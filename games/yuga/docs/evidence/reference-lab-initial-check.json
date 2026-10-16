@@ -1,0 +1,183 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-10-16T22:35:34.323064+00:00",
+  "scope": "Archive of supplied local unit report and initial production smoke; source hashes taken at archive time, not an independently measured start/end freeze. Working tree was modified and untracked. No clean-commit, complete native-suite or public-lab claim.",
+  "repositoryHeadAtArchive": "994a3b32b1bd35e1860f37bcc210b491e3afcb0a",
+  "workingTreeClean": false,
+  "sourceHashesAtArchive": {
+    "games/yuga/reference/bots.ts": "828b80eba656a35a33407eff9877bfb9dbedbdcfcbe627b44240ca8225d3457b",
+    "games/yuga/reference/controller.ts": "61614cd98f2b772f64d749cfb893b4a0b23b37399aa44268cdebd74d8664b004",
+    "games/yuga/reference/objective.ts": "b4ffaab50714edd11c2759fb606cc6a2bb345d02c7ddb4cb8242e2991760fff5",
+    "games/yuga/reference/types.ts": "fae2622795b176c4ce5a2a861a596e656e9c7218c033c3e82dc9973698bb9874",
+    "games/yuga/reference-client/index.html": "4202609f573f6c07986e2e8502ee5c1d129f7259e0248be01d996ea5fe11f996",
+    "games/yuga/reference-client/lab.css": "4676a745bdf36cc021fc846179f1ddec5a33615bcecd83223ed5d1c3cac42e28",
+    "games/yuga/reference-client/main.ts": "156d4e6b852d2d7f5245ad42973a3102acdf57a30585e6b86ea8e9f46eed10e3",
+    "games/yuga/reference-client/objective-status.ts": "e3297060fc645bfe8081ebebb04d4bde74b7a2498204a44332cba26f3a528f82",
+    "games/yuga/reference-tests/controller.test.ts": "8b41e8eb7cb9bee093fc3257f79414f996a7143c854aa9fc830c62c550ce25bc",
+    "games/yuga/reference-tests/objective.test.ts": "e0c3cbb045933b3fdaa8c7f6327c6245df2ff08d8dbecf3e8a39b9290792854b",
+    "games/yuga/reference-tests/primary-receipts.test.ts": "a1eb8168cc4622c4b189bb671a47176d6659ad330dcfd5a3df3bf72bb25e96da",
+    "games/yuga/shared/simulation.ts": "7237870be3f88537b67121f07211da0e61c05ef0205177d392fe4b4f9350b242",
+    "package.json": "99e3adb33e79f1151d738d92b3332bbce6f620413e99a3e8b480e8065dd75ff6",
+    "playwright.yuga-lab.config.ts": "db84e577580a77769adf43918df6978b9e40c8a32301f0f59d2bca952b683eb6",
+    "vite.yuga-lab.config.ts": "267e63851fad5704f8a1da48c5a04a3e927accb0cc19070bc2e506d10514b1c4",
+    "vitest.yuga-lab.config.ts": "3469b440b62c6b34818f9869e86bb46b026dce1913cd396511358361989d6fc6"
+  },
+  "unit": {
+    "inputPath": "/tmp/yuga-reference-unit-final.json",
+    "inputSha256": "287be0bfdc30c9942c4acce1e03ee7ed0fb356514296f1df3471b055e52e59e6",
+    "startTime": 1792189582437,
+    "success": true,
+    "total": 21,
+    "passed": 21,
+    "failed": 0,
+    "pending": 0,
+    "testFiles": [
+      {
+        "file": "games/yuga/reference-tests/controller.test.ts",
+        "status": "passed",
+        "cases": [
+          {
+            "name": "original reference controller through its public API uses genuine arena participants, rejects invalid input/epochs and isolates returned state",
+            "status": "passed"
+          },
+          {
+            "name": "original reference controller through its public API caps elapsed work, pauses without hidden accrual and clears held input on resume",
+            "status": "passed"
+          },
+          {
+            "name": "original reference controller through its public API permits one real base purchase while paused without advancing reload, objective or combat",
+            "status": "passed"
+          },
+          {
+            "name": "original reference controller through its public API spends one round per actual primary shot, blocks an empty magazine and reloads only once",
+            "status": "passed"
+          },
+          {
+            "name": "original reference controller through its public API does not charge primary ammunition for immediate or delayed ability projectiles",
+            "status": "passed"
+          },
+          {
+            "name": "original reference controller through its public API deduplicates actual purchases and resets mode, wallet, reload, input and command identity into a fresh epoch",
+            "status": "passed"
+          },
+          {
+            "name": "original reference controller through its public API reconciles every observed wallet delta through a normal bot match and freezes its real result",
+            "status": "passed"
+          },
+          {
+            "name": "original reference controller through its public API retains the lane arena result and has no hidden control objective or scoring",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "file": "games/yuga/reference-tests/objective.test.ts",
+        "status": "passed",
+        "cases": [
+          {
+            "name": "original hybrid control point \u2014 labelled deterministic placement fixtures counts only living, connected, grounded heroes inside the inclusive radius",
+            "status": "passed"
+          },
+          {
+            "name": "original hybrid control point \u2014 labelled deterministic placement fixtures takes six uncontested seconds regardless of friendly headcount and does not score on the capture tick",
+            "status": "passed"
+          },
+          {
+            "name": "original hybrid control point \u2014 labelled deterministic placement fixtures freezes both unfinished capture and owned scoring while opponents contest",
+            "status": "passed"
+          },
+          {
+            "name": "original hybrid control point \u2014 labelled deterministic placement fixtures keeps an empty owner without income, decays partial capture and lets the returning owner clear hostile progress",
+            "status": "passed"
+          },
+          {
+            "name": "original hybrid control point \u2014 labelled deterministic placement fixtures bounds one delayed call to250ms and ignores invalid elapsed values",
+            "status": "passed"
+          },
+          {
+            "name": "original hybrid control point \u2014 labelled deterministic placement fixtures finishes at60 points, then leaves the completed state unchanged until reset",
+            "status": "passed"
+          },
+          {
+            "name": "original hybrid control point \u2014 labelled deterministic placement fixtures returns independent snapshots that cannot mutate objective ownership or score",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "file": "games/yuga/reference-tests/primary-receipts.test.ts",
+        "status": "passed",
+        "cases": [
+          {
+            "name": "primary-shot observer \u2014 labelled capacity/history fixtures leaves identical seeded arena snapshots unchanged when an observer is installed",
+            "status": "passed"
+          },
+          {
+            "name": "primary-shot observer \u2014 labelled capacity/history fixtures delivers one immutable receipt for a real primary projectile and none for a capacity-rejected attempt",
+            "status": "passed"
+          },
+          {
+            "name": "primary-shot observer \u2014 labelled capacity/history fixtures retains the authoritative receipt when actual later damage evicts its shot event in the same tick",
+            "status": "passed"
+          },
+          {
+            "name": "primary-shot observer \u2014 labelled capacity/history fixtures excludes immediate and delayed ability projectiles and genuine minion fire",
+            "status": "passed"
+          },
+          {
+            "name": "primary-shot observer \u2014 labelled capacity/history fixtures keeps lab ammunition correct undercapacity rejection",
+            "status": "passed"
+          },
+          {
+            "name": "primary-shot observer \u2014 labelled capacity/history fixtures keeps lab ammunition correct underhistory eviction",
+            "status": "passed"
+          }
+        ]
+      }
+    ]
+  },
+  "initialBuiltSmoke": {
+    "inputPath": "test-results/yuga-lab-built-initial-all/evidence.json",
+    "inputSha256": "4445ec09196a764c4f7dfa287224e9f505909fcb3d5c67c4487d9f8dd712b531",
+    "archivedAs": "reference-lab-built-initial.json",
+    "screenshots": [
+      {
+        "file": "test-results/yuga-lab-built-initial-all/lobby.png",
+        "bytes": 503208,
+        "sha256": "569fb244d4df9b3cbe70f92c7fea5ef56a454cf20da2fac02c86f78ef37018e3"
+      },
+      {
+        "file": "test-results/yuga-lab-built-initial-all/paused.png",
+        "bytes": 112050,
+        "sha256": "0f210c2d40a8f74da9f18ffa6e0d4584e76f967d52f7a5ef4c7415c3418cc8a9"
+      },
+      {
+        "file": "test-results/yuga-lab-built-initial-all/practice.png",
+        "bytes": 263295,
+        "sha256": "29c967314241908f53fbecdc61710f0208fcd1ec7d67b603262b8420722205a7"
+      },
+      {
+        "file": "test-results/yuga-lab-built-initial-all/returned.png",
+        "bytes": 513689,
+        "sha256": "ba5eedcf026d0e0d056dc24ca629c9b1696ffc113f9870cc40f3e81ce29a2f91"
+      }
+    ]
+  },
+  "coordinatorReportedChecks": {
+    "existingTestsPassed": 350,
+    "typecheck": "pass",
+    "lint": "pass",
+    "builds": [
+      "main YUGA",
+      "combined lab",
+      "lane lab",
+      "control lab"
+    ],
+    "scope": "Reported by coordinating agent; not rerun in this archival pass."
+  },
+  "pending": [
+    "three native lab cases: desktop flow, mobile flow and full normal control match",
+    "new CI",
+    "public lab deployment and smoke"
+  ]
+}

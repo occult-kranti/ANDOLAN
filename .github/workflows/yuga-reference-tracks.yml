@@ -1,0 +1,35 @@
+name: Verify YUGA mechanics track
+on:
+  push:
+    branches: [reference/deadlock-mechanics, reference/overwatch-mechanics]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck && npm run yuga:typecheck && npm run lint && npm run yuga:lab:test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run yuga:lab:build
+      - name: Verify focused production build
+        run: |
+          lab_track=$(node -p "JSON.parse(require('node:fs').readFileSync('reference-track/track.json', 'utf8')).id")
+          node games/yuga/tools/smoke-lab-built.mjs --built dist/yuga-lab --flavor "$lab_track" --output test-results/yuga-lab-built
+      - name: Preserve track build and browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: yuga-focused-mechanics-track
+          path: |
+            dist/yuga-lab/
+            test-results/yuga-lab-built/
+          if-no-files-found: ignore
+          retention-days: 14
