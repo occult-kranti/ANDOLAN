@@ -1,0 +1,318 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.yuga.config.ts",
+      "--grep",
+      "native mouse chords|cancel delayed actual|labelled reward and camp HUD|labelled action-age",
+      "--reporter=list,json",
+      "--output=test-results/yuga-jungle-focused2"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.yuga.config.ts",
+    "rootDir": "/workspace/ANDOLAN/games/yuga/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-jungle-focused2",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-jungle-focused2",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "snapshotDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5180",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run yuga:dev",
+      "url": "http://127.0.0.1:5180",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "arena.e2e.ts",
+      "file": "arena.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "native mouse chords preserve held fire and release through menus",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 40718,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:32:08.356Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "native-mouse-chords",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJuYXRpdmUtbW91c2UtY2hvcmRzIiwKICAiZGV0YWlsIjogewogICAgInNjb3BlIjogIlJlYWwgcHJhY3RpY2UgYXV0aG9yaXR5IGFuZCBuYXRpdmUgbW91c2UgYnV0dG9uIGNob3Jkcy4gQXV0aG9yaXRhdGl2ZSBvd24tc2hvdCBldmVudHMgcHJvdmUgZmlyZSBjb250aW51aXR5IGFuZCByZWxlYXNlOyBubyBpbnB1dC9jb21tYW5kL3N0YXRlIGluamVjdGlvbi4gVGhpcyBjaGVja3MgYnV0dG9uIHNlbWFudGljcywgbm90IHRhcmdldCBhY3F1aXNpdGlvbiBhdCB0aGlzIGVtcHR5IHNwYXduLiIsCiAgICAib2JzZXJ2YXRpb25zIjogWwogICAgICB7CiAgICAgICAgInN0ZXAiOiAibGVmdC1kb3duIGZpcmVzIiwKICAgICAgICAic2hvdCI6IDcsCiAgICAgICAgImNvb2xkb3duIjogMAogICAgICB9LAogICAgICB7CiAgICAgICAgInN0ZXAiOiAicmlnaHQtZG93biB3aGlsZSBsZWZ0IGhlbGQgc3RpbGwgZmlyZXMiLAogICAgICAgICJzaG90IjogMTcsCiAgICAgICAgImNvb2xkb3duIjogMC40OAogICAgICB9LAogICAgICB7CiAgICAgICAgInN0ZXAiOiAicmlnaHQgcmVsZWFzZSBwcmVzZXJ2ZXMgbGVmdCBmaXJlIiwKICAgICAgICAic2hvdCI6IDIwLAogICAgICAgICJjb29sZG93biI6IDAuNDgKICAgICAgfSwKICAgICAgewogICAgICAgICJzdGVwIjogImxlZnQgcmVsZWFzZSBzdG9wcyIsCiAgICAgICAgInNob3QiOiAyMCwKICAgICAgICAiY29vbGRvd24iOiAwCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAic3RlcCI6ICJsZWZ0LWRvd24gd2hpbGUgcmlnaHQgaGVsZCBzdGFydHMgZmlyZSIsCiAgICAgICAgInNob3QiOiA1MCwKICAgICAgICAiY29vbGRvd24iOiAwLjQ4CiAgICAgIH0sCiAgICAgIHsKICAgICAgICAic3RlcCI6ICJsZWZ0IHJlbGVhc2Ugc3RvcHMgd2hpbGUgcmlnaHQgaGVsZCIsCiAgICAgICAgInNob3QiOiA2MiwKICAgICAgICAiY29vbGRvd24iOiAwCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAic3RlcCI6ICJtZW51IGFuZCByZXN1bWUgcmVtYWluIG5ldXRyYWwiLAogICAgICAgICJzaG90IjogMTcyLAogICAgICAgICJjb29sZG93biI6IDAKICAgICAgfQogICAgXQogIH0sCiAgInBhZ2VFcnJvcnMiOiBbXSwKICAiY29tbWFuZHMiOiBbXSwKICAicmVzdWx0cyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-8136919ea9bac4a0e386",
+          "file": "arena.e2e.ts",
+          "line": 75,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "hero-assets.e2e.ts",
+      "file": "hero-assets.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "cancel delayed actual match assets with Escape and Back, then restart cleanly",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13815,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:32:49.368Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "delayed-match-load-cancellation",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJBIHJlYWwgYmluYXJ5IEdMQiByZXF1ZXN0IHdhcyBkZWxheWVkLiBOYXRpdmUgRXNjYXBlIGFuZCBCYWNrIGNhbmNlbCB0d28gbG9hZGluZyBhdHRlbXB0czsgcmVsZWFzaW5nIHRoZSBhc3NldCBtYXkgcG9wdWxhdGUgY2FjaGUgYnV0IG11c3Qgbm90IHN0YXJ0IGVpdGhlciBjYW5jZWxlZCBtYXRjaC4gQSB0aGlyZCBuYXRpdmUgc3RhcnQgZW50ZXJzIG9yZGluYXJ5IHByYWN0aWNlLiIsCiAgImRlbGF5ZWQiOiAxLAogICJlcnJvcnMiOiBbXSwKICAiY29uc29sZUVycm9ycyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c538d34d19b602e5e2ab-0c40704719aaea312d4c",
+          "file": "hero-assets.e2e.ts",
+          "line": 37,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "jungle.e2e.ts",
+      "file": "jungle.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "labelled reward and camp HUD snapshots show first receipts, shared versus stolen, and expiry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12497,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:33:03.214Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "labelled-jungle-hud-fixture",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJNb2NrZWQgV2ViU29ja2V0IGFuZCBleHBsaWNpdCBhY3Rvci9jYW1wL3Jld2FyZC90aW1lIHNuYXBzaG90cyB2YWxpZGF0ZSBIVUQgcHJlc2VudGF0aW9uIGFuZCBkZWR1cGxpY2F0aW9uIG9ubHkuIE5vIGNhbXAgd2FzIHBoeXNpY2FsbHkgY2xlYXJlZCBhbmQgbm8gY29udGVzdGVkIGdvbGQgd2FzIGVhcm5lZCBpbiB0aGlzIGZpeHR1cmUuIiwKICAiZXJyb3JzIjogewogICAgImVycm9ycyI6IFtdLAogICAgImNvbnNvbGVFcnJvcnMiOiBbXQogIH0KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4e2427d1c2f332db3d13-0fa59bc705be0ce489b0",
+          "file": "jungle.e2e.ts",
+          "line": 50,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "unit-assets.e2e.ts",
+      "file": "unit-assets.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "labelled action-age and resume snapshots preserve recent casts without replaying old history",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10851,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:33:15.777Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "labelled-action-age-fixture",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJNb2NrZWQgYXV0aG9yaXR5IHNuYXBzaG90cyBhbmQgY29udHJvbGxlZCBldmVudCBhZ2VzIC45cy8yLjFzOyBuYXRpdmUgbWVudSBvcGVuL3Jlc3VtZS4gVmFsaWRhdGVzIHJlbmRlcmVyIGZyZXNobmVzcyBhbmQgaGlzdG9yeS1iYXNlbGluZSBydWxlcyBvbmx5LCBub3QgbmF0aXZlIGNvbWJhdCBzdWNjZXNzIG9yIG5ldHdvcmsgbGF0ZW5jeS4iLAogICJpbml0aWFsIjogewogICAgImlkIjogImFnZS1sb2NhbCIsCiAgICAiaGVyb0lkIjogInJhbWEiLAogICAgInVybCI6ICIvY2xpZW50L2Fzc2V0cy9oZXJvZXMvcmFtYS5nbGIiLAogICAgImxvYWRlZCI6IHRydWUsCiAgICAiZmFsbGJhY2siOiBmYWxzZSwKICAgICJza2lubmVkIjogdHJ1ZSwKICAgICJza2VsZXRvbnMiOiBbCiAgICAgIDEKICAgIF0sCiAgICAiYm9uZXMiOiAxNjQsCiAgICAiY2xpcHMiOiBbCiAgICAgICJjYXN0IiwKICAgICAgImNhc3QxIiwKICAgICAgImNhc3QyIiwKICAgICAgImNhc3QzIiwKICAgICAgImRlZmVhdCIsCiAgICAgICJmaXJlIiwKICAgICAgImlkbGUiLAogICAgICAianVtcCIsCiAgICAgICJydW4iCiAgICBdLAogICAgInN0YXRlIjogImlkbGUiLAogICAgImFjdGlvbiI6ICIiLAogICAgImFuaW1hdGlvblRpbWUiOiAwLjIsCiAgICAicG9zZUJvbmVzIjogWwogICAgICAic3BpbmUwMyIsCiAgICAgICJ1cHBlcmFybTAxLkwiLAogICAgICAidXBwZXJhcm0wMS5SIiwKICAgICAgImhlYWQiLAogICAgICAidXBwZXJsZWcwMS5MIiwKICAgICAgImxvd2VybGVnMDEuTCIsCiAgICAgICJ1cHBlcmxlZzAxLlIiLAogICAgICAibG93ZXJsZWcwMS5SIgogICAgXSwKICAgICJwb3NlIjogWwogICAgICAwLAogICAgICAwLAogICAgICAwLjEyMjMsCiAgICAgIDAuOTkyNSwKICAgICAgMC42NDg2LAogICAgICAtMC4wMzIzLAogICAgICAtMC4xNTMyLAogICAgICAwLjc0NDksCiAgICAgIDAuMDMxNSwKICAgICAgMC4xNTY0LAogICAgICAtMC43ODM1LAogICAgICAwLjYwMDUsCiAgICAgIDAsCiAgICAgIDAsCiAgICAgIDAuMzk3OCwKICAgICAgMC45MTc1LAogICAgICAwLjUyNzEsCiAgICAgIDAuNTQzLAogICAgICAtMC4zODk3LAogICAgICAwLjUyNDgsCiAgICAgIDAuMDU2NywKICAgICAgLTAuMDA2OSwKICAgICAgLTAuMzA3NiwKICAgICAgMC45NDk4LAogICAgICAtMC40OTY0LAogICAgICAtMC41Nzc2LAogICAgICAtMC40MTg4LAogICAgICAwLjQ5NDYsCiAgICAgIC0wLjA1NDYsCiAgICAgIDAuMDAxNywKICAgICAgLTAuMzIyOSwKICAgICAgMC45NDQ5CiAgICBdLAogICAgInRyYW5zaXRpb25zIjogewogICAgICAiaWRsZSI6IDEKICAgIH0KICB9LAogICJyZWNlbnQiOiB7CiAgICAiaWQiOiAiYWdlLWxvY2FsIiwKICAgICJoZXJvSWQiOiAicmFtYSIsCiAgICAidXJsIjogIi9jbGllbnQvYXNzZXRzL2hlcm9lcy9yYW1hLmdsYiIsCiAgICAibG9hZGVkIjogdHJ1ZSwKICAgICJmYWxsYmFjayI6IGZhbHNlLAogICAgInNraW5uZWQiOiB0cnVlLAogICAgInNrZWxldG9ucyI6IFsKICAgICAgMQogICAgXSwKICAgICJib25lcyI6IDE2NCwKICAgICJjbGlwcyI6IFsKICAgICAgImNhc3QiLAogICAgICAiY2FzdDEiLAogICAgICAiY2FzdDIiLAogICAgICAiY2FzdDMiLAogICAgICAiZGVmZWF0IiwKICAgICAgImZpcmUiLAogICAgICAiaWRsZSIsCiAgICAgICJqdW1wIiwKICAgICAgInJ1biIKICAgIF0sCiAgICAic3RhdGUiOiAiaWRsZSIsCiAgICAiYWN0aW9uIjogIiIsCiAgICAiYW5pbWF0aW9uVGltZSI6IDAuNCwKICAgICJwb3NlQm9uZXMiOiBbCiAgICAgICJzcGluZTAzIiwKICAgICAgInVwcGVyYXJtMDEuTCIsCiAgICAgICJ1cHBlcmFybTAxLlIiLAogICAgICAiaGVhZCIsCiAgICAgICJ1cHBlcmxlZzAxLkwiLAogICAgICAibG93ZXJsZWcwMS5MIiwKICAgICAgInVwcGVybGVnMDEuUiIsCiAgICAgICJsb3dlcmxlZzAxLlIiCiAgICBdLAogICAgInBvc2UiOiBbCiAgICAgIDAsCiAgICAgIDAsCiAgICAgIDAuMTIyMywKICAgICAgMC45OTI1LAogICAgICAwLjY0ODYsCiAgICAgIC0wLjAzMjMsCiAgICAgIC0wLjE1MzIsCiAgICAgIDAuNzQ0OSwKICAgICAgMC4wMzE1LAogICAgICAwLjE1NjQsCiAgICAgIC0wLjc4MzUsCiAgICAgIDAuNjAwNSwKICAgICAgMCwKICAgICAgMCwKICAgICAgMC4zOTc4LAogICAgICAwLjkxNzUsCiAgICAgIDAuNTI3MSwKICAgICAgMC41NDMsCiAgICAgIC0wLjM4OTcsCiAgICAgIDAuNTI0OCwKICAgICAgMC4wNTY3LAogICAgICAtMC4wMDY5LAogICAgICAtMC4zMDc2LAogICAgICAwLjk0OTgsCiAgICAgIC0wLjQ5NjQsCiAgICAgIC0wLjU3NzYsCiAgICAgIC0wLjQxODgsCiAgICAgIDAuNDk0NiwKICAgICAgLTAuMDU0NiwKICAgICAgMC4wMDE3LAogICAgICAtMC4zMjI5LAogICAgICAwLjk0NDkKICAgIF0sCiAgICAidHJhbnNpdGlvbnMiOiB7CiAgICAgICJpZGxlIjogMSwKICAgICAgImNhc3QxIjogMQogICAgfQogIH0sCiAgImZpbmFsIjogewogICAgImlkIjogImFnZS1sb2NhbCIsCiAgICAiaGVyb0lkIjogInJhbWEiLAogICAgInVybCI6ICIvY2xpZW50L2Fzc2V0cy9oZXJvZXMvcmFtYS5nbGIiLAogICAgImxvYWRlZCI6IHRydWUsCiAgICAiZmFsbGJhY2siOiBmYWxzZSwKICAgICJza2lubmVkIjogdHJ1ZSwKICAgICJza2VsZXRvbnMiOiBbCiAgICAgIDEKICAgIF0sCiAgICAiYm9uZXMiOiAxNjQsCiAgICAiY2xpcHMiOiBbCiAgICAgICJjYXN0IiwKICAgICAgImNhc3QxIiwKICAgICAgImNhc3QyIiwKICAgICAgImNhc3QzIiwKICAgICAgImRlZmVhdCIsCiAgICAgICJmaXJlIiwKICAgICAgImlkbGUiLAogICAgICAianVtcCIsCiAgICAgICJydW4iCiAgICBdLAogICAgInN0YXRlIjogImlkbGUiLAogICAgImFjdGlvbiI6ICJjYXN0MyIsCiAgICAiYW5pbWF0aW9uVGltZSI6IDEuMDk5OTk5OTk5OTk5OTk5OSwKICAgICJwb3NlQm9uZXMiOiBbCiAgICAgICJzcGluZTAzIiwKICAgICAgInVwcGVyYXJtMDEuTCIsCiAgICAgICJ1cHBlcmFybTAxLlIiLAogICAgICAiaGVhZCIsCiAgICAgICJ1cHBlcmxlZzAxLkwiLAogICAgICAibG93ZXJsZWcwMS5MIiwKICAgICAgInVwcGVybGVnMDEuUiIsCiAgICAgICJsb3dlcmxlZzAxLlIiCiAgICBdLAogICAgInBvc2UiOiBbCiAgICAgIDAsCiAgICAgIDAsCiAgICAgIDAuMTIyMywKICAgICAgMC45OTI1LAogICAgICAwLjY1MjEsCiAgICAgIC0wLjAyOTYsCiAgICAgIC0wLjEzOTksCiAgICAgIDAuNzQ0NSwKICAgICAgMC4wMzYzLAogICAgICAwLjE1NjUsCiAgICAgIC0wLjc4OTcsCiAgICAgIDAuNTkyMSwKICAgICAgMCwKICAgICAgMCwKICAgICAgMC4zOTc4LAogICAgICAwLjkxNzUsCiAgICAgIDAuNTI3MSwKICAgICAgMC41NDMsCiAgICAgIC0wLjM4OTcsCiAgICAgIDAuNTI0OCwKICAgICAgMC4wNTY3LAogICAgICAtMC4wMDY5LAogICAgICAtMC4zMDc2LAogICAgICAwLjk0OTgsCiAgICAgIC0wLjQ5NjQsCiAgICAgIC0wLjU3NzYsCiAgICAgIC0wLjQxODgsCiAgICAgIDAuNDk0NiwKICAgICAgLTAuMDU0NiwKICAgICAgMC4wMDE3LAogICAgICAtMC4zMjI5LAogICAgICAwLjk0NDkKICAgIF0sCiAgICAidHJhbnNpdGlvbnMiOiB7CiAgICAgICJpZGxlIjogMSwKICAgICAgImNhc3QxIjogMSwKICAgICAgImNhc3QzIjogMQogICAgfQogIH0sCiAgImVycm9ycyI6IHsKICAgICJlcnJvcnMiOiBbXSwKICAgICJjb25zb2xlRXJyb3JzIjogW10KICB9Cn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d5201f18e50ef76a425d-0e5e79214c096e23e576",
+          "file": "unit-assets.e2e.ts",
+          "line": 50,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T18:32:07.554Z",
+    "duration": 79379.808,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

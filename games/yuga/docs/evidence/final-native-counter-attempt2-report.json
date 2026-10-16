@@ -1,0 +1,213 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.yuga.config.ts",
+      "--grep",
+      "native two-player Dawn",
+      "--reporter=list,json",
+      "--output=test-results/yuga-final-counter"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.yuga.config.ts",
+    "rootDir": "/workspace/ANDOLAN/games/yuga/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-counter",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-counter",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "snapshotDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5180",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run yuga:dev",
+      "url": "http://127.0.0.1:5180",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "arena.e2e.ts",
+      "file": "arena.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "native two-player Dawn Volley windup is visible and lateral movement evades it",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 51455,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"dawn-volley\"\u001b[39m\nReceived: \u001b[31mundefined\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"dawn-volley\"\u001b[39m\nReceived: \u001b[31mundefined\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:103:1214",
+                    "location": {
+                      "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                      "column": 1214,
+                      "line": 103
+                    },
+                    "snippet": "  101 |   // Natural x=-3 spawn clears the central tower and avoids a latency-sensitive lateral detour into a building.\n  102 |   await guest.keyboard.press('Escape');await activate(host);await hold(host,'KeyW',p=>p.z>-12,40_000);await host.keyboard.press('Escape');await activate(guest);await hold(guest,'KeyW',p=>p.z<12,40_000);await guest.keyboard.press('Escape');\n> 103 |   await activate(host);const caster=await me(host),target=await me(guest);expect(caster.health).toBeGreaterThan(0);expect(target.health).toBeGreaterThan(0);await nativeYaw(host,Math.atan2(target.x-caster.x,target.z-caster.z));await host.keyboard.press('KeyT');await expect.poll(()=>host.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(target.id);await expect(host.locator('#target-label')).toContainText('Native dodger');await host.keyboard.press('Escape');expect(await host.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await host.locator('#resume-game').click();await host.keyboard.press('KeyT');await expect.poll(()=>host.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(target.id);await host.keyboard.press('KeyJ');expect(await host.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await nativeYaw(host,Math.atan2(target.x-caster.x,target.z-caster.z));const startTime=(await snapshot(host)).time;await host.keyboard.press('KeyR');await expect.poll(async()=>(await me(host)).cast?.phase,{intervals:[30,50]}).toBe('windup');const cast=(await me(host)).cast!;await expect.poll(async()=>(await snapshot(guest)).actors.find(p=>p.id===caster.id)?.cast?.mechanic,{intervals:[30,50]}).toBe('dawn-volley');\n      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ^\n  104 |   await activate(guest);const beforeDodge=await me(guest);await hold(guest,'KeyA',p=>beforeDodge.x-p.x>4,8_000);await expect.poll(async()=>(await snapshot(host)).time,{intervals:[50,100]}).toBeGreaterThan(cast.releaseAt+1);const afterDodge=await me(guest);expect(beforeDodge.x-afterDodge.x).toBeGreaterThan(4);expect([...observedHits.values()].filter(e=>e.time>=startTime&&e.actorId===caster.id&&e.targetId===target.id)).toEqual([]);expect(results.get(host)!.some(r=>r.ok&&r.code==='ABILITY_CAST')).toBe(true);await capture(guest,info,'native-volley-evade');await attach(host,info,'native-windup-evade',{scope:'Two real browser clients and real local server configured without hero bots to isolate counter timing; lane waves still run. Ordinary keyboard movement/aim/R only. No actor-position/health/time injection.',initialHost,initialGuest,caster,target,cast,beforeDodge,afterDodge,observedTargetHits:[...observedHits.values()].filter(e=>e.actorId===caster.id&&e.targetId===target.id)});expect(errors.get(host)).toEqual([]);expect(errors.get(guest)).toEqual([]);\n  105 |  }finally{await a.close();await b.close();await server.close();}\n  106 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                        "column": 1214,
+                        "line": 103
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"dawn-volley\"\u001b[39m\nReceived: \u001b[31mundefined\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  101 |   // Natural x=-3 spawn clears the central tower and avoids a latency-sensitive lateral detour into a building.\n  102 |   await guest.keyboard.press('Escape');await activate(host);await hold(host,'KeyW',p=>p.z>-12,40_000);await host.keyboard.press('Escape');await activate(guest);await hold(guest,'KeyW',p=>p.z<12,40_000);await guest.keyboard.press('Escape');\n> 103 |   await activate(host);const caster=await me(host),target=await me(guest);expect(caster.health).toBeGreaterThan(0);expect(target.health).toBeGreaterThan(0);await nativeYaw(host,Math.atan2(target.x-caster.x,target.z-caster.z));await host.keyboard.press('KeyT');await expect.poll(()=>host.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(target.id);await expect(host.locator('#target-label')).toContainText('Native dodger');await host.keyboard.press('Escape');expect(await host.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await host.locator('#resume-game').click();await host.keyboard.press('KeyT');await expect.poll(()=>host.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(target.id);await host.keyboard.press('KeyJ');expect(await host.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await nativeYaw(host,Math.atan2(target.x-caster.x,target.z-caster.z));const startTime=(await snapshot(host)).time;await host.keyboard.press('KeyR');await expect.poll(async()=>(await me(host)).cast?.phase,{intervals:[30,50]}).toBe('windup');const cast=(await me(host)).cast!;await expect.poll(async()=>(await snapshot(guest)).actors.find(p=>p.id===caster.id)?.cast?.mechanic,{intervals:[30,50]}).toBe('dawn-volley');\n      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ^\n  104 |   await activate(guest);const beforeDodge=await me(guest);await hold(guest,'KeyA',p=>beforeDodge.x-p.x>4,8_000);await expect.poll(async()=>(await snapshot(host)).time,{intervals:[50,100]}).toBeGreaterThan(cast.releaseAt+1);const afterDodge=await me(guest);expect(beforeDodge.x-afterDodge.x).toBeGreaterThan(4);expect([...observedHits.values()].filter(e=>e.time>=startTime&&e.actorId===caster.id&&e.targetId===target.id)).toEqual([]);expect(results.get(host)!.some(r=>r.ok&&r.code==='ABILITY_CAST')).toBe(true);await capture(guest,info,'native-volley-evade');await attach(host,info,'native-windup-evade',{scope:'Two real browser clients and real local server configured without hero bots to isolate counter timing; lane waves still run. Ordinary keyboard movement/aim/R only. No actor-position/health/time injection.',initialHost,initialGuest,caster,target,cast,beforeDodge,afterDodge,observedTargetHits:[...observedHits.values()].filter(e=>e.actorId===caster.id&&e.targetId===target.id)});expect(errors.get(host)).toEqual([]);expect(errors.get(guest)).toEqual([]);\n  105 |  }finally{await a.close();await b.close();await server.close();}\n  106 | });\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:103:1214"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:58:09.307Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-counter/arena.e2e.ts-native-two-pl-0e01c--lateral-movement-evades-it/test-failed-1.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-counter/arena.e2e.ts-native-two-pl-0e01c--lateral-movement-evades-it/test-failed-2.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-counter/arena.e2e.ts-native-two-pl-0e01c--lateral-movement-evades-it/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-counter/arena.e2e.ts-native-two-pl-0e01c--lateral-movement-evades-it/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                    "column": 1214,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-0224df84fcc0a946ed2f",
+          "file": "arena.e2e.ts",
+          "line": 95,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T17:58:08.541Z",
+    "duration": 54540.71,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

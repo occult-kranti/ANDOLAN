@@ -18,9 +18,14 @@ The arena uses browser Web Audio synthesis. The implementation contains no recor
 | Tower/core destroyed | Distinct rising or descending pair | Objective outcome, based on the destroyed structure's team |
 | Friendly structure under attack | Restrained descending warning | Core damage, or nearby tower damage; at most once per six seconds |
 | Pickup/upgrade | Short two-note confirmation | Accepted local events |
+| Gold secured/intercepted | Quiet paired tones; an interception uses a distinct higher interval | Local authoritative `gold` event only; one cue per 0.2 seconds |
+| Jungle camp cleared | Restrained rising interval | Local credited hero; paired temporary-power event is coalesced |
+| Temporary power granted | Short rising tone with a distinct base pitch | Local standalone `buff` event; no duplicate sound for its camp reward |
 | Match finished | Rising win, descending loss, or neutral draw phrase | One authoritative match outcome |
 
 Sound follows successful server/simulation events. A key press, rejected ability, cooldown change, or purchase-button click does not manufacture confirmation. HUD flashes, health bars, objective states, event labels and the match result remain the primary readable feedback; sound provides another channel.
+
+Protocol 2 adds gold and jungle events. Changing credits, spawning a shard, or changing an effect timer does not manufacture a reward sound. Camp and power events from the same guardian share a 1.2-second cooldown even when split across snapshots. Nearby allies' rewards remain silent. Routine neutral shots remain quiet; damage to the local player uses the guardian's authoritative position for its directional transient.
 
 Nearby hero cues use a stereo pan from the listener's facing direction and distance attenuation, with a 42-metre hearing boundary. Friendly/opposing casts and weapons use different pitch contours. This gives orientation assistance without replacing visual team identification. There is no HRTF, occlusion simulation, or claim of precise front/back localization.
 
@@ -58,4 +63,4 @@ There are at most 20 transient sources, including preview and optional rhythm. F
 
 Read-only diagnostics include context state, preferences, preview state, active voice count and on-demand native RMS/peak measurements. A 256-sample analyser observes game and preview output after gain/compression. A suspended context may retain its last buffer: diagnostics do not substitute a zero based on mute labels. To verify native attenuation, set volume zero while running, then separately verify suspension.
 
-Native browser playback and integrated action checks are pending the client QA pass. No subjective headphone or loudspeaker listening pass has been performed by this implementation agent. Balance across hardware, spatial usability, cultural interpretation and mobile audio behavior require real playtesting. Production must not expose a development audio control global.
+The prior native browser baseline verified original synthesis, muted preview, zero-volume attenuation, suspension and preference persistence (`docs/evidence/baseline-browser-check.json`). The new protocol 2 reward routes have 16 passing mocked lifecycle/routing tests; those constructed snapshots are not evidence of earned gameplay rewards or native acoustic output. Native earned-reward acceptance remains with the integrated QA pass. No subjective headphone or loudspeaker listening pass has been performed by this implementation agent. Balance across hardware, spatial usability, cultural interpretation and mobile audio behavior require real playtesting. Production must not expose a development audio control global.

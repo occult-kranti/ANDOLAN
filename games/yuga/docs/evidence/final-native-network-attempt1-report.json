@@ -1,0 +1,293 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.yuga.config.ts",
+      "--grep",
+      "two actual browser|native two-player Dawn|labelled finished-state",
+      "--reporter=list,json",
+      "--output=test-results/yuga-final-network"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.yuga.config.ts",
+    "rootDir": "/workspace/ANDOLAN/games/yuga/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-network",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-network",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "snapshotDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5180",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run yuga:dev",
+      "url": "http://127.0.0.1:5180",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "arena.e2e.ts",
+      "file": "arena.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "two actual browser clients share movement, upgrades and reconnect identity",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 101901,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:53:10.615Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "real-two-client",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJyZWFsLXR3by1jbGllbnQiLAogICJkZXRhaWwiOiB7CiAgICAicm9vbSI6ICI2MEIzMUY2NyIsCiAgICAiaG9zdElkIjogIjg1NDRlNGU1OGMzMjJjYzEiLAogICAgImd1ZXN0SWQiOiAiZmZjNTViNzYxOGE2ODg5YSIsCiAgICAiYmVmb3JlUmVjb25uZWN0IjogewogICAgICAiaWQiOiAiODU0NGU0ZTU4YzMyMmNjMSIsCiAgICAgICJuYW1lIjogIlN1biBRQSIsCiAgICAgICJoZXJvSWQiOiAicmFtYSIsCiAgICAgICJ0ZWFtIjogInN1biIsCiAgICAgICJib3QiOiBmYWxzZSwKICAgICAgImxhbmUiOiAxLAogICAgICAiY29ubmVjdGVkIjogdHJ1ZSwKICAgICAgImtpbmQiOiAiaGVybyIsCiAgICAgICJ4IjogNy4xOTk5OTk5OTk5OTk5OTc1LAogICAgICAieiI6IC01Ni4wMDAwMDAwMDAwMDAwMywKICAgICAgInkiOiAwLAogICAgICAieWF3IjogMCwKICAgICAgImhlYWx0aCI6IDMwMCwKICAgICAgIm1heEhlYWx0aCI6IDMwMCwKICAgICAgInNoaWVsZCI6IDAsCiAgICAgICJyZXNwYXduIjogMCwKICAgICAgImNvb2xkb3ducyI6IFsKICAgICAgICA3LjY0OTk5OTk5OTk5OTk4OCwKICAgICAgICAxMS44OTk5OTk5OTk5OTk5OTksCiAgICAgICAgMAogICAgICBdLAogICAgICAiZmlyZUNvb2xkb3duIjogMCwKICAgICAgImNyZWRpdHMiOiA2MCwKICAgICAgImxldmVsIjogMiwKICAgICAgImtpbGxzIjogMCwKICAgICAgImRlYXRocyI6IDAsCiAgICAgICJhc3Npc3RzIjogMCwKICAgICAgImRhbWFnZURlYWx0IjogMCwKICAgICAgInVwZ3JhZGVzIjogewogICAgICAgICJwb3dlciI6IDEsCiAgICAgICAgInZpdGFsaXR5IjogMCwKICAgICAgICAidGVtcG8iOiAwCiAgICAgIH0sCiAgICAgICJlZmZlY3RzIjogewogICAgICAgICJoYXN0ZSI6IDAsCiAgICAgICAgInNsb3ciOiAwLAogICAgICAgICJ3YXJkIjogMAogICAgICB9LAogICAgICAibGFzdElucHV0U2VxIjogMgogICAgfSwKICAgICJhZnRlclJlY29ubmVjdCI6IHsKICAgICAgImlkIjogIjg1NDRlNGU1OGMzMjJjYzEiLAogICAgICAibmFtZSI6ICJTdW4gUUEiLAogICAgICAiaGVyb0lkIjogInJhbWEiLAogICAgICAidGVhbSI6ICJzdW4iLAogICAgICAiYm90IjogZmFsc2UsCiAgICAgICJsYW5lIjogMSwKICAgICAgImNvbm5lY3RlZCI6IHRydWUsCiAgICAgICJraW5kIjogImhlcm8iLAogICAgICAieCI6IDQuOTMyODgyOTU5NzgwNTc2LAogICAgICAieiI6IC0xMC43Mzk0ODAwNzk3NTUwNTQsCiAgICAgICJ5IjogMCwKICAgICAgInlhdyI6IC0wLjExMjY5MzQ5MDc2MTYzMDU3LAogICAgICAiaGVhbHRoIjogMzAwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDAsCiAgICAgICAgMi4zOTk5OTk5OTk5OTk5NjQsCiAgICAgICAgNDIuMjAwMDAwMDAwMDAwMQogICAgICBdLAogICAgICAiZmlyZUNvb2xkb3duIjogMC4yMzAwMDAwMDAwMDAwMDAwNCwKICAgICAgImNyZWRpdHMiOiA2MCwKICAgICAgImxldmVsIjogMiwKICAgICAgImtpbGxzIjogMCwKICAgICAgImRlYXRocyI6IDAsCiAgICAgICJhc3Npc3RzIjogMCwKICAgICAgImRhbWFnZURlYWx0IjogOTkuMDIwMDAwMDAwMDAwMDEsCiAgICAgICJ1cGdyYWRlcyI6IHsKICAgICAgICAicG93ZXIiOiAxLAogICAgICAgICJ2aXRhbGl0eSI6IDAsCiAgICAgICAgInRlbXBvIjogMAogICAgICB9LAogICAgICAiZWZmZWN0cyI6IHsKICAgICAgICAiaGFzdGUiOiAwLAogICAgICAgICJzbG93IjogMCwKICAgICAgICAid2FyZCI6IDAKICAgICAgfSwKICAgICAgImxhc3RJbnB1dFNlcSI6IC0xCiAgICB9LAogICAgImNsYWltIjogIlR3byBpbmRlcGVuZGVudCBicm93c2VyIGNvbnRleHRzIGFuZCBhY3R1YWwgbG9jYWwgV2ViU29ja2V0cywgbm90IHB1YmxpYyBob3N0aW5nIgogIH0sCiAgInBhZ2VFcnJvcnMiOiBbXSwKICAiY29tbWFuZHMiOiBbCiAgICB7CiAgICAgICJ0eXBlIjogImNvbW1hbmQiLAogICAgICAiaWQiOiAiYWExZmVhNmQtMSIsCiAgICAgICJhY3Rpb24iOiAidXBncmFkZSIsCiAgICAgICJ1cGdyYWRlIjogInBvd2VyIgogICAgfSwKICAgIHsKICAgICAgInR5cGUiOiAiY29tbWFuZCIsCiAgICAgICJpZCI6ICJhYTFmZWE2ZC0yIiwKICAgICAgImFjdGlvbiI6ICJhYmlsaXR5IiwKICAgICAgInNsb3QiOiAwCiAgICB9LAogICAgewogICAgICAidHlwZSI6ICJjb21tYW5kIiwKICAgICAgImlkIjogImFhMWZlYTZkLTMiLAogICAgICAiYWN0aW9uIjogImFiaWxpdHkiLAogICAgICAic2xvdCI6IDEKICAgIH0KICBdLAogICJyZXN1bHRzIjogWwogICAgewogICAgICAidHlwZSI6ICJyZXN1bHQiLAogICAgICAiaWQiOiAiYWExZmVhNmQtMSIsCiAgICAgICJvayI6IHRydWUsCiAgICAgICJjb2RlIjogIlVQR1JBREVEIgogICAgfSwKICAgIHsKICAgICAgInR5cGUiOiAicmVzdWx0IiwKICAgICAgImlkIjogImFhMWZlYTZkLTIiLAogICAgICAib2siOiB0cnVlLAogICAgICAiY29kZSI6ICJBQklMSVRZX0NBU1QiCiAgICB9LAogICAgewogICAgICAidHlwZSI6ICJyZXN1bHQiLAogICAgICAiaWQiOiAiYWExZmVhNmQtMyIsCiAgICAgICJvayI6IHRydWUsCiAgICAgICJjb2RlIjogIkFCSUxJVFlfQ0FTVCIKICAgIH0KICBdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-1efa3882ae9ef3c6d9e2",
+          "file": "arena.e2e.ts",
+          "line": 73,
+          "column": 1
+        },
+        {
+          "title": "labelled finished-state socket fixture renders results and fresh replay",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6532,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:54:52.779Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "labelled-result-fixture",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJsYWJlbGxlZC1yZXN1bHQtZml4dHVyZSIsCiAgImRldGFpbCI6IHsKICAgICJjbGFpbSI6ICJNb2NrZWQgV2ViU29ja2V0IGFuZCBzaG9ydGVuZWQgc2ltdWxhdGlvbiBmaXh0dXJlIHZlcmlmaWVzIHJlc3VsdC9yZXBsYXkgcHJlc2VudGF0aW9uIG9ubHk7IG5vIG5hdGl2ZSBtYXRjaCB2aWN0b3J5IG9yIHJlYWwgc2VydmVyIGNsYWltIgogIH0sCiAgInBhZ2VFcnJvcnMiOiBbXSwKICAiY29tbWFuZHMiOiBbXSwKICAicmVzdWx0cyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-384b1717832850863278",
+          "file": "arena.e2e.ts",
+          "line": 85,
+          "column": 1
+        },
+        {
+          "title": "native two-player Dawn Volley windup is visible and lateral movement evades it",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 64365,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 40000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 40000ms exceeded while waiting on the predicate\n    at hold (/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:36:200)\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:101:57",
+                    "location": {
+                      "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                      "column": 200,
+                      "line": 36
+                    },
+                    "snippet": "  34 | async function activate(page:Page){await page.bringToFront();if(await page.locator('#pause-dialog').isVisible())await page.locator('#resume-game').click();}\n  35 | async function join(page:Page,name:string,room=''){await page.locator('#online-open').click();await page.locator('#player-name').fill(name);await page.locator('#room-code').fill(room);await page.locator('#join-room').click();await ready(page);if(room)await expect.poll(async()=>(await snapshot(page)).room).toBe(room);}\n> 36 | async function hold(page:Page,key:string,until:(actor:Actor)=>boolean,timeout=15_000){await page.keyboard.down(key);try{await expect.poll(async()=>until(await me(page)),{timeout,intervals:[60,100]}).toBe(true);}finally{await page.keyboard.up(key);}}\n     |                                                                                                                                                                                                        ^\n  37 | async function previewSamples(page:Page){await page.locator('#sound-preview').click();return page.evaluate(async()=>{let peak=0,rms=0,running=false,previewing=false;const end=performance.now()+450;while(performance.now()<end){const d=window.__YUGA.audio();peak=Math.max(peak,d.outputPeak);rms=Math.max(rms,d.outputRms);running ||= d.contextState==='running';previewing ||= d.previewing;await new Promise(r=>setTimeout(r,20));}return{peak,rms,running,previewing};});}\n  38 | async function range(page:Page,id:string,value:number){await page.locator(id).fill(String(value));}\n  39 | async function attach(page:Page,info:TestInfo,name:string,detail:unknown){await info.attach(name,{body:JSON.stringify({scope:name,detail,pageErrors:errors.get(page),commands:commands.get(page),results:results.get(page)},null,2),contentType:'application/json'});}"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                        "column": 200,
+                        "line": 36
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 40000ms exceeded while waiting on the predicate\n\n  34 | async function activate(page:Page){await page.bringToFront();if(await page.locator('#pause-dialog').isVisible())await page.locator('#resume-game').click();}\n  35 | async function join(page:Page,name:string,room=''){await page.locator('#online-open').click();await page.locator('#player-name').fill(name);await page.locator('#room-code').fill(room);await page.locator('#join-room').click();await ready(page);if(room)await expect.poll(async()=>(await snapshot(page)).room).toBe(room);}\n> 36 | async function hold(page:Page,key:string,until:(actor:Actor)=>boolean,timeout=15_000){await page.keyboard.down(key);try{await expect.poll(async()=>until(await me(page)),{timeout,intervals:[60,100]}).toBe(true);}finally{await page.keyboard.up(key);}}\n     |                                                                                                                                                                                                        ^\n  37 | async function previewSamples(page:Page){await page.locator('#sound-preview').click();return page.evaluate(async()=>{let peak=0,rms=0,running=false,previewing=false;const end=performance.now()+450;while(performance.now()<end){const d=window.__YUGA.audio();peak=Math.max(peak,d.outputPeak);rms=Math.max(rms,d.outputRms);running ||= d.contextState==='running';previewing ||= d.previewing;await new Promise(r=>setTimeout(r,20));}return{peak,rms,running,previewing};});}\n  38 | async function range(page:Page,id:string,value:number){await page.locator(id).fill(String(value));}\n  39 | async function attach(page:Page,info:TestInfo,name:string,detail:unknown){await info.attach(name,{body:JSON.stringify({scope:name,detail,pageErrors:errors.get(page),commands:commands.get(page),results:results.get(page)},null,2),contentType:'application/json'});}\n    at hold (/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:36:200)\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:101:57"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:54:59.323Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-network/arena.e2e.ts-native-two-pl-0e01c--lateral-movement-evades-it/test-failed-1.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-network/arena.e2e.ts-native-two-pl-0e01c--lateral-movement-evades-it/test-failed-2.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-network/arena.e2e.ts-native-two-pl-0e01c--lateral-movement-evades-it/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-network/arena.e2e.ts-native-two-pl-0e01c--lateral-movement-evades-it/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                    "column": 200,
+                    "line": 36
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-0224df84fcc0a946ed2f",
+          "file": "arena.e2e.ts",
+          "line": 95,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T17:53:10.059Z",
+    "duration": 176026.168,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

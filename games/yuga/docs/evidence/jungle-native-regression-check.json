@@ -1,0 +1,430 @@
+{
+  "scope": "Native practice controls/combat plus two independent Chromium contexts on an actual local server. Counterplay disables hero bots, preserves lane waves/clocks, and sends an ordinary dodge key when the peer receives the authoritative windup. No actor/health/time setup or gameplay command injection. This is automated native reaction, not a human reaction-speed or every-telegraph-pixel test. Maximum10fps software render budget; no device performance claim.",
+  "stats": {
+    "startTime": "2026-10-16T18:36:47.738Z",
+    "duration": 79189.964,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "sourceSha256": {
+    "games/yuga/client/main.ts": "050854dc5bc1167201350416452960e0a3492b2f168ad4bf8a578303f453a9ab",
+    "games/yuga/client/world.ts": "b4087c09887c82b164b8559decda5354f7031f48ce228673f676966618986fe8",
+    "games/yuga/shared/simulation.ts": "85acc59bc87acf15a0854f3b5cd463bfb9407d9c8d7fa3acfa3f9f19bb6286c4",
+    "games/yuga/shared/types.ts": "ba50968277b687b5e64dd92f56500cbf8edb613f4574630ba761995e6092af7a",
+    "games/yuga/tests/arena.e2e.ts": "def38fa9db6bf449cbae4d6efd45694773a56eea2060958b5340351fd9c06661"
+  },
+  "cases": [
+    {
+      "name": "native practice movement, combat, three skills, upgrade and pause controls",
+      "status": "passed",
+      "durationMs": 27709,
+      "evidence": [
+        {
+          "scope": "native-practice",
+          "detail": {
+            "before": {
+              "id": "local-player",
+              "name": "Traveller",
+              "heroId": "rama",
+              "team": "sun",
+              "bot": false,
+              "lane": 1,
+              "connected": true,
+              "kind": "hero",
+              "x": 0,
+              "z": -56.00000000000003,
+              "y": 0,
+              "yaw": 0,
+              "health": 300,
+              "maxHealth": 300,
+              "shield": 0,
+              "respawn": 0,
+              "cooldowns": [
+                6.99999999999999,
+                9.999999999999972,
+                42.05000000000011
+              ],
+              "fireCooldown": 0,
+              "credits": 60,
+              "level": 2,
+              "kills": 0,
+              "deaths": 0,
+              "assists": 0,
+              "damageDealt": 0,
+              "upgrades": {
+                "power": 1,
+                "vitality": 0,
+                "tempo": 0
+              },
+              "effects": {
+                "haste": 0,
+                "slow": 0,
+                "ward": 0,
+                "vigor": 0
+              },
+              "lastInputSeq": 23
+            },
+            "after": {
+              "id": "local-player",
+              "name": "Traveller",
+              "heroId": "rama",
+              "team": "sun",
+              "bot": false,
+              "lane": 1,
+              "connected": true,
+              "kind": "hero",
+              "x": 6.917151905671878,
+              "z": -38.300837840571944,
+              "y": 0,
+              "yaw": -0.1481622056896601,
+              "health": 108,
+              "maxHealth": 300,
+              "shield": 0,
+              "respawn": 0,
+              "cooldowns": [
+                0,
+                0,
+                29.05000000000064
+              ],
+              "fireCooldown": 0,
+              "credits": 68,
+              "level": 2,
+              "kills": 0,
+              "deaths": 0,
+              "assists": 0,
+              "damageDealt": 63.17999999999999,
+              "upgrades": {
+                "power": 1,
+                "vitality": 0,
+                "tempo": 0
+              },
+              "effects": {
+                "haste": 0,
+                "slow": 0,
+                "ward": 0,
+                "vigor": 0
+              },
+              "lastInputSeq": 100
+            },
+            "snapshotTime": 18.75000000000013,
+            "claim": "Ordinary keyboard controls only; no command, position or clock injection"
+          },
+          "pageErrors": [],
+          "commands": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "name": "native two-player Dawn Volley received windup and lateral movement evades it",
+      "status": "passed",
+      "durationMs": 50341,
+      "evidence": [
+        {
+          "scope": "native-windup-evade",
+          "detail": {
+            "scope": "Two real browser clients and real local server without hero bots; lane waves run. Native movement/aim/R; native dodge key reacts to the peer received windup. First authoritative lateral movement must precede release. No actor-position/health/time injection. Snapshot timing does not itself verify every telegraph pixel or human reaction speed.",
+            "initialHost": {
+              "id": "fad896f599d8109d",
+              "name": "Native caster",
+              "heroId": "rama",
+              "team": "sun",
+              "bot": false,
+              "lane": 0,
+              "connected": true,
+              "kind": "hero",
+              "x": -3,
+              "z": -66,
+              "y": 0,
+              "yaw": 0,
+              "health": 300,
+              "maxHealth": 300,
+              "shield": 0,
+              "respawn": 0,
+              "cooldowns": [
+                0,
+                0,
+                0
+              ],
+              "fireCooldown": 0,
+              "credits": 180,
+              "level": 1,
+              "kills": 0,
+              "deaths": 0,
+              "assists": 0,
+              "damageDealt": 0,
+              "upgrades": {
+                "power": 0,
+                "vitality": 0,
+                "tempo": 0
+              },
+              "effects": {
+                "haste": 0,
+                "slow": 0,
+                "ward": 0,
+                "vigor": 0
+              },
+              "lastInputSeq": 12
+            },
+            "initialGuest": {
+              "id": "be0a9637956ffb2b",
+              "name": "Native dodger",
+              "heroId": "rama",
+              "team": "moon",
+              "bot": false,
+              "lane": 0,
+              "connected": true,
+              "kind": "hero",
+              "x": -3,
+              "z": 66,
+              "y": 0,
+              "yaw": 3.141592653589793,
+              "health": 300,
+              "maxHealth": 300,
+              "shield": 0,
+              "respawn": 0,
+              "cooldowns": [
+                0,
+                0,
+                0
+              ],
+              "fireCooldown": 0,
+              "credits": 180,
+              "level": 1,
+              "kills": 0,
+              "deaths": 0,
+              "assists": 0,
+              "damageDealt": 0,
+              "upgrades": {
+                "power": 0,
+                "vitality": 0,
+                "tempo": 0
+              },
+              "effects": {
+                "haste": 0,
+                "slow": 0,
+                "ward": 0,
+                "vigor": 0
+              },
+              "lastInputSeq": -1
+            },
+            "caster": {
+              "id": "fad896f599d8109d",
+              "name": "Native caster",
+              "heroId": "rama",
+              "team": "sun",
+              "bot": false,
+              "lane": 0,
+              "connected": true,
+              "kind": "hero",
+              "x": -3,
+              "z": -10.920000000000009,
+              "y": 0,
+              "yaw": 0,
+              "health": 300,
+              "maxHealth": 300,
+              "shield": 0,
+              "respawn": 0,
+              "cooldowns": [
+                0,
+                0,
+                0
+              ],
+              "fireCooldown": 0,
+              "credits": 180,
+              "level": 1,
+              "kills": 0,
+              "deaths": 0,
+              "assists": 0,
+              "damageDealt": 0,
+              "upgrades": {
+                "power": 0,
+                "vitality": 0,
+                "tempo": 0
+              },
+              "effects": {
+                "haste": 0,
+                "slow": 0,
+                "ward": 0,
+                "vigor": 0
+              },
+              "lastInputSeq": 123
+            },
+            "target": {
+              "id": "be0a9637956ffb2b",
+              "name": "Native dodger",
+              "heroId": "rama",
+              "team": "moon",
+              "bot": false,
+              "lane": 0,
+              "connected": true,
+              "kind": "hero",
+              "x": -3,
+              "z": 10.920000000000009,
+              "y": 0,
+              "yaw": 3.141592653589793,
+              "health": 300,
+              "maxHealth": 300,
+              "shield": 0,
+              "respawn": 0,
+              "cooldowns": [
+                0,
+                0,
+                0
+              ],
+              "fireCooldown": 0,
+              "credits": 180,
+              "level": 1,
+              "kills": 0,
+              "deaths": 0,
+              "assists": 0,
+              "damageDealt": 0,
+              "upgrades": {
+                "power": 0,
+                "vitality": 0,
+                "tempo": 0
+              },
+              "effects": {
+                "haste": 0,
+                "slow": 0,
+                "ward": 0,
+                "vigor": 0
+              },
+              "lastInputSeq": 100
+            },
+            "castReceipt": {
+              "snapshotTime": 17.85000000000012,
+              "cast": {
+                "slot": 2,
+                "mechanic": "dawn-volley",
+                "phase": "windup",
+                "startedAt": 17.800000000000118,
+                "releaseAt": 18.800000000000118,
+                "endsAt": 18.800000000000118,
+                "origin": {
+                  "x": -3,
+                  "z": -10.920000000000009
+                },
+                "target": {
+                  "x": -3,
+                  "z": 17.07999999999999
+                },
+                "yaw": 0,
+                "pitch": -0.0045787225813037485
+              }
+            },
+            "firstDodgeMovement": {
+              "time": 18.05000000000012,
+              "x": -3.7200000000000006,
+              "phase": "windup"
+            },
+            "beforeDodge": {
+              "id": "be0a9637956ffb2b",
+              "name": "Native dodger",
+              "heroId": "rama",
+              "team": "moon",
+              "bot": false,
+              "lane": 0,
+              "connected": true,
+              "kind": "hero",
+              "x": -3,
+              "z": 10.920000000000009,
+              "y": 0,
+              "yaw": 3.141592653589793,
+              "health": 300,
+              "maxHealth": 300,
+              "shield": 0,
+              "respawn": 0,
+              "cooldowns": [
+                0,
+                0,
+                0
+              ],
+              "fireCooldown": 0,
+              "credits": 180,
+              "level": 1,
+              "kills": 0,
+              "deaths": 0,
+              "assists": 0,
+              "damageDealt": 0,
+              "upgrades": {
+                "power": 0,
+                "vitality": 0,
+                "tempo": 0
+              },
+              "effects": {
+                "haste": 0,
+                "slow": 0,
+                "ward": 0,
+                "vigor": 0
+              },
+              "lastInputSeq": 100
+            },
+            "afterDodge": {
+              "id": "be0a9637956ffb2b",
+              "name": "Native dodger",
+              "heroId": "rama",
+              "team": "moon",
+              "bot": false,
+              "lane": 0,
+              "connected": true,
+              "kind": "hero",
+              "x": -12.719999999999988,
+              "z": 10.920000000000009,
+              "y": 0,
+              "yaw": 3.141592653589793,
+              "health": 300,
+              "maxHealth": 300,
+              "shield": 0,
+              "respawn": 0,
+              "cooldowns": [
+                0,
+                0,
+                0
+              ],
+              "fireCooldown": 0,
+              "credits": 190,
+              "level": 1,
+              "kills": 0,
+              "deaths": 0,
+              "assists": 0,
+              "damageDealt": 0,
+              "upgrades": {
+                "power": 0,
+                "vitality": 0,
+                "tempo": 0
+              },
+              "effects": {
+                "haste": 0,
+                "slow": 0,
+                "ward": 0,
+                "vigor": 0
+              },
+              "lastInputSeq": 114
+            },
+            "observedTargetHits": []
+          },
+          "pageErrors": [],
+          "commands": [
+            {
+              "type": "command",
+              "id": "e44c790e-1",
+              "action": "ability",
+              "slot": 2
+            }
+          ],
+          "results": [
+            {
+              "type": "result",
+              "id": "e44c790e-1",
+              "ok": true,
+              "code": "ABILITY_CAST"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

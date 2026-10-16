@@ -113,9 +113,48 @@ describe('telegraphed mythic abilities', () => {
 });
 
 describe('purposeful lane units', () => {
-  it('spawns two escorts per lane every wave, adds siege every third wave, and routes all six siege lanes forward', () => {
+  it('moves all three escorts in distinct mirrored formations clear of buildings and live plinths', () => {
+    const sim = new ArenaSimulation({ botsPerTeam: 0 }); advance(sim, 1.05);
+    const firstWave = [...sim.actors.values()]; expect(firstWave).toHaveLength(18);
+    for (let tick = 0; tick < 200; tick++) {
+      sim.step(.05);
+      for (const actor of firstWave) {
+        expect(blocked(actor.x, actor.z, .42)).toBe(false);
+        expect(sim.structures.every(structure => Math.hypot(actor.x - structure.x, actor.z - structure.z) >= .42 + (structure.kind === 'core' ? 2.8 : 1.8))).toBe(true);
+      }
+      for (const team of ['sun', 'moon']) for (const lane of [0, 1, 2]) {
+        const units = firstWave.filter(actor => actor.team === team && actor.lane === lane);
+        for (let i = 0; i < units.length; i++) for (let j = i + 1; j < units.length; j++) expect(Math.hypot(units[i]!.x - units[j]!.x, units[i]!.z - units[j]!.z)).toBeGreaterThan(1);
+      }
+    }
+    for (const actor of firstWave.filter(unit => unit.team === 'sun')) {
+      const mirrored = firstWave.find(unit => unit.team === 'moon' && unit.lane === actor.lane && unit.unitArchetype === actor.unitArchetype)!;
+      expect(actor.x).toBeCloseTo(mirrored.x); expect(actor.z).toBeCloseTo(-mirrored.z); expect(Math.abs(actor.z)).toBeLessThan(50);
+    }
+  });
+  it('gives every lane a soldier, ranged watch and minister with bounded allied-only support', () => {
+    const sim = new ArenaSimulation({ botsPerTeam: 0 }); advance(sim, 1.05);
+    for (const team of ['sun', 'moon']) for (const lane of [0, 1, 2]) expect([...sim.actors.values()].filter(a => a.team === team && a.lane === lane).map(a => a.unitArchetype).sort()).toEqual(['city-watch', 'minister', 'soldier']);
+    const minister = [...sim.actors.values()].find(a => a.team === 'sun' && a.unitArchetype === 'minister')!;
+    const allies = [...sim.actors.values()].filter(a => a.team === 'sun' && a.id !== minister.id).slice(0, 4), enemy = [...sim.actors.values()].find(a => a.team === 'moon')!;
+    Object.assign(minister, { x: 0, z: 0 }); for (const [i, actor] of allies.entries()) Object.assign(actor, { x: i * .4, z: 1, shield: 0, effects: { haste: 0, slow: 0, ward: 0 } });
+    Object.assign(enemy, { x: 1, z: 0, shield: 0, effects: { haste: 0, slow: 0, ward: 0 } });
+    const earlierPulses = sim.snapshot().events.filter(event => event.actorId === minister.id && event.label === 'Lane rally').length;
+    sim.time += 5; sim.step(.05);
+    expect(allies.filter(a => a.shield === 12)).toHaveLength(3); expect(enemy.shield).toBe(0); expect(minister.shield).toBe(0);
+    const pulse = sim.snapshot().events.filter(event => event.type === 'ability' && event.actorId === minister.id && event.label === 'Lane rally'); expect(pulse).toHaveLength(earlierPulses + 1);
+    sim.step(.05); expect(sim.snapshot().events.filter(event => event.actorId === minister.id && event.label === 'Lane rally')).toHaveLength(earlierPulses + 1);
+  });
+  it('allocates whole Sun/Moon unit pairs at the actor cap without a Sun-first advantage', () => {
+    const sim = new ArenaSimulation({ botsPerTeam: 0 }), template = sim.addPlayer('fixture', 'Fixture', 'rama', 'sun');
+    for (let i = 0; i < 92; i++) sim.actors.set(`filler-${i}`, { ...structuredClone(template), id: `filler-${i}`, kind: 'minion', bot: true, connected: false });
+    sim.time = .95; sim.step(.05);
+    const spawned = [...sim.actors.values()].filter(actor => actor.id.startsWith('minion-'));
+    expect(spawned).toHaveLength(2); expect(spawned.map(actor => actor.team).sort()).toEqual(['moon', 'sun']); expect(sim.actors.size).toBe(95);
+  });
+  it('spawns three escorts per lane every wave, adds siege every third wave, and routes all six siege lanes forward', () => {
     const sim = new ArenaSimulation({ botsPerTeam: 0, seed: 2 }); advance(sim, 1.05);
-    expect([...sim.actors.values()].filter(a => a.minionRole === 'escort')).toHaveLength(12); expect([...sim.actors.values()].some(a => a.minionRole === 'siege')).toBe(false);
+    expect([...sim.actors.values()].filter(a => a.minionRole === 'escort')).toHaveLength(18); expect([...sim.actors.values()].some(a => a.minionRole === 'siege')).toBe(false);
     advance(sim, 36); const siege = [...sim.actors.values()].filter(a => a.minionRole === 'siege'); expect(siege).toHaveLength(6);
     expect(siege.every(a => a.maxHealth === 240)).toBe(true); const progress = new Set<string>();
     for (let i = 0; i < 500; i++) { sim.step(.05); for (const actor of siege) if (Math.abs(actor.z) < 34) progress.add(`${actor.team}:${actor.lane}`); }

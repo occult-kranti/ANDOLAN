@@ -1,3 +1,4 @@
+import { YUGA_PROTOCOL } from '../shared/types';
 import { test, expect, type Page, type TestInfo } from '@playwright/test';
 import { HEROES } from '../shared/heroes';
 import { ArenaSimulation } from '../shared/simulation';
@@ -53,8 +54,9 @@ test('native practice movement, combat, three skills, upgrade and pause controls
  test.setTimeout(180_000);await load(page);await low(page);await practice(page);await capture(page,info,'practice-spawn');
  await page.keyboard.press('KeyB');await expect(page.locator('#upgrades-dialog')).toBeVisible();await page.locator('#buy-power').click();await expect.poll(async()=>(await me(page)).upgrades.power).toBe(1);expect((await me(page)).credits).toBe(60);await expect(page.locator('#buy-vitality')).toBeDisabled();await page.locator('#upgrades-dialog [data-close]').click();await expect(page.locator('#arena')).toBeFocused();
  for(const [slot,key]of ['KeyQ','KeyE','KeyR'].entries()){await page.keyboard.press(key);await expect.poll(async()=>(await me(page)).cooldowns[slot]!).toBeGreaterThan(0);}
- await hold(page,'Space',actor=>actor.y>.4);const before=await me(page);await hold(page,'KeyA',actor=>actor.x-before.x>4);await hold(page,'KeyW',actor=>actor.z>-23,30_000);
- const visibleRival=async()=>{const state=await snapshot(page),actor=await me(page);return state.actors.filter(target=>target.team!==actor.team&&target.health>0&&Math.abs(target.x)<10&&length(target,actor)<29).sort((a,b)=>length(a,actor)-length(b,actor))[0];};await expect.poll(async()=>!!await visibleRival(),{timeout:30_000}).toBe(true);const target=(await visibleRival())!,pos=await me(page);expect(pos.health).toBeGreaterThan(0);await nativeYaw(page,Math.atan2(target.x-pos.x,target.z-pos.z));await page.keyboard.press('KeyT');await hold(page,'KeyF',actor=>actor.damageDealt>0,15_000);await capture(page,info,'native-combat');
+ await hold(page,'Space',actor=>actor.y>.4);const before=await me(page);await hold(page,'KeyA',actor=>actor.x-before.x>4);await hold(page,'KeyW',actor=>actor.z>-35,30_000);
+ // Acquire from our tower's side before entering the bots'27m firing radius.
+ const visibleRival=async()=>{const state=await snapshot(page),actor=await me(page);return state.actors.filter(target=>target.team!==actor.team&&target.health>0&&Math.abs(target.x)<10&&length(target,actor)<31.5).sort((a,b)=>length(a,actor)-length(b,actor))[0];};await expect.poll(async()=>!!await visibleRival(),{timeout:30_000}).toBe(true);const target=(await visibleRival())!,pos=await me(page);expect(pos.health).toBeGreaterThan(0);await nativeYaw(page,Math.atan2(target.x-pos.x,target.z-pos.z));await page.keyboard.press('KeyT');await hold(page,'KeyF',actor=>actor.damageDealt>0,15_000);await capture(page,info,'native-combat');
  await page.keyboard.press('KeyB');await expect(page.locator('#shop-status')).toContainText('Return to your spawn');await expect(page.locator('#buy-power')).toBeDisabled();await page.locator('#upgrades-dialog [data-close]').click();
  await page.keyboard.down('KeyW');await page.keyboard.down('KeyF');await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();const stopped=await snapshot(page),actor=await me(page);await page.keyboard.press('KeyQ');await page.waitForTimeout(700);expect((await snapshot(page)).time).toBe(stopped.time);expect(length(actor,await me(page))).toBe(0);await page.keyboard.up('KeyW');await page.keyboard.up('KeyF');await page.locator('#resume-game').click();await expect(page.locator('#arena')).toBeFocused();const resumed=await me(page);await hold(page,'KeyS',a=>length(a,resumed)>1);
  await attach(page,info,'native-practice',{before,after:await me(page),snapshotTime:(await snapshot(page)).time,claim:'Ordinary keyboard controls only; no command, position or clock injection'});expect(errors.get(page)).toEqual([]);
@@ -70,6 +72,31 @@ test('mobile touch movement, aiming, firing and modal release',async({browser},i
  }finally{await context.close();}
 });
 
+test('native mouse chords preserve held fire and release through menus',async({page},info)=>{
+ test.setTimeout(120_000);await load(page);await low(page);await practice(page);
+ const actorId=(await me(page)).id;
+ // The authority retains a bounded event window; an old shot being evicted is
+ // not a reversal of the fire sequence. Preserve the largest observed receipt.
+ let observedShot=0;
+ const lastShot=async()=>observedShot=Math.max(observedShot,...(await snapshot(page)).events.filter(event=>event.type==='shot'&&event.actorId===actorId).map(event=>event.id));
+ const observations:{step:string;shot:number;cooldown:number}[]=[];
+ const record=async(step:string)=>observations.push({step,shot:await lastShot(),cooldown:(await me(page)).fireCooldown});
+ const stopped=async()=>{await expect.poll(async()=>(await me(page)).fireCooldown).toBe(0);const shot=await lastShot();await page.waitForTimeout(450);expect(await lastShot()).toBe(shot);};
+ await page.mouse.move(300,220);
+ try{
+  const before=await lastShot();await page.mouse.down({button:'left'});await expect.poll(lastShot).toBeGreaterThan(before);await record('left-down fires');
+  await page.mouse.down({button:'right'});const both=await lastShot();await expect.poll(lastShot).toBeGreaterThan(both);await record('right-down while left held still fires');
+  await page.mouse.up({button:'right'});const rightReleased=await lastShot();await expect.poll(lastShot).toBeGreaterThan(rightReleased);await record('right release preserves left fire');
+  await page.mouse.up({button:'left'});await stopped();await record('left release stops');
+  await page.mouse.down({button:'right'});const rightOnly=await lastShot();await page.waitForTimeout(450);expect(await lastShot()).toBe(rightOnly);
+  await page.mouse.down({button:'left'});await expect.poll(lastShot).toBeGreaterThan(rightOnly);await record('left-down while right held starts fire');
+  await page.mouse.up({button:'left'});await stopped();await record('left release stops while right held');await page.mouse.up({button:'right'});
+  await page.mouse.down({button:'left'});const preMenu=await lastShot();await expect.poll(lastShot).toBeGreaterThan(preMenu);await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();
+  const paused=await snapshot(page);await page.mouse.up({button:'left'});await page.locator('#resume-game').click();await stopped();expect((await snapshot(page)).time).toBeGreaterThan(paused.time);await record('menu and resume remain neutral');
+  await capture(page,info,'native-mouse-chords');await attach(page,info,'native-mouse-chords',{scope:'Real practice authority and native mouse button chords. Authoritative own-shot events prove fire continuity and release; no input/command/state injection. This checks button semantics, not target acquisition at this empty spawn.',observations});expect(errors.get(page)).toEqual([]);
+ }finally{await page.mouse.up({button:'left'});await page.mouse.up({button:'right'});}
+});
+
 test('two actual browser clients share movement, upgrades and reconnect identity',async({browser},info)=>{
  test.setTimeout(180_000);const a=await browser.newContext({viewport:{width:640,height:480}}),b=await browser.newContext({viewport:{width:640,height:480}});const host=await a.newPage(),guest=await b.newPage();try{
  await load(host);await low(host);await join(host,'Sun QA');const code=(await snapshot(host)).room;await load(guest);await low(guest);await pageHero(guest,'arjuna');await join(guest,'Moon QA',code);const hostBefore=await me(host),guestBefore=await me(guest);expect(hostBefore.id).not.toBe(guestBefore.id);expect(hostBefore.team).not.toBe(guestBefore.team);await expect.poll(async()=>(await snapshot(host)).actors.filter(a=>a.kind==='hero'&&!a.bot).length).toBe(2);expect((await snapshot(host)).actors.filter(a=>a.kind==='hero')).toHaveLength(6);
@@ -83,7 +110,7 @@ test('two actual browser clients share movement, upgrades and reconnect identity
 async function pageHero(page:Page,id:string){await page.locator(`[data-hero="${id}"]`).click();}
 
 test('labelled finished-state socket fixture renders results and fresh replay',async({page},info)=>{
- let connections=0;await page.routeWebSocket('**/ws',socket=>{const serial=++connections;socket.onMessage(raw=>{const message=JSON.parse(String(raw));if(message.type!=='join')return;const sim=new ArenaSimulation({room:`FIXTURE-${serial}`,seed:5,duration:serial===1?1:480});sim.addPlayer('fixture-player','Fixture hero',message.heroId,'sun');if(serial===1)for(let i=0;i<21;i++)sim.step(.05);socket.send(JSON.stringify({type:'welcome',protocol:1,id:'fixture-player',room:sim.room,token:'a'.repeat(48),snapshot:sim.snapshot()}));});});
+ let connections=0;await page.routeWebSocket('**/ws',socket=>{const serial=++connections;socket.onMessage(raw=>{const message=JSON.parse(String(raw));if(message.type!=='join')return;const sim=new ArenaSimulation({room:`FIXTURE-${serial}`,seed:5,duration:serial===1?1:480});sim.addPlayer('fixture-player','Fixture hero',message.heroId,'sun');if(serial===1)for(let i=0;i<21;i++)sim.step(.05);socket.send(JSON.stringify({type:'welcome',protocol:YUGA_PROTOCOL,id:'fixture-player',room:sim.room,token:'a'.repeat(48),snapshot:sim.snapshot()}));});});
  await load(page);await low(page);await join(page,'Fixture hero');await expect(page.locator('#result-dialog')).toBeVisible();await expect(page.locator('#scoreboard .score-row')).toHaveCount(7);await capture(page,info,'fixture-result');await page.locator('#play-again').click();await ready(page);await expect(page.locator('#result-dialog')).toBeHidden();expect((await snapshot(page)).phase).toBe('playing');expect((await snapshot(page)).room).toBe('FIXTURE-2');expect((await me(page)).upgrades).toEqual({power:0,vitality:0,tempo:0});expect((await me(page)).credits).toBe(180);expect(connections).toBe(2);await attach(page,info,'labelled-result-fixture',{claim:'Mocked WebSocket and shortened simulation fixture verifies result/replay presentation only; no native match victory or real server claim'});expect(errors.get(page)).toEqual([]);
 });
 
@@ -92,23 +119,75 @@ test('native complete eight-minute practice and fresh replay [release soak]',asy
 });
 
 
-test('native two-player Dawn Volley windup is visible and lateral movement evades it',async({browser},info)=>{
- test.setTimeout(240_000);const server=await createArenaServer({port:0,host:'127.0.0.1',simulation:{botsPerTeam:0}});const address=server.address;if(!address||typeof address==='string')throw new Error('Test listener unavailable');const endpoint=`http://127.0.0.1:${address.port}`,a=await browser.newContext({viewport:{width:640,height:480}}),b=await browser.newContext({viewport:{width:640,height:480}}),host=await a.newPage(),guest=await b.newPage();const observedHits=new Map<number,{id:number;actorId:string;targetId?:string;time:number}>();
+test('native two-player Dawn Volley received windup and lateral movement evades it',async({browser},info)=>{
+ test.setTimeout(240_000);
+ const server=await createArenaServer({port:0,host:'127.0.0.1',simulation:{botsPerTeam:0}});
+ const address=server.address;if(!address||typeof address==='string')throw new Error('Test listener unavailable');
+ const endpoint=`http://127.0.0.1:${address.port}`;
+ const a=await browser.newContext({viewport:{width:480,height:400}}),b=await browser.newContext({viewport:{width:480,height:400}});
+ const host=await a.newPage(),guest=await b.newPage();
+ const observedHits=new Map<number,{id:number;actorId:string;targetId?:string;time:number}>();
+ let casterId='',dodgerId='',armed=false,baselineX=0;
+ let castReceipt:{snapshotTime:number;cast:NonNullable<Actor['cast']>}|undefined;
+ let firstDodgeMovement:{time:number;x:number;phase:string|undefined}|undefined;
+ let nativeDodge:Promise<void>|undefined,nativeDodgeError:string|undefined;
  try{
-  await load(host);await low(host);await practice(host);await host.keyboard.press('Escape');await host.locator('#leave-game').click();await load(guest);await low(guest);await practice(guest);await guest.keyboard.press('Escape');await guest.locator('#leave-game').click();await host.locator('#online-open').click();await host.locator('#server-address').fill(endpoint);await host.locator('#player-name').fill('Native caster');await host.locator('#join-room').click();await ready(host);const code=(await snapshot(host)).room;
-  guest.on('websocket',socket=>socket.on('framereceived',frame=>{try{const message=JSON.parse(String(frame.payload));if(message.type==='snapshot')for(const event of message.snapshot.events)if(event.type==='hit')observedHits.set(event.id,{id:event.id,actorId:event.actorId,targetId:event.targetId,time:event.time});}catch{/* No welcome or bearer traffic retained. */}}));await guest.locator('#online-open').click();await guest.locator('#server-address').fill(endpoint);await guest.locator('#room-code').fill(code);await guest.locator('#player-name').fill('Native dodger');await guest.locator('#join-room').click();await ready(guest);
-  const initialHost=await me(host),initialGuest=await me(guest);expect(initialHost.team).toBe('sun');expect(initialGuest.team).toBe('moon');
-  await activate(host);await hold(host,'KeyA',p=>p.x>4);await hold(host,'KeyW',p=>p.z>-5,40_000);await activate(guest);await hold(guest,'KeyD',p=>p.x>4);await hold(guest,'KeyW',p=>p.z<9,40_000);
-  await activate(host);const caster=await me(host),target=await me(guest);expect(caster.health).toBeGreaterThan(0);expect(target.health).toBeGreaterThan(0);await nativeYaw(host,Math.atan2(target.x-caster.x,target.z-caster.z));await host.keyboard.press('KeyT');await expect.poll(()=>host.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(target.id);await expect(host.locator('#target-label')).toContainText('Native dodger');await host.keyboard.press('Escape');expect(await host.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await host.locator('#resume-game').click();await host.keyboard.press('KeyT');await expect.poll(()=>host.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(target.id);await host.keyboard.press('KeyJ');expect(await host.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await nativeYaw(host,Math.atan2(target.x-caster.x,target.z-caster.z));const startTime=(await snapshot(host)).time;await host.keyboard.press('KeyR');await expect.poll(async()=>(await me(host)).cast?.phase,{intervals:[30,50]}).toBe('windup');const cast=(await me(host)).cast!;await expect.poll(async()=>(await snapshot(guest)).actors.find(p=>p.id===caster.id)?.cast?.mechanic,{intervals:[30,50]}).toBe('dawn-volley');
-  await activate(guest);const beforeDodge=await me(guest);await hold(guest,'KeyA',p=>beforeDodge.x-p.x>4,8_000);await expect.poll(async()=>(await snapshot(host)).time,{intervals:[50,100]}).toBeGreaterThan(cast.releaseAt+1);const afterDodge=await me(guest);expect(beforeDodge.x-afterDodge.x).toBeGreaterThan(4);expect([...observedHits.values()].filter(e=>e.time>=startTime&&e.actorId===caster.id&&e.targetId===target.id)).toEqual([]);expect(results.get(host)!.some(r=>r.ok&&r.code==='ABILITY_CAST')).toBe(true);await capture(guest,info,'native-volley-evade');await attach(host,info,'native-windup-evade',{scope:'Two real browser clients and real local server configured without hero bots to isolate counter timing; lane waves still run. Ordinary keyboard movement/aim/R only. No actor-position/health/time injection.',initialHost,initialGuest,caster,target,cast,beforeDodge,afterDodge,observedTargetHits:[...observedHits.values()].filter(e=>e.actorId===caster.id&&e.targetId===target.id)});expect(errors.get(host)).toEqual([]);expect(errors.get(guest)).toEqual([]);
- }finally{await a.close();await b.close();await server.close();}
+  await load(host);await low(host);await practice(host);await host.keyboard.press('Escape');await host.locator('#leave-game').click();
+  await load(guest);await low(guest);await practice(guest);await guest.keyboard.press('Escape');await guest.locator('#leave-game').click();
+  await host.locator('#online-open').click();await host.locator('#server-address').fill(endpoint);await host.locator('#player-name').fill('Native caster');await host.locator('#join-room').click();await ready(host);
+  const code=(await snapshot(host)).room;casterId=(await me(host)).id;
+  guest.on('websocket',socket=>socket.on('framereceived',frame=>{
+   let message:{type:string;snapshot?:ArenaSnapshot};try{message=JSON.parse(String(frame.payload));}catch{return;}
+   if(message.type!=='snapshot'||!message.snapshot)return;
+   const state=message.snapshot;
+   for(const event of state.events)if(event.type==='hit')observedHits.set(event.id,{id:event.id,actorId:event.actorId,targetId:event.targetId,time:event.time});
+   const caster=state.actors.find(actor=>actor.id===casterId),dodger=state.actors.find(actor=>actor.id===dodgerId);
+   if(armed&&!castReceipt&&caster?.cast?.mechanic==='dawn-volley'&&caster.cast.phase==='windup'){
+    castReceipt={snapshotTime:state.time,cast:{...caster.cast}};
+    // React with an ordinary browser key to the peer's received windup. Retaining the packet
+    // avoids falsely requiring a one-second phase to remain current after sequential polls.
+    nativeDodge=guest.keyboard.down('KeyA').catch(error=>{nativeDodgeError=String(error);});
+   }
+   if(castReceipt&&!firstDodgeMovement&&dodger&&baselineX-dodger.x>.15)firstDodgeMovement={time:state.time,x:dodger.x,phase:caster?.cast?.phase};
+  }));
+  await guest.locator('#online-open').click();await guest.locator('#server-address').fill(endpoint);await guest.locator('#room-code').fill(code);await guest.locator('#player-name').fill('Native dodger');await guest.locator('#join-room').click();await ready(guest);
+  const initialHost=await me(host),initialGuest=await me(guest);dodgerId=initialGuest.id;
+  expect(initialHost.team).toBe('sun');expect(initialGuest.team).toBe('moon');
+  // Natural x=-3 spawn clears the central tower; no latency-sensitive lateral detour.
+  await guest.keyboard.press('Escape');await activate(host);await hold(host,'KeyW',p=>p.z>-12,40_000);
+  await host.keyboard.press('Escape');await activate(guest);await hold(guest,'KeyW',p=>p.z<12,40_000);await guest.keyboard.press('Escape');
+  await activate(host);const caster=await me(host),target=await me(guest);
+  expect(caster.health).toBeGreaterThan(0);expect(target.health).toBeGreaterThan(0);
+  await nativeYaw(host,Math.atan2(target.x-caster.x,target.z-caster.z));
+  await host.keyboard.press('KeyT');await expect.poll(()=>host.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(target.id);
+  await expect(host.locator('#target-label')).toContainText('Native dodger');
+  await host.keyboard.press('Escape');expect(await host.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();
+  await host.locator('#resume-game').click();await host.keyboard.press('KeyT');await expect.poll(()=>host.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(target.id);
+  await host.keyboard.press('KeyJ');expect(await host.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();
+  await nativeYaw(host,Math.atan2(target.x-caster.x,target.z-caster.z));
+  await activate(guest);const beforeDodge=await me(guest);baselineX=beforeDodge.x;armed=true;
+  const startTime=(await snapshot(host)).time;await host.keyboard.press('KeyR');
+  await expect.poll(()=>!!castReceipt,{intervals:[30,50]}).toBe(true);await nativeDodge;
+  expect(nativeDodgeError).toBeUndefined();
+  try{await expect.poll(async()=>beforeDodge.x-(await me(guest)).x,{timeout:8_000,intervals:[50,100]}).toBeGreaterThan(4);}finally{await guest.keyboard.up('KeyA');}
+  await expect.poll(()=>!!firstDodgeMovement,{intervals:[50,100]}).toBe(true);
+  expect(firstDodgeMovement!.time).toBeLessThan(castReceipt!.cast.releaseAt);
+  expect(firstDodgeMovement!.phase).toBe('windup');
+  await expect.poll(async()=>(await snapshot(host)).time,{intervals:[50,100]}).toBeGreaterThan(castReceipt!.cast.releaseAt+1);
+  const afterDodge=await me(guest);
+  expect([...observedHits.values()].filter(event=>event.time>=startTime&&event.actorId===caster.id&&event.targetId===target.id)).toEqual([]);
+  expect(results.get(host)!.some(result=>result.ok&&result.code==='ABILITY_CAST')).toBe(true);
+  await capture(guest,info,'native-volley-evade');
+  await attach(host,info,'native-windup-evade',{scope:'Two real browser clients and real local server without hero bots; lane waves run. Native movement/aim/R; native dodge key reacts to the peer received windup. First authoritative lateral movement must precede release. No actor-position/health/time injection. Snapshot timing does not itself verify every telegraph pixel or human reaction speed.',initialHost,initialGuest,caster,target,castReceipt,firstDodgeMovement,beforeDodge,afterDodge,observedTargetHits:[...observedHits.values()].filter(event=>event.actorId===caster.id&&event.targetId===target.id)});
+  expect(errors.get(host)).toEqual([]);expect(errors.get(guest)).toEqual([]);
+ }finally{armed=false;await nativeDodge;await guest.keyboard.up('KeyA').catch(()=>{});await a.close();await b.close();await server.close();}
 });
 
 test('labelled target fixture verifies native lock, manual release, settings and cover rejection',async({page},info)=>{
  test.setTimeout(180_000);let fixture:ArenaSimulation|undefined,send:(()=>void)|undefined,timer:ReturnType<typeof setInterval>|undefined;const inputs:{time:number;yaw:number;fire:boolean}[]=[];
  await page.routeWebSocket('**/ws',socket=>socket.onMessage(raw=>{const message=JSON.parse(String(raw));if(message.type==='join'){
   fixture=new ArenaSimulation({room:'LOCK-FIXTURE',seed:1,botsPerTeam:0});const actor=fixture.addPlayer('lock-local','Lock fixture','rama','sun'),target=fixture.addPlayer('lock-rival','Visible rival','rama','moon');actor.x=5;actor.z=-28;target.x=5;target.z=-10;
-  send=()=>{fixture!.tick++;socket.send(JSON.stringify({type:'snapshot',snapshot:fixture!.snapshot()}));};socket.send(JSON.stringify({type:'welcome',protocol:1,id:actor.id,room:fixture.room,token:'c'.repeat(48),snapshot:fixture.snapshot()}));timer=setInterval(()=>send?.(),100);
+  send=()=>{fixture!.tick++;socket.send(JSON.stringify({type:'snapshot',snapshot:fixture!.snapshot()}));};socket.send(JSON.stringify({type:'welcome',protocol:YUGA_PROTOCOL,id:actor.id,room:fixture.room,token:'c'.repeat(48),snapshot:fixture.snapshot()}));timer=setInterval(()=>send?.(),100);
  }else if(message.type==='input'&&fixture){const actor=fixture.actors.get('lock-local')!;actor.yaw=message.yaw;actor.lastInputSeq=message.seq;inputs.push({time:Date.now(),yaw:message.yaw,fire:message.fire});}}));
  try{
   await load(page);await low(page);await join(page,'Lock fixture');await page.keyboard.press('KeyT');await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe('lock-rival');await expect(page.locator('#target-label')).toContainText('Visible rival');await capture(page,info,'fixture-visible-target-lock');

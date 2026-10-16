@@ -1,6 +1,7 @@
 import { HEROES, heroById } from './heroes.js';
-import { ARENA, LANES, LANE_X, SPAWNS, SOLIDS, blocked, distance, lineClear } from './map.js';
-import type { AbilityDef, Actor, ArenaCommand, ArenaInput, ArenaSnapshot, CommandResult, GameEvent, Lane, Pickup, Projectile, Structure, Team, Vec, Zone } from './types.js';
+import { ARENA, GOLD_RULES, JUNGLE_CAMPS, JUNGLE_RULES, LANES, LANE_X, NEUTRAL_STATS, SPAWNS, SOLIDS, blocked, distance, lineClear } from './map.js';
+import { YUGA_PROTOCOL } from './types.js';
+import type { AbilityDef, Actor, ArenaCommand, ArenaInput, ArenaSnapshot, CombatTeam, CommandResult, GameEvent, GoldShard, Lane, Neutral, Pickup, Projectile, Structure, Team, UnitArchetype, Vec, Zone } from './types.js';
 
 export const UPGRADE_COSTS = { power: 120, vitality: 100, tempo: 140 } as const;
 export const MAX_UPGRADE = 3;
@@ -9,9 +10,16 @@ const clamp = (value: number, min: number, max: number) => Math.max(min, Math.mi
 const copy = <T>(value: T): T => structuredClone(value);
 const validId = (id: unknown): id is string => typeof id === 'string' && /^[a-zA-Z0-9_-]{1,64}$/.test(id);
 const aim = (yaw: number, pitch = 0) => ({ x: Math.sin(yaw) * Math.cos(pitch), y: Math.sin(pitch), z: Math.cos(yaw) * Math.cos(pitch) });
-type Target = Actor | Structure;
+const formationOffset = (archetype?: UnitArchetype) => archetype === 'soldier' ? -1.2 : archetype === 'minister' ? 1.2 : 0;
+type Target = Actor | Structure | Neutral;
 type StoredInput = { value: ArenaInput; time: number };
-type Memory = { waypoint: number; velocityY: number; jumping: boolean; expires?: number; attackDamage?: number };
+type Memory = { waypoint: number; velocityY: number; jumping: boolean; expires?: number; attackDamage?: number; supportAt?: number };
+type NeutralMemory = { cooldown: number; unseen: number };
+export const ESCORT_STATS = {
+  soldier: { name: 'Soldier', health: 130, damage: 14, range: 11, stop: 7, interval: 1.05 },
+  'city-watch': { name: 'City Watch', health: 90, damage: 10, range: 17, stop: 13, interval: 1.1 },
+  minister: { name: 'Minister', health: 100, damage: 7, range: 13, stop: 9, interval: 1.2 },
+} as const;
 
 /** Original bounded authoritative arena. Browser practice and WebSocket rooms use these same rules. */
 export class ArenaSimulation {
@@ -24,6 +32,8 @@ export class ArenaSimulation {
   winner: ArenaSnapshot['winner'] = null;
   reason = '';
   actors = new Map<string, Actor>();
+  neutrals: Neutral[] = [];
+  goldShards: GoldShard[] = [];
   structures: Structure[] = [];
   projectiles: Projectile[] = [];
   zones: Zone[] = [];
@@ -35,6 +45,7 @@ export class ArenaSimulation {
   private commands = new Map<string, Map<string, CommandResult>>();
   private towerCooldowns = new Map<string, number>();
   private contributors = new Map<string, Map<string, number>>();
+  private neutralMemory = new Map<string, NeutralMemory>();
   private randomState: number;
   private serial = 0;
   private eventSerial = 0;
@@ -57,11 +68,16 @@ export class ArenaSimulation {
     for (const [index, point] of [{ x: -40, z: -12 }, { x: 40, z: 12 }, { x: 0, z: -18 }, { x: 0, z: 18 }, { x: -40, z: 18 }, { x: 40, z: -18 }].entries()) {
       this.pickups.push({ id: `pickup-${index}`, ...point, kind: (['vigor', 'haste', 'ward'] as const)[index % 3]!, readyAt: 8 });
     }
+    for (const camp of JUNGLE_CAMPS) {
+      const stats = NEUTRAL_STATS[camp.species], id = `neutral-${camp.id}`;
+      this.neutrals.push({ id, kind: 'neutral', team: 'neutral', species: camp.species, campId: camp.id, name: stats.name, x: camp.x, z: camp.z, y: 0, yaw: 0, health: 0, maxHealth: stats.health, state: 'dead', targetId: null, respawnAt: JUNGLE_RULES.firstSpawn, slow: 0 });
+      this.neutralMemory.set(id, { cooldown: 0, unseen: 0 });
+    }
   }
 
   private random(): number { this.randomState = (Math.imul(this.randomState, 1664525) + 1013904223) >>> 0; return this.randomState / 0x100000000; }
-  private emit(type: GameEvent['type'], actorId: string, team: Team, point: Vec, label: string, color: string, targetId?: string): void {
-    this.events.push({ id: ++this.eventSerial, type, actorId, team, x: point.x, z: point.z, label, color, time: this.time, ...(targetId ? { targetId } : {}) });
+  private emit(type: GameEvent['type'], actorId: string, team: CombatTeam, point: Vec, label: string, color: string, targetId?: string, details: Pick<GameEvent, 'amount' | 'reward' | 'buff' | 'sharedAwards'> = {}): void {
+    this.events.push({ id: ++this.eventSerial, type, actorId, team, x: point.x, z: point.z, label, color, time: this.time, ...(targetId ? { targetId } : {}), ...details });
     if (this.events.length > ARENA_RULES.eventHistory) this.events.splice(0, this.events.length - ARENA_RULES.eventHistory);
   }
   private makeHero(id: string, name: string, heroId: string, team: Team, bot: boolean, lane: Lane): Actor {
@@ -80,7 +96,7 @@ export class ArenaSimulation {
   }
 
   addPlayer(id: string, name: string, heroId: string, team?: Team): Actor {
-    if (!validId(id) || /^(bot-|minion-)/.test(id) || this.structures.some(value => value.id === id)) throw new Error('INVALID_ID');
+    if (!validId(id) || /^(bot-|minion-|neutral-|gold-)/.test(id) || this.structures.some(value => value.id === id)) throw new Error('INVALID_ID');
     if (!HEROES.some(hero => hero.id === heroId)) throw new Error('UNKNOWN_HERO');
     if (team !== undefined && team !== 'sun' && team !== 'moon') throw new Error('INVALID_TEAM');
     const existing = this.actors.get(id);
@@ -151,43 +167,129 @@ export class ArenaSimulation {
   private blockedAt(x: number, z: number, radius: number = ARENA_RULES.heroRadius): boolean {
     return blocked(x, z, radius) || this.structures.some(structure => structure.health > 0 && Math.hypot(x - structure.x, z - structure.z) < radius + (structure.kind === 'core' ? ARENA_RULES.coreRadius : ARENA_RULES.towerRadius));
   }
-  private move(actor: Actor, dx: number, dz: number): void {
-    const radius = actor.kind === 'hero' ? .65 : .42;
+  private move(actor: Actor | Neutral, dx: number, dz: number): void {
+    const radius = actor.kind === 'hero' ? .65 : actor.kind === 'neutral' ? JUNGLE_RULES.radius : .42;
     const slices = Math.max(1, Math.ceil(Math.hypot(dx, dz) / .35));
     for (let i = 0; i < slices; i++) {
       if (!this.blockedAt(actor.x + dx / slices, actor.z, radius)) actor.x += dx / slices;
       if (!this.blockedAt(actor.x, actor.z + dz / slices, radius)) actor.z += dz / slices;
     }
   }
-  private validTargets(team: Team): Target[] { return [...this.actors.values(), ...this.structures].filter(target => target.team !== team && target.health > 0 && (!('shielded' in target) || !target.shielded)); }
-  private refreshCoreShields(): void { for (const core of this.structures.filter(value => value.kind === 'core')) core.shielded = this.structures.filter(value => value.team === core.team && value.kind === 'tower' && value.health <= 0).length < 2; }
-  private award(team: Team, source: string, point: Vec, gold: number): void {
-    for (const actor of this.actors.values()) if (actor.kind === 'hero' && actor.team === team && (actor.id === source || actor.health > 0 && distance(actor, point) <= 26)) actor.credits = Math.min(99999, actor.credits + gold);
+  private validTargets(team: CombatTeam): Target[] {
+    if (team === 'neutral') return [...this.actors.values()].filter(actor => actor.kind === 'hero' && actor.health > 0);
+    return [...this.actors.values(), ...this.structures, ...this.neutrals].filter(target => target.team !== team && target.health > 0 && (!('shielded' in target) || !target.shielded));
   }
-  private damage(target: Target, amount: number, owner: string, team: Team): void {
+  private refreshCoreShields(): void { for (const core of this.structures.filter(value => value.kind === 'core')) core.shielded = this.structures.filter(value => value.team === core.team && value.kind === 'tower' && value.health <= 0).length < 2; }
+  private award(team: Team, source: string, point: Vec, gold: number): NonNullable<GameEvent['sharedAwards']> {
+    const receipts: NonNullable<GameEvent['sharedAwards']> = [];
+    for (const actor of this.actors.values()) if (actor.kind === 'hero' && actor.team === team && (actor.id === source || actor.health > 0 && distance(actor, point) <= 26)) {
+      const amount = Math.min(gold, 99999 - actor.credits); actor.credits += amount;
+      if (amount > 0) receipts.push({ actorId: actor.id, amount });
+    }
+    return receipts;
+  }
+  private dropGold(source: Target, value: number, originTeam: Team): void {
+    if (this.goldShards.length >= GOLD_RULES.maxShards) this.goldShards.shift();
+    this.goldShards.push({ id: `gold-${++this.serial}`, sourceId: source.id, x: source.x, z: source.z, y: GOLD_RULES.height, value, originTeam, createdAt: this.time, expiresAt: this.time + GOLD_RULES.lifetime });
+  }
+  private secureGold(shard: GoldShard, actor: Actor): boolean {
+    if (this.phase !== 'playing' || actor.kind !== 'hero' || actor.health <= 0 || shard.expiresAt <= this.time) return false;
+    const index = this.goldShards.indexOf(shard); if (index < 0) return false;
+    this.goldShards.splice(index, 1);
+    const amount = Math.min(shard.value, 99999 - actor.credits); actor.credits += amount;
+    const reward = actor.team === shard.originTeam ? 'secure' : 'steal';
+    this.emit('gold', actor.id, actor.team, shard, reward === 'secure' ? 'Gold secured' : 'Gold intercepted', '#ffe28a', shard.id, { amount, reward });
+    return true;
+  }
+  private stepGold(): void {
+    this.goldShards = this.goldShards.filter(shard => shard.expiresAt > this.time);
+    for (const shard of [...this.goldShards]) {
+      if (this.time - shard.createdAt + 1e-7 < GOLD_RULES.pickupDelay) continue;
+      const hero = [...this.actors.values()].filter(actor => actor.kind === 'hero' && actor.health > 0 && distance(actor, shard) <= GOLD_RULES.pickupRadius && Math.abs(actor.y + 1.1 - shard.y) <= 1.7 && lineClear(actor, shard)).sort((a, b) => distance(a, shard) - distance(b, shard) || a.id.localeCompare(b.id))[0];
+      if (hero) this.secureGold(shard, hero);
+    }
+  }
+  private stepNeutrals(dt: number): void {
+    if (this.phase !== 'playing') return;
+    for (const neutral of this.neutrals) {
+      const camp = JUNGLE_CAMPS.find(value => value.id === neutral.campId)!, stats = NEUTRAL_STATS[neutral.species], memory = this.neutralMemory.get(neutral.id)!;
+      memory.cooldown = Math.max(0, memory.cooldown - dt); neutral.slow = Math.max(0, neutral.slow - dt);
+      if (neutral.state === 'dead') {
+        if (this.time + 1e-7 >= neutral.respawnAt) { neutral.x = camp.x; neutral.z = camp.z; neutral.health = neutral.maxHealth; neutral.state = 'idle'; neutral.targetId = null; neutral.respawnAt = 0; memory.cooldown = .6; memory.unseen = 0; }
+        continue;
+      }
+      if (neutral.state === 'returning') {
+        const d = distance(neutral, camp);
+        if (d <= .35) { neutral.x = camp.x; neutral.z = camp.z; neutral.health = neutral.maxHealth; neutral.state = 'idle'; memory.unseen = 0; }
+        else { neutral.yaw = Math.atan2(camp.x - neutral.x, camp.z - neutral.z); this.move(neutral, (camp.x - neutral.x) / d * Math.min(d, 6 * dt), (camp.z - neutral.z) / d * Math.min(d, 6 * dt)); neutral.health = Math.min(neutral.maxHealth, neutral.health + neutral.maxHealth * .4 * dt); }
+        continue;
+      }
+      let target = neutral.targetId ? this.actors.get(neutral.targetId) : undefined;
+      if (!target && neutral.state === 'idle') {
+        target = [...this.actors.values()].filter(actor => actor.kind === 'hero' && actor.health > 0 && distance(actor, neutral) <= JUNGLE_RULES.aggro && lineClear(neutral, actor)).sort((a, b) => distance(a, neutral) - distance(b, neutral) || a.id.localeCompare(b.id))[0];
+        if (target) { neutral.targetId = target.id; neutral.state = 'aggro'; }
+      }
+      if (neutral.state === 'idle') { neutral.health = Math.min(neutral.maxHealth, neutral.health + 10 * dt); continue; }
+      const visible = target && lineClear(neutral, target);
+      memory.unseen = visible ? 0 : memory.unseen + dt;
+      if (!target || target.health <= 0 || distance(target, camp) > JUNGLE_RULES.leash || distance(neutral, camp) > JUNGLE_RULES.leash || memory.unseen > 1.5) { neutral.state = 'returning'; neutral.targetId = null; neutral.slow = 0; continue; }
+      const d = distance(neutral, target); neutral.yaw = Math.atan2(target.x - neutral.x, target.z - neutral.z);
+      if (visible && d <= stats.range && memory.cooldown <= 0 && this.projectiles.length < ARENA_RULES.maxProjectiles) {
+        const delta = { x: target.x - neutral.x, y: target.y + 1.1 - JUNGLE_RULES.bodyHeight, z: target.z - neutral.z }, length = Math.max(.001, Math.hypot(delta.x, delta.y, delta.z));
+        this.projectiles.push({ id: `projectile-${++this.serial}`, owner: neutral.id, team: 'neutral', x: neutral.x, y: JUNGLE_RULES.bodyHeight, z: neutral.z, vx: delta.x / length * 23, vy: delta.y / length * 23, vz: delta.z / length * 23, damage: stats.damage, radius: .32, life: .6, color: stats.color });
+        memory.cooldown = stats.interval; this.emit('shot', neutral.id, 'neutral', neutral, stats.name, stats.color);
+      }
+      if (d > stats.range * .8) { const amount = Math.min(d, stats.speed * dt * (neutral.slow > 0 ? .55 : 1)); this.move(neutral, (target.x - neutral.x) / Math.max(.001, d) * amount, (target.z - neutral.z) / Math.max(.001, d) * amount); }
+    }
+  }
+  private damage(target: Target, amount: number, owner: string, team: CombatTeam): void {
     if (this.phase !== 'playing' || target.team === team || target.health <= 0 || !Number.isFinite(amount) || amount <= 0) return;
     if ('shielded' in target && target.shielded) return;
     const attacker = this.actors.get(owner);
+    if (target.kind === 'neutral' && target.state === 'returning') return;
     let applied = amount;
     if ('shield' in target) { const absorbed = Math.min(target.shield, applied); target.shield -= absorbed; applied -= absorbed; }
     const actual = Math.min(target.health, applied); target.health -= actual;
     if (attacker?.kind === 'hero') attacker.damageDealt += actual;
     if ('heroId' in target && attacker?.kind === 'hero') { const contributors = this.contributors.get(target.id) ?? new Map(); contributors.set(attacker.id, this.time); this.contributors.set(target.id, contributors); }
     this.emit('hit', owner, team, target, String(Math.round(actual)), attacker ? heroById(attacker.heroId).color : '#f9d47d', target.id);
+    if (target.kind === 'neutral') {
+      const credited = attacker?.kind === 'hero' ? attacker : attacker?.summonerId ? this.actors.get(attacker.summonerId) : undefined;
+      if (credited?.kind === 'hero' && credited.health > 0) { target.targetId = credited.id; target.state = 'aggro'; }
+      if (target.health > 0) return;
+      target.state = 'dead'; target.targetId = null; target.respawnAt = this.time + JUNGLE_RULES.respawn; target.slow = 0;
+      if (team !== 'neutral') {
+        const sharedAwards = this.award(team, credited?.id ?? owner, target, JUNGLE_RULES.sharedGold);
+        this.dropGold(target, JUNGLE_RULES.shardGold, team);
+        this.emit('camp', credited?.id ?? owner, team, target, `${target.name} camp cleared`, NEUTRAL_STATS[target.species].color, target.id, { amount: JUNGLE_RULES.sharedGold, sharedAwards });
+        if (credited?.kind === 'hero' && credited.health > 0) {
+          const buff = NEUTRAL_STATS[target.species].buff;
+          credited.effects[buff] = Math.max(credited.effects[buff] ?? 0, JUNGLE_RULES.buffSeconds);
+          if (buff === 'ward') credited.shield = Math.max(credited.shield, 60);
+          this.emit('buff', credited.id, credited.team, target, `${buff} blessing`, NEUTRAL_STATS[target.species].color, target.id, { buff });
+        }
+      }
+      return;
+    }
     if (target.health > 0) return;
     if ('heroId' in target) {
       const hero = target.kind === 'hero';
-      this.scores[team] += hero ? 5 : 1; this.award(team, owner, target, hero ? 100 : 18);
+      let sharedAwards: GameEvent['sharedAwards'];
+      if (team !== 'neutral') {
+        this.scores[team] += hero ? 5 : target.minionRole === 'summon' ? 0 : 1;
+        if (hero) sharedAwards = this.award(team, owner, target, 100);
+        else if (target.minionRole !== 'summon') { sharedAwards = this.award(team, owner, target, GOLD_RULES.laneShared); this.dropGold(target, GOLD_RULES.laneShard, team); }
+      }
       if (hero) {
-        target.deaths++; target.respawn = Math.min(18, 7 + target.deaths * 1.5); target.shield = 0;
+        target.deaths++; target.respawn = Math.min(18, 7 + target.deaths * 1.5); target.shield = 0; target.effects = { haste: 0, slow: 0, ward: 0, vigor: 0 };
         delete target.cast; target.y = 0;
         const memory = this.memory.get(target.id); if (memory) memory.velocityY = 0;
         if (attacker?.kind === 'hero') attacker.kills++;
         for (const [id, time] of this.contributors.get(target.id) ?? []) { const helper = this.actors.get(id); if (helper?.kind === 'hero' && id !== owner && this.time - time <= 8) helper.assists++; }
       } else { this.actors.delete(target.id); this.memory.delete(target.id); }
       this.inputs.delete(target.id); this.contributors.delete(target.id);
-      this.emit('defeat', owner, team, target, hero ? `${target.name} defeated` : 'Lane unit defeated', '#f0c975', target.id);
-    } else {
+      this.emit('defeat', owner, team, target, hero ? `${target.name} defeated` : 'Lane unit defeated', '#f0c975', target.id, sharedAwards ? { amount: hero ? 100 : GOLD_RULES.laneShared, sharedAwards } : {});
+    } else if (team !== 'neutral') {
       this.scores[team] += target.kind === 'tower' ? 30 : 100;
       for (const actor of this.actors.values()) if (actor.kind === 'hero' && actor.team === team) actor.credits = Math.min(99999, actor.credits + (target.kind === 'tower' ? 140 : 250));
       this.refreshCoreShields();
@@ -206,10 +308,12 @@ export class ArenaSimulation {
   private fire(actor: Actor, pitch = 0): void {
     if (actor.cast || actor.fireCooldown > 0 || actor.health <= 0) return;
     const hero = heroById(actor.heroId), minion = actor.kind === 'minion', siege = actor.minionRole === 'siege';
-    const damage = siege ? 12 : minion ? this.memory.get(actor.id)?.attackDamage ?? 13 : hero.damage * (1 + actor.upgrades.power * .17);
-    const projectile = this.shoot(actor, damage, siege ? 26 : minion ? 25 : hero.projectileSpeed, siege ? .45 : minion ? .24 : .32, hero.color, pitch, actor.yaw, siege ? 1.2 : minion ? .6 : 1.7);
+    const escort = actor.unitArchetype && actor.unitArchetype in ESCORT_STATS ? ESCORT_STATS[actor.unitArchetype as keyof typeof ESCORT_STATS] : undefined;
+    const damage = siege ? 12 : minion ? this.memory.get(actor.id)?.attackDamage ?? escort?.damage ?? 13 : hero.damage * (1 + actor.upgrades.power * .17);
+    const projectile = this.shoot(actor, damage, siege ? 26 : minion ? escort ? 28 : 25 : hero.projectileSpeed, siege ? .45 : minion ? .24 : .32, hero.color, pitch, actor.yaw, siege ? 1.2 : minion ? escort ? .8 : .6 : 1.7);
     if (siege && projectile) projectile.structureDamage = 32;
-    actor.fireCooldown = siege ? 1.6 : minion ? 1.05 : hero.fireInterval / (1 + actor.upgrades.tempo * .12);
+    if (!minion && projectile) projectile.canSecureGold = true;
+    actor.fireCooldown = siege ? 1.6 : minion ? escort?.interval ?? 1.05 : hero.fireInterval / (1 + actor.upgrades.tempo * .12);
   }
   private groundAim(actor: Actor, ability: AbilityDef): Vec {
     const input = this.inputs.get(actor.id)?.value, pitch = input?.pitch ?? 0;
@@ -255,7 +359,7 @@ export class ArenaSimulation {
       case 'pull':
         for (const target of enemies()) if (distance(point, target) <= ability.radius && lineClear(actor, target)) {
           this.damage(target, power, actor.id, actor.team);
-          if ('heroId' in target && target.health > 0) { const d = distance(point, target); if (d > .1) this.move(target, (point.x - target.x) / d * Math.min(d, 6), (point.z - target.z) / d * Math.min(d, 6)); }
+          if (('heroId' in target || target.kind === 'neutral') && target.health > 0) { const d = distance(point, target); if (d > .1) this.move(target, (point.x - target.x) / d * Math.min(d, 6), (point.z - target.z) / d * Math.min(d, 6)); }
         }
         this.addZone(actor, ability, point); break;
       case 'summon':
@@ -291,15 +395,16 @@ export class ArenaSimulation {
     return true;
   }
 
-  private spawnMinion(team: Team, lane: Lane, point?: Vec, expires?: number, attackDamage?: number, role: 'escort' | 'siege' | 'summon' = 'escort', summonerId?: string): void {
+  private spawnMinion(team: Team, lane: Lane, point?: Vec, expires?: number, attackDamage?: number, role: 'escort' | 'siege' | 'summon' = 'escort', summonerId?: string, archetype: UnitArchetype = role === 'siege' ? 'king' : role === 'summon' ? 'summon' : 'soldier'): void {
     if (this.actors.size >= ARENA_RULES.maxActors) return;
-    const spawn = point ?? { x: SPAWNS[team].x + (lane - 1) * 1.3, z: SPAWNS[team].z + (team === 'sun' ? 3 : -3) };
+    const spawn = point ?? { x: SPAWNS[team].x + (lane - 1) * 1.3 + formationOffset(archetype), z: SPAWNS[team].z + (team === 'sun' ? 3 : -3) };
     const candidates = [spawn];
     for (const radius of [1.3, 2.6]) for (let index = 0; index < 8; index++) candidates.push({ x: spawn.x + Math.cos(index * Math.PI / 4) * radius, z: spawn.z + Math.sin(index * Math.PI / 4) * radius });
     const placement = candidates.find(candidate => !this.blockedAt(candidate.x, candidate.z, .42));
     if (!placement) return;
     const actor = this.makeHero(`minion-${++this.serial}`, 'Lane sentinel', team === 'sun' ? HEROES[0]!.id : HEROES[1]!.id, team, true, lane);
-    Object.assign(actor, { kind: 'minion', minionRole: role, health: role === 'siege' ? 240 : 105, maxHealth: role === 'siege' ? 240 : 105, x: placement.x, z: placement.z, credits: 0 });
+    const stats = archetype in ESCORT_STATS ? ESCORT_STATS[archetype as keyof typeof ESCORT_STATS] : undefined;
+    Object.assign(actor, { kind: 'minion', minionRole: role, unitArchetype: archetype, name: stats?.name ?? (role === 'siege' ? 'King' : 'Summoned sentinel'), health: stats?.health ?? (role === 'siege' ? 240 : 105), maxHealth: stats?.health ?? (role === 'siege' ? 240 : 105), x: placement.x, z: placement.z, credits: 0 });
     if (summonerId) { actor.summonerId = summonerId; actor.heroId = this.actors.get(summonerId)?.heroId ?? actor.heroId; }
     if (expires) actor.expiresAt = this.time + expires;
     const memory = this.memory.get(actor.id)!; if (expires) memory.expires = this.time + expires; if (attackDamage) memory.attackDamage = attackDamage;
@@ -308,7 +413,7 @@ export class ArenaSimulation {
   private path(actor: Actor): Vec[] {
     // Published lane centerlines cross defensive plinths. A parallel route clears
     // those authoritative circles without cutting across the district buildings.
-    const points = LANES[actor.lane].map(point => ({ x: point.x + 4.5, z: point.z }));
+    const points = LANES[actor.lane].map(point => ({ x: point.x + 4.5 + formationOffset(actor.unitArchetype), z: point.z }));
     return actor.team === 'sun' ? points : [...points].reverse();
   }
   private nearestWaypoint(actor: Actor): number {
@@ -318,9 +423,14 @@ export class ArenaSimulation {
   }
   private botInput(actor: Actor, dt: number): void {
     const memory = this.memory.get(actor.id)!, hero = actor.kind === 'hero', siege = actor.minionRole === 'siege';
-    const range = hero ? 27 : siege ? 22 : 11;
+    const escort = actor.unitArchetype && actor.unitArchetype in ESCORT_STATS ? ESCORT_STATS[actor.unitArchetype as keyof typeof ESCORT_STATS] : undefined;
+    if (actor.unitArchetype === 'minister' && this.time >= (memory.supportAt ?? 0)) {
+      const allies = [...this.actors.values()].filter(ally => ally.id !== actor.id && ally.kind === 'minion' && ally.team === actor.team && ally.health > 0 && distance(actor, ally) <= 6 && lineClear(actor, ally)).sort((a, b) => a.health / a.maxHealth - b.health / b.maxHealth || a.id.localeCompare(b.id)).slice(0, 3);
+      if (allies.length) { for (const ally of allies) { ally.shield = Math.max(ally.shield, 12); ally.effects.ward = Math.max(ally.effects.ward, 3); } this.emit('ability', actor.id, actor.team, actor, 'Lane rally', '#f4d891'); memory.supportAt = this.time + 5; }
+    }
+    const range = hero ? 27 : siege ? 22 : escort?.range ?? 11;
     const preference = (target: Target) => siege && (target.kind === 'tower' || target.kind === 'core') ? -40 : target.kind === 'hero' ? -4 : 0;
-    const target = this.validTargets(actor.team).filter(value => distance(actor, value) <= range && lineClear(actor, value)).sort((a, b) => preference(a) + distance(actor, a) - preference(b) - distance(actor, b))[0];
+    const target = this.validTargets(actor.team).filter(value => value.kind !== 'neutral' && distance(actor, value) <= range && lineClear(actor, value)).sort((a, b) => preference(a) + distance(actor, a) - preference(b) - distance(actor, b))[0];
     if (target) {
       actor.yaw = Math.atan2(target.x - actor.x, target.z - actor.z);
       const targetHeight = 'y' in target ? target.y + (target.kind === 'hero' ? 1.1 : .7) : target.kind === 'core' ? 3 : 2.2;
@@ -333,7 +443,7 @@ export class ArenaSimulation {
           if (useful && actor.cooldowns[slot]! <= 0 && this.random() < dt * (slot === 2 ? .25 : .8)) { this.cast(actor, slot); break; }
         }
       }
-      if (actor.cast || distance(actor, target) < (hero ? 18 : siege ? 14 : 8)) return;
+      if (actor.cast || distance(actor, target) < (hero ? 18 : siege ? 14 : escort?.stop ?? 8)) return;
     }
     const path = this.path(actor);
     if (memory.waypoint >= path.length) memory.waypoint = path.length - 1;
@@ -357,9 +467,14 @@ export class ArenaSimulation {
       for (let i = 0; i < steps; i++) {
         projectile.x += projectile.vx * dt / steps; projectile.z += projectile.vz * dt / steps; projectile.y += projectile.vy * dt / steps;
         if (Math.abs(projectile.x) > 70 || Math.abs(projectile.z) > 84 || projectile.y < .05 || projectile.y > 35 || SOLIDS.some(solid => projectile.y < solid.height && Math.abs(projectile.x - solid.x) < solid.w / 2 + projectile.radius && Math.abs(projectile.z - solid.z) < solid.d / 2 + projectile.radius)) { hit = true; break; }
+        const owner = projectile.canSecureGold ? this.actors.get(projectile.owner) : undefined;
+        if (owner?.kind === 'hero' && owner.health > 0) {
+          const shard = this.goldShards.find(value => value.expiresAt > this.time && Math.hypot(value.x - projectile.x, value.z - projectile.z, value.y - projectile.y) <= GOLD_RULES.radius + projectile.radius);
+          if (shard && this.secureGold(shard, owner)) { hit = true; break; }
+        }
         for (const target of this.validTargets(projectile.team)) {
-          const height = 'y' in target ? target.y + (target.kind === 'hero' ? 1.1 : .7) : target.kind === 'core' ? 3 : 2.2;
-          const radius = target.kind === 'core' ? 2.8 : target.kind === 'tower' ? 1.8 : target.kind === 'hero' ? .95 : .6;
+          const height = 'y' in target ? target.y + (target.kind === 'neutral' ? JUNGLE_RULES.bodyHeight : target.kind === 'hero' ? 1.1 : .7) : target.kind === 'core' ? 3 : 2.2;
+          const radius = target.kind === 'core' ? 2.8 : target.kind === 'tower' ? 1.8 : target.kind === 'hero' ? .95 : target.kind === 'neutral' ? JUNGLE_RULES.radius : .6;
           if (Math.hypot(target.x - projectile.x, target.z - projectile.z, height - projectile.y) <= radius + projectile.radius) { this.damage(target, (target.kind === 'tower' || target.kind === 'core') ? projectile.structureDamage ?? projectile.damage : projectile.damage, projectile.owner, projectile.team); hit = true; break; }
         }
         if (hit) break;
@@ -383,7 +498,7 @@ export class ArenaSimulation {
   }
   private finish(winner: Team | 'draw', reason: string): void {
     if (this.phase === 'finished') return;
-    this.phase = 'finished'; this.winner = winner; this.reason = reason; this.projectiles = []; this.zones = []; this.inputs.clear();
+    this.phase = 'finished'; this.winner = winner; this.reason = reason; this.projectiles = []; this.zones = []; this.goldShards = []; this.inputs.clear();
     for (const actor of this.actors.values()) { delete actor.cast; actor.y = 0; }
     this.emit('victory', '', winner === 'draw' ? 'sun' : winner, { x: 0, z: 0 }, reason, '#f7db96');
   }
@@ -393,7 +508,10 @@ export class ArenaSimulation {
     dt = Math.min(dt, .1, this.duration - this.time); this.time += dt; this.tick++;
     if (this.time >= this.nextWave) {
       this.nextWave += ARENA_RULES.waveSeconds; this.waveNumber++;
-      for (const team of ['sun', 'moon'] as const) for (const lane of [0, 1, 2] as const) { for (let i = 0; i < 2; i++) this.spawnMinion(team, lane); if (this.waveNumber % 3 === 0) this.spawnMinion(team, lane, undefined, undefined, undefined, 'siege'); }
+      for (const lane of [0, 1, 2] as const) {
+        for (const archetype of ['soldier', 'city-watch', 'minister'] as const) if (ARENA_RULES.maxActors - this.actors.size >= 2) for (const team of ['sun', 'moon'] as const) this.spawnMinion(team, lane, undefined, undefined, undefined, 'escort', undefined, archetype);
+        if (this.waveNumber % 3 === 0 && ARENA_RULES.maxActors - this.actors.size >= 2) for (const team of ['sun', 'moon'] as const) this.spawnMinion(team, lane, undefined, undefined, undefined, 'siege');
+      }
     }
     for (const actor of [...this.actors.values()]) {
       if (this.phase !== 'playing') break;
@@ -403,6 +521,8 @@ export class ArenaSimulation {
       if (memory.expires !== undefined && this.time >= memory.expires) { this.actors.delete(actor.id); this.memory.delete(actor.id); continue; }
       actor.cooldowns = actor.cooldowns.map(value => Math.max(0, value - dt)); actor.fireCooldown = Math.max(0, actor.fireCooldown - dt);
       for (const effect of ['haste', 'slow', 'ward'] as const) actor.effects[effect] = Math.max(0, actor.effects[effect] - dt);
+      const vigorTime = Math.min(dt, actor.effects.vigor ?? 0); actor.effects.vigor = Math.max(0, (actor.effects.vigor ?? 0) - dt);
+      if (actor.health > 0 && vigorTime > 0) actor.health = Math.min(actor.maxHealth, actor.health + 5 * vigorTime);
       if (actor.effects.ward <= 0) actor.shield = 0;
       if (actor.health <= 0) {
         actor.respawn = Math.max(0, actor.respawn - dt);
@@ -426,18 +546,18 @@ export class ArenaSimulation {
       if (actor.y > 0 || memory.velocityY > 0) { memory.velocityY -= 18 * dt; actor.y = Math.max(0, actor.y + memory.velocityY * dt); if (actor.y === 0) memory.velocityY = 0; }
       if (actor.kind === 'hero') for (const pickup of this.pickups) if (pickup.readyAt <= this.time && distance(actor, pickup) < 2) {
         if (pickup.kind === 'vigor') actor.health = Math.min(actor.maxHealth, actor.health + 95);
-        else if (pickup.kind === 'haste') actor.effects.haste = 9;
-        else { actor.shield = Math.max(actor.shield, 85); actor.effects.ward = 10; }
+        else if (pickup.kind === 'haste') actor.effects.haste = Math.max(actor.effects.haste, 9);
+        else { actor.shield = Math.max(actor.shield, 85); actor.effects.ward = Math.max(actor.effects.ward, 10); }
         pickup.readyAt = this.time + 24; this.emit('pickup', actor.id, actor.team, pickup, pickup.kind, heroById(actor.heroId).accent);
       }
     }
     for (const zone of this.zones) {
       const activeTime = Math.min(dt, zone.life); zone.life -= dt;
       if (zone.mechanic === 'mithila-sanctuary') for (const ally of this.actors.values()) if (ally.team === zone.team && ally.health > 0 && distance(ally, zone) <= zone.radius && lineClear(zone, ally)) ally.health = Math.min(ally.maxHealth, ally.health + zone.power * activeTime);
-      if (zone.kind === 'slow' && zone.life > 0) for (const target of this.validTargets(zone.team)) if (distance(target, zone) <= zone.radius && lineClear(zone, target)) { if ('effects' in target) target.effects.slow = Math.max(target.effects.slow, .5); this.damage(target, zone.power * dt, zone.owner, zone.team); }
+      if (zone.kind === 'slow' && zone.life > 0) for (const target of this.validTargets(zone.team)) if (distance(target, zone) <= zone.radius && lineClear(zone, target)) { if ('effects' in target) target.effects.slow = Math.max(target.effects.slow, .5); if (target.kind === 'neutral') target.slow = Math.max(target.slow, .5); this.damage(target, zone.power * dt, zone.owner, zone.team); }
     }
     this.zones = this.zones.filter(zone => zone.life > 0);
-    this.stepTowers(dt); this.stepProjectiles(dt); this.refreshCoreShields();
+    this.stepNeutrals(dt); this.stepTowers(dt); this.stepProjectiles(dt); this.stepGold(); this.refreshCoreShields();
     if (this.time >= this.duration && this.phase === 'playing') {
       const sun = this.structures.find(structure => structure.id === 'sun-core')!, moon = this.structures.find(structure => structure.id === 'moon-core')!;
       const scoreDifference = this.scores.sun - this.scores.moon;
@@ -445,5 +565,5 @@ export class ArenaSimulation {
       this.finish(winner, scoreDifference ? 'Time limit · higher team score' : sun.health !== moon.health ? 'Time limit · remaining core health' : 'Time limit · equal score and core health');
     }
   }
-  snapshot(): ArenaSnapshot { return copy({ protocol: 1, room: this.room, seed: this.seed, tick: this.tick, time: this.time, duration: this.duration, phase: this.phase, winner: this.winner, reason: this.reason, actors: [...this.actors.values()], structures: this.structures, projectiles: this.projectiles, zones: this.zones, pickups: this.pickups, events: this.events, scores: this.scores }); }
+  snapshot(): ArenaSnapshot { return copy({ protocol: YUGA_PROTOCOL, room: this.room, seed: this.seed, tick: this.tick, time: this.time, duration: this.duration, phase: this.phase, winner: this.winner, reason: this.reason, actors: [...this.actors.values()], neutrals: this.neutrals, goldShards: this.goldShards, structures: this.structures, projectiles: this.projectiles, zones: this.zones, pickups: this.pickups, events: this.events, scores: this.scores }); }
 }

@@ -1,0 +1,174 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.yuga.config.ts",
+      "--grep",
+      "native practice movement",
+      "--reporter=list,json",
+      "--output=test-results/yuga-final-practice"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.yuga.config.ts",
+    "rootDir": "/workspace/ANDOLAN/games/yuga/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-practice",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-practice",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "snapshotDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5180",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run yuga:dev",
+      "url": "http://127.0.0.1:5180",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "arena.e2e.ts",
+      "file": "arena.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "native practice movement, combat, three skills, upgrade and pause controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24510,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:45:02.818Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "native-practice",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJuYXRpdmUtcHJhY3RpY2UiLAogICJkZXRhaWwiOiB7CiAgICAiYmVmb3JlIjogewogICAgICAiaWQiOiAibG9jYWwtcGxheWVyIiwKICAgICAgIm5hbWUiOiAiVHJhdmVsbGVyIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAic3VuIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDEsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiAwLAogICAgICAieiI6IC01Ni4wMDAwMDAwMDAwMDAwMywKICAgICAgInkiOiAyLjAyNDk5OTk5OTk5OTk5OTUsCiAgICAgICJ5YXciOiAwLAogICAgICAiaGVhbHRoIjogMzAwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDcuMjk5OTk5OTk5OTk5OTg5LAogICAgICAgIDEwLjI5OTk5OTk5OTk5OTk3NiwKICAgICAgICA0Mi40NTAwMDAwMDAwMDAwOQogICAgICBdLAogICAgICAiZmlyZUNvb2xkb3duIjogMCwKICAgICAgImNyZWRpdHMiOiA2MCwKICAgICAgImxldmVsIjogMiwKICAgICAgImtpbGxzIjogMCwKICAgICAgImRlYXRocyI6IDAsCiAgICAgICJhc3Npc3RzIjogMCwKICAgICAgImRhbWFnZURlYWx0IjogMCwKICAgICAgInVwZ3JhZGVzIjogewogICAgICAgICJwb3dlciI6IDEsCiAgICAgICAgInZpdGFsaXR5IjogMCwKICAgICAgICAidGVtcG8iOiAwCiAgICAgIH0sCiAgICAgICJlZmZlY3RzIjogewogICAgICAgICJoYXN0ZSI6IDAsCiAgICAgICAgInNsb3ciOiAwLAogICAgICAgICJ3YXJkIjogMAogICAgICB9LAogICAgICAibGFzdElucHV0U2VxIjogMjQKICAgIH0sCiAgICAiYWZ0ZXIiOiB7CiAgICAgICJpZCI6ICJsb2NhbC1wbGF5ZXIiLAogICAgICAibmFtZSI6ICJUcmF2ZWxsZXIiLAogICAgICAiaGVyb0lkIjogInJhbWEiLAogICAgICAidGVhbSI6ICJzdW4iLAogICAgICAiYm90IjogZmFsc2UsCiAgICAgICJsYW5lIjogMSwKICAgICAgImNvbm5lY3RlZCI6IHRydWUsCiAgICAgICJraW5kIjogImhlcm8iLAogICAgICAieCI6IDcuNjU0NzQxNDAzMTg0NzkzLAogICAgICAieiI6IC0yMS4wNjg5NDAzNjgzOTI1NzUsCiAgICAgICJ5IjogMCwKICAgICAgInlhdyI6IC0wLjg1NDcyNDYzNTMyNzczODcsCiAgICAgICJoZWFsdGgiOiAxMiwKICAgICAgIm1heEhlYWx0aCI6IDMwMCwKICAgICAgInNoaWVsZCI6IDAsCiAgICAgICJyZXNwYXduIjogMCwKICAgICAgImNvb2xkb3ducyI6IFsKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMzEuMzUwMDAwMDAwMDAwNjczCiAgICAgIF0sCiAgICAgICJmaXJlQ29vbGRvd24iOiAwLAogICAgICAiY3JlZGl0cyI6IDYwLAogICAgICAibGV2ZWwiOiAyLAogICAgICAia2lsbHMiOiAwLAogICAgICAiZGVhdGhzIjogMCwKICAgICAgImFzc2lzdHMiOiAwLAogICAgICAiZGFtYWdlRGVhbHQiOiA2My4xNzk5OTk5OTk5OTk5OSwKICAgICAgInVwZ3JhZGVzIjogewogICAgICAgICJwb3dlciI6IDEsCiAgICAgICAgInZpdGFsaXR5IjogMCwKICAgICAgICAidGVtcG8iOiAwCiAgICAgIH0sCiAgICAgICJlZmZlY3RzIjogewogICAgICAgICJoYXN0ZSI6IDAsCiAgICAgICAgInNsb3ciOiAwLAogICAgICAgICJ3YXJkIjogMAogICAgICB9LAogICAgICAibGFzdElucHV0U2VxIjogOTYKICAgIH0sCiAgICAic25hcHNob3RUaW1lIjogMTUuNzUwMDAwMDAwMDAwMDg5LAogICAgImNsYWltIjogIk9yZGluYXJ5IGtleWJvYXJkIGNvbnRyb2xzIG9ubHk7IG5vIGNvbW1hbmQsIHBvc2l0aW9uIG9yIGNsb2NrIGluamVjdGlvbiIKICB9LAogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbW1hbmRzIjogW10sCiAgInJlc3VsdHMiOiBbXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-c7d3c0b745a9479c81de",
+          "file": "arena.e2e.ts",
+          "line": 52,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T17:45:02.109Z",
+    "duration": 25646.368000000002,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

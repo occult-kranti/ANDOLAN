@@ -58,8 +58,8 @@ const actor = (id: string, extra: Partial<Actor> = {}): Actor => ({
 });
 const event = (id: number, extra: Partial<GameEvent> = {}): GameEvent => ({ id, type: 'shot', team: 'sun', actorId: 'me', label: '', color: '#fff', time: 1, x: 0, z: 0, ...extra });
 const snapshot = (events: GameEvent[] = [], extra: Partial<ArenaSnapshot> = {}): ArenaSnapshot => ({
-  protocol: 1, room: 'ARENA', tick: 20, time: 1, duration: 480, phase: 'playing', winner: null, reason: '',
-  actors: [actor('me'), actor('other', { x: 10 })], structures: [], projectiles: [], zones: [], pickups: [],
+  protocol: 2, room: 'ARENA', tick: 20, time: 1, duration: 480, phase: 'playing', winner: null, reason: '',
+  actors: [actor('me'), actor('other', { x: 10 })], neutrals: [], goldShards: [], structures: [], projectiles: [], zones: [], pickups: [],
   events, scores: { sun: 0, moon: 0 }, seed: 5, ...extra,
 });
 let document: Document;
@@ -117,6 +117,54 @@ describe('ArenaAudio authoritative cues and lifecycle', () => {
     audio.update(snapshot([event(2, { type: 'defeat', targetId: 'minion' })], { actors: [actor('me'), actor('minion', { kind: 'minion' })] }), 'me');
     expect(audio.diagnostics.activeVoices).toBe(2);
     audio.update(snapshot([event(3, { type: 'defeat', targetId: 'other' })]), 'me'); expect(audio.diagnostics.activeVoices).toBe(4);
+  });
+
+  it('uses only authoritative local gold rewards, with deduplication and a bounded burst cue', async () => {
+    await start();
+    audio.update(snapshot([], { actors: [actor('me', { credits: 500 })], goldShards: [{ id: 'gold1', sourceId: 'soldier1', originTeam: 'sun', value: 18, createdAt: 1, expiresAt: 5, x: 0, y: .7, z: 0 }] }), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(0);
+    const earned = event(1, { type: 'gold', targetId: 'gold1', amount: 18, reward: 'secure' });
+    audio.update(snapshot([earned]), 'me'); expect(audio.diagnostics.activeVoices).toBe(2);
+    audio.update(snapshot([earned]), 'me'); expect(audio.diagnostics.activeVoices).toBe(2);
+    audio.update(snapshot([event(2, { type: 'gold', targetId: 'gold2', amount: 18, reward: 'steal' })]), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(2);
+    Context.all[0].currentTime += 1;
+    audio.update(snapshot([event(3, { type: 'gold', actorId: 'other', amount: 18, reward: 'steal' }), event(4, { type: 'gold', amount: Number.NaN, reward: 'secure' })]), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(2);
+    audio.update(snapshot([event(5, { type: 'gold', amount: 18, reward: 'steal' })]), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(4);
+    const notes = Context.all[0].nodes.filter(node => node.kind === 'oscillator').map(node => node.frequency.value);
+    expect(notes).toEqual([587.33, 783.99, 659.25, 880]);
+  });
+
+  it('coalesces camp and temporary buff rewards across event order and split snapshots', async () => {
+    await start();
+    const camp = event(1, { type: 'camp', targetId: 'naga1', amount: 75 });
+    const buff = event(2, { type: 'buff', targetId: 'naga1', buff: 'ward' });
+    audio.update(snapshot([camp, buff]), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(2); // Combined camp interval, no extra buff tone.
+    Context.all[0].currentTime += .5;
+    audio.update(snapshot([event(3, { type: 'buff', targetId: 'yaksha1', buff: 'vigor' })]), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(3);
+    Context.all[0].currentTime += .1;
+    audio.update(snapshot([event(4, { type: 'camp', targetId: 'yaksha1', amount: 75 })]), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(3);
+    Context.all[0].currentTime += 2;
+    audio.update(snapshot([event(5, { type: 'buff', actorId: 'other', targetId: 'naga2', buff: 'ward' })], { actors: [actor('me', { effects: { haste: 10, slow: 0, ward: 10, vigor: 10 } })] }), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(3);
+    audio.update(snapshot([event(6, { type: 'buff', targetId: 'sentinel1', buff: 'haste' })]), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(4);
+  });
+
+  it('spatializes neutral damage from its source while keeping routine neutral shots quiet', async () => {
+    await start();
+    const neutral = { id: 'naga1', kind: 'neutral' as const, team: 'neutral' as const, species: 'naga' as const, campId: 'camp1', name: 'Naga', x: -10, y: 0, z: 0, yaw: 0, health: 300, maxHealth: 300, state: 'aggro' as const, targetId: 'me', respawnAt: 0, slow: 0 };
+    audio.update(snapshot([event(1, { actorId: 'naga1', team: 'neutral' })], { neutrals: [neutral] }), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(0);
+    audio.update(snapshot([event(2, { type: 'hit', actorId: 'naga1', targetId: 'me', team: 'neutral' })], { neutrals: [neutral] }), 'me');
+    expect(audio.diagnostics.activeVoices).toBe(2);
+    const pans = Context.all[0].nodes.filter(node => node.kind === 'pan').map(node => node.pan.value);
+    expect(pans[0]).toBeLessThan(0); expect(pans[1]).toBe(0);
   });
 
   it('caps sources at20 and prioritizes a match outcome over old low-priority combat', async () => {

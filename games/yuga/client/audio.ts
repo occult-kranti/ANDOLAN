@@ -143,6 +143,9 @@ export class ArenaAudio {
   private eventPriority(event: GameEvent, playerId: string) {
     if (event.type === 'victory') return 5;
     if (event.type === 'defeat' && (event.actorId === playerId || event.targetId === playerId)) return 4;
+    // A camp and its buff can arrive together. Play the combined camp cue first
+    // so the paired reward does not become two overlapping notifications.
+    if (event.type === 'camp' && event.actorId === playerId) return 3;
     if (event.type === 'tower' || event.type === 'core' || (event.type === 'hit' && event.targetId === playerId)) return 3;
     return event.actorId === playerId ? 2 : 1;
   }
@@ -183,11 +186,36 @@ export class ArenaAudio {
     }
     if (event.type === 'hit') {
       if (event.targetId === listener.id && this.allowed('hurt', .22, true)) {
-        this.noiseHit(.075, .07, 650, this.spatial(source ?? snapshot.structures.find(structure => structure.id === event.actorId) ?? event, listener), 3);
+        this.noiseHit(.075, .07, 650, this.spatial(source ?? snapshot.neutrals.find(neutral => neutral.id === event.actorId) ?? snapshot.structures.find(structure => structure.id === event.actorId) ?? event, listener), 3);
         this.tone(84, .1, .055, { pan: 0, gain: 1 }, 3, 'game', 0, 53); return true;
       }
       if (local && this.allowed('hit-confirm', .12)) { this.tone(930, .045, .028, { pan: 0, gain: 1 }, 2); return true; }
       return false;
+    }
+    if (event.type === 'gold') {
+      if (!local || !Number.isFinite(event.amount) || event.amount! <= 0 || (event.reward !== 'secure' && event.reward !== 'steal') || !this.allowed('gold', .20)) return false;
+      // A small, distinct interval communicates a steal without louder fanfare.
+      // Credits, shard appearance and input presses never trigger these cues.
+      const steal = event.reward === 'steal';
+      this.tone(steal ? 659.25 : 587.33, .075, .032, spatial, 2);
+      this.tone(steal ? 880 : 783.99, .13, .026, spatial, 2, 'game', .055);
+      return true;
+    }
+    if (event.type === 'camp' || event.type === 'buff') {
+      if (!local || !event.targetId) return false;
+      if (event.type === 'camp' && (!Number.isFinite(event.amount) || event.amount! <= 0)) return false;
+      if (event.type === 'buff' && !['vigor', 'haste', 'ward'].includes(event.buff ?? '')) return false;
+      // Same-target pairing also works when the two authoritative events are
+      // split across snapshots. All keys share the existing bounded cooldown map.
+      if (!this.allowed(`camp-buff:${event.targetId}`, 1.2) || !this.allowed('camp-buff', .45)) return false;
+      if (event.type === 'camp') {
+        this.tone(349.23, .17, .046, spatial, 2);
+        this.tone(523.25, .24, .038, spatial, 2, 'game', .10);
+      } else {
+        const pitch = event.buff === 'vigor' ? 293.66 : event.buff === 'haste' ? 440 : 349.23;
+        this.tone(pitch, .21, .038, spatial, 2, 'game', 0, pitch * 1.5);
+      }
+      return true;
     }
     if ((event.type === 'pickup' || event.type === 'upgrade') && local && this.allowed('reward', .3)) {
       this.tone(440, .12, .05, spatial, 2); this.tone(587.33, .2, .045, spatial, 2, 'game', .1); return true;

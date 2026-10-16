@@ -1,7 +1,7 @@
 import { ARENA, SOLIDS } from '../shared/map.js';
-import type { Actor, ArenaSnapshot, Structure, Team } from '../shared/types.js';
+import type { Actor, ArenaSnapshot, Neutral, Structure, Team } from '../shared/types.js';
 
-type Target = Actor | Structure;
+type Target = Actor | Structure | Neutral;
 type Point = { x: number; y: number; z: number };
 export interface TargetAim extends Point { yaw: number; pitch: number; label: string }
 const RANGE = 32, CONE_COS = Math.cos(20 * Math.PI / 180), EPSILON = 1e-9;
@@ -17,6 +17,7 @@ function shooter(snapshot: ArenaSnapshot, playerId: string): Actor | undefined {
 
 function eligible(target: Target, team: Team): boolean {
   if (target.team === team || target.health <= 0 || !finite(target.x, target.z, target.health)) return false;
+  if (target.kind === 'neutral') return target.state !== 'dead' && target.state !== 'returning' && finite(target.y);
   if ('heroId' in target) return finite(target.y, target.respawn) && target.respawn <= 0 && (target.connected || target.bot);
   return !target.shielded;
 }
@@ -68,7 +69,7 @@ function solution(snapshot: ArenaSnapshot, actor: Actor, target: Target): (Targe
   const origin = { x: actor.x, y: actor.y + 1.2, z: actor.z }, point = center(target);
   const dx = point.x - origin.x, dy = point.y - origin.y, dz = point.z - origin.z, distance = Math.hypot(dx, dy, dz);
   if (!Number.isFinite(distance) || distance < EPSILON || distance > RANGE + EPSILON || !visible(snapshot, actor, target, origin, point)) return null;
-  const label = 'heroId' in target ? target.kind === 'hero' ? target.name : target.minionRole === 'siege' ? 'Siege sentinel' : target.minionRole === 'summon' ? 'Summoned sentinel' : 'Lane sentinel' : target.kind === 'core' ? 'Enemy core' : `${ARENA.lanes[target.lane]} tower`;
+  const label = target.kind === 'neutral' ? target.name : 'heroId' in target ? target.kind === 'hero' || target.unitArchetype ? target.name : target.minionRole === 'siege' ? 'Siege sentinel' : target.minionRole === 'summon' ? 'Summoned sentinel' : 'Lane sentinel' : target.kind === 'core' ? 'Enemy core' : `${ARENA.lanes[target.lane]} tower`;
   return { ...point, yaw: Math.atan2(dx, dz), pitch: Math.atan2(dy, Math.hypot(dx, dz)), label, distance };
 }
 
@@ -78,7 +79,7 @@ export function acquireTarget(snapshot: ArenaSnapshot, playerId: string, yaw: nu
   const actor = shooter(snapshot, playerId); if (!actor) return null;
   const forward = { x: Math.sin(yaw) * Math.cos(pitch), y: Math.sin(pitch), z: Math.cos(yaw) * Math.cos(pitch) };
   let best: { id: string; error: number; hero: boolean; distance: number } | undefined;
-  for (const target of [...snapshot.actors, ...snapshot.structures]) {
+  for (const target of [...snapshot.actors, ...snapshot.structures, ...snapshot.neutrals]) {
     const aim = solution(snapshot, actor, target); if (!aim) continue;
     const dot = (forward.x * (aim.x - actor.x) + forward.y * (aim.y - actor.y - 1.2) + forward.z * (aim.z - actor.z)) / aim.distance;
     if (dot + EPSILON < CONE_COS) continue;
@@ -91,7 +92,7 @@ export function acquireTarget(snapshot: ArenaSnapshot, playerId: string, yaw: nu
 /** Revalidates an existing lock every frame; the acquisition cone does not restrict retention. */
 export function targetAim(snapshot: ArenaSnapshot, playerId: string, targetId: string): TargetAim | null {
   const actor = shooter(snapshot, playerId); if (!actor) return null;
-  const target = snapshot.actors.find(candidate => candidate.id === targetId) ?? snapshot.structures.find(candidate => candidate.id === targetId);
+  const target = snapshot.actors.find(candidate => candidate.id === targetId) ?? snapshot.structures.find(candidate => candidate.id === targetId) ?? snapshot.neutrals.find(candidate => candidate.id === targetId);
   if (!target) return null;
   const aim = solution(snapshot, actor, target); if (!aim) return null;
   return { yaw: aim.yaw, pitch: aim.pitch, x: aim.x, y: aim.y, z: aim.z, label: aim.label };

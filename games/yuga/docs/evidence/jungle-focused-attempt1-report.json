@@ -1,0 +1,420 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.yuga.config.ts",
+      "--grep",
+      "native mouse chords|cancel delayed actual|labelled reward and camp HUD|labelled action-age",
+      "--reporter=list,json",
+      "--output=test-results/yuga-jungle-focused"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.yuga.config.ts",
+    "rootDir": "/workspace/ANDOLAN/games/yuga/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-jungle-focused",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-jungle-focused",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "snapshotDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5180",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run yuga:dev",
+      "url": "http://127.0.0.1:5180",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "arena.e2e.ts",
+      "file": "arena.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "native mouse chords preserve held fire and release through menus",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 30699,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m89\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m89\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at stopped (/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:81:176)\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:90:40",
+                    "location": {
+                      "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                      "column": 176,
+                      "line": 81
+                    },
+                    "snippet": "  79 |  const observations:{step:string;shot:number;cooldown:number}[]=[];\n  80 |  const record=async(step:string)=>observations.push({step,shot:await lastShot(),cooldown:(await me(page)).fireCooldown});\n> 81 |  const stopped=async()=>{await expect.poll(async()=>(await me(page)).fireCooldown).toBe(0);const shot=await lastShot();await page.waitForTimeout(450);expect(await lastShot()).toBe(shot);};\n     |                                                                                                                                                                                ^\n  82 |  await page.mouse.move(300,220);\n  83 |  try{\n  84 |   const before=await lastShot();await page.mouse.down({button:'left'});await expect.poll(lastShot).toBeGreaterThan(before);await record('left-down fires');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                        "column": 176,
+                        "line": 81
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m89\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\n  79 |  const observations:{step:string;shot:number;cooldown:number}[]=[];\n  80 |  const record=async(step:string)=>observations.push({step,shot:await lastShot(),cooldown:(await me(page)).fireCooldown});\n> 81 |  const stopped=async()=>{await expect.poll(async()=>(await me(page)).fireCooldown).toBe(0);const shot=await lastShot();await page.waitForTimeout(450);expect(await lastShot()).toBe(shot);};\n     |                                                                                                                                                                                ^\n  82 |  await page.mouse.move(300,220);\n  83 |  try{\n  84 |   const before=await lastShot();await page.mouse.down({button:'left'});await expect.poll(lastShot).toBeGreaterThan(before);await record('left-down fires');\n    at stopped (/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:81:176)\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:90:40"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:28:07.834Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-jungle-focused/arena.e2e.ts-native-mouse--634aa-e-and-release-through-menus/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-jungle-focused/arena.e2e.ts-native-mouse--634aa-e-and-release-through-menus/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-jungle-focused/arena.e2e.ts-native-mouse--634aa-e-and-release-through-menus/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                    "column": 176,
+                    "line": 81
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-8136919ea9bac4a0e386",
+          "file": "arena.e2e.ts",
+          "line": 75,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "hero-assets.e2e.ts",
+      "file": "hero-assets.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "cancel delayed actual match assets with Escape and Back, then restart cleanly",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14838,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:28:41.373Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "delayed-match-load-cancellation",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJBIHJlYWwgYmluYXJ5IEdMQiByZXF1ZXN0IHdhcyBkZWxheWVkLiBOYXRpdmUgRXNjYXBlIGFuZCBCYWNrIGNhbmNlbCB0d28gbG9hZGluZyBhdHRlbXB0czsgcmVsZWFzaW5nIHRoZSBhc3NldCBtYXkgcG9wdWxhdGUgY2FjaGUgYnV0IG11c3Qgbm90IHN0YXJ0IGVpdGhlciBjYW5jZWxlZCBtYXRjaC4gQSB0aGlyZCBuYXRpdmUgc3RhcnQgZW50ZXJzIG9yZGluYXJ5IHByYWN0aWNlLiIsCiAgImRlbGF5ZWQiOiAxLAogICJlcnJvcnMiOiBbXSwKICAiY29uc29sZUVycm9ycyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c538d34d19b602e5e2ab-0c40704719aaea312d4c",
+          "file": "hero-assets.e2e.ts",
+          "line": 37,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "jungle.e2e.ts",
+      "file": "jungle.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "labelled reward and camp HUD snapshots show first receipts, shared versus stolen, and expiry",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 12853,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /workspace/ANDOLAN/games/yuga/tests/jungle.e2e.ts:68:76",
+                    "location": {
+                      "file": "/workspace/ANDOLAN/games/yuga/tests/jungle.e2e.ts",
+                      "column": 76,
+                      "line": 68
+                    },
+                    "snippet": "  66 |   await expect(page.locator('#gold-feedback')).toBeHidden({timeout:5_000});send!();await rendered(page);await expect(page.locator('#gold-feedback')).toBeHidden();\n  67 |   actor.effects={ward:0,vigor:0,haste:0,slow:0};fixture!.time=12;send!();await expect(page.locator('#buff-status [data-buff]')).toHaveCount(0);await expect(page.locator('#camp-status')).toContainText('Returns in 28s');\n> 68 |   expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);\n     |                                                                            ^\n  69 |   await info.attach('labelled-jungle-hud-fixture',{body:JSON.stringify({scope:'Mocked WebSocket and explicit actor/camp/reward/time snapshots validate HUD presentation and deduplication only. No camp was physically cleared and no contested gold was earned in this fixture.',errors:diagnostics},null,2),contentType:'application/json'});\n  70 |  }finally{if(timer)clearInterval(timer);await context.close();}\n  71 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/jungle.e2e.ts",
+                        "column": 76,
+                        "line": 68
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  66 |   await expect(page.locator('#gold-feedback')).toBeHidden({timeout:5_000});send!();await rendered(page);await expect(page.locator('#gold-feedback')).toBeHidden();\n  67 |   actor.effects={ward:0,vigor:0,haste:0,slow:0};fixture!.time=12;send!();await expect(page.locator('#buff-status [data-buff]')).toHaveCount(0);await expect(page.locator('#camp-status')).toContainText('Returns in 28s');\n> 68 |   expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);\n     |                                                                            ^\n  69 |   await info.attach('labelled-jungle-hud-fixture',{body:JSON.stringify({scope:'Mocked WebSocket and explicit actor/camp/reward/time snapshots validate HUD presentation and deduplication only. No camp was physically cleared and no contested gold was earned in this fixture.',errors:diagnostics},null,2),contentType:'application/json'});\n  70 |  }finally{if(timer)clearInterval(timer);await context.close();}\n  71 | });\n    at /workspace/ANDOLAN/games/yuga/tests/jungle.e2e.ts:68:76"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:28:56.480Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-jungle-focused/jungle.e2e.ts-labelled-rew-c8c0a-ed-versus-stolen-and-expiry/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-jungle-focused/jungle.e2e.ts-labelled-rew-c8c0a-ed-versus-stolen-and-expiry/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-jungle-focused/jungle.e2e.ts-labelled-rew-c8c0a-ed-versus-stolen-and-expiry/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/jungle.e2e.ts",
+                    "column": 76,
+                    "line": 68
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4e2427d1c2f332db3d13-0fa59bc705be0ce489b0",
+          "file": "jungle.e2e.ts",
+          "line": 50,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "unit-assets.e2e.ts",
+      "file": "unit-assets.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "labelled action-age and resume snapshots preserve recent casts without replaying old history",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 13957,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /workspace/ANDOLAN/games/yuga/tests/unit-assets.e2e.ts:65:76",
+                    "location": {
+                      "file": "/workspace/ANDOLAN/games/yuga/tests/unit-assets.e2e.ts",
+                      "column": 76,
+                      "line": 65
+                    },
+                    "snippet": "  63 |   await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();events.push(ability(2,3,0));send!();await page.locator('#resume-game').click();await rendered(page);expect((await rig()).transitions.cast3||0).toBe(initial.transitions.cast3||0);\n  64 |   events.push(ability(2,4,0));send!();await expect.poll(async()=>(await rig()).transitions.cast3||0).toBeGreaterThan(initial.transitions.cast3||0);\n> 65 |   expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);await info.attach('labelled-action-age-fixture',{body:JSON.stringify({scope:'Mocked authority snapshots and controlled event ages .9s/2.1s; native menu open/resume. Validates renderer freshness and history-baseline rules only, not native combat success or network latency.',initial,recent,final:await rig(),errors:diagnostics},null,2),contentType:'application/json'});\n     |                                                                            ^\n  66 |  }finally{if(timer)clearInterval(timer);}\n  67 | });\n  68 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/unit-assets.e2e.ts",
+                        "column": 76,
+                        "line": 65
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  63 |   await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();events.push(ability(2,3,0));send!();await page.locator('#resume-game').click();await rendered(page);expect((await rig()).transitions.cast3||0).toBe(initial.transitions.cast3||0);\n  64 |   events.push(ability(2,4,0));send!();await expect.poll(async()=>(await rig()).transitions.cast3||0).toBeGreaterThan(initial.transitions.cast3||0);\n> 65 |   expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);await info.attach('labelled-action-age-fixture',{body:JSON.stringify({scope:'Mocked authority snapshots and controlled event ages .9s/2.1s; native menu open/resume. Validates renderer freshness and history-baseline rules only, not native combat success or network latency.',initial,recent,final:await rig(),errors:diagnostics},null,2),contentType:'application/json'});\n     |                                                                            ^\n  66 |  }finally{if(timer)clearInterval(timer);}\n  67 | });\n  68 |\n    at /workspace/ANDOLAN/games/yuga/tests/unit-assets.e2e.ts:65:76"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:29:11.600Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-jungle-focused/unit-assets.e2e.ts-labelle-b869a-thout-replaying-old-history/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-jungle-focused/unit-assets.e2e.ts-labelle-b869a-thout-replaying-old-history/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-jungle-focused/unit-assets.e2e.ts-labelle-b869a-thout-replaying-old-history/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/unit-assets.e2e.ts",
+                    "column": 76,
+                    "line": 65
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d5201f18e50ef76a425d-0e5e79214c096e23e576",
+          "file": "unit-assets.e2e.ts",
+          "line": 50,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T18:28:06.754Z",
+    "duration": 81211.568,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

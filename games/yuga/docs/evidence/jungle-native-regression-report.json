@@ -1,0 +1,214 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.yuga.config.ts",
+      "--grep",
+      "native practice movement|native two-player Dawn",
+      "--reporter=list,json",
+      "--output=test-results/yuga-jungle-native-regression"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.yuga.config.ts",
+    "rootDir": "/workspace/ANDOLAN/games/yuga/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-jungle-native-regression",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-jungle-native-regression",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "snapshotDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5180",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run yuga:dev",
+      "url": "http://127.0.0.1:5180",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "arena.e2e.ts",
+      "file": "arena.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "native practice movement, combat, three skills, upgrade and pause controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27709,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:36:48.287Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "native-practice",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJuYXRpdmUtcHJhY3RpY2UiLAogICJkZXRhaWwiOiB7CiAgICAiYmVmb3JlIjogewogICAgICAiaWQiOiAibG9jYWwtcGxheWVyIiwKICAgICAgIm5hbWUiOiAiVHJhdmVsbGVyIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAic3VuIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDEsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiAwLAogICAgICAieiI6IC01Ni4wMDAwMDAwMDAwMDAwMywKICAgICAgInkiOiAwLAogICAgICAieWF3IjogMCwKICAgICAgImhlYWx0aCI6IDMwMCwKICAgICAgIm1heEhlYWx0aCI6IDMwMCwKICAgICAgInNoaWVsZCI6IDAsCiAgICAgICJyZXNwYXduIjogMCwKICAgICAgImNvb2xkb3ducyI6IFsKICAgICAgICA2Ljk5OTk5OTk5OTk5OTk5LAogICAgICAgIDkuOTk5OTk5OTk5OTk5OTcyLAogICAgICAgIDQyLjA1MDAwMDAwMDAwMDExCiAgICAgIF0sCiAgICAgICJmaXJlQ29vbGRvd24iOiAwLAogICAgICAiY3JlZGl0cyI6IDYwLAogICAgICAibGV2ZWwiOiAyLAogICAgICAia2lsbHMiOiAwLAogICAgICAiZGVhdGhzIjogMCwKICAgICAgImFzc2lzdHMiOiAwLAogICAgICAiZGFtYWdlRGVhbHQiOiAwLAogICAgICAidXBncmFkZXMiOiB7CiAgICAgICAgInBvd2VyIjogMSwKICAgICAgICAidml0YWxpdHkiOiAwLAogICAgICAgICJ0ZW1wbyI6IDAKICAgICAgfSwKICAgICAgImVmZmVjdHMiOiB7CiAgICAgICAgImhhc3RlIjogMCwKICAgICAgICAic2xvdyI6IDAsCiAgICAgICAgIndhcmQiOiAwLAogICAgICAgICJ2aWdvciI6IDAKICAgICAgfSwKICAgICAgImxhc3RJbnB1dFNlcSI6IDIzCiAgICB9LAogICAgImFmdGVyIjogewogICAgICAiaWQiOiAibG9jYWwtcGxheWVyIiwKICAgICAgIm5hbWUiOiAiVHJhdmVsbGVyIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAic3VuIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDEsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiA2LjkxNzE1MTkwNTY3MTg3OCwKICAgICAgInoiOiAtMzguMzAwODM3ODQwNTcxOTQ0LAogICAgICAieSI6IDAsCiAgICAgICJ5YXciOiAtMC4xNDgxNjIyMDU2ODk2NjAxLAogICAgICAiaGVhbHRoIjogMTA4LAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAyOS4wNTAwMDAwMDAwMDA2NAogICAgICBdLAogICAgICAiZmlyZUNvb2xkb3duIjogMCwKICAgICAgImNyZWRpdHMiOiA2OCwKICAgICAgImxldmVsIjogMiwKICAgICAgImtpbGxzIjogMCwKICAgICAgImRlYXRocyI6IDAsCiAgICAgICJhc3Npc3RzIjogMCwKICAgICAgImRhbWFnZURlYWx0IjogNjMuMTc5OTk5OTk5OTk5OTksCiAgICAgICJ1cGdyYWRlcyI6IHsKICAgICAgICAicG93ZXIiOiAxLAogICAgICAgICJ2aXRhbGl0eSI6IDAsCiAgICAgICAgInRlbXBvIjogMAogICAgICB9LAogICAgICAiZWZmZWN0cyI6IHsKICAgICAgICAiaGFzdGUiOiAwLAogICAgICAgICJzbG93IjogMCwKICAgICAgICAid2FyZCI6IDAsCiAgICAgICAgInZpZ29yIjogMAogICAgICB9LAogICAgICAibGFzdElucHV0U2VxIjogMTAwCiAgICB9LAogICAgInNuYXBzaG90VGltZSI6IDE4Ljc1MDAwMDAwMDAwMDEzLAogICAgImNsYWltIjogIk9yZGluYXJ5IGtleWJvYXJkIGNvbnRyb2xzIG9ubHk7IG5vIGNvbW1hbmQsIHBvc2l0aW9uIG9yIGNsb2NrIGluamVjdGlvbiIKICB9LAogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbW1hbmRzIjogW10sCiAgInJlc3VsdHMiOiBbXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-c7d3c0b745a9479c81de",
+          "file": "arena.e2e.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "native two-player Dawn Volley received windup and lateral movement evades it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 50341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T18:37:16.271Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "native-windup-evade",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJuYXRpdmUtd2luZHVwLWV2YWRlIiwKICAiZGV0YWlsIjogewogICAgInNjb3BlIjogIlR3byByZWFsIGJyb3dzZXIgY2xpZW50cyBhbmQgcmVhbCBsb2NhbCBzZXJ2ZXIgd2l0aG91dCBoZXJvIGJvdHM7IGxhbmUgd2F2ZXMgcnVuLiBOYXRpdmUgbW92ZW1lbnQvYWltL1I7IG5hdGl2ZSBkb2RnZSBrZXkgcmVhY3RzIHRvIHRoZSBwZWVyIHJlY2VpdmVkIHdpbmR1cC4gRmlyc3QgYXV0aG9yaXRhdGl2ZSBsYXRlcmFsIG1vdmVtZW50IG11c3QgcHJlY2VkZSByZWxlYXNlLiBObyBhY3Rvci1wb3NpdGlvbi9oZWFsdGgvdGltZSBpbmplY3Rpb24uIFNuYXBzaG90IHRpbWluZyBkb2VzIG5vdCBpdHNlbGYgdmVyaWZ5IGV2ZXJ5IHRlbGVncmFwaCBwaXhlbCBvciBodW1hbiByZWFjdGlvbiBzcGVlZC4iLAogICAgImluaXRpYWxIb3N0IjogewogICAgICAiaWQiOiAiZmFkODk2ZjU5OWQ4MTA5ZCIsCiAgICAgICJuYW1lIjogIk5hdGl2ZSBjYXN0ZXIiLAogICAgICAiaGVyb0lkIjogInJhbWEiLAogICAgICAidGVhbSI6ICJzdW4iLAogICAgICAiYm90IjogZmFsc2UsCiAgICAgICJsYW5lIjogMCwKICAgICAgImNvbm5lY3RlZCI6IHRydWUsCiAgICAgICJraW5kIjogImhlcm8iLAogICAgICAieCI6IC0zLAogICAgICAieiI6IC02NiwKICAgICAgInkiOiAwLAogICAgICAieWF3IjogMCwKICAgICAgImhlYWx0aCI6IDMwMCwKICAgICAgIm1heEhlYWx0aCI6IDMwMCwKICAgICAgInNoaWVsZCI6IDAsCiAgICAgICJyZXNwYXduIjogMCwKICAgICAgImNvb2xkb3ducyI6IFsKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMAogICAgICBdLAogICAgICAiZmlyZUNvb2xkb3duIjogMCwKICAgICAgImNyZWRpdHMiOiAxODAsCiAgICAgICJsZXZlbCI6IDEsCiAgICAgICJraWxscyI6IDAsCiAgICAgICJkZWF0aHMiOiAwLAogICAgICAiYXNzaXN0cyI6IDAsCiAgICAgICJkYW1hZ2VEZWFsdCI6IDAsCiAgICAgICJ1cGdyYWRlcyI6IHsKICAgICAgICAicG93ZXIiOiAwLAogICAgICAgICJ2aXRhbGl0eSI6IDAsCiAgICAgICAgInRlbXBvIjogMAogICAgICB9LAogICAgICAiZWZmZWN0cyI6IHsKICAgICAgICAiaGFzdGUiOiAwLAogICAgICAgICJzbG93IjogMCwKICAgICAgICAid2FyZCI6IDAsCiAgICAgICAgInZpZ29yIjogMAogICAgICB9LAogICAgICAibGFzdElucHV0U2VxIjogMTIKICAgIH0sCiAgICAiaW5pdGlhbEd1ZXN0IjogewogICAgICAiaWQiOiAiYmUwYTk2Mzc5NTZmZmIyYiIsCiAgICAgICJuYW1lIjogIk5hdGl2ZSBkb2RnZXIiLAogICAgICAiaGVyb0lkIjogInJhbWEiLAogICAgICAidGVhbSI6ICJtb29uIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDAsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiAtMywKICAgICAgInoiOiA2NiwKICAgICAgInkiOiAwLAogICAgICAieWF3IjogMy4xNDE1OTI2NTM1ODk3OTMsCiAgICAgICJoZWFsdGgiOiAzMDAsCiAgICAgICJtYXhIZWFsdGgiOiAzMDAsCiAgICAgICJzaGllbGQiOiAwLAogICAgICAicmVzcGF3biI6IDAsCiAgICAgICJjb29sZG93bnMiOiBbCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAKICAgICAgXSwKICAgICAgImZpcmVDb29sZG93biI6IDAsCiAgICAgICJjcmVkaXRzIjogMTgwLAogICAgICAibGV2ZWwiOiAxLAogICAgICAia2lsbHMiOiAwLAogICAgICAiZGVhdGhzIjogMCwKICAgICAgImFzc2lzdHMiOiAwLAogICAgICAiZGFtYWdlRGVhbHQiOiAwLAogICAgICAidXBncmFkZXMiOiB7CiAgICAgICAgInBvd2VyIjogMCwKICAgICAgICAidml0YWxpdHkiOiAwLAogICAgICAgICJ0ZW1wbyI6IDAKICAgICAgfSwKICAgICAgImVmZmVjdHMiOiB7CiAgICAgICAgImhhc3RlIjogMCwKICAgICAgICAic2xvdyI6IDAsCiAgICAgICAgIndhcmQiOiAwLAogICAgICAgICJ2aWdvciI6IDAKICAgICAgfSwKICAgICAgImxhc3RJbnB1dFNlcSI6IC0xCiAgICB9LAogICAgImNhc3RlciI6IHsKICAgICAgImlkIjogImZhZDg5NmY1OTlkODEwOWQiLAogICAgICAibmFtZSI6ICJOYXRpdmUgY2FzdGVyIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAic3VuIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDAsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiAtMywKICAgICAgInoiOiAtMTAuOTIwMDAwMDAwMDAwMDA5LAogICAgICAieSI6IDAsCiAgICAgICJ5YXciOiAwLAogICAgICAiaGVhbHRoIjogMzAwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwCiAgICAgIF0sCiAgICAgICJmaXJlQ29vbGRvd24iOiAwLAogICAgICAiY3JlZGl0cyI6IDE4MCwKICAgICAgImxldmVsIjogMSwKICAgICAgImtpbGxzIjogMCwKICAgICAgImRlYXRocyI6IDAsCiAgICAgICJhc3Npc3RzIjogMCwKICAgICAgImRhbWFnZURlYWx0IjogMCwKICAgICAgInVwZ3JhZGVzIjogewogICAgICAgICJwb3dlciI6IDAsCiAgICAgICAgInZpdGFsaXR5IjogMCwKICAgICAgICAidGVtcG8iOiAwCiAgICAgIH0sCiAgICAgICJlZmZlY3RzIjogewogICAgICAgICJoYXN0ZSI6IDAsCiAgICAgICAgInNsb3ciOiAwLAogICAgICAgICJ3YXJkIjogMCwKICAgICAgICAidmlnb3IiOiAwCiAgICAgIH0sCiAgICAgICJsYXN0SW5wdXRTZXEiOiAxMjMKICAgIH0sCiAgICAidGFyZ2V0IjogewogICAgICAiaWQiOiAiYmUwYTk2Mzc5NTZmZmIyYiIsCiAgICAgICJuYW1lIjogIk5hdGl2ZSBkb2RnZXIiLAogICAgICAiaGVyb0lkIjogInJhbWEiLAogICAgICAidGVhbSI6ICJtb29uIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDAsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiAtMywKICAgICAgInoiOiAxMC45MjAwMDAwMDAwMDAwMDksCiAgICAgICJ5IjogMCwKICAgICAgInlhdyI6IDMuMTQxNTkyNjUzNTg5NzkzLAogICAgICAiaGVhbHRoIjogMzAwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwCiAgICAgIF0sCiAgICAgICJmaXJlQ29vbGRvd24iOiAwLAogICAgICAiY3JlZGl0cyI6IDE4MCwKICAgICAgImxldmVsIjogMSwKICAgICAgImtpbGxzIjogMCwKICAgICAgImRlYXRocyI6IDAsCiAgICAgICJhc3Npc3RzIjogMCwKICAgICAgImRhbWFnZURlYWx0IjogMCwKICAgICAgInVwZ3JhZGVzIjogewogICAgICAgICJwb3dlciI6IDAsCiAgICAgICAgInZpdGFsaXR5IjogMCwKICAgICAgICAidGVtcG8iOiAwCiAgICAgIH0sCiAgICAgICJlZmZlY3RzIjogewogICAgICAgICJoYXN0ZSI6IDAsCiAgICAgICAgInNsb3ciOiAwLAogICAgICAgICJ3YXJkIjogMCwKICAgICAgICAidmlnb3IiOiAwCiAgICAgIH0sCiAgICAgICJsYXN0SW5wdXRTZXEiOiAxMDAKICAgIH0sCiAgICAiY2FzdFJlY2VpcHQiOiB7CiAgICAgICJzbmFwc2hvdFRpbWUiOiAxNy44NTAwMDAwMDAwMDAxMiwKICAgICAgImNhc3QiOiB7CiAgICAgICAgInNsb3QiOiAyLAogICAgICAgICJtZWNoYW5pYyI6ICJkYXduLXZvbGxleSIsCiAgICAgICAgInBoYXNlIjogIndpbmR1cCIsCiAgICAgICAgInN0YXJ0ZWRBdCI6IDE3LjgwMDAwMDAwMDAwMDExOCwKICAgICAgICAicmVsZWFzZUF0IjogMTguODAwMDAwMDAwMDAwMTE4LAogICAgICAgICJlbmRzQXQiOiAxOC44MDAwMDAwMDAwMDAxMTgsCiAgICAgICAgIm9yaWdpbiI6IHsKICAgICAgICAgICJ4IjogLTMsCiAgICAgICAgICAieiI6IC0xMC45MjAwMDAwMDAwMDAwMDkKICAgICAgICB9LAogICAgICAgICJ0YXJnZXQiOiB7CiAgICAgICAgICAieCI6IC0zLAogICAgICAgICAgInoiOiAxNy4wNzk5OTk5OTk5OTk5OQogICAgICAgIH0sCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgInBpdGNoIjogLTAuMDA0NTc4NzIyNTgxMzAzNzQ4NQogICAgICB9CiAgICB9LAogICAgImZpcnN0RG9kZ2VNb3ZlbWVudCI6IHsKICAgICAgInRpbWUiOiAxOC4wNTAwMDAwMDAwMDAxMiwKICAgICAgIngiOiAtMy43MjAwMDAwMDAwMDAwMDA2LAogICAgICAicGhhc2UiOiAid2luZHVwIgogICAgfSwKICAgICJiZWZvcmVEb2RnZSI6IHsKICAgICAgImlkIjogImJlMGE5NjM3OTU2ZmZiMmIiLAogICAgICAibmFtZSI6ICJOYXRpdmUgZG9kZ2VyIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAibW9vbiIsCiAgICAgICJib3QiOiBmYWxzZSwKICAgICAgImxhbmUiOiAwLAogICAgICAiY29ubmVjdGVkIjogdHJ1ZSwKICAgICAgImtpbmQiOiAiaGVybyIsCiAgICAgICJ4IjogLTMsCiAgICAgICJ6IjogMTAuOTIwMDAwMDAwMDAwMDA5LAogICAgICAieSI6IDAsCiAgICAgICJ5YXciOiAzLjE0MTU5MjY1MzU4OTc5MywKICAgICAgImhlYWx0aCI6IDMwMCwKICAgICAgIm1heEhlYWx0aCI6IDMwMCwKICAgICAgInNoaWVsZCI6IDAsCiAgICAgICJyZXNwYXduIjogMCwKICAgICAgImNvb2xkb3ducyI6IFsKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMAogICAgICBdLAogICAgICAiZmlyZUNvb2xkb3duIjogMCwKICAgICAgImNyZWRpdHMiOiAxODAsCiAgICAgICJsZXZlbCI6IDEsCiAgICAgICJraWxscyI6IDAsCiAgICAgICJkZWF0aHMiOiAwLAogICAgICAiYXNzaXN0cyI6IDAsCiAgICAgICJkYW1hZ2VEZWFsdCI6IDAsCiAgICAgICJ1cGdyYWRlcyI6IHsKICAgICAgICAicG93ZXIiOiAwLAogICAgICAgICJ2aXRhbGl0eSI6IDAsCiAgICAgICAgInRlbXBvIjogMAogICAgICB9LAogICAgICAiZWZmZWN0cyI6IHsKICAgICAgICAiaGFzdGUiOiAwLAogICAgICAgICJzbG93IjogMCwKICAgICAgICAid2FyZCI6IDAsCiAgICAgICAgInZpZ29yIjogMAogICAgICB9LAogICAgICAibGFzdElucHV0U2VxIjogMTAwCiAgICB9LAogICAgImFmdGVyRG9kZ2UiOiB7CiAgICAgICJpZCI6ICJiZTBhOTYzNzk1NmZmYjJiIiwKICAgICAgIm5hbWUiOiAiTmF0aXZlIGRvZGdlciIsCiAgICAgICJoZXJvSWQiOiAicmFtYSIsCiAgICAgICJ0ZWFtIjogIm1vb24iLAogICAgICAiYm90IjogZmFsc2UsCiAgICAgICJsYW5lIjogMCwKICAgICAgImNvbm5lY3RlZCI6IHRydWUsCiAgICAgICJraW5kIjogImhlcm8iLAogICAgICAieCI6IC0xMi43MTk5OTk5OTk5OTk5ODgsCiAgICAgICJ6IjogMTAuOTIwMDAwMDAwMDAwMDA5LAogICAgICAieSI6IDAsCiAgICAgICJ5YXciOiAzLjE0MTU5MjY1MzU4OTc5MywKICAgICAgImhlYWx0aCI6IDMwMCwKICAgICAgIm1heEhlYWx0aCI6IDMwMCwKICAgICAgInNoaWVsZCI6IDAsCiAgICAgICJyZXNwYXduIjogMCwKICAgICAgImNvb2xkb3ducyI6IFsKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMAogICAgICBdLAogICAgICAiZmlyZUNvb2xkb3duIjogMCwKICAgICAgImNyZWRpdHMiOiAxOTAsCiAgICAgICJsZXZlbCI6IDEsCiAgICAgICJraWxscyI6IDAsCiAgICAgICJkZWF0aHMiOiAwLAogICAgICAiYXNzaXN0cyI6IDAsCiAgICAgICJkYW1hZ2VEZWFsdCI6IDAsCiAgICAgICJ1cGdyYWRlcyI6IHsKICAgICAgICAicG93ZXIiOiAwLAogICAgICAgICJ2aXRhbGl0eSI6IDAsCiAgICAgICAgInRlbXBvIjogMAogICAgICB9LAogICAgICAiZWZmZWN0cyI6IHsKICAgICAgICAiaGFzdGUiOiAwLAogICAgICAgICJzbG93IjogMCwKICAgICAgICAid2FyZCI6IDAsCiAgICAgICAgInZpZ29yIjogMAogICAgICB9LAogICAgICAibGFzdElucHV0U2VxIjogMTE0CiAgICB9LAogICAgIm9ic2VydmVkVGFyZ2V0SGl0cyI6IFtdCiAgfSwKICAicGFnZUVycm9ycyI6IFtdLAogICJjb21tYW5kcyI6IFsKICAgIHsKICAgICAgInR5cGUiOiAiY29tbWFuZCIsCiAgICAgICJpZCI6ICJlNDRjNzkwZS0xIiwKICAgICAgImFjdGlvbiI6ICJhYmlsaXR5IiwKICAgICAgInNsb3QiOiAyCiAgICB9CiAgXSwKICAicmVzdWx0cyI6IFsKICAgIHsKICAgICAgInR5cGUiOiAicmVzdWx0IiwKICAgICAgImlkIjogImU0NGM3OTBlLTEiLAogICAgICAib2siOiB0cnVlLAogICAgICAiY29kZSI6ICJBQklMSVRZX0NBU1QiCiAgICB9CiAgXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-d100b65c96843a8f8dd3",
+          "file": "arena.e2e.ts",
+          "line": 122,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T18:36:47.738Z",
+    "duration": 79189.964,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

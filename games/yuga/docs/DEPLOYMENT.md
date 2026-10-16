@@ -1,5 +1,7 @@
 # Deploying YUGA: Confluence
 
+Protocol 2 requires updating the browser bundle and server together. Version-1 servers cannot represent jungle guardians or contested gold.
+
 The browser build can run Practice from a static host. Online matches additionally need a running WebSocket server. The supplied container serves both the built client and the authoritative server on one origin. These files prepare deployment; they do not create a provider account, purchase hosting or establish that a public multiplayer backend is available.
 
 ## Files and build context
@@ -49,11 +51,11 @@ The container reads `PORT`; its health check uses that same variable. A provider
 
 ## Public hosting options
 
-### Current publication blocker
+### Publication permission: resolved; release verification pending
 
-The release branch `game/yuga-confluence` has been pushed. On 16 October 2026 the release coordinator found that the existing GitHub Pages environment, `github-pages`, permits deployment only from `main`. The request to add the exact new branch policy returned **HTTP 403 — ResourceNotAccessibleByIntegration**. The repository owner has been asked to add `game/yuga-confluence` under **Settings → Environments → github-pages → Deployment branches and tags**; that response is still pending at this record's timestamp.
+The release branch `game/yuga-confluence` has been pushed. Earlier on 16 October 2026, the release coordinator found that the existing GitHub Pages environment, `github-pages`, permitted deployment only from `main`. The integration's request to add the exact new branch policy returned **HTTP 403 — ResourceNotAccessibleByIntegration**. This earlier failure remains historical evidence.
 
-This is a GitHub integration permission/protected-environment block, not a successful public release. The protection must remain in force: do not deploy through a replacement environment or another route to evade it. No new public YUGA site or public WSS backend is claimed. Local builds, model checks and the container tests below completed independently of that publication permission.
+The repository owner subsequently removed the Pages deployment-branch restrictions. The coordinator verified `deployment_branch_policy: null` through the environment API; a branch-policy listing HTTP 404 is expected with no branch policy configured. The earlier branch-policy blocker is resolved through the owner's configuration change. This does not itself publish or validate the expansion: final workflow deployment and public client verification remain pending in this record. No public WSS backend is claimed. The local container record below describes the separate historical fourteen-hero build.
 
 ### One full-stack service
 
@@ -79,9 +81,9 @@ At this preparation point, `PORT` is the deployment environment control; the ser
 
 Before broad public multiplayer availability, establish a hosting owner and budget, TLS/WebSocket routing, origin/rate policy, capacity monitoring, deployment rollback and an honest restart message. Keep match admission within measured limits. Stop/restart only the YUGA service under review; the existing ANDOLAN service has separate data and lifecycle.
 
-## Release verification record
+## Historical fourteen-hero verification record
 
-On 16 October 2026, the final frozen runtime/art Docker build and bounded local production-container smoke passed. [deployment-container.json](evidence/deployment-container.json) records the exact image, client/model hashes, configuration hashes and scope. Image `sha256:1e5ee12d523b02f390eaa4a239763240c37484f3cea17ba6844556fa47aed454` served a 6,414,473-byte client with SHA-256 `46193afd937a3ca572351de148833b27cc1a71a9bc52d3ad1117d6ffaf924a26`. All fourteen external GLBs—46,520,992 bytes total—were fetched through the actual URLs declared by the production HTML and matched the frozen asset manifest. The production HTML contained no development-only window hook.
+The protocol-1 baseline predates the seven-unit, jungle and contested-gold expansion. It does not validate the new protocol-2 build. On 16 October 2026, that frozen runtime/art Docker build and bounded local production-container smoke passed. [deployment-container.json](evidence/deployment-container.json) records the exact image, client/model hashes, configuration hashes and scope. Image `sha256:1e5ee12d523b02f390eaa4a239763240c37484f3cea17ba6844556fa47aed454` served a 6,414,473-byte client with SHA-256 `46193afd937a3ca572351de148833b27cc1a71a9bc52d3ad1117d6ffaf924a26`. All fourteen external GLBs—46,520,992 bytes total—were fetched through the actual URLs declared by the production HTML and matched the frozen asset manifest. The production HTML contained no development-only window hook.
 
 This check caught and fixed a real packaging regression: relative model URLs generated for `assets/*.js` resolved from `index.html` after the script was inlined, returning 404. The build now generates GLB URLs with `new URL(filename, document.baseURI)`, retaining the `assets/` prefix for root and nested static hosting. The failed-image HTTP evidence remains in [deployment-container-url-regression.json](evidence/deployment-container-url-regression.json); the earlier pre-asset container result remains in [deployment-container-initial.json](evidence/deployment-container-initial.json). Neither earlier image is the accepted final container.
 

@@ -36,3 +36,27 @@ The repaired functional baseline and local stress pass are complete. The user-di
 ### Revision audit before final native run
 
 Independent review found replay animation event counters surviving a new match, a same-page same-room rejoin resetting command IDs into cached receipts, and gallery disposal racing overlapping model loads. Owners repaired all three; native regression cases now cover fresh replay fire/cast, same-page rejoin then a new skill, and deliberately delayed real GLB requests while switching/closing the gallery. Optional target-lock acceptance covers ordinary T/right-click/touch activation, manual/menu release and a labelled cover fixture; server hit authority remains separate. Final source/art numeric gates and bounded stress pass, with Sita costume/prop defeat-floor review still pending. Actual all14 model transitions, two-human counterplay, long native finish and visual/mobile inspection remain the next gate.
+
+
+### Fourteen-hero verification boundary and next user revision
+
+All14 actual imported models passed native gallery/practice/action checks and14 explicitly labelled duplicate-skin/defeat fixtures. The final authored body and exported binary gates, source-hashed bounded stress, native practice/settings/mobile/audio and actual two-browser reconnect checks passed. Independent visual review accepted the observed framing/poses with recorded Sita palette and cloth/prop-floor limitations. Production Chromium loaded all14 built assets at both root and nested paths after the real inline-URL packaging defect was fixed.
+
+The counterplay test is not accepted: first it overshot a lateral route into a building under dual software rendering; after removing that detour, it observed local windup but missed the peer's short-lived phase through sequential current-state polling. The next test revision must retain incoming authoritative cast frames and prove native lateral movement begins before release. It may not substitute teleported positions, altered health or slowed simulation for physical counterplay. Both failures remain archived.
+
+Before the long native soak began, the user requested political/minion roles, neutral mythic camps and contested gold. All QA browsers were closed and source ownership released for that implementation. The next moderated review must cover camp aggro/leash/reset/respawn, one-owner rewards and steal/range/expiry/duplicate semantics, temporary-power lifecycle, actual new model/animation states and native mouse chords. `QA.md` carries the planned gates. No eight-minute native finish or public deployment is currently claimed; Pages remains blocked by a main-only environment policy and403 policy-update access.
+
+
+### Jungle revision review opened
+
+Protocol2 makes camps and contested gold explicit, while the server alone creates and grants rewards. The requested seven additional unit models passed their final numeric gate after a rendered city-watch grip repair. Input review found a real mouse chord defect: pointer events alone did not represent each physical button transition; root added per-button mouse events with touch filtering. A renderer review also found the0.7-second stale-effect filter could drop accepted skill animation on a slow frame; current code retains recent action events up to2seconds while keeping particles short and seeding history on welcome/resume. New native and labelled fixture gates exercise those exact paths.
+
+The user removed the Pages deployment restriction; public publication now waits for successful expanded build/CI/native acceptance. The previous403 and404 are historical access evidence, not a continuing permissions blocker.
+
+### Expanded focused review result
+
+Six focused cases now pass: native mouse chords/menu release, real asset-loading cancellation/restart, labelled reward/camp HUD and event-age/resume fixtures, actual local-server camp traversal/combat/lifecycle, and all seven real unit skins through four animation states. The camp run used ordinary input, normal spawn/respawn clocks and lane waves; it did not teleport or alter health/rewards. Unit-state fixtures remain labelled presentation evidence. The first attempt's event-history observer bug and missing favicon404 are preserved alongside corrected results in `evidence/jungle-focused-*`; detailed native/fixture scopes and source hashes are in `jungle-native-units-check.json`. No recorded page/console errors or fallback models remain in these passing batches.
+
+The revised native practice and real two-human counterplay cases also pass. The peer's first lateral movement occurred during received windup,0.75s before authoritative release, and no attacker hit was recorded. This is automated ordinary-key reaction rather than a human reflex measurement; physical spawn-to-encounter traversal and unmodified authority remain part of the evidence. `jungle-native-regression-check.json` records both cases and exact timestamps. All eight focused cases are accepted, with prior failures retained.
+
+Next gates remain quiet measured stress, final eight-minute native finish/replay, current production21-asset smoke and successful publication. Browsers closed before the measured stress handoff. The earlier fourteen-hero and production14-asset results remain historical evidence rather than substitutions for these expanded gates.

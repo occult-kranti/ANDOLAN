@@ -1,4 +1,5 @@
 import { ArenaSimulation } from '../shared/simulation';
+import { YUGA_PROTOCOL } from '../shared/types';
 import type { ArenaSnapshot, ArenaInput, ArenaCommand, ServerMessage, CommandResult } from '../shared/types';
 export interface ArenaConnection { input(input:ArenaInput):void; command(command:ArenaCommand):void; pause(paused:boolean):void; close():void; reconnect?():void }
 export interface Callbacks { snapshot(snapshot:ArenaSnapshot):void; welcome(id:string,room:string,online:boolean):void; status(message:string,ready:boolean):void; result(result:CommandResult):void; error(message:string):void }
@@ -44,18 +45,18 @@ export function online(options:{url:string;heroId:string;name:string;room:string
     if(closed)return;joined=false;stale=false;callbacks.status(failures?'Rejoining your match…':'Connecting to arena…',false);
     try{socket=new WebSocket(options.url);}catch{callbacks.error('Could not open that server. Check its address and try again.');return;}
     const attempt=socket;
-    attempt.addEventListener('open',()=>{if(attempt===socket)send({type:'join',protocol:1,heroId:options.heroId,name:options.name,...(room?{room}:{}),...(token?{token}:{})});});
+    attempt.addEventListener('open',()=>{if(attempt===socket)send({type:'join',protocol:YUGA_PROTOCOL,heroId:options.heroId,name:options.name,...(room?{room}:{}),...(token?{token}:{})});});
     attempt.addEventListener('message',event=>{
       if(attempt!==socket||closed)return;
       let message:ServerMessage;try{message=JSON.parse(String(event.data));}catch{return;}
       if(!message||typeof message!=='object')return;
       if(message.type==='welcome'){
-        if(message.protocol!==1||message.snapshot?.protocol!==1||!Array.isArray(message.snapshot.actors)){closed=true;joined=false;clearInterval(freshness);clearTimeout(retry);callbacks.status('Arena version mismatch',false);callbacks.error('This arena server uses a different game version. Update it to YUGA Confluence.');attempt.close();return;}
+        if(message.protocol!==YUGA_PROTOCOL||message.snapshot?.protocol!==YUGA_PROTOCOL||!Array.isArray(message.snapshot.actors)||!Array.isArray(message.snapshot.neutrals)||!Array.isArray(message.snapshot.goldShards)){closed=true;joined=false;clearInterval(freshness);clearTimeout(retry);callbacks.status('Arena version mismatch',false);callbacks.error('This arena server uses a different game version. Update it to YUGA Confluence.');attempt.close();return;}
         room=message.room;token=message.token;joined=true;stale=false;failures=0;lastSnapshot=Date.now();
         try{sessionStorage.setItem(identityKey(),token);}catch{/* Reconnect still works in this tab. */}
         callbacks.welcome(message.id,room,true);callbacks.status(`Online · ${room}`,true);callbacks.snapshot(message.snapshot);
       }else if(message.type==='snapshot'&&joined){
-        if(message.snapshot?.protocol!==1||!Array.isArray(message.snapshot.actors))return;
+        if(message.snapshot?.protocol!==YUGA_PROTOCOL||!Array.isArray(message.snapshot.actors)||!Array.isArray(message.snapshot.neutrals)||!Array.isArray(message.snapshot.goldShards))return;
         lastSnapshot=Date.now();if(stale){stale=false;callbacks.status(`Online · ${room}`,true);}callbacks.snapshot(message.snapshot);
       }else if(message.type==='result')callbacks.result(message);
       else if(message.type==='error')callbacks.error(message.message);

@@ -19,6 +19,7 @@ await fs.mkdir(output, { recursive: true });
 const { createArenaServer } = await import(pathToFileURL(serverFile).href);
 const { HEROES } = await import(pathToFileURL(heroesFile).href);
 assert.equal(HEROES.length, 14, 'Update the production gate deliberately if the roster changes.');
+const unitIds = ['soldier', 'city-watch', 'minister', 'king', 'yaksha', 'naga', 'sky-sentinel'];
 const evidence = { startedAt: new Date().toISOString(), passed: false, build: {}, runs: [] };
 for (const filename of [path.join(built, 'index.html'), serverFile]) {
   evidence.build[path.relative(root, filename)] = createHash('sha256').update(await fs.readFile(filename)).digest('hex');
@@ -85,16 +86,16 @@ try {
       assert.equal(model.magic, 'glTF', `Response is not a binary glTF: ${model.url}`);
       assert.ok(model.bytes > 12, `Empty GLB: ${model.url}`);
     }
-    for (const { id } of HEROES) {
+    for (const id of [...HEROES.map(hero => hero.id), ...unitIds]) {
       assert.ok(run.models.some(model => { const filename = path.basename(new URL(model.url).pathname); return filename === `${id}.glb` || filename.startsWith(`${id}-`); }), `Missing actual ${id} GLB response at ${prefix}`);
     }
-    assert.equal(new Set(run.models.map(model => model.url)).size, 14, 'Expected all fourteen model URLs.');
+    assert.equal(new Set(run.models.map(model => model.url)).size, 21, 'Expected fourteen hero and seven unit model URLs.');
     assert.deepEqual(run.pageErrors, [], 'Production JavaScript raised page errors.');
     assert.deepEqual(run.requestFailures, [], 'Production requests failed.');
     assert.equal(await page.evaluate(() => Object.hasOwn(window, '__YUGA')), false);
     run.passed = true;
     await context.close(); context = undefined; page = undefined;
-    console.log(`PASS ${name}: fourteen binary GLBs, gallery clips, Practice HUD and Q cooldown.`);
+    console.log(`PASS ${name}: twenty-one binary GLBs, gallery clips, Practice HUD and Q cooldown.`);
   }
   evidence.passed = true;
 } catch (error) {

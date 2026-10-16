@@ -1,0 +1,1339 @@
+{
+  "scope": "Native camp route uses actual local server and ordinary browser keys, no hero bots but normal lane waves/camp clocks. Seven-unit animation states are explicitly labelled mocked snapshots using real assets, not native earned kills. Software rendering with maximum10fps budget, deterministic matrix concurrent for part of run; no hardware performance claims.",
+  "stats": {
+    "startTime": "2026-10-16T18:33:45.532Z",
+    "duration": 158229.116,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "sourceSha256": {
+    "games/yuga/client/main.ts": "050854dc5bc1167201350416452960e0a3492b2f168ad4bf8a578303f453a9ab",
+    "games/yuga/client/world.ts": "b4087c09887c82b164b8559decda5354f7031f48ce228673f676966618986fe8",
+    "games/yuga/shared/simulation.ts": "85acc59bc87acf15a0854f3b5cd463bfb9407d9c8d7fa3acfa3f9f19bb6286c4",
+    "games/yuga/shared/types.ts": "ba50968277b687b5e64dd92f56500cbf8edb613f4574630ba761995e6092af7a",
+    "games/yuga/art/hero-assets.json": "d7a9af060a271a5ba67575c64604b893fd008dd3ef989f5e76183a3f11d22843",
+    "games/yuga/art/unit-assets.json": "3adc9c1be2132d5064d5ac8b4122675d88e2079ca68125eac9ed221c12491776",
+    "games/yuga/tests/jungle.e2e.ts": "50bd3eaa0610a19b7c82a81a9a866b1d70608e39942ea6a60d0334083bb1c2f1",
+    "games/yuga/tests/unit-assets.e2e.ts": "d1cfd1dee4976d22276bde3ca7ae3755756ce0b255bfb55aa523c792ef1bb75c"
+  },
+  "cases": [
+    {
+      "name": "native camp approach, leash, clear, gold shard, temporary power and respawn",
+      "status": "passed",
+      "durationMs": 102944,
+      "evidence": [
+        {
+          "scope": "Actual local WebSocket server without hero bots; ordinary movement, target lock and primary fire. Lane waves and normal camp/buff/respawn clocks remain active. No positional, reward, health or timer setup.",
+          "states": [
+            {
+              "time": 0.1,
+              "state": "dead",
+              "health": 0,
+              "x": -20,
+              "z": 0
+            },
+            {
+              "time": 30.00000000000029,
+              "state": "idle",
+              "health": 460,
+              "x": -20,
+              "z": 0
+            },
+            {
+              "time": 30.100000000000293,
+              "state": "aggro",
+              "health": 460,
+              "x": -19.713825830524684,
+              "z": -0.046950449679545356
+            },
+            {
+              "time": 32.600000000000286,
+              "state": "returning",
+              "health": 460,
+              "x": -15.549433930600443,
+              "z": -0.5081904025843523
+            },
+            {
+              "time": 33.40000000000024,
+              "state": "idle",
+              "health": 460,
+              "x": -20,
+              "z": 0
+            },
+            {
+              "time": 35.800000000000104,
+              "state": "aggro",
+              "health": 460,
+              "x": -19.855868548429633,
+              "z": -0.0158469135234436
+            },
+            {
+              "time": 46.99999999999947,
+              "state": "dead",
+              "health": 0,
+              "x": -18.708375194315185,
+              "z": -0.18354157050982878
+            },
+            {
+              "time": 86.9999999999972,
+              "state": "idle",
+              "health": 460,
+              "x": -20,
+              "z": 0
+            }
+          ],
+          "before": {
+            "id": "cbdd79e213c1b98f",
+            "name": "Native grove visitor",
+            "heroId": "rama",
+            "team": "sun",
+            "bot": false,
+            "lane": 0,
+            "connected": true,
+            "kind": "hero",
+            "x": -15.239999999999984,
+            "z": -0.8400000000000182,
+            "y": 0,
+            "yaw": 0,
+            "health": 246,
+            "maxHealth": 300,
+            "shield": 0,
+            "respawn": 0,
+            "cooldowns": [
+              0,
+              0,
+              0
+            ],
+            "fireCooldown": 0,
+            "credits": 100,
+            "level": 2,
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0,
+            "damageDealt": 0,
+            "upgrades": {
+              "power": 1,
+              "vitality": 0,
+              "tempo": 0
+            },
+            "effects": {
+              "haste": 0,
+              "slow": 0,
+              "ward": 0,
+              "vigor": 0
+            },
+            "lastInputSeq": 635
+          },
+          "after": {
+            "id": "cbdd79e213c1b98f",
+            "name": "Native grove visitor",
+            "heroId": "rama",
+            "team": "sun",
+            "bot": false,
+            "lane": 0,
+            "connected": true,
+            "kind": "hero",
+            "x": -15.599999999999984,
+            "z": -0.8400000000000182,
+            "y": 0,
+            "yaw": -1.3626644611983774,
+            "health": 109,
+            "maxHealth": 300,
+            "shield": 0,
+            "respawn": 0,
+            "cooldowns": [
+              0,
+              0,
+              0
+            ],
+            "fireCooldown": 0.38,
+            "credits": 210,
+            "level": 2,
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0,
+            "damageDealt": 460,
+            "upgrades": {
+              "power": 1,
+              "vitality": 0,
+              "tempo": 0
+            },
+            "effects": {
+              "haste": 0,
+              "slow": 0,
+              "ward": 0,
+              "vigor": 11.399999999999991
+            },
+            "lastInputSeq": 825
+          },
+          "killed": {
+            "id": "neutral-stone-grove",
+            "kind": "neutral",
+            "team": "neutral",
+            "species": "yaksha",
+            "campId": "stone-grove",
+            "name": "Grove Yaksha",
+            "x": -18.708375194315185,
+            "z": -0.18354157050982878,
+            "y": 0,
+            "yaw": 1.778928192391416,
+            "health": 0,
+            "maxHealth": 460,
+            "state": "dead",
+            "targetId": null,
+            "respawnAt": 86.99999999999946,
+            "slow": 0
+          },
+          "respawned": {
+            "id": "neutral-stone-grove",
+            "kind": "neutral",
+            "team": "neutral",
+            "species": "yaksha",
+            "campId": "stone-grove",
+            "name": "Grove Yaksha",
+            "x": -20,
+            "z": 0,
+            "y": 0,
+            "yaw": 1.778928192391416,
+            "health": 460,
+            "maxHealth": 460,
+            "state": "idle",
+            "targetId": null,
+            "respawnAt": 0,
+            "slow": 0
+          },
+          "earned": [
+            {
+              "id": 798,
+              "type": "camp",
+              "actorId": "cbdd79e213c1b98f",
+              "team": "sun",
+              "x": -18.708375194315185,
+              "z": -0.18354157050982878,
+              "label": "Grove Yaksha camp cleared",
+              "color": "#c6a36e",
+              "time": 46.99999999999947,
+              "targetId": "neutral-stone-grove",
+              "amount": 30,
+              "sharedAwards": [
+                {
+                  "actorId": "cbdd79e213c1b98f",
+                  "amount": 30
+                }
+              ]
+            },
+            {
+              "id": 799,
+              "type": "buff",
+              "actorId": "cbdd79e213c1b98f",
+              "team": "sun",
+              "x": -18.708375194315185,
+              "z": -0.18354157050982878,
+              "label": "vigor blessing",
+              "color": "#c6a36e",
+              "time": 46.99999999999947,
+              "targetId": "neutral-stone-grove",
+              "buff": "vigor"
+            }
+          ],
+          "gold": [
+            {
+              "id": 814,
+              "type": "gold",
+              "actorId": "cbdd79e213c1b98f",
+              "team": "sun",
+              "x": -18.708375194315185,
+              "z": -0.18354157050982878,
+              "label": "Gold secured",
+              "color": "#ffe28a",
+              "time": 47.49999999999944,
+              "targetId": "gold-433",
+              "amount": 30,
+              "reward": "secure"
+            }
+          ],
+          "observedShard": {
+            "sourceId": "neutral-stone-grove",
+            "value": 30
+          },
+          "errors": {
+            "errors": [],
+            "consoleErrors": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "labelled seven-unit snapshots render real skins through idle, run, fire and defeat",
+      "status": "passed",
+      "durationMs": 53930,
+      "evidence": [
+        {
+          "scope": "Explicit snapshot positions/movement/shot/death fixtures. Seven real GLBs and animation instances, no fallback. This is presentation/skin/clip evidence; no earned unit kill, physical traversal or server-authority claim.",
+          "inventory": {
+            "assets": [
+              {
+                "unitId": "soldier",
+                "url": "/client/assets/units/soldier.glb",
+                "state": "ready",
+                "triangles": 7599,
+                "materials": 4,
+                "skinnedPrimitives": 4,
+                "animations": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ]
+              },
+              {
+                "unitId": "city-watch",
+                "url": "/client/assets/units/city-watch.glb",
+                "state": "ready",
+                "triangles": 7400,
+                "materials": 4,
+                "skinnedPrimitives": 4,
+                "animations": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ]
+              },
+              {
+                "unitId": "minister",
+                "url": "/client/assets/units/minister.glb",
+                "state": "ready",
+                "triangles": 7499,
+                "materials": 4,
+                "skinnedPrimitives": 4,
+                "animations": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ]
+              },
+              {
+                "unitId": "king",
+                "url": "/client/assets/units/king.glb",
+                "state": "ready",
+                "triangles": 7992,
+                "materials": 4,
+                "skinnedPrimitives": 4,
+                "animations": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ]
+              },
+              {
+                "unitId": "yaksha",
+                "url": "/client/assets/units/yaksha.glb",
+                "state": "ready",
+                "triangles": 10000,
+                "materials": 4,
+                "skinnedPrimitives": 4,
+                "animations": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ]
+              },
+              {
+                "unitId": "naga",
+                "url": "/client/assets/units/naga.glb",
+                "state": "ready",
+                "triangles": 10000,
+                "materials": 4,
+                "skinnedPrimitives": 4,
+                "animations": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ]
+              },
+              {
+                "unitId": "sky-sentinel",
+                "url": "/client/assets/units/sky-sentinel.glb",
+                "state": "ready",
+                "triangles": 9495,
+                "materials": 4,
+                "skinnedPrimitives": 4,
+                "animations": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ]
+              }
+            ],
+            "instances": [
+              {
+                "id": "neutral-west-reeds",
+                "unitId": "naga",
+                "url": "/client/assets/units/naga.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  1
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0,
+                "animated": false,
+                "pose": [
+                  0,
+                  0,
+                  0.1411,
+                  0.99,
+                  -0.1857,
+                  0.0027,
+                  0.0189,
+                  0.9824,
+                  0.1857,
+                  -0.0027,
+                  0.0189,
+                  0.9824,
+                  0.5599,
+                  0.5166,
+                  -0.4761,
+                  0.4392,
+                  0.0291,
+                  -0.0012,
+                  -0.0251,
+                  0.9993,
+                  -0.5599,
+                  -0.5166,
+                  -0.4761,
+                  0.4392
+                ],
+                "transitions": {
+                  "idle": 1,
+                  "defeat": 1
+                }
+              },
+              {
+                "id": "neutral-stone-grove",
+                "unitId": "yaksha",
+                "url": "/client/assets/units/yaksha.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  2
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0,
+                "animated": false,
+                "pose": [
+                  0,
+                  0,
+                  0.1605,
+                  0.987,
+                  -0.1742,
+                  0.0025,
+                  0.0188,
+                  0.9845,
+                  0.1742,
+                  -0.0025,
+                  0.0188,
+                  0.9845,
+                  0.5682,
+                  0.5097,
+                  -0.4808,
+                  0.4314,
+                  0.0362,
+                  -0.0011,
+                  -0.0284,
+                  0.9989,
+                  -0.5682,
+                  -0.5097,
+                  -0.4808,
+                  0.4314
+                ],
+                "transitions": {
+                  "idle": 1,
+                  "defeat": 1
+                }
+              },
+              {
+                "id": "neutral-sky-garden",
+                "unitId": "sky-sentinel",
+                "url": "/client/assets/units/sky-sentinel.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  3
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0,
+                "animated": false,
+                "pose": [
+                  0,
+                  0,
+                  0.1456,
+                  0.9893,
+                  -0.1835,
+                  0.0027,
+                  0.019,
+                  0.9828,
+                  0.1835,
+                  -0.0027,
+                  0.019,
+                  0.9828,
+                  0.5618,
+                  0.5148,
+                  -0.4774,
+                  0.4375,
+                  0.0308,
+                  -0.0012,
+                  -0.0259,
+                  0.9992,
+                  -0.5618,
+                  -0.5148,
+                  -0.4774,
+                  0.4375
+                ],
+                "transitions": {
+                  "idle": 1,
+                  "defeat": 1
+                }
+              },
+              {
+                "id": "neutral-east-reeds",
+                "unitId": "naga",
+                "url": "/client/assets/units/naga.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  4
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0,
+                "animated": false,
+                "pose": [
+                  0,
+                  0,
+                  0.1411,
+                  0.99,
+                  -0.1857,
+                  0.0027,
+                  0.0189,
+                  0.9824,
+                  0.1857,
+                  -0.0027,
+                  0.0189,
+                  0.9824,
+                  0.5599,
+                  0.5166,
+                  -0.4761,
+                  0.4392,
+                  0.0291,
+                  -0.0012,
+                  -0.0251,
+                  0.9993,
+                  -0.5599,
+                  -0.5166,
+                  -0.4761,
+                  0.4392
+                ],
+                "transitions": {
+                  "idle": 1,
+                  "defeat": 1
+                }
+              }
+            ],
+            "fallback": []
+          },
+          "evidence": [
+            {
+              "unitId": "soldier",
+              "idle": {
+                "id": "fixture-soldier",
+                "unitId": "soldier",
+                "url": "/client/assets/units/soldier.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  5
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "idle",
+                "action": "",
+                "animationTime": 0.1,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.1332,
+                  0.9911,
+                  -0.0865,
+                  -0.0253,
+                  -0.1057,
+                  0.9903,
+                  0.1249,
+                  -0.011,
+                  0.0885,
+                  0.9882,
+                  0.5442,
+                  0.5284,
+                  -0.4094,
+                  0.507,
+                  0.0252,
+                  -0.0122,
+                  -0.3281,
+                  0.9442,
+                  -0.518,
+                  -0.5582,
+                  -0.4344,
+                  0.4811
+                ],
+                "transitions": {
+                  "idle": 1
+                }
+              },
+              "defeat": {
+                "id": "fixture-soldier",
+                "unitId": "soldier",
+                "url": "/client/assets/units/soldier.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  5
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0.4,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.0739,
+                  0.9973,
+                  -0.24,
+                  -0.1219,
+                  -0.1009,
+                  0.9578,
+                  0.24,
+                  0.1219,
+                  -0.1009,
+                  0.9578,
+                  0.5747,
+                  0.477,
+                  -0.3305,
+                  0.577,
+                  0.0918,
+                  -0.004,
+                  -0.6451,
+                  0.7585,
+                  -0.5747,
+                  -0.477,
+                  -0.3305,
+                  0.577
+                ],
+                "transitions": {
+                  "idle": 2,
+                  "run": 1,
+                  "fire": 1,
+                  "defeat": 1
+                }
+              }
+            },
+            {
+              "unitId": "city-watch",
+              "idle": {
+                "id": "fixture-city-watch",
+                "unitId": "city-watch",
+                "url": "/client/assets/units/city-watch.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  6
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "idle",
+                "action": "",
+                "animationTime": 0.2,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.1309,
+                  0.9914,
+                  -0.5753,
+                  -0.0869,
+                  -0.4008,
+                  0.7077,
+                  0.0419,
+                  0.0869,
+                  -0.4347,
+                  0.8954,
+                  0.5432,
+                  0.5291,
+                  -0.4074,
+                  0.5089,
+                  0.0257,
+                  -0.0109,
+                  -0.3257,
+                  0.9451,
+                  -0.517,
+                  -0.5589,
+                  -0.4324,
+                  0.4831
+                ],
+                "transitions": {
+                  "idle": 1
+                }
+              },
+              "defeat": {
+                "id": "fixture-city-watch",
+                "unitId": "city-watch",
+                "url": "/client/assets/units/city-watch.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  6
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0.4,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.0716,
+                  0.9974,
+                  -0.245,
+                  -0.1221,
+                  -0.1178,
+                  0.9546,
+                  0.245,
+                  0.1221,
+                  -0.1178,
+                  0.9546,
+                  0.574,
+                  0.4772,
+                  -0.3278,
+                  0.5791,
+                  0.0927,
+                  -0.0015,
+                  -0.644,
+                  0.7594,
+                  -0.574,
+                  -0.4772,
+                  -0.3278,
+                  0.5791
+                ],
+                "transitions": {
+                  "idle": 2,
+                  "run": 1,
+                  "fire": 1,
+                  "defeat": 1
+                }
+              }
+            },
+            {
+              "unitId": "minister",
+              "idle": {
+                "id": "fixture-minister",
+                "unitId": "minister",
+                "url": "/client/assets/units/minister.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  7
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "idle",
+                "action": "",
+                "animationTime": 0.1,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.1294,
+                  0.9916,
+                  -0.173,
+                  -0.0239,
+                  -0.0926,
+                  0.9803,
+                  0.095,
+                  -0.0151,
+                  0.1066,
+                  0.9896,
+                  0.5427,
+                  0.5296,
+                  -0.406,
+                  0.5101,
+                  0.026,
+                  -0.01,
+                  -0.3241,
+                  0.9456,
+                  -0.5164,
+                  -0.5594,
+                  -0.431,
+                  0.4844
+                ],
+                "transitions": {
+                  "idle": 1
+                }
+              },
+              "defeat": {
+                "id": "fixture-minister",
+                "unitId": "minister",
+                "url": "/client/assets/units/minister.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  7
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0.4,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.0701,
+                  0.9975,
+                  -0.2505,
+                  -0.1223,
+                  -0.1315,
+                  0.9513,
+                  0.2505,
+                  0.1223,
+                  -0.1315,
+                  0.9513,
+                  0.5735,
+                  0.4775,
+                  -0.326,
+                  0.5804,
+                  0.0933,
+                  0.0002,
+                  -0.6432,
+                  0.76,
+                  -0.5735,
+                  -0.4775,
+                  -0.326,
+                  0.5804
+                ],
+                "transitions": {
+                  "idle": 2,
+                  "run": 1,
+                  "fire": 1,
+                  "defeat": 1
+                }
+              }
+            },
+            {
+              "unitId": "king",
+              "idle": {
+                "id": "fixture-king",
+                "unitId": "king",
+                "url": "/client/assets/units/king.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  8
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "idle",
+                "action": "",
+                "animationTime": 0.1,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.1422,
+                  0.9898,
+                  -0.024,
+                  0.0106,
+                  0.0834,
+                  0.9962,
+                  0.0838,
+                  -0.0048,
+                  0.0568,
+                  0.9949,
+                  0.5453,
+                  0.5203,
+                  -0.3715,
+                  0.5421,
+                  0.049,
+                  -0.0059,
+                  -0.4141,
+                  0.9089,
+                  -0.5186,
+                  -0.5534,
+                  -0.3982,
+                  0.516
+                ],
+                "transitions": {
+                  "idle": 1
+                }
+              },
+              "defeat": {
+                "id": "fixture-king",
+                "unitId": "king",
+                "url": "/client/assets/units/king.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  8
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0.4,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.083,
+                  0.9966,
+                  -0.2162,
+                  -0.1201,
+                  -0.0372,
+                  0.9682,
+                  0.2162,
+                  0.1201,
+                  -0.0372,
+                  0.9682,
+                  0.5766,
+                  0.4728,
+                  -0.3258,
+                  0.5813,
+                  0.0697,
+                  0.0036,
+                  -0.6717,
+                  0.7376,
+                  -0.5766,
+                  -0.4728,
+                  -0.3258,
+                  0.5813
+                ],
+                "transitions": {
+                  "idle": 2,
+                  "run": 1,
+                  "fire": 1,
+                  "defeat": 1
+                }
+              }
+            },
+            {
+              "unitId": "yaksha",
+              "idle": {
+                "id": "neutral-stone-grove",
+                "unitId": "yaksha",
+                "url": "/client/assets/units/yaksha.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  2
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "idle",
+                "action": "",
+                "animationTime": 0.2,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.1,
+                  0.995,
+                  -0.032,
+                  -0.0269,
+                  0.118,
+                  0.9921,
+                  0.1182,
+                  0.0305,
+                  0.0896,
+                  0.9885,
+                  0.5498,
+                  0.5182,
+                  -0.3798,
+                  0.5338,
+                  0.0463,
+                  -0.0132,
+                  -0.4243,
+                  0.9042,
+                  -0.5234,
+                  -0.5511,
+                  -0.4065,
+                  0.507
+                ],
+                "transitions": {
+                  "idle": 2,
+                  "defeat": 1
+                }
+              },
+              "defeat": {
+                "id": "neutral-stone-grove",
+                "unitId": "yaksha",
+                "url": "/client/assets/units/yaksha.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  2
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0.4,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.0927,
+                  0.9957,
+                  -0.2214,
+                  -0.1197,
+                  -0.005,
+                  0.9678,
+                  0.2214,
+                  0.1197,
+                  -0.005,
+                  0.9678,
+                  0.5805,
+                  0.472,
+                  -0.3365,
+                  0.5718,
+                  0.0651,
+                  -0.0077,
+                  -0.6771,
+                  0.7329,
+                  -0.5805,
+                  -0.472,
+                  -0.3365,
+                  0.5718
+                ],
+                "transitions": {
+                  "idle": 3,
+                  "defeat": 2,
+                  "run": 1,
+                  "fire": 1
+                }
+              }
+            },
+            {
+              "unitId": "naga",
+              "idle": {
+                "id": "neutral-west-reeds",
+                "unitId": "naga",
+                "url": "/client/assets/units/naga.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  1
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "idle",
+                "action": "",
+                "animationTime": 0.1,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.1324,
+                  0.9912,
+                  0.0583,
+                  -0.0068,
+                  -0.0187,
+                  0.9981,
+                  -0.024,
+                  -0.0109,
+                  0.0772,
+                  0.9967,
+                  0.5439,
+                  0.5287,
+                  -0.4087,
+                  0.5076,
+                  0.0254,
+                  -0.0118,
+                  -0.3273,
+                  0.9445,
+                  -0.5177,
+                  -0.5584,
+                  -0.4337,
+                  0.4817
+                ],
+                "transitions": {
+                  "idle": 2,
+                  "defeat": 1
+                }
+              },
+              "defeat": {
+                "id": "neutral-west-reeds",
+                "unitId": "naga",
+                "url": "/client/assets/units/naga.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  1
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0.4,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.0731,
+                  0.9973,
+                  -0.2414,
+                  -0.122,
+                  -0.1061,
+                  0.9569,
+                  0.2414,
+                  0.122,
+                  -0.1061,
+                  0.9569,
+                  0.5745,
+                  0.477,
+                  -0.3296,
+                  0.5777,
+                  0.0921,
+                  -0.0032,
+                  -0.6448,
+                  0.7588,
+                  -0.5745,
+                  -0.477,
+                  -0.3296,
+                  0.5777
+                ],
+                "transitions": {
+                  "idle": 3,
+                  "defeat": 2,
+                  "run": 1,
+                  "fire": 1
+                }
+              }
+            },
+            {
+              "unitId": "sky-sentinel",
+              "idle": {
+                "id": "neutral-sky-garden",
+                "unitId": "sky-sentinel",
+                "url": "/client/assets/units/sky-sentinel.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  3
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "idle",
+                "action": "",
+                "animationTime": 0.1,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.111,
+                  0.9938,
+                  0.0872,
+                  -0.057,
+                  -0.1693,
+                  0.98,
+                  -0.0872,
+                  0.057,
+                  -0.1693,
+                  0.98,
+                  0.5457,
+                  0.5273,
+                  -0.4126,
+                  0.5038,
+                  0.0244,
+                  -0.0146,
+                  -0.332,
+                  0.9429,
+                  -0.5197,
+                  -0.557,
+                  -0.4376,
+                  0.4777
+                ],
+                "transitions": {
+                  "idle": 2,
+                  "defeat": 1
+                }
+              },
+              "defeat": {
+                "id": "neutral-sky-garden",
+                "unitId": "sky-sentinel",
+                "url": "/client/assets/units/sky-sentinel.glb",
+                "loaded": true,
+                "fallback": false,
+                "skeletons": [
+                  3
+                ],
+                "bones": 80,
+                "clips": [
+                  "defeat",
+                  "fire",
+                  "idle",
+                  "run"
+                ],
+                "state": "defeat",
+                "action": "",
+                "animationTime": 0.4,
+                "animated": true,
+                "pose": [
+                  0,
+                  0,
+                  0.064,
+                  0.9979,
+                  -0.2273,
+                  -0.1305,
+                  -0.0726,
+                  0.9623,
+                  0.2273,
+                  0.1305,
+                  -0.0726,
+                  0.9623,
+                  0.576,
+                  0.4765,
+                  -0.335,
+                  0.5735,
+                  0.0903,
+                  -0.0082,
+                  -0.6471,
+                  0.757,
+                  -0.576,
+                  -0.4765,
+                  -0.335,
+                  0.5735
+                ],
+                "transitions": {
+                  "idle": 3,
+                  "defeat": 2,
+                  "run": 1,
+                  "fire": 1
+                }
+              }
+            }
+          ],
+          "errors": {
+            "errors": [],
+            "consoleErrors": []
+          }
+        }
+      ]
+    }
+  ]
+}

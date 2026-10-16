@@ -1,0 +1,296 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.yuga.config.ts",
+      "--grep",
+      "gallery rapid|native practice movement|labelled target fixture",
+      "--reporter=list,json",
+      "--output=test-results/yuga-final-repaired"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.yuga.config.ts",
+    "rootDir": "/workspace/ANDOLAN/games/yuga/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-repaired",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-repaired",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "snapshotDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5180",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run yuga:dev",
+      "url": "http://127.0.0.1:5180",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "arena.e2e.ts",
+      "file": "arena.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "native practice movement, combat, three skills, upgrade and pause controls",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 33785,
+                  "error": {
+                    "message": "Error: Native keyboard aim timed out toward -0.7292118102563248; actor {\"id\":\"local-player\",\"name\":\"Traveller\",\"heroId\":\"rama\",\"team\":\"sun\",\"bot\":false,\"lane\":1,\"connected\":true,\"kind\":\"hero\",\"x\":0,\"z\":-66,\"y\":0,\"yaw\":-2.7631853071795844,\"health\":300,\"maxHealth\":300,\"shield\":60,\"respawn\":0,\"cooldowns\":[0,0,22.400000000000546],\"fireCooldown\":0,\"credits\":60,\"level\":2,\"kills\":0,\"deaths\":1,\"assists\":0,\"damageDealt\":0,\"upgrades\":{\"power\":1,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":2.450000000000002},\"lastInputSeq\":162}",
+                    "stack": "Error: Native keyboard aim timed out toward -0.7292118102563248; actor {\"id\":\"local-player\",\"name\":\"Traveller\",\"heroId\":\"rama\",\"team\":\"sun\",\"bot\":false,\"lane\":1,\"connected\":true,\"kind\":\"hero\",\"x\":0,\"z\":-66,\"y\":0,\"yaw\":-2.7631853071795844,\"health\":300,\"maxHealth\":300,\"shield\":60,\"respawn\":0,\"cooldowns\":[0,0,22.400000000000546],\"fireCooldown\":0,\"credits\":60,\"level\":2,\"kills\":0,\"deaths\":1,\"assists\":0,\"damageDealt\":0,\"upgrades\":{\"power\":1,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":2.450000000000002},\"lastInputSeq\":162}\n    at nativeYaw (/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:40:412)\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:57:434",
+                    "location": {
+                      "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                      "column": 412,
+                      "line": 40
+                    },
+                    "snippet": "  38 | async function range(page:Page,id:string,value:number){await page.locator(id).fill(String(value));}\n  39 | async function attach(page:Page,info:TestInfo,name:string,detail:unknown){await info.attach(name,{body:JSON.stringify({scope:name,detail,pageErrors:errors.get(page),commands:commands.get(page),results:results.get(page)},null,2),contentType:'application/json'});}\n> 40 | async function nativeYaw(page:Page,target:number){const end=Date.now()+12_000;let held='';try{while(Date.now()<end){const delta=Math.atan2(Math.sin(target-(await me(page)).yaw),Math.cos(target-(await me(page)).yaw));if(Math.abs(delta)<.07)return;const next=delta>0?'KeyJ':'KeyL';if(next!==held){if(held)await page.keyboard.up(held);await page.keyboard.down(next);held=next;}await page.waitForTimeout(45);}throw new Error(`Native keyboard aim timed out toward ${target}; actor ${JSON.stringify(await me(page))}`);}finally{if(held)await page.keyboard.up(held);}}\n     |                                                                                                                                                                                                                                                                                                                                                                                                                            ^\n  41 |\n  42 | test('roster, saved settings and native muted audio preview',async({page},info)=>{\n  43 |  await load(page);await capture(page,info,'desktop-roster');await expect(page.locator('[data-hero]')).toHaveCount(14);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                        "column": 412,
+                        "line": 40
+                      },
+                      "message": "Error: Native keyboard aim timed out toward -0.7292118102563248; actor {\"id\":\"local-player\",\"name\":\"Traveller\",\"heroId\":\"rama\",\"team\":\"sun\",\"bot\":false,\"lane\":1,\"connected\":true,\"kind\":\"hero\",\"x\":0,\"z\":-66,\"y\":0,\"yaw\":-2.7631853071795844,\"health\":300,\"maxHealth\":300,\"shield\":60,\"respawn\":0,\"cooldowns\":[0,0,22.400000000000546],\"fireCooldown\":0,\"credits\":60,\"level\":2,\"kills\":0,\"deaths\":1,\"assists\":0,\"damageDealt\":0,\"upgrades\":{\"power\":1,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":2.450000000000002},\"lastInputSeq\":162}\n\n  38 | async function range(page:Page,id:string,value:number){await page.locator(id).fill(String(value));}\n  39 | async function attach(page:Page,info:TestInfo,name:string,detail:unknown){await info.attach(name,{body:JSON.stringify({scope:name,detail,pageErrors:errors.get(page),commands:commands.get(page),results:results.get(page)},null,2),contentType:'application/json'});}\n> 40 | async function nativeYaw(page:Page,target:number){const end=Date.now()+12_000;let held='';try{while(Date.now()<end){const delta=Math.atan2(Math.sin(target-(await me(page)).yaw),Math.cos(target-(await me(page)).yaw));if(Math.abs(delta)<.07)return;const next=delta>0?'KeyJ':'KeyL';if(next!==held){if(held)await page.keyboard.up(held);await page.keyboard.down(next);held=next;}await page.waitForTimeout(45);}throw new Error(`Native keyboard aim timed out toward ${target}; actor ${JSON.stringify(await me(page))}`);}finally{if(held)await page.keyboard.up(held);}}\n     |                                                                                                                                                                                                                                                                                                                                                                                                                            ^\n  41 |\n  42 | test('roster, saved settings and native muted audio preview',async({page},info)=>{\n  43 |  await load(page);await capture(page,info,'desktop-roster');await expect(page.locator('[data-hero]')).toHaveCount(14);\n    at nativeYaw (/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:40:412)\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:57:434"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:43:23.546Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-repaired/arena.e2e.ts-native-practi-0c436--upgrade-and-pause-controls/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-repaired/arena.e2e.ts-native-practi-0c436--upgrade-and-pause-controls/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-repaired/arena.e2e.ts-native-practi-0c436--upgrade-and-pause-controls/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                    "column": 412,
+                    "line": 40
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-c7d3c0b745a9479c81de",
+          "file": "arena.e2e.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "labelled target fixture verifies native lock, manual release, settings and cover rejection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13648,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:43:59.724Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "labelled-target-cover-fixture",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJsYWJlbGxlZC10YXJnZXQtY292ZXItZml4dHVyZSIsCiAgImRldGFpbCI6IHsKICAgICJzY29wZSI6ICJNb2NrZWQgV2ViU29ja2V0IGFuZCBleHBsaWNpdCBhY3RvciBwb3NpdGlvbnMgaXNvbGF0ZSBVSSB0YXJnZXRpbmcgdGhyb3VnaCB0aGUgcmVhbCBtYXAgYnVpbGRpbmcgYXQgeDIwLHotMjguIE5hdGl2ZSBUL3JpZ2h0LWNsaWNrL21hbnVhbCBhaW0vc2V0dGluZ3M7IG5vIHJlYWwgbW92ZW1lbnQsIGNvbWJhdCBvciBtdWx0aXBsYXllciBhdXRob3JpdHkgY2xhaW0uIiwKICAgICJpbnB1dHMiOiBbCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDQ5NTMsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ1MDEwLAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0NTA0OCwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDUwOTksCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ2MDA2LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0NjA2MiwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDYwOTksCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ2MTQ4LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0NjIwMiwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDYyNzIsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ2Mjk5LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0NjM0OSwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDYzOTksCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ2NDczLAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0NjQ5OCwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDY1NDgsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ2NjAzLAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0NjY0OCwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDY2OTksCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ2NzY5LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0NjgwMSwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDY4NjYsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ2OTQyLAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0Njk2OCwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDY5ODEsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ3MzMyLAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0NzM5MywKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDc4NTUsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ3OTI0LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0Nzk2NSwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDc5OTgsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ4MDY1LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0ODEwMSwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDg0MTgsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ4NDY5LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0ODk5MSwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDkwMDcsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ5MDY2LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0OTA5OCwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDkxNjYsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ5MjQ4LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0OTI2OCwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDkzMjMsCiAgICAgICAgInlhdyI6IDAsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ5MzY1LAogICAgICAgICJ5YXciOiAwLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0OTQwMCwKICAgICAgICAieWF3IjogMCwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDk0NjksCiAgICAgICAgInlhdyI6IDAuMTYwMDAwMDAwMDAwMDAwMDMsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ5NTAwLAogICAgICAgICJ5YXciOiAwLjE2MDAwMDAwMDAwMDAwMDAzLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0OTU2NywKICAgICAgICAieWF3IjogMC4xNjAwMDAwMDAwMDAwMDAwMywKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDk1OTgsCiAgICAgICAgInlhdyI6IDAuMTYwMDAwMDAwMDAwMDAwMDMsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ5NjY3LAogICAgICAgICJ5YXciOiAwLjE2MDAwMDAwMDAwMDAwMDAzLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0OTcwMCwKICAgICAgICAieWF3IjogMC4xNjAwMDAwMDAwMDAwMDAwMywKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDk3NDgsCiAgICAgICAgInlhdyI6IDAuMzIwMDAwMDAwMDAwMDAwMDYsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ5Nzk4LAogICAgICAgICJ5YXciOiAwLjMyMDAwMDAwMDAwMDAwMDA2LAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY0OTg0OSwKICAgICAgICAieWF3IjogMC4zMjAwMDAwMDAwMDAwMDAwNiwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NDk4OTgsCiAgICAgICAgInlhdyI6IDAuMzIwMDAwMDAwMDAwMDAwMDYsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ5OTY4LAogICAgICAgICJ5YXciOiAwLjQ4MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjQ5OTk5LAogICAgICAgICJ5YXciOiAwLjQ4MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwMDY2LAogICAgICAgICJ5YXciOiAwLjQ4MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwMDk4LAogICAgICAgICJ5YXciOiAwLjQ4MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwMTY2LAogICAgICAgICJ5YXciOiAwLjQ4MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwMTk5LAogICAgICAgICJ5YXciOiAwLjY0MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwMjY2LAogICAgICAgICJ5YXciOiAwLjY0MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwMjk5LAogICAgICAgICJ5YXciOiAwLjY0MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwMzczLAogICAgICAgICJ5YXciOiAwLjY0MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwMzk5LAogICAgICAgICJ5YXciOiAwLjY0MDAwMDAwMDAwMDAwMDEsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwNDY4LAogICAgICAgICJ5YXciOiAwLjgwMDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwNDk5LAogICAgICAgICJ5YXciOiAwLjgwMDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwNTY2LAogICAgICAgICJ5YXciOiAwLjgwMDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwNTk4LAogICAgICAgICJ5YXciOiAwLjgwMDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwNjY1LAogICAgICAgICJ5YXciOiAwLjgwMDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwNzAxLAogICAgICAgICJ5YXciOiAwLjgwMDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwNzY2LAogICAgICAgICJ5YXciOiAwLjk2MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwNzk4LAogICAgICAgICJ5YXciOiAwLjk2MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwODY2LAogICAgICAgICJ5YXciOiAwLjk2MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwODk4LAogICAgICAgICJ5YXciOiAwLjk2MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwOTY1LAogICAgICAgICJ5YXciOiAwLjk2MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUwOTk5LAogICAgICAgICJ5YXciOiAwLjk2MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxMDY1LAogICAgICAgICJ5YXciOiAwLjk2MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxMTAxLAogICAgICAgICJ5YXciOiAxLjEyLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY1MTE0OCwKICAgICAgICAieWF3IjogMS4xMiwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NTExOTgsCiAgICAgICAgInlhdyI6IDEuMTIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxMjY1LAogICAgICAgICJ5YXciOiAxLjEyLAogICAgICAgICJmaXJlIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJ0aW1lIjogMTc5MjE3MjY1MTMwMiwKICAgICAgICAieWF3IjogMS4xMiwKICAgICAgICAiZmlyZSI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAidGltZSI6IDE3OTIxNzI2NTEzNjgsCiAgICAgICAgInlhdyI6IDEuMTIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxMzk4LAogICAgICAgICJ5YXciOiAxLjI4MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxNDUyLAogICAgICAgICJ5YXciOiAxLjI4MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxNDk4LAogICAgICAgICJ5YXciOiAxLjI4MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxNTY2LAogICAgICAgICJ5YXciOiAxLjI4MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxNjAxLAogICAgICAgICJ5YXciOiAxLjI4MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxNjY1LAogICAgICAgICJ5YXciOiAxLjI4MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxNzAxLAogICAgICAgICJ5YXciOiAxLjI4MDAwMDAwMDAwMDAwMDIsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxNzY1LAogICAgICAgICJ5YXciOiAxLjQ0MDAwMDAwMDAwMDAwMDQsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxNzk4LAogICAgICAgICJ5YXciOiAxLjQ0MDAwMDAwMDAwMDAwMDQsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxODQ5LAogICAgICAgICJ5YXciOiAxLjQ0MDAwMDAwMDAwMDAwMDQsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxODk4LAogICAgICAgICJ5YXciOiAxLjQ0MDAwMDAwMDAwMDAwMDQsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUxOTY1LAogICAgICAgICJ5YXciOiAxLjQ0MDAwMDAwMDAwMDAwMDQsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyMDAxLAogICAgICAgICJ5YXciOiAxLjQ0MDAwMDAwMDAwMDAwMDQsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyMDY2LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyMTQzLAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyMTQ4LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyMzM1LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyMzQ4LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyMzk4LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyNDY1LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyNDk4LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyNTczLAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyNjQxLAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyNjQ5LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyNjk4LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyNzY1LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyNzk4LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyODY2LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyOTQ4LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgInRpbWUiOiAxNzkyMTcyNjUyOTQ5LAogICAgICAgICJ5YXciOiAxLjYwMDAwMDAwMDAwMDAwMDUsCiAgICAgICAgImZpcmUiOiBmYWxzZQogICAgICB9CiAgICBdLAogICAgImNvdmVyIjogewogICAgICAiYWN0b3IiOiB7CiAgICAgICAgIngiOiA1LAogICAgICAgICJ6IjogLTI4CiAgICAgIH0sCiAgICAgICJ0YXJnZXQiOiB7CiAgICAgICAgIngiOiAzNSwKICAgICAgICAieiI6IC0yOAogICAgICB9LAogICAgICAiZGlzdGFuY2UiOiAzMAogICAgfSwKICAgICJmaXJlV2FzTmV2ZXJSZXF1ZXN0ZWQiOiB0cnVlCiAgfSwKICAicGFnZUVycm9ycyI6IFtdLAogICJjb21tYW5kcyI6IFtdLAogICJyZXN1bHRzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-36a99611b9ce98009692",
+          "file": "arena.e2e.ts",
+          "line": 107,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "hero-assets.e2e.ts",
+      "file": "hero-assets.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "gallery rapid selection and close survives delayed real GLB loads",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8394,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:44:13.622Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "gallery-delayed-load-lifecycle",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJPbmx5IHR3byByZWFsIEdMQiBuZXR3b3JrIHJlcXVlc3RzIHdlcmUgZGVsaWJlcmF0ZWx5IGRlbGF5ZWQ7IG9yZGluYXJ5IGdhbGxlcnkgY2xpY2tzLCBhY3R1YWwgYXNzZXRzL1BsYXlDYW52YXMsIHRoZW4gY2xvc2UgYW5kIHJlb3Blbi4gTm8gZ2FtZXBsYXkvc3RhdGUgaW5qZWN0aW9uLiIsCiAgImRlbGF5ZWQiOiAyLAogICJjb21wbGV0ZWQiOiAyLAogICJlcnJvcnMiOiBbXSwKICAiY29uc29sZUVycm9ycyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c538d34d19b602e5e2ab-4a25a34ba13e9ea4664a",
+          "file": "hero-assets.e2e.ts",
+          "line": 22,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T17:43:22.686Z",
+    "duration": 59439.257,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

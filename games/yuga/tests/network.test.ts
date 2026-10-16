@@ -2,12 +2,13 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { WebSocket } from 'ws';
 import { createArenaServer, parseArenaMessage } from '../server/server.js';
 import type { ArenaJoin, ServerMessage } from '../shared/types.js';
+import { YUGA_PROTOCOL } from '../shared/types.js';
 
 type Server = Awaited<ReturnType<typeof createArenaServer>>;
 type Welcome = Extract<ServerMessage, { type: 'welcome' }>;
 const servers: Server[] = [];
 const sockets: WebSocket[] = [];
-const join: ArenaJoin = { type: 'join', protocol: 1, name: 'Aadi', heroId: 'rama' };
+const join: ArenaJoin = { type: 'join', protocol: YUGA_PROTOCOL, name: 'Aadi', heroId: 'rama' };
 const intent = { type: 'input', seq: 1, moveX: 1, moveZ: 0, yaw: Math.PI / 2, pitch: 0, fire: false, jump: false };
 async function start(options: Parameters<typeof createArenaServer>[0] = {}) {
   const server = await createArenaServer({ port: 0, host: '127.0.0.1', ...options }); servers.push(server);
@@ -33,9 +34,25 @@ async function client(url: string) {
 afterEach(async () => { for (const socket of sockets.splice(0)) socket.terminate(); await Promise.all(servers.splice(0).map(server => server.close())); });
 
 describe('real arena WebSocket authority', () => {
+  it('synchronizes one physical gold claim and preserves it through token resume without trusting old snapshots', async () => {
+    const { url, server } = await start(); const host = await client(url); host.send(join); const welcome = await host.welcome();
+    const guest = await client(url); guest.send({ ...join, name: 'Noor', room: welcome.room }); const peer = await guest.welcome();
+    expect(peer.snapshot.neutrals).toHaveLength(4); expect(peer.snapshot.goldShards).toEqual([]); expect(peer.protocol).toBe(YUGA_PROTOCOL);
+    const sim = server.rooms.get(welcome.room)!.sim, actor = sim.actors.get(welcome.id)!; Object.assign(actor, { x: 0, z: -6 });
+    sim.goldShards.push({ id: 'gold-network', sourceId: 'fixture-lane', x: 0, z: 0, y: 1.2, value: 8, originTeam: actor.team, createdAt: sim.time, expiresAt: sim.time + 12 });
+    host.send({ ...intent, moveX: 0, yaw: 0, fire: true });
+    const claimed = await guest.next((message): message is Extract<ServerMessage, { type: 'snapshot' }> => message.type === 'snapshot' && message.snapshot.events.some(event => event.type === 'gold' && event.targetId === 'gold-network'));
+    expect(claimed.snapshot.actors.find(a => a.id === welcome.id)!.credits).toBe(188); expect(claimed.snapshot.goldShards).toEqual([]);
+    claimed.snapshot.actors.find(a => a.id === welcome.id)!.credits = 99999;
+    host.send({ ...intent, moveX: 0, yaw: 0, fire: true }); host.send({ type: 'command', id: 'steal-claim', action: 'reward', amount: 99999 });
+    await host.next((message): message is Extract<ServerMessage, { type: 'error' }> => message.type === 'error');
+    host.socket.close(); await host.closed;
+    const resumed = await client(url); resumed.send({ ...join, room: welcome.room, token: welcome.token }); const back = await resumed.welcome();
+    expect(back.id).toBe(welcome.id); expect(back.snapshot.actors.find(a => a.id === welcome.id)!.credits).toBe(188); expect(back.snapshot.events.filter(event => event.type === 'gold' && event.targetId === 'gold-network')).toHaveLength(1);
+  });
   it('parses finite intent only and rejects forged coordinates, rewards and unknown actions', () => {
     expect(parseArenaMessage(join)).toEqual(join); expect(parseArenaMessage(intent)).toEqual(intent);
-    for (const invalid of [{ ...intent, x: 80 }, { ...intent, credits: 9999 }, { ...intent, moveX: Infinity }, { ...intent, pitch: NaN }, { ...intent, seq: 1.5 }, { ...join, heroId: 'unknown' }, { ...join, protocol: 2 }, { type: 'command', id: 'x', action: 'ability', slot: 9 }, { type: 'command', id: 'x', action: 'reward', amount: 999 }]) expect(parseArenaMessage(invalid)).toBeNull();
+    for (const invalid of [{ ...intent, x: 80 }, { ...intent, credits: 9999 }, { ...intent, moveX: Infinity }, { ...intent, pitch: NaN }, { ...intent, seq: 1.5 }, { ...join, heroId: 'unknown' }, { ...join, protocol: YUGA_PROTOCOL - 1 }, { type: 'command', id: 'x', action: 'ability', slot: 9 }, { type: 'command', id: 'x', action: 'reward', amount: 999 }]) expect(parseArenaMessage(invalid)).toBeNull();
   });
 
   it('shares authoritative movement and charges an idempotent upgrade once across two sockets', async () => {
@@ -48,7 +65,7 @@ describe('real arena WebSocket authority', () => {
     host.send(intent);
     const moved = await guest.next((message): message is Extract<ServerMessage, { type: 'snapshot' }> => message.type === 'snapshot' && message.snapshot.actors.some(actor => actor.id === welcome.id && actor.lastInputSeq === 1 && actor.x > .1));
     expect(moved.snapshot.actors.find(actor => actor.id === welcome.id)).toMatchObject({ credits: 60, upgrades: { power: 1 } });
-    expect(await (await fetch(`${http}/health`)).json()).toMatchObject({ game: 'yuga', protocol: 1, connected: 2, simulationHz: 20, snapshotHz: 10 });
+    expect(await (await fetch(`${http}/health`)).json()).toMatchObject({ game: 'yuga', protocol: 2, connected: 2, simulationHz: 20, snapshotHz: 10 });
   });
 
   it('resumes only the token owner, preserves progress and displaces an old transport without a reconnect race', async () => {

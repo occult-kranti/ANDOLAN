@@ -16,6 +16,16 @@ function tower(fields: Partial<Structure> = {}): Structure { return { id: 'moon-
 function deepFreeze(value: object): void { Object.freeze(value); for (const entry of Object.values(value)) if (entry && typeof entry === 'object') deepFreeze(entry); }
 
 describe('client lock-on acquisition', () => {
+  it('targets a living neutral at its real body centre and releases dead, resetting or occluded camps', () => {
+    const { snapshot, self } = fixture(); snapshot.actors = [self];
+    const neutral = snapshot.neutrals[0]!; Object.assign(neutral, { x: 0, z: 10, health: 100, state: 'idle' });
+    expect(acquireTarget(snapshot, self.id, 0, 0)).toBe(neutral.id);
+    expect(targetAim(snapshot, self.id, neutral.id)).toMatchObject({ x: 0, y: 1.1, z: 10, label: 'Reed Naga' });
+    neutral.state = 'returning'; expect(targetAim(snapshot, self.id, neutral.id)).toBeNull();
+    neutral.state = 'dead'; expect(acquireTarget(snapshot, self.id, 0, 0)).toBeNull();
+    neutral.state = 'aggro'; Object.assign(self, { x: -32, z: -28 }); Object.assign(neutral, { x: -8, z: -28 });
+    expect(targetAim(snapshot, self.id, neutral.id)).toBeNull();
+  });
   it('returns the authoritative body-center solution without predicting velocity or writing state', () => {
     const { snapshot, self, enemy } = fixture(); Object.assign(self, { y: 2 }); Object.assign(enemy, { x: 3, y: 4, z: 12 });
     const before = structuredClone(snapshot); deepFreeze(snapshot);

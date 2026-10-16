@@ -1,3 +1,4 @@
+import { YUGA_PROTOCOL } from '../shared/types';
 import { test, expect, type Page, type TestInfo } from '@playwright/test';
 import { HEROES } from '../shared/heroes';
 import { ArenaSimulation } from '../shared/simulation';
@@ -17,7 +18,11 @@ async function setup(page:Page){
 }
 async function frame(page:Page){await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));}
 async function capture(page:Page,info:TestInfo,name:string){await frame(page);await page.screenshot({path:info.outputPath(`${name}.png`)});}
-async function transition(page:Page,key:string,state:string){const count=(await local(page)).transitions[state]||0;await page.keyboard.press(key);await expect.poll(async()=>(await local(page)).transitions[state]||0).toBeGreaterThan(count);}
+async function transition(page:Page,key:string,state:string){
+ const before=await local(page),count=before.transitions[state]||0;await page.keyboard.press(key);
+ try{await expect.poll(async()=>(await local(page)).transitions[state]||0,{message:`${before.heroId} ${key} must produce actual ${state} animation`}).toBeGreaterThan(count);}
+ catch(error){const diagnostic=await page.evaluate(()=>{const snapshot=window.__YUGA.snapshot(),actor=snapshot?.actors.find(a=>a.id===window.__YUGA.playerId());return{time:snapshot?.time,actor,toast:document.getElementById('toast')?.textContent,focused:document.activeElement?.id,openDialogs:[...document.querySelectorAll('dialog[open]')].map(d=>d.id)};});throw new Error(`Native animation failure ${before.heroId} ${key}/${state}: ${JSON.stringify({before:{state:before.state,action:before.action,transitions:before.transitions},after:await local(page),diagnostic})}`,{cause:error});}
+}
 
 test('gallery rapid selection and close survives delayed real GLB loads',async({page},info)=>{
  test.setTimeout(180_000);const errors:string[]=[],consoleErrors:string[]=[];page.on('pageerror',e=>errors.push(e.stack||e.message));page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text());});let release!:()=>void;const held=new Promise<void>(resolve=>release=resolve);let delayed=0,completed=0;
@@ -26,6 +31,26 @@ test('gallery rapid selection and close survives delayed real GLB loads',async({
   await setup(page);await page.locator('[data-hero="rama"]').click();await page.locator('#inspect-hero').click();await expect.poll(()=>delayed).toBe(1);await page.locator('#hero-next').click();await expect.poll(()=>delayed).toBe(2);await page.locator('#hero-next').click();await page.locator('#hero-dialog [data-close]').click();await expect(page.locator('#hero-dialog')).toBeHidden();release();await expect.poll(()=>completed).toBe(2);await frame(page);
   await page.locator('[data-hero="ulupi"]').click();await page.locator('#inspect-hero').click();await expect(page.locator('#showcase-status')).toContainText('Drag to rotate',{timeout:60_000});await page.locator('[data-clip="run"]').click();const diagnostic=()=>page.evaluate(()=>(window.__YUGA as unknown as {showcase():{hero:{heroId:string;state:string;loaded:boolean;fallback:boolean;pose:number[]}}}).showcase());await expect.poll(async()=>(await diagnostic()).hero.state).toBe('run');expect((await diagnostic()).hero).toMatchObject({heroId:'ulupi',loaded:true,fallback:false});await capture(page,info,'ulupi-gallery-run');await page.locator('#hero-dialog [data-close]').click();await frame(page);expect(errors).toEqual([]);expect(consoleErrors).toEqual([]);
   await info.attach('gallery-delayed-load-lifecycle',{body:JSON.stringify({scope:'Only two real GLB network requests were deliberately delayed; ordinary gallery clicks, actual assets/PlayCanvas, then close and reopen. No gameplay/state injection.',delayed,completed,errors,consoleErrors},null,2),contentType:'application/json'});
+ }finally{release();}
+});
+
+test('cancel delayed actual match assets with Escape and Back, then restart cleanly',async({page},info)=>{
+ test.setTimeout(180_000);const errors:string[]=[],consoleErrors:string[]=[];
+ page.on('pageerror',error=>errors.push(error.stack||error.message));page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text());});
+ let release!:()=>void;const gate=new Promise<void>(resolve=>release=resolve);let delayed=0;
+ await page.route(/\/heroes\/[^/?]+\.glb(?:\?.*)?$/,async route=>{
+  if(route.request().resourceType()==='script'){await route.continue();return;}
+  if(!delayed){delayed++;await gate;}await route.continue();
+ });
+ try{
+  await setup(page);await page.locator('#practice-play').click();await expect.poll(()=>delayed).toBe(1);await expect(page.locator('#loading-back')).toBeFocused();
+  await page.keyboard.press('Escape');await expect(page.locator('#lobby')).toBeVisible();await expect(page.locator('#loading')).toBeHidden();
+  await page.locator('#practice-play').click();await expect(page.locator('#loading-back')).toBeFocused();await page.locator('#loading-back').click();await expect(page.locator('#lobby')).toBeVisible();
+  release();await expect.poll(async()=>(await assets(page)).assets.filter(asset=>asset.state==='ready').length,{timeout:120_000}).toBe(14);await frame(page);
+  expect(await page.evaluate(()=>window.__YUGA.snapshot())).toBeUndefined();await expect(page.locator('#hud')).toBeHidden();await expect(page.locator('#loading')).toBeHidden();await expect(page.locator('#lobby')).toBeVisible();
+  await page.locator('#practice-play').click();await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(()=>page.evaluate(()=>window.__YUGA.snapshot()?.room)).toBe('PRACTICE');expect((await assets(page)).fallback).toEqual([]);
+  await capture(page,info,'cancelled-load-restart');expect(errors).toEqual([]);expect(consoleErrors).toEqual([]);
+  await info.attach('delayed-match-load-cancellation',{body:JSON.stringify({scope:'A real binary GLB request was delayed. Native Escape and Back cancel two loading attempts; releasing the asset may populate cache but must not start either canceled match. A third native start enters ordinary practice.',delayed,errors,consoleErrors},null,2),contentType:'application/json'});
  }finally{release();}
 });
 
@@ -43,7 +68,7 @@ test('all fourteen real GLBs spawn and respond to native movement, fire, three c
 
 test('labelled animation snapshot fixtures exercise defeat, recovery and independent duplicate-hero skins',async({page},info)=>{
  test.setTimeout(300_000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.stack||e.message));let deliver:((snapshot:ArenaSnapshot)=>void)|undefined,fixture:ArenaSimulation|undefined,serial=0;
- await page.routeWebSocket('**/ws',socket=>{socket.onMessage(raw=>{const message=JSON.parse(String(raw));if(message.type!=='join')return;fixture=new ArenaSimulation({room:`ART-${++serial}`,seed:4});const self=fixture.addPlayer('fixture-local','Fixture local',message.heroId,'sun'),peer=fixture.addPlayer('fixture-peer','Fixture peer',message.heroId,'moon');peer.z=self.z+4;peer.x=self.x+3;deliver=snapshot=>socket.send(JSON.stringify({type:'snapshot',snapshot}));socket.send(JSON.stringify({type:'welcome',protocol:1,id:'fixture-local',room:fixture.room,token:'b'.repeat(48),snapshot:fixture.snapshot()}));});});
+ await page.routeWebSocket('**/ws',socket=>{socket.onMessage(raw=>{const message=JSON.parse(String(raw));if(message.type!=='join')return;fixture=new ArenaSimulation({room:`ART-${++serial}`,seed:4});const self=fixture.addPlayer('fixture-local','Fixture local',message.heroId,'sun'),peer=fixture.addPlayer('fixture-peer','Fixture peer',message.heroId,'moon');peer.z=self.z+4;peer.x=self.x+3;deliver=snapshot=>socket.send(JSON.stringify({type:'snapshot',snapshot}));socket.send(JSON.stringify({type:'welcome',protocol:YUGA_PROTOCOL,id:'fixture-local',room:fixture.room,token:'b'.repeat(48),snapshot:fixture.snapshot()}));});});
  await setup(page);const records:unknown[]=[];
  for(const hero of HEROES){await page.locator(`[data-hero="${hero.id}"]`).click();await page.locator('#online-open').click();await page.locator('#player-name').fill('Animation fixture');await page.locator('#join-room').click();await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(async()=>(await assets(page)).instances.filter(i=>i.heroId===hero.id).length).toBeGreaterThanOrEqual(2);
   const me=fixture!.actors.get('fixture-local')!,peer=fixture!.actors.get('fixture-peer')!;await frame(page);const models=await assets(page),self=models.instances.find(i=>i.id===me.id)!,other=models.instances.find(i=>i.id===peer.id)!;expect(self.skeletons.some(id=>other.skeletons.includes(id))).toBe(false);expect(models.fallback).toEqual([]);

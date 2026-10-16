@@ -1,8 +1,8 @@
 # YUGA: Confluence
 
-An original 3v3 third-person arena prototype in Sangam City. Fourteen epic-inspired heroes, forty-two abilities, three lanes, escort/siege minion waves, towers, vulnerable cores, match upgrades, pickups and an eight-minute finish. All heroes are unlocked. Competitive online play is the direction; bots support practice and fill team slots.
+An original 3v3 third-person arena prototype in Sangam City. Fourteen epic-inspired heroes, forty-two abilities, three lanes, soldier/watch/minister waves, king-led siege pushes, four neutral jungle courts, contestable gold shards, towers, vulnerable cores, match upgrades, pickups and an eight-minute finish. All heroes are unlocked. Competitive online play is the direction; bots support practice and fill team slots.
 
-The character pipeline has exported fourteen skinned GLBs from MakeHuman's CC0 anatomical mesh, rig and weights, with authored hero proportions, costumes, hair, weapons, materials and motion. Their file sizes and hashes match the [asset manifest](art/hero-assets.json). The city and gameplay effects use original runtime geometry. Illustrated character sheets and the lobby remain concept art. Full deformation and fourteen-hero browser acceptance are separate checks in the [QA ledger](docs/QA.md); a completed export is not proof of finished visual quality. This art pass does not claim parity with the key art or a commercial game's characters.
+The character pipeline has exported fourteen skinned GLBs from MakeHuman's CC0 anatomical mesh, rig and weights, with authored hero proportions, costumes, hair, weapons, materials and motion. Their file sizes and hashes match the [asset manifest](art/hero-assets.json). Seven separate soldier/guardian GLBs add four animation clips each and 4.27 MiB of artwork; their provenance and actual previews are in the [unit build record](art/UNIT_ASSET_BUILD.md). The city and gameplay effects use original runtime geometry. Illustrated character sheets and the lobby remain concept art. Full deformation and fourteen-hero browser acceptance are separate checks in the [QA ledger](docs/QA.md); a completed export is not proof of finished visual quality. This art pass does not claim parity with the key art or a commercial game's characters.
 
 ## Run
 
@@ -18,6 +18,8 @@ The development client uses port 5180; the authoritative server uses 3005. The c
 ```sh
 npm run yuga:typecheck
 npm run yuga:test
+npm run yuga:assets
+npm run yuga:unit-assets
 npm run yuga:e2e
 npm run yuga:build
 npm run yuga:start
@@ -31,11 +33,17 @@ Choose a hero and select **Play with bots**. For **Online team match**, enter a 
 
 Move with WASD or arrows; aim by captured mouse, drag or IJKL; fire with click or F; use Q/E/R for abilities; Space jumps. B opens upgrades near spawn. Escape opens settings and releases the cursor. Touch provides movement/aim surfaces and fire/jump/ability buttons. Practice pauses in menus; online team matches continue.
 
-Optional target lock uses **T**, right-click or the touch **LOCK** button when enabled in Settings. It acquires a visible enemy hero, minion or vulnerable structure within 32 metres and 20 degrees of the current aim. Manual mouse/drag/IJKL aim releases it, as do lost visibility/range and menu transitions. Lock assists aim; you still fire, projectiles can miss or be blocked, and the server decides hits. Its current integration requires the final native-input QA gate, alongside the new art pass.
+Optional target lock uses **T**, right-click or the touch **LOCK** button when enabled in Settings. It acquires a visible enemy hero, lane unit, jungle guardian or vulnerable structure within 32 metres and 20 degrees of the current aim. Manual mouse/drag/IJKL aim releases it, as do lost visibility/range and menu transitions. Lock assists aim; you still fire, projectiles can miss or be blocked, and the server decides hits. See the QA ledger for the exact native-input checks and outstanding gates.
 
 Rama's R prepares a locked three-arrow volley; Hanuman's R commits to a timed leap whose landing damages enemies and heals allies; Sita's R establishes a fixed shielding/healing sanctuary. Their preparation locks actions and shows cast progress. The other thirty-nine abilities use the established projectile, area, movement, support and summon rules.
 
 Push with allied minions. Destroy two defending towers to expose that team's core, then destroy its core. At eight minutes the higher score wins; core health breaks a tied score. Credits buy three ranks of power, vitality or tempo at your spawn. Credits and upgrades reset for every match.
+
+Lane defeats give nearby allies 10 credits each and leave an 8-credit shard. A primary shot can secure a shard for either team immediately; proximity collection starts after one second. Unclaimed shards expire after twelve seconds. Banked credits cannot be stolen. Summons award neither gold nor tiebreak points.
+
+Four wild courts awaken at 30 seconds. Reed Naga grants ward, Grove Yaksha grants regeneration, and Cloudwing grants haste. A defeated guardian provides 30 nearby-team credits, a contested 30-credit shard, and a twelve-second power for the living finishing hero. Retreating beyond the leash resets the guardian without a reward; a defeated court returns after forty seconds. Camp diamonds, shard markers and remaining-power badges make this state visible. Detailed rules and original fictional unit identities are in [Minions and jungle](docs/MINIONS_AND_JUNGLE.md).
+
+Client and server now use **protocol 2**. Update both together; an old server cannot represent neutral combat or the contested economy. The loading screen supports **Back to heroes** and Escape, and canceled loads cannot start a late match.
 
 ## Design and evidence
 
@@ -43,6 +51,7 @@ Push with allied minions. Destroy two defending towers to expose that team's cor
 - [Mythology and roster](docs/MYTHOLOGY_AND_ROSTER.md): fourteen original kits and exactly which source excerpts informed them.
 - [Hero art bible](art/HERO_ART_BIBLE.md), [art direction](docs/ART_DIRECTION.md) and [pipeline evaluation](art/PIPELINE_EVALUATION.md): model/rig/effect requirements, actual asset route and remaining quality gaps.
 - [Mechanics research](docs/MECHANICS_RESEARCH.md), [REA analysis](docs/REA_ANALYSIS.md), [reuse ledger](docs/REUSE_LEDGER.md): inspected sources, license boundaries and research limitations.
+- [Player-experience review](docs/PLAYER_EXPERIENCE_REVIEW.md): accessible sources, unresolved feedback and concrete safeguards.
 - [Review panel](docs/PANEL.md), [QA](docs/QA.md): observed defects, accepted changes, verification and remaining limits.
 - [Audio design](docs/AUDIO_DESIGN.md): synthesized original audio, browser lifecycle and bounded voices.
 

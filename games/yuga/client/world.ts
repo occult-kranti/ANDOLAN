@@ -7,6 +7,8 @@ import { buildSangamCity } from './scenery';
 import { HeroModelLibrary, type HeroModel } from './hero-models';
 import { CastEffects } from './cast-effects';
 import { createOriginalEnvironment } from './environment-light';
+import { UnitModelLibrary, type UnitModel, type UnitModelId } from './unit-models';
+import { JungleView } from './jungle-view';
 
 export interface ScreenPoint { x: number; y: number; visible: boolean }
 export interface ArenaWorld {
@@ -17,10 +19,13 @@ export interface ArenaWorld {
   setReducedMotion(enabled: boolean): void;
   setOverview(enabled: boolean): void;
   setActive(enabled: boolean): void;
+  /** Discard pre-existing transient events after a transport welcome/reconnect. */
+  resetEventHistory(): void;
   project(point: XYZ): ScreenPoint;
   reticle(): ScreenPoint | null;
   preloadHeroes(ids: string[], progress?: (done: number, total: number, heroId: string) => void): Promise<void>;
-  assetDiagnostics(): ReturnType<HeroModelLibrary['diagnostics']> & { fallback: { id: string; heroId: string }[]; casts: ReturnType<CastEffects['diagnostic']> };
+  preloadUnits(progress?: (done: number, total: number, unitId: string) => void): Promise<void>;
+  assetDiagnostics(): ReturnType<HeroModelLibrary['diagnostics']> & { fallback: { id: string; heroId: string }[]; casts: ReturnType<CastEffects['diagnostic']>; units: ReturnType<UnitModelLibrary['diagnostics']> & { fallback: { id: string; unitId: string }[] }; jungle: ReturnType<JungleView['diagnostics']> };
   destroy(): void;
 }
 
@@ -29,7 +34,8 @@ interface Rig {
   weapon: pc.Entity; sash: pc.Entity; shadow: pc.Entity; ring: pc.Entity; shield: pc.Entity; hit: pc.Entity;
   health: pc.Entity; hpFrame: pc.Entity; tag: string; phase: number; x: number; z: number; y: number; yaw: number;
   shotUntil: number; castUntil: number; hitUntil: number; deathAt: number; wasAlive: boolean;
-  model: HeroModel | null; heroId: string; shotEvent: number; castEvent: number; castSlot: number; motionSpeed: number;
+  model: HeroModel | UnitModel | null; heroId: string; unitId: UnitModelId | null; shotEvent: number; castEvent: number; castSlot: number; motionSpeed: number;
+  lastActor: Actor;
 }
 interface StructureView { root: pc.Entity; intact: pc.Entity; crystal: pc.Entity; shield: pc.Entity; health: pc.Entity; frame: pc.Entity; shattered: pc.Entity }
 interface PooledVisual { root: pc.Entity; key: string }
@@ -43,8 +49,10 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
   const environment = createOriginalEnvironment(app);
   const kit = new RenderKit(app), root = new pc.Entity('SANGAM CITY / original arena'); app.root.addChild(root);
   const heroModels = new HeroModelLibrary(app);
+  const unitModels = new UnitModelLibrary(app);
   const castEffects = new CastEffects(kit, root);
   const scenery = buildSangamCity(kit, root);
+  const jungle = new JungleView(kit, root, unitModels);
   const camera = new pc.Entity('responsive shoulder camera'); app.root.addChild(camera);
   camera.addComponent('camera', { fov: 64, nearClip: .12, farClip: 450, clearColor: new pc.Color(.64, .75, .77) });
   const sunlight = new pc.Entity('late afternoon sunlight'); app.root.addChild(sunlight);
@@ -71,6 +79,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
   const shadowMaterial = kit.material('soft contact shadows', '#0b2029', 0, 0, .6);
   shadowMaterial.opacityMap = shadowTexture; shadowMaterial.opacityMapChannel = 'a'; shadowMaterial.useLighting = false; shadowMaterial.depthWrite = false; shadowMaterial.update();
   const rigs = new Map<string, Rig>(), buildings = new Map<string, StructureView>();
+  const corpses: { rig: Rig; until: number; actor: Actor }[] = [];
   const projectileViews = new Map<string, PooledVisual>(), projectilePool: PooledVisual[] = [];
   const zoneViews = new Map<string, PooledVisual>(), zonePool: PooledVisual[] = [];
   const pickupViews = new Map<string, pc.Entity>();
@@ -78,6 +87,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
   let yaw = 0, pitch = -.06, elapsed = 0, reducedMotion = false, overview = true;
   let quality: 'low' | 'high' = 'high', lastSnapshot: ArenaSnapshot | null = null, playerId: string | null = null;
   let epoch = '', lastTick = -1, eventId = -1, tracked = '', initialized = false, destroyed = false;
+  let active = true, baselineEvents = true;
   let cameraDistance = 6;
   const follow = new pc.Vec3(), cameraForward = new pc.Vec3(0, 0, 1), temp = new pc.Vec3(), screen = new pc.Vec3();
 
@@ -120,6 +130,11 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     return weapon;
   }
 
+  function unitIdentity(actor: Actor): UnitModelId {
+    if (actor.unitArchetype === 'summon' || actor.minionRole === 'summon') return actor.heroId === 'hidimbi' ? 'yaksha' : 'soldier';
+    return actor.unitArchetype ?? (actor.minionRole === 'siege' ? 'king' : 'soldier');
+  }
+  function rigTag(actor: Actor) { return `${actor.kind}/${actor.heroId}/${actor.team}/${actor.minionRole ?? ''}/${actor.unitArchetype ?? ''}`; }
   function makeRig(actor: Actor): Rig {
     const hero = heroById(actor.heroId), minion = actor.kind === 'minion', siege = actor.minionRole === 'siege', summon = actor.minionRole === 'summon';
     const color = kit.material(`hero ${hero.id}`, hero.color, .02, .4), accent = kit.material(`hero trim ${hero.id}`, hero.accent, .15, .65);
@@ -204,12 +219,13 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     const hpFrame = group(r, 'health strip', 0, minion ? 2.3 : 2.8, 0);
     kit.shape(hpFrame, 'box', M.hpBack, 0, 0, 0, minion ? .65 : 1.1, .075, .025);
     const health = kit.shape(hpFrame, 'box', team, 0, 0, .025, minion ? .6 : 1.05, .04, .025);
-    const model = minion ? null : heroModels.instantiate(actor.heroId, actor.id, r);
-    if (model) { body.enabled = false; model.setShadows(quality === 'high'); }
+    const unitId = minion ? unitIdentity(actor) : null;
+    const model = unitId ? unitModels.instantiate(unitId, actor.id, r) : heroModels.instantiate(actor.heroId, actor.id, r);
+    if (model) { body.enabled = false; model.setShadows(quality === 'high'); if (minion) model.root.setLocalScale(1 / .68, 1 / .68, 1 / .68); }
     const result: Rig = { root: r, body, leftArm, rightArm, leftLeg, rightLeg, weapon, sash, shadow, ring, shield, hit, health, hpFrame,
-      tag: `${actor.kind}/${actor.heroId}/${actor.team}/${actor.minionRole ?? ''}`, phase: 0, x: actor.x, z: actor.z, y: actor.y, yaw: actor.yaw,
+      tag: rigTag(actor), phase: 0, x: actor.x, z: actor.z, y: actor.y, yaw: actor.yaw,
       shotUntil: 0, castUntil: 0, hitUntil: 0, deathAt: -10, wasAlive: actor.health > 0,
-      model, heroId: actor.heroId, shotEvent: 0, castEvent: 0, castSlot: 0, motionSpeed: 0 };
+      model, heroId: actor.heroId, unitId, shotEvent: 0, castEvent: 0, castSlot: 0, motionSpeed: 0, lastActor: actor };
     r.setPosition(actor.x, actor.y, actor.z); return result;
   }
 
@@ -338,21 +354,26 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     for (const s of fx.sparks) s.render!.meshInstances[0]!.material = material;
   }
   function consumeEvents(snapshot: ArenaSnapshot) {
+    if (baselineEvents) { eventId = snapshot.events.at(-1)?.id ?? -1; baselineEvents = false; return; }
     for (const event of snapshot.events) {
       if (event.id <= eventId) continue;
       eventId = event.id;
-      if (snapshot.time - event.time > .7) continue;
+      const age = snapshot.time - event.time;
       const actor = rigs.get(event.actorId), target = event.targetId ? rigs.get(event.targetId) : undefined;
-      if (actor && event.type === 'shot') { actor.shotUntil = elapsed + .18; actor.shotEvent = event.id; }
-      if (actor && event.type === 'ability') { actor.castUntil = elapsed + .5; actor.castEvent = event.id; actor.castSlot = Math.max(0, heroById(actor.heroId).abilities.findIndex(ability => event.label.includes(ability.name))); }
+      // A delayed render can still play a recent acknowledged action. Very old menu/reconnect
+      // history is discarded, and particles keep the shorter visual freshness window.
+      if (age <= 2 && actor && event.type === 'shot') { actor.shotUntil = elapsed + .18; actor.shotEvent = event.id; }
+      if (age <= 2 && actor && event.type === 'ability') { actor.castUntil = elapsed + .5; actor.castEvent = event.id; actor.castSlot = Math.max(0, heroById(actor.heroId).abilities.findIndex(ability => event.label.includes(ability.name))); if (actor.unitId) actor.shotEvent = event.id; }
+      if (age > .7) continue;
       if (target && event.type === 'hit') target.hitUntil = elapsed + .11;
       burst(event);
     }
   }
   function updateRig(r: Rig, actor: Actor, dt: number, local: boolean) {
-    if (!r.model && actor.kind === 'hero') {
-      r.model = heroModels.instantiate(actor.heroId, actor.id, r.root);
-      if (r.model) { r.body.enabled = false; r.model.setShadows(quality === 'high'); }
+    r.lastActor = actor;
+    if (!r.model) {
+      r.model = r.unitId ? unitModels.instantiate(r.unitId, actor.id, r.root) : heroModels.instantiate(actor.heroId, actor.id, r.root);
+      if (r.model) { r.body.enabled = false; r.model.setShadows(quality === 'high'); if (r.unitId) r.model.root.setLocalScale(1 / .68, 1 / .68, 1 / .68); }
     }
     const present = actor.bot || actor.connected;
     const alive = actor.health > 0 && actor.respawn <= 0 && present;
@@ -372,6 +393,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     r.root.setPosition(r.x, r.y, r.z); r.root.setEulerAngles(0, r.yaw * RAD, 0);
     const minion = actor.kind === 'minion', scale = minion ? .68 : 1;
     r.root.setLocalScale(scale, scale, scale);
+    if (!r.model) {
     r.body.setLocalPosition(0, reducedMotion ? 0 : Math.abs(Math.cos(r.phase)) * stride * .035, 0);
     r.body.setLocalEulerAngles(alive ? -stride * 3 : clamp((elapsed - r.deathAt) * 200, 0, 82), 0, alive ? 0 : 15);
     r.leftLeg.setLocalEulerAngles(actor.y > .1 ? -22 : swing, 0, 0); r.rightLeg.setLocalEulerAngles(actor.y > .1 ? 30 : -swing, 0, 0);
@@ -379,14 +401,20 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     r.leftArm.setLocalEulerAngles(actor.kind === 'hero' && heroById(actor.heroId).weapon === 'bow' ? -82 - (local ? pitch * RAD : 0) : -swing * .65 - cast * 90, 0, cast * 16);
     r.weapon.setLocalEulerAngles(0, shot * 12, 0);
     r.sash.setLocalEulerAngles(reducedMotion ? -6 : -8 - stride * 17 + Math.sin(r.phase * .55) * 4, 0, 0);
+    }
     r.shadow.setPosition(r.x, .035, r.z); const ss = (minion ? 1.2 : 1.7) * (1 + actor.y * .12); r.shadow.setLocalScale(ss, 1, ss);
     r.ring.enabled = alive; r.shield.enabled = alive && (actor.shield > 0 || actor.effects.ward > 0);
     if (!reducedMotion) r.shield.setLocalEulerAngles(65, elapsed * 50, 0);
     r.hit.enabled = alive && r.hitUntil > elapsed;
     if (r.model) {
       r.body.enabled = false; r.model.root.enabled = true;
-      const shot = lastSnapshot?.projectiles.find(projectile => projectile.owner === actor.id);
-      const aimPitch = actor.cast?.pitch ?? (local ? pitch : shot ? Math.atan2(shot.vy, Math.hypot(shot.vx, shot.vz)) : 0);
+      if ('setAnimated' in r.model) {
+        const localActor = lastSnapshot?.actors.find(a => a.id === playerId);
+        const near = !localActor || Math.hypot(localActor.x - actor.x, localActor.z - actor.z) < (quality === 'low' ? 38 : 60);
+        r.model.setAnimated(near || shot > 0 || !alive);
+      }
+      const ownedShot = lastSnapshot?.projectiles.find(projectile => projectile.owner === actor.id);
+      const aimPitch = actor.cast?.pitch ?? (local ? pitch : ownedShot ? Math.atan2(ownedShot.vy, Math.hypot(ownedShot.vx, ownedShot.vz)) : 0);
       r.model.update({ speed: r.motionSpeed, airborne: actor.y > .1, alive, shot: r.shotEvent, cast: r.castEvent, castSlot: r.castSlot, casting: !!actor.cast, reducedMotion, pitch: aimPitch }, dt);
     }
     r.hpFrame.enabled = alive && !local; r.hpFrame.setEulerAngles(0, yaw * RAD + 180, 0);
@@ -461,27 +489,37 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
       if (snapshot) {
         const nextEpoch = `${snapshot.room}/${localId ?? ''}`;
         if (nextEpoch !== epoch || snapshot.tick < lastTick) {
-          epoch = nextEpoch; eventId = -1; initialized = false;
+          epoch = nextEpoch; eventId = -1; baselineEvents = true; initialized = false;
           // A replay can reuse actor/effect IDs with fresh event counters and different heroes.
           // Recreate private skeleton state while retaining the shared loaded GLB resources.
           for (const rig of rigs.values()) { rig.model?.destroy(); rig.root.destroy(); rig.shadow.destroy(); }
           rigs.clear();
+          for (const { rig } of corpses) { rig.model?.destroy(); rig.root.destroy(); rig.shadow.destroy(); } corpses.length = 0;
           releaseRemoved(projectileViews, new Set(), projectilePool);
           releaseRemoved(zoneViews, new Set(), zonePool);
           castEffects.destroy();
+          jungle.reset();
           for (const burst of bursts) { burst.until = 0; burst.root.enabled = false; }
         }
         lastTick = snapshot.tick;
         const aliveIds = new Set(snapshot.actors.map(a => a.id));
-        for (const [id, rig] of rigs) if (!aliveIds.has(id)) { rig.model?.destroy(); rig.root.destroy(); rig.shadow.destroy(); rigs.delete(id); }
+        for (const [id, rig] of rigs) if (!aliveIds.has(id)) {
+          const defeated = !baselineEvents && rig.unitId && snapshot.events.some(e => e.id > eventId && e.type === 'defeat' && e.targetId === id && snapshot.time - e.time <= .7);
+          if (defeated && corpses.length < 24) {
+            // A short, untargetable visual remainder; authority has already removed this unit.
+            corpses.push({ rig, until: elapsed + 1.1, actor: { ...rig.lastActor, health: 0, respawn: 1 } });
+          } else { rig.model?.destroy(); rig.root.destroy(); rig.shadow.destroy(); }
+          rigs.delete(id);
+        }
         for (const actor of snapshot.actors) {
           let rig = rigs.get(actor.id);
-          if (rig && rig.tag !== `${actor.kind}/${actor.heroId}/${actor.team}/${actor.minionRole ?? ''}`) { rig.model?.destroy(); rig.root.destroy(); rig.shadow.destroy(); rigs.delete(actor.id); rig = undefined; }
+          if (rig && rig.tag !== rigTag(actor)) { rig.model?.destroy(); rig.root.destroy(); rig.shadow.destroy(); rigs.delete(actor.id); rig = undefined; }
           if (!rig) { rig = makeRig(actor); rigs.set(actor.id, rig); }
           updateRig(rig, actor, dt, actor.id === localId);
         }
         consumeEvents(snapshot);
         castEffects.update(snapshot, localId, reducedMotion);
+        jungle.update(snapshot, localId, dt, { yaw, reducedMotion, quality, elapsed });
         for (const s of snapshot.structures) {
           let visual = buildings.get(s.id); if (!visual) { visual = makeStructure(s); buildings.set(s.id, visual); }
           visual.intact.enabled = s.health > 0; visual.crystal.enabled = s.health > 0; visual.shield.enabled = s.shielded && s.health > 0; visual.frame.enabled = s.health > 0; visual.shattered.enabled = s.health <= 0;
@@ -526,6 +564,11 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
           if (!reducedMotion) crystal.setLocalEulerAngles(0, elapsed * 50, 0);
         }
       }
+      for (let i = corpses.length - 1; i >= 0; i--) {
+        const corpse = corpses[i]!;
+        if (elapsed >= corpse.until) { corpse.rig.model?.destroy(); corpse.rig.root.destroy(); corpse.rig.shadow.destroy(); corpses.splice(i, 1); }
+        else updateRig(corpse.rig, corpse.actor, dt, false);
+      }
       for (const fx of bursts) {
         fx.root.enabled = fx.until > elapsed; if (!fx.root.enabled) continue;
         const age = elapsed - fx.born, radius = reducedMotion ? .45 : .2 + age * 4;
@@ -537,12 +580,15 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     },
     setCamera(nextYaw, nextPitch) { if (Number.isFinite(nextYaw)) yaw = nextYaw; if (Number.isFinite(nextPitch)) pitch = clamp(nextPitch, -1.1, 1.1); },
     setQuality,
-    setActive(enabled) { app.autoRender = enabled; app.renderNextFrame = enabled; heroModels.setActive(enabled); },
+    setActive(enabled) { if (enabled && !active) { baselineEvents = true; jungle.baselineEvents(); } active = enabled; app.autoRender = enabled; app.renderNextFrame = enabled; heroModels.setActive(enabled); unitModels.setActive(enabled); },
+    resetEventHistory() { baselineEvents = true; jungle.baselineEvents(); },
     setReducedMotion(enabled) { reducedMotion = enabled; },
     setOverview(enabled) { if (overview !== enabled) { overview = enabled; initialized = false; } },
     project,
     preloadHeroes: (ids, progress) => heroModels.preload(ids, progress),
-    assetDiagnostics: () => ({ ...heroModels.diagnostics(), fallback: [...rigs.entries()].filter(([, rig]) => !rig.model && rig.tag.startsWith('hero/')).map(([id, rig]) => ({ id, heroId: rig.heroId })), casts: castEffects.diagnostic() }),
+    preloadUnits: progress => unitModels.preload(progress),
+    assetDiagnostics: () => ({ ...heroModels.diagnostics(), fallback: [...rigs.entries()].filter(([, rig]) => !rig.model && rig.tag.startsWith('hero/')).map(([id, rig]) => ({ id, heroId: rig.heroId })), casts: castEffects.diagnostic(),
+      units: { ...unitModels.diagnostics(), fallback: [...[...rigs.entries()].filter(([, rig]) => !rig.model && rig.unitId).map(([id, rig]) => ({ id, unitId: rig.unitId! })), ...jungle.diagnostics().fallback] }, jungle: jungle.diagnostics() }),
     reticle() {
       const actor = lastSnapshot?.actors.find(a => a.id === playerId); if (!actor || overview || actor.health <= 0) return null;
       const aimYaw = actor.cast?.yaw ?? yaw, aimPitch = actor.cast?.pitch ?? pitch;
@@ -551,7 +597,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     destroy() {
       if (destroyed) return; destroyed = true; observer.disconnect();
       // Dispose cached GPU resources while the device is alive; app.destroy clears its GL context.
-      castEffects.destroy(); heroModels.destroy(); root.destroy(); kit.dispose(); environment.destroy(); app.destroy();
+      castEffects.destroy(); jungle.destroy(); unitModels.destroy(); heroModels.destroy(); root.destroy(); kit.dispose(); environment.destroy(); app.destroy();
     },
   };
 }

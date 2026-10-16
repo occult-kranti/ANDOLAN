@@ -6,6 +6,7 @@ import { performance } from 'node:perf_hooks';
 import { WebSocket, WebSocketServer } from 'ws';
 import { HEROES } from '../shared/heroes.js';
 import { ArenaSimulation } from '../shared/simulation.js';
+import { YUGA_PROTOCOL } from '../shared/types.js';
 import type { ArenaCommand, ArenaInput, ArenaJoin, ServerMessage, Team } from '../shared/types.js';
 import { ArenaStepClock } from './clock.js';
 
@@ -21,7 +22,7 @@ const id = (value: unknown) => typeof value === 'string' && /^[a-zA-Z0-9_-]{1,64
 /** Strict network intent schema: position, health, cooldown and reward claims never enter the engine. */
 export function parseArenaMessage(raw: unknown): ClientMessage | null {
   if (!object(raw)) return null;
-  if (raw.type === 'join' && keys(raw, ['type', 'protocol', 'room', 'heroId', 'name', 'token']) && raw.protocol === 1 && typeof raw.heroId === 'string' && HEROES.some(hero => hero.id === raw.heroId) && typeof raw.name === 'string' && raw.name.length >= 1 && raw.name.length <= 24 && (raw.room === undefined || typeof raw.room === 'string' && /^[A-Z0-9-]{3,16}$/.test(raw.room)) && (raw.token === undefined || typeof raw.token === 'string' && /^[a-f0-9]{48}$/.test(raw.token))) return raw as unknown as ArenaJoin;
+  if (raw.type === 'join' && keys(raw, ['type', 'protocol', 'room', 'heroId', 'name', 'token']) && raw.protocol === YUGA_PROTOCOL && typeof raw.heroId === 'string' && HEROES.some(hero => hero.id === raw.heroId) && typeof raw.name === 'string' && raw.name.length >= 1 && raw.name.length <= 24 && (raw.room === undefined || typeof raw.room === 'string' && /^[A-Z0-9-]{3,16}$/.test(raw.room)) && (raw.token === undefined || typeof raw.token === 'string' && /^[a-f0-9]{48}$/.test(raw.token))) return raw as unknown as ArenaJoin;
   if (raw.type === 'input' && keys(raw, ['type', 'seq', 'moveX', 'moveZ', 'yaw', 'pitch', 'fire', 'jump']) && Number.isSafeInteger(raw.seq) && Number(raw.seq) >= 0 && ['moveX', 'moveZ', 'yaw', 'pitch'].every(key => typeof raw[key] === 'number' && Number.isFinite(raw[key])) && typeof raw.fire === 'boolean' && typeof raw.jump === 'boolean') return raw as unknown as ArenaInput;
   if (raw.type === 'command' && id(raw.id)) {
     if (raw.action === 'ability' && keys(raw, ['type', 'id', 'action', 'slot']) && [0, 1, 2].includes(raw.slot as number)) return raw as unknown as ArenaCommand;
@@ -60,7 +61,7 @@ export async function createArenaServer(options: ArenaServerOptions = {}) {
       response.setHeader('X-Content-Type-Options', 'nosniff'); response.setHeader('Referrer-Policy', 'same-origin');
       let pathname: string;
       try { pathname = decodeURIComponent(new URL(request.url ?? '/', 'http://localhost').pathname); } catch { response.writeHead(400); response.end('Invalid path'); return; }
-      if (pathname === '/health') { response.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); response.end(JSON.stringify({ ok: true, game: 'yuga', protocol: 1, rooms: rooms.size, connected: [...rooms.values()].reduce((n, room) => n + room.clients.size, 0), simulationHz: 20, snapshotHz: 10, status: 'bounded-beta' })); return; }
+      if (pathname === '/health') { response.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); response.end(JSON.stringify({ ok: true, game: 'yuga', protocol: YUGA_PROTOCOL, rooms: rooms.size, connected: [...rooms.values()].reduce((n, room) => n + room.clients.size, 0), simulationHz: 20, snapshotHz: 10, status: 'bounded-beta' })); return; }
       if (request.method !== 'GET' && request.method !== 'HEAD') { response.writeHead(405); response.end('Method not allowed'); return; }
       const requested = path.resolve(staticDir, `.${pathname}`);
       if (pathname.includes('\0') || requested !== staticDir && !requested.startsWith(staticDir + path.sep)) { response.writeHead(403); response.end('Forbidden'); return; }
@@ -114,7 +115,7 @@ export async function createArenaServer(options: ArenaServerOptions = {}) {
         else { token = randomBytes(24).toString('hex'); room.identities.set(hash(token), { id: playerId, heroId: actor.heroId, team: actor.team, lastSeen: now }); }
         room.clients.set(playerId, socket); room.lastActive = now;
         context.room = room; context.id = playerId; clearTimeout(timeout);
-        send(socket, { type: 'welcome', protocol: 1, id: playerId, token: token!, room: room.sim.room, snapshot: room.sim.snapshot() });
+        send(socket, { type: 'welcome', protocol: YUGA_PROTOCOL, id: playerId, token: token!, room: room.sim.room, snapshot: room.sim.snapshot() });
         return;
       }
       const room = context.room;

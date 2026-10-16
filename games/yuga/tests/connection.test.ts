@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { online, practice, type ArenaConnection, type Callbacks } from '../client/connection';
 import { ArenaSimulation } from '../shared/simulation';
+import { YUGA_PROTOCOL } from '../shared/types';
 import type { ArenaCommand, ArenaInput, ArenaSnapshot } from '../shared/types';
 
 class Socket extends EventTarget {
@@ -23,7 +24,7 @@ const intent = (seq: number, moveZ = 0): ArenaInput => ({ type: 'input', seq, mo
 const upgrade: ArenaCommand = { type: 'command', id: 'purchase-1', action: 'upgrade', upgrade: 'power' };
 function connect() { const connection = online({ url: 'ws://localhost:3002/ws', heroId: 'rama', name: 'Tester', room: '' }, callbacks); connections.push(connection); return connection; }
 function welcome(socket = Socket.all.at(-1)!, room = 'ARENA01', token = 'saved-token') {
-  socket.open(); socket.message({ type: 'welcome', protocol: 1, id: 'human', room, token, snapshot: snapshot() }); return socket;
+  socket.open(); socket.message({ type: 'welcome', protocol: YUGA_PROTOCOL, id: 'human', room, token, snapshot: snapshot() }); return socket;
 }
 function local() { const connection = practice('rama', 'Tester', callbacks); connections.push(connection); return connection; }
 function latest() { return vi.mocked(callbacks.snapshot).mock.calls.at(-1)![0]; }
@@ -65,7 +66,7 @@ describe('YUGA browser transport lifecycle', () => {
   it('retains the room/token and exact command IDs across repeated reconnects without replaying actions', async () => {
     const connection = connect(), first = welcome(); connection.command(upgrade);
     connection.reconnect!(); const second = welcome();
-    expect(second.sent).toEqual([{ type: 'join', protocol: 1, heroId: 'rama', name: 'Tester', room: 'ARENA01', token: 'saved-token' }]);
+    expect(second.sent).toEqual([{ type: 'join', protocol: YUGA_PROTOCOL, heroId: 'rama', name: 'Tester', room: 'ARENA01', token: 'saved-token' }]);
     connection.command(upgrade); expect(second.sent.at(-1)).toEqual(upgrade);
     first.message({ type: 'result', id: upgrade.id, ok: true, code: 'UPGRADED' });
     expect(callbacks.result).not.toHaveBeenCalled();
