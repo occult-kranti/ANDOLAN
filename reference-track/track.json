@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "lane",
+  "label": "YUGA Lane Lab",
+  "summary": "An original offline lane-economy experiment studying source-attributed rewards, lane pressure and counterplay with the existing YUGA world and roster.",
+  "defaultMode": "lane-economy",
+  "modes": [
+    "lane-economy"
+  ],
+  "referenceGame": "Deadlock",
+  "implementation": "Original YUGA mechanics; community source studies are comparison evidence.",
+  "featureGates": {
+    "offlineLaneEconomy": true,
+    "hybridControlComparison": false,
+    "sharedArenaAssets": true,
+    "allFourteenYugaHeroes": true,
+    "seededAuthorityInputBots": true,
+    "walletDeltaReadout": true,
+    "sourceCorrelatedEconomyReceipts": false,
+    "newUniversalTraversal": false,
+    "largeItemCatalog": false,
+    "multiplayerLab": false,
+    "commercialSourceOrAssets": false,
+    "commercialParityClaims": false,
+    "acceptedPrimaryShotObserver": true
+  },
+  "gateSemantics": "Enabled gates declare intended scope; they do not certify implementation, tests, publication or commercial equivalence.",
+  "acceptanceStatus": "pending-root-integration-test-evidence",
+  "upstreamResearch": "games/yuga/docs/research/DEADLOCK_ENGINEERING.md",
+  "trackNotes": "reference-track/README.md",
+  "comparisonMode": "control-point",
+  "buildSelection": {
+    "consumedField": "id",
+    "environmentOverride": "YUGA_LAB_TRACK",
+    "clientDefine": "import.meta.env.VITE_YUGA_LAB_TRACK",
+    "metadataScope": "Other fields document scope and are not independently enforced by Vite."
+  },
+  "delivery": {
+    "strategy": "branch-fallback",
+    "branch": "reference/deadlock-mechanics",
+    "repositoryCreation": "GitHub POST /user/repos returned 403; separate repository was not created.",
+    "plannedUrl": "https://occult-kranti.github.io/ANDOLAN/yuga/lane-lab/",
+    "deploymentStatus": "not-deployed",
+    "foundationStatus": "forthcoming-in-this-worktree",
+    "testStatus": "pending-root-evidence"
+  }
+}
