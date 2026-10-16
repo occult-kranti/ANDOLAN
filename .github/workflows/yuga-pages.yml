@@ -24,17 +24,24 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npm run typecheck && npm run yuga:typecheck && npm run lint && npm test && npm run yuga:test
+      - run: npm run typecheck && npm run yuga:typecheck && npm run lint && npm test && npm run yuga:test && npm run yuga:lab:test
       - run: npm run yuga:assets && npm run yuga:unit-assets
       - run: npx playwright install --with-deps chromium
-      - run: npm run build:standalone && npm run yuga:build && node games/yuga/tools/assemble-site.mjs
+      - run: npm run build:standalone && npm run yuga:build && npm run yuga:lab:build:tracks && node games/yuga/tools/assemble-site.mjs
       - run: npm run yuga:smoke:production
+      - name: Verify all production lab variants
+        run: |
+          node games/yuga/tools/smoke-lab-built.mjs --built dist/yuga-lab --flavor all --output test-results/yuga-lab-built/all
+          node games/yuga/tools/smoke-lab-built.mjs --built dist/yuga-lane-lab --flavor lane --output test-results/yuga-lab-built/lane
+          node games/yuga/tools/smoke-lab-built.mjs --built dist/yuga-control-lab --flavor control --output test-results/yuga-lab-built/control
       - name: Preserve production browser evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: yuga-production-browser-report
-          path: test-results/yuga-production/
+          path: |
+            test-results/yuga-production/
+            test-results/yuga-lab-built/
           if-no-files-found: ignore
           retention-days: 14
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
@@ -68,14 +75,37 @@ jobs:
             test-results/yuga/
           if-no-files-found: ignore
           retention-days: 14
+  reference-browser:
+    name: Mechanics Lab browser regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run yuga:lab:e2e
+      - name: Preserve Mechanics Lab browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: yuga-reference-browser-report
+          path: |
+            playwright-report/yuga-lab/
+            test-results/yuga-lab/
+          if-no-files-found: ignore
+          retention-days: 14
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}yuga/
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [build, browser]
+    needs: [build, browser, reference-browser]
     steps:
-      - name: Deploy both games
+      - name: Deploy games and mechanics labs
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

@@ -107,7 +107,7 @@ Unresolved production work includes the 48.64 MiB model payload, no measured con
 
 ## New user steering — accepted bounded extension
 
-The user subsequently requested more Ramayana/Lanka scenery, a swamp-like area, all-hero ability/balance review and further community research. The moderator accepted the finite extension below and reopened source ownership. Implementation does not close the current three rounds; it adds exact acceptance gates to the candidate.
+The user subsequently requested more Ramayana/Lanka scenery, a swamp-like area, all-hero ability/balance review and further community research. The moderator accepted the finite extension below and reopened source ownership. Implementation alone did not close the three rounds; the later native, CI and public checks above satisfied the added bounded gates.
 
 | Evidence / task impact | Proposed scope and owner | Acceptance / current state |
 | --- | --- | --- |
