@@ -1,0 +1,12 @@
+services:
+  andolan:
+    image: andolan:0.1
+    build: .
+    ports:
+      - "3001:3001"
+    volumes:
+      - andolan-saves:/app/.data
+    restart: unless-stopped
+    stop_grace_period: 20s
+volumes:
+  andolan-saves:

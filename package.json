@@ -1,0 +1,44 @@
+{
+  "name": "andolan-city-of-consequences",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "concurrently --kill-others -n server,client \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:client": "vite --host 0.0.0.0",
+    "dev:server": "tsx watch apps/server/src/index.ts",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node dist/server/apps/server/src/index.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:content": "vitest run tests/content.test.ts",
+    "test:network": "vitest run tests/network.test.ts",
+    "test:e2e": "playwright test",
+    "build:client": "vite build && node tools/attach-notices.mjs client",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:standalone": "vite build --config vite.standalone.config.ts && node tools/attach-notices.mjs standalone"
+  },
+  "dependencies": {
+    "@fontsource/barlow-condensed": "5.3.0",
+    "@fontsource/dm-sans": "5.3.0",
+    "playcanvas": "2.23.3",
+    "ws": "8.22.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "24.10.1",
+    "@types/ws": "8.18.1",
+    "concurrently": "10.0.6",
+    "eslint": "10.12.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.2",
+    "vite": "8.3.4",
+    "vite-plugin-singlefile": "2.3.3",
+    "vitest": "5.0.5"
+  }
+}

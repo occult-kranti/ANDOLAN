@@ -1,0 +1,407 @@
+{
+  "observed_at_utc": "2026-10-16",
+  "tool": {
+    "package": "rea-agents",
+    "version": "6.5.0",
+    "source_repository": "morluto/rea",
+    "inspected_commit": "d52a488476e7c41f573f23a1965d3f32d4e6a7f2",
+    "source_package_equivalence": "not established; same version string only"
+  },
+  "target": {
+    "repository": "swift502/Sketchbook",
+    "commit": "62f4b7986fd1ce1e4f91daba89ef032c20a6ce55",
+    "artifact_sha256": "1440e0aee5ec8c3279071c9d1739a185ed2e06f47fb3fc7c9489f4a7f3a2b69e"
+  },
+  "analysis_evidence_id": "ev_81597ee2e1113be6f339d786d742209ad8ced91dcab8c07d28aa6e468fc433fa",
+  "statistics": {
+    "relevant_files": 191,
+    "nested_asar_containers": 0,
+    "text_bytes_read": 40667,
+    "invalid_utf8_files": 0,
+    "parsed_javascript_files": 7,
+    "visited_ast_nodes": 6410,
+    "findings": 153,
+    "modules": 0,
+    "parse_failures": 0
+  },
+  "source_selection": {
+    "requested_paths": [
+      "src/ts/characters/Character.ts",
+      "src/ts/characters/VehicleEntryInstance.ts",
+      "src/ts/characters/character_states/vehicles/EnteringVehicle.ts",
+      "src/ts/characters/character_states/vehicles/Driving.ts",
+      "src/ts/characters/character_states/vehicles/ExitingVehicle.ts",
+      "src/ts/characters/character_states/vehicles/ExitingStateBase.ts",
+      "src/ts/vehicles/VehicleSeat.ts"
+    ],
+    "unselected_files": 184
+  },
+  "integrity_contradictions": [],
+  "semantic_graph": {
+    "graph_id": "jsrg_fc08d17419576d4fc709a1f3bd98dbe78fa40d5390ac115e2128a55709265517",
+    "nodes": 3372,
+    "relations": 1759,
+    "unknowns": 3516,
+    "status": "partial",
+    "truncated": false
+  },
+  "selected_facts": [
+    {
+      "node": {
+        "kind": "function",
+        "identity": {
+          "artifact_sha256": "f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3",
+          "module_path": "src/ts/characters/Character.ts",
+          "source_range": {
+            "start": {
+              "line": 775,
+              "column": 1
+            },
+            "end": {
+              "line": 779,
+              "column": 2
+            }
+          },
+          "role_key": "callable:callable:method:21343:21446"
+        },
+        "function_node_id": null,
+        "application_node_ids": [],
+        "label": "occupySeat",
+        "properties": {
+          "name": "occupySeat"
+        },
+        "evidence": {
+          "context_id": "jsrg_evidence_34876c9aa2926393575693b9aaf6766f3602a75bc171e3d414ae5e3719693d1c",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "src/ts/characters/Character.ts",
+              "start": {
+                "line": 775,
+                "column": 1
+              },
+              "end": {
+                "line": 779,
+                "column": 2
+              }
+            }
+          }
+        },
+        "node_id": "jsrg_node_1132db9ffb0bdc6923a26ac8cc55bcc653a274db739023bda1751eebf598b698"
+      },
+      "evidence_context": {
+        "authority": "ast-static-analysis",
+        "state": "observed",
+        "confidence": "exact",
+        "artifact": {
+          "available": true,
+          "artifact_id": "art_f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3",
+          "sha256": "f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3"
+        },
+        "extractor": {
+          "name": "rea-javascript-semantic-analysis",
+          "version": "1",
+          "operation": "analyze_javascript_application",
+          "executable_sha256": null
+        },
+        "coverage": {
+          "status": "complete",
+          "truncated": false,
+          "omitted_count": 0,
+          "limits": []
+        },
+        "limitations": [],
+        "evidence_ids": [],
+        "context_id": "jsrg_evidence_34876c9aa2926393575693b9aaf6766f3602a75bc171e3d414ae5e3719693d1c"
+      }
+    },
+    {
+      "node": {
+        "kind": "property-slot",
+        "identity": {
+          "artifact_sha256": "f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3",
+          "module_path": "src/ts/characters/Character.ts",
+          "source_range": null,
+          "role_key": "property:[\"scope:function:21343:21446:binding:seat\",[\"occupiedBy\"]]"
+        },
+        "function_node_id": "jsrg_node_1132db9ffb0bdc6923a26ac8cc55bcc653a274db739023bda1751eebf598b698",
+        "application_node_ids": [
+          "jag_node_53beb0b16c75a70acaed2b24450dad4aa0899400f0ef92fc6d4f1d052195b268"
+        ],
+        "label": "occupiedBy",
+        "properties": {
+          "name": "occupiedBy",
+          "property_path": [
+            "occupiedBy"
+          ],
+          "property_pointer": "/occupiedBy",
+          "object_binding_id": "scope:function:21343:21446:binding:seat",
+          "presence": "unknown-coverage",
+          "value_status": "unknown",
+          "value_coverage": null
+        },
+        "evidence": {
+          "context_id": "jsrg_evidence_34876c9aa2926393575693b9aaf6766f3602a75bc171e3d414ae5e3719693d1c",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "artifact-path",
+              "path": "src/ts/characters/Character.ts"
+            }
+          }
+        },
+        "node_id": "jsrg_node_42a29a5265d7da2ea77da7dc1d2c4778e3530a1891047bea89ec57d5ef1d1bbb"
+      },
+      "evidence_context": {
+        "authority": "ast-static-analysis",
+        "state": "observed",
+        "confidence": "exact",
+        "artifact": {
+          "available": true,
+          "artifact_id": "art_f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3",
+          "sha256": "f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3"
+        },
+        "extractor": {
+          "name": "rea-javascript-semantic-analysis",
+          "version": "1",
+          "operation": "analyze_javascript_application",
+          "executable_sha256": null
+        },
+        "coverage": {
+          "status": "complete",
+          "truncated": false,
+          "omitted_count": 0,
+          "limits": []
+        },
+        "limitations": [],
+        "evidence_ids": [],
+        "context_id": "jsrg_evidence_34876c9aa2926393575693b9aaf6766f3602a75bc171e3d414ae5e3719693d1c"
+      }
+    },
+    {
+      "node": {
+        "kind": "expression",
+        "identity": {
+          "artifact_sha256": "f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3",
+          "module_path": "src/ts/characters/Character.ts",
+          "source_range": {
+            "start": {
+              "line": 778,
+              "column": 2
+            },
+            "end": {
+              "line": 778,
+              "column": 17
+            }
+          },
+          "role_key": "object:write:21420:21435"
+        },
+        "function_node_id": "jsrg_node_1132db9ffb0bdc6923a26ac8cc55bcc653a274db739023bda1751eebf598b698",
+        "application_node_ids": [],
+        "label": "write:/occupiedBy",
+        "properties": {
+          "operation_kind": "write",
+          "property_path": [
+            "occupiedBy"
+          ]
+        },
+        "evidence": {
+          "context_id": "jsrg_evidence_34876c9aa2926393575693b9aaf6766f3602a75bc171e3d414ae5e3719693d1c",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "src/ts/characters/Character.ts",
+              "start": {
+                "line": 778,
+                "column": 2
+              },
+              "end": {
+                "line": 778,
+                "column": 17
+              }
+            }
+          }
+        },
+        "node_id": "jsrg_node_7b9315d42b032c9c2ec8cc5892508cf541d14974614262f1f105f1d1b05bce26"
+      },
+      "evidence_context": {
+        "authority": "ast-static-analysis",
+        "state": "observed",
+        "confidence": "exact",
+        "artifact": {
+          "available": true,
+          "artifact_id": "art_f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3",
+          "sha256": "f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3"
+        },
+        "extractor": {
+          "name": "rea-javascript-semantic-analysis",
+          "version": "1",
+          "operation": "analyze_javascript_application",
+          "executable_sha256": null
+        },
+        "coverage": {
+          "status": "complete",
+          "truncated": false,
+          "omitted_count": 0,
+          "limits": []
+        },
+        "limitations": [],
+        "evidence_ids": [],
+        "context_id": "jsrg_evidence_34876c9aa2926393575693b9aaf6766f3602a75bc171e3d414ae5e3719693d1c"
+      }
+    },
+    {
+      "node": {
+        "kind": "expression",
+        "identity": {
+          "artifact_sha256": "f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3",
+          "module_path": "src/ts/characters/Character.ts",
+          "source_range": {
+            "start": {
+              "line": 775,
+              "column": 8
+            },
+            "end": {
+              "line": 775,
+              "column": 18
+            }
+          },
+          "role_key": "reference:439:read:occupySeat"
+        },
+        "function_node_id": "jsrg_node_1132db9ffb0bdc6923a26ac8cc55bcc653a274db739023bda1751eebf598b698",
+        "application_node_ids": [],
+        "label": "occupySeat",
+        "properties": {},
+        "evidence": {
+          "context_id": "jsrg_evidence_34876c9aa2926393575693b9aaf6766f3602a75bc171e3d414ae5e3719693d1c",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "src/ts/characters/Character.ts",
+              "start": {
+                "line": 775,
+                "column": 8
+              },
+              "end": {
+                "line": 775,
+                "column": 18
+              }
+            }
+          }
+        },
+        "node_id": "jsrg_node_edcfb25f6259078f73049650fec38fccc629c18ce921418c452747e1ff9aa717"
+      },
+      "evidence_context": {
+        "authority": "ast-static-analysis",
+        "state": "observed",
+        "confidence": "exact",
+        "artifact": {
+          "available": true,
+          "artifact_id": "art_f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3",
+          "sha256": "f5b05190353e44d3822a6acd5f112ccbed30c607e89b222933d94b45ee5c91d3"
+        },
+        "extractor": {
+          "name": "rea-javascript-semantic-analysis",
+          "version": "1",
+          "operation": "analyze_javascript_application",
+          "executable_sha256": null
+        },
+        "coverage": {
+          "status": "complete",
+          "truncated": false,
+          "omitted_count": 0,
+          "limits": []
+        },
+        "limitations": [],
+        "evidence_ids": [],
+        "context_id": "jsrg_evidence_34876c9aa2926393575693b9aaf6766f3602a75bc171e3d414ae5e3719693d1c"
+      }
+    },
+    {
+      "node": {
+        "kind": "expression",
+        "identity": {
+          "artifact_sha256": "d282b014103fd4961c612d9bae02b22920863f2c154f1b13058a360dd748ced6",
+          "module_path": "src/ts/vehicles/VehicleSeat.ts",
+          "source_range": {
+            "start": {
+              "line": 24,
+              "column": 8
+            },
+            "end": {
+              "line": 24,
+              "column": 18
+            }
+          },
+          "role_key": "reference:15:read:occupiedBy"
+        },
+        "function_node_id": "jsrg_node_e1546b9079bb1bfb3e761d580ace048d08c8a249c489d97fde4afb9651ba93f9",
+        "application_node_ids": [],
+        "label": "occupiedBy",
+        "properties": {},
+        "evidence": {
+          "context_id": "jsrg_evidence_b95389cac702fe6e0a7e2df82ef4666512a89436a13b8d418216e38fb3e996c6",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "src/ts/vehicles/VehicleSeat.ts",
+              "start": {
+                "line": 24,
+                "column": 8
+              },
+              "end": {
+                "line": 24,
+                "column": 18
+              }
+            }
+          }
+        },
+        "node_id": "jsrg_node_f7b60391fe882c9c167dda8f1009e438f9d310a60e3b362eeb94ca25b0400f65"
+      },
+      "evidence_context": {
+        "authority": "ast-static-analysis",
+        "state": "observed",
+        "confidence": "exact",
+        "artifact": {
+          "available": true,
+          "artifact_id": "art_d282b014103fd4961c612d9bae02b22920863f2c154f1b13058a360dd748ced6",
+          "sha256": "d282b014103fd4961c612d9bae02b22920863f2c154f1b13058a360dd748ced6"
+        },
+        "extractor": {
+          "name": "rea-javascript-semantic-analysis",
+          "version": "1",
+          "operation": "analyze_javascript_application",
+          "executable_sha256": null
+        },
+        "coverage": {
+          "status": "complete",
+          "truncated": false,
+          "omitted_count": 0,
+          "limits": []
+        },
+        "limitations": [],
+        "evidence_ids": [],
+        "context_id": "jsrg_evidence_b95389cac702fe6e0a7e2df82ef4666512a89436a13b8d418216e38fb3e996c6"
+      }
+    }
+  ],
+  "limitations": [
+    "Caller-selected source analysis leaves 184 inventoried files outside analysis scope. Inventory identity covers the complete artifact; relationships through unselected sources remain unknown.",
+    "CommonJS and ESM binding relationships were recovered from inert syntax and resolved only within the inventoried artifact container.",
+    "Graph coverage is incomplete; unavailable facts remain explicit and must not be read as absence.",
+    "JavaScript and HTML were parsed as inert text; bundle bootstrap code was never executed.",
+    "Static imports, entrypoints, workers, endpoints, and storage relationships do not prove runtime execution.",
+    "Static paths and relationships may remain unresolved when expressions are dynamic or obfuscated.",
+    "Webpack/Rspack factories were recovered from AST literals; REA did not invoke push handlers or bundle bootstrap code."
+  ],
+  "raw_evidence": {
+    "workspace_path": "/workspace/research/rea-output/sketchbook-application.json",
+    "bytes": 8678205,
+    "sha256": "365e98ea9eeaf93e471f2ce1de2d18f9da74a7767be8912f4867bbe54345a27d"
+  },
+  "runtime_execution": false
+}

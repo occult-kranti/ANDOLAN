@@ -1,0 +1,139 @@
+{
+  "type": "original authored-design diagnostic; not empirical utility or game-equilibrium proof",
+  "contentVersion": "0.5.0",
+  "sourceSha256": "1b7b1a408da06f8244511c60a526e73e0999b9f6e2331b45171d7118be73f476",
+  "choices": [
+    {
+      "id": "supplies",
+      "label": "Put the reserve van first",
+      "vector": [
+        2,
+        14,
+        -4
+      ],
+      "receipt": "The van leaves promptly. The clinic gains time; your depot count remains incomplete.",
+      "laterDialogue": [
+        {
+          "speaker": "Meera",
+          "text": "The reserve van came early enough for the evening desk. Thank you."
+        },
+        {
+          "speaker": "Kavya",
+          "text": "We still owe the depot a full stock check. Helping today did not answer every question."
+        }
+      ]
+    },
+    {
+      "id": "interview",
+      "label": "Hear the clerk’s full account",
+      "vector": [
+        12,
+        -4,
+        6
+      ],
+      "receipt": "The clerk entrusts you with the full account. The clinic waits for the later dispatch.",
+      "laterDialogue": [
+        {
+          "speaker": "Meera",
+          "text": "The clerk’s reserve van finally arrived. We had to keep the desk waiting."
+        },
+        {
+          "speaker": "Aadi",
+          "text": "We stayed to hear his full account. I will not pretend the delay cost you nothing."
+        }
+      ]
+    },
+    {
+      "id": "photo",
+      "label": "Document the stock with the clerk",
+      "vector": [
+        -3,
+        3,
+        14
+      ],
+      "receipt": "The stock count is recorded before loading. The clerk’s personal account remains unheard.",
+      "laterDialogue": [
+        {
+          "speaker": "Kavya",
+          "text": "The reserve van arrived after the count. The inventory and photographs agree."
+        },
+        {
+          "speaker": "Meera",
+          "text": "A record helps. Go back and hear the clerk’s story too, when you can."
+        }
+      ]
+    }
+  ],
+  "componentwiseDominated": [],
+  "profiles": [
+    {
+      "name": "care",
+      "weights": [
+        0.15,
+        0.7,
+        0.15
+      ],
+      "scores": [
+        {
+          "id": "supplies",
+          "value": 9.5
+        },
+        {
+          "id": "interview",
+          "value": -0.1
+        },
+        {
+          "id": "photo",
+          "value": 3.75
+        }
+      ],
+      "winner": "supplies"
+    },
+    {
+      "name": "reporting",
+      "weights": [
+        0.2,
+        0.15,
+        0.65
+      ],
+      "scores": [
+        {
+          "id": "supplies",
+          "value": -0.1
+        },
+        {
+          "id": "interview",
+          "value": 5.7
+        },
+        {
+          "id": "photo",
+          "value": 8.95
+        }
+      ],
+      "winner": "photo"
+    },
+    {
+      "name": "relationship",
+      "weights": [
+        0.65,
+        0.2,
+        0.15
+      ],
+      "scores": [
+        {
+          "id": "supplies",
+          "value": 3.5
+        },
+        {
+          "id": "interview",
+          "value": 7.9
+        },
+        {
+          "id": "photo",
+          "value": 0.75
+        }
+      ],
+      "winner": "interview"
+    }
+  ]
+}

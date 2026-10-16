@@ -1,0 +1,64 @@
+# Playable preview QA
+
+This report covers the condensed six-chapter browser preview. It does not certify the full proposed open-world game. Browser checks use Linux Chromium and SwiftShader software rendering; the 390 × 844 check is browser emulation, not a physical touchscreen device.
+
+## Reproduction
+
+```sh
+npm run typecheck
+npm run lint
+npm test
+npm run test:e2e
+```
+
+`playwright.config.ts` starts the documented client/server development workflow when needed. Tests run sequentially. Desktop uses 960 × 640, final independent crew checks use a fixed 400 × 500 viewport to reduce software GPU contention, and mobile emulation uses 390 × 844. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to select an installed Chromium binary; otherwise the configuration uses `/usr/bin/chromium` when available, then Playwright's installed browser.
+
+The campaign controller plans routes through public collision geometry and sends ordinary bounded movement intent. It does not teleport, advance mission stages, inject checkpoints, alter the clock, or mutate gameplay state. Story decisions and conversations use visible buttons. A separate smoke test exercises actual keyboard controls. The high sequence number used by the campaign controller prevents the browser's keyboard poll from replacing its input; the original simulation still processes movement and collisions.
+
+Two explicitly labelled follow-up tests use completed-state setup. The completed-room test mocks its welcome message to isolate dialog priority. The replay test normally uses a synthetic serialized checkpoint; optional `ANDOLAN_EARNED_CAMPAIGN` reuses the recorded physical campaign's mission and player while keeping default unoccupied vehicles and a fresh command ledger. Neither fixture is counted as campaign traversal or real multiplayer evidence.
+
+## Results
+
+| Check | Result | Observed behavior |
+| --- | --- | --- |
+| TypeScript and ESLint | Passed | Latest owned test changes compile and lint. |
+| Desktop controls, checkpoint and settings | Passed, 35.5 s | E dialogue, F entry/exit, W driving beyond 5 m, reverse beyond 2 m, arrow-key walking, journal, modal input blocking, and reload retaining mission, position and preferences. |
+| Reverse camera with Comfort | Passed | Reverse moved opposite the vehicle's heading. Camera angular separation from vehicle heading did not increase; it did not turn to follow backwards velocity. |
+| Mobile browser layout | Passed, 6.5 s | Title, garage interaction and dialogue controls were in the viewport, with no horizontal overflow or uncaught JavaScript errors. |
+| Six-chapter physical traversal | Passed through ending | All 22 stage IDs were visited using ordinary movement, seven choices were recorded, hearing evidence was acquired, and the visible ending was **Open Windows**. |
+| Evidence documents | Passed in campaign | Comparison and hearing dialogs rendered the expected document count and source attribution. |
+| Location-dependent dialogue | Passed in campaign | The reserve-van callback stayed hidden at Mill Ward and Meera's matching response appeared on arrival at Night Clinic. |
+| Real crew movement, seats and handover | Passed, 19.7 s | Independent contexts and real WebSockets replicated keyboard movement, assigned distinct seats, rejected passenger driving and accepted explicit Take the wheel after driver exit. |
+| Real crew voting and late-join recap | Passed, 1.7 min | Both players physically walked to the clinic. Correct on-foot voting guidance, visible split-vote status outside the dialog, ballot change/consensus, canonical recap and on-foot role passed. Closing the recap kept it closed through subsequent snapshots. No state fixtures or checkpoint injection were used. |
+| Completed-room ending priority | Passed, 9.1 s | Explicit mocked-welcome presentation fixture: ending remains visible on join; the manual Crew panel still opens afterwards. It does not establish real room completion. |
+| Native-confirm replay | Passed, 5.5 s | Reconstructed checkpoint reuses earned mission/player data, with default vehicles/command ledger. Real Story restore, native confirmation and replay reset to keys with empty history all passed. |
+| Production standalone build | Passed over HTTP, then offline | Root verified keyboard dialogue, vehicle entry and driving with networking disabled after initial load, save detection after reload, embedded notices, no debug hooks and no external asset requests/page errors. Direct file navigation was blocked by managed Chromium policy. |
+| Public-room invite | Passed | Root verified an invite opens City sandbox with its explicit room, joins that real room, and copies both mode and room into the invitation URL. |
+
+The original final batch is preserved under `test-results/final/`: two tests passed and two test cases failed. The multiplayer failure expected the obsolete words “River Road” while the UI correctly showed the canonical River Steps objective. The campaign case reached and asserted its ending, then failed its later replay assertion because Playwright dismissed the native confirmation dialog. These are harness failures, not hidden passes. The harness now reads the canonical objective and explicitly accepts the confirmation. Follow-up results are recorded separately in `test-results/final-followup/`. Both completed-state regressions passed there; the real crew route hit its 120-second travel limit when dual software rendering starved browser input heartbeats. The position was on clear road, and the server correctly stopped the vehicle when intent grew stale. A second crew-only run reached the clinic but timed out on a click after restoring the larger canvases; its results are in `test-results/final-crew/`. The final CI tests separate the short seat/handover gate from voting and recap, keep a fixed small viewport, and physically walk both participants to the encounter. The complete campaign separately exercises driving. Both final split tests passed; results are in `test-results/final-crew-split/`.
+
+The physical campaign took 10.7 minutes including the final 15-second replay assertion timeout. This is automation wall time under a software renderer, not a frame-rate or consumer-hardware performance measurement.
+
+## Evidence
+
+- `test-results/final/results.json`: original machine-readable results, including the two harness failures.
+- `test-results/final/campaign-evidence.json`: earned stage list, final mission, seven decisions and player position extracted from the original report attachment.
+- `test-results/final/game.e2e.ts-complete-six-c-da47d-driving-and-visible-choices/campaign-ending.png`: visible earned Open Windows ending.
+- The Story and mobile result directories contain settled title and garage screenshots captured after four animation frames. Waiting for rendering avoids mistaking the previous title overview for the newly entered game camera.
+- `test-results/final-followup/`: the passed, explicitly labelled completed-state regression tests and preserved software-rendering travel timeout.
+- `test-results/final-crew/`: preserved larger-canvas interaction timeout after successful clinic arrival.
+- `test-results/final-crew-split/`: final independent seat/handover and walking/vote/recap checks.
+
+Test output is ignored by Git. Selected shareable evidence is archived by the release owner under `docs/evidence/`.
+
+Stable release evidence includes `docs/evidence/round6-campaign-evidence.json`, `round6-campaign-ending.png`, `round6-crew-results.json`, `round6-private-crew-vote-tie.png`, `round6-late-join-recap.png`, `production-browser-check.json` and `container-check.json`.
+
+## Corrections covered
+
+The review identified and the owning agents corrected missing replay confirmation data, an invalid HTML room-code pattern, captions overlapping the map at medium widths, remote stage dialogue playing before arrival, reverse camera heading, late-join recap priority, and context-sensitive voting guidance. The harness itself was corrected to preserve settings during reload, wait for actual movement instead of fixed wall time, settle movement before comparing peer snapshots, use stable choice IDs, and accept native replay confirmation.
+
+Vite hot reloads during early concurrent edits invalidated two exploratory sessions. Final campaign and follow-up runs used a frozen source tree. Continuous trace screenshots were disabled to avoid repeated software GPU readback; failure traces and selected screenshots remain enabled.
+
+## Limits
+
+This validates one selected story branch and browser interaction path. It does not validate every ending's pacing, human comprehension, physical gamepads, physical touchscreen controls, consumer hardware performance, accessibility with assistive devices, multi-region service behavior, or internet-scale concurrency. Real server protocol/capacity/persistence checks are maintained separately in the simulation/network tests and deployment verification. A successful room on the development server is not a public service launch.
