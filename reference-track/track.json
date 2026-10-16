@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "id": "control",
+  "label": "YUGA Objective & Hero Combat Lab",
+  "summary": "An original local hybrid control experiment with YUGA heroes, lanes, towers and camps; informed by scoped Overwatch tooling research, with no commercial-rule parity claim.",
+  "defaultMode": "control-point",
+  "branch": "reference/overwatch-mechanics",
+  "intendedRepository": "YUGA-Overwatch-Lab",
+  "status": "branch-fallback-integration-in-progress",
+  "configurationRole": "Vite consumes id at build time and injects VITE_YUGA_LAB_TRACK to select the focused UI; descriptive rules remain non-authoritative",
+  "baseline": {
+    "sourceCommit": "994a3b32b1bd35e1860f37bcc210b491e3afcb0a",
+    "reviewedWorkingTree": "shared lab implementation in progress on 2026-10-16; sourceCommit alone does not identify uncommitted lab files",
+    "engine": "original ArenaSimulation and ArenaWorld",
+    "authority": "offline-local",
+    "heroes": 14,
+    "abilities": 42,
+    "heroModels": 14,
+    "unitModels": 7,
+    "participants": {
+      "human": 1,
+      "bots": 5,
+      "teamSize": 3
+    },
+    "retains": [
+      "lanes",
+      "towers",
+      "cores",
+      "waves",
+      "camps",
+      "ordinary-economy",
+      "hero-kits"
+    ],
+    "rulesOwner": "games/yuga/reference/objective.ts and controller.ts; values in this record are descriptive, not a second authority",
+    "primaryAmmoAccounting": "optional accepted-primary-shot callback on successful projectile creation; independent cap/overflow and equivalence tests pending"
+  },
+  "controlContract": {
+    "center": {
+      "x": 0,
+      "z": 0
+    },
+    "radiusMeters": 8,
+    "captureSeconds": 6,
+    "headcountSpeedBonus": false,
+    "targetScore": 60,
+    "scorePerSecond": 1,
+    "scoreRequiresOwnerPresent": true,
+    "contestedBehavior": "freeze capture and scoring",
+    "emptyBehavior": "retain owner, stop scoring, decay unfinished capture by one sixth per second",
+    "ownerReturnBehavior": "uncontested owner clears hostile unfinished capture and resumes scoring",
+    "eligibleOccupants": "connected living hero, respawn <= 0, finite height <= 2 m, inside inclusive radius; exclude summons",
+    "heightRuleIsGroundContactTest": false,
+    "roundSeconds": 240,
+    "underlyingArenaSeconds": 480,
+    "finishPrecedence": [
+      "underlying-arena-result",
+      "control-target",
+      "control-deadline-higher-score-or-draw"
+    ],
+    "overtime": false,
+    "objectiveCredits": false
+  },
+  "featureGates": [
+    {
+      "id": "C0",
+      "feature": "source-and-license-boundaries",
+      "status": "source-reviewed",
+      "acceptance": "Pinned Workshop tooling distinguished from official mode rules; no external runtime code or assets imported."
+    },
+    {
+      "id": "C1",
+      "feature": "shared-foundation",
+      "status": "integration-in-progress",
+      "acceptance": "Root completes branch integration of controller, renderer, entry/build and tests; exact commit and artifact recorded. Build configuration consumes track id; execution validation pending."
+    },
+    {
+      "id": "C2",
+      "feature": "control-rules-and-finish",
+      "status": "pending-independent-tests",
+      "acceptance": "Eligibility boundaries, capture, contest, empty decay, owner return, terminal precedence and freeze match the original contract."
+    },
+    {
+      "id": "C3",
+      "feature": "status-readout-adapter",
+      "status": "implemented-pending-qa",
+      "acceptance": "reference-client/objective-status.ts derives contested/capturing/scoring/absent/unclaimed text without mutation; independent status and pause/finish presentation checks pending."
+    },
+    {
+      "id": "C4",
+      "feature": "native-complete-loop",
+      "status": "pending-native-evidence",
+      "acceptance": "Real launch, movement, aim, fire, reload, capture, finish, restart and back; fixtures identified separately."
+    },
+    {
+      "id": "C5",
+      "feature": "original-art-readability",
+      "status": "pending-rendered-review",
+      "acceptance": "Visible zone matches authoritative radius; status readable without color or sound; all original heroes and assets load."
+    },
+    {
+      "id": "C6",
+      "feature": "verified-yuga-adaptation",
+      "status": "blocked-on-lab-evidence",
+      "acceptance": "One bounded lab improvement has source lesson, original rule, scenario evidence and before/after YUGA regression checks."
+    },
+    {
+      "id": "C7",
+      "feature": "pure-control-arena",
+      "status": "later-scope",
+      "acceptance": "Separate approved rules/map experiment, with explicit lane removal and independently tested finish policy."
+    },
+    {
+      "id": "C8",
+      "feature": "official-overwatch-comparison",
+      "status": "unverified",
+      "acceptance": "Versioned official documentation or lawful recorded reference observation; exact mode, patch, timestamp and unknowns recorded."
+    },
+    {
+      "id": "C9",
+      "feature": "online-play",
+      "status": "later-scope",
+      "acceptance": "Server-owned preset plus two actual clients agree on objectives, damage, rewards, reconnect and ending."
+    }
+  ],
+  "sourcePins": [
+    {
+      "repository": "Zezombye/overpy",
+      "commit": "5a7d0e294b8cad73b9701987bb584d0551d7fa4d",
+      "license": "GPL-3.0 root text and explicit headers",
+      "scope": "custom elimination lifecycle and HUD examples; no Workshop execution",
+      "runtimeImport": false
+    },
+    {
+      "repository": "overtools/OWLib",
+      "commit": "546efa19516d7df7ba138802d221c73ad886df28",
+      "license": "MIT for tooling",
+      "scope": "prior selected animation/audio reader study; not game asset rights",
+      "runtimeImport": false
+    },
+    {
+      "repository": "ItsDeltin/Overwatch-Script-To-Workshop",
+      "commit": "41b51d6dcd98c7d07e4e8f8646e088e8820ae2bd",
+      "license": "nested extension MIT; sibling compiler scope unresolved",
+      "scope": "event-name mapping and prior semantic fixture study",
+      "runtimeImport": false
+    }
+  ],
+  "claimsExcluded": [
+    "commercial-source-access",
+    "official-control-rule-recovery",
+    "commercial-assets",
+    "commercial-parity",
+    "human-balance-validation",
+    "public-online-service",
+    "new-rea-run-in-this-track-review"
+  ],
+  "delivery": {
+    "strategy": "branch-fallback",
+    "repositoryCreation": "GitHub POST /user/repos returned HTTP 403; separate repository not created",
+    "repository": "occult-kranti/ANDOLAN",
+    "branch": "reference/overwatch-mechanics",
+    "plannedUrl": "https://occult-kranti.github.io/ANDOLAN/yuga/control-lab/",
+    "deploymentStatus": "not-deployed",
+    "configuration": {
+      "consumer": "vite.yuga-lab.config.ts",
+      "field": "id",
+      "environmentOverride": "YUGA_LAB_TRACK",
+      "clientDefine": "VITE_YUGA_LAB_TRACK"
+    },
+    "verificationStatus": "tests-and-public-smoke-pending"
+  }
+}
