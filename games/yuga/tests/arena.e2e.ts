@@ -115,7 +115,32 @@ test('labelled finished-state socket fixture renders results and fresh replay',a
 });
 
 test('native complete eight-minute practice and fresh replay [release soak]',async({page},info)=>{
- test.skip(process.env.YUGA_FULL_MATCH!=='1','Explicit bounded release soak; routine native combat and result fixture run separately.');test.setTimeout(720_000);await load(page);await low(page);await practice(page);await hold(page,'KeyA',actor=>actor.x>4);await hold(page,'KeyW',actor=>actor.z>-23,30_000);await page.keyboard.down('KeyF');const began=Date.now(),roles=new Set<string>(),castMechanics=new Set<string>();await expect.poll(async()=>{const state=await snapshot(page);for(const actor of state.actors){if(actor.minionRole)roles.add(actor.minionRole);if(actor.cast)castMechanics.add(actor.cast.mechanic);}return state.phase;},{timeout:640_000,intervals:[1000]}).toBe('finished');await expect(page.locator('#result-dialog')).toBeVisible();await page.keyboard.up('KeyF');expect(roles.has('siege')).toBe(true);const final=await snapshot(page);expect(final.phase).toBe('finished');await capture(page,info,'native-complete-match');await page.locator('#play-again').click();await ready(page);expect((await snapshot(page)).phase).toBe('playing');expect((await snapshot(page)).time).toBeLessThan(5);expect((await me(page)).upgrades).toEqual({power:0,vitality:0,tempo:0});const replayRig=()=>page.evaluate(()=>(window.__YUGA as unknown as {assets():{instances:{id:string;transitions:Record<string,number>}[]}}).assets().instances.find(i=>i.id===window.__YUGA.playerId())!);await page.keyboard.down('KeyF');try{await expect.poll(async()=>(await replayRig()).transitions.fire||0).toBeGreaterThan(0);}finally{await page.keyboard.up('KeyF');}await page.keyboard.press('KeyQ');await expect.poll(async()=>(await replayRig()).transitions.cast1||0).toBeGreaterThan(0);await attach(page,info,'native-full-match',{elapsedMs:Date.now()-began,observedMinionRoles:[...roles],observedCastMechanics:[...castMechanics],final,claim:'Normal wall-clock practice simulation from fresh roster; native held fire, no timer/position/command injection'});expect(errors.get(page)).toEqual([]);
+ test.skip(process.env.YUGA_FULL_MATCH!=='1','Explicit bounded release soak; routine native combat and result fixture run separately.');
+ test.setTimeout(720_000);await load(page);await low(page);await practice(page);
+ const began=Date.now(),initial=await snapshot(page);
+ // Use the same conservative approach distance as the accepted native combat
+ // case. The full authority clock remains unchanged, including death/respawn.
+ await hold(page,'KeyA',actor=>actor.x>4);await hold(page,'KeyW',actor=>actor.z>-35,30_000);
+ const roles=new Set<string>(),archetypes=new Set<string>(),castMechanics=new Set<string>(),campStates=new Set<string>();
+ const peaks={actors:0,neutrals:0,livingCamps:0,shards:0};await page.keyboard.down('KeyF');
+ try{
+  await expect.poll(async()=>{
+   const state=await snapshot(page);
+   for(const actor of state.actors){if(actor.minionRole)roles.add(actor.minionRole);if(actor.unitArchetype)archetypes.add(actor.unitArchetype);if(actor.cast)castMechanics.add(actor.cast.mechanic);}
+   for(const neutral of state.neutrals)campStates.add(`${neutral.campId}:${neutral.state}`);
+   peaks.actors=Math.max(peaks.actors,state.actors.length);peaks.neutrals=Math.max(peaks.neutrals,state.neutrals.length);peaks.livingCamps=Math.max(peaks.livingCamps,state.neutrals.filter(neutral=>neutral.health>0).length);peaks.shards=Math.max(peaks.shards,state.goldShards.length);
+   return state.phase;
+  },{timeout:640_000,intervals:[1000]}).toBe('finished');
+  await expect(page.locator('#result-dialog')).toBeVisible();
+ }finally{await page.keyboard.up('KeyF');}
+ expect(roles.has('siege')).toBe(true);for(const archetype of ['soldier','city-watch','minister','king'])expect(archetypes.has(archetype)).toBe(true);expect(peaks.livingCamps).toBe(4);
+ const final=await snapshot(page),finishedAfterMs=Date.now()-began;expect(final.phase).toBe('finished');await capture(page,info,'native-complete-match');
+ await page.locator('#play-again').click();await ready(page);expect((await snapshot(page)).phase).toBe('playing');expect((await snapshot(page)).time).toBeLessThan(5);expect((await me(page)).upgrades).toEqual({power:0,vitality:0,tempo:0});
+ const replayRig=()=>page.evaluate(()=>(window.__YUGA as unknown as {assets():{instances:{id:string;transitions:Record<string,number>}[]}}).assets().instances.find(i=>i.id===window.__YUGA.playerId())!);
+ await page.keyboard.down('KeyF');try{await expect.poll(async()=>(await replayRig()).transitions.fire||0).toBeGreaterThan(0);}finally{await page.keyboard.up('KeyF');}
+ await page.keyboard.press('KeyQ');await expect.poll(async()=>(await replayRig()).transitions.cast1||0).toBeGreaterThan(0);
+ await attach(page,info,'native-full-match',{initialTime:initial.time,finishedAfterMs,elapsedIncludingReplayMs:Date.now()-began,observedMinionRoles:[...roles],observedUnitArchetypes:[...archetypes],observedCastMechanics:[...castMechanics],observedCampStates:[...campStates],observedEntityPeaks:peaks,final,claim:'Normal wall-clock practice simulation from fresh roster; native approach and held fire, no timer/position/command injection. Read-only counts are functional coverage, not a performance/capacity measurement.'});
+ expect(errors.get(page)).toEqual([]);
 });
 
 
