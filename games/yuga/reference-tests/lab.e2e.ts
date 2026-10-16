@@ -75,6 +75,29 @@ async function capture(page: Page, info: TestInfo, name: string) {
   await page.screenshot({ path: info.outputPath(`${name}.png`) });
 }
 
+async function insideDialog(page: Page, selector: string, dialog: string) {
+  await expect(page.locator(selector)).toBeVisible();
+  const layout = await page.locator(selector).evaluate((element, dialogSelector) => {
+    const bounds = element.getBoundingClientRect(), frame = document.querySelector(dialogSelector)!.getBoundingClientRect();
+    return { left: bounds.left, right: bounds.right, top: bounds.top, bottom: bounds.bottom,
+      frame: { left: frame.left, right: frame.right, top: frame.top, bottom: frame.bottom }, width: innerWidth, height: innerHeight };
+  }, dialog);
+  expect(layout.left, `${selector} left edge`).toBeGreaterThanOrEqual(Math.max(0, layout.frame.left));
+  expect(layout.right, `${selector} right edge`).toBeLessThanOrEqual(Math.min(layout.width, layout.frame.right));
+  expect(layout.top, `${selector} top edge`).toBeGreaterThanOrEqual(Math.max(0, layout.frame.top));
+  expect(layout.bottom, `${selector} bottom edge`).toBeLessThanOrEqual(Math.min(layout.height, layout.frame.bottom));
+  return layout;
+}
+
+async function scoreboardClear(page: Page) {
+  const score = await page.locator('.scoreboard').boundingBox(), menus = await page.locator('.match-tools').boundingBox();
+  expect(score).not.toBeNull(); expect(menus).not.toBeNull();
+  const overlap = Math.max(0, Math.min(score!.x + score!.width, menus!.x + menus!.width) - Math.max(score!.x, menus!.x))
+    * Math.max(0, Math.min(score!.y + score!.height, menus!.y + menus!.height) - Math.max(score!.y, menus!.y));
+  expect(overlap, 'Controls and Pause must not cover either score or its labels').toBe(0);
+  return { score, menus, overlap };
+}
+
 async function evidence(page: Page, info: TestInfo, errors: { errors: string[]; consoleErrors: string[] }, details: unknown) {
   const current = await read(page).catch(() => null);
   await info.attach('reference-lab-observations', { body: JSON.stringify({ scope: 'Ordinary browser inputs, read-only diagnostics; no actor/health/clock injection. Software render cap is a functional budget, not hardware performance evidence.', ...errors, details, final: current }, null, 2), contentType: 'application/json' });
@@ -148,7 +171,16 @@ test.describe('mobile lab', () => {
         expect(box!.x).toBeGreaterThanOrEqual(0); expect(box!.x + box!.width).toBeLessThanOrEqual(391); expect(box!.y + box!.height).toBeLessThanOrEqual(845);
       }
       details.push({ before, after: await read(page) }); await capture(page, info, 'lab-mobile-game');
-      await page.locator('#lab-pause').tap(); await expect(page.locator('#lab-settings-dialog')).toBeVisible(); await capture(page, info, 'lab-mobile-settings');
+      await page.locator('#lab-pause').tap(); await expect(page.locator('#lab-settings-dialog')).toBeVisible();
+      const dialogWidth = await page.locator('#lab-settings-dialog').evaluate(element => ({ scroll: element.scrollWidth, client: element.clientWidth }));
+      expect(dialogWidth.scroll, 'Mobile settings must not require horizontal scrolling').toBeLessThanOrEqual(dialogWidth.client);
+      const settingsBounds = [];
+      for (const selector of ['#lab-quality', '#lab-lighting', '#lab-sensitivity', '#lab-sound-preview']) {
+        await page.locator(selector).scrollIntoViewIfNeeded();
+        settingsBounds.push({ selector, bounds: await insideDialog(page, selector, '#lab-settings-dialog') });
+      }
+      details.push({ dialogWidth, settingsBounds });
+      await page.locator('#lab-settings-title').scrollIntoViewIfNeeded(); await capture(page, info, 'lab-mobile-settings');
       await page.locator('#lab-back').tap(); await expect(page.locator('#lab-lobby')).toBeVisible();
       expect(errors.errors).toEqual([]); expect(errors.consoleErrors).toEqual([]);
     } finally { await touch.detach(); await evidence(page, info, errors, details); }
@@ -162,6 +194,7 @@ test('native control court traversal, contest, normal-clock result and replay', 
   let contested = false, captured = false, scoring = false;
   try {
     await launch(page, 'control-point', 'bhima');
+    observations.push({ layoutAtLaunch: await scoreboardClear(page) });
     const started = Date.now();
     // Ordinary released pulses enter the clear corridor beside the friendly tower.
     for (let pulse = 0; pulse < 20; pulse++) {
@@ -192,7 +225,17 @@ test('native control court traversal, contest, normal-clock result and replay', 
     const finished = await read(page);
     expect(contested).toBe(true); expect(captured).toBe(true); expect(scoring).toBe(true);
     expect(finished.state.arena.time).toBeLessThanOrEqual(240.000001); expect(finished.state.winner).not.toBeNull(); expect(finished.state.reason).not.toBe('');
-    await expect(page.locator('#lab-result-dialog')).toBeVisible(); await capture(page, info, 'lab-control-normal-result');
+    await expect(page.locator('#lab-result-dialog')).toBeVisible();
+    expect(await page.locator('#lab-result-dialog').evaluate(element => element.scrollTop), 'Result must initially open at its heading').toBe(0);
+    await expect(page.locator('#lab-result-title')).toBeFocused();
+    const resultLayout = { heading: await insideDialog(page, '#lab-result-title', '#lab-result-dialog'), reason: await insideDialog(page, '#lab-result-reason', '#lab-result-dialog') };
+    await capture(page, info, 'lab-control-normal-result');
+    await page.keyboard.press('Tab'); await expect(page.locator('#lab-result-restart')).toBeFocused();
+    const restartLayout = await insideDialog(page, '#lab-result-restart', '#lab-result-dialog');
+    await page.keyboard.press('Tab'); await expect(page.locator('#lab-result-back')).toBeFocused();
+    const backLayout = await insideDialog(page, '#lab-result-back', '#lab-result-dialog');
+    observations.push({ resultLayout, restartLayout, backLayout });
+    await capture(page, info, 'lab-control-result-actions');
     observations.push({ normalClockWallMilliseconds: Date.now() - started, terminalReason: finished.state.reason, fixture: false });
     await page.locator('#lab-result-restart').click(); await ready(page);
     const replay = await read(page); expect(replay.state.epoch).toBeGreaterThan(finished.state.epoch); expect(replay.state.arena.time).toBeLessThan(1);
