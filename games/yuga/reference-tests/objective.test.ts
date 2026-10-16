@@ -17,7 +17,7 @@ function advance(point: ControlPoint, actors: Actor[], seconds: number) {
 }
 
 describe('original hybrid control point — labelled deterministic placement fixtures', () => {
-  it('counts only living, connected, grounded heroes inside the inclusive radius', () => {
+  it('counts only living, connected heroes at or below two metres inside the inclusive radius', () => {
     const point = new ControlPoint();
     const eligible = occupant('edge', 'sun', { x: 8, y: 2 });
     const excluded = [
