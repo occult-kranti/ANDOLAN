@@ -49,6 +49,12 @@ The container reads `PORT`; its health check uses that same variable. A provider
 
 ## Public hosting options
 
+### Current publication blocker
+
+The release branch `game/yuga-confluence` has been pushed. On 16 October 2026 the release coordinator found that the existing GitHub Pages environment, `github-pages`, permits deployment only from `main`. The request to add the exact new branch policy returned **HTTP 403 — ResourceNotAccessibleByIntegration**. The repository owner has been asked to add `game/yuga-confluence` under **Settings → Environments → github-pages → Deployment branches and tags**; that response is still pending at this record's timestamp.
+
+This is a GitHub integration permission/protected-environment block, not a successful public release. The protection must remain in force: do not deploy through a replacement environment or another route to evade it. No new public YUGA site or public WSS backend is claimed. Local builds, model checks and the container tests below completed independently of that publication permission.
+
 ### One full-stack service
 
 Deploy the container on a provider that supports persistent WebSocket connections. Terminate TLS at its reverse proxy and route both HTTP and WebSocket upgrades to the container's `PORT`. Preserve `/ws`; use an idle timeout that permits the server's heartbeat. Test the actual public HTTPS and WSS routes from separate browser contexts.
@@ -75,11 +81,13 @@ Before broad public multiplayer availability, establish a hosting owner and budg
 
 ## Release verification record
 
-On 16 October 2026, the Docker build and bounded local production-container smoke passed. [deployment-container.json](evidence/deployment-container.json) records the exact image, client hash, configuration hashes and scope. Image `sha256:dc35c1929b0a9234abf0ca185afc4b5f0a72b7a286cb4dc2a53a93f20b618818` served a 6,371,640-byte client with SHA-256 `2390695788ee665fce1f8136e4bb5497a5eb943bc5bf2364a60fd6ae5e51ff20`. The test used an intermediate working-tree build while later client/renderer/simulation fixes were still underway; rebuild the release image after the final source freeze.
+On 16 October 2026, the final frozen runtime/art Docker build and bounded local production-container smoke passed. [deployment-container.json](evidence/deployment-container.json) records the exact image, client/model hashes, configuration hashes and scope. Image `sha256:1e5ee12d523b02f390eaa4a239763240c37484f3cea17ba6844556fa47aed454` served a 6,414,473-byte client with SHA-256 `46193afd937a3ca572351de148833b27cc1a71a9bc52d3ad1117d6ffaf924a26`. All fourteen external GLBs—46,520,992 bytes total—were fetched through the actual URLs declared by the production HTML and matched the frozen asset manifest. The production HTML contained no development-only window hook.
+
+This check caught and fixed a real packaging regression: relative model URLs generated for `assets/*.js` resolved from `index.html` after the script was inlined, returning 404. The build now generates GLB URLs with `new URL(filename, document.baseURI)`, retaining the `assets/` prefix for root and nested static hosting. The failed-image HTTP evidence remains in [deployment-container-url-regression.json](evidence/deployment-container-url-regression.json); the earlier pre-asset container result remains in [deployment-container-initial.json](evidence/deployment-container-initial.json). Neither earlier image is the accepted final container.
 
 Two independent real Node WebSocket transports joined one room with distinct identities and observed an authoritative input acknowledgment. Reconnect preserved one actor identity. Restart of that owned container discarded the in-memory room, and the old room/token received the expected recoverable error. The runtime ran as UID 1000, with the build CA absent and TypeScript removed. The production pruning step reported zero audited vulnerabilities; this is not a claim about every development dependency or future advisories. The owned test container was stopped/removed; existing ANDOLAN containers were untouched.
 
-The 1.27-second socket/HTTP smoke did not launch a browser, exercise a complete combat match, establish public WSS connectivity or measure capacity. No public backend was deployed. Browser interaction, two-client combat, public deployment and capacity tests remain distinct QA gates.
+The 1.232-second socket/HTTP/model-hash smoke did not launch a browser, exercise a complete combat match, establish public WSS connectivity or measure capacity. No public backend was deployed. Browser interaction, two-client combat, public deployment and capacity tests remain distinct QA records; a container pass cannot substitute for them.
 
 Before claiming public multiplayer, record the deployed source/image identity and verify:
 

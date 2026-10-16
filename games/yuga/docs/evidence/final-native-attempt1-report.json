@@ -1,0 +1,444 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.yuga.config.ts",
+      "--grep",
+      "gallery rapid|roster, saved|native practice movement|mobile touch|labelled target fixture",
+      "--reporter=list,json",
+      "--output=test-results/yuga-final-focused"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.yuga.config.ts",
+    "rootDir": "/workspace/ANDOLAN/games/yuga/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-focused",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga-final-focused",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "snapshotDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5180",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run yuga:dev",
+      "url": "http://127.0.0.1:5180",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "arena.e2e.ts",
+      "file": "arena.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "roster, saved settings and native muted audio preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14310,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:34:51.894Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "native-audio-and-settings",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJuYXRpdmUtYXVkaW8tYW5kLXNldHRpbmdzIiwKICAiZGV0YWlsIjogewogICAgImF1ZGlibGUiOiB7CiAgICAgICJwZWFrIjogMC4wMjU2MzM4MzQzMDI0MjUzODUsCiAgICAgICJybXMiOiAwLjAxNjg2Nzk0NDUxNDUyMzAyNCwKICAgICAgInJ1bm5pbmciOiB0cnVlLAogICAgICAicHJldmlld2luZyI6IHRydWUKICAgIH0sCiAgICAiemVybyI6IHsKICAgICAgInBlYWsiOiAwLAogICAgICAicm1zIjogMCwKICAgICAgInJ1bm5pbmciOiB0cnVlLAogICAgICAicHJldmlld2luZyI6IHRydWUKICAgIH0sCiAgICAiY2xhaW0iOiAiTmF0aXZlIFdlYkF1ZGlvIHNhbXBsZXMgYW5kIHByZWZlcmVuY2VzLCBub3QgaGFyZHdhcmUgbGlzdGVuaW5nIHF1YWxpdHkiCiAgfSwKICAicGFnZUVycm9ycyI6IFtdLAogICJjb21tYW5kcyI6IFtdLAogICJyZXN1bHRzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-f5a66762adf6e263980c",
+          "file": "arena.e2e.ts",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "native practice movement, combat, three skills, upgrade and pause controls",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 50249,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 25000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 25000ms exceeded while waiting on the predicate\n    at hold (/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:36:200)\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:58:194",
+                    "location": {
+                      "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                      "column": 200,
+                      "line": 36
+                    },
+                    "snippet": "  34 | async function activate(page:Page){await page.bringToFront();if(await page.locator('#pause-dialog').isVisible())await page.locator('#resume-game').click();}\n  35 | async function join(page:Page,name:string,room=''){await page.locator('#online-open').click();await page.locator('#player-name').fill(name);await page.locator('#room-code').fill(room);await page.locator('#join-room').click();await ready(page);if(room)await expect.poll(async()=>(await snapshot(page)).room).toBe(room);}\n> 36 | async function hold(page:Page,key:string,until:(actor:Actor)=>boolean,timeout=15_000){await page.keyboard.down(key);try{await expect.poll(async()=>until(await me(page)),{timeout,intervals:[60,100]}).toBe(true);}finally{await page.keyboard.up(key);}}\n     |                                                                                                                                                                                                        ^\n  37 | async function previewSamples(page:Page){await page.locator('#sound-preview').click();return page.evaluate(async()=>{let peak=0,rms=0,running=false,previewing=false;const end=performance.now()+450;while(performance.now()<end){const d=window.__YUGA.audio();peak=Math.max(peak,d.outputPeak);rms=Math.max(rms,d.outputRms);running ||= d.contextState==='running';previewing ||= d.previewing;await new Promise(r=>setTimeout(r,20));}return{peak,rms,running,previewing};});}\n  38 | async function range(page:Page,id:string,value:number){await page.locator(id).fill(String(value));}\n  39 | async function attach(page:Page,info:TestInfo,name:string,detail:unknown){await info.attach(name,{body:JSON.stringify({scope:name,detail,pageErrors:errors.get(page),commands:commands.get(page),results:results.get(page)},null,2),contentType:'application/json'});}"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                        "column": 200,
+                        "line": 36
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 25000ms exceeded while waiting on the predicate\n\n  34 | async function activate(page:Page){await page.bringToFront();if(await page.locator('#pause-dialog').isVisible())await page.locator('#resume-game').click();}\n  35 | async function join(page:Page,name:string,room=''){await page.locator('#online-open').click();await page.locator('#player-name').fill(name);await page.locator('#room-code').fill(room);await page.locator('#join-room').click();await ready(page);if(room)await expect.poll(async()=>(await snapshot(page)).room).toBe(room);}\n> 36 | async function hold(page:Page,key:string,until:(actor:Actor)=>boolean,timeout=15_000){await page.keyboard.down(key);try{await expect.poll(async()=>until(await me(page)),{timeout,intervals:[60,100]}).toBe(true);}finally{await page.keyboard.up(key);}}\n     |                                                                                                                                                                                                        ^\n  37 | async function previewSamples(page:Page){await page.locator('#sound-preview').click();return page.evaluate(async()=>{let peak=0,rms=0,running=false,previewing=false;const end=performance.now()+450;while(performance.now()<end){const d=window.__YUGA.audio();peak=Math.max(peak,d.outputPeak);rms=Math.max(rms,d.outputRms);running ||= d.contextState==='running';previewing ||= d.previewing;await new Promise(r=>setTimeout(r,20));}return{peak,rms,running,previewing};});}\n  38 | async function range(page:Page,id:string,value:number){await page.locator(id).fill(String(value));}\n  39 | async function attach(page:Page,info:TestInfo,name:string,detail:unknown){await info.attach(name,{body:JSON.stringify({scope:name,detail,pageErrors:errors.get(page),commands:commands.get(page),results:results.get(page)},null,2),contentType:'application/json'});}\n    at hold (/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:36:200)\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:58:194"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:35:06.558Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-focused/arena.e2e.ts-native-practi-0c436--upgrade-and-pause-controls/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-focused/arena.e2e.ts-native-practi-0c436--upgrade-and-pause-controls/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-focused/arena.e2e.ts-native-practi-0c436--upgrade-and-pause-controls/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                    "column": 200,
+                    "line": 36
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-c7d3c0b745a9479c81de",
+          "file": "arena.e2e.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "mobile touch movement, aiming, firing and modal release",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16472,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:35:59.182Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "native-mobile",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJuYXRpdmUtbW9iaWxlIiwKICAiZGV0YWlsIjogewogICAgImJlZm9yZSI6IHsKICAgICAgImlkIjogImxvY2FsLXBsYXllciIsCiAgICAgICJuYW1lIjogIlRyYXZlbGxlciIsCiAgICAgICJoZXJvSWQiOiAicmFtYSIsCiAgICAgICJ0ZWFtIjogInN1biIsCiAgICAgICJib3QiOiBmYWxzZSwKICAgICAgImxhbmUiOiAxLAogICAgICAiY29ubmVjdGVkIjogdHJ1ZSwKICAgICAgImtpbmQiOiAiaGVybyIsCiAgICAgICJ4IjogMCwKICAgICAgInoiOiAtNjYsCiAgICAgICJ5IjogMCwKICAgICAgInlhdyI6IDAsCiAgICAgICJoZWFsdGgiOiAzMDAsCiAgICAgICJtYXhIZWFsdGgiOiAzMDAsCiAgICAgICJzaGllbGQiOiAwLAogICAgICAicmVzcGF3biI6IDAsCiAgICAgICJjb29sZG93bnMiOiBbCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAKICAgICAgXSwKICAgICAgImZpcmVDb29sZG93biI6IDAsCiAgICAgICJjcmVkaXRzIjogMTgwLAogICAgICAibGV2ZWwiOiAxLAogICAgICAia2lsbHMiOiAwLAogICAgICAiZGVhdGhzIjogMCwKICAgICAgImFzc2lzdHMiOiAwLAogICAgICAiZGFtYWdlRGVhbHQiOiAwLAogICAgICAidXBncmFkZXMiOiB7CiAgICAgICAgInBvd2VyIjogMCwKICAgICAgICAidml0YWxpdHkiOiAwLAogICAgICAgICJ0ZW1wbyI6IDAKICAgICAgfSwKICAgICAgImVmZmVjdHMiOiB7CiAgICAgICAgImhhc3RlIjogMCwKICAgICAgICAic2xvdyI6IDAsCiAgICAgICAgIndhcmQiOiAwCiAgICAgIH0sCiAgICAgICJsYXN0SW5wdXRTZXEiOiA4CiAgICB9LAogICAgImFmdGVyIjogewogICAgICAiaWQiOiAibG9jYWwtcGxheWVyIiwKICAgICAgIm5hbWUiOiAiVHJhdmVsbGVyIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAic3VuIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDEsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiAwLAogICAgICAieiI6IC02MC4zNjMxNTc4OTQ3MzY4MSwKICAgICAgInkiOiAwLAogICAgICAieWF3IjogLTAuMTI1LAogICAgICAiaGVhbHRoIjogMzAwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDYuMTk5OTk5OTk5OTk5OTkzLAogICAgICAgIDAsCiAgICAgICAgMAogICAgICBdLAogICAgICAiZmlyZUNvb2xkb3duIjogMCwKICAgICAgImNyZWRpdHMiOiAxODAsCiAgICAgICJsZXZlbCI6IDEsCiAgICAgICJraWxscyI6IDAsCiAgICAgICJkZWF0aHMiOiAwLAogICAgICAiYXNzaXN0cyI6IDAsCiAgICAgICJkYW1hZ2VEZWFsdCI6IDAsCiAgICAgICJ1cGdyYWRlcyI6IHsKICAgICAgICAicG93ZXIiOiAwLAogICAgICAgICJ2aXRhbGl0eSI6IDAsCiAgICAgICAgInRlbXBvIjogMAogICAgICB9LAogICAgICAiZWZmZWN0cyI6IHsKICAgICAgICAiaGFzdGUiOiAwLAogICAgICAgICJzbG93IjogMCwKICAgICAgICAid2FyZCI6IDAKICAgICAgfSwKICAgICAgImxhc3RJbnB1dFNlcSI6IDYwCiAgICB9LAogICAgInZpZXdwb3J0IjogewogICAgICAid2lkdGgiOiAzOTAsCiAgICAgICJoZWlnaHQiOiA4NDQKICAgIH0sCiAgICAiY2xhaW0iOiAiQ2hyb21pdW0gbmF0aXZlIHRvdWNoIGVtdWxhdGlvbiwgbm90IHBoeXNpY2FsIHBob25lIGhhcmR3YXJlIgogIH0sCiAgInBhZ2VFcnJvcnMiOiBbXSwKICAiY29tbWFuZHMiOiBbXSwKICAicmVzdWx0cyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-1641aa98a92750f0081d",
+          "file": "arena.e2e.ts",
+          "line": 63,
+          "column": 1
+        },
+        {
+          "title": "labelled target fixture verifies native lock, manual release, settings and cover rejection",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 30816,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#target-lock')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('#target-lock') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#target-lock')\u001b[22m\n\u001b[2m    34 × locator resolved to <button id=\"target-lock\" aria-pressed=\"false\" aria-label=\"Toggle target lock\">LOCK</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#target-lock')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('#target-lock') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#target-lock')\u001b[22m\n\u001b[2m    34 × locator resolved to <button id=\"target-lock\" aria-pressed=\"false\" aria-label=\"Toggle target lock\">LOCK</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:118:97",
+                    "location": {
+                      "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                      "column": 97,
+                      "line": 118
+                    },
+                    "snippet": "  116 |   await page.locator('#arena').click({button:'right',position:{x:400,y:220}});await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe('lock-rival');expect(inputs.every(i=>!i.fire)).toBe(true);await page.keyboard.press('KeyJ');expect(await page.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await nativeYaw(page,0);await page.keyboard.press('KeyT');await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe('lock-rival');\n  117 |   fixture!.actors.get('lock-rival')!.x=35;fixture!.actors.get('lock-rival')!.z=-28;send!();await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await nativeYaw(page,Math.PI/2);await page.keyboard.press('KeyT');expect(await page.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await expect(page.locator('#target-label')).toBeHidden();await capture(page,info,'fixture-target-behind-cover');\n> 118 |   await page.setViewportSize({width:390,height:844});await expect(page.locator('#target-lock')).toBeVisible();await page.locator('#target-lock').click();expect(await page.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);\n      |                                                                                                 ^\n  119 |   await attach(page,info,'labelled-target-cover-fixture',{scope:'Mocked WebSocket and explicit actor positions isolate UI targeting through the real map building at x20,z-28. Native T/right-click/manual aim/settings/touch-button clicks; no real movement, combat or multiplayer authority claim.',inputs,cover:{actor:{x:5,z:-28},target:{x:35,z:-28},distance:30},fireWasNeverRequested:inputs.every(i=>!i.fire)});expect(errors.get(page)).toEqual([]);\n  120 |  }finally{if(timer)clearInterval(timer);}\n  121 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                        "column": 97,
+                        "line": 118
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#target-lock')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('#target-lock') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#target-lock')\u001b[22m\n\u001b[2m    34 × locator resolved to <button id=\"target-lock\" aria-pressed=\"false\" aria-label=\"Toggle target lock\">LOCK</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  116 |   await page.locator('#arena').click({button:'right',position:{x:400,y:220}});await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe('lock-rival');expect(inputs.every(i=>!i.fire)).toBe(true);await page.keyboard.press('KeyJ');expect(await page.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await nativeYaw(page,0);await page.keyboard.press('KeyT');await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe('lock-rival');\n  117 |   fixture!.actors.get('lock-rival')!.x=35;fixture!.actors.get('lock-rival')!.z=-28;send!();await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await nativeYaw(page,Math.PI/2);await page.keyboard.press('KeyT');expect(await page.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();await expect(page.locator('#target-label')).toBeHidden();await capture(page,info,'fixture-target-behind-cover');\n> 118 |   await page.setViewportSize({width:390,height:844});await expect(page.locator('#target-lock')).toBeVisible();await page.locator('#target-lock').click();expect(await page.evaluate(()=>window.__YUGA.metrics().targetId)).toBeNull();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);\n      |                                                                                                 ^\n  119 |   await attach(page,info,'labelled-target-cover-fixture',{scope:'Mocked WebSocket and explicit actor positions isolate UI targeting through the real map building at x20,z-28. Native T/right-click/manual aim/settings/touch-button clicks; no real movement, combat or multiplayer authority claim.',inputs,cover:{actor:{x:5,z:-28},target:{x:35,z:-28},distance:30},fireWasNeverRequested:inputs.every(i=>!i.fire)});expect(errors.get(page)).toEqual([]);\n  120 |  }finally{if(timer)clearInterval(timer);}\n  121 | });\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:118:97"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:36:15.898Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-focused/arena.e2e.ts-labelled-targ-c00ea-ettings-and-cover-rejection/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-focused/arena.e2e.ts-labelled-targ-c00ea-ettings-and-cover-rejection/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-focused/arena.e2e.ts-labelled-targ-c00ea-ettings-and-cover-rejection/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                    "column": 97,
+                    "line": 118
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-36a99611b9ce98009692",
+          "file": "arena.e2e.ts",
+          "line": 107,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "hero-assets.e2e.ts",
+      "file": "hero-assets.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "gallery rapid selection and close survives delayed real GLB loads",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "interrupted",
+                  "duration": 143816,
+                  "error": {
+                    "message": "Error: page.goto: Test ended.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5180/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Test ended.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5180/\", waiting until \"load\"\u001b[22m\n\n    at setup (/workspace/ANDOLAN/games/yuga/tests/hero-assets.e2e.ts:16:13)\n    at /workspace/ANDOLAN/games/yuga/tests/hero-assets.e2e.ts:26:3",
+                    "location": {
+                      "file": "/workspace/ANDOLAN/games/yuga/tests/hero-assets.e2e.ts",
+                      "column": 13,
+                      "line": 16
+                    },
+                    "snippet": "  14 |   const schedule=()=>{if(!queue.size||queued||dispatching||timer!==undefined)return;timer=window.setTimeout(()=>{timer=undefined;queued=true;native(time=>{queued=false;dispatching=true;for(const id of[...queue.keys()]){const callback=queue.get(id);queue.delete(id);if(callback)try{callback(time);}catch(error){window.setTimeout(()=>{throw error;},0);}}dispatching=false;last=performance.now();schedule();});},Math.max(0,100-performance.now()+last));};window.requestAnimationFrame=callback=>{const id=++next;queue.set(id,callback);schedule();return id;};window.cancelAnimationFrame=id=>{queue.delete(id);};\n  15 |  });\n> 16 |  await page.goto('/');await page.waitForFunction(()=>!!window.__YUGA);await page.locator('#lobby-settings').click();await page.locator('#quality').selectOption('low');await page.locator('#resume-game').click();\n     |             ^\n  17 | }\n  18 | async function frame(page:Page){await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));}\n  19 | async function capture(page:Page,info:TestInfo,name:string){await frame(page);await page.screenshot({path:info.outputPath(`${name}.png`)});}"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/hero-assets.e2e.ts",
+                        "column": 13,
+                        "line": 16
+                      },
+                      "message": "Error: page.goto: Test ended.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5180/\", waiting until \"load\"\u001b[22m\n\n\n  14 |   const schedule=()=>{if(!queue.size||queued||dispatching||timer!==undefined)return;timer=window.setTimeout(()=>{timer=undefined;queued=true;native(time=>{queued=false;dispatching=true;for(const id of[...queue.keys()]){const callback=queue.get(id);queue.delete(id);if(callback)try{callback(time);}catch(error){window.setTimeout(()=>{throw error;},0);}}dispatching=false;last=performance.now();schedule();});},Math.max(0,100-performance.now()+last));};window.requestAnimationFrame=callback=>{const id=++next;queue.set(id,callback);schedule();return id;};window.cancelAnimationFrame=id=>{queue.delete(id);};\n  15 |  });\n> 16 |  await page.goto('/');await page.waitForFunction(()=>!!window.__YUGA);await page.locator('#lobby-settings').click();await page.locator('#quality').selectOption('low');await page.locator('#resume-game').click();\n     |             ^\n  17 | }\n  18 | async function frame(page:Page){await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));}\n  19 | async function capture(page:Page,info:TestInfo,name:string){await frame(page);await page.screenshot({path:info.outputPath(`${name}.png`)});}\n    at setup (/workspace/ANDOLAN/games/yuga/tests/hero-assets.e2e.ts:16:13)\n    at /workspace/ANDOLAN/games/yuga/tests/hero-assets.e2e.ts:26:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:36:49.186Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-focused/hero-assets.e2e.ts-gallery-d8551-ives-delayed-real-GLB-loads/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-focused/hero-assets.e2e.ts-gallery-d8551-ives-delayed-real-GLB-loads/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/ANDOLAN/test-results/yuga-final-focused/hero-assets.e2e.ts-gallery-d8551-ives-delayed-real-GLB-loads/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/hero-assets.e2e.ts",
+                    "column": 13,
+                    "line": 16
+                  }
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "c538d34d19b602e5e2ab-4a25a34ba13e9ea4664a",
+          "file": "hero-assets.e2e.ts",
+          "line": 22,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T17:34:50.420Z",
+    "duration": 262930.70800000004,
+    "expected": 2,
+    "skipped": 1,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

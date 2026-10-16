@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-10-16T17:40:00.615825+00:00",
+  "passed": [
+    "14 roster/settings/nativeaudio14.3s",
+    "Mobile native touch16.5s"
+  ],
+  "failed": [
+    {
+      "case": "native practice",
+      "cause": "Harness reached center then stood to open forge/aim while enemies attacked; trace health84\u219240\u219216\u21920 before first fire input. After respawn held fire from spawn, so damage stayed0. No mutation or app fix."
+    },
+    {
+      "case": "labelled target fixture",
+      "cause": "All target logic assertions passed; final desktop viewport resize did not create a coarse pointer, so the mobile-only button correctly stayed hidden. Actual mobile context lock tap passed separately."
+    }
+  ],
+  "interrupted": [
+    {
+      "case": "gallery delay fixture",
+      "cause": "Route also intercepted Vite GLB URL-import JavaScript before app startup; manually interrupted after identifying .glb?import&url module traffic. Not a gallery runtime failure."
+    }
+  ],
+  "sourceSha256": {
+    "games/yuga/tests/arena.e2e.ts": "aa44d688e232e1553bab95444503642d2f610803ebe95372307572e83c330c96",
+    "games/yuga/tests/hero-assets.e2e.ts": "40dde99efb0a68cdb86655b234de488e0aaa690910bf356fc002445dd3d657c0",
+    "games/yuga/client/main.ts": "1ba08a04357b48a80f2eb3db5783b86c857c495aa86c496777c207732220fd3a",
+    "games/yuga/client/world.ts": "9f5be95c3625b4b672e7c0ce21221fbe44761634cfcca717d88f717f2a751553",
+    "games/yuga/client/showcase.ts": "0e7eb2ce5ad3a8ab9582172d977ab45ba44f05710a33058444ee0091cd031ef5"
+  },
+  "productionSeparateFinding": "Research discovered built inline GLB URL rebasing404, root repairing build config separately; dev observations do not cover production."
+}

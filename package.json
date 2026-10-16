@@ -29,7 +29,8 @@
     "yuga:build": "vite build --config vite.yuga.config.ts && tsc -p tsconfig.yuga.server.json && node games/yuga/tools/attach-notices.mjs",
     "yuga:start": "node dist/yuga-server/games/yuga/server/index.js",
     "yuga:e2e": "playwright test --config playwright.yuga.config.ts",
-    "yuga:assets": "tsx games/yuga/tools/verify-hero-assets.ts"
+    "yuga:assets": "tsx games/yuga/tools/verify-hero-assets.ts",
+    "yuga:smoke:production": "node games/yuga/tools/smoke-production.mjs"
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "5.3.0",
