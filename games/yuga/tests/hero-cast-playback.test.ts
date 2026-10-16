@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { lockedCastPlayback, type LockedCastFrame } from '../client/hero-cast-playback';
+import { acknowledgedHeroAction, lockedCastPlayback, type LockedCastFrame } from '../client/hero-cast-playback';
 import { ArenaSimulation } from '../shared/simulation';
+import { HEROES, heroById } from '../shared/heroes';
 import type { Actor } from '../shared/types';
 
 const ultimate = { type: 'command', action: 'ability', id: 'ultimate', slot: 2 } as const;
@@ -63,5 +64,34 @@ describe('authoritative full-body cast playback', () => {
     expect(later.key).not.toBe(first.key); expect(later.seekSeconds).toBeCloseTo(1.399);
     expect(lockedCastPlayback({ ...initial, castElapsed: Number.NaN }, null, 1.4)?.seekSeconds).toBe(0);
     expect(lockedCastPlayback({ ...initial, casting: false }, first.key, 1.4)).toBeNull();
+  });
+
+  it.each(['rama', 'hanuman', 'sita'])('%s does not replay a delayed accepted R receipt after the real cast finishes', hero => {
+    const { sim, actor } = fixture(hero);
+    const started = lockedCastPlayback(frame(sim, actor), null, 1.7)!;
+    const receipt = sim.snapshot().events.find(event => event.type === 'ability' && event.actorId === actor.id)!;
+    const ability = heroById(hero).abilities[2];
+    // Model updates can precede world.consumeEvents, delaying the receipt even
+    // after the last snapshot of the cast has been presented.
+    advance(sim, 1.3); expect(actor.cast).toBeUndefined();
+    expect(lockedCastPlayback(frame(sim, actor), started.key, 1.7)).toBeNull();
+    expect(acknowledgedHeroAction({ cast: receipt.id, shot: 0 }, 0, 0, ability)).toBeNull();
+    expect(acknowledgedHeroAction({ cast: receipt.id, shot: 0 }, receipt.id, 0, ability)).toBeNull();
+    // The same rule applies when a whole cast elapsed between renders: there is
+    // no prior full-body key to identify the receipt as already animated.
+    expect(lockedCastPlayback(frame(sim, actor), null, 1.7)).toBeNull();
+    expect(acknowledgedHeroAction({ cast: receipt.id, shot: 0 }, -1, -1, ability)).toBeNull();
+  });
+
+  it('keeps all 39 untimed ability slots and new primary shots event-driven', () => {
+    const ordinary = HEROES.flatMap(hero => hero.abilities).filter(ability => !ability.mechanic);
+    expect(ordinary).toHaveLength(39);
+    for (const ability of ordinary) {
+      expect(acknowledgedHeroAction({ cast: 7, shot: 3 }, 6, 3, ability)).toBe('cast');
+      expect(acknowledgedHeroAction({ cast: 7, shot: 3 }, 7, 3, ability)).toBeNull();
+    }
+    const timed = heroById('rama').abilities[2];
+    expect(acknowledgedHeroAction({ cast: 7, shot: 8 }, 6, 3, timed)).toBe('fire');
+    expect(acknowledgedHeroAction({ cast: 7, shot: 8 }, 7, 8, timed)).toBeNull();
   });
 });

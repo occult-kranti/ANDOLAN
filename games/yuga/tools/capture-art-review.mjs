@@ -57,11 +57,12 @@ const manifest = {
   scope: 'Actual PlayCanvas/GLB screen captures. Gallery is clip playback. Arena ability fixtures use staged positions/health and real simulation commands. Unit fixtures stage snapshots/events. Coastal views stage the player position and use ordinary keyboard aim/settings. No human match, earned kill, network capacity, sound recording or 4D claim.',
   audio: 'Silent: CDP captures rendered frames only. No soundtrack or commercial recording.',
   timing: 'Each JPEG is an actual Chromium screencast frame. Native timestamp differences request variable-frame durations; the image/encoder timebase can quantize them, so ffprobe durations and timing differences are recorded. No generated/interpolated motion. Capture overhead and repeated/held frames are not a game performance benchmark.',
-  simulation: 'Imported directly from shared/simulation.ts through the installed tsx loader; Vite serves the same source. No compiled server fixture dependency.',
+  simulation: 'Imported directly from shared/simulation.ts through the installed tsx loader; Vite serves the same source. Ability simulation and staged unit ticks run at20Hz; fixture snapshots publish at5Hz, with immediate command results/stage changes. No compiled server fixture dependency.',
+  presentation: 'Capture-only requestAnimationFrame scheduling waits100ms after each native callback batch. All queued callbacks, native timestamps and cancellation are preserved. This sampling budget reduces SwiftShader/CDP contention and is not a game or hardware frame-rate benchmark.',
   revision: (await exec('git', ['rev-parse', 'HEAD'], { cwd: root })).stdout.trim(),
-  pilot, viewport: { width: 1280, height: 800 }, encodedSize: { width: 960, height: 600 },
+  pilot, viewport: { width: 960, height: 600 }, encodedSize: { width: 960, height: 600 },
   heroIds: heroes.map(hero => hero.id), unitIds, expectedAbilities: heroes.length * 3,
-  sources: [], assets: [], assetResponses: [], shots: [], recordings: [], errors: [], files: [],
+  sources: [], assets: [], assetResponses: [], loads: [], shots: [], recordings: [], errors: [], files: [],
 };
 const sources = [...await filesUnder('games/yuga/client'), ...await filesUnder('games/yuga/shared'), 'games/yuga/index.html', 'vite.yuga.config.ts', 'package-lock.json', 'games/yuga/tools/capture-art-review.mjs'].sort();
 for (const filename of sources) {
@@ -111,6 +112,26 @@ async function startServer() {
 async function newPage() {
   context = await browser.newContext({ viewport: manifest.viewport, deviceScaleFactor: 1, reducedMotion: 'no-preference' });
   page = await context.newPage(); page.setDefaultTimeout(45_000);
+  await page.addInitScript(() => {
+    const native = requestAnimationFrame.bind(window), queue = new Map();
+    let next = 0, queued = false, dispatching = false, last = performance.now() - 100, timer;
+    const schedule = () => {
+      if (!queue.size || queued || dispatching || timer !== undefined) return;
+      timer = window.setTimeout(() => {
+        timer = undefined; queued = true;
+        native(time => {
+          queued = false; dispatching = true;
+          for (const id of [...queue.keys()]) {
+            const callback = queue.get(id); queue.delete(id);
+            if (callback) try { callback(time); } catch (error) { window.setTimeout(() => { throw error; }, 0); }
+          }
+          dispatching = false; last = performance.now(); schedule();
+        });
+      }, Math.max(0, 100 - performance.now() + last));
+    };
+    window.requestAnimationFrame = callback => { const id = ++next; queue.set(id, callback); schedule(); return id; };
+    window.cancelAnimationFrame = id => { queue.delete(id); };
+  });
   page.on('pageerror', error => manifest.errors.push(`Page: ${error.message}`));
   page.on('console', message => { if (message.type() === 'error') manifest.errors.push(`Console: ${message.text()}`); });
   page.on('requestfailed', request => manifest.errors.push(`Request: ${request.url()} ${request.failure()?.errorText}`));
@@ -191,14 +212,19 @@ async function abilityFixture(heroId) {
   const self = sim.addPlayer('review-local', 'Staged art review', heroId, 'sun');
   const enemy = sim.addPlayer('review-target', 'Staged target', 'duryodhana', 'moon');
   const ally = sim.addPlayer('review-ally', 'Staged ally', 'sita', 'sun');
-  let socket, timer, previous = performance.now(), accumulator = 0;
-  const results = [], commands = [], send = () => socket?.send(JSON.stringify({ type: 'snapshot', snapshot: sim.snapshot() }));
+  let socket, timer, previous = performance.now(), accumulator = 0, lastPublished = -Infinity;
+  const wire = { joins: 0, welcomes: 0, snapshots: 0, lastSentAt: null };
+  const results = [], commands = [], send = (immediate = true) => {
+    const now = performance.now(); if (!socket || !immediate && now - lastPublished < 200) return;
+    socket.send(JSON.stringify({ type: 'snapshot', snapshot: sim.snapshot() })); lastPublished = now;
+    wire.snapshots++; wire.lastSentAt = new Date().toISOString();
+  };
   const advance = () => {
     const now = performance.now(); accumulator += Math.min(.25, Math.max(0, (now - previous) / 1000)); previous = now;
     while (accumulator >= .05) { sim.step(.05); accumulator -= .05; }
     // Remove unrelated scheduled lane waves in this isolated visual fixture.
     for (const actor of sim.actors.values()) if (actor.kind === 'minion' && actor.minionRole !== 'summon') sim.actors.delete(actor.id);
-    send();
+    send(false);
   };
   const stage = slot => {
     const ability = HEROES.find(hero => hero.id === heroId).abilities[slot];
@@ -213,19 +239,33 @@ async function abilityFixture(heroId) {
     route.onMessage(raw => {
       const message = JSON.parse(String(raw));
       if (message.type === 'join') {
-        stage(0); route.send(JSON.stringify({ type: 'welcome', protocol: YUGA_PROTOCOL, id: self.id, room: sim.room, token: 'a'.repeat(48), snapshot: sim.snapshot() }));
+        wire.joins++; stage(0); route.send(JSON.stringify({ type: 'welcome', protocol: YUGA_PROTOCOL, id: self.id, room: sim.room, token: 'a'.repeat(48), snapshot: sim.snapshot() })); wire.welcomes++;
         previous = performance.now(); timer = setInterval(advance, 50);
       } else if (message.type === 'input') sim.input(self.id, message);
       else if (message.type === 'command') { const result = sim.command(self.id, message); commands.push({ time: sim.time, ...message }); results.push({ time: sim.time, ...result }); route.send(JSON.stringify(result)); send(); }
     });
   });
-  return { stage, sim, commands, results, close() { clearInterval(timer); socket = undefined; } };
+  return { stage, sim, commands, results, wire, close() { clearInterval(timer); socket = undefined; } };
 }
 async function joinFixture() {
+  const load = { startedAt: new Date().toISOString(), samples: [] }; manifest.loads.push(load);
   await page.locator('#online-open').click(); await page.locator('#join-room').click();
-  await expect(page.locator('#loading')).toBeHidden({ timeout: 120_000 });
-  await page.waitForFunction(() => window.__YUGA.metrics().ready && !!window.__YUGA.snapshot());
-  await page.locator('#arena').focus();
+  const deadline = Date.now() + 120_000;
+  while (true) {
+    const sample = await page.evaluate(() => {
+      const metrics = window.__YUGA.metrics(), snapshot = window.__YUGA.snapshot(), self = snapshot?.actors.find(actor => actor.id === window.__YUGA.playerId());
+      return { at: new Date().toISOString(), metrics, snapshot: snapshot && { phase: snapshot.phase, time: snapshot.time, tick: snapshot.tick, self: self && { id: self.id, health: self.health } }, visibility: document.visibilityState, focus: document.hasFocus(), focusId: document.activeElement?.id, dialog: document.querySelector('dialog[open]')?.id,
+        loadingHidden: document.querySelector('#loading').hidden, loader: document.querySelector('#loading-copy').textContent, status: document.querySelector('#status-line').textContent,
+        globalError: document.querySelector('#global-error').textContent, errorHidden: document.querySelector('#global-error').hidden };
+    });
+    load.samples.push({ ...sample, wire: fixture?.wire && { ...fixture.wire } });
+    if (sample.metrics.ready && sample.snapshot && sample.loadingHidden) break;
+    if (!sample.errorHidden && sample.globalError.includes('arena could not start')) throw new Error(`Fixture startup failed: ${sample.globalError}`);
+    if (Date.now() >= deadline) throw new Error(`Fixture readiness timed out: ${JSON.stringify(load.samples.at(-1))}`);
+    await pause(250);
+  }
+  load.finishedAt = new Date().toISOString(); await save();
+  if (load.samples.at(-1).focusId !== 'arena') await page.locator('#arena').focus({ timeout: 5000 });
 }
 async function captureHero(hero) {
   await newPage(); fixture = await abilityFixture(hero.id); await boot(hero.id);
@@ -247,12 +287,18 @@ async function captureHero(hero) {
     assert.equal(record.after.fallback.length, 0); assert.equal(record.after.unitFallback.length, 0);
     if (ability.mechanic) {
       const before = record.before.instances.find(instance => instance.id === 'review-local');
-      const locked = record.timeline.filter(sample => sample.local?.cast).flatMap(sample => sample.heroes.filter(instance => instance.id === 'review-local'));
+      const locked = record.timeline.filter(sample => sample.local?.cast).flatMap(sample => sample.heroes.filter(instance => instance.id === 'review-local').map(instance => ({ ...instance, snapshotTime: sample.time, castStartedAt: sample.local.cast.startedAt })));
+      // Received authority and the most recent presented pose can differ between
+      // engine frames. Keep those raw samples, but do not call them cast poses.
+      const presented = locked.filter(instance => instance.state === `cast${slot + 1}`);
+      const allPresented = record.timeline.flatMap(sample => sample.heroes.filter(instance => instance.id === 'review-local' && instance.state === `cast${slot + 1}`));
+      const timedEventReplays = record.timeline.flatMap(sample => sample.heroes.filter(instance => instance.id === 'review-local' && instance.action === `cast${slot + 1}`).map(instance => ({ snapshotTime: sample.time, state: instance.state, action: instance.action, authorityCasting: !!sample.local?.cast })));
       const legs = before.poseBones.flatMap((name, index) => /^(upperleg|lowerleg)/.test(name) ? [index * 4, index * 4 + 1, index * 4 + 2, index * 4 + 3] : []);
-      const maxLegDelta = Math.max(0, ...locked.flatMap(instance => legs.map(index => Math.abs(instance.pose[index] - before.pose[index]))));
-      record.lockedCastReview = { samples: locked.length, states: [...new Set(locked.map(instance => instance.state))], maxLegQuaternionComponentDeltaFromReady: maxLegDelta, scope: 'Actual arena lower-leg rotations during authority-locked casts; authored recovery may end when authority releases movement.' };
-      assert.ok(locked.some(instance => instance.state === `cast${slot + 1}`), `${hero.id}: full-body locked cast was not sampled.`);
-      assert.ok(locked.every(instance => instance.action === ''), `${hero.id}: an upper action still overlays the locked full-body pose.`);
+      const maxLegDelta = Math.max(0, ...presented.flatMap(instance => legs.map(index => Math.abs(instance.pose[index] - before.pose[index]))));
+      record.lockedCastReview = { samples: locked.length, presentedWhileLocked: presented.length, allPresentedSamples: allPresented.length, states: [...new Set(locked.map(instance => instance.state))], timedEventReplays, prePresentationSamples: locked.filter(instance => instance.state !== `cast${slot + 1}`).map(({ snapshotTime, castStartedAt, state, action }) => ({ snapshotTime, castStartedAt, state, action })), firstSampledPresentationSnapshotAgeSeconds: presented.length ? presented[0].snapshotTime - presented[0].castStartedAt : null, maxLegQuaternionComponentDeltaFromReady: maxLegDelta, scope: 'Actual presented base-cast lower-leg rotations while authority is locked. Every presented base-cast sample, including after authority clears, must have no upper overlay; no event-driven replay of the timed ability is permitted. Received snapshots may precede the next rendered pose; those boundary samples remain in the raw timeline and are listed separately. Sampled snapshot age is not exact render latency. Authored recovery may end when authority releases movement.' };
+      assert.ok(presented.length, `${hero.id}: full-body locked cast was not sampled.`);
+      assert.ok(allPresented.every(instance => instance.action === ''), `${hero.id}: an upper action still overlays the presented full-body pose.`);
+      assert.equal(timedEventReplays.length, 0, `${hero.id}: the timed ability replayed through the event-driven upper layer.`);
       assert.ok(maxLegDelta > .005, `${hero.id}: no meaningful actual lower-body change from the ready stance was sampled.`);
     }
   }
@@ -279,7 +325,7 @@ async function unitFixture(unitId) {
     timer = setInterval(() => { snapshot.time += .05; snapshot.tick++; elapsed += .05;
       if (mode === 'run') subject.x = Math.sin(elapsed * 3) * .8;
       if (mode === 'fire' && elapsed - lastShot >= .9) { emit('shot'); lastShot = elapsed; }
-      send();
+      if (snapshot.tick % 4 === 0) send();
     }, 50);
   }); });
   return { setMode(next) { mode = next; elapsed = 0; lastShot = -99; subject.x = 0;
@@ -402,5 +448,8 @@ try {
   assert.deepEqual(manifest.errors, [], 'Native capture errors; inspect manifest before encoding.');
   if (!args.includes('--skip-encode')) await encode();
   manifest.passed = true;
-} catch (error) { manifest.errors.push(error instanceof Error ? error.stack : String(error)); console.error(manifest.errors.at(-1)); process.exitCode = 1; }
+} catch (error) {
+  manifest.errors.push(error instanceof Error ? error.stack : String(error)); console.error(manifest.errors.at(-1)); process.exitCode = 1;
+  if (page && !page.isClosed()) await page.screenshot({ path: path.join(output, 'failure.png'), timeout: 10_000 }).catch(() => {});
+}
 finally { await shutdown(); manifest.finishedAt = new Date().toISOString(); await save(); }

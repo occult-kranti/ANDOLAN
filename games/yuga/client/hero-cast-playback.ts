@@ -1,9 +1,23 @@
+import type { AbilityDef } from '../shared/types';
+
 export interface LockedCastFrame {
   alive: boolean; casting: boolean; castSlot: number;
   castElapsed?: number; castStartedAt?: number;
 }
 export interface LockedCastPlayback {
   key: string; clip: 'cast1' | 'cast2' | 'cast3'; seekSeconds: number | null;
+}
+
+/** Timed ability events are receipts, not a second animation clock. A delayed
+ * event must not restart an ultimate after its authoritative cast disappeared.
+ */
+export function acknowledgedHeroAction(
+  frame: { cast: number; shot: number }, previousCast: number, previousShot: number,
+  ability: Pick<AbilityDef, 'mechanic'> | undefined,
+): 'cast' | 'fire' | null {
+  if (frame.cast > previousCast && frame.cast > 0 && !ability?.mechanic) return 'cast';
+  if (frame.shot > previousShot && frame.shot > 0) return 'fire';
+  return null;
 }
 
 /** A server-owned cast is movement-locked, so its authored pose owns the whole body.

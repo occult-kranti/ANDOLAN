@@ -1,6 +1,6 @@
 import * as pc from 'playcanvas';
 import { HEROES } from '../shared/heroes';
-import { lockedCastPlayback } from './hero-cast-playback';
+import { acknowledgedHeroAction, lockedCastPlayback } from './hero-cast-playback';
 
 // Vite emits these as separately cached GLB files. Concept illustrations are never used as avatars.
 const modelUrls = import.meta.glob('./assets/heroes/*.glb', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
@@ -114,6 +114,7 @@ export class HeroModelLibrary {
     root.name = `authored-${heroId}`; parent.addChild(root);
     root.addComponent('anim', { activate: true });
     const tracks = animationTracks(resource);
+    const abilities = HEROES.find(hero => hero.id === heroId)!.abilities;
     const anim = root.anim!;
     anim.enabled = this.active;
     for (const name of REQUIRED_CLIPS) anim.assignAnimation(name, tracks.get(name)!, undefined, 1, ['idle', 'run'].includes(name));
@@ -165,7 +166,9 @@ export class HeroModelLibrary {
         if (frame.alive && dead) { baseLayer.transition('idle', 0); base = 'idle'; actionUntil = 0; if (upper) upper.weight = 0; }
         dead = !frame.alive;
         const castName = tracks.has(`cast${frame.castSlot + 1}`) ? `cast${frame.castSlot + 1}` : 'cast';
-        const actionName = frame.cast > lastCast && frame.cast > 0 ? castName : frame.shot > lastShot && frame.shot > 0 ? 'fire' : '';
+        const eventAction = acknowledgedHeroAction(frame, lastCast, lastShot, abilities[frame.castSlot]);
+        const actionName = eventAction === 'cast' ? castName : eventAction ?? '';
+        // Consume counters even when a timed receipt is intentionally ignored.
         lastShot = frame.shot; lastCast = frame.cast;
         const locked = lockedCastPlayback(frame, lockedCastKey, tracks.get(castName)!.duration);
         if (locked) {
