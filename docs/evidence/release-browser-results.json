@@ -1,0 +1,460 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "tests/game.e2e.ts",
+      "--output=test-results/capped-final",
+      "--reporter=list,json"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.config.ts",
+    "rootDir": "/workspace/ANDOLAN/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/capped-final",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/capped-final",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/tests",
+        "snapshotDir": "/workspace/ANDOLAN/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://127.0.0.1:5173",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "game.e2e.ts",
+      "file": "game.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Story keyboard controls, dialogue, vehicle, checkpoint and settings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22106,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T01:58:06.607Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reverse-camera.json",
+                      "contentType": "application/json",
+                      "body": "eyJjb21mb3J0Ijp0cnVlLCJiZWZvcmVSZXZlcnNlIjp7ImlkIjoic29sby1wbGF5ZXIiLCJuYW1lIjoiQWFkaSIsIngiOi00Mi41Njg0NDQxMDQ0NTE0NjYsInoiOjQ4LCJoZWFkaW5nIjoxLjU3MDc5NjMyNjc5NDg5NjYsInZlaGljbGVJZCI6ImNvbXBhY3QtMDEiLCJzZWF0IjowLCJjb25uZWN0ZWQiOnRydWUsImNvbG9yIjowLCJzaWduYWwiOm51bGwsInNpZ25hbFVudGlsIjowLCJsYXN0SW5wdXRTZXEiOjE3OTIxMTU4OTExOTB9LCJhZnRlclJldmVyc2UiOnsiaWQiOiJzb2xvLXBsYXllciIsIm5hbWUiOiJBYWRpIiwieCI6LTQ3LjQyMjg2NDY3MDc3NjY4LCJ6Ijo0OCwiaGVhZGluZyI6MS41NzA3OTYzMjY3OTQ4OTY2LCJ2ZWhpY2xlSWQiOiJjb21wYWN0LTAxIiwic2VhdCI6MCwiY29ubmVjdGVkIjp0cnVlLCJjb2xvciI6MCwic2lnbmFsIjpudWxsLCJzaWduYWxVbnRpbCI6MCwibGFzdElucHV0U2VxIjoxNzkyMTE1ODkxMjcwfSwieWF3QmVmb3JlIjowLjYzNTk2Mjk5NzkzNTE0ODcsInlhd0FmdGVyIjowLjk5MjMzNjk4ODc4OTYzNjN9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31d2674dfebb76fb0c5f-954d4debdccbbae36cdb",
+          "file": "game.e2e.ts",
+          "line": 160,
+          "column": 1
+        },
+        {
+          "title": "two independent browsers share movement, seats and driver handover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12507,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T01:58:28.965Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31d2674dfebb76fb0c5f-241b716379d6802c19ef",
+          "file": "game.e2e.ts",
+          "line": 248,
+          "column": 1
+        },
+        {
+          "title": "real crew walking, split votes, agreement and late-join recap",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 360000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 45143,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T01:58:41.495Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31d2674dfebb76fb0c5f-46a1b5ba86ffcfd92fc1",
+          "file": "game.e2e.ts",
+          "line": 286,
+          "column": 1
+        },
+        {
+          "title": "mobile title, garage and dialogue layout remain usable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4432,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T01:59:26.653Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31d2674dfebb76fb0c5f-b9851aa12ea7ffceac2b",
+          "file": "game.e2e.ts",
+          "line": 354,
+          "column": 1
+        },
+        {
+          "title": "completed-room welcome preserves the ending (presentation fixture)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6043,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T01:59:31.105Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31d2674dfebb76fb0c5f-7c1db937001d1f5ad43a",
+          "file": "game.e2e.ts",
+          "line": 374,
+          "column": 1
+        },
+        {
+          "title": "confirmed replay from a completed checkpoint (labelled setup)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "setup",
+                  "description": "Synthetic completed checkpoint fixture; not campaign completion evidence."
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4293,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T01:59:37.170Z",
+                  "annotations": [
+                    {
+                      "type": "setup",
+                      "description": "Synthetic completed checkpoint fixture; not campaign completion evidence."
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "checkpoint-provenance.txt",
+                      "contentType": "text/plain",
+                      "body": "U3ludGhldGljIGNvbXBsZXRlZCBjaGVja3BvaW50IGZpeHR1cmU7IG5vdCBjYW1wYWlnbiBjb21wbGV0aW9uIGV2aWRlbmNlLg=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31d2674dfebb76fb0c5f-fd33b76a1b72a7d51f7f",
+          "file": "game.e2e.ts",
+          "line": 401,
+          "column": 1
+        },
+        {
+          "title": "complete six chapters through real-time movement, driving and visible choices",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 900000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 263214,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Campaign stage completed: receipt\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: river-return\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: first-pin\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: records\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: compare\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: board-copies\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: depot\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: shipping\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: clinic-restored\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: engineer\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: press\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: edition\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: friendly-ledger\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: square\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: voices\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: offer\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: hearing-arrival\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: hearing-choice\n"
+                    },
+                    {
+                      "text": "Campaign stage completed: open-windows\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T01:59:41.485Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "campaign-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJ2aXNpdGVkIjogWwogICAgImtleXMiLAogICAgImNhciIsCiAgICAiY2xpbmljLWRyaXZlIiwKICAgICJyZWNlaXB0IiwKICAgICJyaXZlci1yZXR1cm4iLAogICAgImZpcnN0LXBpbiIsCiAgICAicmVjb3JkcyIsCiAgICAiY29tcGFyZSIsCiAgICAiYm9hcmQtY29waWVzIiwKICAgICJkZXBvdCIsCiAgICAic2hpcHBpbmciLAogICAgImNsaW5pYy1yZXN0b3JlZCIsCiAgICAiZW5naW5lZXIiLAogICAgInByZXNzIiwKICAgICJlZGl0aW9uIiwKICAgICJmcmllbmRseS1sZWRnZXIiLAogICAgInNxdWFyZSIsCiAgICAidm9pY2VzIiwKICAgICJvZmZlciIsCiAgICAiaGVhcmluZy1hcnJpdmFsIiwKICAgICJoZWFyaW5nLWNob2ljZSIsCiAgICAib3Blbi13aW5kb3dzIgogIF0sCiAgIm1pc3Npb24iOiB7CiAgICAiY2hhcHRlckluZGV4IjogNiwKICAgICJjaGFwdGVySWQiOiAicHVibGljLWhlYXJpbmciLAogICAgInRpdGxlIjogIlRoZSBQdWJsaWMgSGVhcmluZyIsCiAgICAic3RhZ2VJbmRleCI6IDAsCiAgICAic3RhZ2UiOiAiY29tcGxldGUiLAogICAgIm9iamVjdGl2ZSI6ICJUaGUgaGVhcmluZyBoYXMgZW5kZWQuIFJlYWQgdGhlIGNpdHnigJlzIHJlc3BvbnNlLiIsCiAgICAidGFyZ2V0SWQiOiBudWxsLAogICAgInRyaWdnZXIiOiAiY29tcGxldGUiLAogICAgImRpYWxvZ3VlIjogWwogICAgICB7CiAgICAgICAgInNwZWFrZXIiOiAiWXVzdWYiLAogICAgICAgICJ0ZXh0IjogIlNpeCBtb250aHMuIFRoZSBzaHV0dGVyIHN0aWxsIHN0aWNrcy4iCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAic3BlYWtlciI6ICJBYWRpIiwKICAgICAgICAidGV4dCI6ICJTb21lIHRoaW5ncyB0YWtlIGxvbmdlciB0aGFuIGEgc3BlZWNoLiIKICAgICAgfSwKICAgICAgewogICAgICAgICJzcGVha2VyIjogIk1lZXJhIiwKICAgICAgICAidGV4dCI6ICJUaGVuIG9wZW4gaXQuIFRoZXJlIGlzIHdvcmsgdG8gZG8uIgogICAgICB9CiAgICBdLAogICAgImRvY3VtZW50cyI6IFtdLAogICAgImNob2ljZXMiOiBbXSwKICAgICJ2b3RlcyI6IHt9LAogICAgImV2aWRlbmNlIjogWwogICAgICAiY2xpbmljQ29weSIsCiAgICAgICJkZWxpdmVyeSIsCiAgICAgICJjYXV0aW9uIiwKICAgICAgImNvcGllcyIsCiAgICAgICJvcmRlclB1YmxpYyIsCiAgICAgICJhbWVuZG1lbnRQdWJsaWMiLAogICAgICAiZGlzcGF0Y2hQcmlvcml0eSIsCiAgICAgICJkZWxpdmVyeUxvZyIsCiAgICAgICJjbGluaWNSZXN0b3JlZCIsCiAgICAgICJlbmdpbmVlciIsCiAgICAgICJjb3JyZWN0aW9uIiwKICAgICAgInNwb25zb3IiLAogICAgICAidm9pY2VzIiwKICAgICAgIm9mZmVyIiwKICAgICAgImhlYXJpbmciCiAgICBdLAogICAgIm1ldHJpY3MiOiB7CiAgICAgICJ0cnVzdCI6IDg5LAogICAgICAiY2FyZSI6IDgxLAogICAgICAiYWNjb3VudGFiaWxpdHkiOiAxMDAKICAgIH0sCiAgICAiaGlzdG9yeSI6IFsKICAgICAgewogICAgICAgICJjaGFwdGVySWQiOiAibGFzdC1kZWxpdmVyeSIsCiAgICAgICAgInN0YWdlSWQiOiAicmVjZWlwdCIsCiAgICAgICAgImNob2ljZUlkIjogImNvcHkiLAogICAgICAgICJsYWJlbCI6ICJSZXF1ZXN0IGFuIGF1dGhvcml6ZWQgY29weSIKICAgICAgfSwKICAgICAgewogICAgICAgICJjaGFwdGVySWQiOiAidHdvLWNvcGllcyIsCiAgICAgICAgInN0YWdlSWQiOiAiY29tcGFyZSIsCiAgICAgICAgImNob2ljZUlkIjogIm5hcnJvdyIsCiAgICAgICAgImxhYmVsIjogIlJlY29yZCB0aGUgZGlzY3JlcGFuY3kiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiY2hhcHRlcklkIjogImVtcHR5LXNoZWx2ZXMiLAogICAgICAgICJzdGFnZUlkIjogInNoaXBwaW5nIiwKICAgICAgICAiY2hvaWNlSWQiOiAic3VwcGxpZXMiLAogICAgICAgICJsYWJlbCI6ICJQdXQgdGhlIHJlc2VydmUgdmFuIGZpcnN0IgogICAgICB9LAogICAgICB7CiAgICAgICAgImNoYXB0ZXJJZCI6ICJmaXJzdC1lZGl0aW9uIiwKICAgICAgICAic3RhZ2VJZCI6ICJlZGl0aW9uIiwKICAgICAgICAiY2hvaWNlSWQiOiAiY29ycmVjdCIsCiAgICAgICAgImxhYmVsIjogIlB1Ymxpc2ggdGhlIGZpbmRpbmcgYW5kIGNvcnJlY3Rpb24iCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiY2hhcHRlcklkIjogImZpcnN0LWVkaXRpb24iLAogICAgICAgICJzdGFnZUlkIjogImZyaWVuZGx5LWxlZGdlciIsCiAgICAgICAgImNob2ljZUlkIjogImRpc2Nsb3NlIiwKICAgICAgICAibGFiZWwiOiAiRGlzY2xvc2UgdGhlIGNvbmZsaWN0IgogICAgICB9LAogICAgICB7CiAgICAgICAgImNoYXB0ZXJJZCI6ICJvcGVuLW1pY3JvcGhvbmUiLAogICAgICAgICJzdGFnZUlkIjogInZvaWNlcyIsCiAgICAgICAgImNob2ljZUlkIjogInNoYXJlIiwKICAgICAgICAibGFiZWwiOiAiU2hhcmUgdGhlIG1pY3JvcGhvbmUiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiY2hhcHRlcklkIjogInB1YmxpYy1oZWFyaW5nIiwKICAgICAgICAic3RhZ2VJZCI6ICJoZWFyaW5nLWNob2ljZSIsCiAgICAgICAgImNob2ljZUlkIjogIm9wZW4tcmVjb3JkIiwKICAgICAgICAibGFiZWwiOiAiQW4gb3BlbiwgaW5kZXBlbmRlbnQgcmV2aWV3IgogICAgICB9CiAgICBdLAogICAgInJldmlzaW9uIjogMjIsCiAgICAiY29tcGxldGUiOiB0cnVlLAogICAgImVuZGluZyI6IHsKICAgICAgImlkIjogIm9wZW4td2luZG93cyIsCiAgICAgICJ0aXRsZSI6ICJPcGVuIFdpbmRvd3MiLAogICAgICAiZGVzY3JpcHRpb24iOiAiVGhlIGluZGVwZW5kZW50IHJldmlldyBwdWJsaXNoZXMgdGhlIGFwcHJvdmFsIHRyYWlsLiBBc2hhIHJlc2lnbnM7IGFuIGludGVyaW0gY291bmNpbCByZXN0b3JlcyBjbGluaWMgZnVuZGluZyBhbmQgb3BlbnMgaXRzIG93biBhY2NvdW50cy4gVGFyYSBjaGFsbGVuZ2VzIGl0cyBmaXJzdCBkZWNpc2lvbiBpbiBwdWJsaWMuIFNpeCBtb250aHMgbGF0ZXIsIHRoZSBnYXJhZ2UgYm9hcmQgaGFzIHJvb20gZm9yIHF1ZXN0aW9ucyBhYm91dCB0aGUgbmV3IGdvdmVybm1lbnQgdG9vLiIKICAgIH0KICB9LAogICJwbGF5ZXIiOiB7CiAgICAiaWQiOiAic29sby1wbGF5ZXIiLAogICAgIm5hbWUiOiAiQWFkaSIsCiAgICAieCI6IC02NS4xODkyNzkyODYwODkwNiwKICAgICJ6IjogNDMuOTI2MTI1MTk4NzM2NDUsCiAgICAiaGVhZGluZyI6IC0xLjg4OTA5MDU4NzU2MzU2NDQsCiAgICAidmVoaWNsZUlkIjogbnVsbCwKICAgICJzZWF0IjogbnVsbCwKICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgImNvbG9yIjogMCwKICAgICJzaWduYWwiOiBudWxsLAogICAgInNpZ25hbFVudGlsIjogMCwKICAgICJsYXN0SW5wdXRTZXEiOiA4MDAwMDAwMDAwMDA2MzI4CiAgfSwKICAid29ybGRCb3VuZHMiOiAxMDAKfQ=="
+                    },
+                    {
+                      "name": "completed-checkpoint.json",
+                      "contentType": "application/json",
+                      "body": "eyJzY2hlbWEiOjEsImNvbnRlbnRWZXJzaW9uIjoiMC41LjAiLCJ0eXBlIjoic25hcHNob3QiLCJwcm90b2NvbCI6MSwidGljayI6NTE2NSwidGltZSI6MjU4LjI1MDAwMDAwMDAyNDQ0LCJyb29tIjoiU1RPUlkiLCJtb2RlIjoicHJpdmF0ZSIsInBsYXllcnMiOlt7ImlkIjoic29sby1wbGF5ZXIiLCJuYW1lIjoiQWFkaSIsIngiOi02NS4xODkyNzkyODYwODkwNiwieiI6NDMuOTI2MTI1MTk4NzM2NDUsImhlYWRpbmciOi0xLjg4OTA5MDU4NzU2MzU2NDQsInZlaGljbGVJZCI6bnVsbCwic2VhdCI6bnVsbCwiY29ubmVjdGVkIjp0cnVlLCJjb2xvciI6MCwic2lnbmFsIjpudWxsLCJzaWduYWxVbnRpbCI6MCwibGFzdElucHV0U2VxIjo4MDAwMDAwMDAwMDA2MzI4fV0sInZlaGljbGVzIjpbeyJpZCI6ImNvbXBhY3QtMDEiLCJraW5kIjoiY2FyIiwieCI6NDkuNTUyODMwOTEzOTU5NDksInoiOi00Ni44MTc0NDE4ODI4NTg4OTQsImhlYWRpbmciOjIuMzI3NTcyMDkyMTgwNDc0LCJzcGVlZCI6MCwib2NjdXBhbnRzIjpbbnVsbCxudWxsLG51bGwsbnVsbF19LHsiaWQiOiJ2YW4tMDEiLCJraW5kIjoidmFuIiwieCI6NDgsInoiOjQwLCJoZWFkaW5nIjozLjE0MTU5MjY1MzU4OTc5Mywic3BlZWQiOjAsIm9jY3VwYW50cyI6W251bGwsbnVsbCxudWxsLG51bGxdfV0sIm1pc3Npb24iOnsiY2hhcHRlckluZGV4Ijo2LCJjaGFwdGVySWQiOiJwdWJsaWMtaGVhcmluZyIsInRpdGxlIjoiVGhlIFB1YmxpYyBIZWFyaW5nIiwic3RhZ2VJbmRleCI6MCwic3RhZ2UiOiJjb21wbGV0ZSIsIm9iamVjdGl2ZSI6IlRoZSBoZWFyaW5nIGhhcyBlbmRlZC4gUmVhZCB0aGUgY2l0eeKAmXMgcmVzcG9uc2UuIiwidGFyZ2V0SWQiOm51bGwsInRyaWdnZXIiOiJjb21wbGV0ZSIsImRpYWxvZ3VlIjpbeyJzcGVha2VyIjoiWXVzdWYiLCJ0ZXh0IjoiU2l4IG1vbnRocy4gVGhlIHNodXR0ZXIgc3RpbGwgc3RpY2tzLiJ9LHsic3BlYWtlciI6IkFhZGkiLCJ0ZXh0IjoiU29tZSB0aGluZ3MgdGFrZSBsb25nZXIgdGhhbiBhIHNwZWVjaC4ifSx7InNwZWFrZXIiOiJNZWVyYSIsInRleHQiOiJUaGVuIG9wZW4gaXQuIFRoZXJlIGlzIHdvcmsgdG8gZG8uIn1dLCJkb2N1bWVudHMiOltdLCJjaG9pY2VzIjpbXSwidm90ZXMiOnt9LCJldmlkZW5jZSI6WyJjbGluaWNDb3B5IiwiZGVsaXZlcnkiLCJjYXV0aW9uIiwiY29waWVzIiwib3JkZXJQdWJsaWMiLCJhbWVuZG1lbnRQdWJsaWMiLCJkaXNwYXRjaFByaW9yaXR5IiwiZGVsaXZlcnlMb2ciLCJjbGluaWNSZXN0b3JlZCIsImVuZ2luZWVyIiwiY29ycmVjdGlvbiIsInNwb25zb3IiLCJ2b2ljZXMiLCJvZmZlciIsImhlYXJpbmciXSwibWV0cmljcyI6eyJ0cnVzdCI6ODksImNhcmUiOjgxLCJhY2NvdW50YWJpbGl0eSI6MTAwfSwiaGlzdG9yeSI6W3siY2hhcHRlcklkIjoibGFzdC1kZWxpdmVyeSIsInN0YWdlSWQiOiJyZWNlaXB0IiwiY2hvaWNlSWQiOiJjb3B5IiwibGFiZWwiOiJSZXF1ZXN0IGFuIGF1dGhvcml6ZWQgY29weSJ9LHsiY2hhcHRlcklkIjoidHdvLWNvcGllcyIsInN0YWdlSWQiOiJjb21wYXJlIiwiY2hvaWNlSWQiOiJuYXJyb3ciLCJsYWJlbCI6IlJlY29yZCB0aGUgZGlzY3JlcGFuY3kifSx7ImNoYXB0ZXJJZCI6ImVtcHR5LXNoZWx2ZXMiLCJzdGFnZUlkIjoic2hpcHBpbmciLCJjaG9pY2VJZCI6InN1cHBsaWVzIiwibGFiZWwiOiJQdXQgdGhlIHJlc2VydmUgdmFuIGZpcnN0In0seyJjaGFwdGVySWQiOiJmaXJzdC1lZGl0aW9uIiwic3RhZ2VJZCI6ImVkaXRpb24iLCJjaG9pY2VJZCI6ImNvcnJlY3QiLCJsYWJlbCI6IlB1Ymxpc2ggdGhlIGZpbmRpbmcgYW5kIGNvcnJlY3Rpb24ifSx7ImNoYXB0ZXJJZCI6ImZpcnN0LWVkaXRpb24iLCJzdGFnZUlkIjoiZnJpZW5kbHktbGVkZ2VyIiwiY2hvaWNlSWQiOiJkaXNjbG9zZSIsImxhYmVsIjoiRGlzY2xvc2UgdGhlIGNvbmZsaWN0In0seyJjaGFwdGVySWQiOiJvcGVuLW1pY3JvcGhvbmUiLCJzdGFnZUlkIjoidm9pY2VzIiwiY2hvaWNlSWQiOiJzaGFyZSIsImxhYmVsIjoiU2hhcmUgdGhlIG1pY3JvcGhvbmUifSx7ImNoYXB0ZXJJZCI6InB1YmxpYy1oZWFyaW5nIiwic3RhZ2VJZCI6ImhlYXJpbmctY2hvaWNlIiwiY2hvaWNlSWQiOiJvcGVuLXJlY29yZCIsImxhYmVsIjoiQW4gb3BlbiwgaW5kZXBlbmRlbnQgcmV2aWV3In1dLCJyZXZpc2lvbiI6MjIsImNvbXBsZXRlIjp0cnVlLCJlbmRpbmciOnsiaWQiOiJvcGVuLXdpbmRvd3MiLCJ0aXRsZSI6Ik9wZW4gV2luZG93cyIsImRlc2NyaXB0aW9uIjoiVGhlIGluZGVwZW5kZW50IHJldmlldyBwdWJsaXNoZXMgdGhlIGFwcHJvdmFsIHRyYWlsLiBBc2hhIHJlc2lnbnM7IGFuIGludGVyaW0gY291bmNpbCByZXN0b3JlcyBjbGluaWMgZnVuZGluZyBhbmQgb3BlbnMgaXRzIG93biBhY2NvdW50cy4gVGFyYSBjaGFsbGVuZ2VzIGl0cyBmaXJzdCBkZWNpc2lvbiBpbiBwdWJsaWMuIFNpeCBtb250aHMgbGF0ZXIsIHRoZSBnYXJhZ2UgYm9hcmQgaGFzIHJvb20gZm9yIHF1ZXN0aW9ucyBhYm91dCB0aGUgbmV3IGdvdmVybm1lbnQgdG9vLiJ9fSwiY29tbWFuZHMiOnsic29sby1wbGF5ZXIiOnsiYzE3OTIxMTU5ODUxNDlfMSI6eyJ0eXBlIjoicmVzdWx0IiwiY29tbWFuZElkIjoiYzE3OTIxMTU5ODUxNDlfMSIsIm9rIjp0cnVlLCJjb2RlIjoiU1RBR0VfQ09NUExFVEUifSwiYzE3OTIxMTU5ODUxODFfMiI6eyJ0eXBlIjoicmVzdWx0IiwiY29tbWFuZElkIjoiYzE3OTIxMTU5ODUxODFfMiIsIm9rIjp0cnVlLCJjb2RlIjoiRU5URVJFRCJ9LCJjMTc5MjExNjAxMTg3MF8zIjp7InR5cGUiOiJyZXN1bHQiLCJjb21tYW5kSWQiOiJjMTc5MjExNjAxMTg3MF8zIiwib2siOnRydWUsImNvZGUiOiJFWElURUQifSwiYzE3OTIxMTYwMTIxOTZfNCI6eyJ0eXBlIjoicmVzdWx0IiwiY29tbWFuZElkIjoiYzE3OTIxMTYwMTIxOTZfNCIsIm9rIjp0cnVlLCJjb2RlIjoiQ0hPSUNFX0FDQ0VQVEVEIn0sImMxNzkyMTE2MDUyMTg0XzUiOnsidHlwZSI6InJlc3VsdCIsImNvbW1hbmRJZCI6ImMxNzkyMTE2MDUyMTg0XzUiLCJvayI6dHJ1ZSwiY29kZSI6IlNUQUdFX0NPTVBMRVRFIn0sImMxNzkyMTE2MDc4MTg2XzYiOnsidHlwZSI6InJlc3VsdCIsImNvbW1hbmRJZCI6ImMxNzkyMTE2MDc4MTg2XzYiLCJvayI6dHJ1ZSwiY29kZSI6IkNIT0lDRV9BQ0NFUFRFRCJ9LCJjMTc5MjExNjEwMzk0M183Ijp7InR5cGUiOiJyZXN1bHQiLCJjb21tYW5kSWQiOiJjMTc5MjExNjEwMzk0M183Iiwib2siOnRydWUsImNvZGUiOiJTVEFHRV9DT01QTEVURSJ9LCJjMTc5MjExNjEyMTkxMV84Ijp7InR5cGUiOiJyZXN1bHQiLCJjb21tYW5kSWQiOiJjMTc5MjExNjEyMTkxMV84Iiwib2siOnRydWUsImNvZGUiOiJDSE9JQ0VfQUNDRVBURUQifSwiYzE3OTIxMTYxMzg0NDVfOSI6eyJ0eXBlIjoicmVzdWx0IiwiY29tbWFuZElkIjoiYzE3OTIxMTYxMzg0NDVfOSIsIm9rIjp0cnVlLCJjb2RlIjoiU1RBR0VfQ09NUExFVEUifSwiYzE3OTIxMTYxNTQ3MDZfMTAiOnsidHlwZSI6InJlc3VsdCIsImNvbW1hbmRJZCI6ImMxNzkyMTE2MTU0NzA2XzEwIiwib2siOnRydWUsImNvZGUiOiJTVEFHRV9DT01QTEVURSJ9LCJjMTc5MjExNjE2MTc3MF8xMSI6eyJ0eXBlIjoicmVzdWx0IiwiY29tbWFuZElkIjoiYzE3OTIxMTYxNjE3NzBfMTEiLCJvayI6dHJ1ZSwiY29kZSI6IkNIT0lDRV9BQ0NFUFRFRCJ9LCJjMTc5MjExNjE4NjA0Nl8xMiI6eyJ0eXBlIjoicmVzdWx0IiwiY29tbWFuZElkIjoiYzE3OTIxMTYxODYwNDZfMTIiLCJvayI6dHJ1ZSwiY29kZSI6IkNIT0lDRV9BQ0NFUFRFRCJ9LCJjMTc5MjExNjE5NzM3Nl8xMyI6eyJ0eXBlIjoicmVzdWx0IiwiY29tbWFuZElkIjoiYzE3OTIxMTYxOTczNzZfMTMiLCJvayI6dHJ1ZSwiY29kZSI6IkNIT0lDRV9BQ0NFUFRFRCJ9LCJjMTc5MjExNjIxMjYxNl8xNCI6eyJ0eXBlIjoicmVzdWx0IiwiY29tbWFuZElkIjoiYzE3OTIxMTYyMTI2MTZfMTQiLCJvayI6dHJ1ZSwiY29kZSI6IlNUQUdFX0NPTVBMRVRFIn0sImMxNzkyMTE2MjI5NDQ0XzE1Ijp7InR5cGUiOiJyZXN1bHQiLCJjb21tYW5kSWQiOiJjMTc5MjExNjIyOTQ0NF8xNSIsIm9rIjp0cnVlLCJjb2RlIjoiQ0hPSUNFX0FDQ0VQVEVEIn0sImMxNzkyMTE2MjQyOTI5XzE2Ijp7InR5cGUiOiJyZXN1bHQiLCJjb21tYW5kSWQiOiJjMTc5MjExNjI0MjkyOV8xNiIsIm9rIjp0cnVlLCJjb2RlIjoiU1RBR0VfQ09NUExFVEUifX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31d2674dfebb76fb0c5f-b43035970bc925e4911d",
+          "file": "game.e2e.ts",
+          "line": 515,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T01:58:05.901Z",
+    "duration": 359093.797,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

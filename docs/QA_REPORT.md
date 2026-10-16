@@ -8,7 +8,7 @@ This report covers the condensed six-chapter browser preview. It does not certif
 npm run typecheck
 npm run lint
 npm test
-npm run test:e2e
+ANDOLAN_SOFTWARE_RENDERING=1 npm run test:e2e
 ```
 
 `playwright.config.ts` starts the documented client/server development workflow when needed. Tests run sequentially. Desktop uses 960 × 640, final independent crew checks use a fixed 400 × 500 viewport to reduce software GPU contention, and mobile emulation uses 390 × 844. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to select an installed Chromium binary; otherwise the configuration uses `/usr/bin/chromium` when available, then Playwright's installed browser.
@@ -19,7 +19,15 @@ The campaign controller plans routes through public collision geometry and sends
 
 Two explicitly labelled follow-up tests use completed-state setup. The completed-room test mocks its welcome message to isolate dialog priority. The replay test normally uses a synthetic serialized checkpoint; optional `ANDOLAN_EARNED_CAMPAIGN` reuses the recorded physical campaign's mission and player while keeping default unoccupied vehicles and a fresh command ledger. Neither fixture is counted as campaign traversal or real multiplayer evidence.
 
-## Results
+## Final integrated local results
+
+Application commit `7cf1f27896c580f5f87d289227b817a8563275b8` passes all **51 tests in five files**, TypeScript, ESLint and client/server/standalone production builds. The complete local browser suite passes **seven of seven cases in 359.094 seconds**, with zero skipped, unexpected or flaky results, using the documented software graphics budget. This supersedes the earlier split local results as the final integrated functional gate.
+
+The campaign case took 263.214 seconds and completed all 22 stages, seven choices, hearing evidence and the visible **Open Windows** ending, then accepted the native replay confirmation and verified reset to `keys` with empty history. Its checkpoint is the original earned save, not a reconstruction. Real crew movement/seats/handover and physical walking/split votes/consensus/late-join recap passed. Mobile remains browser emulation; the completed-room and checkpoint-only replay cases retain their explicit fixture labels.
+
+Stable evidence: `evidence/release-browser-results.json`, `release-campaign-evidence.json`, `release-completed-checkpoint.json` and `release-campaign-ending.png`. Timing review and baseline-failing regression proof are in `evidence/solo-timing-review.md`. The rebuilt standalone also passed an uncapped offline driving/save check with zero external requests or page errors (`production-browser-final-check.json`); the final non-root container retained real WebSocket identity and story state across restart (`container-final-check.json`).
+
+## Earlier uncapped local results
 
 | Check | Result | Observed behavior |
 | --- | --- | --- |
@@ -47,9 +55,11 @@ Run [38834346095](https://github.com/occult-kranti/ANDOLAN/actions/runs/38834346
 
 Run [38835772270](https://github.com/occult-kranti/ANDOLAN/actions/runs/38835772270), on `40c7cae`, added GitHub failure annotations and saved reports without changing game code or assertions. Its browser summary was **three passed, four failed in 12.1 minutes**: the car settle predicate exceeded 15 seconds, both real-crew cases timed out clicking their initial interaction, and the selected campaign's ordinary walking exceeded the 140-second route limit. Mobile layout and both explicitly labelled completed-state cases passed. Exact assertion output is retained in `evidence/github-ci-second-run-annotations.json`; the Actions run also retains its browser report. Builds and Pages publication were skipped after these failures.
 
-These failures are preserved separately from the earlier local passes. A focused local run with `ANDOLAN_SOFTWARE_RENDERING=1` passed all three previously failing smoke/crew checks: desktop controls in 22.7 seconds, movement/seats/handover in 13.2 seconds, and walking/votes/recap in 46.1 seconds (three passed in 1.4 minutes). Results are in `test-results/capped-smoke/results.json`. No clean all-green CI browser result is claimed here yet.
+These failures are preserved separately from the earlier local passes. A focused local run with `ANDOLAN_SOFTWARE_RENDERING=1` passed all three previously failing smoke/crew checks: desktop controls in 22.7 seconds, movement/seats/handover in 13.2 seconds, and walking/votes/recap in 46.1 seconds (three passed in 1.4 minutes). Results are in `test-results/capped-smoke/results.json`. This was an intermediate run before the production timing fix and final full-suite verification.
 
-Source review also found that delayed local simulation timer callbacks slow movement and damping in wall time because each callback advances a fixed 0.05 seconds. The test scheduler does not fix that behavior in the shipped game. A subsequently started capped campaign was deliberately interrupted before producing a result while the team reviews the production timing correction; it is neither a pass nor a failure.
+Source review found a real fixed-timer defect: each delayed solo callback advanced only 0.05 seconds. One capped campaign was deliberately interrupted before a result while the correction was reviewed; it is neither a pass nor a failure. Commit `7cf1f27` then introduced monotonic elapsed time with bounded 20-Hz catch-up, wall-clock stale-input expiry, advance-before-new-input ordering, hidden-tab pause/reset and cleanup. Nine timing regressions pass, including two that fail against the old implementation. Sustained stalls beyond 250 ms are deliberately bounded; no rendering-performance guarantee is implied.
+
+Run [38837936134](https://github.com/occult-kranti/ANDOLAN/actions/runs/38837936134), on final application commit `7cf1f27`, passed fresh installation, typecheck, lint, all 51 tests, **all seven browser cases (9.3 minutes)** and both production builds. The browser report uploaded successfully. The overall workflow then failed **only at Pages configuration**, which returned `Not Found` because the repository has no enabled Pages site; the deployment job was skipped. This is passing game verification, not a public launch. Full step and annotation metadata is in `evidence/github-ci-final-run.json`.
 
 ## Evidence
 
