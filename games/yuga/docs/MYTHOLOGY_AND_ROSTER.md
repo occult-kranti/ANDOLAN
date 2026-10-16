@@ -54,6 +54,8 @@ Lane waves begin at one second and repeat every eighteen seconds: three escort u
 
 Integration acceptance belongs to simulation/network/browser reports. Required follow-up balance evidence includes completed matches across team compositions, damage and objective contribution by role, shield/heal uptime, summon impact, map-side bias and human reports on readability. Bot completion or a passing typecheck cannot establish competitive balance. No human playtest or cultural-consultation result is claimed here.
 
+The later [all-roster mechanics review](ROSTER_MECHANICS_REVIEW.md) rereads all42 effective skills and counters, records actual model heights/shared hit volumes, verifies all14 GLB hashes/126 required clips and identifies three presentation repairs: depleted-shield visibility, reconnect cast-slot selection and authoritative full-body timed-R playback. Seven new playback-policy tests pass; actual Rama/Hanuman/Sita body/pose acceptance remains a separate native gate. This pass changes no hero health, damage, speed or cooldown to flatten the earlier AI results.
+
 ## Optional guide and Practice focus
 
 [shared/hero-guide.ts](../shared/hero-guide.ts) now supplies all fourteen heroes with a first useful action, positioning, three current ability notes, counterplay and Power/Vitality/Tempo tradeoffs. Independent source review compared all 42 notes with the actual simulator; exact roster/name checks, typecheck and lint passed. These are intended choices to try, not optimal-build or human balance claims. The selected hero's first action is shown directly, while the longer guide is optional.
@@ -62,7 +64,7 @@ The guide preserves the actual upgrade distinctions: Power adds 17% of base prim
 
 [client/practice-goals.ts](../client/practice-goals.ts) offers five optional observations: reach a point 12 metres from the attempt's start, land an authoritative hit, start an accepted ability, buy a rank, or earn actual camp credits/blessing. Free play is the default. An accepted windup can count as starting an ability even if later interrupted; a camp goal is not proof that the player personally landed the final hit. Goal receipts grant no currency or account power and make no mastery judgment. Pause/settings retain progress; dismissal hides it, and replay or a new attempt gets a fresh baseline. The hero-specific prose exercise is a suggestion rather than a second automated goal.
 
-The new UI integration is under its own [three-round review](NEXT_PHASE_PANEL.md). Earlier native jungle/480-second results remain valid baseline evidence; they do not by themselves verify the new guidance controls. All heroes and skills stay unlocked, without paid combat advantage, compulsory lessons or a claimed learning/health effect.
+The new UI integration is under its own [three-round review](NEXT_PHASE_PANEL.md). Its native goal lifecycle/dismissal/paused-forge/online exclusion and mobile all14 first-actions/42 skill notes/forge labels passed focused checks. The replay-reset check deliberately used an eight-second Practice test fixture; the earlier native 480-second result remains a separate baseline. Final release acceptance is still open. All heroes and skills stay unlocked, without paid combat advantage, compulsory lessons or a claimed learning/health effect.
 
 ## Source ledger — passages actually read
 
@@ -108,6 +110,8 @@ Sangam City combines original sandstone, modern and garden forms around three cl
 ### Additional environment reading
 
 [ENVIRONMENT_MYTHOLOGY_RESEARCH.md](ENVIRONMENT_MYTHOLOGY_RESEARCH.md) records the later, bounded research-agent pass over the same pinned files: Ramayana Book II Canto VI on festal city lamps; Mahabharata Paushya III on the interpretation of light/dark weaving and a wheel; and selected courtyard, reservoir and observatory descriptions in Fergusson. It supplies exact lines, context and limits. These are motifs for an original civic space and match-time lighting, not evidence for a canonical eight-minute Yuga, a reconstructed sacred diagram or new hero powers. Its separate contemporary Reddit sample supplies competing source leads and preferences, not textual proof or cultural-consultation approval.
+
+[LANKA_COAST_RESEARCH.md](LANKA_COAST_RESEARCH.md) adds selected Griffith passages describing Lanka's coastal city, gates and fortifications, with separate Pampa clear-water/reed passages. The west gate and shallow Reed Court compose those motifs into original Sangam City scenery. They are not a recovered Lanka site plan or a source-attested swamp. The additional three-community API attempts returned 403 before content collection: six requests, zero posts/comments, and no new community recommendation.
 
 ### Access and interpretation limits
 

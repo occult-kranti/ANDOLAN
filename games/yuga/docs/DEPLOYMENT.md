@@ -4,6 +4,10 @@ Protocol 2 requires updating the browser bundle and server together. Version-1 s
 
 The browser build can run Practice from a static host. Online matches additionally need a running WebSocket server. The supplied container serves both the built client and the authoritative server on one origin. These files prepare deployment; they do not create a provider account, purchase hosting or establish that a public multiplayer backend is available.
 
+Current candidate: optional hero guides/Practice goals, repaired night lighting, the west coastal gate/shallow Reed Court and renderer-readiness/cast corrections. Some focused guidance/lighting cases have passed, but final regression, packaged build identity, CI, actual video and public smoke remain open in [NEXT_PHASE_PANEL.md](NEXT_PHASE_PANEL.md). The container records below are dated baseline evidence and do not contain all later client changes. No public WSS service has been provisioned.
+
+The current runtime was frozen and pushed at `c39d65a`, with 212 unit tests, full typechecks and lint passing. Those source gates do not substitute for the pending native/CI/build/public checks. The browser ZIP command and first-match instructions are in [README.md](../README.md).
+
 ## Files and build context
 
 - [Dockerfile](../Dockerfile): pinned Node 24 base, locked dependency installation, production build, development-dependency pruning and non-root runtime.
