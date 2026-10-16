@@ -1,0 +1,73 @@
+{
+  "classification": "Runner infrastructure failure; no gameplay pass/fail acceptance inferred from these contaminated attempts.",
+  "cause": "Ctrl-C returned130 from the initial npx wrapper but its Playwright child continued. A replacement was started before descendants were verified closed. Two runners temporarily competed for software rendering and shared the output directory; browserContext cleanup reported missing trace files (ENOENT).",
+  "correction": "Interrupted the exact remaining Playwright runner PID327353, waited for exit130, then checked /proc: no Playwright/Chromium processes remained. Restarted unchanged tests through the direct Node Playwright CLI using unique output/report paths.",
+  "isolatedOutput": "/tmp/yuga-navigation-isolated-output",
+  "isolatedReport": "/tmp/yuga-native-navigation-isolated-report.json",
+  "runtimeCommit": "0d326b00041f4a1dc3ee716420093718dea52484",
+  "reports": [
+    {
+      "path": "/tmp/yuga-native-navigation-overlap-old-report.json",
+      "sha256": "f1afdc1ae5b92f1cc99b10e17d49d2d0bca313a195597cddb9c4fe553dd2f977",
+      "runnerStats": {
+        "startTime": "2026-10-16T21:29:39.457Z",
+        "duration": 176074.841,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "native fixed day and night lighting persists and renders the same arena position",
+          "status": "failed",
+          "durationMs": 92250,
+          "error": "Error: browserContext.close: ENOENT: no such file or directory, open '/workspace/ANDOLAN/test-results/yuga/.playwright-artifacts-0/traces/0ff9de03953e2ca43883-fad35fab0240cfa9146d.trace'"
+        },
+        {
+          "title": "native camp approach, leash, clear, gold shard, temporary power and respawn",
+          "status": "failed",
+          "durationMs": 77976,
+          "error": "Error: Native keyboard aim timed out: {\"room\":\"45F9E36C\",\"time\":52.59999999999915,\"tick\":1052,\"phase\":\"playing\",\"actor\":{\"id\":\"17415f2290b889b2\",\"heroId\":\"rama\",\"x\":-20.999999999999975,\"z\":-1.560000000000018,\"yaw\":0.9046400000095369,\"health\":8,\"deaths\":0,\"lastInputSeq\":440},\"metrics\":{\"frames\":101,\"meanFps\":1.9590414476145879,\"maxFrameMs\":1516.6059999999998,\"pendingActions\":0,\"ready\":true,\"loading\":false,\"renderReady\":true,\"warmFrames\":2,\"aimInputSeconds\":0.5654000000059604,\"aimInputDroppedSeconds\":0,\"room\":\"45F9E36C\",\"isOnline\":true,\"yaw\":0.9046400000095369,\"pitch\":0.02,\"targetId\":null},\"visibility\":\"visible\",\"focus\":\"arena\"}"
+        }
+      ]
+    },
+    {
+      "path": "/tmp/yuga-native-navigation-overlap-replacement-report.json",
+      "sha256": "6996d30ce3653da2335e058c162cfe4ffef13dde482855a3a817cb0cd21fc89c",
+      "runnerStats": {
+        "startTime": "2026-10-16T21:30:25.919Z",
+        "duration": 199592.303,
+        "expected": 0,
+        "skipped": 1,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "native fixed day and night lighting persists and renders the same arena position",
+          "status": "failed",
+          "durationMs": 124001,
+          "error": "Error: browserContext.close: ENOENT: no such file or directory, open '/workspace/ANDOLAN/test-results/yuga/.playwright-artifacts-0/traces/0ff9de03953e2ca43883-fad35fab0240cfa9146d.trace'"
+        },
+        {
+          "title": "native camp approach, leash, clear, gold shard, temporary power and respawn",
+          "status": "interrupted",
+          "durationMs": 71972,
+          "error": "Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, copyfile '/workspace/ANDOLAN/test-results/yuga/.playwright-artifacts-1/traces/4e2427d1c2f332db3d13-4bd77478e329d200303e-recording1.network' -> '/workspace/ANDOLAN/test-results/yuga/.playwright-artifacts-1/traces/4e2427d1c2f332db3d13-4bd77478e329d200303e-recording1-pwnetcopy-1.network'"
+        }
+      ]
+    }
+  ],
+  "traces": [
+    {
+      "path": "/tmp/yuga-native-navigation-overlap-artifacts/environment.e2e.ts-native--08d08-ers-the-same-arena-position/trace.zip",
+      "sha256": "4836cd04bc94fc1fe4153a6d014491191dafec2c34096d54c0a12e16b65ba57b"
+    },
+    {
+      "path": "/tmp/yuga-native-navigation-overlap-artifacts/jungle.e2e.ts-native-camp--6df78-temporary-power-and-respawn/trace.zip",
+      "sha256": "d2ced3c6a88f96b4cfe01341a6a740f766a165baa5dad0f775e3410386f40804"
+    }
+  ],
+  "limits": "The shared output directory was contaminated, so these trace files are retained as diagnostic history rather than independent clean case evidence. Raw local traces may contain ephemeral local test transport frames and are not packaged for public release. No runtime change or assertion waiver followed this interruption."
+}

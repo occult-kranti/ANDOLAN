@@ -3,23 +3,27 @@ import { createArenaServer } from '../server/server';
 import { ArenaSimulation } from '../shared/simulation';
 import { JUNGLE_RULES, NEUTRAL_STATS } from '../shared/map';
 import { YUGA_PROTOCOL, type ArenaSnapshot, type GameEvent } from '../shared/types';
-import { boot, arenaState, localActor, waitReady, imageEvidence, nativeWalk, keyboardYaw, mouseAimAt, inputObservation, rendered } from './browser-harness';
+import { boot, arenaState, localActor, waitReady, imageEvidence, nativeWalk, keyboardYaw, mouseAimAt, inputObservation, compactInputObservation, mouseAimAngles, rendered } from './browser-harness';
 
 type GoldFeedbackObservation={at:number;time:number;text:string;hidden:boolean;visible:boolean;kind:string|null;ownGoldIds:number[]};
 
 test('native camp approach, leash, clear, gold shard, temporary power and respawn',async({page},info)=>{
  test.setTimeout(240_000);
+ // Functional software-render budget; separate mobile/lighting cases retain their visual viewports.
+ await page.setViewportSize({width:480,height:400});
  const server=await createArenaServer({port:0,host:'127.0.0.1',simulation:{botsPerTeam:0}}),address=server.address;
  if(!address||typeof address==='string')throw new Error('No arena listener');
  const events=new Map<number,GameEvent>(),states:{time:number;state:string;health:number;x:number;z:number}[]=[],shards=new Map<string,{sourceId:string;value:number}>();
- let campId='';let preLock:Awaited<ReturnType<typeof inputObservation>>|undefined;let feedback:GoldFeedbackObservation[]=[];
- page.on('websocket',socket=>socket.on('framereceived',frame=>{
+ let lastNeutralInputSeq=-1;let campId='';let preLock:Awaited<ReturnType<typeof inputObservation>>|undefined;let feedback:GoldFeedbackObservation[]=[];
+ page.on('websocket',socket=>{
+  socket.on('framesent',frame=>{let message:{type:string;seq?:number;moveX?:number;moveZ?:number;fire?:boolean;jump?:boolean};try{message=JSON.parse(String(frame.payload));}catch{return;}if(message.type==='input'&&typeof message.seq==='number'&&message.moveX===0&&message.moveZ===0&&!message.fire&&!message.jump)lastNeutralInputSeq=message.seq;});
+  socket.on('framereceived',frame=>{
   let message:{type:string;snapshot?:ArenaSnapshot};try{message=JSON.parse(String(frame.payload));}catch{return;}
   if(message.type!=='snapshot'||!message.snapshot)return;
   for(const event of message.snapshot.events)if(['camp','gold','buff'].includes(event.type))events.set(event.id,event);
   for(const shard of message.snapshot.goldShards)shards.set(shard.id,{sourceId:shard.sourceId,value:shard.value});
   const neutral=message.snapshot.neutrals.find(n=>n.campId==='stone-grove');if(neutral){campId=neutral.id;const prior=states.at(-1);if(!prior||prior.state!==neutral.state)states.push({time:message.snapshot.time,state:neutral.state,health:neutral.health,x:neutral.x,z:neutral.z});}
- }));
+ });});
  try{
   const diagnostics=await boot(page);await page.locator('#online-open').click();await page.locator('#server-address').fill(`http://127.0.0.1:${address.port}`);await page.locator('#player-name').fill('Native grove visitor');await page.locator('#join-room').click();await waitReady(page);
   const actorId=(await localActor(page)).id;await imageEvidence(page,info,'jungle-no-interaction-spawn');
@@ -55,29 +59,32 @@ test('native camp approach, leash, clear, gold shard, temporary power and respaw
    return feedback.some(record=>!record.hidden&&record.visible&&record.kind==='secure'&&record.text.split(' · ').some(part=>part===`Secured +${gold[0]!.amount}`||part===`Secured +${gold[0]!.amount} credits`)&&record.ownGoldIds.includes(gold[0]!.id)&&record.time>=gold[0]!.time);
   },{message:'Observe the visible secure component associated with this exact earned camp shard receipt'}).toBe(true);
   const feedbackAtLaterAssertion=await page.locator('#gold-feedback').textContent();await expect(page.locator('#camp-status')).toContainText('Returns in');await imageEvidence(page,info,'native-camp-reward');
-  // Native pointer aim gives a precise north bearing. Keep the retreat corridor
-  // at x4..8.5: beyond the central tower radius2.45, before the east wall at10.35.
-  // The old x>-4 stop could overshoot into the tower, and a .1rad yaw tolerance
-  // could drift several metres over the full retreat.
-  await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('arena');
-  let mouseX=page.viewportSize()!.width*.5;const mouseY=page.viewportSize()!.height*.42;
-  await page.mouse.move(mouseX,mouseY);
-  const sensitivity=Number(await page.locator('#sensitivity').inputValue())/100;
-  for(let attempt=0;attempt<4;attempt++){
-   const yaw=await page.evaluate(()=>window.__YUGA.metrics().yaw),delta=Math.atan2(Math.sin(-yaw),Math.cos(-yaw));
-   if(Math.abs(delta)<.003)break;mouseX-=delta/(.0025*sensitivity);await page.mouse.move(mouseX,mouseY);
+  // The shorter western corridor has the same tower/wall clearance as its
+  // eastern mirror, without crossing the full central avenue from Stone Grove.
+  const retreatAim=await mouseAimAngles(page,0,0),retreatYaw=await page.evaluate(()=>window.__YUGA.metrics().yaw);
+  expect(Math.abs(Math.atan2(Math.sin(retreatYaw),Math.cos(retreatYaw)))).toBeLessThan(.003);
+  const settle=async()=>{
+   const neutralBefore=lastNeutralInputSeq;let neutralSeq:number|undefined,prior=await inputObservation(page);
+   await expect.poll(async()=>{
+    if(neutralSeq===undefined&&lastNeutralInputSeq>neutralBefore)neutralSeq=lastNeutralInputSeq;
+    const next=await inputObservation(page),stable=neutralSeq!==undefined&&next.actor.lastInputSeq>=neutralSeq&&next.state.tick>prior.state.tick&&next.actor.lastInputSeq>prior.actor.lastInputSeq&&Math.hypot(next.actor.x-prior.actor.x,next.actor.z-prior.actor.z)<.03;
+    prior=next;return stable;
+   },{timeout:4_000,intervals:[100]}).toBe(true);
+   expect(prior.actor.health).toBeGreaterThan(0);return{...prior,neutralSeq};
+  };
+  let corridor=await settle();const retreatCorrections:unknown[]=[{neutralSeq:corridor.neutralSeq,observation:compactInputObservation(corridor)}],lateralDeadline=Date.now()+20_000;
+  // Closed-loop ordinary input: each short pulse is released and observed at
+  // a newer neutral authoritative input before deciding the next direction.
+  for(let attempt=0;attempt<24&&Date.now()<lateralDeadline&&(corridor.actor.x< -8.5||corridor.actor.x> -4);attempt++){
+   const key=corridor.actor.x< -8.5?'KeyA':'KeyD',delay=Math.min(250,Math.max(80,Math.abs(-6.25-corridor.actor.x)/7.2*500));
+   await page.keyboard.press(key,{delay});corridor=await settle();retreatCorrections.push({key,delay,neutralSeq:corridor.neutralSeq,observation:compactInputObservation(corridor)});
   }
-  const retreatYaw=await page.evaluate(()=>window.__YUGA.metrics().yaw);expect(Math.abs(Math.atan2(Math.sin(retreatYaw),Math.cos(retreatYaw)))).toBeLessThan(.003);
-  const settle=async()=>{let prior=await inputObservation(page);await expect.poll(async()=>{const next=await inputObservation(page),stable=next.state.tick>prior.state.tick&&next.actor.lastInputSeq>prior.actor.lastInputSeq&&Math.hypot(next.actor.x-prior.actor.x,next.actor.z-prior.actor.z)<.03;prior=next;return stable;},{timeout:4_000,intervals:[100]}).toBe(true);return prior.actor;};
-  await nativeWalk(page,'KeyA',actor=>actor.x>5.5);let corridor=await settle();const retreatCorrections=[{x:corridor.x,z:corridor.z}];
-  for(let attempt=0;attempt<4&&(corridor.x<4||corridor.x>8.5);attempt++){
-   await page.keyboard.press(corridor.x<4?'KeyA':'KeyD',{delay:100});corridor=await settle();retreatCorrections.push({x:corridor.x,z:corridor.z});
-  }
-  expect(corridor.x).toBeGreaterThanOrEqual(4);expect(corridor.x).toBeLessThanOrEqual(8.5);await nativeWalk(page,'KeyS',actor=>actor.z<-50,25_000);
+  await info.attach('native-camp-retreat-corridor',{body:JSON.stringify({scope:'Native pointer north bearing and bounded short keyboard pulses. Every step releases input and observes a newer stopped server position; no authority mutation. Western corridor target-8.5..-4 retains tower/wall clearance.',retreatAim,retreatCorrections},null,2),contentType:'application/json'});
+  expect(corridor.actor.x,`Native retreat corridor: ${JSON.stringify({steps:retreatCorrections.length,first:retreatCorrections[0],last:retreatCorrections.slice(-4)})}`).toBeGreaterThanOrEqual(-8.5);expect(corridor.actor.x,`Native retreat corridor: ${JSON.stringify({steps:retreatCorrections.length,first:retreatCorrections[0],last:retreatCorrections.slice(-4)})}`).toBeLessThanOrEqual(-4);await nativeWalk(page,'KeyS',actor=>actor.z<-50,25_000);
   await expect.poll(async()=>(await localActor(page)).effects.vigor||0,{timeout:20_000}).toBe(0);expect((await localActor(page)).health).toBeGreaterThan(0);await expect(page.locator('#buff-status [data-buff="vigor"]')).toHaveCount(0);
   await expect.poll(async()=>(await neutral()).state,{timeout:50_000}).toBe('idle');const respawned=await neutral();expect(respawned.health).toBe(respawned.maxHealth);expect((await arenaState(page)).time).toBeGreaterThanOrEqual(killed.respawnAt);expect([...events.values()].filter(event=>event.type==='gold'&&event.targetId===gold[0]!.targetId)).toHaveLength(1);
   expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);
-  await info.attach('native-jungle-loop',{body:JSON.stringify({scope:'Actual local WebSocket server without hero bots; ordinary movement, target lock and primary fire. Lane waves and normal camp/buff/respawn clocks remain active. No positional, reward, health or timer setup. Bounded read-only DOM observations prove a not-hidden/CSS-visible secure label tied to the earned receipt, not a guaranteed painted frame; later lane awards may replace that transient label.',states,before,after,killed,respawned,earned,gold,feedback,feedbackAtLaterAssertion,retreatYaw,retreatCorrections,observedShard:shards.get(gold[0]!.targetId!)??'Shard was collected between snapshots; durable gold receipt is authoritative evidence, not a visual shard claim.',errors:diagnostics},null,2),contentType:'application/json'});
+  await info.attach('native-jungle-loop',{body:JSON.stringify({scope:'Actual local WebSocket server without hero bots at480x400 under the existing maximum10fps software render schedule; this is a functional budget, not visual/performance certification. Ordinary movement, target lock and primary fire. Lane waves and normal camp/buff/respawn clocks remain active. No positional, reward, health or timer setup. Bounded read-only DOM observations prove a not-hidden/CSS-visible secure label tied to the earned receipt, not a guaranteed painted frame; later lane awards may replace that transient label.',states,before,after,killed,respawned,earned,gold,feedback,feedbackAtLaterAssertion,retreatYaw,retreatCorrections,observedShard:shards.get(gold[0]!.targetId!)??'Shard was collected between snapshots; durable gold receipt is authoritative evidence, not a visual shard claim.',errors:diagnostics},null,2),contentType:'application/json'});
  }finally{feedback=await page.evaluate(()=>(window as unknown as{__yugaGoldFeedbackObservation?:(stop:boolean)=>GoldFeedbackObservation[]}).__yugaGoldFeedbackObservation?.(true)??[]).catch(()=>feedback);await info.attach('native-camp-lock-diagnostics',{body:JSON.stringify({preLock,final:await inputObservation(page).catch(()=>null),states,feedback},null,2),contentType:'application/json'});await page.keyboard.up('KeyF');await server.close();}
 });
 

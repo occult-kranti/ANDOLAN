@@ -26,6 +26,27 @@ export async function nativeWalk(page:Page,key:string,until:(actor:Actor)=>boole
 export async function inputObservation(page:Page){
  return page.evaluate(()=>{const state=window.__YUGA.snapshot()!,metrics=window.__YUGA.metrics();return{state,metrics,actor:state.actors.find(actor=>actor.id===window.__YUGA.playerId())!,visibility:document.visibilityState,focus:document.activeElement?.id,dialog:document.querySelector('dialog[open]')?.id};});
 }
+export function compactInputObservation(observation:Awaited<ReturnType<typeof inputObservation>>|undefined){
+ if(!observation)return null;const {state,actor,metrics,visibility,focus,dialog}=observation;
+ return{room:state.room,time:state.time,tick:state.tick,phase:state.phase,actor:{id:actor.id,heroId:actor.heroId,x:actor.x,z:actor.z,yaw:actor.yaw,health:actor.health,deaths:actor.deaths,lastInputSeq:actor.lastInputSeq},metrics,visibility,focus,dialog};
+}
+/** Fixed view correction through ordinary pointer-lock mouse input. Acquiring
+ * pointer lock with a native left click may fire an ordinary primary shot. */
+export async function mouseAimAngles(page:Page,yaw:number,pitch:number,tolerance=.003){
+ const viewport=page.viewportSize()!;let x=viewport.width*.5,y=viewport.height*.42;
+ if(await page.evaluate(()=>document.pointerLockElement?.id)!=='arena')await page.mouse.click(x,y);
+ await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('arena');await page.mouse.move(x,y);
+ const sensitivity=Number(await page.locator('#sensitivity').inputValue())/100,observations:unknown[]=[];
+ for(let attempt=0;attempt<=5;attempt++){
+  const observation=await inputObservation(page),dyaw=Math.atan2(Math.sin(yaw-observation.metrics.yaw),Math.cos(yaw-observation.metrics.yaw)),dpitch=pitch-observation.metrics.pitch;
+  observations.push(compactInputObservation(observation));
+  if(!observation.metrics.ready||observation.dialog||observation.visibility!=='visible'||observation.actor.health<=0)throw new Error(`Native pointer aim unavailable: ${JSON.stringify(observations)}`);
+  if(Math.abs(dyaw)<tolerance&&Math.abs(dpitch)<tolerance)return{target:{yaw,pitch,tolerance},observations};
+  if(attempt===5)break;
+  x-=dyaw/(.0025*sensitivity);y-=dpitch/(.0025*sensitivity);await page.mouse.move(x,y);
+ }
+ throw new Error(`Native fixed pointer aim failed: ${JSON.stringify({target:{yaw,pitch,tolerance},observations,final:compactInputObservation(await inputObservation(page))})}`);
+}
 /** Native bounded key pulses; every decision uses one coherent received state and
  * the actual client aim. Authority yaw may lag a rendered frame or network tick. */
 export async function keyboardYaw(page:Page,target:number|((state:ArenaSnapshot,actor:Actor)=>number)){
@@ -34,13 +55,13 @@ export async function keyboardYaw(page:Page,target:number|((state:ArenaSnapshot,
   last=await inputObservation(page);
   const desired=typeof target==='number'?target:target(last.state,last.actor),delta=Math.atan2(Math.sin(desired-last.metrics.yaw),Math.cos(desired-last.metrics.yaw));
   if(Math.abs(delta)<.10)return;
-  if(!last.metrics.ready||last.dialog||last.visibility!=='visible'||last.actor.health<=0)throw new Error(`Native aim unavailable: ${JSON.stringify(last)}`);
+  if(!last.metrics.ready||last.dialog||last.visibility!=='visible'||last.actor.health<=0)throw new Error(`Native aim unavailable: ${JSON.stringify(compactInputObservation(last))}`);
   const sequence=last.actor.lastInputSeq;
   await page.keyboard.press(delta>0?'KeyJ':'KeyL',{delay:Math.max(30,Math.min(160,Math.abs(delta)/1.6*750))});
   // A neutral, newer input observation avoids deciding from the pre-pulse packet.
   await expect.poll(async()=>(await localActor(page)).lastInputSeq,{timeout:3_000,intervals:[30,50]}).toBeGreaterThan(sequence);
  }
- throw new Error(`Native keyboard aim timed out: ${JSON.stringify(last)}`);
+ throw new Error(`Native keyboard aim timed out: ${JSON.stringify(compactInputObservation(last))}`);
 }
 
 /** Native pointer-lock mouse correction after coarse keyboard rotation. The click
@@ -57,5 +78,5 @@ export async function mouseAimAt(page:Page,targetId:string,tolerance=.006){
   const sensitivity=Number(await page.locator('#sensitivity').inputValue())/100;
   x-=dyaw/(.0025*sensitivity);y-=dpitch/(.0025*sensitivity);await page.mouse.move(x,y);
  }
- throw new Error(`Native mouse correction failed: ${JSON.stringify(await inputObservation(page))}`);
+ throw new Error(`Native mouse correction failed: ${JSON.stringify(compactInputObservation(await inputObservation(page)))}`);
 }

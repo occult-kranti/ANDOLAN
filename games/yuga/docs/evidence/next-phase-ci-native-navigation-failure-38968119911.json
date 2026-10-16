@@ -1,0 +1,77 @@
+{
+  "run": "38968119911",
+  "sourceCommit": "0d326b00041f4a1dc3ee716420093718dea52484",
+  "source": "Visible public Actions annotations, scripts/styles excluded; artifact/log API unavailable.",
+  "statusAtObservation": "Failure; deploy skipped.",
+  "annotations": [
+    "2) games/yuga/tests/jungle.e2e.ts:10:1 \u203a native camp approach, leash, clear, gold shard, temporary power and respawn \n    Error: expect(received).toBeLessThanOrEqual(expected)\n\n    Expected: <= 8.5\n    Received:    13.199999610516247\n\n      74 |    await page.keyboard.press(corridor.x<4?'KeyA':'KeyD',{delay:100});corridor=await settle();retreatCorrections.push({x:corridor.x,z:corridor.z});\n      75 |   }\n    > 76 |   expect(corridor.x).toBeGreaterThanOrEqual(4);expect(corridor.x).toBeLessThanOrEqual(8.5);await nativeWalk(page,'KeyS',actor=>actor.z<-50,25_000);\n         |                                                                   ^\n      77 |   await expect.poll(async()=>(await localActor(page)).effects.vigor||0,{timeout:20_000}).toBe(0);expect((await localActor(page)).health).toBeGreaterThan(0);await expect(page.locator('#buff-status [data-buff=\"vigor\"]')).toHaveCount(0);\n      78 |   await expect.poll(async()=>(await neutral()).state,{timeout:50_000}).toBe('idle');const respawned=await neutral();expect(respawned.health).toBe(respawned.maxHealth);expect((await arenaState(page)).time).toBeGreaterThanOrEqual(killed.respawnAt);expect([...events.values()].filter(event=>event.type==='gold'&&event.targetId===gold[0]!.targetId)).toHaveLength(1);\n      79 |   expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);\n        at /home/runner/work/ANDOLAN/ANDOLAN/games/yuga/tests/jungle.e2e.ts:76:67",
+    "1) games/yuga/tests/environment.e2e.ts:6:1 \u203a native fixed day and night lighting persists and renders the same arena position \n    Error: Native keyboard aim timed out: {\"state\":{\"protocol\":2,\"room\":\"PRACTICE\",\"seed\":20261016,\"tick\":796,\"time\":39.799999999999876,\"duration\":480,\"phase\":\"playing\",\"winner\":null,\"reason\":\"\",\"actors\":[{\"id\":\"bot-1\",\"name\":\"Bhima \u00b7 AI\",\"heroId\":\"bhima\",\"team\":\"sun\",\"bot\":true,\"lane\":0,\"connected\":false,\"kind\":\"hero\",\"x\":-34.60304400277777,\"z\":31.925093682290164,\"y\":0,\"yaw\":-0.8161422847590095,\"health\":0,\"maxHealth\":400,\"shield\":0,\"respawn\":3.950000000000008,\"cooldowns\":[3.6999999999999877,8.149999999999903,41.35000000000038],\"fireCooldown\":0,\"credits\":380,\"level\":1,\"kills\":1,\"deaths\":1,\"assists\":0,\"damageDealt\":1188,\"upgrades\":{\"power\":0,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":0,\"vigor\":0},\"lastInputSeq\":-1},{\"id\":\"bot-3\",\"name\":\"Ravana \u00b7 AI\",\"heroId\":\"ravana\",\"team\":\"sun\",\"bot\":true,\"lane\":2,\"connected\":false,\"kind\":\"hero\",\"x\":41.923714650717244,\"z\":-43.114389173501124,\"y\":0,\"yaw\":0.028267753631837027,\"health\":390,\"maxHealth\":390,\"shield\":0,\"respawn\":0,\"cooldowns\":[0,0,0],\"fireCooldown\":0,\"credits\":190,\"level\":1,\"kills\":0,\"deaths\":1,\"assists\":0,\"damageDealt\":453,\"upgrades\":{\"power\":0,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":0,\"vigor\":0},\"lastInputSeq\":-1},{\"id\":\"bot-4\",\"name\":\"Hidimbi \u00b7 AI\",\"heroId\":\"hidimbi\",\"team\":\"moon\",\"bot\":true,\"lane\":0,\"connected\":false,\"kind\":\"hero\",\"x\":-33.56095740889513,\"z\":22.777540945373914,\"y\":0,\"yaw\":-2.400072765981739,\"health\":375,\"maxHealth\":375,\"shield\":0,\"respawn\":0,\"cooldowns\":[0,0,46.450000000000315],\"fireCooldown\":0.10000000000000007,\"credits\":312,\"level\":1,\"kills\":1,\"deaths\":1,\"assists\":0,\"damageDealt\":489.6749999999995,\"upgrades\":{\"power\":0,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":0,\"vigor\":0},\"lastInputSeq\":-1},{\"id\":\"bot-5\",\"name\":\"Chitrangada \u00b7 AI\",\"heroId\":\"chitrangada\",\"team\":\"moon\",\"bot\":true,\"lane\":1,\"connected\":false,\"kind\":\"hero\",\"x\":1.8824559122240356,\"z\":65.62507412816277,\"y\":0,\"yaw\":3.121708910801478,\"health\":350,\"maxHealth\":350,\"shield\":60,\"respawn\":0,\"cooldowns\":[0,1.0999999999999643,21.35000000000053],\"fireCooldown\":0,\"credits\":244,\"level\":1,\"kills\":0,\"deaths\":1,\"assists\":0,\"damageDealt\":931,\"upgrades\":{\"power\":0,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":2.700000000000001,\"vigor\":0},\"lastInputSeq\":-1},{\"id\":\"bot-6\",\"name\":\"Bhima \u00b7 AI\",\"heroId\":\"bhima\",\"team\":\"moon\",\"bot\":true,\"lane\":2,\"connected\":false,\"kind\":\"hero\",\"x\":42.38256409067447,\"z\":-22.892741849455025,\"y\":0,\"yaw\":3.0164671252351036,\"health\":0,\"maxHealth\":400,\"shield\":0,\"respawn\":3.40000000000001,\"cooldowns\":[4.249999999999986,8.499999999999908,0],\"fireCooldown\":0,\"credits\":360,\"level\":1,\"kills\":0,\"deaths\":1,\"assists\":1,\"damageDealt\":738,\"upgrades\":{\"power\":0,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":0,\"vigor\":0},\"lastInputSeq\":-1},{\"id\":\"local-player\",\"name\":\"Traveller\",\"heroId\":\"rama\",\"team\":\"sun\",\"bot\":false,\"lane\":1,\"connected\":true,\"kind\":\"hero\",\"x\":-48.23999999999994,\"z\":7.079999999999979,\"y\":0,\"yaw\":-0.9385600000001489,\"health\":276,\"maxHealth\":300,\"shield\":0,\"respawn\":0,\"cooldowns\":[0,0,0],\"fireCooldown\":0,\"credits\":200,\"level\":1,\"kills\":0,\"deaths\":0,\"assists\":0,\"damageDealt\":0,\"upgrades\":{\"power\":0,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":0,\"vigor\":0},\"lastInputSeq\":207},{\"id\":\"minion-14\",\"name\":\"Soldier\",\"heroId\":\"ravana\",\"team\":\"moon\",\"bot\":true,\"lane\":1,\"connected\":false,\"kind\":\"minion\",\"x\":2.788542990208596,\"z\":-17.194897431470814,\"y\":0,\"yaw\":3.131113456516169,\"health\":120,\"maxHealth\":130,\"shield\":12,\"respawn\":0,\"cooldowns\":[0,0,0],\"fireCooldown\":0,\"credits\":0,\"level\":1,\"kills\":0,\"deaths\":0,\"assists\":0,\"damageDealt\":0,\"upgrades\":{\"power\":0,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":2.3000000000000025,\"vigor\":0},\"lastInputSeq\":-1,\"minionRole\":\"escort\",\"unitArchetype\":\"soldier\"},{\"id\":\"minion-20\",\"name\":\"Soldier\",\"heroId\":\"ravana\",\"team\":\"moon\",\"bot\":true,\"lane\":2,\"connected\":false,\"kind\":\"minion\",\"x\":42.76008326584784,\"z\":-5.",
+    "2 failed\n    games/yuga/tests/environment.e2e.ts:6:1 \u203a native fixed day and night lighting persists and renders the same arena position \n    games/yuga/tests/jungle.e2e.ts:10:1 \u203a native camp approach, leash, clear, gold shard, temporary power and respawn \n  7 passed (6.9m)"
+  ],
+  "coastalLocalActorFromVisibleExcerpt": {
+    "id": "local-player",
+    "name": "Traveller",
+    "heroId": "rama",
+    "team": "sun",
+    "bot": false,
+    "lane": 1,
+    "connected": true,
+    "kind": "hero",
+    "x": -48.23999999999994,
+    "z": 7.079999999999979,
+    "y": 0,
+    "yaw": -0.9385600000001489,
+    "health": 276,
+    "maxHealth": 300,
+    "shield": 0,
+    "respawn": 0,
+    "cooldowns": [
+      0,
+      0,
+      0
+    ],
+    "fireCooldown": 0,
+    "credits": 200,
+    "level": 1,
+    "kills": 0,
+    "deaths": 0,
+    "assists": 0,
+    "damageDealt": 0,
+    "upgrades": {
+      "power": 0,
+      "vitality": 0,
+      "tempo": 0
+    },
+    "effects": {
+      "haste": 0,
+      "slow": 0,
+      "ward": 0,
+      "vigor": 0
+    },
+    "lastInputSeq": 207
+  },
+  "limitations": "The environment annotation truncates during the full snapshot, before final metrics/focus/visibility. It establishes the keyboard-helper timeout and living actor position/yaw, not its precise timing cause.",
+  "jungleFailure": "The exact4..8.5 corridor assertion received13.199999610516247 after four bounded100ms corrections; previous reward assertions had passed. No authority reward defect is evidenced.",
+  "proposedRepair": "Native pointer fixed-angle correction for coastal view; feedback-controlled finite short native movement pulses with neutral/newer-authoritative observation between pulses for retreat. No runtime/state mutation or relaxed corridor assertion.",
+  "gateCounts": {
+    "build": "Passed",
+    "heroAssets": {
+      "passed": 5,
+      "failed": 0,
+      "duration": "10.8m"
+    },
+    "arena": {
+      "passed": 8,
+      "skipped": 1,
+      "duration": "3.9m",
+      "skipScope": "Existing opt-in normal480s soak."
+    },
+    "remaining": {
+      "passed": 7,
+      "failed": 2,
+      "duration": "6.9m"
+    },
+    "totalPassed": 20,
+    "totalFailed": 2
+  }
+}
