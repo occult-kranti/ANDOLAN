@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises';
-const path='dist/yuga/index.html';
+const path=process.argv[2] || 'dist/yuga/index.html';
 const html=await readFile(path,'utf8');
 const notices=(await readFile('games/yuga/THIRD_PARTY_NOTICES.md','utf8'))+'\n\n'+(await readFile('THIRD_PARTY_NOTICES.md','utf8'));
 const escaped=notices.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');

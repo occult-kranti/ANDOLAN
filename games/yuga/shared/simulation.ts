@@ -6,6 +6,10 @@ import type { AbilityDef, Actor, ArenaCommand, ArenaInput, ArenaSnapshot, Combat
 export const UPGRADE_COSTS = { power: 120, vitality: 100, tempo: 140 } as const;
 export const MAX_UPGRADE = 3;
 export const ARENA_RULES = { heroRadius: .65, towerRadius: 1.8, coreRadius: 2.8, maxActors: 96, maxProjectiles: 192, maxZones: 32, eventHistory: 64, waveSeconds: 18, baseRadius: 15, inputExpiry: .35 } as const;
+/** Synchronous notification of a successfully created hero primary projectile.
+ * Optional local adapters can observe it without relying on bounded FX history.
+ * Observers must not throw or reenter the simulation; this is not an isolated hook. */
+export interface PrimaryShotReceipt { readonly actorId: string; readonly projectileId: string; readonly tick: number; readonly time: number }
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 const copy = <T>(value: T): T => structuredClone(value);
 const validId = (id: unknown): id is string => typeof id === 'string' && /^[a-zA-Z0-9_-]{1,64}$/.test(id);
@@ -52,13 +56,15 @@ export class ArenaSimulation {
   private nextWave = 1;
   private waveNumber = 0;
   private readonly teamSize: number;
+  private readonly onPrimaryShot?: (receipt: PrimaryShotReceipt) => void;
 
-  constructor(options: { room?: string; seed?: number; duration?: number; botsPerTeam?: number } = {}) {
+  constructor(options: { room?: string; seed?: number; duration?: number; botsPerTeam?: number; onPrimaryShot?: (receipt: PrimaryShotReceipt) => void } = {}) {
     this.room = options.room ?? 'PRACTICE';
     this.seed = Number.isSafeInteger(options.seed) ? options.seed! >>> 0 : 7301;
     this.randomState = this.seed || 1;
     this.duration = Number.isFinite(options.duration) ? clamp(options.duration!, 1, 4800) : ARENA.duration;
     this.teamSize = Number.isInteger(options.botsPerTeam) ? clamp(options.botsPerTeam!, 0, 3) : 3;
+    this.onPrimaryShot = options.onPrimaryShot;
     for (const team of ['sun', 'moon'] as const) {
       const sign = team === 'sun' ? -1 : 1;
       for (const lane of [0, 1, 2] as const) this.structures.push({ id: `${team}-tower-${lane}`, kind: 'tower', team, lane, x: LANE_X[lane], z: sign * 37, health: 680, maxHealth: 680, shielded: false });
@@ -314,6 +320,7 @@ export class ArenaSimulation {
     if (siege && projectile) projectile.structureDamage = 32;
     if (!minion && projectile) projectile.canSecureGold = true;
     actor.fireCooldown = siege ? 1.6 : minion ? escort?.interval ?? 1.05 : hero.fireInterval / (1 + actor.upgrades.tempo * .12);
+    if (!minion && projectile && this.onPrimaryShot) this.onPrimaryShot(Object.freeze({ actorId: actor.id, projectileId: projectile.id, tick: this.tick, time: this.time }));
   }
   private groundAim(actor: Actor, ability: AbilityDef): Vec {
     const input = this.inputs.get(actor.id)?.value, pitch = input?.pitch ?? 0;

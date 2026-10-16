@@ -37,6 +37,28 @@ npm run yuga:package
 
 This builds first, verifies all 21 GLBs against their manifests, and writes `dist/yuga-confluence-browser-beta.zip` with `START_HERE.txt` and file hashes in `BUILD_INFO.json`. Extract the whole ZIP and serve that directory over HTTP. It includes local bot Practice; online matches still require a separately configured protocol-2 HTTPS/WSS server. The [current clean-worktree package check](docs/evidence/gallery-owner-browser-package.json) passes for runtime `0d326b0`, packaged at `0701f6c`: 24,855,734 bytes, archive CRC, every file hash and all 21 model hashes verified. The older `d1e7450` package remains preserved separately. Pages deployment, exact public HTML and the [production browser/model check](docs/evidence/public-yuga-20261016T215925-check.json) are verified separately.
 
+The [published coastal release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-beta-2026-10-16-coastal) contains that browser ZIP and the separate silent render-review ZIP. Their published digests match the [recorded artifact hashes](docs/evidence/release-coastal.json). These downloads predate the mechanics lab below.
+
+## Mechanics lab — implementation under review
+
+The [reference-game roadmap](docs/REFERENCE_GAME_ROADMAP.md) develops original lane-economy and hybrid control-point experiments from inspected open-source projects. Both reuse YUGA's city, fourteen heroes, normal towers, waves and camps. The control-point preset adds a central capture objective; it is not a pure arena map or a recreation of a commercial game's rules. The lab runs locally with bots and does not connect to a multiplayer server. An initial built-client launch/pause/back smoke passes; complete lab acceptance and publication are pending.
+
+From the repository root after `npm ci`:
+
+```sh
+npm run yuga:lab:dev
+```
+
+Open `http://localhost:5181`. Choose a mode, hero and optional seed. Use the ordinary YUGA controls; **X** reloads the lab's 12-round primary magazine and **B** opens the paused forge. The economy readout shows observed net wallet changes, not source-level earnings attribution.
+
+```sh
+npm run yuga:lab:test
+npm run yuga:lab:e2e
+npm run yuga:lab:build:tracks
+```
+
+The track build writes `dist/yuga-lab/`, `dist/yuga-lane-lab/` and `dist/yuga-control-lab/`; serve each entire directory with its external model files. `npm run yuga:lab:build` builds only the combined entry. Planned public destinations are [combined lab](https://occult-kranti.github.io/ANDOLAN/yuga/lab/), [lane-economy lab](https://occult-kranti.github.io/ANDOLAN/yuga/lane-lab/) and [hybrid control lab](https://occult-kranti.github.io/ANDOLAN/yuga/control-lab/). **These lab routes are pending deployment; the coastal preview above is the currently verified public release.**
+
 ## Play
 
 For a first match:
