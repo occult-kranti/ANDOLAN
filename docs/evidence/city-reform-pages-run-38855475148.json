@@ -1,0 +1,167 @@
+{
+  "runId": 38855475148,
+  "url": "https://github.com/occult-kranti/ANDOLAN/actions/runs/38855475148",
+  "sourceCommit": "b02d96f4947c0f0284d9bfcf64486bff80d7e770",
+  "status": "completed",
+  "conclusion": "failure",
+  "jobs": [
+    {
+      "id": 116825836033,
+      "name": "build",
+      "conclusion": "failure",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success",
+          "started_at": "2026-10-16T05:22:59Z",
+          "completed_at": "2026-10-16T05:23:00Z"
+        },
+        {
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "conclusion": "success",
+          "started_at": "2026-10-16T05:23:00Z",
+          "completed_at": "2026-10-16T05:23:02Z"
+        },
+        {
+          "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "conclusion": "success",
+          "started_at": "2026-10-16T05:23:02Z",
+          "completed_at": "2026-10-16T05:23:02Z"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success",
+          "started_at": "2026-10-16T05:23:02Z",
+          "completed_at": "2026-10-16T05:23:11Z"
+        },
+        {
+          "name": "Run npm run typecheck && npm run lint && npm test",
+          "conclusion": "success",
+          "started_at": "2026-10-16T05:23:11Z",
+          "completed_at": "2026-10-16T05:23:19Z"
+        },
+        {
+          "name": "Run npx playwright install --with-deps chromium",
+          "conclusion": "success",
+          "started_at": "2026-10-16T05:23:19Z",
+          "completed_at": "2026-10-16T05:23:37Z"
+        },
+        {
+          "name": "Run npm run test:e2e",
+          "conclusion": "failure",
+          "started_at": "2026-10-16T05:23:37Z",
+          "completed_at": "2026-10-16T05:34:50Z"
+        },
+        {
+          "name": "Preserve browser test reports",
+          "conclusion": "success",
+          "started_at": "2026-10-16T05:34:50Z",
+          "completed_at": "2026-10-16T05:34:52Z"
+        },
+        {
+          "name": "Run npm run build && npm run build:standalone",
+          "conclusion": "skipped",
+          "started_at": "2026-10-16T05:34:52Z",
+          "completed_at": "2026-10-16T05:34:52Z"
+        },
+        {
+          "name": "Run actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b",
+          "conclusion": "skipped",
+          "started_at": "2026-10-16T05:34:52Z",
+          "completed_at": "2026-10-16T05:34:52Z"
+        },
+        {
+          "name": "Run actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b",
+          "conclusion": "skipped",
+          "started_at": "2026-10-16T05:34:52Z",
+          "completed_at": "2026-10-16T05:34:52Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "conclusion": "skipped",
+          "started_at": "2026-10-16T05:34:52Z",
+          "completed_at": "2026-10-16T05:34:52Z"
+        },
+        {
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "conclusion": "success",
+          "started_at": "2026-10-16T05:34:52Z",
+          "completed_at": "2026-10-16T05:34:52Z"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success",
+          "started_at": "2026-10-16T05:34:52Z",
+          "completed_at": "2026-10-16T05:34:52Z"
+        }
+      ]
+    },
+    {
+      "id": 116829095657,
+      "name": "deploy",
+      "conclusion": "skipped",
+      "steps": []
+    }
+  ],
+  "annotations": [
+    {
+      "title": "",
+      "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+      "path": ".github",
+      "start_line": 2,
+      "annotation_level": "warning"
+    },
+    {
+      "title": "",
+      "message": "Process completed with exit code 1.",
+      "path": ".github",
+      "start_line": 112,
+      "annotation_level": "failure"
+    },
+    {
+      "title": "\ud83c\udfad Playwright Run Summary",
+      "message": "  1 failed\n    tests/multiplayer.e2e.ts:284:1 \u203a two real clients deliver a bound van job once, resume identity and share late-join rewards \n  12 passed (11.2m)",
+      "path": ".github",
+      "start_line": 109,
+      "annotation_level": "notice"
+    },
+    {
+      "title": "Slow Test",
+      "message": "tests/game.e2e.ts took 7.0m",
+      "path": "tests/game.e2e.ts",
+      "start_line": 0,
+      "annotation_level": "warning"
+    },
+    {
+      "title": "tests/multiplayer.e2e.ts:284:1 \u203a two real clients deliver a bound van job once",
+      "message": "  1) tests/multiplayer.e2e.ts:284:1 \u203a two real clients deliver a bound van job once, resume identity and share late-join rewards \n    Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: 0\n    Received: null\n\n    Call Log:\n    - Timeout 15000ms exceeded while waiting on the predicate\n\n      306 |     const van = (await state(host)).vehicles.find(vehicle => vehicle.id === 'van-01')!;\n      307 |     await Promise.all([walkOpenAvenue(host, van), walkOpenAvenue(guest, van)]);\n    > 308 |     await host.keyboard.press('KeyF'); await expect.poll(async () => (await player(host)).seat).toBe(0);\n          |                                                                                                 ^\n      309 |     await guest.keyboard.press('KeyF'); await expect.poll(async () => (await player(guest)).seat).toBe(1);\n      310 |     expect((await player(host)).vehicleId).toBe('van-01'); expect((await player(guest)).vehicleId).toBe('van-01');\n      311 |     await driveRoute(host, 'van-01', [{ x: 48, z: 0 }, { x: -48, z: 0 }, { x: -48, z: -65 }]);\n        at /home/runner/work/ANDOLAN/ANDOLAN/tests/multiplayer.e2e.ts:308:97",
+      "path": "tests/multiplayer.e2e.ts",
+      "start_line": 308,
+      "annotation_level": "failure"
+    },
+    {
+      "title": "",
+      "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+      "path": ".github",
+      "start_line": 1,
+      "annotation_level": "notice"
+    }
+  ],
+  "observedAt": "2026-10-16T05:37:13.899628+00:00",
+  "browserSummary": {
+    "source": "GitHub check-run annotation: Playwright Run Summary",
+    "passed": 12,
+    "failed": 1,
+    "durationReported": "11.2m",
+    "failureLocation": "tests/multiplayer.e2e.ts:308:97",
+    "failure": "Host KeyF did not enter driver seat: expected 0, received null after 15000ms poll."
+  },
+  "browserReportArtifact": {
+    "id": 12026713541,
+    "name": "browser-test-report",
+    "sizeBytes": 7326281,
+    "expired": false,
+    "downloadAttempt": "Single gh api artifact zip attempt failed with Forbidden after redirect to productionresultssa17.blob.core.windows.net. Artifact contents, screenshots and trace were not inspected. No retry.",
+    "downloaded": false
+  }
+}

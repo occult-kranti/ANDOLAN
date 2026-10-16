@@ -1,10 +1,10 @@
 # Render deployment for an invited multiplayer beta
 
-**Prepared for City Reform Beta 0.3, not deployed.** The root [`render.yaml`](../render.yaml) defines one paid Docker web service and one persistent disk. No Render account, purchase or service was created in this session, and no hosted multiplayer address is available. The existing GitHub Pages website serves First Edition 0.1 pending the beta release; static hosting does not operate the multiplayer server.
+**Prepared for City Reform Beta 0.3, not deployed.** The root [`render.yaml`](../render.yaml) defines one paid Docker web service and one persistent disk. No Render account, purchase or service was created in this session, and no hosted multiplayer address is available. The GitHub Pages website now serves the verified Beta 0.3 client; static hosting does not operate the multiplayer server.
 
-This guide uses the beta lobby's **Game server address** field. Publish the matching beta client before following the GitHub Pages connection steps. City Reform 0.3 uses **protocol 2**: update client and server together. An older protocol-one game service is incompatible even if its `/health` endpoint responds.
+This guide uses the beta lobby's **Game server address** field. Use the matching Beta 0.3 client for the GitHub Pages connection steps. City Reform 0.3 uses **protocol 2**: update client and server together. An older protocol-one game service is incompatible even if its `/health` endpoint responds.
 
-The Beta 0.2 baseline passed all ten local browser cases in 491.765 seconds, including physical two-client delivery, reload/rejoin, exactly-once shared reward and practice/audio/mobile checks. City Reform 0.3 adds five once-only cases, sector progress, a persistent crew mandate and control/settings improvements; its final release gates are pending. Deploy a reviewed client/server revision after its own gates pass. Local results do not satisfy the Render-hosted acceptance checks below.
+The Beta 0.2 baseline passed all ten local browser cases in 491.765 seconds. City Reform 0.3 passes local source gates, focused browser checks and production/standalone builds. Its non-root container also passed actual 0.2 volume migration with backup/identity/job retained and new-case progress preserved through restart. Release `c20e912` passed all thirteen CI browser cases, production builds and Pages deployment, followed by exact public-file and native-browser checks; see [current QA](CITY_REFORM_QA.md), which also retains the earlier failed attempt. The test-only follow-up retains the same application/build inputs. Passed public smoke covers local browser play. Local results do not satisfy the Render-hosted acceptance checks below.
 
 ## What the Blueprint runs
 

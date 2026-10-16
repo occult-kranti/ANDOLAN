@@ -4,7 +4,7 @@
 
 The original six-chapter Story remains optional, with 22 stages, seven decisions, five endings and its own evidence journal and saves. The larger six-district/22-mission game remains in [the production roadmap](docs/ROADMAP.md).
 
-**Publication status:** [the public website](https://occult-kranti.github.io/ANDOLAN/) currently serves the earlier **First Edition 0.1 Story preview**. Beta 0.3 is implemented in this repository; its final source/browser/container checks and public release are pending. No public multiplayer backend has been provisioned. Once the beta client is published, **City practice** and **Story** work locally in the browser; online rooms require a running, compatible game server entered in the lobby.
+**Play Beta 0.3:** [Open ANDOLAN](https://occult-kranti.github.io/ANDOLAN/) and choose **City practice** for the city jobs/cases or **Begin story** for the original campaign. The release passed all thirteen CI browser cases; both public URL checks return the exact verified standalone file. The native live-site check also passed, including driving/braking, settings, save restoration and an already-loaded offline tab. Online rooms require a compatible game server entered in the lobby; no public multiplayer backend has been provisioned.
 
 ## Play and develop
 
@@ -57,7 +57,11 @@ npm run test:e2e
 
 Browser tests use installed Chromium; see `playwright.config.ts`. For the software-rendered cloud, run `ANDOLAN_SOFTWARE_RENDERING=1 npm run test:e2e`; CI enables this test-only graphics budget automatically. Evidence and limits are in [QA report](docs/QA_REPORT.md), [panel ledger](docs/PANEL_LEDGER.md) and `docs/evidence`.
 
-Beta 0.2 baseline gates passed: **97 tests, typecheck, lint and all ten browser cases in 491.765 seconds**. The browser checks include physical two-client Clinic Restock, identity through reload/rejoin, the shared 100 credits / 2 reputation / 1 project reward exactly once, practice/audio, separate Story saves and mobile entry/job board. These results precede Beta 0.3: its final combined checks, new case journey, mandate and container verification are pending. No human playtesting or hosted multiplayer result is claimed.
+Beta 0.3 passed **134 tests, typecheck, lint, all thirteen CI browser cases in 11.8 minutes, production/standalone builds and deployment**. Local checks include the physical two-client media case, audio/Story isolation, controls/settings and labelled mandate fixtures. The production container migrated an actual 0.2 room from a copied volume, preserved its identity/job and original backup, then retained new case progress through restart.
+
+Release [run 38857615158](https://github.com/occult-kranti/ANDOLAN/actions/runs/38857615158), on `c20e912`, succeeded. The 2,478,963-byte public HTML matches the verified standalone SHA-256. The earlier failed van-entry run, its unproven cause and the subsequent test-only synchronization change remain documented in [current QA](docs/CITY_REFORM_QA.md). The live-site native-browser smoke passed in 28.889 seconds with no browser or request errors.
+
+The earlier Beta 0.2 baseline remains recorded separately: 97 tests and ten browser cases in 491.765 seconds, including a physical shared Clinic Restock route. No human playtesting, full physical traversal of every sector case or hosted multiplayer result is claimed.
 
 ## Design and research
 

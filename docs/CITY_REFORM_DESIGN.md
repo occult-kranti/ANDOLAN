@@ -2,11 +2,11 @@
 
 ## Scope and status
 
-This is the implementation specification for City Reform Beta 0.3, following the five-job City Jobs Beta 0.2 baseline. It adds one opening media case, four sector cases and one persistent crew decision. The baseline ten-case browser suite passed before this source increment began. Content is now authored; simulation and UI integration and new acceptance checks are in progress. The five existing repeatable jobs and optional six-chapter Story keep their current definitions and saves.
+City Reform Beta 0.3 implements one opening media case, four sector cases and one persistent crew decision after the five-job City Jobs Beta 0.2 baseline. Content, simulation and UI are integrated. Local source gates (134 tests, typecheck/lint), focused browser cases and production/standalone/container checks passed. Release `c20e912` passed all thirteen CI browser cases (11.8 minutes), built and deployed successfully. Public HTML matches the standalone artifact, and the native live-site check passed. The earlier failed CI attempt and subsequent test-only synchronization change remain in the QA history. The original five repeatable jobs and optional six-chapter Story retain their definitions and saves. [Current QA](CITY_REFORM_QA.md) separates physical traversal, controlled fixtures and deployment evidence.
 
 The user requested fictional media parody, driving tasks, subtasks/events and a later betrayal path that reaches a change of administration. The accepted scope uses the existing district, two vehicles, cargo handovers, job board and authoritative rooms. It does not add simulated national elections, a power grid, a resource market, combat, NPC traffic or an investigative document-analysis minigame. Those would need distinct mechanics and evidence.
 
-Design judgments below are authored hypotheses, not conclusions from human playtesting. Existing automated evidence establishes the delivery/vehicle/session primitives; these new routes require their own tests.
+Design judgments below are authored hypotheses, not conclusions from human playtesting. The opening media route now has actual two-client traversal evidence. The four sector routes and both post-case outcomes have source/simulation coverage; the final-choice browser checks start from explicitly prepared completed-case checkpoints and do not establish physical sector traversal.
 
 ## Fiction and cast
 
@@ -69,7 +69,7 @@ Physical loads are a compact game representation of moving records or supplies. 
 
 ## Stage events and satirical captions
 
-Each `JobStage.event` is presentation content `{title, body}`, with stable ID `${job.id}/${stage.id}`. It has no executable condition or reward effect. The city journal can derive completed receipts from all stages of jobs in `city.completedJobs` and earlier stages of the current active case. Cancellation must not imply the case completed or reveal its unearned final event. In-game events use short character dialogue and concrete findings; fiction and implementation qualifications belong in About and these design notes, not repeated in every delivery receipt.
+Each `JobStage.event` is presentation content `{title, body}`, exposed with stable receipt ID `${job.id}:${stage.id}`. It has no executable condition or reward effect. The city journal derives completed receipts from all stages of jobs in `city.completedJobs` and earlier stages of the current active case. Cancellation must not imply the case completed or reveal its unearned final event. In-game events use short character dialogue and concrete findings; fiction and implementation qualifications belong in About and these design notes, not repeated in every delivery receipt.
 
 The central facts and turning points are:
 
@@ -87,7 +87,7 @@ Examples of original in-world captions: **“BREAKING: tomorrow's breakfast arri
 
 ## Persistent mandate and betrayal
 
-The final command is `city_choice`, target `city-mandate`, value `reform` or `capture`. Preconditions: City Jobs mode, opening case completed, each of four sector scores at least one, no active job, on foot within Public Hearing's radius, no prior settled decision. The server stores votes and the final outcome. The client may preview, but cannot award itself the mandate.
+The final command is `city_choice`, target `city-mandate`, value `reform` or `capture`. Preconditions: City Jobs mode, opening case completed, each of four sector scores at least one, no active job, on foot within Public Hearing's radius, no prior settled decision. The server stores the final outcome. Pending ballots are pruned when their players disconnect and cleared on restart or new work; a disconnect cannot silently decide the route. An explicit eligible vote is required to settle it. The client may preview, but cannot award itself the mandate.
 
 | Route | Player-facing decision | Authored outcome | Persistent mechanical effect |
 | --- | --- | --- | --- |
@@ -105,12 +105,15 @@ Systems owns a durable `city` state with `completedJobs`, four sector totals, cu
 | Gate | Concrete acceptance | Evidence status |
 | --- | --- | --- |
 | Content and prerequisites | Exactly five new once-only cases; existing five definitions unchanged; all stage IDs/targets valid; two loads consumed per case; only the opening case is initially available | Passed isolated content checks: ten total jobs, five new cases, 41 stages, 15 loads, four sector prerequisites, 21 event receipts and six media cards; isolated TypeScript and ESLint pass |
-| Subtask authority | Remote, wrong-vehicle, moving-vehicle and passenger actions cannot complete a case; valid driver/runner handoff advances exactly one stage | Existing primitive tests pass; new case coverage pending |
-| Events and late join | A connected late join sees earned receipts with stable IDs; future stages/final receipts remain hidden; jokes never replace the factual comparison | Pending implementation/browser check |
-| Durable arc | Opening completion unlocks four cases; each pays and increments its sector once; replay/restart cannot farm rewards or erase completion | Pending simulation/network checks |
-| Final vote | Remote/vehicle/early votes rejected; connected majority at civic settles one route; a split remains visible; reconnect retains result | Pending simulation/browser checks |
-| Real consequences | Both displayed and paid rewards use the same helper; reform/capture modifiers persist after checkpoint restore; prior counters and Story remain intact | Pure helper passes 30 job/route combinations including non-mutation, rounding and zero-project cases; simulation/network/UI integration pending |
-| Physical route | An actual browser completes the opening case through ordinary controls, sees event receipts and unlocked sector cards | Pending browser check; controlled-position fixtures must be labelled separately |
-| Release claims | Published client revision, hosted backend status, source/test results and remaining limits match the evidence | Pending root release review |
+| Subtask authority | Remote, wrong-vehicle, moving-vehicle and passenger actions cannot complete a case; valid driver/runner handoff advances exactly one stage | Passed local source tests and actual media-case driver/runner handoffs; source-position fixtures labelled |
+| Events and late join | Earned receipts derive from canonical progress; future stages/final receipts remain hidden; late join shares the same ledger | Actual media browser route shows five earned receipts and hides the mandate; real-WebSocket fixture tests share canonical completed ledger/outcome with late join |
+| Durable arc | Opening completion unlocks four cases; each pays and increments its sector once; replay/restart cannot farm rewards or erase completion | Passed simulation/network tests, including bounded-history rollover; physical media completion and duplicate replay award 120/2/1 only once |
+| Final vote | Remote/vehicle/early votes rejected; connected majority at civic settles one route; ties do not settle; reconnect retains result | Passed local simulation/real-WebSocket tests with completed-case fixtures; both UI outcomes/reloads pass labelled solo fixtures |
+| Real consequences | Displayed and paid rewards share the helper; modifiers persist after checkpoint restore; prior counters and Story remain intact | Helper edge checks and route-specific restored payouts pass; UI disclosures/outcomes pass labelled fixtures; full integrated Actions gate passed |
+| Physical route | Actual browsers complete the opening case through ordinary controls, see event receipts and unlocked sector cards | Passed two real clients/all five stages in 71.950 s; four sector routes were not physically traversed in this check |
+| Production persistence | Real older room/identity migrates with backup; new case state survives graceful production restart | Passed actual 0.2 volume copy → schema 3 under non-root 0.3 container, two WebSocket clients and first media briefing; restarted at archive-load |
+| Release claims | Published client revision, hosted backend status, source/test results and remaining limits match evidence | Release c20e912/run 38857615158 passes source checks, thirteen browser cases, builds/deployment, exact public-file comparison and native live-site smoke; public backend unprovisioned |
+
+Evidence: [physical route](evidence/city-reform-media-route.json), [labelled mandate fixtures](evidence/city-reform-mandate-fixtures.json), [container migration/restart](evidence/city-reform-container-check.json) and [central QA record](CITY_REFORM_QA.md). The earlier 0.2 ten-case baseline remains separate historical evidence.
 
 The next meaningful human observations are whether the opening task is understood without narration, whether driver/runner handovers feel useful, whether the satire lands without obscuring the objective, and whether the mandate feels like a consequential choice. Automated pass results cannot answer those questions.
