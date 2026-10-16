@@ -19,9 +19,26 @@ async function setup(page:Page){
 async function frame(page:Page){await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));}
 async function capture(page:Page,info:TestInfo,name:string){await frame(page);await page.screenshot({path:info.outputPath(`${name}.png`)});}
 async function transition(page:Page,key:string,state:string){
- const before=await local(page),count=before.transitions[state]||0;await page.keyboard.press(key);
- try{await expect.poll(async()=>(await local(page)).transitions[state]||0,{message:`${before.heroId} ${key} must produce actual ${state} animation`}).toBeGreaterThan(count);}
- catch(error){const diagnostic=await page.evaluate(()=>{const snapshot=window.__YUGA.snapshot(),actor=snapshot?.actors.find(a=>a.id===window.__YUGA.playerId());return{time:snapshot?.time,actor,toast:document.getElementById('toast')?.textContent,focused:document.activeElement?.id,openDialogs:[...document.querySelectorAll('dialog[open]')].map(d=>d.id)};});throw new Error(`Native animation failure ${before.heroId} ${key}/${state}: ${JSON.stringify({before:{state:before.state,action:before.action,transitions:before.transitions},after:await local(page),diagnostic})}`,{cause:error});}
+ const before=await local(page),count=before.transitions[state]||0,slot=Number(state.at(-1))-1;
+ const started=await page.evaluate(({slot})=>{
+  const samples:unknown[]=[],events=new Map<number,unknown>();
+  const observe=()=>{const snapshot=window.__YUGA.snapshot()!,actor=snapshot.actors.find(a=>a.id===window.__YUGA.playerId())!,metrics=window.__YUGA.metrics(),model=(window.__YUGA as unknown as{assets():Assets}).assets().instances.find(i=>i.id===actor.id)!;
+   if(samples.length<400)samples.push({at:performance.now(),time:snapshot.time,tick:snapshot.tick,frames:metrics.frames,maxFrameMs:metrics.maxFrameMs,health:actor.health,cooldown:actor.cooldowns[slot],cast:actor.cast??null,state:model.state,action:model.action,transitions:{...model.transitions}});
+   for(const event of snapshot.events)if(event.actorId===actor.id&&event.type==='ability')events.set(event.id,event);
+  };
+  observe();const watermark=Math.max(0,...snapshotEvents());
+  function snapshotEvents(){return window.__YUGA.snapshot()!.events.map(event=>event.id);}
+  const timer=window.setInterval(observe,50);Object.defineProperty(window,'__yugaCastObservation',{configurable:true,value:()=>{clearInterval(timer);observe();return{samples,events:[...events.values()]};}});
+  return{watermark,time:window.__YUGA.snapshot()!.time,frames:window.__YUGA.metrics().frames};
+ },{slot});
+ let observation:unknown;
+ try{
+  await page.keyboard.press(key);
+  await expect.poll(()=>page.evaluate(slot=>window.__YUGA.snapshot()!.actors.find(a=>a.id===window.__YUGA.playerId())!.cooldowns[slot]!,slot),{message:`${before.heroId} ${key} must be accepted by practice authority`}).toBeGreaterThan(0);
+  await expect.poll(async()=>(await local(page)).transitions[state]||0,{message:`${before.heroId} ${key} must produce actual ${state} animation`}).toBeGreaterThan(count);
+ }catch(error){observation=await page.evaluate(()=>(window as unknown as{__yugaCastObservation():unknown}).__yugaCastObservation());throw new Error(`Native animation failure ${before.heroId} ${key}/${state}: ${JSON.stringify({before:{state:before.state,action:before.action,transitions:before.transitions},after:await local(page),started,observation})}`,{cause:error});}
+ finally{observation??=await page.evaluate(()=>(window as unknown as{__yugaCastObservation():unknown}).__yugaCastObservation());}
+ return{key,state,started,observation,after:await local(page)};
 }
 
 test('gallery rapid selection and close survives delayed real GLB loads',async({page},info)=>{
@@ -68,14 +85,17 @@ test('cancel delayed actual match assets with Escape and Back, then restart clea
 
 test('all fourteen real GLBs spawn and respond to native movement, fire, three casts and jump',async({page},info)=>{
  test.setTimeout(600_000);const errors:string[]=[],failed:string[]=[],requests=new Set<string>();page.on('pageerror',e=>errors.push(e.stack||e.message));page.on('requestfailed',r=>{if(/\.glb(?:\?|$)/.test(r.url()))failed.push(r.url());});page.on('response',r=>{if(/\.glb(?:\?|$)/.test(r.url())){requests.add(r.url());if(!r.ok())failed.push(`${r.status()} ${r.url()}`);}});
+ // A bounded software-rendering viewport keeps the one-second authoritative
+ // windup observable. It does not change its clock or replay an expired cast.
+ await page.setViewportSize({width:480,height:400});
  await setup(page);expect(HEROES).toHaveLength(14);await expect(page.locator('[data-hero]')).toHaveCount(14);const evidence:unknown[]=[];
  for(const hero of HEROES){
   await page.locator(`[data-hero="${hero.id}"]`).click();await page.locator('#inspect-hero').click();await expect(page.locator('#showcase-status')).toContainText('Drag to rotate',{timeout:60_000});await capture(page,info,`hero-${hero.id}-gallery`);await page.locator('#hero-dialog [data-close]').click();await page.locator('#practice-play').click();await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(async()=>(await local(page))?.heroId,{timeout:30_000}).toBe(hero.id);const diagnostic=await assets(page);expect(diagnostic.assets).toHaveLength(14);expect(diagnostic.assets.every(a=>a.state==='ready'&&a.skinnedPrimitives>0&&clips.every(c=>a.animations.includes(c)))).toBe(true);expect(diagnostic.fallback).toEqual([]);const model=await local(page);expect(model).toMatchObject({loaded:true,fallback:false,skinned:true});expect(model.bones).toBeGreaterThan(5);expect(model.skeletons.length).toBeGreaterThan(0);expect(model.url).toContain('.glb');await capture(page,info,`hero-${hero.id}-spawn`);
   await page.keyboard.down('KeyW');try{await expect.poll(async()=>(await local(page)).state).toBe('run');await expect.poll(async()=>(await local(page)).pose.some((v,i)=>Math.abs(v-(model.pose[i]||0))>.0001)).toBe(true);}finally{await page.keyboard.up('KeyW');}await expect.poll(async()=>(await local(page)).state).toBe('idle');const shot=(await local(page)).transitions.fire||0;await page.keyboard.down('KeyF');try{await expect.poll(async()=>(await local(page)).transitions.fire||0).toBeGreaterThan(shot);}finally{await page.keyboard.up('KeyF');}
-  for(const [slot,key]of ['KeyQ','KeyE','KeyR'].entries()){await transition(page,key,`cast${slot+1}`);await expect.poll(()=>page.evaluate(()=>!window.__YUGA.snapshot()!.actors.find(a=>a.id===window.__YUGA.playerId())!.cast)).toBe(true);}
-  const jumps=(await local(page)).transitions.jump||0;await page.keyboard.down('Space');try{await expect.poll(async()=>(await local(page)).transitions.jump||0).toBeGreaterThan(jumps);}finally{await page.keyboard.up('Space');}await capture(page,info,`hero-${hero.id}-action`);const after=await local(page);for(const state of['idle','run','fire','cast1','cast2','cast3','jump'])expect(after.transitions[state]).toBeGreaterThan(0);evidence.push({heroId:hero.id,before:model,after});await page.keyboard.press('Escape');await page.locator('#leave-game').click();await expect(page.locator('#lobby')).toBeVisible();
+  const casts=[];for(const [slot,key]of ['KeyQ','KeyE','KeyR'].entries()){casts.push(await transition(page,key,`cast${slot+1}`));await expect.poll(()=>page.evaluate(()=>!window.__YUGA.snapshot()!.actors.find(a=>a.id===window.__YUGA.playerId())!.cast)).toBe(true);}
+  const jumps=(await local(page)).transitions.jump||0;await page.keyboard.down('Space');try{await expect.poll(async()=>(await local(page)).transitions.jump||0).toBeGreaterThan(jumps);}finally{await page.keyboard.up('Space');}await capture(page,info,`hero-${hero.id}-action`);const after=await local(page);for(const state of['idle','run','fire','cast1','cast2','cast3','jump'])expect(after.transitions[state]).toBeGreaterThan(0);evidence.push({heroId:hero.id,before:model,casts,after});await page.keyboard.press('Escape');await page.locator('#leave-game').click();await expect(page.locator('#lobby')).toBeVisible();
  }
- expect(failed).toEqual([]);expect(requests.size).toBeGreaterThanOrEqual(14);expect(errors).toEqual([]);await info.attach('fourteen-native-asset-instances',{body:JSON.stringify({scope:'Native fresh practice for each hero; realGLB imports and diagnostics. Samples do not establish every animation frame or visual approval.',requests:[...requests],errors,failed,evidence},null,2),contentType:'application/json'});
+ expect(failed).toEqual([]);expect(requests.size).toBeGreaterThanOrEqual(14);expect(errors).toEqual([]);await info.attach('fourteen-native-asset-instances',{body:JSON.stringify({scope:'Native fresh practice for each hero at480x400 with existing maximum10fps software-render scheduling. This is a functional render budget, not a performance fix/certification. All native commands must be accepted and produce actual model transitions; read-only frame/authority-clock samples retain timing. No health/time/position mutation. Larger960x640 earlier passes and later missed1s-cast failure remain separate historical evidence. Samples do not establish every animation frame or visual approval.',requests:[...requests],errors,failed,evidence},null,2),contentType:'application/json'});
 });
 
 test('labelled animation snapshot fixtures exercise defeat, recovery and independent duplicate-hero skins',async({page},info)=>{

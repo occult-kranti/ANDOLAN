@@ -1,6 +1,6 @@
 import { YUGA_PROTOCOL } from '../shared/types';
 import { test, expect, type Page, type TestInfo } from '@playwright/test';
-import { keyboardYaw, inputObservation } from './browser-harness';
+import { keyboardYaw, mouseAimAt, inputObservation } from './browser-harness';
 import { HEROES } from '../shared/heroes';
 import { ArenaSimulation } from '../shared/simulation';
 import { createArenaServer } from '../server/server';
@@ -72,12 +72,15 @@ test('native practice movement, combat, three skills, upgrade and pause controls
  test.setTimeout(180_000);await load(page);await low(page);await practice(page);await capture(page,info,'practice-spawn');
  await page.keyboard.press('KeyB');await expect(page.locator('#upgrades-dialog')).toBeVisible();await page.locator('#buy-power').click();await expect.poll(async()=>(await me(page)).upgrades.power).toBe(1);expect((await me(page)).credits).toBe(60);await expect(page.locator('#buy-vitality')).toBeDisabled();await page.locator('#upgrades-dialog [data-close]').click();await expect(page.locator('#arena')).toBeFocused();
  for(const [slot,key]of ['KeyQ','KeyE','KeyR'].entries()){await page.keyboard.press(key);await expect.poll(async()=>(await me(page)).cooldowns[slot]!).toBeGreaterThan(0);}
- await hold(page,'Space',actor=>actor.y>.4);const before=await me(page);await hold(page,'KeyA',actor=>actor.x-before.x>4);await hold(page,'KeyW',actor=>actor.z>-35,30_000);
- // Acquire from our tower's side before entering the bots'27m firing radius.
- const visibleRival=async()=>{const state=await snapshot(page),actor=await me(page);return state.actors.filter(target=>target.team!==actor.team&&target.health>0&&Math.abs(target.x)<10&&length(target,actor)<31.5).sort((a,b)=>length(a,actor)-length(b,actor))[0];};await expect.poll(async()=>!!await visibleRival(),{timeout:30_000}).toBe(true);const pos=await me(page);expect(pos.health).toBeGreaterThan(0);await nativeYaw(page,(state,actor)=>{const target=state.actors.filter(other=>other.team!==actor.team&&other.health>0&&Math.abs(other.x)<10&&length(other,actor)<31.5).sort((a,b)=>length(a,actor)-length(b,actor))[0];if(!target)throw new Error(`Rival left visible acquisition range at ${state.time}`);return Math.atan2(target.x-actor.x,target.z-actor.z);});await page.keyboard.press('KeyT');await hold(page,'KeyF',actor=>actor.damageDealt>0,15_000);await capture(page,info,'native-combat');
+ await hold(page,'Space',actor=>actor.y>.4);const before=await me(page);await hold(page,'KeyA',actor=>actor.x-before.x>4);await hold(page,'KeyW',actor=>actor.z>-47,30_000);
+ // Stay behind our z=-37 tower, offset from its collider, and use ordinary
+ // pointer aim promptly as the real enemy wave approaches. Keyboard rotation
+ // has its own native timing gate; a slow aim loop here was dying in bot fire.
+ const visibleRival=()=>page.evaluate(()=>{const state=window.__YUGA.snapshot()!,actor=state.actors.find(a=>a.id===window.__YUGA.playerId())!;return state.actors.filter(target=>target.team!==actor.team&&target.health>0&&Math.abs(target.x)<10&&Math.hypot(target.x-actor.x,target.z-actor.z)<31.5).sort((a,b)=>Math.hypot(a.x-actor.x,a.z-actor.z)-Math.hypot(b.x-actor.x,b.z-actor.z))[0];});
+ await expect.poll(async()=>!!await visibleRival(),{timeout:30_000}).toBe(true);const pos=await me(page);expect(pos.health).toBeGreaterThan(0);const rival=await visibleRival();expect(rival).toBeDefined();const aim=await mouseAimAt(page,rival!.id,.08);await page.keyboard.press('KeyT');await hold(page,'KeyF',actor=>actor.damageDealt>pos.damageDealt,15_000);const afterAttack=await me(page);expect(afterAttack.health).toBeGreaterThan(0);await capture(page,info,'native-combat');
  await page.keyboard.press('KeyB');await expect(page.locator('#shop-status')).toContainText('Return to your spawn');await expect(page.locator('#buy-power')).toBeDisabled();await page.locator('#upgrades-dialog [data-close]').click();
  await page.keyboard.down('KeyW');await page.keyboard.down('KeyF');await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();const stopped=await snapshot(page),actor=await me(page);await page.keyboard.press('KeyQ');await page.waitForTimeout(700);expect((await snapshot(page)).time).toBe(stopped.time);expect(length(actor,await me(page))).toBe(0);await page.keyboard.up('KeyW');await page.keyboard.up('KeyF');await page.locator('#resume-game').click();await expect(page.locator('#arena')).toBeFocused();const resumed=await me(page);await hold(page,'KeyS',a=>length(a,resumed)>1);
- await attach(page,info,'native-practice',{before,after:await me(page),snapshotTime:(await snapshot(page)).time,claim:'Ordinary keyboard controls only; no command, position or clock injection'});expect(errors.get(page)).toEqual([]);
+ await attach(page,info,'native-practice',{before,combat:{rivalId:rival!.id,approach:pos,aim:{time:aim.state.time,yaw:aim.metrics.yaw,pitch:aim.metrics.pitch,health:aim.actor.health},afterAttack},after:await me(page),snapshotTime:(await snapshot(page)).time,claim:'Ordinary keyboard and pointer controls, unchanged bots/health/time and authority hit rules. Pointer correction into the target-lock cone avoids prolonged keyboard acquisition under bot fire. No command, position or clock injection.'});expect(errors.get(page)).toEqual([]);
 });
 
 test('mobile touch movement, aiming, firing and modal release',async({browser},info)=>{

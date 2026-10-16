@@ -45,7 +45,7 @@ export async function keyboardYaw(page:Page,target:number|((state:ArenaSnapshot,
 
 /** Native pointer-lock mouse correction after coarse keyboard rotation. The click
  * can fire an ordinary basic shot; this is gameplay, never a silent aim command. */
-export async function mouseAimAt(page:Page,targetId:string){
+export async function mouseAimAt(page:Page,targetId:string,tolerance=.006){
  const viewport=page.viewportSize()!;let x=viewport.width*.5,y=viewport.height*.42;
  await page.mouse.click(x,y);await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('arena');
  for(let i=0;i<5;i++){
@@ -53,7 +53,7 @@ export async function mouseAimAt(page:Page,targetId:string){
   if(!target)throw new Error(`Native mouse target missing: ${targetId}`);
   const yaw=Math.atan2(target.x-actor.x,target.z-actor.z),pitch=Math.atan2(target.y+1.1-actor.y-1.2,Math.hypot(target.x-actor.x,target.z-actor.z));
   const dyaw=Math.atan2(Math.sin(yaw-observation.metrics.yaw),Math.cos(yaw-observation.metrics.yaw)),dpitch=pitch-observation.metrics.pitch;
-  if(Math.abs(dyaw)<.006&&Math.abs(dpitch)<.006)return observation;
+  if(Math.abs(dyaw)<tolerance&&Math.abs(dpitch)<tolerance)return observation;
   const sensitivity=Number(await page.locator('#sensitivity').inputValue())/100;
   x-=dyaw/(.0025*sensitivity);y-=dpitch/(.0025*sensitivity);await page.mouse.move(x,y);
  }
