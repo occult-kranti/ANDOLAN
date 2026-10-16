@@ -24,7 +24,7 @@ const root = fileURLToPath(new URL('../../../', import.meta.url));
 const args = process.argv.slice(2);
 const option = key => { const index = args.indexOf(key); return index < 0 ? undefined : args[index + 1]; };
 if (!args.includes('--capture') && !args.includes('--plan')) {
-  console.log('Use --plan, or --capture --pilot / --capture --all after the exclusive browser gate. Optional --out dist/yuga-art-review, --base-url http://127.0.0.1:5192, --skip-encode.');
+  console.log('Use --plan, or --capture --pilot / --capture --all after the exclusive browser gate. Optional --out dist/yuga-art-review, --base-url http://127.0.0.1:5192, --skip-encode, --resume-coast prior-output (strict unchanged-runtime recovery into a fresh --out).');
   process.exit(0);
 }
 const pilot = args.includes('--pilot');
@@ -54,7 +54,7 @@ async function filesUnder(directory) {
 }
 const manifest = {
   schema: 1, startedAt: new Date().toISOString(), finishedAt: null, passed: false,
-  scope: 'Actual PlayCanvas/GLB screen captures. Gallery is clip playback. Arena ability fixtures use staged positions/health and real simulation commands. Unit fixtures stage snapshots/events. Coastal views stage the player position and use ordinary keyboard aim/settings. No human match, earned kill, network capacity, sound recording or 4D claim.',
+  scope: 'Actual PlayCanvas/GLB screen captures. Gallery is clip playback. Arena ability fixtures use staged positions/health and real simulation commands. Unit fixtures stage snapshots/events. Coastal views stage the player position and use ordinary pointer aim/settings. No human match, earned kill, network capacity, sound recording or 4D claim.',
   audio: 'Silent: CDP captures rendered frames only. No soundtrack or commercial recording.',
   timing: 'Each JPEG is an actual Chromium screencast frame. Native timestamp differences request variable-frame durations; the image/encoder timebase can quantize them, so ffprobe durations and timing differences are recorded. No generated/interpolated motion. Capture overhead and repeated/held frames are not a game performance benchmark.',
   simulation: 'Imported directly from shared/simulation.ts through the installed tsx loader; Vite serves the same source. Ability simulation and staged unit ticks run at20Hz; fixture snapshots publish at5Hz, with immediate command results/stage changes. No compiled server fixture dependency.',
@@ -79,6 +79,51 @@ if (args.includes('--plan') && !args.includes('--capture')) {
 await fs.mkdir(output, { recursive: true });
 assert.ok(!existsSync(path.join(output, 'manifest.json')), 'Use a fresh --out directory; preserve previous evidence.');
 await fs.mkdir(path.join(output, 'shots'), { recursive: true });
+if (option('--resume-coast')) {
+  assert.equal(pilot, false, 'Coastal recovery requires the full roster.');
+  const parentOutput = path.resolve(root, option('--resume-coast'));
+  assert.ok(['dist', 'test-results'].some(dir => parentOutput.startsWith(path.join(root, dir) + path.sep)), 'Recovery must read an existing local evidence directory.');
+  assert.notEqual(parentOutput, output, 'Never overwrite the failed parent campaign.');
+  const parentBytes = await fs.readFile(path.join(parentOutput, 'manifest.json')), parent = JSON.parse(parentBytes);
+  assert.equal(parent.passed, false);
+  assert.ok(parent.finishedAt, 'Parent capture must have finished.');
+  assert.equal(parent.errors.length, 1, 'Only the known final coastal camera failure is recoverable.');
+  assert.ok(parent.errors[0].startsWith('AssertionError [ERR_ASSERTION]: Coastal camera did not face the west gate.'));
+  assert.deepEqual(parent.heroIds, manifest.heroIds); assert.deepEqual(parent.unitIds, manifest.unitIds);
+  assert.deepEqual(parent.viewport, manifest.viewport); assert.deepEqual(parent.encodedSize, manifest.encodedSize);
+  const toolPath = 'games/yuga/tools/capture-art-review.mjs';
+  const runtimeSources = values => values.filter(source => source.path !== toolPath);
+  assert.deepEqual(runtimeSources(parent.sources), runtimeSources(manifest.sources), 'Every client/shared/asset/build-input hash must still match the original campaign.');
+  assert.deepEqual(parent.assets, manifest.assets, 'Asset manifests changed after the original campaign.');
+  const inherited = parent.shots.filter(record => record.view !== 'western-coast');
+  assert.equal(inherited.length, 158, 'Expected exactly 126 hero/ability, 28 unit and four completed city shots.');
+  for (const heroId of manifest.heroIds) assert.equal(inherited.filter(record => record.heroId === heroId).length, 9);
+  for (const unitId of manifest.unitIds) assert.equal(inherited.filter(record => record.unitId === unitId).length, 4);
+  assert.equal(inherited.filter(record => record.category === 'ability').length, 42);
+  assert.equal(parent.recordings.length, 22, 'All non-coastal chapters must have completed their original assertions.');
+  const inheritedIds = new Set(inherited.map(record => record.id));
+  assert.equal(inheritedIds.size, 158);
+  assert.ok(parent.recordings.every(recording => recording.shots.every(id => inheritedIds.has(id))));
+  for (const record of inherited) {
+    assert.ok(record.finishedAt && record.frames.length >= 2 && record.frameStats.count === record.frames.length);
+    record.captureRevision = parent.revision; record.captureEpoch = 'original';
+    for (const frame of record.frames) {
+      assert.ok(frame.file.startsWith(`shots/${record.id}/`) && !frame.file.split('/').includes('..'), 'Invalid inherited frame path.');
+      const bytes = await fs.readFile(path.join(parentOutput, frame.file));
+      assert.equal(bytes.length, frame.bytes, 'An inherited frame differs from its recorded byte count.');
+      frame.recoverySha256 = hash(bytes);
+      const destination = path.join(output, frame.file);
+      await fs.mkdir(path.dirname(destination), { recursive: true }); await fs.writeFile(destination, bytes);
+    }
+  }
+  await fs.writeFile(path.join(output, 'parent-manifest.json'), parentBytes);
+  manifest.recovery = { parentDirectory: path.relative(root, parentOutput), parentManifest: 'parent-manifest.json', parentManifestSha256: hash(parentBytes), parentRevision: parent.revision, parentToolSha256: parent.sources.find(source => source.path === toolPath).sha256, currentToolSha256: manifest.sources.find(source => source.path === toolPath).sha256, originalFailure: parent.errors[0], reusedShots: inherited.length, omittedFailedShots: parent.shots.filter(record => record.view === 'western-coast').map(record => record.id), scope: 'Two capture epochs with byte-identical runtime/shared/asset sources. Only the capture tool changed. Original failed evidence remains untouched. Reused frames are copied and SHA-256 hashed; only the two coastal views are recaptured.' };
+  manifest.scope += ' This bundle explicitly combines two capture epochs; each video stamps its own capture revision. See recovery and parent-manifest.json.';
+  manifest.shots = inherited; manifest.recordings = parent.recordings;
+  manifest.loads = parent.loads.map(load => ({ ...load, captureEpoch: 'original' }));
+  manifest.assetResponses = parent.assetResponses.map(response => ({ ...response, captureEpoch: 'original' }));
+  console.log(`Verified and preserved ${inherited.length} completed shots; only two coastal views will be recaptured.`);
+}
 const save = () => fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 let server, browser, context, page, fixture, stopping = false;
 const assetReads = [];
@@ -183,7 +228,7 @@ async function shot(id, title, mode, seconds, trigger = async () => {}, metadata
     frames.push({ file: relative(filename), timestamp: event.metadata.timestamp, bytes: Buffer.byteLength(event.data, 'base64') });
     queue = queue.then(async () => { await fs.writeFile(filename, Buffer.from(event.data, 'base64')); await session.send('Page.screencastFrameAck', { sessionId: event.sessionId }); }).catch(error => { writeError = error; });
   });
-  const record = { id, title, mode, seconds, ...metadata, frames, timeline: [], startedAt: new Date().toISOString(), before: brief(await diagnostics()) };
+  const record = { id, title, mode, seconds, ...metadata, captureRevision: manifest.revision, captureEpoch: manifest.recovery ? 'coast-recovery' : 'original', frames, timeline: [], startedAt: new Date().toISOString(), before: brief(await diagnostics()) };
   manifest.shots.push(record);
   try {
     await session.send('Page.startScreencast', { format: 'jpeg', quality: 88, maxWidth: 960, maxHeight: 600, everyNthFrame: 1 });
@@ -368,17 +413,33 @@ async function captureCity() {
 async function captureCoast() {
   await newPage(); fixture = await abilityFixture('rama'); await boot('rama'); await joinFixture();
   // The western court is staged for a repeatable environment review. Camera
-  // orientation still comes from native controls, never a hidden renderer API.
+  // Native pointer displacement is independent of delayed rendering/timer
+  // polling, unlike holding an aim key until a remote condition is observed.
   Object.assign(fixture.sim.actors.get('review-local'), { x: -46, z: 5, y: 0 });
-  await page.locator('#arena').focus();
-  await page.keyboard.down('KeyL');
-  try { await page.waitForFunction(() => window.__YUGA.metrics().yaw <= -1.35, undefined, { timeout: 10_000 }); }
-  finally { await page.keyboard.up('KeyL'); }
+  const aimAttempts = [];
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const before = await page.evaluate(() => window.__YUGA.metrics().yaw);
+    if (before < -1.2 && before > -2) break;
+    const sensitivity = Number(await page.locator('#sensitivity').inputValue()) / 100;
+    const pixels = Math.max(-650, Math.min(650, (-1.6 - before) / (-.0025 * sensitivity)));
+    const startX = pixels > 0 ? 140 : 820;
+    await page.mouse.move(startX, 300); await page.mouse.down();
+    try { await page.mouse.move(startX + pixels, 300, { steps: 1 }); }
+    finally { await page.mouse.up(); }
+    const after = await page.evaluate(() => window.__YUGA.metrics().yaw);
+    aimAttempts.push({ before, pixels, sensitivity, after });
+  }
+  const aimedYaw = await page.evaluate(() => window.__YUGA.metrics().yaw);
+  assert.ok(aimedYaw < -1.2 && aimedYaw > -2, `Native coastal pointer aiming failed: ${JSON.stringify(aimAttempts)}`);
   await pause(750);
   for (const lighting of ['day', 'night']) {
-    await page.keyboard.press('Escape'); await page.locator('#lighting').selectOption(lighting);
+    // The first Escape may be consumed by the browser when releasing pointer
+    // lock. A second ordinary Escape is needed only if Settings is still shut.
+    await page.keyboard.press('Escape');
+    if (!await page.locator('#pause-dialog').isVisible()) await page.keyboard.press('Escape');
+    await page.locator('#lighting').selectOption(lighting);
     await page.locator('#resume-game').click(); await pause(500);
-    const record = await shot(`coast-${lighting}-high`, `Western marsh and Lanka gate / ${lighting}`, 'STAGED VIEW: player position; native keyboard aim and lighting settings', 4, async () => {}, { category: 'city', view: 'western-coast', staged: true, quality: 'high', lighting });
+    const record = await shot(`coast-${lighting}-high`, `Western marsh and Lanka gate / ${lighting}`, 'STAGED VIEW: player position; native pointer aim and lighting settings', 4, async () => {}, { category: 'city', view: 'western-coast', staged: true, quality: 'high', lighting, aimAttempts });
     assert.ok(Math.abs(record.after.local.x + 46) < .1 && Math.abs(record.after.local.z - 5) < .1, 'Coastal fixture moved from its declared review position.');
     assert.ok(record.after.metrics.yaw < -1.2 && record.after.metrics.yaw > -2, 'Coastal camera did not face the west gate.');
   }
@@ -409,7 +470,7 @@ async function encode() {
       lines.push(`duration ${duration.toFixed(6)}`);
     }
     lines.push(`file '${path.join(output, record.frames.at(-1).file)}'`); await fs.writeFile(list, lines.join('\n') + '\n');
-    const label = path.join(directory, 'label.txt'); await fs.writeFile(label, `${record.title}\n${record.mode} | ${manifest.revision.slice(0, 8)} | silent`);
+    const label = path.join(directory, 'label.txt'); await fs.writeFile(label, `${record.title}\n${record.mode} | ${(record.captureRevision || manifest.revision).slice(0, 8)} | silent`);
     const video = path.join(directory, 'clip.mp4');
     await runFFmpeg(['-f', 'concat', '-safe', '0', '-i', list, '-vf', `scale=960:600:flags=lanczos,drawbox=x=0:y=ih-52:w=iw:h=52:color=black@0.86:t=fill,drawtext=fontfile=${font}:textfile=${label}:fontcolor=white:fontsize=13:x=12:y=h-43:line_spacing=5`, '-c:v', 'libx264', '-threads', '2', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p', '-fps_mode', 'vfr', '-movflags', '+faststart', '-an', video]);
     record.video = relative(video); record.videoProbe = await probe(video); record.videoSha256 = hash(await fs.readFile(video));
@@ -444,9 +505,12 @@ async function encode() {
 try {
   await save(); await startServer();
   browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || '/usr/bin/chromium', headless: true, args: ['--no-sandbox', '--enable-unsafe-swiftshader', '--use-angle=swiftshader'] });
-  for (const hero of heroes) await captureHero(hero);
-  for (const unitId of unitIds) await captureUnit(unitId);
-  if (!pilot) { await captureCity(); await captureCoast(); }
+  if (manifest.recovery) await captureCoast();
+  else {
+    for (const hero of heroes) await captureHero(hero);
+    for (const unitId of unitIds) await captureUnit(unitId);
+    if (!pilot) { await captureCity(); await captureCoast(); }
+  }
   await shutdown();
   await Promise.all(assetReads);
   for (const source of manifest.sources) assert.equal(hash(await fs.readFile(path.join(root, source.path))), source.sha256, `Source changed during capture: ${source.path}`);
