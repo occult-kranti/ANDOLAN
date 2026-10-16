@@ -4,6 +4,8 @@
 
 This release contains a condensed six-chapter campaign, 22 stages, seven decisions, five endings, an evidence journal, local story saves and real shared server rooms. The larger six-district/22-mission game remains in [the production roadmap](docs/ROADMAP.md).
 
+**Play the solo preview:** [Open ANDOLAN](https://occult-kranti.github.io/ANDOLAN/) and choose **Story**. Progress saves in that browser. Shared rooms require a separately hosted game server.
+
 ## Play and develop
 
 Node 22.12 or newer (validated with Node 24):
@@ -27,9 +29,9 @@ npm run build:standalone
 npm start
 ```
 
-The server serves the production client and WebSocket rooms on port 3001. `dist/standalone/index.html` is a self-contained solo game. Dockerfile and Compose configuration are included; see [deployment instructions](docs/DEPLOYMENT.md). No public hosting or embedded ChatGPT game execution is claimed.
+The server serves the production client and WebSocket rooms on port 3001. `dist/standalone/index.html` is a self-contained solo game. Dockerfile and Compose configuration are included; see [deployment instructions](docs/DEPLOYMENT.md). The solo preview is published on GitHub Pages. Shared rooms still require a separately hosted server; running the game inside ChatGPT has not been verified.
 
-The GitHub Actions workflow runs verification and publishes the solo build when GitHub Pages is enabled for Actions. Cloud installation and startup were tested; [the setup record](docs/CLOUD_SETUP.md) explains the saved configuration draft and activation step.
+The GitHub Actions workflow verifies and publishes the solo build. Cloud installation and startup were tested; [the setup record](docs/CLOUD_SETUP.md) explains the saved configuration draft and activation step.
 
 ## Verify
 

@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-16T03:49:15.424Z",
+  "url": "https://occult-kranti.github.io/ANDOLAN/",
+  "scope": "Live GitHub Pages production Story smoke in uncapped Linux Chromium with SwiftShader. Ordinary keyboard and visible UI actions; checkpoint reads only. No multiplayer hosting or consumer-device performance claim.",
+  "passed": false,
+  "pageErrors": [],
+  "consoleErrors": [],
+  "consoleWarnings": [],
+  "failedRequests": [
+    {
+      "url": "https://occult-kranti.github.io/ANDOLAN/",
+      "error": "net::ERR_CERT_AUTHORITY_INVALID"
+    }
+  ],
+  "httpErrors": [],
+  "failure": {
+    "message": "page.goto: net::ERR_CERT_AUTHORITY_INVALID at https://occult-kranti.github.io/ANDOLAN/\nCall log:\n\u001b[2m  - navigating to \"https://occult-kranti.github.io/ANDOLAN/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+    "stack": "page.goto: net::ERR_CERT_AUTHORITY_INVALID at https://occult-kranti.github.io/ANDOLAN/\nCall log:\n\u001b[2m  - navigating to \"https://occult-kranti.github.io/ANDOLAN/\", waiting until \"domcontentloaded\"\u001b[22m\n\n    at /tmp/andolan-public-pages-smoke.mjs:47:31"
+  },
+  "classification": "Cloud browser trust-store access failure before application load; not an application defect.",
+  "diagnosis": {
+    "presentedChainVerifiedByOpenSSL": true,
+    "sessionCaSha256": "C71B4D1E9D7775C538C688AB10CEA9CE417D7312E89838F9D15FF73256CD7FC3",
+    "existingNssNickname": "OpenAI-nebula-dns",
+    "chromiumLog": "Error initializing NSS with a persistent database (sql:/home/agent/.pki/nssdb): NSS error code: -8126; initializing NSS without a persistent database.",
+    "temporaryCaImport": "certutil deduplicated the existing session CA; no temporary nickname was created and no pre-existing CA was removed.",
+    "resolution": "The same smoke script passed with scoped execution access to the existing NSS database. TLS verification, inherited proxy and all original CA entries remained intact.",
+    "successfulResult": "public-pages-browser-check.json"
+  }
+}
