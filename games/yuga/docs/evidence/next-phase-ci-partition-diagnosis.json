@@ -1,0 +1,62 @@
+{
+  "run": 38958142889,
+  "source": "0820d8b584ec81d6d12e5d345515201d9a4f6ace",
+  "disposition": "Canceled to supersede a separately observed timed-cast animation replay defect; not recorded as a browser assertion failure.",
+  "jobs": [
+    {
+      "name": "build",
+      "conclusion": "success",
+      "startedAt": "2026-10-16T19:52:49Z",
+      "completedAt": "2026-10-16T19:56:23Z",
+      "browserSteps": []
+    },
+    {
+      "name": "Browser regression 2/2",
+      "conclusion": "success",
+      "startedAt": "2026-10-16T19:52:48Z",
+      "completedAt": "2026-10-16T19:57:40Z",
+      "browserSteps": [
+        {
+          "name": "Run npm run yuga:e2e -- --shard=2/2",
+          "conclusion": "success",
+          "started_at": "2026-10-16T19:53:35Z",
+          "completed_at": "2026-10-16T19:57:36Z"
+        }
+      ]
+    },
+    {
+      "name": "Browser regression 1/2",
+      "conclusion": "cancelled",
+      "startedAt": "2026-10-16T19:52:49Z",
+      "completedAt": "2026-10-16T20:08:09Z",
+      "browserSteps": [
+        {
+          "name": "Run npm run yuga:e2e -- --shard=1/2",
+          "conclusion": "cancelled",
+          "started_at": "2026-10-16T19:53:28Z",
+          "completed_at": "2026-10-16T20:08:03Z"
+        }
+      ]
+    },
+    {
+      "name": "deploy",
+      "conclusion": "cancelled",
+      "startedAt": "2026-10-16T20:08:10Z",
+      "completedAt": "2026-10-16T20:08:09Z",
+      "browserSteps": []
+    }
+  ],
+  "knownSummary": {
+    "shard2": "8 passed (4.0m)",
+    "shard1": "Canceled after14m35s in browser step; no individual assertion outcome available through annotations."
+  },
+  "accessLimits": {
+    "log": "Job log redirect returnedHTTP403 at productionresultssa12.blob.core.windows.net. No trace/log content inspected.",
+    "artifact": "Artifact12071673613 (10,647,044bytes) ZIP redirect returnedHTTP403 at the same host. No bypass or repeated download."
+  },
+  "diagnosis": {
+    "verified": "Playwright file-level sharding puts all arena, environment and hero-assets cases in shard1 (14 declarations, one existing opt-in soak); shard2 has8 smaller cases.",
+    "inference": "The historically ~9minute all14-native-model case plus14defeatfixtures and arena/network cases likely dominates shard1; exact current slow-case timing unavailable. No hang or new assertion failure is inferred.",
+    "repair": "Three disjoint groups isolate hero-assets, arena and all remaining dynamically discovered files. Actual list union matches all22 declarations, no assertion/timeout/worker change."
+  }
+}
