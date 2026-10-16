@@ -27,17 +27,27 @@ npm run yuga:start
 
 Deploy or serve the **entire `dist/yuga/` directory**, including its hashed GLB assets. JavaScript/CSS may be inlined, but the character files are external: copying or downloading only `index.html` is insufficient. A static HTTP host can run Practice without the arena backend; online matches need a reachable secure arena server. The production Node service serves the static bundle and `/ws` together. See [deployment](docs/DEPLOYMENT.md) for Docker, Render and GitHub Pages. Publishing the static bundle does not provision a public multiplayer backend.
 
+To create a downloadable browser package (Python 3 required):
+
+```sh
+npm run yuga:package
+```
+
+This builds first, verifies all 21 GLBs against their manifests, and writes `dist/yuga-confluence-browser-beta.zip` with `START_HERE.txt` and file hashes in `BUILD_INFO.json`. Extract the whole ZIP and serve that directory over HTTP. It includes local bot Practice; online matches still require a separately configured protocol-2 HTTPS/WSS server. The packaging command is prepared for the next frozen-build check; no completed package check is implied yet.
+
 ## Play
 
-Choose a hero and select **Play with bots**. For **Online team match**, enter a shared arena server and leave room blank to create a room; share its invite link with teammates. Bots occupy available seats. A match accommodates six human/bot heroes total. Reconnecting resumes the same hero while its reservation remains valid; an older tab yields ownership to the newer connection.
+Choose a hero and select **Play with bots**. **Practice focus** defaults to **Free play**; optionally choose one small movement, hit, ability, upgrade or camp-reward goal. Dismiss the goal at any time, retain it through pause/settings, or start fresh on replay. Its receipt records the observed action and grants no extra currency or mastery rank. The selected hero’s optional play guide expands the first-action advice, skill notes, counterplay and an exercise. All fourteen heroes remain available. For **Online team match**, enter a shared arena server and leave room blank to create a room; share its invite link with teammates. Bots occupy available seats. A match accommodates six human/bot heroes total. Reconnecting resumes the same hero while its reservation remains valid; an older tab yields ownership to the newer connection.
 
 Move with WASD or arrows; aim by captured mouse, drag or IJKL; fire with click or F; use Q/E/R for abilities; Space jumps. B opens upgrades near spawn. Escape opens settings and releases the cursor. Touch provides movement/aim surfaces and fire/jump/ability buttons. Practice pauses in menus; online team matches continue.
+
+**City lighting** follows the eight-minute match through dawn, day, dusk, night and predawn. Settings can hold Fixed daylight or Fixed night and save that choice. Lighting changes presentation only; combat and target visibility rules stay the same. Reduced motion also suppresses diya flicker.
 
 Optional target lock uses **T**, right-click or the touch **LOCK** button when enabled in Settings. It acquires a visible enemy hero, lane unit, jungle guardian or vulnerable structure within 32 metres and 20 degrees of the current aim. Manual mouse/drag/IJKL aim releases it, as do lost visibility/range and menu transitions. Lock assists aim; you still fire, projectiles can miss or be blocked, and the server decides hits. See the QA ledger for the exact native-input checks and outstanding gates.
 
 Rama's R prepares a locked three-arrow volley; Hanuman's R commits to a timed leap whose landing damages enemies and heals allies; Sita's R establishes a fixed shielding/healing sanctuary. Their preparation locks actions and shows cast progress. The other thirty-nine abilities use the established projectile, area, movement, support and summon rules.
 
-Push with allied minions. Destroy two defending towers to expose that team's core, then destroy its core. At eight minutes the higher score wins; core health breaks a tied score. Credits buy three ranks of power, vitality or tempo at your spawn. Credits and upgrades reset for every match.
+Push with allied minions. Destroy two defending towers to expose that team's core, then destroy its core. At eight minutes the higher score wins; core health breaks a tied score. Credits buy three ranks of power, vitality or tempo at your spawn. Power improves primary damage and applicable ability payloads, Vitality adds health, and Tempo increases basic firing rate without changing skill cooldowns. The forge shows actual effects, current price and hero-specific tradeoffs. Credits and upgrades reset for every match.
 
 Lane defeats give nearby allies 10 credits each and leave an 8-credit shard. A primary shot can secure a shard for either team immediately; proximity collection starts after one second. Unclaimed shards expire after twelve seconds. Banked credits cannot be stolen. Summons award neither gold nor tiebreak points.
 
@@ -54,8 +64,9 @@ Client and server now use **protocol 2**. Update both together; an old server ca
 - [Player-experience review](docs/PLAYER_EXPERIENCE_REVIEW.md): accessible sources, unresolved feedback and concrete safeguards.
 - [Reddit research](docs/REDDIT_RESEARCH.md): official API sampling, source handling and limits; [Deadlock](docs/research/DEADLOCK_ENGINEERING.md), [Overwatch](docs/research/OVERWATCH_ENGINEERING.md) and [Dota 2](docs/research/DOTA2_ENGINEERING.md) studies distinguish available tools from commercial game source.
 - [Review panel](docs/PANEL.md), [QA](docs/QA.md): observed defects, accepted changes, verification and remaining limits.
+- [Next-phase three-round review](docs/NEXT_PHASE_PANEL.md), [production roadmap](docs/PRODUCTION_ROADMAP.md): optional guidance, day/night readability, source decisions and separate new acceptance gates.
 - [Audio design](docs/AUDIO_DESIGN.md): synthesized original audio, browser lifecycle and bounded voices.
 
-The [current AI balance matrix](docs/evidence/jungle-balance-matrix.json) contains 168 mirrored lane/seed matches with the expanded economy under a fixed bot policy; it is not a human win-rate estimate. Bots do not deliberately farm jungle camps. Earlier browser and container checks are labelled baseline evidence. Exported-asset, native-browser, deployment and public WSS checks remain distinct records in the QA ledger. Public Deadlock footage was not viewed in this pass; the [tooling study](art/DEADLOCK_VIDEO_AND_TOOLING.md) records sources actually read without claiming video viewing or proprietary asset extraction.
+The [current AI balance matrix](docs/evidence/jungle-balance-matrix.json) contains 168 mirrored lane/seed matches with the expanded economy under a fixed bot policy; it is not a human win-rate estimate. Bots do not deliberately farm jungle camps. The jungle revision also passed eight targeted browser cases, a separate native match reaching the normal 480-second finish and fresh replay, isolated local stress, the 21-asset container check and built root/nested browser checks. The new guide/focus and lighting revision requires its own targeted native checks, recorded in the next-phase panel. Earlier browser and container checks remain labelled baseline evidence. Exported-asset, native-browser, deployment and public WSS checks remain distinct records in the QA ledger. Public Deadlock footage was not viewed in this pass; the [tooling study](art/DEADLOCK_VIDEO_AND_TOOLING.md) records sources actually read without claiming video viewing or proprietary asset extraction.
 
 The earlier ANDOLAN game remains a separate application at the site root. This branch's Pages workflow assembles both applications, with YUGA under `/yuga/`. A later deployment from `main` must include this assembly step to retain the new path.

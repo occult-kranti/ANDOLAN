@@ -1,0 +1,72 @@
+{
+  "run": 38949328568,
+  "job": 117136847179,
+  "sourceCommit": "d01586b18f92b72228e18ceb0106c45c7b3c1f70",
+  "conclusion": "failure",
+  "browserResults": {
+    "passed": 12,
+    "failed": 4,
+    "releaseSoakSkippedByExplicitRoutineGate": 1,
+    "minutes": 21.1
+  },
+  "priorGates": "typecheck, lint, units and exported asset checks passed",
+  "heroAssetBrowserFileMinutes": 12.1,
+  "artifact": {
+    "id": 12068068908,
+    "bytes": 234120023,
+    "retrieval": "One ZIP attempt returned HTTP403 at productionresultssa17.blob.core.windows.net. Trace/screenshots were not retrieved; no bypass used."
+  },
+  "diagnosis": {
+    "practiceAim": "Confirmed helper used two different snapshot reads in the same angular delta. Renderer-capped keyboard/lock aim also had a source-confirmed timing dependency; root moved aim to the input timer. Exact contributions to this failure are not separable from available logs.",
+    "peerAbility": "Original check inspected only current bounded event window. New observer retains received events and separately requires outgoing command and matching successful result. Whether eviction or missing action caused the original failure remains unresolved.",
+    "volley": "Test stopped at4m although outer arrow at24m plus combined radii can cover4.34m. New ordinary dodge continues through release and full projectile flight; no-hit assertion retained.",
+    "campLock": "Original target bearing was frozen while neutral approached, and aim read lagged authority yaw. New aim recomputes target from coherent current state and live client yaw; exact original failure cause is not proven."
+  },
+  "annotations": [
+    {
+      "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+      "path": ".github",
+      "start_line": 2
+    },
+    {
+      "message": "Process completed with exit code 1.",
+      "path": ".github",
+      "start_line": 266
+    },
+    {
+      "message": "  4 failed\n    games/yuga/tests/arena.e2e.ts:53:1 \u203a native practice movement, combat, three skills, upgrade and pause controls \n    games/yuga/tests/arena.e2e.ts:100:1 \u203a two actual browser clients share movement, upgrades and reconnect identity \n    games/yuga/tests/arena.e2e.ts:147:1 \u203a native two-player Dawn Volley received windup and lateral movement evades it \n    games/yuga/tests/jungle.e2e.ts:8:1 \u203a native camp approach, leash, clear, gold shard, temporary power and respawn \n  1 skipped\n  12 passed (21.1m)",
+      "path": ".github",
+      "start_line": 259
+    },
+    {
+      "message": "games/yuga/tests/hero-assets.e2e.ts took 12.1m",
+      "path": "games/yuga/tests/hero-assets.e2e.ts",
+      "start_line": 0
+    },
+    {
+      "message": "  4) games/yuga/tests/jungle.e2e.ts:8:1 \u203a native camp approach, leash, clear, gold shard, temporary power and respawn \n    Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: \"neutral-stone-grove\"\n    Received: null\n\n    Call Log:\n    - Timeout 15000ms exceeded while waiting on the predicate\n\n      30 |   await nativeWalk(page,'KeyA',actor=>actor.x>-3);await expect.poll(()=>states.some(state=>state.state==='returning')).toBe(true);await expect.poll(async()=>(await neutral()).state).toBe('idle');expect((await neutral()).health).toBe((await neutral()).maxHealth);\n      31 |   await nativeWalk(page,'KeyD',actor=>actor.x<-14);await expect.poll(async()=>(await neutral()).state).toBe('aggro');\n    > 32 |   const before=await localActor(page),target=await neutral();await keyboardYaw(page,Math.atan2(target.x-before.x,target.z-before.z));await page.keyboard.press('KeyT');await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(campId);\n         |                                                                                                                                                                                                                                                   ^\n      33 |   await page.keyboard.down('KeyF');\n      34 |   try{\n      35 |    await expect.poll(async()=>(await neutral()).state,{timeout:25_000,intervals:[50,100]}).toBe('dead');\n        at /home/runner/work/ANDOLAN/ANDOLAN/games/yuga/tests/jungle.e2e.ts:32:243",
+      "path": "games/yuga/tests/jungle.e2e.ts",
+      "start_line": 32
+    },
+    {
+      "message": "  3) games/yuga/tests/arena.e2e.ts:147:1 \u203a native two-player Dawn Volley received windup and lateral movement evades it \n    Error: expect(received).toEqual(expected) // deep equality\n\n    - Expected  - 1\n    + Received  + 8\n\n    - Array []\n    + Array [\n    +   Object {\n    +     \"actorId\": \"a5b951809e77dae4\",\n    +     \"id\": 294,\n    +     \"targetId\": \"dcf57c0ae772009b\",\n    +     \"time\": 29.400000000000283,\n    +   },\n    + ]\n\n      201 |   await expect.poll(async()=>(await snapshot(host)).time,{intervals:[50,100]}).toBeGreaterThan(castReceipt!.cast.releaseAt+1);\n      202 |   const afterDodge=await me(guest);\n    > 203 |   expect([...observedHits.values()].filter(event=>event.time>=startTime&&event.actorId===caster.id&&event.targetId===target.id)).toEqual([]);\n          |                                                                                                                                  ^\n      204 |   expect(results.get(host)!.some(result=>result.ok&&result.code==='ABILITY_CAST')).toBe(true);\n      205 |   await capture(guest,info,'native-volley-evade');\n      206 |   await attach(host,info,'native-windup-evade',{scope:'Two real browser clients and real local server without hero bots; lane waves run. Native movement/aim/R; native dodge key reacts to the peer received windup. First authoritative lateral movement must precede release. No actor-position/health/time injection. Snapshot timing does not itself verify every telegraph pixel or human reaction speed.',initialHost,initialGuest,caster,target,castReceipt,firstDodgeMovement,beforeDodge,afterDodge,observedTargetHits:[...observedHits.values()].filter(event=>event.actorId===caster.id&&event.targetId===target.id)});\n        at /home/runner/work/ANDOLAN/ANDOLAN/games/yuga/tests/arena.e2e.ts:203:130",
+      "path": "games/yuga/tests/arena.e2e.ts",
+      "start_line": 203
+    },
+    {
+      "message": "  2) games/yuga/tests/arena.e2e.ts:100:1 \u203a two actual browser clients share movement, upgrades and reconnect identity \n    Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: true\n    Received: false\n\n    Call Log:\n    - Timeout 15000ms exceeded while waiting on the predicate\n\n      102 |  await load(host);await low(host);await join(host,'Sun QA');const code=(await snapshot(host)).room;await load(guest);await low(guest);await pageHero(guest,'arjuna');await join(guest,'Moon QA',code);const hostBefore=await me(host),guestBefore=await me(guest);expect(hostBefore.id).not.toBe(guestBefore.id);expect(hostBefore.team).not.toBe(guestBefore.team);await expect.poll(async()=>(await snapshot(host)).actors.filter(a=>a.kind==='hero'&&!a.bot).length).toBe(2);expect((await snapshot(host)).actors.filter(a=>a.kind==='hero')).toHaveLength(6);\n      103 |  await activate(host);await host.keyboard.press('KeyB');await host.locator('#buy-power').click();await expect.poll(async()=>(await me(host)).upgrades.power).toBe(1);await host.locator('#upgrades-dialog [data-close]').click();await hold(host,'KeyA',actor=>length(actor,hostBefore)>3);await expect.poll(async()=>length((await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!,await me(host))).toBeLessThan(.6);\n    > 104 |  await activate(guest);await guest.keyboard.press('KeyQ');await expect.poll(async()=>(await snapshot(host)).events.some(e=>e.type==='ability'&&e.actorId===guestBefore.id)).toBe(true);await activate(host);await host.keyboard.press('Escape');const pausedPosition=await me(host),clock=(await snapshot(host)).time;await host.keyboard.press('KeyW');await expect.poll(async()=>(await snapshot(host)).time).toBeGreaterThan(clock+.8);expect(length(pausedPosition,await me(host))).toBeLessThan(.05);await host.locator('#resume-game').click();\n          |                                                                                                                                                                             ^\n      105 |  await host.keyboard.press('KeyQ');await expect.poll(async()=>(await me(host)).cooldowns[0]!).toBeGreaterThan(0);await host.keyboard.press('Escape');await host.locator('#leave-game').click();await join(host,'Sun QA',code);await activate(host);await host.keyboard.press('KeyE');await expect.poll(async()=>(await me(host)).cooldowns[1]!).toBeGreaterThan(0);expect((await me(host)).id).toBe(hostBefore.id);\n      106 |  const beforeReconnect=await me(host);await host.goto('/');await expect.poll(async()=>(await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!.bot).toBe(true);await host.waitForFunction(()=>!!window.__YUGA);await join(host,'Sun QA',code);const afterReconnect=await me(host);expect(afterReconnect.id).toBe(hostBefore.id);expect(afterReconnect.heroId).toBe(beforeReconnect.heroId);expect(afterReconnect.team).toBe(beforeReconnect.team);expect(afterReconnect.upgrades).toEqual(beforeReconnect.upgrades);expect((await snapshot(host)).actors.filter(a=>a.id===hostBefore.id)).toHaveLength(1);await expect.poll(async()=>(await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!.bot).toBe(false);\n      107 |  await capture(host,info,'two-client-host');await capture(guest,info,'two-client-guest');await attach(host,info,'real-two-client',{room:code,hostId:hostBefore.id,guestId:guestBefore.id,beforeReconnect,afterReconnect,claim:'Two independent browser contexts and actual local WebSockets, not public hosting'});expect(errors.get(host)).toEqual([]);expect(errors.get(guest)).toEqual([]);expect(results.get(host)!.some(r=>r.ok&&r.code==='UPGRADED')).toBe(true);\n        at /home/runner/work/ANDOLAN/ANDOLAN/games/yuga/tests/arena.e2e.ts:104:173",
+      "path": "games/yuga/tests/arena.e2e.ts",
+      "start_line": 104
+    },
+    {
+      "message": "  1) games/yuga/tests/arena.e2e.ts:53:1 \u203a native practice movement, combat, three skills, upgrade and pause controls \n    Error: Native keyboard aim timed out toward -0.1531621053605241; actor {\"id\":\"local-player\",\"name\":\"Traveller\",\"heroId\":\"rama\",\"team\":\"sun\",\"bot\":false,\"lane\":1,\"connected\":true,\"kind\":\"hero\",\"x\":0,\"z\":-66,\"y\":0,\"yaw\":-1.12,\"health\":300,\"maxHealth\":300,\"shield\":60,\"respawn\":0,\"cooldowns\":[0,0,15.950000000000454],\"fireCooldown\":0,\"credits\":70,\"level\":2,\"kills\":0,\"deaths\":1,\"assists\":0,\"damageDealt\":0,\"upgrades\":{\"power\":1,\"vitality\":0,\"tempo\":0},\"effects\":{\"haste\":0,\"slow\":0,\"ward\":0.7500000000000024,\"vigor\":0},\"lastInputSeq\":118}\n\n      39 | async function range(page:Page,id:string,value:number){await page.locator(id).fill(String(value));}\n      40 | async function attach(page:Page,info:TestInfo,name:string,detail:unknown){await info.attach(name,{body:JSON.stringify({scope:name,detail,pageErrors:errors.get(page),commands:commands.get(page),results:results.get(page)},null,2),contentType:'application/json'});}\n    > 41 | async function nativeYaw(page:Page,target:number){const end=Date.now()+12_000;let held='';try{while(Date.now()<end){const delta=Math.atan2(Math.sin(target-(await me(page)).yaw),Math.cos(target-(await me(page)).yaw));if(Math.abs(delta)<.10)return;const next=delta>0?'KeyJ':'KeyL';if(next!==held){if(held)await page.keyboard.up(held);await page.keyboard.down(next);held=next;}await page.waitForTimeout(45);}throw new Error(`Native keyboard aim timed out toward ${target}; actor ${JSON.stringify(await me(page))}`);}finally{if(held)await page.keyboard.up(held);}}\n         |                                                                                                                                                                                                                                                                                                                                                                                                                            ^\n      42 |\n      43 | test('roster, saved settings and native muted audio preview',async({page},info)=>{\n      44 |  await load(page);await capture(page,info,'desktop-roster');await expect(page.locator('[data-hero]')).toHaveCount(14);\n        at nativeYaw (/home/runner/work/ANDOLAN/ANDOLAN/games/yuga/tests/arena.e2e.ts:41:412)\n        at /home/runner/work/ANDOLAN/ANDOLAN/games/yuga/tests/arena.e2e.ts:59:436",
+      "path": "games/yuga/tests/arena.e2e.ts",
+      "start_line": 41
+    },
+    {
+      "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+      "path": ".github",
+      "start_line": 1
+    }
+  ]
+}

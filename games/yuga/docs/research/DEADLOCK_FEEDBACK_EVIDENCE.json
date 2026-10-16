@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "reviewed_at": "2026-10-16",
+  "method": "Two authorized official API collections, purposive and bounded; no media viewed; deduplicated by permalink. Counts are collected records, not human viewpoints or sentiment prevalence.",
+  "collections": [
+    {
+      "external_filename": "reddit-deadlock-n7fd7k5d.json",
+      "sha256": "c3fa66968656e01e1bdc84aa4accb64c22afc8b8ab682999ce1fb8eb8407312d",
+      "retrieved_at": "2026-10-16T18:37:55.210426+00:00",
+      "status": "complete",
+      "requests": 17,
+      "post_records": 40,
+      "comment_records": 69,
+      "limits": {
+        "requests": 18,
+        "posts": 40,
+        "comments": 120,
+        "comment_posts": 12,
+        "comments_per_post": 10,
+        "runtime_seconds": 240
+      },
+      "strata": [
+        {
+          "name": "new",
+          "endpoint": "/new",
+          "query": {
+            "sort": "new"
+          },
+          "requested_posts": 10,
+          "usable_posts": 10
+        },
+        {
+          "name": "top_month",
+          "endpoint": "/top",
+          "query": {
+            "t": "month"
+          },
+          "requested_posts": 10,
+          "usable_posts": 10
+        },
+        {
+          "name": "feedback_relevance",
+          "endpoint": "/search",
+          "query": {
+            "q": "frustrating OR confusing OR feedback OR \"new player\"",
+            "restrict_sr": "on",
+            "sort": "relevance",
+            "t": "year"
+          },
+          "requested_posts": 10,
+          "usable_posts": 10
+        },
+        {
+          "name": "counterexamples_relevance",
+          "endpoint": "/search",
+          "query": {
+            "q": "enjoy OR improved OR helpful OR \"love this\"",
+            "restrict_sr": "on",
+            "sort": "relevance",
+            "t": "year"
+          },
+          "requested_posts": 10,
+          "usable_posts": 10
+        }
+      ],
+      "selected_existing_threads": []
+    },
+    {
+      "external_filename": "reddit-deadlock-qd0j3brc.json",
+      "sha256": "71f4231510d3bb7f8dda17e874557238d52f0117dafcb654b3fde2aff2919726",
+      "retrieved_at": "2026-10-16T18:40:55.153667+00:00",
+      "status": "complete",
+      "requests": 9,
+      "post_records": 8,
+      "comment_records": 86,
+      "limits": {
+        "requests": 12,
+        "threads": 8,
+        "comments_per_thread": 15,
+        "comments": 120,
+        "depth": 2,
+        "runtime_seconds": 240
+      },
+      "strata": [],
+      "selected_existing_threads": [
+        "https://www.reddit.com/r/DeadlockTheGame/comments/1udr7ht/weekly_feedback_topic_46_obvious_jank_alpha/",
+        "https://www.reddit.com/r/DeadlockTheGame/comments/1x7nisu/i_want_more_space_to_fight_objectives/",
+        "https://www.reddit.com/r/DeadlockTheGame/comments/1qzyr18/can_we_normalize_teaching_new_players_instead_of/",
+        "https://www.reddit.com/r/DeadlockTheGame/comments/1rksfsc/i_hate_this_thing_as_a_new_player_i_kept_thinking/",
+        "https://www.reddit.com/r/DeadlockTheGame/comments/1spqw43/new_player_here_can_someone_explain_why_this_door/",
+        "https://www.reddit.com/r/DeadlockTheGame/comments/1rceuk1/advice_how_do_i_fix_tunnel_visionpoor_situational/",
+        "https://www.reddit.com/r/DeadlockTheGame/comments/1x7nw48/which_heroes_gameplay_wise_are_similar_to_shiv/",
+        "https://www.reddit.com/r/DeadlockTheGame/comments/1v98hlz/unpopular_opinion_we_should_agree_to_swap_the/"
+      ]
+    }
+  ],
+  "combined": {
+    "unique_posts": 40,
+    "unique_comments": 145,
+    "requests": 26,
+    "overlapping_post_records": 8,
+    "overlapping_comment_records": 10,
+    "post_date_min": "2026-01-13T17:29:49+00:00",
+    "post_date_max": "2026-10-16T18:37:16+00:00",
+    "retained_truncated_posts": 2,
+    "retained_truncated_comments": 2,
+    "empty_body_posts": 15
+  },
+  "reading_scope": "All 40 post titles and initial body excerpts up to 1600 characters, fuller selected-thread text, all 86 focused comment records and relevant initial replies. Not exhaustive coding of every initial reply or full reading of every long post. No raw text or author metadata is republished.",
+  "limitations": [
+    "Initial round-robin comment selection included art/meme threads; follow-up deliberately selected design-relevant posts.",
+    "New/top/relevance rankings and purposive follow-up are not representative sampling.",
+    "Record counts include automated, removed-text and non-substantive material.",
+    "Search labels do not classify sentiment; no prevalence or retention inference.",
+    "Linked images/videos and commercial gameplay were not viewed.",
+    "Exact commercial game builds generally unavailable; older complaints may no longer apply.",
+    "Bug, matchmaking and performance claims are firsthand reports, not independent reproductions.",
+    "Raw sanitized corpora remain outside repository; hashes establish reviewed input, not continuing availability."
+  ],
+  "deduplication_policy": "Permalink identity; retain the longer text when observations overlap. Truncation counts describe the retained observation, not every historical flag."
+}

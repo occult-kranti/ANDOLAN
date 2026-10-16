@@ -29,7 +29,7 @@ test('native camp approach, leash, clear, gold shard, temporary power and respaw
   await expect.poll(async()=>(await neutral()).state,{timeout:45_000}).toBe('aggro');expect((await neutral()).targetId).toBe(actorId);await imageEvidence(page,info,'native-yaksha-aggro');
   await nativeWalk(page,'KeyA',actor=>actor.x>-3);await expect.poll(()=>states.some(state=>state.state==='returning')).toBe(true);await expect.poll(async()=>(await neutral()).state).toBe('idle');expect((await neutral()).health).toBe((await neutral()).maxHealth);
   await nativeWalk(page,'KeyD',actor=>actor.x<-14);await expect.poll(async()=>(await neutral()).state).toBe('aggro');
-  const before=await localActor(page),target=await neutral();await keyboardYaw(page,Math.atan2(target.x-before.x,target.z-before.z));await page.keyboard.press('KeyT');await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(campId);
+  const before=await localActor(page);await keyboardYaw(page,(state,actor)=>{const target=state.neutrals.find(n=>n.id===campId)!;return Math.atan2(target.x-actor.x,target.z-actor.z);});await page.keyboard.press('KeyT');await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(campId);
   await page.keyboard.down('KeyF');
   try{
    await expect.poll(async()=>(await neutral()).state,{timeout:25_000,intervals:[50,100]}).toBe('dead');

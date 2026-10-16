@@ -1,23 +1,24 @@
 import { YUGA_PROTOCOL } from '../shared/types';
 import { test, expect, type Page, type TestInfo } from '@playwright/test';
+import { keyboardYaw, inputObservation } from './browser-harness';
 import { HEROES } from '../shared/heroes';
 import { ArenaSimulation } from '../shared/simulation';
 import { createArenaServer } from '../server/server';
-import type { Actor, ArenaSnapshot, ArenaCommand, CommandResult } from '../shared/types';
+import type { Actor, ArenaSnapshot, ArenaCommand, CommandResult, GameEvent } from '../shared/types';
 
 type AudioDiagnostics = {started:boolean;unlocked:boolean;muted:boolean;active:boolean;volume:number;previewing:boolean;contextState:string;outputRms:number;outputPeak:number};
-declare global { interface Window { __YUGA:{snapshot():ArenaSnapshot|undefined;playerId():string;metrics():{ready:boolean;room:string;frames:number;meanFps:number;maxFrameMs:number;targetId:string|null};audio():AudioDiagnostics}; __yugaQAFrameCap?:boolean } }
-const errors=new WeakMap<Page,string[]>(), commands=new WeakMap<Page,ArenaCommand[]>(), results=new WeakMap<Page,CommandResult[]>();
+declare global { interface Window { __YUGA:{snapshot():ArenaSnapshot|undefined;playerId():string;metrics():{ready:boolean;room:string;frames:number;meanFps:number;maxFrameMs:number;yaw:number;pitch:number;targetId:string|null};audio():AudioDiagnostics}; __yugaQAFrameCap?:boolean } }
+const errors=new WeakMap<Page,string[]>(), commands=new WeakMap<Page,ArenaCommand[]>(), results=new WeakMap<Page,CommandResult[]>(), receivedEvents=new WeakMap<Page,Map<number,GameEvent>>();
 const snapshot=(page:Page)=>page.evaluate(()=>window.__YUGA.snapshot()!);
 const me=(page:Page)=>page.evaluate(()=>window.__YUGA.snapshot()!.actors.find(a=>a.id===window.__YUGA.playerId())!);
 const audio=(page:Page)=>page.evaluate(()=>window.__YUGA.audio());
 const length=(a:{x:number;z:number},b:{x:number;z:number})=>Math.hypot(a.x-b.x,a.z-b.z);
 async function load(page:Page){
- errors.set(page,[]);commands.set(page,[]);results.set(page,[]);
+ errors.set(page,[]);commands.set(page,[]);results.set(page,[]);receivedEvents.set(page,new Map());
  page.on('pageerror',e=>errors.get(page)!.push(e.stack||e.message));
  page.on('websocket',socket=>{
   socket.on('framesent',frame=>{try{const m=JSON.parse(String(frame.payload));if(m.type==='command')commands.get(page)!.push(m);}catch{/* No bearer join/welcome traffic retained. */}});
-  socket.on('framereceived',frame=>{try{const m=JSON.parse(String(frame.payload));if(m.type==='result')results.get(page)!.push(m);}catch{/* No bearer join/welcome traffic retained. */}});
+  socket.on('framereceived',frame=>{try{const m=JSON.parse(String(frame.payload));if(m.type==='result')results.get(page)!.push(m);if(m.type==='snapshot')for(const event of m.snapshot.events)receivedEvents.get(page)!.set(event.id,event);}catch{/* No bearer join/welcome traffic retained. */}});
  });
  if(process.env.CI||process.env.YUGA_SOFTWARE_RENDERING==='1')await page.addInitScript(()=>{
   if(window.__yugaQAFrameCap)return;window.__yugaQAFrameCap=true;
@@ -32,13 +33,13 @@ async function frames(page:Page){await page.evaluate(()=>new Promise<void>(resol
 async function capture(page:Page,info:TestInfo,name:string){await frames(page);await page.screenshot({path:info.outputPath(`${name}.png`),fullPage:true});}
 async function ready(page:Page){await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(()=>page.evaluate(()=>!!window.__YUGA.snapshot()&&window.__YUGA.metrics().ready)).toBe(true);}
 async function practice(page:Page){await page.locator('#practice-play').click();await ready(page);await expect.poll(async()=>(await snapshot(page)).room).toBe('PRACTICE');}
-async function activate(page:Page){await page.bringToFront();if(await page.locator('#pause-dialog').isVisible())await page.locator('#resume-game').click();}
+async function activate(page:Page){await page.bringToFront();if(await page.locator('#pause-dialog').isVisible())await page.locator('#resume-game').click();await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().ready)).toBe(true);}
 async function join(page:Page,name:string,room=''){await page.locator('#online-open').click();await page.locator('#player-name').fill(name);await page.locator('#room-code').fill(room);await page.locator('#join-room').click();await ready(page);if(room)await expect.poll(async()=>(await snapshot(page)).room).toBe(room);}
 async function hold(page:Page,key:string,until:(actor:Actor)=>boolean,timeout=15_000){await page.keyboard.down(key);try{await expect.poll(async()=>until(await me(page)),{timeout,intervals:[60,100]}).toBe(true);}finally{await page.keyboard.up(key);}}
 async function previewSamples(page:Page){await page.locator('#sound-preview').click();return page.evaluate(async()=>{let peak=0,rms=0,running=false,previewing=false;const end=performance.now()+450;while(performance.now()<end){const d=window.__YUGA.audio();peak=Math.max(peak,d.outputPeak);rms=Math.max(rms,d.outputRms);running ||= d.contextState==='running';previewing ||= d.previewing;await new Promise(r=>setTimeout(r,20));}return{peak,rms,running,previewing};});}
 async function range(page:Page,id:string,value:number){await page.locator(id).fill(String(value));}
 async function attach(page:Page,info:TestInfo,name:string,detail:unknown){await info.attach(name,{body:JSON.stringify({scope:name,detail,pageErrors:errors.get(page),commands:commands.get(page),results:results.get(page)},null,2),contentType:'application/json'});}
-async function nativeYaw(page:Page,target:number){const end=Date.now()+12_000;let held='';try{while(Date.now()<end){const delta=Math.atan2(Math.sin(target-(await me(page)).yaw),Math.cos(target-(await me(page)).yaw));if(Math.abs(delta)<.10)return;const next=delta>0?'KeyJ':'KeyL';if(next!==held){if(held)await page.keyboard.up(held);await page.keyboard.down(next);held=next;}await page.waitForTimeout(45);}throw new Error(`Native keyboard aim timed out toward ${target}; actor ${JSON.stringify(await me(page))}`);}finally{if(held)await page.keyboard.up(held);}}
+const nativeYaw=keyboardYaw;
 
 test('roster, saved settings and native muted audio preview',async({page},info)=>{
  await load(page);await capture(page,info,'desktop-roster');await expect(page.locator('[data-hero]')).toHaveCount(14);
@@ -56,7 +57,7 @@ test('native practice movement, combat, three skills, upgrade and pause controls
  for(const [slot,key]of ['KeyQ','KeyE','KeyR'].entries()){await page.keyboard.press(key);await expect.poll(async()=>(await me(page)).cooldowns[slot]!).toBeGreaterThan(0);}
  await hold(page,'Space',actor=>actor.y>.4);const before=await me(page);await hold(page,'KeyA',actor=>actor.x-before.x>4);await hold(page,'KeyW',actor=>actor.z>-35,30_000);
  // Acquire from our tower's side before entering the bots'27m firing radius.
- const visibleRival=async()=>{const state=await snapshot(page),actor=await me(page);return state.actors.filter(target=>target.team!==actor.team&&target.health>0&&Math.abs(target.x)<10&&length(target,actor)<31.5).sort((a,b)=>length(a,actor)-length(b,actor))[0];};await expect.poll(async()=>!!await visibleRival(),{timeout:30_000}).toBe(true);const target=(await visibleRival())!,pos=await me(page);expect(pos.health).toBeGreaterThan(0);await nativeYaw(page,Math.atan2(target.x-pos.x,target.z-pos.z));await page.keyboard.press('KeyT');await hold(page,'KeyF',actor=>actor.damageDealt>0,15_000);await capture(page,info,'native-combat');
+ const visibleRival=async()=>{const state=await snapshot(page),actor=await me(page);return state.actors.filter(target=>target.team!==actor.team&&target.health>0&&Math.abs(target.x)<10&&length(target,actor)<31.5).sort((a,b)=>length(a,actor)-length(b,actor))[0];};await expect.poll(async()=>!!await visibleRival(),{timeout:30_000}).toBe(true);const pos=await me(page);expect(pos.health).toBeGreaterThan(0);await nativeYaw(page,(state,actor)=>{const target=state.actors.filter(other=>other.team!==actor.team&&other.health>0&&Math.abs(other.x)<10&&length(other,actor)<31.5).sort((a,b)=>length(a,actor)-length(b,actor))[0];if(!target)throw new Error(`Rival left visible acquisition range at ${state.time}`);return Math.atan2(target.x-actor.x,target.z-actor.z);});await page.keyboard.press('KeyT');await hold(page,'KeyF',actor=>actor.damageDealt>0,15_000);await capture(page,info,'native-combat');
  await page.keyboard.press('KeyB');await expect(page.locator('#shop-status')).toContainText('Return to your spawn');await expect(page.locator('#buy-power')).toBeDisabled();await page.locator('#upgrades-dialog [data-close]').click();
  await page.keyboard.down('KeyW');await page.keyboard.down('KeyF');await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();const stopped=await snapshot(page),actor=await me(page);await page.keyboard.press('KeyQ');await page.waitForTimeout(700);expect((await snapshot(page)).time).toBe(stopped.time);expect(length(actor,await me(page))).toBe(0);await page.keyboard.up('KeyW');await page.keyboard.up('KeyF');await page.locator('#resume-game').click();await expect(page.locator('#arena')).toBeFocused();const resumed=await me(page);await hold(page,'KeyS',a=>length(a,resumed)>1);
  await attach(page,info,'native-practice',{before,after:await me(page),snapshotTime:(await snapshot(page)).time,claim:'Ordinary keyboard controls only; no command, position or clock injection'});expect(errors.get(page)).toEqual([]);
@@ -101,11 +102,11 @@ test('two actual browser clients share movement, upgrades and reconnect identity
  test.setTimeout(180_000);const a=await browser.newContext({viewport:{width:640,height:480}}),b=await browser.newContext({viewport:{width:640,height:480}});const host=await a.newPage(),guest=await b.newPage();try{
  await load(host);await low(host);await join(host,'Sun QA');const code=(await snapshot(host)).room;await load(guest);await low(guest);await pageHero(guest,'arjuna');await join(guest,'Moon QA',code);const hostBefore=await me(host),guestBefore=await me(guest);expect(hostBefore.id).not.toBe(guestBefore.id);expect(hostBefore.team).not.toBe(guestBefore.team);await expect.poll(async()=>(await snapshot(host)).actors.filter(a=>a.kind==='hero'&&!a.bot).length).toBe(2);expect((await snapshot(host)).actors.filter(a=>a.kind==='hero')).toHaveLength(6);
  await activate(host);await host.keyboard.press('KeyB');await host.locator('#buy-power').click();await expect.poll(async()=>(await me(host)).upgrades.power).toBe(1);await host.locator('#upgrades-dialog [data-close]').click();await hold(host,'KeyA',actor=>length(actor,hostBefore)>3);await expect.poll(async()=>length((await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!,await me(host))).toBeLessThan(.6);
- await activate(guest);await guest.keyboard.press('KeyQ');await expect.poll(async()=>(await snapshot(host)).events.some(e=>e.type==='ability'&&e.actorId===guestBefore.id)).toBe(true);await activate(host);await host.keyboard.press('Escape');const pausedPosition=await me(host),clock=(await snapshot(host)).time;await host.keyboard.press('KeyW');await expect.poll(async()=>(await snapshot(host)).time).toBeGreaterThan(clock+.8);expect(length(pausedPosition,await me(host))).toBeLessThan(.05);await host.locator('#resume-game').click();
+ await activate(guest);const peerEventWatermark=Math.max(0,...receivedEvents.get(host)!.keys()),priorGuestCommands=commands.get(guest)!.length;await guest.keyboard.press('KeyQ');await expect.poll(()=>commands.get(guest)!.length).toBeGreaterThan(priorGuestCommands);const castCommand=commands.get(guest)!.at(-1)!;await expect.poll(()=>results.get(guest)!.find(result=>result.id===castCommand.id)?.code).toBe('ABILITY_CAST');await expect.poll(()=>[...receivedEvents.get(host)!.values()].some(e=>e.id>peerEventWatermark&&e.type==='ability'&&e.actorId===guestBefore.id)).toBe(true);await activate(host);await host.keyboard.press('Escape');const pausedPosition=await me(host),clock=(await snapshot(host)).time;await host.keyboard.press('KeyW');await expect.poll(async()=>(await snapshot(host)).time).toBeGreaterThan(clock+.8);expect(length(pausedPosition,await me(host))).toBeLessThan(.05);await host.locator('#resume-game').click();
  await host.keyboard.press('KeyQ');await expect.poll(async()=>(await me(host)).cooldowns[0]!).toBeGreaterThan(0);await host.keyboard.press('Escape');await host.locator('#leave-game').click();await join(host,'Sun QA',code);await activate(host);await host.keyboard.press('KeyE');await expect.poll(async()=>(await me(host)).cooldowns[1]!).toBeGreaterThan(0);expect((await me(host)).id).toBe(hostBefore.id);
  const beforeReconnect=await me(host);await host.goto('/');await expect.poll(async()=>(await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!.bot).toBe(true);await host.waitForFunction(()=>!!window.__YUGA);await join(host,'Sun QA',code);const afterReconnect=await me(host);expect(afterReconnect.id).toBe(hostBefore.id);expect(afterReconnect.heroId).toBe(beforeReconnect.heroId);expect(afterReconnect.team).toBe(beforeReconnect.team);expect(afterReconnect.upgrades).toEqual(beforeReconnect.upgrades);expect((await snapshot(host)).actors.filter(a=>a.id===hostBefore.id)).toHaveLength(1);await expect.poll(async()=>(await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!.bot).toBe(false);
  await capture(host,info,'two-client-host');await capture(guest,info,'two-client-guest');await attach(host,info,'real-two-client',{room:code,hostId:hostBefore.id,guestId:guestBefore.id,beforeReconnect,afterReconnect,claim:'Two independent browser contexts and actual local WebSockets, not public hosting'});expect(errors.get(host)).toEqual([]);expect(errors.get(guest)).toEqual([]);expect(results.get(host)!.some(r=>r.ok&&r.code==='UPGRADED')).toBe(true);
- }finally{await a.close();await b.close();}
+ }finally{await info.attach('two-client-command-and-state-diagnostics',{body:JSON.stringify({host:{observation:await inputObservation(host).catch(()=>null),commands:commands.get(host),results:results.get(host)},guest:{observation:await inputObservation(guest).catch(()=>null),commands:commands.get(guest),results:results.get(guest)},receivedPeerAbilities:[...(receivedEvents.get(host)?.values()??[])].filter(event=>event.type==='ability')},null,2),contentType:'application/json'});await a.close();await b.close();}
 });
 async function pageHero(page:Page,id:string){await page.locator(`[data-hero="${id}"]`).click();}
 
@@ -156,6 +157,7 @@ test('native two-player Dawn Volley received windup and lateral movement evades 
  let castReceipt:{snapshotTime:number;cast:NonNullable<Actor['cast']>}|undefined;
  let firstDodgeMovement:{time:number;x:number;phase:string|undefined}|undefined;
  let nativeDodge:Promise<void>|undefined,nativeDodgeError:string|undefined;
+ const dodgePath:{time:number;x:number;z:number;lateralClearance:number;projectiles:number}[]=[];
  try{
   await load(host);await low(host);await practice(host);await host.keyboard.press('Escape');await host.locator('#leave-game').click();
   await load(guest);await low(guest);await practice(guest);await guest.keyboard.press('Escape');await guest.locator('#leave-game').click();
@@ -173,6 +175,7 @@ test('native two-player Dawn Volley received windup and lateral movement evades 
     // avoids falsely requiring a one-second phase to remain current after sequential polls.
     nativeDodge=guest.keyboard.down('KeyA').catch(error=>{nativeDodgeError=String(error);});
    }
+   if(castReceipt&&dodger)dodgePath.push({time:state.time,x:dodger.x,z:dodger.z,lateralClearance:Math.abs(Math.cos(castReceipt.cast.yaw)*(dodger.x-castReceipt.cast.origin.x)-Math.sin(castReceipt.cast.yaw)*(dodger.z-castReceipt.cast.origin.z)),projectiles:state.projectiles.filter(p=>p.owner===casterId).length});
    if(castReceipt&&!firstDodgeMovement&&dodger&&baselineX-dodger.x>.15)firstDodgeMovement={time:state.time,x:dodger.x,phase:caster?.cast?.phase};
   }));
   await guest.locator('#online-open').click();await guest.locator('#server-address').fill(endpoint);await guest.locator('#room-code').fill(code);await guest.locator('#player-name').fill('Native dodger');await guest.locator('#join-room').click();await ready(guest);
@@ -194,7 +197,10 @@ test('native two-player Dawn Volley received windup and lateral movement evades 
   const startTime=(await snapshot(host)).time;await host.keyboard.press('KeyR');
   await expect.poll(()=>!!castReceipt,{intervals:[30,50]}).toBe(true);await nativeDodge;
   expect(nativeDodgeError).toBeUndefined();
-  try{await expect.poll(async()=>beforeDodge.x-(await me(guest)).x,{timeout:8_000,intervals:[50,100]}).toBeGreaterThan(4);}finally{await guest.keyboard.up('KeyA');}
+  // Keep dodging across the complete three-arrow envelope. Four metres can
+  // still lie inside the outer arrow plus the combined actor/projectile radii.
+  const volleyRange=HEROES.find(hero=>hero.id==='rama')!.abilities[2].range;
+  try{await expect.poll(async()=>(await snapshot(guest)).time,{timeout:8_000,intervals:[50,100]}).toBeGreaterThan(castReceipt!.cast.releaseAt+volleyRange/62);expect(beforeDodge.x-(await me(guest)).x).toBeGreaterThan(4);}finally{await guest.keyboard.up('KeyA');}
   await expect.poll(()=>!!firstDodgeMovement,{intervals:[50,100]}).toBe(true);
   expect(firstDodgeMovement!.time).toBeLessThan(castReceipt!.cast.releaseAt);
   expect(firstDodgeMovement!.phase).toBe('windup');
@@ -203,9 +209,9 @@ test('native two-player Dawn Volley received windup and lateral movement evades 
   expect([...observedHits.values()].filter(event=>event.time>=startTime&&event.actorId===caster.id&&event.targetId===target.id)).toEqual([]);
   expect(results.get(host)!.some(result=>result.ok&&result.code==='ABILITY_CAST')).toBe(true);
   await capture(guest,info,'native-volley-evade');
-  await attach(host,info,'native-windup-evade',{scope:'Two real browser clients and real local server without hero bots; lane waves run. Native movement/aim/R; native dodge key reacts to the peer received windup. First authoritative lateral movement must precede release. No actor-position/health/time injection. Snapshot timing does not itself verify every telegraph pixel or human reaction speed.',initialHost,initialGuest,caster,target,castReceipt,firstDodgeMovement,beforeDodge,afterDodge,observedTargetHits:[...observedHits.values()].filter(event=>event.actorId===caster.id&&event.targetId===target.id)});
+  await attach(host,info,'native-windup-evade',{scope:'Two real browser clients and real local server without hero bots; lane waves run. Native movement/aim/R; native dodge key reacts to the peer received windup. First authoritative lateral movement must precede release. No actor-position/health/time injection. Snapshot timing does not itself verify every telegraph pixel or human reaction speed.',initialHost,initialGuest,caster,target,castReceipt,firstDodgeMovement,beforeDodge,afterDodge,dodgePath,observedTargetHits:[...observedHits.values()].filter(event=>event.actorId===caster.id&&event.targetId===target.id)});
   expect(errors.get(host)).toEqual([]);expect(errors.get(guest)).toEqual([]);
- }finally{armed=false;await nativeDodge;await guest.keyboard.up('KeyA').catch(()=>{});await a.close();await b.close();await server.close();}
+ }finally{await info.attach('native-dodge-diagnostics',{body:JSON.stringify({castReceipt,firstDodgeMovement,dodgePath,observedHits:[...observedHits.values()],hostResults:results.get(host),guestObservation:await inputObservation(guest).catch(()=>null)},null,2),contentType:'application/json'});armed=false;await nativeDodge;await guest.keyboard.up('KeyA').catch(()=>{});await a.close();await b.close();await server.close();}
 });
 
 test('labelled target fixture verifies native lock, manual release, settings and cover rejection',async({page},info)=>{

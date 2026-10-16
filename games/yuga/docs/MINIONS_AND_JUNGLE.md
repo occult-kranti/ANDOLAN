@@ -115,9 +115,11 @@ The editions and file hashes are retained in the roster source ledger. Regional 
 
 The useful public-tool lesson is narrower: [Boon's pinned README](https://github.com/pnxenopoulos/boon/blob/0c7663f17aa24a65374925b022fd4d98aaa47477/README.md) describes player, damage, ability, objective and optional lane-unit datasets; [demofile-net's pinned README](https://github.com/saul/demofile-net/blob/fd59701a998cf30a46adc4942e063d90de73c07a/README.md) documents entity/tick inspection. Their public documentation motivates recording YUGA's own kill → guaranteed award → shard spawn → claim/expiry sequence and lane opportunity costs. It supplies no imported combat code, current-patch economy or evidence of player satisfaction.
 
-## New acceptance gates
+## Acceptance gates and current evidence
 
-All gates below are pending expansion-specific evidence at authoring. Passing a source/type check is distinct from a browser encounter or a human playtest.
+The expansion now has authority regressions, eight focused browser cases, a 168-match deterministic AI comparison, six complete-match simulations, isolated 6/12/24-client socket scenarios and a production-container pass. [PLAYER_EXPERIENCE_REVIEW.md](PLAYER_EXPERIENCE_REVIEW.md#jungle-baseline-evidence-and-remaining-gates) maps the exact records and their limits. The native Yaksha encounter covers ordinary approach, leash, clear, shard, Vigor and normal respawn; seven-unit animation and rival-steal HUD checks use explicitly labelled presentation fixtures. The separate [native soak](evidence/jungle-native-soak-check.json) reached the normal 480-second finish and started a fresh replay; public-release verification remains a separate QA gate. No participant comprehension, human economy balance or real-region latency result is claimed.
+
+The table defines the required checks; a passed authority test does not substitute for the native or human portion of a gate.
 
 | ID | Required evidence | Owner / limit |
 | --- | --- | --- |

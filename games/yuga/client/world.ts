@@ -9,6 +9,7 @@ import { CastEffects } from './cast-effects';
 import { createOriginalEnvironment } from './environment-light';
 import { UnitModelLibrary, type UnitModel, type UnitModelId } from './unit-models';
 import { JungleView } from './jungle-view';
+import { sampleDayNight, type LightingMode } from './environment-cycle';
 
 export interface ScreenPoint { x: number; y: number; visible: boolean }
 export interface ArenaWorld {
@@ -17,6 +18,8 @@ export interface ArenaWorld {
   setCamera(yaw: number, pitch: number): void;
   setQuality(quality: 'low' | 'high'): void;
   setReducedMotion(enabled: boolean): void;
+  /** Cosmetic only: gameplay visibility, hit rules and the arena clock are unchanged. */
+  setLightingMode(mode: LightingMode): void;
   setOverview(enabled: boolean): void;
   setActive(enabled: boolean): void;
   /** Discard pre-existing transient events after a transport welcome/reconnect. */
@@ -25,7 +28,7 @@ export interface ArenaWorld {
   reticle(): ScreenPoint | null;
   preloadHeroes(ids: string[], progress?: (done: number, total: number, heroId: string) => void): Promise<void>;
   preloadUnits(progress?: (done: number, total: number, unitId: string) => void): Promise<void>;
-  assetDiagnostics(): ReturnType<HeroModelLibrary['diagnostics']> & { fallback: { id: string; heroId: string }[]; casts: ReturnType<CastEffects['diagnostic']>; units: ReturnType<UnitModelLibrary['diagnostics']> & { fallback: { id: string; unitId: string }[] }; jungle: ReturnType<JungleView['diagnostics']> };
+  assetDiagnostics(): ReturnType<HeroModelLibrary['diagnostics']> & { fallback: { id: string; heroId: string }[]; casts: ReturnType<CastEffects['diagnostic']>; units: ReturnType<UnitModelLibrary['diagnostics']> & { fallback: { id: string; unitId: string }[] }; jungle: ReturnType<JungleView['diagnostics']>; lighting: { mode: LightingMode; sample: ReturnType<typeof sampleDayNight>; scenery: ReturnType<ReturnType<typeof buildSangamCity>['diagnostics']> } };
   destroy(): void;
 }
 
@@ -88,6 +91,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
   let quality: 'low' | 'high' = 'high', lastSnapshot: ArenaSnapshot | null = null, playerId: string | null = null;
   let epoch = '', lastTick = -1, eventId = -1, tracked = '', initialized = false, destroyed = false;
   let active = true, baselineEvents = true;
+  let lightingMode: LightingMode = 'cycle', lightingSample = sampleDayNight(0), lightingClock = -1;
   let cameraDistance = 6;
   const follow = new pc.Vec3(), cameraForward = new pc.Vec3(0, 0, 1), temp = new pc.Vec3(), screen = new pc.Vec3();
 
@@ -478,7 +482,22 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     quality = next; app.graphicsDevice.maxPixelRatio = next === 'low' ? .65 : Math.min(window.devicePixelRatio || 1, 1.5);
     sunlight.light!.castShadows = next === 'high'; resize();
     for (const rig of rigs.values()) rig.model?.setShadows(next === 'high');
+    updateLighting(lastSnapshot?.time ?? 0, true);
   }
+  function updateLighting(time: number, force = false) {
+    // At most one uniform update per authoritative tenth-second. No wall-clock drift on menus/rejoin.
+    const clock = Math.floor((Number.isFinite(time) && time >= 0 ? time : 0) * 10) / 10;
+    if (!force && clock === lightingClock) return;
+    lightingClock = clock; lightingSample = sampleDayNight(clock, lightingMode);
+    const s = lightingSample;
+    app.scene.ambientLight.set(...s.ambient); app.scene.fog.color.set(...s.fog);
+    camera.camera!.clearColor.set(...s.fog);
+    sunlight.light!.color = sunlight.light!.color.set(...s.sunColor); sunlight.light!.intensity = s.sunIntensity;
+    fill.light!.color = fill.light!.color.set(...s.fillColor); fill.light!.intensity = s.fillIntensity;
+    sunlight.setEulerAngles(s.sunPitch, s.sunYaw, 0);
+    scenery.updateLighting(s, clock, reducedMotion, quality);
+  }
+  updateLighting(0, true);
   setQuality('high'); kit.app.batcher.generate(); app.start();
 
   return {
@@ -486,6 +505,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
       if (destroyed) return;
       const dt = clamp(Number.isFinite(frameDt) ? frameDt : 0, 0, .1); elapsed += dt;
       lastSnapshot = snapshot; playerId = localId;
+      updateLighting(snapshot?.time ?? 0);
       if (snapshot) {
         const nextEpoch = `${snapshot.room}/${localId ?? ''}`;
         if (nextEpoch !== epoch || snapshot.tick < lastTick) {
@@ -582,13 +602,14 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     setQuality,
     setActive(enabled) { if (enabled && !active) { baselineEvents = true; jungle.baselineEvents(); } active = enabled; app.autoRender = enabled; app.renderNextFrame = enabled; heroModels.setActive(enabled); unitModels.setActive(enabled); },
     resetEventHistory() { baselineEvents = true; jungle.baselineEvents(); },
-    setReducedMotion(enabled) { reducedMotion = enabled; },
+    setReducedMotion(enabled) { reducedMotion = enabled; updateLighting(lastSnapshot?.time ?? 0, true); },
+    setLightingMode(mode) { lightingMode = mode === 'day' || mode === 'night' ? mode : 'cycle'; updateLighting(lastSnapshot?.time ?? 0, true); },
     setOverview(enabled) { if (overview !== enabled) { overview = enabled; initialized = false; } },
     project,
     preloadHeroes: (ids, progress) => heroModels.preload(ids, progress),
     preloadUnits: progress => unitModels.preload(progress),
     assetDiagnostics: () => ({ ...heroModels.diagnostics(), fallback: [...rigs.entries()].filter(([, rig]) => !rig.model && rig.tag.startsWith('hero/')).map(([id, rig]) => ({ id, heroId: rig.heroId })), casts: castEffects.diagnostic(),
-      units: { ...unitModels.diagnostics(), fallback: [...[...rigs.entries()].filter(([, rig]) => !rig.model && rig.unitId).map(([id, rig]) => ({ id, unitId: rig.unitId! })), ...jungle.diagnostics().fallback] }, jungle: jungle.diagnostics() }),
+      units: { ...unitModels.diagnostics(), fallback: [...[...rigs.entries()].filter(([, rig]) => !rig.model && rig.unitId).map(([id, rig]) => ({ id, unitId: rig.unitId! })), ...jungle.diagnostics().fallback] }, jungle: jungle.diagnostics(), lighting: { mode: lightingMode, sample: lightingSample, scenery: scenery.diagnostics() } }),
     reticle() {
       const actor = lastSnapshot?.actors.find(a => a.id === playerId); if (!actor || overview || actor.health <= 0) return null;
       const aimYaw = actor.cast?.yaw ?? yaw, aimPitch = actor.cast?.pitch ?? pitch;

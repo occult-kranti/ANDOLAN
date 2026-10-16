@@ -50,9 +50,19 @@ The expanded content gate passed: fourteen unique IDs, three abilities per hero,
 
 An independent simulator/content review found two discrepancies before integration: ordinary dash/leap added unadvertised destination damage and haste, and pull damage was absent from the original two descriptions. The simulation owner removed the movement additions; all pull descriptions now include their intended damage. `tests/content.test.ts` passes 71 cases exercising all fourteen basic attacks and all forty-two ability slots through public input/command/step APIs, plus duplicate receipts, cooldowns, allied/enemy separation, movement collision, projectile cover and summon expiry. The three explicitly redesigned R abilities have separate timing/payload assertions. These are positioned unit fixtures, not physical browser traversal. They also guard against reintroducing hidden damage/haste on ordinary movement abilities.
 
-Lane waves begin at one second and repeat every eighteen seconds: two escort units per lane per team. Every third wave, beginning at 37 seconds, adds a siege unit per lane per team. Siege units use a distinct slower, tougher role and prefer visible structures; their rounds can still be intercepted. Temporary Subhadra/Hidimbi summons retain the nine-second lifetime and use collision-safe spawn placement. Role, summoner and expiry metadata support truthful visual distinctions; unit art is a separate production gate.
+Lane waves begin at one second and repeat every eighteen seconds: three escort units per lane per team, with distinct soldier, city-watch and minister roles. Every third wave, beginning at 37 seconds, adds a king siege unit per lane per team. The king is slower and tougher and prefers visible structures; its rounds can still be intercepted. Temporary Subhadra/Hidimbi summons retain the nine-second lifetime and collision-safe placement, and award neither gold nor team score when defeated. Seven real unit assets and the four jungle courts are documented in [MINIONS_AND_JUNGLE.md](MINIONS_AND_JUNGLE.md); their current technical/native evidence is separate from human art approval.
 
 Integration acceptance belongs to simulation/network/browser reports. Required follow-up balance evidence includes completed matches across team compositions, damage and objective contribution by role, shield/heal uptime, summon impact, map-side bias and human reports on readability. Bot completion or a passing typecheck cannot establish competitive balance. No human playtest or cultural-consultation result is claimed here.
+
+## Optional guide and Practice focus
+
+[shared/hero-guide.ts](../shared/hero-guide.ts) now supplies all fourteen heroes with a first useful action, positioning, three current ability notes, counterplay and Power/Vitality/Tempo tradeoffs. Independent source review compared all 42 notes with the actual simulator; exact roster/name checks, typecheck and lint passed. These are intended choices to try, not optimal-build or human balance claims. The selected hero's first action is shown directly, while the longer guide is optional.
+
+The guide preserves the actual upgrade distinctions: Power adds 17% of base primary damage and 12% of ability payload per rank where that branch consumes power; Vitality adds 65 maximum/current health; Tempo divides the primary interval by `1 + 0.12 × rank`. Tempo does not shorten skill cooldowns. Upgrades have three ranks and cost 120/100/140 times the next rank respectively, bought while alive near the player's own spawn. Range, duration, summon lifetime and movement distance are not secretly upgraded.
+
+[client/practice-goals.ts](../client/practice-goals.ts) offers five optional observations: reach a point 12 metres from the attempt's start, land an authoritative hit, start an accepted ability, buy a rank, or earn actual camp credits/blessing. Free play is the default. An accepted windup can count as starting an ability even if later interrupted; a camp goal is not proof that the player personally landed the final hit. Goal receipts grant no currency or account power and make no mastery judgment. Pause/settings retain progress; dismissal hides it, and replay or a new attempt gets a fresh baseline. The hero-specific prose exercise is a suggestion rather than a second automated goal.
+
+The new UI integration is under its own [three-round review](NEXT_PHASE_PANEL.md). Earlier native jungle/480-second results remain valid baseline evidence; they do not by themselves verify the new guidance controls. All heroes and skills stay unlocked, without paid combat advantage, compulsory lessons or a claimed learning/health effect.
 
 ## Source ledger — passages actually read
 
@@ -95,6 +105,10 @@ Read the title, transcriber note and selected preface material, then the Mahavel
 
 Sangam City combines original sandstone, modern and garden forms around three clear combat lanes. It is not a reconstruction of Mamallapuram or any other heritage site. Gateway masses, colonnade rhythms and open approaches can guide later visual study, while collision and sight lines remain the game's design constraints. Existing map geometry should not be described as a detailed architectural reconstruction.
 
+### Additional environment reading
+
+[ENVIRONMENT_MYTHOLOGY_RESEARCH.md](ENVIRONMENT_MYTHOLOGY_RESEARCH.md) records the later, bounded research-agent pass over the same pinned files: Ramayana Book II Canto VI on festal city lamps; Mahabharata Paushya III on the interpretation of light/dark weaving and a wheel; and selected courtyard, reservoir and observatory descriptions in Fergusson. It supplies exact lines, context and limits. These are motifs for an original civic space and match-time lighting, not evidence for a canonical eight-minute Yuga, a reconstructed sacred diagram or new hero powers. Its separate contemporary Reddit sample supplies competing source leads and preferences, not textual proof or cultural-consultation approval.
+
 ### Access and interpretation limits
 
 Direct requests to the Project Gutenberg catalogue and the UNESCO Mamallapuram listing returned proxy HTTP 403 in this environment. The pinned mirror texts above were accessible and read; the UNESCO page was not read. No restriction was bypassed. Modern heritage guidance, regional versions and consultation with knowledgeable players remain future research.
@@ -120,6 +134,6 @@ Names such as Rama/Ram, Ravana/Ravan and Meghanada/Meghnad/Indrajit vary with la
 | Chitrangada | Named daughter of Chitravahana and dynastic setting, M1 CCXVII | Agile spear-duelist role, crossing dash, energy arc and allied ward |
 | Ulupi | Naga lineage and water association, M1 CCXVI | Humanoid staff guardian, damaging pull, nearby heal and slowing basin |
 
-These adaptations give women direct, mechanically useful roles rather than making them rescue objectives. That is an authored design choice, not a retroactive claim that the translations describe these kits. Character silhouettes and effects are original procedural art. Religious identity, caste, language and skin tone do not determine a team's virtue or power.
+These adaptations give women direct, mechanically useful roles rather than making them rescue objectives. That is an authored design choice, not a retroactive claim that the translations describe these kits. Hero GLBs use a licensed CC0 anatomical mesh, rig and weights with original proportions, costume, hair, weapons and authored motion; effects and city geometry are original runtime art. Religious identity, caste, language and skin tone do not determine a team's virtue or power.
 
 Future lore should preserve that distinction: name the specific edition or regional source when making a textual claim, mark invented details as adaptation in the source notes, and keep actual ability descriptions focused on what players can do.

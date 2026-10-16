@@ -1,5 +1,5 @@
 import { expect, type Page, type TestInfo } from '@playwright/test';
-import type { Actor } from '../shared/types';
+import type { Actor, ArenaSnapshot } from '../shared/types';
 
 export const arenaState=(page:Page)=>page.evaluate(()=>window.__YUGA.snapshot()!);
 export const localActor=(page:Page)=>page.evaluate(()=>window.__YUGA.snapshot()!.actors.find(actor=>actor.id===window.__YUGA.playerId())!);
@@ -23,6 +23,22 @@ export async function imageEvidence(page:Page,info:TestInfo,name:string){await r
 export async function nativeWalk(page:Page,key:string,until:(actor:Actor)=>boolean,timeout=20_000){
  await page.keyboard.down(key);try{await expect.poll(async()=>{const actor=await localActor(page);expect(actor.health,`Native route died at ${actor.x},${actor.z}`).toBeGreaterThan(0);return until(actor);},{timeout,intervals:[60,100]}).toBe(true);}finally{await page.keyboard.up(key);}
 }
-export async function keyboardYaw(page:Page,target:number){
- const end=Date.now()+12_000;let held='';try{while(Date.now()<end){const actor=await localActor(page),delta=Math.atan2(Math.sin(target-actor.yaw),Math.cos(target-actor.yaw));if(Math.abs(delta)<.10)return;const next=delta>0?'KeyJ':'KeyL';if(next!==held){if(held)await page.keyboard.up(held);await page.keyboard.down(next);held=next;}await page.waitForTimeout(45);}throw new Error(`Keyboard aim failed: ${JSON.stringify({target,actor:await localActor(page)})}`);}finally{if(held)await page.keyboard.up(held);}
+export async function inputObservation(page:Page){
+ return page.evaluate(()=>{const state=window.__YUGA.snapshot()!,metrics=window.__YUGA.metrics();return{state,metrics,actor:state.actors.find(actor=>actor.id===window.__YUGA.playerId())!,visibility:document.visibilityState,focus:document.activeElement?.id,dialog:document.querySelector('dialog[open]')?.id};});
+}
+/** Native bounded key pulses; every decision uses one coherent received state and
+ * the actual client aim. Authority yaw may lag a rendered frame or network tick. */
+export async function keyboardYaw(page:Page,target:number|((state:ArenaSnapshot,actor:Actor)=>number)){
+ const end=Date.now()+12_000;let last:Awaited<ReturnType<typeof inputObservation>>|undefined;
+ while(Date.now()<end){
+  last=await inputObservation(page);
+  const desired=typeof target==='number'?target:target(last.state,last.actor),delta=Math.atan2(Math.sin(desired-last.metrics.yaw),Math.cos(desired-last.metrics.yaw));
+  if(Math.abs(delta)<.10)return;
+  if(!last.metrics.ready||last.dialog||last.visibility!=='visible'||last.actor.health<=0)throw new Error(`Native aim unavailable: ${JSON.stringify(last)}`);
+  const sequence=last.actor.lastInputSeq;
+  await page.keyboard.press(delta>0?'KeyJ':'KeyL',{delay:Math.max(30,Math.min(160,Math.abs(delta)/1.6*750))});
+  // A neutral, newer input observation avoids deciding from the pre-pulse packet.
+  await expect.poll(async()=>(await localActor(page)).lastInputSeq,{timeout:3_000,intervals:[30,50]}).toBeGreaterThan(sequence);
+ }
+ throw new Error(`Native keyboard aim timed out: ${JSON.stringify(last)}`);
 }

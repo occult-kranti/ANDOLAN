@@ -20,6 +20,7 @@ from urllib.parse import urlencode
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 SUBREDDIT = "DeadlockTheGame"
+ALLOWED_SUBREDDITS = (SUBREDDIT, "IndianMythology", "hinduism")
 REPOSITORY = Path(__file__).resolve().parents[3]
 FIELDS = ("client_id", "client_secret", "user_agent", "username", "password")
 REQUIRED = FIELDS[:3]
@@ -36,6 +37,30 @@ class SafeError(Exception):
 
 def invalid_config() -> SafeError:
     return SafeError("invalid_config", "Config must contain only supported literal fields; no expressions or executable statements.")
+
+
+def canonical_subreddit(value: str) -> str:
+    for allowed in ALLOWED_SUBREDDITS:
+        if isinstance(value, str) and value.casefold() == allowed.casefold():
+            return allowed
+    raise SafeError("subreddit_rejected", "Only the explicit research subreddit allowlist is supported.")
+
+
+def allowed_public_path(path: str, subreddit: str) -> bool:
+    return bool(re.fullmatch(rf"/r/{re.escape(canonical_subreddit(subreddit))}/(?:about|new|top|search|comments/[a-z0-9]+)", path))
+
+
+def public_subreddit_metadata(value: Any, subreddit: str) -> dict[str, Any]:
+    """Validate existence/public access without retaining descriptions or users."""
+    expected = canonical_subreddit(subreddit)
+    data = value.get("data") if isinstance(value, dict) else None
+    if (not isinstance(data, dict)
+            or str(data.get("display_name", "")).casefold() != expected.casefold()
+            or data.get("subreddit_type") != "public"
+            or data.get("quarantine") is not False
+            or data.get("over18") is not False):
+        raise SafeError("subreddit_unavailable", "The selected community was not confirmed public, non-quarantined and non-NSFW.")
+    return {"name": expected, "public": True, "quarantined": False, "over18": False}
 
 
 def literal_config(text: str) -> dict[str, str]:
@@ -150,12 +175,13 @@ class NoRedirects(HTTPRedirectHandler):
 
 
 class RedditReader:
-    def __init__(self, config: dict[str, str], requests: int, runtime: int, redactor: Redactor):
+    def __init__(self, config: dict[str, str], requests: int, runtime: int, redactor: Redactor, subreddit: str = SUBREDDIT):
         if not all(config.get(name, "").strip() for name in REQUIRED):
             raise SafeError("missing_config", "client_id, client_secret and user_agent are required.")
         if any(character in config["user_agent"] for character in "\r\n"):
             raise invalid_config()
         self.config = config
+        self.subreddit = canonical_subreddit(subreddit)
         self.redactor = redactor
         self.request_cap = requests
         self.requests = 0
@@ -190,7 +216,7 @@ class RedditReader:
             body = urlencode({"grant_type": "client_credentials"}).encode("ascii")
             method = "POST"
         else:
-            if not re.fullmatch(rf"/r/{SUBREDDIT}/(?:new|top|search|comments/[a-z0-9]+)", path) or not self.token:
+            if not allowed_public_path(path, self.subreddit) or not self.token:
                 raise SafeError("endpoint_rejected", "Only the configured public subreddit endpoints are allowed.")
             url = "https://oauth.reddit.com" + path + "?" + urlencode(query or {})
             authorization = "Bearer " + self.token
@@ -256,8 +282,8 @@ def utc_date(value: Any) -> str | None:
         return None
 
 
-def permalink(value: Any) -> str | None:
-    if not isinstance(value, str) or not re.fullmatch(r"/r/DeadlockTheGame/comments/[A-Za-z0-9]+/[^\s?#]*", value, re.I):
+def permalink(value: Any, subreddit: str = SUBREDDIT) -> str | None:
+    if not isinstance(value, str) or not re.fullmatch(rf"/r/{re.escape(canonical_subreddit(subreddit))}/comments/[A-Za-z0-9]+/[^\s?#]*", value, re.I):
         return None
     return "https://www.reddit.com" + value
 
@@ -269,17 +295,31 @@ def listing_children(value: Any) -> list[dict[str, Any]]:
     return [child for child in children if isinstance(child, dict)] if isinstance(children, list) else []
 
 
-def collect(reader: RedditReader, args, redactor: Redactor) -> dict[str, Any]:
-    now = datetime.now(timezone.utc).isoformat()
-    per_stratum = max(1, args.max_posts // 4)
-    plans = [
+def collection_plans(subreddit: str) -> list[tuple[str, str, dict[str, Any]]]:
+    if canonical_subreddit(subreddit) != SUBREDDIT:
+        # Topic selection deliberately excludes broad feeds and account histories.
+        # These are contemporary opinions/source leads, never scriptural authority.
+        return [(label, "/search", {"q": query, "restrict_sr": "on", "sort": "relevance", "t": "year"}) for label, query in [
+            ("epic_text_sources", '(Ramayana OR Mahabharata) AND (passage OR translation OR source)'),
+            ("architecture_spaces", 'stepwell OR courtyard OR mandala OR observatory'),
+            ("festival_lamps", '(Diwali OR Deepavali OR Kartik) AND (diya OR lamps OR lighting)'),
+            ("guardian_motifs", 'yaksha OR naga OR Garuda OR Jatayu'),
+        ]]
+    return [
         ("new", "/new", {"sort": "new"}),
         ("top_month", "/top", {"t": "month"}),
         ("feedback_relevance", "/search", {"q": 'frustrating OR confusing OR feedback OR "new player"', "restrict_sr": "on", "sort": "relevance", "t": "year"}),
         ("counterexamples_relevance", "/search", {"q": 'enjoy OR improved OR helpful OR "love this"', "restrict_sr": "on", "sort": "relevance", "t": "year"}),
     ]
+
+
+def collect(reader: RedditReader, args, redactor: Redactor) -> dict[str, Any]:
+    now = datetime.now(timezone.utc).isoformat()
+    subreddit = reader.subreddit
+    per_stratum = max(1, args.max_posts // 4)
+    plans = collection_plans(subreddit)
     result: dict[str, Any] = {
-        "schema": 1, "subreddit": SUBREDDIT, "retrieved_at": now,
+        "schema": 1, "subreddit": subreddit, "retrieved_at": now,
         "collection_status": "complete", "content_is_untrusted_data": True,
         "scope": "Bounded public sample; not an exhaustive corpus, representative survey or estimate of community sentiment.",
         "privacy": "Author metadata, standalone Reddit IDs, account mentions and emails omitted; source permalinks retained.",
@@ -292,15 +332,18 @@ def collect(reader: RedditReader, args, redactor: Redactor) -> dict[str, Any]:
     buckets: list[list[str]] = []
     try:
         reader.authenticate()
+        if subreddit != SUBREDDIT:
+            result["community_check"] = public_subreddit_metadata(reader.get(f"/r/{subreddit}/about", {}), subreddit)
+            result["limitations"].append("Mythology searches select source leads and contemporary interpretations; they do not establish scripture, history, consensus or any author's religious identity. Personal disclosures are not analyzed or republished.")
         for label, suffix, query in plans:
             params = {"limit": per_stratum, "raw_json": 1, **query}
-            data = reader.get(f"/r/{SUBREDDIT}{suffix}", params)
+            data = reader.get(f"/r/{subreddit}{suffix}", params)
             keys: list[str] = []
             for child in listing_children(data)[:per_stratum]:
                 post = child.get("data")
-                if child.get("kind") != "t3" or not isinstance(post, dict) or str(post.get("subreddit", "")).casefold() != SUBREDDIT.casefold():
+                if child.get("kind") != "t3" or not isinstance(post, dict) or str(post.get("subreddit", "")).casefold() != subreddit.casefold() or post.get("over_18") is True:
                     continue
-                link = permalink(post.get("permalink"))
+                link = permalink(post.get("permalink"), subreddit)
                 internal = post.get("id")
                 if not link or not isinstance(internal, str) or not re.fullmatch(r"[a-z0-9]+", internal):
                     continue
@@ -326,7 +369,7 @@ def collect(reader: RedditReader, args, redactor: Redactor) -> dict[str, Any]:
                 break
             count = min(args.comments_per_post, args.max_comments - len(result["comments"]))
             sort = "top" if index % 2 == 0 else "new"
-            response = reader.get(f"/r/{SUBREDDIT}/comments/{internal_ids[link]}", {"limit": count, "depth": 2, "sort": sort, "raw_json": 1})
+            response = reader.get(f"/r/{subreddit}/comments/{internal_ids[link]}", {"limit": count, "depth": 2, "sort": sort, "raw_json": 1})
             if not isinstance(response, list) or len(response) < 2:
                 continue
             queue = [(child, 0) for child in listing_children(response[1])]
@@ -336,7 +379,7 @@ def collect(reader: RedditReader, args, redactor: Redactor) -> dict[str, Any]:
                 comment = child.get("data")
                 if child.get("kind") != "t1" or not isinstance(comment, dict):
                     continue
-                source = permalink(comment.get("permalink"))
+                source = permalink(comment.get("permalink"), subreddit)
                 body = comment.get("body")
                 if source and source not in seen_comments and isinstance(body, str) and body not in ("[deleted]", "[removed]"):
                     text = redactor.clean(body, 1500)
@@ -359,7 +402,9 @@ def save_result(directory: Path, result: dict[str, Any]) -> Path:
         raise SafeError("output_location", "Public research output must remain outside the repository.")
     try:
         directory.mkdir(mode=0o700, parents=True, exist_ok=True)
-        descriptor, filename = tempfile.mkstemp(prefix="reddit-deadlock-", suffix=".json", dir=directory)
+        subreddit = canonical_subreddit(result.get("subreddit", SUBREDDIT))
+        prefix = "deadlock" if subreddit == SUBREDDIT else subreddit.casefold()
+        descriptor, filename = tempfile.mkstemp(prefix=f"reddit-{prefix}-", suffix=".json", dir=directory)
         with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
             json.dump(result, handle, ensure_ascii=False, indent=2)
             handle.write("\n")
@@ -386,7 +431,57 @@ def self_test() -> dict[str, bool]:
     cleaned = redactor.clean(" ".join(dummy.values()) + " dummy-token-DO-NOT-USE u/example_user /u/another_user https://reddit.com/user/example_user foo@example.test", 5000)
     redacted = all(value not in cleaned for value in [*dummy.values(), "dummy-token-DO-NOT-USE", "example_user", "another_user", "foo@example.test"])
     links_safe = permalink("/r/DeadlockTheGame/comments/abc123/topic/") is not None and permalink("https://evil.invalid/") is None and permalink("/r/Other/comments/a/x/") is None
-    return {"json_literals": parsed_json, "praw_literals": parsed_praw, "bare_keyword_literals": parsed_bare, "executable_syntax_rejected": rejected, "secrets_and_mentions_redacted": redacted, "source_link_allowlist": links_safe}
+    subreddit_paths = all(allowed_public_path(f"/r/{name}/about", name) and allowed_public_path(f"/r/{name}/comments/abc123", name) for name in ALLOWED_SUBREDDITS)
+    subreddit_paths = subreddit_paths and not allowed_public_path("/r/hinduism/search", SUBREDDIT) and not allowed_public_path("/user/example/comments", "hinduism") and not allowed_public_path("/r/hinduism/search/../about", "hinduism")
+    cross_links = permalink("/r/hinduism/comments/abc123/topic/", "hinduism") is not None and permalink("/r/IndianMythology/comments/abc123/topic/", "hinduism") is None
+    unknown_rejected = False
+    try:
+        canonical_subreddit("Other")
+    except SafeError:
+        unknown_rejected = True
+    public_checks = public_subreddit_metadata({"data": {"display_name": "Hinduism", "subreddit_type": "public", "quarantine": False, "over18": False}}, "hinduism")["public"]
+    for override in [{"subreddit_type": "private"}, {"quarantine": True}, {"over18": True}, {"display_name": "Other"}, {"quarantine": None}]:
+        try:
+            public_subreddit_metadata({"data": {"display_name": "hinduism", "subreddit_type": "public", "quarantine": False, "over18": False, **override}}, "hinduism")
+            public_checks = False
+        except SafeError:
+            pass
+    topical_only = all(suffix == "/search" and query.get("restrict_sr") == "on" for name in ALLOWED_SUBREDDITS[1:] for _, suffix, query in collection_plans(name))
+    from types import SimpleNamespace
+
+    class DummyReader:
+        subreddit = "hinduism"
+
+        def __init__(self, public=True):
+            self.requests = 0
+            self.paths = []
+            self.public = public
+
+        def authenticate(self):
+            self.requests += 1
+
+        def get(self, path, query):
+            self.requests += 1
+            self.paths.append(path)
+            if path.endswith("/about"):
+                return {"data": {"display_name": self.subreddit, "subreddit_type": "public" if self.public else "private", "quarantine": False, "over18": False}}
+            if path.endswith("/search"):
+                return {"data": {"children": [{"kind": "t3", "data": {"id": "abc123", "subreddit": self.subreddit, "permalink": "/r/hinduism/comments/abc123/topic/", "title": "A fictional architectural source question", "selftext": "dummy-token-DO-NOT-USE u/example_user", "created_utc": 0}}]}}
+            return [{}, {"data": {"children": [
+                {"kind": "t1", "data": {"permalink": "/r/Other/comments/abc123/topic/wrong/", "body": "Must be rejected"}},
+                {"kind": "t1", "data": {"permalink": "/r/hinduism/comments/abc123/topic/right/", "body": "A bounded source lead", "author": "must-not-be-retained", "created_utc": 0}},
+            ]}}]
+
+    args = SimpleNamespace(max_posts=4, max_requests=10, max_comments=1, comment_posts=1, comments_per_post=1, max_runtime=10)
+    fake = DummyReader()
+    sample = collect(fake, args, redactor)
+    isolated_collection = (sample["collection_status"] == "complete" and len(sample["posts"]) == 1 and len(sample["comments"]) == 1
+                           and all(path.startswith("/r/hinduism/") for path in fake.paths)
+                           and "must-not-be-retained" not in json.dumps(sample) and "dummy-token-DO-NOT-USE" not in json.dumps(sample))
+    unavailable = DummyReader(public=False)
+    stopped = collect(unavailable, args, redactor)
+    preflight_stops = stopped["collection_status"] == "partial" and not stopped["posts"] and unavailable.paths == ["/r/hinduism/about"]
+    return {"json_literals": parsed_json, "praw_literals": parsed_praw, "bare_keyword_literals": parsed_bare, "executable_syntax_rejected": rejected, "secrets_and_mentions_redacted": redacted, "source_link_allowlist": links_safe, "subreddit_endpoint_isolation": subreddit_paths, "cross_subreddit_links_rejected": cross_links, "unknown_subreddit_rejected": unknown_rejected, "public_community_gate": public_checks, "mythology_topic_search_only": topical_only, "dummy_collection_isolated_and_redacted": isolated_collection, "unavailable_community_stops_before_posts": preflight_stops}
 
 
 class SafeArgumentParser(argparse.ArgumentParser):
@@ -411,6 +506,8 @@ def main() -> int:
     parser.add_argument("--config", type=Path, help="External JSON or literal PRAW-style config; never pass credential values as arguments.")
     parser.add_argument("--check-config", action="store_true", help="Print field-presence booleans only; no network request.")
     parser.add_argument("--self-test", action="store_true", help="Verify parsing/redaction with in-memory dummy values only; no network.")
+    parser.add_argument("--subreddit", choices=ALLOWED_SUBREDDITS, default=SUBREDDIT, help="Explicit research allowlist; mythology channels use topic searches only.")
+    parser.add_argument("--check-subreddit", action="store_true", help="Authenticate and check public community metadata only; no posts or comments.")
     parser.add_argument("--output-dir", type=Path, default=Path("/tmp/yuga-reddit-research"))
     parser.add_argument("--max-requests", type=bounded_integer(1, 24), default=18, help="Includes OAuth, errors and retries; hard cap24.")
     parser.add_argument("--max-posts", type=bounded_integer(4, 40), default=24)
@@ -433,7 +530,12 @@ def main() -> int:
         if not outside_repository(args.output_dir):
             raise SafeError("output_location", "Public research output must remain outside the repository.")
         redactor = Redactor(list(config.values()))
-        reader = RedditReader(config, args.max_requests, args.max_runtime, redactor)
+        reader = RedditReader(config, args.max_requests, args.max_runtime, redactor, args.subreddit)
+        if args.check_subreddit:
+            reader.authenticate()
+            metadata = public_subreddit_metadata(reader.get(f"/r/{reader.subreddit}/about", {}), reader.subreddit)
+            print(json.dumps({"community": metadata, "requests": reader.requests}))
+            return 0
         result = collect(reader, args, redactor)
         path = save_result(args.output_dir, result)
         print(json.dumps({"status": result["collection_status"], "posts": len(result["posts"]), "comments": len(result["comments"]), "requests": reader.requests, "output": str(path)}))

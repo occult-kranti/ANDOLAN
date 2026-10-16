@@ -23,3 +23,22 @@ dialog{position:fixed;max-height:90svh;width:min(560px,calc(100% - 28px));paddin
 .map-legend{display:block;text-align:center;font-size:8px;color:#b8cfc0;padding:4px 0}.map-wrap #camp-status{font-size:9px;max-width:136px;line-height:1.5;color:#e2d6ad;padding:4px 2px;border-top:1px solid #dfca8c33}#buff-status{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}#buff-status:empty{display:none}#buff-status>span{border:1px solid #c7dfc855;border-radius:3px;padding:3px 5px;font-size:8px;color:#daf2db;background:#163d39}#buff-status b{font-weight:400;color:#fff0bd;margin-left:3px}#gold-feedback{position:absolute;right:calc(50% - min(435px,48vw));bottom:122px;color:#ffe4a0;background:#153b36e8;border:1px solid #d3b66a88;border-radius:4px;padding:8px 12px;font-size:11px}#gold-feedback[data-kind=steal]{border-color:#e1b1ff;color:#eed4ff}@media(max-width:650px){.map-legend{font-size:6px;max-width:84px}.map-wrap #camp-status{font-size:7px;max-width:84px}#gold-feedback{bottom:174px;right:10px;max-width:190px;font-size:10px}#buff-status>span{font-size:7px;padding:2px 4px}}@media(max-height:550px) and (orientation:landscape){.map-legend,.map-wrap #camp-status{display:none}#gold-feedback{bottom:85px}#buff-status{position:absolute;bottom:78px;left:0}}
 
 #loading small{display:block;font-size:11px;color:#b9c9bd;max-width:320px;line-height:1.5}#loading-back{margin-top:22px;min-height:44px}
+
+/* Optional guidance is outside the aim and action areas. Free play stays one click away. */
+#hero-first-action{font-size:11px;line-height:1.6;color:#ead4a5;margin-top:10px;max-width:36ch}
+.practice-choice{display:grid;gap:6px;font-size:10px;color:#e3d3af;width:100%;text-align:left}
+.practice-choice select{width:100%;min-height:40px;border:1px solid #bbaa7777;border-radius:4px;color:#f4ecd7;background:#0a252c;padding:8px 10px;font:inherit;font-size:12px}
+#hero-guide{border-top:1px solid var(--line);font-size:12px;padding:0 0 14px;color:#bdd1c6}
+#hero-guide summary{cursor:pointer;padding:14px 0;color:#ead4a5;min-height:44px}
+#hero-guide-copy{max-width:850px;line-height:1.7;padding-bottom:12px}
+#hero-guide-copy p{margin:8px 0}#hero-guide-copy ol{padding-left:20px;margin:12px 0}#hero-guide-copy strong{color:#f1e4be}.guide-exercise{border-left:2px solid #bca575;padding-left:12px}
+#practice-goal{position:absolute;left:20px;top:360px;width:224px;padding:12px 14px;background:#08232eea;border:1px solid #c8b17380;border-radius:5px;color:#e5e8d6;font-size:11px;pointer-events:auto}
+#practice-goal>div{display:flex;align-items:center;justify-content:space-between;gap:8px}#practice-goal small{color:#c7b279;font-size:8px;letter-spacing:1px}#practice-dismiss{min-height:32px;min-width:32px;padding:0;font-size:20px;border:0;background:transparent}
+#practice-goal strong{display:block;font-size:14px;color:#f3d591;margin:4px 0 7px}#practice-goal p{line-height:1.5;margin:5px 0 8px;color:#bcd0c6}#practice-goal-progress{font-size:10px;color:#f2d8a4}#practice-goal.complete{border-color:#92d1a2}#practice-goal.complete #practice-goal-progress{color:#c1f0cc}
+.upgrade-choice{gap:12px}.upgrade-choice small{max-width:330px;line-height:1.5}.upgrade-choice>span{min-width:0}
+@media(max-width:1100px){.practice-choice{grid-column:1/-1;max-width:360px}#practice-goal{left:12px;top:260px;width:185px;font-size:10px}}
+@media(max-width:650px){#hero-first-action{max-width:none;font-size:12px}#practice-goal{left:6px;top:178px;width:162px;padding:7px 9px;font-size:9px;max-height:160px;overflow:auto}#practice-goal strong{font-size:12px}#practice-goal p{font-size:9px}#practice-goal-progress{font-size:9px}#practice-goal small{font-size:7px}#practice-dismiss{min-height:30px;min-width:30px}.practice-choice{max-width:none}#hero-guide-copy{font-size:11px}}
+@media(max-height:550px) and (orientation:landscape){#practice-goal{top:109px;left:6px;width:182px;font-size:9px;max-height:155px;overflow:auto}#practice-goal p{margin:3px 0}#practice-goal strong{font-size:12px}}
+
+@media(max-width:650px) and (max-height:740px){#practice-goal{max-height:110px}}
+@media(max-height:550px) and (orientation:landscape){#practice-goal{max-height:90px}}

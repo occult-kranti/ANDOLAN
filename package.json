@@ -31,7 +31,8 @@
     "yuga:e2e": "playwright test --config playwright.yuga.config.ts",
     "yuga:assets": "tsx games/yuga/tools/verify-hero-assets.ts",
     "yuga:unit-assets": "tsx games/yuga/tools/verify-hero-assets.ts games/yuga/art/unit-assets.json games/yuga/docs/evidence/unit-assets-check.json --units",
-    "yuga:smoke:production": "node games/yuga/tools/smoke-production.mjs"
+    "yuga:smoke:production": "node games/yuga/tools/smoke-production.mjs",
+    "yuga:package": "npm run yuga:build && python3 games/yuga/tools/package-browser.py"
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "5.3.0",

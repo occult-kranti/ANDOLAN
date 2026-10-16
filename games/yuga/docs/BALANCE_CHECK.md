@@ -56,4 +56,14 @@ Historical roster-only evidence remains in [final-roster-balance-matrix.json](ev
 
 ## Isolated stress
 
-The protocol-2 isolated timing and actual-WebSocket run is pending the focused browser and Docker release boundaries. Its results will be recorded separately as `jungle-stress-all.json`; no matrix wall-time performance claim is made here.
+Run `YUGA_EVIDENCE_PREFIX=jungle- YUGA_STRESS_SECONDS=40 npx tsx games/yuga/tools/stress.ts`. The protocol-2 run completed on 2026-10-16 with unchanged authoritative source hashes: [jungle-stress-all.json](evidence/jungle-stress-all.json). Browsers, Docker builds and heavy art work were held; the evidence records one incidental 0.03-second helper syntax check. Server and synthetic loopback clients shared one Node process on a four-core CPU quota, so CPU and memory include both sides.
+
+All six complete-match scenarios passed finite-state and entity-bound checks. Three bot matches reached the 480-second score limit; three fixed-intent synthetic-player matches destroyed the opposing core at 458.7 seconds. Their identical outcomes across seeds reflect that repeated input policy, not independent human trials. Peak population was 63 actors, four living neutrals and 21 shards; the caps remain 96 actors and 48 shards. Simulation-step p95 ranged from 0.48 to 0.98 milliseconds in these scenarios.
+
+| Real loopback clients | Rooms | Duration | Snapshot interval p50 / p95 | Combined CPU, one-core equivalent | Peak RSS |
+|---|---:|---:|---:|---:|---:|
+| 6 | 1 | 40 seconds | 100.2 / 101.5 ms | 6.2% | 242 MiB |
+| 12 | 2 | 40 seconds | 100.1 / 101.6 ms | 9.6% | 241 MiB |
+| 24 | 4 | 40 seconds | 100.2 / 102.3 ms | 16.8% | 236 MiB |
+
+All 42 joined connections remained open through their scenario, with no server errors and approximately 19.95 input messages per client per second. Every client observed all four living camps after their thirty-second spawn. These runs cover camp creation and replicated shard/wave populations; native camp combat, rewards and respawn are separately exercised by QA. They do not measure WAN latency, public WSS deployment, adversarial traffic, multi-host capacity or human balance. The deterministic matrix's concurrently recorded wall times remain outside this performance evidence.
