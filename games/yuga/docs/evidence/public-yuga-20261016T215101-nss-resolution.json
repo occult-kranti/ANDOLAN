@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "scope": "Managed cloud browser environment diagnosis, not an application or public-site certificate failure. The initial document navigation stopped before any app assertion.",
+  "initialFailureArtifacts": [
+    {
+      "file": "public-yuga-20261016T215101-initial-nss-failure.json",
+      "bytes": 1457,
+      "sha256": "a49423998db097b76ca802ac3db194a5bbb4b1b8ccc37883f807a0f315976f11"
+    },
+    {
+      "file": "public-yuga-20261016T215101-initial-nss-failure.png",
+      "bytes": 32218,
+      "sha256": "a7dde3caa6199e5eedf70bc90ef64d1def0f85ad62e42f17fb68b16b3e88af36"
+    }
+  ],
+  "minimalDiagnostic": {
+    "startedAt": "2026-10-16T21:56:47.494Z",
+    "scope": "One managed Chromium navigation with normal certificate verification and unchanged inherited proxy. Narrow native NSS/certificate stderr logging only; no trust changes or application assertions.",
+    "inheritedProxySelected": true,
+    "tlsVerification": true,
+    "passed": false,
+    "error": "page.goto: net::ERR_CERT_AUTHORITY_INVALID at https://occult-kranti.github.io/ANDOLAN/yuga/\nCall log:\n\u001b[2m  - navigating to \"https://occult-kranti.github.io/ANDOLAN/yuga/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+    "finishedAt": "2026-10-16T21:56:48.222Z"
+  },
+  "relevantNssStderr": [
+    "2026-10-16T21:56:47.874Z pw:browser [pid=334365][err] [334365:334391:1016/215647.874281:ERROR:crypto/nss_util.cc:256] Error initializing NSS with a persistent database (sql:/home/agent/.pki/nssdb): NSS error code: -8126",
+    "2026-10-16T21:56:47.874Z pw:browser [pid=334365][err] [334365:334391:1016/215647.874322:VERBOSE1:crypto/nss_util.cc:263] Initializing NSS without a persistent database."
+  ],
+  "observedCause": "Chromium could not initialize the existing NSS database read/write under the workspace-only filesystem sandbox and fell back to NoDB, losing the already-installed managed proxy trust roots.",
+  "managedPublicCaSha256": "c71b4d1e9d7775c538c688ab10cea9ce417d7312e89838f9d15ff73256cd7fc3",
+  "resolution": {
+    "reportedBy": "root executor permission grant and completed smoke session59094",
+    "writeGrantedOnlyTo": "/home/agent/.pki/nssdb",
+    "scope": "root execution turn",
+    "certificateImportPerformed": false,
+    "tlsVerificationDisabled": false,
+    "proxyBypassed": false,
+    "applicationSourceChanged": false,
+    "unchangedSmokeScriptSha256": "472c5c02e4b5ebbf4c46f17118f6b20e3dceb293ae26ec9080c67c9709cba77e",
+    "result": "The unchanged full public smoke passed with normal TLS,21 matching model responses and native Rama\u2192Arjuna gallery/restart flow.",
+    "successEvidence": "public-yuga-20261016T215925-check.json"
+  }
+}
