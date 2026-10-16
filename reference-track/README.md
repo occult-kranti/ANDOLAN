@@ -4,11 +4,11 @@ This branch contains an original offline `lane-economy` experiment using YUGA's 
 
 Shared foundation `b8ecd2a058b8b7e0927b841867521c50f4e74162` is merged into `reference/deadlock-mechanics`. The 21 shared lab unit tests passed locally. Focused build/browser checks run in [GitHub Actions](https://github.com/occult-kranti/ANDOLAN/actions/workflows/yuga-reference-tracks.yml); inspect that branch's current result. The complete native journey and central public deployment remain separate gates.
 
-GitHub rejected `POST /user/repos` with HTTP403, so this uses the requested branch fallback. Planned public entry: https://occult-kranti.github.io/ANDOLAN/yuga/lane-lab/ . It is not a publication claim until central deployment and public smoke pass.
+GitHub rejected `POST /user/repos` with HTTP403, so this uses the requested branch fallback. Public delivery uses https://occult-kranti.github.io/ANDOLAN/yuga/lane-lab/ . Consult the [current deployment evidence](https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-confluence/games/yuga/docs/REFERENCE_LAB_QA.md) for its status and exact verified revision.
 
 Run `npm ci`, then `npm run yuga:lab:dev` or `npm run yuga:lab:build`. Vite consumes this [track.json](track.json) `id` and filters the mode selector through `VITE_YUGA_LAB_TRACK`; `YUGA_LAB_TRACK` optionally overrides it. Other metadata records scope, not executable enforcement. `yuga:lab:e2e` explicitly exercises the shared combined client; the branch workflow separately checks this focused production build. Deployments come from the central branch so these tracks cannot overwrite one another's Pages site.
 
-The review below was initially written before the foundation merge; its source-reading boundaries and later-scope gates remain applicable. Integration state above supersedes those historical pending-integration notes.
+Compact-layout fixes from `176b6f8e71fcffd3d570d96e66643d8cb9893603` are also merged. The review below was initially written before the foundation merge; its source-reading boundaries and later-scope gates remain applicable. Integration state above supersedes those historical pending-integration notes.
 
 ## Evidence and actual reading
 
