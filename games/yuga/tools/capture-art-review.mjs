@@ -24,10 +24,12 @@ const root = fileURLToPath(new URL('../../../', import.meta.url));
 const args = process.argv.slice(2);
 const option = key => { const index = args.indexOf(key); return index < 0 ? undefined : args[index + 1]; };
 if (!args.includes('--capture') && !args.includes('--plan')) {
-  console.log('Use --plan, or --capture --pilot / --capture --all after the exclusive browser gate. Optional --out dist/yuga-art-review, --base-url http://127.0.0.1:5192, --skip-encode, --resume-coast prior-output (strict unchanged-runtime recovery into a fresh --out).');
+  console.log('Use --plan, or --capture --pilot / --capture --all after the exclusive browser gate. Optional --out dist/yuga-art-review, --base-url http://127.0.0.1:5192, --skip-encode, --resume-coast prior-output, --encode-existing completed-output (both require a fresh --out and unchanged runtime hashes).');
   process.exit(0);
 }
 const pilot = args.includes('--pilot');
+const encodingOnly = option('--encode-existing');
+assert.ok(!encodingOnly || !pilot && !option('--resume-coast') && !args.includes('--skip-encode'), 'Encoding-only recovery cannot be combined with another capture mode.');
 const output = path.resolve(root, option('--out') || `dist/yuga-art-review${pilot ? '-pilot' : ''}`);
 assert.ok(['dist', 'test-results'].some(dir => output.startsWith(path.join(root, dir) + path.sep)), 'Write review artifacts only under dist/ or test-results/.');
 assert.match(output, /^[a-zA-Z0-9/_. -]+$/, 'Use a simple output path for FFmpeg filter paths.');
@@ -123,6 +125,38 @@ if (option('--resume-coast')) {
   manifest.loads = parent.loads.map(load => ({ ...load, captureEpoch: 'original' }));
   manifest.assetResponses = parent.assetResponses.map(response => ({ ...response, captureEpoch: 'original' }));
   console.log(`Verified and preserved ${inherited.length} completed shots; only two coastal views will be recaptured.`);
+}
+if (encodingOnly) {
+  const parentOutput = path.resolve(root, encodingOnly);
+  assert.ok(['dist', 'test-results'].some(dir => parentOutput.startsWith(path.join(root, dir) + path.sep)) && parentOutput !== output, 'Read an existing local campaign into a fresh output.');
+  const parentBytes = await fs.readFile(path.join(parentOutput, 'manifest.json')), parent = JSON.parse(parentBytes);
+  assert.ok(parent.passed && parent.finishedAt && parent.errors.length === 0, 'Reuse only a completed capture campaign.');
+  assert.equal(parent.shots.length, 160); assert.equal(parent.recordings.length, 23);
+  assert.deepEqual(parent.heroIds, manifest.heroIds); assert.deepEqual(parent.unitIds, manifest.unitIds);
+  assert.deepEqual(parent.assets, manifest.assets);
+  const toolPath = 'games/yuga/tools/capture-art-review.mjs';
+  const runtimeSources = values => values.filter(source => source.path !== toolPath);
+  assert.deepEqual(runtimeSources(parent.sources), runtimeSources(manifest.sources), 'Runtime/shared/asset/build inputs changed after capture.');
+  const current = { revision: manifest.revision, sources: manifest.sources, startedAt: manifest.startedAt };
+  Object.assign(manifest, parent, current, { passed: false, finishedAt: null, errors: [], files: [] });
+  for (const record of manifest.shots) for (const frame of record.frames) {
+    assert.ok(frame.file.startsWith(`shots/${record.id}/`) && !frame.file.split('/').includes('..'));
+    const bytes = await fs.readFile(path.join(parentOutput, frame.file));
+    assert.equal(bytes.length, frame.bytes);
+    if (frame.recoverySha256) assert.equal(hash(bytes), frame.recoverySha256, 'Recovered frame changed before encoding.');
+    frame.encodingRecoverySha256 = hash(bytes);
+    const destination = path.join(output, frame.file);
+    await fs.mkdir(path.dirname(destination), { recursive: true }); await fs.writeFile(destination, bytes);
+  }
+  await fs.writeFile(path.join(output, 'previous-encoding-manifest.json'), parentBytes);
+  if (manifest.recovery) {
+    const original = await fs.readFile(path.join(parentOutput, 'parent-manifest.json'));
+    assert.equal(hash(original), manifest.recovery.parentManifestSha256);
+    await fs.writeFile(path.join(output, 'parent-manifest.json'), original);
+  }
+  manifest.encodingRecovery = { parentDirectory: path.relative(root, parentOutput), parentManifest: 'previous-encoding-manifest.json', parentManifestSha256: hash(parentBytes), previousRevision: parent.revision, previousToolSha256: parent.sources.find(source => source.path === toolPath).sha256, encodingRevision: current.revision, encodingToolSha256: current.sources.find(source => source.path === toolPath).sha256, reason: 'Previous VFR H264 B-frame ordering underdeclared some MP4 durations and made concatenated chapter timestamps run backwards. Reencode original JPEGs with B-frames disabled; require decoded PTS, packet PTS/DTS and end-duration validity for every clip/chapter/reel. No browser recapture or runtime change.', reusedShots: manifest.shots.length };
+  manifest.scope += ' Original frame capture revisions remain on each shot; encodingRecovery separately records the corrected encoding-tool revision and the superseded encoding manifest.';
+  console.log(`Verified ${manifest.shots.length} original shots for encoding-only recovery; no browser will launch.`);
 }
 const save = () => fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 let server, browser, context, page, fixture, stopping = false;
@@ -448,15 +482,32 @@ async function captureCoast() {
 }
 
 async function probe(filename) {
-  const result = await trackedExec('ffprobe', ['-v', 'error', '-count_frames', '-show_entries', 'format=duration,size:stream=codec_name,width,height,avg_frame_rate,nb_read_frames', '-of', 'json', filename], { timeout: 30_000, maxBuffer: 1024 * 1024 });
-  return JSON.parse(result.stdout);
+  const result = await trackedExec('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-count_frames', '-show_frames', '-show_packets', '-show_entries', 'format=duration,size:stream=codec_name,width,height,avg_frame_rate,nb_read_frames,has_b_frames,duration:frame=pts_time,duration_time:packet=pts_time,dts_time,duration_time', '-of', 'json', filename], { timeout: 30_000, maxBuffer: 4 * 1024 * 1024 });
+  const data = JSON.parse(result.stdout), entries = data.packets_and_frames || [];
+  const frames = entries.filter(value => value.type === 'frame'), packets = entries.filter(value => value.type === 'packet');
+  assert.ok(frames.length >= 2 && packets.length >= 2, `${filename}: missing decoded frames or packets.`);
+  assert.equal(data.streams[0].has_b_frames, 0, `${filename}: B-frame reordering is forbidden for these VFR concatenations.`);
+  for (const [values, field, label] of [[frames, 'pts_time', 'decoded PTS'], [packets, 'pts_time', 'packet PTS'], [packets, 'dts_time', 'packet DTS']]) {
+    const times = values.map(value => Number(value[field]));
+    assert.ok(times.every(Number.isFinite) && times.every((time, index) => index === 0 || time > times[index - 1]), `${filename}: nonmonotonic ${label}.`);
+  }
+  const packetEnds = packets.map(value => Number(value.pts_time) + Number(value.duration_time));
+  assert.ok(packetEnds.every(Number.isFinite), `${filename}: missing packet duration.`);
+  const end = Math.max(...packetEnds), duration = Number(data.format.duration), streamDuration = Number(data.streams[0].duration);
+  assert.ok(Math.abs(duration - end) <= .002 && Math.abs(streamDuration - end) <= .002, `${filename}: declared duration does not cover the final presented packet.`);
+  data.presentationTiming = { decodedFrames: frames.length, packets: packets.length, firstPtsSeconds: Number(frames[0].pts_time), lastPtsSeconds: Number(frames.at(-1).pts_time), finalPacketEndSeconds: end, declaredDurationSeconds: duration, endDifferenceSeconds: duration - end, decodedPtsStrictlyIncreasing: true, packetPtsStrictlyIncreasing: true, packetDtsStrictlyIncreasing: true, bFrames: 0 };
+  delete data.packets_and_frames;
+  return data;
 }
 async function runFFmpeg(args) { await trackedExec('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-threads', '2', '-filter_threads', '1', ...args], { maxBuffer: 2 * 1024 * 1024 }); }
 async function concatenate(ids, filename) {
   const list = path.join(output, `${path.basename(filename)}.concat`);
   await fs.writeFile(list, ids.map(id => `file '${path.join(output, 'shots', id, 'clip.mp4')}'`).join('\n') + '\n');
   await runFFmpeg(['-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', '-movflags', '+faststart', filename]);
-  return probe(filename);
+  const result = await probe(filename);
+  const expectedFrames = ids.reduce((sum, id) => sum + manifest.shots.find(record => record.id === id).videoProbe.presentationTiming.decodedFrames, 0);
+  assert.equal(result.presentationTiming.decodedFrames, expectedFrames, `${filename}: concatenation lost or duplicated decoded frames.`);
+  return result;
 }
 async function encode() {
   const font = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf';
@@ -472,8 +523,9 @@ async function encode() {
     lines.push(`file '${path.join(output, record.frames.at(-1).file)}'`); await fs.writeFile(list, lines.join('\n') + '\n');
     const label = path.join(directory, 'label.txt'); await fs.writeFile(label, `${record.title}\n${record.mode} | ${(record.captureRevision || manifest.revision).slice(0, 8)} | silent`);
     const video = path.join(directory, 'clip.mp4');
-    await runFFmpeg(['-f', 'concat', '-safe', '0', '-i', list, '-vf', `scale=960:600:flags=lanczos,drawbox=x=0:y=ih-52:w=iw:h=52:color=black@0.86:t=fill,drawtext=fontfile=${font}:textfile=${label}:fontcolor=white:fontsize=13:x=12:y=h-43:line_spacing=5`, '-c:v', 'libx264', '-threads', '2', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p', '-fps_mode', 'vfr', '-movflags', '+faststart', '-an', video]);
+    await runFFmpeg(['-f', 'concat', '-safe', '0', '-i', list, '-vf', `scale=960:600:flags=lanczos,drawbox=x=0:y=ih-52:w=iw:h=52:color=black@0.86:t=fill,drawtext=fontfile=${font}:textfile=${label}:fontcolor=white:fontsize=13:x=12:y=h-43:line_spacing=5`, '-c:v', 'libx264', '-threads', '2', '-preset', 'veryfast', '-crf', '22', '-bf', '0', '-pix_fmt', 'yuv420p', '-fps_mode', 'vfr', '-movflags', '+faststart', '-an', video]);
     record.video = relative(video); record.videoProbe = await probe(video); record.videoSha256 = hash(await fs.readFile(video));
+    assert.equal(record.videoProbe.presentationTiming.decodedFrames, record.frames.length + 1, `${record.id}: expected every native frame plus the declared final hold frame.`);
     record.encodedTiming = { nativeFirstToLastSeconds: record.frameStats.firstToLastSeconds, requestedFinalHoldSeconds: .08, encodedDurationSeconds: Number(record.videoProbe.format.duration), differenceSeconds: Number(record.videoProbe.format.duration) - record.frameStats.firstToLastSeconds - .08 };
     const poster = path.join(directory, 'poster.jpg');
     await runFFmpeg(['-ss', String(Math.min(Number(record.videoProbe.format.duration) * .45, record.category === 'ability' ? 1.4 : 1)), '-i', video, '-frames:v', '1', '-q:v', '2', poster]);
@@ -484,8 +536,8 @@ async function encode() {
     recording.video = relative(filename); recording.probe = await concatenate(recording.shots, filename);
   }
   const highlights = manifest.shots.filter(record => record.category === 'gallery' && record.clip === 'idle' || record.category === 'unit' && record.clip === 'fire' || record.category === 'ability' && ['rama', 'hanuman', 'sita'].includes(record.heroId) && record.slot === 2);
-  const reel = path.join(output, 'showcase-reel.mp4'); await concatenate(highlights.map(record => record.id), reel);
-  manifest.reel = { file: relative(reel), scope: 'Selected real clips; full roster/ability/unit coverage remains in the chapter files.', probe: await probe(reel) };
+  const reel = path.join(output, 'showcase-reel.mp4'), reelProbe = await concatenate(highlights.map(record => record.id), reel);
+  manifest.reel = { file: relative(reel), scope: 'Selected real clips; full roster/ability/unit coverage remains in the chapter files.', probe: reelProbe };
   for (const [name, selected] of [['heroes', manifest.shots.filter(record => record.category === 'gallery' && record.clip === 'idle')], ['abilities', manifest.shots.filter(record => record.category === 'ability')], ['units', manifest.shots.filter(record => record.category === 'unit' && record.clip === 'fire')], ['city', manifest.shots.filter(record => record.category === 'city')]]) {
     if (!selected.length) continue;
     const directory = path.join(output, `sheet-${name}`); await fs.mkdir(directory, { recursive: true });
@@ -503,13 +555,16 @@ async function encode() {
 }
 
 try {
-  await save(); await startServer();
-  browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || '/usr/bin/chromium', headless: true, args: ['--no-sandbox', '--enable-unsafe-swiftshader', '--use-angle=swiftshader'] });
-  if (manifest.recovery) await captureCoast();
-  else {
-    for (const hero of heroes) await captureHero(hero);
-    for (const unitId of unitIds) await captureUnit(unitId);
-    if (!pilot) { await captureCity(); await captureCoast(); }
+  await save();
+  if (!encodingOnly) {
+    await startServer();
+    browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || '/usr/bin/chromium', headless: true, args: ['--no-sandbox', '--enable-unsafe-swiftshader', '--use-angle=swiftshader'] });
+    if (manifest.recovery) await captureCoast();
+    else {
+      for (const hero of heroes) await captureHero(hero);
+      for (const unitId of unitIds) await captureUnit(unitId);
+      if (!pilot) { await captureCity(); await captureCoast(); }
+    }
   }
   await shutdown();
   await Promise.all(assetReads);
