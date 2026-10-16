@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { Simulation } from '../packages/sim/src/index';
 import { WORLD, isBlocked, landmark } from '../packages/sim/src/world';
 import type { CommandAction, CommandMessage, InputMessage, Snapshot } from '../packages/protocol/src/index';
+import type { GameAudio } from '../apps/client/src/audio';
 
 type Intent = Omit<InputMessage, 'type' | 'seq'>;
 interface DevHooks {
@@ -11,6 +12,7 @@ interface DevHooks {
   metrics(): { frameTimes: number[]; quality: string; cameraYaw: number };
   command(action: CommandAction, target?: string, value?: string): void;
   connection(): { input(message: InputMessage): void; command(message: CommandMessage): void };
+  audio(): GameAudio['diagnostics'];
 }
 declare global {
   interface Window {
@@ -229,14 +231,16 @@ async function joinedCrew(browser: Browser) {
   const second = await browser.newContext({ viewport: { width: 400, height: 500 } });
   const host = await first.newPage(); const guest = await second.newPage();
   await load(host); await host.locator('#play-private').click();
+  await host.locator('#gameplay').selectOption('story');
   await host.locator('#player-name').fill('QA Host');
-  await host.getByRole('button', { name: 'Enter the city' }).click();
+  await host.getByRole('button', { name: 'Join the city' }).click();
   await expect.poll(async () => (await state(host)).snapshot.room).not.toBe('PREVIEW');
   const room = (await state(host)).snapshot.room;
   await load(guest); await guest.locator('#play-private').click();
+  await guest.locator('#gameplay').selectOption('story');
   await guest.locator('#player-name').fill('QA Guest');
   await guest.locator('#room-input').fill(room);
-  await guest.getByRole('button', { name: 'Enter the city' }).click();
+  await guest.getByRole('button', { name: 'Join the city' }).click();
   for (const page of [host, guest]) {
     await expect.poll(async () => (await state(page)).snapshot.room).toBe(room);
     await expect.poll(async () => (await state(page)).snapshot.players.filter(p => p.connected).length).toBe(2);
@@ -328,8 +332,9 @@ test('real crew walking, split votes, agreement and late-join recap', async ({ b
     const late = await lateContext.newPage();
     try {
       await load(late); await late.locator('#play-private').click();
+      await late.locator('#gameplay').selectOption('story');
       await late.locator('#player-name').fill('QA Late Arrival'); await late.locator('#room-input').fill(room);
-      await late.getByRole('button', { name: 'Enter the city' }).click();
+      await late.getByRole('button', { name: 'Join the city' }).click();
       await expect(late.locator('#crew-dialog')).toBeVisible();
       await expect(late.locator('#crew-recap .recap-line')).toHaveCount(1);
       const lateState = (await state(late)).snapshot;
@@ -384,8 +389,9 @@ test('completed-room welcome preserves the ending (presentation fixture)', async
     });
   });
   await load(page); await page.locator('#play-private').click();
+  await page.locator('#gameplay').selectOption('story');
   await page.locator('#room-input').fill('QA-END');
-  await page.getByRole('button', { name: 'Enter the city' }).click();
+  await page.getByRole('button', { name: 'Join the city' }).click();
   await renderedFrames(page);
   await expect(page.locator('#ending-dialog')).toBeVisible();
   await expect(page.locator('#ending-title')).toHaveText('Open Windows');

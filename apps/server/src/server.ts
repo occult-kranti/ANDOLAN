@@ -29,9 +29,13 @@ export async function createGameServer(options: ServerOptions = {}) {
       const contents = await fs.readFile(path.join(dataDir, filename), 'utf8');
       if (contents.length > 5_000_000) continue;
       const saved = JSON.parse(contents) as SavedRoom;
-      if (saved.schema !== 1 || saved.simulation.mode !== 'private' || saved.simulation.room !== filename.slice(0, -5)) continue;
+      if (saved.schema !== 1 || !['private', 'public'].includes(saved.simulation.mode) || (saved.simulation.mode === 'public' && saved.simulation.gameplay !== 'freeroam') || saved.simulation.room !== filename.slice(0, -5)) continue;
       if (!saved.identities || typeof saved.identities !== 'object' || Array.isArray(saved.identities) || Object.keys(saved.identities).length > 4096 || !Object.entries(saved.identities).every(([hash, identity]) => /^[a-f0-9]{64}$/.test(hash) && identity && /^[a-f0-9]{16}$/.test(identity.id) && Number.isFinite(identity.lastSeen))) continue;
-      const sim = new Simulation(saved.simulation.room, 'private', saved.simulation);
+      const sim = new Simulation(saved.simulation.room, saved.simulation.mode, saved.simulation);
+      if (saved.simulation.schema < 3) {
+        try { await fs.writeFile(path.join(dataDir, `${filename}.legacy-v${saved.simulation.schema}.bak`), contents, { flag: 'wx', mode: 0o600 }); }
+        catch (error) { if (!(error instanceof Error && 'code' in error && error.code === 'EEXIST')) throw error; }
+      }
       rooms.set(sim.room, { sim, identities: new Map(Object.entries(saved.identities)), clients: new Map(), changed: false });
     } catch (error) { console.error(`Checkpoint ${filename} could not be loaded: ${error instanceof Error ? error.message : 'invalid data'}`); }
   }
@@ -88,15 +92,17 @@ export async function createGameServer(options: ServerOptions = {}) {
         if (ctx.joined) { fail(socket, 'ALREADY_JOINED', 'One room per connection.'); return; }
         // A bearer token is scoped to its room. Validate before allocating any room state.
         if (message.token && !message.room) { fail(socket, 'ROOM_REQUIRED', 'Use the saved room code to resume this identity.'); return; }
+        const gameplay = message.gameplay ?? 'story';
         let room: GameRoom | undefined;
         if (message.room) {
           room = rooms.get(message.room);
           if (!room || room.sim.mode !== message.mode) { fail(socket, 'ROOM_NOT_FOUND', 'That room is unavailable in this mode.'); return; }
-        } else if (message.mode === 'public') room = [...rooms.values()].find(r => r.sim.mode === 'public' && !r.sim.mission.complete && r.sim.players.size < 16);
+          if (room.sim.gameplay !== gameplay) { fail(socket, 'GAMEPLAY_MISMATCH', `This room uses ${room.sim.gameplay === 'story' ? 'Story' : 'Free Roam'}. Choose that gameplay mode to join; the two saves remain separate.`); return; }
+        } else if (message.mode === 'public') room = [...rooms.values()].find(r => r.sim.mode === 'public' && r.sim.gameplay === gameplay && (gameplay === 'freeroam' || !r.sim.mission.complete) && r.sim.players.size < 16);
         if (!room) {
           if (rooms.size >= 128) { fail(socket, 'SERVER_FULL', 'The development server has reached its room limit.'); return; }
           const code = message.mode === 'public' ? `CITY-${randomBytes(3).toString('hex').toUpperCase()}` : roomCode();
-          room = { sim: new Simulation(code, message.mode), identities: new Map(), clients: new Map(), changed: true };
+          room = { sim: new Simulation(code, message.mode, undefined, gameplay), identities: new Map(), clients: new Map(), changed: true };
           rooms.set(code, room);
         }
         let token = message.token;
@@ -123,7 +129,7 @@ export async function createGameServer(options: ServerOptions = {}) {
         ctx.room = room; ctx.playerId = playerId; ctx.joined = true;
         clearTimeout(joinTimeout);
         room.clients.set(playerId, socket); room.changed = true;
-        send(socket, { type: 'welcome', protocol: PROTOCOL_VERSION, playerId, token: token!, room: room.sim.room, mode: room.sim.mode, snapshot: room.sim.snapshot() });
+        send(socket, { type: 'welcome', protocol: PROTOCOL_VERSION, playerId, token: token!, room: room.sim.room, mode: room.sim.mode, gameplay: room.sim.gameplay, snapshot: room.sim.snapshot() });
         return;
       }
       if (!ctx.joined || !ctx.room || !ctx.playerId || ctx.room.clients.get(ctx.playerId) !== socket) { fail(socket, 'JOIN_REQUIRED', 'Join a room before sending game input.'); return; }
@@ -141,7 +147,7 @@ export async function createGameServer(options: ServerOptions = {}) {
 
   let writeQueue = Promise.resolve();
   function checkpoint() {
-    const saves = [...rooms.values()].filter(r => r.sim.mode === 'private' && r.changed).map(r => {
+    const saves = [...rooms.values()].filter(r => (r.sim.mode === 'private' || r.sim.gameplay === 'freeroam') && r.changed).map(r => {
       r.changed = false;
       return { room: r, file: path.join(dataDir, `${r.sim.room}.json`), contents: JSON.stringify({ schema: 1, simulation: r.sim.serialize(), identities: Object.fromEntries(r.identities) } satisfies SavedRoom) };
     });
@@ -158,10 +164,12 @@ export async function createGameServer(options: ServerOptions = {}) {
     for (const room of rooms.values()) {
       if (!room.clients.size) continue;
       const revision = room.sim.mission.revision;
+      const contractRevision = room.sim.contracts.revision;
+      const cityRevision = room.sim.city.revision;
       room.sim.step(0.05);
       // Checkpoint positions as well as mission changes during the regular atomic-save cycle.
       room.changed = true;
-      if (tick % 2 === 0 || revision !== room.sim.mission.revision) {
+      if (tick % 2 === 0 || revision !== room.sim.mission.revision || contractRevision !== room.sim.contracts.revision || cityRevision !== room.sim.city.revision) {
         const snapshot = room.sim.snapshot();
         for (const socket of room.clients.values()) send(socket, snapshot);
       }
@@ -177,7 +185,7 @@ export async function createGameServer(options: ServerOptions = {}) {
     for (const room of rooms.values()) {
       // Reserve disconnected seats for two minutes, retaining authenticated identity for later recovery.
       for (const identity of room.identities.values()) if (!room.clients.has(identity.id) && room.sim.players.has(identity.id) && Date.now() - identity.lastSeen > 120_000) { room.sim.removePlayer(identity.id); room.changed = true; }
-      if (room.sim.mode === 'public' && !room.clients.size && room.sim.players.size === 0) rooms.delete(room.sim.room);
+      if (room.sim.mode === 'public' && room.sim.gameplay === 'story' && !room.clients.size && room.sim.players.size === 0) rooms.delete(room.sim.room);
     }
   }, 15_000);
   await new Promise<void>((resolve, reject) => { http.once('error', reject); http.listen(options.port ?? 3001, options.host ?? '0.0.0.0', () => { http.off('error', reject); resolve(); }); });

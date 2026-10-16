@@ -26,5 +26,5 @@ if ca_path:
     if "PRIVATE KEY" in contents or "BEGIN CERTIFICATE" not in contents:
         raise ValueError("Registry trust must be a public certificate bundle")
     args += ["--secret", f"id=registry_ca,src={ca_path}"]
-args += ["--tag", os.environ.get("ANDOLAN_CONTAINER_TAG", "andolan:0.1"), str(root)]
+args += ["--tag", os.environ.get("ANDOLAN_CONTAINER_TAG", "andolan:0.3"), str(root)]
 subprocess.run(args, check=True)

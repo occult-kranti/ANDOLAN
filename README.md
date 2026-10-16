@@ -1,10 +1,10 @@
 # ANDOLAN — City of Consequences
 
-**First Edition 0.1: a playable browser city drama.** Explore an original fictional district of Devnagar, drive, meet the crew, compare records and make choices that return later in the story.
+**City Reform Multiplayer Beta 0.3.** Bring a crew to fictional Devnagar, share a vehicle and take city jobs. Five repeatable runs cover deliveries, vehicle recovery, a checkpoint circuit and community projects. Five linked cases begin with a media exposé, uncover four sector disputes and end in a saved crew decision: publish the full case or take Samar's deal.
 
-This release contains a condensed six-chapter campaign, 22 stages, seven decisions, five endings, an evidence journal, local story saves and real shared server rooms. The larger six-district/22-mission game remains in [the production roadmap](docs/ROADMAP.md).
+The original six-chapter Story remains optional, with 22 stages, seven decisions, five endings and its own evidence journal and saves. The larger six-district/22-mission game remains in [the production roadmap](docs/ROADMAP.md).
 
-**Play the solo preview:** [Open ANDOLAN](https://occult-kranti.github.io/ANDOLAN/) and choose **Story**. Progress saves in that browser. Shared rooms require a separately hosted game server.
+**Publication status:** [the public website](https://occult-kranti.github.io/ANDOLAN/) currently serves the earlier **First Edition 0.1 Story preview**. Beta 0.3 is implemented in this repository; its final source/browser/container checks and public release are pending. No public multiplayer backend has been provisioned. Once the beta client is published, **City practice** and **Story** work locally in the browser; online rooms require a running, compatible game server entered in the lobby.
 
 ## Play and develop
 
@@ -15,9 +15,18 @@ npm ci
 npm run dev
 ```
 
-Client port 5173; room server port 3001. Use **Story** for solo play saved in this browser, **Private crew** for invited co-op, and **City sandbox** for an explicitly limited shared test room. A static/downloaded copy needs a separately hosted server for multiplayer.
+Client port 5173; room server port 3001. In the beta client:
 
-Controls: WASD or arrow keys to move/drive, Shift to sprint, E to interact, F to enter/exit a vehicle, drag to look, J for evidence, Escape for settings. Gamepad and touch controls are implemented. Settings include graphics, camera comfort, subtitles, larger dialog text, driving assistance and key rebinding.
+- **Bring your crew** creates or joins a private room. Choose **City jobs · free roam** or **Original story · co-op**.
+- **Open city** joins a shared development room on the configured server.
+- **City practice** plays the city jobs solo, with a separate browser save.
+- **Begin story / Continue story** opens the original solo campaign and its existing save.
+
+For a static/downloaded client, enter your server's HTTPS or WSS address in **Game server address**. The address is remembered in that browser; an invite includes the server, room and activity. Joining online requires an actual server connection. City practice does not create online teammates.
+
+Start **The Nine O'Clock Correction** from the jobs board for the case arc, or choose a repeatable run. One player can load and drive while another unloads on foot. The final mandate uses the connected crew's majority: reform adds one point to future project-bearing job rewards; capture gives 25% more crew credits but zero project points. Credits are a shared score, with no spending system.
+
+Controls: WASD or arrow keys to move/drive, Shift to sprint, E to interact, F to enter/exit, Space to brake, H for the horn, drag to look, C to recenter, J for jobs or Story evidence, Escape for settings. Touch buttons include vehicle, brake and camera controls; gamepad B brakes. Settings provide graphics, camera comfort, subtitles, larger text, driving assistance, guarded key rebinding and opt-in original procedural audio with a test sound, volume and music controls.
 
 Solo play pauses while its tab is hidden. Its fixed-step clock catches up with short delays, clears stale controls and limits long-stall recovery.
 
@@ -29,7 +38,9 @@ npm run build:standalone
 npm start
 ```
 
-The server serves the production client and WebSocket rooms on port 3001. `dist/standalone/index.html` is a self-contained solo game. Dockerfile and Compose configuration are included; see [deployment instructions](docs/DEPLOYMENT.md). The solo preview is published on GitHub Pages. Shared rooms still require a separately hosted server; running the game inside ChatGPT has not been verified.
+The server serves the production client and WebSocket rooms on port 3001. `dist/standalone/index.html` contains the local City practice and Story modes; online play still requires a server. Beta 0.3 uses **protocol 2**, so deploy the matching client and server. Supported old simulation saves migrate from schema 1/2 to 3 while preserving their existing progress and identities; server migration keeps an original backup. Dockerfile and Compose configuration target `andolan:0.3`; see [deployment and rollback instructions](docs/DEPLOYMENT.md).
+
+An unexecuted [Render Blueprint](render.yaml) and [multiplayer hosting guide](docs/MULTIPLAYER_HOSTING.md) prepare one paid service with persistent room storage. No provider account, purchase or deployment has been made. The same Node service can host both client and rooms, or the static client can connect through its runtime server-address field. Running the game inside ChatGPT has not been verified.
 
 The GitHub Actions workflow verifies and publishes the solo build. Cloud installation and startup were tested; [the setup record](docs/CLOUD_SETUP.md) explains the saved configuration draft and activation step.
 
@@ -46,9 +57,12 @@ npm run test:e2e
 
 Browser tests use installed Chromium; see `playwright.config.ts`. For the software-rendered cloud, run `ANDOLAN_SOFTWARE_RENDERING=1 npm run test:e2e`; CI enables this test-only graphics budget automatically. Evidence and limits are in [QA report](docs/QA_REPORT.md), [panel ledger](docs/PANEL_LEDGER.md) and `docs/evidence`.
 
+Beta 0.2 baseline gates passed: **97 tests, typecheck, lint and all ten browser cases in 491.765 seconds**. The browser checks include physical two-client Clinic Restock, identity through reload/rejoin, the shared 100 credits / 2 reputation / 1 project reward exactly once, practice/audio, separate Story saves and mobile entry/job board. These results precede Beta 0.3: its final combined checks, new case journey, mandate and container verification are pending. No human playtesting or hosted multiplayer result is claimed.
+
 ## Design and research
 
 - [Game design](docs/GAME_DESIGN.md), [product brief](docs/PRODUCT_BRIEF.md), [roadmap](docs/ROADMAP.md)
+- [City Jobs design and acceptance](docs/MULTIPLAYER_DESIGN.md), [City Reform cases and mandate](docs/CITY_REFORM_DESIGN.md), [multiplayer hosting](docs/MULTIPLAYER_HOSTING.md)
 - [Design library and reading notes](docs/library/README.md): exact sources, game theory, story study, twelve-book reading backlog
 - [Original concept art](docs/concepts/README.md): city art direction and the first crew
 - [REA research](docs/research/REA_RUNBOOK.md), [mechanics specification](docs/research/VEHICLE_TRANSITION_SPEC.md), [reuse ledger](docs/REUSE_LEDGER.md)
@@ -58,4 +72,4 @@ Browser tests use installed Chromium; see `playwright.config.ts`. For the softwa
 
 ## Current boundaries
 
-The runtime art is deliberately stylized and procedural; concept paintings are future art targets. Public mode is a development sandbox, with no production accounts, moderation operation, regional matchmaking or economy. Local synthetic network tests do not prove sustained public capacity. The game does not contain commercial game assets, real-world allegations, political profiling or actual protest coordination.
+The runtime art is stylized and procedural; concept paintings are future art targets. Open city is a development mode, with no production accounts, moderation operation or regional matchmaking. Crew credits are room-owned progress counters with no spending system or cash value. Local automated tests do not prove sustained public capacity or how enjoyable repeated jobs feel. The game uses original art, synthesized audio and fictional satirical characters.

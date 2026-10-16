@@ -1,0 +1,44 @@
+{
+  "scope": "Three focused checks after menu-close and HUD-focus repairs; max10fps software render budget. Final mandate checkpoints are explicit fixtures, not physically earned sector completion.",
+  "stats": {
+    "startTime": "2026-10-16T05:13:11.568Z",
+    "duration": 70936.45000000001,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "solo City practice preserves earned Story and uses native opt-in audio",
+      "status": "passed",
+      "durationMs": 28185
+    },
+    {
+      "title": "mobile remapping preserves touch movement and full braking; larger dialogue survives reload",
+      "status": "passed",
+      "durationMs": 21449
+    },
+    {
+      "title": "both mandate outcomes disclose consequences and persist (labelled completed-case fixtures)",
+      "status": "passed",
+      "durationMs": 20094
+    }
+  ],
+  "initialFailures": [
+    {
+      "report": "test-results/city-reform-focused/results.json",
+      "causes": [
+        "Real asynchronous dialog close cleared a new held movement key.",
+        "Mobile keyboard Space activated focused Vehicle button; app now returns focus to game after HUD actions.",
+        "Fixture used wrong room key; save correctly rejected."
+      ]
+    },
+    {
+      "report": "test-results/city-reform-focused2/results.json",
+      "causes": [
+        "Audio/controls passed. Capture fixture screenshot timed out at960x740; bounded viewport640x600 passed all outcome and persistence assertions."
+      ]
+    }
+  ]
+}

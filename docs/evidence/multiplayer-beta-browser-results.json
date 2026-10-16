@@ -1,0 +1,81 @@
+{
+  "scope": "Frozen first multiplayer-beta integration baseline; Linux Chromium/SwiftShader with a maximum10fps test-only graphics budget. No consumer-device performance or subjective audio-quality claim.",
+  "stats": {
+    "startTime": "2026-10-16T04:32:26.992Z",
+    "duration": 491764.60699999996,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "name": "Story keyboard controls, dialogue, vehicle, checkpoint and settings",
+      "status": "passed",
+      "durationMs": 21407
+    },
+    {
+      "name": "two independent browsers share movement, seats and driver handover",
+      "status": "passed",
+      "durationMs": 12995
+    },
+    {
+      "name": "real crew walking, split votes, agreement and late-join recap",
+      "status": "passed",
+      "durationMs": 46944
+    },
+    {
+      "name": "mobile title, garage and dialogue layout remain usable",
+      "status": "passed",
+      "durationMs": 4705
+    },
+    {
+      "name": "completed-room welcome preserves the ending (presentation fixture)",
+      "status": "passed",
+      "durationMs": 6237
+    },
+    {
+      "name": "confirmed replay from a completed checkpoint (labelled setup)",
+      "status": "passed",
+      "durationMs": 4381
+    },
+    {
+      "name": "complete six chapters through real-time movement, driving and visible choices",
+      "status": "passed",
+      "durationMs": 263537
+    },
+    {
+      "name": "solo City practice preserves earned Story and uses native opt-in audio",
+      "status": "passed",
+      "durationMs": 26821
+    },
+    {
+      "name": "mobile multiplayer entry and city job briefing stay reachable",
+      "status": "passed",
+      "durationMs": 7991
+    },
+    {
+      "name": "two real clients deliver a bound van job once, resume identity and share late-join rewards",
+      "status": "passed",
+      "durationMs": 95273
+    }
+  ],
+  "realGameplay": "All22 Story stages, seven choices, earned ending and replay; independent real WebSocket clients physically walked and drove the van delivery; no teleport, clock advance or injected gameplay state.",
+  "fixtures": "Completed-room welcome and separate completed-checkpoint replay cases remain explicitly labelled setup fixtures; actual campaign completion/replay is separately proved.",
+  "harnessCorrections": [
+    {
+      "report": "test-results/multiplayer-beta-short/results.json",
+      "failed": 1,
+      "passed": 1,
+      "cause": "Audio assertion expected a running context inside Settings, where the existing modal policy deliberately suspends audio. Corrected test closes Settings before waveform checks and verifies mute separately in-world."
+    },
+    {
+      "report": "test-results/multiplayer-beta-route/results.json",
+      "failed": 1,
+      "passed": 0,
+      "cause": "Inherited submit selector expected Enter the city after UI text changed to Join the city. Selector updated in preserved Story and new multiplayer cases."
+    }
+  ],
+  "rawReport": "test-results/multiplayer-beta-final/results.json",
+  "releaseStatus": "No release or public smoke for this upgrade; user requested another implementation pass after this baseline."
+}

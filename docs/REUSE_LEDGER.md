@@ -30,6 +30,17 @@ All below are from `swift502/Sketchbook@62f4b7986fd1ce1e4f91daba89ef032c20a6ce55
 
 The REA evidence excerpts contain identifiers and literal source facts, so the MIT research notices accompany them. The full 8.7 MB evidence record remains outside the product checkout; the compact summary and 8 KB focused trace are committed research artifacts. No large third-party asset directory is placed in the game.
 
+## Multiplayer beta research addendum — 16 October 2026 UTC
+
+The bounded source register, concrete design lessons and acceptance gates are in [MULTIPLAYER_REFERENCES.md](research/MULTIPLAYER_REFERENCES.md). This addendum supplements the original pass; it does not imply that whole repositories or games were examined.
+
+| Material | Inspected license / pin | Actual disposition |
+| --- | --- | --- |
+| Sketchbook camera, spring, entry and seat switching | Existing MIT notice; `62f4b7986fd1ce1e4f91daba89ef032c20a6ce55` | Four additional selected files statically analyzed with existing REA 6.5.0; partial graph, no reference runtime. Ideas only; no code/assets imported. |
+| Endel's Tank Battle multiplayer sample | MIT; `6339493130b4b1d4d28f0f52d17b2fba738c7d47` | Selected authoritative room/schema and PlayCanvas target/HUD/smoothing source sections read. No dependencies, game assets or application run. Fixed-frame interpolation is explicitly not adopted as a timing solution. |
+| Godot Multiplayer Bomber demo | Root MIT; `b761b4cd5718a7118f2c95eb55f181d0a5f004f1` | Lobby, lifecycle and score scripts inspected as text. Its disconnect-ends-game behavior is a counterexample for our recoverable jobs. No Godot runtime, textures or fonts imported. |
+| Geckos snapshot interpolation 1.1.1 | BSD-3-Clause; `a171cefb626085bfff5241cbd60c8099bdd742bf` | Selected source inspected; a small original probe executed source externally through existing tsx. No dependency adoption or copied implementation. Bounded observations include useful bracketing behavior and two edge-case defects; ANDOLAN's remote-pose helper is original work. |
+
 ## Adoption rule
 
 Before copying any new component, record upstream URL and immutable revision, exact files, per-file license and notices, third-party dependencies, asset rights, modifications, product destination and executed verification. For an idea-only adaptation, label its values **original design** and avoid implying behavioral equivalence. Runtime tests and license review are separate evidence.
