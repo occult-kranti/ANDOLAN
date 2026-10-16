@@ -1,0 +1,386 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/ANDOLAN/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.yuga.config.ts",
+      "--reporter=list,json",
+      "--max-failures=1"
+    ],
+    "configFile": "/workspace/ANDOLAN/playwright.yuga.config.ts",
+    "rootDir": "/workspace/ANDOLAN/games/yuga/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 1,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/ANDOLAN/test-results/yuga",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "snapshotDir": "/workspace/ANDOLAN/games/yuga/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.e2e.ts",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5180",
+          "viewport": {
+            "width": 960,
+            "height": 640
+          },
+          "actionTimeout": 20000,
+          "screenshot": "only-on-failure",
+          "trace": {
+            "mode": "retain-on-failure",
+            "screenshots": false
+          },
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--no-sandbox",
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run yuga:dev",
+      "url": "http://127.0.0.1:5180",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "arena.e2e.ts",
+      "file": "arena.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "roster, saved settings and native muted audio preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13365,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T16:52:30.198Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "native-audio-and-settings",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJuYXRpdmUtYXVkaW8tYW5kLXNldHRpbmdzIiwKICAiZGV0YWlsIjogewogICAgImF1ZGlibGUiOiB7CiAgICAgICJwZWFrIjogMC4wMjE5OTM1OTYxMDY3Njc2NTQsCiAgICAgICJybXMiOiAwLjAxNDgzMDgyMzY2MzI2MTQyOCwKICAgICAgInJ1bm5pbmciOiB0cnVlLAogICAgICAicHJldmlld2luZyI6IHRydWUKICAgIH0sCiAgICAiemVybyI6IHsKICAgICAgInBlYWsiOiAwLAogICAgICAicm1zIjogMCwKICAgICAgInJ1bm5pbmciOiB0cnVlLAogICAgICAicHJldmlld2luZyI6IHRydWUKICAgIH0sCiAgICAiY2xhaW0iOiAiTmF0aXZlIFdlYkF1ZGlvIHNhbXBsZXMgYW5kIHByZWZlcmVuY2VzLCBub3QgaGFyZHdhcmUgbGlzdGVuaW5nIHF1YWxpdHkiCiAgfSwKICAicGFnZUVycm9ycyI6IFtdLAogICJjb21tYW5kcyI6IFtdLAogICJyZXN1bHRzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-f5a66762adf6e263980c",
+          "file": "arena.e2e.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "native practice movement, combat, three skills, upgrade and pause controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16857,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T16:52:43.981Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "native-practice",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJuYXRpdmUtcHJhY3RpY2UiLAogICJkZXRhaWwiOiB7CiAgICAiYmVmb3JlIjogewogICAgICAiaWQiOiAibG9jYWwtcGxheWVyIiwKICAgICAgIm5hbWUiOiAiVHJhdmVsbGVyIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAic3VuIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDEsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiAwLAogICAgICAieiI6IC01Ni4wMDAwMDAwMDAwMDAwMywKICAgICAgInkiOiAxLjk3OTk5OTk5OTk5OTk5OTgsCiAgICAgICJ5YXciOiAwLAogICAgICAiaGVhbHRoIjogMzAwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDguNDk5OTk5OTk5OTk5OTkzLAogICAgICAgIDExLjU0OTk5OTk5OTk5OTk5NCwKICAgICAgICA0My41NTAwMDAwMDAwMDAwMjYKICAgICAgXSwKICAgICAgImZpcmVDb29sZG93biI6IDAsCiAgICAgICJjcmVkaXRzIjogNjAsCiAgICAgICJsZXZlbCI6IDIsCiAgICAgICJraWxscyI6IDAsCiAgICAgICJkZWF0aHMiOiAwLAogICAgICAiYXNzaXN0cyI6IDAsCiAgICAgICJkYW1hZ2VEZWFsdCI6IDAsCiAgICAgICJ1cGdyYWRlcyI6IHsKICAgICAgICAicG93ZXIiOiAxLAogICAgICAgICJ2aXRhbGl0eSI6IDAsCiAgICAgICAgInRlbXBvIjogMAogICAgICB9LAogICAgICAiZWZmZWN0cyI6IHsKICAgICAgICAiaGFzdGUiOiAwLAogICAgICAgICJzbG93IjogMCwKICAgICAgICAid2FyZCI6IDAKICAgICAgfSwKICAgICAgImxhc3RJbnB1dFNlcSI6IDE3CiAgICB9LAogICAgImFmdGVyIjogewogICAgICAiaWQiOiAibG9jYWwtcGxheWVyIiwKICAgICAgIm5hbWUiOiAiVHJhdmVsbGVyIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAic3VuIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDEsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiA1LjYwNjIxOTgwOTEwOTAwODUsCiAgICAgICJ6IjogLTEuMTg4NjIzNzUyNTQ4NTAyLAogICAgICAieSI6IDAsCiAgICAgICJ5YXciOiAtMC4zMjAwMDAwMDAwMDAwMDAwNiwKICAgICAgImhlYWx0aCI6IDgwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDAsCiAgICAgICAgMS4yNDk5OTk5OTk5OTk5NjQ1LAogICAgICAgIDMzLjI1MDAwMDAwMDAwMDYxCiAgICAgIF0sCiAgICAgICJmaXJlQ29vbGRvd24iOiAwLAogICAgICAiY3JlZGl0cyI6IDYwLAogICAgICAibGV2ZWwiOiAyLAogICAgICAia2lsbHMiOiAwLAogICAgICAiZGVhdGhzIjogMCwKICAgICAgImFzc2lzdHMiOiAwLAogICAgICAiZGFtYWdlRGVhbHQiOiAzMS41ODk5OTk5OTk5OTk5OTYsCiAgICAgICJ1cGdyYWRlcyI6IHsKICAgICAgICAicG93ZXIiOiAxLAogICAgICAgICJ2aXRhbGl0eSI6IDAsCiAgICAgICAgInRlbXBvIjogMAogICAgICB9LAogICAgICAiZWZmZWN0cyI6IHsKICAgICAgICAiaGFzdGUiOiAwLAogICAgICAgICJzbG93IjogMCwKICAgICAgICAid2FyZCI6IDAKICAgICAgfSwKICAgICAgImxhc3RJbnB1dFNlcSI6IDIwOAogICAgfSwKICAgICJzbmFwc2hvdFRpbWUiOiAxMi42MDAwMDAwMDAwMDAwNDQsCiAgICAiY2xhaW0iOiAiT3JkaW5hcnkga2V5Ym9hcmQgY29udHJvbHMgb25seTsgbm8gY29tbWFuZCwgcG9zaXRpb24gb3IgY2xvY2sgaW5qZWN0aW9uIgogIH0sCiAgInBhZ2VFcnJvcnMiOiBbXSwKICAiY29tbWFuZHMiOiBbXSwKICAicmVzdWx0cyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-c7d3c0b745a9479c81de",
+          "file": "arena.e2e.ts",
+          "line": 51,
+          "column": 1
+        },
+        {
+          "title": "mobile touch movement, aiming, firing and modal release",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7150,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T16:53:00.871Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "native-mobile",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJuYXRpdmUtbW9iaWxlIiwKICAiZGV0YWlsIjogewogICAgImJlZm9yZSI6IHsKICAgICAgImlkIjogImxvY2FsLXBsYXllciIsCiAgICAgICJuYW1lIjogIlRyYXZlbGxlciIsCiAgICAgICJoZXJvSWQiOiAicmFtYSIsCiAgICAgICJ0ZWFtIjogInN1biIsCiAgICAgICJib3QiOiBmYWxzZSwKICAgICAgImxhbmUiOiAxLAogICAgICAiY29ubmVjdGVkIjogdHJ1ZSwKICAgICAgImtpbmQiOiAiaGVybyIsCiAgICAgICJ4IjogMCwKICAgICAgInoiOiAtNjYsCiAgICAgICJ5IjogMCwKICAgICAgInlhdyI6IDAsCiAgICAgICJoZWFsdGgiOiAzMDAsCiAgICAgICJtYXhIZWFsdGgiOiAzMDAsCiAgICAgICJzaGllbGQiOiAwLAogICAgICAicmVzcGF3biI6IDAsCiAgICAgICJjb29sZG93bnMiOiBbCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAKICAgICAgXSwKICAgICAgImZpcmVDb29sZG93biI6IDAsCiAgICAgICJjcmVkaXRzIjogMTgwLAogICAgICAibGV2ZWwiOiAxLAogICAgICAia2lsbHMiOiAwLAogICAgICAiZGVhdGhzIjogMCwKICAgICAgImFzc2lzdHMiOiAwLAogICAgICAiZGFtYWdlRGVhbHQiOiAwLAogICAgICAidXBncmFkZXMiOiB7CiAgICAgICAgInBvd2VyIjogMCwKICAgICAgICAidml0YWxpdHkiOiAwLAogICAgICAgICJ0ZW1wbyI6IDAKICAgICAgfSwKICAgICAgImVmZmVjdHMiOiB7CiAgICAgICAgImhhc3RlIjogMCwKICAgICAgICAic2xvdyI6IDAsCiAgICAgICAgIndhcmQiOiAwCiAgICAgIH0sCiAgICAgICJsYXN0SW5wdXRTZXEiOiAyCiAgICB9LAogICAgImFmdGVyIjogewogICAgICAiaWQiOiAibG9jYWwtcGxheWVyIiwKICAgICAgIm5hbWUiOiAiVHJhdmVsbGVyIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAic3VuIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDEsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiAwLAogICAgICAieiI6IC02My4wMTU3ODk0NzM2ODQxNywKICAgICAgInkiOiAwLAogICAgICAieWF3IjogLTAuMTI1LAogICAgICAiaGVhbHRoIjogMzAwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDcuNDk5OTk5OTk5OTk5OTg4NSwKICAgICAgICAwLAogICAgICAgIDAKICAgICAgXSwKICAgICAgImZpcmVDb29sZG93biI6IDAsCiAgICAgICJjcmVkaXRzIjogMTgwLAogICAgICAibGV2ZWwiOiAxLAogICAgICAia2lsbHMiOiAwLAogICAgICAiZGVhdGhzIjogMCwKICAgICAgImFzc2lzdHMiOiAwLAogICAgICAiZGFtYWdlRGVhbHQiOiAwLAogICAgICAidXBncmFkZXMiOiB7CiAgICAgICAgInBvd2VyIjogMCwKICAgICAgICAidml0YWxpdHkiOiAwLAogICAgICAgICJ0ZW1wbyI6IDAKICAgICAgfSwKICAgICAgImVmZmVjdHMiOiB7CiAgICAgICAgImhhc3RlIjogMCwKICAgICAgICAic2xvdyI6IDAsCiAgICAgICAgIndhcmQiOiAwCiAgICAgIH0sCiAgICAgICJsYXN0SW5wdXRTZXEiOiA1MgogICAgfSwKICAgICJ2aWV3cG9ydCI6IHsKICAgICAgIndpZHRoIjogMzkwLAogICAgICAiaGVpZ2h0IjogODQ0CiAgICB9LAogICAgImNsYWltIjogIkNocm9taXVtIG5hdGl2ZSB0b3VjaCBlbXVsYXRpb24sIG5vdCBwaHlzaWNhbCBwaG9uZSBoYXJkd2FyZSIKICB9LAogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbW1hbmRzIjogW10sCiAgInJlc3VsdHMiOiBbXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-1641aa98a92750f0081d",
+          "file": "arena.e2e.ts",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "two actual browser clients share movement, upgrades and reconnect identity",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28502,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T16:53:08.041Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "real-two-client",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJyZWFsLXR3by1jbGllbnQiLAogICJkZXRhaWwiOiB7CiAgICAicm9vbSI6ICJGNUMxQjlDRiIsCiAgICAiaG9zdElkIjogIjdmZTQ0NzUzM2UwNjcyNzIiLAogICAgImd1ZXN0SWQiOiAiYTI3ODYzZDFjNjM3YmQyNiIsCiAgICAiYmVmb3JlUmVjb25uZWN0IjogewogICAgICAiaWQiOiAiN2ZlNDQ3NTMzZTA2NzI3MiIsCiAgICAgICJuYW1lIjogIlN1biBRQSIsCiAgICAgICJoZXJvSWQiOiAicmFtYSIsCiAgICAgICJ0ZWFtIjogInN1biIsCiAgICAgICJib3QiOiBmYWxzZSwKICAgICAgImxhbmUiOiAxLAogICAgICAiY29ubmVjdGVkIjogdHJ1ZSwKICAgICAgImtpbmQiOiAiaGVybyIsCiAgICAgICJ4IjogMy42MDAwMDAwMDAwMDAwMDEsCiAgICAgICJ6IjogLTY2LAogICAgICAieSI6IDAsCiAgICAgICJ5YXciOiAwLAogICAgICAiaGVhbHRoIjogMzAwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwCiAgICAgIF0sCiAgICAgICJmaXJlQ29vbGRvd24iOiAwLAogICAgICAiY3JlZGl0cyI6IDYwLAogICAgICAibGV2ZWwiOiAyLAogICAgICAia2lsbHMiOiAwLAogICAgICAiZGVhdGhzIjogMCwKICAgICAgImFzc2lzdHMiOiAwLAogICAgICAiZGFtYWdlRGVhbHQiOiAwLAogICAgICAidXBncmFkZXMiOiB7CiAgICAgICAgInBvd2VyIjogMSwKICAgICAgICAidml0YWxpdHkiOiAwLAogICAgICAgICJ0ZW1wbyI6IDAKICAgICAgfSwKICAgICAgImVmZmVjdHMiOiB7CiAgICAgICAgImhhc3RlIjogMCwKICAgICAgICAic2xvdyI6IDAsCiAgICAgICAgIndhcmQiOiAwCiAgICAgIH0sCiAgICAgICJsYXN0SW5wdXRTZXEiOiAxNDkKICAgIH0sCiAgICAiYWZ0ZXJSZWNvbm5lY3QiOiB7CiAgICAgICJpZCI6ICI3ZmU0NDc1MzNlMDY3MjcyIiwKICAgICAgIm5hbWUiOiAiU3VuIFFBIiwKICAgICAgImhlcm9JZCI6ICJyYW1hIiwKICAgICAgInRlYW0iOiAic3VuIiwKICAgICAgImJvdCI6IGZhbHNlLAogICAgICAibGFuZSI6IDEsCiAgICAgICJjb25uZWN0ZWQiOiB0cnVlLAogICAgICAia2luZCI6ICJoZXJvIiwKICAgICAgIngiOiAzLjg1MDM1NzgxNzE2MzgsCiAgICAgICJ6IjogLTI5LjI4MDg1MzQ4MjYzOTA4LAogICAgICAieSI6IDAsCiAgICAgICJ5YXciOiAwLAogICAgICAiaGVhbHRoIjogMzAwLAogICAgICAibWF4SGVhbHRoIjogMzAwLAogICAgICAic2hpZWxkIjogMCwKICAgICAgInJlc3Bhd24iOiAwLAogICAgICAiY29vbGRvd25zIjogWwogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwCiAgICAgIF0sCiAgICAgICJmaXJlQ29vbGRvd24iOiAwLAogICAgICAiY3JlZGl0cyI6IDYwLAogICAgICAibGV2ZWwiOiAyLAogICAgICAia2lsbHMiOiAwLAogICAgICAiZGVhdGhzIjogMCwKICAgICAgImFzc2lzdHMiOiAwLAogICAgICAiZGFtYWdlRGVhbHQiOiAwLAogICAgICAidXBncmFkZXMiOiB7CiAgICAgICAgInBvd2VyIjogMSwKICAgICAgICAidml0YWxpdHkiOiAwLAogICAgICAgICJ0ZW1wbyI6IDAKICAgICAgfSwKICAgICAgImVmZmVjdHMiOiB7CiAgICAgICAgImhhc3RlIjogMCwKICAgICAgICAic2xvdyI6IDAsCiAgICAgICAgIndhcmQiOiAwCiAgICAgIH0sCiAgICAgICJsYXN0SW5wdXRTZXEiOiA5CiAgICB9LAogICAgImNsYWltIjogIlR3byBpbmRlcGVuZGVudCBicm93c2VyIGNvbnRleHRzIGFuZCBhY3R1YWwgbG9jYWwgV2ViU29ja2V0cywgbm90IHB1YmxpYyBob3N0aW5nIgogIH0sCiAgInBhZ2VFcnJvcnMiOiBbXSwKICAiY29tbWFuZHMiOiBbCiAgICB7CiAgICAgICJ0eXBlIjogImNvbW1hbmQiLAogICAgICAiaWQiOiAiZDAzZDk1YzUtMSIsCiAgICAgICJhY3Rpb24iOiAidXBncmFkZSIsCiAgICAgICJ1cGdyYWRlIjogInBvd2VyIgogICAgfQogIF0sCiAgInJlc3VsdHMiOiBbCiAgICB7CiAgICAgICJ0eXBlIjogInJlc3VsdCIsCiAgICAgICJpZCI6ICJkMDNkOTVjNS0xIiwKICAgICAgIm9rIjogdHJ1ZSwKICAgICAgImNvZGUiOiAiVVBHUkFERUQiCiAgICB9CiAgXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-1efa3882ae9ef3c6d9e2",
+          "file": "arena.e2e.ts",
+          "line": 72,
+          "column": 1
+        },
+        {
+          "title": "labelled finished-state socket fixture renders results and fresh replay",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5176,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T16:53:36.586Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "labelled-result-fixture",
+                      "contentType": "application/json",
+                      "body": "ewogICJzY29wZSI6ICJsYWJlbGxlZC1yZXN1bHQtZml4dHVyZSIsCiAgImRldGFpbCI6IHsKICAgICJjbGFpbSI6ICJNb2NrZWQgV2ViU29ja2V0IGFuZCBzaG9ydGVuZWQgc2ltdWxhdGlvbiBmaXh0dXJlIHZlcmlmaWVzIHJlc3VsdC9yZXBsYXkgcHJlc2VudGF0aW9uIG9ubHk7IG5vIG5hdGl2ZSBtYXRjaCB2aWN0b3J5IG9yIHJlYWwgc2VydmVyIGNsYWltIgogIH0sCiAgInBhZ2VFcnJvcnMiOiBbXSwKICAiY29tbWFuZHMiOiBbXSwKICAicmVzdWx0cyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c558694157ea8620d48f-384b1717832850863278",
+          "file": "arena.e2e.ts",
+          "line": 83,
+          "column": 1
+        },
+        {
+          "title": "native complete eight-minute practice and fresh replay [release soak]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Explicit bounded release soak; routine native combat and result fixture run separately.",
+                  "location": {
+                    "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                    "line": 89,
+                    "column": 7
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 208,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T16:53:41.776Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Explicit bounded release soak; routine native combat and result fixture run separately.",
+                      "location": {
+                        "file": "/workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts",
+                        "line": 89,
+                        "column": 7
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "c558694157ea8620d48f-0df9117946c56bc4421e",
+          "file": "arena.e2e.ts",
+          "line": 88,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T16:52:29.426Z",
+    "duration": 72693.258,
+    "expected": 5,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

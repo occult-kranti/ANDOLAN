@@ -1,0 +1,72 @@
+{
+  "scope": "Local production Docker image HTTP and independent real Node WebSocket transports. No browser, public service, combat playthrough or scale claim.",
+  "checks": [
+    "Built client and health served from production container",
+    "Two real WebSocket clients share a room, distinct identities and authoritative input acknowledgment",
+    "Reconnect within running process preserves one identity",
+    "Owned container restart drops in-memory room and stale token receives recoverable room error"
+  ],
+  "client": {
+    "status": 200,
+    "bytes": 6371640,
+    "sha256": "2390695788ee665fce1f8136e4bb5497a5eb943bc5bf2364a60fd6ae5e51ff20",
+    "nosniff": "nosniff"
+  },
+  "match": {
+    "observedTick": 4,
+    "humans": 2,
+    "transports": 2
+  },
+  "image": "sha256:dc35c1929b0a9234abf0ca185afc4b5f0a72b7a286cb4dc2a53a93f20b618818",
+  "runtimeUser": "node",
+  "restartError": "Room unavailable. Create a new match.",
+  "result": "pass",
+  "durationMs": 1270,
+  "recordedAt": "2026-10-16T16:46:28.055Z",
+  "runtimeInspection": {
+    "uid": 1000,
+    "serverEntrypointSha256": "634171116a6c9a7aa7b1154114156b04fe2e17f2454f3149824ee6567af11db3",
+    "buildSecretAbsent": true,
+    "typescriptAbsent": true,
+    "health": {
+      "ok": true,
+      "game": "yuga",
+      "protocol": 1,
+      "rooms": 0,
+      "connected": 0,
+      "simulationHz": 20,
+      "snapshotHz": 10,
+      "status": "bounded-beta"
+    }
+  },
+  "build": {
+    "result": "pass",
+    "baseImage": "node:24-bookworm-slim@sha256:a5f4366e834695d5f363b920c104953a535d3a9864d1bdf74566a0ebe01daee5",
+    "contextBytesReported": "3.25MB",
+    "productionPruneAuditReportedVulnerabilities": 0,
+    "buildLogSha256": "c83a1b5dcd4ee4ff799a73dd1f5c874e947cbbe17b9094980b6c4ac11a092138",
+    "sourceState": "Intermediate working-tree build during ongoing renderer/client/simulation fixes; not the final release source or QA acceptance image.",
+    "proxy": "Inherited managed Docker proxy; CA supplied through ephemeral BuildKit secret; TLS verification enabled.",
+    "metadataDirectory": "/tmp/yuga-buildx; Docker credentials/config unchanged."
+  },
+  "configurationFiles": [
+    {
+      "path": "games/yuga/Dockerfile",
+      "sha256": "3b15b618d32f87b4a3925f27f158a0e0e3c7f2364bec5abdcedd2658784bac5d"
+    },
+    {
+      "path": "games/yuga/Dockerfile.dockerignore",
+      "sha256": "938ae6aa741593cf0006b0050fd3aabc5bf4874058b8af6a069d137c90d07675"
+    },
+    {
+      "path": "games/yuga/render.yaml",
+      "sha256": "75c6cfac7ba4ae4b2c6c263a823cdfd14f8eeda6417b4c4cfbbce99923f64324"
+    }
+  ],
+  "cleanup": {
+    "ownedContainerStoppedAndRemoved": true,
+    "existingAndolanContainersUntouched": true
+  },
+  "publicBackendDeployed": false,
+  "browserLaunched": false
+}

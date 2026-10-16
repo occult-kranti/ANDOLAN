@@ -20,7 +20,16 @@
     "test:e2e": "playwright test",
     "build:client": "vite build && node tools/attach-notices.mjs client",
     "build:server": "tsc -p tsconfig.server.json",
-    "build:standalone": "vite build --config vite.standalone.config.ts && node tools/attach-notices.mjs standalone"
+    "build:standalone": "vite build --config vite.standalone.config.ts && node tools/attach-notices.mjs standalone",
+    "yuga:dev": "concurrently --kill-others -n arena,client \"npm:yuga:server:dev\" \"npm:yuga:client:dev\"",
+    "yuga:client:dev": "vite --config vite.yuga.config.ts",
+    "yuga:server:dev": "tsx watch games/yuga/server/index.ts",
+    "yuga:typecheck": "tsc --noEmit -p tsconfig.yuga.json",
+    "yuga:test": "vitest run --config vitest.yuga.config.ts",
+    "yuga:build": "vite build --config vite.yuga.config.ts && tsc -p tsconfig.yuga.server.json && node games/yuga/tools/attach-notices.mjs",
+    "yuga:start": "node dist/yuga-server/games/yuga/server/index.js",
+    "yuga:e2e": "playwright test --config playwright.yuga.config.ts",
+    "yuga:assets": "tsx games/yuga/tools/verify-hero-assets.ts"
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "5.3.0",

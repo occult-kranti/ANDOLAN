@@ -1,0 +1,162 @@
+{
+  "recordedAt": "2026-10-16T17:28:04.866746+00:00",
+  "scope": "Actual REA static analysis of selected licensed open shooter sources; no game execution, commercial binary, replay or footage analysis. Summary is derived metadata, not the full authenticated Evidence.",
+  "tool": {
+    "name": "rea-agents",
+    "version": "6.5.0",
+    "existingInstallation": "/workspace/tooling/rea-runtime"
+  },
+  "javascript": {
+    "target": {
+      "repository": "Mugen87/dive",
+      "commit": "7176136cf6c29eddfd620df2bf0d09a532680763",
+      "license": "MIT",
+      "readAt": "2026-10-16T17:26:20.900801+00:00",
+      "files": [
+        {
+          "path": "src/core/TargetSystem.js",
+          "bytes": 3659,
+          "sha256": "b06e95301da8f9037e5e581cd7e7f5898ed0a150d4c067e1ed9d1bfeaf19d27b",
+          "url": "https://github.com/Mugen87/dive/blob/7176136cf6c29eddfd620df2bf0d09a532680763/src/core/TargetSystem.js"
+        },
+        {
+          "path": "src/core/WeaponSystem.js",
+          "bytes": 30548,
+          "sha256": "455eab419f5a4145db937aeb1e4687de3d24b5c72fa6f265c19a4aa4b9211cee",
+          "url": "https://github.com/Mugen87/dive/blob/7176136cf6c29eddfd620df2bf0d09a532680763/src/core/WeaponSystem.js"
+        },
+        {
+          "path": "LICENSE",
+          "bytes": 1071,
+          "sha256": "d1a2c3708d602d080c854a58ae657d557f45d721b25d4b1877a2fdb4be77d2c5",
+          "url": "https://github.com/Mugen87/dive/blob/7176136cf6c29eddfd620df2bf0d09a532680763/LICENSE"
+        }
+      ]
+    },
+    "command": "rea analyze-javascript-application /workspace/research/yuga-dive --source-path src/core/TargetSystem.js --source-path src/core/WeaponSystem.js --max-semantic-nodes 18000 --max-heap-mb 256 --analysis-timeout-ms 30000 --format json",
+    "exitCode": 0,
+    "evidenceId": "ev_7b62bd19d270f937a89b3940e35171aaf674053d842b6b63a2df684b544054c7",
+    "statistics": {
+      "relevant_files": 3,
+      "nested_asar_containers": 0,
+      "text_bytes_read": 34207,
+      "invalid_utf8_files": 0,
+      "parsed_javascript_files": 2,
+      "visited_ast_nodes": 3753,
+      "findings": 46,
+      "modules": 0,
+      "parse_failures": 0
+    },
+    "semanticGraph": {
+      "nodes": 2338,
+      "relations": 1635,
+      "unknowns": 909,
+      "coverage": "unknown",
+      "truncated": false,
+      "callFlow": {
+        "status": "partial",
+        "retainedRelations": 0
+      }
+    },
+    "rawEvidence": {
+      "path": "/workspace/research/rea-output/yuga-dive-aim.json",
+      "bytes": 3890358,
+      "sha256": "d498289e63ded78000fede3d0508dbca39f1b2f604f2726cfb1de9e90d4fc408"
+    }
+  },
+  "cHistoricalReference": {
+    "target": {
+      "repository": "id-Software/Quake-III-Arena",
+      "commit": "dbe4ddb10315479fc00086f08e25d968b4b43c49",
+      "license": "GPL-2.0",
+      "readAt": "2026-10-16T17:25:45.034972+00:00",
+      "files": [
+        {
+          "path": "code/game/ai_dmq3.c",
+          "bytes": 158046,
+          "sha256": "6452f29f14b9042a8e921166149ede046d24e36734a74925d68cf46dd1a1fb46",
+          "url": "https://github.com/id-Software/Quake-III-Arena/blob/dbe4ddb10315479fc00086f08e25d968b4b43c49/code/game/ai_dmq3.c"
+        },
+        {
+          "path": "COPYING.txt",
+          "bytes": 15148,
+          "sha256": "fac9da110d1433f4df0cb9f5dda9449e9aff6ee236ed240fa29e3e92926c363a",
+          "url": "https://github.com/id-Software/Quake-III-Arena/blob/dbe4ddb10315479fc00086f08e25d968b4b43c49/COPYING.txt"
+        }
+      ]
+    },
+    "command": "rea import-reference-source /workspace/research/yuga-quake3 --detail summary --format json",
+    "exitCode": 0,
+    "manifest": {
+      "schema": "HistoricalSourceManifest",
+      "authority": "historical-reference",
+      "manifest_id": "hsm_fe7d99427fba141170ef2c0b6716768ef7d652ed8a03900601466104200eb587",
+      "graph_sha256": "d63ef2cceb4bea0ac37d73aae69eb514fdadaeac08aebc646a202556c7b2317f",
+      "root_sha256": "9df09ab291cde3b071e8014269c55e09e570b155696d23839522118bca580be6",
+      "inventory_state": "partial",
+      "entry_count": 5,
+      "relationship_count": 0
+    },
+    "counts": {
+      "entries": 5,
+      "files": 3,
+      "directories": 2,
+      "symlinks": 0,
+      "unknown": 0,
+      "relationships": 0,
+      "parse_failures": 0,
+      "exclusions": 0
+    },
+    "rawEvidence": {
+      "path": "/workspace/research/rea-output/yuga-quake3-reference.json",
+      "sha256": "9ec525e6215e8ebd893bce2c3b562d0fb431a6fc9afe4755ef5e755bca75a910"
+    },
+    "limitation": "Historical hashing/inventory only. REA did not parse C semantics; BotAimAtEnemy and BotCheckAttack were read manually."
+  },
+  "manualSourceObservations": [
+    {
+      "source": "dive TargetSystem.js",
+      "lines": [
+        30,
+        112
+      ],
+      "fact": "Visible memory records prefer nearest target; otherwise latest sensed hidden record can remain selected. isTargetShootable separately checks current visibility."
+    },
+    {
+      "source": "dive WeaponSystem.js",
+      "lines": [
+        539,
+        615
+      ],
+      "fact": "Bot shooting requires visible target, completed rotation and elapsed reaction delay; remembered invisible targets may steer search but do not trigger this shooting branch."
+    },
+    {
+      "source": "Quake III ai_dmq3.c",
+      "lines": [
+        3298,
+        3436
+      ],
+      "fact": "Bot aiming uses configurable reaction and accuracy, current visibility and optional projectile travel prediction."
+    },
+    {
+      "source": "Quake III ai_dmq3.c",
+      "lines": [
+        3584,
+        3668
+      ],
+      "fact": "Attack permission separately checks reaction, weapon timing, field of view, world trace and teammate obstruction."
+    }
+  ],
+  "yugaApplications": [
+    "Separate optional target selection/camera assist from authoritative firing and damage.",
+    "Never expose remembered occluded targets as a player lock cue; clear on cover, invalid state and menus.",
+    "Keep bounded turn rate and explicit manual override; this is an original accessibility/control choice, not copied bot constants.",
+    "Test target yaw and authoritative projectile line separately; selection is not proof of a hit."
+  ],
+  "limitations": [
+    "Selected files only; external imports and engine behavior not resolved.",
+    "REA semantic coverage unknown; 909 unknowns and zero retained call-flow relations. Manual observations are labelled separately.",
+    "No source code or assets copied into YUGA. GPL Quake source remains an external research reference.",
+    "No reference game executed or performance/game-feel conclusions inferred."
+  ]
+}

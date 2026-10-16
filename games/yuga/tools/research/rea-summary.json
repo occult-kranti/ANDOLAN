@@ -1,0 +1,108 @@
+{
+  "recordedAt": "2026-10-16T16:35:42.041314+00:00",
+  "scope": "Derived metadata of actual local REA static analysis and one ambiguous trace; not full authenticated Evidence, not runtime or commercial binary analysis.",
+  "tool": {
+    "name": "rea-agents",
+    "version": "6.5.0",
+    "installation": "/workspace/tooling/rea-runtime",
+    "newInstall": false,
+    "persistentIntegration": false
+  },
+  "target": {
+    "repository": "endel/tank-battle-multiplayer",
+    "commit": "6339493130b4b1d4d28f0f52d17b2fba738c7d47",
+    "license": "MIT",
+    "localRoot": "/workspace/research/multiplayer-beta/tank-battle",
+    "archiveScope": "Selected text files, not full repository",
+    "files": [
+      {
+        "repo": "endel/tank-battle-multiplayer",
+        "commit": "6339493130b4b1d4d28f0f52d17b2fba738c7d47",
+        "path": "server/src/rooms/BattleRoom.ts",
+        "url": "https://raw.githubusercontent.com/endel/tank-battle-multiplayer/6339493130b4b1d4d28f0f52d17b2fba738c7d47/server/src/rooms/BattleRoom.ts",
+        "bytes": 15526,
+        "sha256": "83264deb8220db255541c2c4bc61c678ad842985afa0c9c5c9033033d4509a05"
+      },
+      {
+        "repo": "endel/tank-battle-multiplayer",
+        "commit": "6339493130b4b1d4d28f0f52d17b2fba738c7d47",
+        "path": "server/src/schema/BattleState.ts",
+        "url": "https://raw.githubusercontent.com/endel/tank-battle-multiplayer/6339493130b4b1d4d28f0f52d17b2fba738c7d47/server/src/schema/BattleState.ts",
+        "bytes": 2250,
+        "sha256": "8fac5f00bc990452123e0c1cbfe3f32c57516baaf4d67a463206e8c78366efde"
+      },
+      {
+        "repo": "endel/tank-battle-multiplayer",
+        "commit": "6339493130b4b1d4d28f0f52d17b2fba738c7d47",
+        "path": "web-playcanvas/src/Network.ts",
+        "url": "https://raw.githubusercontent.com/endel/tank-battle-multiplayer/6339493130b4b1d4d28f0f52d17b2fba738c7d47/web-playcanvas/src/Network.ts",
+        "bytes": 603,
+        "sha256": "3001d0fad46131a70329350701fcc04fa58238d0349cb2cf508ccaa6772223db"
+      }
+    ]
+  },
+  "analysis": {
+    "exitCode": 0,
+    "evidenceId": "ev_707b237b23376b95d553affec4de049d035bf169563ea86387871074535eafb3",
+    "sourceSelection": {
+      "requested_paths": [
+        "server/src/rooms/BattleRoom.ts",
+        "server/src/schema/BattleState.ts",
+        "web-playcanvas/src/Network.ts"
+      ],
+      "unselected_files": 3
+    },
+    "statistics": {
+      "relevant_files": 6,
+      "nested_asar_containers": 0,
+      "text_bytes_read": 18379,
+      "invalid_utf8_files": 0,
+      "parsed_javascript_files": 3,
+      "visited_ast_nodes": 3221,
+      "findings": 29,
+      "modules": 0,
+      "parse_failures": 0
+    },
+    "semanticGraph": {
+      "nodes": 1972,
+      "relations": 1562,
+      "unknowns": 587,
+      "coverage": "partial",
+      "truncated": false
+    },
+    "rawFile": "/workspace/research/rea-output/yuga-tank-authority.json",
+    "bytes": 3300987,
+    "sha256": "1751f2c43266ee3d191d5ad666c0b80be6b529a249f1bd746c0feed97bda2110"
+  },
+  "trace": {
+    "exitCode": 0,
+    "evidenceId": "ev_652478e1e271d1c2e1dd042ac6630fd63547a63eb5ec0a33df3a59298f226493",
+    "query": {
+      "seed": {
+        "kind": "property",
+        "name": "score"
+      },
+      "direction": "backward-provenance"
+    },
+    "status": "ambiguous",
+    "summary": {
+      "total_seed_matches": 8,
+      "traversed_nodes": 8,
+      "traversed_relations": 0,
+      "traversed_functions": 6,
+      "traversed_modules": 1,
+      "relevant_unknowns": 9
+    },
+    "coverage": "partial",
+    "rawFile": "/workspace/research/rea-output/yuga-score-trace.json",
+    "bytes": 21328,
+    "sha256": "23ccd9209d748fb3a6031b7eec5d2733747d9d307ed05c99b4990f422bb8277e"
+  },
+  "limitations": [
+    "No reference-game bootstrap or server executed.",
+    "No commercial binaries/source/assets inspected or imported.",
+    "Trace traversed no relations and did not resolve score provenance.",
+    "Manual source reading supports gameplay architecture observations separately.",
+    "No runtime cost, peak memory, gameplay feel or WAN performance measured."
+  ]
+}

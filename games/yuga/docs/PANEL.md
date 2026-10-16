@@ -1,0 +1,38 @@
+# YUGA: Confluence — QA review panel
+
+## Round 1: contracts and acceptance, before first playable
+
+Reviewers: QA (browser/state evidence) and REA research (independent mechanics/authority risks). Moderator and implementation ownership remain with the root coordinator and the systems, world, content and audio owners.
+
+Read sources: `IMPLEMENTATION_CONTRACT.md`, `shared/types.ts`, `shared/map.ts`, the initial `shared/heroes.ts`, and the initial `client/connection.ts`. The client and server were still under construction. This review does not imply runtime acceptance.
+
+| Finding | Evidence and implication | Acceptance / owner | State |
+| --- | --- | --- | --- |
+| Practice elapsed time can be lost during rendering stalls | Initial `practice()` advances `min(.1, elapsed)` per callback. Repeated 200ms callbacks advance only 100ms, stretching an eight-minute match. | Root: bounded fixed-step wall-clock catch-up, pause/reset semantics and delayed-timer regression | Source repaired; runtime regression pending |
+| Replaced identities may contend on reconnect | Initial online close handler retries every close code. If a same-token replacement closes the older socket, both tabs can repeatedly reclaim it. | Root/systems: explicit replacement close semantics; one actor/socket owner; old tab stops automatic reclaim | Source terminal-handles 4001; runtime verification pending |
+| Cached positions are not a freshness proof | Prior project CI exposed a native boarding timeout with incomplete state evidence. A stale or paused connection must not silently be counted as valid input. | QA: record status, commands/results and authoritative ticks; root: actionable loss/reconnect UI and neutral resumed controls | Planned |
+| Core unlocking must be team-relative | Contract says a core opens after two friendly towers fall. The friendly team must be that core's defending team, not the attacker or local player. | Systems: shielded-core hits and exactly two destroyed defending towers tested on both teams; UI explains protection | Planned |
+| Menus and hidden tabs can retain fire/skill input | Native TPS includes pointer lock, keyboard fire, three skills, touch pointers and typing in the online dialog. | Root/QA: all paths release axes/fire; no modal casts; online pause affects only own controls; practice pauses time | Planned |
+| Finish/replay needs a fresh match identity | Reused snapshots/events/command IDs or held fire can leak a completed match into replay or late join. | Root/systems/QA: finished rewards freeze; new match epoch and no stale sounds/inputs; fixtures clearly separated from played matches | Planned |
+| Three-lane pressure must stay bounded | Six hero actors plus lane waves/projectiles/zones can grow or stall despite a responsive title screen. | Systems/QA: entity bounds, complete simulation matches, measured loopback stress, readable teammate/enemy/objective labels beyond color | Planned |
+| Static deployment does not establish an online service | Pages can publish the client; a configured reachable WebSocket service is a separate deliverable. | Root/QA: honest server status, practice fallback, actual WS local tests and separate public reachability evidence | Planned |
+
+## Round 2: first playable
+
+Exploratory desktop and 390px mobile screenshots are archived under `evidence/first-*`. Both loaded practice, but a `deleteBuffer` null error occurred. The renderer owner traced resource disposal after device destruction and repaired the lifetime order. Initial near-core spawn framing clipped the camera close to the hero; the systems/world owners are coordinating a three-metre inward spawn. The mobile upgrade control wrapped beneath the ability bar; root repaired the mobile grid. Fresh runtime checks must verify those repairs.
+
+The user subsequently requested character models that match the illustration rather than accepting the current primitive forms. Current images are therefore functional baseline evidence only. Final visual acceptance, the long native match and public release checks wait for that art pass. No visual quality claim is inferred from source.
+
+### Functional baseline execution
+
+Five focused native-browser cases passed in72.7 seconds, with zero recorded page errors. Ordinary keyboard combat dealt 31.59 damage; Q/E/R cooldowns, jump, power purchase, funds/base limits, practice pause and focus restoration passed. 390px Chromium touch emulation passed movement/aim/fire/skill/menu checks. Two independent browser contexts used actual local WebSockets and preserved hero/team/upgrades through leave/rejoin. Settings previews produced native max RMS 0.01483 at 60% volume and zero at volume 0 while running; this does not establish listening quality. The result/replay case used a clearly labelled mocked-socket fixture.
+
+The full-match matrix then exposed a real crash at seed 7/tick 1223 (61.15 simulated seconds): an earlier area cast removed a minion, and the copied actor iteration later dereferenced its removed memory. Systems added an active-identity/memory guard and an exact full-match regression. Six full 480s simulations and real 6/12/24-client socket runs subsequently passed; first failure and corrected source hashes remain archived.
+
+## Round 3: fixes and release verification
+
+The repaired functional baseline and local stress pass are complete. The user-directed character replacement and newly approved authoritative ability/minion revisions now reopen implementation. Final frozen-source native checks, bounded stress, the native eight-minute soak and deployment verification remain pending. Preserve the distinction between native gameplay, authoritative simulation tests, mocked/checkpoint presentation fixtures and public smoke. No current primitive-art frame is final visual acceptance.
+
+### Revision audit before final native run
+
+Independent review found replay animation event counters surviving a new match, a same-page same-room rejoin resetting command IDs into cached receipts, and gallery disposal racing overlapping model loads. Owners repaired all three; native regression cases now cover fresh replay fire/cast, same-page rejoin then a new skill, and deliberately delayed real GLB requests while switching/closing the gallery. Optional target-lock acceptance covers ordinary T/right-click/touch activation, manual/menu release and a labelled cover fixture; server hit authority remains separate. Final source/art numeric gates and bounded stress pass, with Sita costume/prop defeat-floor review still pending. Actual all14 model transitions, two-human counterplay, long native finish and visual/mobile inspection remain the next gate.

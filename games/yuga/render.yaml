@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://render.com/schema/render.yaml.json
+# Prepared configuration, not an existing public service.
+# The standard compute plan is paid; review current allocation/cost before use.
+# One instance is intentional: rooms and reconnect identities live in memory.
+services:
+  - type: web
+    name: yuga-confluence-beta
+    runtime: docker
+    branch: game/yuga-confluence
+    region: oregon
+    plan: standard
+    numInstances: 1
+    dockerfilePath: ./games/yuga/Dockerfile
+    dockerContext: .
+    autoDeployTrigger: "off"
+    healthCheckPath: /health
+    maxShutdownDelaySeconds: 30
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3005"

@@ -1,0 +1,55 @@
+# YUGA production roadmap and review gates
+
+This roadmap separates the current playable prototype and its active fourteen-hero revision from later production investment. It is an ordered backlog with exit evidence, not a promise that the game already matches a commercial title's content, scale, polish or operations. Current acceptance is defined by [IMPLEMENTATION_CONTRACT.md](IMPLEMENTATION_CONTRACT.md); QA owns actual test outcomes. Research recommendations remain proposals until the moderator accepts them.
+
+The current revision implements fourteen kits/forty-two abilities, three bespoke timed R abilities, escort/siege roles and a GLB character pipeline. MakeHuman's pinned CC0 anatomy/rig/weights support original costume, weapon, hair and motion authoring. Fourteen exports have file sizes/hashes matching their manifest; deformation, actual-engine presentation and target-lock integration are being verified. Earlier twelve-hero placeholder-art browser/container results remain historical evidence. The recorded 168 mirrored AI matches are a bounded benchmark, not a human balance verdict. Final native all-roster art/controls, full-match, production-bundle and public deployment checks must correspond to the new source/assets.
+
+## Complete player journey for the first release
+
+Title → choose Practice or Online → inspect/select one of fourteen heroes → load actual character assets → connect/start → learn the three-lane objective → fight/support/earn credits → buy upgrades at spawn → destroy defending towers → attack exposed core or reach the eight-minute tiebreak → results → replay or leave.
+
+Settings, instructions, death/respawn and connection recovery are part of this journey. Every screen needs a clear next action and an escape path. Loading/connecting, rejection, disconnected, no server configured and finished are real states, not blank panels. Practice must not imply that an online server is available. Returning to the existing ANDOLAN game must preserve its separate settings/session keys.
+
+## Milestones
+
+| Gate | Scope and owner | Evidence required to exit | Explicitly later |
+| --- | --- | --- | --- |
+| P0: Contract and source boundary | Moderator, research, content | Shared types/map, fourteen authored kits, one authority model, input/flow contract, source/license ledger; disputed core-protection wording resolved. | Commercial mechanic parity, exhaustive mythology or full-game reverse engineering. |
+| P1: A complete practice match | Systems, world, client, audio | All fourteen kits instantiate and each of 42 abilities works; real windup/travel/zone behavior for the three redesigned R slots; valid lanes and escort/siege/summon roles; actual wave/tower/core/death/respawn/upgrade/end/replay loop. Native browser evidence includes meaningful combat and a finished match. | Cinematic campaign, ranked balance, large item catalog. |
+| P2: Understandable and accessible controls | Client, world, audio, QA | Keyboard/mouse/touch controls agree with hints; target lock acquires only a visible eligible enemy within 32 m/20 degrees and releases on manual aim or invalid visibility/range; no automatic hit/fire; no stuck inputs after blur/menu/hidden; visible focus and escape paths; legible mobile HUD; settings/audio/reduced motion work. Native evidence plus novice observation before claiming intuitive onboarding. | Full controller remapping, localization coverage and assistive-technology certification unless separately tested. |
+| P3: Coherent real multiplayer | Systems, client, QA | Two independent browser contexts over real WebSockets: join/team/hero identity, shared combat/objective outcomes, death/respawn, same-identity reconnect, no duplicate actor, no replayed purchases. Server rejects forged/unbounded input and invalid/duplicate commands. | Global matchmaking, anti-cheat completeness, ranked seasons and large concurrency. |
+| P4: Bounded performance and resilience | Systems, world, QA | Record machine/runtime, renderer mode, actor/minion/projectile counts, room/socket count, duration, tick-time distribution, traffic and failures. Test disconnect/rejoin, backpressure, idle rooms, hidden tabs and cleanup. Compare normal versus delayed callbacks; do not pass by weakening gameplay assertions. | Universal device support or a national-scale capacity claim from a single machine. |
+| P5: Reviewable public first release | Moderator, QA, operations | Branch/build/CI artifact identity, complete `dist/yuga/` bundle including every hashed GLB, live `/ANDOLAN/yuga/` HTTP/asset and ordinary-input browser check, no production debug hook, existing ANDOLAN regression, provenance, reproducible server build and WSS instructions. A public multiplayer claim additionally requires an actually running verified public service. | Standalone HTML download claims for a build with external models; 24/7 uptime/SLA, automated regional failover, account economy. |
+| P6: Measured balance and learning | Design, systems, QA, human playtesters | Observe novices and mixed-skill groups with consent; log anonymized match outcomes, objective contribution, upgrade use and time-to-defeat by context. Review confidence/sample limits and investigate dominant strategies. Adjust a small number of parameters per round and replay regression scenarios. | Claims of psychological efficacy or fair competitive matchmaking without corresponding study. |
+| P7: Production art, animation and narrative | Art, animation, content, audio, cultural reviewers | The fourteen-hero/42-effect bible and CC0-base/original-authoring pipeline are underway. Exit requires all fourteen real GLBs/hash/skin/nine-clip checks, independent skeleton instances, actual gameplay face/cloth/grip/deformation review, readable effects aligned to authority, measured LOD/material budgets, audio rights, cultural review and performance revalidation. | “AAA” or key-art parity based only on generated sheets, base anatomy, finite skin weights or a flattering Blender render. |
+| P8: Operated online beta | Backend/operations, moderation, QA | WSS hosting owner and budget, TLS/origin/rate limits, health/metrics, backup/restore if persistence exists, deployment rollback, abuse reporting/moderation, privacy/retention policy, region/latency tests, recovery drill, load-test headroom. | Paid features, platform certification or global launch without their own gates. |
+| P9: Expanded release | Product/content/operations | Add maps, modes or roster only after retention/learning/cooperation observations identify a useful need. Validate complete journeys, migration and service capacity again. | Endless feature accumulation, compulsory engagement loops or paid combat advantage. |
+
+## Panel loop tied to evidence
+
+The moderator maintains the current decisions and QA verdicts. Each round ends with no more than three accepted changes, an owner and a falsifiable gate. A written discussion without a tested change is not a completed implementation round.
+
+1. **Round A — scope and counterexamples:** research/content/systems challenge authority, economy, kit readability, core prerequisites and provenance. Resolve contradictions before owners implement.
+2. **Round B — integrated player journey:** inspect actual title/selection/settings/HUD/shop/results and two-client behavior. Test rejection and recovery states, not only the happy path. Prioritize blockers over extra content.
+3. **Round C — measured verification:** independent QA runs the agreed normal-input, network and bounded-load gates; capture exact source revision and limits. Fix failures, rerun affected checks, then the release gate.
+4. **Post-release rounds:** use actual player observations and operational incidents. Keep a record of rejected ideas and changed assumptions; revise the roadmap rather than describing untested additions as done.
+
+Current QA's panel ledger is the source of truth for which rounds actually ran. This document defines the process and does not mark any round complete by itself.
+
+## Production budgets to establish, not invent
+
+Before large art or server purchases, measure a representative low-end device and representative online routes. Set explicit budgets for downloaded bytes, texture/mesh memory, draw calls, shader compilation, voices, events/projectiles, fixed-step CPU and per-client traffic. Record p50/p95 frame and tick timings with scene and hardware. A desktop headless SwiftShader run can expose overload sensitivity but does not certify mobile GPU performance.
+
+Choose a target frame rate and supported-device matrix after those observations. Separate rendering quality controls from simulation timing. Culling and LOD may change appearance, never objective visibility rules, damage or cooldowns. A new networking transport requires a measured bottleneck and the same authority/reconnect acceptance suite.
+
+## Content and economy constraints
+
+The first release has a small match-only economy and no account power. Keep all fourteen kits available for informed selection. Support players need agency and visible contribution; the exact reward rule belongs in the implemented rulebook. Avoid adding currencies, reward calendars or item recipes merely to imitate a reference game.
+
+Mythological material needs documented sources, differentiation between texts/traditions and original adaptation, and review of names/symbols/voice before broad release. Commercial game's storytelling, presentation or characters are not reusable folklore. Original art and audio still require authorship/provenance records. The current public-video requests were blocked; a study of accessible tools/source documentation is not a claim that Deadlock footage was watched or its game assets inspected.
+
+End-of-match replay is voluntary. Preserve an obvious exit, no paid power, no loot boxes, no streak-loss pressure and no mandatory login. These are project requirements, not a promise of particular retention or wellbeing results.
+
+## Release claims checklist
+
+Only claim what the artifacts establish: “playable browser prototype” after the practice journey; “two-client multiplayer verified” after that exact test; “public multiplayer available” only after public WSS verification; and “tested up to N rooms/clients on machine M for T” with measured limits. Never convert bots into human-user counts or a local stress result into a global service guarantee. Asset production, cultural review, competitive balance and ongoing operations remain visible work until completed.

@@ -1,0 +1,412 @@
+{
+  "createdAt": "2026-10-16T16:54:22.196074+00:00",
+  "gitHead": "785da87162f4d7e0a26a8aa63070ffe2528c93e2",
+  "sourceWasUncommittedYugaBranch": true,
+  "sourceSha256": {
+    "games/yuga/client/main.ts": "6f768a54906d4b465b1814be94fe914da13cf629d4b3b0ea6e61a4bb2f904768",
+    "games/yuga/client/world.ts": "acebb2706c7547fe5713a7d186ed6efbd35aedf8be01598b630e0e79a45e945e",
+    "games/yuga/client/connection.ts": "3eda98151771cfc6865407f508eeacaef9e616fe628341696121e3198abfa52a",
+    "games/yuga/shared/simulation.ts": "735e595d3965509a3af4c67f244f899477f91e7b4c493b1570121d8c8ad55cbf",
+    "games/yuga/server/server.ts": "907fc5abaeb95360fffee0f2fb4a16995c5b2dd2766ee1e58601c82649df283e",
+    "games/yuga/tests/arena.e2e.ts": "68411e691d5c777109cd7163bd500fe282f188a466e791919acc894f31d9a635"
+  },
+  "scope": "Functional placeholder-art baseline; capped native render dispatch at maximum10fps, ordinary inputs and real simulation/network timers. Not hardware FPS or final character-art acceptance.",
+  "releaseSoak": "Native eight-minute finish deliberately held until replacement art integration. Result/replay presentation uses explicitly labelled socket fixture.",
+  "stats": {
+    "startTime": "2026-10-16T16:52:29.426Z",
+    "duration": 72693.258,
+    "expected": 5,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "test": "roster, saved settings and native muted audio preview",
+      "status": "passed",
+      "durationMs": 13365,
+      "errors": [],
+      "attachments": [
+        {
+          "name": "native-audio-and-settings",
+          "data": {
+            "scope": "native-audio-and-settings",
+            "detail": {
+              "audible": {
+                "peak": 0.021993596106767654,
+                "rms": 0.014830823663261428,
+                "running": true,
+                "previewing": true
+              },
+              "zero": {
+                "peak": 0,
+                "rms": 0,
+                "running": true,
+                "previewing": true
+              },
+              "claim": "Native WebAudio samples and preferences, not hardware listening quality"
+            },
+            "pageErrors": [],
+            "commands": [],
+            "results": []
+          }
+        }
+      ]
+    },
+    {
+      "test": "native practice movement, combat, three skills, upgrade and pause controls",
+      "status": "passed",
+      "durationMs": 16857,
+      "errors": [],
+      "attachments": [
+        {
+          "name": "native-practice",
+          "data": {
+            "scope": "native-practice",
+            "detail": {
+              "before": {
+                "id": "local-player",
+                "name": "Traveller",
+                "heroId": "rama",
+                "team": "sun",
+                "bot": false,
+                "lane": 1,
+                "connected": true,
+                "kind": "hero",
+                "x": 0,
+                "z": -56.00000000000003,
+                "y": 1.9799999999999998,
+                "yaw": 0,
+                "health": 300,
+                "maxHealth": 300,
+                "shield": 0,
+                "respawn": 0,
+                "cooldowns": [
+                  8.499999999999993,
+                  11.549999999999994,
+                  43.550000000000026
+                ],
+                "fireCooldown": 0,
+                "credits": 60,
+                "level": 2,
+                "kills": 0,
+                "deaths": 0,
+                "assists": 0,
+                "damageDealt": 0,
+                "upgrades": {
+                  "power": 1,
+                  "vitality": 0,
+                  "tempo": 0
+                },
+                "effects": {
+                  "haste": 0,
+                  "slow": 0,
+                  "ward": 0
+                },
+                "lastInputSeq": 17
+              },
+              "after": {
+                "id": "local-player",
+                "name": "Traveller",
+                "heroId": "rama",
+                "team": "sun",
+                "bot": false,
+                "lane": 1,
+                "connected": true,
+                "kind": "hero",
+                "x": 5.6062198091090085,
+                "z": -1.188623752548502,
+                "y": 0,
+                "yaw": -0.32000000000000006,
+                "health": 80,
+                "maxHealth": 300,
+                "shield": 0,
+                "respawn": 0,
+                "cooldowns": [
+                  0,
+                  1.2499999999999645,
+                  33.25000000000061
+                ],
+                "fireCooldown": 0,
+                "credits": 60,
+                "level": 2,
+                "kills": 0,
+                "deaths": 0,
+                "assists": 0,
+                "damageDealt": 31.589999999999996,
+                "upgrades": {
+                  "power": 1,
+                  "vitality": 0,
+                  "tempo": 0
+                },
+                "effects": {
+                  "haste": 0,
+                  "slow": 0,
+                  "ward": 0
+                },
+                "lastInputSeq": 208
+              },
+              "snapshotTime": 12.600000000000044,
+              "claim": "Ordinary keyboard controls only; no command, position or clock injection"
+            },
+            "pageErrors": [],
+            "commands": [],
+            "results": []
+          }
+        }
+      ]
+    },
+    {
+      "test": "mobile touch movement, aiming, firing and modal release",
+      "status": "passed",
+      "durationMs": 7150,
+      "errors": [],
+      "attachments": [
+        {
+          "name": "native-mobile",
+          "data": {
+            "scope": "native-mobile",
+            "detail": {
+              "before": {
+                "id": "local-player",
+                "name": "Traveller",
+                "heroId": "rama",
+                "team": "sun",
+                "bot": false,
+                "lane": 1,
+                "connected": true,
+                "kind": "hero",
+                "x": 0,
+                "z": -66,
+                "y": 0,
+                "yaw": 0,
+                "health": 300,
+                "maxHealth": 300,
+                "shield": 0,
+                "respawn": 0,
+                "cooldowns": [
+                  0,
+                  0,
+                  0
+                ],
+                "fireCooldown": 0,
+                "credits": 180,
+                "level": 1,
+                "kills": 0,
+                "deaths": 0,
+                "assists": 0,
+                "damageDealt": 0,
+                "upgrades": {
+                  "power": 0,
+                  "vitality": 0,
+                  "tempo": 0
+                },
+                "effects": {
+                  "haste": 0,
+                  "slow": 0,
+                  "ward": 0
+                },
+                "lastInputSeq": 2
+              },
+              "after": {
+                "id": "local-player",
+                "name": "Traveller",
+                "heroId": "rama",
+                "team": "sun",
+                "bot": false,
+                "lane": 1,
+                "connected": true,
+                "kind": "hero",
+                "x": 0,
+                "z": -63.01578947368417,
+                "y": 0,
+                "yaw": -0.125,
+                "health": 300,
+                "maxHealth": 300,
+                "shield": 0,
+                "respawn": 0,
+                "cooldowns": [
+                  7.4999999999999885,
+                  0,
+                  0
+                ],
+                "fireCooldown": 0,
+                "credits": 180,
+                "level": 1,
+                "kills": 0,
+                "deaths": 0,
+                "assists": 0,
+                "damageDealt": 0,
+                "upgrades": {
+                  "power": 0,
+                  "vitality": 0,
+                  "tempo": 0
+                },
+                "effects": {
+                  "haste": 0,
+                  "slow": 0,
+                  "ward": 0
+                },
+                "lastInputSeq": 52
+              },
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "claim": "Chromium native touch emulation, not physical phone hardware"
+            },
+            "pageErrors": [],
+            "commands": [],
+            "results": []
+          }
+        }
+      ]
+    },
+    {
+      "test": "two actual browser clients share movement, upgrades and reconnect identity",
+      "status": "passed",
+      "durationMs": 28502,
+      "errors": [],
+      "attachments": [
+        {
+          "name": "real-two-client",
+          "data": {
+            "scope": "real-two-client",
+            "detail": {
+              "room": "F5C1B9CF",
+              "hostId": "7fe447533e067272",
+              "guestId": "a27863d1c637bd26",
+              "beforeReconnect": {
+                "id": "7fe447533e067272",
+                "name": "Sun QA",
+                "heroId": "rama",
+                "team": "sun",
+                "bot": false,
+                "lane": 1,
+                "connected": true,
+                "kind": "hero",
+                "x": 3.600000000000001,
+                "z": -66,
+                "y": 0,
+                "yaw": 0,
+                "health": 300,
+                "maxHealth": 300,
+                "shield": 0,
+                "respawn": 0,
+                "cooldowns": [
+                  0,
+                  0,
+                  0
+                ],
+                "fireCooldown": 0,
+                "credits": 60,
+                "level": 2,
+                "kills": 0,
+                "deaths": 0,
+                "assists": 0,
+                "damageDealt": 0,
+                "upgrades": {
+                  "power": 1,
+                  "vitality": 0,
+                  "tempo": 0
+                },
+                "effects": {
+                  "haste": 0,
+                  "slow": 0,
+                  "ward": 0
+                },
+                "lastInputSeq": 149
+              },
+              "afterReconnect": {
+                "id": "7fe447533e067272",
+                "name": "Sun QA",
+                "heroId": "rama",
+                "team": "sun",
+                "bot": false,
+                "lane": 1,
+                "connected": true,
+                "kind": "hero",
+                "x": 3.8503578171638,
+                "z": -29.28085348263908,
+                "y": 0,
+                "yaw": 0,
+                "health": 300,
+                "maxHealth": 300,
+                "shield": 0,
+                "respawn": 0,
+                "cooldowns": [
+                  0,
+                  0,
+                  0
+                ],
+                "fireCooldown": 0,
+                "credits": 60,
+                "level": 2,
+                "kills": 0,
+                "deaths": 0,
+                "assists": 0,
+                "damageDealt": 0,
+                "upgrades": {
+                  "power": 1,
+                  "vitality": 0,
+                  "tempo": 0
+                },
+                "effects": {
+                  "haste": 0,
+                  "slow": 0,
+                  "ward": 0
+                },
+                "lastInputSeq": 9
+              },
+              "claim": "Two independent browser contexts and actual local WebSockets, not public hosting"
+            },
+            "pageErrors": [],
+            "commands": [
+              {
+                "type": "command",
+                "id": "d03d95c5-1",
+                "action": "upgrade",
+                "upgrade": "power"
+              }
+            ],
+            "results": [
+              {
+                "type": "result",
+                "id": "d03d95c5-1",
+                "ok": true,
+                "code": "UPGRADED"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "test": "labelled finished-state socket fixture renders results and fresh replay",
+      "status": "passed",
+      "durationMs": 5176,
+      "errors": [],
+      "attachments": [
+        {
+          "name": "labelled-result-fixture",
+          "data": {
+            "scope": "labelled-result-fixture",
+            "detail": {
+              "claim": "Mocked WebSocket and shortened simulation fixture verifies result/replay presentation only; no native match victory or real server claim"
+            },
+            "pageErrors": [],
+            "commands": [],
+            "results": []
+          }
+        }
+      ]
+    },
+    {
+      "test": "native complete eight-minute practice and fresh replay [release soak]",
+      "status": "skipped",
+      "durationMs": 208,
+      "errors": [],
+      "attachments": []
+    }
+  ]
+}
