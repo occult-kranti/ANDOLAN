@@ -129,6 +129,10 @@ function openDialog(id: string) {
   activeDialog?.close(); activeDialog = $<HTMLDialogElement>(id); clearInput(); syncActive();
   if (document.pointerLockElement) document.exitPointerLock();
   activeDialog.showModal();
+  if (id === 'lab-result-dialog') {
+    const heading = $('lab-result-title'); heading.tabIndex = -1;
+    heading.focus({ preventScroll: true }); activeDialog.scrollTop = 0;
+  }
 }
 function closeDialog() {
   if (!activeDialog) return;
