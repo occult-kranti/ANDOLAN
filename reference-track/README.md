@@ -1,8 +1,14 @@
 # YUGA Objective & Hero Combat Lab
 
-This track studies objective communication, hero combat and round lifecycle for original YUGA. Its initial playable target is **Hybrid team control** (`control-point`), using the shared original arena. It is not a recreation of Overwatch. [Track metadata](track.json) specifies the default and evidence gates; the integrated Vite configuration reads its `id` at build time and injects `VITE_YUGA_LAB_TRACK` to select the focused UI. Rule values remain descriptive metadata rather than runtime authority.
+This branch contains an original offline `control-point` experiment using YUGA's fourteen heroes, 42 abilities, 21 models and Sangam City arena. Overwatch is a comparative research topic; no commercial source, assets or verified full-game replica is included.
 
-Delivery now uses branch `reference/overwatch-mechanics` in `occult-kranti/ANDOLAN`: the lead reports GitHub `POST /user/repos` returned HTTP 403, so the intended separate `YUGA-Overwatch-Lab` repository was not created. The worktree shares Git object storage with ANDOLAN. The planned focused URL is `https://occult-kranti.github.io/ANDOLAN/yuga/control-lab/`; it is **not deployed yet**. Root owns integration and publication. Tests and public smoke checks remain pending.
+Shared foundation `b8ecd2a058b8b7e0927b841867521c50f4e74162` is merged into `reference/overwatch-mechanics`. The 21 shared lab unit tests passed locally. Focused build/browser checks run in [GitHub Actions](https://github.com/occult-kranti/ANDOLAN/actions/workflows/yuga-reference-tracks.yml); inspect that branch's current result. The complete native journey and central public deployment remain separate gates.
+
+GitHub rejected `POST /user/repos` with HTTP403, so this uses the requested branch fallback. Planned public entry: https://occult-kranti.github.io/ANDOLAN/yuga/control-lab/ . It is not a publication claim until central deployment and public smoke pass.
+
+Run `npm ci`, then `npm run yuga:lab:dev` or `npm run yuga:lab:build`. Vite consumes this [track.json](track.json) `id` and filters the mode selector through `VITE_YUGA_LAB_TRACK`; `YUGA_LAB_TRACK` optionally overrides it. Other metadata records scope, not executable enforcement. Deployments come from the central branch so these tracks cannot overwrite one another's Pages site.
+
+The review below was initially written before the foundation merge; its source-reading boundaries and later-scope gates remain applicable. Integration state above supersedes those historical pending-integration notes.
 
 ## Current implementation boundary
 
