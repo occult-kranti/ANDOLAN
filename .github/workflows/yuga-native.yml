@@ -1,0 +1,55 @@
+name: YUGA native foundation
+
+on:
+  push:
+    branches: [game/yuga-native-production]
+    paths:
+      - 'games/yuga-native/**'
+      - '.github/workflows/yuga-native.yml'
+  pull_request:
+    paths:
+      - 'games/yuga-native/**'
+      - '.github/workflows/yuga-native.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: yuga-native-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install verified Godot 4.6.3
+        env:
+          GODOT_SHA256: d0bc2113065e481c9c2c2b2c37daa4e8be3fe9e27f0ab9ab0b6096e9a37907f3
+        run: |
+          curl --fail --location --retry 2 -o "$RUNNER_TEMP/godot.zip" https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/Godot_v4.6.3-stable_linux.x86_64.zip
+          echo "$GODOT_SHA256  $RUNNER_TEMP/godot.zip" | sha256sum --check
+          mkdir -p "$RUNNER_TEMP/godot"
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+          chmod +x "$RUNNER_TEMP/godot/Godot_v4.6.3-stable_linux.x86_64"
+          echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
+      - name: Validate original environment geometry and materials
+        run: python3 games/yuga-native/art/validate_courtyard.py
+      - name: Import native project
+        run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --editor --import --quit
+      - name: Native physics and animation acceptance
+        run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report=${{ runner.temp }}/native-acceptance.json
+      - name: Export and inspect Linux and Windows resource packs
+        run: python3 games/yuga-native/tools/package-native.py --linux-engine "$RUNNER_TEMP/godot/Godot_v4.6.3-stable_linux.x86_64" --export-only
+      - name: Archive exact test and export evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: yuga-native-acceptance
+          path: |
+            ${{ runner.temp }}/native-acceptance.json
+            games/yuga-native/build/native-export-manifest.json
+            games/yuga-native/build/export-*.log
+          if-no-files-found: warn

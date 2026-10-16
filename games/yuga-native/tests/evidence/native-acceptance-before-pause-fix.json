@@ -1,0 +1,211 @@
+{
+	"checks": [
+		{
+			"name": "gameplay_input_actions_exist",
+			"observed": {
+				"missing": []
+			},
+			"passed": true
+		},
+		{
+			"name": "courtyard_contract",
+			"observed": {
+
+			},
+			"passed": true
+		},
+		{
+			"name": "training_starts_with_skinned_rama",
+			"observed": {
+				"ammo": 12,
+				"model_ready": true,
+				"targets": 5
+			},
+			"passed": true
+		},
+		{
+			"name": "pause_freezes_physics_and_weapon",
+			"observed": {
+				"cooldown_after": 0.09,
+				"cooldown_before": 0.09,
+				"movement_metres": 0.0,
+				"shots_after": 1,
+				"shots_before": 1
+			},
+			"passed": true
+		},
+		{
+			"name": "resume_clears_stale_held_input",
+			"observed": {
+				"movement_metres": 0.424999237060547,
+				"shots_after": 1,
+				"shots_before": 1
+			},
+			"passed": false
+		},
+		{
+			"name": "restart_resets_player_targets_and_projectiles",
+			"observed": {
+				"ammo": 12,
+				"defeat_count": 0,
+				"hit_count": 0,
+				"position": [
+					0.0,
+					0.000195310218259692,
+					12.0
+				],
+				"projectiles": 0,
+				"targets_reset": true
+			},
+			"passed": true
+		},
+		{
+			"name": "menu_does_not_simulate_player_input",
+			"observed": {
+				"active": false,
+				"movement_metres": 0.0,
+				"shots": 0
+			},
+			"passed": true
+		},
+		{
+			"name": "rama_rig_and_nine_animations_are_finite",
+			"observed": {
+				"bone_count": 164,
+				"bone_transform_samples": 7380,
+				"clip_lengths_seconds": {
+					"cast": 1.23333334922791,
+					"cast1": 1.03333330154419,
+					"cast2": 0.699999988079071,
+					"cast3": 1.63333332538605,
+					"defeat": 1.23333334922791,
+					"fire": 0.833333313465118,
+					"idle": 4.03333330154419,
+					"jump": 0.833333313465118,
+					"run": 0.833333313465118
+				},
+				"missing_clips": [],
+				"non_rest_samples": 7335,
+				"required_clips": [
+					"cast",
+					"cast1",
+					"cast2",
+					"cast3",
+					"defeat",
+					"fire",
+					"idle",
+					"jump",
+					"run"
+				],
+				"scope": "Five deterministic samples per clip; finite/non-singular transforms do not prove visual quality or every blend.",
+				"skeleton_count": 1,
+				"zero_length_clips": []
+			},
+			"passed": true
+		},
+		{
+			"name": "forward_movement_uses_real_character_physics",
+			"observed": {
+				"distance_metres": 5.57501220703125,
+				"on_floor": true,
+				"position": [
+					0.0,
+					0.000195310218259692,
+					6.42498779296875
+				]
+			},
+			"passed": true
+		},
+		{
+			"name": "diagonal_movement_is_speed_limited",
+			"observed": {
+				"horizontal_speed": 5.99999952316284,
+				"speed_limit": 6.0
+			},
+			"passed": true
+		},
+		{
+			"name": "wall_blocks_walking_and_dash",
+			"observed": {
+				"after_dash_z": 6.49022197723389,
+				"capsule_radius": 0.29,
+				"walk_stop_z": 6.49022197723389,
+				"wall_front_z": 6.2
+			},
+			"passed": true
+		},
+		{
+			"name": "jump_leaves_floor_and_lands",
+			"observed": {
+				"final_y": 0.000850848853588104,
+				"jump_count": 1,
+				"on_floor": true,
+				"peak_y": 1.50085163116455
+			},
+			"passed": true
+		},
+		{
+			"name": "weapon_cooldown_magazine_and_reload",
+			"observed": {
+				"ammo_after_first": 11,
+				"empty_ammo": 0,
+				"empty_shot": false,
+				"final_ammo": 12,
+				"first_shot": true,
+				"immediate_repeat": false,
+				"reload_started": true,
+				"shoot_during_reload": false,
+				"successful_shots": 12
+			},
+			"passed": true
+		},
+		{
+			"name": "swept_projectiles_damage_and_target_respawns",
+			"observed": {
+				"collision_disabled_on_defeat": true,
+				"duplicate_hit_accepted": false,
+				"health_after_respawn": 3,
+				"health_after_three_hits": 0,
+				"projectile_speed_metres_per_second": 600,
+				"reset_delay_seconds": 4.0,
+				"target_thickness_metres": 0.45
+			},
+			"passed": true
+		},
+		{
+			"name": "swept_projectile_respects_world_occlusion",
+			"observed": {
+				"projectile_freed": true,
+				"target_health": 3,
+				"wall_thickness_metres": 0.1
+			},
+			"passed": true
+		}
+	],
+	"elapsed_wall_ms": 558,
+	"engine": {
+		"build": "official",
+		"hash": "7d41c59c457bd5a245092b4e7eb2d833e3b3f8c3",
+		"hex": 263683,
+		"major": 4,
+		"minor": 6,
+		"patch": 3,
+		"status": "stable",
+		"string": "4.6.3-stable (official)",
+		"timestamp": 0
+	},
+	"failures": [
+		"resume_clears_stale_held_input"
+	],
+	"input_method": "Godot Input.action_press/action_release plus explicitly labelled public-API/isolated-world fixtures; not physical OS input",
+	"kind": "native-scripted-scenario-acceptance",
+	"limits": [
+		"One Rama rig; nine clips sampled at five times each, not all possible blends or all heroes.",
+		"Original offline courtyard foundation, not reconstruction or fidelity validation of commercial games.",
+		"Rendering quality, camera feel and native hardware input require separate visible-window evidence."
+	],
+	"passed": false,
+	"renderer": "headless dummy; no visual or GPU performance evidence",
+	"schema_version": 1,
+	"timing": "60 Hz physics; runner --fixed-fps 60; no time scale change"
+}

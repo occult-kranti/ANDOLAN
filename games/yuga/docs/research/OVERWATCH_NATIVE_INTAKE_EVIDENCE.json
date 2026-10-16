@@ -1,0 +1,309 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-16T19:23:21.026634-04:00",
+  "purpose": "Overwatch native tool and input readiness, not whole-game reconstruction or game execution",
+  "rea": {
+    "package": "rea-agents",
+    "version": "6.5.0",
+    "source_docs_pin": "d52a488476e7c41f573f23a1965d3f32d4e6a7f2",
+    "runtime_build_commit": null,
+    "entry_point": "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+    "executed": [
+      {
+        "arguments": [
+          "--help"
+        ],
+        "exit_code": 0,
+        "output_bytes": 17408,
+        "output_sha256": "80df18834181c29915f800d49d0dbd54de6133465f8826c2a8f2b27c686d40da"
+      },
+      {
+        "arguments": [
+          "providers",
+          "--json"
+        ],
+        "exit_code": 0,
+        "output_bytes": 23593,
+        "output_sha256": "dd4f44bff0a90667daa6a0e271e4b073199860d0e38d6faca3866202a2bda5fd"
+      }
+    ],
+    "providers": [
+      {
+        "id": "ghidra",
+        "status": "unavailable",
+        "code": "not_configured",
+        "reason": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.1.x release directory.",
+        "target_support": "unknown"
+      },
+      {
+        "id": "hopper",
+        "status": "unavailable",
+        "code": "executable_missing",
+        "reason": "Hopper launcher is missing or not executable: /opt/hopper/bin/Hopper",
+        "target_support": "unknown"
+      },
+      {
+        "id": "ida",
+        "status": "unavailable",
+        "code": "not_configured",
+        "reason": "Set REA_IDA_MCP_CONFIG to an upstream IDA MCP JSON registration; see docs/ida-provider.md.",
+        "target_support": "unknown"
+      }
+    ],
+    "ghidra_java_check": {
+      "name": "java",
+      "ok": false,
+      "code": "version_unresolved",
+      "detail": "21.0.12.1; 64-bit; runtime only; /usr/lib/jvm/java-21-openjdk-amd64; accepted a 64-bit full JDK matching the installation's declared Java bounds"
+    },
+    "commercial_target_opened": false,
+    "package_json_sha256": "a500302319c1214a8bb6c9a8b4a4a090806e95eef884204a9d9fbb4003050a6c",
+    "entry_point_sha256": "526105418604cc6e5a202a6275b700814e27450bfaffd45e7510530ba669de8d"
+  },
+  "host": {
+    "platform": "linux",
+    "architecture": "x64",
+    "node": "24.19.0",
+    "blender": "4.3.2",
+    "on_path": {
+      "dotnet": false,
+      "pnpm": true,
+      "node": true,
+      "java": true,
+      "javac": false,
+      "analyzeHeadless": false,
+      "ghidra": false,
+      "wine": false,
+      "blender": true
+    }
+  },
+  "source_cache": {
+    "root": "/workspace/tooling/overwatch-research",
+    "checkout_state": {
+      "owlib": "only .git; selected source copies are separate",
+      "overpy": "only .git; selected source copies are separate",
+      "deltin": "only .git; selected source copies are separate"
+    },
+    "reference_tools_built_or_executed": [],
+    "new_source_reads": [
+      {
+        "repository": "owlib",
+        "pin": "546efa19516d7df7ba138802d221c73ad886df28",
+        "path": "global.json",
+        "bytes": 108,
+        "sha256": "f84ad12ea23e5d9d9a5c01ed037f3cd869c0f26c90a737acfbd3b5461a9f46c5",
+        "read_scope": "full file",
+        "source_url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/global.json"
+      },
+      {
+        "repository": "owlib",
+        "pin": "546efa19516d7df7ba138802d221c73ad886df28",
+        "path": "Directory.Build.props",
+        "bytes": 300,
+        "sha256": "d23e109f8af256560516ad3ae5086a351155a20f98781d17e329b9a0ad9cbf1d",
+        "read_scope": "full file",
+        "source_url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/Directory.Build.props"
+      },
+      {
+        "repository": "owlib",
+        "pin": "546efa19516d7df7ba138802d221c73ad886df28",
+        "path": ".gitmodules",
+        "bytes": 169,
+        "sha256": "2e905b090434c7e4f77b3b80f71ce6c607b2dfcb950896295c1634a11a5b7aa0",
+        "read_scope": "full file",
+        "source_url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/.gitmodules"
+      },
+      {
+        "repository": "owlib",
+        "pin": "546efa19516d7df7ba138802d221c73ad886df28",
+        "path": "DataTool/DataTool.csproj",
+        "bytes": 2909,
+        "sha256": "faa0ad544e15cc1b5c5adf54626d063f78c1182d08bc9ae130b04cfa051df650",
+        "read_scope": "full file",
+        "source_url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/DataTool/DataTool.csproj"
+      },
+      {
+        "repository": "owlib",
+        "pin": "546efa19516d7df7ba138802d221c73ad886df28",
+        "path": "DataTool/ToolFlags.cs",
+        "bytes": 4414,
+        "sha256": "581b76967f981117391a091add9f3b920f56849134bc8d8b3a203ab2ed60461f",
+        "read_scope": "full file",
+        "source_url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/DataTool/ToolFlags.cs"
+      },
+      {
+        "repository": "owlib",
+        "pin": "546efa19516d7df7ba138802d221c73ad886df28",
+        "path": ".github/workflows/dotnet.yml",
+        "bytes": 2110,
+        "sha256": "724937f71e34d4d121651a1cc0bb05b7700e45ab79fd7d490fe66818a58a911a",
+        "read_scope": "full file",
+        "source_url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/.github/workflows/dotnet.yml"
+      },
+      {
+        "repository": "overpy",
+        "pin": "5a7d0e294b8cad73b9701987bb584d0551d7fa4d",
+        "path": "src/cli.ts",
+        "bytes": 8078,
+        "sha256": "4f5f2401f0822f5a2f053591c80990283ffe736245052b3b9c744335e997bc55",
+        "read_scope": "full file",
+        "source_url": "https://github.com/Zezombye/overpy/blob/5a7d0e294b8cad73b9701987bb584d0551d7fa4d/src/cli.ts"
+      },
+      {
+        "repository": "overpy",
+        "pin": "5a7d0e294b8cad73b9701987bb584d0551d7fa4d",
+        "path": "esbuild.js",
+        "bytes": 4487,
+        "sha256": "58b29aa6387ca62554de87d83bb86f3e742c8f1af5ef1226697541d8b8b450e1",
+        "read_scope": "full file",
+        "source_url": "https://github.com/Zezombye/overpy/blob/5a7d0e294b8cad73b9701987bb584d0551d7fa4d/esbuild.js"
+      },
+      {
+        "repository": "deltin",
+        "pin": "41b51d6dcd98c7d07e4e8f8646e088e8820ae2bd",
+        "path": "Deltinteger/Deltinteger/Deltinteger.csproj",
+        "bytes": 2123,
+        "sha256": "94c72e335bb71e406506fd4e02d461963b116aa59fd7f180f3b22b60281bb805",
+        "read_scope": "full file",
+        "source_url": "https://github.com/ItsDeltin/Overwatch-Script-To-Workshop/blob/41b51d6dcd98c7d07e4e8f8646e088e8820ae2bd/Deltinteger/Deltinteger/Deltinteger.csproj"
+      },
+      {
+        "repository": "owlib",
+        "pin": "546efa19516d7df7ba138802d221c73ad886df28",
+        "path": "DataTool/Program.cs",
+        "bytes": 26664,
+        "sha256": "4d3174bf3acfe6a04fb4f9246906c0b7a8e58202fc11b7ee395455ed0bb587cc",
+        "read_scope": "lines 56-198 and 254-324; keyword matches elsewhere, not full review",
+        "source_url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/DataTool/Program.cs"
+      },
+      {
+        "repository": "owlib",
+        "pin": "546efa19516d7df7ba138802d221c73ad886df28",
+        "path": "DataTool/Flag/Converter.cs",
+        "bytes": 1699,
+        "sha256": "3312392149b294153e5b9855ec2381cc83acab66cbcd141291051c86e9d4d356",
+        "read_scope": "full file",
+        "source_url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/DataTool/Flag/Converter.cs"
+      },
+      {
+        "repository": "owlib",
+        "pin": "546efa19516d7df7ba138802d221c73ad886df28",
+        "path": "README.md",
+        "bytes": 5430,
+        "sha256": "f00ec32737877d5f85357cc8a54e27c5adcb62b6d99daf91d0fac0cbc057a57d",
+        "read_scope": "lines 1-80",
+        "source_url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/README.md"
+      },
+      {
+        "repository": "overpy",
+        "pin": "5a7d0e294b8cad73b9701987bb584d0551d7fa4d",
+        "path": "README.md",
+        "bytes": 65179,
+        "sha256": "7c0811ea6fd3ddabace4ccdff36e524e7637c932db1ccd0094e46b0d28396ba0",
+        "read_scope": "lines 1-150",
+        "source_url": "https://github.com/Zezombye/overpy/blob/5a7d0e294b8cad73b9701987bb584d0551d7fa4d/README.md"
+      },
+      {
+        "repository": "overpy",
+        "pin": "5a7d0e294b8cad73b9701987bb584d0551d7fa4d",
+        "path": "package.json",
+        "bytes": 10566,
+        "sha256": "2362a4516cd77cfd61fa5b14770855f0febe9a19899dba3dfa33da66639a4872",
+        "read_scope": "lines 1-180",
+        "source_url": "https://github.com/Zezombye/overpy/blob/5a7d0e294b8cad73b9701987bb584d0551d7fa4d/package.json"
+      },
+      {
+        "repository": "deltin",
+        "pin": "41b51d6dcd98c7d07e4e8f8646e088e8820ae2bd",
+        "path": "README.md",
+        "bytes": 461,
+        "sha256": "0dedce672ed99c1b28bc1e34082ca88e41348f444b55a5007e44d6d95d333698",
+        "read_scope": "full file",
+        "source_url": "https://github.com/ItsDeltin/Overwatch-Script-To-Workshop/blob/41b51d6dcd98c7d07e4e8f8646e088e8820ae2bd/README.md"
+      },
+      {
+        "repository": "morluto/rea",
+        "pin": "d52a488476e7c41f573f23a1965d3f32d4e6a7f2",
+        "path": "docs/native-investigation.md",
+        "bytes": 40285,
+        "sha256": "bf216835ccf029f4c1c5de3cffa5737eac66a5f7c791431931528bb6933ba79f",
+        "read_scope": "lines 1-200",
+        "source_url": "https://github.com/morluto/rea/blob/d52a488476e7c41f573f23a1965d3f32d4e6a7f2/docs/native-investigation.md"
+      },
+      {
+        "repository": "morluto/rea",
+        "pin": "d52a488476e7c41f573f23a1965d3f32d4e6a7f2",
+        "path": "docs/cli.md",
+        "bytes": 21441,
+        "sha256": "d2689621fcb61bff1e419abe678eb0014d5eb1d6beed7149cc4dbd1a952e011c",
+        "read_scope": "lines 1-150",
+        "source_url": "https://github.com/morluto/rea/blob/d52a488476e7c41f573f23a1965d3f32d4e6a7f2/docs/cli.md"
+      }
+    ]
+  },
+  "build_inputs": {
+    "owlib": {
+      "sdk": "10.0.100",
+      "roll_forward": "latestMajor",
+      "target": "net10.0",
+      "submodules": {
+        "TACTLib": "129f977b604b2576bfd048e0f2be8b44ee983f39",
+        "revorbstd": "c5f05f3756a2cd589ea0d0acd88046c59ee67b7b"
+      },
+      "data_input": "compatible installed Overwatch directory with required local content and languages",
+      "online_repair_default": true
+    },
+    "overpy": {
+      "package_version": "9.7.17",
+      "package_manager": "pnpm >=10.0.0",
+      "required_builds": [
+        "standalone",
+        "cli"
+      ],
+      "runtime_input": "OverPy or copied Workshop script text; in-game Workshop required to play generated rules"
+    },
+    "deltin": {
+      "target": "net8.0",
+      "runtime_identifiers": [
+        "win-x64",
+        "win-x86",
+        "linux-x64"
+      ],
+      "runtime_input": "Deltin source / Workshop text; in-game Workshop required to play generated rules"
+    }
+  },
+  "input_inventory": {
+    "selected_commercial_client_binary": null,
+    "selected_game_install_directory": null,
+    "selected_recorded_reference_match": null,
+    "selected_server_binary_or_source": null,
+    "scan_scope": [
+      "/workspace/research",
+      "/workspace/tooling/overwatch-research"
+    ],
+    "filename_scan_patterns": [
+      "Overwatch.exe",
+      "DataTool.exe",
+      ".build.info",
+      "*.idx",
+      "*.data",
+      "*.dll",
+      "*.saz",
+      "*.pcap",
+      "*.pcapng"
+    ],
+    "matching_paths": [],
+    "limitation": "Only the named research/cache directories were checked; no claim about the entire filesystem or user devices.",
+    "scan_includes_hidden_files": true
+  },
+  "not_performed": [
+    "commercial executable analysis",
+    "commercial data extraction",
+    "reference game execution",
+    "account login",
+    "network interception",
+    "anti-cheat or protection bypass",
+    "tool build or dependency install"
+  ],
+  "next_gate": "Obtain explicit local target paths plus exact build/version, hashes and a finite behavior question; configure and verify a native provider independently. First output is an immutable offline inventory with uncertainty, not a complete replacement engine."
+}

@@ -1,0 +1,419 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-10-16T23:25:49.668239+00:00",
+  "purpose": "Deadlock input and installed REA capability audit; native tool fixture proof, not commercial game reconstruction.",
+  "scope": {
+    "network_requests": 0,
+    "commercial_client_downloaded": false,
+    "commercial_client_analyzed": false,
+    "commercial_replay_parsed": false,
+    "commercial_asset_extracted": false,
+    "target_fixture_executed": false,
+    "runtime_modified": false
+  },
+  "installed_rea": {
+    "package": "rea-agents",
+    "version": "6.5.0",
+    "license": "MIT"
+  },
+  "rea_source_checkout": {
+    "commit": "d52a488476e7c41f573f23a1965d3f32d4e6a7f2",
+    "note": "Source checkout documentation corroborates capability; installed runtime hashes identify actual executed release. They are separate identities."
+  },
+  "sources": [
+    {
+      "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/package.json",
+      "bytes": 23946,
+      "sha256": "a500302319c1214a8bb6c9a8b4a4a090806e95eef884204a9d9fbb4003050a6c"
+    },
+    {
+      "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+      "bytes": 4385,
+      "sha256": "526105418604cc6e5a202a6275b700814e27450bfaffd45e7510530ba669de8d"
+    },
+    {
+      "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/dist/ghidra/GhidraInstallation.js",
+      "bytes": 30107,
+      "sha256": "0ff09f1350ade169db156c8d987cca0929a98d4b2337c78efc2bceba839a203a"
+    },
+    {
+      "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/dist/ghidra/GhidraJavaLaunch.js",
+      "bytes": 6343,
+      "sha256": "9b267c37f14faeb1cb3f01afe81fd29e445684cfef86af2150e3f56e2115ff95"
+    },
+    {
+      "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/dist/native/pwntools/PwntoolsRelease.js",
+      "bytes": 824,
+      "sha256": "f10bf01df9ade26f01ec3cb3f1718c1bf9deee0748c1a71af4b6a1780535a828"
+    },
+    {
+      "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/dist/objdump/ObjdumpCommand.js",
+      "bytes": 718,
+      "sha256": "465ba50f5e110eb63617c1b113ee21f2281bafb5422be7abf77277f113453be3"
+    },
+    {
+      "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/skills/reverse-engineer-anything/references/native-and-artifacts.md",
+      "bytes": 17722,
+      "sha256": "1d2ac5f64feb5ad6ef8b98d803d570e1c48aa588281ff91a4bbf50d40f924450"
+    },
+    {
+      "path": "/workspace/tooling/rea/docs/installation.md",
+      "bytes": 68051,
+      "sha256": "0009c05b981e1ae562042cab76f5b14741fd9af42b12d119323bd28d4551678c"
+    },
+    {
+      "path": "/workspace/tooling/rea/docs/ghidra-provider.md",
+      "bytes": 23501,
+      "sha256": "e87df4b60d0914abcaf714bd85ead9ab487c48bef5a45895ed919ba990fb46a5"
+    },
+    {
+      "path": "/workspace/tooling/rea/src/ghidra/GhidraReleasePolicy.ts",
+      "bytes": 4555,
+      "sha256": "1c04825a67c9fe687123216a5aa4c72227bae3995ea40e0a3e0abd876344dc6d"
+    },
+    {
+      "path": "/workspace/tooling/rea/scripts/fixtures/binary-layout.c",
+      "bytes": 419,
+      "sha256": "30b7a36f9102a8a1aa1e747fb605b05c04ba35bc52a8d24527e56b4c38ab8990"
+    },
+    {
+      "path": "/workspace/tooling/rea/LICENSE",
+      "bytes": 1064,
+      "sha256": "798f9e4d18e49b30bf2f12696c8ced73dc4e1413da375a333d01281543a1ea8b"
+    },
+    {
+      "path": "/workspace/research/yuga-deadlock/pnxenopoulos__boon/files/README.md",
+      "bytes": 9798,
+      "sha256": "576698cba6243a0fa43e839130331bc5209444495983d4de9ad39d320e79eb77",
+      "repository": "pnxenopoulos/boon",
+      "commit": "0c7663f17aa24a65374925b022fd4d98aaa47477",
+      "url": "https://raw.githubusercontent.com/pnxenopoulos/boon/0c7663f17aa24a65374925b022fd4d98aaa47477/README.md"
+    },
+    {
+      "path": "/workspace/research/yuga-deadlock/pnxenopoulos__boon/files/crates/boon-python/src/datasets.rs",
+      "bytes": 39039,
+      "sha256": "bddb2df87efb7211840531069abf0683a1771a3656409e8b2ce3efcdfd3fc080",
+      "repository": "pnxenopoulos/boon",
+      "commit": "0c7663f17aa24a65374925b022fd4d98aaa47477",
+      "url": "https://raw.githubusercontent.com/pnxenopoulos/boon/0c7663f17aa24a65374925b022fd4d98aaa47477/crates/boon-python/src/datasets.rs"
+    },
+    {
+      "path": "/workspace/research/yuga-deadlock/pnxenopoulos__boon/files/LICENSE",
+      "bytes": 1078,
+      "sha256": "0d3d6ba355f066e273c12ab69dbce075b55cfc4ed892efe34682f265194b7c20",
+      "repository": "pnxenopoulos/boon",
+      "commit": "0c7663f17aa24a65374925b022fd4d98aaa47477",
+      "url": "https://raw.githubusercontent.com/pnxenopoulos/boon/0c7663f17aa24a65374925b022fd4d98aaa47477/LICENSE"
+    },
+    {
+      "path": "/workspace/research/yuga-deadlock/blukai__haste/files/readme.md",
+      "bytes": 4708,
+      "sha256": "80012c9ccfccd1faadb81c6e77a3fbb3694c4d89a7a13a1483c3639d882b541c",
+      "repository": "blukai/haste",
+      "commit": "7ce32e67ba107f256777a10fe0cb19b7812dd187",
+      "url": "https://raw.githubusercontent.com/blukai/haste/7ce32e67ba107f256777a10fe0cb19b7812dd187/readme.md"
+    },
+    {
+      "path": "/workspace/research/yuga-deadlock/blukai__haste/files/crates/haste_core/src/parser.rs",
+      "bytes": 22900,
+      "sha256": "fb6cf829b3b318902466f908ce5e1e80da99be7833cfdac14a5507ca199ef11a",
+      "repository": "blukai/haste",
+      "commit": "7ce32e67ba107f256777a10fe0cb19b7812dd187",
+      "url": "https://raw.githubusercontent.com/blukai/haste/7ce32e67ba107f256777a10fe0cb19b7812dd187/crates/haste_core/src/parser.rs"
+    },
+    {
+      "path": "/workspace/research/yuga-deadlock/blukai__haste/files/license.txt",
+      "bytes": 1493,
+      "sha256": "ebded816ac4b977f92dff6d8a37f37a42550b93858f1110f8dd16c042e2264c5",
+      "repository": "blukai/haste",
+      "commit": "7ce32e67ba107f256777a10fe0cb19b7812dd187",
+      "url": "https://raw.githubusercontent.com/blukai/haste/7ce32e67ba107f256777a10fe0cb19b7812dd187/license.txt"
+    }
+  ],
+  "cli_probes": [
+    {
+      "probe": "providers",
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "providers",
+        "--json"
+      ],
+      "exit": 0,
+      "bytes": 23593,
+      "sha256": "deb16fe19272857e48ab528a980e8c60ffaa405586fc63afa9257d596e934c56",
+      "path": "/tmp/yuga-deadlock-rea-providers.txt"
+    },
+    {
+      "probe": "doctor",
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "doctor",
+        "--json"
+      ],
+      "exit": 1,
+      "bytes": 5534,
+      "sha256": "4340a7d5ff4ced0cd248e8ac16318364c7d453004df22a86693bf8041491161c",
+      "path": "/tmp/yuga-deadlock-rea-doctor.txt"
+    },
+    {
+      "probe": "capabilities",
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "capabilities",
+        "--json"
+      ],
+      "exit": 0,
+      "bytes": 23593,
+      "sha256": "f4cfcf67155efafe3e6a667f29ccc92ac421d66f185f7853cd3b4ed406d6f6c7",
+      "path": "/tmp/yuga-deadlock-rea-capabilities.txt"
+    },
+    {
+      "probe": "inspect-binary-layout-help",
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "inspect-binary-layout",
+        "--help"
+      ],
+      "exit": 0,
+      "bytes": 824,
+      "sha256": "86615c882d96ec5fd6fa970eb1611c0afcfe5b0bc5bcde9b8cfcb6463cfb80fd",
+      "path": "/tmp/yuga-deadlock-rea-inspect-binary-layout-help.txt"
+    },
+    {
+      "probe": "inspect-artifact-help",
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "inspect-artifact",
+        "--help"
+      ],
+      "exit": 0,
+      "bytes": 948,
+      "sha256": "f01db520fd1eae285ebfb1aeb4fa39a1b1053d1ff2840d1d7fe2d33cf6c59549",
+      "path": "/tmp/yuga-deadlock-rea-inspect-artifact-help.txt"
+    },
+    {
+      "probe": "analyze-help",
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "analyze",
+        "--help"
+      ],
+      "exit": 0,
+      "bytes": 1662,
+      "sha256": "1c48e855cf70f6f2898804dcad393a60e1ef62be3a38a2acfd038a1460a30239",
+      "path": "/tmp/yuga-deadlock-rea-analyze-help.txt"
+    },
+    {
+      "probe": "decompile-help",
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "decompile",
+        "--help"
+      ],
+      "exit": 0,
+      "bytes": 1650,
+      "sha256": "529b4073979f870687d9894049bc4d055abb1eeef1e9d62224bb7dc1226cd7f4",
+      "path": "/tmp/yuga-deadlock-rea-decompile-help.txt"
+    }
+  ],
+  "pre_provision_provider_status": [
+    {
+      "provider_id": "ghidra",
+      "availability": {
+        "status": "unavailable",
+        "code": "not_configured",
+        "reason": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.1.x release directory."
+      },
+      "selected": false
+    },
+    {
+      "provider_id": "hopper",
+      "availability": {
+        "status": "unavailable",
+        "code": "executable_missing",
+        "reason": "Hopper launcher is missing or not executable: /opt/hopper/bin/Hopper"
+      },
+      "selected": false
+    },
+    {
+      "provider_id": "ida",
+      "availability": {
+        "status": "unavailable",
+        "code": "not_configured",
+        "reason": "Set REA_IDA_MCP_CONFIG to an upstream IDA MCP JSON registration; see docs/ida-provider.md."
+      },
+      "selected": false
+    }
+  ],
+  "pre_provision_tool_presence": {
+    "boon": false,
+    "cargo": false,
+    "dotnet": false,
+    "Source2Viewer-CLI": false,
+    "javac": false,
+    "java": true,
+    "cc": true,
+    "objdump": true
+  },
+  "artifact_census": {
+    "roots": [
+      "/workspace/ANDOLAN",
+      "/workspace/research",
+      "/workspace/tooling"
+    ],
+    "excluded_directory_names": [
+      ".git",
+      "__pycache__",
+      "attachments",
+      "dist",
+      "node_modules",
+      "playwright-report",
+      "test-results"
+    ],
+    "regular_file_names_checked": 6847,
+    "matching_artifact_names": [],
+    "scope_limitation": "Filename census only; no byte-signature assertion of all host files, attachments or excluded trees. No credentials inspected."
+  },
+  "fixture": {
+    "compile": {
+      "argv": [
+        "cc",
+        "-g",
+        "-O0",
+        "-fno-inline",
+        "/workspace/tooling/rea/scripts/fixtures/binary-layout.c",
+        "-o",
+        "/tmp/yuga-deadlock-native-fixture"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "target_executed": false,
+    "binary": {
+      "path": "/tmp/yuga-deadlock-native-fixture",
+      "bytes": 17920,
+      "sha256": "17fcf295403b79c9d97e4af4694fded29692ce6a5ea17e1c12cea0c61c6f1e21"
+    },
+    "layout": {
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "inspect-binary-layout",
+        "/tmp/yuga-deadlock-native-fixture",
+        "--json"
+      ],
+      "exit": 1,
+      "bytes": 948,
+      "sha256": "06ebd2e6242d9552721c321e4d6717c5d6b74adcc6fae3bc718e9fb481949bd3",
+      "path": "/tmp/yuga-deadlock-native-layout.json"
+    }
+  },
+  "layout_failure": {
+    "code": "provider_unavailable",
+    "category": "unavailable",
+    "message": "Set REA_PWNTOOLS_PYTHON to an absolute caller-supplied Python executable with pwntools 4.15.0, pyelftools 0.33 and Unicorn 2.1.2; REA never installs Python or packages.",
+    "retryable": true,
+    "remediation": {
+      "action": "Set REA_PWNTOOLS_PYTHON to an absolute caller-supplied Python executable with pwntools 4.15.0, pyelftools 0.33 and Unicorn 2.1.2; REA never installs Python or packages."
+    },
+    "details": {
+      "operation": "inspect_binary_layout",
+      "selection_reason": "provider_unavailable",
+      "requested_provider_id": "pwntools-elf",
+      "candidate_ids": [
+        "pwntools-elf"
+      ],
+      "rejections": [
+        {
+          "provider_id": "pwntools-elf",
+          "code": "provider_unavailable",
+          "reason": "Set REA_PWNTOOLS_PYTHON to an absolute caller-supplied Python executable with pwntools 4.15.0, pyelftools 0.33 and Unicorn 2.1.2; REA never installs Python or packages.",
+          "diagnostics": {
+            "configuration_key": "REA_PWNTOOLS_PYTHON",
+            "executable_path": ""
+          }
+        }
+      ]
+    }
+  },
+  "successful_native_probes": [
+    {
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "inspect-with-objdump",
+        "/tmp/yuga-deadlock-native-fixture",
+        "file_headers",
+        "--json"
+      ],
+      "exit": 0,
+      "bytes": 2122,
+      "sha256": "edc35148f075735d2cce07b6d6f8d7d557c0ee1640b5a532de1e9789a47f444b",
+      "path": "/tmp/yuga-deadlock-objdump-headers.json",
+      "evidence_id": "ev_90360028ba5eaa53e59a5389e2ee4114b5de1f234102c6649896209d5890ae23",
+      "observed_output": "\n/tmp/yuga-deadlock-native-fixture:     file format elf64-x86-64\narchitecture: i386:x86-64, flags 0x00000150:\nHAS_SYMS, DYNAMIC, D_PAGED\nstart address 0x0000000000001050\n\n",
+      "artifact_changed": false
+    },
+    {
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "inspect-with-objdump",
+        "/tmp/yuga-deadlock-native-fixture",
+        "symbols",
+        "--json"
+      ],
+      "exit": 0,
+      "bytes": 8305,
+      "sha256": "4f4f9fad9a841c2db7bb25141a6583312d0517aad519f2f9066216db5612f954",
+      "path": "/tmp/yuga-deadlock-objdump-symbols.json",
+      "evidence_id": "ev_1d701a50b307fc419be18848a3cfab95fd61c00006e6161e1f06f0aef88aeafd",
+      "artifact_changed": false,
+      "has_read_values": true,
+      "output_truncated": false
+    },
+    {
+      "argv": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "inspect-with-objdump",
+        "/tmp/yuga-deadlock-native-fixture",
+        "disassemble",
+        "--json"
+      ],
+      "exit": 0,
+      "bytes": 17081,
+      "sha256": "4eb8bc96a015b9eee19f95bfcc360e4ec03fa16136f007898b7b79fd1eeca89f",
+      "path": "/tmp/yuga-deadlock-objdump-disassemble.json",
+      "evidence_id": "ev_e1f0b3d15353e613b4a046ee091291f90bbed20b448d8a9c4cb00f78b9bbdbb8",
+      "artifact_changed": false,
+      "has_read_values": true,
+      "output_truncated": false
+    }
+  ],
+  "input_limits": {
+    "pwntools_elf_max_bytes": 33554432,
+    "source": "installed dist/native/pwntools/PwntoolsRelease.js; this is not a Ghidra limit"
+  },
+  "next_input_required": [
+    "Version-identified legitimate Deadlock installed-client copy or selected native module with build identity and SHA-256",
+    "At least one compatible Deadlock .dem replay for observed gameplay events; preferably a controlled practice scenario plus matching local video",
+    "Selected compiled resource/package only if visual-format study is needed; source asset rights remain separate"
+  ],
+  "pending_other_agent_work": "Native-analysis toolchain agent is provisioning Ghidra/JDK and exact pwntools prerequisites plus an original fixture. This record preserves the pre-provision state; its later result belongs to native-analysis-toolchain.json.",
+  "limits": [
+    "CLI availability is not full-game coverage.",
+    "Objdump fixture observations are assembly/header/symbol facts; no pseudocode decompilation completed by this intake task.",
+    "No source or behavior claim about Deadlock authority, animation graphs, current tick rates or balance follows from the fixture.",
+    "Replay datasets observe fields recorded by a particular build and parser; missing values are not zero.",
+    "Client/replay/resource analysis cannot establish unavailable server-only matchmaking, validation, anticheat, backend code or original authoring source."
+  ]
+}

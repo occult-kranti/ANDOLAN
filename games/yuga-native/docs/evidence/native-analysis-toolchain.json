@@ -1,0 +1,299 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-16T23:30:18.868204+00:00",
+  "status": "verified-on-original-fixture-only",
+  "scope": {
+    "target": "Original authored combat damage ELF fixture",
+    "reference_game_inputs": [],
+    "commercial_binary_analysis_performed": false,
+    "commercial_game_completeness": "blocked: no Deadlock or Overwatch game binaries, packages, recordings, or controlled runtime supplied",
+    "debug_symbols": true,
+    "compiler_optimization": "-O0",
+    "original_fixture_runtime_execution": "five finite authored test vectors only; REA analysis is static"
+  },
+  "toolchain": {
+    "rea_version": "6.5.0",
+    "ghidra": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "java_version": "Temurin JDK 21.0.12.1+1",
+    "layout_provider": {
+      "id": "pwntools-elf",
+      "name": "REA pwntools ELF adapter",
+      "version": "pwntools@4.15.0;pyelftools@0.33;unicorn@2.1.2"
+    },
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "python_packages_sha256": "4265292d89cd899d3ccad0ae0d0a688c6fa0c5b82b5fdb43c80d3d8a25c0a689",
+    "official_downloads": [
+      {
+        "name": "ghidra",
+        "url": "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.1.4_build/ghidra_12.1.4_PUBLIC_20260921.zip",
+        "metadata_url": "https://api.github.com/repos/NationalSecurityAgency/ghidra/releases/tags/Ghidra_12.1.4_build",
+        "sha256": "ddac49f903da9d5bac833e5cc79395098b9c33cfd3279be5f31bd00387d2d4db",
+        "bytes": 569649598,
+        "checksum_verified": true
+      },
+      {
+        "name": "jdk",
+        "url": "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1%2B1/OpenJDK21U-jdk_x64_linux_hotspot_21.0.12.1_1.tar.gz",
+        "metadata_url": "https://api.github.com/repos/adoptium/temurin21-binaries/releases/tags/jdk-21.0.12.1%2B1",
+        "sha256": "ce79869e1307ed8ee1e2baa86a412b1eb5b75d10a01006d788a6f968bcfaee94",
+        "bytes": 207473347,
+        "checksum_verified": true
+      }
+    ],
+    "ghidra_heap_limit": "768M",
+    "global_configuration_changed": false,
+    "network": "inherited managed proxy and normal TLS; no user credentials",
+    "installed_size_approx_gib": 1.5
+  },
+  "fixture": {
+    "source_path": "games/yuga-native/tools/native-analysis/combat-fixture.c",
+    "source_sha256": "7b87de70784da76e619d1920a0d16597e508811fefa5afae164f80632e8b38af",
+    "binary_sha256": "4f92c3c543aace7159be117541f64bcb9222e2380107ebe1d110ffd31dd9b816",
+    "binary_bytes": 17920,
+    "test_vectors": [
+      [
+        100,
+        40,
+        0,
+        80
+      ],
+      [
+        100,
+        40,
+        1,
+        40
+      ],
+      [
+        0,
+        50,
+        0,
+        0
+      ],
+      [
+        20,
+        200,
+        0,
+        1
+      ],
+      [
+        20,
+        -5,
+        0,
+        20
+      ]
+    ]
+  },
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "cc",
+        "-std=c11",
+        "-O0",
+        "-g",
+        "-fno-inline",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "/workspace/ANDOLAN/games/yuga-native/tools/native-analysis/combat-fixture.c",
+        "-o",
+        "/workspace/tooling/yuga-native-analysis/evidence/attempt-1/combat-fixture"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.106,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "fixture-tests",
+      "command": [
+        "/workspace/tooling/yuga-native-analysis/evidence/attempt-1/combat-fixture"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.001,
+      "stdout_sha256": "ae2d18a1de4db50bb503631755f43119a042ca695bbd816bfe24750cb658ff22",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "binary-layout",
+      "command": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "inspect-binary-layout",
+        "/workspace/tooling/yuga-native-analysis/evidence/attempt-1/combat-fixture",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.434,
+      "stdout_sha256": "a8c9e4dc6f9228bd007f3d8e0e1b1e0f7148b9fd5e03e4766b4d6083fe0b4adf",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "decompile",
+      "command": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "decompile",
+        "/workspace/tooling/yuga-native-analysis/evidence/attempt-1/combat-fixture",
+        "combat_damage",
+        "--provider",
+        "ghidra",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 16.918,
+      "stdout_sha256": "10d4675acb575b6d212c254c8e4cd51f5fabfccd906f8686e118fbc9964d9008",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "function",
+      "command": [
+        "node",
+        "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "function",
+        "/workspace/tooling/yuga-native-analysis/evidence/attempt-1/combat-fixture",
+        "combat_damage",
+        "--provider",
+        "ghidra",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 12.872,
+      "stdout_sha256": "9ec178a6cdbb2466ed7355f4caa8263c790d2233f9f15d8445819459266f8a71",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "acceptance": {
+    "checks": {
+      "same_binary_digest_in_all_provider_results": true,
+      "layout_is_x86_64_elf": true,
+      "ghidra_12_1_4_decompiler": true,
+      "selected_function_recovered": true,
+      "pseudocode_calls_clamp": true,
+      "main_is_recovered_caller": true,
+      "clamp_is_recovered_callee": true,
+      "finite_branches_recovered": true,
+      "no_unresolved_calls_in_selected_function": true,
+      "five_authored_runtime_cases_pass": true
+    },
+    "passed": true,
+    "scope": "one unoptimized original fixture with debug symbols; no commercial game coverage"
+  },
+  "layout": {
+    "evidence_id": "ev_c4aa110cb81cc22440cdba83b4cfa4b738a209652db0d7c777ff4066f30b46c7",
+    "architecture": {
+      "machine": "EM_X86_64",
+      "bits": 64,
+      "byte_order": "little"
+    },
+    "sections": 37,
+    "segments": 14,
+    "symbols": 45,
+    "ordinary_relocations": 9,
+    "runtime_load_base": null,
+    "relocation_inventory_completeness": "unknown"
+  },
+  "decompile": {
+    "evidence_id": "ev_92491bc5962c15e808f8d1aeecd06dfb46d771eb5aab218f785c5d1eb33f4c9a",
+    "pseudocode": "\nint combat_damage(int power,int armour,int shield)\n\n{\n  int iVar1;\n  int shield_local;\n  int armour_local;\n  int power_local;\n  int damage;\n  \n  if (power < 1) {\n    damage = 0;\n  }\n  else {\n    iVar1 = clamp_armour(armour);\n    damage = power - iVar1 / 2;\n    if (shield != 0) {\n      damage = damage / 2;\n    }\n    if (damage < 1) {\n      damage = 1;\n    }\n  }\n  return damage;\n}\n\n",
+    "confidence": "observed",
+    "limitations": [
+      "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+      "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+      "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+      "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+      "Pseudocode is Ghidra decompiler output, not original source and not text-equivalent to Hopper output.",
+      "External functions and functions without an analyzable body return null; other decompiler failures remain explicit."
+    ]
+  },
+  "selected_function": {
+    "evidence_id": "ev_53c5580a4885c8c260bf6538957321ae94aa26e7f28a93656c0e34cf526f0a20",
+    "name": "combat_damage",
+    "analysis_address": "0x10115f",
+    "body": {
+      "available": true,
+      "provenance": "ghidra-function-body-address-set",
+      "ranges": [
+        {
+          "start": "0x10115f",
+          "end": "0x1011bf"
+        }
+      ],
+      "total_bytes": 97,
+      "span_bytes": 97,
+      "non_contiguous": false,
+      "contains_entry": true
+    },
+    "assembly_lines": 36,
+    "basic_blocks": 6,
+    "callers": [
+      {
+        "name": "main",
+        "address": "0x1011c0"
+      }
+    ],
+    "callees": [
+      {
+        "name": "clamp_armour",
+        "address": "0x101139"
+      }
+    ],
+    "unresolved_calls": [],
+    "relationship_coverage": {
+      "status": "complete",
+      "diagnostics": [
+        "Only resolved Ghidra call references are returned; unresolved computed or indirect calls remain unknown, while function classifications distinguish thunks and externals."
+      ]
+    },
+    "coverage_scope": "selected 97-byte combat_damage body and its references only; not a whole-game graph",
+    "limitations": [
+      "Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+      "Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+      "Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+      "Synthetic Ghidra entry-point references without actionable memory sources are omitted."
+    ],
+    "facet_availability": {
+      "pseudocode": {
+        "available": true
+      },
+      "assembly": {
+        "available": true
+      },
+      "comments": {
+        "available": true
+      },
+      "callers": {
+        "available": true
+      },
+      "callees": {
+        "available": true
+      },
+      "references": {
+        "available": true
+      },
+      "strings_names": {
+        "available": true
+      },
+      "cfg": {
+        "available": true
+      }
+    }
+  },
+  "unknowns": [
+    "Game-native formats and shipped versions are not available for inspection.",
+    "A successful small unoptimized ELF fixture does not validate PE, stripped or optimized game binaries, packing, or anti-cheat environments.",
+    "Pseudocode is provider reconstruction, not original source.",
+    "No dynamic game behavior, network protocol, rendering, animation, or server implementation was recovered.",
+    "Selected function relationship coverage is reported complete by Ghidra; targetless indirect calls remain outside recovered reference edges.",
+    "ELF runtime load base and ordinary relocation inventory completeness remain unknown."
+  ],
+  "raw_evidence_directory": "/workspace/tooling/yuga-native-analysis/evidence/attempt-1",
+  "reproduction": "games/yuga-native/tools/native-analysis/README.md"
+}
