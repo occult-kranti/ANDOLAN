@@ -21,8 +21,8 @@ Controls: WASD or arrow keys to move/drive, Shift to sprint, E to interact, F to
 
 ```sh
 npm run build
-npm start
 npm run build:standalone
+npm start
 ```
 
 The server serves the production client and WebSocket rooms on port 3001. `dist/standalone/index.html` is a self-contained solo game. Dockerfile and Compose configuration are included; see [deployment instructions](docs/DEPLOYMENT.md). No public hosting or embedded ChatGPT game execution is claimed.
