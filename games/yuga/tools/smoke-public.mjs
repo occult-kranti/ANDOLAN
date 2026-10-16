@@ -40,7 +40,7 @@ const evidence = {
   parentUrl: parentUrl.href, manifests: manifests.map(({ name, sha256 }) => ({ name, sha256 })),
   transport: { inheritedProxySelected: !!proxy, tlsVerification: true },
   models: [], pageErrors: [], consoleErrors: [], requestFailures: [], httpErrors: [],
-  scope: 'Production static Pages game and local practice. No public WSS endpoint is configured or claimed.',
+  scope: 'Production static Pages game and local practice, including native Rama match → leave → Arjuna gallery → close → new Arjuna match. Ordinary sequential UI events do not force the separately tested synchronous gallery-disposal race. No public WSS endpoint is configured or claimed.',
 };
 let browser, context, page;
 try {
@@ -81,6 +81,7 @@ try {
   await expect(page.locator('#hud')).toBeVisible();
   await expect(page.locator('#status-line')).toContainText('Practice');
   await expect(page.locator('#global-error')).toBeHidden();
+  await expect(page.locator('#hero-hudname')).toHaveText(/^Rama · (SUN|MOON)$/);
   await expect(page.locator('#ability-0 .ability-time')).toHaveText('READY');
   await page.locator('#arena').focus();
   await page.keyboard.press('KeyQ');
@@ -88,6 +89,40 @@ try {
   evidence.qCooldown = await page.locator('#ability-0 .ability-time').textContent();
   evidence.hero = await page.locator('#hero-hudname').textContent();
   await page.screenshot({ path: path.join(output, 'public-practice.png') });
+  // Reuse the existing arena app after a second gallery is created/destroyed.
+  // Every action is native UI input; no dev hooks or synchronous DOM fixture.
+  phase = 'yuga-gallery-restart';
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#pause-dialog')).toBeVisible();
+  await page.locator('#leave-game').click();
+  await expect(page.locator('#lobby')).toBeVisible();
+  await expect(page.locator('#hud')).toBeHidden();
+  await page.locator('[data-hero="arjuna"]').click();
+  await expect(page.locator('[data-hero="arjuna"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#hero-name')).toHaveText('Arjuna');
+  await page.locator('#inspect-hero').click();
+  await expect(page.locator('#hero-dialog')).toBeVisible();
+  await expect(page.locator('#showcase-name')).toHaveText('Arjuna');
+  await expect(page.locator('#showcase-status')).toContainText('Drag to rotate', { timeout: 90000 });
+  await expect(page.locator('#showcase-actions [data-clip="idle"]')).toBeEnabled();
+  evidence.galleryRestart = { galleryHero: await page.locator('#showcase-name').textContent(), galleryStatus: await page.locator('#showcase-status').textContent(), input: 'Native sequential Settings/Leave, hero selection, gallery open/close, Practice and keyboard Q; no state injection or forced synchronous race.' };
+  await page.screenshot({ path: path.join(output, 'public-arjuna-gallery.png') });
+  await page.locator('#hero-dialog [data-close]').click();
+  await expect(page.locator('#hero-dialog')).toBeHidden();
+  await page.locator('#practice-play').click();
+  await expect(page.locator('#loading')).toBeHidden({ timeout: 150000 });
+  await expect(page.locator('#hud')).toBeVisible();
+  await expect(page.locator('#status-line')).toContainText('Practice');
+  await expect(page.locator('#global-error')).toBeHidden();
+  await expect(page.locator('#hero-hudname')).toHaveText(/^Arjuna · (SUN|MOON)$/);
+  await expect(page.locator('#ability-0 .ability-time')).toHaveText('READY');
+  await page.locator('#arena').focus();
+  await page.keyboard.press('KeyQ');
+  await expect(page.locator('#ability-0 .ability-time')).toHaveText(/^\d+s$/);
+  evidence.galleryRestart.matchHero = await page.locator('#hero-hudname').textContent();
+  evidence.galleryRestart.qCooldown = await page.locator('#ability-0 .ability-time').textContent();
+  evidence.galleryRestart.passed = true;
+  await page.screenshot({ path: path.join(output, 'public-arjuna-practice.png') });
   await Promise.all(responseChecks);
   for (const model of evidence.models) {
     assert.equal(model.status, 200, `GLB HTTP failure: ${model.url}`);
@@ -115,7 +150,7 @@ try {
   assert.deepEqual(evidence.requestFailures, [], 'Public requests failed.');
   assert.deepEqual(evidence.httpErrors, [], 'Public responses returned HTTP errors.');
   evidence.passed = true;
-  console.log('PASS public Pages: twenty-one matching binary GLBs, Rama practice/Q cooldown, no development hook, and original ANDOLAN parent page.');
+  console.log('PASS public Pages: twenty-one matching binary GLBs, native Rama practice/Q and Arjuna gallery-close/practice/Q flow, no development hook, and original ANDOLAN parent page.');
 } catch (error) {
   evidence.error = error instanceof Error ? error.stack : String(error);
   await page?.screenshot({ path: path.join(output, 'failure.png') }).catch(() => {});

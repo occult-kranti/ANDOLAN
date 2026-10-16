@@ -8,13 +8,32 @@ const clips=['idle','run','fire','cast','jump','defeat','cast1','cast2','cast3']
 type Instance={id:string;heroId:string;url:string;loaded:boolean;fallback:boolean;skinned:boolean;skeletons:number[];bones:number;clips:string[];state:string;action:string;transitions:Record<string,number>;animationTime:number;pose:number[]};
 type Assets={assets:{heroId:string;state:string;url:string;animations:string[];skinnedPrimitives:number;triangles:number;materials:number}[];instances:Instance[];fallback:{id:string;heroId:string}[]};
 const assets=(page:Page)=>page.evaluate(()=>(window.__YUGA as unknown as {assets():Assets}).assets());
-const local=async(page:Page)=>{const id=await page.evaluate(()=>window.__YUGA.playerId());return(await assets(page)).instances.find(i=>i.id===id)!;};
+const local=(page:Page)=>page.evaluate(()=>(window.__YUGA as unknown as {assets():Assets}).assets().instances.find(i=>i.id===window.__YUGA.playerId())!);
 async function setup(page:Page){
  if(process.env.CI||process.env.YUGA_SOFTWARE_RENDERING==='1')await page.addInitScript(()=>{
   if(window.__yugaQAFrameCap)return;window.__yugaQAFrameCap=true;const native=requestAnimationFrame.bind(window),queue=new Map<number,FrameRequestCallback>();let next=0,queued=false,dispatching=false,last=performance.now()-100,timer:number|undefined;
   const schedule=()=>{if(!queue.size||queued||dispatching||timer!==undefined)return;timer=window.setTimeout(()=>{timer=undefined;queued=true;native(time=>{queued=false;dispatching=true;for(const id of[...queue.keys()]){const callback=queue.get(id);queue.delete(id);if(callback)try{callback(time);}catch(error){window.setTimeout(()=>{throw error;},0);}}dispatching=false;last=performance.now();schedule();});},Math.max(0,100-performance.now()+last));};window.requestAnimationFrame=callback=>{const id=++next;queue.set(id,callback);schedule();return id;};window.cancelAnimationFrame=id=>{queue.delete(id);};
  });
  await page.goto('/');await page.waitForFunction(()=>!!window.__YUGA);await page.locator('#lobby-settings').click();await page.locator('#quality').selectOption('low');await page.locator('#resume-game').click();
+}
+async function observeStartupFailures(page:Page){
+ await page.evaluate(()=>{
+  const history:unknown[]=[];let previous='';
+  const record=()=>{const element=document.getElementById('global-error');if(!element)return;const value=JSON.stringify({text:element.textContent,hidden:element.hidden});if(value===previous)return;previous=value;history.push({at:performance.now(),kind:'global-error',text:element.textContent,hidden:element.hidden});if(history.length>40)history.shift();};
+  const observer=new MutationObserver(record);observer.observe(document.getElementById('global-error')!,{attributes:true,childList:true,subtree:true,characterData:true});record();
+  const context=(event:Event)=>{history.push({at:performance.now(),kind:event.type,canvas:(event.target as HTMLElement)?.id});if(history.length>40)history.shift();};
+  document.addEventListener('webglcontextlost',context,true);document.addEventListener('webglcontextrestored',context,true);
+  Object.defineProperty(window,'__yugaStartupHistory',{configurable:true,value:()=>history.slice()});
+  Object.defineProperty(window,'__yugaStopStartupHistory',{configurable:true,value:()=>{observer.disconnect();document.removeEventListener('webglcontextlost',context,true);document.removeEventListener('webglcontextrestored',context,true);return history.slice();}});
+ });
+}
+async function startupFailureState(page:Page){
+ return page.evaluate(()=>{
+  const api=window.__YUGA as unknown as{snapshot():ArenaSnapshot|undefined;playerId():string;metrics():unknown;assets():Assets|undefined;showcase():unknown};
+  const snapshot=api.snapshot(),id=api.playerId(),models=api.assets();
+  const ui=Object.fromEntries(['global-error','status-line','loading','loading-copy','lobby','hud'].map(id=>{const e=document.getElementById(id)!;return[id,{hidden:e.hidden,inert:e.inert,text:['global-error','status-line','loading-copy'].includes(id)?e.textContent:undefined}];}));
+  return{at:performance.now(),visibility:document.visibilityState,focus:document.activeElement?.id,dialogs:[...document.querySelectorAll('dialog[open]')].map(e=>e.id),ui,metrics:api.metrics(),playerId:id,snapshot:snapshot?{room:snapshot.room,tick:snapshot.tick,time:snapshot.time,phase:snapshot.phase,self:snapshot.actors.find(a=>a.id===id),actorIds:snapshot.actors.map(a=>a.id)}:null,models:models?{assets:models.assets.map(a=>({heroId:a.heroId,state:a.state,url:a.url,error:(a as typeof a&{error?:string}).error})),instances:models.instances.map(i=>({id:i.id,heroId:i.heroId,loaded:i.loaded,state:i.state,action:i.action})),fallback:models.fallback}:null,history:(window as unknown as{__yugaStartupHistory():unknown[]}).__yugaStartupHistory()};
+ });
 }
 async function frame(page:Page){await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));}
 async function capture(page:Page,info:TestInfo,name:string){await frame(page);await page.screenshot({path:info.outputPath(`${name}.png`)});}
@@ -83,19 +102,51 @@ test('cancel delayed actual match assets with Escape and Back, then restart clea
  }finally{release();}
 });
 
+test('labelled synchronous gallery-close and practice-start UI lifecycle keeps the owning arena app',async({page},info)=>{
+ test.setTimeout(180_000);const errors:string[]=[];page.on('pageerror',error=>errors.push(error.stack||error.message));
+ await page.setViewportSize({width:480,height:400});await setup(page);await observeStartupFailures(page);
+ try{
+  await page.locator('#practice-play').click();await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().ready),{timeout:120_000}).toBe(true);
+  await page.keyboard.press('Escape');await page.locator('#leave-game').click();await expect(page.locator('#lobby')).toBeVisible();
+  await page.locator('[data-hero="arjuna"]').click();await page.locator('#inspect-hero').click();await expect(page.locator('#showcase-status')).toContainText('Drag to rotate',{timeout:60_000});
+  // Deliberately run the real handlers within one task so no arena RAF can
+  // repair ambient engine ownership between gallery disposal and startup.
+  await page.evaluate(()=>{document.querySelector<HTMLButtonElement>('#hero-dialog [data-close]')!.click();document.querySelector<HTMLButtonElement>('#practice-play')!.click();});
+  await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().ready),{timeout:30_000}).toBe(true);
+  await expect.poll(async()=>(await local(page))?.heroId).toBe('arjuna');
+  expect(await page.evaluate(()=>window.__YUGA.snapshot()!.actors.find(a=>a.id===window.__YUGA.playerId())!.heroId)).toBe('arjuna');
+  expect((await local(page)).loaded).toBe(true);expect((await assets(page)).fallback).toEqual([]);expect(errors).toEqual([]);
+ }catch(error){throw new Error(`Synchronous gallery/start lifecycle failed: ${JSON.stringify({state:await startupFailureState(page),errors})}`,{cause:error});}
+ finally{
+  const state=await startupFailureState(page);await page.evaluate(()=>(window as unknown as{__yugaStopStartupHistory():unknown[]}).__yugaStopStartupHistory());
+  await info.attach('synchronous-gallery-start-lifecycle',{body:JSON.stringify({scope:'Labelled synchronous UI lifecycle fixture: ordinary Practice and gallery preparation, then two real DOM button click handlers in one JS task. This fixes event ordering only; no engine/global/authority/clock/position mutation and no native-gameplay timing claim.',state,errors},null,2),contentType:'application/json'});
+ }
+});
+
 test('all fourteen real GLBs spawn and respond to native movement, fire, three casts and jump',async({page},info)=>{
- test.setTimeout(600_000);const errors:string[]=[],failed:string[]=[],requests=new Set<string>();page.on('pageerror',e=>errors.push(e.stack||e.message));page.on('requestfailed',r=>{if(/\.glb(?:\?|$)/.test(r.url()))failed.push(r.url());});page.on('response',r=>{if(/\.glb(?:\?|$)/.test(r.url())){requests.add(r.url());if(!r.ok())failed.push(`${r.status()} ${r.url()}`);}});
+ test.setTimeout(600_000);const errors:string[]=[],consoleErrors:string[]=[],failed:string[]=[],requests=new Set<string>();page.on('pageerror',e=>errors.push(e.stack||e.message));page.on('console',message=>{if(message.type()==='error'&&consoleErrors.length<100)consoleErrors.push(message.text());});page.on('requestfailed',r=>{if(failed.length<100)failed.push(`${new URL(r.url()).pathname}: ${r.failure()?.errorText}`);});page.on('response',r=>{if(/\.glb(?:\?|$)/.test(r.url())){requests.add(r.url());if(!r.ok())failed.push(`${r.status()} ${new URL(r.url()).pathname}`);}});
  // A bounded software-rendering viewport keeps the one-second authoritative
  // windup observable. It does not change its clock or replay an expired cast.
  await page.setViewportSize({width:480,height:400});
- await setup(page);expect(HEROES).toHaveLength(14);await expect(page.locator('[data-hero]')).toHaveCount(14);const evidence:unknown[]=[];
- for(const hero of HEROES){
-  await page.locator(`[data-hero="${hero.id}"]`).click();await page.locator('#inspect-hero').click();await expect(page.locator('#showcase-status')).toContainText('Drag to rotate',{timeout:60_000});await capture(page,info,`hero-${hero.id}-gallery`);await page.locator('#hero-dialog [data-close]').click();await page.locator('#practice-play').click();await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(async()=>(await local(page))?.heroId,{timeout:30_000}).toBe(hero.id);const diagnostic=await assets(page);expect(diagnostic.assets).toHaveLength(14);expect(diagnostic.assets.every(a=>a.state==='ready'&&a.skinnedPrimitives>0&&clips.every(c=>a.animations.includes(c)))).toBe(true);expect(diagnostic.fallback).toEqual([]);const model=await local(page);expect(model).toMatchObject({loaded:true,fallback:false,skinned:true});expect(model.bones).toBeGreaterThan(5);expect(model.skeletons.length).toBeGreaterThan(0);expect(model.url).toContain('.glb');await capture(page,info,`hero-${hero.id}-spawn`);
+ await setup(page);await observeStartupFailures(page);expect(HEROES).toHaveLength(14);await expect(page.locator('[data-hero]')).toHaveCount(14);const evidence:unknown[]=[];
+ try{for(const hero of HEROES){
+  try{
+   await page.locator(`[data-hero="${hero.id}"]`).click();await page.locator('#inspect-hero').click();await expect(page.locator('#showcase-status')).toContainText('Drag to rotate',{timeout:60_000});await capture(page,info,`hero-${hero.id}-gallery`);await page.locator('#hero-dialog [data-close]').click();await page.locator('#practice-play').click();await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(async()=>(await local(page))?.heroId,{timeout:30_000}).toBe(hero.id);
+  }catch(error){
+   const diagnostic={heroId:hero.id,completedHeroes:evidence.length,state:await startupFailureState(page),errors,consoleErrors,failed};
+   await info.attach('native-start-failure',{body:JSON.stringify(diagnostic,null,2),contentType:'application/json'});
+   throw new Error(`Native start failed: ${JSON.stringify(diagnostic)}`,{cause:error});
+  }
+  const diagnostic=await assets(page);expect(diagnostic.assets).toHaveLength(14);expect(diagnostic.assets.every(a=>a.state==='ready'&&a.skinnedPrimitives>0&&clips.every(c=>a.animations.includes(c)))).toBe(true);expect(diagnostic.fallback).toEqual([]);const model=await local(page);expect(model).toMatchObject({loaded:true,fallback:false,skinned:true});expect(model.bones).toBeGreaterThan(5);expect(model.skeletons.length).toBeGreaterThan(0);expect(model.url).toContain('.glb');await capture(page,info,`hero-${hero.id}-spawn`);
   await page.keyboard.down('KeyW');try{await expect.poll(async()=>(await local(page)).state).toBe('run');await expect.poll(async()=>(await local(page)).pose.some((v,i)=>Math.abs(v-(model.pose[i]||0))>.0001)).toBe(true);}finally{await page.keyboard.up('KeyW');}await expect.poll(async()=>(await local(page)).state).toBe('idle');const shot=(await local(page)).transitions.fire||0;await page.keyboard.down('KeyF');try{await expect.poll(async()=>(await local(page)).transitions.fire||0).toBeGreaterThan(shot);}finally{await page.keyboard.up('KeyF');}
   const casts=[];for(const [slot,key]of ['KeyQ','KeyE','KeyR'].entries()){casts.push(await transition(page,key,`cast${slot+1}`));await expect.poll(()=>page.evaluate(()=>!window.__YUGA.snapshot()!.actors.find(a=>a.id===window.__YUGA.playerId())!.cast)).toBe(true);}
   const jumps=(await local(page)).transitions.jump||0;await page.keyboard.down('Space');try{await expect.poll(async()=>(await local(page)).transitions.jump||0).toBeGreaterThan(jumps);}finally{await page.keyboard.up('Space');}await capture(page,info,`hero-${hero.id}-action`);const after=await local(page);for(const state of['idle','run','fire','cast1','cast2','cast3','jump'])expect(after.transitions[state]).toBeGreaterThan(0);evidence.push({heroId:hero.id,before:model,casts,after});await page.keyboard.press('Escape');await page.locator('#leave-game').click();await expect(page.locator('#lobby')).toBeVisible();
  }
- expect(failed).toEqual([]);expect(requests.size).toBeGreaterThanOrEqual(14);expect(errors).toEqual([]);await info.attach('fourteen-native-asset-instances',{body:JSON.stringify({scope:'Native fresh practice for each hero at480x400 with existing maximum10fps software-render scheduling. This is a functional render budget, not a performance fix/certification. All native commands must be accepted and produce actual model transitions; read-only frame/authority-clock samples retain timing. No health/time/position mutation. Larger960x640 earlier passes and later missed1s-cast failure remain separate historical evidence. Samples do not establish every animation frame or visual approval.',requests:[...requests],errors,failed,evidence},null,2),contentType:'application/json'});
+ expect(failed).toEqual([]);expect(requests.size).toBeGreaterThanOrEqual(14);expect(errors).toEqual([]);
+ }finally{
+  const startupHistory=await page.evaluate(()=>(window as unknown as{__yugaStopStartupHistory():unknown[]}).__yugaStopStartupHistory());
+  await info.attach('fourteen-native-asset-instances',{body:JSON.stringify({scope:'Native fresh practice for each hero at480x400 with existing maximum10fps software-render scheduling. This is a functional render budget, not a performance fix/certification. All native commands must be accepted and produce actual model transitions; read-only frame/authority-clock samples retain timing. No health/time/position mutation. Larger960x640 earlier passes and later missed1s-cast failure remain separate historical evidence. Samples do not establish every animation frame or visual approval.',requests:[...requests],errors,consoleErrors,failed,startupHistory,evidence},null,2),contentType:'application/json'});
+ }
 });
 
 test('labelled animation snapshot fixtures exercise defeat, recovery and independent duplicate-hero skins',async({page},info)=>{

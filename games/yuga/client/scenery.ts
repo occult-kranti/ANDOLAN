@@ -87,7 +87,7 @@ export function buildSangamCity(kit: RenderKit, root: pc.Entity) {
     }
   }
   for (const z of [-56, 0, 56]) for (const x of [-40, 0, 40]) {
-    const node = new pc.Entity('lane compass'); root.addChild(node); node.setPosition(x, .03, z);
+    const node = new pc.Entity('lane compass', kit.app); root.addChild(node); node.setPosition(x, .03, z);
     kit.ring(node, M.gold, 3, .08, 0, 32, true);
     for (let a = 0; a < 8; a++) { const rad = a / 8 * Math.PI * 2; const tile = kit.shape(node, 'box', M.ivory, Math.sin(rad) * 2.4, 0, Math.cos(rad) * 2.4, .18, .02, .65, true); tile.setLocalEulerAngles(0, rad * 180 / Math.PI, 0); }
   }
@@ -258,7 +258,7 @@ export function buildSangamCity(kit: RenderKit, root: pc.Entity) {
     }
     b('box', M.clay, 0, 12.5, z, 30, 1.6, 4);
     b('box', M.trim, 0, 13.4, z, 31, .4, 4.4);
-    const base = new pc.Entity('team spawn mandala'); root.addChild(base); base.setPosition(0, .04, sign * 69);
+    const base = new pc.Entity('team spawn mandala', kit.app); root.addChild(base); base.setPosition(0, .04, sign * 69);
     kit.ring(base, sign < 0 ? M.sun : M.moon, 7.5, .25, 0, 64, true);
     kit.ring(base, M.gold, 8, .07, .002, 64, true);
     for (let a = 0; a < 12; a++) { const r = a / 12 * Math.PI * 2; const tile = kit.shape(base, 'box', M.ivory, Math.sin(r) * 6.3, 0, Math.cos(r) * 6.3, .5, .02, 1.5, true); tile.setLocalEulerAngles(0, r * 180 / Math.PI, 0); }
@@ -271,7 +271,7 @@ export function buildSangamCity(kit: RenderKit, root: pc.Entity) {
   });
   const skyMaterial = kit.material('painted sky dome', '#000000'); skyMaterial.useLighting = false; skyMaterial.useFog = false; skyMaterial.useSkybox = false;
   skyMaterial.emissive.set(1, 1, 1); skyMaterial.emissiveMap = skyTexture; skyMaterial.cull = pc.CULLFACE_FRONT; skyMaterial.depthWrite = false; skyMaterial.update();
-  const sky = new pc.Entity('cosmetic sky follows camera'); root.addChild(sky);
+  const sky = new pc.Entity('cosmetic sky follows camera', kit.app); root.addChild(sky);
   const dome = kit.shape(sky, 'sphere', skyMaterial, 0, 0, 0, 780, 780, 780); dome.render!.castShadows = false;
   const starsTexture = kit.texture('original sparse star field', 1024, 512, ctx => {
     ctx.clearRect(0, 0, 1024, 512);

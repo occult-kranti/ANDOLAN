@@ -52,7 +52,7 @@ export class RenderKit {
   }
 
   shape(parent: pc.Entity, type: Shape, m: pc.Material, x: number, y: number, z: number, sx = 1, sy = 1, sz = 1, batch = false) {
-    const e = new pc.Entity(type); parent.addChild(e);
+    const e = new pc.Entity(type, this.app); parent.addChild(e);
     e.addComponent('render', { meshInstances: [new pc.MeshInstance(this.meshes.get(type)!, m)], castShadows: type !== 'plane', receiveShadows: true });
     e.setLocalPosition(x, y, z); e.setLocalScale(sx, sy, sz);
     if (batch) e.render!.batchGroupId = this.staticGroup;
@@ -71,7 +71,7 @@ export class RenderKit {
   }
 
   arc(parent: pc.Entity, m: pc.Material, radius: number, width: number, y: number, start: number, end: number, segments = 32, batch = false) {
-    const group = new pc.Entity('inlaid ring'); parent.addChild(group); group.setLocalPosition(0, y, 0);
+    const group = new pc.Entity('inlaid ring', this.app); parent.addChild(group); group.setLocalPosition(0, y, 0);
     const positions: number[] = [], normals: number[] = [], uvs: number[] = [], indices: number[] = [];
     for (let i = 0; i <= segments; i++) {
       const a = start + i / segments * (end - start);

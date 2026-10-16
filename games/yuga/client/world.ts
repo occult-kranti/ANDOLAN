@@ -52,21 +52,21 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
   app.scene.ambientLight = new pc.Color(.47, .57, .61); app.scene.exposure = 1.05;
   app.scene.fog.type = pc.FOG_LINEAR; app.scene.fog.color = new pc.Color(.72, .75, .69); app.scene.fog.start = 100; app.scene.fog.end = 240;
   const environment = createOriginalEnvironment(app);
-  const kit = new RenderKit(app), root = new pc.Entity('SANGAM CITY / original arena'); app.root.addChild(root);
+  const kit = new RenderKit(app), root = new pc.Entity('SANGAM CITY / original arena', app); app.root.addChild(root);
   const heroModels = new HeroModelLibrary(app);
   const unitModels = new UnitModelLibrary(app);
   const castEffects = new CastEffects(kit, root);
   const scenery = buildSangamCity(kit, root);
   const jungle = new JungleView(kit, root, unitModels);
-  const camera = new pc.Entity('responsive shoulder camera'); app.root.addChild(camera);
+  const camera = new pc.Entity('responsive shoulder camera', app); app.root.addChild(camera);
   camera.addComponent('camera', { fov: 64, nearClip: .12, farClip: 450, clearColor: new pc.Color(.64, .75, .77) });
   // envAtlas also supplies PlayCanvas's automatic skybox. Keep it for PBR lighting,
   // but let our time-tinted dome own the background instead of being painted over.
   camera.camera!.layers = camera.camera!.layers.filter(id => id !== pc.LAYERID_SKYBOX);
-  const sunlight = new pc.Entity('late afternoon sunlight'); app.root.addChild(sunlight);
+  const sunlight = new pc.Entity('late afternoon sunlight', app); app.root.addChild(sunlight);
   sunlight.addComponent('light', { type: 'directional', color: new pc.Color(1, .87, .68), intensity: 1.55, castShadows: true, shadowResolution: 2048, shadowDistance: 85, shadowType: pc.SHADOW_PCF3, normalOffsetBias: .04, shadowBias: .15, numCascades: 2 });
   sunlight.setEulerAngles(48, -36, 0);
-  const fill = new pc.Entity('sky bounce'); app.root.addChild(fill);
+  const fill = new pc.Entity('sky bounce', app); app.root.addChild(fill);
   fill.addComponent('light', { type: 'directional', color: new pc.Color(.53, .77, .9), intensity: .48, castShadows: false }); fill.setEulerAngles(25, 155, 0);
 
   const M = {
@@ -101,7 +101,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
   let cameraDistance = 6;
   const follow = new pc.Vec3(), cameraForward = new pc.Vec3(0, 0, 1), temp = new pc.Vec3(), screen = new pc.Vec3();
 
-  function group(parent: pc.Entity, name: string, x = 0, y = 0, z = 0) { const e = new pc.Entity(name); parent.addChild(e); e.setLocalPosition(x, y, z); return e; }
+  function group(parent: pc.Entity, name: string, x = 0, y = 0, z = 0) { const e = new pc.Entity(name, app); parent.addChild(e); e.setLocalPosition(x, y, z); return e; }
   function teamMaterial(team: 'sun' | 'moon') { return team === 'sun' ? M.sun : M.moon; }
   function orb(parent: pc.Entity, m: pc.Material, x: number, y: number, z: number, sx: number, sy: number, sz: number) { return kit.shape(parent, 'sphere', m, x, y, z, sx, sy, sz); }
   function limb(parent: pc.Entity, name: string, x: number, y: number, m: pc.Material, length: number, thickness: number) {
@@ -340,7 +340,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
       } else if (kind === 'dash' || kind === 'leap') {
         for (let i = -1; i <= 1; i++) { mark(-.13, i * .2, .035, .22, -38); mark(.13, i * .2, .035, .22, 38); }
       } else if (kind === 'summon') {
-        for (const side of [-1, 1]) { const standard = new pc.Entity('summon standard'); v.root.addChild(standard); standard.setLocalPosition(side * .35, 0, 0); kit.ring(standard, edge, .19, .025, .07, 16); }
+        for (const side of [-1, 1]) { const standard = new pc.Entity('summon standard', app); v.root.addChild(standard); standard.setLocalPosition(side * .35, 0, 0); kit.ring(standard, edge, .19, .025, .07, 16); }
       } else if (kind === 'bolt' || kind === 'line') {
         mark(0, 0, .035, .8); mark(-.12, .25, .025, .25, -45); mark(.12, .25, .025, .25, 45);
       }

@@ -12,11 +12,11 @@ export class CastEffects {
 
   private create(actor: Actor, hostile: boolean): CastVisual {
     const cast = actor.cast!, ability = heroById(actor.heroId).abilities[cast.slot];
-    const root = new pc.Entity(`windup ${cast.mechanic}`); this.parent.addChild(root);
+    const root = new pc.Entity(`windup ${cast.mechanic}`, this.kit.app); this.parent.addChild(root);
     const team = this.kit.material('telegraph team', actor.team === 'sun' ? '#ffc36c' : '#6ce4f4', .7);
     const glow = this.kit.material(`cast ${cast.mechanic}`, ability.color, .8);
     const warning = this.kit.material('hostile telegraph', '#ff8b77', .7);
-    const detail = new pc.Entity('cast silhouette'); root.addChild(detail);
+    const detail = new pc.Entity('cast silhouette', this.kit.app); root.addChild(detail);
     const radius = cast.mechanic === 'dawn-volley' ? 1.3 : ability.radius;
     this.kit.ring(root, team, radius, .09, .055, 48);
     const progress = this.kit.ring(root, glow, radius - .16, .065, .065, 48);

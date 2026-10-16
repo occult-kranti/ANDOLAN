@@ -22,7 +22,7 @@ export class JungleView {
   constructor(private readonly kit: RenderKit, private readonly parent: pc.Entity, private readonly models: UnitModelLibrary) {
     for (const camp of JUNGLE_CAMPS) this.camps.set(camp.id, this.buildCamp(camp));
   }
-  private group(name: string, parent = this.parent) { const node = new pc.Entity(name); parent.addChild(node); return node; }
+  private group(name: string, parent = this.parent) { const node = new pc.Entity(name, this.kit.app); parent.addChild(node); return node; }
   private dashedBoundary(parent: pc.Entity, material: pc.Material) {
     const positions: number[] = [], normals: number[] = [], indices: number[] = [];
     for (let dash = 0; dash < 24; dash++) {
