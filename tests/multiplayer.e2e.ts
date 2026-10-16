@@ -6,7 +6,10 @@ import { isBlocked, landmark } from '../packages/sim/src/world';
 
 type Intent = Omit<InputMessage, 'type' | 'seq'>;
 declare global {
-  interface Window { __betaIntent?: { axes: Intent; sequence: number; timer: number } }
+  interface Window {
+    __betaIntent?: { axes: Intent; sequence: number; timer: number };
+    __betaEvents?: { type: string; code?: string; target: string; at: number; hidden: boolean; focused: boolean }[];
+  }
 }
 const rest: Intent = { moveX: 0, moveZ: 0, forward: 0, turn: 0, sprint: false };
 const errors = new WeakMap<Page, string[]>();
@@ -101,13 +104,29 @@ async function walkOpenAvenue(page: Page, target: Vec2, radius = 3.5) {
   const from = await player(page), length = distance(from, target);
   for (let d = 0; d <= length; d += .35) expect(isBlocked(from.x + (target.x - from.x) * d / length, from.z + (target.z - from.z) * d / length, .7)).toBe(false);
   const deadline = Date.now() + 100_000;
-  while (distance(await player(page), target) > radius) {
+  for (;;) {
     if (Date.now() > deadline) throw new Error(`Ordinary walking timed out: ${JSON.stringify(await player(page))}`);
     const p = await player(page), remaining = distance(p, target);
+    if (remaining <= radius) {
+      // Cached proximity alone does not prove the walk has stopped or that the
+      // connection is fresh. Observe this ordinary neutral packet on the server.
+      const stop = await page.evaluate(axes => {
+        const controller = window.__betaIntent!;
+        controller.axes = axes;
+        const seq = ++controller.sequence, tick = window.__ANDOLAN.snapshot().tick;
+        window.__ANDOLAN.connection().input({ type: 'input', seq, ...axes });
+        return { seq, tick };
+      }, rest);
+      await expect.poll(async () => {
+        const snapshot = await state(page), id = await identity(page);
+        return snapshot.tick > stop.tick && snapshot.players.find(person => person.id === id)!.lastInputSeq >= stop.seq;
+      }).toBe(true);
+      if (distance(await player(page), target) <= radius) return;
+      continue;
+    }
     await intent(page, { moveX: (target.x - p.x) / remaining, moveZ: (target.z - p.z) / remaining, sprint: true });
     await page.waitForTimeout(85);
   }
-  await intent(page, rest);
 }
 async function driveRoute(page: Page, vehicleId: string, route: Vec2[]) {
   const deadline = Date.now() + 180_000;
@@ -131,6 +150,12 @@ async function sendAndObserve(page: Page, command: CommandMessage, count = 1) {
   await page.evaluate(message => window.__ANDOLAN.connection().command(message), command);
   await expect.poll(() => results.get(page)!.filter(result => result.commandId === command.id).length).toBeGreaterThanOrEqual(count);
   return results.get(page)!.filter(result => result.commandId === command.id).at(-1)!;
+}
+async function entryEvidence(page: Page) {
+  const snapshot = await state(page), id = await identity(page);
+  const person = snapshot.players.find(item => item.id === id)!;
+  const van = snapshot.vehicles.find(item => item.id === 'van-01')!;
+  return { tick: snapshot.tick, time: snapshot.time, person, van, distance: distance(person, van), browser: await page.evaluate(() => ({ hidden: document.hidden, focused: document.hasFocus(), activeElement: document.activeElement?.id, modal: document.querySelector('dialog[open]')?.id, status: document.querySelector('#status-text')?.textContent, statusDot: (document.querySelector('#status-dot') as HTMLElement)?.style.background, intent: window.__betaIntent?.axes, events: window.__betaEvents })), commands: commands.get(page), results: results.get(page) };
 }
 async function chooseJob(page: Page, jobId: string) {
   await page.locator('#jobs-open').click();
@@ -302,9 +327,16 @@ test('two real clients deliver a bound van job once, resume identity and share l
     expect(await sendAndObserve(guest, remote)).toMatchObject({ ok: false, code: 'TOO_FAR' });
     expect((await state(host)).contracts.progression).toEqual(baseline);
     expect((await state(host)).contracts.active?.stageId).toBe('load');
+    await host.evaluate(() => {
+      window.__betaEvents = [];
+      for (const type of ['keydown', 'keyup', 'close', 'blur']) document.addEventListener(type, event => {
+        window.__betaEvents!.push({ type, code: (event as KeyboardEvent).code, target: (event.target as HTMLElement).id, at: performance.now(), hidden: document.hidden, focused: document.hasFocus() });
+      }, true);
+    });
     await startIntent(host); await startIntent(guest);
     const van = (await state(host)).vehicles.find(vehicle => vehicle.id === 'van-01')!;
     await Promise.all([walkOpenAvenue(host, van), walkOpenAvenue(guest, van)]);
+    await testInfo.attach('van-before-native-entry.json', { body: JSON.stringify(await entryEvidence(host), null, 2), contentType: 'application/json' });
     await host.keyboard.press('KeyF'); await expect.poll(async () => (await player(host)).seat).toBe(0);
     await guest.keyboard.press('KeyF'); await expect.poll(async () => (await player(guest)).seat).toBe(1);
     expect((await player(host)).vehicleId).toBe('van-01'); expect((await player(guest)).vehicleId).toBe('van-01');
@@ -373,6 +405,15 @@ test('two real clients deliver a bound van job once, resume identity and share l
     } finally { await lateContext.close(); }
     await testInfo.attach('multiplayer-beta-real-job.json', { body: JSON.stringify({ scope: 'Real independent browser contexts and WebSockets; physical walking/driving; no state fixtures, teleportation or clock changes.', stages, baseline, finalProgression: reward, outcome, resumedIdentity: true, duplicateAcceptedCommandDidNotRepay: true, remoteCommandRejected: true }, null, 2), contentType: 'application/json' });
     expect(errors.get(host)).toEqual([]);
+  } catch (error) {
+    const summary: Record<string, unknown> = {};
+    for (const [name, page] of [['host', host], ['guest', guest]] as const) {
+      const evidence = await entryEvidence(page).catch(() => null);
+      await testInfo.attach(`van-${name}-failure.json`, { body: JSON.stringify(evidence, null, 2), contentType: 'application/json' });
+      summary[name] = evidence && { tick: evidence.tick, time: evidence.time, seq: evidence.person.lastInputSeq, position: { x: evidence.person.x, z: evidence.person.z }, seat: evidence.person.seat, distance: evidence.distance, browser: evidence.browser, commands: evidence.commands?.slice(-4), results: evidence.results?.slice(-4) };
+    }
+    // GitHub annotations remain readable even if artifact downloads are blocked.
+    throw new Error(`${error instanceof Error ? error.message : String(error)}\nVan diagnostic: ${JSON.stringify(summary)}`, { cause: error });
   } finally { await first.close(); await second.close(); }
 });
 
