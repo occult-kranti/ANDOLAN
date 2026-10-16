@@ -115,6 +115,8 @@ export class Simulation {
     return true;
   }
 
+  clearInput(playerId: string): void { this.inputs.delete(playerId); }
+
   command(playerId: string, command: CommandMessage): ResultMessage {
     const cache = this.commands.get(playerId);
     const previous = cache?.get(command.id);

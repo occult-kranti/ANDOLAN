@@ -70,7 +70,7 @@ A source freeze protected the real physical campaign traversal. Source edits inv
 | Source/choice integrity | Story; `tests/content.test.ts` | Nine of nine passed, including 2,187 decision sequences and five endings. |
 | Independent story/decision review | Narrative reviewer and reference agent; library diagnostics | Accepted within source/diagnostic scope. |
 | Two final UI corrections | Root implementation; independent story reread of `main.ts` | Accepted in source: ending keeps priority and vote action matches location/seat/key. |
-| Final automated source gates | Root; four test files, lint and typecheck | Root reports 42 tests passed, with lint and typecheck passing. Content's nine tests are included, not additional tests. |
+| Final automated source gates | Root; four test files, lint and typecheck | The review closure had 42 passing tests. Post-round timing hardening adds nine regressions for 51 passing tests, with lint and typecheck passing. Content's nine tests are included, not additional tests. |
 | Keyboard, menus, vehicles and save flow | QA; `QA_REPORT.md` | Desktop controls/settings/save smoke passed in 35.5 s; mobile browser layout passed in 6.5 s. These are Linux Chromium checks, not physical-device validation. |
 | Two independent browser clients | QA; `evidence/round6-crew-results.json` | Both targeted tests passed with no unexpected or flaky result: movement/seats/passenger authority/Take the wheel in 19.7 s, and physical walking/voting/recap in 100.2 s. Independent real WebSocket contexts, no state fixtures. |
 | Full selected campaign and ending | QA; `evidence/round6-campaign-evidence.json` and `evidence/round6-campaign-ending.png` | Passed the selected physical route: all 22 stage IDs, seven resolved choices and Open Windows. Story reviewer read the artifact and viewed the rendered ending. This is not replay proof. |
@@ -83,3 +83,7 @@ A source freeze protected the real physical campaign traversal. Source edits inv
 | Deployment reachability | Root release workstream | Root must record actual URL and limits. |
 
 This remains a development preview. Automated completion establishes that the selected route can finish. It does not establish every branch’s emotional quality, human comprehension, mobile hardware performance, internet-scale capacity or completion of the full 22-mission production.
+
+## Post-round release hardening
+
+Clean GitHub verification exposed software-rendering scheduling failures and a solo fixed-timer slowdown. This is release verification, not a seventh requested review round. A test-only graphics budget preserves rendering and ordinary simulation controls. Independently reviewed production clock hardening adds bounded fixed-step catch-up, stale-control expiry and hidden-tab pause/reset; nine timing regressions pass. Exact CI failures and subsequent results are maintained in `QA_REPORT.md`.

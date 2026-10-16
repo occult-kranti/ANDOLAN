@@ -29,23 +29,56 @@ export function connectSolo(name: string, callbacks: Callbacks, fresh = false): 
   callbacks.welcome(id, 'On this device', true);
   callbacks.status('Story · saved on this device', true);
   callbacks.snapshot(sim.snapshot());
-  let frames = 0;
-  const save = () => {
+  const stepMs = 50, maxCatchUpMs = 250, inputTimeoutMs = 350;
+  let previousTime = performance.now(), lastInputTime = -Infinity, lastSaveTime = previousTime;
+  let accumulator = 0, closed = false;
+  const save = (now = performance.now()) => {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(sim.serialize())); }
     catch { callbacks.error('Browser storage is full or disabled. Keep this tab open to preserve progress.'); }
+    lastSaveTime = now;
   };
-  const timer = setInterval(() => {
-    sim.step(0.05); callbacks.snapshot(sim.snapshot());
-    if (++frames % 100 === 0) save();
-  }, 50);
+  const advance = (now = performance.now()) => {
+    if (closed) return;
+    const elapsed = Math.max(0, now - previousTime); previousTime = now;
+    if (document.hidden) { accumulator = 0; sim.clearInput(id); return; }
+    // Discard excessive lag instead of replaying seconds of unattended movement.
+    accumulator += Math.min(elapsed, maxCatchUpMs);
+    if (now - lastInputTime > inputTimeoutMs) sim.clearInput(id);
+    const steps = Math.floor((accumulator + 1e-6) / stepMs);
+    accumulator = Math.max(0, accumulator - steps * stepMs);
+    for (let i = 0; i < steps; i++) sim.step(stepMs / 1000);
+    if (steps) callbacks.snapshot(sim.snapshot());
+    if (now - lastSaveTime >= 5000) save(now);
+  };
+  const clearHeldInput = () => { sim.clearInput(id); lastInputTime = -Infinity; };
+  const visibilityChanged = () => {
+    previousTime = performance.now(); accumulator = 0; clearHeldInput();
+    if (document.hidden) save(previousTime);
+  };
+  document.addEventListener('visibilitychange', visibilityChanged);
+  window.addEventListener('blur', clearHeldInput);
+  const timer = setInterval(advance, stepMs);
   return {
-    input: input => { sim.input(id, input); },
+    input: input => {
+      if (closed) return;
+      const now = performance.now(); advance(now);
+      // Finish elapsed time with the previous intent before accepting new controls.
+      if (!document.hidden && sim.input(id, input)) lastInputTime = now;
+    },
     command: command => {
+      if (closed || document.hidden) return;
+      advance();
       const result = sim.command(id, command);
       if (!result.ok) callbacks.error(friendlyCode(result.code));
       callbacks.snapshot(sim.snapshot()); save();
     },
-    close: () => { clearInterval(timer); sim.disconnectPlayer(id); save(); },
+    close: () => {
+      if (closed) return;
+      closed = true; clearInterval(timer);
+      document.removeEventListener('visibilitychange', visibilityChanged);
+      window.removeEventListener('blur', clearHeldInput);
+      sim.disconnectPlayer(id); save();
+    },
   };
 }
 export function connectOnline(join: JoinMessage, callbacks: Callbacks): Connection {

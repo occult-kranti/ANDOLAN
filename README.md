@@ -17,6 +17,8 @@ Client port 5173; room server port 3001. Use **Story** for solo play saved in th
 
 Controls: WASD or arrow keys to move/drive, Shift to sprint, E to interact, F to enter/exit a vehicle, drag to look, J for evidence, Escape for settings. Gamepad and touch controls are implemented. Settings include graphics, camera comfort, subtitles, larger dialog text, driving assistance and key rebinding.
 
+Solo play pauses while its tab is hidden. Its fixed-step clock catches up with short delays, clears stale controls and limits long-stall recovery.
+
 ## Build and deploy
 
 ```sh

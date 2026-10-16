@@ -16,6 +16,7 @@ declare global {
   interface Window {
     __ANDOLAN: DevHooks;
     __qaIntent?: { axes: Intent; sequence: number; timer: number };
+    __qaFrameSchedulerInstalled?: boolean;
   }
 }
 const rest: Intent = { moveX: 0, moveZ: 0, forward: 0, turn: 0, sprint: false };
@@ -24,6 +25,51 @@ const errors = new WeakMap<Page, string[]>();
 async function load(page: Page) {
   const collected: string[] = []; errors.set(page, collected);
   page.on('pageerror', error => collected.push(error.message));
+  if (process.env.CI || process.env.ANDOLAN_SOFTWARE_RENDERING === '1') {
+    await page.addInitScript(() => {
+      if (window.__qaFrameSchedulerInstalled) return;
+      window.__qaFrameSchedulerInstalled = true;
+      const nativeRequest = window.requestAnimationFrame.bind(window);
+      const queued = new Map<number, FrameRequestCallback>();
+      let nextHandle = 1;
+      let timer: number | undefined;
+      let nativeQueued = false;
+      let dispatching = false;
+      let finishedAt = performance.now() - 100;
+      const schedule = () => {
+        if (!queued.size || timer !== undefined || nativeQueued || dispatching) return;
+        // Leave a 100 ms graphics cooldown even when one software frame is slow.
+        // Input, networking and the original simulation timers remain untouched.
+        timer = window.setTimeout(() => {
+          timer = undefined;
+          nativeQueued = true;
+          nativeRequest(timestamp => {
+            nativeQueued = false;
+            dispatching = true;
+            const batch = [...queued.keys()];
+            for (const handle of batch) {
+              const callback = queued.get(handle);
+              queued.delete(handle);
+              if (callback) {
+                try { callback(timestamp); }
+                catch (error) { window.setTimeout(() => { throw error; }, 0); }
+              }
+            }
+            dispatching = false;
+            finishedAt = performance.now();
+            schedule();
+          });
+        }, Math.max(0, 100 - (performance.now() - finishedAt)));
+      };
+      window.requestAnimationFrame = callback => {
+        const handle = nextHandle++;
+        queued.set(handle, callback);
+        schedule();
+        return handle;
+      };
+      window.cancelAnimationFrame = handle => { queued.delete(handle); };
+    });
+  }
   await page.addInitScript(() => { if (!localStorage.getItem('andolan.settings')) localStorage.setItem('andolan.settings', JSON.stringify({ quality: 'low' })); });
   await page.goto('/');
   await page.waitForFunction(() => !!window.__ANDOLAN, undefined, { timeout: 90_000 });
