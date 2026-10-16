@@ -1,10 +1,14 @@
 # YUGA Lane Lab
 
-This separate track develops an **original lane-economy experiment** for YUGA. Its focused playable edition exposes `lane-economy` only. `control-point` remains a separate hybrid comparison in the shared/combined lab, retaining the same lanes, towers and camps. The reference is Deadlock as a research topic. The executable foundation is YUGA's existing TypeScript simulation, Sangam City world, fourteen heroes/42 abilities and 21 GLBs. Commercial source, assets, reference match recordings and verified current-patch rules are absent.
+This branch contains an original offline `lane-economy` experiment using YUGA's fourteen heroes, 42 abilities, 21 models and Sangam City arena. Deadlock is a comparative research topic; no commercial source, assets or verified full-game replica is included.
 
-Track ID: `lane`. Branch: `reference/deadlock-mechanics`. The requested separate repository could not be created: root observed GitHub `POST /user/repos` return HTTP 403, so delivery uses the branch fallback. The focused public URL is planned as `https://occult-kranti.github.io/ANDOLAN/yuga/lane-lab/`; it is **not deployed yet**. Root owns foundation integration, build, site and CI. This track adds only documentation/configuration and has not committed, pushed or merged these files.
+Shared foundation `b8ecd2a058b8b7e0927b841867521c50f4e74162` is merged into `reference/deadlock-mechanics`. The 21 shared lab unit tests passed locally. Focused build/browser checks run in [GitHub Actions](https://github.com/occult-kranti/ANDOLAN/actions/workflows/yuga-reference-tracks.yml); inspect that branch's current result. The complete native journey and central public deployment remain separate gates.
 
-[track.json](track.json) supplies `id` to `vite.yuga-lab.config.ts` at build time, with `YUGA_LAB_TRACK` as an optional override. Vite defines `import.meta.env.VITE_YUGA_LAB_TRACK`; the frontend filters the mode selector to the lane experiment when it is `lane`. Other JSON fields document scope and acceptance; Vite does not independently enforce those feature gates. The focused build and its browser behavior await root evidence. Enabled gates are not test, release or publication certifications.
+GitHub rejected `POST /user/repos` with HTTP403, so this uses the requested branch fallback. Planned public entry: https://occult-kranti.github.io/ANDOLAN/yuga/lane-lab/ . It is not a publication claim until central deployment and public smoke pass.
+
+Run `npm ci`, then `npm run yuga:lab:dev` or `npm run yuga:lab:build`. Vite consumes this [track.json](track.json) `id` and filters the mode selector through `VITE_YUGA_LAB_TRACK`; `YUGA_LAB_TRACK` optionally overrides it. Other metadata records scope, not executable enforcement. Deployments come from the central branch so these tracks cannot overwrite one another's Pages site.
+
+The review below was initially written before the foundation merge; its source-reading boundaries and later-scope gates remain applicable. Integration state above supersedes those historical pending-integration notes.
 
 ## Evidence and actual reading
 
