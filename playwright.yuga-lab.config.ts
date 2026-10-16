@@ -18,6 +18,8 @@ export default defineConfig({
       args: ['--no-sandbox', '--enable-unsafe-swiftshader', '--use-angle=swiftshader'] },
   },
   webServer: {
+    // Exercise the shared combined client; focused builds have a separate production smoke.
+    env: { YUGA_LAB_TRACK: 'all' },
     command: 'npm run yuga:lab:dev', url: 'http://127.0.0.1:5181',
     reuseExistingServer: !process.env.CI, timeout: 120_000,
   },

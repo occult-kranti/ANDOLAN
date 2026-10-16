@@ -6,7 +6,7 @@ Shared foundation `b8ecd2a058b8b7e0927b841867521c50f4e74162` is merged into `ref
 
 GitHub rejected `POST /user/repos` with HTTP403, so this uses the requested branch fallback. Planned public entry: https://occult-kranti.github.io/ANDOLAN/yuga/lane-lab/ . It is not a publication claim until central deployment and public smoke pass.
 
-Run `npm ci`, then `npm run yuga:lab:dev` or `npm run yuga:lab:build`. Vite consumes this [track.json](track.json) `id` and filters the mode selector through `VITE_YUGA_LAB_TRACK`; `YUGA_LAB_TRACK` optionally overrides it. Other metadata records scope, not executable enforcement. Deployments come from the central branch so these tracks cannot overwrite one another's Pages site.
+Run `npm ci`, then `npm run yuga:lab:dev` or `npm run yuga:lab:build`. Vite consumes this [track.json](track.json) `id` and filters the mode selector through `VITE_YUGA_LAB_TRACK`; `YUGA_LAB_TRACK` optionally overrides it. Other metadata records scope, not executable enforcement. `yuga:lab:e2e` explicitly exercises the shared combined client; the branch workflow separately checks this focused production build. Deployments come from the central branch so these tracks cannot overwrite one another's Pages site.
 
 The review below was initially written before the foundation merge; its source-reading boundaries and later-scope gates remain applicable. Integration state above supersedes those historical pending-integration notes.
 
