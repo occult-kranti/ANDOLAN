@@ -47,7 +47,7 @@ test('labelled seven-unit snapshots render real skins through idle, run, fire an
  }finally{moving=undefined;if(timer)clearInterval(timer);}
 });
 
-test('labelled action-age and resume snapshots preserve recent casts without replaying old history',async({page},info)=>{
+test('labelled action-age and resume snapshots preserve ordinary casts without replaying history or timed receipts',async({page},info)=>{
  test.setTimeout(180_000);let snapshot:ArenaSnapshot|undefined,send:(()=>void)|undefined,timer:ReturnType<typeof setInterval>|undefined;const events:GameEvent[]=[];
  await page.routeWebSocket('**/ws',socket=>socket.onMessage(raw=>{
   const message=JSON.parse(String(raw));if(message.type!=='join')return;
@@ -60,8 +60,17 @@ test('labelled action-age and resume snapshots preserve recent casts without rep
   const actor=snapshot!.actors[0]!,ability=(slot:number,id:number,age:number):GameEvent=>({id,type:'ability',actorId:actor.id,team:actor.team,label:HEROES.find(hero=>hero.id==='rama')!.abilities[slot]!.name,color:'#fff',time:snapshot!.time-age,x:actor.x,z:actor.z});
   const initial=await rig();events.push(ability(0,1,.9));send!();await expect.poll(async()=>(await rig()).transitions.cast1||0).toBeGreaterThan(initial.transitions.cast1||0);const recent=await rig();
   const beforeOld=recent.transitions.cast2||0;events.push(ability(1,2,2.1));send!();await rendered(page);expect((await rig()).transitions.cast2||0).toBe(beforeOld);
-  await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();events.push(ability(2,3,0));send!();await page.locator('#resume-game').click();await rendered(page);expect((await rig()).transitions.cast3||0).toBe(initial.transitions.cast3||0);
-  events.push(ability(2,4,0));send!();await expect.poll(async()=>(await rig()).transitions.cast3||0).toBeGreaterThan(initial.transitions.cast3||0);
-  expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);await info.attach('labelled-action-age-fixture',{body:JSON.stringify({scope:'Mocked authority snapshots and controlled event ages .9s/2.1s; native menu open/resume. Validates renderer freshness and history-baseline rules only, not native combat success or network latency.',initial,recent,final:await rig(),errors:diagnostics},null,2),contentType:'application/json'});
+  // Ordinary E is event-driven; a timed R receipt cannot substitute for cast state.
+  await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();events.push(ability(1,3,0));send!();
+  await expect.poll(()=>page.evaluate(()=>window.__YUGA.snapshot()!.events.some(event=>event.id===3))).toBe(true);
+  await page.locator('#resume-game').click();await rendered(page);expect((await rig()).transitions.cast2||0).toBe(beforeOld);
+  events.push(ability(1,4,0));send!();await expect.poll(async()=>(await rig()).transitions.cast2||0).toBeGreaterThan(beforeOld);const ordinaryFresh=await rig();
+  const publishAndRender=async()=>{send!();const tick=snapshot!.tick;await expect.poll(()=>page.evaluate(()=>window.__YUGA.snapshot()!.tick)).toBeGreaterThanOrEqual(tick);await rendered(page);};
+  events.push(ability(2,5,0));await publishAndRender();const loneTimedReceipt=await rig();expect(loneTimedReceipt.transitions.cast3||0).toBe(initial.transitions.cast3||0);expect(loneTimedReceipt.action).not.toBe('cast3');
+  actor.cast={slot:2,mechanic:'dawn-volley',phase:'windup',startedAt:snapshot!.time,releaseAt:snapshot!.time+1,endsAt:snapshot!.time+1,origin:{x:actor.x,z:actor.z},target:{x:actor.x,z:actor.z+28},yaw:0,pitch:.02};
+  await publishAndRender();await expect.poll(async()=>(await rig()).state).toBe('cast3');const authoritativeCast=await rig();expect(authoritativeCast.transitions.cast3||0).toBeGreaterThan(initial.transitions.cast3||0);expect(authoritativeCast.action).toBe('');
+  delete actor.cast;await publishAndRender();await expect.poll(async()=>(await rig()).state).toBe('idle');
+  events.push(ability(2,6,0));await publishAndRender();const afterLateTimedReceipt=await rig();expect(afterLateTimedReceipt.transitions.cast3).toBe(authoritativeCast.transitions.cast3);expect(afterLateTimedReceipt.action).not.toBe('cast3');
+  expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);await info.attach('labelled-action-age-fixture',{body:JSON.stringify({scope:'Mocked authority snapshots and controlled event ages .9s/2.1s; native menu open/resume. Ordinary Q/E remain event-driven, menu history is not replayed, isolated fresh/late timed-R receipts cannot animate, and explicit actor.cast state enters the full-body pose. All cast state/receipt timing is a labelled presentation fixture, not native combat success or network latency.',initial,recent,ordinaryFresh,loneTimedReceipt,authoritativeCast,afterLateTimedReceipt,errors:diagnostics},null,2),contentType:'application/json'});
  }finally{if(timer)clearInterval(timer);}
 });
