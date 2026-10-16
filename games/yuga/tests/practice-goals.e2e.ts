@@ -37,8 +37,8 @@ test('mobile hero guides and optional practice focus fit portrait and landscape'
  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:1}),page=await context.newPage();
  try{
   const diagnostics=await boot(page);await page.locator('#hero-guide-summary').tap();
-  for(const hero of HEROES){await page.locator(`[data-hero="${hero.id}"]`).tap();await expect(page.locator('#hero-first-action')).toHaveText(HERO_GUIDES[hero.id as keyof typeof HERO_GUIDES].firstAction);for(const note of HERO_GUIDES[hero.id as keyof typeof HERO_GUIDES].abilityNotes)await expect(page.locator('#hero-guide-copy')).toContainText(note);for(const label of ['Power','Vitality','Tempo'])await expect(page.locator('#hero-guide-copy')).toContainText(label);}
-  await page.locator('[data-hero="rama"]').tap();await imageEvidence(page,info,'mobile-hero-guide');await page.locator('#practice-focus').selectOption('ability');await start(page);
+  for(const hero of HEROES){await page.locator(`[data-hero="${hero.id}"]`).tap();await expect(page.locator('#hero-first-action')).toHaveText(HERO_GUIDES[hero.id as keyof typeof HERO_GUIDES].firstAction);for(const note of HERO_GUIDES[hero.id as keyof typeof HERO_GUIDES].abilityNotes)await expect(page.locator('#hero-guide-copy')).toContainText(note);}
+  await page.locator('[data-hero="rama"]').tap();await imageEvidence(page,info,'mobile-hero-guide');await page.locator('#practice-focus').selectOption('ability');await start(page);await page.locator('#upgrades-open').tap();for(const label of ['Power','Vitality','Tempo'])await expect(page.locator('#hero-upgrade-note')).toContainText(label);await page.locator('#upgrades-dialog [data-close]').tap();
   const bounds=[];
   for(const viewport of[{width:390,height:844},{width:844,height:390}]){
    await page.setViewportSize(viewport);await rendered(page);await expect(page.locator('#practice-goal')).toBeVisible();

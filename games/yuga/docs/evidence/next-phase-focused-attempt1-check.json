@@ -1,0 +1,76 @@
+{
+  "scope": "Nine-case local SwiftShader functional batch; maximum10fps test render scheduling except timing5fps. No hardware performance claim. Original failed attempts preserved.",
+  "results": [
+    {
+      "title": "native practice movement, combat, three skills, upgrade and pause controls",
+      "status": "passed",
+      "durationMs": 33674,
+      "errors": []
+    },
+    {
+      "title": "two actual browser clients share movement, upgrades and reconnect identity",
+      "status": "failed",
+      "durationMs": 89069,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  102 |  test.setTimeout(180_000);const a=await browser.newContext({viewport:{width:640,height:480}}),b=await browser.newContext({viewport:{width:640,height:480}});const host=await a.newPage(),guest=await b.newPage();try{\n  103 |  await load(host);await low(host);await join(host,'Sun QA');const code=(await snapshot(host)).room;await load(guest);await low(guest);await pageHero(guest,'arjuna');await join(guest,'Moon QA',code);const hostBefore=await me(host),guestBefore=await me(guest);expect(hostBefore.id).not.toBe(guestBefore.id);expect(hostBefore.team).not.toBe(guestBefore.team);await expect.poll(async()=>(await snapshot(host)).actors.filter(a=>a.kind==='hero'&&!a.bot).length).toBe(2);expect((await snapshot(host)).actors.filter(a=>a.kind==='hero')).toHaveLength(6);\n> 104 |  await activate(host);await host.keyboard.press('KeyB');await host.locator('#buy-power').click();await expect.poll(async()=>(await me(host)).upgrades.power).toBe(1);await host.locator('#upgrades-dialog [data-close]').click();await hold(host,'KeyA',actor=>length(actor,hostBefore)>3);await expect.poll(async()=>length((await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!,await me(host))).toBeLessThan(.6);\n      |                                                                                                                                                              ^\n  105 |  await activate(guest);const peerEventWatermark=Math.max(0,...receivedEvents.get(host)!.keys()),priorGuestCommands=commands.get(guest)!.length;await guest.keyboard.press('KeyQ');await expect.poll(()=>commands.get(guest)!.length).toBeGreaterThan(priorGuestCommands);const castCommand=commands.get(guest)!.at(-1)!;await expect.poll(()=>results.get(guest)!.find(result=>result.id===castCommand.id)?.code).toBe('ABILITY_CAST');await expect.poll(()=>[...receivedEvents.get(host)!.values()].some(e=>e.id>peerEventWatermark&&e.type==='ability'&&e.actorId===guestBefore.id)).toBe(true);await activate(host);await host.keyboard.press('Escape');const pausedPosition=await me(host),clock=(await snapshot(host)).time;await host.keyboard.press('KeyW');await expect.poll(async()=>(await snapshot(host)).time).toBeGreaterThan(clock+.8);expect(length(pausedPosition,await me(host))).toBeLessThan(.05);await host.locator('#resume-game').click();\n  106 |  await host.keyboard.press('KeyQ');await expect.poll(async()=>(await me(host)).cooldowns[0]!).toBeGreaterThan(0);await host.keyboard.press('Escape');await host.locator('#leave-game').click();await join(host,'Sun QA',code);await activate(host);await host.keyboard.press('KeyE');await expect.poll(async()=>(await me(host)).cooldowns[1]!).toBeGreaterThan(0);expect((await me(host)).id).toBe(hostBefore.id);\n  107 |  const beforeReconnect=await me(host);await host.goto('/');await expect.poll(async()=>(await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!.bot).toBe(true);await host.waitForFunction(()=>!!window.__YUGA);await join(host,'Sun QA',code);const afterReconnect=await me(host);expect(afterReconnect.id).toBe(hostBefore.id);expect(afterReconnect.heroId).toBe(beforeReconnect.heroId);expect(afterReconnect.team).toBe(beforeReconnect.team);expect(afterReconnect.upgrades).toEqual(beforeReconnect.upgrades);expect((await snapshot(host)).actors.filter(a=>a.id===hostBefore.id)).toHaveLength(1);await expect.poll(async()=>(await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!.bot).toBe(false);\n    at /workspace/ANDOLAN/games/yuga/tests/arena.e2e.ts:104:158"
+      ]
+    },
+    {
+      "title": "native two-player Dawn Volley received windup and lateral movement evades it",
+      "status": "passed",
+      "durationMs": 48929,
+      "errors": []
+    },
+    {
+      "title": "native fixed day and night lighting persists and renders the same arena position",
+      "status": "passed",
+      "durationMs": 32434,
+      "errors": []
+    },
+    {
+      "title": "native keyboard aim keeps its input-clock rate with a five-FPS renderer and clears across pause",
+      "status": "failed",
+      "durationMs": 9743,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m1.25\u001b[39m\nReceived:   \u001b[31m0.9382833015762772\u001b[39m\n\n  66 |     const seconds = (up.at - down.at) / 1000, turnRate = (up.yaw - down.yaw) / seconds;\n  67 |     const changesBetweenFrames = observed.samples.filter((sample, index) => index > 0 && sample.frames === observed.samples[index - 1]!.frames && Math.abs(sample.yaw - observed.samples[index - 1]!.yaw) > .01).length;\n> 68 |     expect(seconds).toBeGreaterThan(1.5); expect(turnRate).toBeGreaterThan(1.25); expect(turnRate).toBeLessThan(1.85);\n     |                                                            ^\n  69 |     expect((up.frames - down.frames) / seconds).toBeLessThanOrEqual(5.5);\n  70 |     expect(changesBetweenFrames, 'Aim must advance between renderer frames').toBeGreaterThan(2);\n  71 |     const released = await readAim(page); await page.waitForTimeout(350); expect((await readAim(page)).yaw).toBeCloseTo(released.yaw, 6);\n    at /workspace/ANDOLAN/games/yuga/tests/input-timing.e2e.ts:68:60"
+      ]
+    },
+    {
+      "title": "native camp approach, leash, clear, gold shard, temporary power and respawn",
+      "status": "failed",
+      "durationMs": 62036,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"neutral-stone-grove\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  30 |   await nativeWalk(page,'KeyA',actor=>actor.x>-3);await expect.poll(()=>states.some(state=>state.state==='returning')).toBe(true);await expect.poll(async()=>(await neutral()).state).toBe('idle');expect((await neutral()).health).toBe((await neutral()).maxHealth);\n  31 |   await nativeWalk(page,'KeyD',actor=>actor.x<-14);await expect.poll(async()=>(await neutral()).state).toBe('aggro');\n> 32 |   const before=await localActor(page);await keyboardYaw(page,(state,actor)=>{const target=state.neutrals.find(n=>n.id===campId)!;return Math.atan2(target.x-actor.x,target.z-actor.z);});await page.keyboard.press('KeyT');await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(campId);\n     |                                                                                                                                                                                                                                                                                                       ^\n  33 |   await page.keyboard.down('KeyF');\n  34 |   try{\n  35 |    await expect.poll(async()=>(await neutral()).state,{timeout:25_000,intervals:[50,100]}).toBe('dead');\n    at /workspace/ANDOLAN/games/yuga/tests/jungle.e2e.ts:32:295"
+      ]
+    },
+    {
+      "title": "native optional practice goals preserve pause, complete actions, dismiss and exclude online",
+      "status": "passed",
+      "durationMs": 20160,
+      "errors": []
+    },
+    {
+      "title": "labelled eight-second practice module fixture resets goal progress on Play again",
+      "status": "passed",
+      "durationMs": 18562,
+      "errors": []
+    },
+    {
+      "title": "mobile hero guides and optional practice focus fit portrait and landscape",
+      "status": "failed",
+      "durationMs": 18002,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#hero-guide-copy')\nExpected substring: \u001b[32m\"Power\"\u001b[39m\nReceived string:    \u001b[31m\"Keep space to turn and use Measured Step toward an escape route. Prepare Dawn Volley only when you can commit to its locked angle.Steady Arrow: one aimed, cover-blocked projectile.Measured Step: a forward reposition of up to 10 metres.Dawn Volley: brace for 1 second, then fire three separate arrows.Facing Rama Move sideways or behind cover during the volley preparation. Pressure him after his reposition is spent.Every basic weapon fires an aimed projectile, including maces, staffs and spears. Aim and cover still matter. Support effects also need a clear line of sight.Something to try: Land one aimed shot before trying a longer volley.\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('#hero-guide-copy') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#hero-guide-copy')\u001b[22m\n\u001b[2m    34 \u00d7 locator resolved to <div id=\"hero-guide-copy\">\u2026</div>\u001b[22m\n\u001b[2m       - unexpected value \"Keep space to turn and use Measured Step toward an escape route. Prepare Dawn Volley only when you can commit to its locked angle.Steady Arrow: one aimed, cover-blocked projectile.Measured Step: a forward reposition of up to 10 metres.Dawn Volley: brace for 1 second, then fire three separate arrows.Facing Rama Move sideways or behind cover during the volley preparation. Pressure him after his reposition is spent.Every basic weapon fires an aimed projectile, including maces, staffs and spears. Aim and cover still matter. Support effects also need a clear line of sight.Something to try: Land one aimed shot before trying a longer volley.\"\u001b[22m\n\n\n  38 |  try{\n  39 |   const diagnostics=await boot(page);await page.locator('#hero-guide-summary').tap();\n> 40 |   for(const hero of HEROES){await page.locator(`[data-hero=\"${hero.id}\"]`).tap();await expect(page.locator('#hero-first-action')).toHaveText(HERO_GUIDES[hero.id as keyof typeof HERO_GUIDES].firstAction);for(const note of HERO_GUIDES[hero.id as keyof typeof HERO_GUIDES].abilityNotes)await expect(page.locator('#hero-guide-copy')).toContainText(note);for(const label of ['Power','Vitality','Tempo'])await expect(page.locator('#hero-guide-copy')).toContainText(label);}\n     |                                                                                                                                                                                                                                                                                                                                                                                                                                                              ^\n  41 |   await page.locator('[data-hero=\"rama\"]').tap();await imageEvidence(page,info,'mobile-hero-guide');await page.locator('#practice-focus').selectOption('ability');await start(page);\n  42 |   const bounds=[];\n  43 |   for(const viewport of[{width:390,height:844},{width:844,height:390}]){\n    at /workspace/ANDOLAN/games/yuga/tests/practice-goals.e2e.ts:40:446"
+      ]
+    }
+  ],
+  "sourceHashes": {
+    "games/yuga/client/main.ts": "9cf6d476110a901ff3a97da2d38e6550a456da255688d499379fa799783f8f26",
+    "games/yuga/tests/arena.e2e.ts": "95c686288cd1c2b9e46471772f83613bfb2bebcbbccfd3ed8605f2bbb479776c",
+    "games/yuga/tests/jungle.e2e.ts": "107172e64c3c26539926ebac61fbf738dcd662cddd931c48736d179d3a1f6931"
+  },
+  "limits": [
+    "World night shader is subsequently repaired; old night images are failed visual evidence.",
+    "Five-FPS timing began at frame0 and exposed bounded cold-start stalls; it is not evidence of sustained renderer/input coupling."
+  ]
+}

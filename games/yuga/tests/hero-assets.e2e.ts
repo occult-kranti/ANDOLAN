@@ -37,6 +37,8 @@ test('gallery rapid selection and close survives delayed real GLB loads',async({
 test('cancel delayed actual match assets with Escape and Back, then restart cleanly',async({page},info)=>{
  test.setTimeout(180_000);const errors:string[]=[],consoleErrors:string[]=[];
  page.on('pageerror',error=>errors.push(error.stack||error.message));page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text());});
+ type ColdSample={at:number;time:number;ready:boolean;loading:boolean;renderReady:boolean;warmFrames:number;hudInert:boolean};
+ let coldSamples:ColdSample[]=[];
  let release!:()=>void;const gate=new Promise<void>(resolve=>release=resolve);let delayed=0;
  await page.route(/\/heroes\/[^/?]+\.glb(?:\?.*)?$/,async route=>{
   if(route.request().resourceType()==='script'){await route.continue();return;}
@@ -48,9 +50,19 @@ test('cancel delayed actual match assets with Escape and Back, then restart clea
   await page.locator('#practice-play').click();await expect(page.locator('#loading-back')).toBeFocused();await page.locator('#loading-back').click();await expect(page.locator('#lobby')).toBeVisible();
   release();await expect.poll(async()=>(await assets(page)).assets.filter(asset=>asset.state==='ready').length,{timeout:120_000}).toBe(14);await frame(page);
   expect(await page.evaluate(()=>window.__YUGA.snapshot())).toBeUndefined();await expect(page.locator('#hud')).toBeHidden();await expect(page.locator('#loading')).toBeHidden();await expect(page.locator('#lobby')).toBeVisible();
+  await page.evaluate(()=>{
+   const samples:ColdSample[]=[];const timer=window.setInterval(()=>{const state=window.__YUGA.snapshot();if(!state||samples.length>=300)return;const m=(window.__YUGA as unknown as{metrics():{ready:boolean;loading:boolean;renderReady:boolean;warmFrames:number}}).metrics();samples.push({at:performance.now(),time:state.time,...m,hudInert:document.getElementById('hud')!.inert});},10);
+   Object.defineProperty(window,'__yugaColdObservation',{value:()=>{clearInterval(timer);return samples;}});
+  });
   await page.locator('#practice-play').click();await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(()=>page.evaluate(()=>window.__YUGA.snapshot()?.room)).toBe('PRACTICE');expect((await assets(page)).fallback).toEqual([]);
+  coldSamples=await page.evaluate(()=>(window as unknown as{__yugaColdObservation():ColdSample[]}).__yugaColdObservation());
+  const preparing=coldSamples.filter(sample=>sample.loading&&!sample.renderReady);
+  expect(preparing.length,'Observe the actual scene before its two required renders').toBeGreaterThan(0);
+  for(const sample of preparing){expect(sample.time).toBe(0);expect(sample.ready).toBe(false);expect(sample.hudInert).toBe(true);expect(sample.warmFrames).toBeLessThan(2);}
+  const finalMetrics=await page.evaluate(()=>(window.__YUGA as unknown as{metrics():{ready:boolean;loading:boolean;renderReady:boolean;warmFrames:number}}).metrics());expect(finalMetrics).toMatchObject({ready:true,loading:false,renderReady:true,warmFrames:2});
+  await page.keyboard.press('KeyQ');await expect.poll(()=>page.evaluate(()=>window.__YUGA.snapshot()!.actors.find(actor=>actor.id===window.__YUGA.playerId())!.cooldowns[0])).toBeGreaterThan(0);
   await capture(page,info,'cancelled-load-restart');expect(errors).toEqual([]);expect(consoleErrors).toEqual([]);
-  await info.attach('delayed-match-load-cancellation',{body:JSON.stringify({scope:'A real binary GLB request was delayed. Native Escape and Back cancel two loading attempts; releasing the asset may populate cache but must not start either canceled match. A third native start enters ordinary practice.',delayed,errors,consoleErrors},null,2),contentType:'application/json'});
+  await info.attach('delayed-match-load-cancellation',{body:JSON.stringify({scope:'A real binary GLB request was delayed. Native Escape and Back cancel two loading attempts; releasing the asset may populate cache but must not start either canceled match. A third native start enters ordinary practice. Read-only polling proves its first scene remains paused at time0 with controls inert until two actual postrenders; native Q then works. No simulation/input/clock mutation.',delayed,coldSamples,errors,consoleErrors},null,2),contentType:'application/json'});
  }finally{release();}
 });
 

@@ -54,7 +54,7 @@ async function filesUnder(directory) {
 }
 const manifest = {
   schema: 1, startedAt: new Date().toISOString(), finishedAt: null, passed: false,
-  scope: 'Actual PlayCanvas/GLB screen captures. Gallery is clip playback. Arena ability fixtures use staged positions/health and real simulation commands. Unit fixtures stage snapshots/events. No human match, earned kill, network capacity, sound recording or 4D claim.',
+  scope: 'Actual PlayCanvas/GLB screen captures. Gallery is clip playback. Arena ability fixtures use staged positions/health and real simulation commands. Unit fixtures stage snapshots/events. Coastal views stage the player position and use ordinary keyboard aim/settings. No human match, earned kill, network capacity, sound recording or 4D claim.',
   audio: 'Silent: CDP captures rendered frames only. No soundtrack or commercial recording.',
   timing: 'Each JPEG is an actual Chromium screencast frame. Native timestamp differences request variable-frame durations; the image/encoder timebase can quantize them, so ffprobe durations and timing differences are recorded. No generated/interpolated motion. Capture overhead and repeated/held frames are not a game performance benchmark.',
   simulation: 'Imported directly from shared/simulation.ts through the installed tsx loader; Vite serves the same source. No compiled server fixture dependency.',
@@ -72,7 +72,7 @@ for (const name of ['hero-assets.json', 'unit-assets.json']) {
   manifest.assets.push({ manifest: name, sha256: hash(bytes), models: data.models.map(({ id, sha256 }) => ({ id, sha256 })) });
 }
 if (args.includes('--plan') && !args.includes('--capture')) {
-  console.log(JSON.stringify({ output, pilot, sourceFiles: sources.length, heroIds: manifest.heroIds, unitIds, city: pilot ? [] : ['day-high', 'night-high', 'day-low', 'night-low'], abilities: heroes.flatMap(hero => hero.abilities.map((ability, slot) => ({ hero: hero.id, slot, name: ability.name, kind: ability.kind, seconds: ability.mechanic === 'mithila-sanctuary' ? 8 : 6 }))), scope: manifest.scope }, null, 2));
+  console.log(JSON.stringify({ output, pilot, sourceFiles: sources.length, heroIds: manifest.heroIds, unitIds, city: pilot ? [] : ['day-high', 'night-high', 'day-low', 'night-low', 'coast-day-high', 'coast-night-high'], abilities: heroes.flatMap(hero => hero.abilities.map((ability, slot) => ({ hero: hero.id, slot, name: ability.name, kind: ability.kind, seconds: ability.mechanic === 'mithila-sanctuary' ? 8 : 6 }))), scope: manifest.scope }, null, 2));
   process.exit(0);
 }
 await fs.mkdir(output, { recursive: true });
@@ -146,7 +146,7 @@ function brief(data) {
 }
 function timelineSample(data) {
   const actor = data.snapshot?.actors.find(value => value.id === data.playerId);
-  const instance = value => ({ id: value.id, state: value.state, action: value.action, animationTime: value.animationTime, loaded: value.loaded, fallback: value.fallback, transitions: value.transitions });
+  const instance = value => ({ id: value.id, state: value.state, action: value.action, animationTime: value.animationTime, loaded: value.loaded, fallback: value.fallback, transitions: value.transitions, poseBones: value.poseBones, pose: value.pose });
   return { time: data.snapshot?.time, local: actor && { x: actor.x, z: actor.z, y: actor.y, health: actor.health, shield: actor.shield, cast: actor.cast }, heroes: data.assets?.instances.map(instance), units: data.assets?.units?.instances.map(instance), projectiles: data.snapshot?.projectiles.length, zones: data.snapshot?.zones.map(zone => ({ id: zone.id, kind: zone.kind, x: zone.x, z: zone.z, life: zone.life })) };
 }
 
@@ -245,6 +245,16 @@ async function captureHero(hero) {
     assert.ok(results.some(result => result.ok && result.code === 'ABILITY_CAST'), `${hero.id}/${slot}: no accepted command.`);
     assert.ok(record.after.events.some(event => event.type === 'ability' && event.actorId === 'review-local' && event.label === ability.name), `${hero.id}/${slot}: no authoritative ability event.`);
     assert.equal(record.after.fallback.length, 0); assert.equal(record.after.unitFallback.length, 0);
+    if (ability.mechanic) {
+      const before = record.before.instances.find(instance => instance.id === 'review-local');
+      const locked = record.timeline.filter(sample => sample.local?.cast).flatMap(sample => sample.heroes.filter(instance => instance.id === 'review-local'));
+      const legs = before.poseBones.flatMap((name, index) => /^(upperleg|lowerleg)/.test(name) ? [index * 4, index * 4 + 1, index * 4 + 2, index * 4 + 3] : []);
+      const maxLegDelta = Math.max(0, ...locked.flatMap(instance => legs.map(index => Math.abs(instance.pose[index] - before.pose[index]))));
+      record.lockedCastReview = { samples: locked.length, states: [...new Set(locked.map(instance => instance.state))], maxLegQuaternionComponentDeltaFromReady: maxLegDelta, scope: 'Actual arena lower-leg rotations during authority-locked casts; authored recovery may end when authority releases movement.' };
+      assert.ok(locked.some(instance => instance.state === `cast${slot + 1}`), `${hero.id}: full-body locked cast was not sampled.`);
+      assert.ok(locked.every(instance => instance.action === ''), `${hero.id}: an upper action still overlays the locked full-body pose.`);
+      assert.ok(maxLegDelta > .005, `${hero.id}: no meaningful actual lower-body change from the ready stance was sampled.`);
+    }
   }
   manifest.recordings.push({ id: hero.id, kind: 'hero', shots: manifest.shots.filter(value => value.heroId === hero.id).map(value => value.id) });
   await closePage();
@@ -300,6 +310,27 @@ async function captureCity() {
     await shot(`city-${lighting}-${quality}`, `Sangam City / ${lighting} / ${quality} quality`, 'NATIVE PRACTICE: fixed camera; ordinary lighting/quality settings; bots continue', 4, async () => {}, { category: 'city', quality, lighting });
   }
   manifest.recordings.push({ id: 'day-night', kind: 'city', shots: manifest.shots.filter(record => record.category === 'city').map(record => record.id) });
+  await closePage();
+}
+
+async function captureCoast() {
+  await newPage(); fixture = await abilityFixture('rama'); await boot('rama'); await joinFixture();
+  // The western court is staged for a repeatable environment review. Camera
+  // orientation still comes from native controls, never a hidden renderer API.
+  Object.assign(fixture.sim.actors.get('review-local'), { x: -46, z: 5, y: 0 });
+  await page.locator('#arena').focus();
+  await page.keyboard.down('KeyL');
+  try { await page.waitForFunction(() => window.__YUGA.metrics().yaw <= -1.35, undefined, { timeout: 10_000 }); }
+  finally { await page.keyboard.up('KeyL'); }
+  await pause(750);
+  for (const lighting of ['day', 'night']) {
+    await page.keyboard.press('Escape'); await page.locator('#lighting').selectOption(lighting);
+    await page.locator('#resume-game').click(); await pause(500);
+    const record = await shot(`coast-${lighting}-high`, `Western marsh and Lanka gate / ${lighting}`, 'STAGED VIEW: player position; native keyboard aim and lighting settings', 4, async () => {}, { category: 'city', view: 'western-coast', staged: true, quality: 'high', lighting });
+    assert.ok(Math.abs(record.after.local.x + 46) < .1 && Math.abs(record.after.local.z - 5) < .1, 'Coastal fixture moved from its declared review position.');
+    assert.ok(record.after.metrics.yaw < -1.2 && record.after.metrics.yaw > -2, 'Coastal camera did not face the west gate.');
+  }
+  manifest.recordings.push({ id: 'western-coast', kind: 'city', shots: manifest.shots.filter(record => record.view === 'western-coast').map(record => record.id) });
   await closePage();
 }
 
@@ -363,7 +394,7 @@ try {
   browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || '/usr/bin/chromium', headless: true, args: ['--no-sandbox', '--enable-unsafe-swiftshader', '--use-angle=swiftshader'] });
   for (const hero of heroes) await captureHero(hero);
   for (const unitId of unitIds) await captureUnit(unitId);
-  if (!pilot) await captureCity();
+  if (!pilot) { await captureCity(); await captureCoast(); }
   await shutdown();
   await Promise.all(assetReads);
   for (const source of manifest.sources) assert.equal(hash(await fs.readFile(path.join(root, source.path))), source.sha256, `Source changed during capture: ${source.path}`);

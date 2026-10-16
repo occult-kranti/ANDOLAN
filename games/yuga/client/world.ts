@@ -22,6 +22,8 @@ export interface ArenaWorld {
   setLightingMode(mode: LightingMode): void;
   setOverview(enabled: boolean): void;
   setActive(enabled: boolean): void;
+  /** Genuine completed engine frames; callers own timeout/abort policy. */
+  onRendered(callback: () => void): () => void;
   /** Discard pre-existing transient events after a transport welcome/reconnect. */
   resetEventHistory(): void;
   project(point: XYZ): ScreenPoint;
@@ -58,6 +60,9 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
   const jungle = new JungleView(kit, root, unitModels);
   const camera = new pc.Entity('responsive shoulder camera'); app.root.addChild(camera);
   camera.addComponent('camera', { fov: 64, nearClip: .12, farClip: 450, clearColor: new pc.Color(.64, .75, .77) });
+  // envAtlas also supplies PlayCanvas's automatic skybox. Keep it for PBR lighting,
+  // but let our time-tinted dome own the background instead of being painted over.
+  camera.camera!.layers = camera.camera!.layers.filter(id => id !== pc.LAYERID_SKYBOX);
   const sunlight = new pc.Entity('late afternoon sunlight'); app.root.addChild(sunlight);
   sunlight.addComponent('light', { type: 'directional', color: new pc.Color(1, .87, .68), intensity: 1.55, castShadows: true, shadowResolution: 2048, shadowDistance: 85, shadowType: pc.SHADOW_PCF3, normalOffsetBias: .04, shadowBias: .15, numCascades: 2 });
   sunlight.setEulerAngles(48, -36, 0);
@@ -91,6 +96,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
   let quality: 'low' | 'high' = 'high', lastSnapshot: ArenaSnapshot | null = null, playerId: string | null = null;
   let epoch = '', lastTick = -1, eventId = -1, tracked = '', initialized = false, destroyed = false;
   let active = true, baselineEvents = true;
+  const renderedCallbacks = new Set<() => void>();
   let lightingMode: LightingMode = 'cycle', lightingSample = sampleDayNight(0), lightingClock = -1;
   let cameraDistance = 6;
   const follow = new pc.Vec3(), cameraForward = new pc.Vec3(0, 0, 1), temp = new pc.Vec3(), screen = new pc.Vec3();
@@ -407,7 +413,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     r.sash.setLocalEulerAngles(reducedMotion ? -6 : -8 - stride * 17 + Math.sin(r.phase * .55) * 4, 0, 0);
     }
     r.shadow.setPosition(r.x, .035, r.z); const ss = (minion ? 1.2 : 1.7) * (1 + actor.y * .12); r.shadow.setLocalScale(ss, 1, ss);
-    r.ring.enabled = alive; r.shield.enabled = alive && (actor.shield > 0 || actor.effects.ward > 0);
+    r.ring.enabled = alive; r.shield.enabled = alive && actor.shield > 0;
     if (!reducedMotion) r.shield.setLocalEulerAngles(65, elapsed * 50, 0);
     r.hit.enabled = alive && r.hitUntil > elapsed;
     if (r.model) {
@@ -419,7 +425,10 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
       }
       const ownedShot = lastSnapshot?.projectiles.find(projectile => projectile.owner === actor.id);
       const aimPitch = actor.cast?.pitch ?? (local ? pitch : ownedShot ? Math.atan2(ownedShot.vy, Math.hypot(ownedShot.vx, ownedShot.vz)) : 0);
-      r.model.update({ speed: r.motionSpeed, airborne: actor.y > .1, alive, shot: r.shotEvent, cast: r.castEvent, castSlot: r.castSlot, casting: !!actor.cast, reducedMotion, pitch: aimPitch }, dt);
+      r.model.update({ speed: r.motionSpeed, airborne: actor.y > .1, alive, shot: r.shotEvent, cast: r.castEvent,
+        castSlot: actor.cast?.slot ?? r.castSlot, casting: !!actor.cast,
+        castStartedAt: actor.cast?.startedAt, castElapsed: actor.cast ? Math.max(0, (lastSnapshot?.time ?? actor.cast.startedAt) - actor.cast.startedAt) : undefined,
+        reducedMotion, pitch: aimPitch }, dt);
     }
     r.hpFrame.enabled = alive && !local; r.hpFrame.setEulerAngles(0, yaw * RAD + 180, 0);
     const ratio = clamp(actor.health / actor.maxHealth, 0, 1), width = minion ? .6 : 1.05;
@@ -601,6 +610,11 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     setCamera(nextYaw, nextPitch) { if (Number.isFinite(nextYaw)) yaw = nextYaw; if (Number.isFinite(nextPitch)) pitch = clamp(nextPitch, -1.1, 1.1); },
     setQuality,
     setActive(enabled) { if (enabled && !active) { baselineEvents = true; jungle.baselineEvents(); } active = enabled; app.autoRender = enabled; app.renderNextFrame = enabled; heroModels.setActive(enabled); unitModels.setActive(enabled); },
+    onRendered(callback) {
+      if (destroyed) return () => {};
+      const handler = () => callback(); renderedCallbacks.add(handler); app.on('postrender', handler);
+      return () => { app.off('postrender', handler); renderedCallbacks.delete(handler); };
+    },
     resetEventHistory() { baselineEvents = true; jungle.baselineEvents(); },
     setReducedMotion(enabled) { reducedMotion = enabled; updateLighting(lastSnapshot?.time ?? 0, true); },
     setLightingMode(mode) { lightingMode = mode === 'day' || mode === 'night' ? mode : 'cycle'; updateLighting(lastSnapshot?.time ?? 0, true); },
@@ -617,6 +631,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     },
     destroy() {
       if (destroyed) return; destroyed = true; observer.disconnect();
+      for (const handler of renderedCallbacks) app.off('postrender', handler); renderedCallbacks.clear();
       // Dispose cached GPU resources while the device is alive; app.destroy clears its GL context.
       castEffects.destroy(); jungle.destroy(); unitModels.destroy(); heroModels.destroy(); root.destroy(); kit.dispose(); environment.destroy(); app.destroy();
     },

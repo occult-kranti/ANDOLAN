@@ -1,0 +1,56 @@
+# Lanka-inspired coast and readable wetlands
+
+Reviewed **16 October 2026 UTC**. Recommended small addition: an original gold-accented coastal gate outside the west combat boundary, a shallow wet surface around the existing West Reed Court, and reeds/lotus forms at its edges. Keep the modern city and existing routes legible. The literary sources support a rich coastal city and waterside vegetation; **they do not establish that Lanka was a swamp**, a historical site plan, or a swimming/slow mechanic.
+
+This continues [environment research](ENVIRONMENT_MYTHOLOGY_RESEARCH.md). Only the passages listed below were read in this pass; no entire book, new engine, asset pack or external software dependency was downloaded. [Source evidence](research/LANKA_COAST_SOURCES.json) records the exact edition, commit, file hash and reading ranges.
+
+## Passages actually read
+
+Source: Ralph T. H. Griffith's English verse translation of the *Ramayana*, the already cached GITenberg text at commit `b48a7a226e8a20bed61131382aa5b8bf2206e039`, file `24869-0.txt`, SHA-256 `63f32651220b712149b6b497dbedeb692c098bf08ded21581617d452b84c6847`. This is an older translated literary source, not an archaeological record, measured environment plan or critical Sanskrit edition. Names and divisions follow this translation.
+
+| Read location | Observed description | Concrete original application |
+| --- | --- | --- |
+| Book V, end of Canto I, [45690–45701](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L45690) | Hanuman's approach shows a wooded, green island, streams reaching the sea, and a city above the mountain landscape. | A distant coastal silhouette and planted shoreline can orient the west district. This does not identify a modern location or specify a playable coastline. |
+| Book V, Canto II, “Lanká,” [45706–45750](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L45706); surrounding approach/entry read through 45790 | Palms and gardens, lotus pools, tall domes/turrets, a golden enclosing wall, lily-bearing moats, pale mansions, broad streets, banners and burnished-gold gates. | Give the landmark a pale/terracotta structural mass with selected gold trim, broad gate opening and restrained banners. Terracotta, proportions, geometry and placement are authored choices. Gold accents should remain distinct from collectible gold and attack flashes. |
+| Book V, Canto III opening, [45794–45802](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L45794) | A circling rampart, gold gates, turquoise-inlaid courts and porticoes. | A small turquoise tile/inlay band can distinguish the district at medium distance. Keep detail off the most important aiming backgrounds. Do not infer a full architectural style from this brief poetic catalogue. |
+| Book VI, Canto III, “Lanká,” [49016–49079](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L49016) | Hanuman's report describes four guarded gates, golden ramparts, rich inlays, encircling deep moats and crossing piers in a fortified city. | Gate/piers are useful silhouettes, but this scene's deep moat and siege defenses are **not** the proposed shallow court. A distant decorative bridge must not suggest an accessible route unless simulation and map actually provide it. No attempt to implement the poem's exaggerated weapon descriptions. |
+| Book III, Canto LXXVI, “Pampá,” [37252–37335](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L37252) | Wooded banks, a shelving shore, clear water with sand visible below, lotus/lily colors, fish and shade. | The shallow surface can show a readable sandy bed and bank transition. These are **Pampā motifs**, composed into an invented coastal court rather than asserted to occur beside the Lanka gate. |
+| Book IV, Canto I, “Ráma's Lament,” [37625–37649](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L37625) and [37727–37730](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L37727); surrounding passage 37580–37745 read | Pampā has lotus flowers, ripples, waterfowl among reeds, and a mallard near reeds and sedge. The landscape is also part of Rama's separation/lament, not just scenic inventory. | Reeds, a few lotus shapes and quiet ripples give the Reed Court a recognizable edge. Avoid claiming the passage describes a hostile swamp, specifies naga gameplay, or justifies a movement penalty. |
+
+## Four implementation gates
+
+1. **Water communicates its actual rule.** The current court remains shallow, walkable flat ground unless authority deliberately changes. Show its bed and gentle edge; no deep drop, swimming animation, hidden slowing, drowning or false bridge. If any modifier is added later, server movement, bots, navigation, HUD and tests must change together.
+2. **Plants do not conceal the fight.** Keep tall reeds outside the active route and camp target silhouette; use low, sparse plants on the floor. At daylight, dusk and night, identify the guardian, projectile, camp perimeter and contested-gold marker at the normal camera distance. This is a proposed visual acceptance gate, not an observed result yet.
+3. **Gold remains a landmark material.** Use a limited trim band and readable pale mass; avoid all-over high-gloss surfaces, animated sparkles or silhouettes resembling loot. Decorative structures outside the boundary must not create a visible usable opening that terminates at an unexplained wall.
+4. **Keep both visual and combat budgets bounded.** Start with reused authored meshes/materials and a shallow inexpensive surface, without a reflection-camera pass, new engine or per-lamp shadows. Measure actual frame cost and capture the same view in low/high quality before accepting more water effects. Verify both teams' route/shot collision against the unchanged shared map; visual source inspiration does not prove balance.
+
+These gates narrow the next experiment to one coast/court view. They do not authorize adding a second map, changing a hero kit, or presenting the existing arena as historically reconstructed Lanka. The [art production plan](ART_PRODUCTION_PLAN.md) retains the broader silhouette, animation and ability-readability work.
+
+## Small design-community collection
+
+The [official reader](../tools/collect-reddit.py) now explicitly permits `gamedev`, `gamedesign` and `IndianGaming`, alongside its existing communities. Each new community first must be confirmed public, non-quarantined and non-NSFW. It uses only four one-year, relevance-ranked searches: animation/VFX readability; ability/combat counterplay; routes/water/swamp in map design; and open-source production workflows. `/new` and `/top` are rejected for every non-default community. No account histories, direct messages, unrestricted URL or media retrieval are introduced.
+
+The new community caps are enforced even if a caller uses larger general defaults: **8 posts, 2 comment threads, 3 comments per thread, 6 comments total, 10 HTTP requests including authentication/retries, and 120 seconds**. Two results per search are requested, with no pagination or more-comment expansion. Fewer useful posts or comments are normal; this is neither an exhaustive search nor a representative survey. The small comment budget may be consumed by automated/moderation replies, which must not be counted as player evidence.
+
+For the coordinator's external credential file, repeat this command with each of the three exact names:
+
+```sh
+python games/yuga/tools/collect-reddit.py \
+  --config /path/to/external-config.json \
+  --subreddit gamedev \
+  --max-posts 8 --comment-posts 2 --comments-per-post 3 --max-comments 6 \
+  --max-requests 10 --max-runtime 120 \
+  --output-dir /tmp/yuga-reddit-research
+```
+
+Credentials remain external; only the coordinator handles them. This agent's verification used **19 passing dummy-only self-tests**, Python compilation and a whitespace/diff check. Independent review caught a direct-call budget mismatch; `collect()` now also tightens an already constructed `RedditReader`'s actual request/deadline limits before authentication. No authentication or network request was made by this research agent.
+
+The coordinator attempted all three official collections on 16 October 2026: `gamedev` at **19:37:22.720739 UTC**, `gamedesign` at **19:37:25.863504 UTC**, and `IndianGaming` at **19:37:28.465553 UTC**. Each stopped as **partial** with HTTP **403** at the public-community metadata preflight, after two requests (application authentication and `/about`), before any search. Combined result: **6 requests, 0 posts, 0 comments**. Public access was not confirmed; this does not prove that a subreddit is private, nonexistent or opposed to the subject. Only the sanitized diagnostic fields were inspected. The temporary credential config was deleted by the coordinator; no raw error response or credential value is retained here.
+
+**No new community corpus was read and no community recommendation is claimed.** No relay, unrestricted scrape, alternate-account action or repeated blocked request was attempted. Existing accessible author/project evidence supplies the practical production fallback, rather than invented Reddit feedback:
+
+- [Nystrom's game-loop/state chapters](DESIGN_RESEARCH_NEXT.md) already support keeping simulation/input timing separate from presentation and explicit pause/resume transitions. Apply that principle to shallow-water visuals: rendering cost must not alter movement or ability timing. These are previously read author chapters, not a new community survey.
+- [glTF Transform at `8e2a94a…`](https://github.com/donmccurdy/glTF-Transform/tree/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f) is MIT and was previously inspected in README/license and selected simplify/texture-compress source. A later **offline, single-copy** optimization experiment may help the existing meshes; it does not justify an engine migration or blindly simplifying animated fingers/weapon contacts. The proposed gate remains exported skin/clip validation plus actual-engine comparison.
+- [Spector.js at `970aa97…`](https://github.com/BabylonJS/Spector.js/tree/970aa97e616c4dbe309ddcecd28438961dc80a93) is MIT and its WebGL capture source was previously inspected. Consider one development-only frame capture only if existing metrics cannot identify the coastal view's cost. Remove instrumentation for performance comparison; no new package has been installed or benchmark run in this pass.
+
+The exact prior reading scope and licenses remain in [DESIGN_RESEARCH_NEXT.md](DESIGN_RESEARCH_NEXT.md) and its source register. Any future Reddit tool recommendation would still require license/source inspection and a bounded capability test before dependency adoption.

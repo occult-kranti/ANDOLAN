@@ -8,17 +8,33 @@ import type { Actor, ArenaSnapshot, ArenaCommand, CommandResult, GameEvent } fro
 
 type AudioDiagnostics = {started:boolean;unlocked:boolean;muted:boolean;active:boolean;volume:number;previewing:boolean;contextState:string;outputRms:number;outputPeak:number};
 declare global { interface Window { __YUGA:{snapshot():ArenaSnapshot|undefined;playerId():string;metrics():{ready:boolean;room:string;frames:number;meanFps:number;maxFrameMs:number;yaw:number;pitch:number;targetId:string|null};audio():AudioDiagnostics}; __yugaQAFrameCap?:boolean } }
+type WireProbe={lastSnapshot?:{at:number;tick:number;time:number};closedAt?:number;errors:string[];results:{at:number;id:string;code:string}[]};
+const wireProbes=new WeakMap<Page,WireProbe>();
 const errors=new WeakMap<Page,string[]>(), commands=new WeakMap<Page,ArenaCommand[]>(), results=new WeakMap<Page,CommandResult[]>(), receivedEvents=new WeakMap<Page,Map<number,GameEvent>>();
 const snapshot=(page:Page)=>page.evaluate(()=>window.__YUGA.snapshot()!);
 const me=(page:Page)=>page.evaluate(()=>window.__YUGA.snapshot()!.actors.find(a=>a.id===window.__YUGA.playerId())!);
 const audio=(page:Page)=>page.evaluate(()=>window.__YUGA.audio());
 const length=(a:{x:number;z:number},b:{x:number;z:number})=>Math.hypot(a.x-b.x,a.z-b.z);
 async function load(page:Page){
- errors.set(page,[]);commands.set(page,[]);results.set(page,[]);receivedEvents.set(page,new Map());
+ errors.set(page,[]);commands.set(page,[]);results.set(page,[]);receivedEvents.set(page,new Map());wireProbes.set(page,{errors:[],results:[]});
  page.on('pageerror',e=>errors.get(page)!.push(e.stack||e.message));
  page.on('websocket',socket=>{
+  if(!socket.url().endsWith('/ws'))return;
+  socket.on('close',()=>{wireProbes.get(page)!.closedAt=Date.now();});socket.on('socketerror',error=>wireProbes.get(page)!.errors.push(error));
   socket.on('framesent',frame=>{try{const m=JSON.parse(String(frame.payload));if(m.type==='command')commands.get(page)!.push(m);}catch{/* No bearer join/welcome traffic retained. */}});
-  socket.on('framereceived',frame=>{try{const m=JSON.parse(String(frame.payload));if(m.type==='result')results.get(page)!.push(m);if(m.type==='snapshot')for(const event of m.snapshot.events)receivedEvents.get(page)!.set(event.id,event);}catch{/* No bearer join/welcome traffic retained. */}});
+  socket.on('framereceived',frame=>{try{const m=JSON.parse(String(frame.payload));if(m.type==='result'){results.get(page)!.push(m);wireProbes.get(page)!.results.push({at:Date.now(),id:m.id,code:m.code});}if(m.type==='snapshot')wireProbes.get(page)!.lastSnapshot={at:Date.now(),tick:m.snapshot.tick,time:m.snapshot.time};if(m.type==='snapshot')for(const event of m.snapshot.events)receivedEvents.get(page)!.set(event.id,event);}catch{/* No bearer join/welcome traffic retained. */}});
+ });
+ await page.addInitScript(()=>{
+  const probe={heartbeat:0,lastHeartbeat:0,lastDispatch:0,lastSnapshot:null as null|{tick:number;time:number},lastResult:null as null|{id:string;code:string},closedAt:0,errors:0};
+  Object.defineProperty(window,'__yugaSocketProbe',{value:probe});
+  window.setInterval(()=>{probe.heartbeat++;probe.lastHeartbeat=Date.now();},100);
+  const NativeWebSocket=window.WebSocket;
+  window.WebSocket=class extends NativeWebSocket{
+   constructor(url:string|URL,protocols?:string|string[]){super(url,protocols);if(!String(url).endsWith('/ws'))return;
+    this.addEventListener('message',event=>{let message;try{message=JSON.parse(String(event.data));}catch{return;}probe.lastDispatch=Date.now();if(message.type==='snapshot')probe.lastSnapshot={tick:message.snapshot.tick,time:message.snapshot.time};if(message.type==='result')probe.lastResult={id:message.id,code:message.code};});
+    this.addEventListener('close',()=>{probe.closedAt=Date.now();});this.addEventListener('error',()=>probe.errors++);
+   }
+  };
  });
  if(process.env.CI||process.env.YUGA_SOFTWARE_RENDERING==='1')await page.addInitScript(()=>{
   if(window.__yugaQAFrameCap)return;window.__yugaQAFrameCap=true;
@@ -26,15 +42,16 @@ async function load(page:Page){
   const schedule=()=>{if(!queue.size||timer!==undefined||nativeQueued||dispatching)return;timer=window.setTimeout(()=>{timer=undefined;nativeQueued=true;native(timestamp=>{nativeQueued=false;dispatching=true;for(const key of [...queue.keys()]){const callback=queue.get(key);queue.delete(key);if(callback)try{callback(timestamp);}catch(e){window.setTimeout(()=>{throw e;},0);}}dispatching=false;finished=performance.now();schedule();});},Math.max(0,100-(performance.now()-finished)));};
   window.requestAnimationFrame=callback=>{const key=++id;queue.set(key,callback);schedule();return key;};window.cancelAnimationFrame=key=>{queue.delete(key);};
  });
- await page.goto('/');await page.waitForFunction(()=>!!window.__YUGA);await expect(page.locator('#lobby')).toBeVisible();
+ await page.bringToFront();await page.goto('/');await page.waitForFunction(()=>!!window.__YUGA);await expect(page.locator('#lobby')).toBeVisible();
 }
 async function low(page:Page){await page.locator('#lobby-settings').click();await page.locator('#quality').selectOption('low');await page.locator('#resume-game').click();}
 async function frames(page:Page){await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));}
 async function capture(page:Page,info:TestInfo,name:string){await frames(page);await page.screenshot({path:info.outputPath(`${name}.png`),fullPage:true});}
-async function ready(page:Page){await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(()=>page.evaluate(()=>!!window.__YUGA.snapshot()&&window.__YUGA.metrics().ready)).toBe(true);}
-async function practice(page:Page){await page.locator('#practice-play').click();await ready(page);await expect.poll(async()=>(await snapshot(page)).room).toBe('PRACTICE');}
+async function ready(page:Page){await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(()=>page.evaluate(()=>!!window.__YUGA.snapshot()&&(window.__YUGA.metrics().ready||window.__YUGA.snapshot()!.phase==='finished'))).toBe(true);}
+async function practice(page:Page){await page.bringToFront();await page.locator('#practice-play').click();await ready(page);await expect.poll(async()=>(await snapshot(page)).room).toBe('PRACTICE');}
 async function activate(page:Page){await page.bringToFront();if(await page.locator('#pause-dialog').isVisible())await page.locator('#resume-game').click();await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().ready)).toBe(true);}
-async function join(page:Page,name:string,room=''){await page.locator('#online-open').click();await page.locator('#player-name').fill(name);await page.locator('#room-code').fill(room);await page.locator('#join-room').click();await ready(page);if(room)await expect.poll(async()=>(await snapshot(page)).room).toBe(room);}
+async function park(page:Page){if(!await page.locator('#pause-dialog').isVisible())await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();}
+async function join(page:Page,name:string,room=''){await page.bringToFront();await page.locator('#online-open').click();await page.locator('#player-name').fill(name);await page.locator('#room-code').fill(room);await page.locator('#join-room').click();await ready(page);if(room)await expect.poll(async()=>(await snapshot(page)).room).toBe(room);}
 async function hold(page:Page,key:string,until:(actor:Actor)=>boolean,timeout=15_000){await page.keyboard.down(key);try{await expect.poll(async()=>until(await me(page)),{timeout,intervals:[60,100]}).toBe(true);}finally{await page.keyboard.up(key);}}
 async function previewSamples(page:Page){await page.locator('#sound-preview').click();return page.evaluate(async()=>{let peak=0,rms=0,running=false,previewing=false;const end=performance.now()+450;while(performance.now()<end){const d=window.__YUGA.audio();peak=Math.max(peak,d.outputPeak);rms=Math.max(rms,d.outputRms);running ||= d.contextState==='running';previewing ||= d.previewing;await new Promise(r=>setTimeout(r,20));}return{peak,rms,running,previewing};});}
 async function range(page:Page,id:string,value:number){await page.locator(id).fill(String(value));}
@@ -99,14 +116,14 @@ test('native mouse chords preserve held fire and release through menus',async({p
 });
 
 test('two actual browser clients share movement, upgrades and reconnect identity',async({browser},info)=>{
- test.setTimeout(180_000);const a=await browser.newContext({viewport:{width:640,height:480}}),b=await browser.newContext({viewport:{width:640,height:480}});const host=await a.newPage(),guest=await b.newPage();try{
- await load(host);await low(host);await join(host,'Sun QA');const code=(await snapshot(host)).room;await load(guest);await low(guest);await pageHero(guest,'arjuna');await join(guest,'Moon QA',code);const hostBefore=await me(host),guestBefore=await me(guest);expect(hostBefore.id).not.toBe(guestBefore.id);expect(hostBefore.team).not.toBe(guestBefore.team);await expect.poll(async()=>(await snapshot(host)).actors.filter(a=>a.kind==='hero'&&!a.bot).length).toBe(2);expect((await snapshot(host)).actors.filter(a=>a.kind==='hero')).toHaveLength(6);
+ test.setTimeout(180_000);const a=await browser.newContext({viewport:{width:480,height:400}}),b=await browser.newContext({viewport:{width:480,height:400}});const host=await a.newPage(),guest=await b.newPage();try{
+ await load(host);await low(host);await join(host,'Sun QA');const code=(await snapshot(host)).room;await park(host);await load(guest);await low(guest);await pageHero(guest,'arjuna');await join(guest,'Moon QA',code);await park(guest);const hostBefore=await me(host),guestBefore=await me(guest);expect(hostBefore.id).not.toBe(guestBefore.id);expect(hostBefore.team).not.toBe(guestBefore.team);await expect.poll(async()=>(await snapshot(host)).actors.filter(a=>a.kind==='hero'&&!a.bot).length).toBe(2);expect((await snapshot(host)).actors.filter(a=>a.kind==='hero')).toHaveLength(6);
  await activate(host);await host.keyboard.press('KeyB');await host.locator('#buy-power').click();await expect.poll(async()=>(await me(host)).upgrades.power).toBe(1);await host.locator('#upgrades-dialog [data-close]').click();await hold(host,'KeyA',actor=>length(actor,hostBefore)>3);await expect.poll(async()=>length((await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!,await me(host))).toBeLessThan(.6);
- await activate(guest);const peerEventWatermark=Math.max(0,...receivedEvents.get(host)!.keys()),priorGuestCommands=commands.get(guest)!.length;await guest.keyboard.press('KeyQ');await expect.poll(()=>commands.get(guest)!.length).toBeGreaterThan(priorGuestCommands);const castCommand=commands.get(guest)!.at(-1)!;await expect.poll(()=>results.get(guest)!.find(result=>result.id===castCommand.id)?.code).toBe('ABILITY_CAST');await expect.poll(()=>[...receivedEvents.get(host)!.values()].some(e=>e.id>peerEventWatermark&&e.type==='ability'&&e.actorId===guestBefore.id)).toBe(true);await activate(host);await host.keyboard.press('Escape');const pausedPosition=await me(host),clock=(await snapshot(host)).time;await host.keyboard.press('KeyW');await expect.poll(async()=>(await snapshot(host)).time).toBeGreaterThan(clock+.8);expect(length(pausedPosition,await me(host))).toBeLessThan(.05);await host.locator('#resume-game').click();
+ await park(host);await activate(guest);const peerEventWatermark=Math.max(0,...receivedEvents.get(host)!.keys()),priorGuestCommands=commands.get(guest)!.length;await guest.keyboard.press('KeyQ');await expect.poll(()=>commands.get(guest)!.length).toBeGreaterThan(priorGuestCommands);const castCommand=commands.get(guest)!.at(-1)!;await expect.poll(()=>results.get(guest)!.find(result=>result.id===castCommand.id)?.code).toBe('ABILITY_CAST');await expect.poll(()=>[...receivedEvents.get(host)!.values()].some(e=>e.id>peerEventWatermark&&e.type==='ability'&&e.actorId===guestBefore.id)).toBe(true);await park(guest);await activate(host);await host.keyboard.press('Escape');const pausedPosition=await me(host),clock=(await snapshot(host)).time;await host.keyboard.press('KeyW');await expect.poll(async()=>(await snapshot(host)).time).toBeGreaterThan(clock+.8);expect(length(pausedPosition,await me(host))).toBeLessThan(.05);await host.locator('#resume-game').click();
  await host.keyboard.press('KeyQ');await expect.poll(async()=>(await me(host)).cooldowns[0]!).toBeGreaterThan(0);await host.keyboard.press('Escape');await host.locator('#leave-game').click();await join(host,'Sun QA',code);await activate(host);await host.keyboard.press('KeyE');await expect.poll(async()=>(await me(host)).cooldowns[1]!).toBeGreaterThan(0);expect((await me(host)).id).toBe(hostBefore.id);
  const beforeReconnect=await me(host);await host.goto('/');await expect.poll(async()=>(await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!.bot).toBe(true);await host.waitForFunction(()=>!!window.__YUGA);await join(host,'Sun QA',code);const afterReconnect=await me(host);expect(afterReconnect.id).toBe(hostBefore.id);expect(afterReconnect.heroId).toBe(beforeReconnect.heroId);expect(afterReconnect.team).toBe(beforeReconnect.team);expect(afterReconnect.upgrades).toEqual(beforeReconnect.upgrades);expect((await snapshot(host)).actors.filter(a=>a.id===hostBefore.id)).toHaveLength(1);await expect.poll(async()=>(await snapshot(guest)).actors.find(a=>a.id===hostBefore.id)!.bot).toBe(false);
- await capture(host,info,'two-client-host');await capture(guest,info,'two-client-guest');await attach(host,info,'real-two-client',{room:code,hostId:hostBefore.id,guestId:guestBefore.id,beforeReconnect,afterReconnect,claim:'Two independent browser contexts and actual local WebSockets, not public hosting'});expect(errors.get(host)).toEqual([]);expect(errors.get(guest)).toEqual([]);expect(results.get(host)!.some(r=>r.ok&&r.code==='UPGRADED')).toBe(true);
- }finally{await info.attach('two-client-command-and-state-diagnostics',{body:JSON.stringify({host:{observation:await inputObservation(host).catch(()=>null),commands:commands.get(host),results:results.get(host)},guest:{observation:await inputObservation(guest).catch(()=>null),commands:commands.get(guest),results:results.get(guest)},receivedPeerAbilities:[...(receivedEvents.get(host)?.values()??[])].filter(event=>event.type==='ability')},null,2),contentType:'application/json'});await a.close();await b.close();}
+ await capture(host,info,'two-client-host');await park(host);await activate(guest);await capture(guest,info,'two-client-guest');await attach(host,info,'real-two-client',{room:code,hostId:hostBefore.id,guestId:guestBefore.id,beforeReconnect,afterReconnect,claim:'Two independent480x400 browser contexts and actual local WebSockets. Inactive peer stays in native Settings while receiving shared authority updates; world captures are sequential. This functional software-render budget does not establish simultaneous rendering performance or public hosting.'});expect(errors.get(host)).toEqual([]);expect(errors.get(guest)).toEqual([]);expect(results.get(host)!.some(r=>r.ok&&r.code==='UPGRADED')).toBe(true);
+ }finally{await info.attach('two-client-command-and-state-diagnostics',{body:JSON.stringify({host:{observation:await inputObservation(host).catch(()=>null),browserDispatch:await host.evaluate(()=>({now:Date.now(),probe:(window as unknown as{__yugaSocketProbe:unknown}).__yugaSocketProbe})).catch(()=>null),wire:wireProbes.get(host),pageErrors:errors.get(host),commands:commands.get(host),results:results.get(host)},guest:{observation:await inputObservation(guest).catch(()=>null),browserDispatch:await guest.evaluate(()=>({now:Date.now(),probe:(window as unknown as{__yugaSocketProbe:unknown}).__yugaSocketProbe})).catch(()=>null),wire:wireProbes.get(guest),pageErrors:errors.get(guest),commands:commands.get(guest),results:results.get(guest)},receivedPeerAbilities:[...(receivedEvents.get(host)?.values()??[])].filter(event=>event.type==='ability')},null,2),contentType:'application/json'});await a.close();await b.close();}
 });
 async function pageHero(page:Page,id:string){await page.locator(`[data-hero="${id}"]`).click();}
 
@@ -182,8 +199,8 @@ test('native two-player Dawn Volley received windup and lateral movement evades 
   const initialHost=await me(host),initialGuest=await me(guest);dodgerId=initialGuest.id;
   expect(initialHost.team).toBe('sun');expect(initialGuest.team).toBe('moon');
   // Natural x=-3 spawn clears the central tower; no latency-sensitive lateral detour.
-  await guest.keyboard.press('Escape');await activate(host);await hold(host,'KeyW',p=>p.z>-12,40_000);
-  await host.keyboard.press('Escape');await activate(guest);await hold(guest,'KeyW',p=>p.z<12,40_000);await guest.keyboard.press('Escape');
+  await park(guest);await activate(host);await hold(host,'KeyW',p=>p.z>-12,40_000);
+  await park(host);await activate(guest);await hold(guest,'KeyW',p=>p.z<12,40_000);await park(guest);
   await activate(host);const caster=await me(host),target=await me(guest);
   expect(caster.health).toBeGreaterThan(0);expect(target.health).toBeGreaterThan(0);
   await nativeYaw(host,Math.atan2(target.x-caster.x,target.z-caster.z));

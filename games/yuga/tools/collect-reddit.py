@@ -20,7 +20,9 @@ from urllib.parse import urlencode
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 SUBREDDIT = "DeadlockTheGame"
-ALLOWED_SUBREDDITS = (SUBREDDIT, "IndianMythology", "hinduism")
+MYTHOLOGY_SUBREDDITS = ("IndianMythology", "hinduism")
+DESIGN_SUBREDDITS = ("gamedev", "gamedesign", "IndianGaming")
+ALLOWED_SUBREDDITS = (SUBREDDIT, *MYTHOLOGY_SUBREDDITS, *DESIGN_SUBREDDITS)
 REPOSITORY = Path(__file__).resolve().parents[3]
 FIELDS = ("client_id", "client_secret", "user_agent", "username", "password")
 REQUIRED = FIELDS[:3]
@@ -47,7 +49,19 @@ def canonical_subreddit(value: str) -> str:
 
 
 def allowed_public_path(path: str, subreddit: str) -> bool:
-    return bool(re.fullmatch(rf"/r/{re.escape(canonical_subreddit(subreddit))}/(?:about|new|top|search|comments/[a-z0-9]+)", path))
+    selected = canonical_subreddit(subreddit)
+    endpoints = "about|new|top|search|comments/[a-z0-9]+" if selected == SUBREDDIT else "about|search|comments/[a-z0-9]+"
+    return bool(re.fullmatch(rf"/r/{re.escape(selected)}/(?:{endpoints})", path))
+
+
+def bounded_community_args(args, subreddit: str):
+    """New design communities stay small even when general CLI defaults are used."""
+    result = argparse.Namespace(**vars(args))
+    if canonical_subreddit(subreddit) in DESIGN_SUBREDDITS:
+        for field, cap in {"max_posts": 8, "comment_posts": 2, "comments_per_post": 3,
+                           "max_comments": 6, "max_requests": 10, "max_runtime": 120}.items():
+            setattr(result, field, min(getattr(result, field), cap))
+    return result
 
 
 def public_subreddit_metadata(value: Any, subreddit: str) -> dict[str, Any]:
@@ -296,7 +310,15 @@ def listing_children(value: Any) -> list[dict[str, Any]]:
 
 
 def collection_plans(subreddit: str) -> list[tuple[str, str, dict[str, Any]]]:
-    if canonical_subreddit(subreddit) != SUBREDDIT:
+    selected = canonical_subreddit(subreddit)
+    if selected in DESIGN_SUBREDDITS:
+        return [(label, "/search", {"q": query, "restrict_sr": "on", "sort": "relevance", "t": "year"}) for label, query in [
+            ("animation_readability", '(animation OR VFX) AND (readability OR telegraph OR clarity)'),
+            ("ability_counterplay", '(ability OR abilities OR combat) AND (counterplay OR telegraph OR readability)'),
+            ("lane_routes_water", '("level design" OR map OR lane) AND (route OR water OR swamp)'),
+            ("open_source_production", '("open source" OR Blender OR Godot) AND (animation OR workflow OR production)'),
+        ]]
+    if selected in MYTHOLOGY_SUBREDDITS:
         # Topic selection deliberately excludes broad feeds and account histories.
         # These are contemporary opinions/source leads, never scriptural authority.
         return [(label, "/search", {"q": query, "restrict_sr": "on", "sort": "relevance", "t": "year"}) for label, query in [
@@ -316,6 +338,12 @@ def collection_plans(subreddit: str) -> list[tuple[str, str, dict[str, Any]]]:
 def collect(reader: RedditReader, args, redactor: Redactor) -> dict[str, Any]:
     now = datetime.now(timezone.utc).isoformat()
     subreddit = reader.subreddit
+    args = bounded_community_args(args, subreddit)
+    if isinstance(reader, RedditReader):
+        # Also bind direct callers that constructed the reader before applying
+        # community caps. Requests already spent still count against the cap.
+        reader.request_cap = min(reader.request_cap, args.max_requests)
+        reader.deadline = min(reader.deadline, time.monotonic() + args.max_runtime)
     per_stratum = max(1, args.max_posts // 4)
     plans = collection_plans(subreddit)
     result: dict[str, Any] = {
@@ -334,7 +362,10 @@ def collect(reader: RedditReader, args, redactor: Redactor) -> dict[str, Any]:
         reader.authenticate()
         if subreddit != SUBREDDIT:
             result["community_check"] = public_subreddit_metadata(reader.get(f"/r/{subreddit}/about", {}), subreddit)
-            result["limitations"].append("Mythology searches select source leads and contemporary interpretations; they do not establish scripture, history, consensus or any author's religious identity. Personal disclosures are not analyzed or republished.")
+            if subreddit in MYTHOLOGY_SUBREDDITS:
+                result["limitations"].append("Mythology searches select source leads and contemporary interpretations; they do not establish scripture, history, consensus or any author's religious identity. Personal disclosures are not analyzed or republished.")
+            else:
+                result["limitations"].append("Four design/tool topic searches only; capped at eight posts, two comment threads and three comments per thread (six total). Anecdotes, promotional claims and tool recommendations are unverified leads, not measured performance, software license grants or community consensus. No account histories or personal profiles are studied.")
         for label, suffix, query in plans:
             params = {"limit": per_stratum, "raw_json": 1, **query}
             data = reader.get(f"/r/{subreddit}{suffix}", params)
@@ -447,6 +478,11 @@ def self_test() -> dict[str, bool]:
         except SafeError:
             pass
     topical_only = all(suffix == "/search" and query.get("restrict_sr") == "on" for name in ALLOWED_SUBREDDITS[1:] for _, suffix, query in collection_plans(name))
+    no_broad_design_feeds = all(not allowed_public_path(f"/r/{name}/{feed}", name)
+                               for name in ALLOWED_SUBREDDITS[1:] for feed in ("new", "top"))
+    design_topics = all([label for label, _, _ in collection_plans(name)] == [
+        "animation_readability", "ability_counterplay", "lane_routes_water", "open_source_production"
+    ] for name in DESIGN_SUBREDDITS)
     from types import SimpleNamespace
 
     class DummyReader:
@@ -481,7 +517,64 @@ def self_test() -> dict[str, bool]:
     unavailable = DummyReader(public=False)
     stopped = collect(unavailable, args, redactor)
     preflight_stops = stopped["collection_status"] == "partial" and not stopped["posts"] and unavailable.paths == ["/r/hinduism/about"]
-    return {"json_literals": parsed_json, "praw_literals": parsed_praw, "bare_keyword_literals": parsed_bare, "executable_syntax_rejected": rejected, "secrets_and_mentions_redacted": redacted, "source_link_allowlist": links_safe, "subreddit_endpoint_isolation": subreddit_paths, "cross_subreddit_links_rejected": cross_links, "unknown_subreddit_rejected": unknown_rejected, "public_community_gate": public_checks, "mythology_topic_search_only": topical_only, "dummy_collection_isolated_and_redacted": isolated_collection, "unavailable_community_stops_before_posts": preflight_stops}
+
+    class DesignDummyReader(DummyReader):
+        def __init__(self, subreddit, public=True):
+            super().__init__(public)
+            self.subreddit = subreddit
+            self.search_count = 0
+            self.queries = []
+
+        def get(self, path, query):
+            if path.endswith("/about"):
+                return super().get(path, query)
+            self.requests += 1
+            self.paths.append(path)
+            self.queries.append(query)
+            if path.endswith("/search"):
+                self.search_count += 1
+                return {"data": {"children": [{"kind": "t3", "data": {
+                    "id": f"p{self.search_count}{number}", "subreddit": self.subreddit,
+                    "permalink": f"/r/{self.subreddit}/comments/p{self.search_count}{number}/topic/",
+                    "title": "A synthetic design question", "selftext": "dummy-token-DO-NOT-USE u/example_user", "created_utc": 0,
+                }} for number in range(4)]}}
+            thread_id = path.rsplit("/", 1)[-1]
+            return [{}, {"data": {"children": [{"kind": "t1", "data": {
+                "permalink": f"/r/{self.subreddit}/comments/{thread_id}/topic/c{number}/",
+                "body": "A synthetic design reply", "author": "must-not-be-retained", "created_utc": 0,
+            }} for number in range(8)]}}]
+
+    large_args = SimpleNamespace(max_posts=40, max_requests=24, max_comments=150, comment_posts=12, comments_per_post=15, max_runtime=600)
+    cap_checks = True
+    design_collections = True
+    design_preflights = True
+    for name in DESIGN_SUBREDDITS:
+        bounded = bounded_community_args(large_args, name)
+        cap_checks = cap_checks and vars(bounded) == {"max_posts": 8, "max_requests": 10, "max_comments": 6, "comment_posts": 2, "comments_per_post": 3, "max_runtime": 120}
+        design = DesignDummyReader(name)
+        collected = collect(design, large_args, redactor)
+        serialized = json.dumps(collected)
+        design_collections = design_collections and (collected["collection_status"] == "complete"
+            and len(collected["posts"]) == 8 and len(collected["comments"]) == 6 and collected["requests_performed"] == 8
+            and all(path.startswith(f"/r/{name}/") for path in design.paths)
+            and all(query.get("restrict_sr") == "on" for query in design.queries[:4])
+            and all(len([comment for comment in collected["comments"] if comment["post_permalink"] == post]) == 3
+                    for post in {comment["post_permalink"] for comment in collected["comments"]})
+            and "must-not-be-retained" not in serialized and "dummy-token-DO-NOT-USE" not in serialized)
+        blocked = DesignDummyReader(name, public=False)
+        blocked_result = collect(blocked, large_args, redactor)
+        design_preflights = design_preflights and (blocked_result["collection_status"] == "partial"
+            and not blocked_result["posts"] and blocked.paths == [f"/r/{name}/about"])
+    cap_checks = cap_checks and large_args.max_posts == 40 and large_args.max_requests == 24
+    direct = RedditReader(dummy, 24, 600, redactor, "gamedev")
+    def stop_before_network():
+        raise SafeError("dummy_stop", "Synthetic stop before any authentication or network request.")
+    direct.authenticate = stop_before_network
+    start = time.monotonic()
+    direct_result = collect(direct, large_args, redactor)
+    direct_caps = (direct_result["failure"]["code"] == "dummy_stop" and direct.requests == 0
+                   and direct.request_cap == 10 and direct.deadline <= start + 121)
+    return {"json_literals": parsed_json, "praw_literals": parsed_praw, "bare_keyword_literals": parsed_bare, "executable_syntax_rejected": rejected, "secrets_and_mentions_redacted": redacted, "source_link_allowlist": links_safe, "subreddit_endpoint_isolation": subreddit_paths, "cross_subreddit_links_rejected": cross_links, "unknown_subreddit_rejected": unknown_rejected, "public_community_gate": public_checks, "nondefault_topic_search_only": topical_only, "dummy_collection_isolated_and_redacted": isolated_collection, "unavailable_community_stops_before_posts": preflight_stops, "nondefault_broad_feed_paths_rejected": no_broad_design_feeds, "design_four_topic_plan": design_topics, "design_caps_without_mutating_callers": cap_checks, "design_dummy_collections_bounded_and_redacted": design_collections, "design_public_preflight_stops_before_text": design_preflights, "direct_reader_budgets_capped_without_network": direct_caps}
 
 
 class SafeArgumentParser(argparse.ArgumentParser):
@@ -506,7 +599,7 @@ def main() -> int:
     parser.add_argument("--config", type=Path, help="External JSON or literal PRAW-style config; never pass credential values as arguments.")
     parser.add_argument("--check-config", action="store_true", help="Print field-presence booleans only; no network request.")
     parser.add_argument("--self-test", action="store_true", help="Verify parsing/redaction with in-memory dummy values only; no network.")
-    parser.add_argument("--subreddit", choices=ALLOWED_SUBREDDITS, default=SUBREDDIT, help="Explicit research allowlist; mythology channels use topic searches only.")
+    parser.add_argument("--subreddit", choices=ALLOWED_SUBREDDITS, default=SUBREDDIT, help="Explicit allowlist; non-default communities use topic searches only. Design communities cap at 8 posts, 2 threads, 3 comments/thread (6 total), 10 requests and 120 seconds.")
     parser.add_argument("--check-subreddit", action="store_true", help="Authenticate and check public community metadata only; no posts or comments.")
     parser.add_argument("--output-dir", type=Path, default=Path("/tmp/yuga-reddit-research"))
     parser.add_argument("--max-requests", type=bounded_integer(1, 24), default=18, help="Includes OAuth, errors and retries; hard cap24.")
@@ -517,6 +610,7 @@ def main() -> int:
     parser.add_argument("--max-runtime", type=bounded_integer(10, 600), default=240)
     try:
         args = parser.parse_args()
+        args = bounded_community_args(args, args.subreddit)
         if args.self_test:
             checks = self_test()
             print(json.dumps(checks, sort_keys=True))

@@ -97,6 +97,16 @@ describe('YUGA browser transport lifecycle', () => {
 });
 
 describe('YUGA local fixed-step transport', () => {
+  it('can start paused while graphics warm up without advancing the opening or catching up later', async () => {
+    const connection=practice('rama','Tester',callbacks,true);connections.push(connection);
+    expect(latest().time).toBe(0);const initialSequence=latest().actors.find(actor=>actor.id==='local-player')!.lastInputSeq;
+    clock=15000;await vi.advanceTimersByTimeAsync(15000);
+    connection.input(intent(1,1));expect(latest().time).toBe(0);
+    connection.pause(false);clock=15050;await vi.advanceTimersByTimeAsync(50);
+    expect(latest().time).toBeCloseTo(.05);
+    expect(latest().actors.find(actor=>actor.id==='local-player')!.lastInputSeq).toBe(initialSequence);
+  });
+
   it('retains fractional time and caps a delayed callback without an unbounded catch-up loop', async () => {
     local(); clock = 275; await vi.advanceTimersByTimeAsync(50);
     expect(latest().time).toBeCloseTo(.25); expect(latest().tick).toBe(5);

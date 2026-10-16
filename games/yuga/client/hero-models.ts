@@ -1,5 +1,6 @@
 import * as pc from 'playcanvas';
 import { HEROES } from '../shared/heroes';
+import { lockedCastPlayback } from './hero-cast-playback';
 
 // Vite emits these as separately cached GLB files. Concept illustrations are never used as avatars.
 const modelUrls = import.meta.glob('./assets/heroes/*.glb', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
@@ -8,6 +9,7 @@ type Motion = typeof REQUIRED_CLIPS[number];
 export interface HeroModelFrame {
   speed: number; airborne: boolean; alive: boolean; shot: number; cast: number;
   castSlot: number; casting: boolean; reducedMotion: boolean;
+  castElapsed?: number; castStartedAt?: number;
   pitch?: number;
 }
 export interface HeroAssetDiagnostic {
@@ -130,6 +132,7 @@ export class HeroModelLibrary {
     const skeletons = skins.map(skin => { if (!this.skeletonIds.has(skin)) this.skeletonIds.set(skin, this.nextSkeletonId++); return this.skeletonIds.get(skin)!; });
     const transitions: Record<string, number> = { idle: 1 };
     let time = 0, lastShot = -1, lastCast = -1, actionUntil = 0, action = '', base = 'idle', dead = false, disposed = false, fading = false, aimPitch = 0;
+    let lockedCastKey: string | null = null;
     const baseLayer = anim.baseLayer!; baseLayer.play('idle');
     const aimBones = [['spine03', .25], ['upperarm01.L', .75], ['upperarm01.R', .75], ['head', .75]] as const;
     const aimNodes = aimBones.flatMap(([name, amount]) => {
@@ -164,14 +167,30 @@ export class HeroModelLibrary {
         const castName = tracks.has(`cast${frame.castSlot + 1}`) ? `cast${frame.castSlot + 1}` : 'cast';
         const actionName = frame.cast > lastCast && frame.cast > 0 ? castName : frame.shot > lastShot && frame.shot > 0 ? 'fire' : '';
         lastShot = frame.shot; lastCast = frame.cast;
+        const locked = lockedCastPlayback(frame, lockedCastKey, tracks.get(castName)!.duration);
+        if (locked) {
+          // Stationary preparation and authority-driven travel use the complete
+          // authored pose, including hips/knees. Airborne does not replace it.
+          action = ''; actionUntil = 0; fading = false;
+          if (locked.seekSeconds !== null) {
+            // Direct weight assignment alone does not cancel PlayCanvas's
+            // outstanding blend target. Cancel once, when this cast is entered.
+            if (upper) { upper.blendToWeight(0, 0); upper.weight = 0; }
+            baseLayer.transition(locked.clip, 0);
+            baseLayer.activeStateCurrentTime = locked.seekSeconds;
+            base = locked.clip; transitions[base] = (transitions[base] || 0) + 1;
+          }
+          lockedCastKey = locked.key; anim.speed = 1;
+          return;
+        }
+        if (lockedCastKey !== null) {
+          lockedCastKey = null; action = ''; actionUntil = 0;
+          if (upper) { upper.blendToWeight(0, 0); upper.weight = 0; }
+        }
         if (actionName && frame.alive) {
           transitions[actionName] = (transitions[actionName] || 0) + 1;
           action = actionName; actionUntil = time + Math.min(actionName === 'fire' ? .6 : 3, tracks.get(actionName)!.duration);
           if (upper) { upper.transition(actionName, frame.reducedMotion ? 0 : .065); upper.blendToWeight(1, .05); fading = false; }
-        }
-        if (frame.casting && frame.alive && actionUntil <= time) {
-          action = castName; actionUntil = time + .12;
-          if (upper && (upper.activeState !== castName || fading)) { upper.transition(castName, .1); upper.blendToWeight(1, .08); fading = false; }
         }
         const next: Motion | string = !frame.alive ? 'defeat' : frame.airborne ? 'jump' : !upper && actionUntil > time ? action : frame.speed > .4 ? 'run' : 'idle';
         if (next !== base) { baseLayer.transition(next, frame.reducedMotion || next === 'defeat' ? 0 : .12); base = next; transitions[next] = (transitions[next] || 0) + 1; }

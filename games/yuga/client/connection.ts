@@ -3,10 +3,10 @@ import { YUGA_PROTOCOL } from '../shared/types';
 import type { ArenaSnapshot, ArenaInput, ArenaCommand, ServerMessage, CommandResult } from '../shared/types';
 export interface ArenaConnection { input(input:ArenaInput):void; command(command:ArenaCommand):void; pause(paused:boolean):void; close():void; reconnect?():void }
 export interface Callbacks { snapshot(snapshot:ArenaSnapshot):void; welcome(id:string,room:string,online:boolean):void; status(message:string,ready:boolean):void; result(result:CommandResult):void; error(message:string):void }
-export function practice(heroId:string,name:string,callbacks:Callbacks):ArenaConnection {
+export function practice(heroId:string,name:string,callbacks:Callbacks,initiallyPaused=false):ArenaConnection {
   const sim=new ArenaSimulation({room:'PRACTICE',seed:20261016});
   sim.addPlayer('local-player',name,heroId,'sun');
-  let paused=false,closed=false,previous=performance.now(),accumulator=0;
+  let paused=initiallyPaused,closed=false,previous=performance.now(),accumulator=0;
   const advance=()=>{
     const now=performance.now(),elapsed=Math.max(0,Math.min(1,(now-previous)/1000));previous=now;
     if(paused||closed){accumulator=0;return false;}

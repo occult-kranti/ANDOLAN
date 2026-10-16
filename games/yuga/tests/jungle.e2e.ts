@@ -3,14 +3,14 @@ import { createArenaServer } from '../server/server';
 import { ArenaSimulation } from '../shared/simulation';
 import { JUNGLE_RULES, NEUTRAL_STATS } from '../shared/map';
 import { YUGA_PROTOCOL, type ArenaSnapshot, type GameEvent } from '../shared/types';
-import { boot, arenaState, localActor, waitReady, imageEvidence, nativeWalk, keyboardYaw, rendered } from './browser-harness';
+import { boot, arenaState, localActor, waitReady, imageEvidence, nativeWalk, keyboardYaw, mouseAimAt, inputObservation, rendered } from './browser-harness';
 
 test('native camp approach, leash, clear, gold shard, temporary power and respawn',async({page},info)=>{
  test.setTimeout(240_000);
  const server=await createArenaServer({port:0,host:'127.0.0.1',simulation:{botsPerTeam:0}}),address=server.address;
  if(!address||typeof address==='string')throw new Error('No arena listener');
  const events=new Map<number,GameEvent>(),states:{time:number;state:string;health:number;x:number;z:number}[]=[],shards=new Map<string,{sourceId:string;value:number}>();
- let campId='';
+ let campId='';let preLock:Awaited<ReturnType<typeof inputObservation>>|undefined;
  page.on('websocket',socket=>socket.on('framereceived',frame=>{
   let message:{type:string;snapshot?:ArenaSnapshot};try{message=JSON.parse(String(frame.payload));}catch{return;}
   if(message.type!=='snapshot'||!message.snapshot)return;
@@ -29,7 +29,7 @@ test('native camp approach, leash, clear, gold shard, temporary power and respaw
   await expect.poll(async()=>(await neutral()).state,{timeout:45_000}).toBe('aggro');expect((await neutral()).targetId).toBe(actorId);await imageEvidence(page,info,'native-yaksha-aggro');
   await nativeWalk(page,'KeyA',actor=>actor.x>-3);await expect.poll(()=>states.some(state=>state.state==='returning')).toBe(true);await expect.poll(async()=>(await neutral()).state).toBe('idle');expect((await neutral()).health).toBe((await neutral()).maxHealth);
   await nativeWalk(page,'KeyD',actor=>actor.x<-14);await expect.poll(async()=>(await neutral()).state).toBe('aggro');
-  const before=await localActor(page);await keyboardYaw(page,(state,actor)=>{const target=state.neutrals.find(n=>n.id===campId)!;return Math.atan2(target.x-actor.x,target.z-actor.z);});await page.keyboard.press('KeyT');await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(campId);
+  const before=await localActor(page);await keyboardYaw(page,(state,actor)=>{const target=state.neutrals.find(n=>n.id===campId)!;return Math.atan2(target.x-actor.x,target.z-actor.z);});preLock=await mouseAimAt(page,campId);await page.keyboard.press('KeyT');await expect.poll(()=>page.evaluate(()=>window.__YUGA.metrics().targetId)).toBe(campId);
   await page.keyboard.down('KeyF');
   try{
    await expect.poll(async()=>(await neutral()).state,{timeout:25_000,intervals:[50,100]}).toBe('dead');
@@ -46,7 +46,7 @@ test('native camp approach, leash, clear, gold shard, temporary power and respaw
   await expect.poll(async()=>(await neutral()).state,{timeout:50_000}).toBe('idle');const respawned=await neutral();expect(respawned.health).toBe(respawned.maxHealth);expect((await arenaState(page)).time).toBeGreaterThanOrEqual(killed.respawnAt);expect([...events.values()].filter(event=>event.type==='gold'&&event.targetId===gold[0]!.targetId)).toHaveLength(1);
   expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);
   await info.attach('native-jungle-loop',{body:JSON.stringify({scope:'Actual local WebSocket server without hero bots; ordinary movement, target lock and primary fire. Lane waves and normal camp/buff/respawn clocks remain active. No positional, reward, health or timer setup.',states,before,after,killed,respawned,earned,gold,observedShard:shards.get(gold[0]!.targetId!)??'Shard was collected between snapshots; durable gold receipt is authoritative evidence, not a visual shard claim.',errors:diagnostics},null,2),contentType:'application/json'});
- }finally{await page.keyboard.up('KeyF');await server.close();}
+ }finally{await info.attach('native-camp-lock-diagnostics',{body:JSON.stringify({preLock,final:await inputObservation(page).catch(()=>null),states},null,2),contentType:'application/json'});await page.keyboard.up('KeyF');await server.close();}
 });
 
 test('labelled reward and camp HUD snapshots show first receipts, shared versus stolen, and expiry',async({browser},info)=>{
