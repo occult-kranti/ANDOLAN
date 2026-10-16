@@ -168,7 +168,7 @@ function brief(data) {
 function timelineSample(data) {
   const actor = data.snapshot?.actors.find(value => value.id === data.playerId);
   const instance = value => ({ id: value.id, state: value.state, action: value.action, animationTime: value.animationTime, loaded: value.loaded, fallback: value.fallback, transitions: value.transitions, poseBones: value.poseBones, pose: value.pose });
-  return { time: data.snapshot?.time, local: actor && { x: actor.x, z: actor.z, y: actor.y, health: actor.health, shield: actor.shield, cast: actor.cast }, heroes: data.assets?.instances.map(instance), units: data.assets?.units?.instances.map(instance), projectiles: data.snapshot?.projectiles.length, zones: data.snapshot?.zones.map(zone => ({ id: zone.id, kind: zone.kind, x: zone.x, z: zone.z, life: zone.life })) };
+  return { time: data.snapshot?.time, local: actor && { x: actor.x, z: actor.z, y: actor.y, health: actor.health, shield: actor.shield, cast: actor.cast }, heroes: data.assets?.instances.map(instance), units: data.assets?.units?.instances.map(instance), abilityEvents: data.snapshot?.events.filter(event => event.type === 'ability'), projectiles: data.snapshot?.projectiles.length, zones: data.snapshot?.zones.map(zone => ({ id: zone.id, kind: zone.kind, x: zone.x, z: zone.z, life: zone.life })) };
 }
 
 // CDP produces actual rendered frames, not animation reconstruction. Each shot
@@ -282,8 +282,14 @@ async function captureHero(hero) {
     const record = await shot(`${hero.id}-ability-${slot + 1}`, `${hero.name} / ${'QER'[slot]}: ${ability.name}`, 'STAGED ARENA: fixture positions/health; real accepted simulation cast', ability.mechanic === 'mithila-sanctuary' ? 8 : 6,
       () => page.keyboard.press(['KeyQ', 'KeyE', 'KeyR'][slot]), { heroId: hero.id, slot, ability: { ...ability }, category: 'ability' });
     const results = fixture.results.slice(previous); record.commands = fixture.commands.filter(command => results.some(result => result.id === command.id)); record.results = results;
-    assert.ok(results.some(result => result.ok && result.code === 'ABILITY_CAST'), `${hero.id}/${slot}: no accepted command.`);
-    assert.ok(record.after.events.some(event => event.type === 'ability' && event.actorId === 'review-local' && event.label === ability.name), `${hero.id}/${slot}: no authoritative ability event.`);
+    const accepted = results.find(result => result.ok && result.code === 'ABILITY_CAST');
+    assert.ok(accepted, `${hero.id}/${slot}: no accepted command.`);
+    // Repeated zone hits can evict the start event from the64-event ring before
+    // the last frame. Retain browser-received observations throughout this shot.
+    const watermark = Math.max(0, ...record.before.events.map(event => event.id));
+    const received = new Map([...record.timeline.flatMap(sample => sample.abilityEvents || []), ...record.after.events].filter(event => event.type === 'ability' && event.id > watermark).map(event => [event.id, event]));
+    record.receivedAbilityEvents = [...received.values()];
+    assert.ok(record.receivedAbilityEvents.some(event => event.actorId === 'review-local' && event.label === ability.name && event.time + 1e-7 >= accepted.time), `${hero.id}/${slot}: no current authoritative ability event was observed in the browser.`);
     assert.equal(record.after.fallback.length, 0); assert.equal(record.after.unitFallback.length, 0);
     if (ability.mechanic) {
       const before = record.before.instances.find(instance => instance.id === 'review-local');
