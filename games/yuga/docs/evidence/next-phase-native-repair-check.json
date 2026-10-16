@@ -1,0 +1,980 @@
+{
+  "schema": 1,
+  "startedAt": "2026-10-16T20:39:18.594Z",
+  "testRevision": "3b0e59f229da9fa4af1d917084e8a4bf20b12bf7",
+  "runtimeRevision": "d1e7450f95aefe469370b0e07cce076499acbb46",
+  "testFileHashes": {
+    "games/yuga/tests/arena.e2e.ts": "59a627158fa813a1b4054dcc704be2683a5859a6d94ef9add980553cb2b5795d",
+    "games/yuga/tests/hero-assets.e2e.ts": "946d186ba5cceb1f2f5b2fea01b6bf01798f23e010b2681948ae5c3ffff32b0d",
+    "games/yuga/tests/browser-harness.ts": "50843b3cb46332982fc4b9413c5f8a01d47757699344889f489983fced60e27a"
+  },
+  "stats": {
+    "startTime": "2026-10-16T20:39:18.594Z",
+    "duration": 321762.102,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "results": [
+    {
+      "test": "native practice movement, combat, three skills, upgrade and pause controls",
+      "status": "passed",
+      "durationMs": 38980
+    },
+    {
+      "test": "all fourteen real GLBs spawn and respond to native movement, fire, three casts and jump",
+      "status": "passed",
+      "durationMs": 281486
+    }
+  ],
+  "scope": "Two targeted real-Practice browser cases. Native keyboard/pointer only; no authority time, health, actor position, command or bot injection. All14 case uses480x400 low quality under existing maximum10fps scheduling to bound software-render cost; arena uses960x640. These results do not certify hardware performance or erase earlier960x640 timing/death failures. Full CI remains separate release gate.",
+  "nativeCombat": {
+    "scope": "native-practice",
+    "detail": {
+      "before": {
+        "id": "local-player",
+        "name": "Traveller",
+        "heroId": "rama",
+        "team": "sun",
+        "bot": false,
+        "lane": 1,
+        "connected": true,
+        "kind": "hero",
+        "x": 0,
+        "z": -56.00000000000003,
+        "y": 1.9799999999999998,
+        "yaw": 0,
+        "health": 300,
+        "maxHealth": 300,
+        "shield": 0,
+        "respawn": 0,
+        "cooldowns": [
+          7.549999999999988,
+          10.54999999999998,
+          42.60000000000008
+        ],
+        "fireCooldown": 0,
+        "credits": 60,
+        "level": 2,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "damageDealt": 0,
+        "upgrades": {
+          "power": 1,
+          "vitality": 0,
+          "tempo": 0
+        },
+        "effects": {
+          "haste": 0,
+          "slow": 0,
+          "ward": 0,
+          "vigor": 0
+        },
+        "lastInputSeq": 32
+      },
+      "combat": {
+        "rivalId": "bot-5",
+        "approach": {
+          "id": "local-player",
+          "name": "Traveller",
+          "heroId": "rama",
+          "team": "sun",
+          "bot": false,
+          "lane": 1,
+          "connected": true,
+          "kind": "hero",
+          "x": 8.279999999999996,
+          "z": -43.76000000000005,
+          "y": 0,
+          "yaw": 0,
+          "health": 300,
+          "maxHealth": 300,
+          "shield": 0,
+          "respawn": 0,
+          "cooldowns": [
+            0,
+            1.2999999999999645,
+            33.350000000000605
+          ],
+          "fireCooldown": 0,
+          "credits": 60,
+          "level": 2,
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0,
+          "damageDealt": 0,
+          "upgrades": {
+            "power": 1,
+            "vitality": 0,
+            "tempo": 0
+          },
+          "effects": {
+            "haste": 0,
+            "slow": 0,
+            "ward": 0,
+            "vigor": 0
+          },
+          "lastInputSeq": 70
+        },
+        "aim": {
+          "time": 18.75000000000013,
+          "yaw": -0.19,
+          "pitch": -0.005000000000000001,
+          "health": 300
+        },
+        "afterAttack": {
+          "id": "local-player",
+          "name": "Traveller",
+          "heroId": "rama",
+          "team": "sun",
+          "bot": false,
+          "lane": 1,
+          "connected": true,
+          "kind": "hero",
+          "x": 8.279999999999996,
+          "z": -43.76000000000005,
+          "y": 0,
+          "yaw": -0.19143446152743054,
+          "health": 300,
+          "maxHealth": 300,
+          "shield": 0,
+          "respawn": 0,
+          "cooldowns": [
+            0,
+            0,
+            28.600000000000634
+          ],
+          "fireCooldown": 0,
+          "credits": 60,
+          "level": 2,
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0,
+          "damageDealt": 68.76999999999998,
+          "upgrades": {
+            "power": 1,
+            "vitality": 0,
+            "tempo": 0
+          },
+          "effects": {
+            "haste": 0,
+            "slow": 0,
+            "ward": 0,
+            "vigor": 0
+          },
+          "lastInputSeq": 88
+        }
+      },
+      "after": {
+        "id": "local-player",
+        "name": "Traveller",
+        "heroId": "rama",
+        "team": "sun",
+        "bot": false,
+        "lane": 1,
+        "connected": true,
+        "kind": "hero",
+        "x": 8.827969960750801,
+        "z": -46.58738906451077,
+        "y": 0,
+        "yaw": -0.19143446152743054,
+        "health": 300,
+        "maxHealth": 300,
+        "shield": 0,
+        "respawn": 0,
+        "cooldowns": [
+          0,
+          0,
+          23.35000000000056
+        ],
+        "fireCooldown": 0,
+        "credits": 70,
+        "level": 2,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "damageDealt": 68.76999999999998,
+        "upgrades": {
+          "power": 1,
+          "vitality": 0,
+          "tempo": 0
+        },
+        "effects": {
+          "haste": 0,
+          "slow": 0,
+          "ward": 0,
+          "vigor": 0
+        },
+        "lastInputSeq": 114
+      },
+      "snapshotTime": 26.200000000000237,
+      "claim": "Ordinary keyboard and pointer controls, unchanged bots/health/time and authority hit rules. Pointer correction into the target-lock cone avoids prolonged keyboard acquisition under bot fire. No command, position or clock injection."
+    },
+    "pageErrors": [],
+    "commands": [],
+    "results": []
+  },
+  "nativeModelCasts": [
+    {
+      "heroId": "rama",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 7,
+      "nativeAuthorityEvents": [
+        {
+          "id": 15,
+          "label": "Steady Arrow",
+          "time": 7.399999999999982
+        }
+      ],
+      "elapsedWallMs": 1032.300000011921,
+      "elapsedSimulationSeconds": 1.0500000000000025,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": false
+    },
+    {
+      "heroId": "rama",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 7,
+      "nativeAuthorityEvents": [
+        {
+          "id": 18,
+          "label": "Measured Step",
+          "time": 9.399999999999999
+        }
+      ],
+      "elapsedWallMs": 1010.0,
+      "elapsedSimulationSeconds": 1.0000000000000142,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "rama",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 4,
+      "nativeAuthorityEvents": [
+        {
+          "id": 25,
+          "label": "Dawn Volley",
+          "time": 10.95000000000002
+        }
+      ],
+      "elapsedWallMs": 537.5999999940395,
+      "elapsedSimulationSeconds": 0.5500000000000078,
+      "observedFrames": 1,
+      "sampledCastStates": 3,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "ravana",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 10,
+      "nativeAuthorityEvents": [
+        {
+          "id": 17,
+          "label": "Tenfold Guard",
+          "time": 9.149999999999995
+        }
+      ],
+      "elapsedWallMs": 1504.5,
+      "elapsedSimulationSeconds": 1.5000000000000213,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "ravana",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 23,
+          "label": "Commanding Circle",
+          "time": 10.750000000000018
+        }
+      ],
+      "elapsedWallMs": 1526.2999999970198,
+      "elapsedSimulationSeconds": 1.550000000000022,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "ravana",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 44,
+          "label": "Crownfire",
+          "time": 12.30000000000004
+        }
+      ],
+      "elapsedWallMs": 1661.5,
+      "elapsedSimulationSeconds": 1.6500000000000234,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "arjuna",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 7,
+      "nativeAuthorityEvents": [
+        {
+          "id": 18,
+          "label": "Converging Volley",
+          "time": 7.89999999999998
+        }
+      ],
+      "elapsedWallMs": 985.0999999940395,
+      "elapsedSimulationSeconds": 1.0000000000000115,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": false
+    },
+    {
+      "heroId": "arjuna",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 7,
+      "nativeAuthorityEvents": [
+        {
+          "id": 19,
+          "label": "New Angle",
+          "time": 9.399999999999999
+        }
+      ],
+      "elapsedWallMs": 1065.8999999910593,
+      "elapsedSimulationSeconds": 1.1000000000000156,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "arjuna",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 7,
+      "nativeAuthorityEvents": [
+        {
+          "id": 26,
+          "label": "One Clear Line",
+          "time": 10.95000000000002
+        }
+      ],
+      "elapsedWallMs": 994.6000000089407,
+      "elapsedSimulationSeconds": 1.0000000000000142,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "duryodhana",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 11,
+      "nativeAuthorityEvents": [
+        {
+          "id": 22,
+          "label": "Mace Shock",
+          "time": 10.85000000000002
+        }
+      ],
+      "elapsedWallMs": 2327.0,
+      "elapsedSimulationSeconds": 2.3500000000000334,
+      "observedFrames": 4,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "duryodhana",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 56,
+          "label": "Hold the Ground",
+          "time": 13.250000000000053
+        }
+      ],
+      "elapsedWallMs": 1714.7999999970198,
+      "elapsedSimulationSeconds": 1.7000000000000242,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "duryodhana",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 90,
+          "label": "Iron Crescent",
+          "time": 15.050000000000079
+        }
+      ],
+      "elapsedWallMs": 1669.7000000029802,
+      "elapsedSimulationSeconds": 1.7000000000000242,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "hanuman",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 17,
+          "label": "Windward Leap",
+          "time": 9.149999999999995
+        }
+      ],
+      "elapsedWallMs": 1411.2000000029802,
+      "elapsedSimulationSeconds": 1.40000000000002,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": false
+    },
+    {
+      "heroId": "hanuman",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 23,
+          "label": "Bring Them Home",
+          "time": 10.650000000000016
+        }
+      ],
+      "elapsedWallMs": 1455.1000000089407,
+      "elapsedSimulationSeconds": 1.4500000000000206,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "hanuman",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 4,
+      "nativeAuthorityEvents": [
+        {
+          "id": 43,
+          "label": "Mountain Pulse",
+          "time": 12.150000000000038
+        }
+      ],
+      "elapsedWallMs": 482.5,
+      "elapsedSimulationSeconds": 0.4500000000000064,
+      "observedFrames": 1,
+      "sampledCastStates": 3,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "karna",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 6,
+      "nativeAuthorityEvents": [
+        {
+          "id": 17,
+          "label": "Sunshaft",
+          "time": 8.349999999999984
+        }
+      ],
+      "elapsedWallMs": 1017.5,
+      "elapsedSimulationSeconds": 1.0000000000000142,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "karna",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 8,
+      "nativeAuthorityEvents": [
+        {
+          "id": 20,
+          "label": "Borrowed Dawn",
+          "time": 9.850000000000005
+        }
+      ],
+      "elapsedWallMs": 1030.7000000029802,
+      "elapsedSimulationSeconds": 1.050000000000015,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "karna",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 10,
+      "nativeAuthorityEvents": [
+        {
+          "id": 35,
+          "label": "Solar Reprisal",
+          "time": 11.450000000000028
+        }
+      ],
+      "elapsedWallMs": 1816.0,
+      "elapsedSimulationSeconds": 1.8000000000000256,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "bhima",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 8,
+      "nativeAuthorityEvents": [
+        {
+          "id": 15,
+          "label": "Heavy Sweep",
+          "time": 7.84999999999998
+        }
+      ],
+      "elapsedWallMs": 1569.300000011921,
+      "elapsedSimulationSeconds": 1.5500000000000185,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "bhima",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 8,
+      "nativeAuthorityEvents": [
+        {
+          "id": 16,
+          "label": "Closing Stride",
+          "time": 9.5
+        }
+      ],
+      "elapsedWallMs": 1447.7999999970198,
+      "elapsedSimulationSeconds": 1.4500000000000206,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "bhima",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 23,
+          "label": "Thunder at Your Feet",
+          "time": 11.000000000000021
+        }
+      ],
+      "elapsedWallMs": 1450.4000000059605,
+      "elapsedSimulationSeconds": 1.4500000000000206,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "meghnad",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 17,
+          "label": "Cloud Snare",
+          "time": 8.899999999999991
+        }
+      ],
+      "elapsedWallMs": 1390.2999999970198,
+      "elapsedSimulationSeconds": 1.3500000000000192,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "meghnad",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 10,
+      "nativeAuthorityEvents": [
+        {
+          "id": 21,
+          "label": "Storm Step",
+          "time": 10.350000000000012
+        }
+      ],
+      "elapsedWallMs": 1872.3999999910593,
+      "elapsedSimulationSeconds": 1.8500000000000263,
+      "observedFrames": 4,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "meghnad",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 44,
+          "label": "Gathered Squall",
+          "time": 12.30000000000004
+        }
+      ],
+      "elapsedWallMs": 1382.5999999940395,
+      "elapsedSimulationSeconds": 1.3500000000000192,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "sita",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 7,
+      "nativeAuthorityEvents": [
+        {
+          "id": 15,
+          "label": "Grove Renewal",
+          "time": 7.099999999999983
+        }
+      ],
+      "elapsedWallMs": 951.7999999970198,
+      "elapsedSimulationSeconds": 0.9499999999999966,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": false
+    },
+    {
+      "heroId": "sita",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 7,
+      "nativeAuthorityEvents": [
+        {
+          "id": 16,
+          "label": "Rooted Path",
+          "time": 8.09999999999998
+        }
+      ],
+      "elapsedWallMs": 1037.6000000089407,
+      "elapsedSimulationSeconds": 1.050000000000015,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "sita",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 3,
+      "nativeAuthorityEvents": [
+        {
+          "id": 17,
+          "label": "Shelter of Mithila",
+          "time": 9.199999999999996
+        }
+      ],
+      "elapsedWallMs": 441.79999999701977,
+      "elapsedSimulationSeconds": 0.4500000000000064,
+      "observedFrames": 1,
+      "sampledCastStates": 2,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "draupadi",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 6,
+      "nativeAuthorityEvents": [
+        {
+          "id": 16,
+          "label": "Circle of Resolve",
+          "time": 6.949999999999983
+        }
+      ],
+      "elapsedWallMs": 1050.7000000029802,
+      "elapsedSimulationSeconds": 1.0499999999999963,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": false
+    },
+    {
+      "heroId": "draupadi",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 8,
+      "nativeAuthorityEvents": [
+        {
+          "id": 17,
+          "label": "Stand Accountable",
+          "time": 8.449999999999985
+        }
+      ],
+      "elapsedWallMs": 1016.0,
+      "elapsedSimulationSeconds": 1.3500000000000192,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "draupadi",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 6,
+      "nativeAuthorityEvents": [
+        {
+          "id": 19,
+          "label": "Unbroken Assembly",
+          "time": 9.950000000000006
+        }
+      ],
+      "elapsedWallMs": 1022.0999999940395,
+      "elapsedSimulationSeconds": 1.0000000000000142,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "subhadra",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 10,
+      "nativeAuthorityEvents": [
+        {
+          "id": 15,
+          "label": "Signal Lance",
+          "time": 6.499999999999985
+        }
+      ],
+      "elapsedWallMs": 1390.2000000029802,
+      "elapsedSimulationSeconds": 1.399999999999995,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "subhadra",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 10,
+      "nativeAuthorityEvents": [
+        {
+          "id": 18,
+          "label": "Rally Close",
+          "time": 8.349999999999984
+        }
+      ],
+      "elapsedWallMs": 1559.3999999910593,
+      "elapsedSimulationSeconds": 1.550000000000022,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "subhadra",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 8,
+      "nativeAuthorityEvents": [
+        {
+          "id": 22,
+          "label": "Twin Standards",
+          "time": 10.350000000000012
+        }
+      ],
+      "elapsedWallMs": 1155.5,
+      "elapsedSimulationSeconds": 1.1500000000000163,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "hidimbi",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 10,
+      "nativeAuthorityEvents": [
+        {
+          "id": 15,
+          "label": "Forest Boundary",
+          "time": 8.04999999999998
+        }
+      ],
+      "elapsedWallMs": 2058.2999999970198,
+      "elapsedSimulationSeconds": 2.050000000000029,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "hidimbi",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 10,
+      "nativeAuthorityEvents": [
+        {
+          "id": 19,
+          "label": "Canopy Guard",
+          "time": 10.25000000000001
+        }
+      ],
+      "elapsedWallMs": 1492.2999999970198,
+      "elapsedSimulationSeconds": 1.5000000000000213,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "hidimbi",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 12,
+      "nativeAuthorityEvents": [
+        {
+          "id": 35,
+          "label": "Grove Watch",
+          "time": 11.800000000000033
+        }
+      ],
+      "elapsedWallMs": 3053.0999999940395,
+      "elapsedSimulationSeconds": 2.5500000000000362,
+      "observedFrames": 4,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "chitrangada",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 10,
+      "nativeAuthorityEvents": [
+        {
+          "id": 15,
+          "label": "Crossing Step",
+          "time": 8.449999999999985
+        }
+      ],
+      "elapsedWallMs": 1874.5,
+      "elapsedSimulationSeconds": 1.900000000000027,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "chitrangada",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 11,
+      "nativeAuthorityEvents": [
+        {
+          "id": 30,
+          "label": "Spear Arc",
+          "time": 11.250000000000025
+        }
+      ],
+      "elapsedWallMs": 1456.7000000029802,
+      "elapsedSimulationSeconds": 1.4500000000000206,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "chitrangada",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 8,
+      "nativeAuthorityEvents": [
+        {
+          "id": 49,
+          "label": "Defender\u2019s Vow",
+          "time": 12.800000000000047
+        }
+      ],
+      "elapsedWallMs": 1018.3999999910593,
+      "elapsedSimulationSeconds": 1.0000000000000142,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "ulupi",
+      "key": "KeyQ",
+      "actualTransition": "cast1",
+      "samples": 10,
+      "nativeAuthorityEvents": [
+        {
+          "id": 18,
+          "label": "River Draw",
+          "time": 10.000000000000007
+        }
+      ],
+      "elapsedWallMs": 1433.0,
+      "elapsedSimulationSeconds": 1.4500000000000206,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "ulupi",
+      "key": "KeyE",
+      "actualTransition": "cast2",
+      "samples": 9,
+      "nativeAuthorityEvents": [
+        {
+          "id": 33,
+          "label": "Cooling Current",
+          "time": 11.450000000000028
+        }
+      ],
+      "elapsedWallMs": 1477.5999999940395,
+      "elapsedSimulationSeconds": 1.5000000000000213,
+      "observedFrames": 3,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    },
+    {
+      "heroId": "ulupi",
+      "key": "KeyR",
+      "actualTransition": "cast3",
+      "samples": 6,
+      "nativeAuthorityEvents": [
+        {
+          "id": 52,
+          "label": "Naga Basin",
+          "time": 13.00000000000005
+        }
+      ],
+      "elapsedWallMs": 1096.5,
+      "elapsedSimulationSeconds": 1.1000000000000156,
+      "observedFrames": 2,
+      "sampledCastStates": 0,
+      "observedPresentedState": true
+    }
+  ],
+  "nativeModelObservationFile": "next-phase-native-casts-observations.json",
+  "pagesErrors": [],
+  "failedAssetRequests": []
+}

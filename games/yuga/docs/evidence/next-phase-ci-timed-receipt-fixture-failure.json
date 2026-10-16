@@ -1,0 +1,28 @@
+{
+  "run": 38960307944,
+  "source": "d1e7450f95aefe469370b0e07cce076499acbb46",
+  "sourceKind": "Visible public GitHub Actions HTML annotations, script/style data excluded. Authenticated API status was blocked by401; this failure is directly visible public evidence.",
+  "page": "https://github.com/occult-kranti/ANDOLAN/actions/runs/38960307944",
+  "visibleSummaries": [
+    "1 skipped\n  8 passed (3.7m)",
+    "1 failed\n    games/yuga/tests/unit-assets.e2e.ts:50:1 \u203a labelled action-age and resume snapshots preserve recent casts without replaying old history \n  8 passed (7.2m)"
+  ],
+  "failure": "1) games/yuga/tests/unit-assets.e2e.ts:50:1 \u203a labelled action-age and resume snapshots preserve recent casts without replaying old history \n    Error: expect(received).toBeGreaterThan(expected)\n\n    Expected: > 0\n    Received:   0\n\n    Call Log:\n    - Timeout 15000ms exceeded while waiting on the predicate\n\n      62 |   const beforeOld=recent.transitions.cast2||0;events.push(ability(1,2,2.1));send!();await rendered(page);expect((await rig()).transitions.cast2||0).toBe(beforeOld);\n      63 |   await page.keyboard.press('Escape');await expect(page.locator('#pause-dialog')).toBeVisible();events.push(ability(2,3,0));send!();await page.locator('#resume-game').click();await rendered(page);expect((await rig()).transitions.cast3||0).toBe(initial.transitions.cast3||0);\n    > 64 |   events.push(ability(2,4,0));send!();await expect.poll(async()=>(await rig()).transitions.cast3||0).toBeGreaterThan(initial.transitions.cast3||0);\n         |                                                                                                      ^\n      65 |   expect(diagnostics.errors).toEqual([]);expect(diagnostics.consoleErrors).toEqual([]);await info.attach('labelled-action-age-fixture',{body:JSON.stringify({scope:'Mocked authority snapshots and controlled event ages .9s/2.1s; native menu open/resume. Validates renderer freshness and history-baseline rules only, not native combat success or network latency.',initial,recent,final:await rig(),errors:diagnostics},null,2),contentType:'application/json'});\n      66 |  }finally{if(timer)clearInterval(timer);}\n      67 | });\n        at /home/runner/work/ANDOLAN/ANDOLAN/games/yuga/tests/unit-assets.e2e.ts:64:102",
+  "cause": "Obsolete presentation fixture expected a fresh Rama timed-R receipt without actor.cast state to trigger cast3. The corrected runtime intentionally suppresses that replay.",
+  "repair": "Test-only8fdf7e4 retains recentQ and too-oldE, uses ordinaryE for menu-history/fresh-event coverage, rejects lone fresh/late timedR receipts, and verifies actual actor.cast snapshot entry plus empty upper Action. Receivedtick and two-render barriers preserve meaningful negative checks.",
+  "validation": "Targeted ESLint, fullYUGAtypecheck and gitdiffcheck pass. Native fixture rerun pending exclusive browser release; no runtime code changed.",
+  "unverified": "No full rawHTML/scripts or inaccessible trace payloads archived; overall old-run completion and later replacementCI tracked separately.",
+  "finalVisibleStatus": "Failure",
+  "finalVisibleTotalDuration": "14m46s",
+  "finalVisibleGroups": {
+    "hero-assets": "4 passed (13.8m)",
+    "arena": "8 passed,1 existing opt-in release-soak skipped (3.7m)",
+    "remaining": "8 passed,1 obsolete timed-receipt fixture failed (7.2m)"
+  },
+  "replacement": {
+    "run": 38961660456,
+    "source": "8fdf7e4",
+    "observedStatus": "In progress",
+    "method": "Public ActionsHTML, no API authentication or hidden live-update data"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "run": "https://github.com/occult-kranti/ANDOLAN/actions/runs/38964044640",
+  "sourceRevision": "3b0e59f229da9fa4af1d917084e8a4bf20b12bf7",
+  "runtimeRevision": "d1e7450f95aefe469370b0e07cce076499acbb46",
+  "source": "Visible public Actions annotation only. No trace inspected; HTML scripts/session tokens excluded.",
+  "statusAtObservation": "Failure, terminal public status",
+  "assertion": "1) games/yuga/tests/jungle.e2e.ts:8:1 \u203a native camp approach, leash, clear, gold shard, temporary power and respawn \n    Error: expect(locator).toContainText(expected) failed\n\n    Locator: locator('#gold-feedback')\n    Expected substring: \"Secured\"\n    Received string:    \"Shared +10 credits\"\n    Timeout: 15000ms\n\n    Call log:\n      - Expect \"toContainText\" locator('#gold-feedback') with timeout 15000ms\n      - waiting for locator('#gold-feedback')\n        20 \u00d7 locator resolved to <div role=\"status\" id=\"gold-feedback\" data-kind=\"secure\">Shared +10 credits</div>\n           - unexpected value \"Shared +10 credits\"\n        4 \u00d7 locator resolved to <div hidden=\"\" role=\"status\" id=\"gold-feedback\" data-kind=\"secure\">Shared +10 credits</div>\n          - unexpected value \"Shared +10 credits\"\n        7 \u00d7 locator resolved to <div role=\"status\" id=\"gold-feedback\" data-kind=\"secure\">Shared +10 credits</div>\n          - unexpected value \"Shared +10 credits\"\n\n\n      39 |   expect(earned.filter(event=>event.type==='camp')).toHaveLength(1);expect(earned.filter(event=>event.type==='buff')).toHaveLength(1);expect(gold).toHaveLength(1);expect(gold[0]!.amount).toBe(JUNGLE_RULES.shardGold);expect(gold[0]!.reward).toBe('secure');\n      40 |   expect(after.credits-before.credits).toBeGreaterThanOrEqual(JUNGLE_RULES.sharedGold+JUNGLE_RULES.shardGold);expect(after.effects.vigor).toBeGreaterThan(0);\n    > 41 |   await expect(page.locator('#buff-status [data-buff=\"vigor\"]')).toBeVisible();await expect(page.locator('#gold-feedback')).toContainText('Secured');await expect(page.locator('#camp-status')).toContainText('Returns in');await imageEvidence(page,info,'native-camp-reward');\n         |                                                                                                                             ^\n      42 |   // Return along the open central route behind the friendly tower while the\n      43 |   // normal respawn clock runs; staying beside the camp would invite lane combat.\n      44 |   await keyboardYaw(page,0);await nativeWalk(page,'KeyA',actor=>actor.x>-4);await nativeWalk(page,'KeyS',actor=>actor.z<-50,25_000);\n        at /home/runner/work/ANDOLAN/ANDOLAN/games/yuga/tests/jungle.e2e.ts:41:125",
+  "precedingAssertions": "Source ordering proves unique earned camp/buff/secure30 gold receipts, wallet increase, active vigor and visible buff badge passed before this late text assertion. This is not an independent recovered trace of the transient label.",
+  "diagnosis": "The native scenario retains live lane waves. A later shared10 award legitimately replaced the2200ms transient label before the remote current-text assertion, so that assertion does not establish whether the earlier secure label appeared.",
+  "repair": "Read-only bounded observer installed before attack; require exact secure30 component, not-hidden state and the actual earned receipt ID/time. Preserve all authority and lifecycle assertions. This proves DOM state, not a guaranteed painted frame.",
+  "testRemoval": false,
+  "runtimeMutation": false,
+  "totalDuration": "11m50s",
+  "browserResults": {
+    "hero-assets": "4 passed (11.1m)",
+    "arena": "8 passed,1 existing opt-in release-soak skipped (4.0m)",
+    "remaining": "8 passed,1 failed (7.3m)",
+    "totals": {
+      "passed": 20,
+      "failed": 1,
+      "existingOptInReleaseSoakSkipped": 1
+    }
+  }
+}

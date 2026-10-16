@@ -1,0 +1,35 @@
+{
+  "run": "38966407470",
+  "sourceCommit": "157545eefdde5e5c9a12195aca13e5e92a5262ef",
+  "source": "Public GitHub Actions visible HTML annotations; scripts/styles excluded. No authenticated API or report artifact obtained.",
+  "observedStatus": "Failure",
+  "annotations": [
+    "1) games/yuga/tests/hero-assets.e2e.ts:86:1 \u203a all fourteen real GLBs spawn and respond to native movement, fire, three casts and jump \n    Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: \"arjuna\"\n    Received: undefined\n\n    Call Log:\n    - Timeout 30000ms exceeded while waiting on the predicate\n\n      91 |  await setup(page);expect(HEROES).toHaveLength(14);await expect(page.locator('[data-hero]')).toHaveCount(14);const evidence:unknown[]=[];\n      92 |  for(const hero of HEROES){\n    > 93 |   await page.locator(`[data-hero=\"${hero.id}\"]`).click();await page.locator('#inspect-hero').click();await expect(page.locator('#showcase-status')).toContainText('Drag to rotate',{timeout:60_000});await capture(page,info,`hero-${hero.id}-gallery`);await page.locator('#hero-dialog [data-close]').click();await page.locator('#practice-play').click();await expect(page.locator('#loading')).toBeHidden({timeout:120_000});await expect.poll(async()=>(await local(page))?.heroId,{timeout:30_000}).toBe(hero.id);const diagnostic=await assets(page);expect(diagnostic.assets).toHaveLength(14);expect(diagnostic.assets.every(a=>a.state==='ready'&&a.skinnedPrimitives>0&&clips.every(c=>a.animations.includes(c)))).toBe(true);expect(diagnostic.fallback).toEqual([]);const model=await local(page);expect(model).toMatchObject({loaded:true,fallback:false,skinned:true});expect(model.bones).toBeGreaterThan(5);expect(model.skeletons.length).toBeGreaterThan(0);expect(model.url).toContain('.glb');await capture(page,info,`hero-${hero.id}-spawn`);\n         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ^\n      94 |   await page.keyboard.down('KeyW');try{await expect.poll(async()=>(await local(page)).state).toBe('run');await expect.poll(async()=>(await local(page)).pose.some((v,i)=>Math.abs(v-(model.pose[i]||0))>.0001)).toBe(true);}finally{await page.keyboard.up('KeyW');}await expect.poll(async()=>(await local(page)).state).toBe('idle');const shot=(await local(page)).transitions.fire||0;await page.keyboard.down('KeyF');try{await expect.poll(async()=>(await local(page)).transitions.fire||0).toBeGreaterThan(shot);}finally{await page.keyboard.up('KeyF');}\n      95 |   const casts=[];for(const [slot,key]of ['KeyQ','KeyE','KeyR'].entries()){casts.push(await transition(page,key,`cast${slot+1}`));await expect.poll(()=>page.evaluate(()=>!window.__YUGA.snapshot()!.actors.find(a=>a.id===window.__YUGA.playerId())!.cast)).toBe(true);}\n      96 |   const jumps=(await local(page)).transitions.jump||0;await page.keyboard.down('Space');try{await expect.poll(async()=>(await local(page)).transitions.jump||0).toBeGreaterThan(jumps);}finally{await page.keyboard.up('Space');}await capture(page,info,`hero-${hero.id}-action`);const after=await local(page);for(const state of['idle','run','fire','cast1','cast2','cast3','jump'])expect(after.transitions[state]).toBeGreaterThan(0);evidence.push({heroId:hero.id,before:model,casts,after});await page.keyboard.press('Escape');await page.locator('#leave-game').click();await expect(page.locator('#lobby')).toBeVisible();\n        at /home/runner/work/ANDOLAN/ANDOLAN/games/yuga/tests/hero-assets.e2e.ts:93:492",
+    "1 failed\n    games/yuga/tests/hero-assets.e2e.ts:86:1 \u203a all fourteen real GLBs spawn and respond to native movement, fire, three casts and jump \n  3 passed (3.1m)",
+    "1 skipped\n  8 passed (4.2m)",
+    "9 passed (7.4m)"
+  ],
+  "interpretation": "Arjuna native-start assertion observed no local model after loading became hidden. A loading error can also hide loading; exact caught cause was not included in this CI annotation. Subsequent diagnostic regression will distinguish runtime startup failure from observation issues.",
+  "gateCounts": {
+    "heroAssets": {
+      "passed": 3,
+      "failed": 1,
+      "duration": "3.1m"
+    },
+    "arena": {
+      "passed": 8,
+      "skipped": 1,
+      "skipScope": "Existing opt-in normal480s soak; not disabled by this repair.",
+      "duration": "4.2m"
+    },
+    "remaining": {
+      "passed": 9,
+      "failed": 0,
+      "duration": "7.4m"
+    },
+    "totalPassed": 20,
+    "totalFailed": 1,
+    "deploy": "Not authorized by failing test gate"
+  },
+  "followup": "A labelled synchronous gallery-close/start regression independently reproduced null.systems on unchanged runtime; see next-phase-gallery-ownership-before-check.json. Exact remote exception was not observable in its original annotation."
+}

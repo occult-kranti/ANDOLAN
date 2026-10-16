@@ -33,7 +33,7 @@ To create a downloadable browser package (Python 3 required):
 npm run yuga:package
 ```
 
-This builds first, verifies all 21 GLBs against their manifests, and writes `dist/yuga-confluence-browser-beta.zip` with `START_HERE.txt` and file hashes in `BUILD_INFO.json`. Extract the whole ZIP and serve that directory over HTTP. It includes local bot Practice; online matches still require a separately configured protocol-2 HTTPS/WSS server. The packaging command is prepared for the next frozen-build check; no completed package check is implied yet.
+This builds first, verifies all 21 GLBs against their manifests, and writes `dist/yuga-confluence-browser-beta.zip` with `START_HERE.txt` and file hashes in `BUILD_INFO.json`. Extract the whole ZIP and serve that directory over HTTP. It includes local bot Practice; online matches still require a separately configured protocol-2 HTTPS/WSS server. The [earlier clean-worktree package check](docs/evidence/coastal-browser-package.json) verified the 24,855,707-byte `d1e7450` build, now preserved as `dist/yuga-confluence-browser-beta-d1e7450.zip`. The accepted ownership repair at `0d326b0` awaits a freshly verified replacement package. Package integrity does not establish public availability.
 
 ## Play
 
@@ -68,7 +68,7 @@ Client and server now use **protocol 2**. Update both together; an old server ca
 
 - [Implementation contract](docs/IMPLEMENTATION_CONTRACT.md): shared interfaces and finite release gates.
 - [Mythology and roster](docs/MYTHOLOGY_AND_ROSTER.md): fourteen original kits and exactly which source excerpts informed them.
-- [All-roster mechanics review](docs/ROSTER_MECHANICS_REVIEW.md): all42 actual skill payloads, counters, shared hit volumes and the shield/reconnect/full-body-cast repairs.
+- [All-roster mechanics review](docs/ROSTER_MECHANICS_REVIEW.md): all 42 actual skill payloads, counters, shared hit volumes and the shield/reconnect/full-body-cast repairs.
 - [Hero art bible](art/HERO_ART_BIBLE.md), [art direction](docs/ART_DIRECTION.md) and [pipeline evaluation](art/PIPELINE_EVALUATION.md): model/rig/effect requirements, actual asset route and remaining quality gaps.
 - [Mechanics research](docs/MECHANICS_RESEARCH.md), [REA analysis](docs/REA_ANALYSIS.md), [reuse ledger](docs/REUSE_LEDGER.md): inspected sources, license boundaries and research limitations.
 - [Player-experience review](docs/PLAYER_EXPERIENCE_REVIEW.md): accessible sources, unresolved feedback and concrete safeguards.
@@ -80,6 +80,8 @@ Client and server now use **protocol 2**. Update both together; an old server ca
 
 The [current AI balance matrix](docs/evidence/jungle-balance-matrix.json) contains 168 mirrored lane/seed matches under a fixed bot policy; it is not a human win-rate estimate, and bots do not deliberately farm jungle camps. The jungle baseline passed targeted browser tests, a native 480-second finish/replay, local stress, the 21-asset container and built root/nested checks.
 
-The later guides/goals, mobile presentation, corrected day/night, coastal traversal, two-client reconnect, real first-render loading gate and input-clock separation have passed their bounded checks. Short replay fixtures stay labelled; the timing test retains observed wall-clock stalls. Verification of a late timed-R animation repair, final CI/package, reviewed video and public smoke remain open in the [next-phase panel](docs/NEXT_PHASE_PANEL.md). Final candidate identity is pending; earlier artifacts do not verify later edits. Public WSS remains unprovisioned. The [tooling study](art/DEADLOCK_VIDEO_AND_TOOLING.md) records actual source reading without claiming watched Deadlock footage or proprietary asset extraction.
+Current runtime `0d326b0` fixes a reproduced gallery-to-Practice startup race and passes [all five local hero-assets cases](docs/evidence/next-phase-gallery-ownership-after-check.json), including the ownership regression, fourteen heroes' 42 actual abilities and independent skin/defeat checks. Earlier guidance, camp and recording passes retain their original source identities. The [next-phase panel](docs/NEXT_PHASE_PANEL.md) records failures, repairs and exact evidence limits; a new package, full CI and public smoke remain open. Public WSS remains unprovisioned.
+
+The separate silent `dist/yuga-actual-render-review.zip` contains the actual-render reel, 23 chapters, contact sheets and provenance from the recorded `d1e7450` build. Its [capture summary](docs/evidence/actual-render-art-review-summary.json) and [independent encoding audit](docs/evidence/next-phase-art-encoding-independent-check.json) pass: 160 shots, 2,028 source frames, all fourteen heroes/42 abilities, seven units and six city views. Ability/unit fixtures and staged coast views are labelled; the gallery shows six clips per hero. This review archive is distinct from the playable browser ZIP and does not validate the later startup repair, performance or commercial-art quality. The [tooling study](art/DEADLOCK_VIDEO_AND_TOOLING.md) records actual source reading without claiming watched Deadlock footage or proprietary asset extraction.
 
 The earlier ANDOLAN game remains a separate application at the site root. This branch's Pages workflow assembles both applications, with YUGA under `/yuga/`. A later deployment from `main` must include this assembly step to retain the new path.

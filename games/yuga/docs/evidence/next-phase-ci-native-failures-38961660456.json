@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "sourceRevision": "8fdf7e4",
+  "runtimeRevision": "d1e7450f95aefe469370b0e07cce076499acbb46",
+  "run": "https://github.com/occult-kranti/ANDOLAN/actions/runs/38961660456",
+  "observation": "Visible public Actions annotations only; GitHub API returned401. No trace or full artifact inspected. HTML scripts and session tokens excluded.",
+  "statusAtObservation": "Failure (terminal status from visible public Actions page)",
+  "groups": {
+    "remaining": "9 passed (6.0m)",
+    "hero-assets": "3 passed,1 failed (5.0m)",
+    "arena": "7 passed,1 failed,1 existing opt-in release-soak skipped (6.2m)"
+  },
+  "failures": [
+    {
+      "test": "all fourteen real GLBs spawn and respond to native movement, fire, three casts and jump",
+      "file": "games/yuga/tests/hero-assets.e2e.ts:69",
+      "assertion": "Rama KeyR must produce actual cast3 animation; expected transitions.cast3>0, received0 for15000ms",
+      "before": {
+        "state": "run",
+        "action": "cast2",
+        "transitions": {
+          "idle": 2,
+          "run": 2,
+          "fire": 2,
+          "cast1": 1,
+          "cast2": 1
+        }
+      },
+      "afterTransitions": {
+        "idle": 3,
+        "run": 2,
+        "fire": 3,
+        "cast1": 1,
+        "cast2": 1
+      },
+      "afterState": "idle",
+      "afterAction": "",
+      "authority": {
+        "health": 300,
+        "cooldowns": [
+          0,
+          0,
+          29.900000000000652
+        ],
+        "x": 0,
+        "z": -46.27999999999993,
+        "lastInputSeq": 125
+      },
+      "time": 38.599999999999945,
+      "interpretation": "R accepted by authority. Possible entire1s locked cast missed between slow renderer updates; exact chronology not proved by final annotation."
+    },
+    {
+      "test": "native practice movement, combat, three skills, upgrade and pause controls",
+      "file": "games/yuga/tests/arena.e2e.ts:71",
+      "assertion": "Native aim unavailable: local actor dead while acquiring enemy",
+      "authority": {
+        "time": 22.500000000000185,
+        "x": 5.759999999999999,
+        "z": -31.880000000000067,
+        "health": 0,
+        "respawn": 7.099999999999997,
+        "deaths": 1
+      },
+      "interpretation": "Ordinary bot death before aim completed, not an observed control/authority rejection."
+    }
+  ],
+  "totals": {
+    "passed": 19,
+    "failed": 2,
+    "existingOptInReleaseSoakSkipped": 1
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "scope": "Before-fix regression of real renderer ownership race. Only synchronous ordering of two genuine UI button handlers is a fixture; initial Practice, gallery assets and arena startup use actual application code. No engine/authority/input/clock injection.",
+  "testedBaseCommit": "157545eefdde5e5c9a12195aca13e5e92a5262ef",
+  "testFileSha256": "d11a0afe887cf7f04844b021490d4583739e827e59bb712a01747d7df822c42d",
+  "beforeRuntimeHashes": {
+    "games/yuga/client/world.ts": "a591544f373001648941f0fa5d5504dd038e89f3c2166d50857e8ccde61a33a6",
+    "games/yuga/client/render-kit.ts": "35ba092624c640892804c8f7661efd8917febcbd0da0348e4a5dfdce105fff50",
+    "games/yuga/client/cast-effects.ts": "adeb1b2470ffd99ddfbb71ffee614c0d25323b8a4a29b8202fb7873d6e32e9ca",
+    "games/yuga/client/scenery.ts": "f4df63ce1820b020f56b159d577e108bc7dd30cd502a5236745fe05f263a035d",
+    "games/yuga/client/showcase.ts": "0e7eb2ce5ad3a8ab9582172d977ab45ba44f05710a33058444ee0091cd031ef5",
+    "games/yuga/client/jungle-view.ts": "d4dbc403df16f7c5fba19f53247f643552bb62ccf9aad6837577230389ec5bba"
+  },
+  "result": "failed",
+  "durationMs": 39557,
+  "evidence": {
+    "scope": "Labelled synchronous UI lifecycle fixture: ordinary Practice and gallery preparation, then two real DOM button click handlers in one JS task. This fixes event ordering only; no engine/global/authority/clock/position mutation and no native-gameplay timing claim.",
+    "state": {
+      "at": 37865.20000000298,
+      "visibility": "visible",
+      "focus": "practice-play",
+      "dialogs": [],
+      "ui": {
+        "global-error": {
+          "hidden": true,
+          "inert": false,
+          "text": "The arena could not start: Cannot read properties of null (reading 'systems'). Try again, or select Low visual quality in Settings."
+        },
+        "status-line": {
+          "hidden": false,
+          "inert": false,
+          "text": "Practice \u00b7 bots on both teams"
+        },
+        "loading": {
+          "hidden": true,
+          "inert": false
+        },
+        "loading-copy": {
+          "hidden": false,
+          "inert": false,
+          "text": "Joining your arena\u2026"
+        },
+        "lobby": {
+          "hidden": false,
+          "inert": false
+        },
+        "hud": {
+          "hidden": true,
+          "inert": false
+        }
+      },
+      "metrics": {
+        "frames": 0,
+        "meanFps": 0,
+        "maxFrameMs": 0,
+        "pendingActions": 0,
+        "ready": false,
+        "loading": false,
+        "renderReady": false,
+        "warmFrames": 0,
+        "aimInputSeconds": 0,
+        "aimInputDroppedSeconds": 0,
+        "room": "PRACTICE",
+        "isOnline": false,
+        "yaw": 0,
+        "pitch": 0.02,
+        "targetId": null
+      },
+      "playerId": "local-player",
+      "snapshot": null,
+      "models": {
+        "assets": [
+          {
+            "heroId": "rama",
+            "state": "ready",
+            "url": "/client/assets/heroes/rama.glb"
+          },
+          {
+            "heroId": "ravana",
+            "state": "ready",
+            "url": "/client/assets/heroes/ravana.glb"
+          },
+          {
+            "heroId": "arjuna",
+            "state": "ready",
+            "url": "/client/assets/heroes/arjuna.glb"
+          },
+          {
+            "heroId": "duryodhana",
+            "state": "ready",
+            "url": "/client/assets/heroes/duryodhana.glb"
+          },
+          {
+            "heroId": "hanuman",
+            "state": "ready",
+            "url": "/client/assets/heroes/hanuman.glb"
+          },
+          {
+            "heroId": "karna",
+            "state": "ready",
+            "url": "/client/assets/heroes/karna.glb"
+          },
+          {
+            "heroId": "bhima",
+            "state": "ready",
+            "url": "/client/assets/heroes/bhima.glb"
+          },
+          {
+            "heroId": "meghnad",
+            "state": "ready",
+            "url": "/client/assets/heroes/meghnad.glb"
+          },
+          {
+            "heroId": "sita",
+            "state": "ready",
+            "url": "/client/assets/heroes/sita.glb"
+          },
+          {
+            "heroId": "draupadi",
+            "state": "ready",
+            "url": "/client/assets/heroes/draupadi.glb"
+          },
+          {
+            "heroId": "subhadra",
+            "state": "ready",
+            "url": "/client/assets/heroes/subhadra.glb"
+          },
+          {
+            "heroId": "hidimbi",
+            "state": "ready",
+            "url": "/client/assets/heroes/hidimbi.glb"
+          },
+          {
+            "heroId": "chitrangada",
+            "state": "ready",
+            "url": "/client/assets/heroes/chitrangada.glb"
+          },
+          {
+            "heroId": "ulupi",
+            "state": "ready",
+            "url": "/client/assets/heroes/ulupi.glb"
+          }
+        ],
+        "instances": [],
+        "fallback": []
+      },
+      "history": [
+        {
+          "at": 2014.5,
+          "kind": "global-error",
+          "text": "",
+          "hidden": true
+        },
+        {
+          "at": 8689.5,
+          "kind": "global-error",
+          "text": "The arena could not start: Cannot read properties of null (reading 'systems'). Try again, or select Low visual quality in Settings.",
+          "hidden": false
+        },
+        {
+          "at": 18682.29999999702,
+          "kind": "global-error",
+          "text": "The arena could not start: Cannot read properties of null (reading 'systems'). Try again, or select Low visual quality in Settings.",
+          "hidden": true
+        }
+      ]
+    },
+    "errors": []
+  },
+  "interpretation": "The actual caught startup error is null.systems after gallery disposal. All hero assets are ready but no actor models exist; loading-hidden is not equivalent to a successful start. The global error was retained before its ordinary10s hide. Independent engine/source review identifies default global app ownership on procedural Entity construction.",
+  "afterFix": "Pending full hero-assets file rerun."
+}
