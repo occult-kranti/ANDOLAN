@@ -148,7 +148,7 @@ def staged_case(name, mutation=None, expected=False, resealed_mutation=None, git
             except (ValueError,KeyError,TypeError,OSError,IndexError,subprocess.CalledProcessError) as caught: error = str(caught)
         record(name,expected,error,decoder_calls=decoder.call_count)
         if expected and error is None:
-            tracked = [row for row in observed_git if row[0] == "ls-files" and any("triad-relay-render-r1" in value for value in row)]
+            tracked = [row for row in observed_git if row[0] == "ls-files" and any(release.TRIAD_CAPTURE_DIRECTORY in value for value in row)]
             exact = {str((capture/name).relative_to(repo)) for name in release.TRIAD_CAPTURE_ASSETS}
             exact |= {str((project/name).relative_to(repo)) for name in release.TRIAD_FIXED_SOURCES | release.TRIAD_REQUIRED_RUNTIME}
             CHECKS[-1]["passed"] = decoder.call_count == 3 and bool(tracked) and exact <= set(tracked[-1])
@@ -243,10 +243,10 @@ def main():
         direct_case("decoded metadata rejects "+field,lambda c,p,e,field=field,value=value:mutate_video(c,lambda v:v["probe"]["streams"][0].update({field:value})))
     direct_case("nonfinite movie duration",lambda c,p,e:mutate_video(c,lambda v:v["probe"]["format"].update(duration="nan")))
     def untracked(arguments):
-        if arguments[0] == "ls-files" and any("triad-relay-render-r1" in value for value in arguments):
+        if arguments[0] == "ls-files" and any(release.TRIAD_CAPTURE_DIRECTORY in value for value in arguments):
             raise subprocess.CalledProcessError(1,["git",*arguments])
     staged_case("untracked Triad archive blocks staging",git_failure=untracked)
-    staged_case("changed committed Triad archive blocks staging",git_failure=lambda a:"changed archive" if a[0]=="diff" and any("triad-relay-render-r1" in value for value in a) else None)
+    staged_case("changed committed Triad archive blocks staging",git_failure=lambda a:"changed archive" if a[0]=="diff" and any(release.TRIAD_CAPTURE_DIRECTORY in value for value in a) else None)
     staged_case("wrong tag commit blocks staging",git_failure=lambda a:"b"*40 if a[0]=="rev-parse" and a[1].startswith("refs/tags/") else None)
     record("validator source remains unchanged throughout fixtures",True,None if release.record(PROJECT/"tools/release-native.py")==source_before else "Source changed during run")
     report = {"passed":all(row["passed"] for row in CHECKS),"checks":CHECKS,

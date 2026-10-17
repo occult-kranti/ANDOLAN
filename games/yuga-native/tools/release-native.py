@@ -28,9 +28,9 @@ CHECKS = ("archive", "media", "script", "film", "motion", "vfx", "audio", "nativ
 TRAVERSAL_CHECKS = ("traversal", "traversal-pose", "army", "controls", "traversal-audio", "stress",
                     "security", "release-gates", "siege-army", "vehicle-art", "siege-effects", "siege-audio", "siege-ui", "siege-release-gates", "siege-pose",
                     "relay-control", "relay-art", "relay-integration", "triad-release-gates")
-TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/triad-traversal-render-r1"
-SIEGE_CAPTURE_DIRECTORY = "docs/evidence/triad-siege-render-r1"
-TRIAD_CAPTURE_DIRECTORY = "docs/evidence/triad-relay-render-r1"
+TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/triad-traversal-render-r2"
+SIEGE_CAPTURE_DIRECTORY = "docs/evidence/triad-siege-render-r2"
+TRIAD_CAPTURE_DIRECTORY = "docs/evidence/triad-relay-render-r2"
 TRIAD_SELECTED_FRAMES = (15, 90, 175)
 TRIAD_STILLS = {"still-lotus-day.png", "still-lotus-night.png", "still-reed-day.png", "still-sky-day.png"}
 TRIAD_CAPTURE_ASSETS = {"yuga-triad-preview.mp4", "triad-render-review.json", "triad-video.json", "TRIAD-RENDER-REVIEW.md"} | TRIAD_STILLS
