@@ -30,7 +30,7 @@ rates, latency or visual parity with a commercial game.
 
 ## Current playable content
 
-One original Lanka-inspired coastal courtyard, the existing skinned Rama model,
+One original Lanka-inspired coastal courtyard, a revised skinned Rama model,
 nine animation clips, third-person movement and camera collision, a solar bow,
 sunburst, dash, five resetting targets, procedural sound cues, pause, saved
 settings, restart and return to title. The environment contains carved arches,
@@ -49,8 +49,10 @@ are described in [the art record](art/README.md).
 
 The native training controls and ability rules are explicit experiments. They
 are not a port of all fourteen browser hero kits. Assets retain their provenance
-in [NOTICE](NOTICE/ASSET-NOTICE.md); the existing Rama mesh has not been replaced
-by a new production-quality sculpt.
+in [NOTICE](NOTICE/ASSET-NOTICE.md). The current Rama revision adds original
+cobalt/ivory costume, hair, bow-grip details and PBR textures while retaining
+the existing anatomy, 164-bone rig and nine animation curves. It is an incremental
+art pass; a finished sculpt, fitted cloth and richer action animation remain open.
 
 ## Native analysis
 
@@ -75,6 +77,25 @@ optimized machine code.
 reload/reset/pause and sampled animation transforms. Scripted headless tests
 are separate from actual native-window screenshots and input checks. Build and
 public download status are recorded only after those checks complete.
+
+The [art review](art/production/ART_DIRECTION.md) records actual rendered defects
+and visual gates. [Hero review instructions](docs/HERO_RENDER_REVIEW.md) reproduce
+the staged front/rear/side and animation-pose captures. These still frames do not
+prove smooth continuous animation. Concept images remain separate from runtime
+screenshots and exported 3D assets.
+
+The [reusable-systems study](docs/research/REUSABLE_GAME_SYSTEMS.md) identifies
+versioned Godot examples, Dota 2 tools and REA forks with separate code/asset
+licenses. [Physics and graphics notes](docs/research/PHYSICS_GRAPHICS_STUDY.md)
+connect inspected sources to an implemented projectile lifetime correction.
+The [character reuse audit](docs/research/CHARACTER_REUSE_AUDIT.md) compares
+reconstructed engines and reusable game assets; the
+[reference import](docs/research/REFERENCE_CHARACTER_IMPORT.md) records the
+licensed TPS character's real Godot import, clip-name repair and unapplied bone
+mapping. It is a separate study asset, with no automatic replacement of Rama.
+
+The [task board](docs/PRODUCTION_TASK_BOARD.md) defines four rounds per subgoal:
+inspect, build, verify, then report/integrate, with separate file ownership.
 
 The [production roadmap](docs/NATIVE_PRODUCTION_ROADMAP.md) keeps full-game
 requirements open. The next game work is a native protocol-2 client using the

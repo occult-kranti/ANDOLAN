@@ -4,7 +4,8 @@ extends Node3D
 const PlayerScript = preload("res://scripts/player.gd")
 const TargetScript = preload("res://scripts/target.gd")
 const ProjectileScript = preload("res://scripts/projectile.gd")
-const CoastalWater = preload("res://scripts/coastal_water.gdshader")
+const CoastalWater = preload("res://shaders/production_water.gdshader")
+const ProductionLighting = preload("res://scripts/production_lighting.gd")
 const ENVIRONMENT_PATH := "res://assets/environment/lanka_courtyard.glb"
 const SAVE_PATH := "user://courtyard-settings.cfg"
 const INK := Color("10282e")
@@ -717,15 +718,7 @@ func _apply_settings() -> void:
 	if DisplayServer.get_name() != "headless":
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if full_screen else DisplayServer.WINDOW_MODE_WINDOWED)
 	if is_instance_valid(sun):
-		sun.shadow_enabled = shadows
-		sun.light_energy = 0.4 if night else 1.4
-		sun.light_color = Color("8baed2") if night else Color("ffdcac")
-		var environment: Environment = world_environment.environment
-		environment.ambient_light_energy = 0.35 if night else 0.72
-		var sky_material: ProceduralSkyMaterial = environment.sky.sky_material
-		sky_material.sky_top_color = Color("0e1b35") if night else Color("37596d")
-		sky_material.sky_horizon_color = Color("38566b") if night else Color("ddab7c")
-		sky_material.ground_horizon_color = sky_material.sky_horizon_color
+		ProductionLighting.apply(world_environment.environment, sun, world, night, shadows)
 
 func _quit() -> void:
 	get_tree().paused = false

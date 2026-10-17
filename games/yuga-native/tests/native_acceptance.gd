@@ -6,6 +6,10 @@ const PlayerScript = preload("res://scripts/player.gd")
 const ProjectileScript = preload("res://scripts/projectile.gd")
 const TargetScript = preload("res://scripts/target.gd")
 const REQUIRED_CLIPS := ["cast", "cast1", "cast2", "cast3", "defeat", "fire", "idle", "jump", "run"]
+const EXPECTED_BONES := 164
+const PRODUCTION_HERO_PATH := "res://assets/heroes/rama-production.glb"
+const SOURCE_HERO_PATH := "res://assets/heroes/rama.glb"
+const SOURCE_HERO_SHA256 := "a366dc927cb34208742e5617decefb2580e1cdab97f946ed4eb14687dc7abfbc"
 const ACTIONS := ["move_left", "move_right", "move_forward", "move_back", "jump", "sprint", "fire", "reload", "pulse", "dash"]
 
 var checks: Array[Dictionary] = []
@@ -21,6 +25,14 @@ func _initialize() -> void:
 
 func _run() -> void:
 	source_hashes_before = _source_hashes()
+	var missing_sources: Array[String] = []
+	for path in source_hashes_before:
+		if String(source_hashes_before[path]).length() != 64:
+			missing_sources.append(path)
+	_record("required_source_files_are_present", missing_sources.is_empty(), {"missing_or_unhashed": missing_sources, "files": source_hashes_before.size()})
+	if not missing_sources.is_empty():
+		_finish()
+		return
 	var scene = load("res://scenes/courtyard.tscn")
 	if not scene is PackedScene:
 		_record("courtyard_loads", false, {"reason": "Courtyard PackedScene did not load."})
@@ -109,12 +121,20 @@ func _make_physics_fixture() -> void:
 
 func _check_animations() -> void:
 	player.active = false
+	var source_hash := FileAccess.get_sha256(SOURCE_HERO_PATH)
+	var production_hash := FileAccess.get_sha256(PRODUCTION_HERO_PATH)
+	_record("production_rama_selected_and_original_source_preserved", player.HERO_PATH == PRODUCTION_HERO_PATH and source_hash == SOURCE_HERO_SHA256 and production_hash.length() == 64 and production_hash != source_hash, {"active_model": player.HERO_PATH, "production_sha256": production_hash, "original_source_sha256": source_hash, "expected_original_sha256": SOURCE_HERO_SHA256, "scope": "Production model is selected; original Rama bytes match the prior accepted source model."})
 	var skeletons: Array[Skeleton3D] = []
 	_collect_skeletons(player.visual, skeletons)
 	var bone_count := 0
 	for skeleton in skeletons:
 		bone_count += skeleton.get_bone_count()
 	var missing: Array[String] = []
+	var gameplay_clips: Array[String] = []
+	for clip in player.clips:
+		# Godot may synthesize RESET for editor/rest state; it is not an authored clip.
+		if clip != "reset":
+			gameplay_clips.append(clip)
 	for clip in REQUIRED_CLIPS:
 		if not player.clips.has(clip):
 			missing.append(clip)
@@ -141,7 +161,7 @@ func _check_animations() -> void:
 					samples += 1
 					if not pose.is_equal_approx(skeleton.get_bone_global_rest(bone)):
 						moved_samples += 1
-	_record("rama_rig_and_nine_animations_are_finite", player.model_ready and skeletons.size() > 0 and bone_count > 0 and missing.is_empty() and zero_length.is_empty() and finite and moved_samples > 0, {"skeleton_count": skeletons.size(), "bone_count": bone_count, "required_clips": REQUIRED_CLIPS, "missing_clips": missing, "zero_length_clips": zero_length, "clip_lengths_seconds": clip_lengths, "bone_transform_samples": samples, "non_rest_samples": moved_samples, "scope": "Five deterministic samples per clip; finite/non-singular transforms do not prove visual quality or every blend."})
+	_record("rama_rig_and_nine_animations_are_finite", player.model_ready and skeletons.size() > 0 and bone_count == EXPECTED_BONES and gameplay_clips.size() == REQUIRED_CLIPS.size() and missing.is_empty() and zero_length.is_empty() and finite and moved_samples > 0, {"model_path": player.HERO_PATH, "skeleton_count": skeletons.size(), "bone_count": bone_count, "expected_bones": EXPECTED_BONES, "imported_clip_count": player.clips.size(), "gameplay_clips": gameplay_clips, "required_clips": REQUIRED_CLIPS, "missing_clips": missing, "zero_length_clips": zero_length, "clip_lengths_seconds": clip_lengths, "bone_transform_samples": samples, "non_rest_samples": moved_samples, "scope": "Five deterministic samples per production clip; finite/non-singular transforms do not prove visual quality or every blend."})
 	player.active_clip = "" # The scenario sampled AnimationPlayer directly; restore normal ownership.
 	player.reset()
 	player.active = true
@@ -300,7 +320,7 @@ func _finish() -> void:
 		if argument.begins_with("--report="):
 			output = argument.trim_prefix("--report=")
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(output.get_base_dir()))
-	var report := {"schema_version": 1, "kind": "native-scripted-scenario-acceptance", "engine": Engine.get_version_info(), "renderer": "headless dummy; no visual or GPU performance evidence", "input_method": "Godot Input.action_press/action_release plus explicitly labelled public-API/isolated-world fixtures; not physical OS input", "timing": "60 Hz physics; runner --fixed-fps 60; no time scale change", "elapsed_wall_ms": Time.get_ticks_msec() - started_at, "passed": failures.is_empty(), "checks": checks, "failures": failures, "source_sha256": source_hashes_after, "limits": ["One Rama rig; nine clips sampled at five times each, not all possible blends or all heroes.", "Original offline courtyard foundation, not reconstruction or fidelity validation of commercial games.", "Rendering quality, camera feel and native hardware input require separate visible-window evidence."]}
+	var report := {"schema_version": 1, "kind": "native-scripted-scenario-acceptance", "engine": Engine.get_version_info(), "renderer": "headless dummy; no visual or GPU performance evidence", "input_method": "Godot Input.action_press/action_release plus explicitly labelled public-API/isolated-world fixtures; not physical OS input", "timing": "60 Hz physics; runner --fixed-fps 60; no time scale change", "elapsed_wall_ms": Time.get_ticks_msec() - started_at, "passed": failures.is_empty(), "checks": checks, "failures": failures, "source_sha256": source_hashes_after, "limits": ["One production Rama rig; nine clips sampled at five times each, not all possible blends or all heroes. Original source bytes are hash-checked separately.", "Original offline courtyard foundation, not reconstruction or fidelity validation of commercial games.", "Rendering quality, camera feel and native hardware input require separate visible-window evidence."]}
 	var file := FileAccess.open(output, FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(report, "\t") + "\n")
@@ -313,6 +333,6 @@ func _finish() -> void:
 
 func _source_hashes() -> Dictionary:
 	var hashes := {}
-	for path in ["project.godot", "scenes/courtyard.tscn", "scripts/courtyard.gd", "scripts/player.gd", "scripts/projectile.gd", "scripts/target.gd", "assets/heroes/rama.glb", "assets/environment/lanka_courtyard.glb", "tests/native_acceptance.gd"]:
+	for path in ["project.godot", "scenes/courtyard.tscn", "scripts/courtyard.gd", "scripts/player.gd", "scripts/projectile.gd", "scripts/target.gd", "scripts/production_lighting.gd", "shaders/production_water.gdshader", "assets/heroes/rama.glb", "assets/heroes/rama-production.glb", "assets/environment/lanka_courtyard.glb", "tests/native_acceptance.gd"]:
 		hashes[path] = FileAccess.get_sha256("res://" + path)
 	return hashes

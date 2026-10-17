@@ -30,11 +30,13 @@ func _ready() -> void:
 		look_at(global_position + direction)
 
 func _physics_process(delta: float) -> void:
-	life -= delta
 	if life <= 0:
 		queue_free()
 		return
-	var next := global_position + direction * speed * delta
+	# Sweep the final partial tick before expiry, without extending the range.
+	var travel_delta := minf(delta, life)
+	life -= travel_delta
+	var next := global_position + direction * speed * travel_delta
 	var query := PhysicsRayQueryParameters3D.create(global_position, next, 1 | 4, ignore)
 	var result := get_world_3d().direct_space_state.intersect_ray(query)
 	if not result.is_empty():
@@ -44,3 +46,5 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 	else:
 		global_position = next
+		if life <= 0:
+			queue_free()

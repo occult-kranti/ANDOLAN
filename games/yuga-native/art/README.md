@@ -48,3 +48,27 @@ This is a bounded native training environment foundation. It does not establish
 commercial-game visual parity, animation quality or complete gameplay. Assess
 its appearance using a frame rendered by the game; the build metadata is only
 structural evidence.
+
+## Courtyard refinement, revision 2
+
+The first actual native frame, `build/visual-initial/frame-3.png` from the
+`3f1b782` foundation, showed a dominant foreground lotus, dark paving lines and
+uniform gilding. The original asset remains identifiable by SHA-256
+`d1f7346aad37cecf3a8202022daea0d37cc773ba980a1a582b100540babe13da`.
+This revision follows the software-agent art review of that rendered frame.
+
+| Element | Original | Revision 2 |
+| --- | --- | --- |
+| Paving joints | 35 mm, dark bed 20 mm below the surface | 10 mm, pale mortar 2 mm below the surface |
+| Paving chamfer | 18 mm | 4 mm |
+| Spawn lotus | 2.1 m radius, raised metallic brass | 0.62 m radius, shallow matte stone |
+| Central lotus | 2.1 m radius | 1.0 m radius, quieter fine rings |
+| Main gate depth | 3.9 m arch | 7.5 m arch with deeper stone piers and recessed soffit |
+| Ornament | Frequent brass trim and roof crests | Selective burnished brass, stone gallery reveals and fewer crests |
+
+The front gate plane, 44 × 50 m movement boundary, spawn and target anchors are
+preserved. Additional gate depth extends behind the facade; no new wall or door
+crosses the central aim corridor. The material, topology and provenance checks
+are reproducible through the builder and validator. Visual acceptance requires
+the subsequent native game render; geometry changes alone do not prove that
+the intended hierarchy is achieved.

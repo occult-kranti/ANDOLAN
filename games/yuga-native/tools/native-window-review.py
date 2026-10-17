@@ -10,6 +10,7 @@ import ctypes as C
 import ctypes.util
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import shutil
@@ -124,14 +125,23 @@ def main():
                 xt.XTestFakeKeyEvent(display, code, 0, 0); x.XFlush(display)
                 record['events'].append({'action': action, 'key': name, 'heldWallSeconds': duration, 'time': time.time()})
             elif action == 'click':
-                px, py = int(command['x']), int(command['y'])
-                if not (0 <= px < 960 and 0 <= py < 600):
-                    raise ValueError('Click outside owned window.')
-                xt.XTestFakeMotionEvent(display, -1, px, py, 0)
+                move = command.get('move', True)
+                if not isinstance(move, bool):
+                    raise ValueError('Click move must be true or false.')
+                duration = float(command.get('seconds', 0.15))
+                if not math.isfinite(duration):
+                    raise ValueError('Click duration must be finite.')
+                duration = max(0.05, min(5.0, duration))
+                px, py = None, None
+                if move:
+                    px, py = int(command['x']), int(command['y'])
+                    if not (0 <= px < 960 and 0 <= py < 600):
+                        raise ValueError('Click outside owned window.')
+                    xt.XTestFakeMotionEvent(display, -1, px, py, 0)
                 xt.XTestFakeButtonEvent(display, 1, 1, 0); x.XFlush(display)
-                time.sleep(0.15)
+                time.sleep(duration)
                 xt.XTestFakeButtonEvent(display, 1, 0, 0); x.XFlush(display)
-                record['events'].append({'action': action, 'x': px, 'y': py, 'time': time.time()})
+                record['events'].append({'action': action, 'x': px, 'y': py, 'movedPointer': move, 'heldWallSeconds': duration, 'time': time.time()})
             else:
                 raise ValueError('Unknown command.')
             (out / 'input-review.json').write_text(json.dumps(record, indent=2) + '\n')

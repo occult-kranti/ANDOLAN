@@ -1,0 +1,70 @@
+{
+	"checks": [
+		{
+			"details": {
+				"damage": 0,
+				"impacts": 0,
+				"maximum_travel_metres": 2.7,
+				"remaining_seconds": 0.05,
+				"tick_seconds": 0.1
+			},
+			"name": "final_partial_lifetime_still_hits",
+			"passed": false
+		},
+		{
+			"details": {
+				"damage": 0,
+				"first_out_of_range_surface_metres": 2.71,
+				"travel_metres": 0.0
+			},
+			"name": "expiry_does_not_overshoot_range",
+			"passed": false
+		},
+		{
+			"details": {
+				"target_damage": 0,
+				"tick_travel_metres": 10.0,
+				"wall_damage": 1,
+				"wall_thickness_metres": 0.02
+			},
+			"name": "fast_sweep_respects_thin_wall",
+			"passed": true
+		},
+		{
+			"details": {
+				"shooter_damage": 0,
+				"target_damage": 1
+			},
+			"name": "shooter_exclusion_preserved",
+			"passed": true
+		},
+		{
+			"details": {
+				"substep_seconds": 0.01,
+				"substeps": 5,
+				"travel_metres": 2.15999984741211
+			},
+			"name": "partitioned_expiry_preserves_total_range",
+			"passed": false
+		},
+		{
+			"details": {
+				"damage": 0,
+				"travel_metres": 0.0
+			},
+			"name": "already_expired_has_no_travel_or_damage",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "source_unchanged_during_cases",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": false,
+	"projectile_sha256": "b06e3b17289975e1ae54faaa4e2b3357fd5edafc280efe344c2ae6f5ebdbd869",
+	"scope": "Explicit isolated fixtures and injected physics deltas. Ray queries run inside a real _physics_process callback. No renderer, normal-input, multiplayer or frame-rate claim."
+}

@@ -46,7 +46,7 @@ def texture(name, color, grain=.12, metallic=False):
     height = field * .65 + veins * .07
     rgb = np.clip(np.array(color)[None, None, :] * (1 + field[:, :, None]*grain*3)
                   - veins[:, :, None] * grain * .12, 0, 1)
-    rough = np.clip((.38 if metallic else .79) + field*.16, .2, .95)
+    rough = np.clip((.48 if metallic else .79) + field*.16, .2, .95)
     dx = (np.roll(height, -1, axis=1) - np.roll(height, 1, axis=1)) * 1.6
     dy = (np.roll(height, -1, axis=0) - np.roll(height, 1, axis=0)) * 1.6
     normals = np.stack([-dx, -dy, np.ones_like(dx)], axis=-1)
@@ -97,11 +97,14 @@ def flat(name, color, roughness=.65, metallic=0, emission=0):
     return mat
 
 
-STONE = texture("Warm_carved_sandstone", (.49,.29,.15), .11)
-PALE = texture("Pale_limestone", (.65,.56,.39), .07)
+STONE = texture("Warm_carved_sandstone", (.43,.36,.27), .11)
+PALE = texture("Pale_limestone", (.58,.54,.44), .07)
 INDIGO = texture("Indigo_glazed_stone", (.035,.075,.12), .10)
-GOLD = texture("Aged_brass", (.6,.35,.095), .06, True)
-FLOOR = [flat("Courtyard_stone_%d" % i, (.29+i*.018,.25+i*.014,.19+i*.009), .88) for i in range(4)]
+GOLD = texture("Aged_brass", (.38,.25,.105), .06, True)
+FLOOR = [flat("Courtyard_stone_%d" % i, (.30+i*.007,.28+i*.007,.24+i*.006), .88) for i in range(4)]
+GROUT = flat("Limestone_mortar", (.30,.285,.25), .94)
+INLAY = flat("Quiet_stone_inlay", (.28,.255,.205), .91)
+RECESS = flat("Recessed_gate_soffit", (.11,.12,.115), .94)
 for floor_mat in FLOOR:
     # Share the authored limestone detail maps while retaining the paving tones.
     nodes=floor_mat.node_tree.nodes
@@ -200,12 +203,12 @@ def arch(name, x, z, bottom, radius, band, depth, mat=STONE, group="COL", angle=
     return mesh(name,verts,faces,mat,group)
 
 
-def petal(name,x,z,h,length,width,angle,mat=GOLD,vertical=False):
+def petal(name,x,z,h,length,width,angle,mat=GOLD,vertical=False,relief=.045):
     # Eight-sided raised petal relief, actual geometry rather than a decal.
     pts=[(0,0),(.28*length,-width/2),(.72*length,-width*.42),(length,0),
          (.72*length,width*.42),(.28*length,width/2)]
     verts=[]
-    for lift in [0,.045]:
+    for lift in [0,relief]:
         for a,b in pts:
             dx=a*math.cos(angle)-b*math.sin(angle)
             dz=a*math.sin(angle)+b*math.cos(angle)
@@ -215,16 +218,16 @@ def petal(name,x,z,h,length,width,angle,mat=GOLD,vertical=False):
     return mesh(name,verts,faces,mat)
 
 
-def lotus(name,x,z,h,radius,mat=GOLD,vertical=False):
+def lotus(name,x,z,h,radius,mat=GOLD,vertical=False,relief=.045):
     for i in range(8):
-        petal(name+"_petal",x,z,h,radius,radius*.43,i*math.pi/4,mat,vertical)
+        petal(name+"_petal",x,z,h,radius,radius*.43,i*math.pi/4,mat,vertical,relief)
     if not vertical:
-        cylinder(name+"_heart",x,z,h+.035,radius*.16,.075,mat,16,"DECOR")
+        cylinder(name+"_heart",x,z,h+relief/2,radius*.16,relief,mat,16,"DECOR")
 
 
 def column(x,z,height=5.4,r=.46):
     box("Column_square_foot",x,z,.18,r*3,r*3,.36,PALE,bevel=True)
-    cylinder("Column_base",x,z,.46,r*1.28,.2,GOLD)
+    cylinder("Column_base",x,z,.46,r*1.28,.2,PALE)
     cylinder("Fluted_shaft",x,z,height*.48+.4,r,height*.88,STONE,16)
     # Repeated thin vertical flutes and ornamental capital leaves.
     for i in range(12):
@@ -232,7 +235,7 @@ def column(x,z,height=5.4,r=.46):
         cylinder("Column_flute",x+math.cos(t)*r*.94,z+math.sin(t)*r*.94,
                  height*.48+.4,.035,height*.80,PALE,6,"DECOR")
     for hh,rr in [(.8,1.08),(height-.45,1.1),(height-.2,1.38)]:
-        cylinder("Column_belt",x,z,hh,r*rr,.14,GOLD,24,"DECOR")
+        cylinder("Column_belt",x,z,hh,r*rr,.14,PALE,24,"DECOR")
     box("Carved_capital",x,z,height,r*3.2,r*3.2,.42,PALE,bevel=True)
 
 
@@ -272,47 +275,49 @@ def lantern(x,z,h=1.5,scale=1):
 
 # Ground: individual bevelled slabs, visible joins, broad borders and lotus inlays.
 print("YUGA courtyard: authoring paving and gate", flush=True)
-box("Courtyard_foundation",0,0,-.22,44,50,.4,INDIGO)
+box("Courtyard_foundation",0,0,-.202,44,50,.4,GROUT)
 for ix in range(22):
     for iz in range(25):
-        box("Honed_stone_paving",-21+ix*2,-24+iz*2,-.045,1.965,1.965,.09,
+        box("Honed_stone_paving",-21+ix*2,-24+iz*2,-.045,1.990,1.990,.09,
             FLOOR[(ix*7+iz*3)%4],"FLOOR_BEVEL")
 for x in [-13.3,13.3]:
     box("Processional_indigo_border",x,0,.006,.30,45,.015,INDIGO,"DECOR")
     box("Processional_brass_line",x+(-.20 if x<0 else .20),0,.012,.055,45,.02,GOLD,"DECOR")
 for z in [-15.5,15.5]:
     box("Court_cross_border",0,z,.01,27,.20,.02,INDIGO,"DECOR")
-for x,z in [(0,0),(0,11),(0,-11)]:
-    lotus("Court_lotus_inlay",x,z,.006,2.1,GOLD)
-    torus("Court_mandala",x,z,.012,2.65,.027,GOLD,segments=64)
-    torus("Court_mandala_outer",x,z,.012,2.85,.019,INDIGO,segments=64)
+for x,z,r in [(0,0,1.0),(0,11,.62),(0,-11,.75)]:
+    lotus("Court_lotus_inlay",x,z,.002,r,INLAY,relief=.008)
+    torus("Court_mandala",x,z,.004,r*1.21,.009,INLAY,segments=64)
+    torus("Court_mandala_outer",x,z,.004,r*1.30,.006,INLAY,segments=64)
 
 # Gate: open arch, stepped towers, indigo niches and carved relief crowns.
 for side in [-1,1]:
     x=side*9
     for hh,sx,sz,sh in [(.24,8,5,.48),(.62,7.6,4.7,.28),(5.1,6.8,4.1,8.7),
                         (9.6,7.2,4.5,.38),(10,7.6,4.9,.24)]:
-        box("Gate_tower_mass",x,-23,hh,sx,sz,sh,STONE,bevel=True)
-    for z in [-20.87,-25.13]:
+        # Add depth behind the existing facade: a substantial occupied stone pier.
+        box("Gate_tower_mass",x,-24.8,hh,sx,sz+3.6,sh,STONE,bevel=True)
+    for z in [-20.87]:
         box("Gate_indigo_panel",x,z,5.3,4.6,.06,5.4,INDIGO,"DECOR")
         for xx in [-2.48,2.48]:
-            box("Gate_panel_trim",x+xx,z-.05,5.3,.15,.16,5.7,GOLD,"DECOR")
+            box("Gate_panel_trim",x+xx,z-.05,5.3,.11,.16,5.7,PALE,"DECOR")
         for hh in [2.4,8.2]:
-            box("Gate_panel_cross_trim",x,z-.05,hh,5.1,.16,.15,GOLD,"DECOR")
-        lotus("Gate_lotus_relief",x,z+.11,5.3,1.6,GOLD,True)
+            box("Gate_panel_cross_trim",x,z-.05,hh,5.1,.16,.11,PALE,"DECOR")
+        lotus("Gate_lotus_relief",x,z+.11,5.3,1.10,PALE,True)
     for hh in [1.2,8.8,9.9]:
         box("Gate_carved_frieze",x,-20.8,hh,7,.22,.22,PALE,"DECOR")
-        for i in range(12):
-            cylinder("Gate_frieze_bead",x-3.1+i*.56,-20.65,hh,.10,.16,GOLD,8,"DECOR")
-    dome("Gate_lotus_dome",x,-23,10.2,3.45)
+        for i in range(6):
+            cylinder("Gate_frieze_bead",x-2.8+i*1.12,-20.65,hh,.085,.14,STONE,8,"DECOR")
+    dome("Gate_lotus_dome",x,-24.8,10.2,3.45)
     for xx in [-2.7,2.7]:
         column(x+xx,-20.5,8.8,.31)
-arch("Grand_scalloped_arch",0,-23,4.2,5.6,.74,3.9,STONE)
-arch("Grand_arch_gold_reveal",0,-20.96,4.2,5.66,.12,.12,GOLD,"DECOR")
-arch("Grand_arch_indigo_reveal",0,-20.87,4.2,6.0,.14,.10,INDIGO,"DECOR")
+arch("Grand_scalloped_arch",0,-24.8,4.2,5.6,.74,7.5,STONE)
+arch("Grand_recessed_shadow_vault",0,-25.3,4.2,5.55,.12,5.7,RECESS)
+arch("Grand_arch_gold_reveal",0,-20.96,4.2,5.66,.045,.09,GOLD,"DECOR")
+arch("Grand_arch_indigo_reveal",0,-20.87,4.2,6.0,.08,.09,INDIGO,"DECOR")
 for x in [-5.6,5.6]:
     column(x,-21.4,4.2,.48)
-box("Grand_arch_crown",0,-23,10.9,13.3,4.3,.45,PALE,bevel=True)
+box("Grand_arch_crown",0,-24.8,10.9,13.3,7.9,.45,PALE,bevel=True)
 for x in range(-6,7):
     cylinder("Crown_merlon",x,-23,11.35,.30,.52,STONE,8)
     orb("Crown_bud",x,-23,11.7,(.22,.22,.30),GOLD)
@@ -332,12 +337,12 @@ for side in [-1,1]:
         arch("Gallery_scalloped_arch",side*15.8,z,3.1,2.7,.36,.65,
              STONE,"COL",math.pi/2)
         arch("Gallery_arch_reveal",side*15.4,z,3.1,2.72,.065,.09,
-             GOLD,"DECOR",math.pi/2)
+             PALE,"DECOR",math.pi/2)
         box("Gallery_niche",side*20.99,z,2.9,.025,2.4,2.9,INDIGO,"DECOR")
     for hh,depth in [(5.72,.30),(5.98,.15)]:
         box("Gallery_cornice",x,-1,hh,6.2,36,depth,PALE,bevel=True)
-    for z in range(-17,17,2):
-        box("Gallery_roof_crest",x,z,6.28,5.7,.30,.35,GOLD,"DECOR")
+    for z in range(-17,17,4):
+        box("Gallery_roof_crest",x,z,6.28,5.7,.25,.30,STONE,"DECOR")
     for z in [-12,0,12]:
         lantern(side*14.7,z,1.65,.90)
     dome("Gallery_corner_dome",x,-17,6.13,1.9)
@@ -403,7 +408,7 @@ for group, objects in GROUPS.items():
     # One joined mesh per collision/material group keeps import draw calls bounded.
     if "BEVEL" in group:
         mod=obj.modifiers.new("Small_chamfers","BEVEL")
-        mod.width=.018 if "FLOOR" in group else .055
+        mod.width=.004 if "FLOOR" in group else .055
         mod.segments=2
         mod.affect="EDGES"
         bpy.ops.object.modifier_apply(modifier=mod.name)
@@ -442,6 +447,16 @@ assert all("NORMAL" in primitive["attributes"] for primitive in primitives), "Mi
 assert all("TEXCOORD_0" in primitive["attributes"] for primitive in primitives), "Missing exported UVs"
 metadata={
     "name":"Original Lanka-inspired coastal training courtyard",
+    "revision":"courtyard-material-refinement-v2",
+    "supersedes_glb_sha256":"d1f7346aad37cecf3a8202022daea0d37cc773ba980a1a582b100540babe13da",
+    "refinement_basis":"Actual native game frame build/visual-initial/frame-3.png at git 3f1b782; software-agent art review, not a concept image",
+    "refinements":{"paving_joint_metres":{"before":.035,"after":.010},
+        "mortar_recess_metres":{"before":.020,"after":.002},
+        "paving_chamfer_metres":{"before":.018,"after":.004},
+        "spawn_lotus_radius_metres":{"before":2.1,"after":.62},
+        "central_lotus_radius_metres":{"before":2.1,"after":1.0},
+        "arch_depth_metres":{"before":3.9,"after":7.5},
+        "materials":"Pale mortar, matte stone floor inlay, quieter sandstone/gallery trim, burnished selective brass, recessed dark soffit"},
     "generator":"art/build_courtyard.py","blender_version":bpy.app.version_string,
     "seed":SEED,"coordinate_system":"metres; GLB Y-up; XZ ground, y=0 walking surface",
     "authorship":"Original procedurally authored meshes and PBR texture maps; no commercial game data or third-party assets",

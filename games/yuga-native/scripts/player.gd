@@ -5,7 +5,7 @@ signal fired(origin: Vector3, direction: Vector3, empowered: bool)
 signal pulse(origin: Vector3)
 signal changed
 
-const HERO_PATH := "res://assets/heroes/rama.glb"
+const HERO_PATH := "res://assets/heroes/rama-production.glb"
 const SPEED := 6.0
 const SPRINT_SPEED := 9.0
 const MAGAZINE := 12
@@ -72,7 +72,9 @@ func _ready() -> void:
 	add_child(pivot)
 	spring = SpringArm3D.new()
 	spring.name = "CameraCollision"
-	spring.spring_length = 4.3
+	spring.spring_length = 3.5
+	# Offset the arm itself: SpringArm3D controls its camera child's position.
+	spring.position.x = 0.65
 	spring.margin = 0.20
 	spring.collision_mask = 1
 	spring.add_excluded_object(get_rid())
@@ -85,7 +87,7 @@ func _ready() -> void:
 	camera.fov = 65
 	camera.near = 0.08
 	camera.far = 180
-	camera.position.x = 0.52
+	camera.position.x = 0.0
 	spring.add_child(camera)
 	camera.current = true
 	_update_camera()

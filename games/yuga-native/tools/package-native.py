@@ -48,7 +48,7 @@ def json_write(path: Path, value: dict) -> None:
 
 def source_state() -> dict:
     files = []
-    for directory in ('scripts', 'scenes', 'assets'):
+    for directory in ('scripts', 'shaders', 'scenes', 'assets'):
         files.extend(p for p in (PROJECT / directory).rglob('*') if p.is_file())
     files.extend([PROJECT / 'project.godot', PROJECT / 'export_presets.cfg'])
     records = {str(p.relative_to(PROJECT)): record(p) for p in sorted(files)}
@@ -107,7 +107,7 @@ def inspect_pack(path: Path) -> dict:
         if not parts or '..' in parts or relative.startswith('/') or '\\' in relative or name in seen:
             raise ValueError(f'Unsafe or duplicate pack path: {name}')
         seen.add(name)
-        if parts[0] not in {'.godot', 'assets', 'scripts', 'scenes', 'project.binary'}:
+        if parts[0] not in {'.godot', 'assets', 'scripts', 'shaders', 'scenes', 'project.binary'}:
             raise ValueError(f'Unexpected runtime resource directory: {name}')
         if parts[0] == '.godot' and len(parts) > 1 and parts[1] not in {
             'imported', 'exported', 'global_script_class_cache.cfg', 'uid_cache.bin'}:
@@ -124,7 +124,8 @@ def inspect_pack(path: Path) -> dict:
             raise ValueError(f'Potential credential marker in payload: {name}')
         entries.append({'path': name, 'bytes': size, 'sha256': hashlib.sha256(payload).hexdigest(),
                         'stored_md5_verified': True})
-    required = ('rama.glb-', 'lanka_courtyard.glb-', 'project.binary', 'courtyard.tscn')
+    required = ('rama.glb-', 'rama-production.glb-', 'lanka_courtyard.glb-',
+                'production_water.gdshader', 'project.binary', 'courtyard.tscn')
     for item in required:
         if not any(item in entry['path'] for entry in entries):
             raise ValueError(f'Required runtime resource missing: {item}')
@@ -156,6 +157,9 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
     original_rama = REPOSITORY / 'games/yuga/client/assets/heroes/rama.glb'
     if digest(rama) != digest(original_rama):
         raise ValueError('Staged Rama asset differs from the existing YUGA source model')
+    production = json.loads((PROJECT / 'NOTICE/RAMA-PRODUCTION-PROVENANCE.json').read_text())
+    if digest(PROJECT / 'assets/heroes/rama-production.glb') != production['sha256']:
+        raise ValueError('Production Rama notice differs from the active model')
     before = source_state()
     packs = {}
     for platform in PLATFORMS:
@@ -181,7 +185,8 @@ def start_readme(platform: str) -> str:
 
 def safe_notice_copy(destination: Path) -> None:
     notices = PROJECT / 'NOTICE'
-    required = ['GODOT-LICENSE.txt', 'GODOT-COPYRIGHT.txt', 'MAKEHUMAN-ASSET-LICENSE.md', 'HERO-PROVENANCE.json']
+    required = ['GODOT-LICENSE.txt', 'GODOT-COPYRIGHT.txt', 'MAKEHUMAN-ASSET-LICENSE.md',
+                'HERO-PROVENANCE.json', 'RAMA-PRODUCTION-PROVENANCE.json']
     for name in required:
         if not (notices / name).is_file():
             raise ValueError(f'Required package notice is missing: NOTICE/{name}')
