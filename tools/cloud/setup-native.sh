@@ -10,6 +10,7 @@ case "$engine_version" in
   *) echo 'The prepared native environment requires Godot4.6.3 standard.' >&2; exit 1 ;;
 esac
 npm ci
+python3 games/yuga-native/tools/stage-world.py --check
 godot --headless --path games/yuga-native --editor --import --quit
 python3 games/yuga-native/tools/check-roadmap.py
 python3 games/yuga-native/art/validate_courtyard.py
@@ -17,6 +18,11 @@ python3 games/yuga-native/art/production/validate_rama.py
 npm run yuga:typecheck
 npm run yuga:test
 validation_dir="$(mktemp -d /tmp/yuga-native-setup-XXXXXX)"
+python3 games/yuga-native/tests/world_map_cases.py --report="$validation_dir/world-map-cases.json"
+python3 games/yuga-native/tests/world_plan_cases.py --report="$validation_dir/world-plan-cases.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_scene_cases.gd -- --report="$validation_dir/world-scene-cases.json"
+godot --headless --path games/yuga-native --script res://tests/world_lighting_cases.gd -- --report="$validation_dir/world-lighting-cases.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_flow_cases.gd -- --report="$validation_dir/world-flow-cases.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report="$validation_dir/native-acceptance.json"
 godot --headless --path games/yuga-native --script res://tests/projectile_cases.gd -- --report="$validation_dir/projectile-cases.json"
 python3 games/yuga-native/tools/setup-render-runtime.py

@@ -1,0 +1,370 @@
+extends SceneTree
+## Headless Godot physics proof for the actual world scene. No renderer/FPS claim.
+## godot --headless --path games/yuga-native --script res://tests/world_scene_cases.gd -- --report=/tmp/world-physics.json
+
+class StepDriver extends Node:
+	signal stepped
+	var pending: Callable
+	func _physics_process(_delta: float) -> void:
+		if pending.is_valid():
+			var work := pending
+			pending = Callable()
+			work.call()
+			stepped.emit()
+
+var scene: Node3D
+var driver: StepDriver
+var checks: Array[Dictionary] = []
+var manifest: Dictionary
+var before: Dictionary = {}
+var capsule: CapsuleShape3D
+
+func _initialize() -> void:
+	call_deferred("_run")
+
+func _run() -> void:
+	for path in ["res://art/world/confluence-map.json", "res://assets/world/confluence-map.json", "res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/projectile.gd", "res://scripts/world_lighting.gd", "res://scenes/confluence_world.tscn", "res://tests/world_scene_cases.gd"]:
+		before[path] = FileAccess.get_sha256(path)
+	manifest = JSON.parse_string(FileAccess.get_file_as_string("res://art/world/confluence-map.json"))
+	var packed = load("res://scenes/confluence_world.tscn")
+	if not packed is PackedScene:
+		_record("scene resource loads", false, {})
+		_finish()
+		return
+	scene = packed.instantiate()
+	root.add_child(scene)
+	driver = StepDriver.new()
+	driver.process_mode = Node.PROCESS_MODE_ALWAYS
+	root.add_child(driver)
+	await process_frame
+	if not scene.has_method("set_paused") or not scene.has_method("teleport_to") or not is_instance_valid(scene.get("player")):
+		_record("world traversal API is ready", false, {})
+		_finish()
+		return
+	_record("loaded runtime manifest equals canonical source", scene.manifest == manifest, {"loaded_path":scene.manifest_path,"loaded_sha256":FileAccess.get_sha256(scene.manifest_path),"canonical_sha256":before["res://art/world/confluence-map.json"]})
+	var blockers := get_nodes_in_group("confluence_authority_blocker").size()
+	var floors := get_nodes_in_group("confluence_floor").size()
+	_record("world collision groups", blockers == 8 and floors == 1, {"blockers":blockers,"floors":floors})
+	if blockers != 8 or floors != 1:
+		_finish()
+		return
+	scene.set_paused(false)
+	scene.player.active = false
+	scene.player.set_physics_process(false)
+	await _ready_physics()
+	capsule = CapsuleShape3D.new()
+	capsule.radius = float(manifest.bounds.hero_radius)
+	capsule.height = 1.8
+	await _query(func():
+		var errors := _box_errors()
+		_record("actual authority box surfaces", errors.is_empty(), {"rays":40, "errors":errors})
+		var floor_errors := _floor_errors()
+		_record("actual floor covers open arena", floor_errors.is_empty(), {"grid_spacing_metres":2.0, "sample_count":_floor_sample_count(), "errors":floor_errors})
+		var failures := _route_errors()
+		_record("capsule sweeps all lane and rotation segments", failures.is_empty(), {"hero_radius":capsule.radius,"hero_height":capsule.height,"errors":failures})
+		var anchors := _anchor_errors()
+		_record("spawns camps and review objectives stand on floor", anchors.is_empty(), {"anchors":manifest.spawns.size()+manifest.camps.size()+manifest.objectives.size(),"errors":anchors})
+		var radius := _player_radius()
+		_record("world player uses authority radius", abs(radius-float(manifest.bounds.hero_radius))<0.0001, {"native_radius":radius,"authority_radius":manifest.bounds.hero_radius})
+	)
+	# Deliberately break physics state in this isolated instance; each checker must
+	# detect it before restoration. These changes never touch project assets.
+	var victim: StaticBody3D = get_nodes_in_group("confluence_authority_blocker")[0]
+	var old_layer := victim.collision_layer
+	victim.collision_layer = 0
+	await _ready_physics()
+	await _query(func():
+		var errors := _box_errors()
+		_record("negative missing blocker detected by real rays", not errors.is_empty(), {"errors_detected":errors.size()})
+	)
+	victim.collision_layer = old_layer
+	var floor_body: StaticBody3D = get_nodes_in_group("confluence_floor")[0]
+	old_layer = floor_body.collision_layer
+	floor_body.collision_layer = 0
+	await _ready_physics()
+	await _query(func():
+		_record("negative missing floor detected", not _anchor_errors().is_empty(), {})
+	)
+	floor_body.collision_layer = old_layer
+	var obstruction := StaticBody3D.new()
+	obstruction.collision_layer = 1
+	obstruction.collision_mask = 0
+	obstruction.position = Vector3(0, 1, 0)
+	var shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(2, 2, 2)
+	shape.shape = box
+	obstruction.add_child(shape)
+	scene.add_child(obstruction)
+	await _ready_physics()
+	await _query(func():
+		_record("negative accidental prop blocker detected", not _route_errors().is_empty(), {})
+	)
+	obstruction.queue_free()
+	await _ready_physics()
+	for point in [Vector3(200,0,200),Vector3(-200,0,-200),Vector3(200,0,-200),Vector3(-200,0,200)]:
+		scene.teleport_to(point, 0.0)
+		await _ready_physics()
+		var position: Vector3 = scene.player.global_position
+		_record("player bounded after external displacement " + str(point), abs(position.x)<=67.3501 and abs(position.z)<=81.3501 and position.is_finite(), {"position":_xyz(position)})
+	await _query(func():
+		_record("restored scene collision passes after mutations", _box_errors().is_empty() and _anchor_errors().is_empty() and _route_errors().is_empty(), {})
+	)
+	await _check_layout_and_state()
+	var unchanged := true
+	for path in before:
+		unchanged = unchanged and before[path] == FileAccess.get_sha256(path)
+	_record("sources unchanged during run", unchanged, {})
+	_finish()
+
+func _finish() -> void:
+	var passed := true
+	for check in checks:
+		passed = passed and check.passed
+	var report := {"passed":passed,"engine":Engine.get_version_info().string,"sources":before,"checks":checks,
+		"scope":"Real headless Godot physics queries in _physics_process against instantiated native world. Floor, eight static boxes, capsule route sweeps and scene-local bounds. Objective markers remain nonblocking visual review anchors; live authority objective-circle behavior is verified separately. UI rectangles at two logical viewport sizes and injected actions/button signals are checked, not OS input. No renderer, AI, online match, continuous exhaustive proof or performance claim."}
+	print("YUGA_WORLD_PHYSICS ",JSON.stringify(report))
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--report="):
+			var file := FileAccess.open(arg.trim_prefix("--report="),FileAccess.WRITE)
+			if file:
+				file.store_string(JSON.stringify(report,"\t")+"\n")
+			else:
+				passed=false
+	quit(0 if passed else 1)
+
+func _query(work: Callable) -> void:
+	driver.pending=work
+	await driver.stepped
+
+func _ready_physics() -> void:
+	await physics_frame
+	await physics_frame
+
+func _v(values: Array) -> Vector3:
+	return Vector3(values[0],values[1],values[2])
+
+func _xyz(value: Vector3) -> Array:
+	return [value.x,value.y,value.z]
+
+func _ray(start: Vector3, finish: Vector3) -> Dictionary:
+	var query := PhysicsRayQueryParameters3D.create(start,finish,1)
+	return scene.get_world_3d().direct_space_state.intersect_ray(query)
+
+func _box_errors() -> Array:
+	var errors := []
+	for item in manifest.authority_collision_boxes:
+		var base := _v(item.position)
+		var size := _v(item.size)
+		var rays := [[base+Vector3(0,size.y+2,0),base+Vector3(0,-1,0),base+Vector3(0,size.y,0)]]
+		for direction in [Vector3.RIGHT,Vector3.LEFT,Vector3.FORWARD,Vector3.BACK]:
+			var half := size.x*0.5 if direction.x != 0 else size.z*0.5
+			rays.append([base+Vector3.UP+direction*(half+2),base+Vector3.UP,base+Vector3.UP+direction*half])
+		for ray in rays:
+			var hit := _ray(ray[0],ray[1])
+			if hit.is_empty() or hit.position.distance_to(ray[2]) > 0.02 or str(hit.collider.get_meta("authority_id", "")) != str(item.id):
+				errors.append({"id":item.id,"expected":_xyz(ray[2]),"actual":_xyz(hit.position) if not hit.is_empty() else []})
+	return errors
+
+func _static_blocked(x: float,z: float) -> bool:
+	for item in manifest.authority_collision_boxes:
+		if abs(x-float(item.position[0])) <= float(item.size[0])*0.5+0.05 and abs(z-float(item.position[2])) <= float(item.size[2])*0.5+0.05:
+			return true
+	return false
+
+func _floor_sample_count() -> int:
+	var count := 0
+	for x in range(-66,67,2):
+		for z in range(-80,81,2):
+			if not _static_blocked(x,z):
+				count+=1
+	return count
+
+func _floor_errors() -> Array:
+	var errors := []
+	for x in range(-66,67,2):
+		for z in range(-80,81,2):
+			if _static_blocked(x,z):
+				continue
+			var hit := _ray(Vector3(x,1,z),Vector3(x,-1,z))
+			if hit.is_empty() or abs(hit.position.y)>0.002 or not hit.collider.is_in_group("confluence_floor"):
+				if errors.size()<20:
+					errors.append([x,z])
+	return errors
+
+func _route_errors() -> Array:
+	var errors := []
+	var routes: Array = manifest.lanes.duplicate()
+	routes.append_array(manifest.rotations)
+	for route in routes:
+		var points: Array = route.points.duplicate()
+		if route.get("closed",false):
+			points.append(points[0])
+		for i in range(points.size()-1):
+			var start := _v(points[i])+Vector3(0,0.95,0)
+			var finish := _v(points[i+1])+Vector3(0,0.95,0)
+			var query := PhysicsShapeQueryParameters3D.new()
+			query.shape=capsule
+			query.transform=Transform3D(Basis.IDENTITY,start)
+			query.motion=finish-start
+			query.collision_mask=1
+			query.margin=0.001
+			var result := scene.get_world_3d().direct_space_state.cast_motion(query)
+			if result.size()!=2 or result[0]<0.9999:
+				errors.append({"route":route.id,"segment":i,"safe_fraction":result[0] if result.size()==2 else -1})
+	return errors
+
+func _anchor_errors() -> Array:
+	var errors := []
+	var anchors: Array = manifest.spawns.duplicate()
+	anchors.append_array(manifest.camps)
+	anchors.append_array(manifest.objectives)
+	for item in anchors:
+		var p := _v(item.position)
+		var hit := _ray(p+Vector3.UP,p-Vector3.UP)
+		if hit.is_empty() or abs(hit.position.y)>0.002 or not hit.collider.is_in_group("confluence_floor"):
+			errors.append(item.id)
+	return errors
+
+func _player_radius() -> float:
+	for child in scene.player.get_children():
+		if child is CollisionShape3D and child.shape is CapsuleShape3D:
+			return child.shape.radius
+	return -1.0
+
+func _record(label: String, passed: bool, details: Dictionary) -> void:
+	checks.append({"name":label,"passed":passed,"details":details})
+	print("PASS " if passed else "FAIL ",label)
+
+func _frames(count: int) -> void:
+	for _i in count:
+		await physics_frame
+
+func _visible_rect(control: Control) -> Array:
+	var rect := control.get_global_rect()
+	return [rect.position.x, rect.position.y, rect.size.x, rect.size.y]
+
+func _crosshair() -> Control:
+	var named: Node = scene.hud.find_child("Crosshair", true, false)
+	if named is Control: return named
+	for item in scene.hud.find_children("*", "Label", true, false):
+		if item.text == "·": return item
+	return null
+
+func _button_named(label: String) -> Button:
+	for item in scene.pause_panel.find_children("*", "Button", true, false):
+		if item.text == label: return item
+	return null
+
+func _key(code: Key) -> void:
+	var down := InputEventKey.new()
+	down.physical_keycode=code
+	down.keycode=code
+	down.pressed=true
+	Input.parse_input_event(down)
+	Input.flush_buffered_events()
+	await _frames(2)
+	var up := InputEventKey.new()
+	up.physical_keycode=code
+	up.keycode=code
+	up.pressed=false
+	Input.parse_input_event(up)
+	Input.flush_buffered_events()
+	await _frames(2)
+
+func _horizontal_distance(a: Vector3,b: Vector3) -> float:
+	return Vector2(a.x,a.z).distance_to(Vector2(b.x,b.z))
+
+func _check_layout_and_state() -> void:
+	# Both dimensions are explicit logical canvas sizes. The production window
+	# stretch mode is a separate OS/windowing concern covered by root captures.
+	for dimensions in [Vector2i(1280,720),Vector2i(960,600)]:
+		root.size=dimensions
+		root.content_scale_size=dimensions
+		scene.set_paused(true)
+		await _frames(4)
+		var viewport_rect := root.get_visible_rect()
+		var visual_controls: Array[Control] = [scene.map_control,scene.pause_panel]
+		for card_name in ["TitleCard","ControlsCard"]:
+			var card: Node = scene.hud.find_child(card_name,true,false)
+			if card is Control: visual_controls.append(card)
+		var crosshair := _crosshair()
+		if is_instance_valid(crosshair): visual_controls.append(crosshair)
+		var failures := []
+		var rectangles := {}
+		for control in visual_controls:
+			rectangles[str(control.name)]=_visible_rect(control)
+			if not viewport_rect.encloses(control.get_global_rect()): failures.append(str(control.name))
+		var buttons: Array[Node] = scene.pause_panel.find_children("*","Button",true,false)
+		for button in buttons:
+			rectangles[button.text]=_visible_rect(button)
+			if not viewport_rect.encloses(button.get_global_rect()) or not scene.pause_panel.get_global_rect().encloses(button.get_global_rect()) or button.size.y<40:
+				failures.append(button.text)
+		var overlaps := []
+		for i in range(buttons.size()):
+			for j in range(i+1,buttons.size()):
+				if buttons[i].get_global_rect().intersects(buttons[j].get_global_rect()): overlaps.append([buttons[i].text,buttons[j].text])
+			# Noninteractive HUD still must not cover any pause action visually.
+			if buttons[i].get_global_rect().intersects(scene.map_control.get_global_rect()): overlaps.append([buttons[i].text,"atlas"])
+		var centered := is_instance_valid(crosshair) and crosshair.get_global_rect().get_center().distance_to(viewport_rect.get_center())<24
+		var continue_button := _button_named("Continue exploring")
+		var focus_ready := is_instance_valid(continue_button) and continue_button.has_focus()
+		_record("UI inside viewport and controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==6 and centered and focus_ready,
+			{"logical_viewport":[viewport_rect.size.x,viewport_rect.size.y],"outside_or_small":failures,"overlaps":overlaps,"crosshair_near_center":centered,"resume_keyboard_focus":focus_ready,"rectangles":rectangles})
+	# Resume the actual character controller, then use input actions rather than
+	# assigning a fake position to prove held movement had an effect before pause.
+	scene.set_paused(false)
+	scene.player.set_physics_process(true)
+	scene.teleport_to(Vector3(0,.05,55),180)
+	await _frames(8)
+	var initial: Vector3=scene.player.position
+	Input.action_press("move_forward")
+	Input.action_press("fire")
+	await _frames(20)
+	var moved := _horizontal_distance(initial,scene.player.position)
+	var projectile_count: int=scene.projectiles.get_child_count()
+	var shooter_excluded := projectile_count>0
+	for projectile in scene.projectiles.get_children():
+		shooter_excluded = shooter_excluded and projectile.ignore.has(scene.player.get_rid())
+	_record("held fire creates actual shooter-excluded projectiles", scene.player.shots_fired>0 and projectile_count>0 and shooter_excluded,{"shots":scene.player.shots_fired,"projectile_count":projectile_count,"shooter_excluded":shooter_excluded})
+	await _key(KEY_ESCAPE)
+	var stopped: Vector3=scene.player.position
+	var shots: int=scene.player.shots_fired
+	var remaining: float=scene.player.fire_remaining
+	await _frames(30)
+	_record("pause freezes held movement and fire", moved>.5 and scene.paused and paused and _horizontal_distance(stopped,scene.player.position)<.00001 and shots==scene.player.shots_fired and is_equal_approx(remaining,scene.player.fire_remaining),
+		{"movement_before_pause":moved,"movement_during_pause":_horizontal_distance(stopped,scene.player.position),"shots_before":shots,"shots_after":scene.player.shots_fired})
+	var resume := _button_named("Continue exploring")
+	if is_instance_valid(resume): resume.pressed.emit()
+	await _frames(15)
+	_record("resume button clears stale actions", not scene.paused and not paused and not Input.is_action_pressed("move_forward") and not Input.is_action_pressed("fire") and _horizontal_distance(stopped,scene.player.position)<.02 and scene.player.shots_fired==shots,
+		{"movement_after_resume":_horizontal_distance(stopped,scene.player.position),"shots_after":scene.player.shots_fired})
+	# A dash is deliberately in progress when the real F1 action is dispatched.
+	Input.action_press("move_forward")
+	Input.action_press("dash")
+	await _frames(2)
+	var had_dash: bool=scene.player.dash_time>0
+	await _key(KEY_F1)
+	var overview_position: Vector3=scene.player.position
+	await _frames(10)
+	_record("F1 overview clears live dash and movement", had_dash and scene.overview and not scene.player.active and scene.player.dash_time==0 and scene.player.dash_direction==Vector3.ZERO and Vector2(scene.player.velocity.x,scene.player.velocity.z).length()<.00001 and not Input.is_action_pressed("move_forward") and not Input.is_action_pressed("dash") and _horizontal_distance(overview_position,scene.player.position)<.00001,
+		{"dash_was_active":had_dash,"overview":scene.overview,"movement_during_overview":_horizontal_distance(overview_position,scene.player.position)})
+	await _key(KEY_F1)
+	await _frames(8)
+	_record("F1 returns active camera with neutral movement", not scene.overview and scene.player.active and scene.player.camera.current and _horizontal_distance(overview_position,scene.player.position)<.02,{})
+	for label in ["Visit Lanka coast","Visit Metro gardens"]:
+		# Explicit fixture setup: make a fresh dash available for each transition.
+		scene.player.dash_remaining=0
+		Input.action_press("move_forward")
+		Input.action_press("dash")
+		await _frames(2)
+		if label=="Visit Lanka coast": await _key(KEY_F1)
+		var from_overview: bool=scene.overview
+		scene.set_paused(true)
+		var button := _button_named(label)
+		if is_instance_valid(button): button.pressed.emit()
+		await _frames(8)
+		var expected:=Vector3(-40 if label=="Visit Lanka coast" else 40,0,14)
+		_record(label+" button arrives neutral", is_instance_valid(button) and not scene.paused and not paused and not scene.overview and scene.player.active and scene.player.camera.current and _horizontal_distance(expected,scene.player.position)<.02 and scene.player.dash_time==0 and scene.player.dash_direction==Vector3.ZERO and Vector2(scene.player.velocity.x,scene.player.velocity.z).length()<.00001 and not Input.is_action_pressed("move_forward") and not Input.is_action_pressed("dash"),
+			{"position":_xyz(scene.player.position),"expected_xz":[expected.x,expected.z],"from_overview":from_overview,"returned_to_walking":scene.player.active and not scene.overview})
+	scene.release_actions()

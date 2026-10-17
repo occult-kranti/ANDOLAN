@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[3]
 MANIFESTS = [
     "games/yuga-native/tests/evidence/native-network-final/manifest.json",
     "games/yuga-native/docs/evidence/motion-carry-restored/archive-manifest.json",
+    "games/yuga-native/docs/evidence/confluence-r1/archive-manifest.json",
+    "games/yuga-native/docs/evidence/confluence-r2/archive-manifest.json",
 ]
 
 

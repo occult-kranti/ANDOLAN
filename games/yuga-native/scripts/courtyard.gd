@@ -317,9 +317,12 @@ func _create_ui() -> void:
 	intro.add_child(_wrapped("Train movement, aim and abilities in a single-player courtyard. Five targets return after each clear.", 16, CREAM))
 	start_button = _button("ENTER COURTYARD   →", start_training)
 	intro.add_child(start_button)
+	var explore_button := _button("EXPLORE CONFLUENCE   →", enter_confluence)
+	explore_button.name = "ExploreConfluence"
+	intro.add_child(explore_button)
 	intro.add_child(_button("SETTINGS", func(): _open_settings(true)))
 	intro.add_child(_button("QUIT TO DESKTOP", _quit))
-	intro.add_child(_wrapped("NATIVE PROTOTYPE  ·  Local training only\nWASD + mouse  ·  Esc releases the cursor", 13, MIST))
+	intro.add_child(_wrapped("Local courtyard training · Confluence map exploration\nWASD + mouse  ·  Esc releases the cursor", 13, MIST))
 	pause_panel = _modal(root, "PauseMenu", true)
 	var pause_content := _modal_content(pause_panel)
 	pause_content.add_child(_label("TAKE A BREATH", 13, GOLD))
@@ -464,6 +467,13 @@ func _modal_content(modal: Control) -> VBoxContainer:
 
 func _divider() -> HSeparator:
 	return HSeparator.new()
+
+func enter_confluence() -> void:
+	get_tree().paused = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	var error := get_tree().change_scene_to_file("res://scenes/confluence_world.tscn")
+	if error != OK:
+		push_error("Could not open Confluence: " + error_string(error))
 
 func start_training() -> void:
 	started = true

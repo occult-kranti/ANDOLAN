@@ -1,0 +1,151 @@
+{
+	"checks": [
+		{
+			"details": {
+				"canonical_sha256": "0021a3fc1a5aea2552083cce640d3fb4ebe788ccac62ed3bd57b7bb613ce7162",
+				"loaded_path": "res://assets/world/confluence-map.json",
+				"loaded_sha256": "0021a3fc1a5aea2552083cce640d3fb4ebe788ccac62ed3bd57b7bb613ce7162"
+			},
+			"name": "loaded runtime manifest equals canonical source",
+			"passed": true
+		},
+		{
+			"details": {
+				"blockers": 8,
+				"floors": 1
+			},
+			"name": "world collision groups",
+			"passed": true
+		},
+		{
+			"details": {
+				"errors": [],
+				"rays": 40
+			},
+			"name": "actual authority box surfaces",
+			"passed": true
+		},
+		{
+			"details": {
+				"errors": [],
+				"grid_spacing_metres": 2.0,
+				"sample_count": 4883
+			},
+			"name": "actual floor covers open arena",
+			"passed": true
+		},
+		{
+			"details": {
+				"errors": [],
+				"hero_height": 1.79999995231628,
+				"hero_radius": 0.649999976158142
+			},
+			"name": "capsule sweeps all lane and rotation segments",
+			"passed": true
+		},
+		{
+			"details": {
+				"anchors": 14,
+				"errors": []
+			},
+			"name": "spawns camps and review objectives stand on floor",
+			"passed": true
+		},
+		{
+			"details": {
+				"authority_radius": 0.65,
+				"native_radius": 0.649999976158142
+			},
+			"name": "world player uses authority radius",
+			"passed": true
+		},
+		{
+			"details": {
+				"errors_detected": 5
+			},
+			"name": "negative missing blocker detected by real rays",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "negative missing floor detected",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "negative accidental prop blocker detected",
+			"passed": true
+		},
+		{
+			"details": {
+				"position": [
+					67.3499984741211,
+					0.0,
+					81.3499984741211
+				]
+			},
+			"name": "player bounded after external displacement (200.0, 0.0, 200.0)",
+			"passed": true
+		},
+		{
+			"details": {
+				"position": [
+					-67.3499984741211,
+					0.0,
+					-81.3499984741211
+				]
+			},
+			"name": "player bounded after external displacement (-200.0, 0.0, -200.0)",
+			"passed": true
+		},
+		{
+			"details": {
+				"position": [
+					67.3499984741211,
+					0.0,
+					-81.3499984741211
+				]
+			},
+			"name": "player bounded after external displacement (200.0, 0.0, -200.0)",
+			"passed": true
+		},
+		{
+			"details": {
+				"position": [
+					-67.3499984741211,
+					0.0,
+					81.3499984741211
+				]
+			},
+			"name": "player bounded after external displacement (-200.0, 0.0, 200.0)",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "restored scene collision passes after mutations",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "sources unchanged during run",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": true,
+	"scope": "Real headless Godot physics queries in _physics_process against instantiated native world. Floor, eight static boxes, capsule route sweeps and scene-local bounds. Objective markers remain nonblocking visual review anchors; live authority objective-circle behavior is verified separately. No renderer, AI, online match, continuous exhaustive proof or performance claim.",
+	"sources": {
+		"res://art/world/confluence-map.json": "0021a3fc1a5aea2552083cce640d3fb4ebe788ccac62ed3bd57b7bb613ce7162",
+		"res://scenes/confluence_world.tscn": "06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3",
+		"res://scripts/confluence_world.gd": "6813354d35669bada4ad6457b162fc79d39e782686d6a2ac9a749eefae083e89",
+		"res://tests/world_scene_cases.gd": "0a325cf80266c2a07602938ad890fef97759741169e1b0b696b5b68d0163b8dd"
+	}
+}

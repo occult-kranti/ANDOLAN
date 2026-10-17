@@ -13,9 +13,10 @@ would need to demonstrate.
 
 The production target is now a downloadable PC game. Browser compatibility is
 optional. This branch establishes the native engine, original 3D environment,
-asset import and analysis toolchain. **It is a single-player training foundation,
-not the complete multiplayer game or a completed reconstruction of Deadlock or
-Overwatch.** The existing browser game remains on `game/yuga-confluence`.
+asset import and analysis toolchain. **The current native build contains local
+training and a traversable three-lane map preview. Online native matches and the
+full production visual target remain open.** The existing browser game remains
+on `game/yuga-confluence`.
 
 [Download the native art development preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-art-2026-10-17)
 for Linux or Windows, with rendered review evidence. The extracted Linux package
@@ -46,6 +47,18 @@ rates, latency or visual parity with a commercial game.
 
 ## Current playable content
 
+Choose **EXPLORE CONFLUENCE** from the title to walk a 140 × 170 m city with
+coastal ghats, temple avenue, metro gardens and reed courts. The scene combines
+eight original architecture presets and seven nature presets across 63 deliberate
+placements, animated coast/swamp water, day/night lighting, an atlas and travel
+shortcuts. It uses the current authority's static map coordinates; objective and
+camp markers are visual previews. Live armies, objective collision/state and
+networked matches are still separate integrations. See the
+[world production plan](docs/WORLD_PRODUCTION_PLAN.md) and
+[actual map review](docs/CONFLUENCE_MAP_REVIEW.md).
+
+In the courtyard:
+
 One original Lanka-inspired coastal courtyard, a revised skinned Rama model,
 nine animation clips, third-person movement and camera collision, a solar bow,
 sunburst, dash, five resetting targets, procedural sound cues, pause, saved
@@ -62,6 +75,9 @@ are described in [the art record](art/README.md).
 | Reload | R |
 | Pause and release cursor | Escape |
 | Reset courtyard | F5 |
+| Confluence day / night | N |
+| Confluence atlas view | F1 |
+| Return to Confluence arrival point | F5 |
 
 The native training controls and ability rules are explicit experiments. They
 are not a port of all fourteen browser hero kits. Assets retain their provenance

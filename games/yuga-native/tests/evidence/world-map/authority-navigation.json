@@ -1,0 +1,156 @@
+{
+  "passed": true,
+  "scope": "Executed TypeScript authority data and .5m cardinal grid; live objective blockers included. Does not prove continuous navigation, gameplay AI, native physics, renders or performance.",
+  "manifest": "games/yuga-native/art/world/confluence-map.json",
+  "manifest_sha256": "0021a3fc1a5aea2552083cce640d3fb4ebe788ccac62ed3bd57b7bb613ce7162",
+  "test_sha256": "c43a0fc61be4e9e5fb31438dba925a2e6dfdb9cdb7704e2f919b95f7fe860df1",
+  "authority_sha256": {
+    "games/yuga/shared/map.ts": "8de16e1ebedfbe3ddfb42f683c6d0e1947cb2ca9d9ed70ca8218adcb4209ca7d",
+    "games/yuga/shared/simulation.ts": "e3fa766b06333eb00b5b9b8b03d938b22d5595bdef98b0ae07c0733d0e41a260"
+  },
+  "checks": [
+    {
+      "name": "manifest equals executed authority snapshot",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "sun source authority navigation",
+      "passed": true,
+      "grid_step_m": 0.5,
+      "reachable_cells": 76853,
+      "anchors_and_approaches": 80,
+      "unreachable": []
+    },
+    {
+      "name": "moon source authority navigation",
+      "passed": true,
+      "grid_step_m": 0.5,
+      "reachable_cells": 76853,
+      "anchors_and_approaches": 80,
+      "unreachable": []
+    },
+    {
+      "name": "all source-authority walkable sampled cells connected",
+      "passed": true,
+      "open_cells": 76853
+    },
+    {
+      "name": "living objective centers blocked in authority",
+      "passed": true,
+      "incorrect_open": []
+    },
+    {
+      "name": "negative disconnected-world fixture is detected",
+      "passed": true,
+      "reachable_cells_after_cut": 38292
+    },
+    {
+      "name": "reject missing blocker",
+      "passed": true,
+      "expected_error": "box count",
+      "errors": [
+        "authority box count mismatch",
+        "authority box 7 geometry mismatch",
+        "authority box 7 collision metadata mismatch",
+        "authority box 7 style mismatch",
+        "block-7 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject shifted blocker",
+      "passed": true,
+      "expected_error": "geometry mismatch",
+      "errors": [
+        "authority box 0 geometry mismatch",
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject height mismatch",
+      "passed": true,
+      "expected_error": "geometry mismatch",
+      "errors": [
+        "authority box 0 geometry mismatch",
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject stale source",
+      "passed": true,
+      "expected_error": "source hash",
+      "errors": [
+        "map source hash mismatch"
+      ]
+    },
+    {
+      "name": "reject blocked camp anchor",
+      "passed": true,
+      "expected_error": "camp mismatch",
+      "errors": [
+        "west-reeds camp mismatch"
+      ]
+    },
+    {
+      "name": "reject shifted spawn",
+      "passed": true,
+      "expected_error": "spawn mismatch",
+      "errors": [
+        "sun spawn mismatch"
+      ]
+    },
+    {
+      "name": "reject wrong objective radius",
+      "passed": true,
+      "expected_error": "radius mismatch",
+      "errors": [
+        "sun-tower-0 radius mismatch"
+      ]
+    },
+    {
+      "name": "reject rotated authority visual",
+      "passed": true,
+      "expected_error": "footprint mismatch",
+      "errors": [
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject nonfinite placement",
+      "passed": true,
+      "expected_error": "nonfinite",
+      "errors": [
+        "nonfinite number"
+      ]
+    },
+    {
+      "name": "reject zero scale",
+      "passed": true,
+      "expected_error": "nonpositive scale",
+      "errors": [
+        "block-0 nonpositive scale",
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject narrow native capsule",
+      "passed": true,
+      "expected_error": "hero radius",
+      "errors": [
+        "hero radius mismatch"
+      ]
+    },
+    {
+      "name": "reject changed bounds",
+      "passed": true,
+      "expected_error": "movement bounds",
+      "errors": [
+        "authority movement bounds mismatch"
+      ]
+    },
+    {
+      "name": "authority sources unchanged during checks",
+      "passed": true
+    }
+  ]
+}
