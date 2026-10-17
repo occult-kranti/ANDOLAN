@@ -652,7 +652,7 @@ func _build_ui() -> void:
 	practice_hint_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	menu.add_child(practice_hint_label)
 	_button(menu,"Day / night",func():set_night(not night))
-	_button(menu,"Visit Lotus relay",func():teleport_to(Vector3(0,.05,-7),180);set_paused(false))
+	_button(menu,"Visit Lotus relay",func():teleport_to(Vector3(0,.05,-7),0);set_paused(false))
 	_button(menu,"Visit Lanka coast",func():teleport_to(Vector3(-40,.05,14),180);set_paused(false))
 	_button(menu,"Visit Metro gardens",func():teleport_to(Vector3(40,.05,14),180);set_paused(false))
 	_button(menu,"Controls / remap keys",_open_controls)

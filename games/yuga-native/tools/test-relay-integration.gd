@@ -121,6 +121,7 @@ func run() -> void:
 	scene.army.set_physics_process(false)
 	var initial_nodes := count_nodes(scene.relays)
 	var initial_boxes: int = scene.army.boxes.size()
+	await check_lotus_visit_orientation()
 	await fresh()
 	scene.player.position = Vector3(0,.05,0)
 	await ticks(79)
@@ -323,6 +324,52 @@ func run() -> void:
 	await check_physics()
 	await check_layout()
 	await finish()
+
+func check_lotus_visit_orientation() -> void:
+	scene.set_paused(true)
+	await frames(2)
+	var matches: Array = scene.pause_actions.filter(func(button): return button is Button and button.text=="Visit Lotus relay")
+	if matches.size()!=1:
+		record("lotus_visit_button_faces_safe_spawn_toward_relay",false,{"matching_buttons":matches.size()})
+		return
+	# Exercise the production button callback; this is logical UI/input evidence,
+	# not an OS click or a rendered-camera-quality claim.
+	matches[0].pressed.emit()
+	await frames(2)
+	var spawn: Vector3 = scene.player.global_position
+	var toward: Vector3 = site().position-spawn
+	toward.y = 0
+	var spawn_distance := toward.length()
+	toward = toward.normalized()
+	var camera_forward: Vector3 = -scene.player.camera.global_basis.z
+	camera_forward.y = 0
+	camera_forward = camera_forward.normalized()
+	Input.action_press("move_forward")
+	var input := Input.get_vector("move_left","move_right","move_forward","move_back")
+	var movement_basis: Vector3 = Basis(Vector3.UP,scene.player.yaw)*Vector3(input.x,0,input.y)
+	var safety: Dictionary = await query(func():
+		var space := scene.get_world_3d().direct_space_state
+		var clear := false
+		for child in scene.player.get_children():
+			if child is CollisionShape3D and child.shape is CapsuleShape3D:
+				var shape_query := PhysicsShapeQueryParameters3D.new()
+				shape_query.shape = child.shape
+				shape_query.transform = child.global_transform
+				shape_query.collision_mask = 1|4
+				clear = space.intersect_shape(shape_query,8).is_empty()
+		var floor_hit := space.intersect_ray(PhysicsRayQueryParameters3D.create(spawn+Vector3.UP,spawn+Vector3.DOWN,1))
+		return {"capsule_clear":clear,"floor_below":not floor_hit.is_empty() and floor_hit.collider.is_in_group("confluence_floor")}
+	)
+	scene.player.set_physics_process(true)
+	await frames(12)
+	scene.player.set_physics_process(false)
+	Input.action_release("move_forward")
+	var moved: Vector3 = scene.player.global_position-spawn
+	moved.y = 0
+	var camera_dot := camera_forward.dot(toward)
+	var basis_dot := movement_basis.normalized().dot(toward)
+	var motion_dot := moved.normalized().dot(toward)
+	record("lotus_visit_button_faces_safe_spawn_toward_relay",not scene.paused and not scene.overview and scene.player.camera.current and spawn.is_equal_approx(Vector3(0,.05,-7)) and spawn_distance>site().radius+.65 and safety.capsule_clear and safety.floor_below and camera_dot>.99 and basis_dot>.99 and moved.length()>.02 and motion_dot>.99,{"spawn":str(spawn),"relay_distance":spawn_distance,"safe":safety,"horizontal_camera_dot":camera_dot,"forward_input_basis_dot":basis_dot,"actual_forward_motion_dot":motion_dot,"actual_forward_distance":moved.length()})
 
 func check_physics() -> void:
 	scene.player.set_physics_process(false)

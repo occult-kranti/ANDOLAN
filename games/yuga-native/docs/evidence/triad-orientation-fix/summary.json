@@ -1,0 +1,55 @@
+{
+  "scope": "Headless actual production button callback, Input action and CharacterBody physics; not OS input or visual acceptance.",
+  "runtime_changes": [
+    "Visit Lotus relay yaw 180 -> 0"
+  ],
+  "reports": [
+    {
+      "report": "/workspace/scratch/yuga-relays/orientation-fix/relay-integration.json",
+      "sha256": "133af702aa7be6c568263d0ddf6374a92a53a9c33c241969e0aafce27d230911",
+      "passed": true,
+      "checks": 38,
+      "log_diagnostics": [],
+      "log_sha256": "101a798de14913b8a62e0b9bcc0493a43b90b789b250202b9b46222b2b9da0ca"
+    },
+    {
+      "report": "/workspace/scratch/yuga-relays/orientation-fix/world-scene.json",
+      "sha256": "09bf2c055851ccfe45d48f873217956772c7a59d7b33be199244462a994b507d",
+      "passed": true,
+      "checks": 27,
+      "log_diagnostics": [],
+      "log_sha256": "ed76a30f94c1bca4049020ae34acfdf405fc0896d0d272c2a5cc068b2cf569c4"
+    },
+    {
+      "report": "/workspace/scratch/yuga-relays/orientation-fix/siege-ui.json",
+      "sha256": "e7aadfa80c158a1d0c302f785b12e32437e0635f01c5b54d970adcb1e764e61f",
+      "passed": true,
+      "checks": 25,
+      "log_diagnostics": [],
+      "log_sha256": "1e65b5d0dc84c988da317d9e740d5b78ab69a1352ce7a13611b951c053f6c9b0"
+    }
+  ],
+  "source_sha256": {
+    "games/yuga-native/scripts/confluence_world.gd": "180d7d1671b76c9d0d565b4bac20ed4f4821ab9bf15b9a800281a65f4ddc4c1b",
+    "games/yuga-native/tools/test-relay-integration.gd": "8df3ba5d2d06671caa451f34cccce0644bcade9dcabd4220cad3702eeac18cac"
+  },
+  "orientation_evidence": {
+    "case": "lotus_visit_button_faces_safe_spawn_toward_relay",
+    "evidence": {
+      "actual_forward_distance": 0.42222261428833,
+      "actual_forward_motion_dot": 1.0,
+      "forward_input_basis_dot": 1.0,
+      "horizontal_camera_dot": 1.0,
+      "relay_distance": 7.0,
+      "safe": {
+        "capsule_clear": true,
+        "floor_below": true
+      },
+      "spawn": "(0.0, 0.05, -7.0)"
+    },
+    "passed": true
+  },
+  "passed": true,
+  "total_checks": 90,
+  "preserved_attempt": "relay-integration-attempt1-selector-error.json/log: test selector accessed HSlider.text; corrected with Button type guard."
+}
