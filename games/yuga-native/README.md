@@ -6,6 +6,11 @@ asset import and analysis toolchain. **It is a single-player training foundation
 not the complete multiplayer game or a completed reconstruction of Deadlock or
 Overwatch.** The existing browser game remains on `game/yuga-confluence`.
 
+[Download the native art development preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-art-2026-10-17)
+for Linux or Windows, with rendered review evidence. The extracted Linux package
+was exercised in this cloud worker; Windows is archive-validated but unexecuted.
+See the [production review](docs/PRODUCTION_REVIEW.md) for exact scope and hashes.
+
 ## Run the source
 
 Install Godot **4.6.3 standard**, then open `project.godot`, or run from the

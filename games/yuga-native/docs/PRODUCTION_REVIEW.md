@@ -49,7 +49,7 @@ Synthetic absolute pointer warps produced an unsuitable camera jump, so the
 aimed-night capture is not evidence of smooth normal mouse aiming. Runtime code
 was unchanged between this input review and the v4 model correction.
 
-The final v4 exported PCK is
+The first v4 exported PCK, before final release packaging, is
 `16fc5d53c3bd1706d3b628a115e4f887d559687db31b68fd906fb9fb7cf44592`.
 Its own [native-window record](evidence/window-production-v4/input-review.json)
 includes the viewed [title](evidence/window-production-v4/native-title.png),
@@ -60,6 +60,15 @@ no target hit or smooth physical-mouse claim is made. `title-screen.png` is an
 earlier startup splash and is preserved as such. The game log has no errors or
 warnings. Archive checks and renderer execution are separate from Windows
 execution, which has not been performed on this Linux worker.
+
+Final packaging from clean source `079cc0a44feb75fc1ddbdcd534cfab7f79da2302`
+excluded non-runtime art/docs from Godot's importer. The UID cache changed;
+Linux and Windows PCK resources differ only in that cache. Their exact hashes
+are recorded in [the package manifest](evidence/native-release-packages.json).
+The [extracted Linux release review](evidence/window-release-079cc0a/input-review.json)
+pins the actual packaged engine/PCK and includes the viewed title, training and
+12→10-ammunition held-fire frames. [Release verification](evidence/native-release-review.json)
+links the archive hash and successful CI run for the same source commit.
 
 ## Research translated into usable decisions
 

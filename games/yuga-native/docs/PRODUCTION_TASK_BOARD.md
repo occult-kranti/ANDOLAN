@@ -36,6 +36,23 @@ seven-worker limit is a ceiling, not a goal; only one heavy actual renderer
 runs at a time. Shared files have one owner. A model or shader change invalidates
 the corresponding old render/package proof, not unrelated source research.
 
+## Round-four handoffs
+
+- [Hero artist](../art/production/RAMA_REVIEW_ROUNDS.md): four recorded revisions;
+  introduced hand/calf defects closed in inspected v4 frames, broader art gaps open.
+- [Character import squad](research/REFERENCE_CHARACTER_IMPORT.md): two fresh
+  isolated imports reproduce the corrected names and finite samples; 21 bone-map
+  candidates remain unapplied. Next: one locomotion clip and one aim pose with
+  rest-axis compensation and actual contact/motion review.
+- [Research squad](research/CHARACTER_REUSE_AUDIT.md): five reconstructed/open-game
+  character pipelines compared; a licensed reference selected and independently
+  cross-checked, with source/asset licenses and conversion gaps recorded.
+- [Physics/QA squad](../tests/README.md): 18 native and seven projectile checks
+  pass; failed attempts and the limits of structural tests remain recorded.
+- [Integration](PRODUCTION_REVIEW.md): final actual-render evidence, clean-source
+  portable packages and successful CI; Windows execution and physical-GPU
+  performance remain separate future gates.
+
 ## Wider-game gates
 
 The [native roadmap](NATIVE_PRODUCTION_ROADMAP.md) tracks one production-quality
