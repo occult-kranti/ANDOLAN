@@ -2,6 +2,8 @@
 
 **New chat, contributor or agent:** read [START_HERE](docs/START_HERE.md) for the current build, product boundaries and task routing. The active native YUGA track has a [build handbook](games/yuga-native/docs/BUILD_HANDBOOK.md), [research brief](games/yuga-native/docs/research/RESEARCH_BRIEF.md) and [workspace guide](docs/WORKSPACE_AND_CLEANUP.md). The ANDOLAN protest-game documentation below describes its separate release. The [native siege preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-siege) adds cannon carts and royal chariots; five parallel workstreams, verification and the graphics forecast are tracked in the [siege milestone](games/yuga-native/docs/SIEGE_MILESTONE.md).
 
+The native branch now adds [Triad relays](games/yuga-native/docs/TRIAD_MILESTONE.md): territory capture, contested supply and original station art, guided by a [verified TF2 source study](games/yuga-native/docs/research/TF2_REUSE_STUDY.md). The milestone links exact test, render and publication status; native online matches and the concept-quality character benchmark remain open.
+
 **City Reform Multiplayer Beta 0.3.** Bring a crew to fictional Devnagar, share a vehicle and take city jobs. Five repeatable runs cover deliveries, vehicle recovery, a checkpoint circuit and community projects. Five linked cases begin with a media exposé, uncover four sector disputes and end in a saved crew decision: publish the full case or take Samar's deal.
 
 The original six-chapter Story remains optional, with 22 stages, seven decisions, five endings and its own evidence journal and saves. The larger six-district/22-mission game remains in [the production roadmap](docs/ROADMAP.md).

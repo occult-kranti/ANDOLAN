@@ -6,6 +6,8 @@ All commands below run from the repository root, normally `/workspace/ANDOLAN`. 
 
 ## 1. What exists, and what we are building
 
+The new [Triad relay milestone](TRIAD_MILESTONE.md) is implemented on this branch; its acceptance record distinguishes current checks, rejected captures and publication status.
+
 The published [siege and army preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-siege) is source `35b20429d2b34f06f2907d5739cf4877aac597ab`. All 62 public assets were independently downloaded and checked. The exact downloaded Linux package passed a bounded actual-window repeat of title/world entry, keyboard siege entry, F5 ordinary reset and title return. Windows was packaged/validated but not executed. See [public release evidence](evidence/siege-published/REVIEW.md) for hashes and precise tested flows. The captured runtime is `9e8f54e`; the earlier local package is `9520d616`. Nine imported scene resources differ between local/public packs, while all 227 tagged runtime source files match. This establishes source identity and the tested public behavior, not binary or visual equivalence.
 
 The playable native build contains Rama's courtyard training, a 24-second two-actor combat film, and offline Confluence practice: a 140 × 260 m three-lane city, eight landing decks, ten tether rings, finite-energy flight/grapple, five-role local armies, cannon/chariot drill, local core outcomes, day/night lighting, original sound and persistent keyboard controls. It is a prototype with bounded verified behavior. The six-second traversal and siege videos are silent; the separate film has audio.

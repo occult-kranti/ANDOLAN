@@ -34,6 +34,8 @@ Earlier traversal, cinematic, map and courtyard archives remain historical relea
 
 The current [siege milestone](docs/SIEGE_MILESTONE.md) adds cannon carts, royal chariots and immediate Siege practice. It also records the five parallel tasks and a staffing-dependent estimate for reaching the concept-art target; completion and release evidence are tracked there.
 
+The [Triad relay milestone](docs/TRIAD_MILESTONE.md) now adds capture/contest/supply, three original stations, a relay HUD and clearer siege warnings on this branch. Try **Escape → Visit Lotus relay** in Confluence. The milestone records the exact acceptance/publication status and the [TF2 source study](docs/research/TF2_REUSE_STUDY.md); no TF2 code or assets were imported.
+
 ## Run the source
 
 Install Godot **4.6.3 standard**, then open `project.godot`, or run from the

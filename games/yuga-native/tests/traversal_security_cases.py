@@ -35,7 +35,8 @@ NAMES = [
         "flight_recharge", "minion_hit", "coin", "cannon_windup", "cannon_impact", "chariot_windup", "chariot_impact")],
     *[f"scripts/{name}.gd" for name in (
         "input_bindings", "controls_overlay", "player_traversal", "traversal_pose", "traversal_landmarks",
-        "lane_army", "lane_minion", "lane_unit_art", "traversal_audio", "lane_vehicle_art", "siege_effects")],
+        "lane_army", "lane_minion", "lane_unit_art", "traversal_audio", "lane_vehicle_art", "siege_effects",
+        "relay_control", "relay_session", "relay_art")],
 ]
 
 
@@ -118,7 +119,7 @@ def main() -> int:
             entry for entry in entries if entry[0] != "scripts/lane_army.gd"])[0])
         evaluate("missing native platform stone shader rejected", pack([
             entry for entry in entries if entry[0] != "scripts/traversal_stone.gdshader"])[0])
-        for missing in ("assets/audio/siege/provenance.json", "scripts/lane_vehicle_art.gd", "scripts/siege_effects.gd", ".godot/imported/cannon_windup.wav-fixture.sample", ".godot/imported/cannon_impact.wav-fixture.sample", ".godot/imported/chariot_windup.wav-fixture.sample", ".godot/imported/chariot_impact.wav-fixture.sample"):
+        for missing in ("scripts/relay_control.gd", "scripts/relay_session.gd", "scripts/relay_art.gd", "assets/audio/siege/provenance.json", "scripts/lane_vehicle_art.gd", "scripts/siege_effects.gd", ".godot/imported/cannon_windup.wav-fixture.sample", ".godot/imported/cannon_impact.wav-fixture.sample", ".godot/imported/chariot_windup.wav-fixture.sample", ".godot/imported/chariot_impact.wav-fixture.sample"):
             evaluate("missing siege resource rejected: " + missing, pack([entry for entry in entries if entry[0] != missing])[0])
         corrupt = bytearray(baseline)
         corrupt[-1] ^= 1

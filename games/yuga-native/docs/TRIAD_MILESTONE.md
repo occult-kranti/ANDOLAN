@@ -2,7 +2,7 @@
 
 17 October 2026. This supporting milestone adds three capture-and-supply objectives to **offline native Confluence lane practice**, with original civic landmarks and clearer troop-attack markers. It builds on the published [siege preview](SIEGE_MILESTONE.md); it is not a new native multiplayer release or completion of the final visual target.
 
-**Current checkpoint:** the source study is complete. Rules, supply, world presentation and UI/effects have implementation in the shared working tree, with integrated verification still pending. Runtime sources are changing and are deliberately not hash-pinned here yet. The root integrator owns the final freeze, tests, captures, package and public-release evidence. Until those gates pass, the previously published siege release remains the verified downloadable build.
+**Current checkpoint:** source and implementation are committed at `d835d7d57565f4b4bd00c97cf71a41e64137967a`. The independent37-case relay integration gate and affected world/UI/stress suites pass. The first actual render completed capture and supply but was rejected for an inherited bright floor ring; that decoration is hidden in the committed correction. Fresh complete setup, corrected captures, package flow and public-release evidence are still pending. The previous siege release remains the verified downloadable build until publication is confirmed.
 
 ## Five bounded workstreams
 
@@ -34,7 +34,7 @@ Relays stop when the local round ends and are inactive during the six-unit Siege
 
 In Confluence, use **Escape → Visit Lotus relay** to reach the centre approach, then enter the marked zone with friendly soldiers. Nearby hints explain capture, enemy neutralization, contest, landing within the height band and supply. All three sites show ownership/progress; the minimap shows relay state. F5 keeps its established **ordinary round reset** behavior rather than being described as a simple respawn.
 
-The three landmarks use original Reed, Lotus and Sky motifs, layered stone/brass stations, angular inlaid paving and separate ownership geometry. Neutral, Sun and Moon use different symbols as well as palette. Their physical plinths must match visible solid geometry and remain off the lane centre; authored station offsets do not move the gameplay relay centres.
+The three landmarks use original Reed, Lotus and Sky motifs, layered stone/brass stations, angular inlaid paving and separate ownership geometry. Neutral, Sun and Moon use different symbols as well as palette. Their physical plinths match visible solid geometry at x−34/−6/+34,z4, clear of both lane and cross-mid rotation routes; authored station offsets do not move the gameplay relay centres.
 
 Persistent capture inlays must remain quieter than imminent danger. The effects revision replaces full bright siege rings with segmented blast boundaries, a source-facing pointer and different team-shaped ticks. Exact attack radius, position and timing remain authoritative. They indicate **attacks on troops** in this prototype; the hero still has no damage/death receiver. Actual overlapping day/night fights must establish whether the revised hierarchy works.
 
@@ -44,7 +44,7 @@ Persistent capture inlays must remain quieter than imminent danger. The effects 
 
 The ledger contains 25 records: 20 successfully fetched source/doc files, repository metadata and explicit access failures. All 23 saved response payloads were checked by length and SHA-256; recorded line ranges and source references validate. The independent reviewer checked all 12 community records and the saved payloads. The ordinary Reddit request returned 403 HTML, and the official rendering paper/publications hosts were blocked: no new Reddit corpus or paper-reading claim is made.
 
-Only these stable research artifacts are pinned in the supporting ledger at this stage. Runtime/test/render hashes will be recorded after source freeze. Existing siege evidence proves its historical source; it must not be relabeled as proof of the new relay behavior.
+Current source/owner checks are retained in [triad-integration](evidence/triad-integration/REVIEW.md), independent behavior/collision checks in [triad-qa](evidence/triad-qa/REVIEW.md), and the rejected first actual view in [triad-render-r1-rejected](evidence/triad-render-r1-rejected/REVIEW.md). Final setup and corrected capture hashes will accompany release acceptance. Existing siege evidence proves its historical source; it must not be relabeled as proof of the new relay behavior.
 
 ## Three review rounds and release gates
 

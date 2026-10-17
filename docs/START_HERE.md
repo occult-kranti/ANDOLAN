@@ -10,6 +10,8 @@ The native preview has Rama training, a separate 24-second animated duel film, a
 
 The intended game is **6v6, fourteen heroes, three lanes and an 18-minute match**. Native online matches, the complete native hero roster, production character art/animation, Windows execution and physical-GPU performance remain open. The browser prototype has different rules. Concept paintings are art direction, not captured gameplay. No Deadlock/Overwatch/Dota 2 client binaries or commercial models were recovered here.
 
+The branch now also implements original **Triad relays**: capture, contest, capped supply, three civic stations and revised siege markers. See the [Triad milestone](../games/yuga-native/docs/TRIAD_MILESTONE.md) for current test/capture/release status and the next five production packets. The verified [TF2 source study](../games/yuga-native/docs/research/TF2_REUSE_STUDY.md) is behavior research; no commercial code or assets were imported.
+
 ## Read by purpose
 
 | Need | Start with | Then open only if relevant |
@@ -17,7 +19,7 @@ The intended game is **6v6, fourteen heroes, three lanes and an 18-minute match*
 | Build, change or test native YUGA | [Build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) | Its task-to-file and test matrices |
 | Choose the next milestone | [Production roadmap](../games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md) | [Dependency/status ledger](../games/yuga-native/docs/ROADMAP_BACKLOG.json), [design master](../games/yuga-native/docs/GAME_DESIGN_MASTER.md) |
 | Use criticism, mythology, books or open-source references | [Research brief](../games/yuga-native/docs/research/RESEARCH_BRIEF.md) | The exact source/report linked in the relevant row |
-| Verify the current feature milestone | [Siege milestone](../games/yuga-native/docs/SIEGE_MILESTONE.md) | [Practice UX](../games/yuga-native/docs/SIEGE_PRACTICE_UX.md), source-pinned tests, actual render and published-package review |
+| Verify the current feature milestone | [Triad milestone](../games/yuga-native/docs/TRIAD_MILESTONE.md) | [Practice UX](../games/yuga-native/docs/SIEGE_PRACTICE_UX.md), source-pinned tests, actual render and published-package review |
 | Work on browser YUGA | [Browser README](../games/yuga/README.md) | `games/yuga/shared/`, `client/`, `server/` and its own QA |
 | Work on the ANDOLAN protest game | [Root README](../README.md) | `apps/`, `packages/`, root `tests/` and [ANDOLAN roadmap](ROADMAP.md) |
 | Manage cloud storage or recover setup | [Workspace and cleanup guide](WORKSPACE_AND_CLEANUP.md) | Native handbook setup section and cleanup receipt |
@@ -58,7 +60,7 @@ Return: changes, source hash, executed commands/results, evidence, limits, next 
 
 The current integration bottlenecks are shared rules/elevation, two rendered native clients against authority, and accepted continuous hero motion/contact. Offline improvements provide supporting evidence; they do not close those online/production gates. Recheck the backlog's `next_packets` before assigning work.
 
-Small follow-ups are recorded under the supporting siege packets: close continuous vehicle/art review, clearer overlapping danger rings, and Help's outdated “F5 respawn” footer. Its actual F5 behavior already resets the ordinary round. Keep these separate from the full-game production gates.
+Small follow-ups are recorded under the supporting siege packets: close continuous vehicle/art review, close readability of the new segmented danger marks. Triad fixes the Help footer to describe F5 as a round reset and preserves the previous actual reset behavior. Keep these separate from the full-game production gates.
 
 ## Known restoration limits
 
