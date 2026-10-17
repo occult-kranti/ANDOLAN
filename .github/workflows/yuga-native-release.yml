@@ -1,0 +1,113 @@
+name: YUGA native cinematic prerelease
+
+on:
+  push:
+    tags:
+      - 'yuga-confluence-duel-*'
+
+permissions: {}
+
+concurrency:
+  group: yuga-native-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: startsWith(github.ref, 'refs/tags/yuga-confluence-duel-')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Prepare fixed tools and check directories
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/checks"
+          command -v ffmpeg
+          command -v ffprobe
+          python3 -m venv "$RUNNER_TEMP/media-venv"
+          "$RUNNER_TEMP/media-venv/bin/python" -m pip install --disable-pip-version-check numpy==2.2.6 scipy==1.15.3
+          python3 games/yuga-native/tools/release-native.py install-engines --destination "$RUNNER_TEMP/engines"
+      - name: Verify committed film archive and decode existing media
+        run: |
+          set -euo pipefail
+          python3 games/yuga-native/tools/release-native.py validate-evidence --report "$RUNNER_TEMP/checks/archive.json"
+          "$RUNNER_TEMP/media-venv/bin/python" games/yuga-native/tools/cinematics/verify-film-media.py --video games/yuga-native/docs/evidence/combat-film-r4/yuga-confluence-duel.mp4 --report "$RUNNER_TEMP/checks/media.json"
+      - name: Check cinematic script, original soundtrack and attribution
+        run: |
+          set -euo pipefail
+          python3 games/yuga-native/tests/combat_script_cases.py --report "$RUNNER_TEMP/checks/script.json"
+          python3 -S games/yuga-native/tools/cinematics/build-duel-audio.py --check
+          python3 -S games/yuga-native/tools/cinematics/build-duel-audio.py --check-fixtures
+          python3 games/yuga-native/tools/cinematics/stage-duel-notice.py --check
+          python3 games/yuga-native/tools/stage-world.py --check
+      - name: Import tagged native project
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/engines/Godot_v4.6.3-stable_linux.x86_64" --headless --path games/yuga-native --editor --import --quit
+      - name: Run native film, audio lifecycle, motion and resource gates
+        run: |
+          set -euo pipefail
+          engine="$RUNNER_TEMP/engines/Godot_v4.6.3-stable_linux.x86_64"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report="$RUNNER_TEMP/checks/native.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/combat_film_cases.gd -- --report="$RUNNER_TEMP/checks/film.json"
+          "$engine" --headless --path games/yuga-native --script res://tests/combat_motion_continuity.gd -- --report="$RUNNER_TEMP/checks/motion.json"
+          "$engine" --headless --path games/yuga-native --script res://tests/duel_effects_cases.gd -- --report="$RUNNER_TEMP/checks/vfx.json"
+          "$engine" --headless --path games/yuga-native --script res://tests/combat_film_audio_cases.gd -- --report="$RUNNER_TEMP/checks/audio.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_scene_cases.gd -- --report="$RUNNER_TEMP/checks/world-scene.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_flow_cases.gd -- --report="$RUNNER_TEMP/checks/world-flow.json"
+          "$engine" --headless --path games/yuga-native --script res://tests/world_lighting_cases.gd -- --report="$RUNNER_TEMP/checks/world-lighting.json"
+      - name: Export, inspect and package both native platforms
+        run: |
+          set -euo pipefail
+          python3 games/yuga-native/tools/package-native.py --linux-engine "$RUNNER_TEMP/engines/Godot_v4.6.3-stable_linux.x86_64" --windows-engine "$RUNNER_TEMP/engines/Godot_v4.6.3-stable_win64.exe" --build-dir "$RUNNER_TEMP/packages"
+      - name: Assemble exact release assets and checksums
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python3 games/yuga-native/tools/release-native.py stage --build "$RUNNER_TEMP/packages" --engines "$RUNNER_TEMP/engines" --checks "$RUNNER_TEMP/checks" --output "$RUNNER_TEMP/release-assets" --tag "$RELEASE_TAG" --commit "$RELEASE_COMMIT"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: yuga-native-release-assets
+          path: ${{ runner.temp }}/release-assets/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+      - name: Preserve failed or successful check reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: yuga-native-release-checks
+          path: ${{ runner.temp }}/checks/
+          if-no-files-found: warn
+
+  release:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: yuga-native-release-assets
+          path: ${{ runner.temp }}/release-assets
+      - name: Verify uploaded bytes then publish a prerelease
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_COMMIT: ${{ github.sha }}
+          RELEASE_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          python3 games/yuga-native/tools/release-native.py publish --directory "$RUNNER_TEMP/release-assets" --tag "$RELEASE_TAG" --commit "$RELEASE_COMMIT" --repository "$RELEASE_REPOSITORY"

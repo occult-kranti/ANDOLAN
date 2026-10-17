@@ -105,17 +105,23 @@ Revision 4 passes 20 screenplay/resource, 42 native animation/viewer and five
 motion-continuity checks. Those checks include a repaired guard-reset transition;
 all action, effect and audio times remain unchanged.
 
-The [complete 24-second film](docs/evidence/combat-film-r4/yuga-confluence-duel.mp4)
-is rendered at 1280 × 720 and 24 fps, with original stereo audio. Exact source and
-media hashes are in the direction review. Independent media validation and final
-package tests remain pending. The
-[cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17)
-is planned; publication is not yet verified. The existing map-preview downloads
-above are unchanged. This milestone is a scripted animation
-prototype: visual health receipts are separate from multiplayer authority. It
-does not establish the commercial visual target, live native multiplayer or a
-finished hero roster. Audio timing is checked numerically; listening quality and
-consumer-GPU performance are not established here.
+[Watch the complete 24-second film](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/game/yuga-native-production/games/yuga-native/docs/evidence/combat-film-r4/yuga-confluence-duel.mp4)
+at 1280 × 720 and 24 fps, with original stereo audio. Independent checks confirm
+all 576 rendered frames and zero measured audio offset against the source mix.
+The [local Linux package review](docs/evidence/combat-film-package/REVIEW.md)
+passes after extraction and actual keyboard/mouse testing of playback, seeking,
+replay, accessibility toggles, saved mute, returns and courtyard movement.
+Windows archives and resources validate; Windows execution remains untested.
+
+The [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17)
+is awaiting publication. The tested local package hashes are recorded in the
+direction review; a later CI rebuild needs a pack-hash comparison or its own
+execution check. Existing map-preview downloads above are unchanged.
+
+This is a scripted animation prototype. Visual health receipts are separate from
+multiplayer authority; the commercial visual target, native multiplayer and full
+hero roster remain open. Audio correspondence is checked numerically; listening
+quality and consumer-GPU performance are not established here.
 
 ## Native analysis
 

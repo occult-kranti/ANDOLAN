@@ -1,6 +1,6 @@
 # Combat film direction and acceptance review
 
-Status: **the complete revision 4 film is rendered and encoded; selected frames and numerical motion checks pass; independent media validation and packaged-window review pending**. This is a native animation/presentation prototype. It does not establish Deadlock-level graphics, a finished Ravana hero, live multiplayer combat or the full game's visual target.
+Status: **local cinematic milestone complete: rendered video, independent media validation and actual Linux-package input review pass; public native-release publication remains pending**. This is a native animation/presentation prototype. It does not establish Deadlock-level graphics, a finished Ravana hero, live multiplayer combat or the full game's visual target.
 
 The [screenplay](COMBAT_FILM_SCRIPT.md) describes the intended action. The canonical runtime manifest is [confluence-duel.json](../assets/cinematics/confluence-duel.json), revision 4, SHA-256 `6ec07cb86aa645ba23c4eec51e652bbe89ad42d0558225583f6a8dd54248af6b` at this review. The accepted R2 still-frame composition used revision 3 (`a7f9c8263f0117fa322f5a51ff765710bfe619026c076eda32d207aaf8be5826`). Revision 2 (`5a641d8febad461b633bf5fb5edd80e9a3429ab3754ad21b01e2e90e5aecaea4`) is the captured first preview. Revision 3 changes cameras and the revision number only; cue, action, receipt and audio content is identical. Evidence from another manifest/actor/library revision must be identified separately.
 
@@ -16,9 +16,9 @@ The [screenplay](COMBAT_FILM_SCRIPT.md) describes the intended action. The canon
 | `build/film-poses-r2/combat-film-render.json` | Actual Forward+ studio report contains eight static poses; this reviewer inspected Rama draw/release and Ravana guard | Detached red/gold pieces are visible beside Ravana. Static poses do not establish smooth transitions or staged-film framing |
 | `build/film-scene-r1/combat-film-render.json` | Twelve actual integrated frames at 960 × 540 on Godot 4.6.3 Forward+ / llvmpipe, revision 2 | Sampled frames reveal composition defects; they are not a 24 fps continuous recording or a real-time hardware benchmark |
 | `build/film-scene-r2/combat-film-render.json` | All 12 revised actual full-scene frames independently inspected; footroom, two-shot profiles and reaction framing corrected | Bounded still-frame acceptance only; continuous motion, sound listening and native controls remain separate gates |
-| `docs/evidence/combat-film-r4/combat-film-render.json` and `combat-film-video.json` | Complete 576-frame, 1280 × 720, 24 fps, 24-second render and H.264/AAC encode verified; exact video hash checked | Selected-frame inspection is not a complete real-time aesthetic audition; independent media checks and actual package playback are separate |
+| `docs/evidence/combat-film-r4/combat-film-render.json` and `combat-film-video.json` | Complete 576-frame, 1280 × 720, 24 fps, 24-second render and H.264/AAC encode verified; exact video hash checked | Selected-frame inspection is not a complete real-time aesthetic audition; media correspondence and local Linux input are verified separately below |
 
-This milestone contains two skinned actors, two libraries with nine clips each, a 24-second deterministic director, ten visual cues, three scripted outcome receipts, captions and original synthesized audio. The planned [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17) is not recorded as published until its video/package evidence is supplied. Existing map-preview download facts remain unchanged. Audio has numerical duration, level and cue-timing evidence; this review makes no listening-quality claim.
+This milestone contains two skinned actors, two libraries with nine clips each, a 24-second deterministic director, ten visual cues, three scripted outcome receipts, captions and original synthesized audio. The planned [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17) remains pending public publication. Local video and package evidence is complete; the movie is also available at its verified public raw URL. Existing map-preview download facts remain unchanged. Audio has numerical duration, level and cue-timing evidence; this review makes no listening-quality claim.
 
 ## Direction preflight and retained motion gates
 
@@ -75,24 +75,35 @@ Revision 4 changes only `ravana-ready-wave.blend_in_seconds` from 0.12 to 0.32 s
 
 The [MP4](evidence/combat-film-r4/yuga-confluence-duel.mp4) now exists with **576 actual frames at 1280 × 720, 24 fps and 24 seconds**, encoded as H.264 with 48 kHz stereo AAC. Its size is 2,719,092 bytes and SHA-256 is `9bb618a6d7b8edc37f798ca05869ba5eeaac2f88fd6e0543a4ae778aaf960544`. The file hash was checked directly. The [render report](evidence/combat-film-r4/combat-film-render.json) and [encoder report](evidence/combat-film-r4/combat-film-video.json) preserve source pins and media metadata.
 
-This is the complete fixed-time render, rather than the earlier 12-frame preview. It took 422,631 ms on llvmpipe; that offline elapsed time is not a consumer-GPU frame-rate measurement. The exact captured director is archived alongside the movie with SHA-256 `3fdfbe2571c57ee80d959b9af106aca98c1c59ea3a060b754bca8a9fe32dbaca`; the timeline is revision 4. A subsequent saved-volume fix in the interactive viewer is separate from this frozen video snapshot and requires its own runtime checks.
+This is the complete fixed-time render, rather than the earlier 12-frame preview. It took 422,631 ms on llvmpipe; that offline elapsed time is not a consumer-GPU frame-rate measurement. The exact captured director is archived alongside the movie with SHA-256 `3fdfbe2571c57ee80d959b9af106aca98c1c59ea3a060b754bca8a9fe32dbaca`; the timeline is revision 4. A subsequent saved-volume fix is separate from this frozen video snapshot. The [source-delta report](../tests/evidence/combat-film-viewer-source-delta.json) confirms only viewer gain handling and diagnostics changed; animation, timeline, camera and effects bytes still match. The fixed viewer passes 22 audio/focus checks and the repeated, unchanged 42-check integration suite.
 
 Root inspected opening, guard reset, evade/wave, counter, recoil and resolution frames. This reviewer independently inspected frames 135, 184, 214 and 386 from the final capture: feet and captions remain clear, the fixed warning corridor and post-evade location read correctly, and the sentinel remains standing at 55 health after the counter. Floor aliasing, broad empty paving and simple material/character finish remain visible. Selected-frame inspection does not claim a complete real-time aesthetic audition or audio listening.
 
-Independent media validation is pending. Native-window testing must still exercise pause, seek, restart, captions and return, including audio cleanup on exit. The video is a complete rendered prototype artifact; publication and platform execution are separate release gates.
+Independent [media validation](evidence/combat-film-r4/media-release-check.json) passes: all 576 PNG hashes and encoded video timestamps match; AAC decodes to 1,152,000 stereo sample frames at 48 kHz. Whole-track correlation with the source waveform is 0.999221685 at zero sample offset. Four critical cue windows also have zero offset, with minimum correlation 0.9988802. These are numeric timing/encoding results, not audio listening or artistic sound approval.
+
+The local Linux ZIP was extracted into a fresh directory and all 14 payloads were verified before execution. Actual keyboard/mouse input exercised title → film, Space pause, ±1-second seeking, slider positions before and after the hit, replay, captions/static-camera/reduced-flash toggles, and both Escape and Courtyard returns. Setting volume to zero persisted into film entry, where diagnostics show muted audio and a stopped player. Returning to training and moving forward still works. The [package window review](evidence/combat-film-package/REVIEW.md) and [machine-readable result](evidence/combat-film-package/package-window-review.json) preserve the screenshots and exact package/source pins. This used software rendering and Dummy audio; no listening claim follows from it.
 
 ## Release evidence checkpoint
 
-The planned tag is [`yuga-confluence-duel-2026-10-17`](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17). The following outcomes remain open until root supplies the matching evidence:
+The [movie's public raw URL](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/game/yuga-native-production/games/yuga-native/docs/evidence/combat-film-r4/yuga-confluence-duel.mp4) was downloaded and its hash verified by root. The native release tag [`yuga-confluence-duel-2026-10-17`](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17) remains pending publication through the tag-triggered workflow. No successful CI rebuild or public native-download verification is claimed yet.
 
-| Deliverable | Current status | Required release record |
+| Deliverable | Verified local outcome | Remaining boundary |
 | --- | --- | --- |
-| Complete film | Rendered and encoded; metadata and exact file hash verified | 576 frames, 1280 × 720, 24 fps, 24 s; H.264 + stereo AAC. Selected frames reviewed; independent media check pending |
-| Linux native package | Pending final package/window evidence | ZIP hash, extracted launch and actual film controls/return behavior |
-| Windows native package | Pending final package evidence | ZIP hash and archive/resource validation; execution status stated separately |
-| Public release | Planned | Published URL and downloadable asset names/hashes |
+| Complete film | 576 frames, 1280 × 720, 24 fps, 24 s; H.264 + stereo AAC; exact hash and independent numeric media checks pass | Selected frames reviewed; full aesthetic audition and listening quality not claimed |
+| Linux native package | Extracted ZIP/payloads verified, actual window and keyboard/mouse flows pass | This exact local package was executed; future CI rebuilds require a pack-hash comparison or new execution |
+| Windows native package | ZIP, payloads and packed resources verified | Windows executable has not been run here |
+| Public native release | Workflow prepared; publication pending | Public asset availability and any CI-generated bytes still need verification |
 
-This release is an original scripted animation prototype. It does not complete the full hero roster, live native multiplayer, match authority, production physics or the commercial visual target. Offline rendering on llvmpipe is not evidence of consumer-GPU frame rate. Audio listening remains unverified unless an explicit listening result is added.
+Local packages were built from source `f52ceffd88d9f444541d56f7a755e57af0dcd2e5`. The common PCK contains 178 verified resources and has SHA-256 `48d50b8805ec10d400e280e74d330e7279fec5dd0101cba3497fa6715b890ddf`.
+
+| Local archive | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `yuga-native-linux-x86_64.zip` | 93,699,719 | `d830e048459f56e15922025a3f4fafbf73d929c59c1b562878e42ca37e83fb02` |
+| `yuga-native-windows-x86_64.zip` | 101,700,991 | `5908cd2e3b08a3b964c5b0876a9cbb970f6f71e1f49f7ce28c61b24702f41fe0` |
+
+See the [local package manifest](evidence/combat-film-package/native-package-manifest.json). These hashes identify the tested local outputs; they must not silently be assigned to a later CI rebuild.
+
+This is an original scripted animation prototype. It does not complete the full hero roster, live native multiplayer, match authority, production physics or the commercial visual target. Offline rendering on llvmpipe is not evidence of consumer-GPU frame rate. Audio listening remains unverified. The local milestone is complete within these stated bounds; release publication is tracked separately.
 
 ## Collection roadmap tied to existing full-game gates
 

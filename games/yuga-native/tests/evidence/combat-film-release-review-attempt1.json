@@ -1,0 +1,56 @@
+{
+  "scope": "Local mocked subprocess fixture only. No GitHub API or release mutation occurred.",
+  "helper_sha256": "20a8959006ae603ed81f47f971ff14a1e5fbfd450469ddde0e906c55bf4a1b96",
+  "fixture": "Downloaded internally self-consistent bundle differs from locally verified bytes but uses same tag/commit.",
+  "expected": "Reject before gh release edit.",
+  "observed_would_publish": true,
+  "local_notes_sha256": "f4c38f1ab98bbe3b1bcc4e399bc82e5d043191be6b347745c084c47627826e87",
+  "downloaded_notes_sha256": "a2f825db6de55bf87e340834631ae2fc3bc36a3b7a7688b570d06a41492c077d",
+  "result": {
+    "published": true,
+    "url": "https://github.com/fixture/repository/releases/tag/yuga-confluence-duel-review-fixture"
+  },
+  "commands_mocked": [
+    [
+      "gh",
+      "api",
+      "repos/fixture/repository/releases/tags/yuga-confluence-duel-review-fixture"
+    ],
+    [
+      "gh",
+      "release",
+      "upload",
+      "yuga-confluence-duel-review-fixture",
+      "--repo",
+      "fixture/repository",
+      "--clobber",
+      "/tmp/yuga-release-review-h8kl09_2/local/RELEASE-NOTES.md",
+      "/tmp/yuga-release-review-h8kl09_2/local/SHA256SUMS",
+      "/tmp/yuga-release-review-h8kl09_2/local/release-manifest.json"
+    ],
+    [
+      "gh",
+      "release",
+      "download",
+      "yuga-confluence-duel-review-fixture",
+      "--repo",
+      "fixture/repository",
+      "--dir",
+      "/tmp/yuga-release-download-oh4nz3z8",
+      "--pattern",
+      "*"
+    ],
+    [
+      "gh",
+      "release",
+      "edit",
+      "yuga-confluence-duel-review-fixture",
+      "--repo",
+      "fixture/repository",
+      "--draft=false",
+      "--prerelease",
+      "--latest=false"
+    ]
+  ],
+  "issue_confirmed": true
+}

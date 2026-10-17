@@ -1,0 +1,269 @@
+{
+  "passed": true,
+  "scope": "Read-only release logic/static review. GitHub operations are mocked; no real upload/publication or CI run claimed.",
+  "checks": [
+    {
+      "name": "existing_draft",
+      "passed": true,
+      "details": {
+        "expected_publish": true,
+        "publish_command_count": 1,
+        "remote_tag_checks": 2,
+        "rejection": null
+      }
+    },
+    {
+      "name": "new_draft",
+      "passed": true,
+      "details": {
+        "expected_publish": true,
+        "publish_command_count": 1,
+        "remote_tag_checks": 2,
+        "rejection": null
+      }
+    },
+    {
+      "name": "annotated_tag",
+      "passed": true,
+      "details": {
+        "expected_publish": true,
+        "publish_command_count": 1,
+        "remote_tag_checks": 2,
+        "rejection": null
+      }
+    },
+    {
+      "name": "self_consistent_remote_substitution",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Downloaded asset differs from the verified build artifact: SHA256SUMS"
+      }
+    },
+    {
+      "name": "missing_remote_asset",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Release asset set differs from manifest"
+      }
+    },
+    {
+      "name": "extra_remote_asset",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Release asset set differs from manifest"
+      }
+    },
+    {
+      "name": "corrupt_remote_checksums",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Checksum inventory differs"
+      }
+    },
+    {
+      "name": "corrupt_local_asset",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 0,
+        "rejection": "Release asset checksum mismatch: RELEASE-NOTES.md"
+      }
+    },
+    {
+      "name": "already_public",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Refusing to modify an already published release"
+      }
+    },
+    {
+      "name": "wrong_draft_target",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Existing draft targets a different commit"
+      }
+    },
+    {
+      "name": "release_state_unknown",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Cannot determine release state; refusing publication"
+      }
+    },
+    {
+      "name": "draft_creation_fails",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Command '['gh', 'release', 'create', 'yuga-confluence-duel-review-fixture', '--repo', 'fixture/repository', '--draft', '--prerelease', '--verify-tag', '--target', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '--title', 'YUGA Confluence duel \u2014 native preview', '--notes-file', '/tmp/yuga-independent-release-s9xxg_ft/local/RELEASE-NOTES.md']' returned non-zero exit status 1."
+      }
+    },
+    {
+      "name": "upload_fails",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Command '['gh', 'release', 'upload', 'yuga-confluence-duel-review-fixture', '--repo', 'fixture/repository', '--clobber', '/tmp/yuga-independent-release-aoxpme3y/local/RELEASE-NOTES.md', '/tmp/yuga-independent-release-aoxpme3y/local/SHA256SUMS', '/tmp/yuga-independent-release-aoxpme3y/local/release-manifest.json']' returned non-zero exit status 1."
+      }
+    },
+    {
+      "name": "download_fails",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Command '['gh', 'release', 'download', 'yuga-confluence-duel-review-fixture', '--repo', 'fixture/repository', '--dir', '/tmp/yuga-release-download-05cjb03g', '--pattern', '*']' returned non-zero exit status 1."
+      }
+    },
+    {
+      "name": "wrong_checkout",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 0,
+        "rejection": "Publication checkout differs from artifact"
+      }
+    },
+    {
+      "name": "wrong_local_tag",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 0,
+        "rejection": "Publication tag differs from artifact"
+      }
+    },
+    {
+      "name": "remote_tag_mismatch",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Remote release tag differs from verified artifact"
+      }
+    },
+    {
+      "name": "remote_tag_moves_after_upload",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 2,
+        "rejection": "Remote release tag differs from verified artifact"
+      }
+    },
+    {
+      "name": "tag_api_denied",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Command '['gh', 'api', 'repos/fixture/repository/git/ref/tags/yuga-confluence-duel-review-fixture']' returned non-zero exit status 1."
+      }
+    },
+    {
+      "name": "cyclic_annotated_tag",
+      "passed": true,
+      "details": {
+        "expected_publish": false,
+        "publish_command_count": 0,
+        "remote_tag_checks": 1,
+        "rejection": "Remote annotated tag nesting exceeds limit"
+      }
+    },
+    {
+      "name": "tag_only_trigger",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "job_permissions_and_dependency",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "immutable_official_action_pins_and_shell_syntax",
+      "passed": true,
+      "details": {
+        "shell_blocks": 8
+      }
+    },
+    {
+      "name": "bundled_world_gates_required",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "fresh_decoded_media_check_without_fabricated_capture",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "actual_archived_movie_and_capture_inventory",
+      "passed": true,
+      "details": {
+        "archive": {
+          "passed": true,
+          "archive_files_checked": 29,
+          "movie": {
+            "bytes": 2719092,
+            "sha256": "9bb618a6d7b8edc37f798ca05869ba5eeaac2f88fd6e0543a4ae778aaf960544"
+          },
+          "listed_capture_samples_checked": 576,
+          "selected_pngs_checked": 16,
+          "scope": "Committed archived bytes and recorded timeline checked; unarchived raw PNGs were not rechecked and CI did not render this film."
+        }
+      }
+    },
+    {
+      "name": "engine_downloads_pin_official_host_and_extracted_bytes",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "reviewed_helper_unchanged",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "source_sha256": {
+    "games/yuga-native/tools/release-native.py": "eff056dee2eecc0d7ed4492fa4cf192bc368c8dffb9179f9b1e62effc9c285b8",
+    ".github/workflows/yuga-native-release.yml": "c21a42cc1e903b2ab9ab16a3d8d1774e47a3865c44481ac2148530970ff0d61a"
+  },
+  "limitations": [
+    "No real GitHub API or release mutation was performed.",
+    "This review does not rerun the game suites or rerender the movie; the release workflow performs its required checks on the tagged source.",
+    "Archived render source and current package source remain separately disclosed."
+  ]
+}
