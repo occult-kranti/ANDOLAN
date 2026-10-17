@@ -1,0 +1,101 @@
+{
+  "completed_at_utc": "2026-10-17T12:43:09.921795+00:00",
+  "limits": [
+    "Software Vulkan llvmpipe, Forward+, Dummy audio; no physical-GPU or listening evidence.",
+    "Windows unexecuted.",
+    "1280 subset does not repeat remapping, saved sliders, all five casts or reset; those belong to the root 960 review."
+  ],
+  "package_manifest": {
+    "file": "package-r1-manifest.json",
+    "git": {
+      "branch": "game/yuga-native-production",
+      "head": "2d9353cb6723cf89d6967994f2c773d9bd66c6e6",
+      "native_worktree_status": ""
+    },
+    "sha256": "aafd9bd2968cdbda19293b4b7978abfbd4489304f984c1cca975915d88911e2f"
+  },
+  "runs": {
+    "1280": {
+      "captures": 14,
+      "engine": {
+        "file": "godot",
+        "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3"
+      },
+      "engine_errors_or_warnings": [],
+      "game_cleanup_exit": -15,
+      "input_events": 46,
+      "input_review_sha256": "b523529e1792cbe95ed48d9bca0b4bae62be8b4501479074aed15fcb2650ba81",
+      "local_saves": [],
+      "pack": {
+        "file": "yuga-native.pck",
+        "sha256": "8a7aa2efa23daf4370dee8d7b74f0583a6ea44185863d96df483de942bee98a9"
+      },
+      "path": "1280x720-r1",
+      "resolution_requested": {
+        "height": 720,
+        "width": 1280
+      },
+      "review_owner": "rama_interface",
+      "settings_status": "Rejected: decorative eyebrow clipped on first Settings entry before intentional scroll."
+    },
+    "960": {
+      "captures": 24,
+      "engine": {
+        "file": "godot",
+        "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3"
+      },
+      "engine_errors_or_warnings": [],
+      "game_cleanup_exit": -15,
+      "input_events": 64,
+      "input_review_sha256": "a822f31dd5831308c9f937c77f37b88e95e05fcbd10a42cf62509a3fda2dd5b9",
+      "local_saves": [
+        {
+          "file": "local-saves/courtyard-settings.cfg",
+          "scope": "Only local game preferences/remapped keys; no credentials.",
+          "sha256": "734c46207dcc920848ac15f09af3073078e71898e44e5c75fe224509fa06b991"
+        }
+      ],
+      "pack": {
+        "file": "yuga-native.pck",
+        "sha256": "8a7aa2efa23daf4370dee8d7b74f0583a6ea44185863d96df483de942bee98a9"
+      },
+      "path": "960x600-r1",
+      "resolution_requested": {
+        "height": 600,
+        "width": 960
+      },
+      "review_owner": "root",
+      "settings_status": "Rejected: decorative eyebrow clipped on first Settings entry before intentional scroll."
+    }
+  },
+  "scope": "Actual packaged Linux native-window XTest review. Original package R1 is rejected for the initial Settings heading/eyebrow scroll defect; bounded other-flow findings remain evidence for that package.",
+  "settings_fix": {
+    "actual_new_package_repeat": "Pending root export2; do not treat these headless checks as fixed-package OS acceptance.",
+    "after": {
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 36,
+      "report": "settings-entry-fix/after.json",
+      "sha256": "013a4a01c24caa60d8b501d3c38c68dab8827b56618cbea09108b54f0e04b305"
+    },
+    "before": {
+      "exit_code": 1,
+      "failed": 6,
+      "passed": 30,
+      "report": "settings-entry-fix/before.json",
+      "sha256": "6a2fde5fb12a28bba69924606dc7582bcf5f492077586552bb1ce69b9ed2993f"
+    },
+    "commands": {
+      "after": "XDG_DATA_HOME=/workspace/scratch/rama-hero-validation/settings-entry-r1/after-user taskset -c 0,1 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_screen_cases.gd -- --report=/workspace/scratch/rama-hero-validation/settings-entry-r1/after.json",
+      "before": "XDG_DATA_HOME=/workspace/scratch/rama-hero-validation/settings-entry-r1/before-user taskset -c 0,1 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_screen_cases.gd -- --report=/workspace/scratch/rama-hero-validation/settings-entry-r1/before.json"
+    },
+    "scope": "Only Settings entry: reset scroll after two container layout passes while Sensitivity retains focus.",
+    "sources": {
+      "res://assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+      "res://scripts/courtyard.gd": "4132033c84168a11a48e39765abbb0fb82ce2ccfdea6863edfe88d0d89c0f908",
+      "res://scripts/hero_ui_theme.gd": "8795f64e85a9103f3f97a9ad0b4a0bca5c2f8e1ef25b3cbba61eb0375c8d0c71",
+      "res://scripts/rama_hero_panel.gd": "c24dd5d0ecd90064f0346d42c38601711fdb0189dbc128e4836f1b66064d587a",
+      "res://tests/rama_screen_cases.gd": "5d87de21f546df5b23c79a3a7ccf11dd86f4e9bc533c77d1d02a88bb9bc78ff2"
+    }
+  }
+}

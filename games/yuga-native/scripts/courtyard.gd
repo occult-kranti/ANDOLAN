@@ -800,6 +800,17 @@ func _open_settings(from_menu: bool) -> void:
 	_set_practice_suspended(true)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	settings_panel.get_node("Card/Scroll/Content/Sensitivity").grab_focus()
+	call_deferred("_settle_settings_entry")
+
+func _settle_settings_entry() -> void:
+	# Focus may scroll against the hidden panel's old container geometry. Wait
+	# for both layout passes, then reveal the heading without taking focus away.
+	var scroll: ScrollContainer = settings_panel.get_node("Card/Scroll")
+	var sensitivity_control: Control = scroll.get_node("Content/Sensitivity")
+	for unused in range(2):
+		await get_tree().process_frame
+		if not settings_panel.visible or get_viewport().gui_get_focus_owner() != sensitivity_control: return
+	scroll.scroll_vertical = 0
 
 func _close_settings() -> void:
 	settings_panel.visible = false

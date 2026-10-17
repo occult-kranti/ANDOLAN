@@ -433,6 +433,7 @@ func check_physics() -> void:
 	)
 
 func check_layout() -> void:
+	var expected_actions := ["Continue practice","Rama · abilities and controls","Legacy invocation studies","Siege practice · enter drill","Day / night","Visit Lotus relay","Visit Lanka coast","Visit Metro gardens","Controls / remap keys","Restart lane practice","WorldVolume","Return to courtyard","Quit game"]
 	for size_ in [Vector2i(960,600),Vector2i(1280,720)]:
 		root.size = size_
 		root.content_scale_size = size_
@@ -447,11 +448,18 @@ func check_layout() -> void:
 		scene.set_paused(true)
 		await frames(3)
 		var reachable := true
+		var action_labels: Array[String] = []
+		var action_bounds: Array[Dictionary] = []
 		for action in scene.pause_actions:
 			action.grab_focus()
 			await frames(3)
-			reachable = reachable and root.gui_get_focus_owner()==action and scene.pause_scroll.get_global_rect().grow(1).encloses(action.get_global_rect())
-		record("all_pause_actions_scroll_into_view_"+str(size_),reachable and scene.pause_actions.size()==12 and is_instance_valid(scene.invocation_button),{"actions":scene.pause_actions.size()})
+			var focused: bool = root.gui_get_focus_owner()==action
+			var in_scroll: bool = scene.pause_scroll.get_global_rect().grow(1).encloses(action.get_global_rect())
+			var action_label: String = action.text if action is Button else String(action.name)
+			action_labels.append(action_label)
+			action_bounds.append({"action":action_label,"focused":focused,"in_scroll":in_scroll,"rect":str(action.get_global_rect()),"scroll_rect":str(scene.pause_scroll.get_global_rect())})
+			reachable = reachable and focused and in_scroll
+		record("all_pause_actions_scroll_into_view_"+str(size_),reachable and action_labels==expected_actions and scene.rama_button in scene.pause_actions and scene.invocation_button in scene.pause_actions,{"actions":scene.pause_actions.size(),"expected_actions":expected_actions,"action_bounds":action_bounds})
 		scene.set_paused(false)
 
 func finish() -> void:
