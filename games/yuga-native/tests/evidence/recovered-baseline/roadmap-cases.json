@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "scope": "Controlled graph and evidence counterexamples only",
+  "checks": [
+    {
+      "name": "valid dependency ledger",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "cycle fails",
+      "passed": true,
+      "errors": [
+        "dependency cycle: T1 -> T2 -> T1"
+      ]
+    },
+    {
+      "name": "completion without evidence fails",
+      "passed": true,
+      "errors": [
+        "T1: complete without evidence",
+        "next packet already complete: T1"
+      ]
+    },
+    {
+      "name": "completion before prerequisite fails",
+      "passed": true,
+      "errors": [
+        "T2: complete before dependency T1"
+      ]
+    },
+    {
+      "name": "parent cannot precede children",
+      "passed": true,
+      "errors": [
+        "M1: complete before all tasks"
+      ]
+    },
+    {
+      "name": "outside evidence fails",
+      "passed": true,
+      "errors": [
+        "T1: evidence must stay inside repository: ../outside.json",
+        "T1: evidence file missing: ../outside.json"
+      ]
+    },
+    {
+      "name": "stale evidence hash fails",
+      "passed": true,
+      "errors": [
+        "T1: evidence hash mismatch: proof.json"
+      ]
+    },
+    {
+      "name": "missing evidence fails",
+      "passed": true,
+      "errors": [
+        "T1: evidence file missing: missing.json"
+      ]
+    }
+  ]
+}

@@ -21,5 +21,12 @@ and structural validator are in `art/production/` in the source repository.
 The runtime generates its own brief interface and combat sounds. No sampled
 commercial game audio is included.
 
+The separate experimental `tps_rama_motion_library.tres` adapts licensed Godot
+TPS Demo motion. It has not replaced the active hero's nine original clips.
+Its CC-BY 3.0 attribution, exact source revision and changes are recorded in
+`TPS-MOTION-NOTICE.txt`; the complete upstream notice is preserved in
+`GODOT-TPS-UPSTREAM-LICENSE.md`. Distributing this library requires retaining
+those notices even while the runtime does not select its clips.
+
 Godot 4.6.3 is distributed under the MIT license, with its dependency notices
 preserved in `GODOT-LICENSE.txt` and `GODOT-COPYRIGHT.txt`.

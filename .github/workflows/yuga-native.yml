@@ -5,10 +5,18 @@ on:
     branches: [game/yuga-native-production]
     paths:
       - 'games/yuga-native/**'
+      - 'games/yuga/shared/**'
+      - 'games/yuga/server/**'
+      - 'games/yuga/tests/projectile-lifetime.test.ts'
+      - 'package-lock.json'
       - '.github/workflows/yuga-native.yml'
   pull_request:
     paths:
       - 'games/yuga-native/**'
+      - 'games/yuga/shared/**'
+      - 'games/yuga/server/**'
+      - 'games/yuga/tests/projectile-lifetime.test.ts'
+      - 'package-lock.json'
       - '.github/workflows/yuga-native.yml'
   workflow_dispatch:
 
@@ -25,6 +33,20 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+          cache: npm
+      - name: Install locked authority dependencies
+        run: npm ci
+      - name: Validate production dependency ledger and its counterexamples
+        run: |
+          python3 games/yuga-native/tools/check-roadmap.py --report "$RUNNER_TEMP/roadmap-check.json"
+          python3 games/yuga-native/tests/roadmap_cases.py > "$RUNNER_TEMP/roadmap-cases.json"
+      - name: Check authoritative game rules and projectile boundaries
+        run: |
+          npm run yuga:typecheck
+          npm run yuga:test
       - name: Install verified Godot 4.6.3
         env:
           GODOT_SHA256: d0bc2113065e481c9c2c2b2c37daa4e8be3fe9e27f0ab9ab0b6096e9a37907f3
@@ -39,12 +61,20 @@ jobs:
         run: python3 games/yuga-native/art/validate_courtyard.py
       - name: Validate production hero geometry, skin weights and animation data
         run: python3 games/yuga-native/art/production/validate_rama.py
+      - name: Independently validate GLB format with pinned Khronos package
+        run: |
+          python3 games/yuga-native/tools/research/prepare-gltf-validator.py --destination "$RUNNER_TEMP/gltf-validator"
+          node games/yuga-native/tools/research/check-gltf.mjs --validator-dir "$RUNNER_TEMP/gltf-validator" --report "$RUNNER_TEMP/gltf-validation.json" --asset games/yuga-native/assets/heroes/rama-production.glb --asset games/yuga-native/assets/environment/lanka_courtyard.glb
       - name: Import native project
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --editor --import --quit
       - name: Native physics and animation acceptance
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report=${{ runner.temp }}/native-acceptance.json
       - name: Projectile lifetime, range and occlusion regression
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/projectile_cases.gd -- --report=${{ runner.temp }}/projectile-cases.json
+      - name: Experimental motion numerical gate (visual acceptance remains separate)
+        run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/motion_retarget_cases.gd -- --report=${{ runner.temp }}/motion-cases.json
+      - name: Native two-client transport, interpolation and failure controls
+        run: python3 games/yuga-native/tools/check-native-arena.py --engine "$RUNNER_TEMP/godot/Godot_v4.6.3-stable_linux.x86_64" --output "$RUNNER_TEMP/native-arena"
       - name: Export and inspect Linux and Windows resource packs
         run: python3 games/yuga-native/tools/package-native.py --linux-engine "$RUNNER_TEMP/godot/Godot_v4.6.3-stable_linux.x86_64" --export-only
       - name: Archive exact test and export evidence
@@ -55,6 +85,11 @@ jobs:
           path: |
             ${{ runner.temp }}/native-acceptance.json
             ${{ runner.temp }}/projectile-cases.json
+            ${{ runner.temp }}/motion-cases.json
+            ${{ runner.temp }}/roadmap-check.json
+            ${{ runner.temp }}/roadmap-cases.json
+            ${{ runner.temp }}/gltf-validation.json
+            ${{ runner.temp }}/native-arena/integration-report.json
             games/yuga-native/build/native-export-manifest.json
             games/yuga-native/build/export-*.log
           if-no-files-found: warn

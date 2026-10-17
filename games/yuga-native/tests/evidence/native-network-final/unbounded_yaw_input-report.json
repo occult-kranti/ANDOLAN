@@ -1,0 +1,214 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "100ms_delay_interpolates_authority_midpoint",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "return_copy_cannot_mutate_history",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "yaw_takes_shortest_arc",
+			"passed": true
+		},
+		{
+			"details": {
+				"long_loss_x": 0.400000005960464,
+				"short_loss_x": 0.300000011920929
+			},
+			"name": "extrapolation_is_bounded_then_held",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "zero_extrapolation_holds_authority",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "teleport_is_discrete",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "death_respawn_are_discrete",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "spawn_despawn_follow_source_time",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "long_gap_holds_then_snaps",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "out_of_order_and_time_regression_rejected",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "clock_does_not_reverse",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "room_reset_drops_history",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "same_room_reconnect_resets_clock_and_actors",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "empty_room_and_buffer_safe",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "finished_exact_pose_frozen",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "same_time_coalesces",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "bad_pose_and_input_mutation_cannot_poison_history",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "history_bounded_to_32",
+			"passed": true
+		},
+		{
+			"details": {
+				"maximum_error": 0.0000000572204590376657
+			},
+			"name": "jitter_preserves_authoritative_linear_fixture",
+			"passed": true
+		},
+		{
+			"details": {
+				"literal_time_positive": true,
+				"position_finite": false,
+				"yaw_finite": false
+			},
+			"name": "reconstructed_prior_formulas_reproduce_nan",
+			"passed": true
+		},
+		{
+			"details": {
+				"accepted_left": true,
+				"accepted_right": true
+			},
+			"name": "literal_extreme_yaw_rejected_before_arithmetic",
+			"passed": false
+		},
+		{
+			"details": {
+				"accepted_right": false,
+				"x_finite": true
+			},
+			"name": "literal_subnormal_interval_rejected_without_nan",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "tiny_normal_timestamp_delta_rejected",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "tiny_terminal_remainder_freezes_without_division",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "accepted_yaw_normalized_before_storage",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "computed_nonfinite_pose_is_atomic",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "source_unchanged",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"interpolator_sha256": "67084e233cc8214a862379027c84d3ac9979f7d5b2dd63228edf812ee9c69d46",
+	"passed": false,
+	"scope": "Deterministic actor sampling, literal numerical regressions and optional recorded-authority replay. No renderer, WAN or completed native online game claim.",
+	"settings": {
+		"delay_seconds": 0.1,
+		"extrapolation_seconds": 0.1,
+		"maximum_absolute_yaw": 6.28318530717959,
+		"maximum_gap_seconds": 0.5,
+		"maximum_match_duration_seconds": 4800.0,
+		"maximum_snapshots": 32,
+		"maximum_speed": 35.0,
+		"minimum_interval_seconds": 0.000001,
+		"teleport_distance": 6.0
+	},
+	"test_sha256": "f738dc0f32812bd0a158fcdebbef473be81403dff40d463d2e85501cbd9310dd"
+}

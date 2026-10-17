@@ -1,5 +1,16 @@
 # YUGA native production track
 
+The [full-game production roadmap](docs/FULL_GAME_PRODUCTION_ROADMAP.md) is the
+execution guide from this preview to the intended competitive game. Its
+[design master](docs/GAME_DESIGN_MASTER.md) specifies the player journey, roster,
+combat, world and economy; the [dependency backlog](docs/ROADMAP_BACKLOG.json)
+records owned tasks and acceptance evidence. The proposed production target is
+6v6 with 18-minute matches; the current browser authority is 3v3/480 seconds.
+The [research and engineering desk](docs/RESEARCH_ENGINEERING_DESK.md) handles
+bounded requests from those workstreams. Its [BRUTAL assessment](docs/research/BRUTAL_STACK_DECISION.md)
+retains Godot and Blender for production and records what a future engine change
+would need to demonstrate.
+
 The production target is now a downloadable PC game. Browser compatibility is
 optional. This branch establishes the native engine, original 3D environment,
 asset import and analysis toolchain. **It is a single-player training foundation,
@@ -102,8 +113,14 @@ mapping. It is a separate study asset, with no automatic replacement of Rama.
 The [task board](docs/PRODUCTION_TASK_BOARD.md) defines four rounds per subgoal:
 inspect, build, verify, then report/integrate, with separate file ownership.
 
-The [production roadmap](docs/NATIVE_PRODUCTION_ROADMAP.md) keeps full-game
-requirements open. The next game work is a native protocol-2 client using the
-existing authoritative arena server, rather than discarding the tested browser
-simulation. Production hero sculpting/retopology, richer animation, gameplay
-content, multiplayer operations and hardware profiling require their own gates.
+The earlier [native milestone roadmap](docs/NATIVE_PRODUCTION_ROADMAP.md)
+records the foundation sequence. Use the full-game roadmap above for current
+priorities: native protocol-2 integration, a shared 3D collision/elevation
+contract, production hero and motion quality, then a complete native match.
+Production sculpting/retopology, gameplay content, operated services and physical
+hardware profiling require their own gates. The roadmap checker verifies the
+ledger structure; it does not certify that the game or its art is finished:
+
+```sh
+python3 games/yuga-native/tools/check-roadmap.py
+```

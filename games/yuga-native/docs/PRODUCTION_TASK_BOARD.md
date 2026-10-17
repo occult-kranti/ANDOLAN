@@ -4,6 +4,26 @@ The current goal is original native YUGA art and systems that can be inspected
 and improved toward the requested visual target. The current courtyard is a
 render/animation test scene, not completion of the competitive multiplayer game.
 
+Use the [full-game guide](FULL_GAME_PRODUCTION_ROADMAP.md) and its
+[dependency backlog](ROADMAP_BACKLOG.json) for current priorities. This board
+retains the earlier published preview's handoffs below.
+
+## Current implementation packets · 17 October 2026
+
+| Packet | Result and next gate |
+| --- | --- |
+| Environment recovery | Restored `bd6740f` after worker replacement; fresh 18 native and 7 projectile checks pass. Uncommitted later hero/world corrections were lost and remain recovery tasks. |
+| Design and roadmap | Sixteen production gates and seventy dependency-linked tasks; independent guide review and executable status/evidence checks. Proposed 6v6/18 minutes remains separate from current 3v3/480 seconds. |
+| Research desk | BRUTAL decision, pinned package/IK/glTF experiments and a real requested authority projectile fix. Nine new cases pass after seven failures; full rules suite passes 225 tests. |
+| Native transport | Reconstructed adapter/interpolator, fresh two-client lifecycle tests, recorded replay and six defective variants detected. Rendered online play remains a later integration gate. |
+| Motion | Rebuilt licensed carry library, numerical QA and 236 actual rendered samples. Open fingers, rigid carry and unresolved run-contact/flight quality prevent runtime promotion. |
+| Art | Restored published assets pass custom and Khronos format checks. Those checks do not replace lost later art captures or close the production visual target. |
+
+The [research desk](RESEARCH_ENGINEERING_DESK.md) accepts concrete blockers from
+these owners, then returns a bounded source decision or tested implementation.
+The [independent guide review](PRODUCTION_GUIDE_REVIEW.md) records revisions and
+acceptance boundaries. Archive exact evidence before closing a backlog task.
+
 ## Four-round work contract
 
 1. **Inspect:** identify the exact source/asset, existing defect and intended
@@ -20,7 +40,7 @@ exposes a correctness defect, return to Build and preserve the failed attempt.
 Completed studies are not repeated to inflate a round count. Every run ends
 with a concrete report; no unattended perpetual agent loop is implied.
 
-## Current ownership and dependencies
+## Published preview ownership and dependencies
 
 | Squad / lead | Owned work | Subgoal / next dependency |
 | --- | --- | --- |
@@ -36,7 +56,7 @@ seven-worker limit is a ceiling, not a goal; only one heavy actual renderer
 runs at a time. Shared files have one owner. A model or shader change invalidates
 the corresponding old render/package proof, not unrelated source research.
 
-## Round-four handoffs
+## Published preview round-four handoffs
 
 - [Hero artist](../art/production/RAMA_REVIEW_ROUNDS.md): four recorded revisions;
   introduced hand/calf defects closed in inspected v4 frames, broader art gaps open.

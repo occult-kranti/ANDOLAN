@@ -186,7 +186,8 @@ def start_readme(platform: str) -> str:
 def safe_notice_copy(destination: Path) -> None:
     notices = PROJECT / 'NOTICE'
     required = ['GODOT-LICENSE.txt', 'GODOT-COPYRIGHT.txt', 'MAKEHUMAN-ASSET-LICENSE.md',
-                'HERO-PROVENANCE.json', 'RAMA-PRODUCTION-PROVENANCE.json']
+                'HERO-PROVENANCE.json', 'RAMA-PRODUCTION-PROVENANCE.json',
+                'TPS-MOTION-NOTICE.txt', 'GODOT-TPS-UPSTREAM-LICENSE.md']
     for name in required:
         if not (notices / name).is_file():
             raise ValueError(f'Required package notice is missing: NOTICE/{name}')

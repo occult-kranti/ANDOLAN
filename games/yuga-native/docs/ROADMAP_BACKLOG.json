@@ -1,0 +1,2030 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-17",
+  "baseline": {
+    "published_source": "bd6740f",
+    "native_release_source": "079cc0a44feb75fc1ddbdcd534cfab7f79da2302",
+    "release_url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-art-2026-10-17",
+    "browser": {
+      "team_size": 3,
+      "duration_seconds": 480,
+      "protocol": 2
+    },
+    "native": "Offline Rama training courtyard; the full game target remains open.",
+    "workspace_recovery": "Published native branch restored at bd6740f. Earlier uncommitted art/motion/network artifacts must be recovered or reproduced; no current-pass completion is inferred from pre-reset reports."
+  },
+  "target": {
+    "team_size": 6,
+    "total_heroes": 14,
+    "lanes": 3,
+    "duration_seconds": 1080,
+    "towers_per_team": 6,
+    "platforms": [
+      "Windows",
+      "Linux"
+    ],
+    "graphics": "Approved actual-runtime production art, animation, readability and measured hardware performance inspired by the requested commercial references.",
+    "all_heroes_unlocked": true,
+    "within_team_duplicates": false
+  },
+  "status_values": [
+    "planned",
+    "in_progress",
+    "blocked",
+    "complete"
+  ],
+  "priority_values": [
+    "P0",
+    "P1",
+    "P2"
+  ],
+  "evidence_policy": "Complete requires existing source-pinned evidence covering every acceptance condition. An import/test/staticimage proves only its named scope. Milestones close only after prerequisites and all own tasks pass.",
+  "milestones": [
+    {
+      "id": "FG00",
+      "title": "Evidence and design contract",
+      "status": "in_progress",
+      "depends_on": [],
+      "owner": "root/design/research",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG00-T01",
+        "FG00-T02",
+        "FG00-T03",
+        "FG00-T04"
+      ]
+    },
+    {
+      "id": "FG01",
+      "title": "Visual and performance target",
+      "status": "planned",
+      "depends_on": [
+        "FG00"
+      ],
+      "owner": "art director/performance",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG01-T01",
+        "FG01-T02",
+        "FG01-T03"
+      ]
+    },
+    {
+      "id": "FG02",
+      "title": "Production Rama",
+      "status": "planned",
+      "depends_on": [
+        "FG01"
+      ],
+      "owner": "character/technical art",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG02-T01",
+        "FG02-T02",
+        "FG02-T03",
+        "FG02-T04",
+        "FG02-T05"
+      ]
+    },
+    {
+      "id": "FG03",
+      "title": "Motion and combat feel",
+      "status": "in_progress",
+      "depends_on": [
+        "FG02"
+      ],
+      "owner": "animation/gameplay",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG03-T01",
+        "FG03-T02",
+        "FG03-T03",
+        "FG03-T04"
+      ]
+    },
+    {
+      "id": "FG04",
+      "title": "Authority and native integration",
+      "status": "in_progress",
+      "depends_on": [
+        "FG00"
+      ],
+      "owner": "network/physics",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG04-T01",
+        "FG04-T02",
+        "FG04-T03",
+        "FG04-T04",
+        "FG04-T05"
+      ]
+    },
+    {
+      "id": "FG05",
+      "title": "Three-lane world and physics",
+      "status": "planned",
+      "depends_on": [
+        "FG01"
+      ],
+      "owner": "level/world/physics",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG05-T01",
+        "FG05-T02",
+        "FG05-T03",
+        "FG05-T04",
+        "FG05-T05"
+      ]
+    },
+    {
+      "id": "FG06",
+      "title": "Complete 3v3 vertical slice",
+      "status": "planned",
+      "depends_on": [
+        "FG03",
+        "FG04",
+        "FG05"
+      ],
+      "owner": "root/gameplay/QA",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG06-T01",
+        "FG06-T02",
+        "FG06-T03",
+        "FG06-T04",
+        "FG06-T05"
+      ]
+    },
+    {
+      "id": "FG07",
+      "title": "Six-hero beta",
+      "status": "planned",
+      "depends_on": [
+        "FG06"
+      ],
+      "owner": "hero squads/combat",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG07-T01",
+        "FG07-T02",
+        "FG07-T03",
+        "FG07-T04"
+      ]
+    },
+    {
+      "id": "FG08",
+      "title": "Armies jungle economy",
+      "status": "planned",
+      "depends_on": [
+        "FG06"
+      ],
+      "owner": "AI/systems/unit art",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG08-T01",
+        "FG08-T02",
+        "FG08-T03",
+        "FG08-T04"
+      ]
+    },
+    {
+      "id": "FG09",
+      "title": "6v6 production rules",
+      "status": "planned",
+      "depends_on": [
+        "FG06",
+        "FG07",
+        "FG08"
+      ],
+      "owner": "authority/design",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG09-T01",
+        "FG09-T02",
+        "FG09-T03"
+      ]
+    },
+    {
+      "id": "FG10",
+      "title": "Fourteen production heroes",
+      "status": "planned",
+      "depends_on": [
+        "FG07",
+        "FG08",
+        "FG09"
+      ],
+      "owner": "hero squads/balance/QA",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG10-T01",
+        "FG10-T02",
+        "FG10-T03",
+        "FG10-T04",
+        "FG10-T05",
+        "FG10-T06",
+        "FG10-T07",
+        "FG10-T08",
+        "FG10-T09"
+      ]
+    },
+    {
+      "id": "FG11",
+      "title": "Full city VFX audio cinematics",
+      "status": "planned",
+      "depends_on": [
+        "FG05",
+        "FG10"
+      ],
+      "owner": "environment/VFX/audio",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG11-T01",
+        "FG11-T02",
+        "FG11-T03",
+        "FG11-T04",
+        "FG11-T05"
+      ]
+    },
+    {
+      "id": "FG12",
+      "title": "Public service operations",
+      "status": "planned",
+      "depends_on": [
+        "FG06",
+        "FG09"
+      ],
+      "owner": "backend/operations/security",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG12-T01",
+        "FG12-T02",
+        "FG12-T03",
+        "FG12-T04"
+      ]
+    },
+    {
+      "id": "FG13",
+      "title": "UX accessibility QA tooling",
+      "status": "in_progress",
+      "depends_on": [
+        "FG00"
+      ],
+      "owner": "UX/accessibility/QA",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG13-T01",
+        "FG13-T02",
+        "FG13-T03",
+        "FG13-T04"
+      ]
+    },
+    {
+      "id": "FG14",
+      "title": "Integrated release candidate",
+      "status": "planned",
+      "depends_on": [
+        "FG10",
+        "FG11",
+        "FG12",
+        "FG13"
+      ],
+      "owner": "release/QA",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG14-T01",
+        "FG14-T02",
+        "FG14-T03"
+      ]
+    },
+    {
+      "id": "FG15",
+      "title": "Launch and supported live game",
+      "status": "planned",
+      "depends_on": [
+        "FG14"
+      ],
+      "owner": "release/operations/design",
+      "completion_rule": "All listed tasks pass their acceptance conditions on compatible frozen revisions, and prerequisite gates pass. Missing runtime, hardware or external evidence cannot be replaced by document review.",
+      "task_ids": [
+        "FG15-T01",
+        "FG15-T02",
+        "FG15-T03"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "FG00-T01",
+      "milestone": "FG00",
+      "title": "Restore and reproduce the published native baseline",
+      "status": "complete",
+      "priority": "P0",
+      "owner": "root/release",
+      "depends_on": [],
+      "deliverables": [
+        "games/yuga-native/tests/evidence/recovered-baseline/manifest.json",
+        "games/yuga-native/tests/evidence/recovered-baseline/native-acceptance.json",
+        "games/yuga-native/tests/evidence/recovered-baseline/projectile-cases.json",
+        "games/yuga-native/docs/research/gltf-validator-restored-preview.json"
+      ],
+      "acceptance": [
+        "Restore branch content from published bd6740f without discarding newly created documents.",
+        "Record source revision, installed tools, imported assets and reproducible native test/export commands.",
+        "Distinguish recovered published evidence from missing current-pass artifacts."
+      ],
+      "evidence": [
+        {
+          "path": "games/yuga-native/tests/evidence/recovered-baseline/manifest.json",
+          "sha256": "3e53e02d1d93352241be489e275b90057591782b9dc288abcc33f850800ef014",
+          "scope": "Restored bd6740f source and hashes of freshly executed bounded regression reports; no new art or physical-GPU claim."
+        },
+        {
+          "path": "games/yuga-native/tests/evidence/recovered-baseline/native-acceptance.json",
+          "sha256": "2e6d3fc8818086a50ddaa0d2d9f0755a78ca1d705d6ccb62612508c01e96e9da",
+          "scope": "Fresh native acceptance:18 checks on restored baseline; assertions do not establish complete gameplay or visual quality."
+        },
+        {
+          "path": "games/yuga-native/tests/evidence/recovered-baseline/projectile-cases.json",
+          "sha256": "81322a5a2ffe9cce0527ceb7f7f6614eafd150fa39400a1acf9d4f7414e951e0",
+          "scope": "Fresh seven projectile lifetime/range regression checks on restored baseline."
+        },
+        {
+          "path": "games/yuga-native/docs/research/gltf-validator-restored-preview.json",
+          "sha256": "9283a8027f8beb673b73d109169ffa230aa0a6a259f6c25075a1ec7ab15853f4",
+          "scope": "Independent Khronos glTF validation of restored Rama and courtyard; structural validity is not art approval."
+        }
+      ],
+      "next_action": "Baseline recovery complete. Continue separate missing current-pass motion, network and art reconstruction tasks.",
+      "risk": "Cloud worker reset lost uncommitted artifacts; prior conversation reports are not current filesystem evidence."
+    },
+    {
+      "id": "FG00-T02",
+      "milestone": "FG00",
+      "title": "Approve full design and validate executable backlog",
+      "status": "complete",
+      "priority": "P0",
+      "owner": "design/root",
+      "depends_on": [],
+      "deliverables": [
+        "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md",
+        "games/yuga-native/docs/ROADMAP_BACKLOG.json",
+        "games/yuga-native/docs/GAME_DESIGN_MASTER.md"
+      ],
+      "acceptance": [
+        "GAME_DESIGN_MASTER.md and full roadmap agree on planned 6v6/18-minute and current 3v3/480s.",
+        "All stable IDs are unique; dependencies exist and are acyclic; completed tasks require actual evidence.",
+        "All fourteen heroes and launch-to-support lifecycle have owned work."
+      ],
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/GAME_DESIGN_MASTER.md",
+          "scope": "Complete design baseline for14heroes/42abilities and fulljourney; current-versus-proposed explicit",
+          "sha256": "bc51f4befc524ba9fecc44e45ee3b0faa4ae4508a64976980a73106245fba310"
+        },
+        {
+          "path": "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md",
+          "scope": "Sixteen production gates, owners and measurable acceptance requirements",
+          "sha256": "97d92fcd0344ee4cdcb341a01e58538a4b257762504d8f28306ad6c91d1a7769"
+        },
+        {
+          "path": "games/yuga-native/docs/PRODUCTION_GUIDE_REVIEW.md",
+          "scope": "Independent review accepts guidance after dependency, roster, authority and evidence corrections; does not accept finished game",
+          "sha256": "175935f9a024085de781864066ce9afa3f4d8b39f834a42071f6b0d2ee77b84c"
+        },
+        {
+          "path": "games/yuga-native/tests/evidence/roadmap-cases.json",
+          "scope": "Twelve positive and negative dependency/evidence validator cases",
+          "sha256": "05dbff09b22781147b02cae483a81135bc4b072433ea02f776d0d974dd1fbbaa"
+        }
+      ],
+      "next_action": "Implement dependency-ready packets; revise design only with an explicit rule/content decision and update affected acceptance gates.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG00-T03",
+      "milestone": "FG00",
+      "title": "Maintain source and reuse decision registry",
+      "status": "in_progress",
+      "priority": "P0",
+      "owner": "research-engineering",
+      "depends_on": [
+        "FG00-T01"
+      ],
+      "deliverables": [
+        "planned: source registry and research/BRUTAL_STACK_DECISION.md"
+      ],
+      "acceptance": [
+        "Pin tool/code/model/texture/motion licenses separately with exact versions and hashes.",
+        "Keep actual REA original-fixture execution distinct from unavailable commercial binaries.",
+        "Record BRUTAL decision and a benchmark-triggered migration rule; no speculative engine switch."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG00-T04",
+      "milestone": "FG00",
+      "title": "Version rules map content and replay contracts",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "authority/design",
+      "depends_on": [
+        "FG00-T02"
+      ],
+      "deliverables": [
+        "planned: version contracts and migration fixtures"
+      ],
+      "acceptance": [
+        "Name current protocol2 rules separately from production6v6 rules.",
+        "Define compatibility behavior for protocol/map/content mismatches and rollbacks.",
+        "Define accepted event and input sequence semantics for replay and reconnect."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG01-T01",
+      "milestone": "FG01",
+      "title": "Approve actual-render visual target scene",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "art director",
+      "depends_on": [
+        "FG00-T02"
+      ],
+      "deliverables": [
+        "planned: visual target contact sheets and signed review"
+      ],
+      "acceptance": [
+        "Compare approved Rama/Hanuman/Sita concept family with actual neutral, dusk and night views.",
+        "Record anatomy, cloth, materials, silhouette, pose and world-depth defects explicitly.",
+        "Define an art approval checklist for portrait and normal gameplay distance."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG01-T02",
+      "milestone": "FG01",
+      "title": "Instrument representative performance replay",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "renderer/performance",
+      "depends_on": [
+        "FG00-T01"
+      ],
+      "deliverables": [
+        "planned: profiling harness and benchmark replay"
+      ],
+      "acceptance": [
+        "Capture CPU/GPU frame stages, draw/skinning/effect counts, memory and source/settings metadata.",
+        "Replay a reproducible12-hero/wave/effect worst case and an18-minute match.",
+        "Software-render timings are labeled and excluded from physical GPU acceptance."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG01-T03",
+      "milestone": "FG01",
+      "title": "Qualify initial physical GPU budgets",
+      "status": "blocked",
+      "priority": "P0",
+      "owner": "performance/QA",
+      "depends_on": [
+        "FG01-T01",
+        "FG01-T02"
+      ],
+      "deliverables": [
+        "planned: hardware traces and accepted/revised budget table"
+      ],
+      "acceptance": [
+        "Run declared minimum and recommendedGPU candidates on actual hardware; record driver and OS.",
+        "Measure p50/p95/p99 frame time and stalls at1080p; test proposed60 FPS budgets.",
+        "Revise content budgets from evidence and document unresolved platform gaps."
+      ],
+      "evidence": [],
+      "next_action": "Schedule or obtain a declared physical GPU run while independent art and correctness work continues.",
+      "risk": "No physical GPU is available in the current cloud worker."
+    },
+    {
+      "id": "FG02-T01",
+      "milestone": "FG02",
+      "title": "Recover and validate bounded Rama corrections",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "character artist/root",
+      "depends_on": [
+        "FG00-T01"
+      ],
+      "deliverables": [
+        "planned: Rama correction source and current hero-milestone-m2 review"
+      ],
+      "acceptance": [
+        "Recover accepted current-pass source and matching hero-milestone-m2 evidence if available.",
+        "Otherwise reproduce garment/surface corrections and re-render; historical approval alone is insufficient.",
+        "Preserve original rig/rest/animation and source attribution."
+      ],
+      "evidence": [],
+      "next_action": "Recover original current-pass artifacts if available; otherwise assign an owned reconstruction packet and produce fresh actual-render evidence.",
+      "risk": "Uncommitted pre-reset art/evidence may be unavailable."
+    },
+    {
+      "id": "FG02-T02",
+      "milestone": "FG02",
+      "title": "Author production sculpt retopology and PBR",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "character artist",
+      "depends_on": [
+        "FG01-T01",
+        "FG02-T01"
+      ],
+      "deliverables": [
+        "planned: Rama source sculpt retopology UVs and PBR set"
+      ],
+      "acceptance": [
+        "Face/shoulders/hands and cloth construction meet approved forms.",
+        "UVs, baked normals, skin/cloth/metal roughness and hair mass hold under neutral/dusk/night lighting.",
+        "Editable high/low sources and export reproduce the approved runtime result."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG02-T03",
+      "milestone": "FG02",
+      "title": "Build deformation sockets and correctives",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "technical artist",
+      "depends_on": [
+        "FG02-T02"
+      ],
+      "deliverables": [
+        "planned: Rama deformation rig and contact fixtures"
+      ],
+      "acceptance": [
+        "Rig contract records rest matrices, units, hierarchy and weapon/grip/string sockets.",
+        "Extreme aim/crouch/twist/jump/death tests avoid material limb/cloth penetration.",
+        "FootIK and hand-grip constraints preserve proportions and do not move authoritative hitboxes."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG02-T04",
+      "milestone": "FG02",
+      "title": "Build character LOD and secondary-motion pipeline",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "technical artist/performance",
+      "depends_on": [
+        "FG02-T03",
+        "FG01-T02"
+      ],
+      "deliverables": [
+        "planned: Rama LODs and culling profile"
+      ],
+      "acceptance": [
+        "LOD and texture reductions preserve hero/weapon silhouettes and team readability.",
+        "Hair/cloth update culling freezes safely across visibility and distance changes.",
+        "Bone/material/draw/VRAM budgets are measured in representative crowd scenes."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG02-T05",
+      "milestone": "FG02",
+      "title": "Approve Rama production model rig and LOD package",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "art director/QA",
+      "depends_on": [
+        "FG02-T03",
+        "FG02-T04"
+      ],
+      "deliverables": [
+        "planned: Rama model and rig acceptance package"
+      ],
+      "acceptance": [
+        "Approve portrait/gameplay silhouette, anatomy, fitted materials, deformation rig and LOD transitions in actual rendering.",
+        "Editable sources, rest/sockets, attribution and export manifest reproduce the accepted model.",
+        "Record remaining motion and kit gates under FG03-T04; this model approval is not full hero acceptance."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG03-T01",
+      "milestone": "FG03",
+      "title": "Recover and inspect bow-carry retarget adaptation",
+      "status": "in_progress",
+      "priority": "P0",
+      "owner": "animation/QA",
+      "depends_on": [
+        "FG00-T01"
+      ],
+      "deliverables": [
+        "games/yuga-native/assets/animations/tps_rama_motion_library.tres",
+        "games/yuga-native/art/motion/motion-retarget-manifest.json",
+        "games/yuga-native/docs/evidence/motion-carry-restored/carry-review.mp4",
+        "games/yuga-native/tests/motion_retarget_cases.gd"
+      ],
+      "acceptance": [
+        "Recover current licensed source manifest and baked motion or reproduce from pinned source.",
+        "Retain the rejected full-body run finding; inspect actual continuous destination-rig bow carry.",
+        "Finite/contact/loop/velocity tests and grip/cloth review pass without relabeling stills as motion."
+      ],
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/motion-carry-restored/motion-render-review.json",
+          "scope": "236 actual rendered motion samples on candidate95ffda72 and restored hero6657f4; does not accept grip/foot lock",
+          "sha256": "7ea95e9e80186e3fa086f108e8f682e68e343757f9ab915860b69889f8c048ca"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/motion-carry-restored/README.md",
+          "scope": "Independent visual findings; motion remains experimental and unpromoted",
+          "sha256": "4b0845f3a19e65e3b64d14d625aeb950b445851ce80bc6dde36f29896eaef1f9"
+        },
+        {
+          "path": "games/yuga-native/tests/evidence/motion-retarget-recovered-support.json",
+          "scope": "35 reconstructed numerical checks; phase-specific support and substantialflight measured; not grip/foot-lock acceptance",
+          "sha256": "5807ee405abd922b510bae51e8e1eb807cb3bd17e573a9caa30af681f62cb675"
+        }
+      ],
+      "next_action": "Author closed bow grip and natural carry posture; qualify the substantial flight/contact phases and moving-ground foot lock, then render the exact candidate again.",
+      "risk": "Numerical minima and support contacts do not establish natural run timing or weapon grip; original player clips remain selected."
+    },
+    {
+      "id": "FG03-T02",
+      "milestone": "FG03",
+      "title": "Author locomotion and aim blend graph",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "animation/gameplay",
+      "depends_on": [
+        "FG02-T03",
+        "FG03-T01"
+      ],
+      "deliverables": [
+        "planned: AnimationTree locomotion and aim resources"
+      ],
+      "acceptance": [
+        "Idle/walk/run/strafe/start/stop/turn/jump/land/dash blend without root jumps.",
+        "Movement follows authority; remote pose interpolation does not delay local camera.",
+        "Lower-body locomotion and upper-body aim preserve grip at supported extreme angles."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG03-T03",
+      "milestone": "FG03",
+      "title": "Author archery and ability event sequences",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "animation/combat/audio",
+      "depends_on": [
+        "FG03-T02",
+        "FG00-T04"
+      ],
+      "deliverables": [
+        "planned: authored combat clips and tick-stamped cue contract"
+      ],
+      "acceptance": [
+        "Ready/draw/hold/release/recover and three ability anticipations/actives/recoveries are distinct.",
+        "Accepted server event IDs drive release/projectile/sound/VFX once, with reject/timeout recovery.",
+        "Interrupt, hit reaction, death and respawn release constraints and clear stale effects."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG03-T04",
+      "milestone": "FG03",
+      "title": "Approve continuous motion and combat-feel gate",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "animation director/QA",
+      "depends_on": [
+        "FG03-T02",
+        "FG03-T03",
+        "FG02-T05"
+      ],
+      "deliverables": [
+        "planned: motion acceptance reel trace and defect closure"
+      ],
+      "acceptance": [
+        "Inspect real continuous reels at gameplay and diagnostic camera views across representative frame rates.",
+        "Measure support/weapon contact plus event alignment; reject visible snap/skate/penetration.",
+        "Input release, pause, death, reconnect and interruption leave no stuck weapon or pose.",
+        "Approve complete Rama hero kit and counters, portrait/audio/tutorial, and source-pinned integrated hero package after model gate FG02-T05."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG04-T01",
+      "milestone": "FG04",
+      "title": "Recover and harden native transport/interpolator",
+      "status": "complete",
+      "priority": "P0",
+      "owner": "network/QA",
+      "depends_on": [
+        "FG00-T01"
+      ],
+      "deliverables": [
+        "games/yuga-native/scripts/arena_client.gd",
+        "games/yuga-native/scripts/arena_interpolator.gd",
+        "games/yuga-native/tools/check-native-arena.py",
+        "games/yuga-native/tests/evidence/native-network-final/integration-report.json"
+      ],
+      "acceptance": [
+        "Recover or reproduce protocol adapter and independenttwo-client lifecycle harness.",
+        "Add regressions for finite huge yaw overflow and tiny positive timestamp intervals; all returned poses finite.",
+        "Bound buffers, parse cost, stale updates, commands and reconnect secret exposure."
+      ],
+      "evidence": [
+        {
+          "path": "games/yuga-native/tests/evidence/native-network-final/integration-report.json",
+          "scope": "Fresh two-client transport, deterministic interpolation, real snapshot replay and six failing mutation controls; headless loopback only",
+          "sha256": "7a06cb1e770919e1323adc5ab4d1e67cb6b06e554cfe2db62510527041abe237"
+        },
+        {
+          "path": "games/yuga-native/tests/evidence/native-network-final/manifest.json",
+          "scope": "Archive hashes and current source pins independently rechecked",
+          "sha256": "11297a6cf26228be4fb583cdf4f42791a981cca833124e986c3f6e5039e6408c"
+        }
+      ],
+      "next_action": "Use the tested adapter in the versioned entity/elevation integration packet; rendered online multiplayer remains open.",
+      "risk": "Loopback and synthetic impairment do not prove WAN behavior, local prediction, presentation quality or an integrated match."
+    },
+    {
+      "id": "FG04-T02",
+      "milestone": "FG04",
+      "title": "Define native entity and authority bridge",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "network/gameplay",
+      "depends_on": [
+        "FG04-T01",
+        "FG00-T04"
+      ],
+      "deliverables": [
+        "planned: entity presentation contract and map-version handshake"
+      ],
+      "acceptance": [
+        "Define actor/minion/structure/projectile/zone/pickup/event ownership and lifetime.",
+        "Version remote aim pitch and discontinuities; preserve acknowledged input and room identity.",
+        "Define simulationselection experiment with the worldphysics owner before vertical productionmap."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG04-T03",
+      "milestone": "FG04",
+      "title": "Integrate two rendered native clients",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "network/root",
+      "depends_on": [
+        "FG04-T02",
+        "FG05-T02"
+      ],
+      "deliverables": [
+        "planned: native arena scene and uncut two-client evidence"
+      ],
+      "acceptance": [
+        "Two real rendered clients see identical authoritative map, movement, shots, hits and match end.",
+        "Spawn/despawn/death/reconnect clear old entities and duplicate effect IDs.",
+        "Menus expose connection states and errors without leaking credentials."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG04-T04",
+      "milestone": "FG04",
+      "title": "Implement local prediction and correction",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "network/physics",
+      "depends_on": [
+        "FG04-T03"
+      ],
+      "deliverables": [
+        "planned: prediction reconciliation and impairment reports"
+      ],
+      "acceptance": [
+        "Replay unacknowledged inputs using versioned movement semantics and bounded history.",
+        "Measure divergence/correction under delay/loss; respawn/teleport resets history.",
+        "Aim and camera stay responsive while remote entities interpolate; server remains outcome authority."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG04-T05",
+      "milestone": "FG04",
+      "title": "Validate transport latency and recovery envelope",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "network/QA",
+      "depends_on": [
+        "FG04-T04"
+      ],
+      "deliverables": [
+        "planned: network envelope report and transport decision"
+      ],
+      "acceptance": [
+        "Exercise RTT/jitter/loss/reorder, silent half-open, server restart and reconnect churn.",
+        "Measure head-of-line stall and bandwidth before deciding transportmigration.",
+        "Document tested envelope and remaining WAN/TLS gaps."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG05-T01",
+      "milestone": "FG05",
+      "title": "Recover and validate bounded world corrections",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "world artist/root",
+      "depends_on": [
+        "FG00-T01"
+      ],
+      "deliverables": [
+        "planned: courtyard correction source and current world-milestone-m3 review"
+      ],
+      "acceptance": [
+        "Recover accepted macrocomposition/lighting/water source and world-milestone-m3 captures or reproduce.",
+        "Preserve authoritative training collisions and target visibility.",
+        "Verify dusk/night/gallery/swamp views against exactfinal assets."
+      ],
+      "evidence": [],
+      "next_action": "Recover original current-pass artifacts if available; otherwise assign an owned reconstruction packet and produce fresh actual-render evidence.",
+      "risk": "Uncommitted current-pass environment assets may be unavailable."
+    },
+    {
+      "id": "FG05-T02",
+      "milestone": "FG05",
+      "title": "Resolve shared three-dimensional collision authority",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "physics/research-engineering",
+      "depends_on": [
+        "FG00-T04"
+      ],
+      "deliverables": [
+        "planned: stacked-deck fixture collisioncontract and architecture decision"
+      ],
+      "acceptance": [
+        "Export versioned ramps/stairs/ledge/low ceiling/stacked decks with sharedunits and collisionlayers.",
+        "Compare TSshape queries and headless Godotauthority using identicaltwo-client inputs.",
+        "Select by correctness, profile and migrationcost; demonstrate bridgeoverroad and remote aim contract."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG05-T03",
+      "milestone": "FG05",
+      "title": "Build native three-lane gameplay blockout",
+      "status": "planned",
+      "priority": "P0",
+      "owner": "level design/physics",
+      "depends_on": [
+        "FG05-T02"
+      ],
+      "deliverables": [
+        "planned: native arena blockout collision and route tests"
+      ],
+      "acceptance": [
+        "Map bounds/spawns/lanes/objective anchors match authority and navigation export.",
+        "All capsules/cameras traverse valid routes; inaccessible areas read as inaccessible.",
+        "Test lane travel, cover, sightlines, rotations and spawnprotection before decoration."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG05-T04",
+      "milestone": "FG05",
+      "title": "Author one production lane segment",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "environment/lighting",
+      "depends_on": [
+        "FG05-T03",
+        "FG01-T01",
+        "FG05-T01"
+      ],
+      "deliverables": [
+        "planned: art-complete lane segment with walkthrough and profile"
+      ],
+      "acceptance": [
+        "Hero-scale architecture, groundmaterials, lamps, vegetation and water match visualfamily.",
+        "Near/middle/far depth and hero/target contrast survive dusk/night/combat.",
+        "Profile section with hero/army/effects, preserving artgoal and measurable scalability."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG05-T05",
+      "milestone": "FG05",
+      "title": "Implement navigation and route recovery",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "AI/physics",
+      "depends_on": [
+        "FG05-T03"
+      ],
+      "deliverables": [
+        "planned: navigation export bot route harness and stuck recovery"
+      ],
+      "acceptance": [
+        "Bots/minions follow lane/jungle links with elevation and collision agreement.",
+        "Blocked route, knockback, leash, stuck and resetcases recover or report bounded failure.",
+        "Navigation data and gameplay collision share map version."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG06-T01",
+      "milestone": "FG06",
+      "title": "Produce Hanuman for native slice",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Hanuman",
+      "depends_on": [
+        "FG02-T05",
+        "FG03-T04"
+      ],
+      "deliverables": [
+        "planned: production Hanuman asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG06-T02",
+      "milestone": "FG06",
+      "title": "Produce Sita for native slice",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Sita",
+      "depends_on": [
+        "FG02-T05",
+        "FG03-T04"
+      ],
+      "deliverables": [
+        "planned: production Sita asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG06-T03",
+      "milestone": "FG06",
+      "title": "Integrate slice objectives economy and bots",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "gameplay/AI",
+      "depends_on": [
+        "FG04-T04",
+        "FG05-T03",
+        "FG05-T05"
+      ],
+      "deliverables": [
+        "planned: native3v3 match systems"
+      ],
+      "acceptance": [
+        "Existing3v3 rules execute in native presentation without changing outcomes.",
+        "Waves/camps/gold/upgrade/tower/core/death/respawn have visible and audible feedback.",
+        "Practice and private room share versioned authority and full result behavior."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG06-T04",
+      "milestone": "FG06",
+      "title": "Complete slice launch-to-rematch UI",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "UX/gameplay",
+      "depends_on": [
+        "FG04-T03",
+        "FG13-T01"
+      ],
+      "deliverables": [
+        "planned: slice native flows and journey capture"
+      ],
+      "acceptance": [
+        "Training/heroeselect/room/loading/match/pause/rejoin/results/rematch all work without developer commands.",
+        "Focus loss sends neutral intent; settings persist and connection failures are actionable.",
+        "Tutorial explains lane/core/gold/counters and can be skipped/replayed."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG06-T05",
+      "milestone": "FG06",
+      "title": "Validate complete native three-hero match",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "QA/root",
+      "depends_on": [
+        "FG06-T01",
+        "FG06-T02",
+        "FG06-T03",
+        "FG06-T04",
+        "FG05-T04"
+      ],
+      "deliverables": [
+        "planned: 3v3 verticalslice acceptance package"
+      ],
+      "acceptance": [
+        "Record full uncut3v3 practice and privateonline matches through rematch.",
+        "Server/client results and reward ledger agree through disconnect/death/corefinish.",
+        "Independent visualreview approves actual gameplay; no fullgame claim from this slice."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG07-T01",
+      "milestone": "FG07",
+      "title": "Produce Ravana for six-hero beta",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Ravana",
+      "depends_on": [
+        "FG06-T05"
+      ],
+      "deliverables": [
+        "planned: production Ravana asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG07-T02",
+      "milestone": "FG07",
+      "title": "Produce Arjuna for six-hero beta",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Arjuna",
+      "depends_on": [
+        "FG06-T05"
+      ],
+      "deliverables": [
+        "planned: production Arjuna asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG07-T03",
+      "milestone": "FG07",
+      "title": "Produce Duryodhana for six-hero beta",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Duryodhana",
+      "depends_on": [
+        "FG06-T05"
+      ],
+      "deliverables": [
+        "planned: production Duryodhana asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG07-T04",
+      "milestone": "FG07",
+      "title": "Validate six-hero draft and counter matrix",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "combat design/QA",
+      "depends_on": [
+        "FG07-T01",
+        "FG07-T02",
+        "FG07-T03"
+      ],
+      "deliverables": [
+        "planned: six-hero beta balance and readability report"
+      ],
+      "acceptance": [
+        "Each role has playable counter opportunities and distinct range/mobility/defense identity.",
+        "Sixheroes complete full matches with all ability pair interactions tested.",
+        "Record human/bot sample limits and tune versioned numbers from evidence."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG08-T01",
+      "milestone": "FG08",
+      "title": "Produce complete lane army animations and weapons",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "unit artist/AI",
+      "depends_on": [
+        "FG06-T05"
+      ],
+      "deliverables": [
+        "planned: four lane unit production assets and behavior tests"
+      ],
+      "acceptance": [
+        "Soldier/watch/minister/king have distinct silhouette, weapon, anticipation, attack, hit and defeat.",
+        "Attack animations follow server receipts and support effects visibly precede buffs.",
+        "Army LOD/animation throttling preserves readable siege threat at target load."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG08-T02",
+      "milestone": "FG08",
+      "title": "Produce jungle creatures camps and temporary buffs",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "creature artist/AI",
+      "depends_on": [
+        "FG06-T05"
+      ],
+      "deliverables": [
+        "planned: three jungle creatures camps and acceptance"
+      ],
+      "acceptance": [
+        "Naga/Yaksha/Cloudwing have distinct combat loops, readable camps and counters.",
+        "Aggro/leash/heal/reset/death/respawn and contested kill tests pass.",
+        "Buff duration/expiry/stacking/counter feedback match server rules."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG08-T03",
+      "milestone": "FG08",
+      "title": "Implement production gold item and reward ledger",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "systems/authority",
+      "depends_on": [
+        "FG06-T05",
+        "FG00-T04"
+      ],
+      "deliverables": [
+        "planned: production economy tables items ledger and invariants"
+      ],
+      "acceptance": [
+        "Secure/steal/shared/expire/spend values reconcile in server ledger without duplicate award.",
+        "Purchases are idempotent/server priced and survive reconnect/death correctly.",
+        "Item choice and counter tradeoffs match master design with readable tutorial/UI."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG08-T04",
+      "milestone": "FG08",
+      "title": "Validate objective rotations and economy pacing",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "balance/QA",
+      "depends_on": [
+        "FG08-T01",
+        "FG08-T02",
+        "FG08-T03"
+      ],
+      "deliverables": [
+        "planned: economy pacing and adversarial reward report"
+      ],
+      "acceptance": [
+        "Full matches expose meaningful lane/jungle/core choices and recoverable early disadvantage.",
+        "Concurrent kills/shards/expiry/reconnect do not mint or lose unexplained value.",
+        "Report pacing and balance evidence by seed/composition/player cohort, not unqualified win rates."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG09-T01",
+      "milestone": "FG09",
+      "title": "Migrate capacity and production outcome rules",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "authority/design",
+      "depends_on": [
+        "FG06-T05",
+        "FG00-T04"
+      ],
+      "deliverables": [
+        "planned: 6v6 rules migration and contract tests"
+      ],
+      "acceptance": [
+        "Twelve-player slots and six towers/team are explicit versioned rules.",
+        "Outer/inner/core exposure and18-minute tiebreak exactly match master design.",
+        "Reject incompatible versions; test exact draw/simultaneous core/late command/end immutability."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG09-T02",
+      "milestone": "FG09",
+      "title": "Implement production draft party and team composition",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "UX/backend",
+      "depends_on": [
+        "FG09-T01",
+        "FG13-T01",
+        "FG07-T04"
+      ],
+      "deliverables": [
+        "planned: draft/party contracts and native UI"
+      ],
+      "acceptance": [
+        "No within-team hero duplicates; mirrored opposing picks allowed; all 14unlocked when ready.",
+        "Party/team assignment, reservation, ready check, timeout and leaver behavior explicit.",
+        "No client can choose another identity/team or bypass draft authority."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG09-T03",
+      "milestone": "FG09",
+      "title": "Validate twelve-player full-duration simulation",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "performance/QA",
+      "depends_on": [
+        "FG09-T01",
+        "FG09-T02",
+        "FG08-T04",
+        "FG07-T04"
+      ],
+      "deliverables": [
+        "planned: 6v6 productionrules acceptance and traces"
+      ],
+      "acceptance": [
+        "Run full18-minute12-player/bot sessions with complete waves/camps/economy.",
+        "Measure tick cost/snapshot bytes/event bounds at declared server load.",
+        "Outcome/identity/rewardagreement survives reconnect churn and peak combat."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG10-T01",
+      "milestone": "FG10",
+      "title": "Produce Karna for complete native roster",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Karna",
+      "depends_on": [
+        "FG07-T04",
+        "FG08-T04"
+      ],
+      "deliverables": [
+        "planned: production Karna asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG10-T02",
+      "milestone": "FG10",
+      "title": "Produce Bhima for complete native roster",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Bhima",
+      "depends_on": [
+        "FG07-T04",
+        "FG08-T04"
+      ],
+      "deliverables": [
+        "planned: production Bhima asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG10-T03",
+      "milestone": "FG10",
+      "title": "Produce Draupadi for complete native roster",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Draupadi",
+      "depends_on": [
+        "FG07-T04",
+        "FG08-T04"
+      ],
+      "deliverables": [
+        "planned: production Draupadi asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG10-T04",
+      "milestone": "FG10",
+      "title": "Produce Ulupi for complete native roster",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Ulupi",
+      "depends_on": [
+        "FG07-T04",
+        "FG08-T04"
+      ],
+      "deliverables": [
+        "planned: production Ulupi asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG10-T05",
+      "milestone": "FG10",
+      "title": "Produce Meghnad for complete native roster",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Meghnad",
+      "depends_on": [
+        "FG07-T04",
+        "FG08-T04"
+      ],
+      "deliverables": [
+        "planned: production Meghnad asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG10-T06",
+      "milestone": "FG10",
+      "title": "Produce Subhadra for complete native roster",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Subhadra",
+      "depends_on": [
+        "FG07-T04",
+        "FG08-T04"
+      ],
+      "deliverables": [
+        "planned: production Subhadra asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG10-T07",
+      "milestone": "FG10",
+      "title": "Produce Hidimbi for complete native roster",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Hidimbi",
+      "depends_on": [
+        "FG07-T04",
+        "FG08-T04"
+      ],
+      "deliverables": [
+        "planned: production Hidimbi asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG10-T08",
+      "milestone": "FG10",
+      "title": "Produce Chitrangada for complete native roster",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "hero squad Chitrangada",
+      "depends_on": [
+        "FG07-T04",
+        "FG08-T04"
+      ],
+      "deliverables": [
+        "planned: production Chitrangada asset kit and acceptance"
+      ],
+      "acceptance": [
+        "Editable source mesh/material/rig/LODs and licensed provenance reproduce runtime asset.",
+        "Complete locomotion/aim/primary/three abilities/hit/death/respawn and contact/counter tests.",
+        "Distinct silhouette, telegraph, audio, portrait and tutorial reviewed at gameplay distance.",
+        "Continuous actual motion and team fight/performance evidence on frozen content."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG10-T09",
+      "milestone": "FG10",
+      "title": "Validate fourteen-hero interaction and balance matrix",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "combat design/QA",
+      "depends_on": [
+        "FG10-T01",
+        "FG10-T02",
+        "FG10-T03",
+        "FG10-T04",
+        "FG10-T05",
+        "FG10-T06",
+        "FG10-T07",
+        "FG10-T08",
+        "FG09-T03"
+      ],
+      "deliverables": [
+        "planned: complete roster matrix balance report and source manifest"
+      ],
+      "acceptance": [
+        "All 14 heroes/42 abilities have native event timing/counter/hit/interrupt/stacking coverage.",
+        "Role composition and overlapping effects remain readable in12-hero matches.",
+        "Version tuning with evidence and sample uncertainty; each hero remains individually accepted."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG11-T01",
+      "milestone": "FG11",
+      "title": "Build full city districts and circular rotations",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "environment/level design",
+      "depends_on": [
+        "FG05-T04",
+        "FG05-T05"
+      ],
+      "deliverables": [
+        "planned: full city sources runtime map and walkthrough"
+      ],
+      "acceptance": [
+        "Both bases/all three lanes/jungle/rotation loop visually complete with distinct landmarks.",
+        "Lanka coast/temple ghats/swamp/modern city architecture preserves collision and objective readability.",
+        "Authored modular kit/occlusion/LOD/streaming sources reproduce, with no empty inaccessible-lookingroute gaps."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG11-T02",
+      "milestone": "FG11",
+      "title": "Finish day night water lighting and environmental motion",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "lighting/technical art",
+      "depends_on": [
+        "FG11-T01"
+      ],
+      "deliverables": [
+        "planned: lighting states environment animation and performance captures"
+      ],
+      "acceptance": [
+        "Diyas/lanterns/light pools/water/foliage retain hero and objective contrast at all states.",
+        "Water/swamp boundaries, reflections and particles respect performance presets.",
+        "No day/night state changes competitive visibility unfairly without explicit rules."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG11-T03",
+      "milestone": "FG11",
+      "title": "Finish combat VFX and audio event library",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "VFX/audio",
+      "depends_on": [
+        "FG03-T03",
+        "FG08-T01",
+        "FG08-T02"
+      ],
+      "deliverables": [
+        "planned: production VFX audio cue library and saturation review"
+      ],
+      "acceptance": [
+        "Every hero/unit/event has distinct readable anticipation/active/impact/recovery cues.",
+        "Threat priority survives12-hero effects; audio voices/particles/lights are bounded and culled.",
+        "Critical information has visual/audio alternatives; cue duplication and late cancel tests pass."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG11-T04",
+      "milestone": "FG11",
+      "title": "Produce optional cinematic and promotional media",
+      "status": "planned",
+      "priority": "P2",
+      "owner": "cinematic artist",
+      "depends_on": [
+        "FG11-T01",
+        "FG02-T05"
+      ],
+      "deliverables": [
+        "planned: cinematic scenes trailer and labeled art media"
+      ],
+      "acceptance": [
+        "Opening/hero showcase/end beats use actualproduction assets and skippable sequences.",
+        "Store source scenes and rendered video/images with asset provenance.",
+        "Marketing labels concept art and actual gameplay correctly; no footage implies unimplemented features."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG11-T05",
+      "milestone": "FG11",
+      "title": "Approve full-world presentation under combat load",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "art director/performance",
+      "depends_on": [
+        "FG11-T02",
+        "FG11-T03",
+        "FG10-T09",
+        "FG01-T03"
+      ],
+      "deliverables": [
+        "planned: integrated art/performance signoff"
+      ],
+      "acceptance": [
+        "Inspect full walkthrough and worst-case combat on declared hardware.",
+        "Hero/environment/VFX/audio form one coherentquality bar across settings.",
+        "No production area or hero retains unapproved placeholder art."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG12-T01",
+      "milestone": "FG12",
+      "title": "Deploy TLS match service and regional session allocation",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "backend/operations",
+      "depends_on": [
+        "FG09-T03",
+        "FG04-T05"
+      ],
+      "deliverables": [
+        "planned: deployment files hosted endpoint and external match evidence"
+      ],
+      "acceptance": [
+        "Container/server/TLS health/readiness/shutdown contracts and rollback are versioned.",
+        "Independent external native clients complete matches through WSS.",
+        "Hosting budgets/capacity/session ownership explicit; static Pages stays separate."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG12-T02",
+      "milestone": "FG12",
+      "title": "Implement accounts profiles matchmaking and party service",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "backend/UX",
+      "depends_on": [
+        "FG09-T02",
+        "FG12-T01"
+      ],
+      "deliverables": [
+        "planned: account/party/matchmaker services and contracts"
+      ],
+      "acceptance": [
+        "Identity/session authorization and profile data minimization documented and tested.",
+        "Queue/cancel/ready/reservation/rejoin/party split edgecases have deterministic behavior.",
+        "Matchmaker separates supported versions/regions and exposes actionable wait/error states."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG12-T03",
+      "milestone": "FG12",
+      "title": "Implement service telemetry reports and defense",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "operations/security",
+      "depends_on": [
+        "FG12-T01",
+        "FG13-T03"
+      ],
+      "deliverables": [
+        "planned: monitoring dashboards service defense and report workflow"
+      ],
+      "acceptance": [
+        "Metrics/logs exclude secrets and distinguish server/client/contentversion.",
+        "Rate limits, bounded payloads, malformed inputs, identity isolation and reward authority tests pass.",
+        "Player reporting/moderation/support workflow and operational alerts have named owner."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG12-T04",
+      "milestone": "FG12",
+      "title": "Rehearse service capacity recovery and persistence",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "operations/QA",
+      "depends_on": [
+        "FG12-T02",
+        "FG12-T03"
+      ],
+      "deliverables": [
+        "planned: capacity and recovery runbook with execution evidence"
+      ],
+      "acceptance": [
+        "Run capacity ramp and8-hour soak on declared instance; record limits rather than assume them.",
+        "Rehearse restart/deployment/certificate failure/database backup and restore and rollback.",
+        "External clients recover or receive correct failure/resultwithout duplicated identity/rewards."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG13-T01",
+      "milestone": "FG13",
+      "title": "Specify and implement complete UX state graph",
+      "status": "in_progress",
+      "priority": "P0",
+      "owner": "UX/gameplay",
+      "depends_on": [
+        "FG00-T02"
+      ],
+      "deliverables": [
+        "planned: native flow stategraph screens and journey tests"
+      ],
+      "acceptance": [
+        "Every install/train/select/party/queue/load/play/pause/death/reconnect/result/rematch/support state exists.",
+        "Transitions include loading/error/cancel/timeout/device focus and accessibility states.",
+        "Native implementation is reviewed from actualscreens and interaction, not document wireframes alone."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG13-T02",
+      "milestone": "FG13",
+      "title": "Implement controls accessibility and settings",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "UX/accessibility",
+      "depends_on": [
+        "FG13-T01"
+      ],
+      "deliverables": [
+        "planned: accessible native settings controls and audit"
+      ],
+      "acceptance": [
+        "Remapping/sensitivity/inversion/audio/video/subtitles persist and are resettable.",
+        "Supported keyboard/controller focus and device changes work across menus/gameplay.",
+        "Criticalteam/threat/reward cues do not depend only on color or sound; font/UI scaling readable."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG13-T03",
+      "milestone": "FG13",
+      "title": "Implement replay telemetry and reproducible defect capture",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "QA/tools",
+      "depends_on": [
+        "FG00-T04",
+        "FG04-T02"
+      ],
+      "deliverables": [
+        "planned: replay/telemetry schema capture tools and defect template"
+      ],
+      "acceptance": [
+        "Tick-stamped inputs/events/snapshots capture version/hash without tokens or unnecessary personal data.",
+        "Replay determinism limits and drift detection documented; failed cases reproducible.",
+        "Bug report bundles identify source/content/hardware/settings and player-facing symptom."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG13-T04",
+      "milestone": "FG13",
+      "title": "Implement integrated edge and soak harness",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "QA/performance",
+      "depends_on": [
+        "FG13-T03",
+        "FG06-T05"
+      ],
+      "deliverables": [
+        "planned: integrated QA harness and regression suites"
+      ],
+      "acceptance": [
+        "Exercise long matches/restarts/reconnect churn/map edges/focus/input device changes.",
+        "Asset validators and intentional bad fixtures catch corruption and animation/numeric defects.",
+        "Reports separate structural/rendered/hardware/external evidence and retain failed attempts."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG14-T01",
+      "milestone": "FG14",
+      "title": "Freeze release candidate and exact package manifests",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "release",
+      "depends_on": [
+        "FG10-T09",
+        "FG11-T05",
+        "FG12-T04",
+        "FG13-T02",
+        "FG13-T04"
+      ],
+      "deliverables": [
+        "planned: frozen candidate Linux/Windows packages manifests and release checklist"
+      ],
+      "acceptance": [
+        "Freeze one source/content/rules revision and package both platforms with provenance/notices.",
+        "Verify source-to-package hashes/archive integrity and supported configuration.",
+        "Any fix invalidates and reruns affected acceptance evidence."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG14-T02",
+      "milestone": "FG14",
+      "title": "Execute platform hardware and full journey qualification",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "QA/performance",
+      "depends_on": [
+        "FG14-T01",
+        "FG01-T03"
+      ],
+      "deliverables": [
+        "planned: platform qualification recordings traces and reports"
+      ],
+      "acceptance": [
+        "Actually execute fresh install/full match/rejoin/rematch on Windows and Linux.",
+        "Declaredhardware meets acceptedperformance budgets and stable memory envelope.",
+        "Display/DPI/aspect ratio/device/offline practice/update/rollback journeys pass."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG14-T03",
+      "milestone": "FG14",
+      "title": "Close blocking defects and approve release",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "independent QA/art director/root",
+      "depends_on": [
+        "FG14-T02"
+      ],
+      "deliverables": [
+        "planned: release approval defect ledger and final acceptance"
+      ],
+      "acceptance": [
+        "No unresolved crash/data-loss/reward duplication/wrong winner/unjoinable journey defect.",
+        "Art and animation approval uses integratedactual gameplay at requestedtarget.",
+        "Document residual lower-severity issues with owner, user impact and evidence."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG15-T01",
+      "milestone": "FG15",
+      "title": "Publish website downloads and supported service",
+      "status": "planned",
+      "priority": "P1",
+      "owner": "release/operations",
+      "depends_on": [
+        "FG14-T03"
+      ],
+      "deliverables": [
+        "planned: public website download release and livefirst match evidence"
+      ],
+      "acceptance": [
+        "Fresh external user can download verify install and complete first match/rematch.",
+        "Public website correctly labels platform requirements/currentfeatures and links support.",
+        "Monitoring/rollback/contact owners are active before release announcement."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG15-T02",
+      "milestone": "FG15",
+      "title": "Operate incidents support and compatible patches",
+      "status": "planned",
+      "priority": "P2",
+      "owner": "operations/support",
+      "depends_on": [
+        "FG15-T01"
+      ],
+      "deliverables": [
+        "planned: live operations reports and patch runbook"
+      ],
+      "acceptance": [
+        "Incident triage/recovery/report moderation and compatibility policy are exercised.",
+        "Patch supports deliberate upgrade/rollback and preserves valid profiles/results.",
+        "Capacity/error budget and user impact metrics reviewed from actual operation."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    },
+    {
+      "id": "FG15-T03",
+      "milestone": "FG15",
+      "title": "Run evidence-led balance and content seasons",
+      "status": "planned",
+      "priority": "P2",
+      "owner": "design/balance",
+      "depends_on": [
+        "FG15-T01",
+        "FG15-T02"
+      ],
+      "deliverables": [
+        "planned: balance review cadence patchnotes and future content gates"
+      ],
+      "acceptance": [
+        "Review player criticism and telemetry with cohort/sample uncertainty.",
+        "Tune originalversioned kits/economy using counters and comprehension, not engagement dark patterns.",
+        "Every new hero/map/skin reuses license/art/animation/network/performance gates."
+      ],
+      "evidence": [],
+      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+    }
+  ],
+  "next_packets": [
+    "FG00-T03",
+    "FG03-T01",
+    "FG02-T01",
+    "FG05-T01",
+    "FG00-T04"
+  ],
+  "upcoming_packets": [
+    "FG01-T01",
+    "FG01-T02",
+    "FG04-T02",
+    "FG05-T02",
+    "FG04-T03",
+    "FG01-T03"
+  ],
+  "queue_policy": "next_packets contains only incomplete tasks whose task dependencies are complete. upcoming_packets is an ordered horizon; its tasks are not claimed ready and retain explicit dependency/hardware blocks. Starting investigation does not authorize marking an unmet dependency complete."
+}

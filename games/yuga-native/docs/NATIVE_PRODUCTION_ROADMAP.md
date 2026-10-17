@@ -1,5 +1,13 @@
 # Full native game target and current boundaries
 
+This document records the foundation sequence. The current execution guide is
+[FULL_GAME_PRODUCTION_ROADMAP.md](FULL_GAME_PRODUCTION_ROADMAP.md), with detailed
+[design](GAME_DESIGN_MASTER.md) and a validated [task ledger](ROADMAP_BACKLOG.json).
+Native transport/interpolation now has fresh two-client evidence; actual online
+scene integration remains open. The licensed carry adaptation has been rendered
+and remains experimental pending grip and motion-quality work. The earlier
+foundation handoffs below do not supersede those current records.
+
 The user has removed browser compatibility as a requirement and requests an
 original Indian-mythology game at Deadlock/Overwatch visual quality. Their latest
 direction is to create our own assets in the cloud. Community code and observed
