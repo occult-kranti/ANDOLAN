@@ -1,5 +1,6 @@
 // Original shared Confluence paving. All coordinates are world metres, X/Z.
 // Ground and shallow-water borders use the exact same opaque surface function.
+uniform float arrival_court_z = 69.0;
 uniform int lane_count : hint_range(0, 8) = 0;
 uniform vec4 lane_segments[8];
 uniform int rotation_count : hint_range(0, 20) = 0;
@@ -51,7 +52,7 @@ vec3 world_paving(vec2 p) {
 	// A single union mask resolves intersections without overlapping geometry.
 	paving = mix(paving, avenue, max(lane, rotation * 0.55));
 	// Quiet arrival-court inlays are descriptive scenery, never combat markers.
-	float court_radius = min(length(p - vec2(0.0, 69.0)), length(p - vec2(0.0, -69.0)));
+	float court_radius = min(length(p - vec2(0.0, arrival_court_z)), length(p - vec2(0.0, -arrival_court_z)));
 	float court = 1.0 - smoothstep(7.0, 7.15, court_radius);
 	vec3 court_stone = paving_stones(p, vec2(2.2, 2.2), vec3(0.285, 0.282, 0.252));
 	paving = mix(paving, court_stone, court * 0.75);

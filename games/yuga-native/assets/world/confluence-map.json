@@ -1,23 +1,49 @@
 {
   "schema_version": 1,
   "id": "yuga-confluence-native-review",
-  "revision": 2,
-  "status": "layout_candidate",
-  "scope": "Original flat native traversal and art-review scene; not a rendered online match, full dynamic-authority collision scene, or production 6v6 rules.",
+  "revision": 3,
+  "status": "native_traversal_and_lane_practice_candidate",
+  "scope": "Original 140\u00d7260m offline native traversal and lane-army practice. Native bounds, raised platforms and objectives differ from the browser authority. No online match or commercial-game parity claim.",
   "source": {
     "map_path": "games/yuga/shared/map.ts",
     "map_sha256": "8de16e1ebedfbe3ddfb42f683c6d0e1947cb2ca9d9ed70ca8218adcb4209ca7d",
     "simulation_path": "games/yuga/shared/simulation.ts",
     "simulation_sha256": "e3fa766b06333eb00b5b9b8b03d938b22d5595bdef98b0ae07c0733d0e41a260",
     "copied_fields": [
-      "ARENA width/depth",
-      "LANES",
-      "LANE_X",
-      "SPAWNS",
-      "SOLIDS",
-      "JUNGLE_CAMPS",
-      "current tower/core anchors"
-    ]
+      "Eight SOLIDS footprints/heights only",
+      "LANE_X centers",
+      "JUNGLE_CAMPS"
+    ],
+    "native_modified_fields": [
+      "Bounds and lane polylines",
+      "Spawn and tower/core positions",
+      "Native-only raised traversal platforms and grapple anchors",
+      "Offline army outcomes"
+    ],
+    "browser_baseline": {
+      "nominal_size_xz": [
+        140,
+        170
+      ],
+      "actor_xz": [
+        -68,
+        68,
+        -82,
+        82
+      ],
+      "lane_end_z": [
+        -66,
+        66
+      ],
+      "spawn_z": [
+        -69,
+        69
+      ],
+      "core_z": [
+        -75,
+        75
+      ]
+    }
   },
   "coordinate_contract": {
     "units": "metres",
@@ -33,29 +59,36 @@
   "bounds": {
     "nominal_size_xz": [
       140,
-      170
+      260
     ],
     "nominal_xz": [
       -70,
       70,
-      -85,
-      85
+      -130,
+      130
     ],
     "authority_xz": [
       -68,
       68,
-      -82,
-      82
+      -128,
+      128
     ],
     "art_xz": [
       -100,
       100,
-      -105,
-      105
+      -160,
+      160
     ],
     "hero_radius": 0.65,
-    "actor_bounds_rule": "abs(x)<=68-radius and abs(z)<=82-radius",
-    "floor_y": 0
+    "actor_bounds_rule": "Native feet: x in[-68+radius,68-radius], z in[-128+radius,128-radius], y<=24; authority_xz is a legacy field alias for native actor_xz, not browser-authority parity.",
+    "floor_y": 0,
+    "actor_xz": [
+      -68,
+      68,
+      -128,
+      128
+    ],
+    "altitude_ceiling": 24
   },
   "lanes": [
     {
@@ -66,25 +99,27 @@
         [
           0,
           0,
-          -66
+          -112
         ],
         [
           -40,
           0,
-          -48
+          -88
         ],
         [
           -40,
           0,
-          48
+          88
         ],
         [
           0,
           0,
-          66
+          112
         ]
       ],
-      "clear_half_width": 4.0
+      "clear_half_width": 4.0,
+      "source_relation": "Native extension; original x center retained",
+      "length_metres": 269.295
     },
     {
       "id": 1,
@@ -94,15 +129,17 @@
         [
           0,
           0,
-          -66
+          -112
         ],
         [
           0,
           0,
-          66
+          112
         ]
       ],
-      "clear_half_width": 4.0
+      "clear_half_width": 4.0,
+      "source_relation": "Native extension; original x center retained",
+      "length_metres": 224.0
     },
     {
       "id": 2,
@@ -112,25 +149,27 @@
         [
           0,
           0,
-          -66
+          -112
         ],
         [
           40,
           0,
-          -48
+          -88
         ],
         [
           40,
           0,
-          48
+          88
         ],
         [
           0,
           0,
-          66
+          112
         ]
       ],
-      "clear_half_width": 4.0
+      "clear_half_width": 4.0,
+      "source_relation": "Native extension; original x center retained",
+      "length_metres": 269.295
     }
   ],
   "rotations": [
@@ -253,7 +292,7 @@
       "position": [
         0,
         0,
-        -69
+        -112
       ],
       "yaw_degrees": 0
     },
@@ -263,7 +302,7 @@
       "position": [
         0,
         0,
-        69
+        112
       ],
       "yaw_degrees": 180
     }
@@ -277,10 +316,11 @@
       "position": [
         -40,
         0,
-        -37
+        -68
       ],
       "radius": 1.8,
-      "visual_only": true
+      "visual_only": true,
+      "native_gameplay": "Wayfinding marker; no tower damage rules in this milestone"
     },
     {
       "id": "sun-tower-1",
@@ -290,10 +330,11 @@
       "position": [
         0,
         0,
-        -37
+        -68
       ],
       "radius": 1.8,
-      "visual_only": true
+      "visual_only": true,
+      "native_gameplay": "Wayfinding marker; no tower damage rules in this milestone"
     },
     {
       "id": "sun-tower-2",
@@ -303,10 +344,11 @@
       "position": [
         40,
         0,
-        -37
+        -68
       ],
       "radius": 1.8,
-      "visual_only": true
+      "visual_only": true,
+      "native_gameplay": "Wayfinding marker; no tower damage rules in this milestone"
     },
     {
       "id": "sun-core",
@@ -316,10 +358,11 @@
       "position": [
         0,
         0,
-        -75
+        -120
       ],
       "radius": 2.8,
-      "visual_only": true
+      "visual_only": false,
+      "native_gameplay": "Offline army core outcome"
     },
     {
       "id": "moon-tower-0",
@@ -329,10 +372,11 @@
       "position": [
         -40,
         0,
-        37
+        68
       ],
       "radius": 1.8,
-      "visual_only": true
+      "visual_only": true,
+      "native_gameplay": "Wayfinding marker; no tower damage rules in this milestone"
     },
     {
       "id": "moon-tower-1",
@@ -342,10 +386,11 @@
       "position": [
         0,
         0,
-        37
+        68
       ],
       "radius": 1.8,
-      "visual_only": true
+      "visual_only": true,
+      "native_gameplay": "Wayfinding marker; no tower damage rules in this milestone"
     },
     {
       "id": "moon-tower-2",
@@ -355,10 +400,11 @@
       "position": [
         40,
         0,
-        37
+        68
       ],
       "radius": 1.8,
-      "visual_only": true
+      "visual_only": true,
+      "native_gameplay": "Wayfinding marker; no tower damage rules in this milestone"
     },
     {
       "id": "moon-core",
@@ -368,10 +414,11 @@
       "position": [
         0,
         0,
-        75
+        120
       ],
       "radius": 2.8,
-      "visual_only": true
+      "visual_only": false,
+      "native_gameplay": "Offline army core outcome"
     }
   ],
   "camps": [
@@ -569,8 +616,8 @@
       "bounds_xz": [
         -70,
         -32,
-        -60,
-        60
+        -100,
+        100
       ],
       "theme": "sandstone terraces, carved crowns, brass and warm niches",
       "walkable_floor_y": 0
@@ -581,8 +628,8 @@
       "bounds_xz": [
         -32,
         8,
-        -60,
-        60
+        -100,
+        100
       ],
       "theme": "quiet stone paving, lotus inlays, tall offset temple roofs",
       "walkable_floor_y": 0
@@ -593,8 +640,8 @@
       "bounds_xz": [
         8,
         70,
-        -60,
-        60
+        -100,
+        100
       ],
       "theme": "modern stepped buildings, indigo transit bands, planted roofs",
       "walkable_floor_y": 0
@@ -629,8 +676,8 @@
       "bounds_xz": [
         -70,
         70,
-        -82,
-        -60
+        -128,
+        -100
       ],
       "theme": "warm sun medallion and distant coastal skyline",
       "walkable_floor_y": 0
@@ -641,8 +688,8 @@
       "bounds_xz": [
         -70,
         70,
-        60,
-        82
+        100,
+        128
       ],
       "theme": "cool moon medallion and distant modern skyline",
       "walkable_floor_y": 0
@@ -902,7 +949,7 @@
       "position": [
         -34,
         0,
-        -94
+        -144
       ],
       "yaw_degrees": 0,
       "scale": [
@@ -919,7 +966,7 @@
       "position": [
         32,
         0,
-        94
+        144
       ],
       "yaw_degrees": 0,
       "scale": [
@@ -1424,7 +1471,7 @@
       "position": [
         0,
         0.008,
-        -69
+        -112
       ],
       "yaw_degrees": 0,
       "scale": [
@@ -1441,7 +1488,7 @@
       "position": [
         0,
         0.008,
-        69
+        112
       ],
       "yaw_degrees": 180,
       "scale": [
@@ -2171,10 +2218,10 @@
       ],
       "size_xz": [
         26,
-        170
+        260
       ],
       "depth_appearance": "coastal",
-      "traversal": "outside_authority_bounds",
+      "traversal": "outside_native_actor_bounds",
       "collision": "none",
       "style": "coast"
     },
@@ -2229,20 +2276,9 @@
     "scale_usage": "world dimensions for unit-bound kit; preserve base anchor and apply yaw before translation",
     "architecture_rule": "City-block meshes stay within matching authority footprint. Roof detail is contained. Mounted lamps project at most0.22m above1.9m, within0.65m actor exclusion; other hard scenery is outside actor bounds.",
     "renderers_may_fallback": "Procedural fallback must preserve positions, dimensions, collision and silhouette purpose; record missing visual kit.",
-    "collision_rule": "Only authority_collision_boxes generate blocking collision. No prop with collision none creates a blocker."
+    "collision_rule": "Eight authority_collision_boxes preserve the source SOLIDS. Separate traversal.native_collision_boxes define new native-only solid landing decks. Other props create no blocker."
   },
   "reserved_future_features": [
-    {
-      "id": "vertical-authority-fixture",
-      "status": "not_active",
-      "bounds_xz": [
-        -12,
-        12,
-        -12,
-        12
-      ],
-      "reason": "Separate test scene for ramps, stairs and stacked decks after authority version decision; never inserted into current flat map."
-    },
     {
       "id": "production-inner-towers",
       "status": "not_active",
@@ -2250,16 +2286,16 @@
     }
   ],
   "review": {
-    "round": 2,
+    "round": 3,
     "findings": [
-      "Lamp and light origins inside solid blocks would be hidden; moved to bounded sidewall mounts.",
-      "Negative-height swamp water would be hidden by the flat floor; made explicit shallow wet-ground overlays.",
-      "Static traversal geometry does not include dynamic living structure circles."
+      "Extended lanes from132m center to224m center; original8 static boxes retained.",
+      "Mirrored landing decks and real36m starter grapple approach; native bounds explicitly differ from browser authority.",
+      "Only gold vertical ring anchors are usable; lotus paving and roof ornament are decorative."
     ],
-    "next": "Run planning and independent authority-route tests; integrate exported kits and inspect actual native views."
+    "next": "Run native route/landing/traversal/army lifecycle tests and actual renderer review. No GPU or multiplayer performance claim."
   },
   "dynamic_structure_contract": {
-    "review_scene": "Objectives are visual anchors only; static review collision contains eight authority boxes and world bounds.",
+    "review_scene": "Expanded offline native traversal: eight original blocks plus separate native landing decks. Army core health is local; tower markers remain visual/nonblocking.",
     "authoritative_game": "Living towers and cores have dynamic circular blockers in simulation.blockedAt. Native multiplayer must add those independently and remove them with authoritative state.",
     "future_acceptance": "Full authority matching requires both static collision and living structure circles; traversal review alone cannot prove this."
   },
@@ -2303,6 +2339,411 @@
       "ghat_wave",
       "temple_lotus",
       "transit_line"
+    ]
+  },
+  "traversal": {
+    "status": "native_only_offline",
+    "flight_ceiling": 24,
+    "grapple_range": 36,
+    "initial_team": "sun",
+    "initial_spawn": "sun-spawn",
+    "fiction": "Vayu lift and Naga tether are invented gameplay relics inspired by wind/serpent motifs; no claim that these are canonical powers of Rama.",
+    "landing_rule": "Solid sandstone decks have matching axis-aligned collision and a clear central landing square. Gold vertical ring means usable grapple anchor; decorative roof details carry no anchor. Descend onto the deck or release over open ground.",
+    "anchors": [
+      {
+        "id": "sun-lift-west-ring",
+        "name": "Vayu lift",
+        "position": [
+          -20,
+          12,
+          -88
+        ],
+        "platform_id": "sun-lift-west",
+        "kind": "landing_ring"
+      },
+      {
+        "id": "sun-shrine-west-ring",
+        "name": "Naga tether",
+        "position": [
+          -54,
+          15,
+          -88
+        ],
+        "platform_id": "sun-shrine-west",
+        "kind": "landing_ring"
+      },
+      {
+        "id": "sun-lift-east-ring",
+        "name": "Vayu lift",
+        "position": [
+          20,
+          12,
+          -88
+        ],
+        "platform_id": "sun-lift-east",
+        "kind": "landing_ring"
+      },
+      {
+        "id": "sun-shrine-east-ring",
+        "name": "Naga tether",
+        "position": [
+          54,
+          15,
+          -88
+        ],
+        "platform_id": "sun-shrine-east",
+        "kind": "landing_ring"
+      },
+      {
+        "id": "moon-lift-west-ring",
+        "name": "Vayu lift",
+        "position": [
+          -20,
+          12,
+          88
+        ],
+        "platform_id": "moon-lift-west",
+        "kind": "landing_ring"
+      },
+      {
+        "id": "moon-shrine-west-ring",
+        "name": "Naga tether",
+        "position": [
+          -54,
+          15,
+          88
+        ],
+        "platform_id": "moon-shrine-west",
+        "kind": "landing_ring"
+      },
+      {
+        "id": "moon-lift-east-ring",
+        "name": "Vayu lift",
+        "position": [
+          20,
+          12,
+          88
+        ],
+        "platform_id": "moon-lift-east",
+        "kind": "landing_ring"
+      },
+      {
+        "id": "moon-shrine-east-ring",
+        "name": "Naga tether",
+        "position": [
+          54,
+          15,
+          88
+        ],
+        "platform_id": "moon-shrine-east",
+        "kind": "landing_ring"
+      },
+      {
+        "id": "temple-ring--44",
+        "name": "Temple sky ring",
+        "position": [
+          0,
+          15,
+          -44
+        ],
+        "kind": "sky_ring",
+        "landing": "Release and descend to the clear avenue floor; this luminous ring is not a platform."
+      },
+      {
+        "id": "temple-ring-44",
+        "name": "Temple sky ring",
+        "position": [
+          0,
+          15,
+          44
+        ],
+        "kind": "sky_ring",
+        "landing": "Release and descend to the clear avenue floor; this luminous ring is not a platform."
+      }
+    ],
+    "landmarks": [
+      {
+        "id": "sun-lift-west",
+        "kind": "lift",
+        "name": "Vayu landing court",
+        "position": [
+          -20,
+          0,
+          -88
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ],
+        "anchor_id": "sun-lift-west-ring",
+        "team": "sun",
+        "native_only": true
+      },
+      {
+        "id": "sun-shrine-west",
+        "kind": "shrine",
+        "name": "Naga tether shrine",
+        "position": [
+          -54,
+          0,
+          -88
+        ],
+        "size": [
+          7,
+          10,
+          7
+        ],
+        "anchor_id": "sun-shrine-west-ring",
+        "team": "sun",
+        "native_only": true
+      },
+      {
+        "id": "sun-lift-east",
+        "kind": "lift",
+        "name": "Vayu landing court",
+        "position": [
+          20,
+          0,
+          -88
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ],
+        "anchor_id": "sun-lift-east-ring",
+        "team": "sun",
+        "native_only": true
+      },
+      {
+        "id": "sun-shrine-east",
+        "kind": "shrine",
+        "name": "Naga tether shrine",
+        "position": [
+          54,
+          0,
+          -88
+        ],
+        "size": [
+          7,
+          10,
+          7
+        ],
+        "anchor_id": "sun-shrine-east-ring",
+        "team": "sun",
+        "native_only": true
+      },
+      {
+        "id": "moon-lift-west",
+        "kind": "lift",
+        "name": "Vayu landing court",
+        "position": [
+          -20,
+          0,
+          88
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ],
+        "anchor_id": "moon-lift-west-ring",
+        "team": "moon",
+        "native_only": true
+      },
+      {
+        "id": "moon-shrine-west",
+        "kind": "shrine",
+        "name": "Naga tether shrine",
+        "position": [
+          -54,
+          0,
+          88
+        ],
+        "size": [
+          7,
+          10,
+          7
+        ],
+        "anchor_id": "moon-shrine-west-ring",
+        "team": "moon",
+        "native_only": true
+      },
+      {
+        "id": "moon-lift-east",
+        "kind": "lift",
+        "name": "Vayu landing court",
+        "position": [
+          20,
+          0,
+          88
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ],
+        "anchor_id": "moon-lift-east-ring",
+        "team": "moon",
+        "native_only": true
+      },
+      {
+        "id": "moon-shrine-east",
+        "kind": "shrine",
+        "name": "Naga tether shrine",
+        "position": [
+          54,
+          0,
+          88
+        ],
+        "size": [
+          7,
+          10,
+          7
+        ],
+        "anchor_id": "moon-shrine-east-ring",
+        "team": "moon",
+        "native_only": true
+      }
+    ],
+    "native_collision_boxes": [
+      {
+        "id": "sun-lift-west-deck",
+        "landmark_id": "sun-lift-west",
+        "position": [
+          -20,
+          0,
+          -88
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ],
+        "anchor": "base_center",
+        "collision_layer": 1,
+        "native_only": true
+      },
+      {
+        "id": "sun-shrine-west-deck",
+        "landmark_id": "sun-shrine-west",
+        "position": [
+          -54,
+          0,
+          -88
+        ],
+        "size": [
+          7,
+          10,
+          7
+        ],
+        "anchor": "base_center",
+        "collision_layer": 1,
+        "native_only": true
+      },
+      {
+        "id": "sun-lift-east-deck",
+        "landmark_id": "sun-lift-east",
+        "position": [
+          20,
+          0,
+          -88
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ],
+        "anchor": "base_center",
+        "collision_layer": 1,
+        "native_only": true
+      },
+      {
+        "id": "sun-shrine-east-deck",
+        "landmark_id": "sun-shrine-east",
+        "position": [
+          54,
+          0,
+          -88
+        ],
+        "size": [
+          7,
+          10,
+          7
+        ],
+        "anchor": "base_center",
+        "collision_layer": 1,
+        "native_only": true
+      },
+      {
+        "id": "moon-lift-west-deck",
+        "landmark_id": "moon-lift-west",
+        "position": [
+          -20,
+          0,
+          88
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ],
+        "anchor": "base_center",
+        "collision_layer": 1,
+        "native_only": true
+      },
+      {
+        "id": "moon-shrine-west-deck",
+        "landmark_id": "moon-shrine-west",
+        "position": [
+          -54,
+          0,
+          88
+        ],
+        "size": [
+          7,
+          10,
+          7
+        ],
+        "anchor": "base_center",
+        "collision_layer": 1,
+        "native_only": true
+      },
+      {
+        "id": "moon-lift-east-deck",
+        "landmark_id": "moon-lift-east",
+        "position": [
+          20,
+          0,
+          88
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ],
+        "anchor": "base_center",
+        "collision_layer": 1,
+        "native_only": true
+      },
+      {
+        "id": "moon-shrine-east-deck",
+        "landmark_id": "moon-shrine-east",
+        "position": [
+          54,
+          0,
+          88
+        ],
+        "size": [
+          7,
+          10,
+          7
+        ],
+        "anchor": "base_center",
+        "collision_layer": 1,
+        "native_only": true
+      }
     ]
   }
 }
