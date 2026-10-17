@@ -2,7 +2,7 @@
 
 This is the second verified-batch workstream requested on 17 October 2026. The
 [batch ledger](MYTHIC_BATCHES.md) maps ten bounded packets to the larger
-[production backlog](ROADMAP_BACKLOG.json). Both batches passed their bounded reviews. The [second acceptance review](evidence/mythic-batch2/REVIEW.md) links 113 independent integration checks, final source-matched captures and actual Linux package input. Publication at `yuga-traversal-armies-2026-10-17-mythic` remains the final step; this milestone does not accept the entire production game.
+[production backlog](ROADMAP_BACKLOG.json). Both batches passed their bounded reviews. The [second acceptance review](evidence/mythic-batch2/REVIEW.md) links 113 independent integration checks, final source-matched captures and actual Linux package input. The [Mythic native preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-mythic) is published at `e2dc0ecd3f6903e0c8af68b2c5717ba5947108ed`. [Public verification](evidence/mythic-published/REVIEW.md) checks all 100 downloads, both successful CI runs and the actual downloaded Linux window. This milestone does not accept the entire production game.
 
 ## Play the new practice abilities
 

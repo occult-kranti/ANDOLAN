@@ -1,0 +1,83 @@
+{
+  "task": "Public Mythic release retrieval, exact identity/provenance verification and Linux payload comparison",
+  "source_commit": "e2dc0ecd3f6903e0c8af68b2c5717ba5947108ed",
+  "tag": "yuga-traversal-armies-2026-10-17-mythic",
+  "assets_downloaded": 100,
+  "asset_bytes": 214995902,
+  "public_asset_integrity_passed": true,
+  "release_verification_passed": true,
+  "runtime_sources_identical_to_reviewed_r3": true,
+  "runtime_source_count": 290,
+  "fresh_media_and_16_mythic_reports_passed": true,
+  "linux_engine_byte_identity": true,
+  "linux_pck_byte_identity": false,
+  "identical_pck_payloads": 279,
+  "different_pck_payloads": 9,
+  "bounded_difference_finding": "All nine changed compiled scenes differ in serialized node_ids spans. Eight have no other decompressed byte differences. The imported nature scene additionally differs at two byte offsets. Those two differences remain semantically unexplained; no visual/physics equivalence is inferred.",
+  "preserved_failure": "verification-summary.json and linux-package-comparison.json retain the rejected byte-identity transfer unchanged. The release integrity/provenance checks pass separately.",
+  "public_os_review": "Root independently executed the actual public Linux package; root owns window evidence and final acceptance. This worker did not execute downloaded binaries.",
+  "remaining_owner": "Root writes final REVIEW.md, acceptance.json and archive manifest, and publishes the documentation update.",
+  "cleanup": "Worker reads of local r3 and downloaded comparison PCK are finished. Preserve the public download until root finishes any remaining evidence operations; local scratch raw/decompressed payloads can be cleaned after final archive recovery checks.",
+  "owned_evidence": {
+    "download-and-verify.py": {
+      "sha256": "a9c8d1e6702a6a62c70ed788e498e0ee558b4dcb0098e87917551ddb2acb3f0f",
+      "bytes": 10419
+    },
+    "download.log.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "public-release-metadata.json": {
+      "sha256": "e491eacf9bce73c1b18fd920b9aa987a7b289e261fb2acffa869e33b88710e41",
+      "bytes": 45944
+    },
+    "public-tag-resolution.json": {
+      "sha256": "44a0d667213dfacb6a5263fd7b8d673f6af34a6bbf3f5d07c459ca25e6049151",
+      "bytes": 514
+    },
+    "public-download-records.json": {
+      "sha256": "30b6713005ac9413aa0426fcbdb59a0b3564b5782a3e0bb3590f0d1e9eb23da3",
+      "bytes": 14324
+    },
+    "release-verify.log.txt": {
+      "sha256": "ba8028f1be71a2632244f4b7d6a24940773e9b69cc95e154e40ca22397bfc594",
+      "bytes": 136
+    },
+    "release-verification.json": {
+      "sha256": "60b0c10429ff90f096ee796f90614b58bfa5335bd579dbfd6f6377a1ba06b8de",
+      "bytes": 146
+    },
+    "public-export-capture-verification.json": {
+      "sha256": "4a529bb6acf75ff5af55649d843dc1c36d57fdd6c7258a6d1e782e245133f46a",
+      "bytes": 1261
+    },
+    "source-comparison.json": {
+      "sha256": "90586f46e2a385aadb0e2439e985758e59dbb4081c01e8d83e39951f7bd801a4",
+      "bytes": 397
+    },
+    "linux-package-comparison.json": {
+      "sha256": "1db445944f3a76b950bc71ab3180028115efe1f393706a76db3f85917cf9eccf",
+      "bytes": 1875
+    },
+    "public-release-metadata-after.json": {
+      "sha256": "e491eacf9bce73c1b18fd920b9aa987a7b289e261fb2acffa869e33b88710e41",
+      "bytes": 45944
+    },
+    "verification-source-pins.json": {
+      "sha256": "fa82703bf441fa4559d3b6ef49acfdffca760fc6adc0ff9cabd08eef2f89dbc2",
+      "bytes": 686
+    },
+    "verification-summary.json": {
+      "sha256": "ff0dccefc047872f9b00ebc438663d17b28e6b09a5095f2de5e1bc3128687ea6",
+      "bytes": 724
+    },
+    "compare-pck-payloads.py": {
+      "sha256": "66eaf1d4124e7737990810024b1090471fa1bde529aebd1baf784ca5ecc7a3ca",
+      "bytes": 4519
+    },
+    "pck-decompressed-comparison.json": {
+      "sha256": "7fe6a05af69f63e9c5fce8a05034089a3e5fb137845d59e16ecc4a0df1ea3b01",
+      "bytes": 9263
+    }
+  }
+}

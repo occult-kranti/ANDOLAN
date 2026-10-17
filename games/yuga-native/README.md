@@ -2,9 +2,9 @@
 
 Both bounded batches are accepted, covering [ten mythic packets](docs/MYTHIC_BATCHES.md). Batch 1 passed its [bounded art/animation/contract review](docs/evidence/mythic-batch1/REVIEW.md). Batch 2 adds fourteen troop invocations through Rama, distinct effects, sixteen original cues, a native entity presentation bridge and a measured 3D physics comparison. See the [milestone](docs/MYTHIC_MILESTONE.md) and [Batch 2 evidence/status](docs/evidence/mythic-batch2/REVIEW.md).
 
-**Mythic release: pending.** Planned tag: `yuga-traversal-armies-2026-10-17-mythic`. Final pause/focus, source-matched captures and the [local Linux packaged-input review](docs/evidence/mythic-window-r3/REVIEW.md) are accepted. Publication and verification of the public downloads remain pending. The verified Triad download below remains the public release.
+**[Download the Mythic native preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-mythic)** for Linux or Windows. Tag source: `e2dc0ecd3f6903e0c8af68b2c5717ba5947108ed`. Both CI workflows passed; all 100 public assets, 290 runtime sources, two freshly decoded source-bound captures and sixteen required reports passed independent verification. The exact downloaded Linux build passes title/world entry, fully visible Continue, keyboard selector entry, a visible Sita cast with release/cooldown, pause retaining the field, F5 reset and title return. See [public release evidence](docs/evidence/mythic-published/REVIEW.md). Remapping/settings were not repeated in this public run. The accepted [local Linux input review](docs/evidence/mythic-window-r3/REVIEW.md) remains separately scoped. Windows is packaged and validated, not execution-tested.
 
-**Try the source build:** choose **Explore Confluence**, press **F3**, choose a legend and select **Use invocation**. Aim while grounded and press **X**. F2 opens controls/remapping; the displayed binding takes precedence over this default. All fourteen invocations share a 12-second recovery. They affect lane troops through the current Rama avatar; selecting a legend does not change the hero model.
+**Play:** choose **Explore Confluence**, press **F3**, choose a legend and select **Use invocation**. Aim while grounded and press **X**. F2 opens controls/remapping; the displayed binding takes precedence over this default. All fourteen invocations share a 12-second recovery. They affect lane troops through the current Rama avatar; selecting a legend does not change the hero model.
 
 **Start a new task:** [repository handoff](../../docs/START_HERE.md) → [build handbook](docs/BUILD_HANDBOOK.md). The handbook maps features to files and provides setup, tests, art, capture, packaging and agent handoff instructions. Use the [research brief](docs/research/RESEARCH_BRIEF.md) for Reddit findings, mythology, selected reading and reuse decisions; use the [workspace guide](../../docs/WORKSPACE_AND_CLEANUP.md) for cloud cleanup and recovery.
 
@@ -26,11 +26,11 @@ training, a combat film and offline three-lane army practice with flight, grappl
 full production visual target remain open.** The existing browser game remains
 on `game/yuga-confluence`.
 
-[Download the Triad and siege preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-triad-siege)
+Historical [Triad and siege preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-triad-siege)
 for Linux or Windows, tagged at `ae33db4520bd14fe7b38aed173b764de7a7424d5`.
 Both CI workflows passed. All 77 public assets, 233 runtime source files and three
 decoded, source-matched six-second captures pass independent verification.
-The exact downloaded Linux build passes forward Lotus entry, capture, capped
+That earlier downloaded Linux build passes forward Lotus entry, capture, capped
 arrow supply, pause, ordinary reset, siege entry and title return. This is a
 bounded public repeat; the broader local review remains separate. Windows is
 archive/resource-validated and unexecuted. See the
