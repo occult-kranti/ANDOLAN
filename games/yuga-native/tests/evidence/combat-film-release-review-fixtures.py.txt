@@ -1,0 +1,178 @@
+"""Read-only review fixtures. Run with python3 from the repository root.
+
+All GitHub commands below are mocked. No credentials, remote releases, tags,
+runtime files, or graphics resources are changed by this review.
+"""
+from pathlib import Path
+import argparse
+import ast
+import hashlib
+import json
+import re
+import shutil
+import subprocess
+import tempfile
+import types
+from unittest.mock import patch
+
+import yaml
+
+ROOT = Path.cwd()
+SOURCE = ROOT / "games/yuga-native/tools/release-native.py"
+WORKFLOW = ROOT / ".github/workflows/yuga-native-release.yml"
+EVIDENCE = ROOT / "games/yuga-native/tests/evidence"
+text = SOURCE.read_text()
+module = types.ModuleType("release_review_fixture")
+module.__file__ = str(SOURCE)
+exec(compile(text, str(SOURCE), "exec"), module.__dict__)
+TAG = "yuga-confluence-duel-review-fixture"
+COMMIT = "a" * 40
+checks = []
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def record(name, passed, **details):
+    checks.append({"name": name, "passed": bool(passed), "details": details})
+    if not passed:
+        raise AssertionError(name)
+
+
+def bundle(folder, body):
+    folder.mkdir()
+    (folder / "RELEASE-NOTES.md").write_text(body)
+    files = {"RELEASE-NOTES.md": module.record(folder / "RELEASE-NOTES.md")}
+    module.write_json(folder / "release-manifest.json", {
+        "tag": TAG, "commit": COMMIT, "prerelease": True, "files": files})
+    rows = {**files, "release-manifest.json": module.record(folder / "release-manifest.json")}
+    (folder / "SHA256SUMS").write_text("".join(
+        f"{row['sha256']}  {name}\n" for name, row in sorted(rows.items())))
+
+
+def publication_case(name, success=False):
+    with tempfile.TemporaryDirectory(prefix="yuga-independent-release-") as temporary:
+        root = Path(temporary)
+        local, remote = root / "local", root / "remote"
+        bundle(local, "Verified local bytes.\n")
+        bundle(remote, "Verified local bytes.\n")
+        if name == "self_consistent_remote_substitution":
+            shutil.rmtree(remote)
+            bundle(remote, "Different self-consistent remote bytes.\n")
+        elif name == "missing_remote_asset":
+            (remote / "RELEASE-NOTES.md").unlink()
+        elif name == "extra_remote_asset":
+            (remote / "unexpected.txt").write_text("extra")
+        elif name == "corrupt_remote_checksums":
+            (remote / "SHA256SUMS").write_text("incorrect")
+        elif name == "corrupt_local_asset":
+            (local / "RELEASE-NOTES.md").write_text("corrupt")
+        calls, tag_checks = [], []
+
+        def fake_run(argv, **kwargs):
+            calls.append(argv)
+            rc, out, err = 0, "", ""
+            if argv[:2] == ["gh", "api"]:
+                endpoint = argv[2]
+                if "/git/ref/tags/" in endpoint:
+                    tag_checks.append(endpoint)
+                    value = COMMIT
+                    if name == "remote_tag_mismatch" or (name == "remote_tag_moves_after_upload" and len(tag_checks) > 1):
+                        value = "b" * 40
+                    obj = {"type": "commit", "sha": value}
+                    if name in {"annotated_tag", "cyclic_annotated_tag"}:
+                        obj = {"type": "tag", "sha": "c" * 40}
+                    out = json.dumps({"object": obj})
+                    if name == "tag_api_denied":
+                        rc, err = 1, "HTTP 401"
+                elif "/git/tags/" in endpoint:
+                    out = json.dumps({"object": {"type": "tag", "sha": "c" * 40} if name == "cyclic_annotated_tag" else {"type": "commit", "sha": COMMIT}})
+                else:
+                    out = json.dumps({"draft": name != "already_public", "target_commitish": "b" * 40 if name == "wrong_draft_target" else COMMIT})
+                    if name in {"new_draft", "draft_creation_fails"}:
+                        rc, err = 1, "gh: Not Found (HTTP 404)"
+                    elif name == "release_state_unknown":
+                        rc, err = 1, "HTTP 401"
+            elif argv[:3] == ["gh", "release", "create"]:
+                assert "--draft" in argv and "--verify-tag" in argv
+                if name == "draft_creation_fails":
+                    rc, err = 1, "mock create failure"
+            elif argv[:3] == ["gh", "release", "upload"] and name == "upload_fails":
+                rc, err = 1, "mock upload failure"
+            elif argv[:3] == ["gh", "release", "download"]:
+                if name == "download_fails":
+                    rc, err = 1, "mock download failure"
+                else:
+                    shutil.copytree(remote, Path(argv[argv.index("--dir") + 1]), dirs_exist_ok=True)
+            if rc and kwargs.get("check"):
+                raise subprocess.CalledProcessError(rc, argv, output=out, stderr=err)
+            return types.SimpleNamespace(returncode=rc, stdout=out, stderr=err)
+
+        def fake_git(*args):
+            if name == "wrong_checkout" and args == ("rev-parse", "HEAD"):
+                return "b" * 40
+            if name == "wrong_local_tag" and str(args[-1]).startswith("refs/tags/"):
+                return "b" * 40
+            return COMMIT
+
+        error, result = None, None
+        with patch.object(module.subprocess, "run", fake_run), patch.object(module, "git", fake_git):
+            try:
+                result = module.publish(argparse.Namespace(directory=local, tag=TAG,
+                    commit=COMMIT, repository="fixture/repository"))
+            except (ValueError, subprocess.CalledProcessError) as caught:
+                error = str(caught)
+        edited = [i for i, c in enumerate(calls) if c[:3] == ["gh", "release", "edit"]]
+        if success:
+            okay = result is not None and result.get("published") is True and len(edited) == 1 and edited[0] == len(calls) - 1 and len(tag_checks) == 2
+        else:
+            okay = error is not None and not edited
+        record(name, okay, expected_publish=success, publish_command_count=len(edited),
+            remote_tag_checks=len(tag_checks), rejection=error)
+
+
+for case in ["existing_draft", "new_draft", "annotated_tag"]:
+    publication_case(case, True)
+for case in ["self_consistent_remote_substitution", "missing_remote_asset", "extra_remote_asset",
+             "corrupt_remote_checksums", "corrupt_local_asset", "already_public", "wrong_draft_target",
+             "release_state_unknown", "draft_creation_fails", "upload_fails", "download_fails",
+             "wrong_checkout", "wrong_local_tag", "remote_tag_mismatch", "remote_tag_moves_after_upload",
+             "tag_api_denied", "cyclic_annotated_tag"]:
+    publication_case(case)
+
+workflow = yaml.load(WORKFLOW.read_text(), Loader=yaml.BaseLoader)
+ast.parse(SOURCE.read_text())
+record("tag_only_trigger", set(workflow["on"]) == {"push"} and workflow["on"]["push"] == {"tags": ["yuga-confluence-duel-*"]})
+record("job_permissions_and_dependency", workflow["permissions"] == {} and
+       workflow["jobs"]["build"]["permissions"] == {"contents": "read"} and
+       workflow["jobs"]["release"]["permissions"] == {"contents": "write"} and
+       workflow["jobs"]["release"]["needs"] == "build")
+blocks = 0
+for job in workflow["jobs"].values():
+    for step in job["steps"]:
+        if "uses" in step:
+            assert re.fullmatch(r"actions/(checkout|upload-artifact|download-artifact)@[0-9a-f]{40}", step["uses"])
+            if step["uses"].startswith("actions/checkout@"):
+                assert step["with"]["persist-credentials"] == "false"
+        if "run" in step:
+            subprocess.run(["bash", "-n"], input=re.sub(r"\$\{\{.*?\}\}", "REVIEW_VALUE", step["run"]), text=True, check=True)
+            blocks += 1
+record("immutable_official_action_pins_and_shell_syntax", True, shell_blocks=blocks)
+build_commands = "\n".join(step.get("run", "") for step in workflow["jobs"]["build"]["steps"])
+required_world = {"world-scene", "world-flow", "world-lighting"}
+record("bundled_world_gates_required", required_world <= set(module.CHECKS) and all(
+    token in build_commands for token in ["world_scene_cases.gd", "world_flow_cases.gd", "world_lighting_cases.gd"]))
+record("fresh_decoded_media_check_without_fabricated_capture", "verify-film-media.py" in build_commands and "--capture-report" not in build_commands)
+archive = module.validate_evidence(working_tree=True)
+record("actual_archived_movie_and_capture_inventory", archive["passed"], archive=archive)
+record("engine_downloads_pin_official_host_and_extracted_bytes", module.BASE_URL.startswith("https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/") and all(
+    re.fullmatch(r"[0-9a-f]{64}", spec["archive_sha256"]) and all(re.fullmatch(r"[0-9a-f]{64}", row["sha256"]) for row in spec["files"]) for spec in module.ENGINES.values()))
+source_hashes = {str(p.relative_to(ROOT)): sha(p) for p in (SOURCE, WORKFLOW)}
+record("reviewed_helper_unchanged", sha(SOURCE) == hashlib.sha256(text.encode()).hexdigest())
+report = {"passed": all(c["passed"] for c in checks), "scope": "Read-only release logic/static review. GitHub operations are mocked; no real upload/publication or CI run claimed.",
+          "checks": checks, "source_sha256": source_hashes,
+          "limitations": ["No real GitHub API or release mutation was performed.", "This review does not rerun the game suites or rerender the movie; the release workflow performs its required checks on the tagged source.", "Archived render source and current package source remain separately disclosed."]}
+output = EVIDENCE / "combat-film-release-review-final.json"
+output.write_text(json.dumps(report, indent=2) + "\n")
+print(json.dumps({"passed": report["passed"], "checks": len(checks), "sources": source_hashes, "report": str(output.relative_to(ROOT))}))
