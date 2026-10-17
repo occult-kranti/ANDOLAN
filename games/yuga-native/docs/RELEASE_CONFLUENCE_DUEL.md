@@ -2,7 +2,7 @@
 
 An original 24-second Rama-versus-Ravana Sentinel combat film, built in the native YUGA project. It demonstrates a blocked solar arrow, a telegraphed spectral wave, an evade and a countershot. Two skinned actors use rig-specific libraries with nine clips each, original costume work, timeline effects and an original synthesized soundtrack.
 
-The local milestone is verified. The [movie is publicly available](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/game/yuga-native-production/games/yuga-native/docs/evidence/combat-film-r4/yuga-confluence-duel.mp4); the [native release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17) is awaiting publication. These notes do not claim that a later CI rebuild has been executed.
+The local milestone is verified. The [movie is publicly available](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/game/yuga-native-production/games/yuga-native/docs/evidence/combat-film-r4/yuga-confluence-duel.mp4). Download the native ZIPs from this release's assets. The local execution evidence below does not automatically establish execution of a later CI rebuild; its release manifest identifies the rebuilt files separately.
 
 ### Watch or run
 
