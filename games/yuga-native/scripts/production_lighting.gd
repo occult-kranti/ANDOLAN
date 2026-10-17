@@ -68,7 +68,10 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	sun.light_energy = 0.50 if night else 1.35
 	sun.light_angular_distance = 0.7
 	sun.shadow_enabled = shadows
-	sun.shadow_bias = 0.025
+	# Matched day/night face and ground views show 0.025 causes broad skin
+	# self-shadow patches. Keep the small normal offset and reviewed depth bias;
+	# residual fine stippling and moving-camera contact still need art review.
+	sun.shadow_bias = 0.2
 	sun.shadow_normal_bias = 0.35
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
 	sun.directional_shadow_max_distance = 70.0

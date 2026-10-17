@@ -1,0 +1,34 @@
+{
+  "role": "09 independent material and ownership review",
+  "source_commit": "38d11148fe69b184e981164c8a71387c91dc64c5 plus current unstaged visual campaign",
+  "final_source_sha256": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+  "final_test_sha256": "73f40ffbba850c4293d83da31d12acb4b47ce14c368a9709b7173c9fa71beb63",
+  "passed": true,
+  "checks": {
+    "adversarial_runtime": 7,
+    "maps_and_provenance": 13
+  },
+  "product_defects_found_and_closed": 3,
+  "test_harness_error": "Initial sharing-control check compared a float32 StandardMaterial property to literal .51 exactly. Corrected to compare the captured original property; both failed initial and corrected reports retained. This was not a product defect.",
+  "art_verdict": "LIMITED",
+  "reports": [
+    "r1/report.json",
+    "r1/report-harness-corrected.json",
+    "r2/report.json",
+    "r3/report.json",
+    "r4/report.json",
+    "maps.json",
+    "visual-review.json"
+  ],
+  "native_exits": {
+    "r1": 1,
+    "r1-harness-corrected": 1,
+    "r2": 0,
+    "r3": 1,
+    "r4": 0
+  },
+  "commands": {
+    "runtime": "taskset -c 0,1 env XDG_DATA_HOME=/workspace/scratch/rama-finish-adversarial-r4-user godot --headless --path games/yuga-native --script res://tests/rama_finish_adversarial_cases.gd -- --report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-campaign/material-review/r4/report.json"
+  },
+  "remaining": "Independent final art/capture review and broader integration belong to root; no outstanding blocker found in reviewed material ownership scope."
+}

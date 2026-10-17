@@ -1,0 +1,9 @@
+extends "res://scripts/rama_motion.gd"
+
+func _apply_contact() -> void:
+	var bone:=rig.find_bone("spine05")
+	var before:=rig.get_bone_global_pose(bone).origin
+	super._apply_contact()
+	var after:=rig.get_bone_global_pose(bone).origin
+	var displacement:=before.distance_to(after)
+	Engine.set_meta("review_maximum_compression",maxf(float(Engine.get_meta("review_maximum_compression",0.0)),displacement))

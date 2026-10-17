@@ -104,8 +104,10 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	sun.light_angular_distance = 0.6
 	sun.shadow_enabled = shadows
 	# Directional shadow distance is camera-local, not all 170 m of the arena.
-	# Bias values are initial art settings: captured views must confirm contact.
-	sun.shadow_bias = 0.025
+	# Matched Confluence day/night views support this bounded reduction of skin
+	# self-shadow patches. Keep the normal offset small; dynamic contact and
+	# residual fine stippling remain separate visual acceptance gates.
+	sun.shadow_bias = 0.2
 	sun.shadow_normal_bias = 0.35
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
 	sun.directional_shadow_max_distance = SHADOW_DISTANCE

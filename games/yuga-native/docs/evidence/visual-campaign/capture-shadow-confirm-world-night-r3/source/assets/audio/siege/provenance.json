@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "title": "Original cannon and chariot siege cues",
+  "license": "CC0-1.0",
+  "authorship": "Original additive synthesis authored for YUGA; no recordings, sampled instruments, borrowed tune or commercial-game audio.",
+  "generator": "tools/audio/build-siege-audio.py",
+  "generator_sha256": "fd02c1dc8732d224314dfae30bb07a5f9c67383b66e29fcf05204d9633e312a7",
+  "dependencies": "Python standard library only: math, wave, struct, hashlib and JSON; no external packages.",
+  "synthesis": {
+    "brass": "Sum of harmonics 1,2,3,4 at weights 0.62,0.22,0.10,0.05; phase=2*pi*(f0*t+0.5*slope*t^2).",
+    "wood": "Damped sine modes at ratios 1,2.37,3.91, weighted 1,0.30,0.12; exponential decay rates 28,45,65 s^-1.",
+    "drum": "Damped modes 1,1.59,2.13; integrated exponential frequency fall with 0.024 s time constant; no physical-instrument fidelity claim.",
+    "noise": "Explicit Xorshift32 seeded per cue, normalized to [-1,1], one-pole smoothing coefficient 0.32; only short impact transients.",
+    "envelope": "Raised-cosine attack/release, final sample explicitly zero; normalized to each declared peak before PCM16 rounding.",
+    "culture": "Warm brass/wood-drum-inspired game cues, not an authentic raga/tala performance or historical instrument reconstruction."
+  },
+  "mix_budget": {
+    "max_siege_voices": 6,
+    "per_voice_gain_db": -12,
+    "per_voice_peak_upper_bound": 0.12,
+    "siege_amplitude_upper_bound": 0.180855823069,
+    "siege_headroom_db": 14.853350071375,
+    "assumed_existing_traversal_subsystem_upper_bound": 0.561,
+    "combined_amplitude_upper_bound": 0.741855823069,
+    "combined_headroom_db": 2.593609800883,
+    "assumptions": "Six siege voices maximum, volume <=1, each player gain and positional max gain <=-12 dB. Existing traversal subsystem separately bounded at <=0.561. No other audio, effect gain or bus amplification included; runtime integration must enforce these conditions."
+  },
+  "references": [
+    {
+      "path": "docs/TRAVERSAL_AUDIO_DESIGN.md",
+      "scope": "Existing project synthesis/mix conventions reviewed; no waveform or melody copied."
+    }
+  ],
+  "limitations": "Byte, PCM level, endpoint and distinction checks only. No human listening, perception, historical authenticity or physiological-benefit approval. Distinct hashes do not establish perceptual discrimination.",
+  "assets": [
+    {
+      "asset": "assets/audio/siege/cannon_windup.wav",
+      "kind": "cannon_windup",
+      "bytes": 27884,
+      "sha256": "962c35961cd28f25f7c7fdbe335f32452fb429aee01ce7b7053be5e89e6a9280",
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width_bytes": 2,
+      "format": "PCM16 little-endian",
+      "sample_frames": 13920,
+      "duration_seconds": 0.58,
+      "peak_linear": 0.114993743706,
+      "rms_linear": 0.048058651908,
+      "endpoint_samples": [
+        0,
+        0
+      ],
+      "seed": 2026101723,
+      "attack_seconds": 0.018,
+      "release_seconds": 0.06,
+      "description": "Rising low brass-like harmonic swell; three quiet wood pulses.",
+      "import_settings_sha256": "e9c07404656d128e5c82e0211c244889278605b4eefe177541a6dfc49a89c82a"
+    },
+    {
+      "asset": "assets/audio/siege/cannon_impact.wav",
+      "kind": "cannon_impact",
+      "bytes": 25004,
+      "sha256": "c6836eeb69e3e56e0922fbce114626ac29131fc1d6d9a9a47d88631aaab21569",
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width_bytes": 2,
+      "format": "PCM16 little-endian",
+      "sample_frames": 12480,
+      "duration_seconds": 0.52,
+      "peak_linear": 0.11999877926,
+      "rms_linear": 0.019418492657,
+      "endpoint_samples": [
+        0,
+        0
+      ],
+      "seed": 2026101724,
+      "attack_seconds": 0.003,
+      "release_seconds": 0.06,
+      "description": "Falling membrane-like strike, filtered air transient, low metal tail.",
+      "import_settings_sha256": "d933722e7bb49986d534723dc13992d76877cfcb85447422f85e47371fd0a758"
+    },
+    {
+      "asset": "assets/audio/siege/chariot_windup.wav",
+      "kind": "chariot_windup",
+      "bytes": 31724,
+      "sha256": "6a15ad41746ce11055b97edd533c0c257b169e798bba70a61f15e86c27b554ff",
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width_bytes": 2,
+      "format": "PCM16 little-endian",
+      "sample_frames": 15840,
+      "duration_seconds": 0.66,
+      "peak_linear": 0.105014191107,
+      "rms_linear": 0.02015127102,
+      "endpoint_samples": [
+        0,
+        0
+      ],
+      "seed": 2026101725,
+      "attack_seconds": 0.012,
+      "release_seconds": 0.06,
+      "description": "Three paired wood-like strokes under a restrained rising horn.",
+      "import_settings_sha256": "adeb75c6c2305fa42e2d98188d448d0009c9a8033203bebedd2e98451810a6a8"
+    },
+    {
+      "asset": "assets/audio/siege/chariot_impact.wav",
+      "kind": "chariot_impact",
+      "bytes": 28844,
+      "sha256": "424dfeaab8c9220b4ab08e8b95b87bb3fc6e09ba1ecf766fa61fa0d2699aa7d8",
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width_bytes": 2,
+      "format": "PCM16 little-endian",
+      "sample_frames": 14400,
+      "duration_seconds": 0.6,
+      "peak_linear": 0.114993743706,
+      "rms_linear": 0.022084416524,
+      "endpoint_samples": [
+        0,
+        0
+      ],
+      "seed": 2026101726,
+      "attack_seconds": 0.003,
+      "release_seconds": 0.06,
+      "description": "Lower drum-like strike with a brief offset wood knock and harmonic ring.",
+      "import_settings_sha256": "d236221b849e79659966179e3049dbc2368ae560043224c44dc57caabc85f150"
+    }
+  ]
+}

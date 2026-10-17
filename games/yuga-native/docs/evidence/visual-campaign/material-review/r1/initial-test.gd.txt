@@ -1,0 +1,104 @@
+extends SceneTree
+## Independent lifecycle counterexamples, plus one real-resource admission check.
+## No production mesh, lighting, animation or framebuffer qualification.
+const Finish = preload("res://scripts/rama_surface_finish.gd")
+var checks: Array[Dictionary] = []
+var output := ""
+
+func check(label: String, passed: bool, detail: Dictionary = {}) -> void:
+	checks.append({"name":label,"passed":passed,"details":detail})
+	print("PASS " if passed else "FAIL ", label)
+
+func _maps() -> Dictionary:
+	var image := Image.create(4,4,false,Image.FORMAT_L8)
+	image.fill(Color(.6,.6,.6,1))
+	var texture := ImageTexture.create_from_image(image)
+	return {"skin":texture,"gold":texture,"ivory":texture,"hair":texture,"woven":texture}
+
+func _mesh(material: Material) -> MeshInstance3D:
+	var mesh := MeshInstance3D.new()
+	mesh.mesh = BoxMesh.new()
+	mesh.mesh.material = material
+	return mesh
+
+func _skin() -> StandardMaterial3D:
+	var material := StandardMaterial3D.new()
+	material.resource_name = "Rama warm skin"
+	material.roughness = .51
+	return material
+
+func _fixture() -> Dictionary:
+	var visual := Node3D.new()
+	root.add_child(visual)
+	var source := _skin()
+	var mesh := _mesh(source)
+	visual.add_child(mesh)
+	var finish = Finish.new()
+	visual.add_child(finish)
+	return {"visual":visual,"source":source,"mesh":mesh,"finish":finish}
+
+func _initialize() -> void:
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--report="): output = argument.trim_prefix("--report=")
+	call_deferred("_run")
+
+func _run() -> void:
+	var maps := _maps()
+	var fixture := _fixture()
+	var bound: bool = fixture.finish.configure(fixture.visual,maps)
+	var tuned: Material = fixture.mesh.get_active_material(0)
+	var released: Dictionary = fixture.finish.release()
+	check("Control: live owner binds and restores exact original material",bound and tuned != fixture.source and fixture.mesh.get_active_material(0) == fixture.source and released.restored_slots == 1 and released.conflicts.is_empty())
+	fixture.visual.free()
+
+	fixture = _fixture()
+	bound = fixture.finish.configure(fixture.visual,maps)
+	tuned = fixture.mesh.get_active_material(0)
+	var new_visual := Node3D.new()
+	root.add_child(new_visual)
+	fixture.mesh.reparent(new_visual)
+	var detected: bool = not fixture.finish.configure(fixture.visual,maps)
+	released = fixture.finish.release()
+	check("Reparented mesh is no longer writable through the old visual owner",bound and detected and fixture.mesh.get_active_material(0) == tuned and released.restored_slots == 0 and released.invalidated == 1,{"configured":bound,"detected":detected,"material_retained":fixture.mesh.get_active_material(0) == tuned,"release":released})
+	fixture.visual.free()
+	new_visual.free()
+
+	fixture = _fixture()
+	fixture.finish.free()
+	var outside = Finish.new()
+	var admitted: bool = outside.configure(fixture.visual,maps)
+	outside.free()
+	check("Out-of-tree finish is refused before it can leave an orphaned material",not admitted and fixture.mesh.get_active_material(0) == fixture.source,{"admitted":admitted,"original_retained_after_free":fixture.mesh.get_active_material(0) == fixture.source})
+	fixture.visual.free()
+
+	fixture = _fixture()
+	bound = fixture.finish.configure(fixture.visual,maps)
+	fixture.visual.remove_child(fixture.finish)
+	check("Removing a live owner automatically releases its attached visual",bound and not fixture.finish.configured and fixture.mesh.get_active_material(0) == fixture.source)
+	fixture.finish.free()
+	fixture.visual.free()
+
+	fixture = _fixture()
+	var unrelated := _mesh(fixture.source)
+	new_visual = Node3D.new()
+	root.add_child(new_visual)
+	new_visual.add_child(unrelated)
+	bound = fixture.finish.configure(fixture.visual,maps)
+	check("Another live hero sharing an imported StandardMaterial remains exact",bound and unrelated.get_active_material(0) == fixture.source and unrelated.get_surface_override_material(0) == null and fixture.source.roughness == .51)
+	fixture.visual.free()
+	new_visual.free()
+
+	fixture = _fixture()
+	bound = fixture.finish.configure(fixture.visual)
+	var real_map: Texture2D = fixture.mesh.get_active_material(0).roughness_texture
+	check("Real imported roughness is a loaded texture with declared red channel",bound and real_map != null and real_map.get_width() == 512 and real_map.get_height() == 512 and fixture.mesh.get_active_material(0).roughness_texture_channel == BaseMaterial3D.TEXTURE_CHANNEL_RED,{"path":real_map.resource_path if real_map else ""})
+	fixture.visual.free()
+
+	var passed := true
+	for result in checks: passed = passed and result.passed
+	var report := {"passed":passed,"engine":Engine.get_version_info().string,"checks":checks,"source_sha256":FileAccess.get_sha256("res://scripts/rama_surface_finish.gd"),"test_sha256":FileAccess.get_sha256("res://tests/rama_finish_adversarial_cases.gd"),"scope":"Independent owner/visual lifetime counterexamples and one actual map import. No rendered or GPU quality claim."}
+	if not output.is_empty():
+		var file := FileAccess.open(output,FileAccess.WRITE)
+		if file: file.store_string(JSON.stringify(report,"\t")+"\n")
+		else: passed = false
+	quit(0 if passed else 1)

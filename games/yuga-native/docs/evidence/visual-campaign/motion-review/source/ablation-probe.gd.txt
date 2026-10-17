@@ -1,0 +1,12 @@
+extends "res://tests/rama_motion_adversarial_cases.gd"
+
+func run() -> void:
+	var paths:={"rejected":"/workspace/scratch/visual-motion-correction-r1/rama_motion.before.gd","cap_only":"/workspace/scratch/visual-motion-review-r1/motion_cap_only.gd","boundary_only":"/workspace/scratch/visual-motion-review-r1/motion_boundary_only.gd","final":"res://scripts/rama_motion.gd"}
+	var output:={}
+	for label in paths:
+		var script: Script=load(paths[label])
+		var result:=execute(script,"brake_band",120.0)
+		output[label]={"source_sha256":FileAccess.get_sha256(paths[label]),"maximum_support_error_m":result.maximum_support_error_m,"support_frames":result.support_frames,"finite":result.finite,"input_exact":result.input_exact}
+	var file:=FileAccess.open("/workspace/scratch/visual-motion-review-r1/ablation.json",FileAccess.WRITE)
+	file.store_string(JSON.stringify(output,"  ")+"\n")
+	quit(0)

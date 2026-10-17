@@ -9,6 +9,8 @@ const ProjectileScript = preload("res://scripts/projectile.gd")
 const CoastalWater = preload("res://shaders/production_water.gdshader")
 const ProductionLighting = preload("res://scripts/production_lighting.gd")
 const MythicEnvironment = preload("res://scripts/mythic_environment.gd")
+const HeroDistrict = preload("res://scripts/hero_district_detail.gd")
+const HeroAtmosphere = preload("res://scripts/hero_atmosphere.gd")
 const HeroUITheme = preload("res://scripts/hero_ui_theme.gd")
 const RamaHeroPanel = preload("res://scripts/rama_hero_panel.gd")
 const RamaHeroHUD = preload("res://scripts/rama_hero_hud.gd")
@@ -88,6 +90,7 @@ var rama_panel: Control
 var rama_runtime: Node
 var rama_hud: Control
 var practice_army: Node3D
+var hero_atmosphere := HeroAtmosphere.new()
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -188,6 +191,8 @@ func _create_world() -> void:
 			lamp.shadow_enabled = false
 			world.add_child(lamp)
 	MythicEnvironment.configure(world, "courtyard")
+	var district: Dictionary = HeroDistrict.configure(world)
+	if not district.get("ok", false): push_error("Hero courtyard detail could not be built")
 	projectiles = Node3D.new()
 	projectiles.name = "Projectiles"
 	world.add_child(projectiles)
@@ -1014,6 +1019,9 @@ func _apply_settings() -> void:
 	if is_instance_valid(sun):
 		ProductionLighting.apply(world_environment.environment, sun, world, night, shadows)
 		MythicEnvironment.set_phase(world, 1.0 if night else 0.0)
+		HeroDistrict.set_phase(world, 1.0 if night else 0.0)
+		if not hero_atmosphere.configure(world, world_environment.environment, sun, night):
+			push_error("Hero courtyard atmosphere could not be configured")
 
 func _quit() -> void:
 	get_tree().paused = false

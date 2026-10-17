@@ -1,0 +1,144 @@
+{
+	"assertions": 24,
+	"checks": [
+		{
+			"name": "closed lintel surfaces face away from interior",
+			"passed": true
+		},
+		{
+			"name": "both arch front and back surfaces face out",
+			"passed": true
+		},
+		{
+			"name": "south rosette normal agrees with relief direction",
+			"passed": true
+		},
+		{
+			"name": "north rosette normal agrees with relief direction",
+			"passed": true
+		},
+		{
+			"name": "existing lathe smooth normals retain outward direction",
+			"passed": true
+		},
+		{
+			"name": "all actual vertices and normalized normals finite",
+			"passed": true
+		},
+		{
+			"name": "actual triangle winding agrees with shading normal",
+			"passed": true
+		},
+		{
+			"name": "actual triangles have nonzero area",
+			"passed": true
+		},
+		{
+			"name": "new geometry stays outboard below paving or on occupied north piers",
+			"passed": true
+		},
+		{
+			"name": "district cannot add collision or navigation authority",
+			"passed": true
+		},
+		{
+			"name": "district materials retain opaque depth testing",
+			"passed": true
+		},
+		{
+			"name": "static district has no processing callbacks",
+			"passed": true
+		},
+		{
+			"name": "real courtyard contains its authored art",
+			"passed": true
+		},
+		{
+			"name": "real courtyard traversal stays disabled",
+			"passed": true
+		},
+		{
+			"name": "actual southern movement boundary ends the court at z25",
+			"passed": true
+		},
+		{
+			"name": "actual southern boundary stops ground-level ray",
+			"passed": true
+		},
+		{
+			"name": "all 48 northern relief centres have actual existing solid pier backing",
+			"passed": true
+		},
+		{
+			"name": "twelve actual settings toggles retain physics mesh identity and seamless sky radiance",
+			"passed": true
+		},
+		{
+			"name": "removing presentation leaves actual physics identical",
+			"passed": true
+		},
+		{
+			"name": "rebuild creates a new visual owner",
+			"passed": true
+		},
+		{
+			"name": "rebuild retains exact geometry and actual physics",
+			"passed": true
+		},
+		{
+			"name": "actual raycast unchanged after visual removal and rebuild",
+			"passed": true
+		},
+		{
+			"name": "freed actual scene cannot accept atmosphere writes",
+			"passed": true
+		},
+		{
+			"name": "freed-scene atmosphere releases references and reports missing objects",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"failures": 0,
+	"metrics": {
+		"actual_collision_records": 38,
+		"actual_triangles": 43008,
+		"arch": {
+			"opposed": 0,
+			"outward": 64,
+			"tested": 64
+		},
+		"cylinder": {
+			"opposed": 0,
+			"outward": 32,
+			"tested": 32
+		},
+		"geometry_sha256": "ed8fca450c6cb39898c3771c211180818212e4bb388dc2b4ebedf402cadc4bb2",
+		"lintel": {
+			"opposed": 0,
+			"outward": 32,
+			"tested": 32
+		},
+		"north": {
+			"opposed": 0,
+			"outward": 32,
+			"tested": 32
+		},
+		"northern_reliefs_with_existing_solid_backing": 48,
+		"opposed_face_normal_triangles": 0,
+		"south": {
+			"opposed": 0,
+			"outward": 32,
+			"tested": 32
+		}
+	},
+	"passed": true,
+	"schema": 1,
+	"scope": "Independent headless primitive outward-orientation and actual courtyard physics/resource lifecycle; no continuous visual or hardware performance acceptance.",
+	"sources": {
+		"res://scripts/courtyard.gd": "0a904ebe3de420c80ad436aabf074da159251ed051048c7488c37cd7d0af1128",
+		"res://scripts/hero_atmosphere.gd": "174c02b7fd0733eae17be9cff45713b79feaf2e6f7814e43c27f0206680708fe",
+		"res://scripts/hero_district_detail.gd": "02d2665c7a88dbbeeecfe4718689609f816b5ba09d5c87550203350c658eb913",
+		"res://tests/hero_environment_adversarial_cases.gd": "8f2eb8f7b42bad37e2ebde80d135866555bb7eb682160efa560ff8d52a7b73bb"
+	}
+}

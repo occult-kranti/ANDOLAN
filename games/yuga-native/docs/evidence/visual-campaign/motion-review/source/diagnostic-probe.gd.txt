@@ -1,0 +1,22 @@
+extends "res://tests/rama_motion_adversarial_cases.gd"
+
+func run() -> void:
+	var instrument: Script=load("/workspace/scratch/visual-motion-review-r1/contact_instrumentation.gd")
+	var actual:=execute(MOTION,"brake_band",120.0)
+	var measured:=execute(instrument,"brake_band",120.0)
+	var equality:=compare(actual,measured)
+	var reversal:=execute(MOTION,"reversal",120.0)
+	var maximum:=0.0
+	var peak_frame:=-1
+	var peak_bone:=-1
+	for frame in range(1,reversal.rows.size()):
+		for bone in reversal.rows[frame].positions.size():
+			var step: float=reversal.rows[frame].positions[bone].distance_to(reversal.rows[frame-1].positions[bone])
+			if step>maximum:
+				maximum=step; peak_frame=frame; peak_bone=bone
+	var library: AnimationLibrary=load(MOTION.LIBRARY_PATH)
+	var names: Array=library.get_meta("rama_rig_names")
+	var report:={"source_sha256":FileAccess.get_sha256("res://scripts/rama_motion.gd"),"instrumentation_sha256":FileAccess.get_sha256("/workspace/scratch/visual-motion-review-r1/contact_instrumentation.gd"),"probe_sha256":FileAccess.get_sha256("/workspace/scratch/visual-motion-review-r1/diagnostic_probe.gd"),"braking_120hz":{"maximum_measured_spine05_contact_translation_m":Engine.get_meta("review_maximum_compression",null),"instrumentation_equivalence":equality},"rapid_reversal_120hz":{"maximum_joint_origin_step_m":maximum,"frame":peak_frame,"t":float(peak_frame+1)/120,"bone_index":peak_bone,"bone_name":names[peak_bone]},"scope":"Posture diagnostic; displacement is bone-origin data, not render acceptance."}
+	var file:=FileAccess.open("/workspace/scratch/visual-motion-review-r1/diagnostic.json",FileAccess.WRITE)
+	file.store_string(JSON.stringify(report,"  ")+"\n")
+	quit(0 if equality.event_clocks_exact and equality.maximum_bone_position_difference_m==0 else 1)

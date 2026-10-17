@@ -19,6 +19,15 @@ records 259 authoring assertions, conservative mesh/seam preparation and an
 independently reviewed optional cloth treatment with matched day/night frames.
 Default playable assets and the published preview retain their earlier identity.
 
+Start current graphics work with the [visual handoff](../games/yuga-native/docs/VISUAL_CAMPAIGN_HANDOFF.md).
+Its [ten-round campaign](../games/yuga-native/docs/VISUAL_CAMPAIGN.md) integrates
+material, courtyard, atmosphere, ability and motion changes into the playable
+native source. Follow its [actual-work ledger](../games/yuga-native/docs/VISUAL_CAMPAIGN.json)
+for the current fifteen specialists, rendered defects/corrections and the ten
+requested rounds. The original hero GLBs remain unchanged; current rendering
+and motion behavior have their own source identity. The published preview below
+has not acquired these source changes automatically.
+
 **Download:** [Rama hero preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17) for Linux or Windows. Public file hashes, ZIP contents and both videos are verified in the [publication receipt](../games/yuga-native/docs/evidence/rama-hero/published/REVIEW.md). Linux execution was reviewed; Windows remains unexecuted.
 
 **Play:** choose **Bow training** or **Explore Confluence**. LMB draws/shoots; Q pierces, E steps, C places a protective field and X fires three paced arrows. R reloads; F/G fly and grapple. F3 opens Rama’s guide, F2 opens Help/remapping, Escape pauses, and F5 resets practice. Enemy siege blasts damage Rama; defeat respawns him after three simulation seconds. Ordinary troops target other troops. Ground casts still use planar receivers.

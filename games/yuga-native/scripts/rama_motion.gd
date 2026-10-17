@@ -7,6 +7,17 @@ const GRIP_CENTER := Vector3(0,.105,.025)
 const GRIP_RADIUS := .022
 const GRIP_HALF_LENGTH := .046
 const STRING_CONTACT := Vector3(.012613,.114969,-.042728)
+# Speed hysteresis prevents minor controller/network correction noise from
+# restarting the whole-body blend and dropping both support-foot locks every
+# frame. These are presentation thresholds, never movement or combat rules.
+const WALK_RUN_ENTER_MPS := 3.0
+const WALK_RUN_EXIT_MPS := 2.8
+const RUN_SPRINT_ENTER_MPS := 7.0
+const RUN_SPRINT_EXIT_MPS := 6.75
+# Late walking stance can need more than 10 cm of hip compression while both
+# feet remain planted. Keep a bounded allowance instead of stretching the leg
+# or silently moving its locked world-space target to satisfy the solver.
+const MAX_PELVIS_COMPRESSION_M := .14
 const ACTIONS := {
 	"kodanda":["draw","release",false],
 	"piercing_dawn":["piercing_draw","piercing_release",false],
@@ -143,6 +154,20 @@ func _transition(duration := .16) -> void:
 	transition_duration=duration
 	foot_locks={"L":false,"R":false}
 
+static func ground_gait(speed: float, previous: String) -> String:
+	if speed<=.12: return "idle"
+	# Keep the authored acceleration thresholds; hysteresis only delays downshift.
+	# In particular, never extend the short walk stride above its 3 m/s envelope.
+	if previous=="walk" and speed<=WALK_RUN_ENTER_MPS: return "walk"
+	# Vector lengths use float32; 2.8 arrives as 2.79999995. Compare against the
+	# same representation so an exact input at the boundary does not downshift.
+	if previous=="run" and speed>=Vector2(WALK_RUN_EXIT_MPS,0).x and speed<=RUN_SPRINT_ENTER_MPS: return "run"
+	if previous=="sprint" and speed>=RUN_SPRINT_EXIT_MPS: return "sprint"
+	# A start, landing or large speed change picks the appropriate gait directly.
+	if speed>7: return "sprint"
+	if speed>3: return "run"
+	return "walk"
+
 func update_motion(delta: float, state: Dictionary) -> bool:
 	if not configured: return false
 	if not is_finite(delta) or delta<=0 or delta>.1:
@@ -176,9 +201,7 @@ func update_motion(delta: float, state: Dictionary) -> bool:
 		next="jump" if velocity_.y>1.0 else "fall"
 	elif not was_grounded: next="land"
 	elif locomotion=="land" and locomotion_age<.22: next="land"
-	elif movement_speed>7: next="sprint"
-	elif movement_speed>3: next="run"
-	elif movement_speed>.12: next="walk"
+	else: next=ground_gait(movement_speed,locomotion)
 	if next!=locomotion:
 		_transition(.10 if next=="land" else .16)
 		locomotion=next
@@ -341,7 +364,7 @@ func _apply_contact() -> void:
 		else: foot_locks[side]=false
 	# Pelvic compression preserves both planted feet rather than stretching the
 	# knee or lifting the support ankle. It never changes CharacterBody motion.
-	compression=clampf(compression,0,.10)
+	compression=clampf(compression,0,MAX_PELVIS_COMPRESSION_M)
 	if compression>.00001:
 		for name_ in ["pelvis.L","pelvis.R","spine05"]:
 			var index:=rig.find_bone(name_)

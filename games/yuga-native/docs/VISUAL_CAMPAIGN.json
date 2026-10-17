@@ -1,0 +1,1710 @@
+{
+  "schema_version": 2,
+  "baseline_commit": "38d11148fe69b184e981164c8a71387c91dc64c5",
+  "target": "Deadlock-level original hero slice; current quality remains open",
+  "requested_rounds": 10,
+  "requested_roles_per_round": 15,
+  "max_concurrent_workers": 6,
+  "roles": [
+    {
+      "id": 1,
+      "agent": "visual_hero_surfaces"
+    },
+    {
+      "id": 2,
+      "agent": "visual_district"
+    },
+    {
+      "id": 3,
+      "agent": "visual_atmosphere"
+    },
+    {
+      "id": 4,
+      "agent": "visual_ability"
+    },
+    {
+      "id": 5,
+      "agent": "visual_animation"
+    },
+    {
+      "id": 6,
+      "agent": "visual_render_pipeline"
+    },
+    {
+      "id": 7,
+      "agent": "visual_reuse"
+    },
+    {
+      "id": 8,
+      "agent": "visual_character_detail"
+    },
+    {
+      "id": 9,
+      "agent": "visual_material_review"
+    },
+    {
+      "id": 10,
+      "agent": "visual_motion_review"
+    },
+    {
+      "id": 11,
+      "agent": "visual_effect_review"
+    },
+    {
+      "id": 12,
+      "agent": "visual_environment_review"
+    },
+    {
+      "id": 13,
+      "agent": "visual_performance"
+    },
+    {
+      "id": 14,
+      "agent": "visual_build"
+    },
+    {
+      "id": 15,
+      "agent": "visual_art_review"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "title": "Integrated look-development baseline and corrections",
+      "goal": "Complete the first fifteen-role implementation/review cycle, preserving rejected evidence and source-matched actual images.",
+      "acceptance": "Matched title/near/gameplay day/night originals, five real action receipts, reproducible checks and explicit OPEN defects.",
+      "status": "completed_limited_art_target_open",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "artifact_returned",
+          "task": "Round 1: Own hero surface and principal-form changes; preserve authored color, skin and provenance.",
+          "evidence": [
+            "docs/evidence/visual-campaign/material-review/REVIEW.md"
+          ]
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "artifact_returned",
+          "task": "Round 1: Own architecture, grounding and material scale; preserve clear traversal geometry.",
+          "evidence": [
+            "docs/evidence/visual-campaign/environment-review/REVIEW.md"
+          ]
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "artifact_returned",
+          "task": "Round 1: Own reversible day/night lighting and exposure; retain threat visibility.",
+          "evidence": [
+            "docs/evidence/visual-campaign/capture-candidate-r2/run.json"
+          ]
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "artifact_returned",
+          "task": "Round 1: Own accepted-event VFX, essential warnings and cancellation cleanup.",
+          "evidence": [
+            "docs/evidence/visual-campaign/effect-review/REVIEW.md"
+          ]
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "artifact_returned",
+          "task": "Round 1: Own locomotion/action deformation and hand/foot contact.",
+          "evidence": [
+            "docs/evidence/visual-campaign/motion-review/REVIEW.md",
+            "docs/evidence/visual-campaign/motion-reversal-review/REVIEW.md"
+          ]
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "artifact_returned",
+          "task": "Round 1: Freeze sources and record matched original frames plus necessary continuous sequences.",
+          "evidence": [
+            "docs/evidence/visual-campaign/capture-baseline-r1/run.json",
+            "docs/evidence/visual-campaign/capture-candidate-r2/run.json",
+            "docs/evidence/visual-campaign/capture-action-r1/runtime-vs-snapshot.json",
+            "docs/evidence/visual-campaign/capture-final-anchors-r4/final-source-identity.json"
+          ]
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "artifact_returned",
+          "task": "Round 1: Verify relevant public/open resources, exact licenses and concrete reuse; do not claim inaccessible game analysis.",
+          "evidence": [
+            "docs/evidence/visual-campaign/reuse/source-ledger.json"
+          ]
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "artifact_returned",
+          "task": "Round 1: Author an isolated character detail candidate only when it addresses the visible defect.",
+          "evidence": [
+            "docs/evidence/visual-campaign/art-review/R2_REVIEW.md"
+          ]
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "artifact_returned",
+          "task": "Round 1: Independently check material channels, ownership, texture consistency and lifecycle.",
+          "evidence": [
+            "docs/evidence/visual-campaign/material-review/REVIEW.md"
+          ]
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "artifact_returned",
+          "task": "Round 1: Independently test animation contacts, transitions and event cancellation.",
+          "evidence": [
+            "docs/evidence/visual-campaign/motion-review/REVIEW.md"
+          ]
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "artifact_returned",
+          "task": "Round 1: Independently inspect actual VFX readability and admission under overlap and reduced options.",
+          "evidence": [
+            "docs/evidence/visual-campaign/effect-review/REVIEW.md"
+          ]
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "artifact_returned",
+          "task": "Round 1: Independently inspect world geometry, collision, silhouettes and day/night readability.",
+          "evidence": [
+            "docs/evidence/visual-campaign/environment-review/REVIEW.md"
+          ]
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "artifact_returned",
+          "task": "Round 1: Measure actual resource and frame-time costs on stated hardware; retain failed counterexamples.",
+          "evidence": [
+            "docs/evidence/visual-campaign/performance/REVIEW.md"
+          ]
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "artifact_returned",
+          "task": "Round 1: Integrate only accepted candidates; run affected checks and preserve exact source/build identities.",
+          "evidence": [
+            "docs/evidence/visual-campaign/final-verification-r4/REVIEW.md"
+          ]
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "artifact_returned",
+          "task": "Round 1: Inspect raw images/video independently, reject regressions and return prioritized visible findings.",
+          "evidence": [
+            "docs/evidence/visual-campaign/art-review/R2_REVIEW.md",
+            "docs/evidence/visual-campaign/art-review/FILM_REVIEW.md"
+          ]
+        }
+      ],
+      "decisions": [
+        "Fifteen initial specialist assignments returned artifacts, with corrective follow-ups. R1/R2/R3/R4 are capture or verification revisions within Round1, not additional fifteen-role rounds.",
+        "Optional temple wisps and rapid-reversal prototypes rejected; default GLB geometry and accepted motion4c72fd retained.",
+        "R1-to-R3 original-image reviews support bounded surface, grounding, horizon, practical-light and Guardian-boundary corrections; overall art LIMITED.",
+        "Directional-shadow ablations, two sweeps and twelve eligible confirmation originals support depth0.2/normal0.35 in both product lighting policies. Residual stippling and moving-camera contact remain OPEN.",
+        "R4 visual727, quality777 plus15PCM, world32/30 and resource51 checks pass on unchanged506runtimefiles.",
+        "Final source:363-frame five-action film,25 stills and3 ordinary day/night anchors complete. Independent review inspected all25 stills,31 selected sequence frames and3 anchors; bounded presentation accepted, overall art LIMITED."
+      ],
+      "evidence": [
+        "docs/evidence/visual-campaign/capture-action-r1/capture-run.json",
+        "docs/evidence/visual-campaign/capture-final-anchors-r4/run.json",
+        "docs/evidence/visual-campaign/art-review/FILM_REVIEW.md",
+        "docs/evidence/visual-campaign/final-verification-r4/REVIEW.md"
+      ]
+    },
+    {
+      "round": 2,
+      "title": "Hero face and skin form",
+      "goal": "Diagnose the triangular shading defect, then improve principal facial forms in editable art.",
+      "acceptance": "Front/side/orbit images show no unexplained shading patches; eyelid/lip anatomy and expressions retain deformation, contacts and LOD continuity.",
+      "status": "planned",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "planned",
+          "task": "Isolate the remaining scalp, ear and chest stippling, then author a skin-only material candidate from the accepted original maps. Preserve authored color, UVs, normal-frame conventions and makeup/jewelry boundaries.",
+          "evidence": [],
+          "dependencies": [
+            "Round 1 final source freeze and accepted depth-bias 0.2 / normal-bias 0.35 profile",
+            "R2-06 baseline views and diagnostic capture contract",
+            "R2-07 image/import/provenance audit"
+          ],
+          "artifacts": [
+            "skin-candidate/material-profile.json",
+            "skin-candidate/maps/",
+            "skin-candidate/source-notice.md",
+            "skin-candidate/manifest.json"
+          ],
+          "acceptance": [
+            "Change one material variable per diagnostic candidate; include unchanged control and exact source hashes.",
+            "Residual stippling must diminish in matched front, three-quarter and ordinary-camera views without bleaching indigo/gold, losing skin form or adding waxy halos.",
+            "If maps change, retain generation parameters, exact channels, color-space intent, license and byte hashes."
+          ],
+          "rejection_gate": [
+            "Reject a candidate accepted only from a different camera, exposure, pose, light or LOD.",
+            "Reject new color seams, UV changes, blurred face structure, unstable highlights or an unsupported claim that the prior shadow correction solved all skin defects."
+          ]
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "planned",
+          "task": "Prepare review fixtures using the current courtyard and Confluence backgrounds to test face/background separation and reflected-light context. Select existing architecture; add no new ornament.",
+          "evidence": [],
+          "dependencies": [
+            "Round 1 final world source freeze",
+            "R2-06 fixed camera/lighting contract"
+          ],
+          "artifacts": [
+            "context-fixtures.json",
+            "context-selection.md"
+          ],
+          "acceptance": [
+            "Provide fixed coordinates for close face and gameplay-scale face views against light stone, dark foliage and indigo/gold context in day/night.",
+            "Every fixture records original scene identity and the absence of changes to collisions, architecture and practical-light budgets."
+          ],
+          "rejection_gate": [
+            "Reject a fixture that conceals the face with scenery, changes world materials to flatter one candidate or adds unrelated geometry."
+          ]
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "planned",
+          "task": "Define and compare controlled skin-lighting probes around the accepted shadow policy, keeping artistic skin changes distinct from shadow/contact changes.",
+          "evidence": [],
+          "dependencies": [
+            "Round 1 shadow ablation and accepted bias evidence",
+            "R2-02 context fixtures",
+            "R2-06 capture contract"
+          ],
+          "artifacts": [
+            "lighting-probes.json",
+            "lighting-diagnosis.md",
+            "lighting-policy-candidate.json"
+          ],
+          "acceptance": [
+            "Baseline retains sun shadows and depth 0.2 / normal 0.35; every probe alters exactly one declared variable and restores it.",
+            "Check face, ear, scalp, neck and chest alongside jewelry, foot and ground shadows in courtyard and Confluence day/night.",
+            "Any proposed policy change must reduce its named defect while preserving visible fixed-view contacts; moving-camera limits remain explicit."
+          ],
+          "rejection_gate": [
+            "Reject disabling all shadows or hiding remaining defects with broad bloom, fog or overexposure as a production fix.",
+            "Reject detached contact shadows, eye-socket collapse, light leaks or a policy accepted solely from one face portrait."
+          ]
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "planned",
+          "task": "Build a deterministic shot list from the existing five accepted ability timelines to expose facial and neck deformation during aiming, draw, release, recoil and cancellation. Retain existing effects and gameplay.",
+          "evidence": [],
+          "dependencies": [
+            "Current Rama ability kit/event contracts",
+            "R2-06 capture time contract"
+          ],
+          "artifacts": [
+            "face-action-fixtures.json",
+            "receiver-and-phase-requirements.md"
+          ],
+          "acceptance": [
+            "Each fixture names an existing ability, exact runtime event/phase, camera and required receiver receipt when claiming a hit.",
+            "Provide unobscured facial diagnostic takes and normal effects-on context takes; distinguish the two in metadata.",
+            "No damage, warning geometry, cooldown, projectile timing, gameplay camera or VFX design changes."
+          ],
+          "rejection_gate": [
+            "Reject a pose-only action presented as an executed gameplay event, or a wall impact labeled target-hit evidence.",
+            "Reject added ornamental effects or face-only framing substituted for normal action visibility."
+          ]
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "planned",
+          "task": "Evaluate the existing face morphs and head/neck motion under candidate facial forms; author only the minimal corrective morph or blend change justified by visible closure/intersection failures.",
+          "evidence": [],
+          "dependencies": [
+            "R2-08 isolated facial candidate and baseline geometry/morph manifest",
+            "R2-04 action fixtures",
+            "Existing unique face writer and pause/reset contracts"
+          ],
+          "artifacts": [
+            "deformation-samples.json",
+            "morph-correction-candidate.json",
+            "animation-comparison.md"
+          ],
+          "acceptance": [
+            "Check rest, individual and combined blinks, supported partial-blink targets, aim extremes and existing five-action poses.",
+            "Keep eye/eyelid contact, facial boundary continuity and deterministic pause/reset/cancel behavior.",
+            "Preserve the 164-bone skeleton, existing nine embedded animations and separate 23-state library unless a separately reviewed exception is explicitly proposed."
+          ],
+          "rejection_gate": [
+            "Reject new eye penetration, lips separating into visible gaps, boundary cracks or changes to unrelated body locomotion.",
+            "Reject fixing a failed deformation by disabling the face writer, freezing expression or hiding eyes."
+          ]
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "planned",
+          "task": "Own all heavy imports and captures: freeze the final Round 1 baseline, record controlled skin probes and matched candidate views, then continuous face/deformation context.",
+          "evidence": [],
+          "dependencies": [
+            "Root publishes a frozen Round 1 source snapshot before captures",
+            "Candidate capture phase waits for R2-01/02/03/04/05/08 manifests; baseline phase is independent"
+          ],
+          "artifacts": [
+            "capture-contract.json",
+            "baseline/",
+            "candidate/",
+            "comparison.json",
+            "run.json"
+          ],
+          "acceptance": [
+            "Freeze camera, viewport, exposure, lights, pose, near LOD and render settings for paired views; record all deviations explicitly.",
+            "Save original framebuffers and source before/after identities, producer logs and native exit; retain failed captures.",
+            "Include front and both three-quarter views, ordinary gameplay scale, two world contexts, day/night and a continuous blink/aim/action sample.",
+            "Optional face-only diagnostic toggles must be restored before ordinary gameplay takes."
+          ],
+          "rejection_gate": [
+            "Reject changed source during capture, missing frames, logged engine errors, contaminated user settings or mismatched pose/light/camera comparison.",
+            "Reject retouched framebuffers or fixed capture rate presented as hardware performance."
+          ]
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "planned",
+          "task": "Audit only the assets and tools needed for this face pass: actual skin maps/import options, face/rig/morph source, editable reconstruction and relevant official material semantics.",
+          "evidence": [],
+          "dependencies": [
+            "Round 1 retained skin diagnosis and source ledger",
+            "Current imported hero, texture files and reconstruction blend"
+          ],
+          "artifacts": [
+            "source-and-import-ledger.json",
+            "reuse-decisions.md"
+          ],
+          "acceptance": [
+            "Trace candidate inputs to exact bytes and licenses; distinguish the reconstructed editable scene from missing original modeling history.",
+            "Verify packed/scalar texture channels and relevant import settings from actual files, without assuming a filename defines its channel.",
+            "State which exact REA/native-analysis question, if any, adds evidence; unchanged bridge analysis must not be rerun as new art progress."
+          ],
+          "rejection_gate": [
+            "Reject unverified commercial models, unsupported blanket repository licenses, unread sources described as studied or needless new repositories.",
+            "Reject attributing a visual cause from source inspection alone."
+          ]
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "planned",
+          "task": "Create one isolated editable facial-form candidate that improves eyelid, lip/chin and cheek planes while retaining Rama identity; first work from the existing reconstructed mesh and keep original topology where feasible.",
+          "evidence": [],
+          "dependencies": [
+            "R2-07 reconstruction/provenance and morph constraints",
+            "R2-06 baseline closeups",
+            "R2-01 material baseline controls"
+          ],
+          "artifacts": [
+            "face-form-candidate/reconstruction.blend",
+            "face-form-candidate/candidate.glb",
+            "face-form-candidate/edit-manifest.json",
+            "face-form-candidate/design-decisions.md"
+          ],
+          "acceptance": [
+            "Record a bounded edit mask and before/after vertex/morph/skin differences; hold the face/body boundary and unrelated body/costume/bow data exact.",
+            "Keep bone hierarchy, skin ownership, UVs and morph naming/ordering; any necessary non-exact change must be explicit and separately reviewed.",
+            "Demonstrate stronger coherent eyelid/lip/chin planes in matched front/three-quarter views without losing recognizable features.",
+            "Produce an editable source and fresh external candidate; no direct write to runtime hero assets."
+          ],
+          "rejection_gate": [
+            "Reject detached cosmetic wisps as a substitute for principal facial work.",
+            "Reject changed skeleton/weights, untracked topology/UV changes, boundary cracks, eye intersection, morphed-surface collapse or improvements visible only in a still rest pose."
+          ]
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "planned",
+          "task": "Adversarially inspect the skin candidate and reversible material binding, including exact texture channels, source ownership, appearance restoration and the actual matched pixels.",
+          "evidence": [],
+          "dependencies": [
+            "R2-01 candidate/material manifest",
+            "R2-07 source audit",
+            "R2-06 paired captures"
+          ],
+          "artifacts": [
+            "material-adversarial-review.json",
+            "material-image-review.md"
+          ],
+          "acceptance": [
+            "Reproduce any found failure before requesting a fix; verify restore, shared-resource transfer, repeated configuration and scene teardown.",
+            "Inspect raw paired frames individually and distinguish skin improvement from geometry/light changes.",
+            "Compare actual decoded image channels and source/output hashes against manifests."
+          ],
+          "rejection_gate": [
+            "Reject a technically valid material that creates seams, halos, clipped highlights or identity/color loss.",
+            "Reject asserting final-source pixel acceptance from an older capture or counting repeated tests as new coverage."
+          ]
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "planned",
+          "task": "Check candidate blink/aim/action deformation against the existing facial boundary, unique writer and timing contracts using actual imported candidate geometry.",
+          "evidence": [],
+          "dependencies": [
+            "R2-08 candidate and original manifests",
+            "R2-05 deformation samples/corrections",
+            "R2-06 continuous frames"
+          ],
+          "artifacts": [
+            "face-motion-counterexamples.json",
+            "face-motion-review.md"
+          ],
+          "acceptance": [
+            "Measure boundary continuity, finite transforms and expected morph closure across complete transitions, not just endpoints.",
+            "Retain counterexamples for overclosed lids, eye penetration, contact discontinuity and pause/cancel/reset errors.",
+            "Individually inspect adjacent raw frames for surface popping and silhouette changes; distinguish numerical tests from visual acceptance."
+          ],
+          "rejection_gate": [
+            "Reject a candidate whose geometry/morph changes degrade continuous expression or exact existing event clocks.",
+            "Reject using fixed-pose skin tests to close the pre-existing rapid-reversal body issue."
+          ]
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "planned",
+          "task": "Evaluate whether the revised face remains coherent and readable with the existing five action effects and reduced options; use the fixtures rather than authoring new effects.",
+          "evidence": [],
+          "dependencies": [
+            "R2-04 event/receiver fixtures",
+            "R2-06 normal and diagnostic action captures"
+          ],
+          "artifacts": [
+            "face-effect-context-review.json",
+            "action-context-findings.md"
+          ],
+          "acceptance": [
+            "Inspect draw/release/impact/expiry and cancellation with face-visible and ordinary gameplay cameras.",
+            "Verify the material/form revision does not cause effect lighting to erase eye/lip forms or mask gameplay warnings.",
+            "Preserve receiver evidence distinctions and reduced-effects/motion semantics."
+          ],
+          "rejection_gate": [
+            "Reject recommending stronger emission, full-screen flashes or warning changes solely to conceal facial defects.",
+            "Reject quiet closeup evidence as proof of crowded-fight readability."
+          ]
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "planned",
+          "task": "Verify revised facial shading across the selected existing world contexts, including contacts and moving-camera shadow transitions.",
+          "evidence": [],
+          "dependencies": [
+            "R2-02 scene fixtures",
+            "R2-03 proposed light policy",
+            "R2-06 matched and moving-camera captures"
+          ],
+          "artifacts": [
+            "face-environment-review.json",
+            "shadow-contact-review.md"
+          ],
+          "acceptance": [
+            "Check face separation against light and dark backgrounds, daylight/night, both three-quarter angles and camera/cascade transitions.",
+            "Compare jewelry, neck, foot and architectural contact shadows before accepting a lighting correction.",
+            "Confirm world geometry, collisions, practical count and gameplay visibility remain within the frozen baseline scope."
+          ],
+          "rejection_gate": [
+            "Reject overlit faces, washed-out night scenes, light leakage, detached shadows or hidden target silhouettes.",
+            "Reject transferring courtyard-only approval to Confluence without its actual captured context."
+          ]
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "planned",
+          "task": "Measure actual resource and lifecycle changes caused by the face/material candidate, keeping near/mid/far hero ownership and one face writer intact.",
+          "evidence": [],
+          "dependencies": [
+            "R2-01 texture/material manifest",
+            "R2-08 candidate GLB",
+            "R2-14 integrated scratch project"
+          ],
+          "artifacts": [
+            "face-resource-census.json",
+            "lod-and-lifecycle-review.md"
+          ],
+          "acceptance": [
+            "Report actual triangle/vertex/material/texture bytes, morph buffers and live skeleton/face writers before and after.",
+            "Exercise repeated load/reset/unload and LOD transitions without accumulating materials or duplicated facial nodes.",
+            "Record stated hardware when measuring frame time; if no physical GPU is available, leave that performance gate open."
+          ],
+          "rejection_gate": [
+            "Reject a gratuitous global subdivision/texture-resolution increase without visible benefit and a stated resource budget.",
+            "Reject headless or software-render wall time reported as consumer-GPU FPS, or five stable exits claimed as proof of all leak freedom."
+          ]
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "planned",
+          "task": "Assemble an isolated face-slice candidate from reviewed material, geometry and morph inputs; run affected source/asset contracts and preserve exact identities for renderer and reviewers.",
+          "evidence": [],
+          "dependencies": [
+            "R2-01 candidate manifest",
+            "R2-05 deformation corrections, if any",
+            "R2-08 candidate assets",
+            "Root-approved shared integration contract"
+          ],
+          "artifacts": [
+            "integration-source-manifest.json",
+            "affected-checks/",
+            "integration-handoff.md"
+          ],
+          "acceptance": [
+            "Do not overwrite default runtime assets during review; pin every candidate input and preserve baseline recovery.",
+            "Run checks covering rig, skin, facial partition, morph boundaries, LOD ownership, material lifecycle and existing relevant action/cancel behavior.",
+            "Validate logs and report contents as well as native exits; make capture and final accepted source identities explicit."
+          ],
+          "rejection_gate": [
+            "Reject a success receipt with engine errors, changed source, incomplete artifacts or unknown provenance.",
+            "Reject treating the fifteen gameplay-content pins as a complete art/asset manifest or exporting an unreviewed candidate as a release."
+          ]
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "planned",
+          "task": "Judge the complete Round 2 skin/form candidate from original matched views and continuous expression/action samples, accepting or rejecting each changed element explicitly.",
+          "evidence": [],
+          "dependencies": [
+            "R2-06 complete raw captures",
+            "R2-09/10/11/12 independent reviews",
+            "R2-13 costs and R2-14 exact-source checks"
+          ],
+          "artifacts": [
+            "ROUND2_ART_REVIEW.md",
+            "reviewed-inputs.json",
+            "round2-next-defects.json"
+          ],
+          "acceptance": [
+            "Individually inspect every required raw frame, then relevant adjacent frames and the ordinary-speed recording.",
+            "Decide separately on residual stippling, principal face forms, material response, expression/deformation and gameplay-scale readability.",
+            "Every accepted improvement has an exact source/capture reference; rejected candidates and unresolved defects remain visible.",
+            "State whether this bounded round is complete; do not infer Deadlock parity from role counts, tests or screenshots."
+          ],
+          "rejection_gate": [
+            "Reject changing the acceptance standard to make a weak candidate pass.",
+            "Reject a rest-pose portrait that degrades expression or an improvement that depends on hiding geometry, warnings or contact shadows."
+          ]
+        }
+      ],
+      "decisions": [],
+      "prework": [
+        "Controlled skin ablations prove directional self-shadowing contributes the major angular patches. The bounded depth-bias correction was promoted within Round1 after actual courtyard/Confluence day/night review. Principal facial sculpt, expression and residual fine stippling remain Round2 art work; this does not complete fifteen Round2 assignments."
+      ],
+      "assignment_contract": "docs/VISUAL_ROUND2_TASKS.json"
+    },
+    {
+      "round": 3,
+      "title": "Hair and fabric silhouette",
+      "goal": "Replace weak grouped hair/cloth forms with authored asymmetry, thickness and folds.",
+      "acceptance": "Matched moving and still views improve silhouette without detached wires, intersections, ornament loss or uncontrolled material cost.",
+      "status": "planned",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "planned",
+          "task": "Round 3: Own hero surface and principal-form changes; preserve authored color, skin and provenance.",
+          "evidence": []
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "planned",
+          "task": "Round 3: Own architecture, grounding and material scale; preserve clear traversal geometry.",
+          "evidence": []
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "planned",
+          "task": "Round 3: Own reversible day/night lighting and exposure; retain threat visibility.",
+          "evidence": []
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "planned",
+          "task": "Round 3: Own accepted-event VFX, essential warnings and cancellation cleanup.",
+          "evidence": []
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "planned",
+          "task": "Round 3: Own locomotion/action deformation and hand/foot contact.",
+          "evidence": []
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "planned",
+          "task": "Round 3: Freeze sources and record matched original frames plus necessary continuous sequences.",
+          "evidence": []
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "planned",
+          "task": "Round 3: Verify relevant public/open resources, exact licenses and concrete reuse; do not claim inaccessible game analysis.",
+          "evidence": []
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "planned",
+          "task": "Round 3: Author an isolated character detail candidate only when it addresses the visible defect.",
+          "evidence": []
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "planned",
+          "task": "Round 3: Independently check material channels, ownership, texture consistency and lifecycle.",
+          "evidence": []
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "planned",
+          "task": "Round 3: Independently test animation contacts, transitions and event cancellation.",
+          "evidence": []
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "planned",
+          "task": "Round 3: Independently inspect actual VFX readability and admission under overlap and reduced options.",
+          "evidence": []
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "planned",
+          "task": "Round 3: Independently inspect world geometry, collision, silhouettes and day/night readability.",
+          "evidence": []
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "planned",
+          "task": "Round 3: Measure actual resource and frame-time costs on stated hardware; retain failed counterexamples.",
+          "evidence": []
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "planned",
+          "task": "Round 3: Integrate only accepted candidates; run affected checks and preserve exact source/build identities.",
+          "evidence": []
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "planned",
+          "task": "Round 3: Inspect raw images/video independently, reject regressions and return prioritized visible findings.",
+          "evidence": []
+        }
+      ],
+      "decisions": []
+    },
+    {
+      "round": 4,
+      "title": "Locomotion and action transitions",
+      "goal": "Resolve ordinary turns and extreme reversal, then tune start, stop, land and accepted-action transitions.",
+      "acceptance": "Continuous recordings with adjacent-frame review retain foot/hand contacts and event timing across stated frame rates and cancellation cases.",
+      "status": "planned",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "planned",
+          "task": "Round 4: Own hero surface and principal-form changes; preserve authored color, skin and provenance.",
+          "evidence": []
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "planned",
+          "task": "Round 4: Own architecture, grounding and material scale; preserve clear traversal geometry.",
+          "evidence": []
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "planned",
+          "task": "Round 4: Own reversible day/night lighting and exposure; retain threat visibility.",
+          "evidence": []
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "planned",
+          "task": "Round 4: Own accepted-event VFX, essential warnings and cancellation cleanup.",
+          "evidence": []
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "planned",
+          "task": "Round 4: Own locomotion/action deformation and hand/foot contact.",
+          "evidence": []
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "planned",
+          "task": "Round 4: Freeze sources and record matched original frames plus necessary continuous sequences.",
+          "evidence": []
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "planned",
+          "task": "Round 4: Verify relevant public/open resources, exact licenses and concrete reuse; do not claim inaccessible game analysis.",
+          "evidence": []
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "planned",
+          "task": "Round 4: Author an isolated character detail candidate only when it addresses the visible defect.",
+          "evidence": []
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "planned",
+          "task": "Round 4: Independently check material channels, ownership, texture consistency and lifecycle.",
+          "evidence": []
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "planned",
+          "task": "Round 4: Independently test animation contacts, transitions and event cancellation.",
+          "evidence": []
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "planned",
+          "task": "Round 4: Independently inspect actual VFX readability and admission under overlap and reduced options.",
+          "evidence": []
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "planned",
+          "task": "Round 4: Independently inspect world geometry, collision, silhouettes and day/night readability.",
+          "evidence": []
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "planned",
+          "task": "Round 4: Measure actual resource and frame-time costs on stated hardware; retain failed counterexamples.",
+          "evidence": []
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "planned",
+          "task": "Round 4: Integrate only accepted candidates; run affected checks and preserve exact source/build identities.",
+          "evidence": []
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "planned",
+          "task": "Round 4: Inspect raw images/video independently, reject regressions and return prioritized visible findings.",
+          "evidence": []
+        }
+      ],
+      "decisions": []
+    },
+    {
+      "round": 5,
+      "title": "Combat effect hierarchy",
+      "goal": "Refine five action identities, essential warnings and simultaneous ally/enemy effects.",
+      "acceptance": "Targets and exact threat boundaries remain visible in day/night, reduced settings and bounded overlap; real damage/heal/expiry receipts agree.",
+      "status": "planned",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "planned",
+          "task": "Round 5: Own hero surface and principal-form changes; preserve authored color, skin and provenance.",
+          "evidence": []
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "planned",
+          "task": "Round 5: Own architecture, grounding and material scale; preserve clear traversal geometry.",
+          "evidence": []
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "planned",
+          "task": "Round 5: Own reversible day/night lighting and exposure; retain threat visibility.",
+          "evidence": []
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "planned",
+          "task": "Round 5: Own accepted-event VFX, essential warnings and cancellation cleanup.",
+          "evidence": []
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "planned",
+          "task": "Round 5: Own locomotion/action deformation and hand/foot contact.",
+          "evidence": []
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "planned",
+          "task": "Round 5: Freeze sources and record matched original frames plus necessary continuous sequences.",
+          "evidence": []
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "planned",
+          "task": "Round 5: Verify relevant public/open resources, exact licenses and concrete reuse; do not claim inaccessible game analysis.",
+          "evidence": []
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "planned",
+          "task": "Round 5: Author an isolated character detail candidate only when it addresses the visible defect.",
+          "evidence": []
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "planned",
+          "task": "Round 5: Independently check material channels, ownership, texture consistency and lifecycle.",
+          "evidence": []
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "planned",
+          "task": "Round 5: Independently test animation contacts, transitions and event cancellation.",
+          "evidence": []
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "planned",
+          "task": "Round 5: Independently inspect actual VFX readability and admission under overlap and reduced options.",
+          "evidence": []
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "planned",
+          "task": "Round 5: Independently inspect world geometry, collision, silhouettes and day/night readability.",
+          "evidence": []
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "planned",
+          "task": "Round 5: Measure actual resource and frame-time costs on stated hardware; retain failed counterexamples.",
+          "evidence": []
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "planned",
+          "task": "Round 5: Integrate only accepted candidates; run affected checks and preserve exact source/build identities.",
+          "evidence": []
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "planned",
+          "task": "Round 5: Inspect raw images/video independently, reject regressions and return prioritized visible findings.",
+          "evidence": []
+        }
+      ],
+      "decisions": []
+    },
+    {
+      "round": 6,
+      "title": "Architectural district composition",
+      "goal": "Author distinct near/mid/far city, terrace and swamp silhouettes using documented Indian architectural references. Replace visibly blocklike live soldier/minion presentation with authored, rigged silhouettes before claiming full-world visual quality.",
+      "acceptance": "Walkthrough views show coherent scale and material transitions, clear lanes and flank routes, no floating supports or traversal traps. Actual moving soldiers and bosses must retain team and threat readability without placeholder block forms.",
+      "status": "planned",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "planned",
+          "task": "Round 6: Own hero surface and principal-form changes; preserve authored color, skin and provenance.",
+          "evidence": []
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "planned",
+          "task": "Round 6: Own architecture, grounding and material scale; preserve clear traversal geometry.",
+          "evidence": []
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "planned",
+          "task": "Round 6: Own reversible day/night lighting and exposure; retain threat visibility.",
+          "evidence": []
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "planned",
+          "task": "Round 6: Own accepted-event VFX, essential warnings and cancellation cleanup.",
+          "evidence": []
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "planned",
+          "task": "Round 6: Own locomotion/action deformation and hand/foot contact.",
+          "evidence": []
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "planned",
+          "task": "Round 6: Freeze sources and record matched original frames plus necessary continuous sequences.",
+          "evidence": []
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "planned",
+          "task": "Round 6: Verify relevant public/open resources, exact licenses and concrete reuse; do not claim inaccessible game analysis.",
+          "evidence": []
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "planned",
+          "task": "Round 6: Author an isolated character detail candidate only when it addresses the visible defect.",
+          "evidence": []
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "planned",
+          "task": "Round 6: Independently check material channels, ownership, texture consistency and lifecycle.",
+          "evidence": []
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "planned",
+          "task": "Round 6: Independently test animation contacts, transitions and event cancellation.",
+          "evidence": []
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "planned",
+          "task": "Round 6: Independently inspect actual VFX readability and admission under overlap and reduced options.",
+          "evidence": []
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "planned",
+          "task": "Round 6: Independently inspect world geometry, collision, silhouettes and day/night readability.",
+          "evidence": []
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "planned",
+          "task": "Round 6: Measure actual resource and frame-time costs on stated hardware; retain failed counterexamples.",
+          "evidence": []
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "planned",
+          "task": "Round 6: Integrate only accepted candidates; run affected checks and preserve exact source/build identities.",
+          "evidence": []
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "planned",
+          "task": "Round 6: Inspect raw images/video independently, reject regressions and return prioritized visible findings.",
+          "evidence": []
+        }
+      ],
+      "decisions": []
+    },
+    {
+      "round": 7,
+      "title": "Light, weather and environmental motion",
+      "goal": "Shape day/night practicals, sky, water and restrained environmental movement.",
+      "acceptance": "Hero and warnings remain legible across transitions; shadows, reflections and motion respect declared quality tiers and costs.",
+      "status": "planned",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "planned",
+          "task": "Round 7: Own hero surface and principal-form changes; preserve authored color, skin and provenance.",
+          "evidence": []
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "planned",
+          "task": "Round 7: Own architecture, grounding and material scale; preserve clear traversal geometry.",
+          "evidence": []
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "planned",
+          "task": "Round 7: Own reversible day/night lighting and exposure; retain threat visibility.",
+          "evidence": []
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "planned",
+          "task": "Round 7: Own accepted-event VFX, essential warnings and cancellation cleanup.",
+          "evidence": []
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "planned",
+          "task": "Round 7: Own locomotion/action deformation and hand/foot contact.",
+          "evidence": []
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "planned",
+          "task": "Round 7: Freeze sources and record matched original frames plus necessary continuous sequences.",
+          "evidence": []
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "planned",
+          "task": "Round 7: Verify relevant public/open resources, exact licenses and concrete reuse; do not claim inaccessible game analysis.",
+          "evidence": []
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "planned",
+          "task": "Round 7: Author an isolated character detail candidate only when it addresses the visible defect.",
+          "evidence": []
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "planned",
+          "task": "Round 7: Independently check material channels, ownership, texture consistency and lifecycle.",
+          "evidence": []
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "planned",
+          "task": "Round 7: Independently test animation contacts, transitions and event cancellation.",
+          "evidence": []
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "planned",
+          "task": "Round 7: Independently inspect actual VFX readability and admission under overlap and reduced options.",
+          "evidence": []
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "planned",
+          "task": "Round 7: Independently inspect world geometry, collision, silhouettes and day/night readability.",
+          "evidence": []
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "planned",
+          "task": "Round 7: Measure actual resource and frame-time costs on stated hardware; retain failed counterexamples.",
+          "evidence": []
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "planned",
+          "task": "Round 7: Integrate only accepted candidates; run affected checks and preserve exact source/build identities.",
+          "evidence": []
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "planned",
+          "task": "Round 7: Inspect raw images/video independently, reject regressions and return prioritized visible findings.",
+          "evidence": []
+        }
+      ],
+      "decisions": []
+    },
+    {
+      "round": 8,
+      "title": "Screens, audio and complete match flow",
+      "goal": "Bring title, training, controls, HUD, feedback and outcome screens to the same art direction.",
+      "acceptance": "Actual launch-to-end input walkthrough, remapping and reduced options pass; sound/listening review and screen ownership are explicit.",
+      "status": "planned",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "planned",
+          "task": "Round 8: Own hero surface and principal-form changes; preserve authored color, skin and provenance.",
+          "evidence": []
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "planned",
+          "task": "Round 8: Own architecture, grounding and material scale; preserve clear traversal geometry.",
+          "evidence": []
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "planned",
+          "task": "Round 8: Own reversible day/night lighting and exposure; retain threat visibility.",
+          "evidence": []
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "planned",
+          "task": "Round 8: Own accepted-event VFX, essential warnings and cancellation cleanup.",
+          "evidence": []
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "planned",
+          "task": "Round 8: Own locomotion/action deformation and hand/foot contact.",
+          "evidence": []
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "planned",
+          "task": "Round 8: Freeze sources and record matched original frames plus necessary continuous sequences.",
+          "evidence": []
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "planned",
+          "task": "Round 8: Verify relevant public/open resources, exact licenses and concrete reuse; do not claim inaccessible game analysis.",
+          "evidence": []
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "planned",
+          "task": "Round 8: Author an isolated character detail candidate only when it addresses the visible defect.",
+          "evidence": []
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "planned",
+          "task": "Round 8: Independently check material channels, ownership, texture consistency and lifecycle.",
+          "evidence": []
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "planned",
+          "task": "Round 8: Independently test animation contacts, transitions and event cancellation.",
+          "evidence": []
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "planned",
+          "task": "Round 8: Independently inspect actual VFX readability and admission under overlap and reduced options.",
+          "evidence": []
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "planned",
+          "task": "Round 8: Independently inspect world geometry, collision, silhouettes and day/night readability.",
+          "evidence": []
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "planned",
+          "task": "Round 8: Measure actual resource and frame-time costs on stated hardware; retain failed counterexamples.",
+          "evidence": []
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "planned",
+          "task": "Round 8: Integrate only accepted candidates; run affected checks and preserve exact source/build identities.",
+          "evidence": []
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "planned",
+          "task": "Round 8: Inspect raw images/video independently, reject regressions and return prioritized visible findings.",
+          "evidence": []
+        }
+      ],
+      "decisions": []
+    },
+    {
+      "round": 9,
+      "title": "Optimization and stress qualification",
+      "goal": "Profile the accepted slice on available stated hardware and bound assets, instances, memory and overdraw.",
+      "acceptance": "Repeatable frame-time percentiles, memory/resource limits, quality-tier comparisons, LOD and stress recordings; software timings clearly separated.",
+      "status": "planned",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "planned",
+          "task": "Round 9: Own hero surface and principal-form changes; preserve authored color, skin and provenance.",
+          "evidence": []
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "planned",
+          "task": "Round 9: Own architecture, grounding and material scale; preserve clear traversal geometry.",
+          "evidence": []
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "planned",
+          "task": "Round 9: Own reversible day/night lighting and exposure; retain threat visibility.",
+          "evidence": []
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "planned",
+          "task": "Round 9: Own accepted-event VFX, essential warnings and cancellation cleanup.",
+          "evidence": []
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "planned",
+          "task": "Round 9: Own locomotion/action deformation and hand/foot contact.",
+          "evidence": []
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "planned",
+          "task": "Round 9: Freeze sources and record matched original frames plus necessary continuous sequences.",
+          "evidence": []
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "planned",
+          "task": "Round 9: Verify relevant public/open resources, exact licenses and concrete reuse; do not claim inaccessible game analysis.",
+          "evidence": []
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "planned",
+          "task": "Round 9: Author an isolated character detail candidate only when it addresses the visible defect.",
+          "evidence": []
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "planned",
+          "task": "Round 9: Independently check material channels, ownership, texture consistency and lifecycle.",
+          "evidence": []
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "planned",
+          "task": "Round 9: Independently test animation contacts, transitions and event cancellation.",
+          "evidence": []
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "planned",
+          "task": "Round 9: Independently inspect actual VFX readability and admission under overlap and reduced options.",
+          "evidence": []
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "planned",
+          "task": "Round 9: Independently inspect world geometry, collision, silhouettes and day/night readability.",
+          "evidence": []
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "planned",
+          "task": "Round 9: Measure actual resource and frame-time costs on stated hardware; retain failed counterexamples.",
+          "evidence": []
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "planned",
+          "task": "Round 9: Integrate only accepted candidates; run affected checks and preserve exact source/build identities.",
+          "evidence": []
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "planned",
+          "task": "Round 9: Inspect raw images/video independently, reject regressions and return prioritized visible findings.",
+          "evidence": []
+        }
+      ],
+      "decisions": []
+    },
+    {
+      "round": 10,
+      "title": "Independent slice acceptance and delivery",
+      "goal": "Recheck original concept/quality targets, package accepted sources and preserve unresolved production dependencies.",
+      "acceptance": "Independent visual/feel review plus exact-source build/export/package checks; launch only the scope actually qualified. AAA/full-game gate may remain OPEN.",
+      "status": "planned",
+      "assignments": [
+        {
+          "role": 1,
+          "agent": "visual_hero_surfaces",
+          "status": "planned",
+          "task": "Round 10: Own hero surface and principal-form changes; preserve authored color, skin and provenance.",
+          "evidence": []
+        },
+        {
+          "role": 2,
+          "agent": "visual_district",
+          "status": "planned",
+          "task": "Round 10: Own architecture, grounding and material scale; preserve clear traversal geometry.",
+          "evidence": []
+        },
+        {
+          "role": 3,
+          "agent": "visual_atmosphere",
+          "status": "planned",
+          "task": "Round 10: Own reversible day/night lighting and exposure; retain threat visibility.",
+          "evidence": []
+        },
+        {
+          "role": 4,
+          "agent": "visual_ability",
+          "status": "planned",
+          "task": "Round 10: Own accepted-event VFX, essential warnings and cancellation cleanup.",
+          "evidence": []
+        },
+        {
+          "role": 5,
+          "agent": "visual_animation",
+          "status": "planned",
+          "task": "Round 10: Own locomotion/action deformation and hand/foot contact.",
+          "evidence": []
+        },
+        {
+          "role": 6,
+          "agent": "visual_render_pipeline",
+          "status": "planned",
+          "task": "Round 10: Freeze sources and record matched original frames plus necessary continuous sequences.",
+          "evidence": []
+        },
+        {
+          "role": 7,
+          "agent": "visual_reuse",
+          "status": "planned",
+          "task": "Round 10: Verify relevant public/open resources, exact licenses and concrete reuse; do not claim inaccessible game analysis.",
+          "evidence": []
+        },
+        {
+          "role": 8,
+          "agent": "visual_character_detail",
+          "status": "planned",
+          "task": "Round 10: Author an isolated character detail candidate only when it addresses the visible defect.",
+          "evidence": []
+        },
+        {
+          "role": 9,
+          "agent": "visual_material_review",
+          "status": "planned",
+          "task": "Round 10: Independently check material channels, ownership, texture consistency and lifecycle.",
+          "evidence": []
+        },
+        {
+          "role": 10,
+          "agent": "visual_motion_review",
+          "status": "planned",
+          "task": "Round 10: Independently test animation contacts, transitions and event cancellation.",
+          "evidence": []
+        },
+        {
+          "role": 11,
+          "agent": "visual_effect_review",
+          "status": "planned",
+          "task": "Round 10: Independently inspect actual VFX readability and admission under overlap and reduced options.",
+          "evidence": []
+        },
+        {
+          "role": 12,
+          "agent": "visual_environment_review",
+          "status": "planned",
+          "task": "Round 10: Independently inspect world geometry, collision, silhouettes and day/night readability.",
+          "evidence": []
+        },
+        {
+          "role": 13,
+          "agent": "visual_performance",
+          "status": "planned",
+          "task": "Round 10: Measure actual resource and frame-time costs on stated hardware; retain failed counterexamples.",
+          "evidence": []
+        },
+        {
+          "role": 14,
+          "agent": "visual_build",
+          "status": "planned",
+          "task": "Round 10: Integrate only accepted candidates; run affected checks and preserve exact source/build identities.",
+          "evidence": []
+        },
+        {
+          "role": 15,
+          "agent": "visual_art_review",
+          "status": "planned",
+          "task": "Round 10: Inspect raw images/video independently, reject regressions and return prioritized visible findings.",
+          "evidence": []
+        }
+      ],
+      "decisions": []
+    }
+  ],
+  "quality_acceptance": "OPEN",
+  "publication": {
+    "source_push": "checkpoint_prepared_pending_push",
+    "new_release": "not_published",
+    "receipt": "../../../docs/evidence/visual-campaign-publication.json"
+  },
+  "execution_note": "One complete fifteen-role implementation/review cycle returned artifacts and corrections, with overall art LIMITED. Fifteen initial assignments have executed;135 future assignments remain PLANNED. Capture revisions, corrective follow-ups and roadmap drafting do not count as additional rounds. Full ten-round campaign and Deadlock-level quality remain OPEN.",
+  "workstreams": [
+    {
+      "title": "Baseline and visible failure diagnosis",
+      "status": "baseline_and_first_reviews_complete",
+      "artifact": "docs/evidence/visual-campaign/capture-baseline-r1",
+      "decisions": [
+        "Eight actual Forward+ baseline images from committed source38d1114, followed by eight candidateR1,33candidateR2 and17candidateR3 originals.",
+        "Fifteen initial specialist role assignments returned artifacts through six worker slots. Capture revisions and corrective follow-ups do not count as additional fifteen-role rounds."
+      ],
+      "historical_checkpoints": [
+        "Eight actual Forward+ frames from committed38d1114; frozen baseline copy; no runtime mutation.",
+        "Fifteen roles rotate through six worker slots; later reviewers are still executing their first assignment.",
+        "Eight committed-baseline views, eight R1 candidate views and 33 R2 views are archived. Fifteen initial role assignments returned concrete artifacts."
+      ]
+    },
+    {
+      "title": "Hero material separation",
+      "status": "integrated_limited_art_acceptance",
+      "artifact": "scripts/rama_surface_finish.gd",
+      "decisions": [
+        "Five sourced roughness maps preserve authored color, rig and normals. Three material ownership/lifetime defects are corrected.",
+        "Actual R2 originals show calmer broad highlights; principal face, groom and cloth forms remain LIMITED.54 owner checks and seven independent resource probes pass."
+      ],
+      "historical_checkpoints": [
+        "Five roughness maps preserve authored albedo, rig and normals.",
+        "Three independent lifetime defects fixed; 54 owner actual-resource cases and seven independent probes pass.",
+        "Matched R1 images show calmer cloth/skin highlights. Final lifetime source has same appearance profile; full latest-source capture pending.",
+        "Five sourced roughness maps; 54 actual-resource owner checks and seven independent cleanup/ownership probes. R2 confirms calmer highlights; principal face/hair forms remain LIMITED."
+      ]
+    },
+    {
+      "title": "Courtyard architectural composition",
+      "status": "bounded_architecture_practicals_review_accepted",
+      "artifact": "scripts/hero_district_detail.gd",
+      "decisions": [
+        "Eight material batches add43008triangles: arches, cupolas, relief, plants, terrace and four warm short-range lights.",
+        "Actual R1 exposed floating supports; terrace, winding and packed roughness GREEN channel were corrected. R3 review accepts grounding and local warm pools in the inspected views.",
+        "72 owner and27 independent checks pass. World and soldier silhouettes remain repetitive and insufficiently detailed."
+      ],
+      "historical_checkpoints": [
+        "Five original arches, three cupolas, urns, relief and diyas in eight material batches.",
+        "R1 revealed floating bases: added continuous bevelled terrace beneath all44supports.",
+        "Source audit caught packed roughness sampled from red; green restored with actual-channel regressions.50owner cases pass;43008triangles.",
+        "R2 confirms terrace grounding and repaired winding/horizon. Latest four warm short-range lights pass72 owner and27 independent scene checks; actual R3 review pending."
+      ]
+    },
+    {
+      "title": "Lighting and atmosphere",
+      "status": "bounded_lighting_and_skin_shadow_correction_accepted",
+      "artifact": "scripts/hero_atmosphere.gd",
+      "decisions": [
+        "Actual R2 review confirms the sky/ground horizon seam correction. Atmosphere changes remain reversible;52 component checks pass.",
+        "Four-way face ablation and two bounded bias sweeps identify directional self-shadowing as the main large-patch contributor. Twelve eligible confirmation images cover courtyard night and Confluence day/night.",
+        "Both lighting policies now use depth bias0.2 and normal0.35, retaining sun shadows/cascades/distances. Large patches improve; fine scalp/ear/chest stippling and moving-camera shadow contact remain OPEN."
+      ],
+      "historical_checkpoints": [
+        "More restrained specular and diffuse fill on existing lights.",
+        "R1 showed horizontal sky seam: equalized ground and sky horizon energy with captured/restorable property.52cases pass; actualR2 needed.",
+        "Day/night horizon seam corrected in actual R2 originals; no extra atmosphere nodes or autonomous callbacks. Final numerical suite52 PASS.",
+        "Four-way ablation and two bounded sweeps selected shadow depth bias0.2 with normal0.35. Twelve eligible confirmation originals cover courtyard night plus Confluence day/night; independent review accepts large-patch reduction while preserving visible fixed-view shadows. Both product policies now use that profile; scalp/ear/chest stippling and moving-camera/cascade contact remain OPEN."
+      ]
+    },
+    {
+      "title": "Ability presentation",
+      "status": "bounded_five_action_review_complete",
+      "artifact": "scripts/rama_ability_effects.gd",
+      "decisions": [
+        "Calligraphic strokes, feathered contacts, arrow vanes, traversed-only step echoes and lotus Guardian are integrated. Duplicate-release and pre-release-impact guards are retained.",
+        "R3 accepts the exact five-metre Guardian perimeter in day/night fixed views. Ability85, existingVFX33, visual72 and adversarial56 checks pass with overlapping scope.",
+        "Final source recording contains363 sequence frames and25 original stills for five separate real Confluence takes. Encoded/decoded silent MP4 complete; receipts distinguish damage, periodic field effects and movement."
+      ],
+      "historical_checkpoints": [
+        "Calligraphic ribbons, lotus Guardian, feathered impacts and traversed-only step echoes.",
+        "85ability+33existingVFX+62newgeometry checks pass; actual five-action milestone capture pending.",
+        "All five milestone sequences captured. Guardian warning now has a dark inward stroke and exact warm outer boundary; 85 ability+33 VFX+72 visual+56 adversarial checks pass. Receiver-backed continuous film pending."
+      ]
+    },
+    {
+      "title": "Continuous locomotion",
+      "status": "accepted_bounded_braking_fix_reversal_open",
+      "artifact": "scripts/rama_motion.gd",
+      "decisions": [
+        "Gait hysteresis stops threshold chatter; bounded pelvis reach corrects the observed120Hz braking contact error.",
+        "Accepted motion source4c72fd is unchanged. Independent reversal candidates worsened slipping or ordinary acceleration and were rejected. Rapid reversal remains OPEN."
+      ],
+      "historical_checkpoints": [
+        "Hysteresis prevents120gaitrestarts/120samples and restores foot-support windows in thresholdjitter.",
+        "Independent120Hzbraking exposed15.995mmreach error vs10.29mmbaseline. Owner correcting bounded pelvic reach;2mmcriterion unchanged.",
+        "Threshold chatter and120Hz braking corrected. Independent58 checks pass at4c72fd. All rapid-reversal prototypes rejected for slipping/ordinary-acceleration regressions; issue remains OPEN."
+      ]
+    },
+    {
+      "title": "Integrated rendered review",
+      "status": "final_source_samples_reviewed_limited",
+      "artifact": "docs/evidence/visual-campaign/capture-candidate-r1",
+      "decisions": [
+        "Ninety-six eligible baseline/candidate/diagnostic originals were independently reviewed before the final film.",
+        "Optional temple wisps were rejected as wirelike. Wrongly framed world portraits are retained as failed harness evidence.",
+        "Final review inspected25 original stills,31 selected original animation frames and3 ordinary default-source anchors. Live soldiers remain blocklike; face, groom, fabric, rapid reversal, crowded combat and whole-world art remain OPEN."
+      ],
+      "historical_checkpoints": [
+        "Eight raw R1 images; exactcamera/playerframing matched.",
+        "Concrete floatingfoundation/horizon/materialownership findings returned to owners; noAAAacceptance.",
+        "33 R2 original images independently reviewed. Optional four-wisp hair geometry REJECTED and remains unbound. Overall art LIMITED.",
+        "All17 R3 originals reviewed: warm local diyas and exact Guardian perimeter contrast accepted for these views; overall art LIMITED."
+      ]
+    },
+    {
+      "title": "Correct observed failures",
+      "status": "observed_corrections_promoted",
+      "artifact": "scripts/hero_district_detail.gd",
+      "decisions": [
+        "Corrected floating supports, horizon seam, packed channel, winding, three material lifetime defects, gait chatter and bounded braking contact.",
+        "Corrected duplicate release and early impact admission; improved practical-light pools and Guardian boundary contrast.",
+        "Promoted the reviewed bounded shadow profile after both-scene day/night comparisons. Rejected hair and reversal candidates remain unpromoted."
+      ],
+      "historical_checkpoints": [
+        "Terrace/horizon/lifetime corrections implemented and tested; plantedfootcorrection active.",
+        "Optional800triangle hairwisps remain unbound pending matchedcloseupreview.",
+        "R1 floating bases/horizon/channel/winding and three material ownership bugs corrected. Duplicate release and pre-release impact guards added. R3 practical-light and Guardian contrast corrections await pixels.",
+        "Controlled four-way face ablation identifies directional self-shadowing as the major contributor. Bounded shadow-on sweep selected depth0.2/normal0.35 as candidate; courtyard day/night improves, Confluence confirmation pending. No product policy changed yet."
+      ]
+    },
+    {
+      "title": "Stress and resource bounds",
+      "status": "bounded_checks_pass_hardware_gate_open",
+      "artifact": null,
+      "decisions": [
+        "Final R4 unchanged-source run:727 visual assertions across12suites,777 quality assertions across16suites plus15PCMfiles,32 world-presentation,30 lighting and51 resource/effect assertions.",
+        "All506 runtime identities remain unchanged;31 child processes exit0;48 logs contain zero errors or warnings. Counts overlap and are not additive whole-game coverage.",
+        "Software Vulkan recording and stable bounded resource samples do not establish physical-GPU performance or universal leak freedom."
+      ],
+      "historical_checkpoints": [
+        "Final unchanged-source run:12 visual suites727 assertions,16 quality suites777 assertions+15 PCM files,51 resource/effect assertions; zero errors/warnings. Software Vulkan is not consumer-GPU profiling."
+      ]
+    },
+    {
+      "title": "Independent acceptance and publication",
+      "status": "publication_pending_quality_open",
+      "artifact": null,
+      "decisions": [
+        "Final source film, anchors and independent bounded art review complete. Source checkpoint and exact-commit CI remain publication work.",
+        "No new release has been published. Full campaign, native online play and Deadlock-level quality remain OPEN."
+      ],
+      "historical_checkpoints": [
+        "Source checkpoint, actual film and final handoff pending. Commercial quality remains OPEN; no new release claimed."
+      ]
+    }
+  ],
+  "completed_rounds": 1,
+  "initial_role_assignments_returned": 15
+}

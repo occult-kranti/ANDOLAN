@@ -1,0 +1,138 @@
+{
+  "task": "Visual campaign role 10 / independent actual-rig motion review",
+  "source_commit": "38d11148fe69b184e981164c8a71387c91dc64c5",
+  "status": "PASS_BOUNDED_NUMERICAL_REVIEW_CONTINUOUS_MOTION_OPEN",
+  "source_sha256": {
+    "source_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+    "test_sha256": "2233da04c89fd912d66af7cc61f9546ad71e7b2b74845ee58ec097a8a2d9fbac",
+    "hero_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "library_sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+    "baseline_sha256": "d3a898b640de9c62aa3a919786b5a3b7c56dea823349472e361ba33906010f22"
+  },
+  "corrected_command": "OPENBLAS_NUM_THREADS=1 LP_NUM_THREADS=1 taskset -c 0 timeout 120 godot --headless --path games/yuga-native --script res://tests/rama_motion_adversarial_cases.gd -- --report=/workspace/scratch/visual-motion-review-r1/report-corrected-r1.json --baseline-script=/workspace/scratch/visual-motion-r1/rama_motion.before.gd",
+  "corrected_exit_code": 0,
+  "checks_passed": 58,
+  "checks_total": 58,
+  "rejected_exit_code": 1,
+  "rejected_checks_passed": 57,
+  "rejected_checks_total": 58,
+  "rejected_source_sha256": "d458cfa585b8756cbcff59761370e2823141d5495d013addb57ad434068bf074",
+  "defect": {
+    "fixture": "120 Hz; 9 m/s for .3s, 6.75 for .3s, 6.749 for .3s, 2.8 for .3s, 2.799 to 1.6s; translate actual rig root each tick",
+    "first_failing_frame": 167,
+    "peak_frame": 168,
+    "peak_time_s": 1.40833333333333,
+    "side": "R",
+    "gait": "walk",
+    "peak_error_m": 0.0159947611391544,
+    "historical_peak_error_m": 0.0102900248020887,
+    "post_compression_hip_to_target_m": 0.916775763034821,
+    "solver_reach_m": 0.900781013727188,
+    "cause": "Locked foot target remained beyond reachable leg length after bounded pelvic compression; hysteresis changed phase and increased an existing failure. Nominal Vector3 2.8 speed was below double-precision threshold."
+  },
+  "correction": "Owner retained exact locked targets, raised bounded pelvic compression allowance to 0.14 m and used matching float32 representation for the 2.8 m/s exit boundary.",
+  "braking_support_after_correction": [
+    {
+      "hz": 30.0,
+      "maximum_support_error_m": 3.48827228435766e-07,
+      "support_frames": 21,
+      "total_frames": 48,
+      "settled_walk_frames": 8,
+      "settled_walk_frames_without_support": 0
+    },
+    {
+      "hz": 60.0,
+      "maximum_support_error_m": 5.61716490210529e-07,
+      "support_frames": 44,
+      "total_frames": 96,
+      "settled_walk_frames": 15,
+      "settled_walk_frames_without_support": 0
+    },
+    {
+      "hz": 120.0,
+      "maximum_support_error_m": 5.99204554418975e-07,
+      "support_frames": 86,
+      "total_frames": 192,
+      "settled_walk_frames": 29,
+      "settled_walk_frames_without_support": 0
+    }
+  ],
+  "ablation": {
+    "boundary_only": {
+      "finite": true,
+      "input_exact": true,
+      "maximum_support_error_m": 5.99204554418975e-07,
+      "source_sha256": "732a2872b51711a37b3368e90ea698a454a8ed2d04340bfd2b5d535a79344f3c",
+      "support_frames": 86
+    },
+    "cap_only": {
+      "finite": true,
+      "input_exact": true,
+      "maximum_support_error_m": 5.63295429856225e-07,
+      "source_sha256": "f972acf2b223820a98d9e7dc34d4edcb4335dcc4ddda94270c07804b912ff2a6",
+      "support_frames": 103
+    },
+    "final": {
+      "finite": true,
+      "input_exact": true,
+      "maximum_support_error_m": 5.99204554418975e-07,
+      "source_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "support_frames": 86
+    },
+    "rejected": {
+      "finite": true,
+      "input_exact": true,
+      "maximum_support_error_m": 0.0159947611391544,
+      "source_sha256": "d458cfa585b8756cbcff59761370e2823141d5495d013addb57ad434068bf074",
+      "support_frames": 103
+    }
+  },
+  "instrumented_posture_diagnostic": {
+    "braking_120hz": {
+      "instrumentation_equivalence": {
+        "event_clocks_exact": true,
+        "maximum_bone_position_difference_m": 0.0
+      },
+      "maximum_measured_spine05_contact_translation_m": 0.0616274476051331
+    },
+    "instrumentation_sha256": "163cf1abd3df71c60c87592a048a52a8de470eb53f913d233f121a4a2c1f2c10",
+    "probe_sha256": "a459cdcdf1a392a3d250b37763a97126f6ccaf667be5c25cf11944e51dc5d956",
+    "rapid_reversal_120hz": {
+      "bone_index": 39,
+      "bone_name": "toe5-2.R",
+      "frame": 24,
+      "maximum_joint_origin_step_m": 0.912670791149139,
+      "t": 0.208333333333333
+    },
+    "scope": "Posture diagnostic; displacement is bone-origin data, not render acceptance.",
+    "source_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1"
+  },
+  "unchanged_behavior": "At 30/60/120 Hz, start/stop, traversal/landing, constant-speed rapid reversals and action-cancel scenarios retain exact historical event clocks and every evaluated bone position.",
+  "harness_corrections": [
+    {
+      "issue": "Initial GDScript inferred Dictionary-derived Boolean type failed parse. Explicit bool fixed; initial log retained."
+    },
+    {
+      "issue": "Initial 30 Hz jitter oracle required 60 switches and zero support frames; initial odd tick legitimately remains prior gait, yielding 59 switches and one support frame. Corrected to require >=N-1 switches and <=1 support in historical, while candidate restores support. Initial test source retained; raw failed report remains scratch/report-r2.json."
+    }
+  ],
+  "remaining_findings": [
+    {
+      "id": "MOTION-RAPID-REVERSAL-01",
+      "status": "OPEN_PRE_EXISTING",
+      "bone": "toe5-2.R",
+      "case": "+Z to -Z at6m/s,120Hz",
+      "frame": 24,
+      "time_s": 0.208333333333333,
+      "joint_origin_step_m": 0.912670791149139,
+      "scope": "Identical historical/candidate. Numerical joint discontinuity, not a new gait-regression. Needs direction-transition authoring and continuous rendered review."
+    }
+  ],
+  "limits": [
+    "No continuous motion image/video reviewed by this assignment.",
+    "Transforms/contact evidence does not certify skinned cloth, silhouette, game feel, hardware FPS or AAA visual quality.",
+    "Normal-speed paired jitter reel requested from render owner: 60 Hz stimulus, four simulation steps per15Hz captured image.",
+    "Final braking case measures61.62745mm maximum contact compression, below140mm cap; cap-only ablation independently closes the old failure without changing its103supportframes."
+  ],
+  "next_owner": "Root: record unresolved rapid-reversal issue in backlog; render owner: normal-speed paired contact/gait review; retain failed source before promoting corrected motion."
+}

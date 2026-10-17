@@ -1,0 +1,47 @@
+--- candidate-r1/8b006235
++++ fixed/7936f28f
+@@ -62,13 +62,6 @@
+ 		maps[key] = texture
+ 	return maps
+ 
+-func _live_slot(binding: Dictionary, material: Material) -> bool:
+-	for slot in binding.slots:
+-		var mesh = slot.mesh.get_ref()
+-		if is_instance_valid(mesh) and is_instance_valid(_visual) and (mesh == _visual or _visual.is_ancestor_of(mesh)) and mesh.mesh != null and mesh.mesh.get_instance_id() == slot.mesh_id and slot.surface < mesh.mesh.get_surface_count() and mesh.get_active_material(slot.surface) == material:
+-			return true
+-	return false
+-
+ func _all_slots_owned(binding: Dictionary, material: Material) -> bool:
+ 	for slot in binding.slots:
+ 		var mesh = slot.mesh.get_ref()
+@@ -93,8 +86,8 @@
+ 	return true
+ 
+ func configure(visual: Node3D, supplied_maps: Dictionary = {}) -> bool:
+-	if not is_instance_valid(visual) or not visual.is_inside_tree():
+-		_last_reason = "visual must be a live tree node"
++	if not is_inside_tree() or not is_instance_valid(visual) or not visual.is_inside_tree():
++		_last_reason = "finish owner and visual must be live tree nodes"
+ 		return false
+ 	if configured:
+ 		var stable := visual == _visual and _matches_owned()
+@@ -179,7 +172,7 @@
+ 		var material_changed: bool = _stored(binding.material) != binding.stored
+ 		for slot in binding.slots:
+ 			var mesh = slot.mesh.get_ref()
+-			if not is_instance_valid(mesh) or mesh.mesh == null or mesh.mesh.get_instance_id() != slot.mesh_id or slot.surface >= mesh.mesh.get_surface_count():
++			if not is_instance_valid(mesh) or not is_instance_valid(_visual) or not (mesh == _visual or _visual.is_ancestor_of(mesh)) or mesh.mesh == null or mesh.mesh.get_instance_id() != slot.mesh_id or slot.surface >= mesh.mesh.get_surface_count():
+ 				result.invalidated += 1
+ 				continue
+ 			if material_changed:
+@@ -194,7 +187,9 @@
+ 		if binding.material.get_meta(OWNER_META,0) != get_instance_id():
+ 			result.conflicts.append(binding.label + ": owner replaced")
+ 			continue
+-		if binding.material.shader == SECONDARY_SHADER and _live_slot(binding,binding.material):
++		# Uniforms affect every slot sharing this material. If even one slot was
++		# transferred/replaced, do not mutate that other owner's appearance.
++		if binding.material.shader == SECONDARY_SHADER and _all_slots_owned(binding,binding.material):
+ 			for key in binding.values:
+ 				if binding.material.get_shader_parameter(key) == binding.values[key]:
+ 					binding.material.set_shader_parameter(key,binding.before[key])

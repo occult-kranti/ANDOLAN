@@ -1,0 +1,299 @@
+{
+  "task": "MOTION-RAPID-REVERSAL-01",
+  "status": "OPEN",
+  "decision": "All reversal prototypes rejected; accepted canonical gait/braking correction remains unchanged.",
+  "base_commit": "38d11148fe69b184e981164c8a71387c91dc64c5",
+  "source_scope": "Working-tree motion source pinned separately; this investigation did not modify canonical runtime or tests.",
+  "native_source_pins": {
+    "scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+    "assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8"
+  },
+  "archive": {
+    "path": "reversal-study.zip",
+    "bytes": 1861318,
+    "sha256": "b455770a0a3762a06c5fb9492d8c721f68eacd1d382a18e006667ecbf3a4cf61",
+    "members": 22
+  },
+  "handoff_sha256": "4aecaa673118ad52cc6aa821ede3bf3af9d0f63f9defda6657a2b66de5dbd437",
+  "acceptance": {
+    "finite_and_event_clock_probes_passed": true,
+    "contact_tolerance_m": 0.002,
+    "visual_quality_accepted": false,
+    "runtime_promoted": false,
+    "actual_images_reviewed": false
+  },
+  "causes": [
+    "Instantaneous heading inversion mirrors an authored stride without a gait transition.",
+    "Direction smoothing exposes support-target relocation and support-release discontinuities."
+  ],
+  "prototype_results": [
+    {
+      "report": "angular-r1.json",
+      "report_sha256": "ee1f45d6905ab0e6a9b8aeaf2bcc525a3b4256e90afaf1f4005c41a2bdd7caee",
+      "finite_and_event_clock_checks": 42,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "bc08f4df1f0978db519e1632764b935b503fdbc9f0a390cc23beee521afaa616",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.461193442344666,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.81946733796212e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.461013615131378,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 5.70541317301831e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.409311294555664,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 6.22870345523552e-07,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96
+        }
+      ]
+    },
+    {
+      "report": "vector-r1.json",
+      "report_sha256": "c924292e2561b24200046fd450f5544695a066168e862e1c3e48944dedcec2e0",
+      "finite_and_event_clock_checks": 42,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "175aa23df168c95d3f133e674ab008f0ea51a9c54ae6cb8cd1f18342c451b032",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.280039191246033,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.63172830475378e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.336406111717224,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 6.95103608450154e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.357353210449219,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 1.30263902065053e-06,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96
+        }
+      ]
+    },
+    {
+      "report": "vector-reach-r1.json",
+      "report_sha256": "f8467a4dcfe5dc9b75eeb1e55580f9f29dee5b12046e7293fed578f20dd65b96",
+      "finite_and_event_clock_checks": 42,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "f7d1d5ab6d24eadbce2b8e4f129492a6ae5e004c1d78da42c2aa7a5cdd34b709",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.32454177737236,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.63172830475378e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.484474897384644,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 6.95103608450154e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.534474670886993,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 1.30263902065053e-06,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96
+        }
+      ]
+    },
+    {
+      "report": "vector-projection-r2.json",
+      "report_sha256": "caab7226db10dd0c2018f29d13ccc21d41724ffd5695fc2a3dda62cbac42499c",
+      "finite_and_event_clock_checks": 42,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "bf7c47bac04d538108711b5d0de1426abdd8066f342b519d8396787e82b7f0a3",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.32454177737236,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.63172830475378e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.386755079030991,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 6.95103608450154e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.41642963886261,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 1.30263902065053e-06,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96
+        }
+      ]
+    },
+    {
+      "report": "acceleration-projection-r1.json",
+      "report_sha256": "6bbc7bf6ffdf1694f622a59bf02de11e908b694b377eb3c51f2f8c507e26ab87",
+      "finite_and_event_clock_checks": 12,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "bf7c47bac04d538108711b5d0de1426abdd8066f342b519d8396787e82b7f0a3",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "accelerated_reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.338847935199738,
+          "baseline_joint_step_m": 0.339283376932144,
+          "candidate_contact_error_m": 5.2830870345133e-07,
+          "baseline_contact_error_m": 6.69060455038561e-07,
+          "candidate_support_frames": 15,
+          "baseline_support_frames": 15,
+          "candidate_anchor_drift_max_m": 0.0,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.0,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.32454177737236,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.63172830475378e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23,
+          "candidate_anchor_drift_max_m": 0.0,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.0,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "accelerated_reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.311608344316483,
+          "baseline_joint_step_m": 0.30980321764946,
+          "candidate_contact_error_m": 5.11220605403651e-07,
+          "baseline_contact_error_m": 5.23028631960187e-07,
+          "candidate_support_frames": 26,
+          "baseline_support_frames": 26,
+          "candidate_anchor_drift_max_m": 0.0,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.0,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.386755079030991,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 6.95103608450154e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46,
+          "candidate_anchor_drift_max_m": 0.0924290865659714,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.21168882958591,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "accelerated_reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.26553151011467,
+          "baseline_joint_step_m": 0.16191890835762,
+          "candidate_contact_error_m": 4.5491270839193e-07,
+          "baseline_contact_error_m": 4.99800137276907e-07,
+          "candidate_support_frames": 50,
+          "baseline_support_frames": 50,
+          "candidate_anchor_drift_max_m": 0.0,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.0,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.41642963886261,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 1.30263902065053e-06,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96,
+          "candidate_anchor_drift_max_m": 0.0462985411286354,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.211693810299039,
+          "baseline_anchor_drift_total_m": 0.0
+        }
+      ]
+    }
+  ],
+  "reason_rejected": "Final projection still has a 0.416430 m stress joint step, introduces up to 0.046299 m anchor drift per frame, and worsens the ordinary accelerated 120 Hz joint step from 0.161919 m to 0.265532 m.",
+  "next_gate": "A separate foot-plant release/inertialization design with ordinary player acceleration, explicit anchor-slip bounds, unchanged authoritative events, actual skin/contact checks and continuous rendered review.",
+  "limits": [
+    "No renderedframes were generated or visuallyreviewed.",
+    "Nohumanfeel/commercialquality acceptance.",
+    "The2mmcontact gate was retained; movedtargets wereexplicitlymeasured ratherthanreported as no-slip.",
+    "Canonical motion andtests wereheldfrozen throughout thisinvestigation."
+  ]
+}

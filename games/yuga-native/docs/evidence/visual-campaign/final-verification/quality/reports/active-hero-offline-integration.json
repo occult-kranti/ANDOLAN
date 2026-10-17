@@ -1,0 +1,803 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "Actual Confluence world and current Rama runtime configure",
+			"passed": true
+		},
+		{
+			"details": {
+				"asset": "res://assets/heroes/rama-hero.glb",
+				"imports": {
+					"res://assets/heroes/rama-hero-far.glb": {
+						"imported": "res://.godot/imported/rama-hero-far.glb-59b3f84256e6c2881bf1ee43e3adfa6e.scn",
+						"sha256": "62fceb2f675f7d6ed60f6d780573c3763d5d04032bfe74c61c45fa40df19880f",
+						"stamp_sha256": "37c75aa0c70127c240968f85fba4dcf9d43dc16ac81f03352447b891f5ac7547"
+					},
+					"res://assets/heroes/rama-hero-mid.glb": {
+						"imported": "res://.godot/imported/rama-hero-mid.glb-59b4ceab3d9667e3df57d44bb7b0dadb.scn",
+						"sha256": "cdb2bc87e6d64d705fe2c91a7bb0c3cb93cab588812e363e83dc4cd614103a53",
+						"stamp_sha256": "b8911b3a0f9a46d6486700d3018040d2e290354c0f550467faba258857c665fe"
+					},
+					"res://assets/heroes/rama-hero.glb": {
+						"imported": "res://.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.scn",
+						"sha256": "90d5e4c33a2955ffaf47aee772e225c106f7e4bc2976cbbcca0be250bfaf68a9",
+						"stamp_sha256": "3b58de2e380e0e86068d23cad1ec205f7647c54f6b218aa35fee69be989febf5"
+					}
+				}
+			},
+			"name": "Actual hero source and imported scene have matching current stamps",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Present LOD candidate import is current: res://assets/heroes/rama-hero-mid.glb",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Present LOD candidate import is current: res://assets/heroes/rama-hero-far.glb",
+			"passed": true
+		},
+		{
+			"details": {
+				"skeletons": 1
+			},
+			"name": "Actual hero owns exactly one 164-bone skeleton",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "One Rama motion modifier and no retained competing pose owner",
+			"passed": true
+		},
+		{
+			"details": {
+				"face": {
+					"blink_clock": 0.166666666666667,
+					"blink_index": 0,
+					"configured": true,
+					"defeat_age": 0.0,
+					"effort": 0.0,
+					"elapsed": 0.166666666666667,
+					"half_correctives": true,
+					"last_reason": "player reset",
+					"owned_meshes": 1,
+					"rejected_states": 0,
+					"reset_count": 2,
+					"scope": "Authored eyelid morph performance only, optional authored half-blink arc correctives. No eye scaling, facial shader warp, skeleton modification, gaze or jaw expression.",
+					"weights": {
+						"rama_blink_left": 0.0,
+						"rama_blink_right": 0.0
+					}
+				},
+				"materials": {
+					"additional_lights": 0,
+					"configured": true,
+					"native_pbr": true,
+					"owned_materials": 22,
+					"profile_version": 1,
+					"profiles": {
+						"Deep brown iris": 3,
+						"Natural lips": 3,
+						"Polished sapphire": 6,
+						"Rama warm skin": 4,
+						"Recessed antique gold": 3,
+						"Warm sclera": 3
+					}
+				},
+				"secondary": {
+					"anchored_vertices": {
+						"cloth": 163363,
+						"hair": 13974
+					},
+					"bindings": 15,
+					"cloth_limit_m": 0.075,
+					"cloth_offset": "(0.0, 0.000131, 0.0)",
+					"cloth_velocity": "(0.0, -0.000593, 0.0)",
+					"configured": true,
+					"elapsed": 0.166666666666667,
+					"finite": true,
+					"hair_limit_m": 0.018,
+					"hair_offset": "(0.0, 0.00002, 0.0)",
+					"hair_velocity": "(0.0, -0.000208, 0.0)",
+					"last_reason": "player reset",
+					"masked_vertices": {
+						"cloth": 10575,
+						"hair": 51365
+					},
+					"rejected_states": 0,
+					"reset_count": 1,
+					"scope": "Bounded analytic spring response through authored rest-space masks. No cloth collision, strands, gameplay or skeleton writes."
+				}
+			},
+			"name": "Actual imported hero admits facial, secondary and material controllers",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Every actual skinned mesh binds to the same live skeleton",
+			"passed": true
+		},
+		{
+			"details": {
+				"matching_meshes": 1,
+				"names": [
+					"rama_blink_left",
+					"rama_blink_right",
+					"rama_blink_half_left",
+					"rama_blink_half_right"
+				]
+			},
+			"name": "One unique face has the four authored full and half blink morphs",
+			"passed": true
+		},
+		{
+			"details": {
+				"skin_bind_count": 164,
+				"vertices": 5564
+			},
+			"name": "Facial morphs remain a small skinned partition",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual_clone_meshes": 4,
+				"actual_face_meshes": 1,
+				"binding": {
+					"configured": true,
+					"errors": [],
+					"ignored_candidate_faces": 2,
+					"last_reason": "player reset",
+					"level": 1,
+					"levels": 3,
+					"live_bones": 164,
+					"live_rigs": 1,
+					"mode": "lod_ready",
+					"owned_mesh_instances": 4,
+					"owned_skins": 2,
+					"paths": [
+						"res://assets/heroes/rama-hero-mid.glb",
+						"res://assets/heroes/rama-hero-far.glb"
+					],
+					"scope": "One existing rig; body/bow visibility only; source face/morph writer remains unique; actual posed LOD acceptance and GPU profiling are separate.",
+					"switches": 1,
+					"visible_levels": [
+						1
+					]
+				}
+			},
+			"name": "Actual asset LOD binding has three levels, four clones and one original rig and face",
+			"passed": true
+		},
+		{
+			"details": {
+				"bound_surfaces": 15,
+				"bow_nonzero_weights": 0,
+				"domains": {
+					"Cobalt handwoven silk": {
+						"anchors": 29790,
+						"moving": 5715
+					},
+					"Cobalt lotus brocade": {
+						"anchors": 8059,
+						"moving": 1602
+					},
+					"Swept black hair": {
+						"anchors": 13974,
+						"moving": 51365
+					},
+					"Worked warm gold": {
+						"anchors": 125514,
+						"moving": 3258
+					}
+				},
+				"ordinary_pbr": {
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaBowLOD1:1": {
+						"source_material": "Polished sapphire",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaBowLOD1:2": {
+						"source_material": "Dark bow leather",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaBowLOD1:3": {
+						"source_material": "Ivory silk",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaBowLOD2:1": {
+						"source_material": "Polished sapphire",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaBowLOD2:2": {
+						"source_material": "Dark bow leather",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaBowLOD2:3": {
+						"source_material": "Ivory silk",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD1:1": {
+						"source_material": "Ivory silk",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD1:10": {
+						"source_material": "Dark bow leather",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD1:11": {
+						"source_material": "Rama warm skin",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD1:12": {
+						"source_material": "Natural lips",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD1:5": {
+						"source_material": "Recessed antique gold",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD1:6": {
+						"source_material": "Polished sapphire",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD1:7": {
+						"source_material": "Warm sclera",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD1:8": {
+						"source_material": "Deep brown iris",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD1:9": {
+						"source_material": "Pupil",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD2:1": {
+						"source_material": "Ivory silk",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD2:10": {
+						"source_material": "Dark bow leather",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD2:11": {
+						"source_material": "Rama warm skin",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD2:12": {
+						"source_material": "Natural lips",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD2:5": {
+						"source_material": "Recessed antique gold",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD2:6": {
+						"source_material": "Polished sapphire",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD2:7": {
+						"source_material": "Warm sclera",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD2:8": {
+						"source_material": "Deep brown iris",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/RamaHeroLOD2:9": {
+						"source_material": "Pupil",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/NockedArrow/@MeshInstance3D@232:0": {
+						"source_material": "",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": false
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/NockedArrow/@MeshInstance3D@233:0": {
+						"source_material": "",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": false
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaBow:1": {
+						"source_material": "Polished sapphire",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaBow:2": {
+						"source_material": "Dark bow leather",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaBow:3": {
+						"source_material": "Ivory silk",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaFace:0": {
+						"source_material": "Rama warm skin",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaHero:1": {
+						"source_material": "Ivory silk",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaHero:10": {
+						"source_material": "Dark bow leather",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaHero:11": {
+						"source_material": "Rama warm skin",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaHero:12": {
+						"source_material": "Natural lips",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaHero:5": {
+						"source_material": "Recessed antique gold",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaHero:6": {
+						"source_material": "Polished sapphire",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaHero:7": {
+						"source_material": "Warm sclera",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaHero:8": {
+						"source_material": "Deep brown iris",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					},
+					"/root/ConfluenceWorld/World/Rama/HeroVisual/rama-hero/YugaHeroRig/Skeleton3D/RamaHero:9": {
+						"source_material": "Pupil",
+						"transparency": 0,
+						"vertex_color_use_as_albedo": true
+					}
+				},
+				"unowned_secondary_surfaces": [],
+				"unused_nonsecondary_alpha_positive_rows": 118511
+			},
+			"name": "Actual moving masks bind all four domains while skin and bow remain outside displacement",
+			"passed": true
+		},
+		{
+			"details": {
+				"profiles": {
+					"Deep brown iris": 3,
+					"Natural lips": 3,
+					"Polished sapphire": 6,
+					"Rama warm skin": 4,
+					"Recessed antique gold": 3,
+					"Warm sclera": 3
+				},
+				"secondary_bindings": 15
+			},
+			"name": "All six PBR profiles bind outside the four secondary domains",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual moving-shader-on-skin counterexample rejects and restores original resources",
+			"passed": true
+		},
+		{
+			"details": {
+				"binding": {
+					"configured": true,
+					"errors": [],
+					"ignored_candidate_faces": 2,
+					"last_reason": "QA actual near camera",
+					"level": 0,
+					"levels": 3,
+					"live_bones": 164,
+					"live_rigs": 1,
+					"mode": "lod_ready",
+					"owned_mesh_instances": 4,
+					"owned_skins": 2,
+					"paths": [
+						"res://assets/heroes/rama-hero-mid.glb",
+						"res://assets/heroes/rama-hero-far.glb"
+					],
+					"scope": "One existing rig; body/bow visibility only; source face/morph writer remains unique; actual posed LOD acceptance and GPU profiling are separate.",
+					"switches": 2,
+					"visible_levels": [
+						0
+					]
+				}
+			},
+			"name": "Actual viewport near camera selects only near body and bow with the original face",
+			"passed": true
+		},
+		{
+			"details": {
+				"binding": {
+					"configured": true,
+					"errors": [],
+					"ignored_candidate_faces": 2,
+					"last_reason": "QA actual near camera",
+					"level": 2,
+					"levels": 3,
+					"live_bones": 164,
+					"live_rigs": 1,
+					"mode": "lod_ready",
+					"owned_mesh_instances": 4,
+					"owned_skins": 2,
+					"paths": [
+						"res://assets/heroes/rama-hero-mid.glb",
+						"res://assets/heroes/rama-hero-far.glb"
+					],
+					"scope": "One existing rig; body/bow visibility only; source face/morph writer remains unique; actual posed LOD acceptance and GPU profiling are separate.",
+					"switches": 4,
+					"visible_levels": [
+						2
+					]
+				}
+			},
+			"name": "Actual player camera hook reaches only far body and bow without replacing face or skins",
+			"passed": true
+		},
+		{
+			"details": {
+				"binding": {
+					"configured": true,
+					"errors": [],
+					"ignored_candidate_faces": 2,
+					"last_reason": "QA actual near camera",
+					"level": 0,
+					"levels": 3,
+					"live_bones": 164,
+					"live_rigs": 1,
+					"mode": "lod_ready",
+					"owned_mesh_instances": 4,
+					"owned_skins": 2,
+					"paths": [
+						"res://assets/heroes/rama-hero-mid.glb",
+						"res://assets/heroes/rama-hero-far.glb"
+					],
+					"scope": "One existing rig; body/bow visibility only; source face/morph writer remains unique; actual posed LOD acceptance and GPU profiling are separate.",
+					"switches": 6,
+					"visible_levels": [
+						0
+					]
+				}
+			},
+			"name": "Actual viewport approach returns to near with the same admitted resources",
+			"passed": true
+		},
+		{
+			"details": {
+				"binding": {
+					"configured": true,
+					"errors": [],
+					"ignored_candidate_faces": 2,
+					"last_reason": "player reset",
+					"level": 0,
+					"levels": 3,
+					"live_bones": 164,
+					"live_rigs": 1,
+					"mode": "lod_ready",
+					"owned_mesh_instances": 4,
+					"owned_skins": 2,
+					"paths": [
+						"res://assets/heroes/rama-hero-mid.glb",
+						"res://assets/heroes/rama-hero-far.glb"
+					],
+					"scope": "One existing rig; body/bow visibility only; source face/morph writer remains unique; actual posed LOD acceptance and GPU profiling are separate.",
+					"switches": 6,
+					"visible_levels": [
+						0
+					]
+				}
+			},
+			"name": "Actual player reset restores only near visibility and preserves one original face and rig",
+			"passed": true
+		},
+		{
+			"details": {
+				"face": {
+					"blink_clock": 0.566666666666667,
+					"blink_index": 0,
+					"configured": true,
+					"defeat_age": 0.0,
+					"effort": 0.864664716763387,
+					"elapsed": 0.566666666666667,
+					"half_correctives": true,
+					"last_reason": "player reset",
+					"owned_meshes": 1,
+					"rejected_states": 0,
+					"reset_count": 6,
+					"scope": "Authored eyelid morph performance only, optional authored half-blink arc correctives. No eye scaling, facial shader warp, skeleton modification, gaze or jaw expression.",
+					"weights": {
+						"rama_blink_left": 0.121053060346874,
+						"rama_blink_right": 0.121053060346874
+					}
+				},
+				"secondary": {
+					"anchored_vertices": {
+						"cloth": 163363,
+						"hair": 13974
+					},
+					"bindings": 15,
+					"cloth_limit_m": 0.075,
+					"cloth_offset": "(0.00047, 0.003242, -0.008798)",
+					"cloth_velocity": "(-0.000839, -0.025561, 0.069379)",
+					"configured": true,
+					"elapsed": 0.566666666666667,
+					"finite": true,
+					"hair_limit_m": 0.018,
+					"hair_offset": "(0.000211, 0.000265, -0.001066)",
+					"hair_velocity": "(-0.001294, -0.003576, 0.01437)",
+					"last_reason": "player reset",
+					"masked_vertices": {
+						"cloth": 10575,
+						"hair": 51365
+					},
+					"rejected_states": 0,
+					"reset_count": 5,
+					"scope": "Bounded analytic spring response through authored rest-space masks. No cloth collision, strands, gameplay or skeleton writes."
+				}
+			},
+			"name": "Real player movement and accepted draw seed nonneutral visible quality state",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual world pause holds facial clock and partial blink exactly",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual world pause holds secondary inertia and shader offsets exactly",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Focus-loss callback clears input without snapping paused quality state",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Resume advances one ordinary presentation tick without reset or catch-up",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual teleport clears inertia and every full/half morph before another update",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Second real draw fixture is admitted after ordinary world reset",
+			"passed": true
+		},
+		{
+			"details": {
+				"audio_alive": false,
+				"playing": 0,
+				"receipt": {
+					"accepted": true,
+					"damage_applied": 300.0,
+					"generation": 13,
+					"health_after": 0.0,
+					"health_before": 300.0,
+					"sequence": 0,
+					"shield_after": 0.0,
+					"shield_before": 0.0,
+					"source_id": "quality_lifecycle",
+					"time_s": 0.0
+				}
+			},
+			"name": "Lethal actual receiver receipt reaches audio lifecycle before the alive guard",
+			"passed": true
+		},
+		{
+			"details": {
+				"morphs": {
+					"rama_blink_half_left": 0.0,
+					"rama_blink_half_right": 0.0,
+					"rama_blink_left": 1.0,
+					"rama_blink_right": 1.0
+				}
+			},
+			"name": "Actual death update rests hair/cloth and closes the authored eyelid morphs",
+			"passed": true
+		},
+		{
+			"details": {
+				"face": {
+					"blink_clock": 0.15,
+					"blink_index": 0,
+					"configured": true,
+					"defeat_age": 0.0,
+					"effort": 0.292145389122445,
+					"elapsed": 0.15,
+					"half_correctives": true,
+					"last_reason": "player reset",
+					"owned_meshes": 1,
+					"rejected_states": 0,
+					"reset_count": 11,
+					"scope": "Authored eyelid morph performance only, optional authored half-blink arc correctives. No eye scaling, facial shader warp, skeleton modification, gaze or jaw expression.",
+					"weights": {
+						"rama_blink_left": 0.0409003544771423,
+						"rama_blink_right": 0.0409003544771423
+					}
+				},
+				"secondary": {
+					"anchored_vertices": {
+						"cloth": 163363,
+						"hair": 13974
+					},
+					"bindings": 15,
+					"cloth_limit_m": 0.075,
+					"cloth_offset": "(0.0, 0.0, 0.0)",
+					"cloth_velocity": "(0.0, 0.0, 0.0)",
+					"configured": true,
+					"elapsed": 0.15,
+					"finite": true,
+					"hair_limit_m": 0.018,
+					"hair_offset": "(0.0, 0.0, 0.0)",
+					"hair_velocity": "(0.0, 0.0, 0.0)",
+					"last_reason": "player reset",
+					"masked_vertices": {
+						"cloth": 10575,
+						"hair": 51365
+					},
+					"rejected_states": 0,
+					"reset_count": 11,
+					"scope": "Bounded analytic spring response through authored rest-space masks. No cloth collision, strands, gameplay or skeleton writes."
+				}
+			},
+			"name": "Authority respawn returns the same bound face and materials without corpse state",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "100 actual player resets retain the same rig, face, skins and owned material resources",
+			"passed": true
+		},
+		{
+			"details": {
+				"remaining_nodes": 1,
+				"starting_nodes": 1
+			},
+			"name": "World teardown releases all quality component nodes",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "All tested source and imported bytes stay frozen",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"imports": {
+		"res://assets/heroes/rama-hero-far.glb": {
+			"imported": "res://.godot/imported/rama-hero-far.glb-59b3f84256e6c2881bf1ee43e3adfa6e.scn",
+			"sha256": "62fceb2f675f7d6ed60f6d780573c3763d5d04032bfe74c61c45fa40df19880f",
+			"stamp_sha256": "37c75aa0c70127c240968f85fba4dcf9d43dc16ac81f03352447b891f5ac7547"
+		},
+		"res://assets/heroes/rama-hero-mid.glb": {
+			"imported": "res://.godot/imported/rama-hero-mid.glb-59b4ceab3d9667e3df57d44bb7b0dadb.scn",
+			"sha256": "cdb2bc87e6d64d705fe2c91a7bb0c3cb93cab588812e363e83dc4cd614103a53",
+			"stamp_sha256": "b8911b3a0f9a46d6486700d3018040d2e290354c0f550467faba258857c665fe"
+		},
+		"res://assets/heroes/rama-hero.glb": {
+			"imported": "res://.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.scn",
+			"sha256": "90d5e4c33a2955ffaf47aee772e225c106f7e4bc2976cbbcca0be250bfaf68a9",
+			"stamp_sha256": "3b58de2e380e0e86068d23cad1ec205f7647c54f6b218aa35fee69be989febf5"
+		}
+	},
+	"passed": true,
+	"scope": "Actual Confluence imported hero admission, one-rig ownership, three-level LOD binding and actual viewport camera selection, semantic masks/material isolation, real player update and pause/focus/reset/teleport/death/respawn glue. Headless source-bound regression only; no rendered LOD silhouette/pop, visual closure, cloth collision, hand-contact, listening, OS input, physical-GPU, Windows, online or commercial-quality acceptance.",
+	"source_sha256": {
+		"res://.godot/imported/rama-hero-far.glb-59b3f84256e6c2881bf1ee43e3adfa6e.md5": "37c75aa0c70127c240968f85fba4dcf9d43dc16ac81f03352447b891f5ac7547",
+		"res://.godot/imported/rama-hero-far.glb-59b3f84256e6c2881bf1ee43e3adfa6e.scn": "62fceb2f675f7d6ed60f6d780573c3763d5d04032bfe74c61c45fa40df19880f",
+		"res://.godot/imported/rama-hero-mid.glb-59b4ceab3d9667e3df57d44bb7b0dadb.md5": "b8911b3a0f9a46d6486700d3018040d2e290354c0f550467faba258857c665fe",
+		"res://.godot/imported/rama-hero-mid.glb-59b4ceab3d9667e3df57d44bb7b0dadb.scn": "cdb2bc87e6d64d705fe2c91a7bb0c3cb93cab588812e363e83dc4cd614103a53",
+		"res://.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.md5": "3b58de2e380e0e86068d23cad1ec205f7647c54f6b218aa35fee69be989febf5",
+		"res://.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.scn": "90d5e4c33a2955ffaf47aee772e225c106f7e4bc2976cbbcca0be250bfaf68a9",
+		"res://assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+		"res://assets/audio/rama-quality/blocked.wav": "46f92c5de93bd760aeef391518ac30b5dae2d452de0c523f3e57f5e0a7e41811",
+		"res://assets/audio/rama-quality/cancel.wav": "e904b81a932a211dcc4d0a355137f6adc149de340c4b9075f54b7e4ab62f764a",
+		"res://assets/audio/rama-quality/confirm.wav": "7710de239832100fc38f503cf2cf37668902e4e7cc6100dcdb2b7a905dae8c20",
+		"res://assets/audio/rama-quality/contact.wav": "f03b2d7a84fbed558318f5a4f85720eebea27405d734f94290aa90fc0e0266cd",
+		"res://assets/audio/rama-quality/draw_dawn_volley.wav": "78a5eb254505d60403e975e82af3185d673e785218a0b195d48a4a11e3014193",
+		"res://assets/audio/rama-quality/draw_guardian_circle.wav": "89df09de3303c162482dac899c8be6392dcf7da326d25ae8f5421a9f217920e2",
+		"res://assets/audio/rama-quality/draw_kodanda.wav": "5f34621c8dcd86a9b547fc79bbb43ba06557cf180336f59b608195151f357bd7",
+		"res://assets/audio/rama-quality/draw_measured_step.wav": "a5c4c3a348c89a95751619f2a7ceb3431187ca6dbbde5ae42dcb8c944b4e3cc2",
+		"res://assets/audio/rama-quality/draw_piercing_dawn.wav": "ba8c7cc86fced066813dcefb1814ce7acc09866cf582b269cdcd9e635ed54133",
+		"res://assets/audio/rama-quality/manifest.json": "9c29ad40bef9e524a1216c6ea45ae4adfb1663987b26a81c37c3c93d710b7c8b",
+		"res://assets/audio/rama-quality/release_dawn_volley.wav": "92118f35c8a7726384caac4c2e243b3fc59c7bc75c75671ecf225ba94a55ee2e",
+		"res://assets/audio/rama-quality/release_guardian_circle.wav": "012357565f977a2cc830709e4a3fa97416353b22154ce225899bfeae80cbccbb",
+		"res://assets/audio/rama-quality/release_kodanda.wav": "636bd972fe69c81ceba89e38a0db3f74101d8d7992c705731dd45912b865b610",
+		"res://assets/audio/rama-quality/release_measured_step.wav": "066564ad5db1b262dc8f78e9e3ddcfa5447cc68a74013fda7dbf8711dc4d3a17",
+		"res://assets/audio/rama-quality/release_piercing_dawn.wav": "caa7071f1acdf5a40e3f69f88ef46ea4bcc9634b758b6a3ed0a695f4f45d6c56",
+		"res://assets/audio/rama-quality/threat.wav": "fb077b936353fba38b45cd861db0c1e1daf822523d2da4aa666377c4465a6217",
+		"res://assets/heroes/rama-hero-far.glb": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+		"res://assets/heroes/rama-hero-far.glb.import": "60c2d7585242b7e0130da031a9e98316d9f4ded36eb6c2ed437ab01c687a0c66",
+		"res://assets/heroes/rama-hero-mid.glb": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+		"res://assets/heroes/rama-hero-mid.glb.import": "893f150856eba4a372d0f24a7bbdd1e591f9f28c999f85a53c24de61562b6598",
+		"res://assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+		"res://assets/heroes/rama-hero.glb.import": "c9480cdb1c83f72a5b3479d91402aa81a50ff7d8e62c2775405108784639151a",
+		"res://scenes/confluence_world.tscn": "06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3",
+		"res://scripts/confluence_world.gd": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7",
+		"res://scripts/player.gd": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+		"res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+		"res://scripts/rama_action_audio.gd": "6091e288e9236ee54ea11839db3eef31a59b306b738d7008ae46287c8f5e3c89",
+		"res://scripts/rama_action_buffer.gd": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+		"res://scripts/rama_facial_performance.gd": "c525d720eab133c66be18e9d49a14ddc2dd20fd0616ec4a5e4f96ee5d2947128",
+		"res://scripts/rama_hero_runtime.gd": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+		"res://scripts/rama_lod_binding.gd": "266e29dfa72cac407d3750eefcb296ec0b9cf82dc7665afb30b2eaa658956bfc",
+		"res://scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+		"res://scripts/rama_secondary_motion.gd": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+		"res://scripts/rama_surface_materials.gd": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a",
+		"res://scripts/rama_visual_lod.gd": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5",
+		"res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+		"res://shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+		"res://tests/rama_quality_integration_cases.gd": "99fa55e19edf6178c737f961b9d5ec69b0a9e75b677e3b02be67675fd9f1e6cd"
+	},
+	"wall_seconds": 3.936435
+}

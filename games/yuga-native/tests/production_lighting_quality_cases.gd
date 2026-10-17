@@ -40,7 +40,9 @@ func _run() -> void:
 		check(env.fog_density <= 0.0016001, "courtyard close-range haze bounded %s" % night)
 		check(is_equal_approx(env.tonemap_exposure, 1.0), "courtyard exposure fixed for comparisons %s" % night)
 		check(env.glow_bloom == 0.0 and env.glow_hdr_threshold >= 1.6, "courtyard no broad bloom veil %s" % night)
-		check(sun.shadow_bias <= 0.0251 and sun.shadow_normal_bias <= 0.35001, "courtyard shadow contact offsets bounded %s" % night)
+		# Preserve the profile reviewed in visual-campaign shadow confirmations.
+		# This property assertion does not measure rendered contact or acne.
+		check(is_equal_approx(sun.shadow_bias, 0.2) and is_equal_approx(sun.shadow_normal_bias, 0.35), "courtyard reviewed shadow profile retained %s" % night)
 		check(not env.volumetric_fog_enabled and not env.ssr_enabled and not env.sdfgi_enabled and not env.ssil_enabled, "courtyard expensive screen/GI effects disabled %s" % night)
 	var sky_id := env.sky.get_instance_id()
 	Courtyard.apply(env, sun, world)
@@ -69,7 +71,7 @@ func _run() -> void:
 		check(fill.sky_mode == DirectionalLight3D.SKY_MODE_LIGHT_ONLY and not fill.shadow_enabled, "world fill has no shadow or second sky sun %s" % phase)
 		check(is_equal_approx(env.tonemap_exposure, 1.0) and env.ambient_light_sky_contribution == 0.0, "world fixed exposure explicit ambient source %s" % phase)
 		check(env.glow_bloom == 0.0 and env.glow_intensity <= 0.16001, "world no broad bloom veil %s" % phase)
-		check(sun.directional_shadow_max_distance == 72.0 and sun.shadow_normal_bias <= 0.35001, "world retained camera shadow budget with contact bias %s" % phase)
+		check(sun.directional_shadow_max_distance == 72.0 and is_equal_approx(sun.shadow_bias, 0.2) and is_equal_approx(sun.shadow_normal_bias, 0.35), "world retained camera shadow budget and reviewed offsets %s" % phase)
 	controller.set_phase(NAN)
 	check(controller.diagnostics().phase == 0.0, "nonfinite phase resets to day")
 	controller.set_phase(INF)

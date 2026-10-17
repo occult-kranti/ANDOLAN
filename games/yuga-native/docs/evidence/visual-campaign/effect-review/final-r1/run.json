@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "receipts": [
+    {
+      "label": "adversarial",
+      "command": [
+        "taskset",
+        "-c",
+        "0,1",
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/rama_effect_adversarial_cases.gd",
+        "--",
+        "--report=/workspace/scratch/extreme-effect-independent-final-r1/adversarial.json"
+      ],
+      "exit_code": 0,
+      "seconds": 2.0823817549971864,
+      "passed": true,
+      "checks": 56,
+      "report_sha256": "a819116efe2760e11261a6a8e31fa6ed2288ad01a27fac8f60f46256dc94cb51"
+    },
+    {
+      "label": "abilities",
+      "command": [
+        "taskset",
+        "-c",
+        "0,1",
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/rama_ability_cases.gd",
+        "--",
+        "--report=/workspace/scratch/extreme-effect-independent-final-r1/abilities.json"
+      ],
+      "exit_code": 0,
+      "seconds": 2.422734652995132,
+      "passed": true,
+      "checks": 85,
+      "report_sha256": "a55a8c27485cf7782f771c476d9a255db59f070e36fd07b4937f3e3a8951b4cc"
+    },
+    {
+      "label": "vfx",
+      "command": [
+        "taskset",
+        "-c",
+        "0,1",
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/rama_vfx_quality_cases.gd",
+        "--",
+        "--report=/workspace/scratch/extreme-effect-independent-final-r1/vfx.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.828061580999929,
+      "passed": true,
+      "checks": 33,
+      "report_sha256": "0cddb979a3a711db0f38eaf94f04870d7ae2a96901695737fbd0d4b7b2fff7da"
+    },
+    {
+      "label": "visual",
+      "command": [
+        "taskset",
+        "-c",
+        "0,1",
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/rama_ability_visual_cases.gd",
+        "--",
+        "--report=/workspace/scratch/extreme-effect-independent-final-r1/visual.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.8362073969983612,
+      "passed": true,
+      "checks": 62,
+      "report_sha256": "c19d02096bb6fd360a4325220f493cc35ba607927491d63090c20cd40be4fa95"
+    }
+  ],
+  "all_passed": true
+}

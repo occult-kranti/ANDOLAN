@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "reviewer": "/root/visual_art_review",
+  "input_directory": "games/yuga-native/docs/evidence/visual-campaign/capture-face-ablation-r1",
+  "original_images_viewed": 4,
+  "source_unchanged": true,
+  "same_camera": true,
+  "same_pose": true,
+  "runtime_promoted": false,
+  "godot_exit_code": 0,
+  "warnings": [],
+  "capture_report_sha256": "ebc38d66277b2e20af5a64530c43626cfd1fbb270ff53907bad1d0626b1b2b25",
+  "files": [
+    {
+      "path": "face-ablation-baseline.png",
+      "sha256": "c353bc2a4186ed023a991c6c541d74017414e5a19051d05dacf2e81708f842bc",
+      "bytes": 975955,
+      "individually_viewed": true,
+      "capture_report_and_archive_match": true
+    },
+    {
+      "path": "face-ablation-sun-shadow-off.png",
+      "sha256": "1b8791ba1a300daedef7da84b866adaf3d87bb97db273144c6c120a32856953d",
+      "bytes": 856648,
+      "individually_viewed": true,
+      "capture_report_and_archive_match": true
+    },
+    {
+      "path": "face-ablation-skin-normal-off.png",
+      "sha256": "1dd95e88bfcd5abff426ea870235f124d64deea5fb60000b0939dadec982954c",
+      "bytes": 975389,
+      "individually_viewed": true,
+      "capture_report_and_archive_match": true
+    },
+    {
+      "path": "face-ablation-ssao-off.png",
+      "sha256": "57b9c072d1533d1caafc29a277b02e4e82f82e4f0ab4e4bed39e96a45b8febec",
+      "bytes": 975783,
+      "individually_viewed": true,
+      "capture_report_and_archive_match": true
+    }
+  ],
+  "diagnostic_controls": [
+    {
+      "mode": "baseline",
+      "sun_shadow_enabled": true,
+      "skin_normals_enabled": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "ssao_enabled": true
+    },
+    {
+      "mode": "sun-shadow-off",
+      "sun_shadow_enabled": false,
+      "skin_normals_enabled": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "ssao_enabled": true
+    },
+    {
+      "mode": "skin-normal-off",
+      "sun_shadow_enabled": true,
+      "skin_normals_enabled": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "ssao_enabled": true
+    },
+    {
+      "mode": "ssao-off",
+      "sun_shadow_enabled": true,
+      "skin_normals_enabled": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "ssao_enabled": false
+    }
+  ],
+  "finding": "Sun-shadow-off removes broad facial triangular patches and scalp stipple in this view; normal-off and SSAO-off do not. Targeted shadow-on correction still pending.",
+  "scope": "AI controlled-frame review. No final hero art, all-shadow disabling, hardware or motion acceptance."
+}

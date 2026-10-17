@@ -35,6 +35,30 @@ The runner stages an isolated material project because `art/.gdignore` excludes
 authoring textures from normal product imports. Preserve that boundary. Actual
 render comparisons use the separate commands in `art/open-art-wave/render/README.md`.
 
+The current visual implementation is the [ten-round campaign](VISUAL_CAMPAIGN.md).
+Start with its [current handoff](VISUAL_CAMPAIGN_HANDOFF.md), then the
+[execution ledger](VISUAL_CAMPAIGN.json). Fifteen initial specialist assignments
+have returned work; this is not 150 completed assignments. Raw R1/R2/R3 captures
+are revisions within the first cycle. Default geometry is unchanged; the new
+surface finish, district, lighting and ability treatment have separate evidence.
+Optional temple wisps and rapid-reversal prototypes were rejected. The visual
+target remains open.
+
+The integrated current-source check entry point is included in ordinary setup
+and native CI. It covers twelve visual/resource/motion/identity suites; numerical
+passing results do not replace actual image and continuous-motion reviews:
+
+```sh
+/workspace/tooling/yuga-native-python/bin/python games/yuga-native/tools/run-visual-checks.py \
+  --python /workspace/tooling/yuga-native-python/bin/python --engine godot \
+  --output /absolute/fresh/visual-checks
+```
+
+`tools/visual-campaign/run.py --help` describes matched Forward+ still capture.
+`tools/run-rama-gameplay.py --help` describes the separate receiver-backed
+continuous five-action film. Use isolated frozen sources and serialize heavy
+renders. Keep source pins, unmodified originals, error logs and rejected evidence.
+
 The following Mythic and Triad releases are historical. [MYTHIC_BATCHES.md](MYTHIC_BATCHES.md) preserves their bounded scope; the old `rama-production.glb`, carry overlay and fourteen-invocation research components remain available for comparisons and the existing film. They are not the current default hero or controls.
 
 The published [Mythic native preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-mythic) is source `e2dc0ecd3f6903e0c8af68b2c5717ba5947108ed`. It implements fourteen **invocations through the current Rama avatar**, a selector, actual troop receivers, distinct event-driven effects, sixteen original synthesized cues, a diagnostic entity bridge and a 3D physics experiment. Both bounded batches are accepted, including final pause/focus, source-matched captures and [local Linux packaged input](evidence/mythic-window-r3/REVIEW.md). [Foundation CI](https://github.com/occult-kranti/ANDOLAN/actions/runs/39025311081) and [prerelease CI](https://github.com/occult-kranti/ANDOLAN/actions/runs/39025531829) passed. All 100 downloaded assets, 290 runtime sources, two fresh source-bound decodes and sixteen required reports are verified. The exact downloaded Linux build passes title/world entry, fully visible Continue, keyboard selector entry, a visible Sita cast with release/cooldown, pause retaining that state, F5 reset to READY and title return. The 960 × 600 software Forward+/Dummy-audio run reports no engine errors or warnings. It does not repeat remapping/settings or establish listening/GPU quality; see [public release evidence](evidence/mythic-published/REVIEW.md). Windows remains unexecuted. The quick-start is **Explore Confluence → F3 → Use invocation → X**; F2 opens remapping. [Practice rules](ULTIMATE_PRACTICE.md) and [selector UX](INVOCATION_UX.md) describe this one-avatar prototype.

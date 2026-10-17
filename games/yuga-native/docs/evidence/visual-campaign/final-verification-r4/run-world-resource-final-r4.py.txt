@@ -1,0 +1,22 @@
+import importlib.util, json, os
+from pathlib import Path
+root=Path('/workspace/ANDOLAN/games/yuga-native')
+script=root/'tools/run-visual-checks.py'
+spec=importlib.util.spec_from_file_location('visual_final_helper',script)
+visual=importlib.util.module_from_spec(spec);spec.loader.exec_module(visual)
+h=visual.helper
+out=Path('/workspace/scratch/visual-world-resource-final-r4');out.mkdir(exist_ok=False)
+for name in ['logs','reports','users']:(out/name).mkdir()
+selected=[('world-presentation','godot','tests/world_presentation_cases.gd',()),('world-lighting','godot','tests/world_lighting_cases.gd',()),('resource-budget','godot','tests/visual_resource_budget_cases.gd',('--effects',))]
+before=visual.sources(selected);h.write_json(out/'source-before.json',before)
+results=[]
+for name,kind,source,args in selected:
+ user=out/'users'/name;user.mkdir()
+ env=os.environ.copy();env.update(LP_NUM_THREADS='2',PYTHONDONTWRITEBYTECODE='1',XDG_DATA_HOME=str(user/'data'),XDG_CONFIG_HOME=str(user/'config'),XDG_CACHE_HOME=str(user/'cache'))
+ command=['/usr/local/bin/godot','--headless','--single-threaded-scene','--audio-driver','Dummy','--path',str(root),'--script','res://'+source,'--',*args,'--report='+str(out/'reports'/(name+'.json'))]
+ result=h.execute_suite(name,command,out/'reports'/(name+'.json'),out,env=env,timeout=120)
+ results.append(result)
+ print(json.dumps({'suite':name,'passed':result['passed'],'checks':result.get('checks'),'exit_code':result['exit_code']}),flush=True)
+after=visual.sources(selected);h.write_json(out/'source-after.json',after)
+summary={'schema':1,'passed':all(r['passed'] for r in results) and before==after,'checked_sources_unchanged':before==after,'sources_before_sha256':h.sha(out/'source-before.json'),'sources_after_sha256':h.sha(out/'source-after.json'),'suites':results,'scope':'World light/presentation contracts and five lifecycle/effect allocation samples after reviewed shadow-depth correction; no GPU performance, rendered quality or full leak-proof claim.'}
+h.write_json(out/'summary.json',summary);print(json.dumps(summary,indent=2));raise SystemExit(0 if summary['passed'] else 1)

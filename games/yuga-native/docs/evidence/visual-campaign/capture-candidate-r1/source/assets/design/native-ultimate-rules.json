@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "rules_id": "yuga.native_invocations.practice.v1",
+  "revision": 1,
+  "codex_sha256": "b83e0f06f25f3978a16479f97e7bf76c349f651040b2253bedf5d1c1879ff72c",
+  "scope": {
+    "offline_only": true,
+    "network_enabled": false,
+    "hero_health_enabled": false,
+    "core_spell_damage_enabled": false,
+    "avatar_changes_enabled": false,
+    "receiver": "living_lane_troops"
+  },
+  "shared_cooldown_s": 12.0,
+  "max_active_casts": 1,
+  "max_receipts_per_event": 72,
+  "history_capacity": 64,
+  "grounded_max_height_m": 0.35,
+  "receiver_policy": "ground_root_center_with_height_and_authority_xz_los",
+  "rules": [
+    {
+      "hero_id": "rama",
+      "name": "Dawn Volley",
+      "effect_id": "rama.r.v1",
+      "timing": {
+        "windup_s": 1,
+        "travel_s": 0.45161290322580644,
+        "active_s": 0.6,
+        "recovery_s": 0.45
+      },
+      "geometry": {
+        "kind": "projectile_volley",
+        "anchor": "caster",
+        "range_m": 28.0,
+        "radius_m": 0.5,
+        "speed_mps": 62.0,
+        "yaw_offsets_rad": [
+          -0.12,
+          0,
+          0.12
+        ],
+        "height_m": 2.5
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "team": "enemy",
+          "amount": 32.0
+        }
+      ]
+    },
+    {
+      "hero_id": "ravana",
+      "name": "Crownfire",
+      "effect_id": "ravana.r.v1",
+      "timing": {
+        "windup_s": 0.9,
+        "travel_s": 0,
+        "active_s": 0.8,
+        "recovery_s": 0.7
+      },
+      "geometry": {
+        "kind": "disk",
+        "radius_m": 7.0,
+        "height_m": 2.5,
+        "anchor": "caster"
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "team": "enemy",
+          "amount": 90.0
+        }
+      ]
+    },
+    {
+      "hero_id": "arjuna",
+      "name": "One Clear Line",
+      "effect_id": "arjuna.r.v1",
+      "timing": {
+        "windup_s": 0.75,
+        "travel_s": 0.45161290322580644,
+        "active_s": 0.35,
+        "recovery_s": 0.4
+      },
+      "geometry": {
+        "kind": "projectile_volley",
+        "anchor": "caster",
+        "range_m": 28.0,
+        "radius_m": 0.5,
+        "speed_mps": 62.0,
+        "yaw_offsets_rad": [
+          0.0
+        ],
+        "height_m": 2.5
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "team": "enemy",
+          "amount": 88.0
+        }
+      ]
+    },
+    {
+      "hero_id": "duryodhana",
+      "name": "Iron Crescent",
+      "effect_id": "duryodhana.r.v1",
+      "timing": {
+        "windup_s": 0.85,
+        "travel_s": 0,
+        "active_s": 0.65,
+        "recovery_s": 0.8
+      },
+      "geometry": {
+        "kind": "sector",
+        "anchor": "caster",
+        "range_m": 12.0,
+        "half_angle_cos": 0.55,
+        "height_m": 2.5
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "team": "enemy",
+          "amount": 92.0
+        }
+      ]
+    },
+    {
+      "hero_id": "hanuman",
+      "name": "Mountain Pulse",
+      "effect_id": "hanuman.r.v1",
+      "timing": {
+        "windup_s": 0.7,
+        "travel_s": 0.45,
+        "active_s": 1,
+        "recovery_s": 0.65
+      },
+      "geometry": {
+        "kind": "disk",
+        "radius_m": 7.0,
+        "height_m": 2.5,
+        "anchor": "ground_target",
+        "target_range_m": 14.0
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "team": "enemy",
+          "amount": 65.0
+        },
+        {
+          "kind": "heal",
+          "team": "ally",
+          "amount": 45.0
+        }
+      ]
+    },
+    {
+      "hero_id": "karna",
+      "name": "Solar Reprisal",
+      "effect_id": "karna.r.v1",
+      "timing": {
+        "windup_s": 1,
+        "travel_s": 0,
+        "active_s": 0.8,
+        "recovery_s": 0.7
+      },
+      "geometry": {
+        "kind": "disk",
+        "radius_m": 6.0,
+        "height_m": 2.5,
+        "anchor": "caster"
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "team": "enemy",
+          "amount": 95.0
+        }
+      ]
+    },
+    {
+      "hero_id": "bhima",
+      "name": "Thunder at Your Feet",
+      "effect_id": "bhima.r.v1",
+      "timing": {
+        "windup_s": 0.8,
+        "travel_s": 0,
+        "active_s": 0.9,
+        "recovery_s": 0.8
+      },
+      "geometry": {
+        "kind": "disk",
+        "radius_m": 8.0,
+        "height_m": 2.5,
+        "anchor": "caster"
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "team": "enemy",
+          "amount": 92.0
+        }
+      ]
+    },
+    {
+      "hero_id": "meghnad",
+      "name": "Gathered Squall",
+      "effect_id": "meghnad.r.v1",
+      "timing": {
+        "windup_s": 0.75,
+        "travel_s": 0,
+        "active_s": 0.8,
+        "recovery_s": 0.55
+      },
+      "geometry": {
+        "kind": "sector",
+        "anchor": "caster",
+        "range_m": 22.0,
+        "half_angle_cos": 0.25,
+        "height_m": 2.5
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "team": "enemy",
+          "amount": 78.0
+        }
+      ]
+    },
+    {
+      "hero_id": "sita",
+      "name": "Shelter of Mithila",
+      "effect_id": "sita.r.v1",
+      "timing": {
+        "windup_s": 0.8,
+        "travel_s": 0,
+        "active_s": 6,
+        "recovery_s": 0.6
+      },
+      "geometry": {
+        "kind": "zone_disk",
+        "radius_m": 8.0,
+        "height_m": 2.5,
+        "anchor": "caster"
+      },
+      "effects": [
+        {
+          "kind": "shield",
+          "team": "ally",
+          "amount": 70.0,
+          "duration_s": 6.0
+        },
+        {
+          "kind": "heal_rate",
+          "team": "ally",
+          "amount_per_s": 9.0
+        }
+      ]
+    },
+    {
+      "hero_id": "draupadi",
+      "name": "Unbroken Assembly",
+      "effect_id": "draupadi.r.v1",
+      "timing": {
+        "windup_s": 0.9,
+        "travel_s": 0,
+        "active_s": 1.1,
+        "recovery_s": 0.6
+      },
+      "geometry": {
+        "kind": "disk",
+        "radius_m": 8.0,
+        "height_m": 2.5,
+        "anchor": "caster"
+      },
+      "effects": [
+        {
+          "kind": "heal",
+          "team": "ally",
+          "amount": 95.0
+        }
+      ]
+    },
+    {
+      "hero_id": "subhadra",
+      "name": "Twin Standards",
+      "effect_id": "subhadra.r.v1",
+      "timing": {
+        "windup_s": 0.85,
+        "travel_s": 0,
+        "active_s": 9,
+        "recovery_s": 0.5
+      },
+      "geometry": {
+        "kind": "summon_pair",
+        "anchor": "caster",
+        "height_m": 2.5,
+        "maximum_route_distance_m": 5.0,
+        "lateral_offsets_m": [
+          -1.3,
+          1.3
+        ]
+      },
+      "effects": [
+        {
+          "kind": "summon",
+          "team": "ally",
+          "role": "bow_guard",
+          "count": 2,
+          "duration_s": 9.0,
+          "health": 105.0,
+          "attack_damage": 28.0,
+          "core_damage": 0.0,
+          "gold_on_expiry": 0
+        }
+      ]
+    },
+    {
+      "hero_id": "hidimbi",
+      "name": "Grove Watch",
+      "effect_id": "hidimbi.r.v1",
+      "timing": {
+        "windup_s": 1,
+        "travel_s": 0,
+        "active_s": 9,
+        "recovery_s": 0.6
+      },
+      "geometry": {
+        "kind": "summon_pair",
+        "anchor": "caster",
+        "height_m": 2.5,
+        "maximum_route_distance_m": 5.0,
+        "lateral_offsets_m": [
+          -1.3,
+          1.3
+        ]
+      },
+      "effects": [
+        {
+          "kind": "summon",
+          "team": "ally",
+          "role": "spearman",
+          "count": 2,
+          "duration_s": 9.0,
+          "health": 105.0,
+          "attack_damage": 32.0,
+          "core_damage": 0.0,
+          "gold_on_expiry": 0
+        }
+      ]
+    },
+    {
+      "hero_id": "chitrangada",
+      "name": "Defender\u2019s Vow",
+      "effect_id": "chitrangada.r.v1",
+      "timing": {
+        "windup_s": 0.65,
+        "travel_s": 0,
+        "active_s": 4,
+        "recovery_s": 0.5
+      },
+      "geometry": {
+        "kind": "disk",
+        "radius_m": 6.0,
+        "height_m": 2.5,
+        "anchor": "caster"
+      },
+      "effects": [
+        {
+          "kind": "shield",
+          "team": "ally",
+          "amount": 80.0,
+          "duration_s": 4.0
+        }
+      ]
+    },
+    {
+      "hero_id": "ulupi",
+      "name": "Naga Basin",
+      "effect_id": "ulupi.r.v1",
+      "timing": {
+        "windup_s": 0.9,
+        "travel_s": 0,
+        "active_s": 6,
+        "recovery_s": 0.65
+      },
+      "geometry": {
+        "kind": "zone_disk",
+        "radius_m": 7.0,
+        "height_m": 2.5,
+        "anchor": "ground_target",
+        "target_range_m": 23.0
+      },
+      "effects": [
+        {
+          "kind": "damage_rate",
+          "team": "enemy",
+          "amount_per_s": 12.0
+        },
+        {
+          "kind": "slow",
+          "team": "enemy",
+          "multiplier": 0.55,
+          "duration_s": 0.5
+        }
+      ]
+    }
+  ]
+}

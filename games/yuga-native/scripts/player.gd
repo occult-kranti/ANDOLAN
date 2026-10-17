@@ -14,6 +14,7 @@ const HeroCarryPose = preload("res://scripts/hero_pose.gd")
 const RamaMotion = preload("res://scripts/rama_motion.gd")
 const RamaSurface = preload("res://scripts/rama_surface_materials.gd")
 const RamaSecondary = preload("res://scripts/rama_secondary_motion.gd")
+const RamaFinish = preload("res://scripts/rama_surface_finish.gd")
 const RamaFace = preload("res://scripts/rama_facial_performance.gd")
 const RamaLod = preload("res://scripts/rama_lod_binding.gd")
 
@@ -58,6 +59,7 @@ var last_finite_position := Vector3.ZERO
 var rama_motion: SkeletonModifier3D
 var rama_surface: Node
 var rama_secondary: Node
+var rama_finish: Node
 var rama_face: Node
 var rama_lod: Node
 var _quality_position := Vector3.ZERO
@@ -111,6 +113,9 @@ func _ready() -> void:
 		rama_surface.configure(visual)
 		rama_secondary = RamaSecondary.new(); visual.add_child(rama_secondary)
 		rama_secondary.configure(visual)
+		rama_finish = RamaFinish.new(); rama_finish.name = "RamaSurfaceFinish"; visual.add_child(rama_finish)
+		if not rama_finish.configure(visual):
+			push_error("Rama surface finish failed to bind: " + str(rama_finish.report()))
 		rama_face = RamaFace.new(); visual.add_child(rama_face)
 		rama_face.configure(visual)
 	else:
@@ -186,6 +191,7 @@ func traversal_report() -> Dictionary:
 	result["rama_motion"] = rama_motion.diagnostics() if is_instance_valid(rama_motion) else {}
 	result["rama_surface"] = rama_surface.diagnostics() if is_instance_valid(rama_surface) else {}
 	result["rama_secondary"] = rama_secondary.report() if is_instance_valid(rama_secondary) else {}
+	result["rama_finish"] = rama_finish.report() if is_instance_valid(rama_finish) else {}
 	result["rama_face"] = rama_face.report() if is_instance_valid(rama_face) else {}
 	result["rama_lod"] = rama_lod.report() if is_instance_valid(rama_lod) else {}
 	return result

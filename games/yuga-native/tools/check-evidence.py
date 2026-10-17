@@ -8,6 +8,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[3]
 MANIFESTS = [
+    "games/yuga-native/docs/evidence/visual-campaign/archive-manifest.json",
     "games/yuga-native/docs/evidence/open-art-wave/archive-manifest.json",
     "games/yuga-native/docs/evidence/reuse-study/archive-manifest.json",
     "games/yuga-native/docs/evidence/rama-quality/archive-manifest.json",

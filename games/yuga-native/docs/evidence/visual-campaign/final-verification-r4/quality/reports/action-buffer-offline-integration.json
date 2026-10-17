@@ -1,0 +1,824 @@
+{
+	"checks": [
+		{
+			"case": "Actual world owns a configured separate Q/X input adapter",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual CharacterBody is grounded in the existing world",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A fresh Q input starts the existing kit without spending primary ammo",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "X pressed during real Q windup rejects with truthful feedback",
+			"evidence": {
+				"notice": "Finish the current draw"
+			},
+			"passed": true
+		},
+		{
+			"case": "X during early recovery never becomes pending",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Final-recovery input reaches the adapter through normal player polling",
+			"evidence": {
+				"buffer": {
+					"cleared_count": 0,
+					"configured": true,
+					"dispatched_count": 0,
+					"dispatching": false,
+					"last_edge": 4,
+					"last_reason": "Dawn Volley · queued after recovery",
+					"pending": {
+						"ability_id": "dawn_volley",
+						"cast_id": 1,
+						"edge_token": 4,
+						"expires_at": 0.97,
+						"generation": 5,
+						"queued_at": 0.85,
+						"serial": 18
+					},
+					"queued_count": 1,
+					"rejected_count": 2,
+					"scope": "One deliberate Q/X edge near accepted recovery; no gameplay authority",
+					"window_s": 0.12
+				},
+				"note": "Dawn Volley · queued after recovery"
+			},
+			"passed": true
+		},
+		{
+			"case": "Queued UI feedback does not fake begin, sound or animation",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual recovery produces one synchronized real X begin",
+			"evidence": {
+				"authority_s": 0.95,
+				"notice": "Dawn Volley · drawing"
+			},
+			"passed": true
+		},
+		{
+			"case": "The real dispatch samples the changed current camera aim",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Only the actual accepted dispatch starts the windup cue",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Later updates never repeat a released queued edge",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A held or same-tick repeated poll creates one deliberate input edge",
+			"evidence": {
+				"before": {
+					"active": true,
+					"after_press": {
+						"just_pressed": false,
+						"pressed": true
+					},
+					"down": {
+						"pulse": false,
+						"ultimate": false
+					},
+					"frame": 39,
+					"grounded": true,
+					"just_pressed": false,
+					"pressed": false,
+					"ticks": {
+						"pulse": 22,
+						"ultimate": 28
+					}
+				},
+				"begins": 1,
+				"buffer": {
+					"cleared_count": 0,
+					"configured": true,
+					"dispatched_count": 1,
+					"dispatching": false,
+					"last_edge": 5,
+					"last_reason": "Piercing Dawn · drawing",
+					"pending": {
+
+					},
+					"queued_count": 1,
+					"rejected_count": 2,
+					"scope": "One deliberate Q/X edge near accepted recovery; no gameplay authority",
+					"window_s": 0.12
+				},
+				"edge": 5,
+				"held_edge": 5,
+				"notice": "Piercing Dawn · drawing"
+			},
+			"passed": true
+		},
+		{
+			"case": "Buffer integration preserves committed E/C/LMB and movement locks",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Direct runtime and kit APIs retain immediate busy rejection",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Cooldown-blocked Q input gives feedback without arming a retry",
+			"evidence": {
+				"begins": 1,
+				"buffer": {
+					"cleared_count": 0,
+					"configured": true,
+					"dispatched_count": 1,
+					"dispatching": false,
+					"last_edge": 7,
+					"last_reason": "Ability is cooling down",
+					"pending": {
+
+					},
+					"queued_count": 1,
+					"rejected_count": 3,
+					"scope": "One deliberate Q/X edge near accepted recovery; no gameplay authority",
+					"window_s": 0.12
+				},
+				"kit": {
+					"accepted_casts": 6,
+					"action_locked": true,
+					"active_ability": "kodanda",
+					"active_cast_id": 2,
+					"casts": [
+						{
+							"ability_id": "piercing_dawn",
+							"age_s": 1.25,
+							"cast_id": 1,
+							"geometry": {
+								"center": "(-40.0, 0.0, -10.0)",
+								"forward": "(-0.142126, 0.0, 0.989849)",
+								"height_m": 2.7,
+								"kind": "projectiles",
+								"origin": "(-40.0, 0.0, -10.0)",
+								"projectiles": [
+									{
+										"delay_s": 0.0,
+										"forward": "(-0.142126, 0.0, 0.989849)",
+										"index": 0,
+										"origin": "(-40.189, 1.329877, -9.282079)"
+									}
+								],
+								"radius_m": 0.36,
+								"range_m": 38.0,
+								"speed_mps": 52.0
+							},
+							"phase": "active",
+							"released": true
+						},
+						{
+							"ability_id": "kodanda",
+							"age_s": 0.3,
+							"cast_id": 2,
+							"geometry": {
+								"center": "(-40.0, 0.0, -10.0)",
+								"forward": "(-0.142126, 0.0, 0.989849)",
+								"height_m": 2.7,
+								"kind": "projectiles",
+								"origin": "(-40.0, 0.0, -10.0)",
+								"projectiles": [
+									{
+										"delay_s": 0.0,
+										"forward": "(-0.142126, 0.0, 0.989849)",
+										"index": 0,
+										"origin": "(-40.07719, 1.332404, -9.27266)"
+									}
+								],
+								"radius_m": 0.22,
+								"range_m": 40.0,
+								"speed_mps": 60.0
+							},
+							"phase": "recovery",
+							"released": true
+						}
+					],
+					"configured": true,
+					"cooldowns": {
+						"dawn_volley": 0.0,
+						"guardian_circle": 0.0,
+						"kodanda": 0.0999999999999999,
+						"measured_step": 0.0,
+						"piercing_dawn": 4.75
+					},
+					"elapsed": 1.25,
+					"generation": 17,
+					"history_capacity": 96,
+					"history_size": 37,
+					"last_reason": "Kodanda · drawing",
+					"max_casts": 12,
+					"network_enabled": false,
+					"receipts_count": 0,
+					"receiver_scope": "lane_troops_and_explicit_movement_receiver",
+					"rejected_casts": 2,
+					"release_count": 4,
+					"suspended": false
+				},
+				"notice": "Ability is cooling down"
+			},
+			"passed": true
+		},
+		{
+			"case": "Recovery never retries the cooldown-blocked input",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after pause",
+			"evidence": {
+				"hero_generation": 21,
+				"kit_generation": 21,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after controls modal",
+			"evidence": {
+				"hero_generation": 25,
+				"kit_generation": 25,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after hero guide",
+			"evidence": {
+				"hero_generation": 29,
+				"kit_generation": 29,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after overview",
+			"evidence": {
+				"hero_generation": 33,
+				"kit_generation": 33,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after window focus",
+			"evidence": {
+				"hero_generation": 37,
+				"kit_generation": 37,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after teleport",
+			"evidence": {
+				"hero_generation": 42,
+				"kit_generation": 42,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after hit",
+			"evidence": {
+				"hero_generation": 46,
+				"kit_generation": 46,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after defeat",
+			"evidence": {
+				"hero_generation": 50,
+				"kit_generation": 50,
+				"notice": "Defeated · returning in 3 seconds"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after actor generation",
+			"evidence": {
+				"hero_generation": 55,
+				"kit_generation": 54,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after army reset",
+			"evidence": {
+				"hero_generation": 60,
+				"kit_generation": 59,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after round outcome",
+			"evidence": {
+				"hero_generation": 64,
+				"kit_generation": 63,
+				"notice": "Action cancelled"
+			},
+			"passed": true
+		},
+		{
+			"case": "Player reset preserves monotonic edge identity",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Real reload blocks Q before it can become pending",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual airborne state blocks discrete kit input",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "The actual runtime owns the ready four-voice staged sound set",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual nonlethal vitals receipt reaches the local threat cue once",
+			"evidence": {
+				"audio": {
+					"active_casts": 0,
+					"alive": true,
+					"damage_sources": 1,
+					"dropped": 0,
+					"errors": [],
+					"focused": true,
+					"generation": 80,
+					"last_cast_id": 0,
+					"last_event_seq": 1,
+					"listening": "UNRUN",
+					"played": 53,
+					"players": 4,
+					"playing": 1,
+					"ready": true,
+					"receiver_generation": 81,
+					"rejected": 0,
+					"streams": 15,
+					"suppressed": 0,
+					"suspended": false,
+					"vitals_generation": 81,
+					"voices": [
+						{
+							"cast_id": 1,
+							"cue": "cancel",
+							"pitch_scale": 1.0,
+							"playing": false,
+							"priority": 1,
+							"serial": 52,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 2,
+							"cue": "cancel",
+							"pitch_scale": 1.00600004196167,
+							"playing": false,
+							"priority": 1,
+							"serial": 16,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 0,
+							"cue": "",
+							"pitch_scale": 1.0,
+							"playing": false,
+							"priority": 0,
+							"serial": -1,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 0,
+							"cue": "threat",
+							"pitch_scale": 1.00600004196167,
+							"playing": true,
+							"priority": 3,
+							"serial": 53,
+							"spatial": false,
+							"volume_db": -27.1186389923096
+						}
+					],
+					"volume": 0.35
+				},
+				"receipt": {
+					"accepted": true,
+					"damage_applied": 25.0,
+					"generation": 81,
+					"health_after": 275.0,
+					"health_before": 300.0,
+					"sequence": 0,
+					"shield_after": 0.0,
+					"shield_before": 0.0,
+					"source_id": "combined_nonlethal",
+					"time_s": 0.0
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual duplicate hazard is rejected before another audio onset",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lethal receipt reaches the silent defeated audio lifecycle",
+			"evidence": {
+				"audio": {
+					"active_casts": 0,
+					"alive": false,
+					"damage_sources": 2,
+					"dropped": 0,
+					"errors": [],
+					"focused": true,
+					"generation": 80,
+					"last_cast_id": 0,
+					"last_event_seq": 1,
+					"listening": "UNRUN",
+					"played": 53,
+					"players": 4,
+					"playing": 0,
+					"ready": true,
+					"receiver_generation": 81,
+					"rejected": 0,
+					"streams": 15,
+					"suppressed": 0,
+					"suspended": false,
+					"vitals_generation": 81,
+					"voices": [
+						{
+							"cast_id": 1,
+							"cue": "cancel",
+							"pitch_scale": 1.0,
+							"playing": false,
+							"priority": 1,
+							"serial": 52,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 2,
+							"cue": "cancel",
+							"pitch_scale": 1.00600004196167,
+							"playing": false,
+							"priority": 1,
+							"serial": 16,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 0,
+							"cue": "",
+							"pitch_scale": 1.0,
+							"playing": false,
+							"priority": 0,
+							"serial": -1,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 0,
+							"cue": "threat",
+							"pitch_scale": 1.00600004196167,
+							"playing": false,
+							"priority": 3,
+							"serial": 53,
+							"spatial": false,
+							"volume_db": -27.1186389923096
+						}
+					],
+					"volume": 0.35
+				},
+				"receipt": {
+					"accepted": true,
+					"damage_applied": 275.0,
+					"generation": 81,
+					"health_after": 0.0,
+					"health_before": 275.0,
+					"sequence": 0,
+					"shield_after": 0.0,
+					"shield_before": 0.0,
+					"source_id": "combined_lethal",
+					"time_s": 0.0
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "External real vitals.reset synchronizes receiver generation and clears pending sound",
+			"evidence": {
+				"audio": {
+					"active_casts": 1,
+					"alive": true,
+					"damage_sources": 0,
+					"dropped": 0,
+					"errors": [],
+					"focused": true,
+					"generation": 84,
+					"last_cast_id": 1,
+					"last_event_seq": 9,
+					"listening": "UNRUN",
+					"played": 56,
+					"players": 4,
+					"playing": 0,
+					"ready": true,
+					"receiver_generation": 86,
+					"rejected": 0,
+					"streams": 15,
+					"suppressed": 0,
+					"suspended": false,
+					"vitals_generation": 86,
+					"voices": [
+						{
+							"cast_id": 1,
+							"cue": "release_kodanda",
+							"pitch_scale": 0.987999975681305,
+							"playing": false,
+							"priority": 2,
+							"serial": 56,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 2,
+							"cue": "cancel",
+							"pitch_scale": 1.00600004196167,
+							"playing": false,
+							"priority": 1,
+							"serial": 16,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 0,
+							"cue": "",
+							"pitch_scale": 1.0,
+							"playing": false,
+							"priority": 0,
+							"serial": -1,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 0,
+							"cue": "threat",
+							"pitch_scale": 1.0,
+							"playing": false,
+							"priority": 3,
+							"serial": 54,
+							"spatial": false,
+							"volume_db": -27.1186389923096
+						}
+					],
+					"volume": 0.35
+				},
+				"hero_generation": 86
+			},
+			"passed": true
+		},
+		{
+			"case": "An old actual receipt cannot replay after external generation reset",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A current actual receipt works after external reset",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "External actor reset never replays the discarded queued X",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A real accepted Q begins the new audio owner",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual suspension stops voices and blocks cast and damage onsets",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Resume does not replay a stopped draw or arm a delayed cue",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Only the later real authority release creates the next sound",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual runtime reset clears voices and pending casts without a queued onset",
+			"evidence": {
+				"audio": {
+					"active_casts": 0,
+					"alive": true,
+					"damage_sources": 0,
+					"dropped": 0,
+					"errors": [],
+					"focused": true,
+					"generation": 93,
+					"last_cast_id": 0,
+					"last_event_seq": 1,
+					"listening": "UNRUN",
+					"played": 63,
+					"players": 4,
+					"playing": 0,
+					"ready": true,
+					"receiver_generation": 95,
+					"rejected": 1,
+					"streams": 15,
+					"suppressed": 0,
+					"suspended": false,
+					"vitals_generation": 95,
+					"voices": [
+						{
+							"cast_id": 1,
+							"cue": "release_kodanda",
+							"pitch_scale": 1.00600004196167,
+							"playing": false,
+							"priority": 2,
+							"serial": 63,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 2,
+							"cue": "cancel",
+							"pitch_scale": 1.00600004196167,
+							"playing": false,
+							"priority": 1,
+							"serial": 16,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 0,
+							"cue": "",
+							"pitch_scale": 1.0,
+							"playing": false,
+							"priority": 0,
+							"serial": -1,
+							"spatial": true,
+							"volume_db": -27.1186389923096
+						},
+						{
+							"cast_id": 0,
+							"cue": "threat",
+							"pitch_scale": 1.0,
+							"playing": false,
+							"priority": 3,
+							"serial": 57,
+							"spatial": false,
+							"volume_db": -27.1186389923096
+						}
+					],
+					"volume": 0.35
+				},
+				"hero_generation": 95,
+				"kit_generation": 93
+			},
+			"passed": true
+		},
+		{
+			"case": "Updates after reset cannot replay pre-reset input or sound",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Input/runtime/authority source bytes remain unchanged during this fixture",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "World teardown frees the scene and every owned Node",
+			"evidence": {
+				"baseline_nodes": 1,
+				"remaining_nodes": 1
+			},
+			"passed": true
+		},
+		{
+			"case": "Stopped Dummy playback refs retire within one real second",
+			"evidence": {
+				"playbacks": [
+					{
+						"node": "/root/ConfluenceWorld/World/TraversalAudio/LanternProcession",
+						"playback_class": "AudioStreamPlaybackWAV",
+						"stream": ""
+					},
+					{
+						"node": "/root/ConfluenceWorld/World/@Node3D@400/RamaActionAudio/RamaActionWorld0",
+						"playback_class": "AudioStreamPlaybackWAV",
+						"stream": "res://assets/audio/rama-quality/release_kodanda.wav"
+					},
+					{
+						"node": "/root/ConfluenceWorld/World/TraversalAudio/LanternProcession",
+						"playback_class": "AudioStreamPlaybackWAV",
+						"stream": ""
+					}
+				],
+				"sampled_playbacks": 3,
+				"wait_ms": 49
+			},
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Actual Confluence scene, CharacterBody grounding, Input.action_press/release, existing player polling and real 20 Hz army/kit/vitals/action-audio receipts. Focus is an explicitly emitted window signal; audio is the actual Dummy-driver owner, not listening evidence. No OS input, rendered continuity, human-feel, online or hardware performance claim.",
+	"sources": {
+		"res://assets/audio/rama-quality/manifest.json": "9c29ad40bef9e524a1216c6ea45ae4adfb1663987b26a81c37c3c93d710b7c8b",
+		"res://assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+		"res://scripts/confluence_world.gd": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7",
+		"res://scripts/player.gd": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+		"res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+		"res://scripts/rama_action_audio.gd": "6091e288e9236ee54ea11839db3eef31a59b306b738d7008ae46287c8f5e3c89",
+		"res://scripts/rama_action_buffer.gd": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+		"res://scripts/rama_hero_runtime.gd": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+		"res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+		"res://tests/rama_action_buffer_integration_cases.gd": "dbf05cca6cf4b8ed6a4fe8724c63b9cd16db570a598f2a17f169d7b42e8e6da9"
+	}
+}

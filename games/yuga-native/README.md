@@ -2,14 +2,23 @@
 
 **Download the current Rama preview:** [Linux / Windows](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17). Extract the entire ZIP and run `launch.sh` or `launch.bat`. [Watch the actual five-action capture](https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-rama-hero-2026-10-17/rama-five-abilities.mp4). Linux input and all public download bytes were verified; Windows execution remains untested. This is offline practice, with production art quality still open.
 
-**Active production:** [fifteen specialist roles](docs/PRODUCTION_SQUADS.md) are working through the [hero-quality and full-game gates](docs/DEADLOCK_QUALITY_TARGET.md). Use the [current source handoff](docs/RAMA_QUALITY_MILESTONE.md) for ownership, files, component results and remaining acceptance work. Staged art and rejected candidates are distinct from the published preview.
+**Active production:** [fifteen specialist roles](docs/PRODUCTION_SQUADS.md) are working through the [hero-quality and full-game gates](docs/DEADLOCK_QUALITY_TARGET.md). Use the [current source handoff](docs/VISUAL_CAMPAIGN_HANDOFF.md) for ownership, files, component results and remaining acceptance work. Staged art and rejected candidates are distinct from the published preview.
 
-**Current implementation wave:** [next fifteen assignments](docs/OPEN_ART_WAVE.md)
+**Current graphics campaign:** [ten-round plan](docs/VISUAL_CAMPAIGN.md) and
+[actual work ledger](docs/VISUAL_CAMPAIGN.json). Fifteen specialists rotate
+through six worker slots. The native source now integrates hero material
+finishing, courtyard detail/lighting, ability ornament, locomotion corrections
+and a reviewed reduction of large facial shadow artifacts.
+Actual rendered comparisons and independent reviews retain rejected revisions;
+the complete quality target is still open.
+
+**Previous implementation wave:** [fifteen assignments](docs/OPEN_ART_WAVE.md)
 use [selected open art and adopted tools](docs/REUSE_ADOPTION_GUIDE.md) to repair
 the hero's authoring data and review actual native material/render candidates.
 The [completed wave handoff](docs/OPEN_ART_WAVE_HANDOFF.md) contains verification
 and run commands. R2 is accepted as an optional cloth surface treatment; default
-adoption and the overall production art target remain open.
+adoption belonged to that earlier wave's scope. The new surface-finishing owner
+has separate integration and visual evidence in the current campaign.
 
 The current source builds **one Rama hero** across courtyard practice and Confluence: a new smooth-skinned model, detailed blue/ivory garments and goldwork, continuous locomotion/archery, five coherent abilities, health/shield, siege damage and respawn. Read the [milestone and code map](docs/RAMA_HERO_MILESTONE.md), [actual art review](art/hero-rama/REVIEW.md), [independent acceptance](docs/RAMA_HERO_ACCEPTANCE.md), and [source-pinned character-design research](docs/research/RAMA_HERO_DESIGN_STUDY.md).
 

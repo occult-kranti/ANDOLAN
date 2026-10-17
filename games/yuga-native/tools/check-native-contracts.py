@@ -37,10 +37,25 @@ def main():
         canonical = json.dumps(profile["content_sources"], sort_keys=True, separators=(",", ":")).encode()
         check(profile["id"] + "_content_aggregate", hashlib.sha256(canonical).hexdigest() == profile["content_sha256"])
         check(profile["id"] + "_no_live_handshake_claim", profile["live_handshake"] is False)
-    check("per_profile_content_revisions", [p.get("content_revision") for p in data["profiles"]] == [1, 4, 1])
+    check("per_profile_content_revisions", [p.get("content_revision") for p in data["profiles"]] == [1, 5, 1])
     check("wire_versions_unchanged", data["envelope_versions"] == {key: 1 for key in ["contract", "rules", "map", "content", "replay", "input", "event", "entity"]})
+    # Preserve the exact previously accepted catalog and its Godot-derived
+    # descriptor. Revision 5 changes the player ownership source identity;
+    # it does not redefine browser/production or claim all art is wire-pinned.
+    old_catalog_path = NATIVE / "tests/fixtures/contracts/native-content4-catalog.json"
+    old_descriptor_path = NATIVE / "tests/fixtures/contracts/native-content4-descriptor.json"
+    check("preserved_revision4_catalog_exact_bytes", digest(old_catalog_path) == "f28949365043db23b379f68aadee4be8bfccd7c4fce5cd53322dd66882d51371")
+    check("preserved_revision4_descriptor_exact_bytes", digest(old_descriptor_path) == "2edd08196bb789a1ac2b4c095297513e719a113d0796bcb83bf949714f8a3d82")
+    old_catalog = json.loads(old_catalog_path.read_text())
+    check("other_profiles_unchanged_from_revision4", all(data["profiles"][i] == old_catalog["profiles"][i] for i in (0, 2)))
+    old_native = old_catalog["profiles"][1]
+    current_native = data["profiles"][1]
+    changed_paths = {path for path in current_native["content_sources"] if current_native["content_sources"][path] != old_native["content_sources"].get(path)}
+    check("revision5_changes_only_player_source_pin", set(current_native["content_sources"]) == set(old_native["content_sources"]) and changed_paths == {"games/yuga-native/scripts/player.gd"})
+    check("revision5_preserves_noncontent_native_rules", all(current_native[key] == value for key, value in old_native.items() if key not in ("content_sources", "content_revision", "content_sha256")))
+
     required_native = {"games/yuga-native/" + path for path in ["scripts/lane_army.gd", "scripts/lane_minion.gd", "scripts/relay_control.gd", "scripts/player_traversal.gd", "scripts/ultimate_rules.gd", "scripts/ultimate_session.gd", "assets/design/native-ultimate-rules.json", "scripts/player.gd", "scripts/rama_ability_kit.gd", "scripts/rama_hero_runtime.gd", "scripts/rama_vitals.gd", "scripts/rama_practice_army.gd", "scripts/rama_practice_target.gd", "assets/design/rama-ability-kit.json", "scripts/rama_action_buffer.gd"]}
-    check("native_revision4_retains_rama_invocation_and_pins_input_buffer", set(data["profiles"][1]["content_sources"]) == required_native)
+    check("native_revision5_retains_rama_invocation_and_pins_visual_owner_in_player", set(data["profiles"][1]["content_sources"]) == required_native)
     check("native_hero_health_declared_and_vitals_pinned", data["profiles"][1]["features"]["hero_health"] is True and "scripts/rama_vitals.gd" in " ".join(required_native))
     types = (ROOT / "games/yuga/shared/types.ts").read_text()
     map_text = (ROOT / "games/yuga/shared/map.ts").read_text()

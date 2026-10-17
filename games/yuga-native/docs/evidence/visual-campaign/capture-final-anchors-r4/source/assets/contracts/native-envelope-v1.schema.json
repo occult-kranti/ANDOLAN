@@ -1,0 +1,529 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuga:native-contracts:envelope:1",
+  "title": "YUGA contract v1 proposal envelopes; not browser protocol 2 wire messages",
+  "$comment": "Structural schema only. native_contracts.gd enforces finite values, profile mask, magnitude, compatibility, stream order, lifetimes, acknowledgement and resource budgets. Not authentication or live transport.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/descriptor"
+    },
+    {
+      "$ref": "#/$defs/input"
+    },
+    {
+      "$ref": "#/$defs/event"
+    },
+    {
+      "$ref": "#/$defs/snapshot"
+    },
+    {
+      "$ref": "#/$defs/replay_header"
+    },
+    {
+      "$ref": "#/$defs/replay_record"
+    }
+  ],
+  "$defs": {
+    "descriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_id",
+        "profile_id",
+        "versions",
+        "protocol",
+        "map_id",
+        "map_sha256",
+        "content_sha256",
+        "rules_sha256"
+      ],
+      "properties": {
+        "contract_id": {
+          "const": "yuga-native-contracts-v1"
+        },
+        "profile_id": {
+          "enum": [
+            "browser-p2-3v3",
+            "native-offline-triad",
+            "production-6v6"
+          ]
+        },
+        "versions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "contract",
+            "rules",
+            "map",
+            "content",
+            "replay",
+            "input",
+            "event",
+            "entity"
+          ],
+          "properties": {
+            "contract": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "rules": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "map": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "content": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "replay": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "input": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "event": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "entity": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            }
+          }
+        },
+        "protocol": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535
+        },
+        "map_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "map_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "rules_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "room",
+        "epoch",
+        "seq",
+        "actor_id",
+        "move",
+        "yaw",
+        "pitch",
+        "buttons"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "room": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "actor_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "move": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number",
+            "minimum": -1,
+            "maximum": 1
+          }
+        },
+        "yaw": {
+          "type": "number",
+          "minimum": -3.141592653589793,
+          "maximum": 3.141592653589793
+        },
+        "pitch": {
+          "type": "number",
+          "minimum": -1.35,
+          "maximum": 1.35
+        },
+        "buttons": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 511
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "room",
+        "epoch",
+        "seq",
+        "tick",
+        "kind",
+        "actor_id",
+        "target_id",
+        "position",
+        "amount"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "room": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "enum": [
+            "spawn",
+            "despawn",
+            "shot",
+            "hit",
+            "defeat",
+            "objective",
+            "reward",
+            "match_end"
+          ]
+        },
+        "actor_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9_.-]+$"
+            },
+            {
+              "const": ""
+            }
+          ]
+        },
+        "target_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9_.-]+$"
+            },
+            {
+              "const": ""
+            }
+          ]
+        },
+        "position": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "minimum": -10000,
+            "maximum": 10000
+          }
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "generation",
+        "kind",
+        "team",
+        "position",
+        "yaw",
+        "pitch",
+        "discontinuity",
+        "alive",
+        "ack_input",
+        "owner_id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "enum": [
+            "actor",
+            "minion",
+            "neutral",
+            "structure",
+            "projectile",
+            "zone",
+            "pickup",
+            "gold_shard"
+          ]
+        },
+        "team": {
+          "enum": [
+            "sun",
+            "moon",
+            "neutral"
+          ]
+        },
+        "position": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "minimum": -10000,
+            "maximum": 10000
+          }
+        },
+        "yaw": {
+          "type": "number",
+          "minimum": -3.141592653589793,
+          "maximum": 3.141592653589793
+        },
+        "pitch": {
+          "type": "number",
+          "minimum": -1.35,
+          "maximum": 1.35
+        },
+        "discontinuity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "alive": {
+          "type": "boolean"
+        },
+        "ack_input": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 9007199254740991
+        },
+        "owner_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9_.-]+$"
+            },
+            {
+              "const": ""
+            }
+          ]
+        }
+      }
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "room",
+        "epoch",
+        "tick",
+        "entities"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "room": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "entities": {
+          "type": "array",
+          "maxItems": 640,
+          "items": {
+            "$ref": "#/$defs/entity"
+          }
+        }
+      }
+    },
+    "replay_header": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "descriptor",
+        "room",
+        "epoch",
+        "identity",
+        "seed",
+        "record_count"
+      ],
+      "properties": {
+        "format": {
+          "const": 1
+        },
+        "descriptor": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "room": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "identity": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "record_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        }
+      }
+    },
+    "replay_record": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "input"
+            },
+            "value": {
+              "$ref": "#/$defs/input"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "event"
+            },
+            "value": {
+              "$ref": "#/$defs/event"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "snapshot"
+            },
+            "value": {
+              "$ref": "#/$defs/snapshot"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "scope": "Two actual near-camera day/night pairs. Candidate also changes environment, so images do not isolate material contribution. Four images viewed individually at full supplied resolution.",
+  "images": [
+    {
+      "kind": "baseline",
+      "path": "/workspace/scratch/visual-campaign-baseline-r1/02-hero-near-day.png",
+      "sha256": "8f47688859c76c1c6d1bf608239783747b0b72179cdcc3f2e6fc83c658cf8ceb",
+      "bytes": 727812,
+      "viewed_original": true
+    },
+    {
+      "kind": "baseline",
+      "path": "/workspace/scratch/visual-campaign-baseline-r1/03-hero-near-night.png",
+      "sha256": "01471524fbd19eb12735915814e995cac1732cdf05ae1e85b365737b839a129d",
+      "bytes": 636830,
+      "viewed_original": true
+    },
+    {
+      "kind": "candidate",
+      "path": "/workspace/scratch/visual-campaign-candidate-r1/02-hero-near-day.png",
+      "sha256": "366f366348344765f5d36347593cc4556e8c5d86390334aec94e08831629856c",
+      "bytes": 876860,
+      "viewed_original": true
+    },
+    {
+      "kind": "candidate",
+      "path": "/workspace/scratch/visual-campaign-candidate-r1/03-hero-near-night.png",
+      "sha256": "1fe422a5c36b6735cdef8dcc3bf52c96609c693c61144dc82554c896524bce06",
+      "bytes": 765061,
+      "viewed_original": true
+    }
+  ],
+  "captured_finish_sha256": "8b00623549bef1ab2330f1300797503a440cfedda2ac48266f3fade664c2264d",
+  "fixed_finish_sha256": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+  "fixed_test_sha256": "73f40ffbba850c4293d83da31d12acb4b47ce14c368a9709b7173c9fa71beb63",
+  "render_delta": "Only admission and cleanup/ownership code changed between captured and fixed finish. Profiles, maps, shader and successful configure writes are identical. This supports profile continuity but is not a new exact-final-source render receipt.",
+  "surface_observations": [
+    "Blue brocade and gold motifs remain recognizable in both candidate frames.",
+    "Skin and upper arm highlights are broader and less sharp; dark blue drape reads as cloth more consistently than the baseline glossy edge.",
+    "Ivory lower cloth retains large smooth folds and a clear light/dark separation; no new obvious color or UV discontinuity in these two views.",
+    "Night face and torso remain low contrast, fine pores or silk weave cannot be judged reliably, and hair retains coarse separated strips/cords.",
+    "The face, hair silhouette, finger anatomy and sculpted cloth remain visibly below the requested Deadlock-level character target."
+  ],
+  "scene_finding": "Candidate pavilion columns/plant pots appear to float above the floor in near-day. Root already assigned foundation correction to district owner; not fixed by material finish.",
+  "verdict": "LIMITED overall hero art; accept material direction as a bounded visible improvement, with final scene integration and continuous motion still open.",
+  "provenance_checks": 13,
+  "independent_runtime_checks": 7,
+  "runtime_passed": true,
+  "runtime_native_exit": 0,
+  "runtime_report": "r4/report.json",
+  "not_qualified": [
+    "Complete run of candidate capture",
+    "Continuous animation/contact",
+    "Far/mid LOD transition appearance",
+    "GPU speed or memory",
+    "AAA equivalence",
+    "Final district foundation correction"
+  ]
+}

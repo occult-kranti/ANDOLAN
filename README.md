@@ -2,7 +2,15 @@
 
 **Download the current Rama preview:** [Linux / Windows](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17). Extract the entire ZIP and run `launch.sh` or `launch.bat`. [Watch the actual five-action capture](https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-rama-hero-2026-10-17/rama-five-abilities.mp4). Linux input and all public download bytes were verified; Windows execution remains untested. This is offline practice, with production art quality still open.
 
-**Active production:** [fifteen specialist roles](games/yuga-native/docs/PRODUCTION_SQUADS.md) are improving one Rama hero slice against [explicit visual, motion and full-game gates](games/yuga-native/docs/DEADLOCK_QUALITY_TARGET.md). [Current source handoff](games/yuga-native/docs/RAMA_QUALITY_MILESTONE.md) distinguishes integrated work, staged art and rejected candidates from the published preview.
+**Active production:** [fifteen specialist roles](games/yuga-native/docs/PRODUCTION_SQUADS.md) are improving one Rama hero slice against [explicit visual, motion and full-game gates](games/yuga-native/docs/DEADLOCK_QUALITY_TARGET.md). [Current source handoff](games/yuga-native/docs/VISUAL_CAMPAIGN_HANDOFF.md) distinguishes integrated work, staged art and rejected candidates from the published preview.
+
+**Current graphics work:** the [visual campaign](games/yuga-native/docs/VISUAL_CAMPAIGN.md)
+integrates hero surface finishes, a detailed courtyard backdrop, warm practical
+lighting, five ability effects, motion corrections and a reviewed facial-shadow
+fix into the native source. Its
+[round ledger](games/yuga-native/docs/VISUAL_CAMPAIGN.json) tracks the requested
+ten rounds and actual specialist work. The published download above retains its
+earlier source; commercial-game visual quality remains open.
 
 Native YUGA now focuses on **one coherent Rama hero**: a new smooth 3D model, an authored motion controller, a five-part bow/ability kit, shared courtyard and Confluence controls, health and siege-damage respawn. See the [Rama milestone](games/yuga-native/docs/RAMA_HERO_MILESTONE.md), [actual art review](games/yuga-native/art/hero-rama/REVIEW.md) and [independent acceptance checklist](games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md). LMB draws and shoots; Q/E/C/X use the four abilities; F3 opens Rama's guide. F2 opens Help in title/training and saved key remapping in Confluence.
 

@@ -1,0 +1,159 @@
+extends SceneTree
+## Independent presentation counterexamples. No gameplay or render acceptance.
+const Army = preload("res://scripts/lane_army.gd")
+const Kit = preload("res://scripts/rama_ability_kit.gd")
+const Effects = preload("res://scripts/rama_ability_effects.gd")
+var army
+var kit
+var events: Array=[]
+var checks: Array=[]
+var templates: Dictionary={}
+var generation:=100
+
+func _initialize() -> void:call_deferred("run")
+func check(label: String, passed: bool, details: Dictionary={}) -> void:
+	checks.append({"case":label,"passed":passed,"evidence":details})
+	if not passed:push_error("INDEPENDENT EFFECT REVIEW: "+label)
+func effect():
+	var node=Effects.new();root.add_child(node);node.set_process(false)
+	generation+=1
+	return node
+func event_at(id: String, kind: String) -> Dictionary:
+	for event in templates[id]:
+		if event.kind==kind:
+			var copy: Dictionary=event.duplicate(true);copy.generation=generation;return copy
+	return {}
+func begin(fx,id: String) -> Dictionary:
+	var event:=event_at(id,"begin");fx.consume_event(event);return event
+func mesh_audit(node: Node) -> Dictionary:
+	var result:={"finite":true,"index_bounds":true,"triangles":0,"vertices":0,"meshes":0}
+	var pending: Array=[node]
+	while not pending.is_empty():
+		var current: Node=pending.pop_back();pending.append_array(current.get_children())
+		if current is Node3D:result.finite=result.finite and current.transform.is_finite()
+		if not current is MeshInstance3D or not current.mesh:continue
+		for surface in current.mesh.get_surface_count():
+			var arrays: Array=current.mesh.surface_get_arrays(surface)
+			var points: PackedVector3Array=arrays[Mesh.ARRAY_VERTEX]
+			var indices: PackedInt32Array=arrays[Mesh.ARRAY_INDEX]
+			result.meshes+=1;result.vertices+=points.size();result.triangles+=indices.size()/3
+			for point in points:result.finite=result.finite and point.is_finite() and point.length()<100.0
+			for uv in arrays[Mesh.ARRAY_TEX_UV]:result.finite=result.finite and uv.is_finite()
+			for color in arrays[Mesh.ARRAY_COLOR]:result.finite=result.finite and is_finite(color.r) and is_finite(color.g) and is_finite(color.b) and is_finite(color.a)
+			for index in indices:result.index_bounds=result.index_bounds and index>=0 and index<points.size()
+	return result
+func state_signature(fx) -> Dictionary:
+	var casts: Array=[]
+	for cast in fx._casts.values():
+		var arrows: Array=[]
+		for arrow in cast.arrows:arrows.append({"visible":arrow.root.visible,"transform":arrow.root.global_transform})
+		casts.append({"age":cast.age,"phase":cast.main.get_shader_parameter("phase"),"transform":cast.root.global_transform,"arrows":arrows,"geometry":cast.motif.mesh})
+	var impacts: Array=[]
+	for impact in fx._impacts:impacts.append({"age":impact.age,"phase":impact.material.get_shader_parameter("phase"),"transform":impact.root.global_transform})
+	return {"casts":casts,"impacts":impacts}
+func run() -> void:
+	army=Army.new();army.visual_enabled=false;root.add_child(army);army.set_physics_process(false)
+	check("independent_real_army_configures",army.configure(JSON.parse_string(FileAccess.get_file_as_string("res://assets/world/confluence-map.json")),null))
+	kit=Kit.new();root.add_child(kit);check("independent_real_kit_configures",kit.configure(army))
+	kit.set_movement_receiver(func(_origin,destination,_duration):return {"accepted":true,"destination":destination})
+	kit.ability_event.connect(func(event):events.append(event.duplicate(true)))
+	for id in Effects.IDS:
+		army.reset();events.clear()
+		check(id+"_real_request_accepted",kit.request_ability(id,Vector3.ZERO,Vector3.BACK,Vector3(0,0,4)).accepted)
+		for tick in range(170):army.step_simulation(.05)
+		templates[id]=events.duplicate(true)
+		check(id+"_has_real_begin_release_and_end",events.any(func(e):return e.kind=="begin") and events.any(func(e):return e.kind=="release") and events.any(func(e):return e.kind=="end"))
+		var fx=effect();begin(fx,id)
+		for tick in range(6):fx.step(.5)
+		check(id+"_presentation_clock_cannot_release_projectile",fx.report().live_arrows==0 and fx.report().impacts==0 and fx._casts.values().all(func(c):return not c.released),fx.report())
+		fx.free()
+		fx=effect()
+		var all_admitted:=true
+		var all_finite:=true
+		var max_triangles:=0
+		for event in templates[id]:
+			var replay: Dictionary=event.duplicate(true);replay.generation=generation
+			all_admitted=fx.consume_event(replay) and all_admitted
+			var audit:=mesh_audit(fx);all_finite=all_finite and audit.finite and audit.index_bounds
+			max_triangles=maxi(max_triangles,audit.triangles)
+			fx.step(.025)
+		check(id+"_full_actual_event_chronology_admitted",all_admitted,{"events":templates[id].size()})
+		check(id+"_all_sampled_geometry_finite_indexed_and_bounded",all_finite and max_triangles<6000,{"max_triangles":max_triangles})
+		check(id+"_actual_end_retires_cast",fx.report().active==0)
+		fx.free()
+	var fx=effect();var first:=begin(fx,"piercing_dawn")
+	var impact:=event_at("piercing_dawn","impact")
+	check("actual_piercing_contact_available",not impact.is_empty())
+	var premature_accepted: bool=fx.consume_event(impact)
+	check("contact_before_accepted_release_is_refused",not premature_accepted and fx.report().impacts==0,{"admitted":premature_accepted,"report":fx.report(),"event_age":impact.get("age_s")})
+	fx.free()
+	fx=effect();begin(fx,"dawn_volley")
+	var release:=event_at("dawn_volley","release");fx.consume_event(release)
+	var original_release_age: float=fx._casts.values()[0].release_age_s
+	var replay_release:=release.duplicate(true);replay_release.event_seq+=1;replay_release.age_s+=.1
+	var repeat_accepted: bool=fx.consume_event(replay_release)
+	check("second_release_cannot_restart_projectile_clock",not repeat_accepted and fx._casts.values()[0].release_age_s==original_release_age,{"admitted":repeat_accepted,"original_release_age":original_release_age,"after_release_age":fx._casts.values()[0].release_age_s})
+	fx.free()
+	fx=effect();first=begin(fx,"guardian_circle")
+	var ward: Dictionary=fx._casts.values()[0]
+	var warning: Mesh=ward.warning.mesh
+	var points: PackedVector3Array=warning.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	var max_radius:=0.0
+	for point in points:max_radius=maxf(max_radius,Vector2(point.x,point.z).length())
+	check("guardian_warning_outer_vertex_radius_matches_gameplay",absf(max_radius-float(ward.geometry.radius_m))<.0001,{"outer_vertex_radius":max_radius,"gameplay_radius":ward.geometry.radius_m,"polygon_segments":64})
+	for reduced_motion in [false,true]:
+		for reduced_effects in [false,true]:
+			fx.set_options({"reduced_motion":reduced_motion,"reduced_effects":reduced_effects})
+			var finite:=mesh_audit(fx)
+			check("guardian_warning_unchanged_flags_%s_%s"%[reduced_motion,reduced_effects],ward.warning.mesh==warning and ward.warning.visible and finite.finite and finite.index_bounds)
+	var corrupt:=first.duplicate(true);corrupt.kind="tick";corrupt.event_seq+=1;corrupt.geometry.radius_m+=.25
+	check("changed_warning_radius_rejected_without_mutation",not fx.consume_event(corrupt) and ward.warning.mesh==warning and ward.geometry.radius_m==first.geometry.radius_m)
+	var duplicate:=first.duplicate(true)
+	check("same_sequence_is_rejected",not fx.consume_event(duplicate))
+	var saved:=state_signature(fx)
+	fx.set_suspended(true);fx.step(.4)
+	check("suspended_cast_clock_phase_and_geometry_frozen",state_signature(fx)==saved)
+	fx.set_suspended(false);paused=true;fx.step(.4)
+	check("tree_pause_cast_clock_phase_and_geometry_frozen",state_signature(fx)==saved)
+	paused=false
+	for bad_delta in [-.01,.500001,INF,NAN]:fx.step(bad_delta)
+	check("invalid_delta_cannot_change_clock_or_geometry",state_signature(fx)==saved)
+	fx.free()
+	fx=effect();begin(fx,"piercing_dawn");fx.consume_event(event_at("piercing_dawn","release"));fx.consume_event(event_at("piercing_dawn","impact"))
+	check("actual_contact_creates_effect",fx.report().impacts>0)
+	saved=state_signature(fx);paused=true;fx.step(.4)
+	check("tree_pause_freezes_contact_clock_phase_and_transform",state_signature(fx)==saved);paused=false
+	fx.step(.43)
+	check("contact_expiry_hides_and_pools_node",fx.report().impacts==0 and fx.report().pooled_impacts>0)
+	fx.reset();check("reset_frees_live_and_pooled_nodes",fx.get_child_count()==0 and fx.report().allocated_impacts==0)
+	fx.free()
+	fx=effect();first=begin(fx,"piercing_dawn")
+	for tick in range(17):fx.step(.5)
+	check("missing_authority_stream_expires_after_bounded_wait",fx.report().active==0 and fx.get_child_count()==0 and fx.report().counts.expired==1)
+	var late:=event_at("piercing_dawn","release")
+	check("late_release_cannot_resurrect_expired_cast",not fx.consume_event(late) and fx.get_child_count()==0)
+	fx.free()
+	fx=effect()
+	var sequence:=1
+	for index in range(12):
+		var event:=event_at("guardian_circle","begin");event.cast_id=index+1;event.event_seq=sequence;sequence+=1
+		fx.consume_event(event)
+	var overflow:=event_at("guardian_circle","begin");overflow.cast_id=13;overflow.event_seq=sequence;sequence+=1
+	check("dense_ward_cap_rejects_thirteenth_without_node",not fx.consume_event(overflow) and fx.get_child_count()==12)
+	var dense:=mesh_audit(fx)
+	check("twelve_overlapped_wards_have_finite_bounded_geometry",dense.finite and dense.index_bounds and dense.triangles<=49152,dense)
+	fx.set_options({"reduced_effects":true,"reduced_motion":true})
+	var reduced:=mesh_audit(fx)
+	check("reduced_dense_wards_allocate_less_and_keep_all_warnings",reduced.triangles<dense.triangles and fx._casts.values().all(func(c):return c.warning.visible),{"normal":dense,"reduced":reduced})
+	fx.reset();check("dense_reset_frees_every_owned_node",fx.get_child_count()==0)
+	fx.free()
+	var sources: Dictionary={}
+	for path in [get_script().resource_path,"res://scripts/rama_ability_effects.gd","res://scripts/rama_ability_kit.gd","res://scripts/lane_army.gd","res://shaders/rama_ribbon.gdshader","res://shaders/rama_ability_calligraphy.gdshader"]:sources[path]=FileAccess.get_sha256(path)
+	var passed:=checks.all(func(item):return item.passed)
+	var report:={"schema":1,"suite":"rama_effect_adversarial_cases","passed":passed,"checks":checks,"source_sha256":sources,"scope":"Independent real offline kit chronologies plus synthetic consumer-order counterexamples, sampled CPU geometry, options, pause and lifetime. Headless evidence does not establish rendered readability, GPU performance, networking, or Deadlock-level quality."}
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--report="):
+			var path:=argument.trim_prefix("--report=");DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+			var file:=FileAccess.open(path,FileAccess.WRITE);file.store_string(JSON.stringify(report,"  "));file.close()
+	print("Independent effect checks: %d/%d"%[checks.filter(func(item):return item.passed).size(),checks.size()])
+	kit.free();army.free();quit(0 if passed else 1)
