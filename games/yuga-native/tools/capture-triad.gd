@@ -39,7 +39,15 @@ func _run() -> void:
 	scene.set_review_phase(0.0)
 	if not _camera(Vector3(7,6,-11),Vector3(-2,1,0)): _fail("Capture camera obstructed");return
 	# A fixture sets initial position and ammo once. Capture/supply then use actual physics.
+	# The unrecorded preparation uses the same aspect ratio at reduced resolution.
+	# This saves software-render time; recorded gameplay always uses1280x720.
+	root.size=Vector2i(320,180)
 	await _draw_frames(225)
+	scene.set_paused(true)
+	root.size=capture_size
+	await _draw_frames(3)
+	scene.set_paused(false)
+	scene.player.active=false
 	before=scene.relays.report()
 	take_start_tick=Engine.get_physics_frames()
 	var prior_tick:=take_start_tick
@@ -95,7 +103,7 @@ func _source_hashes() -> Dictionary:
 	return result
 
 func _finish(success: bool) -> void:
-	var report:={"schema":1,"complete":success,"failure":failure,"renderer":RenderingServer.get_current_rendering_method(),"display":DisplayServer.get_name(),"adapter":RenderingServer.get_video_adapter_name(),"fps":30,"physics_hz":Engine.physics_ticks_per_second,"time_scale":Engine.time_scale,"width":1280,"height":720,"take_start_tick":take_start_tick,"take_physics_ticks":take_ticks,"frames":frames,"stills":stills,"source_sha256":sources,"imports":imports,"before":before,"after":after,"outcomes":{"captured":captured,"supplied":supplied,"finite":all_finite},"staging":{"hero_position":[0,.05,0],"initial_ammo":3,"pre_take_draw_frames":225,"pre_take_seconds":7.5},"scope":"Actual offline physics after one initial hero/ammo/camera fixture. Six continuous seconds cross capture then first supply. Four subsequent frozen-world art views. Silent software render at simulated30FPS; no human-input, hardware-FPS or final-art approval claim."}
+	var report:={"schema":1,"complete":success,"failure":failure,"renderer":RenderingServer.get_current_rendering_method(),"display":DisplayServer.get_name(),"adapter":RenderingServer.get_video_adapter_name(),"fps":30,"physics_hz":Engine.physics_ticks_per_second,"time_scale":Engine.time_scale,"width":1280,"height":720,"take_start_tick":take_start_tick,"take_physics_ticks":take_ticks,"frames":frames,"stills":stills,"source_sha256":sources,"imports":imports,"before":before,"after":after,"outcomes":{"captured":captured,"supplied":supplied,"finite":all_finite},"staging":{"hero_position":[0,.05,0],"initial_ammo":3,"pre_take_draw_frames":225,"pre_take_seconds":7.5,"unrecorded_preparation_size":[320,180],"paused_resolution_settle_frames":3},"scope":"Actual offline physics after one initial hero/ammo/camera fixture. Six continuous1280x720 seconds cross capture then first supply; unrecorded preparation uses320x180. Four subsequent frozen-world art views. Silent software render at simulated30FPS; no human-input, hardware-FPS or final-art approval claim."}
 	var file:=FileAccess.open(output_path.path_join("triad-render-review.json"),FileAccess.WRITE)
 	if file: file.store_string(JSON.stringify(_normal(report),"\t")+"\n")
 	if not success: push_error(failure)

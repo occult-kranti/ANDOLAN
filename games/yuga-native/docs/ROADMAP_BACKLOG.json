@@ -2354,12 +2354,12 @@
       "evidence": [
         {
           "path": "games/yuga-native/docs/research/TF2_REUSE_STUDY.md",
-          "sha256": "9337ba1acd1dd3279db4a6a7faf48615895aa5a1000f4a76fa18860e453b766c",
+          "sha256": "af7ab563cf17e14fbe54f96af3705680271b00573e74ca6f2b88d5e9961e5db8",
           "scope": "Three-round source verification, original design transfer and counterarguments; official Valve revision and community scope/license limits; no leaked source adoption."
         },
         {
           "path": "games/yuga-native/docs/research/tf2-reuse-sources.json",
-          "sha256": "236dfa57e3b79d7420044a49615a8c04d398f5a3004d4c6192be4ccd578cfb85",
+          "sha256": "4438773f24ed0e190b216fe259b28308fe5a291314c404eb29bc8429910c938e",
           "scope": "Immutable commits/URLs, UTC timestamps, SHA-256/length, selected reading ranges, brief passages, observation references and explicit paper/Reddit403 failures; 20 successful source/doc files."
         }
       ],
@@ -2368,8 +2368,8 @@
     {
       "id": "TRIAD-02",
       "title": "Deterministic relay capture and bounded supply",
-      "status": "in_progress",
-      "phase": "implemented_pending_verification",
+      "status": "complete",
+      "phase": "offline_behavior_verified",
       "supports": [
         "FG00-T04",
         "FG08-T04"
@@ -2379,20 +2379,32 @@
       ],
       "contract": "games/yuga-native/docs/TRIAD_MILESTONE.md",
       "owner": "Native rules, army and player-resource integration",
-      "acceptance_scope": "Three offline sites at x=-40/0/40,z=0; 5 m capture radius, 2.5 m height tolerance, maximum two contributors and eight contributor-seconds per capture/neutralization stage. Contest stops progress/supply; empty pressure returns at 0.5 units/s. A 5 s supply cadence grants up to 6 troop health or 3 hero arrows with 8 m range, LOS/resource revalidation and reset epoch/receipt-ID protection. Implementation exists; integrated proof is pending.",
+      "acceptance_scope": "Three offline sites at x=-40/0/40,z=0; 5 m capture radius, 2.5 m height tolerance, maximum two contributors and eight contributor-seconds per capture/neutralization stage. Contest stops progress/supply; empty pressure returns at 0.5 units/s. A 5 s supply cadence grants up to 6 troop health or 3 hero arrows with 8 m range, LOS/resource revalidation and reset epoch/receipt-ID protection. 42 rule cases including one simulated hour and97 actor rows plus37 actual-world integration cases pass on the frozen runtime. This closes bounded offline behavior only; human balance and native network authority remain open.",
       "artifacts": [
         "games/yuga-native/scripts/relay_control.gd",
         "games/yuga-native/scripts/relay_session.gd",
         "games/yuga-native/tools/test-relay-control.gd"
       ],
-      "evidence": [],
-      "next_action": "Freeze source and archive independent same-tick contest, duplicate/conflicting ID, delta/row limit, height/LOS, cap, replay/stale receipt, paused/overview/drill/winner/reset cases; attach exact reports before completion."
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/triad-setup/relay-control.json",
+          "sha256": "f927308bbe50572492d0f7cf0016565321fae1b21409e8ccaee71d482b3bc397",
+          "scope": "42 pure rule cases and36000 advancing fixed steps with97 actor rows."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/triad-setup/relay-integration.json",
+          "sha256": "54c7ed12df80994c79c44ba1a64a139026ec0a93b9720ca79f69bc3c403e426d",
+          "scope": "37 actual-world capture/supply/receipt/LOS/height/lifecycle/collision/UI cases; no rendered or online acceptance."
+        }
+      ],
+      "next_action": "Preserve the mixed-ID, stale receipt, pressure, physical-wall and lifecycle regressions when versioning native rules or integrating online authority. Human balance remains open.",
+      "source_context_commit": "d835d7d57565f4b4bd00c97cf71a41e64137967a"
     },
     {
       "id": "TRIAD-03",
       "title": "Original relay landmarks and physical readability",
       "status": "in_progress",
-      "phase": "implemented_pending_verification",
+      "phase": "prototype_views_verified_art_refinement_open",
       "supports": [
         "FG05-T01",
         "FG08-T04"
@@ -2406,14 +2418,25 @@
       "artifacts": [
         "games/yuga-native/scripts/relay_art.gd"
       ],
-      "evidence": [],
-      "next_action": "Verify visible-solid/collision correspondence and troop/player route clearance, then review actual close and gameplay-distance day/night views with moving troops and siege markers; record unresolved material/detail/contact limits."
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/triad-setup/relay-art.json",
+          "sha256": "59cff84f6fd9ec61be67dd827fb312091da903d08348b2b5b9a6bc50fc615b3f",
+          "scope": "30 geometry, collision, bounded-state and animation lifetime cases."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/triad-relay-render-r1/TRIAD-RENDER-REVIEW.md",
+          "sha256": "0303daef45b80530738b789da8b2018e1da004680624f812b12b5ecd918af1e1",
+          "scope": "Seven actual neutral/Sun relay views reviewed; contrast/site identity and Moon/contested proof remain open."
+        }
+      ],
+      "next_action": "Strengthen neutral inlay contrast and distinctive station silhouettes, then review Moon/contested states and continuous transitions at actual gameplay distance; geometry and sampled neutral/Sun day-night views are verified."
     },
     {
       "id": "TRIAD-04",
       "title": "Relay practice UX and distinguishable troop-attack markers",
       "status": "in_progress",
-      "phase": "implemented_pending_verification",
+      "phase": "render_reviewed_package_input_pending",
       "supports": [
         "FG13-T01",
         "FG13-T02"
@@ -2429,14 +2452,25 @@
         "games/yuga-native/scripts/controls_overlay.gd",
         "games/yuga-native/scripts/siege_effects.gd"
       ],
-      "evidence": [],
-      "next_action": "Capture 960×600/1280×720 layout and actual keyboard/mouse entry, capture/contest/supply, Help, overview, pause/reset/return flow; compare overlapping warnings in the same camera/day-night conditions and attach current-source effects/input reports."
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/triad-setup/siege-ui.json",
+          "sha256": "8a143a406d279fa09ec6e4e549c9b2ddd89d317d6c4336788f31b1d8cff3961b",
+          "scope": "25 actual-scene UI/input and compact-layout cases."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/triad-siege-render-r1/SIEGE-RENDER-REVIEW.md",
+          "sha256": "af1e5d271cda711bf765f748c899a4508c09429f6c3a9cd226714f8e6b794648",
+          "scope": "Seven selected actual siege frames reviewed; overlap/pointer limits remain open."
+        }
+      ],
+      "next_action": "Verify actual packaged960x600 menu focus, relay visit, capture/supply, pause/reset and help. Retain overlapping warning/source-pointer and shape-only readability as open visual refinements."
     },
     {
       "id": "TRIAD-05",
       "title": "Independent relay integration, capture and release verification",
       "status": "in_progress",
-      "phase": "verification_pending",
+      "phase": "checks_and_captures_verified_package_pending",
       "supports": [
         "FG13-T03",
         "FG13-T04"
@@ -2449,8 +2483,24 @@
       "contract": "games/yuga-native/docs/TRIAD_MILESTONE.md",
       "owner": "Independent QA and root release integration",
       "acceptance_scope": "Independent relay/supply/art/UI/effects stress, frozen-source actual capture, extracted-package flow and any public release verification are required. Historical siege evidence does not prove this changed source. No native multiplayer, hero-health, Windows execution, target-GPU performance, listening or AAA-quality claim is included.",
-      "evidence": [],
-      "next_action": "After source freeze, run affected suites and actual compact-window/playback review, export and inspect package source inventories, then verify all public assets and exact downloaded Linux flow if published. Preserve rejected runs and record unexecuted platforms separately."
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/triad-setup/summary.json",
+          "sha256": "33442b902a9be6cb464a28fe439b7a60bb8cf72b86d87930ff982056fc8ee626",
+          "scope": "Fresh complete setup:31 reports and225 browser-authority tests."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/triad-qa/REVIEW.md",
+          "sha256": "854a42897d4d8c177978583b197d7afdad0716518bb0e86cd62a0d2cbfddc7c6",
+          "scope": "Independent37-case real-world relay integration and retained counterexamples."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/triad-traversal-render-r1/REVIEW.md",
+          "sha256": "bcf3bd079d48c36425dcdccabccd7442b04256617d48f85e5fa0e109f8e133df",
+          "scope": "Fresh current-runtime traversal take and five selected actual views; no hardware/whole-video acceptance."
+        }
+      ],
+      "next_action": "Match all three captures to the exported source, test actual extracted Linux package, publish exact tag and independently verify all77 public assets before repeating public Linux input."
     }
   ]
 }

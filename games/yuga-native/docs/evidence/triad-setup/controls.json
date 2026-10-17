@@ -1,0 +1,285 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "missing settings install all defaults",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "repeated scene install does not duplicate actions",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "flight grapple descent and fixed help labels",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "remap persists while preserving other settings",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "duplicate key rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "reserved navigation key rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unknown action rejected",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "reset defaults persists immediately",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "outgoing object constructor variant rejected",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe persisted oversize rejected without overwrite",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe persisted constructor rejected without overwrite",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe persisted deep nesting rejected without overwrite",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe persisted malformed rejected without overwrite",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "explicit reset recovers malformed file with exact unique backup",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "preferences can save after malformed reset",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "explicit reset recovers oversized file with exact unique backup",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "preferences can save after oversized reset",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "bounded backup-path failure leaves original bytes untouched",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "invalid key types fall back to defaults",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unknown saved actions fall back to defaults",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "reset repairs invalid saved binding map and clears notice",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "all held gameplay and traversal actions released",
+			"passed": true
+		},
+		{
+			"details": {
+				"rect": "[P: (140.0, 16.0), S: (680.0, 568.0)]"
+			},
+			"name": "controls modal fits 960 by 600",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "keyboard Tab navigates next mapping",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Shift Tab navigates previous mapping",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "capture duplicate keeps existing binding and capture",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Escape cancels capture without closing modal",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "capture commits new key and dynamic button label",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "reset button restores persisted defaults",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "controls modal fits 1280 by 720",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Escape closes idle controls modal",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "courtyard controls return to Settings with focus and label",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "ordinary settings preserve remapped controls",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "help freezes live practice and releases held input",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "closing live help resumes practice",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "held Escape repeat cannot toggle pause",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "help opened from pause returns to pause",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "focus loss cancels capture and preserves paused settings context",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "courtyard Settings modal fits 960 by 600",
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Recovered implementation; headless state, focus, layout and config fixtures. No OS-input or rendered visual acceptance implied.",
+	"sources": {
+		"res://scripts/controls_overlay.gd": "6d14246339aecda7cfafec1be386e976037f3b0bf47b982b9ed07a40ce4a6c07",
+		"res://scripts/courtyard.gd": "4f1fce80324a1fe2a475ef680f0b8f37a85c353c00b0d8f40fe2c13b1549da9a",
+		"res://scripts/input_bindings.gd": "e686112bf6f87edbac2dc5b1b4bde9ee773577c0b130c53f2105c96919f92f96",
+		"res://tests/input_binding_cases.gd": "029bd8dda24d9e4888ed86140fc5705d0480d13ffffca4bb4febfcc3a5ea9d3e"
+	}
+}

@@ -1,0 +1,232 @@
+{
+  "passed": true,
+  "scope": "Executed TypeScript baseline and its .5m grid with live structures, separately from extended native ground grid with sixteen blockers. Native objective markers do not add ground colliders. Does not prove continuous navigation, gameplay AI, native physics, renders or performance.",
+  "manifest": "games/yuga-native/art/world/confluence-map.json",
+  "manifest_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+  "test_sha256": "26ca24f71e2a4788594b06560989257e59a3ea252a33b1e77fbe71a864eb0ff8",
+  "authority_sha256": {
+    "games/yuga/shared/map.ts": "8de16e1ebedfbe3ddfb42f683c6d0e1947cb2ca9d9ed70ca8218adcb4209ca7d",
+    "games/yuga/shared/simulation.ts": "e3fa766b06333eb00b5b9b8b03d938b22d5595bdef98b0ae07c0733d0e41a260"
+  },
+  "checks": [
+    {
+      "name": "native manifest preserves copied authority fields and declares extensions",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "sun source authority navigation",
+      "passed": true,
+      "grid_step_m": 0.5,
+      "reachable_cells": 76853,
+      "anchors_and_approaches": 80,
+      "unreachable": []
+    },
+    {
+      "name": "moon source authority navigation",
+      "passed": true,
+      "grid_step_m": 0.5,
+      "reachable_cells": 76853,
+      "anchors_and_approaches": 80,
+      "unreachable": []
+    },
+    {
+      "name": "all source-authority walkable sampled cells connected",
+      "passed": true,
+      "open_cells": 76853
+    },
+    {
+      "name": "living objective centers blocked in authority",
+      "passed": true,
+      "incorrect_open": []
+    },
+    {
+      "name": "negative disconnected-world fixture is detected",
+      "passed": true,
+      "reachable_cells_after_cut": 38292
+    },
+    {
+      "name": "sun extended native ground navigation",
+      "passed": true,
+      "unreachable": [],
+      "reachable_cells": 124453,
+      "targets": 56
+    },
+    {
+      "name": "moon extended native ground navigation",
+      "passed": true,
+      "unreachable": [],
+      "reachable_cells": 124453,
+      "targets": 56
+    },
+    {
+      "name": "all sampled extended native ground connected",
+      "passed": true,
+      "open_cells": 124453,
+      "step_m": 0.5,
+      "blockers": 16
+    },
+    {
+      "name": "new native deck centers block ground routing",
+      "passed": true,
+      "incorrect_open": []
+    },
+    {
+      "name": "negative disconnected native ground fixture detected",
+      "passed": true
+    },
+    {
+      "name": "canonical and packaged manifests identical",
+      "passed": true
+    },
+    {
+      "name": "reject missing blocker",
+      "passed": true,
+      "expected_error": "box count",
+      "errors": [
+        "authority box count mismatch",
+        "authority box 7 geometry mismatch",
+        "authority box 7 collision metadata mismatch",
+        "authority box 7 style mismatch",
+        "block-7 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject shifted blocker",
+      "passed": true,
+      "expected_error": "geometry mismatch",
+      "errors": [
+        "authority box 0 geometry mismatch",
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject height mismatch",
+      "passed": true,
+      "expected_error": "geometry mismatch",
+      "errors": [
+        "authority box 0 geometry mismatch",
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject stale source",
+      "passed": true,
+      "expected_error": "source hash",
+      "errors": [
+        "map source hash mismatch"
+      ]
+    },
+    {
+      "name": "reject blocked camp anchor",
+      "passed": true,
+      "expected_error": "camp mismatch",
+      "errors": [
+        "west-reeds camp mismatch"
+      ]
+    },
+    {
+      "name": "reject shifted spawn",
+      "passed": true,
+      "expected_error": "spawn mismatch",
+      "errors": [
+        "sun spawn mismatch"
+      ]
+    },
+    {
+      "name": "reject wrong objective radius",
+      "passed": true,
+      "expected_error": "radius mismatch",
+      "errors": [
+        "sun-tower-0 radius mismatch"
+      ]
+    },
+    {
+      "name": "reject rotated authority visual",
+      "passed": true,
+      "expected_error": "footprint mismatch",
+      "errors": [
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject nonfinite placement",
+      "passed": true,
+      "expected_error": "nonfinite",
+      "errors": [
+        "nonfinite number"
+      ]
+    },
+    {
+      "name": "reject zero scale",
+      "passed": true,
+      "expected_error": "nonpositive scale",
+      "errors": [
+        "block-0 nonpositive scale",
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject narrow native capsule",
+      "passed": true,
+      "expected_error": "hero radius",
+      "errors": [
+        "hero radius mismatch"
+      ]
+    },
+    {
+      "name": "reject changed bounds",
+      "passed": true,
+      "expected_error": "movement bounds",
+      "errors": [
+        "native movement bounds mismatch"
+      ]
+    },
+    {
+      "name": "reject conflated browser baseline",
+      "passed": true,
+      "expected_error": "browser baseline",
+      "errors": [
+        "browser baseline mismatch"
+      ]
+    },
+    {
+      "name": "reject missing native platform",
+      "passed": true,
+      "expected_error": "platform/anchor count",
+      "errors": [
+        "native platform/anchor count mismatch",
+        "moon-shrine-east native platform mismatch",
+        "moon-shrine-east native visual footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject shifted native platform",
+      "passed": true,
+      "expected_error": "native platform mismatch",
+      "errors": [
+        "sun-lift-west native platform mismatch"
+      ]
+    },
+    {
+      "name": "reject misplaced native anchor",
+      "passed": true,
+      "expected_error": "native anchor mismatch",
+      "errors": [
+        "sun-lift-west native anchor mismatch"
+      ]
+    },
+    {
+      "name": "reject false native lane length",
+      "passed": true,
+      "expected_error": "lane length mismatch",
+      "errors": [
+        "native lane length mismatch"
+      ]
+    },
+    {
+      "name": "authority sources unchanged during checks",
+      "passed": true
+    }
+  ]
+}
