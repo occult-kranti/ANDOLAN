@@ -1,5 +1,11 @@
 # Cloud workspace and cleanup
 
+Latest visual-campaign cleanup: [verified receipt](evidence/visual-campaign-cleanup/README.md).
+Nine obsolete render-clone/cache paths were removed after source `09dac722`
+was pushed and all recovery bytes were checked: about **793 MB logical /
+806 MB allocated**. Current renders, all raw frames, source art and installed
+tools remain. Earlier cleanup receipts below describe separate operations.
+
 Rama preview cleanup on 17 October 2026: [the verified receipt](../games/yuga-native/docs/evidence/rama-hero/published/cleanup/receipt.json) removes 2.2 GB of obsolete duplicate package ZIPs/extractions after the current public release was downloaded and verified. Current R3/public downloads and all source, art and accepted/rejected capture evidence remain. Superseded package manifests retain exact regeneration commits.
 
 The cloud worker is a development machine; Git and published releases retain the durable project history. Preserve the ready toolchain while removing duplicate delivery artifacts. The [build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) supplies setup/rebuild commands, and [START_HERE](START_HERE.md) supplies product routing.
