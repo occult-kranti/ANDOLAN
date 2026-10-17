@@ -23,7 +23,7 @@ func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
-	for path in ["res://art/world/confluence-map.json", "res://assets/world/confluence-map.json", "res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/projectile.gd", "res://scripts/world_lighting.gd", "res://scripts/traversal_landmarks.gd", "res://scripts/traversal_stone.gdshader", "res://scripts/world_ground_common.gdshaderinc", "res://scripts/player_traversal.gd", "res://scripts/lane_army.gd", "res://scenes/confluence_world.tscn", "res://tests/world_scene_cases.gd"]:
+	for path in ["res://art/world/confluence-map.json", "res://assets/world/confluence-map.json", "res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/projectile.gd", "res://scripts/world_lighting.gd", "res://scripts/traversal_landmarks.gd", "res://scripts/traversal_stone.gdshader", "res://scripts/world_ground_common.gdshaderinc", "res://scripts/player_traversal.gd", "res://scripts/lane_army.gd", "res://scenes/confluence_world.tscn", "res://tests/world_scene_cases.gd", "res://scripts/relay_control.gd", "res://scripts/relay_art.gd", "res://scripts/relay_session.gd"]:
 		before[path] = FileAccess.get_sha256(path)
 	manifest = JSON.parse_string(FileAccess.get_file_as_string("res://art/world/confluence-map.json"))
 	var packed = load("res://scenes/confluence_world.tscn")
@@ -201,6 +201,11 @@ func _static_blocked(x: float,z: float) -> bool:
 	for item in manifest.authority_collision_boxes+manifest.traversal.native_collision_boxes:
 		if abs(x-float(item.position[0])) <= float(item.size[0])*0.5+0.05 and abs(z-float(item.position[2])) <= float(item.size[2])*0.5+0.05:
 			return true
+	# Plinth tops are deliberately solid. Open-floor sampling excludes only their
+	# exact footprints; the independent route sweeps still detect misplaced props.
+	for item in scene.relays.art.collision_boxes():
+		if absf(x-item.position.x)<=item.size.x*.5+.05 and absf(z-item.position.z)<=item.size.z*.5+.05:
+			return true
 	return false
 
 func _floor_sample_count() -> int:
@@ -316,7 +321,7 @@ func _check_layout_and_state() -> void:
 		await _frames(4)
 		var viewport_rect := root.get_visible_rect()
 		var visual_controls: Array[Control] = [scene.map_control,scene.pause_panel]
-		for card_name in ["TitleCard","ControlsCard","TraversalStatus","AtlasLegend"]:
+		for card_name in ["TitleCard","RelayStatus","ControlsCard","TraversalStatus","AtlasLegend"]:
 			var card: Node = scene.hud.find_child(card_name,true,false)
 			if card is Control: visual_controls.append(card)
 		var crosshair := _crosshair()
@@ -355,7 +360,7 @@ func _check_layout_and_state() -> void:
 		if is_instance_valid(continue_button): continue_button.grab_focus()
 		await _frames(4)
 		var focus_ready := is_instance_valid(continue_button) and continue_button.has_focus() and scroll_rect.grow(1).encloses(continue_button.get_global_rect())
-		_record("UI inside viewport and focused controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==9 and scene.pause_actions.size()==10 and focus_reachable and centered and focus_ready,
+		_record("UI inside viewport and focused controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==10 and scene.pause_actions.size()==11 and focus_reachable and centered and focus_ready,
 			{"logical_viewport":[viewport_rect.size.x,viewport_rect.size.y],"outside_or_small":failures,"overlaps":overlaps,"crosshair_near_center":centered,"resume_keyboard_focus":focus_ready,"all_targets_reachable":focus_reachable,"focused_rectangles":rectangles})
 	# Resume the actual character controller, then use input actions rather than
 	# assigning a fake position to prove held movement had an effect before pause.

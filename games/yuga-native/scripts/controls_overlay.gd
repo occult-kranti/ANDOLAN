@@ -74,7 +74,7 @@ func _ready() -> void:
 		binding_buttons[action] = button
 		focus_order.append(button)
 	var fixed := Label.new()
-	fixed.text = "Fixed: LMB fire · arrows move · Esc pause/back · F2 help\nWorld: F1 overview · F5 respawn · N day/night"
+	fixed.text = "Fixed: LMB fire · arrows move · Esc pause/back · F2 help\nWorld: F1 overview · F5 restart round · N day/night"
 	fixed.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	fixed.add_theme_font_size_override("font_size",14)
 	content.add_child(fixed)

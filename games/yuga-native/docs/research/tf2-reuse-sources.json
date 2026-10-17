@@ -1,0 +1,913 @@
+{
+  "schema_version": 1,
+  "title": "TF2 source/reuse study for original YUGA Triad relays",
+  "reviewed_utc": "2026-10-17T07:14:30.362392+00:00",
+  "repository_working_head": "af9dae258936a2fc1854587736dd847ef1c0d604",
+  "scope": "Bounded public source/document reading; no clones, builds, runtime tool use, commercial game files, models, sounds or maps. No credentials supplied or credential files read; platform proxy injection was not inspected.",
+  "rounds": [
+    {
+      "round": 1,
+      "status": "completed",
+      "purpose": "Verify immutable official/community sources, license scope and access failures."
+    },
+    {
+      "round": 2,
+      "status": "completed",
+      "purpose": "Translate selected behavior into original relay/supply/readability recommendations; no implementation claim."
+    },
+    {
+      "round": 3,
+      "status": "completed",
+      "purpose": "Challenge camping/snowball/flight/marker overload, documentation drift and unsupported parity claims."
+    }
+  ],
+  "repositories": [
+    {
+      "repository": "ValveSoftware/source-sdk-2013",
+      "branch": "master",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "commit_timestamp_utc": "2026-10-10T03:57:29Z",
+      "head_source_id": "VALVE-HEAD",
+      "classification": "official published game source, not a reverse-engineered/leaked source mirror"
+    },
+    {
+      "repository": "ata4/bspsrc",
+      "branch": "master",
+      "commit": "eaac417f16d3a4d8ef55bb637ecd7bff28740209",
+      "observed_utc": "2026-10-17T07:07:58.698489+00:00",
+      "method": [
+        "git",
+        "ls-remote",
+        "--symref",
+        "https://github.com/ata4/bspsrc.git",
+        "HEAD"
+      ],
+      "stdout": "ref: refs/heads/master\tHEAD\neaac417f16d3a4d8ef55bb637ecd7bff28740209\tHEAD\n",
+      "stdout_sha256": "cffc2aa2d1878c5df7638dc39dc0a43c86da58b1e44042b08ef43fbd68049dbf",
+      "classification": "community reverse-engineering map tool"
+    },
+    {
+      "repository": "mastercomfig/mastercomfig",
+      "branch": "develop",
+      "commit": "d947673e721d686a64a3e7055f38197556a3405b",
+      "observed_utc": "2026-10-17T07:07:59.288723+00:00",
+      "method": [
+        "git",
+        "ls-remote",
+        "--symref",
+        "https://github.com/mastercomfig/mastercomfig.git",
+        "HEAD"
+      ],
+      "stdout": "ref: refs/heads/develop\tHEAD\nd947673e721d686a64a3e7055f38197556a3405b\tHEAD\n",
+      "stdout_sha256": "ab419489b5e312834d74ba6581ef15b0c1a5c29181edf688981fc62837c40108",
+      "classification": "community configuration/editor tool"
+    },
+    {
+      "repository": "TrenchBroom/TrenchBroom",
+      "branch": "master",
+      "commit": "4f9e04354d574b71e32dafecfb78ed45a456e5e5",
+      "observed_utc": "2026-10-17T07:08:00.078154+00:00",
+      "method": [
+        "git",
+        "ls-remote",
+        "--symref",
+        "https://github.com/TrenchBroom/TrenchBroom.git",
+        "HEAD"
+      ],
+      "stdout": "ref: refs/heads/master\tHEAD\n4f9e04354d574b71e32dafecfb78ed45a456e5e5\tHEAD\n",
+      "stdout_sha256": "5c907ea131488fee597f0af008344beb0c54dab179b74cc60605d735bb2437cf",
+      "classification": "community configuration/editor tool"
+    }
+  ],
+  "sources": [
+    {
+      "id": "VALVE-HEAD",
+      "url": "https://api.github.com/repos/ValveSoftware/source-sdk-2013/commits/master",
+      "retrieved_utc": "2026-10-17T07:06:44.314162+00:00",
+      "category": "repository_metadata",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://api.github.com/repos/ValveSoftware/source-sdk-2013/commits/master",
+      "bytes": 9432,
+      "sha256": "262f3ba5bc9883ef064d2c7e2c5a1c29c9e8a1fcf923ade906471090aa8b371d",
+      "content_type": "application/json; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/valve-commit.json",
+      "reading": {
+        "scope": "metadata_fields",
+        "line_ranges": [],
+        "note": "Commit SHA and author/committer timestamp inspected; not all changed-file patches.",
+        "reader": "full_game_roadmap"
+      }
+    },
+    {
+      "id": "VALVE-PUBLICATIONS-BLOCKED",
+      "url": "https://www.valvesoftware.com/en/publications",
+      "retrieved_utc": "2026-10-17T07:06:44.315032+00:00",
+      "category": "access_failure",
+      "repository": null,
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "http_status": null,
+      "reading": {
+        "scope": "not_read",
+        "line_ranges": [],
+        "note": "Blocked response; no requested source content read."
+      }
+    },
+    {
+      "id": "REDDIT-TF2-BLOCKED",
+      "url": "https://www.reddit.com/r/tf2/top.json?limit=5&t=month",
+      "retrieved_utc": "2026-10-17T07:06:44.315553+00:00",
+      "category": "access_failure",
+      "repository": null,
+      "final_url": "https://www.reddit.com/r/tf2/top.json?limit=5&t=month",
+      "bytes": 189908,
+      "sha256": "13bcba13bd1bad5aace04e8a76880b710337a8d595224967e874401832cc203c",
+      "content_type": "text/html",
+      "http_status": 403,
+      "scratch_path": "official/reddit-tf2.json",
+      "reading": {
+        "scope": "not_read",
+        "line_ranges": [],
+        "note": "Blocked response; no requested source content read."
+      }
+    },
+    {
+      "id": "VALVE-README",
+      "url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/README.md",
+      "retrieved_utc": "2026-10-17T07:06:54.432390+00:00",
+      "category": "official_source",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/README.md",
+      "bytes": 2387,
+      "sha256": "832d9216a336ace6733c575d3cb9fb886f750f41ba51afe36ba7617326846323",
+      "content_type": "text/plain; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/valve-readme.md",
+      "reading": {
+        "scope": "complete_file",
+        "line_ranges": [],
+        "note": "Full README; installation instructions observed, not executed.",
+        "reader": "full_game_roadmap"
+      },
+      "code_license": "Source 1 SDK License; modified Valve games on Source 1, subject to stated free-distribution and notice/Steam conditions",
+      "asset_rights": "No TF2 artwork/audio/model/map reuse grant established for YUGA.",
+      "integration": "No copied game code or assets.",
+      "selected_passages": [
+        {
+          "quote": "Contains the game code for Half-Life 2, HL2: DM and TF2.",
+          "purpose": "Confirms official TF2 game-code scope."
+        }
+      ]
+    },
+    {
+      "id": "VALVE-LICENSE",
+      "url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/LICENSE",
+      "retrieved_utc": "2026-10-17T07:06:54.433541+00:00",
+      "category": "official_source",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/LICENSE",
+      "bytes": 1882,
+      "sha256": "0b5e31e476514bed810d04e5a79d2e7f4e17e7e99f4f4f1a8fe7d7505c6da4af",
+      "content_type": "text/plain; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/valve-license.txt",
+      "reading": {
+        "scope": "complete_file",
+        "line_ranges": [],
+        "note": "Full Source 1 SDK license; no Godot code/asset adoption.",
+        "reader": "full_game_roadmap"
+      },
+      "code_license": "Source 1 SDK License; modified Valve games on Source 1, subject to stated free-distribution and notice/Steam conditions",
+      "asset_rights": "No TF2 artwork/audio/model/map reuse grant established for YUGA.",
+      "integration": "No copied game code or assets.",
+      "selected_passages": [
+        {
+          "quote": "modified Valve game running on Valve's Source 1 engine",
+          "purpose": "Limits scope of SDK code reuse."
+        }
+      ]
+    },
+    {
+      "id": "VALVE-TREE",
+      "url": "https://api.github.com/repos/ValveSoftware/source-sdk-2013/git/trees/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0?recursive=1",
+      "retrieved_utc": "2026-10-17T07:06:54.434198+00:00",
+      "category": "repository_metadata",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://api.github.com/repos/ValveSoftware/source-sdk-2013/git/trees/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0?recursive=1",
+      "bytes": 2053640,
+      "sha256": "1ff19a087ce77feca39ca5679f2dc50d24297bef52300007ab3b2ff9cd267e69",
+      "content_type": "application/json; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/valve-tree.json",
+      "reading": {
+        "scope": "tree_paths",
+        "line_ranges": [],
+        "note": "Nontruncated recursive path inventory searched for selected gameplay files; source tree not read in full.",
+        "reader": "full_game_roadmap"
+      }
+    },
+    {
+      "id": "VALVE-ART-PAPER-BLOCKED",
+      "url": "https://cdn.akamai.steamstatic.com/apps/valve/2007/NPAR07_IllustrativeRenderingInTeamFortress2.pdf",
+      "retrieved_utc": "2026-10-17T07:06:54.434938+00:00",
+      "category": "access_failure",
+      "repository": null,
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "http_status": null,
+      "reading": {
+        "scope": "not_read",
+        "line_ranges": [],
+        "note": "Blocked response; no requested source content read."
+      }
+    },
+    {
+      "id": "TF2-CAPTURE",
+      "url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/server/trigger_area_capture.cpp",
+      "retrieved_utc": "2026-10-17T07:07:40.954806+00:00",
+      "category": "official_source",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/server/trigger_area_capture.cpp",
+      "bytes": 35287,
+      "sha256": "cae87ab84047fa3f50432864e314ade1ac63930d0bd62e716b70894b6f67e9b5",
+      "content_type": "text/plain; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/trigger_area_capture.cpp",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            304,
+            465
+          ],
+          [
+            543,
+            635
+          ]
+        ],
+        "note": "CaptureThink eligibility, contest/progress decay and StartTouch race guard. Capture-rate formula in omitted range not audited.",
+        "reader": "full_game_roadmap"
+      },
+      "code_license": "Source 1 SDK License; modified Valve games on Source 1, subject to stated free-distribution and notice/Steam conditions",
+      "asset_rights": "No TF2 artwork/audio/model/map reuse grant established for YUGA.",
+      "integration": "No copied game code or assets.",
+      "selected_passages": [
+        {
+          "line_range": [
+            626,
+            626
+          ],
+          "quote": "if ( !m_bStartTouch )",
+          "purpose": "Selected guard; interpret together with comment at lines621–625 and surrounding code."
+        }
+      ]
+    },
+    {
+      "id": "TF2-PAYLOAD",
+      "url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/server/team_train_watcher.cpp",
+      "retrieved_utc": "2026-10-17T07:07:40.955574+00:00",
+      "category": "official_source",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/server/team_train_watcher.cpp",
+      "bytes": 43892,
+      "sha256": "42d8ce8b9a85d7742c5b41f44a7b595d33268b1458ebe2c5b14ca140743f8675",
+      "content_type": "text/plain; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/team_train_watcher.cpp",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            644,
+            694
+          ]
+        ],
+        "note": "InternalSetNumTrainCappers; full movement/physics not audited.",
+        "reader": "full_game_roadmap"
+      },
+      "code_license": "Source 1 SDK License; modified Valve games on Source 1, subject to stated free-distribution and notice/Steam conditions",
+      "asset_rights": "No TF2 artwork/audio/model/map reuse grant established for YUGA.",
+      "integration": "No copied game code or assets."
+    },
+    {
+      "id": "TF2-DISPENSER",
+      "url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/server/tf/tf_obj_dispenser.cpp",
+      "retrieved_utc": "2026-10-17T07:07:40.956197+00:00",
+      "category": "official_source",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/server/tf/tf_obj_dispenser.cpp",
+      "bytes": 33958,
+      "sha256": "8ae6d44b9a4186849a066cced78a8fd0f4d945780c54900f05ed3add05821b3f",
+      "content_type": "text/plain; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/tf_obj_dispenser.cpp",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            552,
+            600
+          ],
+          [
+            626,
+            714
+          ],
+          [
+            901,
+            951
+          ]
+        ],
+        "note": "Metal stock bound, periodic eligibility/cleanup and CouldHealTarget. Not all subclass/upgrade behavior.",
+        "reader": "full_game_roadmap"
+      },
+      "code_license": "Source 1 SDK License; modified Valve games on Source 1, subject to stated free-distribution and notice/Steam conditions",
+      "asset_rights": "No TF2 artwork/audio/model/map reuse grant established for YUGA.",
+      "integration": "No copied game code or assets.",
+      "selected_passages": [
+        {
+          "quote": "EndTouch() can be flakey",
+          "purpose": "Source comment explains why periodic validity/distance cleanup exists."
+        }
+      ]
+    },
+    {
+      "id": "TF2-CP-HUD",
+      "url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/client/hud_controlpointicons.cpp",
+      "retrieved_utc": "2026-10-17T07:07:40.956744+00:00",
+      "category": "official_source",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/client/hud_controlpointicons.cpp",
+      "bytes": 54744,
+      "sha256": "0f128eda8f7871ca62456f60d6d5a39ec2f97fa2841f022885574e0efda351b5",
+      "content_type": "text/plain; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/hud_controlpointicons.cpp",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            287,
+            322
+          ]
+        ],
+        "note": "UpdateImage owner/locked/overlay selection; no runtime accessibility evaluation.",
+        "reader": "full_game_roadmap"
+      },
+      "code_license": "Source 1 SDK License; modified Valve games on Source 1, subject to stated free-distribution and notice/Steam conditions",
+      "asset_rights": "No TF2 artwork/audio/model/map reuse grant established for YUGA.",
+      "integration": "No copied game code or assets."
+    },
+    {
+      "id": "TF2-PAYLOAD-HUD",
+      "url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/client/tf/tf_hud_escort.cpp",
+      "retrieved_utc": "2026-10-17T07:07:41.262442+00:00",
+      "category": "official_source",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/client/tf/tf_hud_escort.cpp",
+      "bytes": 33391,
+      "sha256": "5b9f8268a8257dae45709e5f0c8d2b22eb9d061bcce0a05ebe80b8d65beb8e89",
+      "content_type": "text/plain; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/tf_hud_escort.cpp",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            818,
+            844
+          ],
+          [
+            890,
+            962
+          ]
+        ],
+        "note": "Deadline-derived countdown and mutually managed event/status icons; full HUD not audited.",
+        "reader": "full_game_roadmap"
+      },
+      "code_license": "Source 1 SDK License; modified Valve games on Source 1, subject to stated free-distribution and notice/Steam conditions",
+      "asset_rights": "No TF2 artwork/audio/model/map reuse grant established for YUGA.",
+      "integration": "No copied game code or assets."
+    },
+    {
+      "id": "TF2-MVM-RESOURCE",
+      "url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/server/tf/tf_objective_resource.cpp",
+      "retrieved_utc": "2026-10-17T07:07:41.278915+00:00",
+      "category": "official_source",
+      "repository": "ValveSoftware/source-sdk-2013",
+      "commit": "be57e3d01ac7d7aa6a2cacbfef187c0b46616db0",
+      "final_url": "https://raw.githubusercontent.com/ValveSoftware/source-sdk-2013/be57e3d01ac7d7aa6a2cacbfef187c0b46616db0/src/game/server/tf/tf_objective_resource.cpp",
+      "bytes": 13181,
+      "sha256": "5b6e5342f98197774868d095f1a8ce2c4624dffa9d751ed99967e3894a5457c9",
+      "content_type": "text/plain; charset=utf-8",
+      "http_status": 200,
+      "scratch_path": "official/tf_objective_resource.cpp",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            1,
+            155
+          ]
+        ],
+        "note": "MvM send table/initialization; not the complete generic capture-point replication implementation.",
+        "reader": "full_game_roadmap"
+      },
+      "code_license": "Source 1 SDK License; modified Valve games on Source 1, subject to stated free-distribution and notice/Steam conditions",
+      "asset_rights": "No TF2 artwork/audio/model/map reuse grant established for YUGA.",
+      "integration": "No copied game code or assets."
+    },
+    {
+      "id": "BSPSRC-README",
+      "repository": "ata4/bspsrc",
+      "commit": "eaac417f16d3a4d8ef55bb637ecd7bff28740209",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/ata4/bspsrc/eaac417f16d3a4d8ef55bb637ecd7bff28740209/README.md",
+      "retrieved_utc": "2026-10-17T07:07:03.438483+00:00",
+      "http_status": 200,
+      "bytes": 3567,
+      "sha256": "3fbef7686a00e1986ddb23ce0664172bb57426e4a24c8312f8b810e52d9d4ec6",
+      "scratch_path": "community/bspsrc/README.md",
+      "category": "reverse_engineering_tool_source",
+      "code_license": "Unlicense tool code; Apache-2.0/BSD-3-Clause dependency notices separately listed",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            3,
+            27
+          ]
+        ],
+        "note": "Source 1 BSP/VMF, format exclusion and incomplete reconstruction limits.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "BSPSRC-LICENSE",
+      "repository": "ata4/bspsrc",
+      "commit": "eaac417f16d3a4d8ef55bb637ecd7bff28740209",
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/ata4/bspsrc/eaac417f16d3a4d8ef55bb637ecd7bff28740209/LICENSE.md",
+      "retrieved_utc": "2026-10-17T07:07:38.863228+00:00",
+      "http_status": 200,
+      "bytes": 1839,
+      "sha256": "321881948285bd104f61a71bae69239ec5656c5375e2149578f7b7684542643e",
+      "scratch_path": "community/bspsrc/LICENSE.md",
+      "category": "reverse_engineering_tool_source",
+      "code_license": "Unlicense tool code; Apache-2.0/BSD-3-Clause dependency notices separately listed",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            1,
+            42
+          ]
+        ],
+        "note": "Unlicense dedication and separate dependency notices.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "BSPSRC-TF2",
+      "repository": "ata4/bspsrc",
+      "commit": "eaac417f16d3a4d8ef55bb637ecd7bff28740209",
+      "path": "bspsrc-lib/src/main/java/info/ata4/bspsrc/lib/app/definitions/TeamFortress2Def.java",
+      "url": "https://raw.githubusercontent.com/ata4/bspsrc/eaac417f16d3a4d8ef55bb637ecd7bff28740209/bspsrc-lib/src/main/java/info/ata4/bspsrc/lib/app/definitions/TeamFortress2Def.java",
+      "retrieved_utc": "2026-10-17T07:07:38.948109+00:00",
+      "http_status": 200,
+      "bytes": 2508,
+      "sha256": "b7f28da5778cdad29f195d87cfd54166981dd0125703f71f16d3343c50a41c61",
+      "scratch_path": "community/bspsrc/bspsrc-lib/src/main/java/info/ata4/bspsrc/lib/app/definitions/TeamFortress2Def.java",
+      "category": "reverse_engineering_tool_source",
+      "code_license": "Unlicense tool code; Apache-2.0/BSD-3-Clause dependency notices separately listed",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            11,
+            88
+          ]
+        ],
+        "note": "Explicit TF2/BSP20 recognition and entities; no decompilation run.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "MASTERCOMFIG-README",
+      "repository": "mastercomfig/mastercomfig",
+      "commit": "d947673e721d686a64a3e7055f38197556a3405b",
+      "path": ".github/README.md",
+      "url": "https://raw.githubusercontent.com/mastercomfig/mastercomfig/d947673e721d686a64a3e7055f38197556a3405b/.github/README.md",
+      "retrieved_utc": "2026-10-17T07:07:38.931783+00:00",
+      "http_status": 200,
+      "bytes": 3763,
+      "sha256": "72db4908720b857efc0185758b33889aba2d3ffcafcef7f8e70b402c2c13f225",
+      "scratch_path": "community/mastercomfig/.github/README.md",
+      "category": "community_tool_source",
+      "code_license": "MIT",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            14,
+            20
+          ],
+          [
+            40,
+            44
+          ]
+        ],
+        "note": "Configuration role/performance claims and Valve affiliation disclaimer.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "MASTERCOMFIG-LICENSE",
+      "repository": "mastercomfig/mastercomfig",
+      "commit": "d947673e721d686a64a3e7055f38197556a3405b",
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/mastercomfig/mastercomfig/d947673e721d686a64a3e7055f38197556a3405b/LICENSE.md",
+      "retrieved_utc": "2026-10-17T07:07:38.837445+00:00",
+      "http_status": 200,
+      "bytes": 1072,
+      "sha256": "65ec09f52367a473c35fc5b2c1428a93192cfbe6d8964ff2a0b0fa864d1936b4",
+      "scratch_path": "community/mastercomfig/LICENSE.md",
+      "category": "community_tool_source",
+      "code_license": "MIT",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "complete_file",
+        "line_ranges": [],
+        "note": "Full MIT license.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "MASTERCOMFIG-MODULES",
+      "repository": "mastercomfig/mastercomfig",
+      "commit": "d947673e721d686a64a3e7055f38197556a3405b",
+      "path": "docs/customization/modules.md",
+      "url": "https://raw.githubusercontent.com/mastercomfig/mastercomfig/d947673e721d686a64a3e7055f38197556a3405b/docs/customization/modules.md",
+      "retrieved_utc": "2026-10-17T07:07:39.059336+00:00",
+      "http_status": 200,
+      "bytes": 34415,
+      "sha256": "a49198b5fa1afb23a7f1a8531c18d66b3d2101d61f138a26063d9847560b11d3",
+      "scratch_path": "community/mastercomfig/docs/customization/modules.md",
+      "category": "community_tool_source",
+      "code_license": "MIT",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            9,
+            29
+          ],
+          [
+            62,
+            90
+          ]
+        ],
+        "note": "Quality modules, relative hardware estimates and network tradeoffs; no benchmark.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "TRENCHBROOM-README",
+      "repository": "TrenchBroom/TrenchBroom",
+      "commit": "4f9e04354d574b71e32dafecfb78ed45a456e5e5",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/TrenchBroom/TrenchBroom/4f9e04354d574b71e32dafecfb78ed45a456e5e5/README.md",
+      "retrieved_utc": "2026-10-17T07:07:20.287809+00:00",
+      "http_status": 200,
+      "bytes": 2784,
+      "sha256": "bae4bfa6c84672f18d3d87e6b8f5514e982ddb26e9bee5d944a785e2c49aaff2",
+      "scratch_path": "community/trenchbroom/README.md",
+      "category": "community_tool_source",
+      "code_license": "Inspected code GPL-3.0-or-later; repository LICENSE is GPLv3 text",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            5,
+            5
+          ],
+          [
+            41,
+            48
+          ]
+        ],
+        "note": "Quake editor/game scopes; patch prose checked against current enum/implementation.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "TRENCHBROOM-LICENSE",
+      "repository": "TrenchBroom/TrenchBroom",
+      "commit": "4f9e04354d574b71e32dafecfb78ed45a456e5e5",
+      "path": "LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/TrenchBroom/TrenchBroom/4f9e04354d574b71e32dafecfb78ed45a456e5e5/LICENSE.txt",
+      "retrieved_utc": "2026-10-17T07:07:20.805861+00:00",
+      "http_status": 200,
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "scratch_path": "community/trenchbroom/LICENSE.txt",
+      "category": "community_tool_source",
+      "code_license": "Inspected code GPL-3.0-or-later; repository LICENSE is GPLv3 text",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            1,
+            2
+          ],
+          [
+            158,
+            162
+          ]
+        ],
+        "note": "GPLv3 identification and conditional output coverage; selected clauses, not entire license review.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "TRENCHBROOM-FORMAT-CPP",
+      "repository": "TrenchBroom/TrenchBroom",
+      "commit": "4f9e04354d574b71e32dafecfb78ed45a456e5e5",
+      "path": "lib/TbMdlLib/src/MapFormat.cpp",
+      "url": "https://raw.githubusercontent.com/TrenchBroom/TrenchBroom/4f9e04354d574b71e32dafecfb78ed45a456e5e5/lib/TbMdlLib/src/MapFormat.cpp",
+      "retrieved_utc": "2026-10-17T07:07:48.388729+00:00",
+      "http_status": 200,
+      "bytes": 4754,
+      "sha256": "3f0107bb806113dcfda4f0c079024545ea4653d0701afd3504f63fe9fa3bfe1e",
+      "scratch_path": "community/trenchbroom/lib/TbMdlLib/src/MapFormat.cpp",
+      "category": "community_tool_source",
+      "code_license": "Inspected code GPL-3.0-or-later; repository LICENSE is GPLv3 text",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            6,
+            9
+          ],
+          [
+            30,
+            68
+          ],
+          [
+            185,
+            192
+          ]
+        ],
+        "note": "GPLv3-or-later header, format names, patch capability; no VMF support claim.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "TRENCHBROOM-FORMAT-H",
+      "repository": "TrenchBroom/TrenchBroom",
+      "commit": "4f9e04354d574b71e32dafecfb78ed45a456e5e5",
+      "path": "lib/TbMdlLib/include/mdl/MapFormat.h",
+      "url": "https://raw.githubusercontent.com/TrenchBroom/TrenchBroom/4f9e04354d574b71e32dafecfb78ed45a456e5e5/lib/TbMdlLib/include/mdl/MapFormat.h",
+      "retrieved_utc": "2026-10-17T07:07:48.414965+00:00",
+      "http_status": 200,
+      "bytes": 2463,
+      "sha256": "e5030a3632ed3c2d650c06edb1f90fedd092a6b90128a22cb8a9dfb414abd908",
+      "scratch_path": "community/trenchbroom/lib/TbMdlLib/include/mdl/MapFormat.h",
+      "category": "community_tool_source",
+      "code_license": "Inspected code GPL-3.0-or-later; repository LICENSE is GPLv3 text",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            6,
+            9
+          ],
+          [
+            29,
+            73
+          ]
+        ],
+        "note": "GPLv3-or-later header and enum including Valve220; no TF2 parser established.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "TRENCHBROOM-QUAKE",
+      "repository": "TrenchBroom/TrenchBroom",
+      "commit": "4f9e04354d574b71e32dafecfb78ed45a456e5e5",
+      "path": "app/TrenchBroom/resources/games/Quake/GameConfig.cfg",
+      "url": "https://raw.githubusercontent.com/TrenchBroom/TrenchBroom/4f9e04354d574b71e32dafecfb78ed45a456e5e5/app/TrenchBroom/resources/games/Quake/GameConfig.cfg",
+      "retrieved_utc": "2026-10-17T07:07:48.318353+00:00",
+      "http_status": 200,
+      "bytes": 2112,
+      "sha256": "0354e8b25248537ed093fa9d9ad227181c91692655c7ae7dac3f88a2485b868c",
+      "scratch_path": "community/trenchbroom/app/TrenchBroom/resources/games/Quake/GameConfig.cfg",
+      "category": "community_tool_source",
+      "code_license": "Inspected code GPL-3.0-or-later; repository LICENSE is GPLv3 text",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            3,
+            20
+          ],
+          [
+            72,
+            75
+          ]
+        ],
+        "note": "Quake/id1/Teamfortress.fgd association, not TF2.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    },
+    {
+      "id": "TRENCHBROOM-MANUAL",
+      "repository": "TrenchBroom/TrenchBroom",
+      "commit": "4f9e04354d574b71e32dafecfb78ed45a456e5e5",
+      "path": "app/TrenchBroom/resources/documentation/manual/index.md",
+      "url": "https://raw.githubusercontent.com/TrenchBroom/TrenchBroom/4f9e04354d574b71e32dafecfb78ed45a456e5e5/app/TrenchBroom/resources/documentation/manual/index.md",
+      "retrieved_utc": "2026-10-17T07:08:04.644959+00:00",
+      "http_status": 200,
+      "bytes": 265010,
+      "sha256": "3cdc42cb006f2a5e2f4ff85934044cdd3ca138143b8b8bc963ca96f169d6d2e7",
+      "scratch_path": "community/trenchbroom/app/TrenchBroom/resources/documentation/manual/index.md",
+      "category": "community_tool_source",
+      "code_license": "Inspected code GPL-3.0-or-later; repository LICENSE is GPLv3 text",
+      "asset_rights": "Tool/software terms do not grant rights to third-party game assets or input maps.",
+      "reading": {
+        "scope": "selected_lines",
+        "line_ranges": [
+          [
+            125,
+            125
+          ],
+          [
+            1004,
+            1004
+          ],
+          [
+            1154,
+            1154
+          ],
+          [
+            1578,
+            1578
+          ],
+          [
+            2799,
+            2813
+          ]
+        ],
+        "note": "Valve220 history/config boundaries and documented format list; no full-manual reading.",
+        "reader": "tf2_community_audit; TrenchBroom subset independently checked by its delegated reviewer"
+      },
+      "integration": "Not installed, built, run or integrated."
+    }
+  ],
+  "discovery_failures": [
+    {
+      "repo": "ata4/bspsrc",
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/ata4/bspsrc/eaac417f16d3a4d8ef55bb637ecd7bff28740209/LICENSE",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repo": "mastercomfig/mastercomfig",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/mastercomfig/mastercomfig/d947673e721d686a64a3e7055f38197556a3405b/README.md",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repo": "mastercomfig/mastercomfig",
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/mastercomfig/mastercomfig/d947673e721d686a64a3e7055f38197556a3405b/LICENSE",
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "observations": [
+    {
+      "id": "OBS-CAPTURE",
+      "source_ids": [
+        "TF2-CAPTURE"
+      ],
+      "finding": "Living/capture/block eligibility differs; team aggregate and StartTouch guard handle contested and repeated-entry cases. Mode flags alter behavior."
+    },
+    {
+      "id": "OBS-CONTEST",
+      "source_ids": [
+        "TF2-PAYLOAD",
+        "TF2-PAYLOAD-HUD"
+      ],
+      "finding": "Contested is distinct from unattended recede; explicit deadlines feed presentation."
+    },
+    {
+      "id": "OBS-SUPPLY",
+      "source_ids": [
+        "TF2-DISPENSER"
+      ],
+      "finding": "Periodic validity/range/LOS checks and actual-accepted metal deduction avoid stale recipients and over-grants."
+    },
+    {
+      "id": "OBS-READABILITY",
+      "source_ids": [
+        "TF2-CP-HUD",
+        "TF2-PAYLOAD-HUD"
+      ],
+      "finding": "State-derived locked/owner overlays and managed status display are inspectable; accessibility and aesthetic quality need actual review."
+    },
+    {
+      "id": "OBS-TOOL-BOUNDARY",
+      "source_ids": [
+        "BSPSRC-README",
+        "BSPSRC-LICENSE",
+        "BSPSRC-TF2",
+        "MASTERCOMFIG-MODULES",
+        "MASTERCOMFIG-LICENSE",
+        "TRENCHBROOM-FORMAT-H",
+        "TRENCHBROOM-QUAKE",
+        "TRENCHBROOM-LICENSE"
+      ],
+      "finding": "Decompiler/config/editor capabilities and licenses are distinct; none supplies general Valve art rights or a complete Godot game."
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "REC-RELAY",
+      "derived_from": [
+        "OBS-CAPTURE",
+        "OBS-CONTEST"
+      ],
+      "status": "design recommendation; implementation owned elsewhere",
+      "decision": "Original fixed-tick relay state, explicit eligible entity set and vertical band, one capture result per tick; YUGA-authored tuning."
+    },
+    {
+      "id": "REC-SUPPLY",
+      "derived_from": [
+        "OBS-SUPPLY"
+      ],
+      "status": "design recommendation; receiving runtime API must exist",
+      "decision": "Bounded uncontested owner supply with LOS/height/team/cooldown checks, actual accepted receipts; no healing claim without hero health."
+    },
+    {
+      "id": "REC-UI",
+      "derived_from": [
+        "OBS-READABILITY"
+      ],
+      "status": "design inference, not a finding from the blocked rendering paper",
+      "decision": "Original relay/supply glyphs and troop-attack marker hierarchy; verify day/night/overlap and text at960x600 and1280x720."
+    },
+    {
+      "id": "REC-STACK",
+      "derived_from": [
+        "OBS-TOOL-BOUNDARY"
+      ],
+      "status": "source-led intake decision",
+      "decision": "Retain Godot/Blender and original assets; no Source SDK code port or commercial asset adoption; no tools installed this pass."
+    }
+  ],
+  "validation": {
+    "local_payload_hashes_and_lengths_verified": 23,
+    "successful_source_file_hashes_verified": 20,
+    "line_ranges_within_saved_files": true,
+    "selected_passages_match_saved_bytes": true,
+    "all_source_and_observation_references_resolve": true,
+    "community_independent_source_hashes_verified": 12
+  },
+  "limits": [
+    "The official TF2 art paper and Valve publications page were blocked by proxy403; no paper content read.",
+    "The one ordinary Reddit request returned403HTML; no new post/comment corpus or player-consensus claim.",
+    "Reading is limited to recorded ranges; complete Source/TF2 implementation and runtime behavior not audited.",
+    "TrenchBroom documentation/implementation drift about Quake3 patches was recorded, not resolved through execution.",
+    "Gameplay designs and initial art motifs are YUGA proposals, not code ports or measured balance/accessibility results.",
+    "No leaked source was fetched or adopted."
+  ],
+  "scratch_retention": "Raw downloaded source remains under /workspace/scratch/yuga-tf2-study; the repository stores metadata, bounded excerpts and analysis only."
+}

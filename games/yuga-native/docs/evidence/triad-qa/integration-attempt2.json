@@ -1,0 +1,747 @@
+{
+	"checks": [
+		{
+			"case": "actual_world_initializes_three_relays",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "solo_capture_requires_eight_seconds_and_no_immediate_supply",
+			"evidence": {
+				"after": {
+					"capture_team": "sun",
+					"contested": false,
+					"contributors": {
+						"moon": 0,
+						"sun": 1
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "sun",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "sun",
+					"progress": 8.0,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				},
+				"before": {
+					"capture_team": "sun",
+					"contested": false,
+					"contributors": {
+						"moon": 0,
+						"sun": 1
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "neutral",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "sun",
+					"progress": 7.89999999999999,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "same_troop_reference_counts_once",
+			"evidence": {
+				"intake": {
+					"conflicting_ids": 0,
+					"duplicate_rows": 4,
+					"input": 6,
+					"invalid_rows": 0,
+					"unique_alive": 2
+				},
+				"site": {
+					"capture_team": "sun",
+					"contested": false,
+					"contributors": {
+						"moon": 0,
+						"sun": 1
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "neutral",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "sun",
+					"progress": 1.0,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "more_troops_cap_at_two_and_dead_troops_do_not_contribute",
+			"evidence": {
+				"site": {
+					"capture_team": "sun",
+					"contested": false,
+					"contributors": {
+						"moon": 0,
+						"sun": 2
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "neutral",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "sun",
+					"progress": 3.0,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "both_teams_contest_without_progress_or_supply",
+			"evidence": {
+				"site": {
+					"capture_team": "sun",
+					"contested": true,
+					"contributors": {
+						"moon": 1,
+						"sun": 2
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "neutral",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "neutral",
+					"progress": 3.0,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "idle_partial_capture_decays",
+			"evidence": {
+				"after": {
+					"capture_team": "sun",
+					"contested": false,
+					"contributors": {
+						"moon": 0,
+						"sun": 0
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "neutral",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "neutral",
+					"progress": 2.0,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				},
+				"before": 3.0
+			},
+			"passed": true
+		},
+		{
+			"case": "hero_above_capture_height_cannot_contribute",
+			"evidence": {
+				"site": {
+					"capture_team": "neutral",
+					"contested": false,
+					"contributors": {
+						"moon": 0,
+						"sun": 0
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "neutral",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "neutral",
+					"progress": 0.0,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "documented_low_hover_boundary_counts",
+			"evidence": {
+				"feet_height": 2.5,
+				"site": {
+					"capture_team": "sun",
+					"contested": false,
+					"contributors": {
+						"moon": 0,
+						"sun": 1
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "neutral",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "sun",
+					"progress": 1.0,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "enemy_must_neutralize_before_capturing",
+			"evidence": {
+				"captured": {
+					"capture_team": "moon",
+					"contested": false,
+					"contributors": {
+						"moon": 1,
+						"sun": 0
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "moon",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "moon",
+					"progress": -8.0,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				},
+				"neutral": {
+					"capture_team": "neutral",
+					"contested": false,
+					"contributors": {
+						"moon": 1,
+						"sun": 0
+					},
+					"id": 1,
+					"label": "Lotus Relay",
+					"owner": "neutral",
+					"position": "(0.0, 0.0, 0.0)",
+					"pressure_team": "moon",
+					"progress": 0.0,
+					"radius": 5.0,
+					"supply_clock": 0.0
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "five_second_supply_clamps_real_troop_health_and_hero_ammo",
+			"evidence": {
+				"report": {
+					"arrows_total": 1,
+					"art": {
+						"animation_seconds": 0.416666666666667,
+						"cached_meshes": 23,
+						"collision_shapes": 9,
+						"finite": true,
+						"invalid_states": 0,
+						"materials": 13,
+						"mesh_instances": 156,
+						"night_blend": 0.0,
+						"nodes": 214,
+						"ready": true,
+						"scope": "Original offline relay presentation; state/damage authority belongs to relay_session. Flat capture tiles are non-solid; stepped plinths share explicit collision boxes.",
+						"sites": 3,
+						"states": [
+							{
+								"capture_team": "neutral",
+								"contested": false,
+								"id": 0,
+								"owner": "neutral",
+								"progress": 0.0
+							},
+							{
+								"capture_team": "sun",
+								"contested": false,
+								"id": 1,
+								"owner": "sun",
+								"progress": 1.0
+							},
+							{
+								"capture_team": "neutral",
+								"contested": false,
+								"id": 2,
+								"owner": "neutral",
+								"progress": 0.0
+							}
+						],
+						"static_bodies": 3
+					},
+					"healing_total": 2.0,
+					"last_event": "Lotus Relay supplied +1 arrows",
+					"last_receipt": 1,
+					"receipts_applied": 1,
+					"receipts_rejected": 0,
+					"rules": {
+						"actors": {
+							"conflicting_ids": 0,
+							"duplicate_rows": 0,
+							"input": 2,
+							"invalid_rows": 0,
+							"unique_alive": 2
+						},
+						"captures": 1,
+						"contests": 0,
+						"elapsed": 13.0,
+						"epoch": 7,
+						"last_support_id": 1,
+						"limits": {
+							"actors": 97,
+							"contributors_per_team": 2,
+							"events_per_step": 3,
+							"max_delta": 0.25,
+							"sites": 3,
+							"support_requests_per_step": 3
+						},
+						"neutralizations": 0,
+						"schema": 1,
+						"sites": [
+							{
+								"capture_team": "neutral",
+								"contested": false,
+								"contributors": {
+									"moon": 0,
+									"sun": 0
+								},
+								"id": 0,
+								"label": "Reed Relay",
+								"owner": "neutral",
+								"position": "(-40.0, 0.0, 0.0)",
+								"pressure_team": "neutral",
+								"progress": 0.0,
+								"radius": 5.0,
+								"supply_clock": 0.0
+							},
+							{
+								"capture_team": "sun",
+								"contested": false,
+								"contributors": {
+									"moon": 0,
+									"sun": 1
+								},
+								"id": 1,
+								"label": "Lotus Relay",
+								"owner": "sun",
+								"position": "(0.0, 0.0, 0.0)",
+								"pressure_team": "sun",
+								"progress": 8.0,
+								"radius": 5.0,
+								"supply_clock": 0.0
+							},
+							{
+								"capture_team": "neutral",
+								"contested": false,
+								"contributors": {
+									"moon": 0,
+									"sun": 0
+								},
+								"id": 2,
+								"label": "Sky Relay",
+								"owner": "neutral",
+								"position": "(40.0, 0.0, 0.0)",
+								"pressure_team": "neutral",
+								"progress": 0.0,
+								"radius": 5.0,
+								"supply_clock": 0.0
+							}
+						],
+						"steps": 130
+					},
+					"scope": "Offline relay capture and supplies; no hero health or network authority."
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "issued_support_receipt_applies_once_and_unissued_rejects",
+			"evidence": {
+				"first": {
+					"accepted": true,
+					"arrows": 3,
+					"healed": 6.0,
+					"malformed_result": false
+				},
+				"replay": {
+					"accepted": false,
+					"arrows": 0,
+					"healed": 0.0,
+					"malformed_result": false
+				},
+				"unissued": {
+					"accepted": false,
+					"arrows": 0,
+					"healed": 0.0,
+					"malformed_result": false
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "reset_invalidates_previous_epoch_receipts",
+			"evidence": {
+				"stale": {
+					"accepted": false,
+					"arrows": 0,
+					"healed": 0.0,
+					"malformed_result": false
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "dead_troop_cannot_be_healed_by_old_receipt",
+			"evidence": {
+				"result": {
+					"accepted": true,
+					"arrows": 0,
+					"healed": 0.0,
+					"malformed_result": false
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "receipt_rechecks_current_range_and_flight_height",
+			"evidence": {
+				"result": {
+					"accepted": true,
+					"arrows": 0,
+					"healed": 0.0,
+					"malformed_result": false
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "new_four_centimetre_wall_blocks_supply_ray",
+			"evidence": {
+				"result": {
+					"accepted": true,
+					"arrows": 0,
+					"healed": 0.0,
+					"malformed_result": false
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "removing_wall_restores_next_valid_supply",
+			"evidence": {
+				"result": {
+					"accepted": true,
+					"arrows": 0,
+					"healed": 6.0,
+					"malformed_result": false
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "oversize_actor_input_cannot_partially_capture_or_reward",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "nonfinite_troop_health_cannot_contribute",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "pause_freezes_capture_clock_and_due_supply",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "overview_freezes_world_and_direct_adapter",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "focus_loss_stops_due_supply",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "resume_awards_only_one_due_supply",
+			"evidence": {
+				"report": {
+					"arrows_total": 3,
+					"art": {
+						"animation_seconds": 0.933333333333335,
+						"cached_meshes": 23,
+						"collision_shapes": 9,
+						"finite": true,
+						"invalid_states": 0,
+						"materials": 13,
+						"mesh_instances": 156,
+						"night_blend": 0.0,
+						"nodes": 214,
+						"ready": true,
+						"scope": "Original offline relay presentation; state/damage authority belongs to relay_session. Flat capture tiles are non-solid; stepped plinths share explicit collision boxes.",
+						"sites": 3,
+						"states": [
+							{
+								"capture_team": "neutral",
+								"contested": false,
+								"id": 0,
+								"owner": "neutral",
+								"progress": 0.0
+							},
+							{
+								"capture_team": "sun",
+								"contested": false,
+								"id": 1,
+								"owner": "sun",
+								"progress": 1.0
+							},
+							{
+								"capture_team": "neutral",
+								"contested": false,
+								"id": 2,
+								"owner": "neutral",
+								"progress": 0.0
+							}
+						],
+						"static_bodies": 3
+					},
+					"healing_total": 0.0,
+					"last_event": "Lotus Relay supplied +3 arrows",
+					"last_receipt": 1,
+					"receipts_applied": 1,
+					"receipts_rejected": 0,
+					"rules": {
+						"actors": {
+							"conflicting_ids": 0,
+							"duplicate_rows": 0,
+							"input": 1,
+							"invalid_rows": 0,
+							"unique_alive": 1
+						},
+						"captures": 1,
+						"contests": 0,
+						"elapsed": 13.0,
+						"epoch": 13,
+						"last_support_id": 1,
+						"limits": {
+							"actors": 97,
+							"contributors_per_team": 2,
+							"events_per_step": 3,
+							"max_delta": 0.25,
+							"sites": 3,
+							"support_requests_per_step": 3
+						},
+						"neutralizations": 0,
+						"schema": 1,
+						"sites": [
+							{
+								"capture_team": "neutral",
+								"contested": false,
+								"contributors": {
+									"moon": 0,
+									"sun": 0
+								},
+								"id": 0,
+								"label": "Reed Relay",
+								"owner": "neutral",
+								"position": "(-40.0, 0.0, 0.0)",
+								"pressure_team": "neutral",
+								"progress": 0.0,
+								"radius": 5.0,
+								"supply_clock": 0.0
+							},
+							{
+								"capture_team": "sun",
+								"contested": false,
+								"contributors": {
+									"moon": 0,
+									"sun": 1
+								},
+								"id": 1,
+								"label": "Lotus Relay",
+								"owner": "sun",
+								"position": "(0.0, 0.0, 0.0)",
+								"pressure_team": "sun",
+								"progress": 8.0,
+								"radius": 5.0,
+								"supply_clock": 0.0
+							},
+							{
+								"capture_team": "neutral",
+								"contested": false,
+								"contributors": {
+									"moon": 0,
+									"sun": 0
+								},
+								"id": 2,
+								"label": "Sky Relay",
+								"owner": "neutral",
+								"position": "(40.0, 0.0, 0.0)",
+								"pressure_team": "neutral",
+								"progress": 0.0,
+								"radius": 5.0,
+								"supply_clock": 0.0
+							}
+						],
+						"steps": 130
+					},
+					"scope": "Offline relay capture and supplies; no hero health or network authority."
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "simultaneous_core_draw_stops_relays_and_has_draw_copy",
+			"evidence": {
+				"text": "Draw · both cores destroyed · Restart in pause"
+			},
+			"passed": true
+		},
+		{
+			"case": "ordinary_restart_resets_relays_and_thirty_unit_round",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "siege_drill_leaves_relays_inactive",
+			"evidence": {
+
+			},
+			"passed": false
+		},
+		{
+			"case": "rejected_drill_keeps_existing_relay_state",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "thirty_resets_do_not_accumulate_art_colliders_or_boxes",
+			"evidence": {
+				"army_boxes": 25,
+				"plinths": 3,
+				"relay_nodes": 215
+			},
+			"passed": true
+		},
+		{
+			"case": "three_real_plinths_stop_player_at_authored_geometry",
+			"evidence": {
+				"hits": [
+					{
+						"hit_y": 0.560000061988831,
+						"station_x": -34.0
+					},
+					{
+						"hit_y": 0.560000061988831,
+						"station_x": -6.0
+					},
+					{
+						"hit_y": 0.560000061988831,
+						"station_x": 34.0
+					}
+				]
+			},
+			"passed": true
+		},
+		{
+			"case": "all_lane_segments_clear_at_center_and_two_metre_offsets",
+			"evidence": {
+				"capsule_radius": 0.65,
+				"failures": [],
+				"offsets": [
+					-2,
+					0,
+					2
+				]
+			},
+			"passed": true
+		},
+		{
+			"case": "camera_collision_mask_detects_plinth",
+			"evidence": {
+				"safe_fraction": 0.265625
+			},
+			"passed": true
+		},
+		{
+			"case": "all_nine_plinth_shapes_have_matching_army_geometry",
+			"evidence": {
+				"army_boxes": 25,
+				"art_boxes": 9
+			},
+			"passed": true
+		},
+		{
+			"case": "relay_hud_fits_(960, 600)",
+			"evidence": {
+				"rect": "[P: (20.0, 164.0), S: (535.0, 82.0)]"
+			},
+			"passed": true
+		},
+		{
+			"case": "all_pause_actions_scroll_into_view_(960, 600)",
+			"evidence": {
+				"actions": 11
+			},
+			"passed": true
+		},
+		{
+			"case": "relay_hud_fits_(1280, 720)",
+			"evidence": {
+				"rect": "[P: (20.0, 164.0), S: (535.0, 82.0)]"
+			},
+			"passed": true
+		},
+		{
+			"case": "all_pause_actions_scroll_into_view_(1280, 720)",
+			"evidence": {
+				"actions": 11
+			},
+			"passed": true
+		},
+		{
+			"case": "source_files_unchanged_during_run",
+			"evidence": {
+				"res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+				"res://scripts/confluence_world.gd": "e0fb3f66e8a2c60d3956173f5d1cb2da661b13ad3a5040475114a959001d7514",
+				"res://scripts/lane_army.gd": "da777328b8fe299c24d59c9175cd4d845588c9090dd43935b4253741e2a1b58a",
+				"res://scripts/lane_minion.gd": "ba2339640a133307a495619dc60621333afa655d7db878ca3312909994acf983",
+				"res://scripts/player.gd": "8561ec5cf206619d9475f9643c26446f3fd029c6e8835936474e6f08748a844c",
+				"res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+				"res://scripts/relay_art.gd": "4cacbbc1204d4828cde9df788ef255537ea6caf0c6d3e9ad88e3a35f8d9f8bdf",
+				"res://scripts/relay_control.gd": "42d68a7d034c31033c5e105fd227e9e179d35d88209428544f396fa39f2fe000",
+				"res://scripts/relay_session.gd": "3c15d66e32e59f0b593fa7e3a815a4163edaaf427e50c9e8a5186908330ff0a3",
+				"res://tools/test-relay-integration.gd": "5c8a576e4a429c0e9e9399975576176c7e21fd04225859361328005c0f9bb8d8"
+			},
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": false,
+	"scope": "Actual instantiated offline world, real army/player health/ammo, production fixed-step relay adapter, retained/delayed receipt fixtures, headless PhysicsServer rays/sweeps and logical UI focus/layout. Troops and time are explicitly isolated for deterministic counterexamples. No OS input, render/beauty, online authorization or hardware-performance claim.",
+	"source_sha256": {
+		"res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+		"res://scripts/confluence_world.gd": "e0fb3f66e8a2c60d3956173f5d1cb2da661b13ad3a5040475114a959001d7514",
+		"res://scripts/lane_army.gd": "da777328b8fe299c24d59c9175cd4d845588c9090dd43935b4253741e2a1b58a",
+		"res://scripts/lane_minion.gd": "ba2339640a133307a495619dc60621333afa655d7db878ca3312909994acf983",
+		"res://scripts/player.gd": "8561ec5cf206619d9475f9643c26446f3fd029c6e8835936474e6f08748a844c",
+		"res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+		"res://scripts/relay_art.gd": "4cacbbc1204d4828cde9df788ef255537ea6caf0c6d3e9ad88e3a35f8d9f8bdf",
+		"res://scripts/relay_control.gd": "42d68a7d034c31033c5e105fd227e9e179d35d88209428544f396fa39f2fe000",
+		"res://scripts/relay_session.gd": "3c15d66e32e59f0b593fa7e3a815a4163edaaf427e50c9e8a5186908330ff0a3",
+		"res://tools/test-relay-integration.gd": "5c8a576e4a429c0e9e9399975576176c7e21fd04225859361328005c0f9bb8d8"
+	}
+}

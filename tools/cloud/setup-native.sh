@@ -54,5 +54,9 @@ godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/si
 python3 games/yuga-native/tools/audio/build-siege-audio.py --check --report="$validation_dir/siege-audio.json"
 python3 games/yuga-native/tests/traversal_security_cases.py --report="$validation_dir/security.json"
 python3 games/yuga-native/tests/release_traversal_cases.py --report="$validation_dir/release-gates.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tools/test-relay-control.gd -- --report="$validation_dir/relay-control.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tools/test-relay-art.gd -- --report="$validation_dir/relay-art.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tools/test-relay-integration.gd -- --report="$validation_dir/relay-integration.json"
+python3 games/yuga-native/tests/release_triad_cases.py --report="$validation_dir/triad-release-gates.json"
 python3 games/yuga-native/tools/setup-render-runtime.py
 printf 'Native setup checks complete. Reports: %s\n' "$validation_dir"

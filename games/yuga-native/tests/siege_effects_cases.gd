@@ -28,6 +28,175 @@ func _wait_real(seconds: float) -> void:
 	var deadline := Time.get_ticks_usec() + int(seconds * 1000000.0)
 	while Time.get_ticks_usec() < deadline: await process_frame
 
+func _mesh_facts(mesh: Mesh, radius: float) -> Dictionary:
+	var vertices: PackedVector3Array = mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	var colors: PackedColorArray = mesh.surface_get_arrays(0)[Mesh.ARRAY_COLOR]
+	var finite_inside := true
+	var extent := 0.0
+	var bright_area := 0.0
+	var dark := 0
+	var bright := 0
+	for index in range(vertices.size()):
+		var point := vertices[index]
+		var radial := Vector2(point.x,point.z).length()
+		extent = maxf(extent,radial)
+		finite_inside = finite_inside and point.is_finite() and radial<=radius+.0001 and point.y>=0.0 and point.y<.05
+		if colors[index].r>.9: bright += 1
+		else: dark += 1
+	for index in range(0,vertices.size(),3):
+		if colors[index].r>.9:
+			bright_area += (vertices[index+1]-vertices[index]).cross(vertices[index+2]-vertices[index]).length()*.5
+	return {"finite_inside":finite_inside,"extent":extent,"bright_fraction":bright_area/(PI*radius*radius),
+		"dark_vertices":dark,"bright_vertices":bright,"vertices":vertices.size(),"surfaces":mesh.get_surface_count()}
+
+func _geometry_cases(fx: Node3D) -> void:
+	fx.clear()
+	fx.set_volume(0.0)
+	var boundaries_valid := true
+	var glyphs_valid := true
+	var gaps_valid := true
+	var dark_and_sparse := true
+	var shapes_distinct := true
+	var boundary_vertices := 0
+	for radius in [.1,2.4,3.0,20.0]:
+		var boundary: Mesh = fx._hazard_footprint(radius)
+		var facts := _mesh_facts(boundary,radius)
+		boundary_vertices = facts.vertices
+		boundaries_valid = boundaries_valid and facts.finite_inside and is_equal_approx(facts.extent,radius) and facts.surfaces==1
+		dark_and_sparse = dark_and_sparse and facts.dark_vertices>0 and facts.bright_vertices>0 and facts.bright_fraction<.12
+		var points: PackedVector3Array = boundary.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+		var occupied := {}
+		for point in points:
+			if Vector2(point.x,point.z).length()<radius-.00001: continue
+			var angle := fposmod(atan2(point.x,point.z),TAU)
+			var sector := roundi(angle/(TAU/12.0))%12
+			var offset := absf(wrapf(angle-float(sector)*TAU/12.0,-PI,PI))
+			gaps_valid = gaps_valid and offset<=PI/12.0*.58+.00001
+			occupied[sector] = true
+		gaps_valid = gaps_valid and occupied.size()==12
+		for outward in [false,true]:
+			var sun: Mesh = fx._team_glyph("sun",radius,outward)
+			var moon: Mesh = fx._team_glyph("moon",radius,outward)
+			var sun_facts := _mesh_facts(sun,radius)
+			var moon_facts := _mesh_facts(moon,radius)
+			glyphs_valid = glyphs_valid and sun_facts.finite_inside and moon_facts.finite_inside and sun_facts.surfaces==1 and moon_facts.surfaces==1
+			shapes_distinct = shapes_distinct and sun_facts.vertices==48 and moon_facts.vertices==144
+	_check("segmented mesh preserves exact radius at minimum normal and maximum sizes",boundaries_valid,{"vertices_per_boundary":boundary_vertices})
+	_check("twelve boundary segments retain measured open angular gaps",gaps_valid)
+	_check("dark edged bright marks cover less than twelve percent of footprint",dark_and_sparse)
+	_check("both team glyphs remain finite and inside the attack radius",glyphs_valid)
+	_check("Sun triangles and Moon brackets retain distinct topology without color",shapes_distinct)
+	var event := _event(1)
+	event.origin = Vector3(8,1.3,-5)
+	event.target = Vector3(-2,0,4.2)
+	fx.handle_event(event)
+	var effect: Dictionary = fx._effects[0]
+	var source_direction: Vector3 = event.origin-event.target
+	source_direction.y = 0.0
+	_check("source notch points toward firing unit in world space",effect.node.global_basis.z.is_equal_approx(source_direction.normalized()))
+	_check("windup remains unshaded without emissive flash",effect.material.shading_mode==BaseMaterial3D.SHADING_MODE_UNSHADED and not effect.material.emission_enabled and is_equal_approx(effect.material.albedo_color.a,.88))
+	var mesh_id: int = effect.ring.mesh.get_instance_id()
+	var glyph_id: int = effect.glyph.mesh.get_instance_id()
+	var material_id: int = effect.material.get_instance_id()
+	var previous_scale := 1.1
+	var progress_valid := true
+	var identities_stable := true
+	for step in range(9):
+		if step>0: fx._process(.1)
+		effect = fx._effects[0]
+		progress_valid = progress_valid and effect.glyph.scale.x<previous_scale and effect.ring.scale.is_equal_approx(Vector3.ONE) and effect.node.global_position.is_equal_approx(event.target+Vector3.UP*.055)
+		identities_stable = identities_stable and effect.ring.mesh.get_instance_id()==mesh_id and effect.glyph.mesh.get_instance_id()==glyph_id and effect.material.get_instance_id()==material_id
+		previous_scale = effect.glyph.scale.x
+	_check("windup countdown converges while boundary and target remain fixed",progress_valid and is_equal_approx(previous_scale,.35))
+	_check("animation reuses existing meshes and one material without allocation",identities_stable and _nodes(fx)==12)
+	var impact := event.duplicate(true)
+	impact.kind = "impact"
+	impact.delay = 0.0
+	fx.handle_event(impact)
+	previous_scale = 0.0
+	var previous_alpha := 1.0
+	var aftermath_valid := true
+	var aftermath_samples: Array[Dictionary] = []
+	for step in range(5):
+		if step>0: fx._process(.1)
+		effect = fx._effects[0]
+		aftermath_valid = aftermath_valid and effect.glyph.scale.x>previous_scale and effect.material.albedo_color.a<previous_alpha and effect.material.albedo_color.a<=.620001 and effect.ring.scale.is_equal_approx(Vector3.ONE)
+		aftermath_samples.append({"age":effect.age,"glyph_scale":effect.glyph.scale.x,"opacity":effect.material.albedo_color.a})
+		previous_scale = effect.glyph.scale.x
+		previous_alpha = effect.material.albedo_color.a
+	_check("aftermath moves outward and fades without enlarging attack boundary",aftermath_valid,{"samples":aftermath_samples})
+	fx.clear()
+	event = _event(1)
+	event.origin = event.target
+	fx.handle_event(event)
+	_check("coincident source and target retain finite world orientation",fx._effects[0].node.global_basis.is_finite())
+	fx.clear()
+	# Projection measures actual vertices from the retained siege capture camera.
+	# It cannot establish visibility through troops, raster thickness or contrast.
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(1280,720)
+	viewport.own_world_3d = true
+	root.add_child(viewport)
+	var camera := Camera3D.new()
+	viewport.add_child(camera)
+	camera.position = Vector3(8,12,-28)
+	camera.look_at(Vector3(0,1,0),Vector3.UP)
+	camera.fov = 58.0
+	var projections: Array[Dictionary] = []
+	var projection_valid := true
+	for fixture in [["sun",3.0,4.2000046,-12.568],["moon",3.0,-4.0099945,12.568],["moon",2.4,-.9700012,3.705],["sun",2.4,1.1600037,-3.55]]:
+		event = _event(1,"windup","cannon_cart" if fixture[1]==3.0 else "royal_chariot",fixture[0])
+		event.target = Vector3(0,0,fixture[2])
+		event.origin = Vector3(0,1.3,fixture[3])
+		fx.handle_event(event)
+		effect = fx._effects[0]
+		var points: PackedVector3Array = effect.ring.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+		var bounds := Rect2()
+		for index in range(points.size()):
+			var world: Vector3 = effect.ring.to_global(points[index])
+			var screen := camera.unproject_position(world)
+			projection_valid = projection_valid and screen.is_finite() and not camera.is_position_behind(world)
+			bounds = Rect2(screen,Vector2.ZERO) if index==0 else bounds.expand(screen)
+		projection_valid = projection_valid and bounds.position.x>=0.0 and bounds.position.y>=0.0 and bounds.end.x<=1280.0 and bounds.end.y<=720.0 and bounds.size.x>60.0 and bounds.size.y>15.0
+		projections.append({"team":fixture[0],"radius":fixture[1],"target_z":fixture[2],"projected_width_px":bounds.size.x,"projected_height_px":bounds.size.y})
+		fx.clear()
+	_check("actual warning vertices project inside recorded siege camera",projection_valid,{"viewport":[1280,720],"camera":[8,12,-28],"fov":58,"footprints":projections})
+	viewport.free()
+	var repeated_valid := true
+	for cycle in range(20):
+		fx.clear()
+		fx.set_volume(0.0)
+		fx.handle_event(_event(1,"windup","cannon_cart","sun" if cycle%2==0 else "moon"))
+		fx._process(.2)
+		effect = fx._effects[0]
+		var age: float = effect.age
+		var scale: Vector3 = effect.glyph.scale
+		fx.set_suspended(true)
+		fx.set_suspended(true)
+		fx._process(3.0)
+		fx.handle_event(_event(2))
+		repeated_valid = repeated_valid and fx.report().active_events==1 and effect.age==age and effect.glyph.scale==scale and fx.report().playing_voices==0
+		fx.set_suspended(false)
+		fx.set_suspended(false)
+		fx.set_volume(1.0)
+		fx.set_volume(0.0)
+		repeated_valid = repeated_valid and effect.ring.visible and fx.report().playing_voices==0
+		var cancel := _event(1,"impact")
+		cancel.cancelled = true
+		cancel.damage = 0.0
+		fx.handle_event(cancel)
+		fx.handle_event(cancel)
+		repeated_valid = repeated_valid and fx.report().active_events==0 and _nodes(fx)==7
+		fx.handle_event(_event(2))
+		fx._process(1.16)
+		repeated_valid = repeated_valid and fx.report().active_events==0 and _nodes(fx)==7
+		fx.handle_event(_event(3))
+		paused = true
+		fx.handle_event({"kind":"reset","id":0})
+		paused = false
+		repeated_valid = repeated_valid and fx.report().active_events==0 and fx.report().history_size==0 and fx.report().playing_voices==0 and _nodes(fx)==7
+	_check("twenty mixed pause mute cancellation expiry and reset cycles remain bounded",repeated_valid)
+
 func _run() -> void:
 	var source_hash := FileAccess.get_sha256("res://scripts/siege_effects.gd")
 	var host := Node3D.new()
@@ -176,6 +345,7 @@ func _run() -> void:
 		fx.handle_event(_event(1))
 		fx.handle_event({"kind":"reset","id":0})
 	_check("twenty reset cycles leave no presentation accumulation",_nodes(fx)==7 and host.get_child_count()==stable_children)
+	_geometry_cases(fx)
 	var released: WeakRef = weakref(fx)
 	host.queue_free()
 	await process_frame
@@ -187,7 +357,7 @@ func _run() -> void:
 	for check in checks: passed = passed and check.passed
 	var report := {"passed":passed,"engine":Engine.get_version_info().string,"checks":checks,
 		"sources":{"runtime":source_hash,"runner":FileAccess.get_sha256(get_script().resource_path),"audio_provenance":FileAccess.get_sha256("res://assets/audio/siege/provenance.json")},
-		"scope":"Headless real Node3D/mesh/audio states, finite arcs, validated events, 10000-event flood, bounded resources, pause/mute/cancel/reset/disposal. No audible-quality, actual rendered readability, OS focus or hardware-performance claim."}
+		"scope":"Headless real Node3D/mesh/audio states, finite arcs and vertices, segmented footprint and team topology, fixed-camera projection, validated events, 10000-event flood, bounded resources, pause/mute/cancel/reset/disposal. No audible-quality, actual rendered readability, OS focus or hardware-performance claim."}
 	if not output.is_empty():
 		var file := FileAccess.open(output,FileAccess.WRITE)
 		if file: file.store_string(JSON.stringify(report,"\t")+"\n")

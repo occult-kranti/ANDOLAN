@@ -8,6 +8,9 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[3]
 MANIFESTS = [
+    "games/yuga-native/docs/evidence/triad-render-r1-rejected/archive-manifest.json",
+    "games/yuga-native/docs/evidence/triad-integration/archive-manifest.json",
+    "games/yuga-native/docs/evidence/triad-qa/evidence-manifest.json",
     "games/yuga-native/docs/evidence/siege-published/archive-manifest.json",
     "games/yuga-native/docs/evidence/siege-window-r2/archive-manifest.json",
     "games/yuga-native/docs/evidence/siege-traversal-render-r1/archive-manifest.json",

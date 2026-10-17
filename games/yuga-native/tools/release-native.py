@@ -26,9 +26,17 @@ NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,160}\Z")
 CHECKS = ("archive", "media", "script", "film", "motion", "vfx", "audio", "native",
           "world-scene", "world-flow", "world-lighting")
 TRAVERSAL_CHECKS = ("traversal", "traversal-pose", "army", "controls", "traversal-audio", "stress",
-                    "security", "release-gates", "siege-army", "vehicle-art", "siege-effects", "siege-audio", "siege-ui", "siege-release-gates", "siege-pose")
-TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/siege-traversal-render-r1"
-SIEGE_CAPTURE_DIRECTORY = "docs/evidence/siege-render-r2"
+                    "security", "release-gates", "siege-army", "vehicle-art", "siege-effects", "siege-audio", "siege-ui", "siege-release-gates", "siege-pose",
+                    "relay-control", "relay-art", "relay-integration", "triad-release-gates")
+TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/triad-traversal-render-r1"
+SIEGE_CAPTURE_DIRECTORY = "docs/evidence/triad-siege-render-r1"
+TRIAD_CAPTURE_DIRECTORY = "docs/evidence/triad-relay-render-r1"
+TRIAD_SELECTED_FRAMES = (15, 90, 175)
+TRIAD_STILLS = {"still-lotus-day.png", "still-lotus-night.png", "still-reed-day.png", "still-sky-day.png"}
+TRIAD_CAPTURE_ASSETS = {"yuga-triad-preview.mp4", "triad-render-review.json", "triad-video.json", "TRIAD-RENDER-REVIEW.md"} | TRIAD_STILLS
+TRIAD_CAPTURE_ASSETS |= {f"triad-frame-{index:05d}.png" for index in TRIAD_SELECTED_FRAMES}
+TRIAD_FIXED_SOURCES = {"tools/capture-triad.gd", "tools/run-triad-capture.py"}
+TRIAD_REQUIRED_RUNTIME = {"scripts/relay_control.gd", "scripts/relay_session.gd", "scripts/relay_art.gd"}
 SIEGE_CAPTURE_ASSETS = {"yuga-siege-preview.mp4", "siege-render-review.json", "siege-video.json", "SIEGE-RENDER-REVIEW.md"}
 SIEGE_SELECTED_FRAMES = (45, 90, 145)
 SIEGE_CAPTURE_ASSETS |= {f"siege-frame-{index:05d}.png" for index in SIEGE_SELECTED_FRAMES}
@@ -55,6 +63,10 @@ def traversal_release(tag):
 
 def siege_release(tag):
     return traversal_release(tag) and tag.endswith("-siege")
+
+
+def triad_release(tag):
+    return traversal_release(tag) and TAG.fullmatch(tag) is not None and tag.endswith("-triad-siege")
 REQUIRED_ARCHIVE = {
     "yuga-confluence-duel.mp4", "combat-film-render.json", "combat-film-video.json",
     "confluence-duel.json", "capture-combat-film.gd", "cinematic_actor.gd",
@@ -350,6 +362,163 @@ def validate_siege_capture(directory, exported, decode=False):
     return {"passed":True,"frames":180,"physics_ticks":360,"source_files":len(expected),"decoded_this_run":decode}
 
 
+def validate_triad_capture(directory, exported, decode=False):
+    """Bind actual relay take, retained views and video to the exported sources.
+
+    Imported cache hashes document the capture worker. They are not compared to
+    freshly generated CI caches, whose binary scene serialization can differ.
+    The three original GLB source hashes are nevertheless pinned to this export.
+    """
+    render_path = member(directory, "triad-render-review.json")
+    render = json.loads(render_path.read_text())
+    video = json.loads(member(directory, "triad-video.json").read_text())
+    member(directory, "TRIAD-RENDER-REVIEW.md")
+    require(render.get("complete") is True and not render.get("failure") and render.get("preview", False) is False,
+            "Triad capture failed, incomplete or preview-only")
+    require(render.get("renderer") == "forward_plus" and str(render.get("display", "")).lower() == "x11",
+            "Triad capture lacks an actual Forward+ X11 display")
+    require((render.get("fps"), render.get("physics_hz"), render.get("take_physics_ticks"),
+             render.get("width"), render.get("height")) == (30, 60, 360, 1280, 720) and
+            type(render.get("time_scale")) in (int, float) and render["time_scale"] == 1.0,
+            "Triad capture timing, resolution or time scale differs")
+    require(all(render.get("outcomes", {}).get(key) is True for key in ("captured", "supplied", "finite")),
+            "Triad capture did not observe capture, supply and finite state")
+    frames = render.get("frames")
+    start = render.get("take_start_tick")
+    require(isinstance(frames, list) and len(frames) == 180 and type(start) is int and start >= 0,
+            "Triad frame count or starting tick is invalid")
+
+    def finite_number(value):
+        return type(value) in (int, float) and math.isfinite(value)
+
+    def rules_snapshot(snapshot):
+        require(isinstance(snapshot, dict) and type(snapshot.get("arrows_total")) is int and snapshot["arrows_total"] >= 0,
+                "Triad supply counter is invalid")
+        rules = snapshot.get("rules", {})
+        require(isinstance(rules, dict) and type(rules.get("epoch")) is int and rules["epoch"] > 0 and
+                type(rules.get("steps")) is int and rules["steps"] >= 0 and
+                type(rules.get("last_support_id")) is int and rules["last_support_id"] >= 0,
+                "Triad rule epoch, steps or receipt counter is invalid")
+        require(finite_number(rules.get("elapsed")) and rules["elapsed"] >= 0 and
+                abs(rules["elapsed"]-rules["steps"]*.1) < 1e-5,
+                "Triad rule clock differs from fixed 0.1 second steps")
+        sites = rules.get("sites")
+        require(isinstance(sites, list) and len(sites) == 3, "Triad report must contain three fixed sites")
+        for index, site in enumerate(sites):
+            require(isinstance(site, dict) and type(site.get("id")) is int and site["id"] == index and
+                    site.get("label") == ("Reed Relay", "Lotus Relay", "Sky Relay")[index] and
+                    isinstance(site.get("position"), list) and len(site["position"]) == 3 and
+                    all(finite_number(value) for value in site["position"]) and
+                    site.get("position") == [[-40,0,0],[0,0,0],[40,0,0]][index] and site.get("radius") == 5,
+                    "Triad site identity or geometry differs")
+            require(site.get("owner") in ("neutral", "sun", "moon") and type(site.get("contested")) is bool and
+                    finite_number(site.get("progress")) and -8 <= site["progress"] <= 8 and
+                    finite_number(site.get("supply_clock")) and 0 <= site["supply_clock"] < 5,
+                    "Triad site has invalid ownership, progress or supply state")
+            require((site["owner"] == "neutral" and abs(site["progress"]) < 8) or
+                    (site["owner"] == "sun" and site["progress"] > 0) or
+                    (site["owner"] == "moon" and site["progress"] < 0),
+                    "Triad owner and signed progress contradict one another")
+        return rules
+
+    def image_metadata(image, filename):
+        require(isinstance(image, dict) and image.get("file") == filename and
+                (image.get("width"), image.get("height")) == (1280, 720), "Triad image name or dimensions differ")
+        require(isinstance(image.get("sha256"), str) and re.fullmatch(r"[a-f0-9]{64}", image["sha256"]) is not None,
+                "Triad image hash is invalid")
+        require(all(type(image.get(key)) is int and image[key] > 0 for key in
+                    ("draw_calls", "rendered_objects", "rendered_primitives")), "Triad image lacks actual renderer counters")
+
+    def retained_image(image, filename):
+        path = member(directory, filename)
+        with path.open("rb") as stream:
+            header = stream.read(24)
+        require(len(header) == 24 and header[:8] == b"\x89PNG\r\n\x1a\n" and
+                struct.unpack(">II", header[16:24]) == (1280, 720) and digest(path) == image["sha256"],
+                "Retained Triad image differs: " + filename)
+
+    before = render.get("before", {})
+    after = render.get("after", {})
+    before_rules = rules_snapshot(before)
+    after_rules = rules_snapshot(after)
+    require(before_rules["sites"][1]["owner"] == "neutral" and before["arrows_total"] == 0,
+            "Triad take must begin before Lotus ownership and supplies")
+    require(after_rules["sites"][1]["owner"] == "sun" and after["arrows_total"] >= 3,
+            "Triad take must end with Sun Lotus ownership and applied arrows")
+    require(after_rules["epoch"] == before_rules["epoch"] and after_rules["steps"]-before_rules["steps"] == 60,
+            "Triad rules reset or did not advance sixty actual fixed steps")
+    previous_draw = -1
+    previous_rules = before_rules
+    previous_arrows = 0
+    for index, frame in enumerate(frames):
+        require(type(frame.get("index")) is int and frame["index"] == index and
+                type(frame.get("physics_tick_delta")) is int and frame["physics_tick_delta"] == 2 and
+                type(frame.get("physics_tick")) is int and frame["physics_tick"] == start+2*(index+1) and
+                frame.get("finite") is True, "Triad frame sequence or finite state is invalid")
+        require(type(frame.get("render_frame")) is int and frame["render_frame"] > previous_draw,
+                "Triad renderer frame counter did not advance")
+        previous_draw = frame["render_frame"]
+        image = frame.get("image", {})
+        image_metadata(image, f"frame-{index:05d}.png")
+        if index in TRIAD_SELECTED_FRAMES:
+            retained_image(image, f"triad-frame-{index:05d}.png")
+        snapshot = frame.get("relays", {})
+        rules = rules_snapshot(snapshot)
+        require(rules["epoch"] == before_rules["epoch"] and
+                0 <= rules["steps"]-previous_rules["steps"] <= 1 and
+                0 <= rules["last_support_id"]-previous_rules["last_support_id"] <= 3 and
+                snapshot["arrows_total"] >= previous_arrows,
+                "Triad frame resets or regresses relay time/receipts/supplies")
+        ammo = frame.get("ammo")
+        require(type(ammo) is int and 0 <= ammo <= 12 and ammo == min(12,3+snapshot["arrows_total"]),
+                "Triad frame ammo differs from initially staged three arrows and applied supplies")
+        previous_rules, previous_arrows = rules, snapshot["arrows_total"]
+    require(frames[0]["ammo"] == 3 and frames[-1]["ammo"] == 6 and
+            previous_rules == after_rules and previous_arrows == after["arrows_total"],
+            "Triad ending snapshot or three-to-six arrow demonstration differs")
+    stills = render.get("stills", [])
+    require(isinstance(stills, list) and len(stills) == 4 and
+            {row.get("image", {}).get("file") for row in stills} == TRIAD_STILLS,
+            "Triad capture must retain the four specified relay views")
+    for still in stills:
+        image = still["image"]
+        image_metadata(image, image["file"])
+        retained_image(image, image["file"])
+    expected = set(CAPTURE_FIXED_SOURCES) | TRIAD_FIXED_SOURCES
+    for folder in ("scripts", "scenes", "assets"):
+        expected.update(path.relative_to(PROJECT).as_posix() for path in (PROJECT/folder).rglob("*") if path.is_file())
+    sources = render.get("source_sha256", {})
+    require(TRIAD_REQUIRED_RUNTIME <= expected and isinstance(sources, dict) and
+            set(sources) == {"res://"+name for name in expected}, "Triad source inventory differs")
+    exported_sources = exported.get("source", {}).get("files", {})
+    shared = {name for name in expected if name == "project.godot" or name.split("/")[0] in ("scripts", "scenes", "assets")}
+    require(shared == {name for name in exported_sources if name == "project.godot" or name.split("/")[0] in ("scripts", "scenes", "assets")},
+            "Triad exported runtime source set differs")
+    for name in expected:
+        actual = record(member(PROJECT, name))
+        require(sources["res://"+name] == actual["sha256"], "Triad captured source changed: " + name)
+        if name in shared:
+            require(exported_sources[name] == actual, "Triad exported source differs: " + name)
+    imports = render.get("imports", {})
+    require(isinstance(imports, dict) and set(imports) == {"res://assets/heroes/rama-production.glb", "res://assets/world/architecture.glb", "res://assets/world/nature.glb"},
+            "Triad capture omits its three imported-asset proofs")
+    for entry in imports.values():
+        require(isinstance(entry, dict) and entry.get("fresh") is True and
+                isinstance(entry.get("sha256"), str) and re.fullmatch(r"[a-f0-9]{64}", entry["sha256"]) is not None and
+                isinstance(entry.get("imported"), str) and re.fullmatch(r"res://\.godot/imported/[A-Za-z0-9._-]+\.scn", entry["imported"]) is not None,
+                "Triad imported-asset proof is stale, malformed or unsafe")
+    movie = member(directory, "yuga-triad-preview.mp4")
+    require(video.get("complete") is True and video.get("file") == movie.name and
+            record(movie) == {key:video.get(key) for key in ("bytes", "sha256")}, "Triad movie bytes differ")
+    require(video.get("capture_report_sha256") == digest(render_path), "Triad movie links a different capture report")
+    signature = traversal_probe_signature(video.get("probe", {}))
+    if decode:
+        require(probe_traversal_movie(movie) == signature, "Fresh decoded Triad movie differs")
+    return {"passed":True,"frames":180,"physics_ticks":360,"retained_frames":3,"retained_stills":4,
+            "source_files":len(expected),"imports":3,"decoded_this_run":decode,"video":record(movie),
+            "scope":"Recorded continuous relay simulation, retained image bytes, decoded media and source/export identity. No rerender, OS-input, audio or hardware-performance claim."}
+
+
 def stage(args):
     require(TAG.fullmatch(args.tag), "Unexpected release tag")
     commit = git("rev-parse", "HEAD")
@@ -412,6 +581,15 @@ def stage(args):
         for name in sorted(SIEGE_CAPTURE_ASSETS): copy(capture/name)
         copy(PROJECT/"docs/SIEGE_MILESTONE.md", "SIEGE-MILESTONE.md")
         copy(PROJECT/"assets/audio/siege/provenance.json", "SIEGE-AUDIO-PROVENANCE.json")
+    if triad_release(args.tag):
+        capture = PROJECT / TRIAD_CAPTURE_DIRECTORY
+        validate_triad_capture(capture, exported, decode=True)
+        captured_sources = json.loads(member(capture,"triad-render-review.json").read_text())["source_sha256"]
+        tracked = [str(member(capture,name).relative_to(REPO)) for name in sorted(TRIAD_CAPTURE_ASSETS)]
+        tracked += [str(member(PROJECT,name.removeprefix("res://")).relative_to(REPO)) for name in sorted(captured_sources)]
+        git("ls-files", "--error-unmatch", "--", *tracked)
+        require(not git("diff", "--name-only", "HEAD", "--", *tracked), "Triad capture/source differs from committed checkout")
+        for name in sorted(TRIAD_CAPTURE_ASSETS): copy(capture/name)
     notes = PROJECT / ("docs/RELEASE_TRAVERSAL_ARMIES.md" if traversal_release(args.tag) else "docs/RELEASE_CONFLUENCE_DUEL.md")
     text = notes.read_text() if notes.exists() else (
         "# YUGA — Confluence duel preview\n\nDownload yuga-confluence-duel.mp4 for the original 24-second film. "
@@ -425,6 +603,10 @@ def stage(args):
         text += ("\nThe separate yuga-traversal-preview.mp4 contains 180 consecutive rendered frames (six seconds at simulated 30 FPS). "
                  "Its captured source inventory matches this checkout and the shared exported runtime sources. Five retained stills include separately staged city/army views. "
                  "The traversal video is silent; real OS-input testing and hardware performance are separate evidence.\n")
+    if triad_release(args.tag):
+        text += ("\nThe separate yuga-triad-preview.mp4 shows six seconds of continuous offline relay capture and applied arrow supply, "
+                 "with 180 rendered frames and 360 actual physics ticks. Three retained take frames and four separately staged relay views "
+                 "are source-bound to this tagged runtime. The video is silent; multiplayer, Windows execution, final art and hardware performance remain separate gates.\n")
     (args.output / "RELEASE-NOTES.md").write_text(text)
     sources["RELEASE-NOTES.md"] = "Generated release scope with committed notes when available"
     files = {name: record(args.output / name) for name in sorted(sources)}
@@ -461,6 +643,9 @@ def verify(directory, tag, commit):
         if siege_release(tag):
             require(SIEGE_CAPTURE_ASSETS | {"SIEGE-MILESTONE.md","SIEGE-AUDIO-PROVENANCE.json"} <= set(inventory["files"]), "Siege release omits required assets")
             validate_siege_capture(directory, exported)
+        if triad_release(tag):
+            require(TRIAD_CAPTURE_ASSETS <= set(inventory["files"]), "Triad release omits required capture assets")
+            validate_triad_capture(directory, exported)
         require(packages["git"]["head"] == commit and exported["git"]["head"] == commit,
                 "Feature package source mismatch")
         for platform in ("linux", "windows"):

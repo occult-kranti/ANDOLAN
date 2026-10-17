@@ -7,6 +7,8 @@ const HISTORY_CAP := 64
 const DEFAULT_VOLUME := 0.35
 const CUE_GAIN_DB := -12.0
 const IMPACT_LIFETIME := 0.48
+const HAZARD_SEGMENTS := 12
+const HAZARD_COVERAGE := 0.58
 const ROLES := {"cannon_cart":"cannon", "royal_chariot":"chariot"}
 const AUDIO_BASE := "res://assets/audio/siege/"
 const CUE_NAMES := ["cannon_windup", "cannon_impact", "chariot_windup", "chariot_impact"]
@@ -195,10 +197,10 @@ func _material(team: String) -> StandardMaterial3D:
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	material.albedo_color = Color("ffc56c") if team == "sun" else Color("89d9ef")
-	material.emission_enabled = true
-	material.emission = material.albedo_color
-	material.emission_energy_multiplier = 0.35
+	material.vertex_color_use_as_albedo = true
+	material.albedo_color = Color("efad52") if team == "sun" else Color("70c5d5")
+	# Unshaded geometry remains visible at night without emissive bloom/flash.
+	material.emission_enabled = false
 	return material
 
 func _mesh(parent: Node3D, shape: Mesh, material: Material, label: String) -> MeshInstance3D:
@@ -210,29 +212,74 @@ func _mesh(parent: Node3D, shape: Mesh, material: Material, label: String) -> Me
 	parent.add_child(mesh)
 	return mesh
 
-func _team_glyph(team: String, radius: float) -> ImmediateMesh:
+func _triangle(geometry: ImmediateMesh, a: Vector3, b: Vector3, c: Vector3, color: Color) -> void:
+	geometry.surface_set_color(color)
+	geometry.surface_add_vertex(a)
+	geometry.surface_add_vertex(b)
+	geometry.surface_add_vertex(c)
+
+func _quad(geometry: ImmediateMesh, a: Vector3, b: Vector3, c: Vector3, d: Vector3, color: Color) -> void:
+	_triangle(geometry,a,b,c,color)
+	_triangle(geometry,a,c,d,color)
+
+func _flat_point(angle: float, radius: float, height := 0.0) -> Vector3:
+	return Vector3(sin(angle)*radius,height,cos(angle)*radius)
+
+func _hazard_footprint(radius: float) -> ImmediateMesh:
+	# Twelve broken boundary ribbons expose the true maximum radius, while a
+	# dark underprint keeps them distinct from bright decorative map rings.
+	# Every vertex stays inside the declared radius; no filled ground disk.
+	var geometry := ImmediateMesh.new()
+	geometry.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
+	var width := clampf(radius*0.085,0.008,0.28)
+	for segment in range(HAZARD_SEGMENTS):
+		var center := TAU*float(segment)/HAZARD_SEGMENTS
+		var half_span := PI/HAZARD_SEGMENTS*HAZARD_COVERAGE
+		for step in range(4):
+			var begin := center-half_span+2.0*half_span*float(step)/4.0
+			var end := center-half_span+2.0*half_span*float(step+1)/4.0
+			_quad(geometry,_flat_point(begin,radius),_flat_point(end,radius),
+				_flat_point(end,radius-width),_flat_point(begin,radius-width),Color(0.045,0.06,0.075,1.0))
+			_quad(geometry,_flat_point(begin,radius-width*.18,.003),_flat_point(end,radius-width*.18,.003),
+				_flat_point(end,radius-width*.72,.003),_flat_point(begin,radius-width*.72,.003),Color.WHITE)
+	# The broad source-facing notch points from the firing unit toward target.
+	# It is wholly inside the footprint and does not imply a second hit area.
+	_triangle(geometry,Vector3(0,.006,radius*.66),Vector3(-radius*.12,.006,radius*.88),Vector3(radius*.12,.006,radius*.88),Color(0.045,0.06,0.075,1.0))
+	_triangle(geometry,Vector3(0,.009,radius*.72),Vector3(-radius*.07,.009,radius*.85),Vector3(radius*.07,.009,radius*.85),Color.WHITE)
+	geometry.surface_end()
+	return geometry
+
+func _glyph_bar(geometry: ImmediateMesh, a: Vector3, b: Vector3, thickness: float) -> void:
+	var along := (b-a).normalized()
+	var side := Vector3(-along.z,0,along.x)*thickness*.5
+	_quad(geometry,a-side,b-side,b+side,a+side,Color(0.045,0.06,0.075,1.0))
+	var rise := Vector3.UP*.003
+	side *= .48
+	_quad(geometry,a-side+rise,b-side+rise,b+side+rise,a+side+rise,Color.WHITE)
+
+func _team_glyph(team: String, radius: float, outward := false) -> ImmediateMesh:
 	var geometry := ImmediateMesh.new()
 	geometry.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
 	var count := 8 if team == "sun" else 4
 	for index in range(count):
 		var angle := TAU * float(index) / count
-		var radial := Vector3(cos(angle),0,sin(angle))
-		var tangent := Vector3(-sin(angle),0,cos(angle))
-		var center := radial * (radius + 0.22)
-		var length := minf(0.35, radius * 0.16)
-		var width := minf(0.16, radius * 0.08)
+		var radial := Vector3(sin(angle),0,cos(angle))
+		var tangent := Vector3(cos(angle),0,-sin(angle))
+		var tip := radius*(.84 if outward else .60)
+		var back := radius*(.61 if outward else .83)
 		if team == "moon":
-			# Four diamonds contrast with the Sun's eight triangular rays.
-			geometry.surface_add_vertex(center + radial * length)
-			geometry.surface_add_vertex(center + tangent * width)
-			geometry.surface_add_vertex(center - radial * length)
-			geometry.surface_add_vertex(center + radial * length)
-			geometry.surface_add_vertex(center - radial * length)
-			geometry.surface_add_vertex(center - tangent * width)
+			# Four squared brackets remain distinct from Sun's eight arrowheads
+			# even when the owner colors coincide or the scene is desaturated.
+			var half_span := tangent*radius*.12
+			_glyph_bar(geometry,radial*tip-half_span,radial*tip+half_span,radius*.065)
+			_glyph_bar(geometry,radial*tip-half_span,radial*back-half_span,radius*.065)
+			_glyph_bar(geometry,radial*tip+half_span,radial*back+half_span,radius*.065)
 		else:
-			geometry.surface_add_vertex(center + radial * length)
-			geometry.surface_add_vertex(center - radial * length + tangent * width)
-			geometry.surface_add_vertex(center - radial * length - tangent * width)
+			_triangle(geometry,radial*tip,radial*back+tangent*radius*.10,radial*back-tangent*radius*.10,Color(0.045,0.06,0.075,1.0))
+			var center := (tip+back)*.5
+			_triangle(geometry,radial*lerpf(center,tip,.67)+Vector3.UP*.003,
+				radial*lerpf(center,back,.67)+tangent*radius*.055+Vector3.UP*.003,
+				radial*lerpf(center,back,.67)-tangent*radius*.055+Vector3.UP*.003,Color.WHITE)
 	geometry.surface_end()
 	return geometry
 
@@ -242,14 +289,16 @@ func _make_effect(event: Dictionary) -> Dictionary:
 	add_child(body)
 	body.top_level = true
 	body.global_position = event.target + Vector3.UP * 0.055
+	var source_direction: Vector3 = event.origin-event.target
+	source_direction.y = 0.0
+	if source_direction.length_squared() > .000001:
+		body.rotation.y = atan2(source_direction.x,source_direction.z)
 	var material := _material(event.team)
-	var torus := TorusMesh.new()
-	torus.inner_radius = maxf(0.03, event.radius - 0.065)
-	torus.outer_radius = event.radius + 0.065
-	torus.rings = 32
-	torus.ring_segments = 6
-	var ring := _mesh(body, torus, material, "GroundDangerRing")
-	var glyph := _mesh(body, _team_glyph(event.team, event.radius), material, "TeamGlyph")
+	# Retain the internal ring/glyph slots and node budget for existing consumers.
+	var ring := _mesh(body, _hazard_footprint(event.radius), material, "SegmentedTroopImpactBoundary")
+	ring.position.y = 0.0 if event.team=="sun" else .008
+	var glyph := _mesh(body, _team_glyph(event.team, event.radius, event.kind=="impact"), material, "InwardCountdown" if event.kind=="windup" else "OutwardAftermath")
+	glyph.position.y = .018 if event.team=="sun" else .026
 	var effect := {"id":event.id,"kind":event.kind,"role":event.role,"team":event.team,
 		"origin":event.origin,"target":event.target,"delay":float(event.delay),"radius":float(event.radius),
 		"age":0.0,"ttl":float(event.delay)+0.35 if event.kind=="windup" else IMPACT_LIFETIME,
@@ -264,7 +313,7 @@ func _make_effect(event: Dictionary) -> Dictionary:
 		effect.charge.global_position = event.origin
 		effect.projectile = _mesh(body, sphere, material, "PresentationProjectile")
 		effect.projectile.visible = false
-		_update_effect(effect)
+	_update_effect(effect)
 	return effect
 
 static func arc_position(origin: Vector3, target: Vector3, phase: float) -> Vector3:
@@ -276,7 +325,10 @@ func _update_effect(effect: Dictionary) -> void:
 	var color: Color = effect.material.albedo_color
 	if effect.kind == "windup":
 		var phase := clampf(effect.age / effect.delay, 0.0, 1.0)
-		color.a = 0.68 + phase * 0.25
+		color.a = 0.88
+		# Boundary remains fixed. Only the inner team-shaped ticks converge,
+		# communicating countdown without shrinking the actual affected area.
+		effect.glyph.scale = Vector3.ONE*lerpf(1.0,.35,phase)
 		effect.charge.scale = Vector3.ONE * (0.7 + phase * 0.9)
 		var can_arc: bool = effect.delay >= 0.22
 		effect.charge.visible = not can_arc or phase < 0.4
@@ -285,10 +337,9 @@ func _update_effect(effect: Dictionary) -> void:
 			effect.projectile.global_position = arc_position(effect.origin, effect.target, (phase-0.4)/0.6)
 	else:
 		var phase := clampf(effect.age / IMPACT_LIFETIME, 0.0, 1.0)
-		var expansion := 0.35 + 0.65 * (1.0 - pow(1.0-phase, 2.0))
-		effect.ring.scale = Vector3.ONE * expansion
+		var expansion := 0.28 + 0.72 * (1.0 - pow(1.0-phase, 2.0))
 		effect.glyph.scale = Vector3.ONE * expansion
-		color.a = (1.0-phase) * 0.9
+		color.a = (1.0-phase) * 0.62
 	effect.material.albedo_color = color
 
 func _process(delta: float) -> void:

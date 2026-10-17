@@ -85,6 +85,10 @@ jobs:
           python3 games/yuga-native/tools/audio/build-siege-audio.py --check --report="$RUNNER_TEMP/checks/siege-audio.json"
           python3 games/yuga-native/tests/traversal_security_cases.py --report="$RUNNER_TEMP/checks/security.json"
           python3 games/yuga-native/tests/release_traversal_cases.py --report="$RUNNER_TEMP/checks/release-gates.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tools/test-relay-control.gd -- --report="$RUNNER_TEMP/checks/relay-control.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tools/test-relay-art.gd -- --report="$RUNNER_TEMP/checks/relay-art.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tools/test-relay-integration.gd -- --report="$RUNNER_TEMP/checks/relay-integration.json"
+          python3 games/yuga-native/tests/release_triad_cases.py --report="$RUNNER_TEMP/checks/triad-release-gates.json"
       - name: Export, inspect and package both native platforms
         run: |
           set -euo pipefail

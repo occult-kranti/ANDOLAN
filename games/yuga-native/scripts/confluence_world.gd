@@ -10,6 +10,7 @@ const Bindings = preload("res://scripts/input_bindings.gd")
 const ControlsOverlay = preload("res://scripts/controls_overlay.gd")
 const TraversalAudio = preload("res://scripts/traversal_audio.gd")
 const SiegeEffects = preload("res://scripts/siege_effects.gd")
+const RelaySession = preload("res://scripts/relay_session.gd")
 const RUNTIME_MANIFEST := "res://assets/world/confluence-map.json"
 const SOURCE_MANIFEST := "res://art/world/confluence-map.json"
 const CREAM := Color("f0e5d0")
@@ -27,6 +28,9 @@ var landmark_report: Dictionary = {}
 var army: Node3D
 var audio: Node
 var siege_effects: Node3D
+var relays: Node3D
+var relay_labels: Array[Label] = []
+var relay_hint: Label
 var siege_practice_button: Button
 var practice_mode_label: Label
 var practice_hint_label: Label
@@ -78,6 +82,7 @@ class Atlas extends Control:
 	var data: Dictionary = {}
 	var hero_position := Vector3.ZERO
 	var units: Array = []
+	var relays: Array = []
 	var footer_height := 70.0
 	func project(point: Vector3) -> Vector2:
 		var bounds: Array=data.get("bounds",{}).get("nominal_xz",[-70,70,-130,130])
@@ -107,6 +112,16 @@ class Atlas extends Control:
 				draw_circle(p,5.5,Color("efba70") if unit.team=="sun" else Color("88bded"),false,1.5,true)
 			if unit.team=="sun": draw_colored_polygon(PackedVector2Array([p+Vector2(0,-2.5),p+Vector2(2,2),p+Vector2(-2,2)]),Color("efba70"))
 			else: draw_rect(Rect2(p-Vector2(1.7,1.7),Vector2(3.4,3.4)),Color("88bded"))
+		for relay in relays:
+			var p:=project(relay.position)
+			var color:=Color("efba70") if relay.owner=="sun" else (Color("88bded") if relay.owner=="moon" else Color("c3bfae"))
+			draw_rect(Rect2(p-Vector2(5,5),Vector2(10,10)),Color("14242d"))
+			draw_rect(Rect2(p-Vector2(5,5),Vector2(10,10)),color,false,2)
+			if relay.owner=="sun": draw_colored_polygon(PackedVector2Array([p+Vector2(0,-3),p+Vector2(3,2),p+Vector2(-3,2)]),color)
+			elif relay.owner=="moon": draw_rect(Rect2(p-Vector2(2,2),Vector2(4,4)),color)
+			if relay.contested:
+				draw_line(p-Vector2(7,7),p+Vector2(7,7),Color.WHITE,2,true)
+				draw_line(p+Vector2(-7,7),p+Vector2(7,-7),Color.WHITE,2,true)
 		draw_circle(project(hero_position),5,Color.WHITE)
 		draw_circle(project(hero_position),8,Color(1,1,1,.4),false,1,true)
 	func _background() -> StyleBoxFlat:
@@ -143,6 +158,10 @@ func _ready() -> void:
 	if not _build_army_audio() or not player.traversal_report().get("enabled",false):
 		push_error("Confluence requires a configured army and traversal controller.")
 		return
+	relays=RelaySession.new()
+	relays.name="TriadRelays"
+	world.add_child(relays)
+	relays.configure(army,player)
 	_build_ui()
 	for template in kit_templates.values(): template.free()
 	kit_templates.clear()
@@ -308,7 +327,7 @@ func _gold_changed(value: int) -> void:
 	last_gold=value
 
 func _army_outcome(team: String) -> void:
-	if goal_label: goal_label.text="%s core victory · Restart lane practice from pause" % ("SUN" if team=="sun" else "MOON")
+	if goal_label: goal_label.text=("Draw · both cores destroyed" if team=="draw" else "%s core victory" % team.to_upper())+" · Restart from pause"
 	set_paused(true)
 
 func _start_siege_practice() -> bool:
@@ -320,6 +339,7 @@ func _start_siege_practice() -> bool:
 	practice_error=""
 	last_gold=0
 	_clear_combat_presentation()
+	if relays: relays.reset()
 	teleport_to(Vector3(7,.05,-15),-25)
 	set_paused(false)
 	_update_practice_hud()
@@ -336,6 +356,7 @@ func _restart_army() -> void:
 	last_gold=0
 	_clear_combat_presentation()
 	if army: army.reset()
+	if relays: relays.reset()
 	visit_anchor("sun-spawn")
 	set_paused(false)
 
@@ -388,6 +409,11 @@ func _build_props() -> void:
 		node.scale=_v(entry.scale)
 		node.set_meta("preset",entry.preset)
 		node.set_meta("visual_collision",entry.collision)
+		if entry.id in ["lane-0-mid-inlay","lane-1-mid-inlay","lane-2-mid-inlay"]:
+			# These old reflective circles obscure the functional relay's progress
+			# paving. Keep their authored identity; relay_art owns presentation here.
+			node.visible=false
+			node.set_meta("superseded_by","TriadRelays")
 		props_root.add_child(node)
 		if entry.kit=="skyline":
 			var dimensions:=_v(entry.scale)
@@ -541,7 +567,7 @@ func _build_ui() -> void:
 	map_control.offset_right=-20
 	map_control.offset_top=20
 	map_control.offset_bottom=356
-	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You\n◎ Siege engine",11,CREAM)
+	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You\n◎ Siege  ·  □ Relay",11,CREAM)
 	legend.name="AtlasLegend"
 	hud.add_child(legend)
 	legend.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
@@ -549,6 +575,21 @@ func _build_ui() -> void:
 	legend.offset_right=-32
 	legend.offset_top=292
 	legend.offset_bottom=344
+	var relay_card:=_card(hud,Vector2(20,164),Vector2(535,82))
+	relay_card.name="RelayStatus"
+	var relay_column:=VBoxContainer.new()
+	relay_card.add_child(relay_column)
+	var relay_row:=HBoxContainer.new()
+	relay_row.add_theme_constant_override("separation",12)
+	relay_column.add_child(relay_row)
+	for index in 3:
+		var label:=_label("",13,CREAM)
+		label.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		relay_row.add_child(label)
+		relay_labels.append(label)
+	relay_hint=_label("Hold a relay: supplies every 5s · Contest stops supply",12,Color("aec2c3"))
+	relay_hint.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	relay_column.add_child(relay_hint)
 	var help:=_card(hud,Vector2(20,-94),Vector2(330,74))
 	help.name="ControlsCard"
 	help.set_anchors_preset(Control.PRESET_BOTTOM_LEFT,true)
@@ -611,6 +652,7 @@ func _build_ui() -> void:
 	practice_hint_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	menu.add_child(practice_hint_label)
 	_button(menu,"Day / night",func():set_night(not night))
+	_button(menu,"Visit Lotus relay",func():teleport_to(Vector3(0,.05,-7),180);set_paused(false))
 	_button(menu,"Visit Lanka coast",func():teleport_to(Vector3(-40,.05,14),180);set_paused(false))
 	_button(menu,"Visit Metro gardens",func():teleport_to(Vector3(40,.05,14),180);set_paused(false))
 	_button(menu,"Controls / remap keys",_open_controls)
@@ -750,6 +792,7 @@ func _process(delta: float) -> void:
 		phase_clock+=delta
 		if phase_clock>.08 or is_equal_approx(phase,target_phase):
 			lighting.set_phase(phase)
+			if relays and relays.art: relays.art.set_night_blend(phase)
 			phase_clock=0
 	ui_clock+=delta
 	if ui_clock>.12:
@@ -776,9 +819,46 @@ func _physics_process(_delta: float) -> void:
 	if clamped.z!=player.position.z: player.velocity.z=0
 	player.position=clamped
 	if player.position.y<-.5: visit_anchor("sun-spawn")
+	_step_relays(_delta)
+
+func _step_relays(delta: float) -> void:
+	if not world_ready or paused or get_tree().paused or overview or not army or not relays: return
+	if army.siege_drill or not army.winner.is_empty(): return
+	relays.advance(delta)
+
+func _update_relay_hud() -> void:
+	if not relays or relay_labels.size()!=3: return
+	map_control.relays=[] if army.siege_drill else relays.sites()
+	var nearest:=99.0
+	var close_site: Dictionary={}
+	for site in relays.sites():
+		var label:=relay_labels[site.id]
+		var short_name: String=String(site.label).trim_suffix(" Relay")
+		var state:="Contested" if site.contested else (String(site.owner).capitalize() if absf(site.progress)>=7.999 else "%d%%" % roundi(absf(site.progress)/8*100))
+		if not site.contested and absf(site.progress)>.001 and absf(site.progress)<7.999:
+			state="%s %d%%" % ["▲" if site.capture_team=="sun" else "■",roundi(absf(site.progress)/8*100)]
+		if site.owner=="neutral" and absf(site.progress)<.001: state="Open"
+		label.text="%s · %s" % [short_name,state]
+		label.modulate=GOLD if site.owner=="sun" else (TEAL if site.owner=="moon" else CREAM)
+		var distance: float=Vector2(player.position.x-site.position.x,player.position.z-site.position.z).length()
+		if distance<nearest: nearest=distance;close_site=site
+	if army.siege_drill:
+		relay_hint.text="Relays inactive during siege drill · F5 restarts lane practice"
+		for label in relay_labels: label.text="—"
+	elif not army.winner.is_empty(): relay_hint.text="Round ended · Relay capture and supplies stopped"
+	elif nearest<=8 and not close_site.is_empty():
+		if close_site.contested: relay_hint.text="Contested · Clear enemies to capture and receive supplies"
+		elif close_site.owner!="neutral" and close_site.pressure_team not in ["neutral",close_site.owner]: relay_hint.text="Under pressure · Clear enemy soldiers to keep this relay and restore supply"
+		elif absf(player.position.y-close_site.position.y)>2.5: relay_hint.text="Land within the marked zone to contribute to capture"
+		elif nearest>5: relay_hint.text="Enter the marked zone · %.0fm to relay centre" % nearest
+		elif close_site.owner=="sun": relay_hint.text="Held · +3 arrows / +6 troop health every 5s · Enemy pressure stops supply"
+		elif close_site.owner=="moon": relay_hint.text="Neutralize enemy control, then secure this relay · Soldiers help"
+		else: relay_hint.text="Capture: stay in the zone · 8 seconds solo, 4 with support"
+	else: relay_hint.text="Hold lane relays for supplies · ▲ Sun · ■ Moon · X Contested"
 
 func _update_practice_hud() -> void:
 	_refresh_control_labels()
+	_update_relay_hud()
 	var siege_drill:=false
 	var enemy_siege:=0
 	if army:
@@ -798,7 +878,7 @@ func _update_practice_hud() -> void:
 		if practice_hint_label:
 			practice_hint_label.text=practice_error if not practice_error.is_empty() else ("Break enemy engines before impact to protect Sun troops. Your hero takes no damage. Restart lane practice exits this drill." if siege_drill else "Try cannon carts and royal chariots in the central court. Blasts damage troops; your hero takes no damage.")
 		if not String(battle.get("winner","")).is_empty():
-			goal_label.text="%s wins · Restart lane practice in pause" % String(battle.winner).to_upper()
+			goal_label.text=("Draw · both cores destroyed" if battle.winner=="draw" else "%s wins" % String(battle.winner).to_upper())+" · Restart in pause"
 			return
 	if not player.has_method("traversal_report"): return
 	var report: Dictionary=player.traversal_report()
@@ -843,6 +923,7 @@ func set_phase(value: float) -> void:
 	target_phase=phase
 	night=phase>.5
 	if lighting: lighting.set_phase(phase)
+	if relays and relays.art: relays.art.set_night_blend(phase)
 
 func set_review_phase(value: float) -> void:
 	set_phase(value)
@@ -909,6 +990,8 @@ func set_overview(value: bool) -> void:
 	overview=value
 	release_actions()
 	if army: army.process_mode=Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_PAUSABLE
+	if relays: relays.process_mode=Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_PAUSABLE
+	if relays and relays.art: relays.art.process_mode=Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_PAUSABLE
 	if audio: audio.set_suspended(value or paused)
 	if siege_effects: siege_effects.set_suspended(value or paused)
 	player.active=not value and not paused
@@ -974,7 +1057,7 @@ func _pulse(origin: Vector3) -> void:
 	tween.tween_callback(ring.queue_free)
 
 func build_report() -> Dictionary:
-	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
+	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"relays":relays.report() if relays else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
 
 func get_build_report() -> Dictionary:
 	return build_report()

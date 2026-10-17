@@ -8,6 +8,10 @@ Use the [full-game guide](FULL_GAME_PRODUCTION_ROADMAP.md) and its
 [dependency backlog](ROADMAP_BACKLOG.json) for current priorities. This board
 retains the earlier published preview's handoffs below.
 
+## Triad continuation · 17 October 2026
+
+Five parallel supporting packets add the original relay loop, station geometry, UI and siege-warning revision using a verified TF2 source study. See [TRIAD_MILESTONE.md](TRIAD_MILESTONE.md) for rules, review rounds, current evidence and the next five production dependencies. Independent tests found and fixed a mixed-ID supply exception and blocked cross-lane routes. Current-source actual capture and release acceptance are tracked separately from the 70 production gates.
+
 ## Current implementation packets · 17 October 2026
 
 | Packet | Result and next gate |
