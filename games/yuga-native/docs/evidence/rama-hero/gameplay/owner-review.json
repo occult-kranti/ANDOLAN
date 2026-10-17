@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "status": "accepted_for_bounded_offline_presentation",
+  "independent_status": "accepted",
+  "source_commit": "9eb6323ef20d8f10436a893ffcd434096686247a",
+  "source_files": 355,
+  "source_unchanged": true,
+  "video_sha256": "77cb1dea4b12a928157d8c1645332409f0a890d9b69ae28bf87370494ede6230",
+  "frames": 363,
+  "stills": 25,
+  "fps": 30,
+  "physics_hz": 60,
+  "authority_hz": 20,
+  "duration_s": 12.1,
+  "checks": [
+    "one authoritative release per accepted take",
+    "normal cast and presentation expiry for all five takes",
+    "actual lane damage, hero and ally healing/shield receipts, and swept player step",
+    "all355 source hashes equal before/after and current source",
+    "every frame has exactly two normal physics ticks",
+    "every rendered notice/shield label agrees with current runtime",
+    "Guardian boundary/recipient expiry agrees with authoritative age",
+    "all captured PNG dimensions and hashes validated",
+    "exact363 video frames, full decode passed, no script/engine errors",
+    "Godot/Xvfb cleanup complete"
+  ],
+  "owner_visual_review": {
+    "sequential_frames": [
+      "0\u201344 Kodanda",
+      "45\u201398 Piercing Dawn",
+      "99\u2013119 Measured Step",
+      "288\u2013362 Dawn Volley"
+    ],
+    "full_size_critical": [
+      "Guardian270/271/287",
+      "Kodanda release",
+      "Piercing contact and low-angle release",
+      "Measured Step contact",
+      "Guardian reduced options",
+      "Dawn Volley low-angle release",
+      "hero defeat and respawn"
+    ],
+    "finding": "No new concrete blocking defect. Accepted preparation, release/contact, recovery and cleanup are coherent; Guardian decoration fades before the exact boundary, and boundary/shield/HUD clear together at authority5.05."
+  },
+  "takes": [
+    {
+      "ability_id": "kodanda",
+      "start_frame": 0,
+      "frame_count": 45,
+      "physics_ticks": 90,
+      "release_count": 1,
+      "receipt_count": 1,
+      "normal_expiry": true
+    },
+    {
+      "ability_id": "piercing_dawn",
+      "start_frame": 45,
+      "frame_count": 54,
+      "physics_ticks": 108,
+      "release_count": 1,
+      "receipt_count": 3,
+      "normal_expiry": true
+    },
+    {
+      "ability_id": "measured_step",
+      "start_frame": 99,
+      "frame_count": 21,
+      "physics_ticks": 42,
+      "release_count": 1,
+      "receipt_count": 0,
+      "normal_expiry": true
+    },
+    {
+      "ability_id": "guardian_circle",
+      "start_frame": 120,
+      "frame_count": 168,
+      "physics_ticks": 336,
+      "release_count": 1,
+      "receipt_count": 182,
+      "normal_expiry": true
+    },
+    {
+      "ability_id": "dawn_volley",
+      "start_frame": 288,
+      "frame_count": 75,
+      "physics_ticks": 150,
+      "release_count": 1,
+      "receipt_count": 3,
+      "normal_expiry": true
+    }
+  ],
+  "limitations": [
+    "five separate fixture takes with deliberate resets, not one uninterrupted fight",
+    "scripted actual world cast entry, not human input",
+    "silent recording; no audio audition claim",
+    "simulated30fps via software Forward+ renderer; no hardware-performance claim",
+    "low-angle/reduced/lifecycle stills are separate replays outside the video",
+    "this harness records selected hit/defeat/respawn states; continuous reaction motion has separate motion evidence",
+    "broader stylized cloth and body-motion limits remain recorded in motion review"
+  ],
+  "failed_evidence": [
+    "../combat-expiry/review.json",
+    "../combat-expiry/r2-boundary/review.json"
+  ],
+  "accepted_probe": "../combat-expiry/guardian-probe/review.json",
+  "independent_review": {
+    "path": "../qa/final-review/gameplay-r3-review.json",
+    "sha256": "957383bf8f70fa23d518bdac8110a6adc4574f3359feba0580ed586f430991b3",
+    "scope": "All243 Guardian/Volley frames and all25stills independently inspected, including full270/271/287. All355 source hashes match current;351 shared package source hashes match. No new concrete defect."
+  }
+}

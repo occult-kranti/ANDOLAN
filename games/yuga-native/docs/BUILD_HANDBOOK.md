@@ -160,7 +160,7 @@ python3 games/yuga-native/tools/check-roadmap.py --report "$YUGA_CHECKS/roadmap.
 
 | Changed area | Required focused checks, then integration |
 | --- | --- |
-| Rama hero integration | `rama_ability_cases.gd`, `rama_motion_cases.gd`, `rama_practice_cases.gd`, `rama_hero_integration_cases.gd`, `rama_screen_cases.gd`, `rama_hud_layout_cases.gd`, Python `rama_package_cases.py`; actual continuous motion/gameplay and packaged screen/input review |
+| Rama hero integration | `rama_ability_cases.gd`, `rama_motion_cases.gd`, `rama_practice_cases.gd`, `rama_hero_integration_cases.gd`, `rama_screen_cases.gd`, `rama_hud_layout_cases.gd`, `rama_hud_expiry_cases.gd`, Python `rama_package_cases.py`; actual continuous motion/gameplay and packaged screen/input review |
 | Input/settings/UI | `input_binding_cases.gd`, `siege_ui_cases.gd`, `world_scene_cases.gd`, `world_flow_cases.gd`; `combat_film_audio_cases.gd` if shared reader/audio changes; actual small-window remap/pause/drill/return |
 | Player/traversal | `traversal_cases.gd`, `traversal_pose_cases.gd`, `native_acceptance.gd`, `world_scene_cases.gd`; actual motion capture |
 | Army/combat/rewards | `lane_army_cases.gd`, `siege_army_cases.gd`, `siege_pose_cases.gd`, `lane_vehicle_art_cases.gd`, `projectile_cases.gd`, `traversal_army_stress.gd`; actual engagement and close continuous vehicle review |

@@ -1,8 +1,10 @@
 # YUGA native production track
 
+**Download the current Rama preview:** [Linux / Windows](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17). Extract the entire ZIP and run `launch.sh` or `launch.bat`. [Watch the actual five-action capture](https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-rama-hero-2026-10-17/rama-five-abilities.mp4). Linux input and all public download bytes were verified; Windows execution remains untested. This is offline practice, with production art quality still open.
+
 The current source builds **one Rama hero** across courtyard practice and Confluence: a new smooth-skinned model, detailed blue/ivory garments and goldwork, continuous locomotion/archery, five coherent abilities, health/shield, siege damage and respawn. Read the [milestone and code map](docs/RAMA_HERO_MILESTONE.md), [actual art review](art/hero-rama/REVIEW.md), [independent acceptance](docs/RAMA_HERO_ACCEPTANCE.md), and [source-pinned character-design research](docs/research/RAMA_HERO_DESIGN_STUDY.md).
 
-**Play:** enter Confluence or courtyard practice. LMB draws/shoots, Q pierces, E steps, C places Guardian Circle, and X releases Dawn Volley. R reloads; F/G retain traversal. F3 opens the Rama guide, F2 opens controls/remapping, Escape pauses, and F5 resets practice. Both scenes use the same accepted combat events and motion controller. The older invocation catalogue is a separate legacy study, not the default hero kit.
+**Play:** enter Confluence or courtyard practice. LMB draws/shoots, Q pierces, E steps, C places Guardian Circle, and X releases Dawn Volley. R reloads; F/G retain traversal. F3 opens the Rama guide, F2 opens Help/remapping, Escape pauses, and F5 resets practice. Both scenes use the same accepted combat events and motion controller. The older invocation catalogue is a separate legacy study, not the default hero kit.
 
 The [published Mythic preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-mythic) is historical source `e2dc0ecd3f6903e0c8af68b2c5717ba5947108ed`. Its [ten bounded packets](docs/MYTHIC_BATCHES.md) and [public evidence](docs/evidence/mythic-published/REVIEW.md) retain their original scope. They do not validate later Rama changes.
 
@@ -75,13 +77,13 @@ contain eight landable stone decks and ten glowing tether anchors. Finite-energy
 flight and grappling use capsule collision and bounded speeds. Day/night lighting,
 animated coast/swamp water, an overview and travel shortcuts remain available.
 
-F3 opens invocation practice. Damage, capped healing, shields, slows and temporary
-guards use actual lane-troop receivers. Warning shapes, team/line-of-sight checks
-and shared cooldown belong to separate native practice rules. Travel cancels an
-active cast without bypassing recovery; F5 resets the round. Reduced effects and
-reduced motion are saved in the selector, and the world volume controls the
-sixteen original synthesized cues. Hero health/death and spell damage to cores
-remain unimplemented. [Exact practice rules](docs/ULTIMATE_PRACTICE.md).
+F3 opens Rama's current ability guide. His five-action kit uses actual target and
+lane-troop receivers; Guardian Circle also shields and heals the hero. The separate
+legacy invocation study is available through the pause menu. Its warning shapes,
+shared cooldown and selector settings retain their own [practice rules](docs/ULTIMATE_PRACTICE.md).
+Those fourteen studies are not fourteen finished heroes. Rama's health, siege
+blast damage, death and three-second respawn are implemented; ability damage to
+cores and elevation-aware combat remain open.
 
 Press **Escape → Visit Lotus relay**, then move forward into the marked zone.
 A neutral relay takes 8 seconds to capture alone or 4 with a friendly contributor;
@@ -99,8 +101,8 @@ clearance and capacity for a reinforcement pair to appear.
 Press **Escape → Siege practice** to enter an immediate six-unit central drill.
 Destroy an enemy engine before its marked attack lands to cancel the shot.
 **Restart lane practice**, or F5 during play, restores the ordinary round and
-arrival spawn. Siege blasts damage troops; hero health and death are not
-implemented in this practice mode.
+arrival spawn. Siege blasts damage troops and Rama. Hero defeat cancels active actions and
+respawns Rama after three simulation seconds; ordinary troops still target troops.
 
 This is offline practice: the browser's 140 × 170 m baseline and production army,
 economy and network rules remain separate. Native online matches, jungle combat

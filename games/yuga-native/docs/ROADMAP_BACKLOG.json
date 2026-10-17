@@ -439,7 +439,7 @@
         {
           "path": "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md",
           "scope": "Sixteen production gates and measurable acceptance requirements, with a bounded Rama supporting milestone; production rules, dependencies and open hardware/LOD/network gates are preserved.",
-          "sha256": "f1f81ec62d18cf977cf9121a5b0947a2fef1234bf9fdcd7caad48e2f18b81baa"
+          "sha256": "f886c42e17a9a0caefd56d0ea5baaa7af19077e20f125e66d5bf6646181cc2c7"
         },
         {
           "path": "games/yuga-native/docs/PRODUCTION_GUIDE_REVIEW.md",
@@ -3099,8 +3099,8 @@
     {
       "id": "RAMA-04",
       "title": "One coherent offline kit with real receivers and lifecycle",
-      "status": "in_progress",
-      "phase": "r2_guardian_boundary_and_hud_rejected_correction_open",
+      "status": "complete",
+      "phase": "bounded_offline_function_and_presentation_accepted",
       "supports": [
         "FG03-T03",
         "FG04-T02",
@@ -3111,7 +3111,7 @@
       ],
       "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
       "owner": "Combat, practice adapters and independent integration",
-      "acceptance_scope": "Bounded offline function: one primary plus four fixed abilities share the 20 Hz authority clock across lanes and courtyard; real troop/target health, hero shields/healing, siege damage, death/respawn, collision, pause/reset and reentrancy are exercised. Ordinary troops still target troops; elevated/airborne combat and online authority remain open.",
+      "acceptance_scope": "One primary plus four abilities share the 20 Hz offline authority clock across lanes and courtyard, with real troop/target health, hero healing/shields, siege damage, death/respawn, collision, pause/reset and reentrancy. Final corrected source passes 138 strengthened actual-world integration, 85 combat and 9 normal-render HUD checks. Accepted R3 contains 363 frames across five separate scripted real-world takes with resets and 25 stills; owner and independent QA cover the stated action/expiry intervals. All 355 capture source hashes are verified, including 351 shared package files; the package-only export preset and four capture-only inputs are accounted separately. Ordinary troops still target troops; elevated/airborne combat, human balance/feel, listening, online authority and production art remain open.",
       "evidence": [
         {
           "path": "games/yuga-native/docs/evidence/rama-hero/qa/integration-expiry/report.json",
@@ -3132,15 +3132,50 @@
           "path": "games/yuga-native/docs/evidence/rama-hero/qa/final-review/gameplay-r2-review.json",
           "sha256": "3038d5c7f8ddc61e2505d7547c1335d7876d93dfebf2938d181565dffbffe596",
           "scope": "Independent rejection after all 168 Guardian frames: decorative fade improved, but the gold gameplay boundary disappears while field-active/shield HUD remains. The strengthened real-process regression exposes two failures hidden by the earlier forced HUD refresh."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/qa/final-review/expiry-regression/summary.json",
+          "sha256": "cff61f14a889b2706d45066ee3d46b1f0c68644fd442e648fbe485a1bccd7208",
+          "scope": "Unchanged strengthened actual-world fixture: old presentation fails two assertions, corrected FX/HUD passes 138/138 through the normal render callback. Only those presentation source hashes change."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/combat-expiry/r2-boundary/rama-ability-owner-r20-authority-boundary.json",
+          "sha256": "0364cf2906f44a07dbf8fcf916a6299054c4abe1f3f762fcd49d0416c20d4587",
+          "scope": "85 focused owner cases after the authority-boundary correction; new regression cases retain the live gameplay boundary while decorative geometry fades."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/qa/final-review/guardian-expiry-probe-review.json",
+          "sha256": "f929927ee8e071306c48d47e148ae595d1ace1503dbd1bfc7a6deeec92ccf364",
+          "scope": "Independent acceptance of the specific Guardian expiry correction: inspected sequential frames 143\u2013157 plus 167, with authority/live-boundary/HUD agreement at the expiry transition. Full five-ability R3 acceptance remains separate."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/gameplay/REVIEW.md",
+          "sha256": "b4e16897adab8927ea526618d7fefff4f728bb5727d76428885a58f8231ebca7",
+          "scope": "Accepted final R3 overview: five real actions, 363 rendered samples, 25 stills, normal release/expiry and exact Guardian boundary/HUD agreement; scripted reset takes, software rendering and silence are explicit."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/gameplay/owner-review.json",
+          "sha256": "0fff9f2e0be77e47e4bcc68f9f9bb898899200fc7fb70f919d4ce10c592a668c",
+          "scope": "Owner all-frame review of primary, piercing, step and volley, plus critical Guardian and additional stills; bounded offline presentation acceptance."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/gameplay/manifest.json",
+          "sha256": "535e5548db1e96e1a38126da0b023175f238906e9ac5566de75562424437e671",
+          "scope": "Final 57-file gameplay archive hashes, source/event/frame reports, encoded video and selected images."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/qa/final-review/gameplay-r3-review.json",
+          "sha256": "957383bf8f70fa23d518bdac8110a6adc4574f3359feba0580ed586f430991b3",
+          "scope": "Independent acceptance of every Guardian/Volley frame (243) and all 25 stills; exact 270\u2192271 expiry, 355 capture-source checks and 351 shared package-source comparisons, with the export preset and four capture-only inputs explicit."
         }
       ],
-      "next_action": "Correct the authority-boundary and normal-render HUD timing, pass the strengthened regression and short Guardian probe, then obtain independent R3 gameplay acceptance before closing. Human combat feel, balance, audio, elevation and network authority remain separate."
+      "next_action": "Preserve the accepted offline kit and source-pinned R3 evidence. Continue parent production work on human combat feel/balance, audio, elevation authority and native online integration; staged stills and local receivers do not close those gates."
     },
     {
       "id": "RAMA-05",
       "title": "Consistent Rama screens and saved controls",
-      "status": "in_progress",
-      "phase": "packaged_input_accepted_waiting_gameplay_dependency",
+      "status": "complete",
+      "phase": "bounded_linux_screen_and_input_flow_accepted",
       "supports": [
         "FG13-T01",
         "FG13-T02"
@@ -3150,7 +3185,7 @@
       ],
       "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
       "owner": "Native UI and independent input review",
-      "acceptance_scope": "Title, Rama guide, shared courtyard/world HUD and persistent bindings expose the same hero. Broader actual Linux R1 flows include training, five-ability input, remapping, saved settings, reset, pause/menu scrolling and returns, with narrower 1280 coverage explicitly recorded. The rejected initial Settings eyebrow clipping is corrected and accepted in the affected R2 repeat at both 960x600 and 1280x720 (12 inspected PNGs / 39 XTest events). Only Settings/title/world-entry flows were repeated on frozen package 78b49fbe; earlier flow evidence retains its exact R1 source. Controller, full-match journey, Windows and listening/hardware review remain open. Settings/Help still return focus to Bow training rather than the exact opener; this navigation-polish limit is retained.",
+      "acceptance_scope": "Title, Rama guide, shared courtyard/world HUD and persistent bindings expose the same hero. Broader actual Linux R1 flows include training, five-ability input, remapping, saved settings, reset, pause/menu scrolling and returns, with narrower 1280 coverage explicitly recorded. The rejected initial Settings eyebrow clipping is corrected and accepted in the affected R2 repeat at both 960x600 and 1280x720 (12 inspected PNGs / 39 XTest events). Only Settings/title/world-entry flows were repeated on frozen package 78b49fbe; earlier flow evidence retains its exact R1 source. Controller, full-match journey, Windows and listening/hardware review remain open. Settings/Help still return focus to Bow training rather than the exact opener; this navigation-polish limit is retained. Final source 9eb6323e also passes a seven-still/13-event actual Linux 960x600 Guardian, pause/resume and reset smoke; unchanged R1/R2 flows are not claimed as all repeated.",
       "evidence": [
         {
           "path": "games/yuga-native/docs/evidence/rama-hero/window/R2-REVIEW.md",
@@ -3176,9 +3211,24 @@
           "path": "games/yuga-native/docs/evidence/rama-hero/qa/final-review/os-review.json",
           "sha256": "1a5cec3dead7dd266832621c9123fb340056b1d46dfdaa830f651c22d4cab154",
           "scope": "Independent bounded Linux screen/input acceptance of all 12 affected R2 images plus five explicitly selected earlier images and source-pinned receipts; exact-opener focus restoration remains a known polish limit."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/window/960x600-r3/REVIEW.md",
+          "sha256": "a3fb9d7d9dd4149c15dcc031fd33fc3bff4eca68082b19e55019fe60a2d5c2c9",
+          "scope": "Accepted final 9eb6323e Linux 960x600 smoke: seven inspected stills and 13 XTest events cover title, world, active/naturally expired Guardian, pause/resume and F5 reset. Earlier unchanged R1/R2 flows retain their own source identity."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/window/960x600-r3/review.json",
+          "sha256": "1602d40408a7a60be308a86c2f28e2ebccde0891a7eacd2c81f31827a9bac027",
+          "scope": "Exact executed final Linux engine/PCK/runtime identity, clean helper cleanup and qualified still-image limits; exact expiry frame alignment belongs to separate continuous evidence."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/qa/final-review/os-package3-review.json",
+          "sha256": "a74e80325be03ff00a5e0ea142cd992cf989dada26f444b9bf672f9d1b12859e",
+          "scope": "Independent final-package Linux smoke acceptance on exact source 9eb6323e/PCK 0b48d929: all seven stills and source-pinned receipts; no exact-frame, Windows, physical-GPU, audio-listening or online claim."
         }
       ],
-      "next_action": "Close RAMA-04 after the final R2 gameplay review before closing this dependent bounded packet. Preserve the accepted package-specific input evidence and retain controller, physical-device accessibility and full-match journey gaps."
+      "next_action": "Preserve the accepted package-specific Linux evidence. Improve exact-opener focus restoration and broader production UX; qualify controller/device accessibility, Windows, listening and the complete online match journey separately."
     },
     {
       "id": "RAMA-06",
@@ -3195,7 +3245,7 @@
       ],
       "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
       "owner": "Contract, packaging and setup validation",
-      "acceptance_scope": "235 contract, 41 source-pin, 19 package-provenance, 23 practice and 19 setup-consistency checks pass. The R7 generator dependency and weight-correction evidence are verified. This closes source-only gates, not export, package execution, platform release or hardware qualification. Source pins, contract and package cases were repeated after the Guardian expiry/fade and shield-clock fixes; earlier reports remain as their original snapshots.",
+      "acceptance_scope": "235 contract, 41 source-pin, 19 package-provenance, 23 practice and 19 setup-consistency checks pass. The R7 generator dependency and weight-correction evidence are verified. This closes source-only gates, not export, package execution, platform release or hardware qualification. Source pins, contract and package cases were repeated after the Guardian expiry/fade and shield-clock fixes; earlier reports remain as their original snapshots. After the residual R2 boundary/HUD finding, 41/235/19 pass again and 28 parity checks verify all seven Rama engine suites, including the new nine-case normal-render HUD expiry regression, are wired into CI/setup with report retention.",
       "evidence": [
         {
           "path": "games/yuga-native/docs/evidence/rama-hero/contracts/manifest.json",
@@ -3231,6 +3281,16 @@
           "path": "games/yuga-native/docs/evidence/rama-hero/ci-relay-fixture/review.json",
           "scope": "Preserved 36/38 failure and corrected 38/38 relay fixture: exact 13-action menu inventory with all focus/scroll bounds checks retained; no runtime change or complete-CI claim.",
           "sha256": "47446ee1a015df1bb5378b36cb7d753736520369a1d76e47ebcd5ce670158bf4"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/contracts/boundary-hud-fix/manifest.json",
+          "sha256": "d9a25a3dd6d28ca2fc4c4f7d595847c94181812dbc8e51074a93fd25a4aa6742",
+          "scope": "Post-R2 correction: 41 source-pin, 235 contract, 19 provenance and 28 CI/setup parity checks. Rules14 source inventory is unchanged; exact changed FX/HUD bytes are pinned in the complete 352-file runtime manifest."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/ci-final/review.json",
+          "sha256": "eb0477de7aebca5fbb04e38c0bc97c8b8867fd01928e7d639baec5fc68f5701a",
+          "scope": "Exact final source 9eb6323e native foundation CI run39036000777 succeeds: one job and 29 steps. Archived REST API metadata only; artifact bytes were not downloaded or independently inspected."
         }
       ],
       "next_action": "Keep source gates reproducible; final export, captured-source identity, Linux/Windows execution and publication belong to release review."
@@ -3241,7 +3301,7 @@
     "acceptance": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
     "evidence_root": "games/yuga-native/docs/evidence/rama-hero",
     "status": "in_progress",
-    "scope": "Single-hero offline milestone with bounded staged motion accepted and production art LIMITED. Candidate 78b49fbe is superseded after R2 exposed residual Guardian boundary/HUD timing; publication is held for correction, R3 evidence and a newly frozen candidate. Historical published baselines are unchanged.",
+    "scope": "Frozen single-hero published offline preview 9eb6323e: bounded motion, five-action function/presentation, Linux screens/input and native foundation CI are accepted. Production art remains LIMITED and in progress, and the full-game parent gates remain open. All seven public assets, archive payloads and both videos are verified separately; rejected earlier candidates and historical published baselines are preserved.",
     "asset_sha256": "667f3a215a7b868e3bdbcde880a73d42b68b29af1303db4e1d99b93f73cf2b50",
     "native_content_revision": 3,
     "content_sha256": "9f3151f3cd14cf707e5a794453dda40078f7595d84c613af5f1314fd39e05279",
@@ -3254,15 +3314,21 @@
       "RAMA-06"
     ],
     "open_gates": [
-      "Correct residual Guardian boundary/HUD timing; pass strengthened regression, short rendered probe and final R3 gameplay review",
       "Production sculpt/retopology and complete model approval",
       "Authored LOD and twelve-player physical-hardware budgets",
       "Full roster, elevation authority and native online match flow",
-      "Controller/device accessibility, Windows execution and auditory review",
-      "Complete current-candidate CI and public-release verification"
+      "Controller/device accessibility, Windows execution and auditory review"
     ],
-    "source_commit": "78b49fbe8b9edeb78b09c2363b878bf73c158602",
+    "source_commit": "9eb6323ef20d8f10436a893ffcd434096686247a",
     "runtime_files": 352,
-    "runtime_sha256": "9ca7ac699d3bbde68be710cd1ca25c8e9ddbc4c383a2797f1b2e338449469e9e"
+    "runtime_sha256": "65b5b8f4baff7bf5393b2051b96181bfed6fc48436869428835177e3a05566e3",
+    "ci_run": "https://github.com/occult-kranti/ANDOLAN/actions/runs/39036000777",
+    "release": {
+      "tag": "yuga-rama-hero-2026-10-17",
+      "url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17",
+      "verification": "games/yuga-native/docs/evidence/rama-hero/published/public-verification.json",
+      "verification_sha256": "fa5b8b691be3960a2cf839e3aa5d37f2de7d2208ffcf760087d021c60472c3ab",
+      "scope": "Seven public files downloaded and hashed; both ZIP payloads/PCKs and videos verified. Exact Linux engine and pack match the prior OS smoke. Windows remains unexecuted."
+    }
   }
 }

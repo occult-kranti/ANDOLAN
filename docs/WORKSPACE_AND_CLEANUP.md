@@ -1,5 +1,7 @@
 # Cloud workspace and cleanup
 
+Rama preview cleanup on 17 October 2026: [the verified receipt](../games/yuga-native/docs/evidence/rama-hero/published/cleanup/receipt.json) removes 2.2 GB of obsolete duplicate package ZIPs/extractions after the current public release was downloaded and verified. Current R3/public downloads and all source, art and accepted/rejected capture evidence remain. Superseded package manifests retain exact regeneration commits.
+
 The cloud worker is a development machine; Git and published releases retain the durable project history. Preserve the ready toolchain while removing duplicate delivery artifacts. The [build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) supplies setup/rebuild commands, and [START_HERE](START_HERE.md) supplies product routing.
 
 ## Directory ownership

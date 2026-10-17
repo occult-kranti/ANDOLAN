@@ -39,7 +39,7 @@ The earlier published preview **`yuga-traversal-armies-2026-10-17-siege`** is ta
 The earlier traversal/army preview at `395986a512ecabe874710048a19bd0fdd0a71f89`, with captures/local package at `0124fd4d63384a988223eb76ceb72b2510659ac3`, remains a [historical verified release](evidence/traversal-armies-published/REVIEW.md). Its 46-asset and window results are not substituted for the newer release's checks.
 
 - **Map and movement:** native Confluence is 140 × 260 m, with three extended lanes, eight original blocker footprints plus eight solid landing decks, ten tether anchors, energy-limited flight, a 24 m feet ceiling and 36 m tether range. Actual native capsule collision, landing, cancellation and limits are tested. The browser remains 140 × 170 m; local vertical movement does not close the shared authoritative elevation contract.
-- **Offline armies:** spear soldiers, bow guards, banner commanders, cannon carts and royal chariots advance, fight, damage cores and grant once-only player last-hit gold. Normal practice starts with thirty infantry; mirrored cannon/chariot reinforcements depend on wave cadence, capacity and clearance. A six-unit drill exposes committed ground blasts and source-death cancellation. This local experiment uses a 30 s wave interval, 72-live/24-corpse/96-total caps, at most 72 queued attacks and 32 pending siege attacks. Native hero health/death is absent. Browser soldier/watch/minister/king rules, the production economy, jungle combat and server-owned combat receipts remain separate.
+- **Offline armies:** spear soldiers, bow guards, banner commanders, cannon carts and royal chariots advance, fight, damage cores and grant once-only player last-hit gold. Normal practice starts with thirty infantry; mirrored cannon/chariot reinforcements depend on wave cadence, capacity and clearance. A six-unit drill exposes committed ground blasts and source-death cancellation. This local experiment uses a 30 s wave interval, 72-live/24-corpse/96-total caps, at most 72 queued attacks and 32 pending siege attacks. The current Rama kit adds hero health, siege damage and respawn; the older army-only evidence predates those additions. Browser soldier/watch/minister/king rules, the production economy, jungle combat and server-owned combat receipts remain separate.
 - **Input and flow:** persistent keyboard remapping, contextual Help, mouse sensitivity/inversion, existing audio/video settings, focus/pause release and explicit malformed-settings backup/reset are implemented. The actual portable Linux window was exercised at 960 × 600 for entry, remapping, movement, flight, pause, day/night, overview, reset, mute and return. Controller support, complete accessibility options and the online journey remain open.
 - **Evidence and presentation:** [final rendered review](evidence/traversal-armies-render-r2/REVIEW.md) covers a six-second 720p take with 180 consecutive rendered frames and separate staged views; [portable window review](evidence/traversal-armies-window-r2/REVIEW.md) records actual OS input. The video is silent, and software Vulkan does not establish gaming-GPU FPS. Detailed animation, cloth/hair/grips, full roster art, human balance and online matches retain their production gates.
 - **Siege integration:** [r2 render](evidence/siege-render-r2/SIEGE-RENDER-REVIEW.md) adds 180 actual frames over 360 advancing physics ticks; [local packaged-window review](evidence/siege-window-r2/REVIEW.md) verifies drill entry/restart, saved mute, regular F5 reset, Help, settled focus wrap and title return. Current setup passes 27 report files and 225 TypeScript tests; independent siege combat, poses and presentation retain their exact scopes. Overlapping warning rings, Help's stale F5 footer and close continuous vehicle/material review remain follow-ups.
@@ -197,32 +197,39 @@ Each report records task ID, round, source revision/hash, changed files, passed/
 
 ## Current supporting Rama hero milestone
 
-The [Rama hero milestone](RAMA_HERO_MILESTONE.md) concentrates work
-on one original hero, 23 authored clips, one primary attack and four
-abilities shared by training and lane practice. [Independent acceptance](RAMA_HERO_ACCEPTANCE.md)
-separates source, numerical, rendered and input evidence. The six supporting
-RAMA packets do not close their parent FG production tasks or dependencies.
+The [Rama hero milestone](RAMA_HERO_MILESTONE.md) accepts the bounded offline
+preview at frozen source `9eb6323e`: one original hero, 23 authored clips, one
+primary attack and four abilities shared by training and lane practice.
+Supporting RAMA-01/03/04/05/06 are complete within their recorded scopes; their
+parent FG production tasks and dependencies remain open. [Independent acceptance](RAMA_HERO_ACCEPTANCE.md)
+keeps function, rendering, input and production quality separate.
 
-RAMA-01's bounded source study, RAMA-03's continuous motion review and RAMA-06's
-source gates are complete within their recorded scopes. The [motion archive](evidence/rama-hero/motion/REVIEW.md)
-contains a 539-frame full take and 118-frame side correction, with 39 motion and
-34 traversal checks. RAMA-04's earlier 138 integration and 78 combat checks
-remain archived; the actual R2 capture exposed residual Guardian boundary/HUD
-timing that the earlier forced HUD refresh masked. Candidate `78b49fbe` is
-superseded while corrected regression, short rendered probe and R3 review are
-pending. RAMA-05's
-[packaged-window follow-up](evidence/rama-hero/window/R2-REVIEW.md) passes at
-960 × 600 and 1280 × 720; the packet awaits that gameplay dependency.
-Complete candidate CI and publication also remain separate release gates.
+The [motion archive](evidence/rama-hero/motion/REVIEW.md) contains 539 full-take
+frames and a 118-frame side correction, with 39 motion and 34 traversal checks.
+The [accepted R3 gameplay archive](evidence/rama-hero/gameplay/REVIEW.md) contains
+363 frames across five deliberate takes with resets and 25 stills. Corrected
+source passes 138 strengthened integration, 85 combat and 9 HUD expiry checks.
+Owner/QA reviews accept the bounded actions and Guardian expiry; rejected R1/R2
+findings remain archived. QA verified 355 capture-source hashes and 351 shared
+package/capture files, with the package-only export preset and four capture-only
+inputs accounted separately.
+
+Actual Linux input evidence retains its exact package scope: broader R1 flows,
+the [960/1280 Settings correction repeat](evidence/rama-hero/window/R2-REVIEW.md),
+and the [final-package 960 smoke](evidence/rama-hero/window/960x600-r3/REVIEW.md).
+The exact candidate's [native foundation CI](evidence/rama-hero/ci-final/review.json)
+passes all 29 steps. The [published Rama preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17) has [verified public downloads](evidence/rama-hero/published/REVIEW.md): all seven files, both complete ZIP payloads and both videos. Public pack/engine bytes match the actual Linux smoke. The prior Mythic release and its evidence remain historical.
 
 RAMA-02 remains **LIMITED / in progress** against the production visual target.
 R7 has 450,084 triangles, 13 materials and 18 embedded maps. Sculpted hair, a
-stiff long sash, stylized skinned drape and material richness remain quality
-limits; no authored LOD or twelve-player physical-hardware budget is accepted.
-Offline siege damage and respawn do not establish native server authority.
-The full roster, elevation authority, online journey, Windows execution,
-controller/device accessibility and auditory review remain open. The prior
-Mythic release and its evidence remain historical and unchanged.
+stiff long sash, stylized skinned drape, facial expression and material richness
+remain quality limits; no authored LOD or twelve-player physical-hardware budget
+is accepted. Offline siege damage and respawn do not establish native server
+authority. The full roster, elevation authority, online journey, Windows
+execution, controller/device accessibility and auditory review remain open.
+Settings/Help return focus to Bow training; exact-opener restoration and broader
+production UX still need work. Scripted software-rendered captures and headless
+counts do not establish commercial visual parity, human balance or GPU FPS.
 
 ## Earlier supporting siege milestone
 

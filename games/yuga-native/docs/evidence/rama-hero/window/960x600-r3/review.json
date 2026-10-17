@@ -1,0 +1,112 @@
+{
+  "accepted": true,
+  "captures": [
+    {
+      "action": "capture",
+      "file": "01-title-loaded.png",
+      "sha256": "0ec22ae00ec689b200ffd83074497987ec54a52b9cc894446298c93cfe79c528",
+      "size": [
+        960,
+        600
+      ],
+      "time": 1792243216.3311887
+    },
+    {
+      "action": "capture",
+      "file": "02-confluence-entry.png",
+      "sha256": "51357c483d5804e70c7609db200dce29e52433f502f1b3dc00e74ae9731b8a0b",
+      "size": [
+        960,
+        600
+      ],
+      "time": 1792243231.1910093
+    },
+    {
+      "action": "capture",
+      "file": "03-guardian-active.png",
+      "sha256": "13db314e8e383212acea82048da9dfe191747d515a47f2cb13c1ce3b441d9ef4",
+      "size": [
+        960,
+        600
+      ],
+      "time": 1792243248.6139379
+    },
+    {
+      "action": "capture",
+      "file": "04-guardian-expired.png",
+      "sha256": "c02caee97edd4843c52c921aa9692b960b1155887ef30a4410b4e47c96294820",
+      "size": [
+        960,
+        600
+      ],
+      "time": 1792243283.430851
+    },
+    {
+      "action": "capture",
+      "file": "05-paused.png",
+      "sha256": "b518b457fc8a983f4ee721b9c018f1c7c75fc6d9c77a65c443ee896a6d841478",
+      "size": [
+        960,
+        600
+      ],
+      "time": 1792243291.3645427
+    },
+    {
+      "action": "capture",
+      "file": "06-resumed.png",
+      "sha256": "d018612b71fdc58f2702e5e189fc0bae399243323c15773ff3e9e10930026ee2",
+      "size": [
+        960,
+        600
+      ],
+      "time": 1792243310.9734983
+    },
+    {
+      "action": "capture",
+      "file": "07-reset.png",
+      "sha256": "3740e5bbb6203aa08a8d9fddc270693b02809a5dce90b305b606d287c8191362",
+      "size": [
+        960,
+        600
+      ],
+      "time": 1792243324.0823035
+    }
+  ],
+  "checks": {
+    "F5_reset_restores_entry_camera_and_ready_hud": true,
+    "actual_world_entry_and_ability_hud": true,
+    "clean_helper_and_display_cleanup": true,
+    "guardian_active_field_note_and_55_shield": true,
+    "loaded_title_and_real_hero_visible": true,
+    "natural_expiry_field_absent_ready_note_no_shield": true,
+    "pause_and_resume": true
+  },
+  "command": "LD_LIBRARY_PATH=/workspace/tooling/native-render/runtime/usr/lib/x86_64-linux-gnu VK_ICD_FILENAMES=/workspace/tooling/native-render/runtime/usr/share/vulkan/icd.d/lvp_icd.json LP_NUM_THREADS=2 python3 games/yuga-native/tools/native-window-review.py --engine /workspace/scratch/rama-hero-package-r3/yuga-native-linux-x86_64/godot --pack /workspace/scratch/rama-hero-package-r3/yuga-native-linux-x86_64/yuga-native.pck --output /workspace/scratch/rama-window-960-r3 --xvfb /workspace/tooling/native-render/runtime/usr/bin/Xvfb --display :109 --width 960 --height 600 --shader-cache-seed /workspace/scratch/rama-window-960-r2/user/cache/mesa",
+  "completed_at_utc": "2026-10-17T13:24:39.517665+00:00",
+  "engine_errors_or_warnings": [],
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "game_cleanup_exit_code": -15,
+  "game_log_sha256": "007fb1dfb799a10d2e0695a6ada3483f7551cbb88ff5e68be79f4df60237a05c",
+  "helper_exit_code": 0,
+  "input_events": 13,
+  "input_review_sha256": "1512cb87ab4dde98704f1fc99ee875030de8ae00a9676f3d33c567455f16133a",
+  "limits": [
+    "Software Vulkan llvmpipe Forward+ and Dummy audio, no physical-GPU performance or listening claim.",
+    "Windows unexecuted.",
+    "Expired screenshot follows natural expiry and cooldown completion; frame-accurate authority/FX/HUD alignment belongs to independent numerical and continuous-capture evidence.",
+    "Unchanged Settings/guide/remapping flows were not repeated; their R1/R2 evidence remains separately source-pinned."
+  ],
+  "native_worktree_status": "",
+  "package_manifest": {
+    "file": "package-manifest.json",
+    "sha256": "dd556781ff7791fc9f07dd5d95b02cc8afbc52ce6dcb527212f216a02b9da329"
+  },
+  "pck_sha256": "0b48d929c08285ffdcd1a7b2cc01136f6e53e1e4ad9b2645b927ce0cd047cf04",
+  "public_byte_equivalence_scope": "These hashes identify the locally extracted package actually executed. A later public download must match both exact hashes before claiming byte equivalence; no public download is asserted by this smoke.",
+  "runtime_source": {
+    "file_count": 352,
+    "sha256": "65b5b8f4baff7bf5393b2051b96181bfed6fc48436869428835177e3a05566e3"
+  },
+  "scope": "Actual XTest packaged Linux960x600 smoke on final Guardian/HUD correction: title toConfluence, Guardian active and naturallyexpired HUD, pause/resume,F5reset,helpercleanup. Seven reviewed stills; not a frame-accurate expiry or fullUI repetition.",
+  "source_commit": "9eb6323ef20d8f10436a893ffcd434096686247a"
+}
