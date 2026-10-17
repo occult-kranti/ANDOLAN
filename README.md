@@ -1,6 +1,8 @@
 # ANDOLAN — City of Consequences
 
-Publication status for the visual checkpoint is recorded in [the verified source/CI receipt](docs/evidence/visual-campaign-publication.json); campaign metadata preserves the state at the source checkpoint.
+Publication status for the visual checkpoint is recorded in [the verified source/CI receipt](docs/evidence/visual-campaign-publication.json).
+
+**Latest reuse consultation:** [selected tools, two implemented offline adapters and the next five production goals](games/yuga-native/docs/research/community-reuse/README.md). Six specialists reviewed art, animation, mythology, engine sources and community coverage. Reddit app authentication succeeds, but subreddit access returns 403; fresh tool recommendations come from pinned upstream sources. Face/skin remains the next visual round.
 
 **Download the current Rama preview:** [Linux / Windows](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17). Extract the entire ZIP and run `launch.sh` or `launch.bat`. [Watch the actual five-action capture](https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-rama-hero-2026-10-17/rama-five-abilities.mp4). Linux input and all public download bytes were verified; Windows execution remains untested. This is offline practice, with production art quality still open.
 

@@ -39,6 +39,13 @@ quality, human art acceptance or physical-GPU performance.
 
 ## Round sequence
 
+The [latest reuse consultation](research/community-reuse/README.md) refines the
+next goals without advancing round completion. The published Round 1 runtime
+baseline is `09dac7220544374a471a11d953b67de20ab99d7d`; face/skin remains next.
+Existing Godot/Blender tooling and owned art stay on the critical path. Source-
+derived mesh/key optimizers are optional Round 9 tools. Six mythology briefs
+inform later motion, troop and district work, with explicit source/invention limits.
+
 | Round | Production goal | Required outcome |
 | --- | --- | --- |
 | 1 | Integrated look development and corrections | Baseline and revised actual-engine views; sourced surface treatment, architecture, light, effects and motion; independent rejection of regressions. |

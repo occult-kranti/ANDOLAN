@@ -1,0 +1,818 @@
+{
+  "schema": 1,
+  "reviewed_at_utc": "2026-10-17T21:52:57.228517+00:00",
+  "repository_base_commit": "7c86cd430e2c878b4f5e6ba1b21f562b73fdc32f",
+  "objective": "Bounded engine/tool reuse for the existing Godot/Blender/glTF pipeline; actual offline animation authoring algorithm adoption.",
+  "repositories": [
+    {
+      "repository": "morluto/rea",
+      "commit": "4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b",
+      "default_branch": "main",
+      "license_hint": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "tree_count": 4670,
+      "tree_truncated": false,
+      "retrieved_at_utc": "2026-10-17T21:41:06.905426+00:00",
+      "scratch": "/workspace/scratch/community-reuse/engine/morluto__rea"
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "default_branch": "master",
+      "license_hint": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "tree_count": 2444,
+      "tree_truncated": false,
+      "retrieved_at_utc": "2026-10-17T21:41:08.347927+00:00",
+      "scratch": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat"
+    },
+    {
+      "repository": "godotengine/godot-demo-projects",
+      "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "default_branch": "master",
+      "license_hint": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "tree_count": 4645,
+      "tree_truncated": false,
+      "retrieved_at_utc": "2026-10-17T21:41:10.511596+00:00",
+      "scratch": "/workspace/scratch/community-reuse/engine/godotengine__godot-demo-projects"
+    }
+  ],
+  "files": [
+    {
+      "repository": "morluto/rea",
+      "commit": "4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b",
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/morluto/rea/4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b/LICENSE",
+      "sha256": "798f9e4d18e49b30bf2f12696c8ced73dc4e1413da375a333d01281543a1ea8b",
+      "bytes": 1064,
+      "downloaded_at_utc": "2026-10-17T21:41:51.766082+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/morluto__rea/files/LICENSE",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "morluto/rea",
+      "commit": "4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/morluto/rea/4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b/README.md",
+      "sha256": "1462e109522863c64c3cc62bed700d4a31d9fef73c7d28fcc95dbf6fe234af9b",
+      "bytes": 22388,
+      "downloaded_at_utc": "2026-10-17T21:41:51.954665+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/morluto__rea/files/README.md",
+      "read_scope": "Lines 61-71, 160-213 and 296-301; other native/reconstruction lines searched.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "morluto/rea",
+      "commit": "4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b",
+      "path": "package.json",
+      "url": "https://raw.githubusercontent.com/morluto/rea/4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b/package.json",
+      "sha256": "6ce1579286d682c1c85b5d3a030a442c93a76fa21b92d3f42258b29be234714a",
+      "bytes": 24696,
+      "downloaded_at_utc": "2026-10-17T21:41:52.240295+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/morluto__rea/files/package.json",
+      "read_scope": "JSON version field parsed (6.5.0); scripts/dependencies not audited.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "morluto/rea",
+      "commit": "4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b",
+      "path": "docs/native-investigation.md",
+      "url": "https://raw.githubusercontent.com/morluto/rea/4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b/docs/native-investigation.md",
+      "sha256": "f2df4c3b0cac68d150ca0d9649594e75ad55f9588a72a0d86ff367899c00cfb9",
+      "bytes": 42384,
+      "downloaded_at_utc": "2026-10-17T21:41:52.560552+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/morluto__rea/files/docs/native-investigation.md",
+      "read_scope": "Lines 1-70.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "morluto/rea",
+      "commit": "4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b",
+      "path": "docs/ghidra-provider.md",
+      "url": "https://raw.githubusercontent.com/morluto/rea/4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b/docs/ghidra-provider.md",
+      "sha256": "0f2140b7b59aa4b71b5b910dfcbad63b1c5086940de8e1f9f5630dd68015f25c",
+      "bytes": 24829,
+      "downloaded_at_utc": "2026-10-17T21:41:52.749115+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/morluto__rea/files/docs/ghidra-provider.md",
+      "read_scope": "Lines 1-65.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/LICENSE",
+      "sha256": "19549e9b3203eaf3938f35f98e63fc6b166a16af29936affa3df6ec7e2ae7f8d",
+      "bytes": 1100,
+      "downloaded_at_utc": "2026-10-17T21:41:53.006445+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/LICENSE",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/README.md",
+      "sha256": "130f7f6fbd1a74d7d9ca38f4cbd1d53d9eaa39bf10170ee0f634206615cb4a48",
+      "bytes": 4142,
+      "downloaded_at_utc": "2026-10-17T21:41:53.229082+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/README.md",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "ValveResourceFormat/ValveResourceFormat.csproj",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/ValveResourceFormat/ValveResourceFormat.csproj",
+      "sha256": "48d05f2074a0f6773e1b155bf144ce5e9b142337cf0c85de19bedd77829ae1c2",
+      "bytes": 2611,
+      "downloaded_at_utc": "2026-10-17T21:41:53.536535+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/ValveResourceFormat/ValveResourceFormat.csproj",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "ValveResourceFormat/Animation/README.md",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/ValveResourceFormat/Animation/README.md",
+      "sha256": "e9b960c778643894e34713e7a90c9edcecd58a89289b0995aa5dd10b0d506a1e",
+      "bytes": 1176,
+      "downloaded_at_utc": "2026-10-17T21:41:53.883333+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/ValveResourceFormat/Animation/README.md",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "ValveResourceFormat/Animation/TwoBoneSolver.cs",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/ValveResourceFormat/Animation/TwoBoneSolver.cs",
+      "sha256": "332b9301fff3e3594ca68caa6499d008ccf5a013a3a1fed08a522ba376cbf78b",
+      "bytes": 9330,
+      "downloaded_at_utc": "2026-10-17T21:41:54.177558+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/ValveResourceFormat/Animation/TwoBoneSolver.cs",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "ValveResourceFormat/IO/Gltf/GltfModelExporter.Anim.cs",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/ValveResourceFormat/IO/Gltf/GltfModelExporter.Anim.cs",
+      "sha256": "47122fb3effe5f7a0eb4a89922002a804d753729eaefb5e03095c045fb2ac803",
+      "bytes": 36235,
+      "downloaded_at_utc": "2026-10-17T21:41:54.422320+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/ValveResourceFormat/IO/Gltf/GltfModelExporter.Anim.cs",
+      "read_scope": "Lines 287-307 and 686-845 read; remaining frame/morph/retarget sections symbol-search only.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "ValveResourceFormat/IO/Gltf/GltfModelExporter.Skeleton.cs",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/ValveResourceFormat/IO/Gltf/GltfModelExporter.Skeleton.cs",
+      "sha256": "0691eee0219467126bcffd22a19dea52cc19c77c8a660d7329e01cefeede39f8",
+      "bytes": 3757,
+      "downloaded_at_utc": "2026-10-17T21:41:54.656049+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/ValveResourceFormat/IO/Gltf/GltfModelExporter.Skeleton.cs",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "ValveResourceFormat/IO/Gltf/GltfModelExporter.cs",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/ValveResourceFormat/IO/Gltf/GltfModelExporter.cs",
+      "sha256": "6bdaa76e847e86eb2f2efd3d54879ee787e720ee42d2ce2979be3baf69e67a17",
+      "bytes": 32668,
+      "downloaded_at_utc": "2026-10-17T21:41:54.895340+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/ValveResourceFormat/IO/Gltf/GltfModelExporter.cs",
+      "read_scope": "Fetched, not read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "godotengine/godot-demo-projects",
+      "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-demo-projects/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/LICENSE.md",
+      "sha256": "0339177149b474f7ff676d32218ecb3a8f2538955610023c3769763720d09e4c",
+      "bytes": 1134,
+      "downloaded_at_utc": "2026-10-17T21:41:55.085694+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godotengine__godot-demo-projects/files/LICENSE.md",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "godotengine/godot-demo-projects",
+      "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-demo-projects/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/README.md",
+      "sha256": "4c121fc88a1412b8e381263146ac67937c485386e79641569117a6516dd64ba3",
+      "bytes": 2263,
+      "downloaded_at_utc": "2026-10-17T21:41:55.345296+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godotengine__godot-demo-projects/files/README.md",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "godotengine/godot-demo-projects",
+      "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "path": "3d/ik/README.md",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-demo-projects/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/README.md",
+      "sha256": "de3d3dcf4309026f1fad2ddf8a17449d778316d1aa3c0134235bfec9fcfe5c4f",
+      "bytes": 752,
+      "downloaded_at_utc": "2026-10-17T21:41:55.549657+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godotengine__godot-demo-projects/files/3d/ik/README.md",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "godotengine/godot-demo-projects",
+      "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "path": "3d/ik/project.godot",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-demo-projects/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/project.godot",
+      "sha256": "04f0b18b31b88ed8935d44d6ae8bec03c2702ebcb8a47e2fca466af343168199",
+      "bytes": 753,
+      "downloaded_at_utc": "2026-10-17T21:41:55.722073+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godotengine__godot-demo-projects/files/3d/ik/project.godot",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "godotengine/godot-demo-projects",
+      "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "path": "3d/ik/addons/sade/ik_fabrik.gd",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-demo-projects/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/addons/sade/ik_fabrik.gd",
+      "sha256": "f0f432d75fa8086edb50d26ab0ca5adf0097c6323dc225376ce9371063567505",
+      "bytes": 16485,
+      "downloaded_at_utc": "2026-10-17T21:41:55.983641+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godotengine__godot-demo-projects/files/3d/ik/addons/sade/ik_fabrik.gd",
+      "read_scope": "Lines 1-160; solver body not audited.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "godotengine/godot-demo-projects",
+      "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "path": "3d/ik/addons/sade/ik_look_at.gd",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-demo-projects/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/addons/sade/ik_look_at.gd",
+      "sha256": "c5d77e250b799f071f64a5a3ab1b0e9e64295ab7f3d388d4b1075408eaacfa9c",
+      "bytes": 6977,
+      "downloaded_at_utc": "2026-10-17T21:41:56.240999+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godotengine__godot-demo-projects/files/3d/ik/addons/sade/ik_look_at.gd",
+      "read_scope": "Lines 1-120; remaining implementation not audited.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "godotengine/godot-demo-projects",
+      "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "path": "3d/ik/model/README.md",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-demo-projects/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/model/README.md",
+      "sha256": "5c4a40dc540bce08d5797ec0e52c8adb18657101dabfd2bc741bc97c02c8abbb",
+      "bytes": 173,
+      "downloaded_at_utc": "2026-10-17T21:41:56.470522+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godotengine__godot-demo-projects/files/3d/ik/model/README.md",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "godotengine/godot-demo-projects",
+      "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "path": "3d/ik/skeleton_ik_runner.gd",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-demo-projects/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/skeleton_ik_runner.gd",
+      "sha256": "7a06f08256fd2b77de1819fa1b5ff7e262afa1483a99d0ba2240e81bdf2b1859",
+      "bytes": 51,
+      "downloaded_at_utc": "2026-10-17T21:41:56.825246+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godotengine__godot-demo-projects/files/3d/ik/skeleton_ik_runner.gd",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "THIRD_PARTY_NOTICES.txt",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/THIRD_PARTY_NOTICES.txt",
+      "sha256": "3fcf074becf92d1f5b5dbad9d02279c334571912f381857910657c3436600374",
+      "bytes": 6065,
+      "downloaded_at_utc": "2026-10-17T21:43:06.946451+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/THIRD_PARTY_NOTICES.txt",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "docs/guides/format-support.md",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/docs/guides/format-support.md",
+      "sha256": "ac5bd0a2b9d6a48a2626f710fe748bf82d737af65c5166023ed6c2d4e58b2982",
+      "bytes": 51701,
+      "downloaded_at_utc": "2026-10-17T21:43:07.271056+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/docs/guides/format-support.md",
+      "read_scope": "Lines 60-125, 152-174 and 289-335 read; glTF/animation/material/cloth terms searched elsewhere.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "Tests/IO/GltfKeyframeReductionTest.cs",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/Tests/IO/GltfKeyframeReductionTest.cs",
+      "sha256": "c279d9ea887466eade4655414b2f3b8f950bb780369d311c9bab7050b85033a7",
+      "bytes": 5089,
+      "downloaded_at_utc": "2026-10-17T21:44:31.495928+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/Tests/IO/GltfKeyframeReductionTest.cs",
+      "read_scope": "Complete file read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    },
+    {
+      "repository": "ValveResourceFormat/ValveResourceFormat",
+      "commit": "b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1",
+      "path": "ValveResourceFormat/IO/Gltf/GltfModelExporter.Conversion.cs",
+      "url": "https://raw.githubusercontent.com/ValveResourceFormat/ValveResourceFormat/b94b74c5417eceaf0f7ec1ad5bed5ec0bccc32e1/ValveResourceFormat/IO/Gltf/GltfModelExporter.Conversion.cs",
+      "sha256": "c869a75bd41eb664311ab2d04f35594c5f4e97b18eac3dff94548f74181bed8a",
+      "bytes": 4008,
+      "downloaded_at_utc": "2026-10-17T21:44:31.882471+00:00",
+      "download_exit": 0,
+      "scratch_path": "/workspace/scratch/community-reuse/engine/ValveResourceFormat__ValveResourceFormat/files/ValveResourceFormat/IO/Gltf/GltfModelExporter.Conversion.cs",
+      "read_scope": "Fetched, not read.",
+      "execution": "Not executed; source-only except explicitly adapted selected animation reducer."
+    }
+  ],
+  "rea_delta": {
+    "previous_commit": "300905c11be1c25b98fda9e2b71dfa899fc2831c",
+    "current_commit": "4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b",
+    "ahead_by": 21,
+    "behind_by": 0,
+    "changed_file_count": 96,
+    "scope": "Compare metadata/file paths inspected, not all changed implementation bodies. Source and installed npm package remain separate identities. No upgrade or rerun of REA/Ghidra.",
+    "compare_url": "https://api.github.com/repos/morluto/rea/compare/300905c11be1c25b98fda9e2b71dfa899fc2831c...4f7b5fb6023ce2ec449561782d09e3c7e5ac7c7b",
+    "compare_sha256": "d84b5624c59dfe2f7611e48c62e760bfc79ba649f6aaf1b04e6e8471be1bf7d2"
+  },
+  "forks": {
+    "fresh_fork_survey": false,
+    "reason": "Previous ten-fork audit supplied no useful implementation difference; no concrete fork capability justified a new survey.",
+    "previous_evidence": "../REA_REUSE_REFRESH.md"
+  },
+  "discovery_failures": [
+    {
+      "url": "https://api.github.com/repos/ValveResourceFormat/io_scene_source2",
+      "http_status": 404,
+      "meaning": "Suggested repository name did not resolve through ordinary gh api; not selected or installed."
+    },
+    {
+      "url": "https://api.github.com/search/repositories?q=io_scene_source2&per_page=5",
+      "http_status": 200,
+      "returned_items": 0,
+      "meaning": "Bounded exact-name discovery found no public repository; no broader nonexistence claim."
+    }
+  ],
+  "adopted_boundary": {
+    "code": "tools/reuse-animation/audit.py",
+    "upstream": "ValveResourceFormat/IO/Gltf/GltfModelExporter.Anim.cs lines 686-845",
+    "license": "MIT, full notice retained in tools/reuse-animation/NOTICE.md",
+    "runtime_dependency_added": false,
+    "asset_downloaded": false,
+    "output": "External JSON key-reduction proposal, no Godot resource saved",
+    "original_additions": [
+      "strict finite/interpolation/channel admission",
+      "both existing endpoints retained",
+      "half-budget key selection",
+      "dense SLERP/NLERP neighbor-key restoration",
+      "Godot actual-resource extraction and in-memory interpolation verification",
+      "fresh external output and symlink refusal"
+    ]
+  },
+  "measurement": {
+    "input_sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+    "clip_count": 23,
+    "track_count": 1185,
+    "input_keys": 20989,
+    "proposed_keys": 13230,
+    "reduction_fraction": 0.3696698270522655,
+    "python_probe_count": 160227,
+    "python_max_rotation_radians": 8.712881228304697e-05,
+    "python_max_nlerp_radians": 8.712881228304697e-05,
+    "python_max_position_m": 4.861330307342537e-06,
+    "python_passed": true,
+    "godot": {
+      "candidate_sha256": "aef5554171d7a4d6d2faeaae2a4bc8973891f457ed50beeaf49ed03d0c735c36",
+      "clips": [
+        {
+          "name": "aim",
+          "passed": true
+        },
+        {
+          "name": "circle_draw",
+          "passed": true
+        },
+        {
+          "name": "circle_release",
+          "passed": true
+        },
+        {
+          "name": "dash",
+          "passed": true
+        },
+        {
+          "name": "death",
+          "passed": true
+        },
+        {
+          "name": "draw",
+          "passed": true
+        },
+        {
+          "name": "fall",
+          "passed": true
+        },
+        {
+          "name": "flight",
+          "passed": true
+        },
+        {
+          "name": "grapple",
+          "passed": true
+        },
+        {
+          "name": "hit",
+          "passed": true
+        },
+        {
+          "name": "idle",
+          "passed": true
+        },
+        {
+          "name": "jump",
+          "passed": true
+        },
+        {
+          "name": "land",
+          "passed": true
+        },
+        {
+          "name": "piercing_draw",
+          "passed": true
+        },
+        {
+          "name": "piercing_release",
+          "passed": true
+        },
+        {
+          "name": "ready_draw",
+          "passed": true
+        },
+        {
+          "name": "release",
+          "passed": true
+        },
+        {
+          "name": "respawn",
+          "passed": true
+        },
+        {
+          "name": "run",
+          "passed": true
+        },
+        {
+          "name": "sprint",
+          "passed": true
+        },
+        {
+          "name": "volley_draw",
+          "passed": true
+        },
+        {
+          "name": "volley_release",
+          "passed": true
+        },
+        {
+          "name": "walk",
+          "passed": true
+        }
+      ],
+      "engine": {
+        "build": "official",
+        "hash": "7d41c59c457bd5a245092b4e7eb2d833e3b3f8c3",
+        "hex": 263683,
+        "major": 4,
+        "minor": 6,
+        "patch": 3,
+        "status": "stable",
+        "string": "4.6.3-stable (official)",
+        "timestamp": 0
+      },
+      "input_sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+      "max_position_m": 4.86085173179163e-06,
+      "max_rotation_radians": 8.70950977310085e-05,
+      "passed": true,
+      "probes": 182246,
+      "runtime_asset_changed": false,
+      "schema": 1,
+      "scope": "In-memory Godot interpolation including loop-boundary probes; no skin/contact/events/render/performance acceptance.",
+      "verifier_sha256": "5d24da4466a388130f95fca049b82e39a0ffd4ae2cc7cc0f0a78165a87e73096"
+    },
+    "output_guards": {
+      "passed": true,
+      "checks": [
+        {
+          "name": "symlink_parent",
+          "command": [
+            "taskset",
+            "-c",
+            "0,1",
+            "godot",
+            "--headless",
+            "--path",
+            "/workspace/ANDOLAN/games/yuga-native",
+            "--script",
+            "res://tools/reuse-animation/export-library.gd",
+            "--",
+            "--input=/workspace/ANDOLAN/games/yuga-native/assets/animations/rama_hero_motion.tres",
+            "--output=/workspace/scratch/community-reuse/engine/guard-repository-link/must-not-create.json"
+          ],
+          "returncode": 2,
+          "stderr": "Output and its parent directories must not be symbolic links.\n",
+          "stdout": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\n",
+          "before_sha256": null,
+          "after_sha256": null,
+          "passed": true
+        },
+        {
+          "name": "existing_output",
+          "command": [
+            "taskset",
+            "-c",
+            "0,1",
+            "godot",
+            "--headless",
+            "--path",
+            "/workspace/ANDOLAN/games/yuga-native",
+            "--script",
+            "res://tools/reuse-animation/export-library.gd",
+            "--",
+            "--input=/workspace/ANDOLAN/games/yuga-native/assets/animations/rama_hero_motion.tres",
+            "--output=/workspace/scratch/community-reuse/engine/existing-output-sentinel.json"
+          ],
+          "returncode": 2,
+          "stderr": "Use an absolute input and a fresh absolute output JSON path.\n",
+          "stdout": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\n",
+          "before_sha256": "9627c89e4a7dc54e28ddb0c747a90d5b4d8b3916e7ca0dbeb020a86621814508",
+          "after_sha256": "9627c89e4a7dc54e28ddb0c747a90d5b4d8b3916e7ca0dbeb020a86621814508",
+          "passed": true
+        }
+      ]
+    },
+    "runtime_asset_changed": false,
+    "scope": "Finite numeric probes only; no continuous proof, skinned contact/aim/event/visual quality, package size or performance claim.",
+    "candidate_guards": {
+      "passed": true,
+      "checks": [
+        {
+          "name": "duplicate_clip",
+          "returncode": 2,
+          "stdout": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\n",
+          "stderr": "Candidate clip names must be unique and match the source library exactly.\n",
+          "passed": true
+        },
+        {
+          "name": "unknown_clip",
+          "returncode": 2,
+          "stdout": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\n",
+          "stderr": "Candidate clip names must be unique and match the source library exactly.\n",
+          "passed": true
+        }
+      ]
+    },
+    "track_contract_guards": {
+      "passed": true,
+      "checks": [
+        {
+          "name": "changed_kind",
+          "returncode": 2,
+          "stdout": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\n",
+          "stderr": "Candidate changes track kind, interpolation, loop-wrap, enabled state or key-transition contract.\n",
+          "passed": true
+        },
+        {
+          "name": "changed_interpolation",
+          "returncode": 2,
+          "stdout": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\n",
+          "stderr": "Candidate changes track kind, interpolation, loop-wrap, enabled state or key-transition contract.\n",
+          "passed": true
+        },
+        {
+          "name": "changed_loop_wrap",
+          "returncode": 2,
+          "stdout": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\n",
+          "stderr": "Candidate changes track kind, interpolation, loop-wrap, enabled state or key-transition contract.\n",
+          "passed": true
+        },
+        {
+          "name": "changed_enabled",
+          "returncode": 2,
+          "stdout": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\n",
+          "stderr": "Candidate changes track kind, interpolation, loop-wrap, enabled state or key-transition contract.\n",
+          "passed": true
+        },
+        {
+          "name": "changed_transitions",
+          "returncode": 2,
+          "stdout": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\n",
+          "stderr": "Candidate changes track kind, interpolation, loop-wrap, enabled state or key-transition contract.\n",
+          "passed": true
+        }
+      ]
+    }
+  },
+  "validation": {
+    "python_unit_cases": 10,
+    "python_unit_passed": 10,
+    "cases": [
+      "linear ramp endpoints",
+      "translation excursion",
+      "antipodal quaternions",
+      "wide SLERP/NLERP arc",
+      "rotation excursion",
+      "clip name/duration/loop/source preservation",
+      "invalid channel forms (7 subcases)",
+      "zero quaternion",
+      "partial loop span",
+      "single constant key"
+    ],
+    "independent_python_review": "reuse_reviewer reported 10/10 passing tests and inspected the source/receipts.",
+    "meaningful_failures": [
+      {
+        "failure": "Wide SLERP arc passed sample logic but failed dense NLERP tolerance.",
+        "correction": "Restore original source neighbors at worst dense probe, then recheck; test now passes."
+      },
+      {
+        "failure": "Initial Godot extractor inferred untyped clip/type and did not parse.",
+        "correction": "Explicit Animation/int declarations; actual extraction and guarded rejection then pass."
+      },
+      {
+        "failure": "Independent review found clip-count alone could accept duplicate names and omit other source clips.",
+        "correction": "Require unique exact source-name membership and equal count before sampling; duplicate and unknown-name guard calls return2."
+      }
+    ]
+  },
+  "local_inputs_and_tools": [
+    {
+      "path": "games/yuga-native/assets/animations/rama_hero_motion.tres",
+      "sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+      "bytes": 1619178
+    },
+    {
+      "path": "games/yuga-native/art/hero-rama-motion/build_library.gd",
+      "sha256": "b637da3597758037688163b25bf5c0c79bfa33ef001fad9c26a4c4ed0a24fe8c",
+      "bytes": 12560
+    },
+    {
+      "path": "games/yuga-native/tools/reuse-animation/audit.py",
+      "sha256": "c549c0245a17832a415e9f6ac64b8c61bcd1e0e532bcf5aed032dc10d7352012",
+      "bytes": 12964
+    },
+    {
+      "path": "games/yuga-native/tools/reuse-animation/export-library.gd",
+      "sha256": "57a2c238323d86ad062a88f2d1a1f08941858fefbe00b4c4f2f6a87df51611e4",
+      "bytes": 3363
+    },
+    {
+      "path": "games/yuga-native/tools/reuse-animation/verify-candidate.gd",
+      "sha256": "5d24da4466a388130f95fca049b82e39a0ffd4ae2cc7cc0f0a78165a87e73096",
+      "bytes": 6216
+    },
+    {
+      "path": "games/yuga-native/tools/reuse-animation/test_audit.py",
+      "sha256": "d387c9b86c4b364d7c4c915c7856723cc7e4013c5ec68218c14464faa9643767",
+      "bytes": 4391
+    }
+  ],
+  "scratch_receipts": [
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/rama-library-extraction-r1.json",
+      "sha256": "2fe0b7528b2ad565945bd3fa1b066afe7a02469f717a68e7a915c42fceac5081",
+      "bytes": 4765515
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/rama-key-audit-r1/audit.json",
+      "sha256": "22eada0145b6a136d7d6151e15980cb6ee9b68ebf73efe459d48b639ea2d9881",
+      "bytes": 659910
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/rama-key-audit-r1/candidate.json",
+      "sha256": "aef5554171d7a4d6d2faeaae2a4bc8973891f457ed50beeaf49ed03d0c735c36",
+      "bytes": 3158017
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godot-key-verification-r1.json",
+      "sha256": "264f85f93ed63cc5001a5121df8ea0a06c56d33d0781c55f15b65106bab1a679",
+      "bytes": 2203
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godot-key-verification-r1.log",
+      "sha256": "9b1a5dd8a97d33a2fd49f08970e34066cdc2f81d012ad085295415596e4012e4",
+      "bytes": 1572
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/export-guard-checks.json",
+      "sha256": "7a3bd4c0a8302311028bec51f8d462bb2f56983f91eaeb1c8c19bc3c89faa1ae",
+      "bytes": 1742
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godot-key-verification-r2.log",
+      "sha256": "ee02b7d0cab378813f3ce949071a24fdb4cec3c8be3c2844de8f3208fbd5af3b",
+      "bytes": 1572
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godot-key-verification-r2.json",
+      "sha256": "3735345665613e409633e1a2cc013a6fa7f86b583eb16808f7ff8e5f43f3044b",
+      "bytes": 2203
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/candidate-guard-checks.json",
+      "sha256": "121888cebdfabd66c505bce2e810337d9ad9fa20d89b120492d3823df0761b99",
+      "bytes": 595
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godot-key-verification-r3.log",
+      "sha256": "a8b64494d18a9ede785b66ab5e0c23e21ecd3275883df2730802355cf8901dfb",
+      "bytes": 1572
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/godot-key-verification-r3.json",
+      "sha256": "f01e00169b0c48eb9c1bcfca93bb9100138f7f5254f6af4cb9078c1689f49e29",
+      "bytes": 2203
+    },
+    {
+      "scratch_path": "/workspace/scratch/community-reuse/engine/candidate-contract-guards.json",
+      "sha256": "9508d3c4ed64023391a4e93fe37e1550a723fbaab5f337d9e09a0b2a5aebccd7",
+      "bytes": 1568
+    }
+  ],
+  "commands": [
+    "python3 -m unittest discover -s games/yuga-native/tools/reuse-animation -p test_*.py -v",
+    "taskset -c 0,1 godot --headless --path games/yuga-native --script res://tools/reuse-animation/export-library.gd -- --input=/workspace/ANDOLAN/games/yuga-native/assets/animations/rama_hero_motion.tres --output=/workspace/scratch/community-reuse/engine/rama-library-extraction-r1.json",
+    "taskset -c 0,1 python3 games/yuga-native/tools/reuse-animation/audit.py --input /workspace/scratch/community-reuse/engine/rama-library-extraction-r1.json --output /workspace/scratch/community-reuse/engine/rama-key-audit-r1",
+    "taskset -c 0,1 godot --headless --path games/yuga-native --script res://tools/reuse-animation/verify-candidate.gd -- --input=/workspace/ANDOLAN/games/yuga-native/assets/animations/rama_hero_motion.tres --candidate=/workspace/scratch/community-reuse/engine/rama-key-audit-r1/candidate.json"
+  ],
+  "execution_boundaries": {
+    "downloaded": "Selected source/license/docs/test files and GitHub metadata only; no repository clones or Tests/Files game data.",
+    "executed": "Original local extractor, MIT-attributed Python reduction adaptation/tests, original Godot in-memory interpolation verifier, two output refusal checks.",
+    "not_executed": [
+      "REA/Ghidra new analysis",
+      "VRF C# binary/library or whole test suite",
+      "Godot upstream demo",
+      "Source 2 asset conversion",
+      "commercial client/map/asset",
+      "renderer or play session"
+    ],
+    "retained_existing_pipeline": [
+      "Godot 4.6.3",
+      "Blender/glTF",
+      "MikkTSpace authoring",
+      "original Rama assets/runtime release clocks"
+    ]
+  }
+}

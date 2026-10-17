@@ -1,0 +1,323 @@
+{
+  "schema": 1,
+  "reviewed_at": "2026-10-17",
+  "source_commit": "7c86cd430e2c878b4f5e6ba1b21f562b73fdc32f",
+  "state": "complete_with_blocked_fresh_community_access",
+  "fresh_public_check": {
+    "checked_at": "2026-10-17T21:40:11.863919+00:00",
+    "method": "GET",
+    "url": "https://www.reddit.com/r/gamedev/about.json",
+    "requests": 1,
+    "redirects_followed": false,
+    "proxy_and_tls": "inherited defaults",
+    "auth_used": false,
+    "http_status": 403,
+    "content_type": "text/html",
+    "proxy_error_code": null,
+    "body_not_retained": true,
+    "policy_denial_identified": false,
+    "denial_origin": "unknown",
+    "new_posts": 0,
+    "new_comments": 0
+  },
+  "runtime_observation": {
+    "connectivity": "connected",
+    "observations_current": true,
+    "network_policy_mode": "restricted",
+    "network_policy_state": "unknown",
+    "reddit_in_effective_allowed_hosts": false,
+    "reddit_variable_names": [],
+    "declared_secret_bindings": 0,
+    "vpn_configured": false
+  },
+  "sources_read": [
+    {
+      "path": "games/yuga/tools/collect-reddit.py",
+      "sha256": "81be86afb1b12e9ca800c4c7a7597d3ad395959f9fee36cd86cb6c5f126e3b23",
+      "access": "local retained source; current pass read report or code, not historical raw Reddit corpus"
+    },
+    {
+      "path": "games/yuga/docs/REDDIT_RESEARCH.md",
+      "sha256": "6a0c1ceca346b864de2cc7e65a357c5ed35df576b317ca6be31bd0dc0f5c9376",
+      "access": "local retained source; current pass read report or code, not historical raw Reddit corpus"
+    },
+    {
+      "path": "games/yuga/docs/ENVIRONMENT_MYTHOLOGY_RESEARCH.md",
+      "sha256": "c0dbd1ca197d74f155350fad0b22e7abbe0bebf11b86dc6a5c6df5430a1f17df",
+      "access": "local retained source; current pass read report or code, not historical raw Reddit corpus"
+    },
+    {
+      "path": "games/yuga/docs/research/ENVIRONMENT_RESEARCH_SOURCES.json",
+      "sha256": "9dba4439b65953524992f25f17e7e14ff2e997abcca667879ec5cd45a00ff05a",
+      "access": "local retained source; current pass read report or code, not historical raw Reddit corpus"
+    },
+    {
+      "path": "games/yuga/docs/LANKA_COAST_RESEARCH.md",
+      "sha256": "30c2c182a2cb48b525bfec731dd4b7dbf1b022fdc648f751b463cb337dc793c4",
+      "access": "local retained source; current pass read report or code, not historical raw Reddit corpus"
+    },
+    {
+      "path": "games/yuga/docs/research/LANKA_COAST_SOURCES.json",
+      "sha256": "126df5fbc19aab2823dce58622e10f33671d6314d6f0035306e18a9f235c1001",
+      "access": "local retained source; current pass read report or code, not historical raw Reddit corpus"
+    }
+  ],
+  "historical_mythology_runs": [
+    {
+      "subreddit": "IndianMythology",
+      "retrieved_at": "2026-10-16T19:10:29.819087+00:00",
+      "external_filename": "reddit-indianmythology-1nkj_tgo.json",
+      "sha256": "f57380bd0cd51358a61064b2c2bbb5d916a10ff6becafcc3e192b1ef570222ae",
+      "status": "complete",
+      "post_records": 7,
+      "comment_records": 5,
+      "requests": 10,
+      "raw_available_this_pass": false,
+      "text_re_read_this_pass": false
+    },
+    {
+      "subreddit": "hinduism",
+      "retrieved_at": "2026-10-16T19:10:55.464652+00:00",
+      "external_filename": "reddit-hinduism-0_gusgiq.json",
+      "sha256": "e7a689697420230600e7c74911649e5c40f383ccbcf5b47a345a4c880d7e9e39",
+      "status": "complete",
+      "post_records": 12,
+      "comment_records": 16,
+      "requests": 10,
+      "raw_available_this_pass": false,
+      "text_re_read_this_pass": false
+    }
+  ],
+  "historical_combined": {
+    "unique_posts": 19,
+    "unique_comments": 21,
+    "requests": 20
+  },
+  "historical_design_runs": [
+    {
+      "subreddit": "gamedev",
+      "retrieved_at": "2026-10-16T19:37:22.720739+00:00",
+      "status": "partial",
+      "failure": "http_403",
+      "stage": "public metadata preflight",
+      "requests": 2,
+      "posts": 0,
+      "comments": 0
+    },
+    {
+      "subreddit": "gamedesign",
+      "retrieved_at": "2026-10-16T19:37:25.863504+00:00",
+      "status": "partial",
+      "failure": "http_403",
+      "stage": "public metadata preflight",
+      "requests": 2,
+      "posts": 0,
+      "comments": 0
+    },
+    {
+      "subreddit": "IndianGaming",
+      "retrieved_at": "2026-10-16T19:37:28.465553+00:00",
+      "status": "partial",
+      "failure": "http_403",
+      "stage": "public metadata preflight",
+      "requests": 2,
+      "posts": 0,
+      "comments": 0
+    }
+  ],
+  "current_raw_corpus_scope": "No historical raw Reddit corpus found in documented /tmp/yuga-reddit-research, /tmp or /workspace/tooling; filename scan found an unrelated saved TF2 HTTP403 response under /workspace/scratch.",
+  "collector_self_test": {
+    "command": "python3 games/yuga/tools/collect-reddit.py --self-test",
+    "exit_code": 0,
+    "checks_passed": 19,
+    "network_requests": 0
+  },
+  "privacy": "No account names, raw public prose, secret values, credentials or authentication responses published. Links are source identifiers; report paraphrases require original-context recheck before publication.",
+  "official_preflight": {
+    "checked_at": "2026-10-17T21:50:38.485026+00:00",
+    "purpose": "official app authentication and exact public metadata only",
+    "subreddit": "gamedev",
+    "endpoints": [
+      "https://www.reddit.com/api/v1/access_token",
+      "https://oauth.reddit.com/r/gamedev/about"
+    ],
+    "max_requests": 3,
+    "max_runtime_seconds": 30,
+    "new_posts": 0,
+    "new_comments": 0,
+    "redirects_followed": false,
+    "credential_values_retained": false,
+    "field_presence": {
+      "client_id": true,
+      "client_secret": true,
+      "user_agent": true,
+      "username": true,
+      "password": true
+    },
+    "app_authentication_succeeded": true,
+    "status": "blocked",
+    "stage": "public_community_metadata",
+    "failure_code": "http_403",
+    "failure_message": "Official API request rejected (HTTP 403); check network permission, app configuration and API access.",
+    "requests_performed": 2
+  },
+  "fresh_totals": {
+    "http_requests": 3,
+    "oauth_exchanges": 1,
+    "public_metadata_requests": 2,
+    "posts": 0,
+    "comments": 0,
+    "search_requests": 0,
+    "comment_requests": 0,
+    "policy_denial_origin": "unknown",
+    "application_credentials": "usable for observed OAuth exchange",
+    "community_access": "not confirmed; HTTP 403"
+  },
+  "configuration_diagnosis": {
+    "initial_strict_reader": "invalid_config",
+    "narrow_normalizers": "invalid_config; zero network requests",
+    "shape_diagnosis": "required recognized fields present/nonempty; six unselected metadata fields; no duplicate recognized keys",
+    "correction": "Inert recognized-field extraction in memory; only client_id/client_secret/user_agent supplied to existing application-authentication reader. Unselected metadata and username/password were not used for login.",
+    "credential_values_published": false,
+    "credential_copies_created": false,
+    "attachment_content_changed": false,
+    "new_credentials_requested": false
+  },
+  "external_preflight_helper": {
+    "path": "/tmp/yuga-community-research-20261017/official-preflight.py",
+    "sha256": "b4d655badda5e13f9694407d7e8e6b786572b1dd4f6f591490dbebdf0369f2a4",
+    "retained_in_repository": false,
+    "self_test_command": "python3 /tmp/yuga-community-research-20261017/official-preflight.py --self-test",
+    "self_test_exit_code": 0,
+    "dummy_checks_passed": 11,
+    "live_command": "python3 /tmp/yuga-community-research-20261017/official-preflight.py <authorized-external-config-path>",
+    "config_locator_omitted_from_public_report": true,
+    "live_exit_code": 2,
+    "network_reader": "Unmodified games/yuga/tools/collect-reddit.py RedditReader"
+  },
+  "crosspost_deduplication": {
+    "fresh_sample": "not applicable: no records",
+    "historical_sample": "Prior ledger reports unique permalinks; raw records absent, so this pass cannot recompute crosspost/content overlap or count independent viewpoints."
+  },
+  "current_claims": [
+    {
+      "id": "C1",
+      "source_type": "retained local report paraphrase, not fresh original access",
+      "sources": [
+        {
+          "url": "https://www.reddit.com/r/IndianMythology/comments/1wbwmkl/can_we_talk_about_the_kauravas_without_the/",
+          "created_date": "2026-09-09"
+        },
+        {
+          "url": "https://www.reddit.com/r/IndianMythology/comments/1wbwmkl/can_we_talk_about_the_kauravas_without_the/p8w6gvx/",
+          "created_date": "2026-09-10"
+        },
+        {
+          "url": "https://www.reddit.com/r/hinduism/comments/1walhnh/the_bhanumatikrishna_story_mahabharata_passage_or/",
+          "created_date": "2026-09-08"
+        }
+      ],
+      "paraphrase": "Retained discussions contain differing character readings and a request to locate a circulated story.",
+      "next_trial": "One source-linked Rama content brief with explicit edition/passage and adaptation labels."
+    },
+    {
+      "id": "C2",
+      "source_type": "retained local report paraphrase, not fresh original access",
+      "sources": [
+        {
+          "url": "https://www.reddit.com/r/hinduism/comments/1r3e19c/mandalas_are_spiritual_maps_as_a_window_to_the/",
+          "created_date": "2026-02-13"
+        }
+      ],
+      "paraphrase": "Broad mandala claims and promotional replies were retained; claims were not validated.",
+      "next_trial": "Original radial-court readability trial; no sacred-plan reconstruction claim."
+    },
+    {
+      "id": "C3",
+      "source_type": "retained local report paraphrase, not fresh original access",
+      "sources": [
+        {
+          "url": "https://www.reddit.com/r/hinduism/comments/1odqqqp/make_diwali_green_abstain_from_fireworks_return/",
+          "created_date": "2025-10-23"
+        },
+        {
+          "url": "https://www.reddit.com/r/hinduism/comments/1odqqqp/make_diwali_green_abstain_from_fireworks_return/nkwe24i/",
+          "created_date": null
+        }
+      ],
+      "paraphrase": "A lamp preference and disagreement about tradition were retained; numerical and historical claims remain unverified.",
+      "next_trial": "Bounded lamp reuse with actual day/night readability and frame-cost gates."
+    },
+    {
+      "id": "C4",
+      "source_type": "retained local report paraphrase, not fresh original access",
+      "sources": [
+        {
+          "url": "https://www.reddit.com/r/hinduism/comments/1wzjlyq/700_year_old_carvings_of_hanuman_and_garuda_oc/",
+          "created_date": "2026-10-07"
+        },
+        {
+          "url": "https://www.reddit.com/r/hinduism/comments/1wzjlyq/700_year_old_carvings_of_hanuman_and_garuda_oc/pec8tp2/",
+          "created_date": null
+        }
+      ],
+      "paraphrase": "A carving post/location reply is an unverified heritage lead; imagery was not inspected or licensed.",
+      "next_trial": "Verify site/provenance and rights from institutional/source records before asset reuse."
+    }
+  ],
+  "followup": {
+    "condition": "Meaningful change to official public-community access; usable application credentials already demonstrated",
+    "initial_communities": [
+      "gamedev",
+      "IndianMythology"
+    ],
+    "candidate_communities_not_currently_allowlisted": [
+      "godot",
+      "blender",
+      "gamedevassets"
+    ],
+    "candidate_existence_validated_this_pass": false,
+    "per_community_caps": {
+      "posts": 8,
+      "comment_threads": 2,
+      "comments_per_thread": 3,
+      "comments": 6,
+      "http_requests": 10,
+      "runtime_seconds": 120,
+      "searches": 4,
+      "posts_per_search": 2
+    },
+    "initial_combined_caps": {
+      "posts": 16,
+      "comments": 12,
+      "http_requests": 20
+    },
+    "public_preflight_required": true,
+    "stop_after_access_refusal": true,
+    "media_or_profile_access": false,
+    "broad_feeds_or_pagination": false,
+    "new_collector_added": false,
+    "queries_and_acceptance": "community.md"
+  },
+  "limits": [
+    "No fresh public post/comment was obtained.",
+    "Historical raw samples are unavailable; current conclusions rely on retained source-linked reports.",
+    "No subreddit-based best-tool ranking, license determination, population sentiment estimate or current public-existence claim is supported.",
+    "No graphics or animation software recommendation in this packet comes from a freshly inspected community source.",
+    "The existing collector lacks godot/blender/gamedevassets; a future narrowly reviewed extension would be needed after access and exact public metadata validation."
+  ],
+  "packet_validation": {
+    "checks_passed": 7,
+    "checks": [
+      "fresh request accounting equals1public+2official",
+      "zero fresh posts/comments",
+      "appOAuthsuccess and publicmetadata403 separately recorded",
+      "historical post/comment counts match retained ledger",
+      "read-sourceSHA256values match",
+      "relative report links resolve",
+      "credential attachment locator omitted"
+    ],
+    "whitespace_check": "git diff --no-index --check /dev/null <each new community.md/community.json file>; exit1 for new-file difference, no whitespace diagnostics.",
+    "independent_review": "Accepted within retained-secondary-evidence scope; credential usability and3request accounting checked; historical unique_* fields remain attributed to original ledger, not recomputed."
+  }
+}

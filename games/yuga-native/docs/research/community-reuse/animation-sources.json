@@ -1,0 +1,619 @@
+{
+  "schema": 1,
+  "task": "COMMUNITY-REUSE-ANIMATION",
+  "checked_utc_date": "2026-10-17",
+  "project": "YUGA native",
+  "project_source_commit": "7c86cd430e2c878b4f5e6ba1b21f562b73fdc32f",
+  "network": "HTTPS Git/raw.githubusercontent.com using inherited proxy and CA trust. Policy snapshot restricted; environment_status enforcement state unknown. No credential extraction, VPN, direct-route change or denial bypass.",
+  "community_evidence": "No new Reddit animation/tool evidence; separate community worker observed403 and0posts/comments. Sources here are primary repositories, not community recommendations.",
+  "sources": [
+    {
+      "id": "ANIM-01",
+      "title": "Blender 4.3.2 bundled Rigify",
+      "repository": "https://github.com/blender/blender",
+      "revision": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+      "revision_kind": "v4.3.2 release tag, matched to project tool version",
+      "license": "GPL-2.0-or-later (selected Rigify files)",
+      "decision": "tool-only",
+      "runtime_adoption": false,
+      "specific_use": "Optional control-rig and FK/IK snapping/baking study on a copied authoring scene; bake to the original 164-bone deform skeleton. Existing native eyelid pipeline remains the first face route.",
+      "compatibility": "Exact Blender release source verified; Rigify bl_info0.6.10/minimum Blender4.0.0. Rig generation/export was not executed. Generated rig cannot replace Rama rest/name/parent contract.",
+      "rights_boundary": "GPL applies to copied plugin/script code. Separately authored meshes/motion retain their own provenance; external rigs, animations and training datasets require individual rights review. No generated Rigify UI script or tool source shipped.",
+      "files": [
+        {
+          "repo": "blender/blender",
+          "commit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+          "file": "scripts/addons_core/rigify/__init__.py",
+          "url": "https://raw.githubusercontent.com/blender/blender/32f5fdce0a0a571a39198edf8d7b5d719bf59f2c/scripts/addons_core/rigify/__init__.py",
+          "status": 200,
+          "bytes": 30795,
+          "sha256": "5609d437532232ce38958712b862690b46f2fb68c561c68986583e238cdc30e8",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/blender/scripts/addons_core/rigify/__init__.py"
+        },
+        {
+          "repo": "blender/blender",
+          "commit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+          "file": "scripts/addons_core/rigify/utils/animation.py",
+          "url": "https://raw.githubusercontent.com/blender/blender/32f5fdce0a0a571a39198edf8d7b5d719bf59f2c/scripts/addons_core/rigify/utils/animation.py",
+          "status": 200,
+          "bytes": 36753,
+          "sha256": "4496ae982b596a49eac47ff693bc775ed44d56d1d98a823eb2bc244874dbf4ef",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/blender/scripts/addons_core/rigify/utils/animation.py"
+        },
+        {
+          "repo": "blender/blender",
+          "commit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+          "file": "scripts/addons_core/rigify/rigs/limbs/limb_rigs.py",
+          "url": "https://raw.githubusercontent.com/blender/blender/32f5fdce0a0a571a39198edf8d7b5d719bf59f2c/scripts/addons_core/rigify/rigs/limbs/limb_rigs.py",
+          "status": 200,
+          "bytes": 49912,
+          "sha256": "aac05c447c259e361f70ce89e4b9ce4d0fa8a3a340b53252b68b298a1d1d6739",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/blender/scripts/addons_core/rigify/rigs/limbs/limb_rigs.py"
+        },
+        {
+          "repo": "blender/blender",
+          "commit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+          "file": "scripts/addons_core/rigify/rigs/face/skin_eye.py",
+          "url": "https://raw.githubusercontent.com/blender/blender/32f5fdce0a0a571a39198edf8d7b5d719bf59f2c/scripts/addons_core/rigify/rigs/face/skin_eye.py",
+          "status": 200,
+          "bytes": 30809,
+          "sha256": "6d070e7d99317a5dcb3a2857dcea21ac09fa5b8e44a083a83bfb2cd8d326f1d9",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/blender/scripts/addons_core/rigify/rigs/face/skin_eye.py"
+        },
+        {
+          "repo": "blender/blender",
+          "commit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+          "file": "scripts/addons_core/rigify/rigs/spines/basic_tail.py",
+          "url": "https://raw.githubusercontent.com/blender/blender/32f5fdce0a0a571a39198edf8d7b5d719bf59f2c/scripts/addons_core/rigify/rigs/spines/basic_tail.py",
+          "status": 200,
+          "bytes": 7842,
+          "sha256": "a67d72e165988530aa6fe057cff10e5de4c720137dc38daad640d3ec8aeaab5f",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/blender/scripts/addons_core/rigify/rigs/spines/basic_tail.py"
+        },
+        {
+          "repo": "blender/blender",
+          "commit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+          "file": "COPYING",
+          "url": "https://raw.githubusercontent.com/blender/blender/32f5fdce0a0a571a39198edf8d7b5d719bf59f2c/COPYING",
+          "status": 200,
+          "bytes": 302,
+          "sha256": "19e6f4b541772f9d7b98a52bdbca3ebd5ef9e404956a9a6de68bfc3c1a178387",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/blender/COPYING"
+        },
+        {
+          "repo": "blender/blender",
+          "commit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+          "file": "doc/license/GPL-license.txt",
+          "url": "https://raw.githubusercontent.com/blender/blender/32f5fdce0a0a571a39198edf8d7b5d719bf59f2c/doc/license/GPL-license.txt",
+          "status": 200,
+          "bytes": 17992,
+          "sha256": "f2703dec1b0118070caabd3302e21738c00211b0cc3260dbeb1168d6eda726b7",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/blender/doc/license/GPL-license.txt"
+        }
+      ]
+    },
+    {
+      "id": "ANIM-02",
+      "title": "Godot 4.6.3 native skeletal modifiers",
+      "repository": "https://github.com/godotengine/godot",
+      "revision": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "revision_kind": "4.6.3-stable tag, exact runtime family",
+      "license": "MIT (repository license; selected engine C++ and class XML)",
+      "decision": "adapt-native-first-in-isolation",
+      "runtime_adoption": false,
+      "specific_use": "Use built-in TwoBoneIK3D as isolated comparator before external solver integration; RetargetModifier3D/Profile source defines explicit mapping/update-order constraints; SpringBoneSimulator3D deferred until authored secondary chains exist.",
+      "compatibility": "API/source present in4.6.3. TwoBoneIK3D ignores intermediate rotations; Rama actively rotates two upper/two lower segments. Retarget rewrites target poses; global mode assumes matching lengths. SpringBone supports nonbranching chains and warns against scaled skeletons. No Godot scene executed in this work.",
+      "rights_boundary": "Engine licensing is not an animation/model/data license. No upstream model or motion adopted.",
+      "files": [
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "LICENSE.txt",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/LICENSE.txt",
+          "status": 200,
+          "bytes": 1149,
+          "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/LICENSE.txt"
+        },
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "scene/3d/retarget_modifier_3d.cpp",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/scene/3d/retarget_modifier_3d.cpp",
+          "status": 200,
+          "bytes": 18164,
+          "sha256": "15dbb37d55981c7ff94b81477b838fde5e65447a31ece4a3958ce577a986758e",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/scene/3d/retarget_modifier_3d.cpp"
+        },
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "scene/3d/spring_bone_simulator_3d.cpp",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/scene/3d/spring_bone_simulator_3d.cpp",
+          "status": 200,
+          "bytes": 77421,
+          "sha256": "c3364174c8a26f6214323df42dffa431e68ac1deb6b25ffb6183c9e135fc8ebd",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/scene/3d/spring_bone_simulator_3d.cpp"
+        },
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "scene/resources/skeleton_profile.cpp",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/scene/resources/skeleton_profile.cpp",
+          "status": 200,
+          "bytes": 33683,
+          "sha256": "150480b811401e738846f3b1dce0eec5eff04b65d171a7fff0d8eedfa2cb7ea6",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/scene/resources/skeleton_profile.cpp"
+        },
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "doc/classes/RetargetModifier3D.xml",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/RetargetModifier3D.xml",
+          "status": 200,
+          "bytes": 4588,
+          "sha256": "97e4af3030a472698c81a3f5ca909bc8360ccaa0a7abefdc7d5eff2dfc45682a",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/doc/classes/RetargetModifier3D.xml"
+        },
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "doc/classes/SkeletonProfileHumanoid.xml",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/SkeletonProfileHumanoid.xml",
+          "status": 200,
+          "bytes": 4155,
+          "sha256": "e534d5308c20f9aeeacb17cb2fb30b1ead21c1f3b0fd4b73b15be374a5eaeeaf",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/doc/classes/SkeletonProfileHumanoid.xml"
+        },
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "doc/classes/SpringBoneSimulator3D.xml",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/SpringBoneSimulator3D.xml",
+          "status": 200,
+          "bytes": 29919,
+          "sha256": "b180dc03d30829762969a581543c92be63a8c469cfaf96379996262298445a9a",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/doc/classes/SpringBoneSimulator3D.xml"
+        },
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "doc/classes/SkeletonIK3D.xml",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/SkeletonIK3D.xml",
+          "status": 200,
+          "bytes": 6287,
+          "sha256": "e50ede63bddf2019f31a4393ddf90c03975b2eb52b6a23befe2f7620c2e393e8",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/doc/classes/SkeletonIK3D.xml"
+        },
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "doc/classes/TwoBoneIK3D.xml",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/TwoBoneIK3D.xml",
+          "status": 200,
+          "bytes": 8932,
+          "sha256": "87ff27d074217c4b1fd26f9bb56188920f51b72ea07d69f7adf236e9da1ccb76",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/doc/classes/TwoBoneIK3D.xml"
+        },
+        {
+          "repo": "godotengine/godot",
+          "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+          "file": "scene/3d/two_bone_ik_3d.cpp",
+          "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/scene/3d/two_bone_ik_3d.cpp",
+          "status": 200,
+          "bytes": 36104,
+          "sha256": "d4d763411f8f5b96e387d30bbfbba29ba4b43fcdb105cbb29ade65dc5a4a3799",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot/scene/3d/two_bone_ik_3d.cpp"
+        }
+      ]
+    },
+    {
+      "id": "ANIM-03",
+      "title": "Godot official IK demo",
+      "repository": "https://github.com/godotengine/godot-demo-projects",
+      "revision": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "revision_kind": "remote HEAD observed2026-10-17; commit2026-10-08",
+      "license": "MIT (repository license and README); selected model README provides no distinct art-license clarification",
+      "decision": "inspire; defer-current-demo-import",
+      "runtime_adoption": false,
+      "specific_use": "Reference target/pole visualization and constrained iteration. Do not import demo controller/model as Rama fix.",
+      "compatibility": "project.godot explicitly declares4.7; README says master targets next development release. SkeletonIK3D runner uses class deprecated in4.6.3; FABRIK tolerance0.01m is looser than retained0.002m contact gate.",
+      "rights_boundary": "No demo model/texture/motion copied. Review selected data notices separately before any future asset transfer.",
+      "files": [
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "file": "LICENSE.md",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/LICENSE.md",
+          "status": "git_https_checkout",
+          "bytes": 1134,
+          "sha256": "0339177149b474f7ff676d32218ecb3a8f2538955610023c3769763720d09e4c",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot-demo-projects/LICENSE.md"
+        },
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "file": "README.md",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/README.md",
+          "status": "git_https_checkout",
+          "bytes": 2263,
+          "sha256": "4c121fc88a1412b8e381263146ac67937c485386e79641569117a6516dd64ba3",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot-demo-projects/README.md"
+        },
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "file": "3d/ik/project.godot",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/project.godot",
+          "status": "git_https_checkout",
+          "bytes": 753,
+          "sha256": "04f0b18b31b88ed8935d44d6ae8bec03c2702ebcb8a47e2fca466af343168199",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot-demo-projects/3d/ik/project.godot"
+        },
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "file": "3d/ik/README.md",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/README.md",
+          "status": "git_https_checkout",
+          "bytes": 752,
+          "sha256": "de3d3dcf4309026f1fad2ddf8a17449d778316d1aa3c0134235bfec9fcfe5c4f",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot-demo-projects/3d/ik/README.md"
+        },
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "file": "3d/ik/addons/sade/ik_fabrik.gd",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/addons/sade/ik_fabrik.gd",
+          "status": "git_https_checkout",
+          "bytes": 16485,
+          "sha256": "f0f432d75fa8086edb50d26ab0ca5adf0097c6323dc225376ce9371063567505",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot-demo-projects/3d/ik/addons/sade/ik_fabrik.gd"
+        },
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "file": "3d/ik/skeleton_ik_runner.gd",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/skeleton_ik_runner.gd",
+          "status": "git_https_checkout",
+          "bytes": 51,
+          "sha256": "7a06f08256fd2b77de1819fa1b5ff7e262afa1483a99d0ba2240e81bdf2b1859",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot-demo-projects/3d/ik/skeleton_ik_runner.gd"
+        },
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "file": "3d/ik/model/README.md",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/ik/model/README.md",
+          "status": "git_https_checkout",
+          "bytes": 173,
+          "sha256": "5c4a40dc540bce08d5797ec0e52c8adb18657101dabfd2bc741bc97c02c8abbb",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/godot-demo-projects/3d/ik/model/README.md"
+        }
+      ]
+    },
+    {
+      "id": "ANIM-04",
+      "title": "ozz-animation0.17.0 two-bone IK and foot IK sample",
+      "repository": "https://github.com/guillaumeblanc/ozz-animation",
+      "revision": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+      "revision_kind": "remote HEAD observed2026-10-17;0.17.0 release merge2026-08-01",
+      "license": "MIT",
+      "decision": "adapt-offline-probe; defer-runtime-port",
+      "runtime_adoption": false,
+      "specific_use": "Actual source-linked scratch C++ probe verifies full/half/zero correction-weight reach semantics; consult sample ordering for target/pelvis/IK. Native Godot baseline is the first next experiment.",
+      "compatibility": "GCC14.2 compiler with-std=c++17 built selected native sources directly. This is not full CMake library build or Godot extension. Upstream CMake>=3.30; cmake absent. No sampled pose/mesh from ozz used.",
+      "rights_boundary": "Probe fixture/FK reconstruction adapts upstream MIT test source and keeps license. Source-only API use does not license arbitrary animation datasets. Ozz is not a motion-generation model.",
+      "files": [
+        {
+          "repo": "guillaumeblanc/ozz-animation",
+          "commit": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+          "file": "LICENSE.md",
+          "url": "https://github.com/guillaumeblanc/ozz-animation/blob/744eb9d99f606eda849acb0b1204f7a3dc20bca1/LICENSE.md",
+          "status": "git_https_checkout",
+          "bytes": 1183,
+          "sha256": "3ddd93e9888fe70b9d61675ceb1c4278a579dc67171678f015de114efe815852",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/ozz-animation/LICENSE.md"
+        },
+        {
+          "repo": "guillaumeblanc/ozz-animation",
+          "commit": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+          "file": "CMakeLists.txt",
+          "url": "https://github.com/guillaumeblanc/ozz-animation/blob/744eb9d99f606eda849acb0b1204f7a3dc20bca1/CMakeLists.txt",
+          "status": "git_https_checkout",
+          "bytes": 4592,
+          "sha256": "2371814a4c4c9e10cb525951c1cba82fc230919786e3e7e22b52a468dcbafd96",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/ozz-animation/CMakeLists.txt"
+        },
+        {
+          "repo": "guillaumeblanc/ozz-animation",
+          "commit": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+          "file": "include/ozz/animation/runtime/ik_two_bone_job.h",
+          "url": "https://github.com/guillaumeblanc/ozz-animation/blob/744eb9d99f606eda849acb0b1204f7a3dc20bca1/include/ozz/animation/runtime/ik_two_bone_job.h",
+          "status": "git_https_checkout",
+          "bytes": 6305,
+          "sha256": "14e50614e56b4e433cb0ab0c767e575693f513d410f5a1ec43f40c866850c999",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/ozz-animation/include/ozz/animation/runtime/ik_two_bone_job.h"
+        },
+        {
+          "repo": "guillaumeblanc/ozz-animation",
+          "commit": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+          "file": "src/animation/runtime/ik_two_bone_job.cc",
+          "url": "https://github.com/guillaumeblanc/ozz-animation/blob/744eb9d99f606eda849acb0b1204f7a3dc20bca1/src/animation/runtime/ik_two_bone_job.cc",
+          "status": "git_https_checkout",
+          "bytes": 16492,
+          "sha256": "c528e016951e507589c661fa8a03b9d478022a0c63fc710bb0e6c6851888ccaa",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/ozz-animation/src/animation/runtime/ik_two_bone_job.cc"
+        },
+        {
+          "repo": "guillaumeblanc/ozz-animation",
+          "commit": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+          "file": "src/base/maths/simd_math.cc",
+          "url": "https://github.com/guillaumeblanc/ozz-animation/blob/744eb9d99f606eda849acb0b1204f7a3dc20bca1/src/base/maths/simd_math.cc",
+          "status": "git_https_checkout",
+          "bytes": 3242,
+          "sha256": "6769681e9fb48635e56d9e6dfcabe749aa60fb77c0cac26e56922387b144f236",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/ozz-animation/src/base/maths/simd_math.cc"
+        },
+        {
+          "repo": "guillaumeblanc/ozz-animation",
+          "commit": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+          "file": "samples/foot_ik/sample_foot_ik.cc",
+          "url": "https://github.com/guillaumeblanc/ozz-animation/blob/744eb9d99f606eda849acb0b1204f7a3dc20bca1/samples/foot_ik/sample_foot_ik.cc",
+          "status": "git_https_checkout",
+          "bytes": 28061,
+          "sha256": "a09fcb135c88d834381c0b598362bccca47856eaf711e0c2dbddf6bf718d135e",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/ozz-animation/samples/foot_ik/sample_foot_ik.cc"
+        },
+        {
+          "repo": "guillaumeblanc/ozz-animation",
+          "commit": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+          "file": "test/animation/runtime/ik_two_bone_job_tests.cc",
+          "url": "https://github.com/guillaumeblanc/ozz-animation/blob/744eb9d99f606eda849acb0b1204f7a3dc20bca1/test/animation/runtime/ik_two_bone_job_tests.cc",
+          "status": "git_https_checkout",
+          "bytes": 34042,
+          "sha256": "be3c37bf0680a66b9ba8baca2a0d1773fd12e0dcd85f3af2938d8c171111da65",
+          "retrieved_utc_date": "2026-10-17",
+          "local_evidence_path": "/workspace/scratch/community-reuse/animation/sources/ozz-animation/test/animation/runtime/ik_two_bone_job_tests.cc"
+        }
+      ]
+    }
+  ],
+  "local_evidence": {
+    "rama_contract": {
+      "scope": "Read-only actual GLB/library/upstream-name and ancestry audit; no transform equivalence, retargeted pose, Blender import or rendered acceptance.",
+      "passed": true,
+      "checks": [
+        {
+          "name": "164 unique deform-joint names",
+          "passed": true
+        },
+        {
+          "name": "GLB and runtime names match by set",
+          "passed": true
+        },
+        {
+          "name": "GLB and runtime hierarchy match by name",
+          "passed": true
+        },
+        {
+          "name": "9 embedded clips remain separate",
+          "passed": true
+        },
+        {
+          "name": "23 runtime clips unique",
+          "passed": true
+        },
+        {
+          "name": "56 upstream humanoid profile names",
+          "passed": true
+        },
+        {
+          "name": "bow string remains outside standard humanoid profile",
+          "passed": true
+        },
+        {
+          "name": "L split leg ancestry",
+          "passed": true
+        },
+        {
+          "name": "R split leg ancestry",
+          "passed": true
+        },
+        {
+          "name": "four full/half authored blink targets",
+          "passed": true
+        }
+      ],
+      "joint_count": 164,
+      "embedded_clips": [
+        "cast",
+        "cast1",
+        "cast2",
+        "cast3",
+        "defeat",
+        "fire",
+        "idle",
+        "jump",
+        "run"
+      ],
+      "runtime_clips": [
+        "aim",
+        "circle_draw",
+        "circle_release",
+        "dash",
+        "death",
+        "draw",
+        "fall",
+        "flight",
+        "grapple",
+        "hit",
+        "idle",
+        "jump",
+        "land",
+        "piercing_draw",
+        "piercing_release",
+        "ready_draw",
+        "release",
+        "respawn",
+        "run",
+        "sprint",
+        "volley_draw",
+        "volley_release",
+        "walk"
+      ],
+      "rig_name_order_equal": true,
+      "profile_bone_count": 56,
+      "exact_profile_name_matches": [],
+      "extra_name_count_vs_profile": 164,
+      "secondary_named_bones": [],
+      "morph_targets": {
+        "RamaFace exact original quads": [
+          "rama_blink_left",
+          "rama_blink_right",
+          "rama_blink_half_left",
+          "rama_blink_half_right"
+        ]
+      },
+      "pins": {
+        "assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+        "assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+        "/workspace/scratch/community-reuse/animation/sources/godot/scene/resources/skeleton_profile.cpp": "150480b811401e738846f3b1dce0eec5eff04b65d171a7fff0d8eedfa2cb7ea6"
+      }
+    },
+    "ozz_api_probe": {
+      "scope": "synthetic two-bone API only; no Rama mesh or controller",
+      "rows": [
+        {
+          "weight": 1.0,
+          "reported_reached": true,
+          "target_error_m": 0.0,
+          "end_displacement_m": 0.44721359
+        },
+        {
+          "weight": 0.5,
+          "reported_reached": false,
+          "target_error_m": 0.22159794,
+          "end_displacement_m": 0.227214009
+        },
+        {
+          "weight": 0.0,
+          "reported_reached": false,
+          "target_error_m": 0.44721362,
+          "end_displacement_m": 6e-08
+        }
+      ],
+      "cases": 4,
+      "passed": true
+    },
+    "reversal_archive_verification": {
+      "command": "python3 games/yuga-native/docs/evidence/visual-campaign/motion-reversal-review/verify.py --native games/yuga-native",
+      "exit_code": 0,
+      "archive_files": 5,
+      "zip_members": 22,
+      "prototypes_accepted": 0,
+      "motion_issue": "OPEN"
+    },
+    "scratch_artifacts": [
+      {
+        "path": "/workspace/scratch/community-reuse/animation/audit_rama_contract.py",
+        "sha256": "3566512298aba45d268d5be6e90d27042c9dd7c5340d1754fdfda835a7edbbdc",
+        "bytes": 3895
+      },
+      {
+        "path": "/workspace/scratch/community-reuse/animation/rama-contract-report.json",
+        "sha256": "b27ee0125cbeb2106edbc880a157f48267dc8fd30225fdaa6bfdc3c557cdc457",
+        "bytes": 2323
+      },
+      {
+        "path": "/workspace/scratch/community-reuse/animation/ozz-api-probe.cc",
+        "sha256": "18b10355a63a57b1af98d5852d74f39ea89ab9cbdc3b6fe6ba14dd992ce0331d",
+        "bytes": 2078
+      },
+      {
+        "path": "/workspace/scratch/community-reuse/animation/OZZ-PROBE-NOTICE.md",
+        "sha256": "3ddd93e9888fe70b9d61675ceb1c4278a579dc67171678f015de114efe815852",
+        "bytes": 1183
+      },
+      {
+        "path": "/workspace/scratch/community-reuse/animation/ozz-api-report.json",
+        "sha256": "29a7e928f56c9bd369a6b5d404ad528c11be3f3f3a8f95e3cb8ba5e4ea59bd05",
+        "bytes": 409
+      }
+    ]
+  },
+  "executed_commands": [
+    {
+      "command": "python3 /workspace/scratch/community-reuse/animation/audit_rama_contract.py",
+      "exit_code": 0,
+      "checks": 10
+    },
+    {
+      "command": "c++ -std=c++17 -O2 -I /workspace/scratch/community-reuse/animation/sources/ozz-animation/include /workspace/scratch/community-reuse/animation/ozz-api-probe.cc /workspace/scratch/community-reuse/animation/sources/ozz-animation/src/animation/runtime/ik_two_bone_job.cc /workspace/scratch/community-reuse/animation/sources/ozz-animation/src/base/maths/simd_math.cc -o /workspace/scratch/community-reuse/animation/ozz-api-probe",
+      "exit_code": 0
+    },
+    {
+      "command": "/workspace/scratch/community-reuse/animation/ozz-api-probe",
+      "exit_code": 0,
+      "cases": 4
+    }
+  ],
+  "recovered_failures": [
+    {
+      "operation": "blender v4.3.2 COPYING.txt raw lookup",
+      "result": "404; repository uses COPYING and doc/license/GPL-license.txt; both obtained and hashed."
+    },
+    {
+      "operation": "CMake availability",
+      "result": "cmake absent; no full-build claim. Selected-source compiler probe is an explicitly narrower verification."
+    },
+    {
+      "operation": "initial scratch C++ probe compilation",
+      "result": "missing initializer_list header; added header and recompiled successfully."
+    },
+    {
+      "operation": "initial scratch .tres parser",
+      "result": "expected PackedStringArray; actual metadata uses Array[String]; corrected reader and10checks passed."
+    }
+  ],
+  "not_run": [
+    "Blender launch/rig generation/bake/export",
+    "Godot launch/import/retarget/skeletal-modifier comparison",
+    "continuous skin/contact render",
+    "human feel review",
+    "physical GPU measurement",
+    "full ozz build/upstream test suite"
+  ],
+  "runtime_changes": [],
+  "new_code_origin": "Original Python contract audit; scratch C++ fixture/FK adapted from exact MIT ozz upstream test with retained notice. No third-party runtime code adopted."
+}

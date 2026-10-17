@@ -4,6 +4,8 @@ Updated 17 October 2026. This is the short entry point for a new chat, contribut
 
 ## The current build in one minute
 
+For current source reuse and task selection, read the [reuse consultation](../games/yuga-native/docs/research/community-reuse/README.md): six reviewed research streams, two isolated offline tools, six mythology art briefs and the next five dependency-ordered goals. The [fifteen Round 2 face tasks](../games/yuga-native/docs/VISUAL_ROUND2_TASKS.json) now pin the published runtime baseline. This research does not complete another visual round or change the downloadable build.
+
 The active track is **YUGA native**, an original mythology-inspired third-person game under `games/yuga-native/`, on `game/yuga-native-production`. The [single Rama milestone](../games/yuga-native/docs/RAMA_HERO_MILESTONE.md) replaces the active avatar with `rama-hero.glb`: an editable skinned character, 23 authored clips, one primary attack and four abilities shared by training and lane practice. [Independent acceptance](../games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md) distinguishes passed functional checks from the still-limited art target.
 
 The next production pass uses [fifteen rotating specialist roles](../games/yuga-native/docs/PRODUCTION_SQUADS.md) and [P0–P6 quality gates](../games/yuga-native/docs/DEADLOCK_QUALITY_TARGET.md). Start with the [quality-pass handoff](../games/yuga-native/docs/RAMA_QUALITY_MILESTONE.md) for current integration, asset dependencies and exact source evidence. Component tests and staged art do not qualify the published preview or close native online/full-game gates.

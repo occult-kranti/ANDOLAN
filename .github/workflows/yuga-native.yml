@@ -41,6 +41,11 @@ jobs:
           cache: npm
       - name: Install locked authority dependencies
         run: npm ci
+      - name: Verify isolated offline reuse adapters
+        run: |
+          npm ci --prefix games/yuga-native/tools/reuse-art --ignore-scripts
+          npm test --prefix games/yuga-native/tools/reuse-art
+          python3 -m unittest discover -s games/yuga-native/tools/reuse-animation -p 'test_*.py' -v
       - name: Validate production dependency ledger and its counterexamples
         run: |
           python3 games/yuga-native/tools/check-roadmap.py --report "$RUNNER_TEMP/roadmap-check.json"
@@ -81,6 +86,14 @@ jobs:
           node games/yuga-native/tools/research/check-gltf.mjs --validator-dir "$RUNNER_TEMP/gltf-validator" --report "$RUNNER_TEMP/gltf-validation.json" --asset games/yuga-native/assets/heroes/rama-production.glb --asset games/yuga-native/assets/heroes/rama-hero.glb --asset games/yuga-native/assets/heroes/rama-hero-mid.glb --asset games/yuga-native/assets/heroes/rama-hero-far.glb --asset games/yuga-native/assets/environment/lanka_courtyard.glb --asset games/yuga-native/assets/world/architecture.glb --asset games/yuga-native/assets/world/nature.glb --asset games/yuga-native/assets/cinematics/ravana-sentinel.glb
       - name: Import native project
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --editor --import --quit
+      - name: Audit actual animation library without runtime replacement
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/reuse-animation"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/reuse-animation/export-library.gd -- --input="$GITHUB_WORKSPACE/games/yuga-native/assets/animations/rama_hero_motion.tres" --output="$RUNNER_TEMP/reuse-animation/library.json"
+          python3 games/yuga-native/tools/reuse-animation/audit.py --input "$RUNNER_TEMP/reuse-animation/library.json" --output "$RUNNER_TEMP/reuse-animation/proposal"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/reuse-animation/verify-candidate.gd -- --input="$GITHUB_WORKSPACE/games/yuga-native/assets/animations/rama_hero_motion.tres" --candidate="$RUNNER_TEMP/reuse-animation/proposal/candidate.json" > "$RUNNER_TEMP/reuse-animation/godot-verify.log" 2>&1
+          python3 -c 'import json,pathlib,sys; text=pathlib.Path(sys.argv[1]).read_text(); rows=[json.loads(line) for line in text.splitlines() if line.startswith("{")]; assert len(rows)==1 and rows[0]["passed"] and not rows[0]["runtime_asset_changed"]; assert "SCRIPT ERROR" not in text and "ERROR:" not in text; print("Actual Godot interpolation audit passed")' "$RUNNER_TEMP/reuse-animation/godot-verify.log"
       - name: Native physics and animation acceptance
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report=${{ runner.temp }}/native-acceptance.json
       - name: Rama combat motion interface practice and provenance gates
@@ -177,6 +190,8 @@ jobs:
         with:
           name: yuga-native-acceptance
           path: |
+            ${{ runner.temp }}/reuse-animation/proposal/audit.json
+            ${{ runner.temp }}/reuse-animation/godot-verify.log
             ${{ runner.temp }}/native-acceptance.json
             ${{ runner.temp }}/rama-ability.json
             ${{ runner.temp }}/rama-motion.json

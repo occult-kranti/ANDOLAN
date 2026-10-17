@@ -18,6 +18,16 @@ has not been achieved.
 
 ## Changed components and owners
 
+Latest continuation: [reuse consultation and next five goals](research/community-reuse/README.md).
+Six research/review specialists returned source-linked recommendations and two
+tested offline tools. Runtime source `09dac7220544374a471a11d953b67de20ab99d7d`
+is published with passing native CI; `7c86cd4` adds the receipt documents.
+Round 2 remains planned and starts with fixed face/skin diagnostics and owned
+form authoring. Optional mesh/key optimizers stay in Round 9; they do not replace
+art production or repair contact. Source, license and review details are in the
+consultation. Reddit authentication worked, but subreddit access returned 403;
+no fresh posts or comments were collected.
+
 | Area | Files / owner | Current result |
 | --- | --- | --- |
 | Hero materials | `scripts/rama_surface_finish.gd`, `assets/materials/rama-finish/`; surface artist and material reviewer | Five roughness maps reduce broad glare while retaining indigo/gold identity. Three ownership/lifetime defects fixed. [Independent review](evidence/visual-campaign/material-review/REVIEW.md). |
