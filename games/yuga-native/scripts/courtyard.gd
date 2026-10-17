@@ -1,6 +1,8 @@
 extends Node3D
 ## Original native training foundation. No commercial game assets or rules claimed.
 
+const Bindings = preload("res://scripts/input_bindings.gd")
+const ControlsOverlay = preload("res://scripts/controls_overlay.gd")
 const PlayerScript = preload("res://scripts/player.gd")
 const TargetScript = preload("res://scripts/target.gd")
 const ProjectileScript = preload("res://scripts/projectile.gd")
@@ -35,6 +37,12 @@ var crosshair: Label
 var start_button: Button
 var resume_button: Button
 var settings_back: Button
+var controls_button: Button
+var controls_overlay: Control
+var help_panel: Control
+var help_label: Label
+var help_return := "menu"
+var menu_hint: Label
 var settings_from_menu := true
 var hit_count := 0
 var defeat_count := 0
@@ -71,24 +79,7 @@ func _ready() -> void:
 		start_training()
 
 func _install_actions() -> void:
-	var key_actions := {
-		"move_forward": [KEY_W, KEY_UP], "move_back": [KEY_S, KEY_DOWN],
-		"move_left": [KEY_A, KEY_LEFT], "move_right": [KEY_D, KEY_RIGHT],
-		"jump": [KEY_SPACE], "sprint": [KEY_SHIFT], "reload": [KEY_R],
-		"pulse": [KEY_Q], "dash": [KEY_E], "pause_game": [KEY_ESCAPE], "reset_training": [KEY_F5]
-	}
-	for action in key_actions:
-		if not InputMap.has_action(action):
-			InputMap.add_action(action)
-		for key in key_actions[action]:
-			var event := InputEventKey.new()
-			event.physical_keycode = key
-			InputMap.action_add_event(action, event)
-	if not InputMap.has_action("fire"):
-		InputMap.add_action("fire")
-	var click := InputEventMouseButton.new()
-	click.button_index = MOUSE_BUTTON_LEFT
-	InputMap.action_add_event("fire", click)
+	Bindings.install()
 
 func _create_world() -> void:
 	world = Node3D.new()
@@ -286,7 +277,7 @@ func _create_ui() -> void:
 	help_card.add_child(help)
 	cooldown_label = _label("Q  SUNBURST · READY     E  DASH · READY", 16, CREAM)
 	help.add_child(cooldown_label)
-	status_label = _label("WASD move   ·   Mouse aim / fire   ·   Space jump   ·   Shift sprint   ·   R reload", 14, MIST)
+	status_label = _label("Mouse aim · LMB fire · " + Bindings.label("reload") + " reload · F2 help · Esc pause", 14, MIST)
 	help.add_child(status_label)
 	crosshair = _label("·", 36, CREAM)
 	crosshair.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
@@ -323,9 +314,11 @@ func _create_ui() -> void:
 	var film_button := _button("WATCH CONFLUENCE DUEL   →", enter_combat_film)
 	film_button.name = "WatchConfluenceDuel"
 	intro.add_child(film_button)
+	intro.add_child(_button("CONTROLS & HELP", _open_help))
 	intro.add_child(_button("SETTINGS", func(): _open_settings(true)))
 	intro.add_child(_button("QUIT TO DESKTOP", _quit))
-	intro.add_child(_wrapped("Local courtyard training · Confluence map exploration\nWASD + mouse  ·  Esc releases the cursor", 13, MIST))
+	menu_hint = _wrapped("Local practice · F2 controls and help · Esc releases the cursor",13,MIST)
+	intro.add_child(menu_hint)
 	pause_panel = _modal(root, "PauseMenu", true)
 	var pause_content := _modal_content(pause_panel)
 	pause_content.add_child(_label("TAKE A BREATH", 13, GOLD))
@@ -333,6 +326,7 @@ func _create_ui() -> void:
 	pause_content.add_child(_wrapped("Your movement and all cooldowns are frozen.", 17, MIST))
 	resume_button = _button("RESUME TRAINING", func(): set_paused(false))
 	pause_content.add_child(resume_button)
+	pause_content.add_child(_button("CONTROLS & HELP", _open_help))
 	pause_content.add_child(_button("SETTINGS", func(): _open_settings(false)))
 	pause_content.add_child(_button("RESET COURTYARD", func(): reset_training(); set_paused(false)))
 	pause_content.add_child(_button("RETURN TO TITLE", return_to_menu))
@@ -365,9 +359,23 @@ func _create_ui() -> void:
 	settings.add_child(_check("Fullscreen", full_screen, func(value: bool): full_screen = value; _apply_settings(); _save_settings()))
 	settings.add_child(_check("Dynamic sun shadows", shadows, func(value: bool): shadows = value; _apply_settings(); _save_settings()))
 	settings.add_child(_check("Moonlit courtyard", night, func(value: bool): night = value; _apply_settings(); _save_settings()))
+	controls_button = _button("CUSTOMIZE KEYBOARD CONTROLS", _open_controls)
+	settings.add_child(controls_button)
 	settings_back = _button("BACK", _close_settings)
 	settings.add_child(settings_back)
-	settings.add_child(_wrapped("Settings save locally on this computer.\nQ sunburst · E dash · F5 reset courtyard", 13, MIST))
+	settings.add_child(_wrapped("Settings save locally on this computer. Fixed shortcuts remain in Help.", 13, MIST))
+	help_panel = _modal(root,"ControlsHelp",true)
+	var help_content := _modal_content(help_panel)
+	help_content.add_child(_label("CONTROLS & HELP",28,CREAM))
+	help_label = _wrapped(Bindings.help_text(),17,CREAM)
+	help_content.add_child(help_label)
+	help_content.add_child(_wrapped("Courtyard: practice aim and abilities. Confluence: offline lane battles, flight and grapple rings. Flight and grappling are available in Confluence only.",15,MIST))
+	help_content.add_child(_button("BACK",_close_help))
+	help_panel.hide()
+	controls_overlay = ControlsOverlay.new()
+	root.add_child(controls_overlay)
+	controls_overlay.closed.connect(_close_controls)
+	controls_overlay.bindings_changed.connect(_bindings_changed)
 	hud.visible = false
 	pause_panel.visible = false
 	settings_panel.visible = false
@@ -457,6 +465,7 @@ func _modal(root: Control, label: String, centered: bool) -> Control:
 	var scroll := ScrollContainer.new()
 	scroll.name = "Scroll"
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.follow_focus = true
 	panel.add_child(scroll)
 	var stack := VBoxContainer.new()
 	stack.name = "Content"
@@ -472,6 +481,7 @@ func _divider() -> HSeparator:
 	return HSeparator.new()
 
 func enter_confluence() -> void:
+	_release_gameplay_actions()
 	get_tree().paused = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	var error := get_tree().change_scene_to_file("res://scenes/confluence_world.tscn")
@@ -479,6 +489,7 @@ func enter_confluence() -> void:
 		push_error("Could not open Confluence: " + error_string(error))
 
 func enter_combat_film() -> void:
+	_release_gameplay_actions()
 	get_tree().paused = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	var error := get_tree().change_scene_to_file("res://scenes/combat_film.tscn")
@@ -486,6 +497,7 @@ func enter_combat_film() -> void:
 		push_error("Could not open the Confluence duel: " + error_string(error))
 
 func start_training() -> void:
+	_release_gameplay_actions()
 	started = true
 	main_panel.visible = false
 	settings_panel.visible = false
@@ -500,8 +512,8 @@ func start_training() -> void:
 func set_paused(value: bool) -> void:
 	if not started:
 		return
+	_release_gameplay_actions()
 	if value:
-		_release_gameplay_actions()
 		player.velocity.x = 0
 		player.velocity.z = 0
 		player.dash_time = 0
@@ -546,8 +558,16 @@ func return_to_menu() -> void:
 	start_button.grab_focus()
 
 func _input(event: InputEvent) -> void:
+	if controls_overlay.visible: return
+	if event.is_action_pressed("help_controls") and not settings_panel.visible:
+		if help_panel.visible: _close_help()
+		else: _open_help()
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("pause_game"):
-		if settings_panel.visible:
+		if help_panel.visible:
+			_close_help()
+		elif settings_panel.visible:
 			_close_settings()
 		elif started:
 			set_paused(not get_tree().paused)
@@ -556,14 +576,62 @@ func _input(event: InputEvent) -> void:
 		reset_training()
 
 func _release_gameplay_actions() -> void:
-	for action in ["move_forward", "move_back", "move_left", "move_right", "fire", "jump", "sprint", "dash", "pulse", "reload"]:
-		Input.action_release(action)
+	Bindings.release_gameplay()
+	if is_instance_valid(player) and player.has_method("cancel_traversal"):
+		player.cancel_traversal("interface")
 
 func _on_focus_lost() -> void:
-	if started and not smoke_mode:
-		set_paused(true)
+	_release_gameplay_actions()
+	if controls_overlay and controls_overlay.visible:
+		controls_overlay.cancel_capture()
+		return
+	if settings_panel.visible or help_panel.visible: return
+	if started and not smoke_mode: set_paused(true)
+
+func _open_controls() -> void:
+	_release_gameplay_actions()
+	settings_panel.hide()
+	controls_overlay.open()
+
+func _close_controls() -> void:
+	settings_panel.show()
+	controls_button.grab_focus()
+	_bindings_changed()
+
+func _bindings_changed() -> void:
+	help_label.text = Bindings.help_text()
+	status_label.text = "Mouse aim · LMB fire · " + Bindings.label("reload") + " reload · F2 help · Esc pause"
+	_refresh_hud()
+
+func _open_help() -> void:
+	_release_gameplay_actions()
+	help_return = "menu" if not started else ("pause" if get_tree().paused else "training")
+	main_panel.hide()
+	pause_panel.hide()
+	_bindings_changed()
+	help_panel.show()
+	if started: get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	_modal_content(help_panel).get_child(3).grab_focus()
+
+func _close_help() -> void:
+	help_panel.hide()
+	if help_return == "menu":
+		main_panel.show()
+		start_button.grab_focus()
+	else: set_paused(help_return == "pause")
+
+func _process(_delta: float) -> void:
+	var viewport := get_viewport().get_visible_rect().size
+	for modal in [main_panel,pause_panel,settings_panel,help_panel]:
+		if not modal or not modal.visible: continue
+		var panel: Control = modal.get_node("Card")
+		panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+		panel.size = Vector2(minf(560,viewport.x-40),minf(620,viewport.y-40))
+		panel.position = (viewport-panel.size)/2 if modal != main_panel else Vector2(28,(viewport.y-panel.size.y)/2)
 
 func _open_settings(from_menu: bool) -> void:
+	_release_gameplay_actions()
 	settings_from_menu = from_menu
 	main_panel.visible = false
 	pause_panel.visible = false
@@ -601,7 +669,7 @@ func _refresh_hud() -> void:
 	ammo_label.text = "RELOAD  %.1f" % player.reload_remaining if player.reload_remaining > 0 else "%02d / %02d" % [player.ammo, player.MAGAZINE]
 	var pulse_text := "READY" if player.pulse_remaining <= 0 else "%.1fs" % player.pulse_remaining
 	var dash_text := "READY" if player.dash_remaining <= 0 else "%.1fs" % player.dash_remaining
-	cooldown_label.text = "Q  SUNBURST · %s     E  DASH · %s" % [pulse_text, dash_text]
+	cooldown_label.text = "%s  SUNBURST · %s     %s  DASH · %s" % [Bindings.label("pulse"),pulse_text,Bindings.label("dash"),dash_text]
 	stats_label.text = "%d hits  ·  %d targets cleared  ·  %02d:%02d" % [hit_count, defeat_count, int(elapsed) / 60, int(elapsed) % 60]
 	objective_label.text = "MASTER THE BOW" if defeat_count < 5 else "FIND YOUR RHYTHM"
 
@@ -708,30 +776,32 @@ func _sound(name: String, gain: float = 0) -> void:
 	audio.volume_db = linear_to_db(maxf(0.001, volume)) + gain
 	audio.play()
 
+func _saved_number(config: ConfigFile,section: String,key: String,fallback: float,minimum: float,maximum: float) -> float:
+	var value = config.get_value(section,key,fallback)
+	return clampf(float(value),minimum,maximum) if (value is int or value is float) and is_finite(float(value)) else fallback
+
+func _saved_bool(config: ConfigFile,section: String,key: String,fallback: bool) -> bool:
+	var value = config.get_value(section,key,fallback)
+	return value if value is bool else fallback
+
 func _load_settings() -> void:
-	var config := ConfigFile.new()
-	if config.load(SAVE_PATH) != OK:
-		return
-	sensitivity = clampf(float(config.get_value("controls", "sensitivity", 1.0)), 0.35, 2.5)
-	volume = clampf(float(config.get_value("audio", "volume", 0.7)), 0, 1)
-	invert_y = bool(config.get_value("controls", "invert_y", false))
-	full_screen = bool(config.get_value("video", "fullscreen", false))
-	shadows = bool(config.get_value("video", "shadows", true))
-	night = bool(config.get_value("video", "night", false))
+	var loaded := Bindings.read_config(SAVE_PATH)
+	if not loaded.ok: return
+	var config: ConfigFile = loaded.config
+	sensitivity = _saved_number(config,"controls","sensitivity",1.0,0.35,2.5)
+	volume = _saved_number(config,"audio","volume",0.7,0,1)
+	invert_y = _saved_bool(config,"controls","invert_y",false)
+	full_screen = _saved_bool(config,"video","fullscreen",false)
+	shadows = _saved_bool(config,"video","shadows",true)
+	night = _saved_bool(config,"video","night",false)
 
 func _save_settings() -> void:
-	var config := ConfigFile.new()
-	config.set_value("controls", "sensitivity", sensitivity)
-	config.set_value("controls", "invert_y", invert_y)
-	config.set_value("audio", "volume", volume)
-	config.set_value("video", "fullscreen", full_screen)
-	config.set_value("video", "shadows", shadows)
-	config.set_value("video", "night", night)
-	var result := config.save(SAVE_PATH)
-	if result != OK:
-		push_warning("Settings could not be saved: " + error_string(result))
+	var result := Bindings.merge_settings({"controls":{"sensitivity":sensitivity,"invert_y":invert_y},"audio":{"volume":volume},"video":{"fullscreen":full_screen,"shadows":shadows,"night":night}})
+	if not result.ok: push_warning(result.message)
 
 func _apply_settings() -> void:
+	if volume <= 0:
+		for audio in audio_players: audio.stop()
 	if is_instance_valid(player):
 		player.sensitivity = sensitivity * 0.0024
 		player.invert_y = invert_y

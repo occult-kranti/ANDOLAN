@@ -1,5 +1,6 @@
 extends Node3D
 ## Deterministic original combat film. Visual receipts never drive multiplayer state.
+const Bindings = preload("res://scripts/input_bindings.gd")
 const Actor = preload("res://scripts/cinematic_actor.gd")
 const Effects = preload("res://scripts/duel_effects.gd")
 const Lighting = preload("res://scripts/film_lighting.gd")
@@ -224,8 +225,9 @@ func _build_stage() -> void:
 	add_child(audio_player)
 
 func _read_saved_audio_volume() -> float:
-	var config:=ConfigFile.new()
-	if config.load(AUDIO_SETTINGS_PATH)!=OK: return 0.7
+	var loaded:=Bindings.read_config(AUDIO_SETTINGS_PATH)
+	if not loaded.ok: return 0.7
+	var config: ConfigFile=loaded.config
 	var value=config.get_value("audio","volume",0.7)
 	if not _number(value): return 0.7
 	return clampf(float(value),0.0,1.0)
