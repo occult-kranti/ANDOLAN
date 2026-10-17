@@ -23,6 +23,7 @@ NAMES = [
     "assets/cinematics/confluence-duel.json", "shaders/production_water.gdshader",
     "shaders/world_water.gdshader", "shaders/world_ground.gdshader",
     "shaders/world_ground_common.gdshaderinc", "shaders/duel_energy.gdshader",
+    "scripts/traversal_stone.gdshader",
     *[f".godot/imported/{name}-fixture.scn" for name in (
         "rama.glb", "rama-production.glb", "lanka_courtyard.glb",
         "architecture.glb", "nature.glb", "ravana-sentinel.glb")],
@@ -115,6 +116,8 @@ def main() -> int:
             ("assets/marker.txt", b"-----BEGIN PRIVATE KEY-----\nfixture")])[0])
         evaluate("missing essential army resource rejected", pack([
             entry for entry in entries if entry[0] != "scripts/lane_army.gd"])[0])
+        evaluate("missing native platform stone shader rejected", pack([
+            entry for entry in entries if entry[0] != "scripts/traversal_stone.gdshader"])[0])
         corrupt = bytearray(baseline)
         corrupt[-1] ^= 1
         evaluate("payload checksum corruption rejected", bytes(corrupt))

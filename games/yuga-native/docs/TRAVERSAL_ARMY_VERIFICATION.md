@@ -1,6 +1,6 @@
 # Longer lanes, traversal and army verification
 
-Release status: integration in progress. Only a completed report tied to current source establishes a passing gate. Earlier pre-outage results in `TRAVERSAL_ARMY_RECOVERY_2026-10-17.md` are historical, not the acceptance evidence for recovered source.
+Release status: local implementation, stress tests, full rendered capture and portable Linux window review complete; public CI rebuild and release-byte verification pending. Only a completed report tied to current source establishes a passing gate. Earlier pre-outage results in `TRAVERSAL_ARMY_RECOVERY_2026-10-17.md` are historical, not the acceptance evidence for recovered source.
 
 ## Design contract
 
@@ -49,6 +49,23 @@ Retain a source-hash manifest and exact renderer/adapter/resolution for every ac
 
 ## Current evidence
 
-Fresh recovered reports are being collected in `tests/evidence/`. Final accepted reports, source freeze, rendered review and release verification will be recorded here before publication. Unrun gates remain pending.
+The complete cloud setup passed, including 225 TypeScript tests and 20 native/specification/security report files; its exact command, log and reports are archived under `docs/evidence/traversal-armies-setup/`. Rendered review then prompted a bounded UI/material/unit-art pass and explicit recovery from malformed saved settings. Fresh affected-suite reports supersede the earlier source hashes:
+
+| Final focused check | Result | Evidence under `tests/evidence/` |
+| --- | --- | --- |
+| Physical traversal / rig poses | 36 / 24 passed | `traversal-cases-recovered.json`, `traversal-pose-recovered.json` |
+| Army owner simulation | 21 passed; 24,000 ticks = 20 simulated minutes | `lane-army-cases.json` |
+| Independent combined scene | 36 passed; 1,187 physics frames plus a separate 24,000 army ticks | `traversal-army-stress-final.json` |
+| Package malformed-input checks | 27 passed | `traversal-security-final.json` |
+| Controls and settings recovery | 39 passed | `input-bindings-recovered.json` |
+| Audio | 39 passed in normal and accelerated clocks | `traversal-audio-runtime.json`, `traversal-audio-runtime-fixed60.json` |
+| Extended world / lighting | 27 / 30 passed | `traversal-world/physics-ui-material-r3.json`, `traversal-world/lighting-material-r3.json` |
+| Map specification / navigation | 12 / 30 passed | `world-plan-traversal-recovered.json`, `world-map-traversal-recovered.json` |
+
+The independent soak recorded maxima of 64 live units, 64 unit nodes, eight corpses and 20 queued attacks. A separate capacity-pressure fixture reaches the exact 72-live limit and confirms paired spawn overflow is deferred. Both spawn-to-ring approaches measured about 33.065 m and stayed within the 18 m/s tether cap. Real projectiles triggered damage and audio; kill rewards across all three roles were awarded once. Reset/focus/overview and simultaneous core outcomes were exercised.
+
+The first real preview is preserved under `docs/evidence/traversal-armies-render-r1/`: its HUD and art shortcomings are documented rather than replaced by the generated concept. Final capture is archived in `docs/evidence/traversal-armies-render-r2/`: 180 rendered frames, 360 physics ticks, six seconds at 1280 × 720 and five supplementary stills. All 214 captured sources match the real local export inventory. Maximum recorded speed was 18 m/s; every sampled player/rig state was finite. The capture uses software Vulkan and does not establish hardware FPS. The release validator passes 125 adversarial checks, including mismatched source, substituted media and omitted failed reports.
+
+Portable Linux OS-input review is archived separately in `docs/evidence/traversal-armies-window-r2/`. It exercises title-to-world, remap/persistence/reset, movement, flight, pause, day/night, overview, round reset and return to the courtyard using XTest input to the actual packaged window. Public CI rebuild and remote release-byte verification remain the publication gates. Windows has archive validation but no execution review.
 
 No proprietary Deadlock/Overwatch binaries, rigs, animation clips or textures were analyzed or copied by this milestone. It does not complete the full roster, online native authority, production art, accessibility playtesting or commercial visual-quality roadmap.

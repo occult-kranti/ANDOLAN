@@ -9,6 +9,7 @@ import argparse
 import ctypes as C
 import ctypes.util
 import hashlib
+import importlib.util
 import json
 import math
 import os
@@ -29,6 +30,7 @@ def main():
     parser.add_argument('--xvfb', default=shutil.which('Xvfb'))
     parser.add_argument('--display', default=':107')
     parser.add_argument('--renderer', choices=['forward_plus', 'gl_compatibility'], default='forward_plus')
+    parser.add_argument('--shader-cache-seed', type=Path)
     args = parser.parse_args()
     if not args.xvfb:
         parser.error('Xvfb is required; supply --xvfb for a task-local installation.')
@@ -47,6 +49,12 @@ def main():
         'pack': {'file': pack.name, 'sha256': hashlib.sha256(pack.read_bytes()).hexdigest()},
         'rendererRequested': args.renderer, 'events': [], 'startedAtUnix': time.time(),
     }
+    if args.shader_cache_seed:
+        helper_path = Path(__file__).with_name('run-traversal-capture.py')
+        spec = importlib.util.spec_from_file_location('traversal_capture_cache', helper_path)
+        helper = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(helper)
+        record['shaderCacheSeed'] = helper.seed_shader_cache(args.shader_cache_seed, out / 'user/cache/mesa')
     log = (out / 'game.log').open('w')
     xlog = (out / 'xvfb.log').open('w')
     server = subprocess.Popen([args.xvfb, args.display, '-screen', '0', '960x600x24', '-nolisten', 'tcp', '-extension', 'MIT-SHM', '-ac'], env=env, stdout=xlog, stderr=subprocess.STDOUT)
@@ -67,6 +75,7 @@ def main():
     xt.XTestFakeKeyEvent.argtypes = [C.c_void_p, C.c_uint, C.c_int, C.c_ulong]
     xt.XTestFakeButtonEvent.argtypes = [C.c_void_p, C.c_uint, C.c_int, C.c_ulong]
     xt.XTestFakeMotionEvent.argtypes = [C.c_void_p, C.c_int, C.c_int, C.c_int, C.c_ulong]
+    xt.XTestFakeRelativeMotionEvent.argtypes = [C.c_void_p, C.c_int, C.c_int, C.c_ulong]
 
     def window():
         root, parent = C.c_ulong(), C.c_ulong()
@@ -124,6 +133,13 @@ def main():
                 time.sleep(duration)
                 xt.XTestFakeKeyEvent(display, code, 0, 0); x.XFlush(display)
                 record['events'].append({'action': action, 'key': name, 'heldWallSeconds': duration, 'time': time.time()})
+            elif action == 'motion':
+                dx, dy = command['dx'], command['dy']
+                if type(dx) is not int or type(dy) is not int or abs(dx) > 720 or abs(dy) > 480:
+                    raise ValueError('Relative mouse motion must be bounded integer pixels.')
+                xt.XTestFakeRelativeMotionEvent(display, dx, dy, 0)
+                x.XFlush(display)
+                record['events'].append({'action': action, 'dx': dx, 'dy': dy, 'time': time.time()})
             elif action == 'click':
                 move = command.get('move', True)
                 if not isinstance(move, bool):

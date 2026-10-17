@@ -5,10 +5,12 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import re
 import shutil
+import struct
 import subprocess
 import sys
 import tempfile
@@ -25,6 +27,22 @@ CHECKS = ("archive", "media", "script", "film", "motion", "vfx", "audio", "nativ
           "world-scene", "world-flow", "world-lighting")
 TRAVERSAL_CHECKS = ("traversal", "traversal-pose", "army", "controls", "traversal-audio", "stress",
                     "security", "release-gates")
+TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/traversal-armies-render-r2"
+TRAVERSAL_STILLS = {
+    "still-05-actual-take-hud.png", "still-city-overview.png",
+    "still-sun-landing-courts.png", "still-army-engagement.png",
+    "still-moonlit-confluence.png",
+}
+TRAVERSAL_CAPTURE_ASSETS = {"yuga-traversal-preview.mp4", "traversal-render-review.json",
+                            "traversal-video.json", "TRAVERSAL-RENDER-REVIEW.md"} | TRAVERSAL_STILLS
+CAPTURE_FIXED_SOURCES = {"project.godot", "tools/capture-traversal.gd",
+                         "tools/run-traversal-capture.py", "art/world/confluence-map.json"}
+CAPTURE_REQUIRED_RUNTIME = {"scripts/confluence_world.gd", "scripts/player.gd",
+                            "scripts/player_traversal.gd", "scripts/lane_army.gd",
+                            "scripts/lane_minion.gd", "scripts/traversal_pose.gd",
+                            "scripts/traversal_landmarks.gd", "scripts/traversal_audio.gd",
+                            "scenes/confluence_world.tscn", "assets/world/confluence-map.json",
+                            "assets/heroes/rama-production.glb"}
 
 
 def traversal_release(tag):
@@ -158,6 +176,126 @@ def validate_evidence(working_tree=False):
             "scope": "Committed archived bytes and recorded timeline checked; unarchived raw PNGs were not rechecked and CI did not render this film."}
 
 
+def traversal_probe_signature(probe):
+    streams = probe.get("streams", [])
+    require(isinstance(streams, list) and len(streams) == 1 and isinstance(streams[0], dict),
+            "Traversal video must contain one silent video stream")
+    stream = streams[0]
+    require(stream.get("codec_type") == "video" and stream.get("codec_name") == "h264",
+            "Traversal preview is not the expected silent H.264 video")
+    require((stream.get("width"), stream.get("height")) == (1280, 720) and
+            str(stream.get("nb_read_frames")) == "180" and stream.get("avg_frame_rate") == "30/1",
+            "Traversal video dimensions, decoded frames or frame rate differ")
+    try:
+        duration = float(probe["format"]["duration"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("Traversal video duration is missing or invalid") from error
+    require(math.isfinite(duration) and abs(duration - 6.0) <= .02, "Traversal video must be six seconds")
+    return {"width":1280,"height":720,"frames":180,"fps":30,"duration_seconds":duration}
+
+
+def probe_traversal_movie(path):
+    command = ["ffprobe", "-v", "error", "-count_frames", "-show_streams", "-show_format", "-of", "json", str(path)]
+    probe = json.loads(subprocess.check_output(command, timeout=60))
+    return traversal_probe_signature(probe)
+
+
+def validate_traversal_capture(directory, exported, decode=False):
+    """Check retained capture facts and bind them to this checkout/export source.
+
+    Raw sequential PNGs need not be distributed. Their recorded sequence and the
+    decoded movie frame count are checked; the five retained stills are byte-checked.
+    A source comparison is required even for a self-consistent release inventory.
+    """
+    render_path = member(directory, "traversal-render-review.json")
+    render = json.loads(render_path.read_text())
+    video = json.loads(member(directory, "traversal-video.json").read_text())
+    require(render.get("complete") is True and not render.get("failure") and render.get("preview") is False,
+            "Traversal capture is incomplete, failed or preview-only")
+    require(render.get("kind") == "actual-staged-native-traversal-input" and
+            render.get("renderer") == "forward_plus" and render.get("display") not in (None, "", "headless"),
+            "Traversal capture does not identify an actual Forward+ display")
+    require((render.get("expected_frames"), render.get("take_physics_ticks"), render.get("physics_hz"),
+             render.get("fps"), render.get("width"), render.get("height")) == (180, 360, 60, 30, 1280, 720),
+            "Traversal capture frame/tick count, timing or dimensions differ")
+    frames = render.get("frames")
+    require(isinstance(frames, list) and len(frames) == 180, "Traversal capture omits sequential frames")
+    start = render.get("take_start_tick")
+    require(type(start) is int and start >= 0, "Traversal capture starting tick is invalid")
+    previous_draw = -1
+
+    def image_metadata(image, expected_name):
+        require(image.get("file") == expected_name and (image.get("width"), image.get("height")) == (1280, 720),
+                "Traversal image name/dimensions differ")
+        require(isinstance(image.get("sha256"), str) and re.fullmatch(r"[0-9a-f]{64}", image["sha256"]),
+                "Traversal image lacks a SHA-256 record")
+        require(all(type(image.get(key)) is int and image[key] > 0
+                    for key in ("draw_calls", "rendered_objects", "rendered_primitives")),
+                "Traversal image lacks actual renderer counters")
+
+    for index, frame in enumerate(frames):
+        require(frame.get("index") == index and frame.get("physics_tick_delta") == 2 and
+                frame.get("physics_tick") == start + 2 * (index + 1), "Traversal capture tick sequence is discontinuous")
+        require(type(frame.get("render_frame")) is int and frame["render_frame"] > previous_draw,
+                "Traversal rendered frame counter did not advance")
+        previous_draw = frame["render_frame"]
+        require(frame.get("finite") is True and isinstance(frame.get("pose_sha256"), str) and
+                re.fullmatch(r"[0-9a-f]{64}", frame["pose_sha256"]), "Traversal skeletal pose evidence is invalid")
+        for key, expected in (("presentation_seconds", index / 30), ("sample_end_simulation_seconds", (index+1) / 30)):
+            value = frame.get(key)
+            require(type(value) in (int, float) and math.isfinite(value) and abs(value-expected) < 1e-5,
+                    "Traversal frame timing differs: " + key)
+        image_metadata(frame["image"], f"frame-{index:05d}.png")
+    outcomes = render.get("outcomes", {})
+    require(all(outcomes.get(key) is True for key in ("grapple", "flight", "visible_rope", "pose_overlay", "pose_finite")),
+            "Traversal capture did not observe required mechanics/finite poses")
+    stills = render.get("stills", [])
+    require(len(stills) == 5 and {row["image"]["file"] for row in stills} == TRAVERSAL_STILLS,
+            "Traversal capture must retain the five specified stills")
+    for still in stills:
+        image = still["image"]
+        image_metadata(image, image["file"])
+        path = member(directory, image["file"])
+        with path.open("rb") as stream:
+            header = stream.read(24)
+        require(len(header) == 24 and header[:8] == b"\x89PNG\r\n\x1a\n" and
+                struct.unpack(">II", header[16:24]) == (1280, 720) and digest(path) == image["sha256"],
+                "Traversal retained PNG differs: " + image["file"])
+        if image["file"] == "still-05-actual-take-hud.png":
+            require(still.get("take_frame") == 145 and image["sha256"] == frames[145]["image"]["sha256"],
+                    "Traversal HUD still is not the recorded take frame")
+    require(render.get("army_staging", {}).get("observed_queued_attack") is True,
+            "Traversal army still lacks a recorded engagement")
+
+    source_hashes = render.get("source_sha256", {})
+    expected_sources = set(CAPTURE_FIXED_SOURCES)
+    for folder in ("scripts", "scenes", "assets"):
+        expected_sources.update(path.relative_to(PROJECT).as_posix() for path in (PROJECT / folder).rglob("*") if path.is_file())
+    require(CAPTURE_REQUIRED_RUNTIME <= expected_sources and isinstance(source_hashes, dict) and
+            set(source_hashes) == {"res://" + name for name in expected_sources},
+            "Traversal capture source inventory differs from the checkout")
+    export_files = exported.get("source", {}).get("files", {})
+    shared = {name for name in expected_sources if name == "project.godot" or name.split("/")[0] in ("scripts", "scenes", "assets")}
+    export_shared = {name for name in export_files if name == "project.godot" or name.split("/")[0] in ("scripts", "scenes", "assets")}
+    require(shared == export_shared, "Traversal capture/export runtime source sets differ")
+    for name in expected_sources:
+        actual = record(member(PROJECT, name))
+        require(source_hashes["res://" + name] == actual["sha256"], "Traversal captured source differs from checkout: " + name)
+        if name in shared:
+            require(export_files[name] == actual, "Traversal exported source differs from captured checkout: " + name)
+    movie = member(directory, "yuga-traversal-preview.mp4")
+    require(video.get("complete") is True and video.get("file") == movie.name and
+            record(movie) == {key: video[key] for key in ("bytes", "sha256")}, "Traversal movie bytes or completion differ")
+    require(video.get("capture_report_sha256") == digest(render_path), "Traversal movie links a different capture report")
+    signature = traversal_probe_signature(video.get("probe", {}))
+    if decode:
+        actual_signature = probe_traversal_movie(movie)
+        require(actual_signature == signature, "Fresh decoded traversal video differs from its recorded probe")
+    return {"passed":True,"frames":180,"physics_ticks":360,"retained_stills":5,"source_files":len(expected_sources),
+            "video":record(movie),"decoded_this_run":decode,
+            "scope":"Full recorded input take, retained still bytes and current/exported source verified. No rerender, OS-input, audio or realtime-performance claim."}
+
+
 def stage(args):
     require(TAG.fullmatch(args.tag), "Unexpected release tag")
     commit = git("rev-parse", "HEAD")
@@ -201,6 +339,16 @@ def stage(args):
         copy(PROJECT / "assets/audio/traversal/lane-procession-loop.wav")
         copy(PROJECT / "NOTICE/TRAVERSAL-AUDIO-PROVENANCE.json")
         copy(PROJECT / "docs/TRAVERSAL_ARMY_VERIFICATION.md", "TRAVERSAL-VERIFICATION.md")
+        capture = PROJECT / TRAVERSAL_CAPTURE_DIRECTORY
+        validate_traversal_capture(capture, exported, decode=True)
+        archive_names = (TRAVERSAL_CAPTURE_ASSETS - {"TRAVERSAL-RENDER-REVIEW.md"}) | {"REVIEW.md"}
+        captured_sources = json.loads(member(capture, "traversal-render-review.json").read_text())["source_sha256"]
+        tracked = [str(member(capture, name).relative_to(REPO)) for name in sorted(archive_names)]
+        tracked += [str(member(PROJECT, name.removeprefix("res://")).relative_to(REPO)) for name in sorted(captured_sources)]
+        git("ls-files", "--error-unmatch", "--", *tracked)
+        require(not git("diff", "--name-only", "HEAD", "--", *tracked), "Traversal capture/source differs from committed checkout")
+        for name in sorted(archive_names):
+            copy(capture / name, "TRAVERSAL-RENDER-REVIEW.md" if name == "REVIEW.md" else name)
     notes = PROJECT / ("docs/RELEASE_TRAVERSAL_ARMIES.md" if traversal_release(args.tag) else "docs/RELEASE_CONFLUENCE_DUEL.md")
     text = notes.read_text() if notes.exists() else (
         "# YUGA — Confluence duel preview\n\nDownload yuga-confluence-duel.mp4 for the original 24-second film. "
@@ -210,6 +358,10 @@ def stage(args):
     text += (f"\n\nPackages were rebuilt and checked at `{commit}`. The MP4 and archived render reports retain their original captured source hashes; "
              "later tested playback fixes can differ from captured source. CI checks decoded media/audio correspondence and native headless scenarios; "
              "it does not rerender the film, listen to its sound, run Windows or measure hardware-GPU performance.\n")
+    if traversal_release(args.tag):
+        text += ("\nThe separate yuga-traversal-preview.mp4 contains 180 consecutive rendered frames (six seconds at simulated 30 FPS). "
+                 "Its captured source inventory matches this checkout and the shared exported runtime sources. Five retained stills include separately staged city/army views. "
+                 "The traversal video is silent; real OS-input testing and hardware performance are separate evidence.\n")
     (args.output / "RELEASE-NOTES.md").write_text(text)
     sources["RELEASE-NOTES.md"] = "Generated release scope with committed notes when available"
     files = {name: record(args.output / name) for name in sorted(sources)}
@@ -235,12 +387,14 @@ def verify(directory, tag, commit):
         required = {"native-package-manifest.json", "native-export-manifest.json", "engine-downloads.json",
                     "RELEASE-NOTES.md", "TRAVERSAL-VERIFICATION.md", "TRAVERSAL-AUDIO-PROVENANCE.json",
                     "lane-procession-loop.wav"} | {"ci-" + name + ".json" for name in CHECKS + TRAVERSAL_CHECKS}
+        required |= TRAVERSAL_CAPTURE_ASSETS
         require(required <= set(inventory["files"]), "Feature release omits required assets/reports")
         for name in CHECKS + TRAVERSAL_CHECKS:
             require(json.loads(member(directory, "ci-" + name + ".json").read_text()).get("passed") is True,
                     "Feature release report failed: " + name)
         packages = json.loads(member(directory, "native-package-manifest.json").read_text())
         exported = json.loads(member(directory, "native-export-manifest.json").read_text())
+        validate_traversal_capture(directory, exported)
         require(packages["git"]["head"] == commit and exported["git"]["head"] == commit,
                 "Feature package source mismatch")
         for platform in ("linux", "windows"):

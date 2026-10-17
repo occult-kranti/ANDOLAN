@@ -92,7 +92,7 @@ func enemy_of_role(army, role: String):
 func run() -> void:
 	root.size = Vector2i(1280, 720)
 	root.content_scale_size = Vector2i(1280, 720)
-	for path in ["res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/player_traversal.gd", "res://scripts/traversal_pose.gd", "res://scripts/traversal_landmarks.gd", "res://scripts/lane_army.gd", "res://scripts/lane_minion.gd", "res://scripts/lane_unit_art.gd", "res://scripts/input_bindings.gd", "res://scripts/controls_overlay.gd", "res://scripts/traversal_audio.gd", "res://assets/world/confluence-map.json", "res://tests/traversal_army_stress.gd"]:
+	for path in ["res://scripts/confluence_world.gd", "res://scripts/courtyard.gd", "res://scripts/player.gd", "res://scripts/player_traversal.gd", "res://scripts/traversal_pose.gd", "res://scripts/traversal_landmarks.gd", "res://scripts/traversal_stone.gdshader", "res://scripts/lane_army.gd", "res://scripts/lane_minion.gd", "res://scripts/lane_unit_art.gd", "res://scripts/input_bindings.gd", "res://scripts/controls_overlay.gd", "res://scripts/traversal_audio.gd", "res://assets/world/confluence-map.json", "res://tests/traversal_army_stress.gd"]:
 		source_before[path] = FileAccess.get_sha256(path)
 	var result := change_scene_to_file("res://scenes/confluence_world.tscn")
 	if result != OK:

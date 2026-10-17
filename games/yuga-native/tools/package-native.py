@@ -133,7 +133,7 @@ def inspect_pack(path: Path) -> dict:
                 'assets/cinematics/confluence-duel.json', 'confluence-duel-mix.wav-',
                 'duel_energy.gdshader', 'scripts/input_bindings.gd', 'scripts/controls_overlay.gd',
                 'scripts/player_traversal.gd', 'scripts/traversal_pose.gd',
-                'scripts/traversal_landmarks.gd', 'scripts/lane_army.gd', 'scripts/lane_minion.gd',
+                'scripts/traversal_landmarks.gd', 'scripts/traversal_stone.gdshader', 'scripts/lane_army.gd', 'scripts/lane_minion.gd',
                 'scripts/lane_unit_art.gd', 'scripts/traversal_audio.gd', 'lane-procession-loop.wav-',
                 'grapple_lock.wav-', 'grapple_release.wav-', 'flight_start.wav-',
                 'flight_exhaust.wav-', 'flight_recharge.wav-', 'minion_hit.wav-', 'coin.wav-')

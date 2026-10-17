@@ -5,7 +5,7 @@
       "name": "structurally valid explicit native resource bundle",
       "passed": true,
       "expected": "accept",
-      "entry_count": 37
+      "entry_count": 38
     },
     {
       "name": "magic rejected",
@@ -122,6 +122,12 @@
       "rejection": "ValueError: Required runtime resource missing: scripts/lane_army.gd"
     },
     {
+      "name": "missing native platform stone shader rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/traversal_stone.gdshader"
+    },
+    {
       "name": "payload checksum corruption rejected",
       "passed": true,
       "expected": "reject",
@@ -149,7 +155,7 @@
       "name": "canonical fixture remains accepted after mutations",
       "passed": true,
       "expected": "accept",
-      "entry_count": 37
+      "entry_count": 38
     },
     {
       "name": "tested packager unchanged",
@@ -157,8 +163,8 @@
     }
   ],
   "sources": {
-    "tools/package-native.py": "f135654d64730b30d236e43350fa5692958e96e20b56d92d49e9fc9ceb699d3a",
-    "tests/traversal_security_cases.py": "4391290810db2b5483f15716f535944c8a3fee4ce228db786ba5908dd45ee21a"
+    "tools/package-native.py": "703cacf7783de76e324892a7e621c87ebbabbd6578772e52b8f63fd23cc745ae",
+    "tests/traversal_security_cases.py": "e8d1da631a6d0095cf35e301f0340880eae6403049f0c9afa5266683a1712cb1"
   },
   "scope": "Bounded structural PCK acceptance fixtures only. No pack execution, extraction, production secrets, runtime security certificate, online security or full parser fuzzing claim."
 }

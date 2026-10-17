@@ -201,13 +201,13 @@
 		{
 			"details": {
 				"active_music": false,
-				"dropped_events": 7,
-				"duck_db": 0.0,
+				"dropped_events": 4,
+				"duck_db": -8.0,
 				"focused": true,
 				"music_enabled": true,
 				"music_paused": true,
 				"muted": false,
-				"played_events": 4,
+				"played_events": 7,
 				"playing_cues": 0,
 				"pool_size": 6,
 				"suspended": true,
@@ -286,13 +286,13 @@
 			"details": {
 				"after": {
 					"active_music": true,
-					"dropped_events": 7,
+					"dropped_events": 4,
 					"duck_db": -8.0,
 					"focused": true,
 					"music_enabled": true,
 					"music_paused": false,
 					"muted": false,
-					"played_events": 5,
+					"played_events": 8,
 					"playing_cues": 1,
 					"pool_size": 6,
 					"suspended": false,
@@ -300,13 +300,13 @@
 				},
 				"before": {
 					"active_music": true,
-					"dropped_events": 7,
+					"dropped_events": 4,
 					"duck_db": 0.0,
 					"focused": true,
 					"music_enabled": true,
 					"music_paused": false,
 					"muted": false,
-					"played_events": 4,
+					"played_events": 7,
 					"playing_cues": 0,
 					"pool_size": 6,
 					"suspended": false,
@@ -334,13 +334,13 @@
 		{
 			"details": {
 				"active_music": false,
-				"dropped_events": 110,
+				"dropped_events": 107,
 				"duck_db": -8.0,
 				"focused": true,
 				"music_enabled": true,
 				"music_paused": false,
 				"muted": true,
-				"played_events": 6,
+				"played_events": 9,
 				"playing_cues": 0,
 				"pool_size": 6,
 				"suspended": false,
@@ -440,7 +440,7 @@
 				"max_corpses": 8,
 				"max_unit_nodes": 64,
 				"ticks": 24000,
-				"wall_ms": 27666
+				"wall_ms": 32822
 			},
 			"name": "independent20-minute army sweep has bounded finite live state",
 			"passed": true
@@ -542,18 +542,20 @@
 		{
 			"details": {
 				"res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
-				"res://scripts/confluence_world.gd": "386d147d1dca43255d47c393842ccdf90d57fa86b563290282ebdc5e50b90930",
+				"res://scripts/confluence_world.gd": "279282564d64e69569b7907c4a47fd1f006ea3ba56206de79c08c3419c60a7ac",
 				"res://scripts/controls_overlay.gd": "0d10a05426f55d3180818c9a34731617bfad545e61b592189561f7aa7837be84",
-				"res://scripts/input_bindings.gd": "f0e9f05705ebe2cdf9eb54fba157bbf523ab8040383642b499f48696254bc856",
+				"res://scripts/courtyard.gd": "4f1fce80324a1fe2a475ef680f0b8f37a85c353c00b0d8f40fe2c13b1549da9a",
+				"res://scripts/input_bindings.gd": "e686112bf6f87edbac2dc5b1b4bde9ee773577c0b130c53f2105c96919f92f96",
 				"res://scripts/lane_army.gd": "5368cd0870ddb27c07b4c8563d331f758001eccacfa3ff0c70e05b5d93eaa85a",
 				"res://scripts/lane_minion.gd": "897c189481e1f1b53da7a0361182777cee5da62d0586e7a3bc3bd49f0b096410",
-				"res://scripts/lane_unit_art.gd": "63f9b8834688a567debab0d6603250eaf85fb3cae6918f938be519190043c3dc",
+				"res://scripts/lane_unit_art.gd": "5861731faf1fc4dc77be7d99861a8c8eb885dba95c82cd074fe2b260e805482d",
 				"res://scripts/player.gd": "8561ec5cf206619d9475f9643c26446f3fd029c6e8835936474e6f08748a844c",
 				"res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
 				"res://scripts/traversal_audio.gd": "067ff9f82cb73305418330de32fa7d59b4c492b16985d64e58bd09c1df77fd2a",
-				"res://scripts/traversal_landmarks.gd": "d6504cba3e7e35171591528aeab0db09f6c7cecac5dc9b9eb3c6fd2442b33931",
+				"res://scripts/traversal_landmarks.gd": "ee070b0a4b1c0bb07ac645681e6ef3dcf0311adb88afe07ece3ecc75b4ab971b",
 				"res://scripts/traversal_pose.gd": "92502267f318fef5ce822f698457a7fc07f8129cebd20c17a6b187ef333e2cdf",
-				"res://tests/traversal_army_stress.gd": "8e2a6bad04fd268b983cb5bff237285f5f57fc7139af3b2d9864447f7bae83df"
+				"res://scripts/traversal_stone.gdshader": "711a5cc8bbdeff0d7456379c7a921ec26f2019c59695363ec0b3e59a3327f548",
+				"res://tests/traversal_army_stress.gd": "c8d8cb74bc43630fa59120f57a475a19b1eafd5b3ad15ce7116b16d539a0d42a"
 			},
 			"name": "integrated sources remain unchanged during test",
 			"passed": true
@@ -566,17 +568,19 @@
 	"scope": "Actual native scene, Godot physics, injected InputEvents/signals and lifecycle; separate accelerated army simulation at20Hz. No OS-input, renderer, audible-quality, consumer-GPU performance, multiplayer authority or comprehensive security certification.",
 	"sources": {
 		"res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
-		"res://scripts/confluence_world.gd": "386d147d1dca43255d47c393842ccdf90d57fa86b563290282ebdc5e50b90930",
+		"res://scripts/confluence_world.gd": "279282564d64e69569b7907c4a47fd1f006ea3ba56206de79c08c3419c60a7ac",
 		"res://scripts/controls_overlay.gd": "0d10a05426f55d3180818c9a34731617bfad545e61b592189561f7aa7837be84",
-		"res://scripts/input_bindings.gd": "f0e9f05705ebe2cdf9eb54fba157bbf523ab8040383642b499f48696254bc856",
+		"res://scripts/courtyard.gd": "4f1fce80324a1fe2a475ef680f0b8f37a85c353c00b0d8f40fe2c13b1549da9a",
+		"res://scripts/input_bindings.gd": "e686112bf6f87edbac2dc5b1b4bde9ee773577c0b130c53f2105c96919f92f96",
 		"res://scripts/lane_army.gd": "5368cd0870ddb27c07b4c8563d331f758001eccacfa3ff0c70e05b5d93eaa85a",
 		"res://scripts/lane_minion.gd": "897c189481e1f1b53da7a0361182777cee5da62d0586e7a3bc3bd49f0b096410",
-		"res://scripts/lane_unit_art.gd": "63f9b8834688a567debab0d6603250eaf85fb3cae6918f938be519190043c3dc",
+		"res://scripts/lane_unit_art.gd": "5861731faf1fc4dc77be7d99861a8c8eb885dba95c82cd074fe2b260e805482d",
 		"res://scripts/player.gd": "8561ec5cf206619d9475f9643c26446f3fd029c6e8835936474e6f08748a844c",
 		"res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
 		"res://scripts/traversal_audio.gd": "067ff9f82cb73305418330de32fa7d59b4c492b16985d64e58bd09c1df77fd2a",
-		"res://scripts/traversal_landmarks.gd": "d6504cba3e7e35171591528aeab0db09f6c7cecac5dc9b9eb3c6fd2442b33931",
+		"res://scripts/traversal_landmarks.gd": "ee070b0a4b1c0bb07ac645681e6ef3dcf0311adb88afe07ece3ecc75b4ab971b",
 		"res://scripts/traversal_pose.gd": "92502267f318fef5ce822f698457a7fc07f8129cebd20c17a6b187ef333e2cdf",
-		"res://tests/traversal_army_stress.gd": "8e2a6bad04fd268b983cb5bff237285f5f57fc7139af3b2d9864447f7bae83df"
+		"res://scripts/traversal_stone.gdshader": "711a5cc8bbdeff0d7456379c7a921ec26f2019c59695363ec0b3e59a3327f548",
+		"res://tests/traversal_army_stress.gd": "c8d8cb74bc43630fa59120f57a475a19b1eafd5b3ad15ce7116b16d539a0d42a"
 	}
 }

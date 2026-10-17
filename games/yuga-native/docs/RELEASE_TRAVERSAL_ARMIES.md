@@ -6,6 +6,8 @@ Extract the entire Linux or Windows ZIP. Run `launch.sh` or `launch.bat`, then c
 
 Default controls: WASD move, mouse aim, left click bow, Space jump/rise, Ctrl descend, Shift sprint, Q pulse, E dash, R reload, F toggle flight, G tether/release, F1 overview, F2 help/remap, N daylight, Escape pause, F5 reset. Settings retain sound, sensitivity and custom bindings. Flight and tether need energy and a clear target.
 
+The new `yuga-traversal-preview.mp4` contains six seconds of actual input-driven tether and flight capture at 1280 × 720, with five additional world/army stills. It is silent; its 30 FPS is simulated playback time from software rendering, not a hardware performance benchmark.
+
 The original music loop is included separately as `lane-procession-loop.wav`. Its synthesis, cue provenance and numerical tests are documented; human listening review is not claimed. `TRAVERSAL-VERIFICATION.md` identifies current evidence and practical limits.
 
 This is offline native practice. Competitive native multiplayer, the full hero roster and production-quality character art remain open. The generated army/map concept is a future visual target. The separately included 24-second Confluence duel movie is unchanged archived cinematic work; it does not depict these new traversal mechanics.
