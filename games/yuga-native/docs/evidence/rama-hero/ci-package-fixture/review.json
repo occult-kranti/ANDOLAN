@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "source_context_commit": "2d9353cb6723cf89d6967994f2c773d9bd66c6e6",
+  "failed_ci_run": "https://github.com/occult-kranti/ANDOLAN/actions/runs/39032599397",
+  "failure": "The legacy canonical synthetic PCK omitted all14 required Rama resources. Its two acceptance controls failed at missing rama-hero.glb-. The packager correctly rejected it.",
+  "change": "Only the explicit test inventory changed, with14 targeted removal counterexamples requiring the matching missing-resource reason. No packager or runtime source change.",
+  "results": {
+    "before": {
+      "passed": false,
+      "passed_checks": 59,
+      "total_checks": 61
+    },
+    "after": {
+      "passed": true,
+      "checks": 75
+    },
+    "rama_provenance": {
+      "passed": true,
+      "checks": 19
+    },
+    "next_release_gate": {
+      "passed": true,
+      "checks": 169
+    }
+  },
+  "packager_sha256_unchanged": "d44edd1263b04441b8220914892a92fd63a2eef56a2d7d04f488c2f3ce4aadd1",
+  "runtime_source_sha256_unchanged": "5aaeec270783a727cb06095e2c541628069eeb20e6d6443060e62a25f4ad2b86",
+  "runtime_files": 352,
+  "files": {
+    "failed-ci.log": {
+      "sha256": "ecad3fbe3f45cadbd948ecee9ff0697a53aa5429ab33dabfb60999aceb210115",
+      "bytes": 130343
+    },
+    "before.json": {
+      "sha256": "56b536c25d415f6cda6d7b0886ac019c25606cca0395834bf665ba62d63abbd7",
+      "bytes": 13951
+    },
+    "after.json": {
+      "sha256": "897f6ed784c93be8bb0ea57c249ca622946576d252a087cfe0d766a7bd9e0a2e",
+      "bytes": 19051
+    },
+    "provenance.json": {
+      "sha256": "e048475658c93de37cd0bc2bfb6195685056df0a2c289b6444002ae890022e25",
+      "bytes": 3612
+    },
+    "next-release-gate.json": {
+      "sha256": "ee84d415521ab6aa77e225d9795816394a3fa5ed9e9ef6ccf20c0769b62270a1",
+      "bytes": 43214
+    },
+    "fixture-before.py": {
+      "sha256": "8ea590366d8c8bac687383d874a748ea3c78ce1b43fc22f0f7573d3dcefc9c58",
+      "bytes": 9558
+    },
+    "fixture-after.py": {
+      "sha256": "11153392d7a2ca405b2f2e05f63dc9c5cb2593a2c4cf71e915dffe48b61e91aa",
+      "bytes": 10681
+    }
+  },
+  "scope": "Bounded Python fixture checks only; fixtures are never executed as Godot packs. Actual OS package review and complete follow-up CI remain separate.",
+  "commands": [
+    "python3 games/yuga-native/tests/traversal_security_cases.py --report=<before-or-after.json>",
+    "python3 games/yuga-native/tests/rama_package_cases.py --report=<provenance.json>",
+    "python3 games/yuga-native/tests/release_traversal_cases.py --report=<next-release-gate.json>"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "suite": "rama_package_cases",
+  "passed": true,
+  "checks": [
+    {
+      "name": "matching asset editable and generator hashes accepted",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "boolean schema rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance must be a schema-1 object"
+    },
+    {
+      "name": "unknown schema rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance must be a schema-1 object"
+    },
+    {
+      "name": "path traversal rejected before reading outside",
+      "passed": true,
+      "rejection": "Rama hero provenance has unexpected asset"
+    },
+    {
+      "name": "absolute editable path rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has unexpected editableSource"
+    },
+    {
+      "name": "missing digest rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has invalid sha256"
+    },
+    {
+      "name": "nonhex digest rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has invalid sha256"
+    },
+    {
+      "name": "omitted weight correction dependency rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has unexpected weightCorrectionGenerator"
+    },
+    {
+      "name": "weight correction dependency traversal rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has unexpected weightCorrectionGenerator"
+    },
+    {
+      "name": "omitted weight correction evidence hash rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has invalid weightCorrectionSha256"
+    },
+    {
+      "name": "generated dependency ledger mismatch rejected",
+      "passed": true,
+      "rejection": "Rama hero generated dependencies differ from the required weight correction source"
+    },
+    {
+      "name": "changed source rejects: assets/heroes/rama-hero.glb",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: assets/heroes/rama-hero.glb"
+    },
+    {
+      "name": "changed source rejects: art/hero-rama/rama-hero.blend",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/rama-hero.blend"
+    },
+    {
+      "name": "changed source rejects: art/hero-rama/build_hero.py",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/build_hero.py"
+    },
+    {
+      "name": "changed source rejects: art/hero-rama/rebind_dhoti.py",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/rebind_dhoti.py"
+    },
+    {
+      "name": "changed source rejects: art/hero-rama/weight-correction.json",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/weight-correction.json"
+    },
+    {
+      "name": "missing asset rejects",
+      "passed": true,
+      "rejection": "Rama hero source is missing or unsafe: assets/heroes/rama-hero.glb"
+    },
+    {
+      "name": "matching external symlink still rejects",
+      "passed": true,
+      "rejection": "Rama hero source is missing or unsafe: assets/heroes/rama-hero.glb"
+    },
+    {
+      "name": "restored source passes",
+      "passed": true,
+      "rejection": null
+    }
+  ],
+  "source_sha256": {
+    "tools/package-native.py": "d44edd1263b04441b8220914892a92fd63a2eef56a2d7d04f488c2f3ce4aadd1",
+    "tests/rama_package_cases.py": "8672f7f884cb56bca4fa4fbaa89879457f6d09339ca39072259351bb323226ac"
+  },
+  "scope": "Provenance schema, exact source identity, and safe-path counterexamples; not GLB format or art quality."
+}

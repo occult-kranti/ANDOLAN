@@ -28,8 +28,18 @@ INVOCATION_NAMES = [
         "meghnad-release", "sita-release", "draupadi-release", "subhadra-release",
         "hidimbi-release", "chitrangada-release", "ulupi-release")],
 ]
+RAMA_NAMES = [
+    ".godot/imported/rama-hero.glb-fixture.scn",
+    "assets/animations/rama_hero_motion.tres", "assets/design/rama-ability-kit.json",
+    "shaders/rama_ribbon.gdshader",
+    *[f"scripts/{name}.gd" for name in (
+        "rama_ability_kit", "rama_ability_effects", "rama_hero_runtime", "rama_vitals",
+        "rama_motion", "rama_hero_hud", "rama_hero_panel", "hero_ui_theme",
+        "rama_practice_army", "rama_practice_target")],
+]
 NAMES = [
     *INVOCATION_NAMES,
+    *RAMA_NAMES,
     "assets/audio/siege/provenance.json", "project.binary", "scenes/courtyard.tscn", "scenes/confluence_world.tscn",
     "scenes/combat_film.tscn", "assets/world/confluence-map.json",
     "assets/cinematics/confluence-duel.json", "shaders/production_water.gdshader",
@@ -91,7 +101,8 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="yuga-pack-security-") as temporary:
         target = Path(temporary) / "fixture.pck"
 
-        def evaluate(name: str, data: bytes, accept: bool = False) -> None:
+        def evaluate(name: str, data: bytes, accept: bool = False,
+                     rejection_contains: str | None = None) -> None:
             target.write_bytes(data)
             try:
                 result = module.inspect_pack(target)
@@ -100,8 +111,10 @@ def main() -> int:
             except (ValueError, struct.error, UnicodeDecodeError) as error:
                 accepted = False
                 detail = {"rejection": type(error).__name__ + ": " + str(error)}
-            checks.append({"name": name, "passed": accepted == accept,
-                           "expected": "accept" if accept else "reject", **detail})
+            correct_reason = rejection_contains is None or rejection_contains in detail.get("rejection", "")
+            checks.append({"name": name, "passed": accepted == accept and correct_reason,
+                           "expected": "accept" if accept else "reject", **detail,
+                           **({"required_rejection": rejection_contains} if rejection_contains else {})})
 
         evaluate("structurally valid explicit native resource bundle", baseline, True)
         evaluate("magic rejected", b"NOPE" + baseline[4:])
@@ -135,6 +148,11 @@ def main() -> int:
             evaluate("missing siege resource rejected: " + missing, pack([entry for entry in entries if entry[0] != missing])[0])
         for missing in INVOCATION_NAMES:
             evaluate("missing invocation resource rejected: " + missing, pack([entry for entry in entries if entry[0] != missing])[0])
+        for missing in RAMA_NAMES:
+            token = "rama-hero.glb-" if missing.startswith(".godot/imported/") else missing
+            evaluate("missing Rama resource rejected: " + missing,
+                     pack([entry for entry in entries if entry[0] != missing])[0],
+                     rejection_contains="Required runtime resource missing: " + token)
         corrupt = bytearray(baseline)
         corrupt[-1] ^= 1
         evaluate("payload checksum corruption rejected", bytes(corrupt))
