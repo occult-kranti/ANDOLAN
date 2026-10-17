@@ -320,6 +320,9 @@ func _create_ui() -> void:
 	var explore_button := _button("EXPLORE CONFLUENCE   →", enter_confluence)
 	explore_button.name = "ExploreConfluence"
 	intro.add_child(explore_button)
+	var film_button := _button("WATCH CONFLUENCE DUEL   →", enter_combat_film)
+	film_button.name = "WatchConfluenceDuel"
+	intro.add_child(film_button)
 	intro.add_child(_button("SETTINGS", func(): _open_settings(true)))
 	intro.add_child(_button("QUIT TO DESKTOP", _quit))
 	intro.add_child(_wrapped("Local courtyard training · Confluence map exploration\nWASD + mouse  ·  Esc releases the cursor", 13, MIST))
@@ -474,6 +477,13 @@ func enter_confluence() -> void:
 	var error := get_tree().change_scene_to_file("res://scenes/confluence_world.tscn")
 	if error != OK:
 		push_error("Could not open Confluence: " + error_string(error))
+
+func enter_combat_film() -> void:
+	get_tree().paused = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	var error := get_tree().change_scene_to_file("res://scenes/combat_film.tscn")
+	if error != OK:
+		push_error("Could not open the Confluence duel: " + error_string(error))
 
 func start_training() -> void:
 	started = true

@@ -1,0 +1,711 @@
+{
+	"actors_only": true,
+	"checks": [
+		{
+			"details": {
+				"bones": 164,
+				"clips": [
+					"cast_release",
+					"cast_windup",
+					"defeat",
+					"draw",
+					"evade",
+					"guard",
+					"ready",
+					"recoil",
+					"release"
+				]
+			},
+			"name": "rama imported rig and clip coverage",
+			"passed": true
+		},
+		{
+			"details": {
+				"lowest_rest_foot_vertex_count": 1136,
+				"selection_depth_metres": 0.015
+			},
+			"name": "rama actual skinned sole cohort exists",
+			"passed": true
+		},
+		{
+			"details": {
+				"bone_samples": 60516,
+				"invalid_transforms": 0,
+				"max_local_segment_length_error": 0.40919354557991,
+				"segment_errors_by_bone": {
+					"bowstring": 0.40919354557991,
+					"pelvis.L": 0.385023638606071,
+					"pelvis.R": 0.385023579001427,
+					"spine05": 0.385023579001427
+				},
+				"track_path_errors": []
+			},
+			"name": "rama all loaded animation bone poses finite",
+			"passed": true
+		},
+		{
+			"details": {
+				"limit_metres": 0.005,
+				"maximum_anatomical_local_segment_length_error": 0.000000417232513427734,
+				"separately_disclosed_translation_controls": [
+					"pelvis.L",
+					"pelvis.R",
+					"spine05",
+					"bowstring"
+				]
+			},
+			"name": "rama anatomical segments retain length",
+			"passed": true
+		},
+		{
+			"details": {
+				"branch_parents": {
+					"pelvis.L": "root",
+					"pelvis.R": "root",
+					"spine05": "root"
+				},
+				"maximum_body_control_offset": 0.464364647865295,
+				"maximum_branch_translation_disagreement": 0.000000524847450833477,
+				"root_weighted_vertex_influences": 0,
+				"scope": "These three child branches translate together under an unweighted root for authored crouch. They are not treated as physical limb segments; their rest offsets and within-clip variations remain explicitly reported. Bowstring translation is separately intentional."
+			},
+			"name": "rama root branch translations are coordinated controls",
+			"passed": false
+		},
+		{
+			"details": {
+				"clips": [
+					{
+						"clip": "ready",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849365442991257,
+						"maximum_sole_centroid_horizontal_drift": 0.000000295779614134517,
+						"minimum_sole_y": 0.00849304348230362,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000189816248052921,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.000000189816248052921
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.035000067204237,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.035000067204237,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"spine05": {
+								"max_rest_offset": 0.034999955445528,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "draw",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849360227584839,
+						"maximum_sole_centroid_horizontal_drift": 0.000000337174782316652,
+						"minimum_sole_y": 0.00849304348230362,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.511545598506927,
+								"max_within_clip_displacement": 0.511545777320862,
+								"phase0_rest_offset": 0.00000018507795118694
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.035000067204237,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.035000067204237,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"spine05": {
+								"max_rest_offset": 0.034999955445528,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "release",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.0084935799241066,
+						"maximum_sole_centroid_horizontal_drift": 0.000000286629557422202,
+						"minimum_sole_y": 0.00849304348230362,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.280374437570572,
+								"max_within_clip_displacement": 0.25129646062851,
+								"phase0_rest_offset": 0.251296371221542
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.035000067204237,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.035000067204237,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"spine05": {
+								"max_rest_offset": 0.034999955445528,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "guard",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849374383687973,
+						"maximum_sole_centroid_horizontal_drift": 0.00000246198578679468,
+						"minimum_sole_y": 0.00849295407533646,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000193006357562808,
+								"max_within_clip_displacement": 0.000000199920052068592,
+								"phase0_rest_offset": 0.00000018507795118694
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0782922208309174,
+								"max_within_clip_displacement": 0.0432921536266804,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.0782922208309174,
+								"max_within_clip_displacement": 0.0432921536266804,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"spine05": {
+								"max_rest_offset": 0.0782921090722084,
+								"max_within_clip_displacement": 0.0432921536266804,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "recoil",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849365442991257,
+						"maximum_sole_centroid_horizontal_drift": 0.000000295779614134517,
+						"minimum_sole_y": 0.00849304348230362,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000205541851983071,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.000000205541851983071
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.035000067204237,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.035000067204237,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"spine05": {
+								"max_rest_offset": 0.034999955445528,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "evade",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849360227584839,
+						"maximum_sole_centroid_horizontal_drift": 0.00000796496351540554,
+						"minimum_sole_y": 0.00849304348230362,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000211924486848147,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.000000211924486848147
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.195000052452087,
+								"max_within_clip_displacement": 0.16000010073185,
+								"phase0_rest_offset": 0.0349999479949474
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.195000052452087,
+								"max_within_clip_displacement": 0.16000010073185,
+								"phase0_rest_offset": 0.0349999479949474
+							},
+							"spine05": {
+								"max_rest_offset": 0.195000052452087,
+								"max_within_clip_displacement": 0.16000010073185,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "cast_windup",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849374383687973,
+						"maximum_sole_centroid_horizontal_drift": 0.00000323904077959014,
+						"minimum_sole_y": 0.00849299132823944,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000252778164622214,
+								"max_within_clip_displacement": 0.000000232763582630469,
+								"phase0_rest_offset": 0.00000018507795118694
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0937116891145706,
+								"max_within_clip_displacement": 0.0587116181850433,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.0937116891145706,
+								"max_within_clip_displacement": 0.0587116219103336,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"spine05": {
+								"max_rest_offset": 0.0937116965651512,
+								"max_within_clip_displacement": 0.0587117411196232,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "cast_release",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849379599094391,
+						"maximum_sole_centroid_horizontal_drift": 0.00000351048879565496,
+						"minimum_sole_y": 0.0084928572177887,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000252778164622214,
+								"max_within_clip_displacement": 0.000000232763582630469,
+								"phase0_rest_offset": 0.000000252778164622214
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0937116891145706,
+								"max_within_clip_displacement": 0.0587116181850433,
+								"phase0_rest_offset": 0.0937116891145706
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.0937116891145706,
+								"max_within_clip_displacement": 0.0587116219103336,
+								"phase0_rest_offset": 0.0937116891145706
+							},
+							"spine05": {
+								"max_rest_offset": 0.0937116965651512,
+								"max_within_clip_displacement": 0.0587117411196232,
+								"phase0_rest_offset": 0.0937116965651512
+							}
+						}
+					},
+					{
+						"clip": "defeat",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849366933107376,
+						"maximum_sole_centroid_horizontal_drift": 0.0000192576990230009,
+						"minimum_sole_y": 0.00849317014217377,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000154509748995224,
+								"max_within_clip_displacement": 0.000000111758708953857,
+								"phase0_rest_offset": 0.000000154509748995224
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.464364647865295,
+								"max_within_clip_displacement": 0.429364591836929,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.464364647865295,
+								"max_within_clip_displacement": 0.429364562034607,
+								"phase0_rest_offset": 0.035000067204237
+							},
+							"spine05": {
+								"max_rest_offset": 0.464364647865295,
+								"max_within_clip_displacement": 0.429364711046219,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					}
+				],
+				"maximum_stationary_foot_minimum_y": 0.00849379599094391,
+				"maximum_stationary_horizontal_drift": 0.00000351048879565496,
+				"minimum_stationary_sole_y": 0.0084928572177887,
+				"scope": "CPU skinning of actual loaded lowest-rest foot/toe vertex cohort at41phases perclip; numerical contact evidence, not visual acceptance."
+			},
+			"name": "rama stationary clips have grounded fixed soles",
+			"passed": true
+		},
+		{
+			"details": {
+				"bones": 164,
+				"clips": [
+					"cast_release",
+					"cast_windup",
+					"defeat",
+					"draw",
+					"evade",
+					"guard",
+					"ready",
+					"recoil",
+					"release"
+				]
+			},
+			"name": "ravana imported rig and clip coverage",
+			"passed": true
+		},
+		{
+			"details": {
+				"lowest_rest_foot_vertex_count": 1144,
+				"selection_depth_metres": 0.015
+			},
+			"name": "ravana actual skinned sole cohort exists",
+			"passed": true
+		},
+		{
+			"details": {
+				"bone_samples": 60516,
+				"invalid_transforms": 0,
+				"max_local_segment_length_error": 0.4091931656003,
+				"segment_errors_by_bone": {
+					"bowstring": 0.4091931656003,
+					"pelvis.L": 0.38502361625433,
+					"pelvis.R": 0.385023556649685,
+					"spine05": 0.385023526847363
+				},
+				"track_path_errors": []
+			},
+			"name": "ravana all loaded animation bone poses finite",
+			"passed": true
+		},
+		{
+			"details": {
+				"limit_metres": 0.005,
+				"maximum_anatomical_local_segment_length_error": 0.000000908970832824707,
+				"separately_disclosed_translation_controls": [
+					"pelvis.L",
+					"pelvis.R",
+					"spine05",
+					"bowstring"
+				]
+			},
+			"name": "ravana anatomical segments retain length",
+			"passed": true
+		},
+		{
+			"details": {
+				"branch_parents": {
+					"pelvis.L": "root",
+					"pelvis.R": "root",
+					"spine05": "root"
+				},
+				"maximum_body_control_offset": 0.464364588260651,
+				"maximum_branch_translation_disagreement": 0.000000524847166616382,
+				"root_weighted_vertex_influences": 0,
+				"scope": "These three child branches translate together under an unweighted root for authored crouch. They are not treated as physical limb segments; their rest offsets and within-clip variations remain explicitly reported. Bowstring translation is separately intentional."
+			},
+			"name": "ravana root branch translations are coordinated controls",
+			"passed": false
+		},
+		{
+			"details": {
+				"clips": [
+					{
+						"clip": "ready",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849331915378571,
+						"maximum_sole_centroid_horizontal_drift": 0.000000465527165260937,
+						"minimum_sole_y": 0.0084928572177887,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000331278641851895,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.000000331278641851895
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0350000746548176,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.0350000746548176
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.0350000709295273,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.0350000709295273
+							},
+							"spine05": {
+								"max_rest_offset": 0.034999955445528,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "draw",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849307328462601,
+						"maximum_sole_centroid_horizontal_drift": 0.00000112009263375512,
+						"minimum_sole_y": 0.00849273800849915,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.511545360088348,
+								"max_within_clip_displacement": 0.511545598506927,
+								"phase0_rest_offset": 0.000000376457137463149
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0350000746548176,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.0350000746548176
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.0350000709295273,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.0350000709295273
+							},
+							"spine05": {
+								"max_rest_offset": 0.034999955445528,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "release",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849307328462601,
+						"maximum_sole_centroid_horizontal_drift": 0.00000108318215552572,
+						"minimum_sole_y": 0.00849277526140213,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.280374586582184,
+								"max_within_clip_displacement": 0.251296490430832,
+								"phase0_rest_offset": 0.25129646062851
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0350000746548176,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.0350000746548176
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.0350000709295273,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.0350000709295273
+							},
+							"spine05": {
+								"max_rest_offset": 0.034999955445528,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "guard",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849345326423645,
+						"maximum_sole_centroid_horizontal_drift": 0.00000267167479250929,
+						"minimum_sole_y": 0.00849271565675735,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000377432769482766,
+								"max_within_clip_displacement": 0.0000000842936955791629,
+								"phase0_rest_offset": 0.000000376457137463149
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0782922208309174,
+								"max_within_clip_displacement": 0.0432921536266804,
+								"phase0_rest_offset": 0.0350000746548176
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.078292228281498,
+								"max_within_clip_displacement": 0.043292161077261,
+								"phase0_rest_offset": 0.0350000709295273
+							},
+							"spine05": {
+								"max_rest_offset": 0.078292116522789,
+								"max_within_clip_displacement": 0.043292161077261,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "recoil",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849331915378571,
+						"maximum_sole_centroid_horizontal_drift": 0.000000465527165260937,
+						"minimum_sole_y": 0.0084928572177887,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000331278641851895,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.000000331278641851895
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0350000746548176,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.0350000746548176
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.0350000709295273,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.0350000709295273
+							},
+							"spine05": {
+								"max_rest_offset": 0.034999955445528,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "evade",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849337875843048,
+						"maximum_sole_centroid_horizontal_drift": 0.00000779549009166658,
+						"minimum_sole_y": 0.00849264115095139,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000331278641851895,
+								"max_within_clip_displacement": 0.0,
+								"phase0_rest_offset": 0.000000331278641851895
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.194999992847443,
+								"max_within_clip_displacement": 0.160000041127205,
+								"phase0_rest_offset": 0.0349999517202377
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.194999992847443,
+								"max_within_clip_displacement": 0.160000041127205,
+								"phase0_rest_offset": 0.0349999517202377
+							},
+							"spine05": {
+								"max_rest_offset": 0.194999992847443,
+								"max_within_clip_displacement": 0.160000041127205,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "cast_windup",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.0084933266043663,
+						"maximum_sole_centroid_horizontal_drift": 0.00000352506162926147,
+						"minimum_sole_y": 0.00849276781082153,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000376457137463149,
+								"max_within_clip_displacement": 0.000000223020165890375,
+								"phase0_rest_offset": 0.000000376457137463149
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0937116891145706,
+								"max_within_clip_displacement": 0.058711614459753,
+								"phase0_rest_offset": 0.0350000746548176
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.0937116891145706,
+								"max_within_clip_displacement": 0.0587116219103336,
+								"phase0_rest_offset": 0.0350000709295273
+							},
+							"spine05": {
+								"max_rest_offset": 0.0937117040157318,
+								"max_within_clip_displacement": 0.0587117448449135,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					},
+					{
+						"clip": "cast_release",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849331915378571,
+						"maximum_sole_centroid_horizontal_drift": 0.00000385655903301085,
+						"minimum_sole_y": 0.00849273055791855,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000376457137463149,
+								"max_within_clip_displacement": 0.000000223020165890375,
+								"phase0_rest_offset": 0.000000360795866072294
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.0937116891145706,
+								"max_within_clip_displacement": 0.058711614459753,
+								"phase0_rest_offset": 0.0937116891145706
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.0937116891145706,
+								"max_within_clip_displacement": 0.0587116219103336,
+								"phase0_rest_offset": 0.0937116891145706
+							},
+							"spine05": {
+								"max_rest_offset": 0.0937117040157318,
+								"max_within_clip_displacement": 0.0587117448449135,
+								"phase0_rest_offset": 0.0937117040157318
+							}
+						}
+					},
+					{
+						"clip": "defeat",
+						"length": 1.0,
+						"maximum_foot_minimum_y": 0.00849349796772003,
+						"maximum_sole_centroid_horizontal_drift": 0.0000190686841960996,
+						"minimum_sole_y": 0.0084928423166275,
+						"translation_controls": {
+							"bowstring": {
+								"max_rest_offset": 0.000000423111629288542,
+								"max_within_clip_displacement": 0.000000111510082945188,
+								"phase0_rest_offset": 0.000000423111629288542
+							},
+							"pelvis.L": {
+								"max_rest_offset": 0.464364588260651,
+								"max_within_clip_displacement": 0.429364532232285,
+								"phase0_rest_offset": 0.0350000746548176
+							},
+							"pelvis.R": {
+								"max_rest_offset": 0.464364558458328,
+								"max_within_clip_displacement": 0.429364502429962,
+								"phase0_rest_offset": 0.0350000709295273
+							},
+							"spine05": {
+								"max_rest_offset": 0.464364588260651,
+								"max_within_clip_displacement": 0.429364651441574,
+								"phase0_rest_offset": 0.034999955445528
+							}
+						}
+					}
+				],
+				"maximum_stationary_foot_minimum_y": 0.00849345326423645,
+				"maximum_stationary_horizontal_drift": 0.00000385655903301085,
+				"minimum_stationary_sole_y": 0.00849271565675735,
+				"scope": "CPU skinning of actual loaded lowest-rest foot/toe vertex cohort at41phases perclip; numerical contact evidence, not visual acceptance."
+			},
+			"name": "ravana stationary clips have grounded fixed soles",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "sampled sources unchanged",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": false,
+	"scope": "Actual imported rigs and animation libraries evaluated numerically. CPU-skinned sole samples are bounded numerical evidence, not rendered art quality or gameplay physics. Viewer integration recorded separately when actors_only=false.",
+	"sources": {
+		"res://assets/cinematics/confluence-duel.json": "a7f9c8263f0117fa322f5a51ff765710bfe619026c076eda32d207aaf8be5826",
+		"res://assets/cinematics/duel-motion-rama.tres": "3ab73222e16d6925eb972f900e385fd18d1b3df2c47a6b744663be7007f0df94",
+		"res://assets/cinematics/duel-motion-ravana.tres": "d0d0f3b23dff6c12bc0174f3e1cedb66475ba85c0c8e61c533800f0d0a8ea3be",
+		"res://assets/cinematics/ravana-sentinel.glb": "f00bed98cc11847da41d2f9f13ef9119e3ed983d41ca6dd7a14862a1c80672ca",
+		"res://assets/heroes/rama-production.glb": "6657f4bf2fdb41b1f8b1bbd64777b35b5b4acfe00b3e3e22e4bc793fd4df3e8e",
+		"res://tests/combat_film_cases.gd": "78b099f87dbf31bcecbf8d92a7006138f4f7673f1a92462c4572e926f6bc0d22"
+	}
+}

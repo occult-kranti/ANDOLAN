@@ -128,7 +128,10 @@ def inspect_pack(path: Path) -> dict:
                 'architecture.glb-', 'nature.glb-', 'assets/world/confluence-map.json',
                 'production_water.gdshader', 'world_water.gdshader', 'project.binary',
                 'world_ground.gdshader', 'world_ground_common.gdshaderinc',
-                'courtyard.tscn', 'confluence_world.tscn')
+                'courtyard.tscn', 'confluence_world.tscn', 'combat_film.tscn',
+                'ravana-sentinel.glb-', 'duel-motion-rama', 'duel-motion-ravana',
+                'assets/cinematics/confluence-duel.json', 'confluence-duel-mix.wav-',
+                'duel_energy.gdshader')
     for item in required:
         if not any(item in entry['path'] for entry in entries):
             raise ValueError(f'Required runtime resource missing: {item}')
@@ -170,6 +173,10 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
             raise ValueError('Confluence world notice differs from the active asset')
     if digest(PROJECT / world_notice['map']['path']) != world_notice['map']['sha256']:
         raise ValueError('Confluence world notice differs from the runtime layout')
+    film_notice = json.loads((PROJECT / 'NOTICE/CONFLUENCE-DUEL-PROVENANCE.json').read_text())
+    for entry in film_notice['assets']:
+        if digest(PROJECT / entry['asset']) != entry['sha256']:
+            raise ValueError('Confluence duel notice differs from the active asset: ' + entry['asset'])
     before = source_state()
     packs = {}
     for platform in PLATFORMS:
@@ -190,14 +197,14 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
 
 def start_readme(platform: str) -> str:
     start = './launch.sh' if platform == 'linux' else 'launch.bat'
-    return f'''YUGA — CONFLUENCE + LANKA COURTYARD\nOriginal native world exploration and training / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. The bundled official Godot 4.6.3\nengine opens yuga-native.pck directly using --main-pack. This portable package\ncontains the full engine binary and is larger than a release-template export.\n\nControls\nWASD / arrows: move; mouse: aim; left mouse: solar bow; Space: jump;\nShift: sprint; R: reload; Q: sunburst; E: dash; Esc: pause/release cursor;\nF5: reset. Settings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nChoose EXPLORE CONFLUENCE from the title to walk the three-lane coastal city,\ntemple avenue, metro gardens and reed courts. N changes daylight; Esc pauses.\nThe courtyard has Rama and five practice targets. Confluence is an offline map\npreview with visual objective/camp markers; live matches are not integrated.\nThis release is not a full match, multiplayer server, commercial-engine reconstruction,\nor evidence of Deadlock/Overwatch visual parity. Windows is packaged and archive-\nvalidated from Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
+    return f'''YUGA — CONFLUENCE DUEL + WORLD\nOriginal animated combat film, world exploration and training / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. The bundled official Godot 4.6.3\nengine opens yuga-native.pck directly using --main-pack. This portable package\ncontains the full engine binary and is larger than a release-template export.\n\nControls\nWASD / arrows: move; mouse: aim; left mouse: solar bow; Space: jump;\nShift: sprint; R: reload; Q: sunburst; E: dash; Esc: pause/release cursor;\nF5: reset. Settings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nChoose WATCH CONFLUENCE DUEL for a 24-second choreographed Rama-versus-\nRavana Sentinel film with animated actors, camera direction, visual effects and\nan original synthesized soundtrack. Its playback controls pause, seek and replay;\nreturn opens the title again. This is a scripted film, not a playable battle.\n\nChoose EXPLORE CONFLUENCE from the title to walk the three-lane coastal city,\ntemple avenue, metro gardens and reed courts. N changes daylight; Esc pauses.\nThe courtyard has Rama and five practice targets. Confluence is an offline map\npreview with visual objective/camp markers; live matches are not integrated.\nThis release is not a full match, multiplayer server, commercial-engine reconstruction,\nor evidence of Deadlock/Overwatch visual parity. Windows is packaged and archive-\nvalidated from Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
 
 
 def safe_notice_copy(destination: Path) -> None:
     notices = PROJECT / 'NOTICE'
     required = ['GODOT-LICENSE.txt', 'GODOT-COPYRIGHT.txt', 'MAKEHUMAN-ASSET-LICENSE.md',
                 'HERO-PROVENANCE.json', 'RAMA-PRODUCTION-PROVENANCE.json',
-                'CONFLUENCE-WORLD-PROVENANCE.json',
+                'CONFLUENCE-WORLD-PROVENANCE.json', 'CONFLUENCE-DUEL-PROVENANCE.json',
                 'TPS-MOTION-NOTICE.txt', 'GODOT-TPS-UPSTREAM-LICENSE.md']
     for name in required:
         if not (notices / name).is_file():

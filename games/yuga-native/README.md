@@ -89,6 +89,20 @@ cobalt/ivory costume, hair, bow-grip details and PBR textures while retaining
 the existing anatomy, 164-bone rig and nine animation curves. It is an incremental
 art pass; a finished sculpt, fitted cloth and richer action animation remain open.
 
+## Combat film in development
+
+The [combat film script](docs/COMBAT_FILM_SCRIPT.md) defines a 24-second original
+Rama–Ravana sentinel study in the authored courtyard: visible guard, warned
+attack, evade and countershot. Its [runtime timeline](assets/cinematics/confluence-duel.json)
+coordinates animation, cameras, effects, captions and original sound through one
+absolute clock. Choreographed visual damage is separate from the multiplayer
+simulation.
+
+The [direction review](docs/COMBAT_FILM_REVIEW.md) records source, animation and
+actual-render gates as they are checked. This source milestone does not change
+the downloadable map preview described above. Rendered-film acceptance, packaged
+playback and a new release require their own evidence.
+
 ## Native analysis
 
 REA 6.5.0 has now been exercised through Ghidra 12.1.4 on an original compiled C

@@ -1,0 +1,924 @@
+{
+  "schema_version": 1,
+  "id": "confluence-duel",
+  "revision": 3,
+  "title": "Confluence: A duel of timing",
+  "duration_seconds": 24,
+  "scope": "Original deterministic in-engine combat film. Choreographed visual receipts are not authoritative multiplayer damage or a full playable hero kit.",
+  "environment_path": "res://assets/environment/lanka_courtyard.glb",
+  "coordinate_contract": {
+    "units": "metres",
+    "up_axis": "+Y",
+    "forward_axis": "+Z",
+    "yaw_degrees": "positive rotates +Z toward +X",
+    "ground_y": 0
+  },
+  "sampling_contract": {
+    "time": "Absolute seconds clamped to[0,24]; every visible state derives from that time.",
+    "motion": "Per-actor keys interpolate position linearly and yaw by shortest angular path; endpoints hold.",
+    "actions": "Half-open intervals[start,start+duration); final24s samples last endpoint. Map action0..1 to clip0..length. Ready fills gaps; no additive unbounded root motion.",
+    "camera": "Blend from previous segment endpoint camera to current segment target during blend_seconds after t_seconds; previous segment target is held before cut. First segment and final endpoint hold.",
+    "cues": "Visible only during declared half-open interval; deterministic effect phase=(t-start)/duration, no accumulated random state.",
+    "receipts": "UI health derives from latest applicable receipt at time<=t; receipts never mutate gameplay simulation.",
+    "audio": "Seek shared24s mix to absolute time; seeking/restart does not stack independentcue players.",
+    "restart": "Reset absolute time and all derivedstate; repeatedseek tosame time produces same pose/cues/camera/health."
+  },
+  "acts": [
+    {
+      "id": "anticipation",
+      "t_seconds": 0,
+      "end_seconds": 6,
+      "goal": "Establish readable silhouettes, draw and a visible defensive counter."
+    },
+    {
+      "id": "counterplay",
+      "t_seconds": 6,
+      "end_seconds": 17,
+      "goal": "Warn before danger, evade the locked wave, then punish guard recovery."
+    },
+    {
+      "id": "resolution",
+      "t_seconds": 17,
+      "end_seconds": 24,
+      "goal": "Hold the outcome and readable teaching beat without an unnecessary death."
+    }
+  ],
+  "actors": [
+    {
+      "id": "rama",
+      "name": "Rama",
+      "role": "archer",
+      "model_path": "res://assets/heroes/rama-production.glb",
+      "animation_library_path": "res://assets/cinematics/duel-motion-rama.tres",
+      "animation_namespace": "film",
+      "position": [
+        -3,
+        0,
+        -6
+      ],
+      "yaw_degrees": 26.56505117707799,
+      "visual_health": 100
+    },
+    {
+      "id": "ravana",
+      "name": "Ravana Sentinel",
+      "role": "guard",
+      "model_path": "res://assets/cinematics/ravana-sentinel.glb",
+      "animation_library_path": "res://assets/cinematics/duel-motion-ravana.tres",
+      "animation_namespace": "film",
+      "position": [
+        3,
+        0,
+        6
+      ],
+      "yaw_degrees": -153.43494882292202,
+      "visual_health": 100
+    }
+  ],
+  "motion_tracks": [
+    {
+      "actor_id": "rama",
+      "keys": [
+        {
+          "t_seconds": 0,
+          "position": [
+            -3,
+            0,
+            -6
+          ],
+          "yaw_degrees": 26.56505117707799
+        },
+        {
+          "t_seconds": 7.25,
+          "position": [
+            -3,
+            0,
+            -6
+          ],
+          "yaw_degrees": 26.56505117707799
+        },
+        {
+          "t_seconds": 7.95,
+          "position": [
+            -7,
+            0,
+            -3
+          ],
+          "yaw_degrees": 48.01278750418334
+        },
+        {
+          "t_seconds": 24,
+          "position": [
+            -7,
+            0,
+            -3
+          ],
+          "yaw_degrees": 48.01278750418334
+        }
+      ]
+    },
+    {
+      "actor_id": "ravana",
+      "keys": [
+        {
+          "t_seconds": 0,
+          "position": [
+            3,
+            0,
+            6
+          ],
+          "yaw_degrees": -153.43494882292202
+        },
+        {
+          "t_seconds": 9.2,
+          "position": [
+            3,
+            0,
+            6
+          ],
+          "yaw_degrees": -153.43494882292202
+        },
+        {
+          "t_seconds": 10.2,
+          "position": [
+            3,
+            0,
+            6
+          ],
+          "yaw_degrees": -131.98721249581666
+        },
+        {
+          "t_seconds": 24,
+          "position": [
+            3,
+            0,
+            6
+          ],
+          "yaw_degrees": -131.98721249581666
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "rama-ready-opening",
+      "actor_id": "rama",
+      "t_seconds": 0,
+      "duration_seconds": 1.8,
+      "clip_id": "ready",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "ravana",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "rama-draw-opening",
+      "actor_id": "rama",
+      "t_seconds": 1.8,
+      "duration_seconds": 2.35,
+      "clip_id": "draw",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "ravana",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "rama-release-opening",
+      "actor_id": "rama",
+      "t_seconds": 4.15,
+      "duration_seconds": 0.6,
+      "clip_id": "release",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "ravana",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "rama-ready-counter",
+      "actor_id": "rama",
+      "t_seconds": 4.75,
+      "duration_seconds": 2.5,
+      "clip_id": "ready",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "ravana",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "rama-evade-wave",
+      "actor_id": "rama",
+      "t_seconds": 7.25,
+      "duration_seconds": 0.7,
+      "clip_id": "evade",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "ravana",
+      "foot_contact": "moving"
+    },
+    {
+      "id": "rama-ready-aim",
+      "actor_id": "rama",
+      "t_seconds": 7.95,
+      "duration_seconds": 4.85,
+      "clip_id": "ready",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "ravana",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "rama-draw-counter",
+      "actor_id": "rama",
+      "t_seconds": 12.8,
+      "duration_seconds": 2.4,
+      "clip_id": "draw",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "ravana",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "rama-release-counter",
+      "actor_id": "rama",
+      "t_seconds": 15.2,
+      "duration_seconds": 0.65,
+      "clip_id": "release",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "ravana",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "rama-resolve",
+      "actor_id": "rama",
+      "t_seconds": 15.85,
+      "duration_seconds": 8.15,
+      "clip_id": "ready",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "ravana",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "ravana-ready-opening",
+      "actor_id": "ravana",
+      "t_seconds": 0,
+      "duration_seconds": 3,
+      "clip_id": "ready",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "rama",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "ravana-guard",
+      "actor_id": "ravana",
+      "t_seconds": 3,
+      "duration_seconds": 2.5,
+      "clip_id": "guard",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "rama",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "ravana-ready-wave",
+      "actor_id": "ravana",
+      "t_seconds": 5.5,
+      "duration_seconds": 0.5,
+      "clip_id": "ready",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "rama",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "ravana-charge-wave",
+      "actor_id": "ravana",
+      "t_seconds": 6,
+      "duration_seconds": 2.1,
+      "clip_id": "cast_windup",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "rama",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "ravana-release-wave",
+      "actor_id": "ravana",
+      "t_seconds": 8.1,
+      "duration_seconds": 0.8,
+      "clip_id": "cast_release",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "rama",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "ravana-recover-wave",
+      "actor_id": "ravana",
+      "t_seconds": 8.9,
+      "duration_seconds": 6.95,
+      "clip_id": "ready",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "rama",
+      "foot_contact": "pivot_allowed"
+    },
+    {
+      "id": "ravana-counter-recoil",
+      "actor_id": "ravana",
+      "t_seconds": 15.85,
+      "duration_seconds": 1.15,
+      "clip_id": "recoil",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "rama",
+      "foot_contact": "planted"
+    },
+    {
+      "id": "ravana-resolve",
+      "actor_id": "ravana",
+      "t_seconds": 17,
+      "duration_seconds": 7,
+      "clip_id": "ready",
+      "phase_mapping": "action_normalized_to_clip_length",
+      "blend_in_seconds": 0.12,
+      "blend_out_seconds": 0.12,
+      "aim_target_id": "rama",
+      "foot_contact": "planted"
+    }
+  ],
+  "cues": [
+    {
+      "id": "cue-rama-first-draw",
+      "type": "telegraph",
+      "t_seconds": 2.8,
+      "duration_seconds": 1.35,
+      "actor_id": "rama",
+      "color_role": "solar",
+      "style": "cast_symbol",
+      "position": [
+        -3,
+        1.3,
+        -6
+      ],
+      "target_id": "ravana",
+      "warns_event_id": "cue-rama-first-arrow"
+    },
+    {
+      "id": "cue-ravana-guard",
+      "type": "guard",
+      "t_seconds": 3,
+      "duration_seconds": 2.5,
+      "actor_id": "ravana",
+      "color_role": "spectral",
+      "style": "counter_shield",
+      "position": [
+        3,
+        1.1,
+        6
+      ]
+    },
+    {
+      "id": "cue-rama-first-arrow",
+      "type": "projectile",
+      "t_seconds": 4.15,
+      "duration_seconds": 0.6,
+      "actor_id": "rama",
+      "color_role": "solar",
+      "style": "solar_arrow",
+      "from_position": [
+        -3,
+        1.35,
+        -6
+      ],
+      "to_position": [
+        3,
+        1.15,
+        6
+      ],
+      "receipt_id": "receipt-opening-block",
+      "target_id": "ravana",
+      "impact_t_seconds": 4.75,
+      "telegraph_event_id": "cue-rama-first-draw"
+    },
+    {
+      "id": "cue-opening-block",
+      "type": "impact",
+      "t_seconds": 4.75,
+      "duration_seconds": 0.55,
+      "actor_id": "ravana",
+      "color_role": "spectral",
+      "style": "impact_ring",
+      "position": [
+        3,
+        1.15,
+        6
+      ],
+      "receipt_id": "receipt-opening-block",
+      "target_id": "rama"
+    },
+    {
+      "id": "cue-ravana-wave-warning",
+      "type": "telegraph",
+      "t_seconds": 6,
+      "duration_seconds": 2.1,
+      "actor_id": "ravana",
+      "color_role": "spectral",
+      "style": "danger_corridor",
+      "from_position": [
+        3,
+        0.025,
+        6
+      ],
+      "to_position": [
+        -3,
+        0.025,
+        -6
+      ],
+      "radius": 1.6,
+      "locked_target_position": [
+        -3,
+        0,
+        -6
+      ],
+      "target_id": "rama",
+      "warns_event_id": "cue-ravana-wave"
+    },
+    {
+      "id": "cue-rama-evade",
+      "type": "trail",
+      "t_seconds": 7.25,
+      "duration_seconds": 0.7,
+      "actor_id": "rama",
+      "color_role": "solar",
+      "style": "dash_trail",
+      "from_position": [
+        -3,
+        0.1,
+        -6
+      ],
+      "to_position": [
+        -7,
+        0.1,
+        -3
+      ]
+    },
+    {
+      "id": "cue-ravana-wave",
+      "type": "projectile",
+      "t_seconds": 8.1,
+      "duration_seconds": 0.8,
+      "actor_id": "ravana",
+      "color_role": "spectral",
+      "style": "spectral_fan",
+      "from_position": [
+        3,
+        0.75,
+        6
+      ],
+      "to_position": [
+        -3,
+        0.75,
+        -6
+      ],
+      "radius": 1.6,
+      "receipt_id": "receipt-wave-evaded",
+      "target_id": "rama",
+      "impact_t_seconds": 8.9,
+      "telegraph_event_id": "cue-ravana-wave-warning"
+    },
+    {
+      "id": "cue-rama-counter-draw",
+      "type": "telegraph",
+      "t_seconds": 13.7,
+      "duration_seconds": 1.5,
+      "actor_id": "rama",
+      "color_role": "solar",
+      "style": "cast_symbol",
+      "position": [
+        -7,
+        1.3,
+        -3
+      ],
+      "target_id": "ravana",
+      "warns_event_id": "cue-rama-counter-arrow"
+    },
+    {
+      "id": "cue-rama-counter-arrow",
+      "type": "projectile",
+      "t_seconds": 15.2,
+      "duration_seconds": 0.65,
+      "actor_id": "rama",
+      "color_role": "solar",
+      "style": "solar_arrow",
+      "from_position": [
+        -7,
+        1.35,
+        -3
+      ],
+      "to_position": [
+        3,
+        1.15,
+        6
+      ],
+      "receipt_id": "receipt-counter-hit",
+      "target_id": "ravana",
+      "impact_t_seconds": 15.85,
+      "telegraph_event_id": "cue-rama-counter-draw"
+    },
+    {
+      "id": "cue-counter-hit",
+      "type": "impact",
+      "t_seconds": 15.85,
+      "duration_seconds": 0.7,
+      "actor_id": "rama",
+      "color_role": "solar",
+      "style": "impact_ring",
+      "position": [
+        3,
+        1.15,
+        6
+      ],
+      "receipt_id": "receipt-counter-hit",
+      "target_id": "ravana"
+    }
+  ],
+  "visual_receipts": [
+    {
+      "id": "receipt-opening-block",
+      "t_seconds": 4.75,
+      "source_event_id": "cue-rama-first-arrow",
+      "actor_id": "rama",
+      "target_id": "ravana",
+      "outcome": "blocked",
+      "amount": 0,
+      "health_before": 100,
+      "health_after": 100,
+      "counter_event_id": "ravana-guard"
+    },
+    {
+      "id": "receipt-wave-evaded",
+      "t_seconds": 8.9,
+      "source_event_id": "cue-ravana-wave",
+      "actor_id": "ravana",
+      "target_id": "rama",
+      "outcome": "evaded",
+      "amount": 0,
+      "health_before": 100,
+      "health_after": 100,
+      "counter_event_id": "rama-evade-wave"
+    },
+    {
+      "id": "receipt-counter-hit",
+      "t_seconds": 15.85,
+      "source_event_id": "cue-rama-counter-arrow",
+      "actor_id": "rama",
+      "target_id": "ravana",
+      "outcome": "hit",
+      "amount": 45,
+      "health_before": 100,
+      "health_after": 55,
+      "counter_event_id": null
+    }
+  ],
+  "cameras": [
+    {
+      "id": "camera-establish",
+      "t_seconds": 0,
+      "duration_seconds": 3,
+      "position": [
+        12,
+        4.7,
+        -6
+      ],
+      "look_at": [
+        0,
+        1.1,
+        0
+      ],
+      "fov": 48,
+      "blend_seconds": 0
+    },
+    {
+      "id": "camera-first-draw",
+      "t_seconds": 3,
+      "duration_seconds": 2.5,
+      "position": [
+        10,
+        3.2,
+        -5
+      ],
+      "look_at": [
+        0,
+        1.1,
+        0
+      ],
+      "fov": 50,
+      "blend_seconds": 0.45
+    },
+    {
+      "id": "camera-wave-tell",
+      "t_seconds": 5.5,
+      "duration_seconds": 4,
+      "position": [
+        11,
+        4.8,
+        -5.5
+      ],
+      "look_at": [
+        -1.3,
+        0.9,
+        -0.3
+      ],
+      "fov": 50,
+      "blend_seconds": 0.5
+    },
+    {
+      "id": "camera-counter",
+      "t_seconds": 9.5,
+      "duration_seconds": 6.35,
+      "position": [
+        6,
+        3.2,
+        -7.3
+      ],
+      "look_at": [
+        -2,
+        1.1,
+        1.5
+      ],
+      "fov": 50,
+      "blend_seconds": 0.7
+    },
+    {
+      "id": "camera-impact",
+      "t_seconds": 15.85,
+      "duration_seconds": 2.15,
+      "position": [
+        -0.8,
+        2.65,
+        -0.2
+      ],
+      "look_at": [
+        3,
+        1.1,
+        6
+      ],
+      "fov": 43,
+      "blend_seconds": 0
+    },
+    {
+      "id": "camera-resolve",
+      "t_seconds": 18,
+      "duration_seconds": 6,
+      "position": [
+        8,
+        4.5,
+        -9.5
+      ],
+      "look_at": [
+        -2,
+        1.1,
+        1.5
+      ],
+      "fov": 47,
+      "blend_seconds": 0
+    }
+  ],
+  "captions": [
+    {
+      "id": "caption-1",
+      "t_seconds": 0,
+      "end_seconds": 1.6,
+      "text": "CONFLUENCE"
+    },
+    {
+      "id": "caption-2",
+      "t_seconds": 1.8,
+      "end_seconds": 4.15,
+      "text": "Rama draws. Ravana guards."
+    },
+    {
+      "id": "caption-3",
+      "t_seconds": 4.75,
+      "end_seconds": 5.9,
+      "text": "Blocked — no damage."
+    },
+    {
+      "id": "caption-4",
+      "t_seconds": 6,
+      "end_seconds": 8.1,
+      "text": "Violet marks the wave’s path."
+    },
+    {
+      "id": "caption-5",
+      "t_seconds": 8.9,
+      "end_seconds": 11.3,
+      "text": "Evaded. The wave misses."
+    },
+    {
+      "id": "caption-6",
+      "t_seconds": 12.8,
+      "end_seconds": 15.2,
+      "text": "Guard down. Rama counters."
+    },
+    {
+      "id": "caption-7",
+      "t_seconds": 15.85,
+      "end_seconds": 18,
+      "text": "Countershot lands. Ravana stands."
+    },
+    {
+      "id": "caption-8",
+      "t_seconds": 18,
+      "end_seconds": 24,
+      "text": "Read the warning. Evade the line. Counter."
+    }
+  ],
+  "audio_cues": [
+    {
+      "id": "audio-first-draw",
+      "t_seconds": 1.8,
+      "duration_seconds": 1.3,
+      "kind": "bow_draw",
+      "actor_id": "rama"
+    },
+    {
+      "id": "audio-first-release",
+      "t_seconds": 4.15,
+      "duration_seconds": 0.35,
+      "kind": "bow_release",
+      "actor_id": "rama"
+    },
+    {
+      "id": "audio-guard-block",
+      "t_seconds": 4.75,
+      "duration_seconds": 0.55,
+      "kind": "guard_block",
+      "actor_id": "ravana"
+    },
+    {
+      "id": "audio-wave-charge",
+      "t_seconds": 6,
+      "duration_seconds": 2.1,
+      "kind": "wave_charge",
+      "actor_id": "ravana"
+    },
+    {
+      "id": "audio-evade",
+      "t_seconds": 7.25,
+      "duration_seconds": 0.65,
+      "kind": "evade",
+      "actor_id": "rama"
+    },
+    {
+      "id": "audio-wave-release",
+      "t_seconds": 8.1,
+      "duration_seconds": 0.8,
+      "kind": "wave_release",
+      "actor_id": "ravana"
+    },
+    {
+      "id": "audio-counter-draw",
+      "t_seconds": 12.8,
+      "duration_seconds": 1.5,
+      "kind": "bow_draw",
+      "actor_id": "rama"
+    },
+    {
+      "id": "audio-counter-release",
+      "t_seconds": 15.2,
+      "duration_seconds": 0.35,
+      "kind": "bow_release",
+      "actor_id": "rama"
+    },
+    {
+      "id": "audio-counter-hit",
+      "t_seconds": 15.85,
+      "duration_seconds": 0.65,
+      "kind": "counter_hit",
+      "actor_id": "ravana"
+    },
+    {
+      "id": "audio-resolve",
+      "t_seconds": 18,
+      "duration_seconds": 2,
+      "kind": "resolve",
+      "actor_id": "rama"
+    }
+  ],
+  "audio_mix_path": "res://assets/cinematics/audio/confluence-duel-mix.wav",
+  "accessibility": {
+    "captions_default": true,
+    "reduced_flash": true,
+    "critical_signals": "Guard, danger corridor, evade result and hit receipt have captions plus visual shape; audio is supplemental.",
+    "transcript": "CONFLUENCE Rama draws. Ravana guards. Blocked — no damage. Violet marks the wave’s path. Evaded. The wave misses. Guard down. Rama counters. Countershot lands. Ravana stands. Read the warning. Evade the line. Counter.",
+    "caption_policy": "Short captions describe current or completed actions; no future outcome claim. Captions remain readable without audio."
+  },
+  "review": {
+    "round": 2,
+    "status": "script_candidate",
+    "findings": [
+      "Use authored courtyard GLB directly; exclude explorer/training controllers.",
+      "One film animation namespace is shared across actor libraries and runtime.",
+      "Captions describe completed outcomes only after their receipts.",
+      "Ravana9.2–10.2s pivot is distinct from stationary planted-foot windows."
+    ],
+    "next": "Independent chronology/contact/resource review, then actual continuous in-engine capture and correction."
+  },
+  "environment_scope": "Authored courtyard geometry only, instantiated without the training/world-explorer controller or UI.",
+  "counter_windows": [
+    {
+      "id": "window-opening-guard",
+      "actor_id": "ravana",
+      "t_seconds": 3,
+      "end_seconds": 5.5,
+      "action_id": "ravana-guard",
+      "threat_event_id": "cue-rama-first-arrow",
+      "receipt_id": "receipt-opening-block",
+      "kind": "guard_active"
+    },
+    {
+      "id": "window-wave-evade",
+      "actor_id": "rama",
+      "t_seconds": 7.25,
+      "end_seconds": 8.9,
+      "action_id": "rama-evade-wave",
+      "threat_event_id": "cue-ravana-wave",
+      "receipt_id": "receipt-wave-evaded",
+      "kind": "outside_locked_corridor"
+    },
+    {
+      "id": "window-counter-punish",
+      "actor_id": "ravana",
+      "t_seconds": 8.9,
+      "end_seconds": 17,
+      "action_id": "ravana-recover-wave",
+      "threat_event_id": "cue-rama-counter-arrow",
+      "receipt_id": "receipt-counter-hit",
+      "kind": "guard_inactive"
+    }
+  ],
+  "contact_windows": [
+    {
+      "id": "rama-opening-planted",
+      "actor_id": "rama",
+      "t_seconds": 0,
+      "end_seconds": 7.25,
+      "mode": "planted"
+    },
+    {
+      "id": "rama-evasion-step",
+      "actor_id": "rama",
+      "t_seconds": 7.25,
+      "end_seconds": 7.95,
+      "mode": "moving"
+    },
+    {
+      "id": "rama-counter-planted",
+      "actor_id": "rama",
+      "t_seconds": 7.95,
+      "end_seconds": 24,
+      "mode": "planted"
+    },
+    {
+      "id": "ravana-opening-planted",
+      "actor_id": "ravana",
+      "t_seconds": 0,
+      "end_seconds": 9.2,
+      "mode": "planted"
+    },
+    {
+      "id": "ravana-tracking-pivot",
+      "actor_id": "ravana",
+      "t_seconds": 9.2,
+      "end_seconds": 10.2,
+      "mode": "pivot"
+    },
+    {
+      "id": "ravana-counter-planted",
+      "actor_id": "ravana",
+      "t_seconds": 10.2,
+      "end_seconds": 24,
+      "mode": "planted"
+    }
+  ]
+}

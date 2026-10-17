@@ -13,6 +13,11 @@ MANIFESTS = [
     "games/yuga-native/docs/evidence/confluence-r1/archive-manifest.json",
     "games/yuga-native/docs/evidence/confluence-r2/archive-manifest.json",
     "games/yuga-native/docs/evidence/confluence-package/archive-manifest.json",
+    "games/yuga-native/docs/evidence/combat-poses-r2/archive-manifest.json",
+    "games/yuga-native/docs/evidence/combat-poses-r3/archive-manifest.json",
+    "games/yuga-native/docs/evidence/combat-scene-r1/archive-manifest.json",
+    "games/yuga-native/docs/evidence/combat-scene-r2/archive-manifest.json",
+    "games/yuga-native/tests/evidence/combat-film-qa-final-manifest.json",
 ]
 
 
@@ -38,8 +43,12 @@ def main():
     for name in MANIFESTS:
         try:
             manifest = json.loads(read(name))
-            for filename, item in manifest["files"].items():
-                relative = Path(name).parent / filename
+            entries = manifest["files"]
+            # Team QA reports pin repository-relative paths, while capture
+            # archives pin members relative to their own manifest directory.
+            members = [(Path(row["path"]), row) for row in entries] if isinstance(entries, list) else [
+                (Path(name).parent / filename, item) for filename, item in entries.items()]
+            for relative, item in members:
                 try:
                     raw = read(relative)
                     expected = item["sha256"] if isinstance(item, dict) else item

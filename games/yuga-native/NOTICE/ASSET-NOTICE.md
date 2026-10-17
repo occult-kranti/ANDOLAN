@@ -21,6 +21,15 @@ and structural validator are in `art/production/` in the source repository.
 The runtime generates its own brief interface and combat sounds. No sampled
 commercial game audio is included.
 
+The Confluence duel adds a separately authored Ravana Sentinel costume on that
+same CC0 anatomy and rig, two film-specific skeletal animation libraries, original
+timeline effects, camera direction and captions. Its 24-second soundtrack and ten
+cue files are deterministic mathematical synthesis. No commercial game models,
+motion capture or recordings are used in this film. Exact resource hashes and
+source records are in `CONFLUENCE-DUEL-PROVENANCE.json`; the generation sources
+are under `art/cinematics/` and `tools/cinematics/` in the repository. Film animation
+does not replace the existing playable Rama clips.
+
 The separate experimental `tps_rama_motion_library.tres` adapts licensed Godot
 TPS Demo motion. It has not replaced the active hero's nine original clips.
 Its CC-BY 3.0 attribution, exact source revision and changes are recorded in

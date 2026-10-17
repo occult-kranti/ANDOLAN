@@ -1,0 +1,221 @@
+{
+  "passed": false,
+  "scope": "Independent deterministic screenplay validation and malformed fixtures. Authored hits/health/counters are visual receipts, not gameplay damage. Native poses, runtime rejection, effects and UI are separate tests.",
+  "resources_verified": false,
+  "manifest_sha256": "5a641d8febad461b633bf5fb5edd80e9a3429ab3754ad21b01e2e90e5aecaea4",
+  "test_sha256": "7d960e76bed83faa4d55887e3628b04e5bfbce5736a817d578f1ebf9c6ee2339",
+  "metrics": {
+    "actors": 2,
+    "actions": 17,
+    "cues": 10,
+    "contact_windows": 6,
+    "receipt_times": [
+      4.75,
+      8.9,
+      15.85
+    ]
+  },
+  "resources": [],
+  "audio": {},
+  "checks": [
+    {
+      "name": "independent film chronology and contract",
+      "passed": false,
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace"
+      ]
+    },
+    {
+      "name": "reject missing actor",
+      "passed": true,
+      "expected_error": "missing or duplicate actor",
+      "errors": [
+        "missing or duplicate actor",
+        "unexpected animation namespace",
+        "missing actor reference rama-ready-opening",
+        "missing actor reference rama-draw-opening",
+        "missing actor reference rama-release-opening",
+        "missing actor reference rama-ready-counter",
+        "missing actor reference rama-evade-wave",
+        "missing actor reference rama-ready-aim",
+        "missing actor reference rama-draw-counter",
+        "missing actor reference rama-release-counter",
+        "missing actor reference rama-resolve",
+        "missing actor reference ravana-ready-opening",
+        "missing actor reference ravana-guard",
+        "missing actor reference ravana-ready-wave",
+        "missing actor reference ravana-charge-wave",
+        "missing actor reference ravana-release-wave",
+        "missing actor reference ravana-recover-wave",
+        "missing actor reference ravana-counter-recoil",
+        "missing actor reference ravana-resolve",
+        "missing actor reference cue-rama-first-draw",
+        "missing actor reference cue-ravana-guard",
+        "missing actor reference cue-rama-first-arrow",
+        "missing actor reference cue-opening-block",
+        "missing actor reference cue-ravana-wave-warning",
+        "missing actor reference cue-ravana-wave",
+        "missing actor reference cue-rama-counter-draw",
+        "missing actor reference cue-rama-counter-arrow",
+        "missing actor reference cue-counter-hit",
+        "missing actor reference receipt-opening-block",
+        "missing actor reference receipt-wave-evaded",
+        "missing actor reference receipt-counter-hit",
+        "missing actor reference audio-guard-block",
+        "missing actor reference audio-wave-charge",
+        "missing actor reference audio-wave-release",
+        "missing actor reference audio-counter-hit",
+        "missing actor reference window-opening-guard",
+        "missing actor reference window-counter-punish",
+        "missing actor reference ravana-opening-planted",
+        "missing actor reference ravana-tracking-pivot",
+        "missing actor reference ravana-counter-planted",
+        "missing or duplicate motion track"
+      ]
+    },
+    {
+      "name": "reject invalid negative time",
+      "passed": true,
+      "expected_error": "invalid time",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace",
+        "invalid time interval cue-rama-first-draw"
+      ]
+    },
+    {
+      "name": "reject nonfinite coordinate",
+      "passed": true,
+      "expected_error": "nonfinite",
+      "errors": [
+        "nonfinite number"
+      ]
+    },
+    {
+      "name": "reject duplicate event",
+      "passed": true,
+      "expected_error": "duplicate event",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace",
+        "duplicate event id"
+      ]
+    },
+    {
+      "name": "reject duplicate resource",
+      "passed": true,
+      "expected_error": "duplicate actor resource",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace",
+        "duplicate actor resource"
+      ]
+    },
+    {
+      "name": "reject unknown actor reference",
+      "passed": true,
+      "expected_error": "missing actor reference",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace",
+        "missing actor reference cue-rama-first-draw"
+      ]
+    },
+    {
+      "name": "reject unknown clip",
+      "passed": false,
+      "expected_error": "unknown action clip",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace"
+      ]
+    },
+    {
+      "name": "reject receipt precedes arrival",
+      "passed": false,
+      "expected_error": "receipt before or after",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace"
+      ]
+    },
+    {
+      "name": "reject missing telegraph",
+      "passed": false,
+      "expected_error": "missing reciprocal telegraph",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace"
+      ]
+    },
+    {
+      "name": "reject shifted impact time",
+      "passed": false,
+      "expected_error": "impact time mismatch",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace"
+      ]
+    },
+    {
+      "name": "reject duplicate motion time",
+      "passed": true,
+      "expected_error": "nonincreasing",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace",
+        "nonincreasing motion times"
+      ]
+    },
+    {
+      "name": "reject planted moving actor",
+      "passed": false,
+      "expected_error": "stationary contact",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace"
+      ]
+    },
+    {
+      "name": "reject late guard window",
+      "passed": false,
+      "expected_error": "receipt outside",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace"
+      ]
+    },
+    {
+      "name": "reject wrong visual health",
+      "passed": false,
+      "expected_error": "health arithmetic",
+      "errors": [
+        "unexpected animation namespace",
+        "unexpected animation namespace"
+      ]
+    },
+    {
+      "name": "reject unknown resource path",
+      "passed": true,
+      "expected_error": "invalid resource path",
+      "errors": [
+        "invalid resource path",
+        "unexpected animation namespace",
+        "unexpected animation namespace"
+      ]
+    },
+    {
+      "name": "reject duplicate JSON key",
+      "passed": true
+    },
+    {
+      "name": "reject JSON NaN",
+      "passed": true
+    },
+    {
+      "name": "reject JSON infinity",
+      "passed": true
+    }
+  ]
+}
