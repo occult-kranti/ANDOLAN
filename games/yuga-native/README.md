@@ -113,7 +113,7 @@ passes after extraction and actual keyboard/mouse testing of playback, seeking,
 replay, accessibility toggles, saved mute, returns and courtyard movement.
 Windows archives and resources validate; Windows execution remains untested.
 
-The [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17)
+The [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17-r2)
 is awaiting publication. The tested local package hashes are recorded in the
 direction review; a later CI rebuild needs a pack-hash comparison or its own
 execution check. Existing map-preview downloads above are unchanged.

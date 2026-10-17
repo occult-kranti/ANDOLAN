@@ -18,7 +18,7 @@ The [screenplay](COMBAT_FILM_SCRIPT.md) describes the intended action. The canon
 | `build/film-scene-r2/combat-film-render.json` | All 12 revised actual full-scene frames independently inspected; footroom, two-shot profiles and reaction framing corrected | Bounded still-frame acceptance only; continuous motion, sound listening and native controls remain separate gates |
 | `docs/evidence/combat-film-r4/combat-film-render.json` and `combat-film-video.json` | Complete 576-frame, 1280 × 720, 24 fps, 24-second render and H.264/AAC encode verified; exact video hash checked | Selected-frame inspection is not a complete real-time aesthetic audition; media correspondence and local Linux input are verified separately below |
 
-This milestone contains two skinned actors, two libraries with nine clips each, a 24-second deterministic director, ten visual cues, three scripted outcome receipts, captions and original synthesized audio. The planned [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17) remains pending public publication. Local video and package evidence is complete; the movie is also available at its verified public raw URL. Existing map-preview download facts remain unchanged. Audio has numerical duration, level and cue-timing evidence; this review makes no listening-quality claim.
+This milestone contains two skinned actors, two libraries with nine clips each, a 24-second deterministic director, ten visual cues, three scripted outcome receipts, captions and original synthesized audio. The planned [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17-r2) remains pending public publication. Local video and package evidence is complete; the movie is also available at its verified public raw URL. Existing map-preview download facts remain unchanged. Audio has numerical duration, level and cue-timing evidence; this review makes no listening-quality claim.
 
 ## Direction preflight and retained motion gates
 
@@ -85,7 +85,7 @@ The local Linux ZIP was extracted into a fresh directory and all 14 payloads wer
 
 ## Release evidence checkpoint
 
-The [movie's public raw URL](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/game/yuga-native-production/games/yuga-native/docs/evidence/combat-film-r4/yuga-confluence-duel.mp4) was downloaded and its hash verified by root. The native release tag [`yuga-confluence-duel-2026-10-17`](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17) remains pending publication through the tag-triggered workflow. No successful CI rebuild or public native-download verification is claimed yet.
+The [movie's public raw URL](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/game/yuga-native-production/games/yuga-native/docs/evidence/combat-film-r4/yuga-confluence-duel.mp4) was downloaded and its hash verified by root. The native release tag [`yuga-confluence-duel-2026-10-17`](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17-r2) remains pending publication through the tag-triggered workflow. No successful CI rebuild or public native-download verification is claimed yet.
 
 | Deliverable | Verified local outcome | Remaining boundary |
 | --- | --- | --- |

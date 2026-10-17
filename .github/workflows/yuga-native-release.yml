@@ -27,6 +27,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/checks"
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends ffmpeg python3-venv
           command -v ffmpeg
           command -v ffprobe
           python3 -m venv "$RUNNER_TEMP/media-venv"
