@@ -4,13 +4,15 @@ Updated 17 October 2026. This is the short entry point for a new chat, contribut
 
 ## The current build in one minute
 
-The active production track is **YUGA native**, an original mythology-inspired third-person team game under `games/yuga-native/`, on `game/yuga-native-production`. Its current [downloadable siege preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-siege) is source **`35b20429d2b34f06f2907d5739cf4877aac597ab`**. Later documentation commits do not replace that release source.
+The active production track is **YUGA native**, an original mythology-inspired third-person team game under `games/yuga-native/`, on `game/yuga-native-production`. Its current [downloadable Triad and siege preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-triad-siege) is source **`ae33db4520bd14fe7b38aed173b764de7a7424d5`**. Later documentation commits do not replace that release source.
 
-The native preview has Rama training, a separate 24-second animated duel film, and offline three-lane Confluence practice: a 140 × 260 m world, flight/grappling, five army roles including cannon carts and royal chariots, local gold/core outcomes, original sound, day/night lighting and saved/remappable controls. Press **Escape → Siege practice** for the six-unit drill; F5 restores ordinary waves. Siege blasts affect troops; native hero health/death is not implemented. Both CI workflows passed and all **62 public release assets** were independently verified. The exact downloaded Linux package passed a bounded actual-window repeat: title/world entry, keyboard drill entry, ordinary reset and title return. [Evidence and limitations](../games/yuga-native/docs/evidence/siege-published/REVIEW.md).
+The native preview has Rama training, a separate 24-second animated duel film, and offline three-lane Confluence practice: a 140 × 260 m world, flight/grappling, five army roles including siege vehicles, three capture/contest/supply relays, local gold/core outcomes, original sound, day/night lighting and saved/remappable controls. Press **Escape → Visit Lotus relay** for the centre approach, or **Siege practice** for the six-unit drill; F5 restores ordinary waves and resets relays. Supply restores capped troop health and hero arrows; native hero health/death is not implemented.
+
+Both CI workflows passed. All **77 public assets**, **233 tagged runtime sources** and three decoded, source-matched six-second captures were independently verified. The exact downloaded Linux build passes forward Lotus entry, capture, capped arrow supply, pause, ordinary reset, siege entry and title return. Windows remains unexecuted. [Public evidence and limitations](../games/yuga-native/docs/evidence/triad-published/REVIEW.md). The earlier [62-asset siege review](../games/yuga-native/docs/evidence/siege-published/REVIEW.md) remains historical evidence for its own release.
 
 The intended game is **6v6, fourteen heroes, three lanes and an 18-minute match**. Native online matches, the complete native hero roster, production character art/animation, Windows execution and physical-GPU performance remain open. The browser prototype has different rules. Concept paintings are art direction, not captured gameplay. No Deadlock/Overwatch/Dota 2 client binaries or commercial models were recovered here.
 
-The branch now also implements original **Triad relays**: capture, contest, capped supply, three civic stations and revised siege markers. See the [Triad milestone](../games/yuga-native/docs/TRIAD_MILESTONE.md) for current test/capture/release status and the next five production packets. The verified [TF2 source study](../games/yuga-native/docs/research/TF2_REUSE_STUDY.md) is behavior research; no commercial code or assets were imported.
+See the [Triad milestone](../games/yuga-native/docs/TRIAD_MILESTONE.md) for current test/capture/release status and the next five production packets. The verified [TF2 source study](../games/yuga-native/docs/research/TF2_REUSE_STUDY.md) is behavior research; no TF2 code or assets were imported.
 
 ## Read by purpose
 
@@ -60,7 +62,7 @@ Return: changes, source hash, executed commands/results, evidence, limits, next 
 
 The current integration bottlenecks are shared rules/elevation, two rendered native clients against authority, and accepted continuous hero motion/contact. Offline improvements provide supporting evidence; they do not close those online/production gates. Recheck the backlog's `next_packets` before assigning work.
 
-Small follow-ups are recorded under the supporting siege packets: close continuous vehicle/art review, close readability of the new segmented danger marks. Triad fixes the Help footer to describe F5 as a round reset and preserves the previous actual reset behavior. Keep these separate from the full-game production gates.
+Small follow-ups remain: close continuous vehicle/art review, crowded warning readability, neutral-pad contrast and a smoother initial world-loading transition. Triad corrects the Help footer's round-reset wording and the Lotus visit's approach direction. Keep these separate from the full-game production gates.
 
 ## Known restoration limits
 

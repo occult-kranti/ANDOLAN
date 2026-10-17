@@ -16,25 +16,28 @@ would need to demonstrate.
 The production target is now a downloadable PC game. Browser compatibility is
 optional. This branch establishes the native engine, original 3D environment,
 asset import and analysis toolchain. **The current native build contains local
-training, a combat film and offline three-lane army practice with flight, grappling and siege vehicles. Online native matches and the
+training, a combat film and offline three-lane army practice with flight, grappling, siege vehicles and capture/supply relays. Online native matches and the
 full production visual target remain open.** The existing browser game remains
 on `game/yuga-confluence`.
 
-[Download the siege and lane-army preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-siege)
-for Linux or Windows, tagged at `35b20429d2b34f06f2907d5739cf4877aac597ab`.
-All 62 public release assets pass independent checksum verification. The exact
-downloaded Linux package passed actual title/world entry, keyboard siege entry,
-F5 ordinary reset and title return. This bounded repeat is separate from the
-broader local review. Windows is archive/resource-validated and unexecuted.
-See the [milestone verification](docs/SIEGE_MILESTONE.md),
-[actual rendered review](docs/evidence/siege-render-r2/SIEGE-RENDER-REVIEW.md),
-[local Linux window review](docs/evidence/siege-window-r2/REVIEW.md) and
-[public package verification](docs/evidence/siege-published/REVIEW.md).
-Earlier traversal, cinematic, map and courtyard archives remain historical releases.
+[Download the Triad and siege preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-triad-siege)
+for Linux or Windows, tagged at `ae33db4520bd14fe7b38aed173b764de7a7424d5`.
+Both CI workflows passed. All 77 public assets, 233 runtime source files and three
+decoded, source-matched six-second captures pass independent verification.
+The exact downloaded Linux build passes forward Lotus entry, capture, capped
+arrow supply, pause, ordinary reset, siege entry and title return. This is a
+bounded public repeat; the broader local review remains separate. Windows is
+archive/resource-validated and unexecuted. See the
+[Triad milestone](docs/TRIAD_MILESTONE.md),
+[actual relay render review](docs/evidence/triad-relay-render-r2/TRIAD-RENDER-REVIEW.md),
+[local Linux window review](docs/evidence/triad-window-r2/REVIEW.md) and
+[public package verification](docs/evidence/triad-published/REVIEW.md).
+Earlier siege, traversal, cinematic, map and courtyard evidence remains tied to
+its original release and source.
 
-The current [siege milestone](docs/SIEGE_MILESTONE.md) adds cannon carts, royal chariots and immediate Siege practice. It also records the five parallel tasks and a staffing-dependent estimate for reaching the concept-art target; completion and release evidence are tracked there.
+The earlier [siege milestone](docs/SIEGE_MILESTONE.md) records cannon carts, royal chariots and immediate Siege practice, with its own evidence and a staffing-dependent estimate for reaching the concept-art target.
 
-The [Triad relay milestone](docs/TRIAD_MILESTONE.md) now adds capture/contest/supply, three original stations, a relay HUD and clearer siege warnings on this branch. Try **Escape → Visit Lotus relay** in Confluence. The milestone records the exact acceptance/publication status and the [TF2 source study](docs/research/TF2_REUSE_STUDY.md); no TF2 code or assets were imported.
+The [Triad relay milestone](docs/TRIAD_MILESTONE.md) adds capture/contest/supply, three original stations, a relay HUD and revised siege warnings. Its [TF2 source study](docs/research/TF2_REUSE_STUDY.md) informs original behavior; no TF2 code or assets were imported.
 
 ## Run the source
 
@@ -65,6 +68,13 @@ coastal ghats, temple avenue, metro gardens and reed courts. Three longer routes
 contain eight landable stone decks and ten glowing tether anchors. Finite-energy
 flight and grappling use capsule collision and bounded speeds. Day/night lighting,
 animated coast/swamp water, an overview and travel shortcuts remain available.
+
+Press **Escape → Visit Lotus relay**, then move forward into the marked zone.
+A neutral relay takes 8 seconds to capture alone or 4 with a friendly contributor;
+enemy ownership must first be neutralized. Opposing presence contests the point
+and stops supply. Every 5 seconds, an uncontested owned relay can restore up to
+6 nearby troop health and 3 hero arrows, capped by each resource maximum and
+checked against range, height and line of sight. These are original offline rules.
 
 Paired 30-second waves of spear soldiers, bow guards and banner commanders fight,
 threaten local cores and grant once-only player last-hit gold. Mirrored cannon

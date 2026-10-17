@@ -10,9 +10,11 @@ retains the earlier published preview's handoffs below.
 
 ## Triad continuation · 17 October 2026
 
-Five parallel supporting packets add the original relay loop, station geometry, UI and siege-warning revision using a verified TF2 source study. See [TRIAD_MILESTONE.md](TRIAD_MILESTONE.md) for rules, review rounds, current evidence and the next five production dependencies. Independent tests found and fixed a mixed-ID supply exception and blocked cross-lane routes. Current-source actual capture and release acceptance are tracked separately from the 70 production gates.
+The [Triad and siege preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-triad-siege) is published at `ae33db4520bd14fe7b38aed173b764de7a7424d5`. Both CI workflows passed; independent checks verified 77 public assets, 233 tagged runtime sources and three decoded, source-matched six-second captures. The exact public Linux window passes forward relay entry, capture, capped arrows, pause, ordinary reset, siege entry and title return. [Public verification](evidence/triad-published/REVIEW.md) retains the precise scope. Windows execution and production art remain open.
 
-## Current implementation packets · 17 October 2026
+Five parallel supporting packets deliver the original relay loop, station geometry, UI and siege-warning revision using a verified TF2 source study. See [TRIAD_MILESTONE.md](TRIAD_MILESTONE.md) for rules, reviews and the next five production dependencies. Tests found and fixed mixed-ID supply handling and obstructed rotation routes; actual package input found and corrected the reversed Lotus approach. These bounded results do not close the 70 production gates or native online play.
+
+## Earlier foundation checkpoints · 17 October 2026
 
 | Packet | Result and next gate |
 | --- | --- |

@@ -1,6 +1,8 @@
 # Longer lanes, traversal and army verification
 
-The base traversal/army evidence below is historical to `yuga-traversal-armies-2026-10-17`. The current **siege extension** is tracked in [SIEGE_MILESTONE.md](SIEGE_MILESTONE.md): cannon carts, royal chariots, committed blast warnings, four original cues, and immediate Siege practice. Fresh full-setup evidence is in [siege-setup/summary.json](evidence/siege-setup/summary.json); independent combat/pose review is in [siege-qa/REVIEW.md](evidence/siege-qa/REVIEW.md). The new [public siege review](evidence/siege-published/REVIEW.md) records 62 verified assets and a bounded actual downloaded-Linux run at source `35b20429d2b34f06f2907d5739cf4877aac597ab`. The original release counts below are historical.
+The current [Triad and siege release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-triad-siege) is source `ae33db4520bd14fe7b38aed173b764de7a7424d5`. Both CI workflows passed; all 77 public assets and 233 runtime sources were independently verified, and all three current-source six-second captures decoded successfully. The exact downloaded Linux window passes forward Lotus entry, capture, capped arrow supply, pause, ordinary reset, siege entry and title return. This bounded repeat excludes the broader local Help/overview checks, audio listening and hardware performance. See [TRIAD_MILESTONE.md](TRIAD_MILESTONE.md) and [public verification](evidence/triad-published/REVIEW.md). Windows execution, native online matches and production art remain open.
+
+The earlier **siege extension** remains in [SIEGE_MILESTONE.md](SIEGE_MILESTONE.md), [siege-setup](evidence/siege-setup/summary.json), [siege-qa](evidence/siege-qa/REVIEW.md) and its [62-asset public review](evidence/siege-published/REVIEW.md), pinned to `35b20429d2b34f06f2907d5739cf4877aac597ab`. The base traversal/army evidence below is historical to `yuga-traversal-armies-2026-10-17`; those counts and sources are preserved rather than reused as new-release proof.
 
 Release status: published at `yuga-traversal-armies-2026-10-17` from `395986a512ecabe874710048a19bd0fdd0a71f89`. Local and CI gates, full capture, public release bytes and actual published Linux window checks passed. Only a completed report tied to current source establishes a passing gate. Earlier pre-outage results in `TRAVERSAL_ARMY_RECOVERY_2026-10-17.md` are historical, not the acceptance evidence for recovered source.
 
@@ -49,7 +51,7 @@ AI uses bounded fixed-step logic; 20 simulated minutes are not a 20-minute hardw
 
 Retain a source-hash manifest and exact renderer/adapter/resolution for every accepted capture. Never rename a preview into a full render or reuse stale test summaries. The software Vulkan renderer supports inspection but cannot establish gaming-GPU FPS. Audio numerical checks cannot establish perceptual music quality.
 
-## Current evidence
+## Historical traversal/army evidence
 
 The complete cloud setup passed, including 225 TypeScript tests and 20 native/specification/security report files; its exact command, log and reports are archived under `docs/evidence/traversal-armies-setup/`. Rendered review then prompted a bounded UI/material/unit-art pass and explicit recovery from malformed saved settings. Fresh affected-suite reports supersede the earlier source hashes:
 
