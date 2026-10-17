@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "scope": "Authority projectile final-lifetime interval only. Existing sampled-radius collision model retained; no native/server collision parity or human balance claim.",
+  "source": {
+    "path": "games/yuga/shared/simulation.ts",
+    "before_sha256": "7237870be3f88537b67121f07211da0e61c05ef0205177d392fe4b4f9350b242",
+    "after_sha256": "e3fa766b06333eb00b5b9b8b03d938b22d5595bdef98b0ae07c0733d0e41a260"
+  },
+  "tests": {
+    "path": "games/yuga/tests/projectile-lifetime.test.ts",
+    "before_and_after_sha256": "c66ac90084dda5a77aa1cc73c04ae4c3839584fbca2d1ae410f9af4a2fd31ae4",
+    "unchanged_between_runs": true
+  },
+  "baseline_commit": "bd6740fbf36ad4c25920b53f2c73a9d5e98c86f9",
+  "reports": {
+    "projectile-lifetime-before.json": {
+      "path": "games/yuga-native/docs/research/projectile-lifetime-before.json",
+      "sha256": "ffc6e3e8625e30870c22e3d7830ba791a688c663aa9c3895886d44886823582f",
+      "tests": 9,
+      "passed": 2,
+      "failed": 7
+    },
+    "projectile-lifetime-after.json": {
+      "path": "games/yuga-native/docs/research/projectile-lifetime-after.json",
+      "sha256": "4969d3e4caebe6dfba63153edfc502fb63ab15d31c8e7c52dcf57c22c169724c",
+      "tests": 9,
+      "passed": 9,
+      "failed": 0
+    },
+    "projectile-lifetime-yuga-suite.json": {
+      "path": "games/yuga-native/docs/research/projectile-lifetime-yuga-suite.json",
+      "sha256": "aa4816cf77698805fdf9f68396d57670458ef96dfb45b986582ebbff86491777",
+      "tests": 225,
+      "passed": 225,
+      "failed": 0
+    }
+  },
+  "typecheck": {
+    "command": "npm run yuga:typecheck",
+    "exit_code": 0
+  },
+  "dependency_hashes_unchanged": {
+    "package.json": "99e3adb33e79f1151d738d92b3332bbce6f620413e99a3e8b480e8065dd75ff6",
+    "package-lock.json": "36ebb90635f0c72b56219ee374f10a772f1142d4c92ce391837ffabe522b92b1"
+  },
+  "independent_review": "production_world_artist reviewed the function diff and nine cases; bounded lifetime finding accepted, full collision parity open"
+}

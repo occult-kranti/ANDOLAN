@@ -468,11 +468,13 @@ export class ArenaSimulation {
   private stepProjectiles(dt: number): void {
     const survivors: Projectile[] = [];
     for (const projectile of this.projectiles) {
-      projectile.life -= dt; if (projectile.life <= 0 || this.phase !== 'playing') continue;
-      const steps = Math.max(1, Math.ceil(Math.hypot(projectile.vx, projectile.vy, projectile.vz) * dt / .35));
+      if (projectile.life <= 0 || this.phase !== 'playing') continue;
+      const travelTime = Math.min(dt, projectile.life);
+      projectile.life = Math.max(0, projectile.life - travelTime);
+      const steps = Math.max(1, Math.ceil(Math.hypot(projectile.vx, projectile.vy, projectile.vz) * travelTime / .35));
       let hit = false;
       for (let i = 0; i < steps; i++) {
-        projectile.x += projectile.vx * dt / steps; projectile.z += projectile.vz * dt / steps; projectile.y += projectile.vy * dt / steps;
+        projectile.x += projectile.vx * travelTime / steps; projectile.z += projectile.vz * travelTime / steps; projectile.y += projectile.vy * travelTime / steps;
         if (Math.abs(projectile.x) > 70 || Math.abs(projectile.z) > 84 || projectile.y < .05 || projectile.y > 35 || SOLIDS.some(solid => projectile.y < solid.height && Math.abs(projectile.x - solid.x) < solid.w / 2 + projectile.radius && Math.abs(projectile.z - solid.z) < solid.d / 2 + projectile.radius)) { hit = true; break; }
         const owner = projectile.canSecureGold ? this.actors.get(projectile.owner) : undefined;
         if (owner?.kind === 'hero' && owner.health > 0) {
@@ -486,7 +488,7 @@ export class ArenaSimulation {
         }
         if (hit) break;
       }
-      if (!hit) survivors.push(projectile);
+      if (!hit && projectile.life > 0) survivors.push(projectile);
     }
     this.projectiles = this.phase === 'playing' ? survivors : [];
   }
