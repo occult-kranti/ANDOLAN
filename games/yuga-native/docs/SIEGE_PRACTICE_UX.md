@@ -38,6 +38,14 @@ Acceptance checks: entry creates the expected six-unit drill; a rejected configu
 
 The integration is implemented. A focused real-scene run passes **25 checks**, including injected Tab and Shift+Tab navigation, the six-unit drill, both team-role counts, minimap data, preserved state after a rejected drill, persistent failure copy, receipt routing, mute, pause/overview, reset and F5. The menu rectangle is 480 × 568 at `(240, 16)` in a 960 × 600 logical viewport and 480 × 600 at `(400, 60)` in a 1280 × 720 viewport. Every focused control scrolls completely inside the panel. These are headless checks, not evidence of OS mouse input or rendered aesthetics.
 
-The existing world-scene suite was updated to require fully visible focused controls inside the scroll viewport. Minimum button heights, separation, HUD bounds, physics and input lifecycle checks remain. Its first revised run passes **27 checks**.
+The existing world-scene suite was updated to require fully visible focused controls inside the scroll viewport. Minimum button heights, separation, HUD bounds, physics and input lifecycle checks remain. Its final revised run passes **27 checks**. The unchanged world-flow suite passes **13 checks**, exercising three complete courtyard → world → pause → courtyard cycles and disposal of the previous instances.
 
-Final source-pinned regression and actual window/render review remain pending while the independent army/effects owners finish their integration checks. Earlier traversal/army release evidence does not automatically accept this extension. The root integrator owns the final archived reports and release acceptance.
+All three final runs used the delivered army and effects modules, returned exit code 0, and produced no engine warnings or errors. The source pin for `confluence_world.gd` is `840e2c2d6483d31ebe8663069c76512e9852e9ff4a74028d6cc67714b2256bcf`; the UI report also pins army `da777328…` and effects `35c950bd…`.
+
+| Maintained test | Final report | Checks | Report SHA-256 |
+| --- | --- | --- | --- |
+| [`siege_ui_cases.gd`](../tests/siege_ui_cases.gd) | [UI report](evidence/siege-integration/ui.json) | 25 / 25 | `924e5e964b8c007dd1fda57a087b16e215068f44d9f16fcbcdedd2dba68c0ab4` |
+| [`world_scene_cases.gd`](../tests/world_scene_cases.gd) | [World-scene report](evidence/siege-integration/world-scene.json) | 27 / 27 | `f4fe6c535620637b6c69f8574b8bb097b36047c57d3543c03dbfabacba4b7b5e` |
+| [`world_flow_cases.gd`](../tests/world_flow_cases.gd) | [World-flow report](evidence/siege-integration/world-flow.json) | 13 / 13 | `c77042b548fad0e72f1ffc1ffa3e4f39601a852817e974773c42320cda9c6694` |
+
+The reports are permanently archived with the [integration evidence manifest](evidence/siege-integration/archive-manifest.json). Actual window input remains pending; rendered-review and release status are tracked in the [siege milestone](SIEGE_MILESTONE.md#evidence-and-current-status). Earlier traversal/army release evidence does not automatically accept this extension. Headless success does not establish visual quality, audio listening quality, physical-GPU performance or native multiplayer.

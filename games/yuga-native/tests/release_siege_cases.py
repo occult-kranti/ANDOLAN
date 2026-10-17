@@ -51,7 +51,7 @@ def fixture(path):
     for i,name in enumerate(('assets/heroes/rama-production.glb','assets/world/architecture.glb','assets/world/nature.glb')):
         imported=f'.godot/imported/synthetic-{i}.scn';write(project/imported,'synthetic verified import')
         imports['res://'+name]={'fresh':True,'imported':'res://'+imported,'sha256':release.digest(project/imported)}
-    render={'schema':1,'complete':True,'failure':'','renderer':'forward_plus','display':'x11','fps':30,'physics_hz':60,'time_scale':1.0,'take_physics_ticks':360,'take_start_tick':100,'width':1280,'height':720,'frames':frames,'source_sha256':{'res://'+name:release.digest(project/name) for name in paths},'imports':imports,'outcomes':{name:True for name in ('windup','impact','vehicles_moved','finite')},'events':[{'physics_tick':102,'event':{'kind':'windup'}},{'physics_tick':150,'event':{'kind':'impact','cancelled':False}}]}
+    render={'schema':1,'complete':True,'failure':'','renderer':'forward_plus','display':'X11','fps':30,'physics_hz':60,'time_scale':1.0,'take_physics_ticks':360,'take_start_tick':100,'width':1280,'height':720,'frames':frames,'source_sha256':{'res://'+name:release.digest(project/name) for name in paths},'imports':imports,'outcomes':{name:True for name in ('windup','impact','vehicles_moved','finite')},'events':[{'physics_tick':102,'event':{'kind':'windup'}},{'physics_tick':150,'event':{'kind':'impact','cancelled':False}}]}
     write(capture/'siege-render-review.json',render)
     write(capture/'yuga-siege-preview.mp4','synthetic video bytes; decoding mocked')
     video={'complete':True,'file':'yuga-siege-preview.mp4',**release.record(capture/'yuga-siege-preview.mp4'),'capture_report_sha256':release.digest(capture/'siege-render-review.json'),'probe':{'streams':[{'codec_type':'video','codec_name':'h264','width':1280,'height':720,'nb_read_frames':'180','avg_frame_rate':'30/1'}],'format':{'duration':'6.000000'}}}
@@ -100,7 +100,8 @@ def staged_case(name,mutation=None,expect=False,verify_mutation=None,tag=TAG):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--report',type=Path);args=parser.parse_args()
-    direct_case('valid siege capture control',expect=True)
+    direct_case('valid documented X11 siege capture control',expect=True)
+    direct_case('lowercase x11 remains accepted',lambda c,p,e:render_mutation(c,lambda r:r.update(display='x11')),expect=True)
     direct_case('fresh decode control',expect=True,decode=True)
     direct_case('fresh decoder rejection',decode=True,decode_failure=True)
     direct_case('valid raw runner capture control',expect=True,target='runner')
@@ -111,6 +112,9 @@ def main():
       'incomplete capture':lambda r:r.update(complete=False),
       'reported renderer failure':lambda r:r.update(failure='capture failed'),
       'headless capture':lambda r:r.update(display='headless'),
+      'uppercase headless capture':lambda r:r.update(display='HEADLESS'),
+      'unsupported display capture':lambda r:r.update(display='wayland'),
+      'null display capture':lambda r:r.update(display=None),
       'zero time scale':lambda r:r.update(time_scale=0),
       'nonfinite time scale':lambda r:r.update(time_scale=float('nan')),
       'missing time scale':lambda r:r.pop('time_scale'),

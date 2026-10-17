@@ -1,0 +1,527 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "valid siege capture control",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "decoder_calls": 0
+    },
+    {
+      "name": "fresh decode control",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "decoder_calls": 1
+    },
+    {
+      "name": "fresh decoder rejection",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "mock decoder rejected movie",
+      "decoder_calls": 1
+    },
+    {
+      "name": "valid raw runner capture control",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "decoder_calls": 0
+    },
+    {
+      "name": "valid siege staging and verification control",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "decoder_calls": 2
+    },
+    {
+      "name": "non-siege traversal tag remains compatible",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "decoder_calls": 1
+    },
+    {
+      "name": "siege tag selection is bounded",
+      "passed": true
+    },
+    {
+      "name": "incomplete capture",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege capture failed or incomplete",
+      "decoder_calls": 0
+    },
+    {
+      "name": "reported renderer failure",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege capture failed or incomplete",
+      "decoder_calls": 0
+    },
+    {
+      "name": "headless capture",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege capture lacks actual display",
+      "decoder_calls": 0
+    },
+    {
+      "name": "zero time scale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege time scale differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "nonfinite time scale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege time scale differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "missing time scale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege time scale differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "wrong render dimensions",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege capture timing/resolution differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "missing sequence frame",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame count/start invalid",
+      "decoder_calls": 0
+    },
+    {
+      "name": "physics discontinuity",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame sequence invalid",
+      "decoder_calls": 0
+    },
+    {
+      "name": "incorrect per-frame tick delta",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame sequence invalid",
+      "decoder_calls": 0
+    },
+    {
+      "name": "nonfinite frame",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame sequence invalid",
+      "decoder_calls": 0
+    },
+    {
+      "name": "numeric fake finite flag",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame sequence invalid",
+      "decoder_calls": 0
+    },
+    {
+      "name": "no observed impact",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege mechanics missing from capture",
+      "decoder_calls": 0
+    },
+    {
+      "name": "invalid raw frame name",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame image metadata invalid",
+      "decoder_calls": 0
+    },
+    {
+      "name": "zero actual draw calls",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame lacks actual render counters",
+      "decoder_calls": 0
+    },
+    {
+      "name": "missing source set",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege source inventory differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "changed source hash",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege source changed: scripts/lane_vehicle_art.gd",
+      "decoder_calls": 0
+    },
+    {
+      "name": "unsafe source path",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege source inventory differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "nonadvancing rendered frame counter",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege render counter regressed",
+      "decoder_calls": 0
+    },
+    {
+      "name": "missing nonretained frame hash",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame hash invalid",
+      "decoder_calls": 0
+    },
+    {
+      "name": "invalid nonretained frame hash",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame hash invalid",
+      "decoder_calls": 0
+    },
+    {
+      "name": "negative starting tick",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege frame count/start invalid",
+      "decoder_calls": 0
+    },
+    {
+      "name": "capture helper requires SIEGE-RENDER-REVIEW.md",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: SIEGE-RENDER-REVIEW.md",
+      "decoder_calls": 0
+    },
+    {
+      "name": "released asset cannot be omitted and resealed: SIEGE-RENDER-REVIEW.md",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege release omits required assets",
+      "decoder_calls": 2
+    },
+    {
+      "name": "capture helper requires siege-frame-00045.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: siege-frame-00045.png",
+      "decoder_calls": 0
+    },
+    {
+      "name": "released asset cannot be omitted and resealed: siege-frame-00045.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege release omits required assets",
+      "decoder_calls": 2
+    },
+    {
+      "name": "capture helper requires siege-frame-00090.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: siege-frame-00090.png",
+      "decoder_calls": 0
+    },
+    {
+      "name": "released asset cannot be omitted and resealed: siege-frame-00090.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege release omits required assets",
+      "decoder_calls": 2
+    },
+    {
+      "name": "capture helper requires siege-frame-00145.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: siege-frame-00145.png",
+      "decoder_calls": 0
+    },
+    {
+      "name": "released asset cannot be omitted and resealed: siege-frame-00145.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege release omits required assets",
+      "decoder_calls": 2
+    },
+    {
+      "name": "capture helper requires siege-render-review.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: siege-render-review.json",
+      "decoder_calls": 0
+    },
+    {
+      "name": "released asset cannot be omitted and resealed: siege-render-review.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege release omits required assets",
+      "decoder_calls": 2
+    },
+    {
+      "name": "capture helper requires siege-video.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: siege-video.json",
+      "decoder_calls": 0
+    },
+    {
+      "name": "released asset cannot be omitted and resealed: siege-video.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege release omits required assets",
+      "decoder_calls": 2
+    },
+    {
+      "name": "capture helper requires yuga-siege-preview.mp4",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: yuga-siege-preview.mp4",
+      "decoder_calls": 0
+    },
+    {
+      "name": "released asset cannot be omitted and resealed: yuga-siege-preview.mp4",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege release omits required assets",
+      "decoder_calls": 2
+    },
+    {
+      "name": "released siege requirement: SIEGE-MILESTONE.md",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege release omits required assets",
+      "decoder_calls": 2
+    },
+    {
+      "name": "released siege requirement: SIEGE-AUDIO-PROVENANCE.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege release omits required assets",
+      "decoder_calls": 2
+    },
+    {
+      "name": "released siege requirement: ci-siege-army.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "decoder_calls": 2
+    },
+    {
+      "name": "released siege requirement: ci-vehicle-art.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "decoder_calls": 2
+    },
+    {
+      "name": "released siege requirement: ci-siege-effects.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "decoder_calls": 2
+    },
+    {
+      "name": "released siege requirement: ci-siege-audio.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "decoder_calls": 2
+    },
+    {
+      "name": "changed retained PNG bytes",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Retained siege frame differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "changed checkout source bytes",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege source changed: scripts/lane_vehicle_art.gd",
+      "decoder_calls": 0
+    },
+    {
+      "name": "missing checkout source",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: tools/capture-siege.gd",
+      "decoder_calls": 0
+    },
+    {
+      "name": "changed export source record",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege exported source changed: scripts/lane_vehicle_art.gd",
+      "decoder_calls": 0
+    },
+    {
+      "name": "missing exported runtime file",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege exported runtime set differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "extra exported runtime file",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege exported runtime set differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "movie bytes substituted",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege video bytes differ",
+      "decoder_calls": 0
+    },
+    {
+      "name": "movie links other capture",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Siege movie links different capture",
+      "decoder_calls": 0
+    },
+    {
+      "name": "movie metadata nb_read_frames",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Traversal video dimensions, decoded frames or frame rate differ",
+      "decoder_calls": 0
+    },
+    {
+      "name": "movie metadata avg_frame_rate",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Traversal video dimensions, decoded frames or frame rate differ",
+      "decoder_calls": 0
+    },
+    {
+      "name": "movie metadata width",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Traversal video dimensions, decoded frames or frame rate differ",
+      "decoder_calls": 0
+    },
+    {
+      "name": "nonfinite movie duration",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Traversal video must be six seconds",
+      "decoder_calls": 0
+    },
+    {
+      "name": "runner draw counter regression",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Rendered frame counter did not advance",
+      "decoder_calls": 0
+    },
+    {
+      "name": "runner wrong per-frame tick delta",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Nonconsecutive or nonfinite frame",
+      "decoder_calls": 0
+    },
+    {
+      "name": "runner wrong dimensions",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Capture timing differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "runner empty imported-asset proof",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Imported-asset evidence missing",
+      "decoder_calls": 0
+    },
+    {
+      "name": "runner zero time scale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Capture time scale differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "runner nonfinite time scale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Capture time scale differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "runner missing time scale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Capture time scale differs",
+      "decoder_calls": 0
+    },
+    {
+      "name": "runner missing actual raw PNG",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Expected 180 consecutive actual frames",
+      "decoder_calls": 0
+    },
+    {
+      "name": "runner changed actual raw PNG",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Invalid actual PNG dimensions: frame-00044.png",
+      "decoder_calls": 0
+    },
+    {
+      "name": "failed stage gate siege-army",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Required release check failed/missing: siege-army",
+      "decoder_calls": 0
+    },
+    {
+      "name": "failed stage gate vehicle-art",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Required release check failed/missing: vehicle-art",
+      "decoder_calls": 0
+    },
+    {
+      "name": "failed stage gate siege-effects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Required release check failed/missing: siege-effects",
+      "decoder_calls": 0
+    },
+    {
+      "name": "failed stage gate siege-audio",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Required release check failed/missing: siege-audio",
+      "decoder_calls": 0
+    }
+  ],
+  "source_sha256": {
+    "tools/release-native.py": "7d77cc8ab05cb3fcad60f7b7f8a0d21b26581f1813b0a8a8015410e5b76cd526",
+    "tools/capture-siege.gd": "4deae19794d8eeb3b1f10de8809489550cc8a6a67608474da6b70307062a0fd0",
+    "tools/run-siege-capture.py": "9a8271692ff7acd17c1db6c884f014399b92f99491db6bf7fe4d3d4bb0b67447",
+    "tests/release_siege_cases.py": "23930a723336cac51ddca2dc8e6232077eab6308420f1a0d69ccccb6dfd320e6"
+  },
+  "scope": "Synthetic temporary files and mocked existing archive/decode/git checks only. No network, credential, repository, tag or release mutation; no rendering. Actual encoded media validation remains separate."
+}

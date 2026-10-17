@@ -28,7 +28,7 @@ CHECKS = ("archive", "media", "script", "film", "motion", "vfx", "audio", "nativ
 TRAVERSAL_CHECKS = ("traversal", "traversal-pose", "army", "controls", "traversal-audio", "stress",
                     "security", "release-gates", "siege-army", "vehicle-art", "siege-effects", "siege-audio", "siege-ui", "siege-release-gates", "siege-pose")
 TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/siege-traversal-render-r1"
-SIEGE_CAPTURE_DIRECTORY = "docs/evidence/siege-render-r1"
+SIEGE_CAPTURE_DIRECTORY = "docs/evidence/siege-render-r2"
 SIEGE_CAPTURE_ASSETS = {"yuga-siege-preview.mp4", "siege-render-review.json", "siege-video.json", "SIEGE-RENDER-REVIEW.md"}
 SIEGE_SELECTED_FRAMES = (45, 90, 145)
 SIEGE_CAPTURE_ASSETS |= {f"siege-frame-{index:05d}.png" for index in SIEGE_SELECTED_FRAMES}
@@ -309,7 +309,7 @@ def validate_siege_capture(directory, exported, decode=False):
     render = json.loads(render_path.read_text())
     video = json.loads(member(directory, "siege-video.json").read_text())
     require(render.get("complete") is True and not render.get("failure"), "Siege capture failed or incomplete")
-    require(render.get("renderer") == "forward_plus" and render.get("display") == "x11", "Siege capture lacks actual display")
+    require(render.get("renderer") == "forward_plus" and str(render.get("display", "")).lower() == "x11", "Siege capture lacks actual display")
     require((render.get("fps"), render.get("physics_hz"), render.get("take_physics_ticks"), render.get("width"), render.get("height")) == (30,60,360,1280,720), "Siege capture timing/resolution differs")
     require(render.get("time_scale") == 1.0, "Siege time scale differs")
     require(all(render.get("outcomes", {}).get(key) is True for key in ("windup","impact","vehicles_moved","finite")), "Siege mechanics missing from capture")

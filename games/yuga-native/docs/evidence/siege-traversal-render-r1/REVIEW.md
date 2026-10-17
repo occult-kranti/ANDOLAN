@@ -1,0 +1,9 @@
+# Traversal capture on the siege runtime
+
+17 October 2026. This fresh run passed 180 consecutive actual Forward+ frames at 1280 × 720 and 360 advancing physics ticks, plus five separate review stills. Its silent six-second movie decodes at 30/1 FPS. Software rendering and simulated playback time do not establish realtime hardware performance.
+
+The source inventory contains 227 pinned files; the runtime includes the cannon/chariot extension. The ordinary lane round is retained for this traversal test. Tether, visible rope, flight and finite skeletal overlays all passed. Maximum speed was 18 m/s; minimum energy was approximately 19.4. Initial player/camera placement was staged before the take. Godot Input actions then drive the uninterrupted recording without per-frame player transforms. Overview, landing courts, army engagement and night views are separate post-take staging. Army engagement advanced another 20.5833 seconds until a queued attack appeared; that staging is absent from the movie.
+
+Root inspected the actual take HUD, army engagement and moonlit still. The compact HUD and expanded siege-engine minimap legend fit their panels. Infantry roles and team colors remain distinguishable at the sampled distance. Night lighting, visible lanterns and building silhouettes remain readable. The hero framing is sky-heavy; buildings and troops remain visibly procedural. These samples do not approve detailed grips, continuous contact, cloth/hair, audio quality or the requested concept-level graphics.
+
+The capture records llvmpipe software Vulkan and actual renderer counters. The runner verified every raw PNG before encoding and compared source/import hashes. All raw frames remain in `/workspace/scratch/yuga-siege/traversal-r1`; retained stills/movie/report are here. Native OS keyboard/mouse and exported/public-package checks are separate gates. See the siege milestone for their status.

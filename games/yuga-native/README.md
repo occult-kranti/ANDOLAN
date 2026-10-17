@@ -1,6 +1,6 @@
 # YUGA native production track
 
-**Start a new task:** [repository handoff](../../docs/START_HERE.md) → [build handbook](docs/BUILD_HANDBOOK.md). The handbook maps features to files and provides setup, tests, art, capture, packaging and agent handoff instructions. Use the [research brief](docs/research/RESEARCH_BRIEF.md) for Reddit findings, mythology, selected reading and reuse decisions; use the [workspace guide](../../../docs/WORKSPACE_AND_CLEANUP.md) for cloud cleanup and recovery.
+**Start a new task:** [repository handoff](../../docs/START_HERE.md) → [build handbook](docs/BUILD_HANDBOOK.md). The handbook maps features to files and provides setup, tests, art, capture, packaging and agent handoff instructions. Use the [research brief](docs/research/RESEARCH_BRIEF.md) for Reddit findings, mythology, selected reading and reuse decisions; use the [workspace guide](../../docs/WORKSPACE_AND_CLEANUP.md) for cloud cleanup and recovery.
 
 The [full-game production roadmap](docs/FULL_GAME_PRODUCTION_ROADMAP.md) is the
 execution guide from this preview to the intended competitive game. Its
@@ -63,7 +63,17 @@ flight and grappling use capsule collision and bounded speeds. Day/night lightin
 animated coast/swamp water, an overview and travel shortcuts remain available.
 
 Paired 30-second waves of spear soldiers, bow guards and banner commanders fight,
-threaten local cores and grant once-only player last-hit gold. F5 resets the round.
+threaten local cores and grant once-only player last-hit gold. In the current
+source build, mirrored cannon carts can reinforce each lane every third wave;
+royal chariots can reinforce the centre every fifth. Both sides must have spawn
+clearance and capacity for a reinforcement pair to appear.
+
+Press **Escape → Siege practice** to enter an immediate six-unit central drill.
+Destroy an enemy engine before its marked attack lands to cancel the shot.
+**Restart lane practice**, or F5 during play, restores the ordinary round and
+arrival spawn. Siege blasts damage troops; hero health and death are not
+implemented in this practice mode.
+
 This is offline practice: the browser's 140 × 170 m baseline and production army,
 economy and network rules remain separate. Native online matches, jungle combat
 and the full competitive rules are still open roadmap work.

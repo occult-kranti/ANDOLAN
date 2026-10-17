@@ -1,0 +1,108 @@
+{
+  "passed": true,
+  "scope": "Native planning: district coverage, combined ground-blocker route clearance, anchor/deck contracts and decorative placement. Browser-authority parity is not claimed. No rendered art, dynamic-authority physics, GPU or multiplayer acceptance.",
+  "map_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+  "script_sha256": "b056b7b1ff0bbd54627a703552602a26c0df7411951763736da56aadeef543d6",
+  "protected_design_observed_hashes": {
+    "games/yuga-native/docs/GAME_DESIGN_MASTER.md": "5a9958fb61c23a751a5f4f0497187092b44a32bbc6ecce115c28089fb3ebe759",
+    "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md": "eeb47bac1b836aa78aacb1e533eaf0af01e8513dcbbe6b41d2209c98dd576787"
+  },
+  "counts": {
+    "props": 63,
+    "lights": 16,
+    "districts": 7,
+    "rotations": 2,
+    "authority_collision_boxes": 8
+  },
+  "checks": [
+    {
+      "name": "canonical_layout_placement_and_route_contract",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reject_unknown_kit",
+      "passed": true,
+      "details": [
+        "block-0 unknown preset"
+      ]
+    },
+    {
+      "name": "reject_hard_prop_in_open_route",
+      "passed": true,
+      "details": [
+        "bad-hard hard decorative prop in free traversal area"
+      ]
+    },
+    {
+      "name": "reject_route_through_building",
+      "passed": true,
+      "details": [
+        "mid-confluence-loop corridor intersects native ground collision",
+        "mid-confluence-loop corridor intersects native ground collision"
+      ]
+    },
+    {
+      "name": "reject_unreadable_camp_foliage",
+      "passed": true,
+      "details": [
+        "swamp-reed--1-0 vegetation in camp clearance",
+        "swamp-reed--1-0 vegetation in mid crossing"
+      ]
+    },
+    {
+      "name": "reject_hidden_swamp_water",
+      "passed": true,
+      "details": [
+        "west-reed-water ambiguous swamp traversal"
+      ]
+    },
+    {
+      "name": "reject_oversized_wall_fixture",
+      "passed": true,
+      "details": [
+        "block-0-lamp--1 mount projects beyond exclusion"
+      ]
+    },
+    {
+      "name": "reject_activated_future_geometry",
+      "passed": true,
+      "details": [
+        "future geometry silently active"
+      ]
+    },
+    {
+      "name": "reject_omitted_base_corners",
+      "passed": true,
+      "details": [
+        "unthemed floor -68,-128",
+        "unthemed floor -68,-124",
+        "unthemed floor -68,-120",
+        "unthemed floor -68,-116",
+        "unthemed floor -68,-112"
+      ]
+    },
+    {
+      "name": "reject_native_deck_visual_mismatch",
+      "passed": true,
+      "details": [
+        "native deck visual collision mismatch"
+      ]
+    },
+    {
+      "name": "reject_unreachable_high_anchor",
+      "passed": true,
+      "details": [
+        "anchor above flight ceiling"
+      ]
+    },
+    {
+      "name": "reject_lane_through_native_deck",
+      "passed": true,
+      "details": [
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision"
+      ]
+    }
+  ]
+}

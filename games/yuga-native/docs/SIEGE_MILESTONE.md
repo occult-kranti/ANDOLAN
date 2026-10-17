@@ -16,7 +16,7 @@ These are supporting prototype tasks, not substitutes for the dependency-ready p
 
 ## Gameplay contract
 
-Ordinary practice retains its initial thirty soldiers. A cannon pair can reinforce each lane on every third wave; a royal-chariot pair can reinforce the centre on every fifth. Each pair must fit both teams' spawn clearance and the global capacity. A rejected pair does not produce a one-sided reinforcement. The existing bounds remain 72 live units, 24 corpses, 96 total units and 72 pending attacks.
+Ordinary practice retains its initial thirty soldiers. A cannon pair can reinforce each lane on every third wave; a royal-chariot pair can reinforce the centre on every fifth. Each pair must fit both teams' spawn clearance and the global capacity. A rejected pair does not produce a one-sided reinforcement. The existing bounds remain 72 live units, 24 corpses, 96 total units and 72 pending attacks, with a separate cap of 32 pending siege attacks.
 
 Cannon shots commit to a ground location before impact. Visible anticipation, a fixed blast location and a slow repeat rate create opportunities to move away or defeat the attacker. Royal chariots are elite lane units, with their own silhouette and shorter-range attack. They are not a completed jungle-boss encounter. Siege practice stages the same units and rules for immediate inspection. Normal reset returns to the ordinary wave schedule.
 
@@ -24,7 +24,7 @@ This offline army simulation handles troop and core damage plus the hero's last-
 
 ## How long to the concept target?
 
-The comparison is between [`rama-hanuman-sita.png`](../../yuga/art/references/rama-hanuman-sita.png) and actual native captures, including [the previous army encounter](evidence/traversal-armies-render-r2/still-army-engagement.png). The concept has detailed anatomy, faces, hair, layered costume, engraved materials and intentional lighting. Current procedural troops and world dressing remain prototype art. Additional objects alone cannot close that gap.
+The comparison is between [`rama-hanuman-sita.png`](../../yuga/art/references/rama-hanuman-sita.png) and actual native captures, including the [r2 siege review](evidence/siege-render-r2/SIEGE-RENDER-REVIEW.md) and [previous army encounter](evidence/traversal-armies-render-r2/still-army-engagement.png). The concept has detailed anatomy, faces, hair, layered costume, engraved materials and intentional lighting. Current procedural troops and world dressing remain prototype art. Additional objects alone cannot close that gap.
 
 **Planning estimate, not an established delivery schedule:** with a stable scope, funding, an experienced core team of roughly 8–12 people across character/environment art, animation, technical art, gameplay/network engineering and QA, and dedicated audio/UI support, budget roughly **3–6 months for an accepted visual vertical slice**: one arena, two finished heroes, representative troops, abilities and a complete playable encounter. The roadmap's three-hero networked slice has additional integration gates. A fourteen-hero competitive online game at the requested standard could require **18–36+ months and a larger production/operations team**. There is no measured project velocity or staffed production budget yet, so neither range is a promise. Agent concurrency reduces some implementation and research time; it does not establish art approval, hardware performance or player acceptance.
 
@@ -44,4 +44,10 @@ Review the estimate after the first accepted hero and arena benchmark. Record ac
 
 ## Evidence and current status
 
-Implementation and verification are in progress. This section is replaced with the final source, executed checks, render/package evidence and remaining defects before acceptance. The previous public release remains the verified download until a new release is independently checked.
+The implementation checkpoint is `9e8f54e72f6388eebf329003f4879c31793ba1dd`; [native branch CI passed](https://github.com/occult-kranti/ANDOLAN/actions/runs/39009864974). The repeated cloud setup passed all 27 report files and 225 browser-authority tests; [exact summary](evidence/siege-setup/summary.json). New direct gates passed: combat 31, integrated poses 27, vehicle art 48, effects 63, UI 25 and release counterexamples 74. These checks have distinct scopes and are not a single visual score.
+
+[Independent siege QA](evidence/siege-qa/REVIEW.md) records 24,000 advancing simulation steps (20 simulated minutes), 556 windups and 537 impacts, all lanes fighting, and bounded lifetimes. Tests exposed and corrected overlapping shared-endpoint spawns, same-tick queued audio escaping pause, and release-record validation gaps. Retained failed runs distinguish actual defects from source edits made during a test.
+
+The [r2 siege render](evidence/siege-render-r2/SIEGE-RENDER-REVIEW.md) passed capture validation: 180 frames over 360 advancing physics ticks, covering six seconds at 30 playback frames per second. The first take was rejected for camera clipping. The bounded review of two actual r2 stills retains overlapping telegraph-ring clarity and limited surface/detail quality as open concerns. This silent capture does not establish audio listening quality, measured hardware frame rate or the final graphics target.
+
+Exported application controls and public package verification remain in progress. The previous public release remains the verified download until the new release is independently checked.

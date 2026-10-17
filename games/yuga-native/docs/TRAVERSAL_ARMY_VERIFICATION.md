@@ -1,5 +1,7 @@
 # Longer lanes, traversal and army verification
 
+The base traversal/army evidence below is historical to `yuga-traversal-armies-2026-10-17`. The current **siege extension** is tracked in [SIEGE_MILESTONE.md](SIEGE_MILESTONE.md): cannon carts, royal chariots, committed blast warnings, four original cues, and immediate Siege practice. Fresh full-setup evidence is in [siege-setup/summary.json](evidence/siege-setup/summary.json); independent combat/pose review is in [siege-qa/REVIEW.md](evidence/siege-qa/REVIEW.md). Rendering and publication are accepted separately there. The original release counts below must not be presented as the new release's asset inventory.
+
 Release status: published at `yuga-traversal-armies-2026-10-17` from `395986a512ecabe874710048a19bd0fdd0a71f89`. Local and CI gates, full capture, public release bytes and actual published Linux window checks passed. Only a completed report tied to current source establishes a passing gate. Earlier pre-outage results in `TRAVERSAL_ARMY_RECOVERY_2026-10-17.md` are historical, not the acceptance evidence for recovered source.
 
 ## Design contract

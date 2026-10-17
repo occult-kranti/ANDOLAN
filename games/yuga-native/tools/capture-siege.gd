@@ -51,9 +51,16 @@ func _run() -> void:
 	scene.set_overview(false)
 	scene.set_review_phase(0.0)
 	scene.player.active = false
-	scene.review_camera.global_position = Vector3(18,12,-23)
+	scene.review_camera.global_position = Vector3(8,12,-28)
 	scene.review_camera.look_at(Vector3(0,1,0),Vector3.UP)
 	scene.review_camera.fov = 58
+	var point_query := PhysicsPointQueryParameters3D.new()
+	point_query.position = scene.review_camera.global_position
+	point_query.collision_mask = 1
+	var sight_query := PhysicsRayQueryParameters3D.create(scene.review_camera.global_position,Vector3(0,1,0),1)
+	if not scene.get_world_3d().direct_space_state.intersect_point(point_query,8).is_empty() or not scene.get_world_3d().direct_space_state.intersect_ray(sight_query).is_empty():
+		_fail("Staged camera is inside map geometry or cannot see the encounter focus")
+		return
 	scene.review_camera.make_current()
 	scene.ui.visible = false
 	var layer := CanvasLayer.new()
