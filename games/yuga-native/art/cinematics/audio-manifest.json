@@ -3,7 +3,7 @@
   "id": "confluence-original-audio",
   "provenance": "Original deterministic mathematical synthesis; no downloaded recordings, voices, commercial game sounds or copyrighted music samples",
   "film_path": "assets/cinematics/confluence-duel.json",
-  "film_sha256": "a7f9c8263f0117fa322f5a51ff765710bfe619026c076eda32d207aaf8be5826",
+  "film_sha256": "6ec07cb86aa645ba23c4eec51e652bbe89ad42d0558225583f6a8dd54248af6b",
   "source_path": "tools/cinematics/build-duel-audio.py",
   "source_sha256": "35daa272b4e40c430ab2f3453856c24f5f80100c005e1b3c3a988bd2c40f2f38",
   "tools": {
@@ -389,10 +389,5 @@
     "status": "numerically_validated_original_synthesis",
     "listening_review": "Human audition and audiovisual timing review remain required; waveform checks do not establish sound quality"
   },
-  "playback_contract": "One nonlooping AudioStreamPlayer. Seek/restart with play(absolute_seconds), pause with stream_paused, stop at24s. Capture mutes nativeaudio; mux this exact WAV. Do not spawn cue players on seek.",
-  "validation_source_update": {
-    "previous_source_sha256": "5e52a3c44791b9eded8f5b237247c5813808427b0d4c6a246fbbf45d269085a3",
-    "reason": "Tightened read-only saved-PCM payload-length, byte-count and cue-duration validation; added six temporary-copy negative fixtures. Synthesis expressions and frozen audio bytes are unchanged.",
-    "audio_bytes_unchanged": true
-  }
+  "playback_contract": "One nonlooping AudioStreamPlayer. Seek/restart with play(absolute_seconds), pause with stream_paused, stop at24s. Capture mutes nativeaudio; mux this exact WAV. Do not spawn cue players on seek."
 }

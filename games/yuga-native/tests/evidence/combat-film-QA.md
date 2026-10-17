@@ -18,7 +18,7 @@ At 8.55 s, measured world-space soles are:
 | Rama | 8.4937 mm | 8.4932 mm | 0 m |
 | Ravana | 8.4870 mm | 8.4872 mm | 0 m |
 
-Across all declared planted intervals, the minimum sampled sole height is **7.2811 mm** and the greatest horizontal sole-centroid drift is **0.3983 mm**. These geometry measurements do not determine whether a rendered contact shadow looks convincing.
+Across all declared planted intervals in revision 4, the minimum sampled sole height is **6.7588 mm** and the greatest horizontal sole-centroid drift is **0.5637 mm**. These remain within the original gates; revision 3 measured 7.2811 mm / 0.3983 mm before the guard-reset interpolation change. These geometry measurements do not determine whether a rendered contact shadow looks convincing.
 
 The initial animation test incorrectly treated every local bone translation as a physical segment length. The actual rig has an unweighted `root` and three body-bearing child branches, `pelvis.L`, `pelvis.R` and `spine05`, that translate together for crouch. Their translation vectors agree within **0.53 micrometres**. The bowstring is a separate intentional deformation control. The corrected gate retains the original **5 mm anatomical-segment threshold**; maximum measured anatomical variation is **0.91 micrometres**.
 
@@ -26,13 +26,16 @@ The control motion is disclosed rather than hidden: the body branches begin 35 m
 
 ## Evidence and reproduction
 
-`combat-film-qa-final-manifest.json` pins the final reports, log and test helpers. Final source pins include script revision 3 `a7f9c826…`, director `3fdfbe25…`, actor adapter `f050e4d5…`, Ravana model `f00bed98…`, and the revised Rama/Ravana motion libraries `3ab73222…` / `d0d0f3b2…`.
+`combat-film-qa-final-manifest.json` pins the final reports, logs and test helpers. Final source pins include script revision 4 `6ec07cb8…`, director `3fdfbe25…`, actor adapter `f050e4d5…`, Ravana model `f00bed98…`, and the revised Rama/Ravana motion libraries `3ab73222…` / `d0d0f3b2…`.
+
+An additional read-only continuity probe samples all actors at 24 Hz and on both sides of all 17 internal action boundaries. Revision 3 exposed one fast, continuous guard-reset transition. The planner increased only `ravana-ready-wave.blend_in_seconds` from 0.12 to 0.32. All three suites were rerun with unchanged tests and thresholds: **20 script + 42 native + 5 continuity checks pass**. The reset's maximum frame travel fell from 0.2663 to 0.1065 m and its maximum angular delta from 50.20 to 19.41 degrees. No speed alerts remain; the worst boundary displacement remains 12.594 micrometres. `combat-film-motion-continuity.md` records the numerical scope and limitations. Revision 3 evidence is preserved under explicit historical filenames.
 
 ```sh
 python3 games/yuga-native/tests/combat_script_cases.py --report /tmp/combat-script.json
 godot --headless --path games/yuga-native --script res://tests/combat_film_cases.gd -- --report=/tmp/combat-film.json
+godot --headless --path games/yuga-native --script res://tests/combat_motion_continuity.gd -- --report=/tmp/combat-motion.json
 ```
 
-Both final commands exit zero. The Godot log contains one intentional `YUGA_COMBAT_FILM: rama: missing model_path` diagnostic from the fatal-resource fixture and no unexpected errors or warnings.
+All three final commands exit zero. The native integration log contains one intentional `YUGA_COMBAT_FILM: rama: missing model_path` diagnostic from the fatal-resource fixture and no unexpected errors or warnings. The continuity log contains no errors or warnings.
 
 Earlier reports remain historical evidence. The first schema draft used an incorrect test namespace assumption; later actor reports used the overbroad rig-distance gate described above. The first integrated report also compared JSON float-valued health dictionaries against integer-valued dictionaries too strictly; the final test compares numerical health values and separately records playback state. These were test corrections, not gameplay repairs. Button callbacks and engine state are exercised headlessly; operating-system clicks and actual frames are reviewed separately by root.

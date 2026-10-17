@@ -85,6 +85,8 @@ jobs:
         run: |
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/combat_film_cases.gd -- --report=${{ runner.temp }}/combat-film-cases.json
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/duel_effects_cases.gd -- --report=${{ runner.temp }}/duel-effects-cases.json
+      - name: Combat film anatomical motion continuity
+        run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/combat_motion_continuity.gd -- --report=${{ runner.temp }}/combat-motion-continuity.json
       - name: Confluence native traversal and rendering resource checks
         run: |
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_scene_cases.gd -- --report=${{ runner.temp }}/world-scene-cases.json
@@ -109,6 +111,7 @@ jobs:
             ${{ runner.temp }}/motion-cases.json
             ${{ runner.temp }}/combat-script-cases.json
             ${{ runner.temp }}/combat-film-cases.json
+            ${{ runner.temp }}/combat-motion-continuity.json
             ${{ runner.temp }}/duel-effects-cases.json
             ${{ runner.temp }}/roadmap-check.json
             ${{ runner.temp }}/roadmap-cases.json

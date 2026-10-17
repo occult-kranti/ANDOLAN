@@ -1,14 +1,16 @@
 # Combat film direction and acceptance review
 
-Status: **all 12 revised full-scene stills reviewed; bounded camera/readability corrections accepted; continuous film and packaged playback acceptance pending**. This is a native animation/presentation prototype. It does not establish Deadlock-level graphics, a finished Ravana hero, live multiplayer combat or the full game's visual target.
+Status: **revised still-frame composition accepted; revision 4 screenplay, native-viewer and numerical motion checks pass; full video and packaged-window review pending**. This is a native animation/presentation prototype. It does not establish Deadlock-level graphics, a finished Ravana hero, live multiplayer combat or the full game's visual target.
 
-The [screenplay](COMBAT_FILM_SCRIPT.md) describes the intended action. The canonical runtime manifest is [confluence-duel.json](../assets/cinematics/confluence-duel.json), revision 3, SHA-256 `a7f9c8263f0117fa322f5a51ff765710bfe619026c076eda32d207aaf8be5826` at this review. Revision 2 (`5a641d8febad461b633bf5fb5edd80e9a3429ab3754ad21b01e2e90e5aecaea4`) is the captured first preview. Revision 3 changes cameras and the revision number only; cue, action, receipt and audio content is identical. Evidence from another manifest/actor/library revision must be identified separately.
+The [screenplay](COMBAT_FILM_SCRIPT.md) describes the intended action. The canonical runtime manifest is [confluence-duel.json](../assets/cinematics/confluence-duel.json), revision 4, SHA-256 `6ec07cb86aa645ba23c4eec51e652bbe89ad42d0558225583f6a8dd54248af6b` at this review. The accepted R2 still-frame composition used revision 3 (`a7f9c8263f0117fa322f5a51ff765710bfe619026c076eda32d207aaf8be5826`). Revision 2 (`5a641d8febad461b633bf5fb5edd80e9a3429ab3754ad21b01e2e90e5aecaea4`) is the captured first preview. Revision 3 changes cameras and the revision number only; cue, action, receipt and audio content is identical. Evidence from another manifest/actor/library revision must be identified separately.
 
 ## Current evidence boundary
 
 | Evidence | Observed result | Limit |
 | --- | --- | --- |
-| `tests/evidence/combat-film-script-draft2.json` | 19 schema, chronology and malformed-fixture checks pass on revision 2 | Report explicitly has `resources_verified:false`; it is not an import, skinning, camera or video pass |
+| `tests/evidence/combat-film-script-final.json` | 20 screenplay/resource checks pass on revision 4, with actual asset resources and 24-second audio duration verified | Scripted receipts and resource validity do not certify gameplay authority or perceptual sound quality |
+| `tests/evidence/combat-film-integration-final.json` | 42 imported-animation/native-viewer checks pass; nine clips per actor, finite poses, sole geometry, seek, lifecycle and wired UI behavior evaluated | Headless callback/layout tests are distinct from operating-system input, visible animation quality and package execution |
+| `tests/evidence/combat-film-motion-continuity-final.json` | Five continuity checks pass on revision 4; 577 time samples, zero frame-speed alerts and continuous action boundaries | Numerical pose continuity does not establish artistic quality, gameplay movement or cloth physics |
 | `tests/evidence/combat-film/duel-effects-cases.json` | 32 bounded VFX configuration, sampling, lifetime, projectile-origin and invalid-input checks pass on revision 3 | Headless component behavior does not establish visible effect quality, actor contact or integrated playback |
 | Script/camera preflight | Clear guard → warned wave → evade → counter causal sequence; planned actors fit the main wide camera frusta in a geometric estimate | Estimated framing is not actual occlusion, animation or UI review; the effect can still hide the hands/feet |
 | `build/film-poses-r2/combat-film-render.json` | Actual Forward+ studio report contains eight static poses; this reviewer inspected Rama draw/release and Ravana guard | Detached red/gold pieces are visible beside Ravana. Static poses do not establish smooth transitions or staged-film framing |
@@ -16,13 +18,13 @@ The [screenplay](COMBAT_FILM_SCRIPT.md) describes the intended action. The canon
 | `build/film-scene-r2/combat-film-render.json` | All 12 revised actual full-scene frames independently inspected; footroom, two-shot profiles and reaction framing corrected | Bounded still-frame acceptance only; continuous motion, sound listening and native controls remain separate gates |
 | Continuous render, sound listening and game UI | Pending exact evidence from the revised integrated build | Do not mark these complete from the source manifest or isolated test counts |
 
-The native README's existing map-preview download facts remain unchanged. The new cinematic source section is labeled in development. A new video/package release needs its own frozen source, runtime review and archive evidence.
+This milestone contains two skinned actors, two libraries with nine clips each, a 24-second deterministic director, ten visual cues, three scripted outcome receipts, captions and original synthesized audio. The planned [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17) is not recorded as published until its video/package evidence is supplied. Existing map-preview download facts remain unchanged. Audio has numerical duration, level and cue-timing evidence; this review makes no listening-quality claim.
 
 ## Direction preflight and retained motion gates
 
 **Readable cause and effect.** The first shot is visibly guarded before its receipt. The wave warning occupies the same locked line the wave will travel; Rama completes the evade before release. The counter lands after the guard is down. Captions appear at current/completed beats instead of announcing an outcome during projectile travel. Keep these relationships when revising animation or camera timing.
 
-**Framing.** The first actual preview confirmed that placing both actors inside the camera frustum was insufficient: the camera mostly saw Rama's cape, the sentinel was small, and captions covered near feet. Revision 3 uses side/three-quarter two-shots with more comparable actor sizes. Static projection checks reserve footroom; fresh frames must confirm the result. Diagnostic close-ups still need to inspect grip and release rather than treating a wide shot as proof.
+**Framing.** The first actual preview confirmed that placing both actors inside the camera frustum was insufficient: the camera mostly saw Rama's cape, the sentinel was small, and captions covered near feet. Revision 3 uses side/three-quarter two-shots with more comparable actor sizes. Fresh R2 frames confirm the intended footroom and actor profiles. Diagnostic close-ups still need to inspect grip and release rather than treating a wide shot as proof.
 
 **Impact camera.** Revision 2 moved the camera approximately 10.8 m over 0.18 s at 15.85 s. Revision 3 replaces that move with a clean cut to a closer reaction view and cuts back to the two-shot at 18 s. The intended result is clear contact/recoil without a fast synthetic dolly. Continuous playback must still confirm the edit; damage and audio were not retimed.
 
@@ -63,7 +65,26 @@ Stage material chatter and detached sentinel ornament were referred to their own
 
 **Remaining quality limits:** broad paving and repeated architecture still dominate the set; character proportions, material finish and deformation remain prototype work. Early draw anticipation is subtle in the selected stills. A 5 m evade, the pivot, clip boundaries, cuts and long ready holds must be evaluated in motion. None of these frames proves cloth physics, smooth foot contact, production bow-string behavior, final roster quality or real-time performance.
 
-The next gate is a continuous 24-second recording of this same source revision. Review the whole bow release, transition into and out of the evade, sentinel pivot, both camera cuts, effect/audio contact and final settling. During native-window testing, exercise pause, seek, restart, captions and return; verify that exit stops audio and clears temporary effects. A contact sheet supports pose review but cannot establish smoothness or sound synchronization.
+### Revision 4: guard-reset correction
+
+The preserved [revision 3 continuity report](../tests/evidence/combat-film-motion-continuity-revision3.md) passed its finite-pose and micro-boundary gates, but flagged a fast sentinel guard reset around 5.54–5.58 s: the reported 24 Hz sample step changed forearm orientation by 50.20° and fingertip position by 0.2663 m. Finite transforms and continuous interpolation therefore did not establish acceptable motion. The preceding 12 stills did not sample this transition.
+
+Revision 4 changes only `ravana-ready-wave.blend_in_seconds` from 0.12 to 0.32 seconds, inside its existing 5.5–6.0 s action window. The action start/end, every effect/receipt/audio time and all cameras remain unchanged. A deep equality assertion checked that the revision number and this single blend field were the only manifest changes. The revision 3 evidence is preserved. Independent QA reran unchanged tests and thresholds on revision 4: 20 screenplay, 42 native integration and 5 continuity checks pass. The guard-reset maximum 24 Hz travel falls from 0.266273 to 0.106485 m, accumulated rotation from 50.2016° to 19.4095°, and local rotation from 49.6560° to 19.1736°. No frame-speed alerts remain; action boundaries and planted-contact gates still pass. The final continuity report SHA-256 is `4e54fddd377249740cc032f235126753a7ee9d5456c08359d221678805fa8dec`. This accepts the bounded numerical correction; the continuous render still needs visual review.
+
+With revision 4 passing the independent transition checks, the next gate is a continuous 24-second recording of the frozen revision. Review the whole bow release, transition into and out of the evade, sentinel pivot, both camera cuts, effect/audio contact and final settling. During native-window testing, exercise pause, seek, restart, captions and return; verify that exit stops audio and clears temporary effects. A contact sheet supports pose review but cannot establish smoothness or sound synchronization.
+
+## Release evidence checkpoint
+
+The planned tag is [`yuga-confluence-duel-2026-10-17`](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17). The following outcomes remain open until root supplies the matching evidence:
+
+| Deliverable | Current status | Required release record |
+| --- | --- | --- |
+| Complete film | Rendering in progress | Exact video hash, resolution, frame count, duration, audio stream and source manifest; actual transition review |
+| Linux native package | Pending final package/window evidence | ZIP hash, extracted launch and actual film controls/return behavior |
+| Windows native package | Pending final package evidence | ZIP hash and archive/resource validation; execution status stated separately |
+| Public release | Planned | Published URL and downloadable asset names/hashes |
+
+This release is an original scripted animation prototype. It does not complete the full hero roster, live native multiplayer, match authority, production physics or the commercial visual target. Offline rendering on llvmpipe is not evidence of consumer-GPU frame rate. Audio listening remains unverified unless an explicit listening result is added.
 
 ## Collection roadmap tied to existing full-game gates
 

@@ -1,0 +1,244 @@
+{
+  "passed": true,
+  "scope": "Scripted-film guard-reset smoothing regression, not art or gameplay approval.",
+  "manifest_revision": 4,
+  "manifest_sha256": "6ec07cb86aa645ba23c4eec51e652bbe89ad42d0558225583f6a8dd54248af6b",
+  "exact_change_reconstruction": {
+    "passed": true,
+    "old_sha256": "a7f9c8263f0117fa322f5a51ff765710bfe619026c076eda32d207aaf8be5826",
+    "edits": [
+      "revision: 3 to 4",
+      "ravana-ready-wave.blend_in_seconds: 0.12 to 0.32"
+    ]
+  },
+  "source_changes": {
+    "res://assets/cinematics/confluence-duel.json": {
+      "before": "a7f9c8263f0117fa322f5a51ff765710bfe619026c076eda32d207aaf8be5826",
+      "after": "6ec07cb86aa645ba23c4eec51e652bbe89ad42d0558225583f6a8dd54248af6b"
+    }
+  },
+  "thresholds_unchanged": true,
+  "review_alert_count": {
+    "before": 1,
+    "after": 0
+  },
+  "guard_reset_maxima": {
+    "before": {
+      "position_m": {
+        "actor": "ravana",
+        "bone": "finger3-3.L",
+        "from_action": "ravana-ready-wave",
+        "from_seconds": 5.54166666666667,
+        "to_action": "ravana-ready-wave",
+        "to_seconds": 5.58333333333333,
+        "value": 0.266272634267807
+      },
+      "angle_deg": {
+        "actor": "ravana",
+        "bone": "lowerarm01.L",
+        "from_action": "ravana-ready-wave",
+        "from_seconds": 5.54166666666667,
+        "to_action": "ravana-ready-wave",
+        "to_seconds": 5.58333333333333,
+        "value": 50.2016337013664
+      },
+      "local_angle_deg": {
+        "actor": "ravana",
+        "bone": "wrist.L",
+        "from_action": "ravana-ready-wave",
+        "from_seconds": 5.54166666666667,
+        "to_action": "ravana-ready-wave",
+        "to_seconds": 5.58333333333333,
+        "value": 49.6559901191677
+      }
+    },
+    "after": {
+      "position_m": {
+        "actor": "ravana",
+        "bone": "finger3-3.L",
+        "from_action": "ravana-ready-wave",
+        "from_seconds": 5.625,
+        "to_action": "ravana-ready-wave",
+        "to_seconds": 5.66666666666667,
+        "value": 0.106485016644001
+      },
+      "angle_deg": {
+        "actor": "ravana",
+        "bone": "lowerarm02.L",
+        "from_action": "ravana-ready-wave",
+        "from_seconds": 5.625,
+        "to_action": "ravana-ready-wave",
+        "to_seconds": 5.66666666666667,
+        "value": 19.4095335191627
+      },
+      "local_angle_deg": {
+        "actor": "ravana",
+        "bone": "wrist.L",
+        "from_action": "ravana-ready-wave",
+        "from_seconds": 5.625,
+        "to_action": "ravana-ready-wave",
+        "to_seconds": 5.66666666666667,
+        "value": 19.1736188127732
+      }
+    }
+  },
+  "boundary_maxima": {
+    "before": {
+      "angle_deg": {
+        "actor": "rama",
+        "bone": "upperleg02.L",
+        "from_action": "rama-evade-wave",
+        "from_seconds": 7.94999,
+        "to_action": "rama-ready-aim",
+        "to_seconds": 7.95,
+        "value": 0.00138949920439693
+      },
+      "local_angle_deg": {
+        "actor": "rama",
+        "bone": "lowerleg01.L",
+        "from_action": "rama-evade-wave",
+        "from_seconds": 7.94999,
+        "to_action": "rama-ready-aim",
+        "to_seconds": 7.95,
+        "value": 0.00270899251292691
+      },
+      "position_m": {
+        "actor": "rama",
+        "bone": "finger3-2.R",
+        "from_action": "rama-evade-wave",
+        "from_seconds": 7.94999,
+        "to_action": "rama-ready-aim",
+        "to_seconds": 7.95,
+        "value": 1.25935175674385e-05
+      }
+    },
+    "after": {
+      "angle_deg": {
+        "actor": "rama",
+        "bone": "upperleg02.L",
+        "from_action": "rama-evade-wave",
+        "from_seconds": 7.94999,
+        "to_action": "rama-ready-aim",
+        "to_seconds": 7.95,
+        "value": 0.00138949920439693
+      },
+      "local_angle_deg": {
+        "actor": "rama",
+        "bone": "lowerleg01.L",
+        "from_action": "rama-evade-wave",
+        "from_seconds": 7.94999,
+        "to_action": "rama-ready-aim",
+        "to_seconds": 7.95,
+        "value": 0.00270899251292691
+      },
+      "position_m": {
+        "actor": "rama",
+        "bone": "finger3-2.R",
+        "from_action": "rama-evade-wave",
+        "from_seconds": 7.94999,
+        "to_action": "rama-ready-aim",
+        "to_seconds": 7.95,
+        "value": 1.25935175674385e-05
+      }
+    }
+  },
+  "planted_contact": {
+    "before": {
+      "actual_world_geometry_at_8_55_seconds": {
+        "rama": {
+          "actor_origin_y": 0.0,
+          "left_sole_y": 0.00849368423223495,
+          "right_sole_y": 0.00849324464797974
+        },
+        "ravana": {
+          "actor_origin_y": 0.0,
+          "left_sole_y": 0.0084870308637619,
+          "right_sole_y": 0.00848720967769623
+        }
+      },
+      "ground_contract_y": 0,
+      "scope": "CPU-skinned loaded shoe/toe cohort in actual director world transforms. This checks geometric clearance and horizontal drift, not the visual appearance of shadow contact.",
+      "windows": {
+        "rama-counter-planted": {
+          "actor": "rama",
+          "maximum_foot_minimum_y": 0.00849379599094391,
+          "maximum_horizontal_drift": 7.15255737304688e-07,
+          "minimum_sole_y": 0.00849301367998123,
+          "samples": 235
+        },
+        "rama-opening-planted": {
+          "actor": "rama",
+          "maximum_foot_minimum_y": 0.00849384069442749,
+          "maximum_horizontal_drift": 6.74349564633303e-07,
+          "minimum_sole_y": 0.00849305838346481,
+          "samples": 134
+        },
+        "ravana-counter-planted": {
+          "actor": "ravana",
+          "maximum_foot_minimum_y": 0.0084935650229454,
+          "maximum_horizontal_drift": 6.74349564633303e-07,
+          "minimum_sole_y": 0.00849288702011108,
+          "samples": 193
+        },
+        "ravana-opening-planted": {
+          "actor": "ravana",
+          "maximum_foot_minimum_y": 0.00849363952875137,
+          "maximum_horizontal_drift": 0.000398266158299521,
+          "minimum_sole_y": 0.00728112459182739,
+          "samples": 175
+        }
+      }
+    },
+    "after": {
+      "actual_world_geometry_at_8_55_seconds": {
+        "rama": {
+          "actor_origin_y": 0.0,
+          "left_sole_y": 0.00849368423223495,
+          "right_sole_y": 0.00849324464797974
+        },
+        "ravana": {
+          "actor_origin_y": 0.0,
+          "left_sole_y": 0.0084870308637619,
+          "right_sole_y": 0.00848720967769623
+        }
+      },
+      "ground_contract_y": 0,
+      "scope": "CPU-skinned loaded shoe/toe cohort in actual director world transforms. This checks geometric clearance and horizontal drift, not the visual appearance of shadow contact.",
+      "windows": {
+        "rama-counter-planted": {
+          "actor": "rama",
+          "maximum_foot_minimum_y": 0.00849379599094391,
+          "maximum_horizontal_drift": 7.15255737304688e-07,
+          "minimum_sole_y": 0.00849301367998123,
+          "samples": 235
+        },
+        "rama-opening-planted": {
+          "actor": "rama",
+          "maximum_foot_minimum_y": 0.00849384069442749,
+          "maximum_horizontal_drift": 6.74349564633303e-07,
+          "minimum_sole_y": 0.00849305838346481,
+          "samples": 134
+        },
+        "ravana-counter-planted": {
+          "actor": "ravana",
+          "maximum_foot_minimum_y": 0.0084935650229454,
+          "maximum_horizontal_drift": 6.74349564633303e-07,
+          "minimum_sole_y": 0.00849288702011108,
+          "samples": 193
+        },
+        "ravana-opening-planted": {
+          "actor": "ravana",
+          "maximum_foot_minimum_y": 0.00849363952875137,
+          "maximum_horizontal_drift": 0.000563738925848156,
+          "minimum_sole_y": 0.00675883144140244,
+          "samples": 175
+        }
+      }
+    }
+  },
+  "receipt_times": [
+    4.75,
+    8.9,
+    15.85
+  ]
+}

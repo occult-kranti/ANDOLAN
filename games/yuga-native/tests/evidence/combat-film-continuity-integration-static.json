@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "scope": "Static CI/setup integration verification; no editor import, render, or full setup execution.",
+  "yaml_parser": "PyYAML 6.0.3 BaseLoader (preserves GitHub Actions on key)",
+  "run_blocks_bash_syntax_checked": 18,
+  "setup_bash_syntax_checked": true,
+  "checks": [
+    "workflow YAML parses with trigger keys intact",
+    "all shell run blocks pass bash -n",
+    "cloud setup script passes bash -n",
+    "one headless continuity invocation in each integration",
+    "CI check runs after native import",
+    "continuity JSON included in always-upload artifact",
+    "test helper matches passing revision 4 evidence"
+  ],
+  "exact_invocations": {
+    "github_actions": "Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/combat_motion_continuity.gd -- --report=${{ runner.temp }}/combat-motion-continuity.json",
+    "cloud_setup": "godot --headless --path games/yuga-native --script res://tests/combat_motion_continuity.gd -- --report=\"$validation_dir/combat-motion-continuity.json\""
+  },
+  "source_sha256": {
+    ".github/workflows/yuga-native.yml": "211ae86a5798eacf47d0cedcd8dc9ec533336e26e5149d9124525cd3cac8cdcf",
+    "tools/cloud/setup-native.sh": "e367a0e38800aec420aca348130bc7aab5a91cc5a54cdc00f38beae9cfc77662",
+    "games/yuga-native/tests/combat_motion_continuity.gd": "ee8297ec65d9ec17580152c241f299ec532d50cbf396c3c4a828eb7c9903434b"
+  },
+  "existing_runtime_evidence": "games/yuga-native/tests/evidence/combat-film-motion-continuity-final.json",
+  "full_setup_executed": false
+}

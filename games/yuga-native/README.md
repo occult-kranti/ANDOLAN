@@ -89,19 +89,29 @@ cobalt/ivory costume, hair, bow-grip details and PBR textures while retaining
 the existing anatomy, 164-bone rig and nine animation curves. It is an incremental
 art pass; a finished sculpt, fitted cloth and richer action animation remain open.
 
-## Combat film in development
+## Confluence duel animation milestone
 
-The [combat film script](docs/COMBAT_FILM_SCRIPT.md) defines a 24-second original
-Rama–Ravana sentinel study in the authored courtyard: visible guard, warned
-attack, evade and countershot. Its [runtime timeline](assets/cinematics/confluence-duel.json)
-coordinates animation, cameras, effects, captions and original sound through one
-absolute clock. Choreographed visual damage is separate from the multiplayer
-simulation.
+Choose **WATCH CONFLUENCE DUEL** from the source build's title screen for the
+24-second Rama–Ravana sentinel study: a guarded shot, a warned wave, an evade
+and a countershot. Two skinned actors use nine clips each, with a shared timeline
+for cameras, effects, captions and original synthesized audio. The viewer has
+play/pause, replay, a scrubber, captions, reduced flashes, a static-camera option
+and return to the courtyard. Space toggles playback; arrow keys seek; Escape returns.
 
-The [direction review](docs/COMBAT_FILM_REVIEW.md) records source, animation and
-actual-render gates as they are checked. This source milestone does not change
-the downloadable map preview described above. Rendered-film acceptance, packaged
-playback and a new release require their own evidence.
+The [screenplay](docs/COMBAT_FILM_SCRIPT.md),
+[runtime timeline](assets/cinematics/confluence-duel.json) and
+[direction review](docs/COMBAT_FILM_REVIEW.md) record the four review rounds.
+Revision 4 passes 20 screenplay/resource, 42 native animation/viewer and five
+motion-continuity checks. Those checks include a repaired guard-reset transition;
+all action, effect and audio times remain unchanged.
+
+The [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17)
+is planned; its full video and final package evidence are pending. The existing
+map-preview downloads above are unchanged. This milestone is a scripted animation
+prototype: visual health receipts are separate from multiplayer authority. It
+does not establish the commercial visual target, live native multiplayer or a
+finished hero roster. Audio timing is checked numerically; listening quality and
+consumer-GPU performance are not established here.
 
 ## Native analysis
 
