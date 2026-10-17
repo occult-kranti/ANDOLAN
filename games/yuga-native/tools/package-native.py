@@ -72,6 +72,23 @@ RAMA_FACE_POSE_FILES = (
      'upstream_path': 'makehuman/data/poseunits/face-poseunits.bvh',
      'sha256': '42a8e69692e30010371ee6993a6e5d3b468d35065559ec0953c936e31b8d903f', 'bytes': 310826},
 )
+RAMA_FORM_BASE = 'art/visual-rounds/face/principal-form-v1'
+RAMA_FORM_HISTORICAL_NOTICE_SHA256 = 'eae9e6cb3701f7030af7ec4365f6a5bd7d7d43c785e53c4f3e19f2d00981421c'
+RAMA_FORM_HELD_RING_SHA256 = '71cc40e8f5eb732382255cbb9ca2eca88f6306429c2c649f8223dbe5b4db0ccd'
+RAMA_FORM_LOD_INPUTS = {
+    'mid': '40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd',
+    'far': 'd5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa',
+}
+RAMA_FORM_DEPENDENCIES = (
+    'art/hero-rama-lod/glb_lod.py', 'art/visual-rounds/face/import_editable.py',
+    f'{RAMA_FORM_BASE}/reconstruction.inspection.json', f'{RAMA_FORM_BASE}/vertex-edits.json',
+    'tools/visual-rounds/integration/transfer_form_lods.py', f'{RAMA_FORM_BASE}/lod-transfer-manifest.json',
+    f'{RAMA_FORM_BASE}/rama-hero-mid.glb', f'{RAMA_FORM_BASE}/rama-hero-far.glb',
+    f'{RAMA_FORM_BASE}/input/rama-hero-mid.glb', f'{RAMA_FORM_BASE}/input/rama-hero-far.glb',
+    f'{RAMA_FORM_BASE}/input/RAMA-HERO-PROVENANCE.json', f'{RAMA_FORM_BASE}/NOTICE.md',
+    'art/production/reconstruction-rama.blend',
+    'art/visual-rounds/face/held-ring.json',
+)
 
 
 def _rama_source(project: Path, relative: str, expected_hash: str) -> dict:
@@ -116,11 +133,109 @@ def _validate_rama_schema1(project: Path, notice: dict, asset_relocation: str | 
     return sources
 
 
+def _validate_rama_form_stage(project: Path, stage: dict, historical: list, sources: dict) -> dict:
+    """One bounded GLB form stage; editable data is imported from its output.
+
+    This checks provenance identities, not the numerical or visual truth of an
+    author's receipt. Those remain separate source-bound acceptance gates.
+    """
+    required = {'id', 'parent', 'asset', 'sha256', 'editableSource', 'editableSha256',
+                'generator', 'generatorSha256', 'metadata', 'metadataSha256',
+                'generatedDependencies', 'inputEditableSha256', 'inputAssetSha256',
+                'editableOrigin', 'runtimeLods'}
+    if not isinstance(stage, dict) or set(stage) != required:
+        raise ValueError('Rama form stage is malformed')
+    parent = historical[-1]
+    if (stage['id'] != 'principal-facial-form-v1' or stage['parent'] != 'face'
+            or stage['inputAssetSha256'] != parent['sha256']
+            or stage['inputEditableSha256'] is not None
+            or stage['editableOrigin'] != 'imported-stage-asset'):
+        raise ValueError('Rama form stage must derive from the previous GLB; its editable is an imported companion')
+    for field, relative, hash_field in (
+            ('asset', f'{RAMA_FORM_BASE}/candidate.glb', 'sha256'),
+            ('editableSource', f'{RAMA_FORM_BASE}/reconstruction.blend', 'editableSha256'),
+            ('generator', 'art/visual-rounds/face/build_form_candidate.py', 'generatorSha256'),
+            ('metadata', f'{RAMA_FORM_BASE}/edit-manifest.json', 'metadataSha256')):
+        if stage.get(field) != relative:
+            raise ValueError(f'Rama form stage has unexpected {field}')
+        sources[relative] = _rama_source(project, relative, stage.get(hash_field))
+    dependencies = stage['generatedDependencies']
+    if not isinstance(dependencies, list) or len(dependencies) != len(RAMA_FORM_DEPENDENCIES):
+        raise ValueError('Rama form stage requires the complete ordered authoring/LOD dependencies')
+    for item, relative in zip(dependencies, RAMA_FORM_DEPENDENCIES):
+        if not isinstance(item, dict) or set(item) != {'path', 'sha256'} or item.get('path') != relative:
+            raise ValueError('Rama form stage dependency is malformed or unsafe')
+        sources[relative] = _rama_source(project, relative, item.get('sha256'))
+    archived = f'{RAMA_FORM_BASE}/input/RAMA-HERO-PROVENANCE.json'
+    if sources[archived]['sha256'] != RAMA_FORM_HISTORICAL_NOTICE_SHA256:
+        raise ValueError('Rama form immutable schema2 notice differs from the original historical bytes')
+    old = json.loads((project / archived).read_text())
+    if (old.get('schema') != 2 or old.get('authoringStages') != historical
+            or old.get('sha256') != parent['sha256'] or old.get('editableSha256') != parent['editableSha256']):
+        raise ValueError('Rama form stage rewrote historical authoring ancestry')
+    if sources['art/visual-rounds/face/held-ring.json']['sha256'] != RAMA_FORM_HELD_RING_SHA256:
+        raise ValueError('Rama form original 288-vertex held-ring source differs from frozen bytes')
+    metadata = json.loads((project / stage['metadata']).read_text())
+    identities = {'schema': 1, 'task': 'R2-08', 'stage': stage['id'],
+                  'input_sha256': parent['sha256'], 'output_sha256': stage['sha256'],
+                  'partition_sha256': parent['metadataSha256'], 'generator_sha256': stage['generatorSha256'],
+                  'vertex_edits_sha256': sources[f'{RAMA_FORM_BASE}/vertex-edits.json']['sha256'],
+                  'original_held_ring_sha256': RAMA_FORM_HELD_RING_SHA256, 'original_held_ring_vertices': 288,
+                  'bytes': sources[stage['asset']]['bytes']}
+    if (not isinstance(metadata, dict) or type(metadata.get('schema')) is not int
+            or type(metadata.get('bytes')) is not int
+            or any(metadata.get(k) != v for k, v in identities.items())):
+        raise ValueError('Rama form authoring metadata identity/ancestry differs')
+    inspection = json.loads((project / f'{RAMA_FORM_BASE}/reconstruction.inspection.json').read_text())
+    expected = {'candidate_sha256': stage['sha256'], 'editable_sha256': stage['editableSha256'],
+                'original_held_ring_sha256': RAMA_FORM_HELD_RING_SHA256,
+                'generator_sha256': sources['art/visual-rounds/face/import_editable.py']['sha256']}
+    if not isinstance(inspection, dict) or any(inspection.get(k) != v for k, v in expected.items()):
+        raise ValueError('Rama form editable-import receipt identity differs')
+    source_inspections = inspection.get('source_inspections')
+    if (not isinstance(source_inspections, list) or len(source_inspections) != 2
+            or [s.get('sha256') for s in source_inspections if isinstance(s, dict)] != [
+                sources['art/production/reconstruction-rama.blend']['sha256'], parent['editableSha256']]):
+        raise ValueError('Rama form inspected editable sources differ')
+    lod = json.loads((project / f'{RAMA_FORM_BASE}/lod-transfer-manifest.json').read_text())
+    expected = {'schema': 1, 'task': 'R2-14', 'stage': 'principal-facial-form-lod-transfer-v1',
+                'original_held_ring_sha256': RAMA_FORM_HELD_RING_SHA256,
+                'near_input_sha256': parent['sha256'], 'near_candidate_sha256': stage['sha256'],
+                'generator_sha256': sources['tools/visual-rounds/integration/transfer_form_lods.py']['sha256']}
+    if (not isinstance(lod, dict) or type(lod.get('schema')) is not int
+            or any(lod.get(k) != v for k, v in expected.items())
+            or not isinstance(lod.get('levels'), dict) or set(lod['levels']) != {'mid', 'far'}):
+        raise ValueError('Rama form LOD receipt identity/ancestry differs')
+    bindings = stage['runtimeLods']
+    if not isinstance(bindings, list) or len(bindings) != 2:
+        raise ValueError('Rama form requires both runtime body LOD bindings')
+    for binding, (level, input_hash) in zip(bindings, RAMA_FORM_LOD_INPUTS.items()):
+        asset, source = f'assets/heroes/rama-hero-{level}.glb', f'{RAMA_FORM_BASE}/rama-hero-{level}.glb'
+        if (not isinstance(binding, dict) or set(binding) != {'asset', 'sha256'}
+                or binding.get('asset') != asset or binding.get('sha256') != sources[source]['sha256']):
+            raise ValueError('Rama form runtime LOD binding differs from its authored output')
+        sources[asset] = _rama_source(project, asset, binding['sha256'])
+        if sources[f'{RAMA_FORM_BASE}/input/rama-hero-{level}.glb']['sha256'] != input_hash:
+            raise ValueError('Rama form original LOD input differs from frozen historical bytes')
+        receipt = lod['levels'][level]
+        expected = {'input_sha256': input_hash, 'output_sha256': binding['sha256'], 'bytes': sources[source]['bytes']}
+        if (not isinstance(receipt, dict) or type(receipt.get('bytes')) is not int
+                or any(receipt.get(k) != v for k, v in expected.items())
+                or receipt.get('all_other_binary_bytes_exact') is not True
+                or receipt.get('json_exact_except_frame_bounds') is not True):
+            raise ValueError('Rama form LOD output receipt differs from exact preserved-input contract')
+    return {'id': stage['id'], 'parent': stage['parent'], 'asset': stage['asset'], 'sha256': stage['sha256'],
+            'editableSource': stage['editableSource'], 'editableSha256': stage['editableSha256'],
+            'editableOrigin': stage['editableOrigin'], 'runtimeLods': bindings}
+
+
 def validate_rama_hero_notice(project: Path | None = None) -> dict:
     """Verify source identity and ordered authoring, not anatomy or art acceptance.
 
     Schema 1 preserves the R7 contract. Schema 2 records R7 -> Q3 -> final face
     authoring, so the R7 generator is never mislabeled as the final generator.
+    Schema 3 appends one bounded form stage and its coherent mid/far body LODs,
+    preserving the schema2 notice and all three historical stages exactly.
     Historical rama.glb/rama-production.glb retain their separate checks.
     """
     project = (project or PROJECT).resolve()
@@ -132,7 +247,7 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
         raise ValueError('Rama hero provenance must declare an integer schema')
     if notice['schema'] == 1:
         return {'notice': record(notice_path), 'sources': _validate_rama_schema1(project, notice)}
-    if notice['schema'] != 2:
+    if notice['schema'] not in (2, 3):
         raise ValueError('Rama hero provenance has an unknown schema')
     obsolete = {'generator', 'generatorSha256', 'weightCorrectionGenerator',
                 'weightCorrectionGeneratorSha256', 'weightCorrection',
@@ -145,8 +260,9 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
     if type(notice.get('bytes')) is not int or notice['bytes'] != sources[notice['asset']]['bytes']:
         raise ValueError('Rama hero provenance byte count differs from active asset')
     stages = notice.get('authoringStages')
-    if not isinstance(stages, list) or len(stages) != len(RAMA_HERO_STAGE_PATHS):
-        raise ValueError('Rama hero requires exactly the ordered R7/Q3/face authoring stages')
+    stage_count = len(RAMA_HERO_STAGE_PATHS) + (notice['schema'] == 3)
+    if not isinstance(stages, list) or len(stages) != stage_count:
+        raise ValueError('Rama hero requires the schema-specific ordered R7/Q3/face[/form] stages')
     required_keys = {'id', 'parent', 'asset', 'sha256', 'editableSource', 'editableSha256',
                      'generator', 'generatorSha256', 'metadata', 'metadataSha256',
                      'generatedDependencies', 'inputEditableSha256'}
@@ -249,6 +365,9 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
                                 'asset': asset, 'sha256': stage['sha256'],
                                 'editableSource': editable, 'editableSha256': stage['editableSha256']})
         previous = stage
+    if notice['schema'] == 3:
+        reviewed_stages.append(_validate_rama_form_stage(project, stages[3], stages[:3], sources))
+        previous = stages[3]
     if (notice.get('sha256') != previous['sha256']
             or notice.get('editableSource') != previous['editableSource']
             or notice.get('editableSha256') != previous['editableSha256']):

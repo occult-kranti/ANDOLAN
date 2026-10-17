@@ -1,5 +1,7 @@
 # Rama visual campaign: resume here
 
+Current checkpoint: [Round 2 integration](evidence/visual-rounds/round2/ROUND_REVIEW.md) is complete with limited art acceptance. Two of ten visual work rounds are complete; eight remain. Rounds 3–4 and the separate [screen campaign](SCREEN_CAMPAIGN.md) are active. The detailed sections below retain their Round 1 historical source scope.
+
 Review cut: 17 October 2026. Source base
 `38d11148fe69b184e981164c8a71387c91dc64c5`, branch
 `game/yuga-native-production`. The repository

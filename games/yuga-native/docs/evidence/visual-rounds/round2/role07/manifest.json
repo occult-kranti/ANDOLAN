@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "task": "R2-07",
+  "status": "source_audit_complete",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "files": [
+    {
+      "path": "audit_source.py",
+      "sha256": "71000e324acd7706de359780ded56c714c356baf47acb6b5fd0b491c5facff13",
+      "bytes": 10442
+    },
+    {
+      "path": "source-and-import-ledger.json",
+      "sha256": "9502b834a3f39c6078736364c3cc18251cfa469a9f921f5e541068cc1ebcde13",
+      "bytes": 92025
+    },
+    {
+      "path": "current-seam.json",
+      "sha256": "f663fe4911156a56cbf4ff71a4fab5384a7c5000427126728e1919dd0dfc0ea0",
+      "bytes": 1412
+    },
+    {
+      "path": "reuse-decisions.md",
+      "sha256": "c07f48cd33e1743b39c62346cf1541ee4cb0dfdd87958ddde8e89cd3b1fe9175",
+      "bytes": 7909
+    }
+  ],
+  "checks": [
+    {
+      "command": "python games/yuga-native/docs/evidence/visual-rounds/round2/role07/audit_source.py --repo /workspace/ANDOLAN --report /workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round2/role07/source-and-import-ledger.json",
+      "exit_code": 0,
+      "result": "50 actual file pins; 0 missing inputs; three-level face attribute/morph and ordered-joint equality"
+    },
+    {
+      "command": "python games/yuga-native/art/hero-rama-face/validate_native_seam.py games/yuga-native/assets/heroes/rama-hero.glb --partition games/yuga-native/art/hero-rama-face/candidate.json --report /workspace/scratch/visual-round2/role-07/current-seam.json",
+      "exit_code": 0,
+      "passed": 4,
+      "failed": 0
+    }
+  ],
+  "not_run": [
+    "Blender source reopen/export",
+    "Godot import or render",
+    "visual acceptance",
+    "hardware profiling"
+  ],
+  "next_owners": [
+    "R2-01 skin candidate",
+    "R2-08 form candidate and refreshed LOD agreement",
+    "R2-06 matched source-frozen capture",
+    "root integration"
+  ]
+}

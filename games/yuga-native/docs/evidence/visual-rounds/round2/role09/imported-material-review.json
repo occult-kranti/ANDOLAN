@@ -1,0 +1,167 @@
+{
+	"checks": [
+		{
+			"details": {
+				"count": 2
+			},
+			"name": "Actual near import has separate face and body skin slots",
+			"passed": true
+		},
+		{
+			"details": {
+				"channel": 1,
+				"mipmaps": true,
+				"rgba": "(1.0, 0.5294, 1.0, 1.0)"
+			},
+			"name": "Actual imported authored roughness selects GREEN",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual imported calibration and secondary binding succeed",
+			"passed": true
+		},
+		{
+			"details": {
+				"configured": true,
+				"frame_callbacks": 0,
+				"last_reason": "configured roughness and PBR finish",
+				"last_release": {
+
+				},
+				"profiles": {
+					"Cobalt handwoven silk": 1,
+					"Cobalt lotus brocade": 1,
+					"Deep brown iris": 1,
+					"Ivory silk": 2,
+					"Natural lips": 1,
+					"Polished sapphire": 1,
+					"Pupil": 1,
+					"Rama warm skin": 1,
+					"Recessed antique gold": 1,
+					"Swept black hair": 1,
+					"Warm sclera": 1,
+					"Worked warm gold": 1
+				},
+				"scope": "Reversible PBR finish. Original albedo/UV/normal, geometry, rig and secondary offset retained; actual appearance and GPU timing require rendered review.",
+				"secondary_materials": 5,
+				"standard_materials": 10,
+				"surface_slots": 16,
+				"version": 1
+			},
+			"name": "Actual imported finish public API succeeds",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual face/body finish binds RED and preserves authored palette normal and UV",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Both imported-source resources and second actual hero remain untouched",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Second owner cannot claim actual finished hero",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Repeated actual configure keeps all imported active material identities",
+			"passed": true
+		},
+		{
+			"details": {
+				"conflicts": [],
+				"invalidated": 0,
+				"restored_slots": 11,
+				"restored_uniforms": 27
+			},
+			"name": "Release restores every actual pre-finish material by identity",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Repeated release clears ownership without further restores",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Moving actual face outside visual is detected",
+			"passed": true
+		},
+		{
+			"details": {
+				"conflicts": [],
+				"invalidated": 1,
+				"restored_slots": 10,
+				"restored_uniforms": 27
+			},
+			"name": "Release retains transferred actual face appearance",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Owner teardown restores all actual material identities",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual visual tree exit releases ownership",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"finish_sha256": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+	"hero_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+	"material_rows": [
+		{
+			"channel": 0,
+			"mesh": "RamaFace",
+			"mipmap_count": 0,
+			"mipmaps": false,
+			"normal_scale": 0.239999994635582,
+			"roughness": 1.0,
+			"specular": 0.340000003576279,
+			"sss": true,
+			"sss_strength": 0.0799999982118607,
+			"texture": "res://assets/materials/rama-finish/skin-roughness.png"
+		},
+		{
+			"channel": 0,
+			"mesh": "RamaHero",
+			"mipmap_count": 0,
+			"mipmaps": false,
+			"normal_scale": 0.239999994635582,
+			"roughness": 1.0,
+			"specular": 0.340000003576279,
+			"sss": true,
+			"sss_strength": 0.0799999982118607,
+			"texture": "res://assets/materials/rama-finish/skin-roughness.png"
+		}
+	],
+	"passed": true,
+	"scope": "Actual imported hero channel, preservation, isolation and lifecycle checks; no renderer, image or performance acceptance",
+	"script_sha256": "4ad3259fc6c76a22e962586f305469256e6250c4e64e553e35a979562b7753f6",
+	"task": "R2-09"
+}

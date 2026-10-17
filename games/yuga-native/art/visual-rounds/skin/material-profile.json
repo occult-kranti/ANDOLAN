@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "task": "R2-01",
+  "source_commit_pin": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "target": "Rama warm skin through rama_surface_finish.gd",
+  "status": "unreviewed; candidate and diagnostic must earn pixel acceptance",
+  "variants": {
+    "control": {"changes": []},
+    "roughness-mips": {
+      "purpose": "Test minification aliasing in the existing grain-bearing finish roughness map",
+      "changes": [{"file": "assets/materials/rama-finish/skin-roughness.png.import", "property": "mipmaps/generate", "before": false, "after": true}],
+      "promotion": "Only if matched captures show lower skin stippling/shimmer without reduced form or unstable highlights"
+    },
+    "sss-off-diagnostic": {
+      "purpose": "Isolate the existing skin subsurface-scattering contribution from roughness sampling and directional shadows",
+      "changes": [{"file": "scripts/rama_surface_finish.gd", "material": "Rama warm skin", "property": "subsurf_scatter_enabled", "before": true, "after": false}],
+      "promotion": "Diagnostic only; a disabled-scattering render alone is not a final skin treatment"
+    }
+  },
+  "unchanged": {
+    "skin_albedo": "512x512 RGB, sRGB color; exact bytes retained",
+    "skin_normal": "512x512 RGB, linear tangent-space data; RGB encode XYZ; source +Y convention, no inversion; strength 0.24 retained",
+    "original_skin_roughness": "512x512 RGB glTF metallic-roughness texture; roughness is GREEN, not RED",
+    "finish_skin_roughness": "512x512 grayscale, linear scalar data in RED; exact bytes retained, roughness multiplier 1.0",
+    "finish_specular": 0.34,
+    "finish_subsurface_strength": 0.08,
+    "finish_subsurface_skin_mode": true,
+    "shadow_depth_bias": 0.2,
+    "shadow_normal_bias": 0.35,
+    "geometry_uv_tangents_rig_morphs": "Exact existing bytes; no transport or rebake",
+    "other_materials": "All jewelry, lips, makeup, cloth and hair unchanged"
+  },
+  "capture_contract": {
+    "pair_controls": ["same source except one declared property", "same camera and lens", "same pose and morph weights", "same LOD", "same exposure and lights", "same framebuffer size and renderer", "same warmup and capture frame"],
+    "required_stills": ["front day/night", "left and right three-quarter day/night", "profile day/night", "ordinary gameplay in Courtyard and Confluence"],
+    "required_motion": ["short fixed-path orbit with stable animation frame", "blink/aim/draw face and neck deformation"],
+    "inspect_regions": ["scalp/temple", "outer ear and concha", "neck/chest", "cheek/nose", "jewelry and cloth boundaries"],
+    "reject": ["no demonstrated reduction", "new seams", "washed-out color", "waxy halos", "lost facial form", "changing pose/light/camera to hide defect"],
+    "causal_limit": "Prior normal/SSAO ablations address large triangles, not every remaining fine dot. If both new material variants retain the pattern, keep source maps and send the paired evidence to the lighting owner."
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "task": "R2-14",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "status": "bounded-integration-ready-runtime-promotion-and-art-review-pending",
+  "source_files": {
+    "tools/package-native.py": {
+      "sha256": "b28628ee6f9029e30ed94ebe33a18237899c7098521856f63a511f2797a0bf72",
+      "bytes": 48863
+    },
+    "tests/rama_package_cases.py": {
+      "sha256": "4c1f1e9d049f5e35f95ba3f8f85f70fda07b6f07b1e9e557ffad97e7c823cd3a",
+      "bytes": 34211
+    },
+    "tools/visual-rounds/integration/transfer_form_lods.py": {
+      "sha256": "046ea6eb6acb529abd3a8c312b96e161f488704b3d03841e64a5120f2ee167d6",
+      "bytes": 12247
+    },
+    "tools/visual-rounds/integration/test_transfer_form_lods.py": {
+      "sha256": "a3656e6d331ee20e9cb999020b224838de45c2e14abd28af338ee7e5672a413c",
+      "bytes": 7797
+    },
+    "tools/visual-rounds/integration/prepare_form_review.py": {
+      "sha256": "f8a569efd53d0e1ca3cbb93ef81ffb8dffd8a3003aca443df73d4062f4fac4d3",
+      "bytes": 8325
+    },
+    "art/visual-rounds/face/build_form_candidate.py": {
+      "sha256": "7bdf0ed92958dca350d8b12c32fcc2a05c0e03110702dc90ebf4ee0cb2dd2134",
+      "bytes": 13383
+    },
+    "art/visual-rounds/face/import_editable.py": {
+      "sha256": "dd081d16adf3aaf7f7d43a189d577a0744434f7f72cefa8057343d29a277d8c2",
+      "bytes": 4770
+    },
+    "art/hero-rama-lod/glb_lod.py": {
+      "sha256": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7",
+      "bytes": 17623
+    },
+    "art/hero-rama-face/validate_native_seam.py": {
+      "sha256": "f93ec917c0e3ab8b144ee003149679fcd14107bdfbfe804813731dfe5ce01b29",
+      "bytes": 4722
+    },
+    "NOTICE/RAMA-HERO-PROVENANCE.json": {
+      "sha256": "eae9e6cb3701f7030af7ec4365f6a5bd7d7d43c785e53c4f3e19f2d00981421c",
+      "bytes": 5037
+    },
+    "assets/heroes/rama-hero.glb": {
+      "sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "bytes": 34322216
+    },
+    "assets/heroes/rama-hero-mid.glb": {
+      "sha256": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+      "bytes": 25049516
+    },
+    "assets/heroes/rama-hero-far.glb": {
+      "sha256": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+      "bytes": 20507548
+    },
+    "art/visual-rounds/face/held-ring.json": {
+      "sha256": "71cc40e8f5eb732382255cbb9ca2eca88f6306429c2c649f8223dbe5b4db0ccd",
+      "bytes": 26924
+    },
+    "art/visual-rounds/face/README.md": {
+      "sha256": "ea1ac7b9a309dafc5e70e611e79f5b7cd6594b0674967830ef6c06dc6875d7fa",
+      "bytes": 5283
+    },
+    "art/visual-rounds/face/candidate-manifest.json": {
+      "sha256": "a239cd45bc49b80dd77f9e8031ad412c2e3a0ef1b2d3f4b82725e4904ce2212d",
+      "bytes": 6287
+    },
+    "art/visual-rounds/face/NOTICE.md": {
+      "sha256": "9defe93b01aacf30d4625753c00bc9e21ca7eb33864a94210acdf08addc22b5a",
+      "bytes": 1782
+    }
+  },
+  "candidate_overlay": "/workspace/scratch/visual-round2/role-14/form-lods-r3/overlay",
+  "candidate_assets": {
+    "assets/heroes/rama-hero-far.glb": {
+      "sha256": "62e65520da49d4f81d8cf0755f77df214f7ce0929d4818c13f62555b300a8f43",
+      "bytes": 20507548
+    },
+    "assets/heroes/rama-hero-mid.glb": {
+      "sha256": "44bf3961fa52aef0b1a212dff05dcc6bda5c3cae7c9eaf00303aba9f39d45416",
+      "bytes": 25049516
+    },
+    "assets/heroes/rama-hero.glb": {
+      "sha256": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+      "bytes": 34322216
+    }
+  },
+  "promotion_review_tree": "/workspace/scratch/visual-round2/role-14/provenance-review-r2",
+  "checks": {
+    "package_counterexamples": 180,
+    "form_lod_counterexamples": 29,
+    "seam_checks": {
+      "near": 4,
+      "mid": 4,
+      "far": 4
+    },
+    "actual_schema3_provenance_sources": 43,
+    "exact_held_ring": {
+      "source_vertices": 288,
+      "exported_rows": 434,
+      "levels": [
+        "near",
+        "mid",
+        "far"
+      ]
+    }
+  },
+  "unrun": [
+    "Final imported r6 Godot lifecycle/LOD/material/face/action checks belong to renderer06/resource13; existing copied scripts in prior capture-forms-project-r1/tests are reusable test inputs, not current r6 runtime evidence.",
+    "Actual pixels, expression/action deformation and transition review",
+    "PCK/export/package/release; no export scheduled"
+  ],
+  "rejected_retained": [
+    {
+      "path": "/workspace/scratch/visual-round2/role-14/form-lods-r1",
+      "reason": "Inherited stale Natural lips POSITION extrema; corrected r2 matches exact18POSITIONbounds at each LOD"
+    },
+    {
+      "path": "/workspace/scratch/visual-round2/role-14/form-lods-r2",
+      "source_candidate": "face-form-candidate-r5",
+      "reason": "Four held face vertices moved <=9.876 micrometres; finalr6 restores positions/normals/tangents exact."
+    }
+  ],
+  "preserved": "Default runtime assets and native NOTICE unchanged; all historical r7/q3/face sources and schema2 notice preserved."
+}

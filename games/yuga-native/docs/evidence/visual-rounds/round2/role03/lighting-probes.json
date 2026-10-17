@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "task": "R2-03",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "status": "both material originals reviewed; lighting pixels pending",
+  "renderer_owner": "R2-06",
+  "new_frame_budget": 2,
+  "baseline": {
+    "capture": "/workspace/scratch/visual-round2/capture-baseline-court-r1/capture.json",
+    "shot": "courtyard-three-quarter-left-day",
+    "raw_sha256": "1cabca9ec2dea9762eac7f28384a48f0519a880414ffa1a683e4eb388a5e2438",
+    "shadow_enabled": true,
+    "shadow_bias": 0.2,
+    "shadow_normal_bias": 0.35,
+    "portrait_fill": false
+  },
+  "pair_controls": [
+    "same camera and lens",
+    "same pose pin and facial weights",
+    "same near LOD",
+    "same source except declared one-variable overlay and explicit metadata-only harness change",
+    "same 1280x960 Forward+ framebuffer",
+    "same exposure and every light",
+    "same background time and four-frame screenshot warmup"
+  ],
+  "material_probes": [
+    {
+      "id": "roughness-mips",
+      "owner": "R2-01",
+      "overlay": "/workspace/scratch/visual-round2/role-01/roughness-mips/overlay",
+      "variable": "skin-roughness.png.import mipmaps/generate",
+      "before": false,
+      "after": true,
+      "observe_application": "source import SHA and actual loaded roughness texture image has_mipmaps/count",
+      "status": "actual original viewed: band persists; no useful correction in fixture",
+      "decision_if_reduced": "roughness sampling contributes in this fixture; retain bias and require broader material/motion review before promotion",
+      "decision_if_unchanged": "no visible reduction here; do not credit sampling as the fix"
+    },
+    {
+      "id": "sss-off-diagnostic",
+      "owner": "R2-01",
+      "overlay": "/workspace/scratch/visual-round2/role-01/sss-off-diagnostic/overlay",
+      "variable": "Rama warm skin subsurf_scatter_enabled",
+      "before": true,
+      "after": false,
+      "observe_application": "actual named skin material feature flag, unchanged scattering strength and roughness mip state",
+      "status": "actual original viewed: band persists; no useful correction in fixture",
+      "decision_if_reduced": "scattering path contributes in this fixture; diagnostic only, judge form/color before a separate skin treatment",
+      "decision_if_unchanged": "no visible reduction here; keep enabled baseline pending another causal test"
+    }
+  ],
+  "deferred_lighting_probe": {
+    "id": "directional-pcss-off",
+    "status": "trigger met; staged for sole renderer; not rendered or accepted by role03",
+    "trigger": "both current material probes retain the visible band under valid controls",
+    "variable": "scene.sun.light_angular_distance",
+    "before_courtyard": 0.7,
+    "before_world": 0.6,
+    "after": 0.0,
+    "single_first_view": "same courtyard-three-quarter-left-day",
+    "method": "In isolated capture fixture record previous actual property, set only light_angular_distance to 0.0 after normal phase setup, capture, restore exact previous value and verify getter; retain enabled sun shadows and bias0.2/normal0.35 throughout",
+    "decision_if_reduced": "supports PCSS-path contribution; investigate shadow-filter quality without treating this single portrait as a hard-shadow production approval",
+    "decision_if_unchanged": "reject this bounded softness hypothesis as a sufficient correction; preserve raw failed comparison and re-evaluate imported geometry/shadow-map interaction",
+    "overlay": "/workspace/scratch/visual-round2/role-03/directional-pcss-off-r2/overlay",
+    "manifest": "/workspace/scratch/visual-round2/role-03/directional-pcss-off-r2/manifest.json"
+  },
+  "inspect_regions": [
+    "outer ear and concha",
+    "skin visible through earring",
+    "rear neck",
+    "crown/forehead edge",
+    "visible chest only",
+    "jewelry silhouette",
+    "cheek/nose form"
+  ],
+  "coverage_limits": [
+    "one portrait cannot establish foot/ground contact",
+    "tight crop does not expose every chest region",
+    "fixed-camera material probes cannot establish temporal shimmer or cascade transitions"
+  ],
+  "runtime_edits_authorized": false,
+  "deferred_taa_probe": {
+    "id": "taa-on",
+    "trigger": "both material probes retain visible band",
+    "status": "trigger met; staged for sole renderer; not rendered or accepted by role03",
+    "manifest": "/workspace/scratch/visual-round2/role-03/taa-on-r2/manifest.json",
+    "variable": "project.godot anti_aliasing/quality/use_taa",
+    "before": false,
+    "after": true,
+    "retained": "MSAA2x and every light/material/shadow setting",
+    "single_first_view": "same courtyard-three-quarter-left-day with same four-frame settle; record TAA history age since camera cut",
+    "decision_if_reduced": "temporal accumulation suppresses the visible pattern; does not identify roughness versus shadow noise cause",
+    "mandatory_before_promotion": "actual matched 36-frame blink/draw/cancel clip inspected for skinned-face, eyelid, hair, earring, bow and arrow ghosting/smearing; more contexts/contact still required",
+    "engine_coupling": "one explicit TAA setting internally alters camera jitter, temporal history and mip LOD bias; not a pure PCSS algorithm isolation"
+  }
+}

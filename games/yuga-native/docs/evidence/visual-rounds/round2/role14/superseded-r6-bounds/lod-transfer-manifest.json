@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "task": "R2-14",
+  "stage": "principal-facial-form-lod-transfer-v1",
+  "generator_sha256": "046ea6eb6acb529abd3a8c312b96e161f488704b3d03841e64a5120f2ee167d6",
+  "near_input_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+  "near_candidate_sha256": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+  "near_changes": [
+    {
+      "mesh": 1,
+      "primitive": 0,
+      "vertices": 1808,
+      "maximum_displacement_m": 0.000834047794342041
+    },
+    {
+      "mesh": 2,
+      "primitive": 11,
+      "vertices": 1560,
+      "maximum_displacement_m": 0.0015619993209838867
+    },
+    {
+      "mesh": 2,
+      "primitive": 12,
+      "vertices": 564,
+      "maximum_displacement_m": 0.0007586032152175903
+    }
+  ],
+  "levels": {
+    "mid": {
+      "input_sha256": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+      "output_sha256": "44bf3961fa52aef0b1a212dff05dcc6bda5c3cae7c9eaf00303aba9f39d45416",
+      "bytes": 25049516,
+      "primitives": [
+        {
+          "mesh": 1,
+          "primitive": 0,
+          "mapped_vertices": 5564,
+          "changed_rows": {
+            "POSITION": 1808,
+            "NORMAL": 1808,
+            "TANGENT": 1808
+          }
+        },
+        {
+          "mesh": 2,
+          "primitive": 11,
+          "mapped_vertices": 35565,
+          "changed_rows": {
+            "POSITION": 1560,
+            "NORMAL": 1560,
+            "TANGENT": 1557
+          }
+        },
+        {
+          "mesh": 2,
+          "primitive": 12,
+          "mapped_vertices": 922,
+          "changed_rows": {
+            "POSITION": 564,
+            "NORMAL": 564,
+            "TANGENT": 563
+          }
+        }
+      ],
+      "changed_binary_bytes": 74966,
+      "all_other_binary_bytes_exact": true,
+      "json_exact_except_position_bounds": true,
+      "position_bounds_changes": [
+        {
+          "accessor": 4597,
+          "field": "min",
+          "before": [
+            -0.022649448364973068,
+            1.6350598335266113,
+            0.15185892581939697
+          ],
+          "after": [
+            -0.022649448364973068,
+            1.6350598335266113,
+            0.15185974538326263
+          ]
+        },
+        {
+          "accessor": 4597,
+          "field": "max",
+          "before": [
+            0.022649450227618217,
+            1.651807188987732,
+            0.16893260180950165
+          ],
+          "after": [
+            0.022649450227618217,
+            1.651807188987732,
+            0.16969120502471924
+          ]
+        }
+      ]
+    },
+    "far": {
+      "input_sha256": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+      "output_sha256": "62e65520da49d4f81d8cf0755f77df214f7ce0929d4818c13f62555b300a8f43",
+      "bytes": 20507548,
+      "primitives": [
+        {
+          "mesh": 1,
+          "primitive": 0,
+          "mapped_vertices": 5564,
+          "changed_rows": {
+            "POSITION": 1808,
+            "NORMAL": 1808,
+            "TANGENT": 1808
+          }
+        },
+        {
+          "mesh": 2,
+          "primitive": 11,
+          "mapped_vertices": 35359,
+          "changed_rows": {
+            "POSITION": 1560,
+            "NORMAL": 1560,
+            "TANGENT": 1557
+          }
+        },
+        {
+          "mesh": 2,
+          "primitive": 12,
+          "mapped_vertices": 922,
+          "changed_rows": {
+            "POSITION": 564,
+            "NORMAL": 564,
+            "TANGENT": 563
+          }
+        }
+      ],
+      "changed_binary_bytes": 74966,
+      "all_other_binary_bytes_exact": true,
+      "json_exact_except_position_bounds": true,
+      "position_bounds_changes": [
+        {
+          "accessor": 4597,
+          "field": "min",
+          "before": [
+            -0.022649448364973068,
+            1.6350598335266113,
+            0.15185892581939697
+          ],
+          "after": [
+            -0.022649448364973068,
+            1.6350598335266113,
+            0.15185974538326263
+          ]
+        },
+        {
+          "accessor": 4597,
+          "field": "max",
+          "before": [
+            0.022649450227618217,
+            1.651807188987732,
+            0.16893260180950165
+          ],
+          "after": [
+            0.022649450227618217,
+            1.651807188987732,
+            0.16969120502471924
+          ]
+        }
+      ]
+    }
+  },
+  "original_held_ring_sha256": "71cc40e8f5eb732382255cbb9ca2eca88f6306429c2c649f8223dbe5b4db0ccd",
+  "held_ring_check": {
+    "source_vertices": 288,
+    "exported_rows": 434,
+    "all_positions_normals_tangents_exact": true
+  },
+  "scope": "Exact near-row form transfer onto existing LOD topology. Every non-form binary byte, including rig, UV, weights, morphs, animations, images and unrelated geometry, remains unchanged from each original LOD; JSON differs only in eligible POSITION bounds. Numerical identity is not art or continuous-deformation acceptance."
+}

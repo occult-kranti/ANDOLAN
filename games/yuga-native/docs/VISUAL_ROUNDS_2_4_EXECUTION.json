@@ -1,0 +1,873 @@
+{
+  "schema": 1,
+  "source_base": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "requested_rounds": [
+    2,
+    3,
+    4
+  ],
+  "assignments_requested": 45,
+  "max_concurrent_workers": 6,
+  "completion_policy": "Count actual role artifacts and independent review per round; capture revisions or multiple tasks on one unreported run do not create additional assignments. Bounded cycle completion does not establish commercial art quality.",
+  "rounds": [
+    {
+      "round": 2,
+      "title": "Hero face and skin form",
+      "status": "completed_limited_art_target_open",
+      "assignments": [
+        {
+          "id": "R2-01",
+          "role": 1,
+          "agent": "r2_01_skin",
+          "status": "completed_bounded_review",
+          "task": "Isolate the remaining scalp, ear and chest stippling, then author a skin-only material candidate from the accepted original maps. Preserve authored color, UVs, normal-frame conventions and makeup/jewelry boundaries.",
+          "artifacts": [
+            {
+              "path": "art/visual-rounds/skin/NOTICE.md",
+              "sha256": "18a9b7daaeb2da9675dbf2647d2b0f15bc83ba8ce684379309224c21f405deb3"
+            },
+            {
+              "path": "art/visual-rounds/skin/README.md",
+              "sha256": "9e78e197a9955c58fc58b2616251bd3701b1465176be99ffd9c9db6e22421ae6"
+            },
+            {
+              "path": "art/visual-rounds/skin/material-profile.json",
+              "sha256": "b62da0a35488bf68ce6134b5534c75b3abad7f5df408617fca0fe02361a66817"
+            },
+            {
+              "path": "art/visual-rounds/skin/source-manifest.json",
+              "sha256": "e03ab221240f9a5e1eeb14510fb113be319a053681095bee715f918c0e1b5e3d"
+            },
+            {
+              "path": "art/visual-rounds/skin/stage_candidate.py",
+              "sha256": "0789cf709b497b806ebad66957db10554bbb3247b81e6aa7ce2fa7075c47b359"
+            },
+            {
+              "path": "art/visual-rounds/skin/test_candidates.py",
+              "sha256": "51f33f627919b1923b02a888a37cea560620687c0e75dbece20d826edeccc272"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "art/visual-rounds/skin/README.md",
+            "sha256": "9e78e197a9955c58fc58b2616251bd3701b1465176be99ffd9c9db6e22421ae6"
+          }
+        },
+        {
+          "id": "R2-02",
+          "role": 2,
+          "agent": "r2_02_context",
+          "status": "completed_bounded_review",
+          "task": "Prepare review fixtures using the current courtyard and Confluence backgrounds to test face/background separation and reflected-light context. Select existing architecture; add no new ornament.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round2/role02/context-fixtures.json",
+              "sha256": "296b4a8c0c4c0e37544142fbd2506a5cffd93a58e9b75ec9c1609c0d0eb4cd05"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role02/context-selection.md",
+              "sha256": "fdbb67458bea6f7e6c806a74f10a0ba17b78fff94ed54ce2dd4eba7d51d7c9d6"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role02/verification.json",
+              "sha256": "322a5aaca4bf9c580294089ecf2f4a43a3cd380ec10f51967f240c57064c7509"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role02/context-selection.md",
+            "sha256": "fdbb67458bea6f7e6c806a74f10a0ba17b78fff94ed54ce2dd4eba7d51d7c9d6"
+          }
+        },
+        {
+          "id": "R2-03",
+          "role": 3,
+          "agent": "r2_03_lighting",
+          "status": "completed_bounded_review",
+          "task": "Define and compare controlled skin-lighting probes around the accepted shadow policy, keeping artistic skin changes distinct from shadow/contact changes.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round2/role03/lighting-diagnosis.md",
+              "sha256": "f3b0358d89be707dcc2a0d4fa9723dcf176d920d46db1d2e198bc1ae8a9b1c89"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role03/lighting-policy-candidate.json",
+              "sha256": "5382f37e0498ddc2742a52f56d54f5b8fd8f951a18c9f35ffad87fdc2e06fdf3"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role03/lighting-probes.json",
+              "sha256": "3a0e823dc1dbcd1cb7c8a9c509d655ccb03b3b0ffc5a563128cec3fb093213ed"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role03/manifest.json",
+              "sha256": "bfd6c4bce76404628264bd5a73b42aac5e727a265f1e9779b0329f144341bae2"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role03/material-ablation-review.json",
+              "sha256": "16827de2ff74322f4d267eb2016150b947fc8fdb8bc2a5e538537a04d6f45859"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role03/source-pins.json",
+              "sha256": "066ae8d28bde7234df3b8be494459bd69d94fc9e022c95f18461645148929675"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role03/stage_lighting_probe.py",
+              "sha256": "624c678c4a8188fcfe5ca3cbaada40dcd2335d2110c03ed4aaa372cd9dc70e1c"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role03/staging-verification.json",
+              "sha256": "9d5d0306746f987f21340b9e01eb525fdc98b7e09b4ff04e29be4748943e79f3"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role03/lighting-diagnosis.md",
+            "sha256": "f3b0358d89be707dcc2a0d4fa9723dcf176d920d46db1d2e198bc1ae8a9b1c89"
+          }
+        },
+        {
+          "id": "R2-04",
+          "role": 4,
+          "agent": "r2_04_actions",
+          "status": "completed_bounded_review",
+          "task": "Build a deterministic shot list from the existing five accepted ability timelines to expose facial and neck deformation during aiming, draw, release, recoil and cancellation. Retain existing effects and gameplay.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round2/role04/face-action-fixtures.json",
+              "sha256": "0f8da7a2f4c02dbe95778fc58c9a98bbaedb407fa3842922c70c400ae898d659"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role04/receiver-and-phase-requirements.md",
+              "sha256": "8affac61f5464a8e81b6c53dc94fcc1928a74ae070df2464350b11717bbf270c"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role04/source-checks.json",
+              "sha256": "edf8670667f6e44cc39a3040fa3fc077ca1fe76930274ae7142da2ebb4a66a1f"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role04/receiver-and-phase-requirements.md",
+            "sha256": "8affac61f5464a8e81b6c53dc94fcc1928a74ae070df2464350b11717bbf270c"
+          }
+        },
+        {
+          "id": "R2-05",
+          "role": 5,
+          "agent": "r2_05_deformation",
+          "status": "completed_bounded_review",
+          "task": "Evaluate the existing face morphs and head/neck motion under candidate facial forms; author only the minimal corrective morph or blend change justified by visible closure/intersection failures.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round2/role05/analyze_deformation.py",
+              "sha256": "d4508cda96eebda0b23b5465ae2ae7ccd1102dbb11c492de4463fc3bcb25041a"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role05/animation-comparison.md",
+              "sha256": "676f2c2f9de3ec79c80ef6af4216210c44a99af5e8a1afba02d5e28a4d373530"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role05/baseline-deformation-r2.json",
+              "sha256": "baab8aa13b77c684fd0c98efea720e99c29358d9546c06e559f4dbc27ef8dc5e"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role05/baseline-runtime-summary.json",
+              "sha256": "fab89687d50bc95f7b7b5d1f07ce7cd8b8e0d98c1c1de6ce455b8a233e43a0b5"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role05/candidate-r5-source-deformation.json",
+              "sha256": "7d5f16f7052cacb9fd9f27f554fa5f2b1dc353ce84c5fc68c9b17154507b1f60"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role05/deformation-samples.json",
+              "sha256": "26c735c76f316dada63b1f0a89ac23175bfb44ab5ec3442683099c4e3e76432e"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role05/manifest.json",
+              "sha256": "ebc3ad2fa86e673613beebd9f24627a3c7f54cd491df26246b906dac075f3f7b"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role05/morph-correction-candidate.json",
+              "sha256": "864d13494eb8416ffd2730ab16c0729390e0bbac027f93ec9682e74301a3dabf"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role05/animation-comparison.md",
+            "sha256": "676f2c2f9de3ec79c80ef6af4216210c44a99af5e8a1afba02d5e28a4d373530"
+          }
+        },
+        {
+          "id": "R2-06",
+          "role": 6,
+          "agent": "r2_06_capture",
+          "status": "completed_bounded_review",
+          "task": "Own all heavy imports and captures: freeze the final Round 1 baseline, record controlled skin probes and matched candidate views, then continuous face/deformation context.",
+          "artifacts": [],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role06/HANDOFF.md",
+            "sha256": "356ca74dc6d37c2a87fa2c3228b1fc4b2869026fd1e6d510de8e6338c274a05f"
+          }
+        },
+        {
+          "id": "R2-07",
+          "role": 7,
+          "agent": "r2_07_source",
+          "status": "completed_bounded_review",
+          "task": "Audit only the assets and tools needed for this face pass: actual skin maps/import options, face/rig/morph source, editable reconstruction and relevant official material semantics.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round2/role07/audit_source.py",
+              "sha256": "71000e324acd7706de359780ded56c714c356baf47acb6b5fd0b491c5facff13"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role07/current-seam.json",
+              "sha256": "f663fe4911156a56cbf4ff71a4fab5384a7c5000427126728e1919dd0dfc0ea0"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role07/manifest.json",
+              "sha256": "21c13154ebf1276654878140d75f70dd1f2b84fce442b6f2256a12cf9e71c563"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role07/reuse-decisions.md",
+              "sha256": "c07f48cd33e1743b39c62346cf1541ee4cb0dfdd87958ddde8e89cd3b1fe9175"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role07/source-and-import-ledger.json",
+              "sha256": "9502b834a3f39c6078736364c3cc18251cfa469a9f921f5e541068cc1ebcde13"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role07/reuse-decisions.md",
+            "sha256": "c07f48cd33e1743b39c62346cf1541ee4cb0dfdd87958ddde8e89cd3b1fe9175"
+          }
+        },
+        {
+          "id": "R2-08",
+          "role": 8,
+          "agent": "r2_08_forms",
+          "status": "completed_bounded_review",
+          "task": "Create one isolated editable facial-form candidate that improves eyelid, lip/chin and cheek planes while retaining Rama identity; first work from the existing reconstructed mesh and keep original topology where feasible.",
+          "artifacts": [
+            {
+              "path": "art/visual-rounds/face/NOTICE.md",
+              "sha256": "82d6f6ccfe8f9264d456e1c05672dbccc01a67e32c77e4f833a941aff25429df"
+            },
+            {
+              "path": "art/visual-rounds/face/README.md",
+              "sha256": "ef9a19394b0778d1f5477a211fd7a779acae7132985ab26dd1046b15ad269a4f"
+            },
+            {
+              "path": "art/visual-rounds/face/build_form_candidate.py",
+              "sha256": "1e05b3cb6d4cfa96c6590fdaaad73bc3760494d8a0e52042d09cde5d5b6d0c84"
+            },
+            {
+              "path": "art/visual-rounds/face/candidate-manifest.json",
+              "sha256": "fcbb7d133a31f2a1a2b0439039e8493ea84f309bcac8dccf09be8ace71fa5638"
+            },
+            {
+              "path": "art/visual-rounds/face/design-decisions.md",
+              "sha256": "1534c8d49b8e21e840134237a1251dfeb512f4f1b638e7ba4234c4e75f92f9c2"
+            },
+            {
+              "path": "art/visual-rounds/face/import_editable.py",
+              "sha256": "dd081d16adf3aaf7f7d43a189d577a0744434f7f72cefa8057343d29a277d8c2"
+            },
+            {
+              "path": "art/visual-rounds/face/validate_form_candidate.py",
+              "sha256": "be53e85bc8dfffc7046acfa6d03f8e1938c6b6917c8ca93572028451a61b13c6"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "art/visual-rounds/face/README.md",
+            "sha256": "ea1ac7b9a309dafc5e70e611e79f5b7cd6594b0674967830ef6c06dc6875d7fa"
+          }
+        },
+        {
+          "id": "R2-09",
+          "role": 9,
+          "agent": "r2_09_material_review",
+          "status": "completed_bounded_review",
+          "task": "Adversarially inspect the skin candidate and reversible material binding, including exact texture channels, source ownership, appearance restoration and the actual matched pixels.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/compare_captures.py",
+              "sha256": "b02670e989ce7d5ff733573f68e63c51b131bc4757fa5f5f66b08030e05ed1d9"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/existing-finish-review.json",
+              "sha256": "3734ec405fdace2bb3d7b6cfd053aec4a90a012236d4da103fbee126de4c2c6b"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/imported-material-review.json",
+              "sha256": "171a3156802bef7ecef7f52e2231d288a458a1b9eaeccd4ef58470ae3389db0f"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/imported_material_review.gd",
+              "sha256": "4ad3259fc6c76a22e962586f305469256e6250c4e64e553e35a979562b7753f6"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/material-adversarial-review.json",
+              "sha256": "d944b150905563fa0030c54fc3e1b81c9bbe059c4007378c884f8284ae5bc8ea"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/material-image-review.md",
+              "sha256": "22be939a78f183191bd666ae81033e8d4a51817177b660c1adc3601e1372fe4f"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/mips-pair-review.json",
+              "sha256": "201acf4e4586802e04c9b6f3225588f3590c212fb29abf4f41e9287914791c4b"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/review_source.py",
+              "sha256": "ae6807162992bf97a6aa13fb446e4bd3338f50fc156a4cfff542d47aaf250cd9"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/reviewed-images.json",
+              "sha256": "1446f631252673a55803b98a5e611d12a1f387deeda2ae95c424d08f85f8113d"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/source-review.json",
+              "sha256": "9bbe522635dcfe060b7a55408f67863dfd30d470e7dac9df423bacff145242f8"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role09/sss-pair-review.json",
+              "sha256": "4297da72a878eac3c7c6970ffcc4f18f370cddab940708365c3315e3c574e814"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role09/material-image-review.md",
+            "sha256": "22be939a78f183191bd666ae81033e8d4a51817177b660c1adc3601e1372fe4f"
+          }
+        },
+        {
+          "id": "R2-10",
+          "role": 10,
+          "agent": "r2_10_motion_review",
+          "status": "completed_bounded_review",
+          "task": "Check candidate blink/aim/action deformation against the existing facial boundary, unique writer and timing contracts using actual imported candidate geometry.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round2/role10/baseline-source-integrity.json",
+              "sha256": "622762d0da177f317336b64adc5dafc0adebe4b31d1145470d28be5c462bc736"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role10/candidate-r6-face-check.json",
+              "sha256": "ceda12073fe706cf32bb4704e4e479465155d4f891a1a02f896d0731b50f1436"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role10/face-motion-counterexamples-r5-rejected.json",
+              "sha256": "27ffcb67681359effd8fe8ec118d14fac86c2d3e8c94a31a8b13f5cb7e8bcef9"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role10/face-motion-counterexamples.json",
+              "sha256": "a09d847a5aafba051166efbee6d9d69ec44f42c740259fcf1db7f008ef65bffe"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role10/face-motion-review.md",
+              "sha256": "ec4009beaeb2505dab0798d053a31a5f8cb622fa327e5b56a706283a9addb5c2"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role10/review_deformation-r5-rejected.py",
+              "sha256": "b27eade8be0f51e3b039162b91f21b387a2162266fe4a300b00db5dc553a6f6c"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role10/review_deformation.py",
+              "sha256": "daa8c4ca1998a4cfe634679a157e92bfb0f2f4d9be5159977d65be619408df6c"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role10/face-motion-review.md",
+            "sha256": "ec4009beaeb2505dab0798d053a31a5f8cb622fa327e5b56a706283a9addb5c2"
+          }
+        },
+        {
+          "id": "R2-11",
+          "role": 11,
+          "agent": "r2_11_effect_review",
+          "status": "completed_bounded_review",
+          "task": "Evaluate whether the revised face remains coherent and readable with the existing five action effects and reduced options; use the fixtures rather than authoring new effects.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/REVIEW.md",
+              "sha256": "cea443017d47b714b971733b1202207ae547355b1c676711d2bd515f8335f7ba"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/abilities.json",
+              "sha256": "7ae7b62946ff12318b953befe2bce0a7fba1587ec7bf64dededf008909707e5c"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/abilities.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/abilities.stdout.log",
+              "sha256": "75c1400249357e21640d273768b160effe38bb0f2cfb8a6b73798bf77807aa65"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/adversarial.json",
+              "sha256": "aa26c62d13339cc4b1325b07421c2a2432d47945140a6c64cf79a33d95bfe2e5"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/adversarial.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/adversarial.stdout.log",
+              "sha256": "9f95ebc221d142e94ba0534377e0757b59616826e5f84832d48a9ec15966311a"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/audit-evidence.py",
+              "sha256": "c40eff193dc2a1f6d7368e829b89dc86207b668a931bf6f4051bd25d83bfaa2b"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/manifest.json",
+              "sha256": "13a7365a467a7898b8165645886d4983e1004adb59fef072c3eaa55b7008e700"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/reviewed-images.json",
+              "sha256": "d6e751ec1d200abeebfd65c32725059497f4a0b6f2ea9a4082c507f84a0502cb"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/run-review.py",
+              "sha256": "5a423e42f3e59ba25df705c823eed0333750b642b35682f28fe930926c21553c"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/run.json",
+              "sha256": "c44f95a4480395b7090fb1b63352197db37618c964d2571b3bdcc98e2f91780e"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/source-and-event-review.json",
+              "sha256": "6fb8d765dffb8aa638efbc7dba7fc6d596aee43f4bbbaa0f07d079fd89f71ee0"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/vfx.json",
+              "sha256": "c2c4340971c893500055d27aa4f1585d4b790de38bdabc829b413f5a7fff70c0"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/vfx.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/vfx.stdout.log",
+              "sha256": "89b4472c69d5063235df854b686e08fd71104e6c8e0b1216f3bbd8e7d2877eb7"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/visual.json",
+              "sha256": "982f7a668e6802043dd250d75a33392ca944c92c965883955c7465f57b008076"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/visual.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role11/visual.stdout.log",
+              "sha256": "c6548c404ba1cb3954c92b74399760fe248e711548e7a042de55c0ee44d36a0e"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role11/REVIEW.md",
+            "sha256": "cea443017d47b714b971733b1202207ae547355b1c676711d2bd515f8335f7ba"
+          }
+        },
+        {
+          "id": "R2-12",
+          "role": 12,
+          "agent": "r2_12_environment_review",
+          "status": "completed_bounded_review",
+          "task": "Verify revised facial shading across the selected existing world contexts, including contacts and moving-camera shadow transitions.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round2/role12/audit_context.py",
+              "sha256": "41b156b9ec36e17c39123a2dc14bf23eb1397c9c6f0850b9dbadb66306e5b1e7"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role12/context-review.json",
+              "sha256": "f6e7efea7bc47d5716ba988695750ce0331df3ea057c9883a84e3d38be76e090"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round2/role12/review.md",
+              "sha256": "db658ddf20328615482c927654213399f524e0db93416265723daf304e891603"
+            }
+          ],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role12/review.md",
+            "sha256": "db658ddf20328615482c927654213399f524e0db93416265723daf304e891603"
+          }
+        },
+        {
+          "id": "R2-13",
+          "role": 13,
+          "agent": "r2_13_resources",
+          "status": "completed_bounded_review",
+          "task": "Measure actual resource and lifecycle changes caused by the face/material candidate, keeping near/mid/far hero ownership and one face writer intact.",
+          "artifacts": [],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role13/lod-and-lifecycle-review.md",
+            "sha256": "afa5fa004fe2a6ea886bc3700b1f5e4107a36eb7c7d7579e037f45a9f8b55fdc"
+          }
+        },
+        {
+          "id": "R2-14",
+          "role": 14,
+          "agent": "r2_14_integration",
+          "status": "completed_bounded_review",
+          "task": "Assemble an isolated face-slice candidate from reviewed material, geometry and morph inputs; run affected source/asset contracts and preserve exact identities for renderer and reviewers.",
+          "artifacts": [],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role14/integration-handoff.md",
+            "sha256": "dcb2adcd186bcc580083f020153c0ccb40eaef5dbfef4ca7a926b36131de2016"
+          }
+        },
+        {
+          "id": "R2-15",
+          "role": 15,
+          "agent": "r2_15_art_review",
+          "status": "completed_bounded_review",
+          "task": "Judge the complete Round 2 skin/form candidate from original matched views and continuous expression/action samples, accepting or rejecting each changed element explicitly.",
+          "artifacts": [],
+          "review_disposition": "Executed assignment; see pinned report and final R2-15 review for accepted and rejected scope.",
+          "executed_report": {
+            "path": "docs/evidence/visual-rounds/round2/role15/ROUND2_ART_REVIEW.md",
+            "sha256": "7bbac8b52771afd0729106e6bf4bef9185bb41b8ed671824b8dea242ade73e99"
+          }
+        }
+      ],
+      "review_disposition": "All fifteen assignments executed; bounded face and zero-angular lighting change accepted after exact metadata/import/framebuffer reconciliation. Material diagnostics rejected; unresolved art gates remain open.",
+      "integration_receipt": "docs/evidence/visual-rounds/round2/INTEGRATION.json"
+    },
+    {
+      "round": 3,
+      "title": "Hair and cloth: silhouette, material response and motion stability",
+      "status": "in_progress",
+      "assignments": [
+        {
+          "id": "R3-01",
+          "role": 1,
+          "agent": "r3_01_cloth",
+          "status": "returned_pending_review",
+          "task": "Author a bounded cloth-fold/thickness or material candidate from the accepted Round2 hero; preserve rig, source rights and silhouette readability.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round3/role01/REVIEW.md",
+              "sha256": "92bf9d3c0021489e702bfeb9530ef151348a6b7fc9e0c18ab6b56440d402d5cb"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round3/role01/artifact-manifest.json",
+              "sha256": "0d0aec5b4374d7eab62717840905bb147d91ace293d6813fcd908f8d3080bdc1"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round3/role01/cpu-tests-rejected-mip-reference.json",
+              "sha256": "125b2c2253cfb49027b1a79aaaa74d56fab9597f915cca24cbd55d508198baab"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round3/role01/cpu-tests.json",
+              "sha256": "66a6602d0aa36164538879406c51379285cb2f75db266c042b72ca2947d23c5c"
+            }
+          ],
+          "review_disposition": "Executed original art/tool candidate and tests; runtime adoption and visual acceptance pending"
+        },
+        {
+          "id": "R3-02",
+          "role": 2,
+          "agent": null,
+          "status": "planned",
+          "task": "Build fixed front/rear/profile and gameplay hair/cloth silhouette fixtures against existing light stone and dark foliage; no new scenery.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-03",
+          "role": 3,
+          "agent": null,
+          "status": "planned",
+          "task": "Diagnose hair highlight and fabric fold response under unchanged day/night lights; propose only demonstrated material/light corrections.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-04",
+          "role": 4,
+          "agent": null,
+          "status": "planned",
+          "task": "Provide exact five-ability garment/hair clearance fixtures and warning/weapon-occlusion requirements using actual events.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-05",
+          "role": 5,
+          "agent": "r3_05_secondary",
+          "status": "in_progress",
+          "task": "Test and correct candidate cloth/groom deformation and bounded secondary motion during draw, dash, turn and reset, retaining one writer.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-06",
+          "role": 6,
+          "agent": null,
+          "status": "planned",
+          "task": "Freeze the accepted Round2 baseline and isolated Round3 candidate; capture matched originals plus continuous garment/groom action context.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-07",
+          "role": 7,
+          "agent": "r3_07_reuse",
+          "status": "returned_pending_review",
+          "task": "Read selected game-design/update-loop references and inspected open-source cloth/groom/shader techniques. Implement one justified offline art or runtime diagnostic adaptation; preserve exact source/license/version and distinguish research from adoption. Supply actionable contracts to roles1,5,8 and Round4, without a new-engine migration.",
+          "artifacts": [
+            {
+              "path": "docs/evidence/visual-rounds/round3/role07/REVIEW.md",
+              "sha256": "cb03ae7797e68976a9410d5e5d10cbd95149e151fdcab6ca3634f8e9ed4ca6d5"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round3/role07/artifact-hashes.json",
+              "sha256": "c21def5ae72d650e05bc3713604cd3265fded214cc2fa79e83762e5230c34f0c"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round3/role07/baseline-frame-probe.json",
+              "sha256": "3e2d46a9c4821a0ea299a89b676f619f381a7f223c266292e2692b33b145a05a"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round3/role07/reading-ledger.json",
+              "sha256": "21ebeb2fc8adbcbc1eddfe0eab5959c9dc3746f43194aac10e22b15a3ecb3762"
+            },
+            {
+              "path": "docs/evidence/visual-rounds/round3/role07/test-receipt.json",
+              "sha256": "3ad494b6e8acfe3034c8f3968fe80fedcdec2e8caf58e6a8f7a271bafbcb7dd6"
+            }
+          ],
+          "review_disposition": "Executed original art/tool candidate and tests; runtime adoption and visual acceptance pending"
+        },
+        {
+          "id": "R3-08",
+          "role": 8,
+          "agent": "r3_08_groom",
+          "status": "in_progress",
+          "task": "Author principal groom shapes, scalp/temple coverage and asymmetry as an isolated reproducible candidate; avoid detached cosmetic wisps.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-09",
+          "role": 9,
+          "agent": null,
+          "status": "planned",
+          "task": "Independently check cloth/hair channels, normal frames, material ownership and import/lifecycle behavior on actual candidate.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-10",
+          "role": 10,
+          "agent": null,
+          "status": "planned",
+          "task": "Independently evaluate groom/cloth intersections and hand/string/face contacts through action and locomotion, including reset.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-11",
+          "role": 11,
+          "agent": null,
+          "status": "planned",
+          "task": "Inspect actual five-action threat/weapon visibility with the new cloth/hair silhouette and reduced effects.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-12",
+          "role": 12,
+          "agent": null,
+          "status": "planned",
+          "task": "Inspect gameplay-scale silhouette, near walls/foliage, camera overlap and day/night background separation.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-13",
+          "role": 13,
+          "agent": null,
+          "status": "planned",
+          "task": "Measure actual new geometry, materials, texture memory and LOD ownership; keep physical-GPU timing open if unavailable.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-14",
+          "role": 14,
+          "agent": null,
+          "status": "planned",
+          "task": "Assemble reviewed groom/cloth stages with notices and LOD contracts; run affected checks, preserving source and candidate recovery.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R3-15",
+          "role": 15,
+          "agent": null,
+          "status": "planned",
+          "task": "Independently inspect all required original views and sequence samples; accept/reject each groom/cloth change and publish remaining defects.",
+          "artifacts": [],
+          "review_disposition": null
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "title": "Continuous movement, combat transitions and contact",
+      "status": "planned",
+      "assignments": [
+        {
+          "id": "R4-01",
+          "role": 1,
+          "agent": null,
+          "status": "planned",
+          "task": "Define skinned-surface continuity and silhouette checkpoints through motion; diagnose any new seam or material instability without unrelated resculpting.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-02",
+          "role": 2,
+          "agent": null,
+          "status": "planned",
+          "task": "Build actual ground, turn, stopping and landing fixtures on existing traversal surfaces with explicit contact normals and clear camera views.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-03",
+          "role": 3,
+          "agent": null,
+          "status": "planned",
+          "task": "Hold matched lighting/exposure for continuous motion comparisons and diagnose shadow/contact changes separately from bone motion.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-04",
+          "role": 4,
+          "agent": null,
+          "status": "planned",
+          "task": "Implement or verify exact action/locomotion transition receipts for draw/release/cancel/dash/hit/respawn without changing combat authority.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-05",
+          "role": 5,
+          "agent": null,
+          "status": "planned",
+          "task": "Implement a bounded motion-controller correction for demonstrated start/stop/reversal/contact defects; retain exact rig and shared action clocks.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-06",
+          "role": 6,
+          "agent": null,
+          "status": "planned",
+          "task": "Freeze Round3 baseline and motion candidate; capture uninterrupted start/stop/turn/reversal/land/action sequences with per-frame pose and event evidence.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-07",
+          "role": 7,
+          "agent": null,
+          "status": "planned",
+          "task": "Compare current four-segment leg/support contract against existing native Godot IK facilities with a bounded actual rig experiment before external solver adoption.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-08",
+          "role": 8,
+          "agent": null,
+          "status": "planned",
+          "task": "Implement only justified follow-through/secondary-motion synchronization corrections; prevent multiple writers and face/weapon intersections.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-09",
+          "role": 9,
+          "agent": null,
+          "status": "planned",
+          "task": "Independently audit skinned surface/material continuity and lifecycle across candidate motion, pause/reset and LOD changes.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-10",
+          "role": 10,
+          "agent": null,
+          "status": "planned",
+          "task": "Independently run adversarial contact/joint-step checks and judge candidate frame sequences; retain meaningful failed prototypes.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-11",
+          "role": 11,
+          "agent": null,
+          "status": "planned",
+          "task": "Independently verify warning, nocked-arrow and release/impact visibility during moving/cancelled actions and reduced options.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-12",
+          "role": 12,
+          "agent": null,
+          "status": "planned",
+          "task": "Independently verify render pose versus actual capsule/ground/landing behavior and route/camera visibility in existing world fixtures.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-13",
+          "role": 13,
+          "agent": null,
+          "status": "planned",
+          "task": "Measure motion work, resource allocation and sustained lifecycle at declared simulation rates; separate numerical bounds from hardware FPS.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-14",
+          "role": 14,
+          "agent": null,
+          "status": "planned",
+          "task": "Integrate the reviewed motion correction and synchronize exact content/provenance pins; run focused regression and whole-slice integration checks.",
+          "artifacts": [],
+          "review_disposition": null
+        },
+        {
+          "id": "R4-15",
+          "role": 15,
+          "agent": null,
+          "status": "planned",
+          "task": "Independently review continuous source-bound motion recordings, contact overlays and ordinary gameplay; accept/reject changes and update next defects.",
+          "artifacts": [],
+          "review_disposition": null
+        }
+      ]
+    }
+  ],
+  "current_user_focus": "Apply game-design/reference and inspected open-source techniques to visible graphics, stable hair/cloth, smooth animation transitions and combat readability; prove adoption with actual code, numerical counterexamples and source-matched continuous renders.",
+  "execution_note": "All15Round2 roles dispatched with actual artifacts returning; final source-matched candidate capture/review pending. UI track separately records48newassignments. No further visual round counted complete."
+}

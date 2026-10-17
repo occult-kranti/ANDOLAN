@@ -1,0 +1,72 @@
+{
+  "task": "R2-05",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "status": "SOURCE_DEFORMATION_PASS; candidate import and actual motion pixels pending R2-06",
+  "baseline_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+  "candidate_sha256": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+  "actual_executed": {
+    "runtime_checks": 73,
+    "runtime_passed": 73,
+    "baseline_actual_pose_samples": 37,
+    "candidate_source_deformation_checks": 16,
+    "candidate_source_deformation_passed": 16,
+    "candidate_source_pose_and_target_samples": 50,
+    "skinned_vertices_per_sample": 55363,
+    "candidate_Godot_import": false,
+    "candidate_render_review": false
+  },
+  "limits": [
+    "Candidate geometry replay uses actual baseline imported skin matrices and sampled poses, not a candidate importer run.",
+    "Only baseline neutral front/three-quarter pixels viewed by R2-05.",
+    "Individual L/R samples are CPU-only; no manual publish bypass.",
+    "Existing source open-cornea obstruction and hidden globe inset retained.",
+    "No whole-triangle collision proof or physical GPU/art-quality acceptance."
+  ],
+  "next_owners": [
+    "R2-06 exact candidate import/runtime rerun and rendered blink/actions",
+    "R2-10 independent review",
+    "Root integration and disposition"
+  ],
+  "files": [
+    {
+      "path": "tests/visual_round_face_cases.gd",
+      "sha256": "8569a901862d28a851c6b757b9a9be3b94b60957b22c7fb937f7e7f43f2119fe",
+      "bytes": 11171
+    },
+    {
+      "path": "docs/evidence/visual-rounds/round2/role05/analyze_deformation.py",
+      "sha256": "d4508cda96eebda0b23b5465ae2ae7ccd1102dbb11c492de4463fc3bcb25041a",
+      "bytes": 17579
+    },
+    {
+      "path": "docs/evidence/visual-rounds/round2/role05/animation-comparison.md",
+      "sha256": "676f2c2f9de3ec79c80ef6af4216210c44a99af5e8a1afba02d5e28a4d373530",
+      "bytes": 7116
+    },
+    {
+      "path": "docs/evidence/visual-rounds/round2/role05/baseline-deformation-r2.json",
+      "sha256": "baab8aa13b77c684fd0c98efea720e99c29358d9546c06e559f4dbc27ef8dc5e",
+      "bytes": 53228
+    },
+    {
+      "path": "docs/evidence/visual-rounds/round2/role05/baseline-runtime-summary.json",
+      "sha256": "fab89687d50bc95f7b7b5d1f07ce7cd8b8e0d98c1c1de6ce455b8a233e43a0b5",
+      "bytes": 77092
+    },
+    {
+      "path": "docs/evidence/visual-rounds/round2/role05/candidate-r5-source-deformation.json",
+      "sha256": "7d5f16f7052cacb9fd9f27f554fa5f2b1dc353ce84c5fc68c9b17154507b1f60",
+      "bytes": 94199
+    },
+    {
+      "path": "docs/evidence/visual-rounds/round2/role05/deformation-samples.json",
+      "sha256": "26c735c76f316dada63b1f0a89ac23175bfb44ab5ec3442683099c4e3e76432e",
+      "bytes": 94167
+    },
+    {
+      "path": "docs/evidence/visual-rounds/round2/role05/morph-correction-candidate.json",
+      "sha256": "864d13494eb8416ffd2730ab16c0729390e0bbac027f93ec9682e74301a3dabf",
+      "bytes": 1126
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "task": "R2-01",
+  "source_commit_pin": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "runtime_inputs": {
+    "assets/heroes/rama-hero.glb": {
+      "sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "bytes": 34322216
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-basecolor.png": {
+      "sha256": "ea49440de0c434b7bd6d0336fbebe0bbe600d448e4603a8bf912f9088160ae5f",
+      "bytes": 119566,
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "channel_ranges": [
+        [
+          118,
+          122
+        ],
+        [
+          65,
+          67
+        ],
+        [
+          37,
+          38
+        ]
+      ]
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-normal.png": {
+      "sha256": "0968f8aed162bafc3f6f0d4b333b90ff136dbc04ad99bebf8f00e5a774c4ea80",
+      "bytes": 136052,
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "channel_ranges": [
+        [
+          123,
+          132
+        ],
+        [
+          122,
+          133
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-roughness.png": {
+      "sha256": "7e1da3a481852ff8788d36fcc18c5eecf09b44783e70b695a2f239e4d8c24902",
+      "bytes": 90337,
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "channel_ranges": [
+        [
+          255,
+          255
+        ],
+        [
+          134,
+          136
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    },
+    "assets/materials/rama-finish/skin-roughness.png": {
+      "sha256": "d89c377097a342a5f60cc5bf2abf03405aaa5415267b2ce371ef8772079c5611",
+      "bytes": 87740,
+      "size": [
+        512,
+        512
+      ],
+      "mode": "L",
+      "channel_ranges": [
+        128,
+        168
+      ]
+    },
+    "scripts/rama_surface_finish.gd": {
+      "sha256": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+      "bytes": 11373
+    },
+    "scripts/production_lighting.gd": {
+      "sha256": "b1da45eeb090eabb802f199c84759532b4fd202371fa6c543de6316c2740ca52",
+      "bytes": 5160
+    },
+    "scripts/world_lighting.gd": {
+      "sha256": "2b0e9c992b7e13456ef135fc9457172d3731103a27715d54f393c62d391c1ceb",
+      "bytes": 8851
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-basecolor.png.import": {
+      "sha256": "b9c77eb83185c35d6c123fd7ed2a4652fc6d3803d2ffd973dd3351e4e115ae08",
+      "bytes": 1086
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-normal.png.import": {
+      "sha256": "236d05d7fef6c644a85abe49e5c0541e407b200a485eda389a412c5eba2e48bd",
+      "bytes": 1075
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-roughness.png.import": {
+      "sha256": "0a6a5d73a5d06a47ec524f72f0fc2b03aa7577411f63c8a03a1b23f8e31c0f89",
+      "bytes": 1086
+    },
+    "assets/materials/rama-finish/skin-roughness.png.import": {
+      "sha256": "02cf763cdcf14daa7e70f61e94c3c234b468fa4ad70e820531a5131b9012f01a",
+      "bytes": 975
+    }
+  },
+  "viewed_originals": {
+    "docs/evidence/visual-campaign/capture-shadow-confirm-world-day-r3/shadow-bias-depth2-face-day.png": {
+      "sha256": "f0ee3f85ce8f09a99425c885d365f8cff72b45e95bffea1d4f97bae30be17313",
+      "review": "Opened original image with view_image; no newly rendered evidence claimed"
+    },
+    "docs/evidence/visual-campaign/capture-shadow-confirm-world-night-r3/shadow-bias-depth2-face-night.png": {
+      "sha256": "1225b9d1d78d4cfee5d71baf6ba7505d1204abf588a0c2dbf2a9b174f0f430a6",
+      "review": "Opened original image with view_image; no newly rendered evidence claimed"
+    },
+    "docs/evidence/visual-campaign/capture-final-anchors-r4/02-hero-near-day.png": {
+      "sha256": "8f711a0345173f66810d9adad2a2a6f190bffc87f827020863e367f09553aa8e",
+      "review": "Opened original image with view_image; no newly rendered evidence claimed"
+    }
+  },
+  "rights_source": {
+    "path": "art/hero-rama/NOTICE.md",
+    "sha256": "f110076b5baf174e1a5400ce0891e78f5782d0323670ec3fd72f257a02d861f6"
+  },
+  "observations": [
+    "Finish skin roughness is single-channel L and bound through RED; original glTF roughness is RGB and occupies GREEN.",
+    "Finish skin roughness import has mipmap generation disabled; original skin albedo, normal and roughness imports enable mips.",
+    "No direct causal proof yet; source maps alone cannot attribute residual skin dots to roughness or scattering."
+  ]
+}

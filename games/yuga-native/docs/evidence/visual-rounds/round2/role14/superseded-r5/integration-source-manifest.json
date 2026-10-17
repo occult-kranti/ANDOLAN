@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "task": "R2-14",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "status": "bounded-integration-ready-runtime-promotion-and-art-review-pending",
+  "source_files": {
+    "tools/package-native.py": {
+      "sha256": "71f38c0e4cc843f39ed4a76f36f9d21f6150242521c76ffd34f1fe777c7eeae7",
+      "bytes": 48267
+    },
+    "tests/rama_package_cases.py": {
+      "sha256": "813402567580d619984f14f7a6b9cb5cebfa234f33d0782a789916bb40d2e085",
+      "bytes": 33375
+    },
+    "tools/visual-rounds/integration/transfer_form_lods.py": {
+      "sha256": "3566ae2a4edacc28ec2addc90c7e25564591dd2325e9e596d2b9c0bdf8b337b3",
+      "bytes": 10645
+    },
+    "tools/visual-rounds/integration/test_transfer_form_lods.py": {
+      "sha256": "580e385206bc0a78e3e9a091a8497f948fc2118716273db14144e1f61395e705",
+      "bytes": 6756
+    },
+    "tools/visual-rounds/integration/prepare_form_review.py": {
+      "sha256": "f09567115ac7f5e3abc886be9dc381c6403abc27b0031149a85b5153094ceac6",
+      "bytes": 7947
+    },
+    "art/visual-rounds/face/build_form_candidate.py": {
+      "sha256": "1e05b3cb6d4cfa96c6590fdaaad73bc3760494d8a0e52042d09cde5d5b6d0c84",
+      "bytes": 12072
+    },
+    "art/visual-rounds/face/import_editable.py": {
+      "sha256": "dd081d16adf3aaf7f7d43a189d577a0744434f7f72cefa8057343d29a277d8c2",
+      "bytes": 4770
+    },
+    "art/hero-rama-lod/glb_lod.py": {
+      "sha256": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7",
+      "bytes": 17623
+    },
+    "art/hero-rama-face/validate_native_seam.py": {
+      "sha256": "f93ec917c0e3ab8b144ee003149679fcd14107bdfbfe804813731dfe5ce01b29",
+      "bytes": 4722
+    },
+    "NOTICE/RAMA-HERO-PROVENANCE.json": {
+      "sha256": "eae9e6cb3701f7030af7ec4365f6a5bd7d7d43c785e53c4f3e19f2d00981421c",
+      "bytes": 5037
+    },
+    "assets/heroes/rama-hero.glb": {
+      "sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "bytes": 34322216
+    },
+    "assets/heroes/rama-hero-mid.glb": {
+      "sha256": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+      "bytes": 25049516
+    },
+    "assets/heroes/rama-hero-far.glb": {
+      "sha256": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+      "bytes": 20507548
+    }
+  },
+  "candidate_overlay": "/workspace/scratch/visual-round2/role-14/form-lods-r2/overlay",
+  "candidate_assets": {
+    "assets/heroes/rama-hero-far.glb": {
+      "sha256": "02f54e29bcd7351d6c4b2c25290faf133e4435962b2b7b78a9c2c5885210c30d",
+      "bytes": 20507548
+    },
+    "assets/heroes/rama-hero-mid.glb": {
+      "sha256": "dcfdc6413e7d23744b12189b6f63dab5116ad84f8feef8e2b963266df2ac4b38",
+      "bytes": 25049516
+    },
+    "assets/heroes/rama-hero.glb": {
+      "sha256": "2dbd60ae1ca090340a1b927f71f815da313e976d8645991ea3ecc73282f7dd88",
+      "bytes": 34322216
+    }
+  },
+  "promotion_review_tree": "/workspace/scratch/visual-round2/role-14/provenance-review-r1",
+  "checks": {
+    "package_counterexamples": 174,
+    "form_lod_counterexamples": 23,
+    "seam_checks": {
+      "near": 4,
+      "mid": 4,
+      "far": 4
+    },
+    "actual_schema3_provenance_sources": 42
+  },
+  "unrun": [
+    "Fresh imported candidate Godot lifecycle/LOD/material/face/action checks; copied test scripts to renderer-owned capture-forms-project-r1/tests only",
+    "Actual pixels, expression/action deformation and transition review",
+    "PCK/export/package/release; no export scheduled"
+  ],
+  "rejected_retained": {
+    "path": "/workspace/scratch/visual-round2/role-14/form-lods-r1",
+    "reason": "Inherited stale Natural lips POSITION extrema; corrected r2 matches exact18POSITIONbounds at each LOD"
+  },
+  "preserved": "Default runtime assets and native NOTICE unchanged; all historical r7/q3/face sources and schema2 notice preserved."
+}

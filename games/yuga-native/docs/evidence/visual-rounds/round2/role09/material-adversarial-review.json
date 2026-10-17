@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "task": "R2-09",
+  "product": "YUGA native",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "status": "source review complete; material diagnostics rejected as demonstrated stipple fix; form pixel review pending",
+  "source_disposition": "Accept one-variable overlays and r4 form material/frame preservation for further isolated capture; no runtime promotion",
+  "runtime_hero_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+  "form_candidate_sha256": "491c2cb608227c48be57937db3351daa51cc22871b00c1587f1f205053766144",
+  "reports": {
+    "source-review.json": {
+      "path": "source-review.json",
+      "sha256": "9bbe522635dcfe060b7a55408f67863dfd30d470e7dac9df423bacff145242f8",
+      "checks": 13,
+      "passed": true
+    },
+    "imported-material-review.json": {
+      "path": "imported-material-review.json",
+      "sha256": "171a3156802bef7ecef7f52e2231d288a458a1b9eaeccd4ef58470ae3389db0f",
+      "checks": 14,
+      "passed": true
+    },
+    "existing-finish-review.json": {
+      "path": "existing-finish-review.json",
+      "sha256": "3734ec405fdace2bb3d7b6cfd053aec4a90a012236d4da103fbee126de4c2c6b",
+      "checks": 54,
+      "passed": true
+    },
+    "mips-pair-review.json": {
+      "path": "mips-pair-review.json",
+      "sha256": "201acf4e4586802e04c9b6f3225588f3590c212fb29abf4f41e9287914791c4b",
+      "checks": 0,
+      "passed": true
+    },
+    "sss-pair-review.json": {
+      "path": "sss-pair-review.json",
+      "sha256": "4297da72a878eac3c7c6970ffcc4f18f370cddab940708365c3315e3c574e814",
+      "checks": 0,
+      "passed": true
+    }
+  },
+  "viewed_originals": 12,
+  "image_list": "reviewed-images.json",
+  "defects": [
+    {
+      "id": "R2-09-D1",
+      "defect": "Fine dark stipple persists behind the ear, down the hair/neck boundary and on the forehead.",
+      "source": "role06 baseline courtyard-three-quarter-left-day/night and front day/night originals; same day original in both material diagnostics",
+      "correction": "Keep accepted maps. Continue matched one-variable lighting/sampling probes, then repeat the demonstrated defect view and relevant day/night/motion contexts.",
+      "decision": "Reject roughness-mips and sss-off-diagnostic as proven residual-stipple fixes; retain both negative diagnostics."
+    },
+    {
+      "id": "R2-09-D2",
+      "defect": "Form candidate source changes near body cheek/chin/lip frames while current mid/far body bytes remain the baseline.",
+      "source": "role08 face-form-candidate-r4/edit-manifest.json plus independent changed-byte and material/frame check",
+      "correction": "Keep candidate near-only for diagnostic captures or refresh equivalent LOD body forms/frames before promotion; retain unique near face writer.",
+      "decision": "Accept source preservation only; reject any complete LOD/runtime readiness claim without LOD integration evidence."
+    }
+  ],
+  "pending": [
+    "Role08 candidate original renders, especially eyelid transition and skin-boundary appearance after geometry/frame transport.",
+    "R2-03 lighting probes and a demonstrated residual-stipple correction.",
+    "Front/right-three-quarter/profile/night/default Confluence and moving candidate evidence; current probes cover only left-three-quarter courtyard day."
+  ],
+  "limits": [
+    "No material-candidate promotion. No new normal map, color map or rig approval.",
+    "Baseline recorder did not pin import metadata; independent loaded-material check confirms actual baseline has zero roughness mip levels. New recorder pins imports and reports actual candidate state.",
+    "Recorder added probe mode and metadata. All existing camera/light/pose/LOD controls match, and per-shot warmup remains four frames. Absolute frame counters differ because the probe omits the earlier front shot.",
+    "No new external-source retrieval, physical-GPU performance, full-game test or full art acceptance."
+  ],
+  "next_owner": "Root for rotation; renderer06 and lighting03 for causal probes; reactivate reviewer after corrected form images."
+}

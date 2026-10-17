@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "task": "R2-01",
+  "variant": "roughness-mips",
+  "disposition": "unreviewed diagnostic; no runtime promotion",
+  "source_commit_pin": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "project": "/workspace/ANDOLAN/games/yuga-native",
+  "generator_sha256": "0789cf709b497b806ebad66957db10554bbb3247b81e6aa7ce2fa7075c47b359",
+  "source_manifest_sha256": "e03ab221240f9a5e1eeb14510fb113be319a053681095bee715f918c0e1b5e3d",
+  "material_profile_sha256": "b62da0a35488bf68ce6134b5534c75b3abad7f5df408617fca0fe02361a66817",
+  "inputs": {
+    "assets/heroes/rama-hero.glb": {
+      "sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "bytes": 34322216
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-basecolor.png": {
+      "sha256": "ea49440de0c434b7bd6d0336fbebe0bbe600d448e4603a8bf912f9088160ae5f",
+      "bytes": 119566
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-normal.png": {
+      "sha256": "0968f8aed162bafc3f6f0d4b333b90ff136dbc04ad99bebf8f00e5a774c4ea80",
+      "bytes": 136052
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-roughness.png": {
+      "sha256": "7e1da3a481852ff8788d36fcc18c5eecf09b44783e70b695a2f239e4d8c24902",
+      "bytes": 90337
+    },
+    "assets/materials/rama-finish/skin-roughness.png": {
+      "sha256": "d89c377097a342a5f60cc5bf2abf03405aaa5415267b2ce371ef8772079c5611",
+      "bytes": 87740
+    },
+    "scripts/rama_surface_finish.gd": {
+      "sha256": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+      "bytes": 11373
+    },
+    "scripts/production_lighting.gd": {
+      "sha256": "b1da45eeb090eabb802f199c84759532b4fd202371fa6c543de6316c2740ca52",
+      "bytes": 5160
+    },
+    "scripts/world_lighting.gd": {
+      "sha256": "2b0e9c992b7e13456ef135fc9457172d3731103a27715d54f393c62d391c1ceb",
+      "bytes": 8851
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-basecolor.png.import": {
+      "sha256": "b9c77eb83185c35d6c123fd7ed2a4652fc6d3803d2ffd973dd3351e4e115ae08",
+      "bytes": 1086
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-normal.png.import": {
+      "sha256": "236d05d7fef6c644a85abe49e5c0541e407b200a485eda389a412c5eba2e48bd",
+      "bytes": 1075
+    },
+    "assets/heroes/rama-hero_rama-warm-skin-roughness.png.import": {
+      "sha256": "0a6a5d73a5d06a47ec524f72f0fc2b03aa7577411f63c8a03a1b23f8e31c0f89",
+      "bytes": 1086
+    },
+    "assets/materials/rama-finish/skin-roughness.png.import": {
+      "sha256": "02cf763cdcf14daa7e70f61e94c3c234b468fa4ad70e820531a5131b9012f01a",
+      "bytes": 975
+    }
+  },
+  "edits": [
+    {
+      "path": "assets/materials/rama-finish/skin-roughness.png.import",
+      "source_sha256": "02cf763cdcf14daa7e70f61e94c3c234b468fa4ad70e820531a5131b9012f01a",
+      "candidate_sha256": "79e070da2232f0d80d1e4db1353dde0805e66fb9579f8a8c083faabc24d5c4c3",
+      "bytes": 974,
+      "old": "mipmaps/generate=false",
+      "new": "mipmaps/generate=true"
+    }
+  ],
+  "material_profile": {
+    "schema": 1,
+    "task": "R2-01",
+    "source_commit_pin": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+    "target": "Rama warm skin through rama_surface_finish.gd",
+    "status": "unreviewed; candidate and diagnostic must earn pixel acceptance",
+    "variants": {
+      "control": {
+        "changes": []
+      },
+      "roughness-mips": {
+        "purpose": "Test minification aliasing in the existing grain-bearing finish roughness map",
+        "changes": [
+          {
+            "file": "assets/materials/rama-finish/skin-roughness.png.import",
+            "property": "mipmaps/generate",
+            "before": false,
+            "after": true
+          }
+        ],
+        "promotion": "Only if matched captures show lower skin stippling/shimmer without reduced form or unstable highlights"
+      },
+      "sss-off-diagnostic": {
+        "purpose": "Isolate the existing skin subsurface-scattering contribution from roughness sampling and directional shadows",
+        "changes": [
+          {
+            "file": "scripts/rama_surface_finish.gd",
+            "material": "Rama warm skin",
+            "property": "subsurf_scatter_enabled",
+            "before": true,
+            "after": false
+          }
+        ],
+        "promotion": "Diagnostic only; a disabled-scattering render alone is not a final skin treatment"
+      }
+    },
+    "unchanged": {
+      "skin_albedo": "512x512 RGB, sRGB color; exact bytes retained",
+      "skin_normal": "512x512 RGB, linear tangent-space data; RGB encode XYZ; source +Y convention, no inversion; strength 0.24 retained",
+      "original_skin_roughness": "512x512 RGB glTF metallic-roughness texture; roughness is GREEN, not RED",
+      "finish_skin_roughness": "512x512 grayscale, linear scalar data in RED; exact bytes retained, roughness multiplier 1.0",
+      "finish_specular": 0.34,
+      "finish_subsurface_strength": 0.08,
+      "finish_subsurface_skin_mode": true,
+      "shadow_depth_bias": 0.2,
+      "shadow_normal_bias": 0.35,
+      "geometry_uv_tangents_rig_morphs": "Exact existing bytes; no transport or rebake",
+      "other_materials": "All jewelry, lips, makeup, cloth and hair unchanged"
+    },
+    "capture_contract": {
+      "pair_controls": [
+        "same source except one declared property",
+        "same camera and lens",
+        "same pose and morph weights",
+        "same LOD",
+        "same exposure and lights",
+        "same framebuffer size and renderer",
+        "same warmup and capture frame"
+      ],
+      "required_stills": [
+        "front day/night",
+        "left and right three-quarter day/night",
+        "profile day/night",
+        "ordinary gameplay in Courtyard and Confluence"
+      ],
+      "required_motion": [
+        "short fixed-path orbit with stable animation frame",
+        "blink/aim/draw face and neck deformation"
+      ],
+      "inspect_regions": [
+        "scalp/temple",
+        "outer ear and concha",
+        "neck/chest",
+        "cheek/nose",
+        "jewelry and cloth boundaries"
+      ],
+      "reject": [
+        "no demonstrated reduction",
+        "new seams",
+        "washed-out color",
+        "waxy halos",
+        "lost facial form",
+        "changing pose/light/camera to hide defect"
+      ],
+      "causal_limit": "Prior normal/SSAO ablations address large triangles, not every remaining fine dot. If both new material variants retain the pattern, keep source maps and send the paired evidence to the lighting owner."
+    }
+  },
+  "changed_variable_count": 1,
+  "new_maps": 0,
+  "source_geometry_and_maps_changed": false,
+  "next_step": "Capture owner applies overlay only to a frozen scratch project, imports serially, then captures paired original framebuffers."
+}

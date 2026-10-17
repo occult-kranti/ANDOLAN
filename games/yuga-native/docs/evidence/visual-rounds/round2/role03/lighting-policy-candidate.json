@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "task": "R2-03",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "disposition": "retain_accepted_policy_pending_causal_pixels",
+  "runtime_promoted": false,
+  "candidate_changes": [],
+  "retained": {
+    "sun_shadow_enabled": true,
+    "shadow_bias": 0.2,
+    "shadow_normal_bias": 0.35,
+    "courtyard_light_angular_distance": 0.7,
+    "world_light_angular_distance": 0.6,
+    "directional_shadow_atlas": 2048,
+    "ground_shadow_policy": "existing exact-path flat-ground caster whitelist",
+    "tonemap_exposure": 1.0
+  },
+  "current_causal_result": "both mips9 and SSS-off originals retain ear/neck stipple; angular-distance and TAA pixels pending",
+  "production_rejection_gates": [
+    "No permanent all-shadow disable",
+    "No broad bloom, fog or overexposure used to conceal dots",
+    "No detached contact shadow, eye-socket collapse or thin-geometry leak",
+    "No policy accepted from only one portrait"
+  ],
+  "required_if_policy_later_changes": [
+    "matched face and gameplay Courtyard and Confluence day/night originals",
+    "jewelry, feet, target and structural contact inspection",
+    "moving-camera/caster sequence across cascades",
+    "source-bound independent review and affected native lighting tests"
+  ]
+}

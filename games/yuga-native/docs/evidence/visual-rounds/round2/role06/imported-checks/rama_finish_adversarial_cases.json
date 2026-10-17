@@ -1,0 +1,74 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "Control: live owner binds and restores exact original material",
+			"passed": true
+		},
+		{
+			"details": {
+				"configured": true,
+				"detected": true,
+				"material_retained": true,
+				"release": {
+					"conflicts": [],
+					"invalidated": 1,
+					"restored_slots": 0,
+					"restored_uniforms": 0
+				}
+			},
+			"name": "Reparented mesh is no longer writable through the old visual owner",
+			"passed": true
+		},
+		{
+			"details": {
+				"admitted": false,
+				"original_retained_after_free": true
+			},
+			"name": "Out-of-tree finish is refused before it can leave an orphaned material",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Removing a live owner automatically releases its attached visual",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Another live hero sharing an imported StandardMaterial remains exact",
+			"passed": true
+		},
+		{
+			"details": {
+				"configured": true,
+				"release": {
+					"conflicts": [],
+					"invalidated": 1,
+					"restored_slots": 0,
+					"restored_uniforms": 0
+				},
+				"roughness_retained": true
+			},
+			"name": "Transferring one shared shader slot prevents rollback through its remaining sibling",
+			"passed": true
+		},
+		{
+			"details": {
+				"path": "res://assets/materials/rama-finish/skin-roughness.png"
+			},
+			"name": "Real imported roughness is a loaded texture with declared red channel",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": true,
+	"scope": "Independent owner/visual lifetime counterexamples and one actual map import. No rendered or GPU quality claim.",
+	"source_sha256": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+	"test_sha256": ""
+}

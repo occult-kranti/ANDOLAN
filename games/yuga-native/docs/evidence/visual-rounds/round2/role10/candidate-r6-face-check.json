@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "asset_sha256": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+  "baseline_sha256": null,
+  "validator_sha256": "0b3b1102edaabcf4dfb466cd83f73101198c1aea1ef232401651ee0efc22b9bc",
+  "passed": false,
+  "count": 19,
+  "checks": [
+    {
+      "name": "Exactly one separate small facial node",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Named full/optional-half eyelid morphs",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Every exported skin retains 164 joints",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Face attributes and semantic anchors preserved",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Opaque skin material retained",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Only intended eye moves in morph rama_blink_left",
+      "passed": true,
+      "details": {
+        "moved_vertices": 1453
+      }
+    },
+    {
+      "name": "Morph positions/normals finite and bounded rama_blink_left",
+      "passed": true,
+      "details": {
+        "maximum_delta_m": 0.008778794668614864
+      }
+    },
+    {
+      "name": "Only intended eye moves in morph rama_blink_right",
+      "passed": true,
+      "details": {
+        "moved_vertices": 1453
+      }
+    },
+    {
+      "name": "Morph positions/normals finite and bounded rama_blink_right",
+      "passed": true,
+      "details": {
+        "maximum_delta_m": 0.00877903588116169
+      }
+    },
+    {
+      "name": "Only intended eye moves in morph rama_blink_half_left",
+      "passed": true,
+      "details": {
+        "moved_vertices": 1453
+      }
+    },
+    {
+      "name": "Morph positions/normals finite and bounded rama_blink_half_left",
+      "passed": true,
+      "details": {
+        "maximum_delta_m": 0.0044156285002827644
+      }
+    },
+    {
+      "name": "Only intended eye moves in morph rama_blink_half_right",
+      "passed": true,
+      "details": {
+        "moved_vertices": 1453
+      }
+    },
+    {
+      "name": "Morph positions/normals finite and bounded rama_blink_half_right",
+      "passed": true,
+      "details": {
+        "maximum_delta_m": 0.004415747709572315
+      }
+    },
+    {
+      "name": "Fixed outer-boundary vertices remain exactly neutral",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Morph payload remains local rather than body-wide",
+      "passed": true,
+      "details": {
+        "exported_vertices": 5564,
+        "maximum_displacement_m": 0.00877903588116169
+      }
+    },
+    {
+      "name": "Closed skin occludes the sampled cornea L",
+      "passed": true,
+      "details": {
+        "samples": 63,
+        "uncovered": [],
+        "minimum_coverage_margin_m": 0.002365302104889999
+      }
+    },
+    {
+      "name": "Open lids preserve the sampled central cornea L",
+      "passed": false,
+      "details": {
+        "samples": 25,
+        "obstructed": [
+          [
+            -0.004,
+            0.0018
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Closed skin occludes the sampled cornea R",
+      "passed": true,
+      "details": {
+        "samples": 63,
+        "uncovered": [],
+        "minimum_coverage_margin_m": 0.0023663105520028427
+      }
+    },
+    {
+      "name": "Open lids preserve the sampled central cornea R",
+      "passed": false,
+      "details": {
+        "samples": 25,
+        "obstructed": [
+          [
+            0.004,
+            0.0018
+          ]
+        ]
+      }
+    }
+  ],
+  "eye_origins": [
+    {
+      "side": "L",
+      "rest_center_gltf": [
+        0.03279019559023377,
+        1.7278743319127798,
+        0.13738906120339728
+      ]
+    },
+    {
+      "side": "R",
+      "rest_center_gltf": [
+        -0.03279053479126907,
+        1.7278745977688093,
+        0.13738889116714625
+      ]
+    }
+  ],
+  "scope": "Actual GLB geometry/morph payload and bounded cornea ray coverage only. Optional original baseline compares neutral visibility instead of incorrectly requiring original skin-covered points to become transparent. Requires imported neutral/half/closed sequential visual review; no art-quality, gameplay, GPU performance or commercial parity claim."
+}

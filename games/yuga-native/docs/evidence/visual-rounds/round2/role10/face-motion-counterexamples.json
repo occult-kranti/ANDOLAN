@@ -1,0 +1,536 @@
+{
+  "task": "R2-10",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Imported baseline maps to source: ('RamaFace', 'Rama warm skin')",
+      "passed": true,
+      "maximum_mapping_error_m": 5.1287814662636465e-15
+    },
+    {
+      "name": "Corrected candidate POSITION bounds: ('RamaFace', 'Rama warm skin')",
+      "passed": true
+    },
+    {
+      "name": "Imported baseline maps to source: ('RamaHero', 'Rama warm skin')",
+      "passed": true,
+      "maximum_mapping_error_m": 5.146096297904096e-15
+    },
+    {
+      "name": "Corrected candidate POSITION bounds: ('RamaHero', 'Rama warm skin')",
+      "passed": true
+    },
+    {
+      "name": "Imported baseline maps to source: ('RamaHero', 'Natural lips')",
+      "passed": true,
+      "maximum_mapping_error_m": 5.1288342726672635e-15
+    },
+    {
+      "name": "Corrected candidate POSITION bounds: ('RamaHero', 'Natural lips')",
+      "passed": true
+    },
+    {
+      "name": "All 146 boundary witnesses independently remap",
+      "passed": true
+    },
+    {
+      "name": "Exact 288 held source positions and all four target deltas fixed",
+      "passed": true,
+      "maximum_rest_delta_m": 0.0,
+      "maximum_target_delta_m": 0.0
+    },
+    {
+      "name": "Independent bone-accumulation evaluator agrees with role05 slot evaluator",
+      "passed": true,
+      "maximum_difference_m": 6.661338147750939e-16
+    },
+    {
+      "name": "37 actual baseline poses with mapped candidate retain finite attachments",
+      "passed": true,
+      "samples": 37,
+      "maximum_boundary_m": 0.0,
+      "maximum_lip_m": 0.0,
+      "lip_vertex_witnesses": 231
+    },
+    {
+      "name": "Independent actual-eye rays find no new visibility at 13 partial/full/asymmetric combinations",
+      "passed": true,
+      "samples": [
+        {
+          "left": 0,
+          "right": 0,
+          "baseline_visible": {
+            "L": 36,
+            "R": 36
+          },
+          "candidate_visible": {
+            "L": 36,
+            "R": 36
+          }
+        },
+        {
+          "left": 0.25,
+          "right": 0,
+          "baseline_visible": {
+            "L": 27,
+            "R": 36
+          },
+          "candidate_visible": {
+            "L": 27,
+            "R": 36
+          }
+        },
+        {
+          "left": 0.5,
+          "right": 0,
+          "baseline_visible": {
+            "L": 15,
+            "R": 36
+          },
+          "candidate_visible": {
+            "L": 15,
+            "R": 36
+          }
+        },
+        {
+          "left": 0.75,
+          "right": 0,
+          "baseline_visible": {
+            "L": 3,
+            "R": 36
+          },
+          "candidate_visible": {
+            "L": 3,
+            "R": 36
+          }
+        },
+        {
+          "left": 1,
+          "right": 0,
+          "baseline_visible": {
+            "L": 0,
+            "R": 36
+          },
+          "candidate_visible": {
+            "L": 0,
+            "R": 36
+          }
+        },
+        {
+          "left": 0,
+          "right": 0.25,
+          "baseline_visible": {
+            "L": 36,
+            "R": 27
+          },
+          "candidate_visible": {
+            "L": 36,
+            "R": 27
+          }
+        },
+        {
+          "left": 0,
+          "right": 0.5,
+          "baseline_visible": {
+            "L": 36,
+            "R": 15
+          },
+          "candidate_visible": {
+            "L": 36,
+            "R": 15
+          }
+        },
+        {
+          "left": 0,
+          "right": 0.75,
+          "baseline_visible": {
+            "L": 36,
+            "R": 3
+          },
+          "candidate_visible": {
+            "L": 36,
+            "R": 3
+          }
+        },
+        {
+          "left": 0,
+          "right": 1,
+          "baseline_visible": {
+            "L": 36,
+            "R": 0
+          },
+          "candidate_visible": {
+            "L": 36,
+            "R": 0
+          }
+        },
+        {
+          "left": 0.25,
+          "right": 0.75,
+          "baseline_visible": {
+            "L": 27,
+            "R": 3
+          },
+          "candidate_visible": {
+            "L": 27,
+            "R": 3
+          }
+        },
+        {
+          "left": 0.75,
+          "right": 0.25,
+          "baseline_visible": {
+            "L": 3,
+            "R": 27
+          },
+          "candidate_visible": {
+            "L": 3,
+            "R": 27
+          }
+        },
+        {
+          "left": 0.5,
+          "right": 0.5,
+          "baseline_visible": {
+            "L": 15,
+            "R": 15
+          },
+          "candidate_visible": {
+            "L": 15,
+            "R": 15
+          }
+        },
+        {
+          "left": 1,
+          "right": 1,
+          "baseline_visible": {
+            "L": 0,
+            "R": 0
+          },
+          "candidate_visible": {
+            "L": 0,
+            "R": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Independent full single and combined blink coverage",
+      "passed": true
+    },
+    {
+      "name": "Counterexample: 1 mm attachment displacement is rejected",
+      "passed": true,
+      "measured_gap_m": 0.000999984751055864
+    },
+    {
+      "name": "Counterexample: missing left full-blink target exposes actual eye",
+      "passed": true,
+      "control": {
+        "L": 0,
+        "R": 0
+      },
+      "mutant": {
+        "L": 36,
+        "R": 0
+      }
+    },
+    {
+      "name": "Counterexample: full closure substituted at half phase is detected",
+      "passed": true,
+      "half_visible": {
+        "L": 15,
+        "R": 15
+      },
+      "overclosed_visible": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "name": "Counterexample: 20 mm forward eye displacement breaches closure",
+      "passed": true,
+      "control": {
+        "L": 0,
+        "R": 0
+      },
+      "mutant": {
+        "L": 63,
+        "R": 63
+      }
+    },
+    {
+      "name": "Pre-existing two open-cornea failures remain explicitly identical",
+      "passed": true,
+      "failures": [
+        {
+          "name": "Open lids preserve the sampled central cornea L",
+          "passed": false,
+          "details": {
+            "samples": 25,
+            "obstructed": [
+              [
+                -0.004,
+                0.0018
+              ]
+            ]
+          }
+        },
+        {
+          "name": "Open lids preserve the sampled central cornea R",
+          "passed": false,
+          "details": {
+            "samples": 25,
+            "obstructed": [
+              [
+                0.004,
+                0.0018
+              ]
+            ]
+          }
+        }
+      ],
+      "total_each": 19
+    }
+  ],
+  "count": 17,
+  "actual_baseline_pose_samples": [
+    {
+      "id": "rest",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "blink_0.25",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "blink_0.5",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "blink_0.75",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "blink_1.0",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "combined_0.6",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "combined_3.16375",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "combined_3.1775",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "combined_3.215",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_-0.85000002384186_-0.69999998807907_blink_0.0",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_-0.85000002384186_-0.69999998807907_blink_0.5",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_-0.85000002384186_-0.69999998807907_blink_1.0",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_-0.85000002384186_0.69999998807907_blink_0.0",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_-0.85000002384186_0.69999998807907_blink_0.5",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_-0.85000002384186_0.69999998807907_blink_1.0",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_0.64999997615814_-0.69999998807907_blink_0.0",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_0.64999997615814_-0.69999998807907_blink_0.5",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_0.64999997615814_-0.69999998807907_blink_1.0",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_0.64999997615814_0.69999998807907_blink_0.0",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_0.64999997615814_0.69999998807907_blink_0.5",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "aim_0.64999997615814_0.69999998807907_blink_1.0",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "kodanda_windup",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "kodanda_release",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "kodanda_recoil",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "piercing_dawn_windup",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "piercing_dawn_release",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "piercing_dawn_recoil",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "measured_step_windup",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "measured_step_release",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "measured_step_recoil",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "guardian_circle_windup",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "guardian_circle_release",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "guardian_circle_recoil",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "dawn_volley_windup",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "dawn_volley_release",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "dawn_volley_recoil",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    },
+    {
+      "id": "cancel_recovered",
+      "seam_m": 0.0,
+      "lip_gap_m": 0.0,
+      "finite": true
+    }
+  ],
+  "source_pins": {
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round2/role10/review_deformation.py": "daa8c4ca1998a4cfe634679a157e92bfb0f2f4d9be5159977d65be619408df6c",
+    "/workspace/scratch/visual-round2/role-05/baseline-runtime-r3.json": "8edd6d7dc9217d877a8a013f287b43a98d3a3869f5bb3cec387689df07e7a00d",
+    "/workspace/scratch/visual-round2/role-05/baseline-runtime-r3-meshes.json": "1856cd1bb7046d2625862c7d60aa8916d5d17a5a889394cc9c722c4efa2fc7eb",
+    "/workspace/ANDOLAN/games/yuga-native/assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "/workspace/scratch/visual-round2/role-08/face-form-candidate-r6/candidate.glb": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+    "/workspace/scratch/visual-round2/role-08/face-form-candidate-r5/reconstruction.held-ring.json": "71cc40e8f5eb732382255cbb9ca2eca88f6306429c2c649f8223dbe5b4db0ccd",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round2/role05/analyze_deformation.py": "d4508cda96eebda0b23b5465ae2ae7ccd1102dbb11c492de4463fc3bcb25041a"
+  },
+  "scope": "Independent CPU skin evaluator plus independent ray implementation. Candidate source deltas mapped to actual baseline imported vertices; candidate Godot import and 36 adjacent raw images NOT reviewed by this report. Static source-to-baseline replay does not establish continuous art acceptance, collision-free geometry, full locomotion or AAA parity.",
+  "remaining_gates": [
+    "Actual candidate imported arrays replay",
+    "36 adjacent baseline/candidate raw frames inspected individually with exact source pins",
+    "Rendered open/partial/full expression and aim/extreme contact review"
+  ]
+}

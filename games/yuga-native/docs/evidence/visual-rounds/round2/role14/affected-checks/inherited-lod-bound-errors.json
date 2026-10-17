@@ -1,0 +1,559 @@
+{
+  "task": "R3-08",
+  "stage": "Inherited R2 nonhair accessor-bound defect",
+  "rows": [
+    {
+      "level": "mid",
+      "source_sha256": "44bf3961fa52aef0b1a212dff05dcc6bda5c3cae7c9eaf00303aba9f39d45416",
+      "candidate_sha256": "e50b308d75f278bc3b30598776891dce04111e089609a40cc7292be72bb32411",
+      "errors_exactly_inherited": true,
+      "errors": [
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-0.9997776746749878) does not match actual minimum (-0.9997701644897461).",
+          "severity": 0,
+          "pointer": "/accessors/4474/min/1"
+        },
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-0.9629446864128113) does not match actual minimum (-0.9911260604858398).",
+          "severity": 0,
+          "pointer": "/accessors/4474/min/2"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MIN_BOUND",
+          "message": "Accessor contains 6 element(s) less than declared minimum value -0.9629446864128113.",
+          "severity": 0,
+          "pointer": "/accessors/4474/min/2"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9987353682518005) does not match actual maximum (0.9987816214561462).",
+          "severity": 0,
+          "pointer": "/accessors/4474/max/1"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MAX_BOUND",
+          "message": "Accessor contains 2 element(s) greater than declared maximum value 0.9987353682518005.",
+          "severity": 0,
+          "pointer": "/accessors/4474/max/1"
+        },
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-1) does not match actual minimum (-0.9999880194664001).",
+          "severity": 0,
+          "pointer": "/accessors/4476/min/1"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9994999766349792) does not match actual maximum (0.999333381652832).",
+          "severity": 0,
+          "pointer": "/accessors/4476/max/0"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9896000027656555) does not match actual maximum (0.9961696863174438).",
+          "severity": 0,
+          "pointer": "/accessors/4476/max/1"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MAX_BOUND",
+          "message": "Accessor contains 2 element(s) greater than declared maximum value 0.9896000027656555.",
+          "severity": 0,
+          "pointer": "/accessors/4476/max/1"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9999825954437256) does not match actual maximum (0.9999986886978149).",
+          "severity": 0,
+          "pointer": "/accessors/4589/max/2"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MAX_BOUND",
+          "message": "Accessor contains 1 element(s) greater than declared maximum value 0.9999825954437256.",
+          "severity": 0,
+          "pointer": "/accessors/4589/max/2"
+        },
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-0.9878042936325073) does not match actual minimum (-0.9860331416130066).",
+          "severity": 0,
+          "pointer": "/accessors/4598/min/2"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9960314035415649) does not match actual maximum (0.9983664155006409).",
+          "severity": 0,
+          "pointer": "/accessors/4598/max/2"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MAX_BOUND",
+          "message": "Accessor contains 1 element(s) greater than declared maximum value 0.9960314035415649.",
+          "severity": 0,
+          "pointer": "/accessors/4598/max/2"
+        },
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-0.9987999796867371) does not match actual minimum (-0.9990768432617188).",
+          "severity": 0,
+          "pointer": "/accessors/4600/min/1"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MIN_BOUND",
+          "message": "Accessor contains 2 element(s) less than declared minimum value -0.9987999796867371.",
+          "severity": 0,
+          "pointer": "/accessors/4600/min/1"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9587000012397766) does not match actual maximum (0.9586817622184753).",
+          "severity": 0,
+          "pointer": "/accessors/4600/max/1"
+        }
+      ],
+      "affected_accessors": [
+        {
+          "accessor": 4474,
+          "uses": [
+            {
+              "mesh": 1,
+              "primitive": 0,
+              "semantic": "NORMAL",
+              "material": "Rama warm skin"
+            }
+          ],
+          "declared_min": [
+            -0.9996429681777954,
+            -0.9997776746749878,
+            -0.9629446864128113
+          ],
+          "actual_min": [
+            -0.9996429681777954,
+            -0.9997701644897461,
+            -0.9911260604858398
+          ],
+          "declared_max": [
+            0.9996429681777954,
+            0.9987353682518005,
+            0.9999747276306152
+          ],
+          "actual_max": [
+            0.9996429681777954,
+            0.9987816214561462,
+            0.9999747276306152
+          ]
+        },
+        {
+          "accessor": 4476,
+          "uses": [
+            {
+              "mesh": 1,
+              "primitive": 0,
+              "semantic": "TANGENT",
+              "material": "Rama warm skin"
+            }
+          ],
+          "declared_min": [
+            -0.8041999936103821,
+            -1.0,
+            -0.9998999834060669,
+            1.0
+          ],
+          "actual_min": [
+            -0.8041999936103821,
+            -0.9999880194664001,
+            -0.9998999834060669,
+            1.0
+          ],
+          "declared_max": [
+            0.9994999766349792,
+            0.9896000027656555,
+            1.0,
+            1.0
+          ],
+          "actual_max": [
+            0.999333381652832,
+            0.9961696863174438,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "accessor": 4589,
+          "uses": [
+            {
+              "mesh": 2,
+              "primitive": 11,
+              "semantic": "NORMAL",
+              "material": "Rama warm skin"
+            }
+          ],
+          "declared_min": [
+            -0.9999814033508301,
+            -0.999937117099762,
+            -0.9999748468399048
+          ],
+          "actual_min": [
+            -0.9999814033508301,
+            -0.999937117099762,
+            -0.9999748468399048
+          ],
+          "declared_max": [
+            0.9999814033508301,
+            0.999964714050293,
+            0.9999825954437256
+          ],
+          "actual_max": [
+            0.9999814033508301,
+            0.999964714050293,
+            0.9999986886978149
+          ]
+        },
+        {
+          "accessor": 4598,
+          "uses": [
+            {
+              "mesh": 2,
+              "primitive": 12,
+              "semantic": "NORMAL",
+              "material": "Natural lips"
+            }
+          ],
+          "declared_min": [
+            -0.7553003430366516,
+            -0.9960110783576965,
+            -0.9878042936325073
+          ],
+          "actual_min": [
+            -0.7553003430366516,
+            -0.9960110783576965,
+            -0.9860331416130066
+          ],
+          "declared_max": [
+            0.7554131746292114,
+            0.9979856014251709,
+            0.9960314035415649
+          ],
+          "actual_max": [
+            0.7554131746292114,
+            0.9979856014251709,
+            0.9983664155006409
+          ]
+        },
+        {
+          "accessor": 4600,
+          "uses": [
+            {
+              "mesh": 2,
+              "primitive": 12,
+              "semantic": "TANGENT",
+              "material": "Natural lips"
+            }
+          ],
+          "declared_min": [
+            -0.954800009727478,
+            -0.9987999796867371,
+            -0.9986000061035156,
+            1.0
+          ],
+          "actual_min": [
+            -0.954800009727478,
+            -0.9990768432617188,
+            -0.9986000061035156,
+            1.0
+          ],
+          "declared_max": [
+            1.0,
+            0.9587000012397766,
+            0.9976000189781189,
+            1.0
+          ],
+          "actual_max": [
+            1.0,
+            0.9586817622184753,
+            0.9976000189781189,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "level": "far",
+      "source_sha256": "62e65520da49d4f81d8cf0755f77df214f7ce0929d4818c13f62555b300a8f43",
+      "candidate_sha256": "00e63ad9ff36482f3b8d2157a398a20715d58636aec2b036cf02947d67595ea1",
+      "errors_exactly_inherited": true,
+      "errors": [
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-0.9997776746749878) does not match actual minimum (-0.9997701644897461).",
+          "severity": 0,
+          "pointer": "/accessors/4474/min/1"
+        },
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-0.9629446864128113) does not match actual minimum (-0.9911260604858398).",
+          "severity": 0,
+          "pointer": "/accessors/4474/min/2"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MIN_BOUND",
+          "message": "Accessor contains 6 element(s) less than declared minimum value -0.9629446864128113.",
+          "severity": 0,
+          "pointer": "/accessors/4474/min/2"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9987353682518005) does not match actual maximum (0.9987816214561462).",
+          "severity": 0,
+          "pointer": "/accessors/4474/max/1"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MAX_BOUND",
+          "message": "Accessor contains 2 element(s) greater than declared maximum value 0.9987353682518005.",
+          "severity": 0,
+          "pointer": "/accessors/4474/max/1"
+        },
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-1) does not match actual minimum (-0.9999880194664001).",
+          "severity": 0,
+          "pointer": "/accessors/4476/min/1"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9994999766349792) does not match actual maximum (0.999333381652832).",
+          "severity": 0,
+          "pointer": "/accessors/4476/max/0"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9896000027656555) does not match actual maximum (0.9961696863174438).",
+          "severity": 0,
+          "pointer": "/accessors/4476/max/1"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MAX_BOUND",
+          "message": "Accessor contains 2 element(s) greater than declared maximum value 0.9896000027656555.",
+          "severity": 0,
+          "pointer": "/accessors/4476/max/1"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9999825954437256) does not match actual maximum (0.9999986886978149).",
+          "severity": 0,
+          "pointer": "/accessors/4589/max/2"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MAX_BOUND",
+          "message": "Accessor contains 1 element(s) greater than declared maximum value 0.9999825954437256.",
+          "severity": 0,
+          "pointer": "/accessors/4589/max/2"
+        },
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-0.9878042936325073) does not match actual minimum (-0.9860331416130066).",
+          "severity": 0,
+          "pointer": "/accessors/4598/min/2"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9960314035415649) does not match actual maximum (0.9983664155006409).",
+          "severity": 0,
+          "pointer": "/accessors/4598/max/2"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MAX_BOUND",
+          "message": "Accessor contains 1 element(s) greater than declared maximum value 0.9960314035415649.",
+          "severity": 0,
+          "pointer": "/accessors/4598/max/2"
+        },
+        {
+          "code": "ACCESSOR_MIN_MISMATCH",
+          "message": "Declared minimum value for this component (-0.9987999796867371) does not match actual minimum (-0.9990768432617188).",
+          "severity": 0,
+          "pointer": "/accessors/4600/min/1"
+        },
+        {
+          "code": "ACCESSOR_ELEMENT_OUT_OF_MIN_BOUND",
+          "message": "Accessor contains 2 element(s) less than declared minimum value -0.9987999796867371.",
+          "severity": 0,
+          "pointer": "/accessors/4600/min/1"
+        },
+        {
+          "code": "ACCESSOR_MAX_MISMATCH",
+          "message": "Declared maximum value for this component (0.9587000012397766) does not match actual maximum (0.9586817622184753).",
+          "severity": 0,
+          "pointer": "/accessors/4600/max/1"
+        }
+      ],
+      "affected_accessors": [
+        {
+          "accessor": 4474,
+          "uses": [
+            {
+              "mesh": 1,
+              "primitive": 0,
+              "semantic": "NORMAL",
+              "material": "Rama warm skin"
+            }
+          ],
+          "declared_min": [
+            -0.9996429681777954,
+            -0.9997776746749878,
+            -0.9629446864128113
+          ],
+          "actual_min": [
+            -0.9996429681777954,
+            -0.9997701644897461,
+            -0.9911260604858398
+          ],
+          "declared_max": [
+            0.9996429681777954,
+            0.9987353682518005,
+            0.9999747276306152
+          ],
+          "actual_max": [
+            0.9996429681777954,
+            0.9987816214561462,
+            0.9999747276306152
+          ]
+        },
+        {
+          "accessor": 4476,
+          "uses": [
+            {
+              "mesh": 1,
+              "primitive": 0,
+              "semantic": "TANGENT",
+              "material": "Rama warm skin"
+            }
+          ],
+          "declared_min": [
+            -0.8041999936103821,
+            -1.0,
+            -0.9998999834060669,
+            1.0
+          ],
+          "actual_min": [
+            -0.8041999936103821,
+            -0.9999880194664001,
+            -0.9998999834060669,
+            1.0
+          ],
+          "declared_max": [
+            0.9994999766349792,
+            0.9896000027656555,
+            1.0,
+            1.0
+          ],
+          "actual_max": [
+            0.999333381652832,
+            0.9961696863174438,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "accessor": 4589,
+          "uses": [
+            {
+              "mesh": 2,
+              "primitive": 11,
+              "semantic": "NORMAL",
+              "material": "Rama warm skin"
+            }
+          ],
+          "declared_min": [
+            -0.9999814033508301,
+            -0.999937117099762,
+            -0.9999748468399048
+          ],
+          "actual_min": [
+            -0.9999814033508301,
+            -0.999937117099762,
+            -0.9999748468399048
+          ],
+          "declared_max": [
+            0.9999814033508301,
+            0.999964714050293,
+            0.9999825954437256
+          ],
+          "actual_max": [
+            0.9999814033508301,
+            0.999964714050293,
+            0.9999986886978149
+          ]
+        },
+        {
+          "accessor": 4598,
+          "uses": [
+            {
+              "mesh": 2,
+              "primitive": 12,
+              "semantic": "NORMAL",
+              "material": "Natural lips"
+            }
+          ],
+          "declared_min": [
+            -0.7553003430366516,
+            -0.9960110783576965,
+            -0.9878042936325073
+          ],
+          "actual_min": [
+            -0.7553003430366516,
+            -0.9960110783576965,
+            -0.9860331416130066
+          ],
+          "declared_max": [
+            0.7554131746292114,
+            0.9979856014251709,
+            0.9960314035415649
+          ],
+          "actual_max": [
+            0.7554131746292114,
+            0.9979856014251709,
+            0.9983664155006409
+          ]
+        },
+        {
+          "accessor": 4600,
+          "uses": [
+            {
+              "mesh": 2,
+              "primitive": 12,
+              "semantic": "TANGENT",
+              "material": "Natural lips"
+            }
+          ],
+          "declared_min": [
+            -0.954800009727478,
+            -0.9987999796867371,
+            -0.9986000061035156,
+            1.0
+          ],
+          "actual_min": [
+            -0.954800009727478,
+            -0.9990768432617188,
+            -0.9986000061035156,
+            1.0
+          ],
+          "declared_max": [
+            1.0,
+            0.9587000012397766,
+            0.9976000189781189,
+            1.0
+          ],
+          "actual_max": [
+            1.0,
+            0.9586817622184753,
+            0.9976000189781189,
+            1.0
+          ]
+        }
+      ]
+    }
+  ],
+  "source_report_sha256": "e55a4803bdc8af0e9ae96f8812bf55e78c5825e4552b3f17dc431308d545e288",
+  "candidate_report_sha256": "9f7bf4a8f51afce4f8baab4692cbb023f8c505bdc3d5147ca7d3fdfc3902c688",
+  "resolution_owner": "Root / role14: repair only stale optional NORMAL/TANGENT accessor bounds in form transfer; issue new source pins; rebuild groom against those reviewed sources."
+}

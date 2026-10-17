@@ -1,0 +1,906 @@
+{
+  "schema": 1,
+  "task": "R2-12",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "scope": "Independent source/pixel/context review. No Godot import/render, runtime mutation, capsule sweep or gameplay input.",
+  "source_pins": [
+    {
+      "path": "scenes/courtyard.tscn",
+      "expected": "8a901cbe8bd5a44d50b6d2f46fc728e7430810bf5b794bdedb6839e7722be0f5",
+      "actual": "8a901cbe8bd5a44d50b6d2f46fc728e7430810bf5b794bdedb6839e7722be0f5",
+      "matches": true
+    },
+    {
+      "path": "scenes/confluence_world.tscn",
+      "expected": "06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3",
+      "actual": "06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3",
+      "matches": true
+    },
+    {
+      "path": "scripts/courtyard.gd",
+      "expected": "0a904ebe3de420c80ad436aabf074da159251ed051048c7488c37cd7d0af1128",
+      "actual": "0a904ebe3de420c80ad436aabf074da159251ed051048c7488c37cd7d0af1128",
+      "matches": true
+    },
+    {
+      "path": "scripts/confluence_world.gd",
+      "expected": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7",
+      "actual": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7",
+      "matches": true
+    },
+    {
+      "path": "scripts/player.gd",
+      "expected": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+      "actual": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+      "matches": true
+    },
+    {
+      "path": "scripts/production_lighting.gd",
+      "expected": "b1da45eeb090eabb802f199c84759532b4fd202371fa6c543de6316c2740ca52",
+      "actual": "b1da45eeb090eabb802f199c84759532b4fd202371fa6c543de6316c2740ca52",
+      "matches": true
+    },
+    {
+      "path": "scripts/world_lighting.gd",
+      "expected": "2b0e9c992b7e13456ef135fc9457172d3731103a27715d54f393c62d391c1ceb",
+      "actual": "2b0e9c992b7e13456ef135fc9457172d3731103a27715d54f393c62d391c1ceb",
+      "matches": true
+    },
+    {
+      "path": "scripts/hero_district_detail.gd",
+      "expected": "09c6447f36a9eba2d0898f3db846fedb45693b9c9d56f3212bc2ec537de56431",
+      "actual": "09c6447f36a9eba2d0898f3db846fedb45693b9c9d56f3212bc2ec537de56431",
+      "matches": true
+    },
+    {
+      "path": "scripts/mythic_environment.gd",
+      "expected": "a93295f73be9f4c983a74fc7a209935be2f752ee132ae6734280757672e59cb0",
+      "actual": "a93295f73be9f4c983a74fc7a209935be2f752ee132ae6734280757672e59cb0",
+      "matches": true
+    },
+    {
+      "path": "scripts/hero_atmosphere.gd",
+      "expected": "174c02b7fd0733eae17be9cff45713b79feaf2e6f7814e43c27f0206680708fe",
+      "actual": "174c02b7fd0733eae17be9cff45713b79feaf2e6f7814e43c27f0206680708fe",
+      "matches": true
+    },
+    {
+      "path": "assets/world/confluence-map.json",
+      "expected": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+      "actual": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+      "matches": true
+    },
+    {
+      "path": "assets/world/nature.glb",
+      "expected": "856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f",
+      "actual": "856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f",
+      "matches": true
+    },
+    {
+      "path": "assets/world/architecture.glb",
+      "expected": "8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a",
+      "actual": "8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a",
+      "matches": true
+    },
+    {
+      "path": "assets/environment/lanka_courtyard.glb",
+      "expected": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+      "actual": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+      "matches": true
+    },
+    {
+      "path": "assets/heroes/rama-hero.glb",
+      "expected": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "actual": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "matches": true
+    },
+    {
+      "path": "tools/visual-campaign/capture.gd",
+      "expected": "e03fcabaf31f4894d6704b71c001d49cd74dfd5b4e0811618be125fc836c4402",
+      "actual": "e03fcabaf31f4894d6704b71c001d49cd74dfd5b4e0811618be125fc836c4402",
+      "matches": true
+    }
+  ],
+  "all_fixture_source_pins_match": true,
+  "both_baseline_capture_source_maps_match_all_16_fixture_pins": true,
+  "independent_fixture_math": [
+    {
+      "station": "confluence-lightstone",
+      "camera_recomputation_max_error_m": {
+        "close": 0.0,
+        "gameplay_scale_front_review": 0.0
+      },
+      "solid_count": 16,
+      "clearances": [
+        {
+          "id": "authority-solid-0",
+          "horizontal_clearance_after_radius_m": 32.35
+        },
+        {
+          "id": "authority-solid-1",
+          "horizontal_clearance_after_radius_m": 4.35
+        },
+        {
+          "id": "authority-solid-2",
+          "horizontal_clearance_after_radius_m": 44.62692569068709
+        },
+        {
+          "id": "authority-solid-3",
+          "horizontal_clearance_after_radius_m": 30.750636936215166
+        },
+        {
+          "id": "authority-solid-4",
+          "horizontal_clearance_after_radius_m": 42.39648650006177
+        },
+        {
+          "id": "authority-solid-5",
+          "horizontal_clearance_after_radius_m": 36.35
+        },
+        {
+          "id": "authority-solid-6",
+          "horizontal_clearance_after_radius_m": 79.43120878208569
+        },
+        {
+          "id": "authority-solid-7",
+          "horizontal_clearance_after_radius_m": 76.35
+        },
+        {
+          "id": "sun-lift-west-deck",
+          "horizontal_clearance_after_radius_m": 97.35
+        },
+        {
+          "id": "sun-shrine-west-deck",
+          "horizontal_clearance_after_radius_m": 102.4640145664012
+        },
+        {
+          "id": "sun-lift-east-deck",
+          "horizontal_clearance_after_radius_m": 103.75306508910549
+        },
+        {
+          "id": "sun-shrine-east-deck",
+          "horizontal_clearance_after_radius_m": 120.48009535206351
+        },
+        {
+          "id": "moon-lift-west-deck",
+          "horizontal_clearance_after_radius_m": 69.35
+        },
+        {
+          "id": "moon-shrine-west-deck",
+          "horizontal_clearance_after_radius_m": 76.16471213250753
+        },
+        {
+          "id": "moon-lift-east-deck",
+          "horizontal_clearance_after_radius_m": 78.06467461661771
+        },
+        {
+          "id": "moon-shrine-east-deck",
+          "horizontal_clearance_after_radius_m": 99.05205614730319
+        }
+      ],
+      "minimum_clearance_m": 4.35
+    },
+    {
+      "station": "confluence-darkfoliage",
+      "camera_recomputation_max_error_m": {
+        "close": 0.0,
+        "gameplay_scale_front_review": 0.0
+      },
+      "solid_count": 16,
+      "clearances": [
+        {
+          "id": "authority-solid-0",
+          "horizontal_clearance_after_radius_m": 30.750636936215166
+        },
+        {
+          "id": "authority-solid-1",
+          "horizontal_clearance_after_radius_m": 30.750636936215166
+        },
+        {
+          "id": "authority-solid-2",
+          "horizontal_clearance_after_radius_m": 67.07001181334805
+        },
+        {
+          "id": "authority-solid-3",
+          "horizontal_clearance_after_radius_m": 67.07001181334805
+        },
+        {
+          "id": "authority-solid-4",
+          "horizontal_clearance_after_radius_m": 7.89400374531753
+        },
+        {
+          "id": "authority-solid-5",
+          "horizontal_clearance_after_radius_m": 11.71931687685298
+        },
+        {
+          "id": "authority-solid-6",
+          "horizontal_clearance_after_radius_m": 110.63791488746655
+        },
+        {
+          "id": "authority-solid-7",
+          "horizontal_clearance_after_radius_m": 110.99676439557037
+        },
+        {
+          "id": "sun-lift-west-deck",
+          "horizontal_clearance_after_radius_m": 88.54641248391103
+        },
+        {
+          "id": "sun-shrine-west-deck",
+          "horizontal_clearance_after_radius_m": 83.85
+        },
+        {
+          "id": "sun-lift-east-deck",
+          "horizontal_clearance_after_radius_m": 108.69349546269315
+        },
+        {
+          "id": "sun-shrine-east-deck",
+          "horizontal_clearance_after_radius_m": 133.73935969785703
+        },
+        {
+          "id": "moon-lift-west-deck",
+          "horizontal_clearance_after_radius_m": 88.54641248391103
+        },
+        {
+          "id": "moon-shrine-west-deck",
+          "horizontal_clearance_after_radius_m": 83.85
+        },
+        {
+          "id": "moon-lift-east-deck",
+          "horizontal_clearance_after_radius_m": 108.69349546269315
+        },
+        {
+          "id": "moon-shrine-east-deck",
+          "horizontal_clearance_after_radius_m": 133.73935969785703
+        }
+      ],
+      "minimum_clearance_m": 7.89400374531753
+    },
+    {
+      "station": "courtyard-indigo-gold",
+      "camera_recomputation_max_error_m": {
+        "close": 0.0,
+        "gameplay_scale_front_review": 0.0
+      },
+      "solid_count": 0,
+      "clearances": [],
+      "minimum_clearance_m": null
+    }
+  ],
+  "baseline_phase_pairs": [
+    {
+      "pair": "courtyard-three-quarter-left",
+      "invariants": {
+        "camera": true,
+        "pose_pin": true,
+        "player_transform": true,
+        "visual_yaw": true,
+        "viewport": true,
+        "tree_paused": true,
+        "ui_visible": true,
+        "lod_level": true,
+        "face_weights": true,
+        "retained_light_controls": true
+      },
+      "all_pass": true,
+      "day_light": {
+        "color": "(1.0, 0.898, 0.7843, 1.0)",
+        "energy": 1.2999999523162842,
+        "portrait_fill": false,
+        "shadow_bias": 0.20000000298023224,
+        "shadow_enabled": true,
+        "shadow_normal_bias": 0.3499999940395355,
+        "ssao_enabled": true,
+        "sun_transform": [
+          [
+            0.6156615018844604,
+            0.0,
+            0.7880107164382935
+          ],
+          [
+            0.39400535821914673,
+            0.8660253882408142,
+            -0.3078307509422302
+          ],
+          [
+            -0.6824373006820679,
+            0.5,
+            0.5331785082817078
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "tonemap_exposure": 1.0
+      },
+      "night_light": {
+        "color": "(0.7333, 0.8078, 0.9216, 1.0)",
+        "energy": 0.5,
+        "portrait_fill": false,
+        "shadow_bias": 0.20000000298023224,
+        "shadow_enabled": true,
+        "shadow_normal_bias": 0.3499999940395355,
+        "ssao_enabled": true,
+        "sun_transform": [
+          [
+            0.6156615018844604,
+            0.0,
+            0.7880107164382935
+          ],
+          [
+            0.44064998626708984,
+            0.829037606716156,
+            -0.34427353739738464
+          ],
+          [
+            -0.6532905101776123,
+            0.5591928958892822,
+            0.5104065537452698
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "tonemap_exposure": 1.0
+      },
+      "actual_camera": {
+        "far": 180.0,
+        "fov": 32.0,
+        "near": 0.05000000074505806,
+        "transform": [
+          [
+            -0.6957949995994568,
+            0.0,
+            0.7182404398918152
+          ],
+          [
+            0.032209355384111404,
+            0.998993992805481,
+            0.03120279312133789
+          ],
+          [
+            -0.7175179123878479,
+            0.04484480991959572,
+            -0.6950950026512146
+          ],
+          [
+            -0.6400003433227539,
+            1.7923438549041748,
+            11.32677173614502
+          ]
+        ]
+      },
+      "pose_pin": "f343eebf75c980ea8ce92dbe6be35635b272f344254b069a0b49c4c9d67d3366",
+      "foot_position": [
+        0.0,
+        0.00010742060840129852,
+        12.0
+      ]
+    },
+    {
+      "pair": "courtyard-gameplay",
+      "invariants": {
+        "camera": true,
+        "pose_pin": true,
+        "player_transform": true,
+        "visual_yaw": true,
+        "viewport": true,
+        "tree_paused": true,
+        "ui_visible": true,
+        "lod_level": true,
+        "face_weights": true,
+        "retained_light_controls": true
+      },
+      "all_pass": true,
+      "day_light": {
+        "color": "(1.0, 0.898, 0.7843, 1.0)",
+        "energy": 1.2999999523162842,
+        "portrait_fill": false,
+        "shadow_bias": 0.20000000298023224,
+        "shadow_enabled": true,
+        "shadow_normal_bias": 0.3499999940395355,
+        "ssao_enabled": true,
+        "sun_transform": [
+          [
+            0.6156615018844604,
+            0.0,
+            0.7880107164382935
+          ],
+          [
+            0.39400535821914673,
+            0.8660253882408142,
+            -0.3078307509422302
+          ],
+          [
+            -0.6824373006820679,
+            0.5,
+            0.5331785082817078
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "tonemap_exposure": 1.0
+      },
+      "night_light": {
+        "color": "(0.7333, 0.8078, 0.9216, 1.0)",
+        "energy": 0.5,
+        "portrait_fill": false,
+        "shadow_bias": 0.20000000298023224,
+        "shadow_enabled": true,
+        "shadow_normal_bias": 0.3499999940395355,
+        "ssao_enabled": true,
+        "sun_transform": [
+          [
+            0.6156615018844604,
+            0.0,
+            0.7880107164382935
+          ],
+          [
+            0.44064998626708984,
+            0.829037606716156,
+            -0.34427353739738464
+          ],
+          [
+            -0.6532905101776123,
+            0.5591928958892822,
+            0.5104065537452698
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "tonemap_exposure": 1.0
+      },
+      "actual_camera": {
+        "far": 180.0,
+        "fov": 65.0,
+        "near": 0.07999999821186066,
+        "transform": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9950041770935059,
+            -0.0998334214091301
+          ],
+          [
+            0.0,
+            0.0998334214091301,
+            0.9950041770935059
+          ],
+          [
+            0.6499999761581421,
+            1.8495243787765503,
+            15.482514381408691
+          ]
+        ]
+      },
+      "pose_pin": "f343eebf75c980ea8ce92dbe6be35635b272f344254b069a0b49c4c9d67d3366",
+      "foot_position": [
+        0.0,
+        0.00010742060840129852,
+        12.0
+      ]
+    },
+    {
+      "pair": "stone-three-quarter-left",
+      "invariants": {
+        "camera": true,
+        "pose_pin": true,
+        "player_transform": true,
+        "visual_yaw": true,
+        "viewport": true,
+        "tree_paused": true,
+        "ui_visible": true,
+        "lod_level": true,
+        "face_weights": true,
+        "retained_light_controls": true
+      },
+      "all_pass": true,
+      "day_light": {
+        "angular_distance": 0.6000000238418579,
+        "color": "(1.0, 0.8941, 0.7608, 1.0)",
+        "energy": 1.25,
+        "portrait_fill": false,
+        "shadow_bias": 0.20000000298023224,
+        "shadow_enabled": true,
+        "shadow_normal_bias": 0.3499999940395355,
+        "ssao_enabled": true,
+        "sun_transform": [
+          [
+            0.7880107760429382,
+            0.0,
+            0.6156615018844604
+          ],
+          [
+            0.4119579493999481,
+            0.7431448101997375,
+            -0.5272821187973022
+          ],
+          [
+            -0.4575256407260895,
+            0.6691306233406067,
+            0.5856060981750488
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "tonemap_exposure": 1.0
+      },
+      "night_light": {
+        "angular_distance": 0.6000000238418579,
+        "color": "(0.7176, 0.7961, 0.9294, 1.0)",
+        "energy": 0.47999998927116394,
+        "portrait_fill": false,
+        "shadow_bias": 0.20000000298023224,
+        "shadow_enabled": true,
+        "shadow_normal_bias": 0.3499999940395355,
+        "ssao_enabled": true,
+        "sun_transform": [
+          [
+            0.5735764503479004,
+            0.0,
+            0.8191520571708679
+          ],
+          [
+            0.4580639898777008,
+            0.829037606716156,
+            -0.32073989510536194
+          ],
+          [
+            -0.6791078448295593,
+            0.5591928958892822,
+            0.4755164384841919
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "tonemap_exposure": 1.0
+      },
+      "actual_camera": {
+        "far": 180.0,
+        "fov": 32.0,
+        "near": 0.05000000074505806,
+        "transform": [
+          [
+            -0.695795476436615,
+            0.0,
+            0.718239963054657
+          ],
+          [
+            0.032209351658821106,
+            0.998993992805481,
+            0.031202832236886024
+          ],
+          [
+            -0.7175174355506897,
+            0.04484483227133751,
+            -0.6950954794883728
+          ],
+          [
+            -20.639999389648438,
+            1.7924317121505737,
+            13.32677173614502
+          ]
+        ]
+      },
+      "pose_pin": "cb8006bf565417662cf62b4e997790f1ee4d7af963d6196d614901d025f88696",
+      "foot_position": [
+        -20.0,
+        0.0001953102182596922,
+        14.0
+      ]
+    }
+  ],
+  "reviewed_images": [
+    {
+      "path": "games/yuga-native/docs/evidence/visual-rounds/round2/role06/baseline/courtyard/courtyard-three-quarter-left-day.png",
+      "sha256": "1cabca9ec2dea9762eac7f28384a48f0519a880414ffa1a683e4eb388a5e2438",
+      "matches_capture_sha256": true,
+      "size": [
+        1280,
+        960
+      ],
+      "inspected_via": "view_image original full framebuffer",
+      "roi_method": "Manual fixed pixel boxes; descriptive samples, not segmentation or acceptance thresholds. sRGB inverse transfer then linear Rec709.",
+      "roi_measurements": {
+        "cheek": {
+          "xyxy": [
+            570,
+            610,
+            620,
+            660
+          ],
+          "median_linear_rec709_luminance": 0.03606694417324023,
+          "mean_linear_rec709_luminance": 0.040761632664404975
+        },
+        "hair": {
+          "xyxy": [
+            930,
+            440,
+            980,
+            600
+          ],
+          "median_linear_rec709_luminance": 0.0024075153281126692,
+          "mean_linear_rec709_luminance": 0.010046488081819509
+        },
+        "right_background": {
+          "xyxy": [
+            1050,
+            440,
+            1120,
+            600
+          ],
+          "median_linear_rec709_luminance": 0.051516480678887706,
+          "mean_linear_rec709_luminance": 0.09584059005867585
+        }
+      }
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/visual-rounds/round2/role06/baseline/courtyard/courtyard-three-quarter-left-night.png",
+      "sha256": "ec5a1dc391573142a45ec5e1f8bd69a3cffdd828aa91930703613fc9ec9f2fb9",
+      "matches_capture_sha256": true,
+      "size": [
+        1280,
+        960
+      ],
+      "inspected_via": "view_image original full framebuffer",
+      "roi_method": "Manual fixed pixel boxes; descriptive samples, not segmentation or acceptance thresholds. sRGB inverse transfer then linear Rec709.",
+      "roi_measurements": {
+        "cheek": {
+          "xyxy": [
+            570,
+            610,
+            620,
+            660
+          ],
+          "median_linear_rec709_luminance": 0.02346195210230758,
+          "mean_linear_rec709_luminance": 0.023404905044334158
+        },
+        "hair": {
+          "xyxy": [
+            930,
+            440,
+            980,
+            600
+          ],
+          "median_linear_rec709_luminance": 0.0006508832635221272,
+          "mean_linear_rec709_luminance": 0.002400992511076365
+        },
+        "right_background": {
+          "xyxy": [
+            1050,
+            440,
+            1120,
+            600
+          ],
+          "median_linear_rec709_luminance": 0.04172138929594023,
+          "mean_linear_rec709_luminance": 0.06749876039325835
+        }
+      }
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/visual-rounds/round2/role06/baseline/courtyard/courtyard-gameplay-day.png",
+      "sha256": "c1265bff2297a9ae14e49941608ed2d083c67aadee97822ac73acb655200bd2b",
+      "matches_capture_sha256": true,
+      "size": [
+        1280,
+        960
+      ],
+      "inspected_via": "view_image original full framebuffer",
+      "roi_method": "Manual fixed pixel boxes; descriptive samples, not segmentation or acceptance thresholds. sRGB inverse transfer then linear Rec709.",
+      "roi_measurements": {
+        "rear_costume": {
+          "xyxy": [
+            475,
+            500,
+            525,
+            560
+          ],
+          "median_linear_rec709_luminance": 0.03272864045571551,
+          "mean_linear_rec709_luminance": 0.04428982205837898
+        },
+        "ground": {
+          "xyxy": [
+            650,
+            510,
+            730,
+            590
+          ],
+          "median_linear_rec709_luminance": 0.5230041116939439,
+          "mean_linear_rec709_luminance": 0.5223790282324515
+        }
+      }
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/visual-rounds/round2/role06/baseline/courtyard/courtyard-gameplay-night.png",
+      "sha256": "48b29864f4d0217b0493f85089407b9b59345d2241c352c311a30b6ef38b9176",
+      "matches_capture_sha256": true,
+      "size": [
+        1280,
+        960
+      ],
+      "inspected_via": "view_image original full framebuffer",
+      "roi_method": "Manual fixed pixel boxes; descriptive samples, not segmentation or acceptance thresholds. sRGB inverse transfer then linear Rec709.",
+      "roi_measurements": {
+        "rear_costume": {
+          "xyxy": [
+            475,
+            500,
+            525,
+            560
+          ],
+          "median_linear_rec709_luminance": 0.014869418185159715,
+          "mean_linear_rec709_luminance": 0.017342333396362854
+        },
+        "ground": {
+          "xyxy": [
+            650,
+            510,
+            730,
+            590
+          ],
+          "median_linear_rec709_luminance": 0.2950466245634662,
+          "mean_linear_rec709_luminance": 0.2962143552913687
+        }
+      }
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/visual-rounds/round2/role06/baseline/stone/stone-three-quarter-left-day.png",
+      "sha256": "5d1397cef69a97ad1ba830a3d37ef31e434daa4eb918a08f4c86f92f4cb3fc10",
+      "matches_capture_sha256": true,
+      "size": [
+        1280,
+        960
+      ],
+      "inspected_via": "view_image original full framebuffer",
+      "roi_method": "Manual fixed pixel boxes; descriptive samples, not segmentation or acceptance thresholds. sRGB inverse transfer then linear Rec709.",
+      "roi_measurements": {
+        "cheek": {
+          "xyxy": [
+            570,
+            610,
+            620,
+            660
+          ],
+          "median_linear_rec709_luminance": 0.021008292514812357,
+          "mean_linear_rec709_luminance": 0.021451825158124535
+        },
+        "hair": {
+          "xyxy": [
+            930,
+            440,
+            980,
+            600
+          ],
+          "median_linear_rec709_luminance": 0.0021892187215443453,
+          "mean_linear_rec709_luminance": 0.00254456944951277
+        },
+        "right_background": {
+          "xyxy": [
+            1050,
+            440,
+            1120,
+            600
+          ],
+          "median_linear_rec709_luminance": 0.14058941220154628,
+          "mean_linear_rec709_luminance": 0.1086944604312103
+        }
+      }
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/visual-rounds/round2/role06/baseline/stone/stone-three-quarter-left-night.png",
+      "sha256": "54d1b23cb11d7bcfaa8dd0c0f52b5eff60c092b802e5bd8fcdf731983eb505c3",
+      "matches_capture_sha256": true,
+      "size": [
+        1280,
+        960
+      ],
+      "inspected_via": "view_image original full framebuffer",
+      "roi_method": "Manual fixed pixel boxes; descriptive samples, not segmentation or acceptance thresholds. sRGB inverse transfer then linear Rec709.",
+      "roi_measurements": {
+        "cheek": {
+          "xyxy": [
+            570,
+            610,
+            620,
+            660
+          ],
+          "median_linear_rec709_luminance": 0.01846340931011318,
+          "mean_linear_rec709_luminance": 0.01901542677306782
+        },
+        "hair": {
+          "xyxy": [
+            930,
+            440,
+            980,
+            600
+          ],
+          "median_linear_rec709_luminance": 0.0021466035330540887,
+          "mean_linear_rec709_luminance": 0.0024984270583029507
+        },
+        "right_background": {
+          "xyxy": [
+            1050,
+            440,
+            1120,
+            600
+          ],
+          "median_linear_rec709_luminance": 0.1349355400058885,
+          "mean_linear_rec709_luminance": 0.10578082711246696
+        }
+      }
+    }
+  ],
+  "separate_lighting_diagnostic": {
+    "path": "games/yuga-native/docs/evidence/visual-rounds/round2/role06/diagnostics/directional-pcss-off/courtyard-three-quarter-left-day.png",
+    "sha256": "a596d3fe71964e7b6f43dec9c0fcffb98f19d97bd81e53191253a7cc07459e53",
+    "inspected_via": "view_image original full framebuffer",
+    "light": {
+      "angular_distance": 0.0,
+      "color": "(1.0, 0.898, 0.7843, 1.0)",
+      "energy": 1.2999999523162842,
+      "portrait_fill": false,
+      "shadow_bias": 0.20000000298023224,
+      "shadow_enabled": true,
+      "shadow_normal_bias": 0.3499999940395355,
+      "ssao_enabled": true,
+      "sun_transform": [
+        [
+          0.6156615018844604,
+          0.0,
+          0.7880107164382935
+        ],
+        [
+          0.39400535821914673,
+          0.8660253882408142,
+          -0.3078307509422302
+        ],
+        [
+          -0.6824373006820679,
+          0.5,
+          0.5331785082817078
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "tonemap_exposure": 1.0
+    },
+    "same_camera": true,
+    "same_pose_pin": true,
+    "changed_common_source_paths": [
+      "res://scripts/production_lighting.gd",
+      "res://tools/visual-rounds/capture.gd",
+      "res://tools/visual-rounds/run.py"
+    ],
+    "disposition": "Diagnostic only: reduced visible ear/neck stipple with harder environment shadow edges; lighting differs and must be explicit in any final candidate comparison."
+  },
+  "candidate_pixel_status": "Pending; final forms/material/lighting candidate not inspected by R2-12 in this bounded review.",
+  "remaining_gates": [
+    "Candidate originals and declared light/AA changes",
+    "Foliage day/night full-frame coverage",
+    "Optional indigo/gold station and all frontal gameplay-scale context views",
+    "Runtime capsule sweep if collision acceptance beyond static clearance is required",
+    "Moving contact/cascade review before accepting shadow-policy change"
+  ],
+  "disposition": "BASELINE_CONTEXT_LIMITED; source and static fixture math pass; full context/candidate acceptance remains open."
+}

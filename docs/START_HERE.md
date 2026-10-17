@@ -4,6 +4,8 @@ Updated 17 October 2026. This is the short entry point for a new chat, contribut
 
 ## The current build in one minute
 
+The active request is tracked in [visual rounds 2–4](../games/yuga-native/docs/VISUAL_ROUNDS_2_4_EXECUTION.json) and the separate [native screen/integration campaign](../games/yuga-native/docs/SCREEN_CAMPAIGN.md). Read those ledgers for pending versus executed work before assigning agents. The screen campaign has five 6-role rounds followed by three 6-role integration rounds; it does not replace the ongoing three 15-role visual rounds.
+
 For current source reuse and task selection, read the [reuse consultation](../games/yuga-native/docs/research/community-reuse/README.md): six reviewed research streams, two isolated offline tools, six mythology art briefs and the next five dependency-ordered goals. The [fifteen Round 2 face tasks](../games/yuga-native/docs/VISUAL_ROUND2_TASKS.json) now pin the published runtime baseline. This research does not complete another visual round or change the downloadable build.
 
 The active track is **YUGA native**, an original mythology-inspired third-person game under `games/yuga-native/`, on `game/yuga-native-production`. The [single Rama milestone](../games/yuga-native/docs/RAMA_HERO_MILESTONE.md) replaces the active avatar with `rama-hero.glb`: an editable skinned character, 23 authored clips, one primary attack and four abilities shared by training and lane practice. [Independent acceptance](../games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md) distinguishes passed functional checks from the still-limited art target.
@@ -26,7 +28,8 @@ Its [ten-round campaign](../games/yuga-native/docs/VISUAL_CAMPAIGN.md) integrate
 material, courtyard, atmosphere, ability and motion changes into the playable
 native source. Follow its [actual-work ledger](../games/yuga-native/docs/VISUAL_CAMPAIGN.json)
 for the current fifteen specialists, rendered defects/corrections and the ten
-requested rounds. The original hero GLBs remain unchanged; current rendering
+requested rounds. Round 2 integrates a bounded face refinement across all three
+hero LODs and a reviewed lighting correction; its [integration receipt](../games/yuga-native/docs/evidence/visual-rounds/round2/ROUND_REVIEW.md) retains unresolved art gates. Current rendering
 and motion behavior have their own source identity. The published preview below
 has not acquired these source changes automatically.
 

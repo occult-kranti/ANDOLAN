@@ -236,6 +236,138 @@ def authoring_chain_cases(checks: list) -> None:
         run('schema2 restored sources accepted', valid=True)
 
 
+def form_stage_cases(checks: list) -> None:
+    """Challenge schema3's append gate without pretending fixtures are meshes."""
+    with tempfile.TemporaryDirectory(prefix='rama-form-stage-cases-') as folder:
+        root = Path(folder)
+        base = packaging.RAMA_FORM_BASE
+        historical_bytes = (PROJECT / 'NOTICE/RAMA-HERO-PROVENANCE.json').read_bytes()
+        historical_notice = json.loads(historical_bytes)
+        # Tests remain useful after promotion: recover the immutable schema2 notice.
+        if historical_notice['schema'] == 3:
+            historical_bytes = (PROJECT / base / 'input/RAMA-HERO-PROVENANCE.json').read_bytes()
+            historical_notice = json.loads(historical_bytes)
+        historical = historical_notice['authoringStages']
+        parent = historical[-1]
+        files = {p: ('fixture: ' + p).encode() for p in packaging.RAMA_FORM_DEPENDENCIES}
+        files.update({f'{base}/candidate.glb': b'form-output-fixture',
+                      'art/visual-rounds/face/held-ring.json': (PROJECT / 'art/visual-rounds/face/held-ring.json').read_bytes(),
+                      f'{base}/reconstruction.blend': b'form-editable-fixture',
+                      'art/visual-rounds/face/build_form_candidate.py': b'# form generator fixture',
+                      f'{base}/input/RAMA-HERO-PROVENANCE.json': historical_bytes})
+        for level in ('mid', 'far'):
+            source = PROJECT / f'assets/heroes/rama-hero-{level}.glb'
+            if packaging.digest(source) != packaging.RAMA_FORM_LOD_INPUTS[level]:
+                source = PROJECT / base / 'input' / source.name
+            files[f'{base}/input/rama-hero-{level}.glb'] = source.read_bytes()
+            files[f'assets/heroes/rama-hero-{level}.glb'] = files[f'{base}/rama-hero-{level}.glb']
+        def sha(path):
+            return packaging.hashlib.sha256(files[path]).hexdigest()
+        files[f'{base}/edit-manifest.json'] = json.dumps({
+            'schema': 1, 'task': 'R2-08', 'stage': 'principal-facial-form-v1',
+            'input_sha256': parent['sha256'], 'output_sha256': sha(f'{base}/candidate.glb'),
+            'partition_sha256': parent['metadataSha256'],
+            'generator_sha256': sha('art/visual-rounds/face/build_form_candidate.py'),
+            'vertex_edits_sha256': sha(f'{base}/vertex-edits.json'), 'bytes': len(files[f'{base}/candidate.glb'])}).encode()
+        data = json.loads(files[f'{base}/edit-manifest.json'])
+        data.update(original_held_ring_sha256=packaging.RAMA_FORM_HELD_RING_SHA256, original_held_ring_vertices=288)
+        files[f'{base}/edit-manifest.json'] = json.dumps(data).encode()
+        files[f'{base}/reconstruction.inspection.json'] = json.dumps({
+            'candidate_sha256': sha(f'{base}/candidate.glb'), 'editable_sha256': sha(f'{base}/reconstruction.blend'),
+            'original_held_ring_sha256': packaging.RAMA_FORM_HELD_RING_SHA256,
+            'generator_sha256': sha('art/visual-rounds/face/import_editable.py'),
+            'source_inspections': [{'sha256': sha('art/production/reconstruction-rama.blend')},
+                                   {'sha256': parent['editableSha256']}]}).encode()
+        files[f'{base}/lod-transfer-manifest.json'] = json.dumps({
+            'schema': 1, 'task': 'R2-14', 'stage': 'principal-facial-form-lod-transfer-v1',
+            'original_held_ring_sha256': packaging.RAMA_FORM_HELD_RING_SHA256,
+            'near_input_sha256': parent['sha256'], 'near_candidate_sha256': sha(f'{base}/candidate.glb'),
+            'generator_sha256': sha('tools/visual-rounds/integration/transfer_form_lods.py'),
+            'levels': {level: {'input_sha256': packaging.RAMA_FORM_LOD_INPUTS[level],
+                               'output_sha256': sha(f'{base}/rama-hero-{level}.glb'),
+                               'bytes': len(files[f'{base}/rama-hero-{level}.glb']),
+                               'all_other_binary_bytes_exact': True, 'json_exact_except_frame_bounds': True} for level in ('mid', 'far')}}).encode()
+        stage = {'id': 'principal-facial-form-v1', 'parent': 'face',
+                 'asset': f'{base}/candidate.glb', 'sha256': sha(f'{base}/candidate.glb'),
+                 'editableSource': f'{base}/reconstruction.blend', 'editableSha256': sha(f'{base}/reconstruction.blend'),
+                 'generator': 'art/visual-rounds/face/build_form_candidate.py',
+                 'generatorSha256': sha('art/visual-rounds/face/build_form_candidate.py'),
+                 'metadata': f'{base}/edit-manifest.json', 'metadataSha256': sha(f'{base}/edit-manifest.json'),
+                 'inputEditableSha256': None, 'inputAssetSha256': parent['sha256'], 'editableOrigin': 'imported-stage-asset',
+                 'generatedDependencies': [{'path': p, 'sha256': sha(p)} for p in packaging.RAMA_FORM_DEPENDENCIES],
+                 'runtimeLods': [{'asset': f'assets/heroes/rama-hero-{level}.glb',
+                                  'sha256': sha(f'{base}/rama-hero-{level}.glb')} for level in ('mid', 'far')]}
+        for relative, data in files.items():
+            path = root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+        dirty = set()
+        def alter_file(relative, data):
+            dirty.add(relative)
+            (root / relative).write_bytes(data)
+        def mutate_receipt(value, relative, mutate):
+            data = json.loads((root / relative).read_text())
+            mutate(data)
+            alter_file(relative, json.dumps(data).encode())
+            digest = packaging.digest(root / relative)
+            if relative == value['metadata']:
+                value['metadataSha256'] = digest
+            else:
+                next(d for d in value['generatedDependencies'] if d['path'] == relative)['sha256'] = digest
+        def run(name, mutate=None, valid=False):
+            for relative in dirty:
+                path = root / relative
+                if path.is_symlink(): path.unlink()
+                path.write_bytes(files[relative])
+            dirty.clear()
+            value, ancestors = copy.deepcopy(stage), copy.deepcopy(historical)
+            if mutate: mutate(value, ancestors)
+            error = None
+            try:
+                packaging._validate_rama_form_stage(root, value, ancestors, {})
+            except (ValueError, OSError) as exc:
+                error = str(exc)
+            checks.append({'name': 'schema3 ' + name, 'passed': (error is None) == valid, 'rejection': error})
+        run('complete fixed form stage and both LODs accepted', valid=True)
+        for key, wrong in [('id', 'arbitrary-stage'), ('parent', 'q3'), ('inputAssetSha256', '0'*64),
+                           ('inputEditableSha256', parent['editableSha256']), ('editableOrigin', 'authored-from-original-blend'),
+                           ('asset', '../candidate.glb'), ('generator', '/tmp/build.py'), ('editableSha256', True)]:
+            run(key + ' contradiction rejected', lambda s, h, k=key, v=wrong: s.update({k: v}))
+        run('extra stage fields rejected', lambda s, h: s.update(untrackedGenerator='elsewhere'))
+        run('omitted dependency rejected', lambda s, h: s['generatedDependencies'].pop())
+        run('unsafe dependency rejected', lambda s, h: s['generatedDependencies'][0].update(path='../helper.py'))
+        run('rewritten historical stage rejected', lambda s, h: h[0].update(generatorSha256='0'*64))
+        run('self-hashed rewritten historical notice rejected', lambda s, h: mutate_receipt(s, f'{base}/input/RAMA-HERO-PROVENANCE.json', lambda n: n.update(sha256='0'*64)))
+        for key in ['input_sha256', 'output_sha256', 'partition_sha256', 'generator_sha256', 'vertex_edits_sha256', 'original_held_ring_sha256', 'original_held_ring_vertices']:
+            run('self-hashed form metadata ' + key + ' rejected', lambda s, h, k=key: mutate_receipt(s, s['metadata'], lambda n: n.update({k: '0'*64})))
+        run('boolean form metadata schema rejected', lambda s, h: mutate_receipt(s, s['metadata'], lambda n: n.update(schema=True)))
+        for key in ['candidate_sha256', 'editable_sha256', 'generator_sha256', 'original_held_ring_sha256']:
+            run('self-hashed editable receipt ' + key + ' rejected', lambda s, h, k=key: mutate_receipt(s, f'{base}/reconstruction.inspection.json', lambda n: n.update({k: '0'*64})))
+        run('missing editable inspection inputs rejected', lambda s, h: mutate_receipt(s, f'{base}/reconstruction.inspection.json', lambda n: n.update(source_inspections=[])))
+        for key in ['near_input_sha256', 'near_candidate_sha256', 'generator_sha256', 'original_held_ring_sha256']:
+            run('self-hashed LOD ancestry ' + key + ' rejected', lambda s, h, k=key: mutate_receipt(s, f'{base}/lod-transfer-manifest.json', lambda n: n.update({k: '0'*64})))
+        run('missing far body binding rejected', lambda s, h: s['runtimeLods'].pop())
+        run('self-hashed original held-ring replacement rejected', lambda s, h: mutate_receipt(s, 'art/visual-rounds/face/held-ring.json', lambda n: n.update(held_vertices=287)))
+        run('LOD binding order rejected', lambda s, h: s['runtimeLods'].reverse())
+        run('stale LOD output binding rejected', lambda s, h: s['runtimeLods'][0].update(sha256='0'*64))
+        for key, wrong in [('input_sha256', '0'*64), ('output_sha256', '0'*64), ('bytes', True),
+                           ('all_other_binary_bytes_exact', False), ('json_exact_except_frame_bounds', False)]:
+            run('self-hashed LOD receipt ' + key + ' rejected', lambda s, h, k=key, v=wrong: mutate_receipt(s, f'{base}/lod-transfer-manifest.json', lambda n: n['levels']['mid'].update({k: v})))
+        for relative in files:
+            run('changed source rejected: ' + relative, lambda s, h, r=relative: alter_file(r, files[r] + b'changed'))
+        run('obsolete position-only LOD receipt rejected', lambda s, h: mutate_receipt(s, f'{base}/lod-transfer-manifest.json', lambda n: n['levels']['mid'].update(json_exact_except_frame_bounds=False, json_exact_except_position_bounds=True)))
+        def symlink(s, h):
+            relative = f'{base}/candidate.glb'
+            dirty.add(relative)
+            target = root / relative
+            target.unlink()
+            outside = root / 'matching-link-target.glb'
+            outside.write_bytes(files[relative])
+            target.symlink_to(outside)
+        run('matching symlink rejected', symlink)
+        run('restored fixed form stage accepted', valid=True)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--report', type=Path)
@@ -312,11 +444,12 @@ def main() -> int:
         asset.write_bytes(files[original['asset']])
         run('restored source passes', valid=True)
     authoring_chain_cases(checks)
+    form_stage_cases(checks)
     passed = all(check['passed'] for check in checks)
     report = {'suite': 'rama_package_cases', 'passed': passed, 'checks': checks,
               'source_sha256': {'tools/package-native.py': packaging.digest(PROJECT / 'tools/package-native.py'),
                                 'tests/rama_package_cases.py': packaging.digest(Path(__file__))},
-              'scope': 'Historical schema1 and ordered schema2 authoring provenance, source identity, ancestry and safe-path counterexamples; not GLB format or art quality.'}
+              'scope': 'Historical schema1/schema2 plus fixed schema3 form append, complete LOD identities, honest imported editable origin, ancestry and safe-path counterexamples; not GLB format or art quality.'}
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + '\n')

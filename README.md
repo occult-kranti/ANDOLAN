@@ -2,7 +2,9 @@
 
 Publication status for the visual checkpoint is recorded in [the verified source/CI receipt](docs/evidence/visual-campaign-publication.json).
 
-**Latest reuse consultation:** [selected tools, two implemented offline adapters and the next five production goals](games/yuga-native/docs/research/community-reuse/README.md). Six specialists reviewed art, animation, mythology, engine sources and community coverage. Reddit app authentication succeeds, but subreddit access returns 403; fresh tool recommendations come from pinned upstream sources. Face/skin remains the next visual round.
+**Active implementation:** [three visual rounds / 45 assignments](games/yuga-native/docs/VISUAL_ROUNDS_2_4_EXECUTION.json) are underway, alongside a separate [five screen rounds and three integration rounds / 48 assignments](games/yuga-native/docs/SCREEN_CAMPAIGN.md). The ledgers distinguish implemented components, independent checks, pending actual-image gates and completed rounds; these are not additional completed milestones. Six workers rotate through exclusive tasks with one capture lane.
+
+**Latest reuse consultation:** [selected tools, two implemented offline adapters and the next five production goals](games/yuga-native/docs/research/community-reuse/README.md). Six specialists reviewed art, animation, mythology, engine sources and community coverage. Reddit app authentication succeeds, but subreddit access returns 403; fresh tool recommendations come from pinned upstream sources. Round 2 face/skin is now integrated with bounded acceptance; hair and cloth are the next visual work.
 
 **Download the current Rama preview:** [Linux / Windows](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17). Extract the entire ZIP and run `launch.sh` or `launch.bat`. [Watch the actual five-action capture](https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-rama-hero-2026-10-17/rama-five-abilities.mp4). Linux input and all public download bytes were verified; Windows execution remains untested. This is offline practice, with production art quality still open.
 
@@ -14,8 +16,9 @@ lighting, five ability effects, motion corrections and a reviewed facial-shadow
 fix into the native source. Its
 [round ledger](games/yuga-native/docs/VISUAL_CAMPAIGN.json) tracks the requested
 ten rounds and actual specialist work. The published download above retains its
-earlier source; commercial-game visual quality remains open. One fifteen-role
-implementation/review cycle is complete; nine rounds remain planned.
+earlier source; commercial-game visual quality remains open. Two fifteen-role
+implementation/review cycles are complete with limited art acceptance; eight rounds remain.
+[Round 2 integration and open defects](games/yuga-native/docs/evidence/visual-rounds/round2/ROUND_REVIEW.md) records the accepted small facial refinement and lighting correction.
 [Watch the new silent action recording](games/yuga-native/docs/evidence/visual-campaign/capture-action-r1/rama-five-abilities.mp4)
 and read its [bounded visual review](games/yuga-native/docs/evidence/visual-campaign/art-review/FILM_REVIEW.md).
 

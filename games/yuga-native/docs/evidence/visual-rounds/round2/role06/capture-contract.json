@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "task_id": "R2-06",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "product": "YUGA native",
+  "viewport": [
+    1280,
+    960
+  ],
+  "renderer": "Godot4.6.3 Forward+ llvmpipe Vulkan",
+  "resource_lane": {
+    "affinity": [
+      2,
+      3
+    ],
+    "llvmpipe_threads": 2,
+    "one_heavy_process": true
+  },
+  "paired_controls": [
+    "viewport",
+    "camera.transform",
+    "camera.fov",
+    "camera.near",
+    "camera.far",
+    "pose_pin",
+    "player_transform",
+    "visual_yaw",
+    "night",
+    "light",
+    "lod.level",
+    "face.weights"
+  ],
+  "lighting_policy": "Baseline actual runtime sun angular distance .7 courtyard / .6 Confluence; final combined candidate uses 0 in both worlds. All other light, exposure and .2/.35 shadow bias controls remain matched; portrait fill off.",
+  "static_views": {
+    "courtyard": [
+      "front",
+      "three-quarter-left",
+      "three-quarter-right",
+      "profile",
+      "gameplay"
+    ],
+    "confluence_stone": [
+      "three-quarter-left"
+    ],
+    "confluence_foliage": "Historical station name only; actual pixels show mixed coast/architecture and do not establish dark-foliage contrast.",
+    "phases": [
+      "day",
+      "night"
+    ],
+    "raw_frames_per_source": 14
+  },
+  "continuity": {
+    "raw_adjacent_frames": 36,
+    "fixed_process_hz": 30,
+    "seconds": 1.2,
+    "physics_hz": 60,
+    "face_clock_staged_public_updates": 181,
+    "face_clock_update_seconds": 0.016666666666666666,
+    "world_advanced_during_preroll": false,
+    "actions": [
+      {
+        "before_frame": 0,
+        "action": "cast kodanda"
+      },
+      {
+        "before_frame": 15,
+        "action": "cast piercing_dawn"
+      },
+      {
+        "before_frame": 24,
+        "action": "cancel_windup round2_face_probe"
+      }
+    ],
+    "validity": [
+      "No missing rendered frames",
+      "Blink reaches at least .98 then reopens",
+      "Real Kodanda release event",
+      "Real Piercing cancel and no release"
+    ]
+  },
+  "action_poses": {
+    "count": 5,
+    "kind": "Actual late windup",
+    "abilities": [
+      "kodanda",
+      "piercing_dawn",
+      "measured_step",
+      "guardian_circle",
+      "dawn_volley"
+    ],
+    "normal_effects": true,
+    "camera": "42 degree posed-head target with fixed metric offset; actual projected head/neck border gate 24 px. Supersedes cropped 32 degree original action cameras."
+  },
+  "material_diagnostics": {
+    "roughness-mips": "One daylight three-quarter PNG with same authored texture and actual imported mipmap check",
+    "sss-off-diagnostic": "One daylight three-quarter PNG, baseline mip policy"
+  },
+  "related_fixture_paths": [
+    "../role02/context-fixtures.json",
+    "../role04/face-action-fixtures.json"
+  ],
+  "source_snapshots": {
+    "baseline_v1": "/workspace/scratch/visual-round2/capture-baseline-project-r1",
+    "baseline_v2": "/workspace/scratch/visual-round2/capture-baseline-project-r2",
+    "baseline_final_actions": "/workspace/scratch/visual-round2/capture-baseline-project-r6",
+    "candidate_forms": "/workspace/scratch/visual-round2/capture-forms-project-r2",
+    "candidate_final_actions": "/workspace/scratch/visual-round2/capture-final-project-r2",
+    "candidate_reconciled": "/workspace/scratch/visual-round2/capture-final-project-r3"
+  },
+  "harness_revision_note": "Each archive retains its exact harness. Current action-only camera uses posed head and 42 degree FOV after cropped originals were rejected. All prior source/capture receipts remain unchanged.",
+  "unverified_limits": [
+    "Ordinary Confluence gameplay-scale not in14view subset",
+    "Optional indigo-gold station not rendered",
+    "Independent blink-side or aim-extreme rendered matrix not included",
+    "No physical-GPU frame-time/performance claim",
+    "No commercial graphics parity claim",
+    "Dark-foliage contrast gate remains open: ray-hit tree is occluded by actor in actual frame.",
+    "Continuity neck/chest may cross frame border; independent review confirms mouth/chin remain visible in all 36 pairs.",
+    "Normal-speed playback has not been claimed; raw adjacent frames and decoded MP4 validated."
+  ],
+  "status": "Complete: matched 14 static + 36 adjacent + 5 corrected action originals per source; source metadata correction reconciled by fresh import, all-LOD equivalence and byte-identical framebuffer.",
+  "lighting_diagnostics": {
+    "directional-pcss-off": "One actual day three-quarter original; production_lighting sun angular_distance .7 to0, bias .2/.35 unchanged; world lighting unaffected",
+    "taa-on": "One actual day three-quarter original; project TAA enabled, MSAA2x retained; no moving-TAA acceptance"
+  },
+  "rejected_harness_run": "rejected/baseline-continuity-r1/failure.json",
+  "reconciliation": "reconciliation/reconciliation.json"
+}

@@ -66,7 +66,7 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	sun.rotation_degrees = Vector3(-32, -47, 0) if night else Vector3(-26, -47, 0)
 	sun.light_color = Color("b7cbed") if night else Color("ffe2bd")
 	sun.light_energy = 0.50 if night else 1.35
-	sun.light_angular_distance = 0.7
+	sun.light_angular_distance = 0.0
 	sun.shadow_enabled = shadows
 	# Matched day/night face and ground views show 0.025 causes broad skin
 	# self-shadow patches. Keep the small normal offset and reviewed depth bias;

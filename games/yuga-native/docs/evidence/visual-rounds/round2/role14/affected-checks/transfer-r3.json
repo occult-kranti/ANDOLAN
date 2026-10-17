@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "task": "R2-14",
+  "passed": true,
+  "count": 29,
+  "checks": [
+    {
+      "name": "real bounded form accepted",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "unchanged no-op refused",
+      "passed": true,
+      "rejection": "Candidate contains no form edits"
+    },
+    {
+      "name": "stale lip accessor bound refused",
+      "passed": true,
+      "rejection": "POSITION bounds differ from actual rows: 2/12"
+    },
+    {
+      "name": "changed bone identity refused",
+      "passed": true,
+      "rejection": "Bounded form stage must preserve GLB JSON except eligible POSITION bounds and binary length"
+    },
+    {
+      "name": "UV edit refused",
+      "passed": true,
+      "rejection": "Candidate changed bytes outside declared form positions/frames"
+    },
+    {
+      "name": "weight edit refused",
+      "passed": true,
+      "rejection": "Candidate changed bytes outside declared form positions/frames"
+    },
+    {
+      "name": "nonfinite frame refused",
+      "passed": true,
+      "rejection": "Nonfinite candidate frame"
+    },
+    {
+      "name": "tangent handedness edit refused",
+      "passed": true,
+      "rejection": "Tangent handedness changed"
+    },
+    {
+      "name": "greater than 2mm displacement refused",
+      "passed": true,
+      "rejection": "Candidate exceeds finite 2 mm form budget"
+    },
+    {
+      "name": "microscopic held-ring displacement refused",
+      "passed": true,
+      "rejection": "POSITION bounds differ from actual rows: 1/0"
+    },
+    {
+      "name": "held-ring normal-only change refused",
+      "passed": true,
+      "rejection": "Original held-ring position/normal/tangent changed"
+    },
+    {
+      "name": "incomplete original ring refused",
+      "passed": true,
+      "rejection": "Complete original 288-vertex held ring is required"
+    },
+    {
+      "name": "unreviewed self-contained ring source refused",
+      "passed": true,
+      "rejection": "Held-ring input differs from exact original 288-vertex source receipt"
+    },
+    {
+      "name": "exact reordered row transfer maps deterministically",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "position match with different original frame refused",
+      "passed": true,
+      "rejection": "LOD vertex is not an exact original near attribute row"
+    },
+    {
+      "name": "ambiguous original row producing different forms refused",
+      "passed": true,
+      "rejection": "Ambiguous original row maps to different candidate forms"
+    },
+    {
+      "name": "missing original attribute refused",
+      "passed": true,
+      "rejection": "Attribute domains differ"
+    },
+    {
+      "name": "mid actual exact POSITION bounds",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "mid complete held-ring positions and frames exact",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "mid deterministic complete bytes",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "mid rig nodes and animation structures retained",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "mid all four decoded morphs unchanged",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "far actual exact POSITION bounds",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "far complete held-ring positions and frames exact",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "far deterministic complete bytes",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "far rig nodes and animation structures retained",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "far all four decoded morphs unchanged",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "repository output refused before writing",
+      "passed": true,
+      "rejection": "Fresh external output directory required"
+    },
+    {
+      "name": "existing output refused before writing",
+      "passed": true,
+      "rejection": "Fresh external output directory required"
+    }
+  ],
+  "candidate_sha256": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+  "source_sha256": {
+    "tools/visual-rounds/integration/transfer_form_lods.py": "046ea6eb6acb529abd3a8c312b96e161f488704b3d03841e64a5120f2ee167d6",
+    "tools/visual-rounds/integration/test_transfer_form_lods.py": "a3656e6d331ee20e9cb999020b224838de45c2e14abd28af338ee7e5672a413c"
+  },
+  "scope": "Exact form admission, source bounds, deterministic LOD correspondence and rejection tests; no imported deformation or visual acceptance."
+}

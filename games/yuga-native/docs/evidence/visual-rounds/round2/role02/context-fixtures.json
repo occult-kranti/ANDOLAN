@@ -1,0 +1,322 @@
+{
+  "schema": 1,
+  "task": "R2-02",
+  "kind": "Executed source-pinned context selection and offline geometry verification; new framebuffer acceptance pending",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "source_sha256": {
+    "scenes/courtyard.tscn": "8a901cbe8bd5a44d50b6d2f46fc728e7430810bf5b794bdedb6839e7722be0f5",
+    "scenes/confluence_world.tscn": "06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3",
+    "scripts/courtyard.gd": "0a904ebe3de420c80ad436aabf074da159251ed051048c7488c37cd7d0af1128",
+    "scripts/confluence_world.gd": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7",
+    "scripts/player.gd": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+    "scripts/production_lighting.gd": "b1da45eeb090eabb802f199c84759532b4fd202371fa6c543de6316c2740ca52",
+    "scripts/world_lighting.gd": "2b0e9c992b7e13456ef135fc9457172d3731103a27715d54f393c62d391c1ceb",
+    "scripts/hero_district_detail.gd": "09c6447f36a9eba2d0898f3db846fedb45693b9c9d56f3212bc2ec537de56431",
+    "scripts/mythic_environment.gd": "a93295f73be9f4c983a74fc7a209935be2f752ee132ae6734280757672e59cb0",
+    "scripts/hero_atmosphere.gd": "174c02b7fd0733eae17be9cff45713b79feaf2e6f7814e43c27f0206680708fe",
+    "assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "assets/world/nature.glb": "856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f",
+    "assets/world/architecture.glb": "8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a",
+    "assets/environment/lanka_courtyard.glb": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+    "assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "tools/visual-campaign/capture.gd": "e03fcabaf31f4894d6704b71c001d49cd74dfd5b4e0811618be125fc836c4402"
+  },
+  "coordinate_contract": {
+    "units": "metres",
+    "up": "+Y",
+    "world_forward": "+Z",
+    "positive_yaw": "rotates+Z toward+X about+Y",
+    "player_anchor": "feet/base center; request y=.05 then record actual settled y",
+    "visual_yaw": "player.visual.global_rotation.y; distinct from player.yaw/controller camera",
+    "confluence_teleport": "teleport_to(position,visual_yaw_degrees) sets player.yaw=deg_to_rad(wrapped_visual_yaw-180)",
+    "camera_offset_rotation": "Basis(Vector3.UP,deg_to_rad(visual_yaw_degrees-180))*face_offset_m; Godot camera looks along local-Z",
+    "fixed_target_note": "Literal y1.7522 is the frozen review target near the historical head+.075 height; no claim this is an exact live bone position for every pose."
+  },
+  "shared_invariants": {
+    "scene_geometry_changed": false,
+    "collision_changed": false,
+    "architecture_changed": false,
+    "world_materials_changed": false,
+    "added_meshes": 0,
+    "added_lights": 0,
+    "practical_light_budget_changed": false,
+    "courtyard_practicals": "4 existing gallery OmniLights +4 existing HeroDistrictDetail diya pools; title portrait fill hidden for training fixtures; preserve scene phase energies/ranges",
+    "confluence_practicals": "WorldLighting.MAX_PRACTICALS=12; same manifest selections, energies and ranges; no hero fill",
+    "lighting": "Normal ProductionLighting.apply or WorldLighting.apply endpoints only; sun shadows enabled; bias.2/normal_bias.35; exposure1; no per-candidate changes",
+    "reflection_scope": "Sky reflection and existing scene illumination only; SSR,SSIL,SDFGI disabled. Context does not prove physical colored bounce from nearby geometry.",
+    "ui_visible": false,
+    "tree_paused": true,
+    "label": "Paused review fixture at fixed pose. No live HUD, input or continuous-motion claim.",
+    "animation": "Same idle/action, morph state, pose hash, LOD and secondary-motion state within each matched pair; freeze time-dependent atmosphere/water consistently; log controls",
+    "viewport": [
+      1280,
+      960
+    ]
+  },
+  "stations": [
+    {
+      "id": "confluence-lightstone",
+      "scene": "res://scenes/confluence_world.tscn",
+      "player_position_m": [
+        -20,
+        0.05,
+        14
+      ],
+      "visual_yaw_degrees": 180.0,
+      "face_offset_m": [
+        -0.64,
+        0.04,
+        -0.62
+      ],
+      "background_class": "light stone",
+      "background_object": "block-1",
+      "background_preset": "temple_sandstone",
+      "selection": "Camera-to-face segment stays on the open mid crossing; wall is beyond the hero, beginning z=19. Existing inset/brass boundaries remain visible.",
+      "phases": [
+        {
+          "id": "day",
+          "value": 0.0
+        },
+        {
+          "id": "night",
+          "value": 1.0
+        }
+      ],
+      "camera_contract": {
+        "world_up": [
+          0,
+          1,
+          0
+        ],
+        "exact_fixed_target_m": [
+          -20.0,
+          1.7522,
+          14.0
+        ],
+        "close": {
+          "position_m": [
+            -20.64,
+            1.7922,
+            13.38
+          ],
+          "look_at_m": [
+            -20.0,
+            1.7522,
+            14.0
+          ],
+          "fov_degrees": 32.0,
+          "near_m": 0.05,
+          "far_m": 180.0
+        },
+        "gameplay_scale_front_review": {
+          "position_m": [
+            -22.56,
+            1.9122,
+            11.52
+          ],
+          "look_at_m": [
+            -20.0,
+            1.7522,
+            14.0
+          ],
+          "fov_degrees": 65.0,
+          "near_m": 0.08,
+          "far_m": 180.0
+        },
+        "renderer_head_anchor_variant": "If R2-06 uses the current head global pose + (0,.075,0), record the resulting exact target, camera transform and pose pin. Use that identical resolved camera in baseline/candidate/day/night; do not compare literal-target and head-derived frames as a matched pair."
+      },
+      "invariants_ref": "shared_invariants",
+      "new_frame_status": "pending_R2-06_capture",
+      "source_identity_ref": "source_sha256"
+    },
+    {
+      "id": "confluence-darkfoliage",
+      "scene": "res://scenes/confluence_world.tscn",
+      "player_position_m": [
+        -54,
+        0.05,
+        0
+      ],
+      "visual_yaw_degrees": 18.627274488929288,
+      "face_offset_m": [
+        -0.64,
+        -0.08,
+        -0.62
+      ],
+      "background_class": "dark foliage",
+      "background_object": "coast-nature--1-0",
+      "background_preset": "mangrove_roots",
+      "selection": "Existing west reed court, toward outboard mangrove at(-75,0,-10). Low camera elevation raises the backdrop ray into the leaf canopy. Runtime crop must confirm foliage surrounds face rather than only a single center ray.",
+      "phases": [
+        {
+          "id": "day",
+          "value": 0.0
+        },
+        {
+          "id": "night",
+          "value": 1.0
+        }
+      ],
+      "camera_contract": {
+        "world_up": [
+          0,
+          1,
+          0
+        ],
+        "exact_fixed_target_m": [
+          -54.0,
+          1.7522,
+          0.0
+        ],
+        "close": {
+          "position_m": [
+            -53.1954909879547,
+            1.6722,
+            0.38309952954538096
+          ],
+          "look_at_m": [
+            -54.0,
+            1.7522,
+            0.0
+          ],
+          "fov_degrees": 32.0,
+          "near_m": 0.05,
+          "far_m": 180.0
+        },
+        "gameplay_scale_front_review": {
+          "position_m": [
+            -50.781963951818796,
+            1.4322,
+            1.5323981181815238
+          ],
+          "look_at_m": [
+            -54.0,
+            1.7522,
+            0.0
+          ],
+          "fov_degrees": 65.0,
+          "near_m": 0.08,
+          "far_m": 180.0
+        },
+        "renderer_head_anchor_variant": "If R2-06 uses the current head global pose + (0,.075,0), record the resulting exact target, camera transform and pose pin. Use that identical resolved camera in baseline/candidate/day/night; do not compare literal-target and head-derived frames as a matched pair."
+      },
+      "invariants_ref": "shared_invariants",
+      "new_frame_status": "pending_R2-06_capture",
+      "source_identity_ref": "source_sha256"
+    },
+    {
+      "id": "courtyard-indigo-gold",
+      "scene": "res://scenes/courtyard.tscn",
+      "player_position_m": [
+        12,
+        0.05,
+        10
+      ],
+      "visual_yaw_degrees": 187.56176418381568,
+      "face_offset_m": [
+        -0.64,
+        0.04,
+        -0.62
+      ],
+      "background_class": "indigo/gold",
+      "background_object": "existing courtyard lamp and gallery at(14.7,0,12)",
+      "background_preset": "COL_Indigo_glazed_stone + DECOR_Aged_brass",
+      "selection": "Existing lamp carries dark indigo body and aged brass. Center ray reaches brass. This is a mixed indigo/brass/stone context, not a solid blue backdrop; no recoloring. Existing nearby practical remains at normal scene phase.",
+      "phases": [
+        {
+          "id": "day",
+          "value": 0.0
+        },
+        {
+          "id": "night",
+          "value": 1.0
+        }
+      ],
+      "camera_contract": {
+        "world_up": [
+          0,
+          1,
+          0
+        ],
+        "exact_fixed_target_m": [
+          12.0,
+          1.7522,
+          10.0
+        ],
+        "close": {
+          "position_m": [
+            11.283976882075018,
+            1.7922,
+            9.469612505240754
+          ],
+          "look_at_m": [
+            12.0,
+            1.7522,
+            10.0
+          ],
+          "fov_degrees": 32.0,
+          "near_m": 0.05,
+          "far_m": 180.0
+        },
+        "gameplay_scale_front_review": {
+          "position_m": [
+            9.135907528300075,
+            1.9122,
+            7.878450020963019
+          ],
+          "look_at_m": [
+            12.0,
+            1.7522,
+            10.0
+          ],
+          "fov_degrees": 65.0,
+          "near_m": 0.08,
+          "far_m": 180.0
+        },
+        "renderer_head_anchor_variant": "If R2-06 uses the current head global pose + (0,.075,0), record the resulting exact target, camera transform and pose pin. Use that identical resolved camera in baseline/candidate/day/night; do not compare literal-target and head-derived frames as a matched pair."
+      },
+      "invariants_ref": "shared_invariants",
+      "new_frame_status": "pending_R2-06_capture",
+      "source_identity_ref": "source_sha256"
+    }
+  ],
+  "capture_handoff": {
+    "owner": "R2-06",
+    "bounded_initial_subset": "10courtyard baseline views(4close angles+ordinary rear player camera,day/night)+4Confluence context closeups(2stations,day/night)=14/source",
+    "requested_confluence_station_ids": [
+      "confluence-lightstone",
+      "confluence-darkfoliage"
+    ],
+    "additional_fixture_available": "courtyard-indigo-gold and gameplay_scale_front_review for all3stations are fully specified but outside the initial14frame subset",
+    "coverage_limit": "Ordinary rear player camera does not show frontal face. Initial14frames do not establish all3backgrounds at both scales. Uncaptured fixtures remain pending; do not claim full context acceptance.",
+    "reject_on": "Foreground geometry overlaps face; wrong background category around face; near-clip; unrecorded camera/light/LOD difference; HUD values described as live while paused."
+  },
+  "inspected_original_frames": [
+    {
+      "path": "docs/evidence/visual-campaign/capture-final-anchors-r4/02-hero-near-day.png",
+      "sha256": "8f711a0345173f66810d9adad2a2a6f190bffc87f827020863e367f09553aa8e",
+      "viewed_with": "view_image",
+      "observation": "Viewed original full day frame: face lies largely against sky; stone arches and foliage sit around the figure. Not a stone-only or foliage-only face test."
+    },
+    {
+      "path": "docs/evidence/visual-campaign/capture-final-anchors-r4/03-hero-near-night.png",
+      "sha256": "fc647dc71674e29e8f1e700287bfd3d0d1539bf6ee7e4bb56c61228fac59c84a",
+      "viewed_with": "view_image",
+      "observation": "Viewed matched original full night frame: background and pose retained; reduced contrast needs a separate context challenge."
+    },
+    {
+      "path": "docs/evidence/visual-campaign/capture-shadow-confirm-world-day-r3/shadow-bias-depth2-face-day.png",
+      "sha256": "f0ee3f85ce8f09a99425c885d365f8cff72b45e95bffea1d4f97bae30be17313",
+      "viewed_with": "view_image",
+      "observation": "Viewed original world day closeup: sandstone/teal architecture, visible ear/neck stippling, indigo and gold retained."
+    },
+    {
+      "path": "docs/evidence/visual-campaign/capture-shadow-confirm-world-night-r3/shadow-bias-depth2-face-night.png",
+      "sha256": "1225b9d1d78d4cfee5d71baf6ba7505d1204abf588a0c2dbf2a9b174f0f430a6",
+      "viewed_with": "view_image",
+      "observation": "Viewed original world night closeup: practical pool appears on existing wall; face remains readable but dark. This historical diagnostic is not a new Round2 fixture capture."
+    }
+  ],
+  "offline_geometry_verification": "verification.json",
+  "runtime_promoted": false
+}

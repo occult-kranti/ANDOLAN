@@ -1,0 +1,1966 @@
+{
+  "task": "R2-05",
+  "passed": false,
+  "count": 13,
+  "checks": [
+    {
+      "name": "Runtime checks executed and passed on both exact imported assets",
+      "passed": true,
+      "details": {
+        "actual_checks": 73,
+        "baseline_checks": 73
+      }
+    },
+    {
+      "name": "Imported mesh export hash matches runtime report",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "All 146 source attachments map into actual imported face and body",
+      "passed": true,
+      "details": {
+        "matched": 146,
+        "missing": []
+      }
+    },
+    {
+      "name": "Imported candidate keeps attachment rest positions and all four morph boundary deltas",
+      "passed": true,
+      "details": {
+        "rest_gap_m": 0.0,
+        "morph_delta_m": 0.0
+      }
+    },
+    {
+      "name": "Four imported morph deltas retain baseline correspondence",
+      "passed": true,
+      "details": {
+        "maximum_delta_difference_m": 0.0
+      }
+    },
+    {
+      "name": "Original lip/body attachment witnesses exist",
+      "passed": true,
+      "details": {
+        "matched": 226
+      }
+    },
+    {
+      "name": "CPU skinning reproduces imported rest vertices",
+      "passed": false,
+      "details": {
+        "maximum_rest_error_m": 7.965339890420649e-05,
+        "scope": "Includes importer weight quantization and bind matrix float error."
+      }
+    },
+    {
+      "name": "All sampled actual imported skinned positions remain finite",
+      "passed": true,
+      "details": {
+        "samples": 50,
+        "vertices_per_sample": 55363
+      }
+    },
+    {
+      "name": "All posed face/body attachment gaps stay below 0.05 mm",
+      "passed": true,
+      "details": {
+        "maximum_gap_m": 0.0
+      }
+    },
+    {
+      "name": "All posed original lip/body attachment gaps stay below 0.05 mm",
+      "passed": true,
+      "details": {
+        "maximum_gap_m": 0.0,
+        "witnesses": 226
+      }
+    },
+    {
+      "name": "Candidate face has no inverted triangles relative to corresponding baseline poses",
+      "passed": true,
+      "details": {
+        "maximum_new_inversions": 0
+      }
+    },
+    {
+      "name": "Full individual/combined blinks cover actual sampled eye surfaces",
+      "passed": true,
+      "details": {
+        "uncovered": [],
+        "rays_per_eye": 63,
+        "depth_tolerance_m": 0.0002
+      }
+    },
+    {
+      "name": "Candidate does not expose new cornea rays in matching baseline samples",
+      "passed": true,
+      "details": {
+        "extra_visible_samples": []
+      }
+    }
+  ],
+  "sample_count": 50,
+  "actual_runtime_samples": 37,
+  "offline_asymmetric_and_combined_samples": 13,
+  "samples": [
+    {
+      "id": "rest",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604609351982275
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604460635609475
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604609351982275
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604460635609475
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "blink_0.25",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 29,
+          "min_front_skin_minus_eye_m": -0.038604609351982275
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 29,
+          "min_front_skin_minus_eye_m": -0.038604460635609475
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 29,
+          "min_front_skin_minus_eye_m": -0.038604609351982275
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 29,
+          "min_front_skin_minus_eye_m": -0.038604460635609475
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "blink_0.5",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490650437026666
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490433350540754
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490650437026666
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490433350540754
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "blink_0.75",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0012701916006222502
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0012702786805632305
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0012701916006222502
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0012702786805632305
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "blink_1.0",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024891988208158855
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.00248936768280994
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024891988208158855
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.00248936768280994
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "combined_0.6",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604609351982275
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604460635609475
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604609351982275
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604460635609475
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "combined_3.16375",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 29,
+          "min_front_skin_minus_eye_m": -0.038604609351982275
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 29,
+          "min_front_skin_minus_eye_m": -0.038604460635609475
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 29,
+          "min_front_skin_minus_eye_m": -0.038604609351982275
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 29,
+          "min_front_skin_minus_eye_m": -0.038604460635609475
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "combined_3.1775",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490650437026666
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490433350540754
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490650437026666
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490433350540754
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "combined_3.215",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024891988208158855
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.00248936768280994
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024891988208158855
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.00248936768280994
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_-0.85000002384186_-0.69999998807907_blink_0.0",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604562562785924
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860450408653299
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604562562785924
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860450408653299
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_-0.85000002384186_-0.69999998807907_blink_0.5",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490599886035745
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849048660008404
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490599886035745
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849048660008404
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_-0.85000002384186_-0.69999998807907_blink_1.0",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024957598054929364
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024966017795050865
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024957598054929364
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024966017795050865
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_-0.85000002384186_0.69999998807907_blink_0.0",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860455046028756
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860448940311369
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860455046028756
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860448940311369
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_-0.85000002384186_0.69999998807907_blink_0.5",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490587189305425
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849047328537794
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490587189305425
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849047328537794
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_-0.85000002384186_0.69999998807907_blink_1.0",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024964705343709648
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024958992528857638
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024964705343709648
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024958992528857638
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_0.64999997615814_-0.69999998807907_blink_0.0",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860456701314317
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860456401200803
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860456701314317
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860456401200803
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_0.64999997615814_-0.69999998807907_blink_0.5",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849061966169358
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490527878827924
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849061966169358
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.038490527878827924
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_0.64999997615814_-0.69999998807907_blink_1.0",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024767942459948122
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002477566922692548
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.0024767942459948122
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002477566922692548
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_0.64999997615814_0.69999998807907_blink_0.0",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604668382362456
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860450677064928
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604668382362456
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860450677064928
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_0.64999997615814_0.69999998807907_blink_0.5",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849071033819117
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849048069333308
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849071033819117
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849048069333308
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "aim_0.64999997615814_0.69999998807907_blink_1.0",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002477427002815752
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002476927934618872
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002477427002815752
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002476927934618872
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "kodanda_windup",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 33,
+          "min_front_skin_minus_eye_m": -0.03860464353654597
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 33,
+          "min_front_skin_minus_eye_m": -0.03860448808989257
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 33,
+          "min_front_skin_minus_eye_m": -0.03860464353654597
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 33,
+          "min_front_skin_minus_eye_m": -0.03860448808989257
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "kodanda_release",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860461776842837
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860449274460927
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860461776842837
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860449274460927
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "kodanda_recoil",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.03860460713820742
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.038604456802235856
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.03860460713820742
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.038604456802235856
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "piercing_dawn_windup",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604626398256375
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.03860447938360502
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604626398256375
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.03860447938360502
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "piercing_dawn_release",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.038604637932117936
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860449573014288
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.038604637932117936
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860449573014288
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "piercing_dawn_recoil",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860460852765585
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860447091921698
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860460852765585
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860447091921698
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "measured_step_windup",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.03860461992589902
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.03860447629951394
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.03860461992589902
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.03860447629951394
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "measured_step_release",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.038604635461269285
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.0386044712664184
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.038604635461269285
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 35,
+          "min_front_skin_minus_eye_m": -0.0386044712664184
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "measured_step_recoil",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462667596096
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604467059254896
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462667596096
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604467059254896
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "guardian_circle_windup",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604640130639745
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604479130761676
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604640130639745
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.038604479130761676
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "guardian_circle_release",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.038604622589360996
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860444870790765
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.038604622589360996
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860444870790765
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "guardian_circle_recoil",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.038604622383518084
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860447861147316
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.038604622383518084
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860447861147316
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "dawn_volley_windup",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.03860464811494378
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.03860446211740785
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.03860464811494378
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 31,
+          "min_front_skin_minus_eye_m": -0.03860446211740785
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "dawn_volley_release",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.038604618690598544
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860446644762258
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.038604618690598544
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860446644762258
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "dawn_volley_recoil",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860463514958447
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860448189317446
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860463514958447
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 34,
+          "min_front_skin_minus_eye_m": -0.03860448189317446
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "cancel_recovered",
+      "offline_combination": false,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604612358541304
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860446158519169
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604612358541304
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860446158519169
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0_R0",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0.25_R0",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 27,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 27,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0.5_R0",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.0384906741133072
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.0384906741133072
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0.75_R0",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 3,
+          "min_front_skin_minus_eye_m": -0.03734114121197436
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 3,
+          "min_front_skin_minus_eye_m": -0.03734114121197436
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L1_R0",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002493305658752859
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002493305658752859
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0_R0.25",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 27,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 27,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0_R0.5",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849043508883854
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849043508883854
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0_R0.75",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 3,
+          "min_front_skin_minus_eye_m": -0.037341024247939475
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 3,
+          "min_front_skin_minus_eye_m": -0.037341024247939475
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0_R1",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002493474785755484
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 36,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002493474785755484
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0.25_R0.75",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 27,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 3,
+          "min_front_skin_minus_eye_m": -0.037341024247939475
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 27,
+          "min_front_skin_minus_eye_m": -0.03860462343621113
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 3,
+          "min_front_skin_minus_eye_m": -0.037341024247939475
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0.75_R0.25",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 3,
+          "min_front_skin_minus_eye_m": -0.03734114121197436
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 27,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 3,
+          "min_front_skin_minus_eye_m": -0.03734114121197436
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 27,
+          "min_front_skin_minus_eye_m": -0.038604455991529105
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L0.5_R0.5",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.0384906741133072
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849043508883854
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.0384906741133072
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 15,
+          "min_front_skin_minus_eye_m": -0.03849043508883854
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    {
+      "id": "offline_individual_L1_R1",
+      "offline_combination": true,
+      "skinned_vertices": 55363,
+      "attachment_gap_m": 0.0,
+      "lip_attachment_gap_m": 0.0,
+      "candidate_face_delta_m": 0.0,
+      "new_triangle_inversions": 0,
+      "cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002493305658752859
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002493474785755484
+        }
+      },
+      "baseline_cornea": {
+        "L": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002493305658752859
+        },
+        "R": {
+          "actual_eye_rays": 63,
+          "visible_rays": 0,
+          "min_front_skin_minus_eye_m": 0.002493474785755484
+        }
+      },
+      "new_visible_rays": {
+        "L": 0,
+        "R": 0
+      }
+    }
+  ],
+  "runtime_sha256": "8edd6d7dc9217d877a8a013f287b43a98d3a3869f5bb3cec387689df07e7a00d",
+  "baseline_runtime_sha256": "8edd6d7dc9217d877a8a013f287b43a98d3a3869f5bb3cec387689df07e7a00d",
+  "asset_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+  "baseline_asset_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+  "analyzer_sha256": "17467570ff11ccf66397421627f41d12a1d1103303c027a50c18c62f8ba8ac76",
+  "maximum_candidate_face_delta_m": 0.0,
+  "scope": "CPU linear blend skinning of actual imported meshes at real runtime pose/target samples, plus offline independent-target combinations. Frontal actual-eye triangle rays are bounded visibility/closure checks, not exhaustive triangle collision or visual acceptance. Existing open-cornea obstruction is retained and separately reported by source validator. Held288 proof included only when exact source quad ring provided."
+}

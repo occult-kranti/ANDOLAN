@@ -1,0 +1,2055 @@
+{
+  "schema": 1,
+  "task_id": "R2-04",
+  "product": "YUGA native",
+  "status": "source_checked_capture_fixture; new Round2 rendering pending",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "source_pins": [
+    {
+      "path": "assets/design/rama-ability-kit.json",
+      "sha256": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+      "accepted_capture_sha256": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "scripts/rama_ability_kit.gd",
+      "sha256": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+      "accepted_capture_sha256": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "scripts/rama_hero_runtime.gd",
+      "sha256": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+      "accepted_capture_sha256": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "scripts/rama_motion.gd",
+      "sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "accepted_capture_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "scripts/rama_facial_performance.gd",
+      "sha256": "c525d720eab133c66be18e9d49a14ddc2dd20fd0616ec4a5e4f96ee5d2947128",
+      "accepted_capture_sha256": "c525d720eab133c66be18e9d49a14ddc2dd20fd0616ec4a5e4f96ee5d2947128",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "scripts/player.gd",
+      "sha256": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+      "accepted_capture_sha256": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "scripts/rama_ability_effects.gd",
+      "sha256": "573cf061b9d16056d3c384261ead2965aa57726e29d0bb44b2ba21503bfbde2c",
+      "accepted_capture_sha256": "573cf061b9d16056d3c384261ead2965aa57726e29d0bb44b2ba21503bfbde2c",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "assets/heroes/rama-hero.glb",
+      "sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "accepted_capture_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "assets/animations/rama_hero_motion.tres",
+      "sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+      "accepted_capture_sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "tools/capture-rama-gameplay.gd",
+      "sha256": "362d3bb7a2ad89ff6dad4e79b16bcbcdab3e1d6db50ad696e30987e454aaf38d",
+      "accepted_capture_sha256": "362d3bb7a2ad89ff6dad4e79b16bcbcdab3e1d6db50ad696e30987e454aaf38d",
+      "same_as_accepted_capture": true
+    },
+    {
+      "path": "tools/visual-campaign/capture.gd",
+      "sha256": "e03fcabaf31f4894d6704b71c001d49cd74dfd5b4e0811618be125fc836c4402",
+      "accepted_capture_sha256": null,
+      "same_as_accepted_capture": false
+    }
+  ],
+  "scope": "Deterministic real runtime casts and presentation-only observation; no gameplay, asset, effect or camera-source changes. Historical accepted evidence is reference/control, not candidate acceptance.",
+  "clock_contract": {
+    "physics_hz": 60,
+    "army_authority_hz": 20,
+    "compact_capture_hz": 30,
+    "capture_is_hardware_performance": false,
+    "event_key": [
+      "generation",
+      "cast_id",
+      "event_seq"
+    ],
+    "schedule": "Select phases by observed combat_event and kit.report().casts; record physics ticks and face clocks. Render/sample_time_s may differ by one army tick; never relabel image phase from a filename."
+  },
+  "setup": {
+    "reference_harness": "tools/capture-rama-gameplay.gd:fixture and _align_receivers",
+    "scene": "res://scenes/confluence_world.tscn",
+    "origin": [
+      -40,
+      0.05,
+      -10
+    ],
+    "yaw_radians": 3.141592653589793,
+    "pitch_radians": -0.25,
+    "guardian_pitch_radians": -0.55,
+    "grounded_required": true,
+    "near_lod_required": true,
+    "ordinary_camera_owner": "scene.player.camera",
+    "receiver_staging": "Same four real lane_minion.gd commanders as existing harness: ally at index0 damaged80, three moon opponents indices1..3; hero damage60. Alignment follows begin geometry, not guessed camera aim. Disable decisions/waves only within isolated staging harness, exactly as existing fixture. Never issue direct damage as proof of an arrow hit.",
+    "reset_between_takes": "Use scene._restart_army and scene.teleport_to through the existing fixture; do not remove cooldown or speed rules."
+  },
+  "cameras": {
+    "face_front": {
+      "existing_anchor": "tools/visual-campaign/capture.gd:capture_character_detail",
+      "head_center": "rig.global_transform * rig.get_bone_global_pose(rig.find_bone(\"head\")).origin + Vector3(0,.075,0)",
+      "offset_m": [
+        -0.1,
+        0.01,
+        -0.82
+      ],
+      "fov_degrees": 32,
+      "reference_visual_yaw_radians": 3.141592653589793,
+      "confluence_offset_rotation": "Basis(Vector3.UP, player.visual.global_rotation.y - PI) * offset",
+      "freeze": "Compute transform at take start; keep fixed for baseline/candidate. Head tracking, if chosen, must be identical and logged for both."
+    },
+    "face_three_quarter_left": {
+      "inherits": "face_front",
+      "offset_m": [
+        -0.64,
+        0.04,
+        -0.62
+      ]
+    },
+    "face_three_quarter_right": {
+      "inherits": "face_front",
+      "offset_m": [
+        0.64,
+        0.04,
+        -0.62
+      ],
+      "anchor_status": "Mirrored review camera; new review framing, not an existing accepted image"
+    },
+    "ordinary_player": {
+      "object": "scene.player.camera",
+      "transform_source": "Existing fixture player.yaw/pitch then player._update_camera; no camera source edits",
+      "portrait_light": false,
+      "ui_visible": true
+    }
+  },
+  "effects_modes": {
+    "diagnostic_effects_off": {
+      "review_only": true,
+      "method": "Snapshot scene.rama_effects.visible; set false in capture harness only; restore exact previous value before ordinary shots",
+      "suspend_or_disconnect_forbidden": true,
+      "note": "Node3D visibility only; events, warnings data, runtime effects stepping, damage and clocks remain active. Hidden warning pixels are not gameplay readability evidence."
+    },
+    "ordinary_effects_on": {
+      "visible": true,
+      "reduced_effects": false,
+      "reduced_motion": false,
+      "ui_visible": true,
+      "no_portrait_light": true
+    },
+    "ordinary_reduced": {
+      "visible": true,
+      "reduced_effects": true,
+      "reduced_motion": true,
+      "invoke": "rama_effects.set_options",
+      "required_pair": "guardian_circle ordinary receiver and expiry; dawn_volley paced-arrow context",
+      "restore": "Save report().reduced_effects/reduced_motion, restore both; compare unchanged event/receiver timing",
+      "not_effects_off": true
+    }
+  },
+  "receiver_policies": {
+    "projectile_damage": {
+      "event_kind": "impact",
+      "reason": "unit",
+      "require_receipts": true,
+      "receipt_kind": "damage",
+      "predicate": "damage_applied > 0; health_before + shield_before - health_after - shield_after == damage_applied within 1e-5",
+      "identity": [
+        "generation",
+        "cast_id",
+        "event_seq",
+        "projectile_index",
+        "unit_id"
+      ],
+      "exclude": [
+        "reason=wall",
+        "reason=range",
+        "empty receipts",
+        "image filename containing contact without matching event"
+      ]
+    },
+    "step_movement": {
+      "event_kind": "impact",
+      "reason": "movement_accepted",
+      "require_receipts": false,
+      "predicate": "contact_position equals accepted movement destination; subsequent player position changes in that direction; no damage/hit claim",
+      "identity": [
+        "generation",
+        "cast_id",
+        "event_seq"
+      ],
+      "actual_receiver": "player.accept_measured_step; CharacterBody3D move_and_slide owns displacement"
+    },
+    "guardian_support": {
+      "event_kind": "impact or tick",
+      "receipt_kind": "guardian",
+      "require_receipts": true,
+      "predicate": "shield_after > shield_before on entry OR healing_applied > 0 with health_after > health_before on later tick",
+      "identity": [
+        "generation",
+        "cast_id",
+        "event_seq",
+        "unit_id",
+        "receiver_kind when hero"
+      ],
+      "hero_discriminator": "receiver_kind=hero and unit_id=0",
+      "not_a_damage_hit": true
+    }
+  },
+  "compact_continuous_take": {
+    "id": "r2-face-blink-kodanda-cancel-36",
+    "frame_count": 36,
+    "capture_hz": 30,
+    "duration_s": 1.2,
+    "camera": "face_three_quarter_left",
+    "required_modes": [
+      "diagnostic_effects_off",
+      "ordinary_effects_on"
+    ],
+    "ordinary_context_camera": "ordinary_player for its separate matched take",
+    "preroll": {
+      "method": "player.rama_face.reset(\"round2_capture_start\") before natural normal-update preroll only; allow player._update_rama_motion to be sole updater",
+      "physics_ticks_after_face_reset": 181,
+      "target_blink_clock_s": 3.0166666666666666,
+      "tolerance_s": 0.008333333333333333,
+      "no_manual_morph_or_clock_write": true,
+      "skip_capture_during_preroll": true,
+      "staged_alternate": {
+        "method": "While SceneTree paused, reset face then call the same public rama_face.update_facial(1.0/60.0,{alive:true,paused:false,effort:0.0})181 times; do not call private _publish or set mesh weights/clocks",
+        "preparation_scope": "Staged facial-clock preparation only; world_advanced=false; not naturally elapsed gameplay",
+        "required_metadata": [
+          "face_preroll_mode=staged_public_updates",
+          "world_advanced=false",
+          "public_update_count=181",
+          "face_report_before",
+          "face_report_after"
+        ],
+        "continuous_take": "Unpause and use only normal player update for all36 capture frames; never double-update face"
+      },
+      "note": "Record actual face report. If draw scheduling cannot land on181 ticks, shift start to an observed clock that samples [3.205,3.230] at30Hz. Never label an unsampled near closure as endpoint."
+    },
+    "frame_convention": "At local time0 before frame0 advance, issue first command. Rendered frames index0..35 are after2,4,...72 physics ticks. Commands at before_frame15 and24 occur after30 and48 physics ticks. Frame sample time=(index+1)/30.",
+    "commands": [
+      {
+        "before_frame": 0,
+        "at_physics_tick_offset": 0,
+        "method": "scene.rama_runtime.cast_ability",
+        "args": [
+          "kodanda"
+        ],
+        "bind_response": "kodanda_cast",
+        "require": "accepted=true; begin event same generation/cast_id"
+      },
+      {
+        "before_frame": 15,
+        "at_physics_tick_offset": 30,
+        "method": "scene.rama_runtime.cast_ability",
+        "args": [
+          "piercing_dawn"
+        ],
+        "bind_response": "cancel_cast",
+        "require": "accepted=true; previous Kodanda authority recovery has occurred"
+      },
+      {
+        "before_frame": 24,
+        "at_physics_tick_offset": 48,
+        "method": "scene.rama_runtime.kit.cancel_windup",
+        "args": [
+          "round2_face_probe"
+        ],
+        "bind_response": "cancelled",
+        "require": "true; event kind=cancel matches cancel_cast, reason=round2_face_probe; no release/impact for cancel_cast"
+      }
+    ],
+    "blink": {
+      "initial_index": 0,
+      "start_clock_s": 3.15,
+      "close_endpoint_clock_s": 3.205,
+      "hold_end_clock_s": 3.23,
+      "open_end_clock_s": 3.34,
+      "full_closure_frame_index": 5,
+      "full_closure_clock_s": 3.216666666666667,
+      "morphs": [
+        "rama_blink_left",
+        "rama_blink_right"
+      ],
+      "half_correctives": [
+        "rama_blink_half_left",
+        "rama_blink_half_right"
+      ],
+      "combined_expression": "max(blink, smoothed_effort*.14), left/right equal; effort target1 during windup/hold, .35 during recovery,0 otherwise; not separate brow/jaw/gaze morphs"
+    },
+    "required_frame_fields": [
+      "physics_tick",
+      "render_frame",
+      "camera_transform",
+      "lod",
+      "rama_face.report()",
+      "rama_motion.diagnostics()",
+      "kit.report()",
+      "effects.report()",
+      "events_since_previous_frame",
+      "receivers"
+    ],
+    "required_outcomes": [
+      "Exactly36 adjacent framebuffers; physics_tick_delta=2",
+      "At least one left/right published weight=1 within1e-6",
+      "Kodanda begin/release/recovery; target-hit claim only if real damage receipt observed",
+      "Piercing begin/cancel with zero release/impact/receipts for that cast",
+      "After cancel+.16s motion stage none/action empty and aim/effort return continuously",
+      "No pause/reset/camera toggle within continuous take"
+    ],
+    "scope_limit": "The36-frame sequence covers natural blink plus real action/cancel, not all five abilities, full guardian expiry, defeat, user-key delivery or crowded combat. Other action fixtures remain separate sparse samples."
+  },
+  "deformation_handoff": {
+    "owner": "R2-05 and R2-10",
+    "handles": [
+      "player.rama_face.report().weights",
+      "player.rama_face.report().half_correctives",
+      "player.rama_motion.rig",
+      "head",
+      "neck01",
+      "neck02",
+      "neck03",
+      "spine03",
+      "player.rama_motion.socket_global(\"bow_grip\")"
+    ],
+    "checks": [
+      "Unique facial writer remains1",
+      "No eye penetration, face/body boundary cracks or neck discontinuity on adjacent blink/draw/recoil/cancel frames",
+      "Preserve full/half morph names and ordering; no manual eyelid publish bypass",
+      "Numerically probe pause/reset/teleport and combined blink/effort separately; reset must restore blink_index0/clock0/weights0",
+      "No facial fixture closes pre-existing rapid-reversal body defect"
+    ]
+  },
+  "minimal_round2_capture_request": {
+    "five_action_originals": [
+      "kodanda-draw",
+      "piercing_dawn-draw",
+      "measured_step-draw",
+      "guardian_circle-draw",
+      "dawn_volley-draw"
+    ],
+    "five_action_original_scope": "One live-runtime late-windup face/neck original for each existing ability. Other event/receiver/reduced/expiry anchors are source-pinned follow-on fixtures; do not claim their new rendering from these five images.",
+    "continuous_take": "r2-face-blink-kodanda-cancel-36",
+    "full_reel_required": false
+  },
+  "fixtures": [
+    {
+      "id": "r2-face-kodanda",
+      "ability_id": "kodanda",
+      "input_action": "fire",
+      "invoke": {
+        "object": "scene.rama_runtime",
+        "method": "cast_ability",
+        "args": [
+          "kodanda"
+        ],
+        "accepted_required": true,
+        "actual_player_input_claim": false
+      },
+      "camera_ids": [
+        "face_front",
+        "face_three_quarter_left",
+        "face_three_quarter_right",
+        "ordinary_player"
+      ],
+      "effects_modes": [
+        "diagnostic_effects_off",
+        "ordinary_effects_on"
+      ],
+      "timing": {
+        "declared_windup_s": 0.18,
+        "authority_release_age_s": 0.2,
+        "authority_recovery_age_s": 0.4,
+        "authority_end_age_s": 1.15,
+        "presentation_recoil_duration_s": 0.22,
+        "presentation_fade_s": 0.16
+      },
+      "pose_handles": {
+        "controller": "player.rama_motion",
+        "draw_clip": "draw",
+        "release_clip": "release",
+        "aim_bone": "spine03",
+        "head_bone": "head",
+        "neck_bones": [
+          "neck01",
+          "neck02",
+          "neck03"
+        ],
+        "authoritative_release_method": "release_action is called by rama_hero_runtime._event; do not call it manually"
+      },
+      "shots": [
+        {
+          "id": "kodanda-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.1,
+            "released": false
+          },
+          "motion_stage": [
+            "windup",
+            "hold"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "kodanda-release",
+          "trigger": {
+            "kind": "release",
+            "first_frame_after_event": true
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "kodanda-recoil",
+          "trigger": {
+            "kind": "release",
+            "elapsed_physics_ticks_after_event": 7
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_right",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "kodanda-ordinary-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.1,
+            "released": false
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "kodanda-ordinary-receiver",
+          "trigger": {
+            "kind": "impact",
+            "predicate_ref": "projectile_damage"
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "kodanda-ordinary-expiry",
+          "trigger": {
+            "kind": "end",
+            "first_frame_after_event": true
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        }
+      ],
+      "receiver_requirement": "projectile_damage",
+      "accepted_control": {
+        "report": "docs/evidence/visual-campaign/capture-action-r1/rama-gameplay-review.json",
+        "report_sha256": "cbb4c0cb262cd8078d93c1387ff64daef5ec99deb3fba6e72dd2713557bb98d6",
+        "generation": 5,
+        "cast_id": 1,
+        "release_count": 1,
+        "normal_expiry": true,
+        "event_excerpt": [
+          {
+            "kind": "begin",
+            "age_s": 0.0,
+            "generation": 5,
+            "cast_id": 1,
+            "event_seq": 2,
+            "release_age_s": -1.0,
+            "receipts": []
+          },
+          {
+            "kind": "release",
+            "age_s": 0.2,
+            "generation": 5,
+            "cast_id": 1,
+            "event_seq": 6,
+            "release_age_s": 0.2,
+            "receipts": []
+          },
+          {
+            "kind": "impact",
+            "age_s": 0.3,
+            "generation": 5,
+            "cast_id": 1,
+            "event_seq": 9,
+            "reason": "unit",
+            "projectile_index": 0,
+            "contact_position": [
+              -40.7088737487793,
+              1.38492488861084,
+              -3.64940524101257
+            ],
+            "release_age_s": 0.2,
+            "receipts": [
+              {
+                "damage_applied": 28.0,
+                "health_after": 122.0,
+                "health_before": 150.0,
+                "kind": "damage",
+                "position": [
+                  -40.7697410583496,
+                  0.0,
+                  -3.04244995117188
+                ],
+                "shield_after": 0.0,
+                "shield_before": 0.0,
+                "unit_id": 32
+              }
+            ]
+          },
+          {
+            "kind": "recovery",
+            "age_s": 0.4,
+            "generation": 5,
+            "cast_id": 1,
+            "event_seq": 12,
+            "release_age_s": 0.2,
+            "receipts": []
+          },
+          {
+            "kind": "end",
+            "age_s": 1.15,
+            "generation": 5,
+            "cast_id": 1,
+            "event_seq": 29,
+            "release_age_s": 0.2,
+            "receipts": []
+          }
+        ],
+        "stills": [
+          {
+            "phase": "windup",
+            "image": {
+              "draw_calls": 1002,
+              "file": "still-kodanda-windup.png",
+              "height": 720,
+              "rendered_objects": 2037,
+              "rendered_primitives": 1362637,
+              "sha256": "45d4f181055fd13a28e2d7f2edc78948c05762737a82eb739f9e0ce5640b5630",
+              "width": 1280
+            },
+            "sample_age_s": 0.133333333333333
+          },
+          {
+            "phase": "release",
+            "image": {
+              "draw_calls": 993,
+              "file": "still-kodanda-release.png",
+              "height": 720,
+              "rendered_objects": 1991,
+              "rendered_primitives": 1362351,
+              "sha256": "b4f5eb6197056fc875fce4e0e409ffb50ff47171b442721ce79aad92d49cb333",
+              "width": 1280
+            },
+            "sample_age_s": 0.266666666666667
+          },
+          {
+            "phase": "contact",
+            "image": {
+              "draw_calls": 993,
+              "file": "still-kodanda-contact.png",
+              "height": 720,
+              "rendered_objects": 1986,
+              "rendered_primitives": 1362529,
+              "sha256": "82693eb560a41f39b12eb3dae8acc5e99762de21708075c2be96c763f5ce7e30",
+              "width": 1280
+            },
+            "sample_age_s": 0.5
+          }
+        ],
+        "frames": [
+          {
+            "phase": "release",
+            "event_seq": 6,
+            "authority_age_s": 0.2,
+            "frame_index": 5,
+            "sample_time_s": 0.2,
+            "image": {
+              "draw_calls": 993,
+              "file": "frame-00005.png",
+              "height": 720,
+              "rendered_objects": 1991,
+              "rendered_primitives": 1362351,
+              "sha256": "0c74b9cf121163debb5ba16716b2e63171db0196be88c93350c94d9df3abcdcb",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "receiver",
+            "event_seq": 9,
+            "authority_age_s": 0.3,
+            "frame_index": 8,
+            "sample_time_s": 0.3,
+            "image": {
+              "draw_calls": 991,
+              "file": "frame-00008.png",
+              "height": 720,
+              "rendered_objects": 1990,
+              "rendered_primitives": 1362537,
+              "sha256": "a2782071506986a4ba597d5d6d8f175e4c7e9c7153e6054621adb9febfc94cb8",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "recovery",
+            "event_seq": 12,
+            "authority_age_s": 0.4,
+            "frame_index": 11,
+            "sample_time_s": 0.4,
+            "image": {
+              "draw_calls": 992,
+              "file": "frame-00011.png",
+              "height": 720,
+              "rendered_objects": 1985,
+              "rendered_primitives": 1362527,
+              "sha256": "07f64797948ffaa9c774ee62be0051213ed6f5f5d7902b19cddd4d8e54ad091f",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "end",
+            "event_seq": 29,
+            "authority_age_s": 1.15,
+            "frame_index": 34,
+            "sample_time_s": 1.16666666666667,
+            "image": {
+              "draw_calls": 992,
+              "file": "frame-00034.png",
+              "height": 720,
+              "rendered_objects": 1985,
+              "rendered_primitives": 1362217,
+              "sha256": "b29ff839de889f78283c44b94045e9a132552216f8736d46c4465ce851e6fbb0",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r2-face-piercing_dawn",
+      "ability_id": "piercing_dawn",
+      "input_action": "pulse",
+      "invoke": {
+        "object": "scene.rama_runtime",
+        "method": "cast_ability",
+        "args": [
+          "piercing_dawn"
+        ],
+        "accepted_required": true,
+        "actual_player_input_claim": false
+      },
+      "camera_ids": [
+        "face_front",
+        "face_three_quarter_left",
+        "face_three_quarter_right",
+        "ordinary_player"
+      ],
+      "effects_modes": [
+        "diagnostic_effects_off",
+        "ordinary_effects_on"
+      ],
+      "timing": {
+        "declared_windup_s": 0.65,
+        "authority_release_age_s": 0.65,
+        "authority_recovery_age_s": 0.95,
+        "authority_end_age_s": 1.7,
+        "presentation_recoil_duration_s": 0.3,
+        "presentation_fade_s": 0.16
+      },
+      "pose_handles": {
+        "controller": "player.rama_motion",
+        "draw_clip": "piercing_draw",
+        "release_clip": "piercing_release",
+        "aim_bone": "spine03",
+        "head_bone": "head",
+        "neck_bones": [
+          "neck01",
+          "neck02",
+          "neck03"
+        ],
+        "authoritative_release_method": "release_action is called by rama_hero_runtime._event; do not call it manually"
+      },
+      "shots": [
+        {
+          "id": "piercing_dawn-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.6,
+            "released": false
+          },
+          "motion_stage": [
+            "windup",
+            "hold"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "piercing_dawn-release",
+          "trigger": {
+            "kind": "release",
+            "first_frame_after_event": true
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "piercing_dawn-recoil",
+          "trigger": {
+            "kind": "release",
+            "elapsed_physics_ticks_after_event": 9
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_right",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "piercing_dawn-ordinary-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.6,
+            "released": false
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "piercing_dawn-ordinary-receiver",
+          "trigger": {
+            "kind": "impact",
+            "predicate_ref": "projectile_damage"
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "piercing_dawn-ordinary-expiry",
+          "trigger": {
+            "kind": "end",
+            "first_frame_after_event": true
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        }
+      ],
+      "receiver_requirement": "projectile_damage",
+      "accepted_control": {
+        "report": "docs/evidence/visual-campaign/capture-action-r1/rama-gameplay-review.json",
+        "report_sha256": "cbb4c0cb262cd8078d93c1387ff64daef5ec99deb3fba6e72dd2713557bb98d6",
+        "generation": 9,
+        "cast_id": 1,
+        "release_count": 1,
+        "normal_expiry": true,
+        "event_excerpt": [
+          {
+            "kind": "begin",
+            "age_s": 0.0,
+            "generation": 9,
+            "cast_id": 1,
+            "event_seq": 2,
+            "release_age_s": -1.0,
+            "receipts": []
+          },
+          {
+            "kind": "release",
+            "age_s": 0.65,
+            "generation": 9,
+            "cast_id": 1,
+            "event_seq": 15,
+            "release_age_s": 0.65,
+            "receipts": []
+          },
+          {
+            "kind": "impact",
+            "age_s": 0.800000000000001,
+            "generation": 9,
+            "cast_id": 1,
+            "event_seq": 19,
+            "reason": "unit",
+            "projectile_index": 0,
+            "contact_position": [
+              -40.7723045349121,
+              1.38324511051178,
+              -3.79244565963745
+            ],
+            "release_age_s": 0.65,
+            "receipts": [
+              {
+                "damage_applied": 70.0,
+                "health_after": 80.0,
+                "health_before": 150.0,
+                "kind": "damage",
+                "position": [
+                  -40.7697410583496,
+                  0.0,
+                  -3.04244995117188
+                ],
+                "shield_after": 0.0,
+                "shield_before": 0.0,
+                "unit_id": 32
+              }
+            ]
+          },
+          {
+            "kind": "impact",
+            "age_s": 0.850000000000001,
+            "generation": 9,
+            "cast_id": 1,
+            "event_seq": 21,
+            "reason": "unit",
+            "projectile_index": 0,
+            "contact_position": [
+              -41.0472106933594,
+              1.38324511051178,
+              -1.30760610103607
+            ],
+            "release_age_s": 0.65,
+            "receipts": [
+              {
+                "damage_applied": 70.0,
+                "health_after": 80.0,
+                "health_before": 150.0,
+                "kind": "damage",
+                "position": [
+                  -41.0446510314941,
+                  0.0,
+                  -0.557610511779785
+                ],
+                "shield_after": 0.0,
+                "shield_before": 0.0,
+                "unit_id": 33
+              }
+            ]
+          },
+          {
+            "kind": "impact",
+            "age_s": 0.900000000000001,
+            "generation": 9,
+            "cast_id": 1,
+            "event_seq": 23,
+            "reason": "unit",
+            "projectile_index": 0,
+            "contact_position": [
+              -41.3221206665039,
+              1.38324511051178,
+              1.17723333835602
+            ],
+            "release_age_s": 0.65,
+            "receipts": [
+              {
+                "damage_applied": 70.0,
+                "health_after": 80.0,
+                "health_before": 150.0,
+                "kind": "damage",
+                "position": [
+                  -41.3195571899414,
+                  0.0,
+                  1.9272289276123
+                ],
+                "shield_after": 0.0,
+                "shield_before": 0.0,
+                "unit_id": 34
+              }
+            ]
+          },
+          {
+            "kind": "recovery",
+            "age_s": 0.950000000000001,
+            "generation": 9,
+            "cast_id": 1,
+            "event_seq": 25,
+            "release_age_s": 0.65,
+            "receipts": []
+          },
+          {
+            "kind": "impact",
+            "age_s": 1.4,
+            "generation": 9,
+            "cast_id": 1,
+            "event_seq": 35,
+            "reason": "range",
+            "projectile_index": 0,
+            "contact_position": [
+              -44.3422966003418,
+              1.38324511051178,
+              28.4760131835938
+            ],
+            "release_age_s": 0.65,
+            "receipts": []
+          },
+          {
+            "kind": "end",
+            "age_s": 1.7,
+            "generation": 9,
+            "cast_id": 1,
+            "event_seq": 43,
+            "release_age_s": 0.65,
+            "receipts": []
+          }
+        ],
+        "stills": [
+          {
+            "phase": "windup",
+            "image": {
+              "draw_calls": 1005,
+              "file": "still-piercing_dawn-windup.png",
+              "height": 720,
+              "rendered_objects": 2016,
+              "rendered_primitives": 1362965,
+              "sha256": "315ba70cc73e0199b1b6d1dccdd569db2549b5eb1c83fc0d44e216a2fd601073",
+              "width": 1280
+            },
+            "sample_age_s": 0.6
+          },
+          {
+            "phase": "release",
+            "image": {
+              "draw_calls": 995,
+              "file": "still-piercing_dawn-release.png",
+              "height": 720,
+              "rendered_objects": 2007,
+              "rendered_primitives": 1362489,
+              "sha256": "d5b440b0e8cfd8e9afbc0da003e3e2a10ce5b14bd61da094dd7089153c9f36e8",
+              "width": 1280
+            },
+            "sample_age_s": 0.733333333333333
+          },
+          {
+            "phase": "contact",
+            "image": {
+              "draw_calls": 997,
+              "file": "still-piercing_dawn-contact.png",
+              "height": 720,
+              "rendered_objects": 1999,
+              "rendered_primitives": 1363297,
+              "sha256": "acaef070ee7f696760df9393876612bdc14883f451481d97ed89190c75b8ab3a",
+              "width": 1280
+            },
+            "sample_age_s": 0.966666666666667
+          }
+        ],
+        "frames": [
+          {
+            "phase": "release",
+            "event_seq": 15,
+            "authority_age_s": 0.65,
+            "frame_index": 64,
+            "sample_time_s": 0.666666666666667,
+            "image": {
+              "draw_calls": 995,
+              "file": "frame-00064.png",
+              "height": 720,
+              "rendered_objects": 2007,
+              "rendered_primitives": 1362489,
+              "sha256": "d983e5078dcb43bb78c260cfa8f5b49e02403ad6fc3f516d739463f0272da152",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "receiver",
+            "event_seq": 19,
+            "authority_age_s": 0.800000000000001,
+            "frame_index": 68,
+            "sample_time_s": 0.8,
+            "image": {
+              "draw_calls": 995,
+              "file": "frame-00068.png",
+              "height": 720,
+              "rendered_objects": 2008,
+              "rendered_primitives": 1362801,
+              "sha256": "8f369db47bbf1a03fbd9a6bcf7a5b00d5438e15f88c70258c2c00065a52b5019",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "recovery",
+            "event_seq": 25,
+            "authority_age_s": 0.950000000000001,
+            "frame_index": 73,
+            "sample_time_s": 0.966666666666667,
+            "image": {
+              "draw_calls": 997,
+              "file": "frame-00073.png",
+              "height": 720,
+              "rendered_objects": 1999,
+              "rendered_primitives": 1363297,
+              "sha256": "acaef070ee7f696760df9393876612bdc14883f451481d97ed89190c75b8ab3a",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "end",
+            "event_seq": 43,
+            "authority_age_s": 1.7,
+            "frame_index": 95,
+            "sample_time_s": 1.7,
+            "image": {
+              "draw_calls": 993,
+              "file": "frame-00095.png",
+              "height": 720,
+              "rendered_objects": 1995,
+              "rendered_primitives": 1362387,
+              "sha256": "014fa906f1d86d5863630b79605ad6e2b47973126dae7292d2a1f6f2acfca358",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r2-face-measured_step",
+      "ability_id": "measured_step",
+      "input_action": "dash",
+      "invoke": {
+        "object": "scene.rama_runtime",
+        "method": "cast_ability",
+        "args": [
+          "measured_step"
+        ],
+        "accepted_required": true,
+        "actual_player_input_claim": false
+      },
+      "camera_ids": [
+        "face_front",
+        "face_three_quarter_left",
+        "face_three_quarter_right",
+        "ordinary_player"
+      ],
+      "effects_modes": [
+        "diagnostic_effects_off",
+        "ordinary_effects_on"
+      ],
+      "timing": {
+        "declared_windup_s": 0.1,
+        "authority_release_age_s": 0.1,
+        "authority_recovery_age_s": 0.35,
+        "authority_end_age_s": 0.4,
+        "presentation_recoil_duration_s": 0.25,
+        "presentation_fade_s": 0.16
+      },
+      "pose_handles": {
+        "controller": "player.rama_motion",
+        "draw_clip": "dash",
+        "release_clip": "dash",
+        "aim_bone": "spine03",
+        "head_bone": "head",
+        "neck_bones": [
+          "neck01",
+          "neck02",
+          "neck03"
+        ],
+        "authoritative_release_method": "release_action is called by rama_hero_runtime._event; do not call it manually"
+      },
+      "shots": [
+        {
+          "id": "measured_step-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.05,
+            "released": false
+          },
+          "motion_stage": [
+            "windup",
+            "hold"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "measured_step-release",
+          "trigger": {
+            "kind": "release",
+            "first_frame_after_event": true
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "measured_step-recoil",
+          "trigger": {
+            "kind": "release",
+            "elapsed_physics_ticks_after_event": 8
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_right",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "measured_step-ordinary-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.05,
+            "released": false
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "measured_step-ordinary-receiver",
+          "trigger": {
+            "kind": "impact",
+            "predicate_ref": "step_movement"
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "measured_step-ordinary-expiry",
+          "trigger": {
+            "kind": "end",
+            "first_frame_after_event": true
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        }
+      ],
+      "receiver_requirement": "step_movement",
+      "accepted_control": {
+        "report": "docs/evidence/visual-campaign/capture-action-r1/rama-gameplay-review.json",
+        "report_sha256": "cbb4c0cb262cd8078d93c1387ff64daef5ec99deb3fba6e72dd2713557bb98d6",
+        "generation": 13,
+        "cast_id": 1,
+        "release_count": 1,
+        "normal_expiry": true,
+        "event_excerpt": [
+          {
+            "kind": "begin",
+            "age_s": 0.0,
+            "generation": 13,
+            "cast_id": 1,
+            "event_seq": 2,
+            "release_age_s": -1.0,
+            "receipts": []
+          },
+          {
+            "kind": "release",
+            "age_s": 0.1,
+            "generation": 13,
+            "cast_id": 1,
+            "event_seq": 4,
+            "release_age_s": 0.1,
+            "receipts": []
+          },
+          {
+            "kind": "impact",
+            "age_s": 0.1,
+            "generation": 13,
+            "cast_id": 1,
+            "event_seq": 5,
+            "reason": "movement_accepted",
+            "contact_position": [
+              -40.4948348999023,
+              0.000195310218259692,
+              -5.52728939056396
+            ],
+            "release_age_s": 0.1,
+            "receipts": []
+          },
+          {
+            "kind": "recovery",
+            "age_s": 0.35,
+            "generation": 13,
+            "cast_id": 1,
+            "event_seq": 11,
+            "release_age_s": 0.1,
+            "receipts": []
+          },
+          {
+            "kind": "end",
+            "age_s": 0.4,
+            "generation": 13,
+            "cast_id": 1,
+            "event_seq": 14,
+            "release_age_s": 0.1,
+            "receipts": []
+          }
+        ],
+        "stills": [
+          {
+            "phase": "windup",
+            "image": {
+              "draw_calls": 1004,
+              "file": "still-measured_step-windup.png",
+              "height": 720,
+              "rendered_objects": 2057,
+              "rendered_primitives": 1363091,
+              "sha256": "46f5db717ba19ce9c6dba2cf07239958c9059b488f1fe71f10a3c0ba1e37298d",
+              "width": 1280
+            },
+            "sample_age_s": 0.0666666666666667
+          },
+          {
+            "phase": "release",
+            "image": {
+              "draw_calls": 984,
+              "file": "still-measured_step-release.png",
+              "height": 720,
+              "rendered_objects": 1990,
+              "rendered_primitives": 1358713,
+              "sha256": "9e463289ee56bf0e1d3c73116ac1a6ff8034332dc496b6307a30834782ff3536",
+              "width": 1280
+            },
+            "sample_age_s": 0.166666666666667
+          },
+          {
+            "phase": "contact",
+            "image": {
+              "draw_calls": 900,
+              "file": "still-measured_step-contact.png",
+              "height": 720,
+              "rendered_objects": 1802,
+              "rendered_primitives": 1330211,
+              "sha256": "5ed62d0cf9a161169e3857e30b5adcac098ea94ef7196f7745e91ddb78fb1800",
+              "width": 1280
+            },
+            "sample_age_s": 0.4
+          }
+        ],
+        "frames": [
+          {
+            "phase": "release",
+            "event_seq": 4,
+            "authority_age_s": 0.1,
+            "frame_index": 101,
+            "sample_time_s": 0.1,
+            "image": {
+              "draw_calls": 993,
+              "file": "frame-00101.png",
+              "height": 720,
+              "rendered_objects": 2005,
+              "rendered_primitives": 1362509,
+              "sha256": "ebb2009f4b145fffc7c90f1c450df7c4fe22904b16882767d5504c2d7f70d15d",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "receiver",
+            "event_seq": 5,
+            "authority_age_s": 0.1,
+            "frame_index": 101,
+            "sample_time_s": 0.1,
+            "image": {
+              "draw_calls": 993,
+              "file": "frame-00101.png",
+              "height": 720,
+              "rendered_objects": 2005,
+              "rendered_primitives": 1362509,
+              "sha256": "ebb2009f4b145fffc7c90f1c450df7c4fe22904b16882767d5504c2d7f70d15d",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "recovery",
+            "event_seq": 11,
+            "authority_age_s": 0.35,
+            "frame_index": 109,
+            "sample_time_s": 0.366666666666667,
+            "image": {
+              "draw_calls": 901,
+              "file": "frame-00109.png",
+              "height": 720,
+              "rendered_objects": 1804,
+              "rendered_primitives": 1330659,
+              "sha256": "729bad9046e5088397e480abdf8aba42030024cca29c177450f03e481f9c15da",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "end",
+            "event_seq": 14,
+            "authority_age_s": 0.4,
+            "frame_index": 110,
+            "sample_time_s": 0.4,
+            "image": {
+              "draw_calls": 900,
+              "file": "frame-00110.png",
+              "height": 720,
+              "rendered_objects": 1802,
+              "rendered_primitives": 1330211,
+              "sha256": "5ed62d0cf9a161169e3857e30b5adcac098ea94ef7196f7745e91ddb78fb1800",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r2-face-guardian_circle",
+      "ability_id": "guardian_circle",
+      "input_action": "guardian_circle",
+      "invoke": {
+        "object": "scene.rama_runtime",
+        "method": "cast_ability",
+        "args": [
+          "guardian_circle"
+        ],
+        "accepted_required": true,
+        "actual_player_input_claim": false
+      },
+      "camera_ids": [
+        "face_front",
+        "face_three_quarter_left",
+        "face_three_quarter_right",
+        "ordinary_player"
+      ],
+      "effects_modes": [
+        "diagnostic_effects_off",
+        "ordinary_effects_on"
+      ],
+      "timing": {
+        "declared_windup_s": 0.55,
+        "authority_release_age_s": 0.55,
+        "authority_recovery_age_s": 0.85,
+        "authority_end_age_s": 5.35,
+        "presentation_recoil_duration_s": 0.3,
+        "presentation_fade_s": 0.16
+      },
+      "pose_handles": {
+        "controller": "player.rama_motion",
+        "draw_clip": "circle_draw",
+        "release_clip": "circle_release",
+        "aim_bone": "spine03",
+        "head_bone": "head",
+        "neck_bones": [
+          "neck01",
+          "neck02",
+          "neck03"
+        ],
+        "authoritative_release_method": "release_action is called by rama_hero_runtime._event; do not call it manually"
+      },
+      "shots": [
+        {
+          "id": "guardian_circle-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.5,
+            "released": false
+          },
+          "motion_stage": [
+            "windup",
+            "hold"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "guardian_circle-release",
+          "trigger": {
+            "kind": "release",
+            "first_frame_after_event": true
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "guardian_circle-recoil",
+          "trigger": {
+            "kind": "release",
+            "elapsed_physics_ticks_after_event": 9
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_right",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "guardian_circle-ordinary-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.5,
+            "released": false
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "guardian_circle-ordinary-receiver",
+          "trigger": {
+            "kind": "impact",
+            "predicate_ref": "guardian_support"
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "guardian_circle-ordinary-expiry",
+          "trigger": {
+            "kind": "end",
+            "first_frame_after_event": true
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        }
+      ],
+      "receiver_requirement": "guardian_support",
+      "accepted_control": {
+        "report": "docs/evidence/visual-campaign/capture-action-r1/rama-gameplay-review.json",
+        "report_sha256": "cbb4c0cb262cd8078d93c1387ff64daef5ec99deb3fba6e72dd2713557bb98d6",
+        "generation": 17,
+        "cast_id": 1,
+        "release_count": 1,
+        "normal_expiry": true,
+        "event_excerpt": [
+          {
+            "kind": "begin",
+            "age_s": 0.0,
+            "generation": 17,
+            "cast_id": 1,
+            "event_seq": 2,
+            "release_age_s": -1.0,
+            "receipts": []
+          },
+          {
+            "kind": "release",
+            "age_s": 0.55,
+            "generation": 17,
+            "cast_id": 1,
+            "event_seq": 13,
+            "release_age_s": 0.55,
+            "receipts": []
+          },
+          {
+            "kind": "impact",
+            "age_s": 0.55,
+            "generation": 17,
+            "cast_id": 1,
+            "event_seq": 14,
+            "release_age_s": 0.55,
+            "receipts": [
+              {
+                "damage_applied": 0.0,
+                "healing_applied": 0.0,
+                "health_after": 70.0,
+                "health_before": 70.0,
+                "kind": "guardian",
+                "position": [
+                  -39.9500007629395,
+                  0.0,
+                  -7.55311870574951
+                ],
+                "remaining_s": 4.5,
+                "shield_after": 55.0,
+                "shield_before": 0.0,
+                "unit_id": 31
+              },
+              {
+                "damage_applied": 0.0,
+                "healing_applied": 0.0,
+                "health_after": 240.0,
+                "health_before": 240.0,
+                "kind": "guardian",
+                "position": [
+                  -40.0,
+                  0.000195310218259692,
+                  -10.0
+                ],
+                "receiver_kind": "hero",
+                "remaining_s": 4.5,
+                "shield_after": 55.0,
+                "shield_before": 0.0,
+                "unit_id": 0
+              }
+            ]
+          },
+          {
+            "kind": "recovery",
+            "age_s": 0.850000000000001,
+            "generation": 17,
+            "cast_id": 1,
+            "event_seq": 21,
+            "release_age_s": 0.55,
+            "receipts": []
+          },
+          {
+            "kind": "end",
+            "age_s": 5.34999999999999,
+            "generation": 17,
+            "cast_id": 1,
+            "event_seq": 113,
+            "release_age_s": 0.55,
+            "receipts": []
+          }
+        ],
+        "stills": [
+          {
+            "phase": "windup",
+            "image": {
+              "draw_calls": 935,
+              "file": "still-guardian_circle-windup.png",
+              "height": 720,
+              "rendered_objects": 1929,
+              "rendered_primitives": 1347945,
+              "sha256": "d13fde09bb822a33be78307ad381062051306069240c5137b8edfdc4247131a2",
+              "width": 1280
+            },
+            "sample_age_s": 0.5
+          },
+          {
+            "phase": "release",
+            "image": {
+              "draw_calls": 941,
+              "file": "still-guardian_circle-release.png",
+              "height": 720,
+              "rendered_objects": 1939,
+              "rendered_primitives": 1348077,
+              "sha256": "3307a898a7db91e6366242e4bfe677f5a3de1e8b04ce5aefaf22591d36093f7c",
+              "width": 1280
+            },
+            "sample_age_s": 0.633333333333333
+          },
+          {
+            "phase": "contact",
+            "image": {
+              "draw_calls": 941,
+              "file": "still-guardian_circle-contact.png",
+              "height": 720,
+              "rendered_objects": 1941,
+              "rendered_primitives": 1348081,
+              "sha256": "41fcbaa22fe8b5ff8720443be8080e51be0a97551d90819dc07b21a4ea513eb1",
+              "width": 1280
+            },
+            "sample_age_s": 0.866666666666667
+          }
+        ],
+        "frames": [
+          {
+            "phase": "release",
+            "event_seq": 13,
+            "authority_age_s": 0.55,
+            "frame_index": 136,
+            "sample_time_s": 0.566666666666667,
+            "image": {
+              "draw_calls": 941,
+              "file": "frame-00136.png",
+              "height": 720,
+              "rendered_objects": 1939,
+              "rendered_primitives": 1348077,
+              "sha256": "dbb2156283d744c17b769c773dda3fb39461cc8d16fb4380053125278098c434",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "receiver",
+            "event_seq": 14,
+            "authority_age_s": 0.55,
+            "frame_index": 136,
+            "sample_time_s": 0.566666666666667,
+            "image": {
+              "draw_calls": 941,
+              "file": "frame-00136.png",
+              "height": 720,
+              "rendered_objects": 1939,
+              "rendered_primitives": 1348077,
+              "sha256": "dbb2156283d744c17b769c773dda3fb39461cc8d16fb4380053125278098c434",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "recovery",
+            "event_seq": 21,
+            "authority_age_s": 0.850000000000001,
+            "frame_index": 145,
+            "sample_time_s": 0.866666666666667,
+            "image": {
+              "draw_calls": 941,
+              "file": "frame-00145.png",
+              "height": 720,
+              "rendered_objects": 1941,
+              "rendered_primitives": 1348081,
+              "sha256": "41fcbaa22fe8b5ff8720443be8080e51be0a97551d90819dc07b21a4ea513eb1",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "end",
+            "event_seq": 113,
+            "authority_age_s": 5.34999999999999,
+            "frame_index": 280,
+            "sample_time_s": 5.36666666666667,
+            "image": {
+              "draw_calls": 929,
+              "file": "frame-00280.png",
+              "height": 720,
+              "rendered_objects": 1915,
+              "rendered_primitives": 1346835,
+              "sha256": "7d2d0acb2c54f257032f633e39612e18d31561a667ce53353fd89d1ccd2db882",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          }
+        ]
+      },
+      "field_expiry": {
+        "authority_age_s": 5.05,
+        "capture_tick_ages_s": [
+          5.0,
+          5.05,
+          5.1
+        ],
+        "end_cleanup_age_s": 5.35,
+        "requirements": [
+          "No field-active HUD label after5.05",
+          "Warning/boundary and owner shields expire on authority age",
+          "Do not use end5.35 alone to prove gameplay boundary expiry"
+        ]
+      }
+    },
+    {
+      "id": "r2-face-dawn_volley",
+      "ability_id": "dawn_volley",
+      "input_action": "ultimate",
+      "invoke": {
+        "object": "scene.rama_runtime",
+        "method": "cast_ability",
+        "args": [
+          "dawn_volley"
+        ],
+        "accepted_required": true,
+        "actual_player_input_claim": false
+      },
+      "camera_ids": [
+        "face_front",
+        "face_three_quarter_left",
+        "face_three_quarter_right",
+        "ordinary_player"
+      ],
+      "effects_modes": [
+        "diagnostic_effects_off",
+        "ordinary_effects_on"
+      ],
+      "timing": {
+        "declared_windup_s": 0.95,
+        "authority_release_age_s": 0.95,
+        "authority_recovery_age_s": 1.5,
+        "authority_end_age_s": 2.35,
+        "presentation_recoil_duration_s": 0.55,
+        "presentation_fade_s": 0.16
+      },
+      "pose_handles": {
+        "controller": "player.rama_motion",
+        "draw_clip": "volley_draw",
+        "release_clip": "volley_release",
+        "aim_bone": "spine03",
+        "head_bone": "head",
+        "neck_bones": [
+          "neck01",
+          "neck02",
+          "neck03"
+        ],
+        "authoritative_release_method": "release_action is called by rama_hero_runtime._event; do not call it manually"
+      },
+      "shots": [
+        {
+          "id": "dawn_volley-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.9,
+            "released": false
+          },
+          "motion_stage": [
+            "windup",
+            "hold"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "dawn_volley-release",
+          "trigger": {
+            "kind": "release",
+            "first_frame_after_event": true
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_left",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "dawn_volley-recoil",
+          "trigger": {
+            "kind": "release",
+            "elapsed_physics_ticks_after_event": 16
+          },
+          "motion_stage": [
+            "recovery"
+          ],
+          "camera": "face_three_quarter_right",
+          "mode": "diagnostic_effects_off"
+        },
+        {
+          "id": "dawn_volley-ordinary-draw",
+          "trigger": {
+            "kind": "tick",
+            "minimum_age_s": 0.9,
+            "released": false
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "dawn_volley-ordinary-receiver",
+          "trigger": {
+            "kind": "impact",
+            "predicate_ref": "projectile_damage"
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        },
+        {
+          "id": "dawn_volley-ordinary-expiry",
+          "trigger": {
+            "kind": "end",
+            "first_frame_after_event": true
+          },
+          "camera": "ordinary_player",
+          "mode": "ordinary_effects_on"
+        }
+      ],
+      "receiver_requirement": "projectile_damage",
+      "accepted_control": {
+        "report": "docs/evidence/visual-campaign/capture-action-r1/rama-gameplay-review.json",
+        "report_sha256": "cbb4c0cb262cd8078d93c1387ff64daef5ec99deb3fba6e72dd2713557bb98d6",
+        "generation": 21,
+        "cast_id": 1,
+        "release_count": 1,
+        "normal_expiry": true,
+        "event_excerpt": [
+          {
+            "kind": "begin",
+            "age_s": 0.0,
+            "generation": 21,
+            "cast_id": 1,
+            "event_seq": 2,
+            "release_age_s": -1.0,
+            "receipts": []
+          },
+          {
+            "kind": "release",
+            "age_s": 0.950000000000001,
+            "generation": 21,
+            "cast_id": 1,
+            "event_seq": 21,
+            "release_age_s": 0.950000000000001,
+            "receipts": []
+          },
+          {
+            "kind": "impact",
+            "age_s": 1.2,
+            "generation": 21,
+            "cast_id": 1,
+            "event_seq": 27,
+            "reason": "unit",
+            "projectile_index": 0,
+            "contact_position": [
+              -41.761287689209,
+              1.38164150714874,
+              -1.98109936714172
+            ],
+            "release_age_s": 0.950000000000001,
+            "receipts": [
+              {
+                "damage_applied": 82.0,
+                "health_after": 68.0,
+                "health_before": 150.0,
+                "kind": "damage",
+                "position": [
+                  -41.921760559082,
+                  0.0,
+                  -1.20756912231445
+                ],
+                "shield_after": 0.0,
+                "shield_before": 0.0,
+                "unit_id": 32
+              }
+            ]
+          },
+          {
+            "kind": "impact",
+            "age_s": 1.3,
+            "generation": 21,
+            "cast_id": 1,
+            "event_seq": 30,
+            "reason": "unit",
+            "projectile_index": 1,
+            "contact_position": [
+              -40.9877853393555,
+              1.38164150714874,
+              -1.84457659721375
+            ],
+            "release_age_s": 0.950000000000001,
+            "receipts": [
+              {
+                "damage_applied": 82.0,
+                "health_after": 68.0,
+                "health_before": 150.0,
+                "kind": "damage",
+                "position": [
+                  -40.9896697998047,
+                  0.0,
+                  -1.05457878112793
+                ],
+                "shield_after": 0.0,
+                "shield_before": 0.0,
+                "unit_id": 33
+              }
+            ]
+          },
+          {
+            "kind": "impact",
+            "age_s": 1.4,
+            "generation": 21,
+            "cast_id": 1,
+            "event_seq": 33,
+            "reason": "unit",
+            "projectile_index": 2,
+            "contact_position": [
+              -40.2033195495605,
+              1.38164150714874,
+              -1.7744345664978
+            ],
+            "release_age_s": 0.950000000000001,
+            "receipts": [
+              {
+                "damage_applied": 82.0,
+                "health_after": 68.0,
+                "health_before": 150.0,
+                "kind": "damage",
+                "position": [
+                  -40.0466728210449,
+                  0.0,
+                  -1.00012111663818
+                ],
+                "shield_after": 0.0,
+                "shield_before": 0.0,
+                "unit_id": 34
+              }
+            ]
+          },
+          {
+            "kind": "recovery",
+            "age_s": 1.5,
+            "generation": 21,
+            "cast_id": 1,
+            "event_seq": 36,
+            "release_age_s": 0.950000000000001,
+            "receipts": []
+          },
+          {
+            "kind": "end",
+            "age_s": 2.35,
+            "generation": 21,
+            "cast_id": 1,
+            "event_seq": 55,
+            "release_age_s": 0.950000000000001,
+            "receipts": []
+          }
+        ],
+        "stills": [
+          {
+            "phase": "windup",
+            "image": {
+              "draw_calls": 989,
+              "file": "still-dawn_volley-windup.png",
+              "height": 720,
+              "rendered_objects": 2011,
+              "rendered_primitives": 1363003,
+              "sha256": "99bb3449f63dc96cc4cb6b2cc61eadfa300db971b62afef578392ab0dcd310f0",
+              "width": 1280
+            },
+            "sample_age_s": 0.9
+          },
+          {
+            "phase": "release",
+            "image": {
+              "draw_calls": 982,
+              "file": "still-dawn_volley-release.png",
+              "height": 720,
+              "rendered_objects": 2005,
+              "rendered_primitives": 1362941,
+              "sha256": "1c334d970a08c6d91a7887b6941c8547cb46571de07caeb2e7f1165057aa550c",
+              "width": 1280
+            },
+            "sample_age_s": 1.03333333333333
+          },
+          {
+            "phase": "contact",
+            "image": {
+              "draw_calls": 980,
+              "file": "still-dawn_volley-contact.png",
+              "height": 720,
+              "rendered_objects": 2004,
+              "rendered_primitives": 1362809,
+              "sha256": "4f53193b6cab3c6b29f073ea9f48fa2876abdb6c85efc7f3c7d17c3e3a99a949",
+              "width": 1280
+            },
+            "sample_age_s": 1.26666666666667
+          }
+        ],
+        "frames": [
+          {
+            "phase": "release",
+            "event_seq": 21,
+            "authority_age_s": 0.950000000000001,
+            "frame_index": 316,
+            "sample_time_s": 0.966666666666667,
+            "image": {
+              "draw_calls": 980,
+              "file": "frame-00316.png",
+              "height": 720,
+              "rendered_objects": 2003,
+              "rendered_primitives": 1362815,
+              "sha256": "afa3aff2299efda3fd180637dc1fc850ffc5bed748358a2ad6d19eccbb7ae0f3",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "receiver",
+            "event_seq": 27,
+            "authority_age_s": 1.2,
+            "frame_index": 323,
+            "sample_time_s": 1.2,
+            "image": {
+              "draw_calls": 981,
+              "file": "frame-00323.png",
+              "height": 720,
+              "rendered_objects": 2006,
+              "rendered_primitives": 1363205,
+              "sha256": "9425082fc1bcc15447462e86e6864e5de87df82154defd82294bdf708fc03969",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "recovery",
+            "event_seq": 36,
+            "authority_age_s": 1.5,
+            "frame_index": 332,
+            "sample_time_s": 1.5,
+            "image": {
+              "draw_calls": 979,
+              "file": "frame-00332.png",
+              "height": 720,
+              "rendered_objects": 1994,
+              "rendered_primitives": 1363165,
+              "sha256": "3b0dab651c471cde777681d8ba122996d0eb37730439772134b2f6c013691d3d",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          },
+          {
+            "phase": "end",
+            "event_seq": 55,
+            "authority_age_s": 2.35,
+            "frame_index": 358,
+            "sample_time_s": 2.36666666666667,
+            "image": {
+              "draw_calls": 976,
+              "file": "frame-00358.png",
+              "height": 720,
+              "rendered_objects": 1991,
+              "rendered_primitives": 1362229,
+              "sha256": "607782cd87d86f6d67d77f029500a1fd6c994b6f42296051841b103d459686b7",
+              "width": 1280
+            },
+            "archive_root": "docs/evidence/visual-campaign/capture-action-r1",
+            "raw_frame_note": "Raw sequential PNGs may be stored in archive; locate through archive.json, do not claim a loose file exists."
+          }
+        ]
+      },
+      "paced_arrows": {
+        "release_event_count": 1,
+        "projectile_delays_s": [
+          0,
+          0.1,
+          0.2
+        ],
+        "require_unit_damage_for_projectile_indices": [
+          0,
+          1,
+          2
+        ],
+        "accepted_contact_ages_s": [
+          1.2,
+          1.3,
+          1.4
+        ]
+      }
+    }
+  ],
+  "validation_scope": "Static source/accepted-event consistency only. This role did not import, execute gameplay, render, inspect new raw pixels or accept candidate art."
+}

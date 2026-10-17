@@ -1,0 +1,203 @@
+{
+  "task": "R2-09",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Skin source manifest identities match actual files",
+      "passed": true,
+      "details": {
+        "count": 12
+      }
+    },
+    {
+      "name": "Actual decoded assets/heroes/rama-hero_rama-warm-skin-basecolor.png",
+      "passed": true,
+      "details": {
+        "mode": "RGB",
+        "size": [
+          512,
+          512
+        ],
+        "ranges": [
+          [
+            118,
+            122
+          ],
+          [
+            65,
+            67
+          ],
+          [
+            37,
+            38
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Actual decoded assets/heroes/rama-hero_rama-warm-skin-normal.png",
+      "passed": true,
+      "details": {
+        "mode": "RGB",
+        "size": [
+          512,
+          512
+        ],
+        "ranges": [
+          [
+            123,
+            132
+          ],
+          [
+            122,
+            133
+          ],
+          [
+            255,
+            255
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Actual decoded assets/heroes/rama-hero_rama-warm-skin-roughness.png",
+      "passed": true,
+      "details": {
+        "mode": "RGB",
+        "size": [
+          512,
+          512
+        ],
+        "ranges": [
+          [
+            255,
+            255
+          ],
+          [
+            134,
+            136
+          ],
+          [
+            255,
+            255
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Actual decoded assets/materials/rama-finish/skin-roughness.png",
+      "passed": true,
+      "details": {
+        "mode": "L",
+        "size": [
+          512,
+          512
+        ],
+        "ranges": [
+          128,
+          168
+        ]
+      }
+    },
+    {
+      "name": "Exact one-variable overlay control",
+      "passed": true,
+      "details": {
+        "files": 0,
+        "declared_changes": []
+      }
+    },
+    {
+      "name": "Exact one-variable overlay roughness-mips",
+      "passed": true,
+      "details": {
+        "files": 1,
+        "declared_changes": [
+          {
+            "file": "assets/materials/rama-finish/skin-roughness.png.import",
+            "property": "mipmaps/generate",
+            "before": false,
+            "after": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Exact one-variable overlay sss-off-diagnostic",
+      "passed": true,
+      "details": {
+        "files": 1,
+        "declared_changes": [
+          {
+            "file": "scripts/rama_surface_finish.gd",
+            "material": "Rama warm skin",
+            "property": "subsurf_scatter_enabled",
+            "before": true,
+            "after": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "Form candidate JSON materials texture bindings rig and morph declarations exact",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Form frame/material preservation Rama warm skin (1, 0)",
+      "passed": true,
+      "details": {
+        "mesh": 1,
+        "primitive": 0,
+        "material": "Rama warm skin",
+        "moved": 1812,
+        "max_displacement_m": 0.000834047794342041,
+        "max_abs_normal_tangent_dot": 0.00014401599764823914,
+        "moved_max_abs_normal_tangent_dot": 7.450580596923828e-08,
+        "tangent_w_exact": true
+      }
+    },
+    {
+      "name": "Form frame/material preservation Rama warm skin (2, 11)",
+      "passed": true,
+      "details": {
+        "mesh": 2,
+        "primitive": 11,
+        "material": "Rama warm skin",
+        "moved": 1560,
+        "max_displacement_m": 0.0015619993209838867,
+        "max_abs_normal_tangent_dot": 0.0001382008194923401,
+        "moved_max_abs_normal_tangent_dot": 5.960464477539063e-08,
+        "tangent_w_exact": true
+      }
+    },
+    {
+      "name": "Form frame/material preservation Natural lips (2, 12)",
+      "passed": true,
+      "details": {
+        "mesh": 2,
+        "primitive": 12,
+        "material": "Natural lips",
+        "moved": 564,
+        "max_displacement_m": 0.0007586032152175903,
+        "max_abs_normal_tangent_dot": 0.00011521577835083008,
+        "moved_max_abs_normal_tangent_dot": 8.940696716308594e-08,
+        "tangent_w_exact": true
+      }
+    },
+    {
+      "name": "All bytes outside declared base position normal tangent XYZ remain exact",
+      "passed": true,
+      "details": {
+        "changed_bytes": 75048,
+        "scope": "Includes original UVs, skin weights, sparse morph payloads, image bytes, unrelated geometry and animation payloads"
+      }
+    }
+  ],
+  "candidate": "/workspace/scratch/visual-round2/role-08/face-form-candidate-r4/candidate.glb",
+  "candidate_sha256": "491c2cb608227c48be57937db3351daa51cc22871b00c1587f1f205053766144",
+  "original_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+  "script_sha256": "ae6807162992bf97a6aa13fb446e4bd3338f50fc156a4cfff542d47aaf250cd9",
+  "scope": "Independent source/pixel-channel/frame preservation; no deformation or visual quality acceptance"
+}
