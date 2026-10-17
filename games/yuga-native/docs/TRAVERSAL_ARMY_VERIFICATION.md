@@ -39,7 +39,7 @@ godot --headless --path games/yuga-native --fixed-fps 60 \
 | Publication | `release_traversal_cases.py`, `release-native.py` | Failed/missing evidence and substituted assets block publication; exact remote tag and downloaded bytes checked |
 | Render and interaction | Actual Forward+ capture and native window review | Readable routes/roles/HUD, plausible motion, usable controls and visible response to input |
 
-AI uses bounded fixed-step logic; 20 simulated minutes are not a 20-minute hardware performance measurement. Check live units ≤72, corpses ≤24 and pending attacks ≤96 at every step, including reset and capacity pressure. Report memory/object counts separately from frame time. Inspect logs for runtime errors even when the process exits zero.
+AI uses bounded fixed-step logic; 20 simulated minutes are not a 20-minute hardware performance measurement. Check live units ≤72, corpses ≤24, total unit nodes ≤96 and pending attacks ≤72 at every step, including reset and capacity pressure. Report memory/object counts separately from frame time. Inspect logs for runtime errors even when the process exits zero.
 
 ## Visual and source standards
 

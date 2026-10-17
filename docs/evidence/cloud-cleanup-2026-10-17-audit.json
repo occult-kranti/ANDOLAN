@@ -1,0 +1,418 @@
+{
+  "schema": 1,
+  "kind": "read-only-cleanup-audit",
+  "observed_utc": "2026-10-17T05:54:34.524312+00:00",
+  "deletion_performed": false,
+  "scope": "Only metadata and known source/evidence/binary checks were inspected. No credential contents, process arguments or environment variables read. No global cleanup/globs recommended.",
+  "repository": {
+    "path": "/workspace/ANDOLAN",
+    "head": "63db71e9cb634c4439c624b4753615329f342a13",
+    "status_short": "M README.md\n M games/yuga-native/README.md\n?? AGENTS.md\n?? docs/START_HERE.md\n?? docs/WORKSPACE_AND_CLEANUP.md\n?? games/yuga-native/docs/BUILD_HANDBOOK.md\n?? games/yuga-native/docs/research/RESEARCH_BRIEF.md",
+    "remote_refs": [
+      "63db71e9cb634c4439c624b4753615329f342a13\trefs/heads/game/yuga-native-production",
+      "395986a512ecabe874710048a19bd0fdd0a71f89\trefs/tags/yuga-traversal-armies-2026-10-17"
+    ],
+    "branch_head_matches_remote": true
+  },
+  "release": {
+    "tag": "yuga-traversal-armies-2026-10-17",
+    "commit": "395986a512ecabe874710048a19bd0fdd0a71f89",
+    "public_assets_verified": 46,
+    "committed_public_verification": "games/yuga-native/docs/evidence/traversal-armies-published/public-byte-verification.json",
+    "committed_ci_observation": "games/yuga-native/docs/evidence/traversal-armies-published/ci-observation.json"
+  },
+  "process_check": {
+    "owned_user": 1000,
+    "active_game_build_render_processes": [],
+    "candidate_path_users": [],
+    "limits": "Point-in-time owned-process /proc metadata only; recheck before removal. Zombie git/esbuild processes have no active file descriptors and are not workloads."
+  },
+  "delete_allowlist_after_final_process_recheck": [
+    {
+      "path": "/workspace/ANDOLAN/.npm-cache",
+      "type": "directory",
+      "logical_bytes": 66267045,
+      "allocated_bytes": 69636096,
+      "regular_files": 349,
+      "reason": "Reproducible npm download cache; installed node_modules and lockfile retained.",
+      "recreate": "npm ci can refill this cache from locked registry packages.",
+      "proof": [
+        "tools/cloud/setup-native.sh runs npm ci; it does not require this cache to exist."
+      ]
+    },
+    {
+      "path": "/tmp/node-compile-cache",
+      "type": "directory",
+      "logical_bytes": 2866720,
+      "allocated_bytes": 4218880,
+      "regular_files": 582,
+      "reason": "Interpreter/compiler cache; no source or retained report.",
+      "recreate": "Regenerated automatically on future execution.",
+      "proof": []
+    },
+    {
+      "path": "/tmp/tsx-1000",
+      "type": "directory",
+      "logical_bytes": 102013,
+      "allocated_bytes": 110592,
+      "regular_files": 4,
+      "reason": "Interpreter/compiler cache; no source or retained report.",
+      "recreate": "Regenerated automatically on future execution.",
+      "proof": []
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tools/__pycache__",
+      "type": "directory",
+      "logical_bytes": 118817,
+      "allocated_bytes": 131072,
+      "regular_files": 4,
+      "reason": "Interpreter/compiler cache; no source or retained report.",
+      "recreate": "Regenerated automatically on future execution.",
+      "proof": []
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tests/__pycache__",
+      "type": "directory",
+      "logical_bytes": 67743,
+      "allocated_bytes": 77824,
+      "regular_files": 2,
+      "reason": "Interpreter/compiler cache; no source or retained report.",
+      "recreate": "Regenerated automatically on future execution.",
+      "proof": []
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/build/xdg/cache",
+      "type": "directory",
+      "logical_bytes": 3143331,
+      "allocated_bytes": 3166208,
+      "regular_files": 3,
+      "reason": "Ephemeral isolated renderer/user-cache directory; actual settings/data and evidence excluded.",
+      "recreate": "Renderer recreates compiled cache; primary .godot imports and rendering libraries remain.",
+      "proof": []
+    },
+    {
+      "path": "/tmp/yuga-traversal-native-window-r2/user/cache",
+      "type": "directory",
+      "logical_bytes": 4690889,
+      "allocated_bytes": 5111808,
+      "regular_files": 104,
+      "reason": "Ephemeral isolated renderer/user-cache directory; actual settings/data and evidence excluded.",
+      "recreate": "Renderer recreates compiled cache; primary .godot imports and rendering libraries remain.",
+      "proof": []
+    },
+    {
+      "path": "/tmp/yuga-traversal-published-window/user/cache",
+      "type": "directory",
+      "logical_bytes": 4690890,
+      "allocated_bytes": 5111808,
+      "regular_files": 104,
+      "reason": "Ephemeral isolated renderer/user-cache directory; actual settings/data and evidence excluded.",
+      "recreate": "Renderer recreates compiled cache; primary .godot imports and rendering libraries remain.",
+      "proof": []
+    },
+    {
+      "path": "/tmp/yuga-traversal-full-r2-user/cache",
+      "type": "directory",
+      "logical_bytes": 4402683,
+      "allocated_bytes": 4820992,
+      "regular_files": 104,
+      "reason": "Ephemeral isolated renderer/user-cache directory; actual settings/data and evidence excluded.",
+      "recreate": "Renderer recreates compiled cache; primary .godot imports and rendering libraries remain.",
+      "proof": []
+    },
+    {
+      "path": "/tmp/yuga-traversal-recovery-preview-user/cache",
+      "type": "directory",
+      "logical_bytes": 3785588,
+      "allocated_bytes": 4202496,
+      "regular_files": 104,
+      "reason": "Ephemeral isolated renderer/user-cache directory; actual settings/data and evidence excluded.",
+      "recreate": "Renderer recreates compiled cache; primary .godot imports and rendering libraries remain.",
+      "proof": []
+    },
+    {
+      "path": "/workspace/generated_images/exec-51a11ca5-7a8a-49c5-8914-2993993eeff5.png",
+      "type": "file",
+      "logical_bytes": 3185972,
+      "allocated_bytes": 3186688,
+      "regular_files": 1,
+      "reason": "Exact duplicate of committed concept image.",
+      "recreate": "Read preserved concept image from repository.",
+      "proof": [
+        {
+          "retained_path": "/workspace/ANDOLAN/games/yuga-native/art/concepts/long-lanes-army-concept.png",
+          "sha256": "47ca1db1ffadc16534030b24233b06e16fb666e8b45d04e87d9ff83b841f03f8",
+          "git_tracked": true
+        }
+      ]
+    },
+    {
+      "path": "/workspace/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64.zip",
+      "type": "file",
+      "logical_bytes": 71806687,
+      "allocated_bytes": 71806976,
+      "regular_files": 1,
+      "reason": "Download archive duplicates verified retained engine executables.",
+      "recreate": "release-native.py install_engines downloads a missing archive from the pinned official URL, verifies SHA256 and extracts. Normal setup-native.sh and package-native.py use installed executables, not ZIPs.",
+      "proof": [
+        {
+          "archive_sha256": "d0bc2113065e481c9c2c2b2c37daa4e8be3fe9e27f0ab9ab0b6096e9a37907f3",
+          "extracted_members_exact": [
+            {
+              "retained_executable": "/workspace/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64",
+              "bytes": 138981968,
+              "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/workspace/tooling/native-engine/Godot_v4.6.3-stable_win64.exe.zip",
+      "type": "file",
+      "logical_bytes": 79844616,
+      "allocated_bytes": 79847424,
+      "regular_files": 1,
+      "reason": "Download archive duplicates verified retained engine executables.",
+      "recreate": "release-native.py install_engines downloads a missing archive from the pinned official URL, verifies SHA256 and extracts. Normal setup-native.sh and package-native.py use installed executables, not ZIPs.",
+      "proof": [
+        {
+          "archive_sha256": "e39986a178d585ce7ac198fb8de6ea436366dc0cc00e594810c2e3e104c04b90",
+          "extracted_members_exact": [
+            {
+              "retained_executable": "/workspace/tooling/native-engine/Godot_v4.6.3-stable_win64.exe",
+              "bytes": 172409864,
+              "sha256": "ef90e929ba1a6a4322860285d97f40f4aa349c90329a91b0e8b55b8df0f4cb00"
+            },
+            {
+              "retained_executable": "/workspace/tooling/native-engine/Godot_v4.6.3-stable_win64_console.exe",
+              "bytes": 198152,
+              "sha256": "63b3b2208819714c9677fbfdd8217c5b7dee8ecf5f383502e826bc9e2227ff5a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/tmp/yuga-traversal-local-linux",
+      "type": "directory",
+      "logical_bytes": 165156683,
+      "allocated_bytes": 165195776,
+      "regular_files": 17,
+      "reason": "Exact duplicate extracted local Linux test package.",
+      "recreate": "Retained /tmp/yuga-traversal-packages contains byte-identical files until its archive-first action completes.",
+      "proof": [
+        {
+          "folder": "/tmp/yuga-traversal-local-linux/yuga-native-linux-x86_64",
+          "manifest_payload_records": 16,
+          "all_manifest_payloads_valid": true,
+          "bad_members": [],
+          "exact_duplicate_folder": "/tmp/yuga-traversal-packages/yuga-native-linux-x86_64",
+          "all_files_exact_duplicate": true
+        }
+      ]
+    },
+    {
+      "path": "/tmp/yuga-traversal-public-linux",
+      "type": "directory",
+      "logical_bytes": 165156122,
+      "allocated_bytes": 165195776,
+      "regular_files": 17,
+      "reason": "Extracted published Linux package; all16manifest payloads validated.",
+      "recreate": "Re-extract the published Linux ZIP (public tag and SHA records retained).",
+      "proof": [
+        {
+          "folder": "/tmp/yuga-traversal-public-linux/yuga-native-linux-x86_64",
+          "manifest_payload_records": 16,
+          "all_manifest_payloads_valid": true,
+          "bad_members": [],
+          "exact_duplicate_folder": null,
+          "all_files_exact_duplicate": null
+        }
+      ]
+    },
+    {
+      "path": "/tmp/yuga-traversal-public-assets",
+      "type": "directory",
+      "logical_bytes": 210946679,
+      "allocated_bytes": 211038208,
+      "regular_files": 46,
+      "reason": "All46files are downloaded public release assets;45checksum-covered files verified and checksum/manifest bytes match committed evidence.",
+      "recreate": "Download https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17 and verify committed SHA256SUMS.",
+      "proof": [
+        {
+          "tag": "yuga-traversal-armies-2026-10-17",
+          "release_commit": "395986a512ecabe874710048a19bd0fdd0a71f89",
+          "assets": 46,
+          "checksum_verified_files": 45,
+          "committed_manifest_and_checksums_exact": true
+        }
+      ]
+    },
+    {
+      "path": "/tmp/yuga-native-setup-a8Q434",
+      "type": "directory",
+      "logical_bytes": 688927,
+      "allocated_bytes": 729088,
+      "regular_files": 20,
+      "reason": "All20generated setup reports exactly match committed evidence.",
+      "recreate": "Use games/yuga-native/docs/evidence/traversal-armies-setup or rerun tools/cloud/setup-native.sh.",
+      "proof": [
+        "/tmp/yuga-cleanup-evidence-inventory.json records all20exact matches."
+      ]
+    }
+  ],
+  "delete_allowlist_after_archive_first": [
+    {
+      "path": "/tmp/yuga-traversal-packages",
+      "type": "directory",
+      "logical_bytes": 614800484,
+      "allocated_bytes": 614895616,
+      "regular_files": 42,
+      "reason": "Generated local packages/extracted binaries duplicate preserved source and installed engines. Local PCK differs from CI only through independently classified import metadata/shading quantization.",
+      "recreate": "Regenerate with tools/package-native.py; bit-identical local import-generated IDs are not promised. Public tested builds remain downloadable.",
+      "proof": [
+        "Before deletion copy/move and SHA-verify all six preservation records below.",
+        "Committed traversal-armies-published/pack-comparison.json accounts for all local-vs-published PCK differences."
+      ],
+      "archive_first": [
+        {
+          "source": "/tmp/yuga-traversal-packages/native-export-manifest.json",
+          "destination": "/workspace/scratch/yuga-retained/local-package-metadata/native-export-manifest.json",
+          "bytes": 148632,
+          "sha256": "6cfacc6b56c1de12521d5e04fb429b2db384f8672f83b3ed3c0089d277bff685"
+        },
+        {
+          "source": "/tmp/yuga-traversal-packages/native-package-manifest.json",
+          "destination": "/workspace/scratch/yuga-retained/local-package-metadata/native-package-manifest.json",
+          "bytes": 2304,
+          "sha256": "45a2d890bedd798654d214c821d41187b135ace3619f8c91ed027fe0a4b8f523"
+        },
+        {
+          "source": "/tmp/yuga-traversal-packages/export-linux.log",
+          "destination": "/workspace/scratch/yuga-retained/local-package-metadata/export-linux.log",
+          "bytes": 27669,
+          "sha256": "70d70a90f880862d6dba3638a7fed0525ac49735cfe73d92b9e34d4dab1e0e2a"
+        },
+        {
+          "source": "/tmp/yuga-traversal-packages/export-windows.log",
+          "destination": "/workspace/scratch/yuga-retained/local-package-metadata/export-windows.log",
+          "bytes": 27669,
+          "sha256": "70d70a90f880862d6dba3638a7fed0525ac49735cfe73d92b9e34d4dab1e0e2a"
+        },
+        {
+          "source": "/tmp/yuga-traversal-packages/yuga-native-linux-x86_64/PACKAGE-MANIFEST.json",
+          "destination": "/workspace/scratch/yuga-retained/local-package-metadata/yuga-native-linux-x86_64/PACKAGE-MANIFEST.json",
+          "bytes": 93541,
+          "sha256": "2742481284369ca71bae1ba6cd4fda7afe9027773bf1e7deda8d59b1930a42e5"
+        },
+        {
+          "source": "/tmp/yuga-traversal-packages/yuga-native-windows-x86_64/PACKAGE-MANIFEST.json",
+          "destination": "/workspace/scratch/yuga-retained/local-package-metadata/yuga-native-windows-x86_64/PACKAGE-MANIFEST.json",
+          "bytes": 94403,
+          "sha256": "de5fda1f625fe03607b0cf098aaeed896d58b960e007fbc31e2b1b3a8285c343"
+        }
+      ]
+    }
+  ],
+  "retain_or_relocate_raw_frames": [
+    {
+      "path": "/tmp/yuga-traversal-full-r2",
+      "logical_bytes": 88355424,
+      "allocated_bytes": 88756224,
+      "regular_files": 189,
+      "action": "retain; relocate intact to scratch after verifying copy/move",
+      "destination": "/workspace/scratch/yuga-retained/raw-render/full-r2",
+      "reason": "Contains unique unarchived raw frames/capture-run metadata. Encoded final movie/selected frames are committed, but not every raw frame is byte-archived."
+    },
+    {
+      "path": "/tmp/yuga-traversal-recovery-preview",
+      "logical_bytes": 7947145,
+      "allocated_bytes": 8011776,
+      "regular_files": 29,
+      "action": "retain; relocate intact to scratch after verifying copy/move",
+      "destination": "/workspace/scratch/yuga-retained/raw-render/recovery-preview",
+      "reason": "Contains unique unarchived raw frames/capture-run metadata. Encoded final movie/selected frames are committed, but not every raw frame is byte-archived."
+    }
+  ],
+  "retain_list": [
+    {
+      "path": "/workspace/ANDOLAN",
+      "exceptions": "Only exact npm-cache, Python __pycache__ and build/xdg/cache paths listed above",
+      "reason": "Keep source, .git, tracked art, evidence, project assets and documentation."
+    },
+    {
+      "path": "/workspace/ANDOLAN/node_modules",
+      "reason": "Ready development dependencies, explicitly retained."
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/.godot",
+      "reason": "Keep imported assets/exported cache for ready native development."
+    },
+    {
+      "path": "/opt/godot",
+      "reason": "Installed primary Godot toolchain."
+    },
+    {
+      "path": "/workspace/tooling/native-engine",
+      "exceptions": "Only the two verified ZIP files listed above",
+      "reason": "Retain all executable engines and provenance JSON; archive cache can redownload."
+    },
+    {
+      "path": "/workspace/tooling/yuga-native-python",
+      "reason": "Keep pinned NumPy/SciPy venv."
+    },
+    {
+      "path": "/workspace/tooling/native-render",
+      "reason": "Keep native rendering libraries."
+    },
+    {
+      "path": "/usr/bin/blender and any existing /opt Blender installations",
+      "reason": "No installed Blender/toolchain removal proposed."
+    },
+    {
+      "path": "/tmp/yuga-traversal-sources",
+      "destination": "/workspace/scratch/yuga-retained/research-sources",
+      "reason": "Unique fetched research excerpts; preserve before any cleanup."
+    },
+    {
+      "path": "/tmp/yuga-surviving-feature-files-2026-10-17.tgz",
+      "destination": "/workspace/scratch/yuga-retained/recovery/",
+      "reason": "Unique recovery archive; contents not exhaustively compared, retain."
+    },
+    {
+      "path": "Remaining small /tmp recovery scripts, intermediate failures/reports, debug probes, unarchived logs and test user-data/config directories",
+      "destination": "/workspace/scratch/yuga-retained/diagnostics/",
+      "reason": "Not allowlisted for deletion; preserve unique unarchived work. Only exact cache subdirectories are removable."
+    },
+    {
+      "path": "/tmp/yuga-native-setup-eOZZX4",
+      "destination": "/workspace/scratch/yuga-retained/diagnostics/setup-earlier",
+      "reason": "Three earlier report variants lack byte-identical committed matches."
+    },
+    {
+      "path": "/tmp/codex-environment-executor.log and cloud service runtime files/sockets",
+      "reason": "Active cloud-owned files; never use broad /tmp deletion."
+    }
+  ],
+  "summary": {
+    "immediate_allowlist_allocated_bytes": 793587712,
+    "immediate_allowlist_logical_bytes": 786921405,
+    "conditional_package_allocated_bytes": 614895616,
+    "archive_first_metadata_bytes": 394218,
+    "retained_raw_render_allocated_bytes": 96768000,
+    "candidate_entries": 17,
+    "conditional_entries": 1
+  },
+  "audit_support_files": [
+    "/tmp/yuga-cleanup-evidence-inventory.json",
+    "/tmp/yuga-cleanup-package-proofs.json"
+  ],
+  "execution_constraints": [
+    "Root performs actual cleanup separately; this report does not delete or move files.",
+    "Recheck active-process references and retain/archive-first SHA matches immediately before deletion.",
+    "No path outside explicit allowlists should be removed by a blanket rule.",
+    "Retain raw render folders and unique diagnostics under /workspace/scratch/yuga-retained as requested.",
+    "Future install_engines calls will redownload missing ZIPs with pinned digest checks; normal ready development does not require archive files."
+  ]
+}

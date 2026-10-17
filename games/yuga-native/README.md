@@ -1,5 +1,7 @@
 # YUGA native production track
 
+**Start a new task:** [repository handoff](../../docs/START_HERE.md) → [build handbook](docs/BUILD_HANDBOOK.md). The handbook maps features to files and provides setup, tests, art, capture, packaging and agent handoff instructions. Use the [research brief](docs/research/RESEARCH_BRIEF.md) for Reddit findings, mythology, selected reading and reuse decisions; use the [workspace guide](../../docs/WORKSPACE_AND_CLEANUP.md) for cloud cleanup and recovery.
+
 The [full-game production roadmap](docs/FULL_GAME_PRODUCTION_ROADMAP.md) is the
 execution guide from this preview to the intended competitive game. Its
 [design master](docs/GAME_DESIGN_MASTER.md) specifies the player journey, roster,
