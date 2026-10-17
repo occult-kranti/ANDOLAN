@@ -1,0 +1,266 @@
+{
+	"checks": [
+		{
+			"name": "required_source_files_are_present",
+			"observed": {
+				"files": 12,
+				"missing_or_unhashed": []
+			},
+			"passed": true
+		},
+		{
+			"name": "gameplay_input_actions_exist",
+			"observed": {
+				"missing": []
+			},
+			"passed": true
+		},
+		{
+			"name": "courtyard_contract",
+			"observed": {
+
+			},
+			"passed": true
+		},
+		{
+			"name": "training_starts_with_skinned_rama",
+			"observed": {
+				"ammo": 12,
+				"model_ready": true,
+				"targets": 5
+			},
+			"passed": true
+		},
+		{
+			"name": "pause_freezes_physics_and_weapon",
+			"observed": {
+				"cooldown_after": 0.09,
+				"cooldown_before": 0.09,
+				"movement_metres": 0.0,
+				"shots_after": 1,
+				"shots_before": 1
+			},
+			"passed": true
+		},
+		{
+			"name": "resume_clears_stale_held_input",
+			"observed": {
+				"movement_metres": 0.0,
+				"shots_after": 1,
+				"shots_before": 1
+			},
+			"passed": true
+		},
+		{
+			"name": "restart_resets_player_targets_and_projectiles",
+			"observed": {
+				"ammo": 12,
+				"defeat_count": 0,
+				"hit_count": 0,
+				"position": [
+					0.0,
+					0.000195310218259692,
+					12.0
+				],
+				"projectiles": 0,
+				"targets_reset": true
+			},
+			"passed": true
+		},
+		{
+			"name": "menu_does_not_simulate_player_input",
+			"observed": {
+				"active": false,
+				"movement_metres": 0.0,
+				"shots": 0
+			},
+			"passed": true
+		},
+		{
+			"name": "production_rama_selected_and_original_source_preserved",
+			"observed": {
+				"active_model": "res://assets/heroes/rama-production.glb",
+				"expected_original_sha256": "a366dc927cb34208742e5617decefb2580e1cdab97f946ed4eb14687dc7abfbc",
+				"original_source_sha256": "a366dc927cb34208742e5617decefb2580e1cdab97f946ed4eb14687dc7abfbc",
+				"production_sha256": "6657f4bf2fdb41b1f8b1bbd64777b35b5b4acfe00b3e3e22e4bc793fd4df3e8e",
+				"scope": "Production model is selected; original Rama bytes match the prior accepted source model."
+			},
+			"passed": true
+		},
+		{
+			"name": "rama_rig_and_nine_animations_are_finite",
+			"observed": {
+				"bone_count": 164,
+				"bone_transform_samples": 7380,
+				"clip_lengths_seconds": {
+					"cast": 1.23333334922791,
+					"cast1": 1.03333330154419,
+					"cast2": 0.699999988079071,
+					"cast3": 1.63333332538605,
+					"defeat": 1.23333334922791,
+					"fire": 0.833333313465118,
+					"idle": 4.03333330154419,
+					"jump": 0.833333313465118,
+					"run": 0.833333313465118
+				},
+				"expected_bones": 164,
+				"gameplay_clips": [
+					"cast",
+					"cast1",
+					"cast2",
+					"cast3",
+					"defeat",
+					"fire",
+					"idle",
+					"jump",
+					"run"
+				],
+				"imported_clip_count": 9,
+				"missing_clips": [],
+				"model_path": "res://assets/heroes/rama-production.glb",
+				"non_rest_samples": 7335,
+				"required_clips": [
+					"cast",
+					"cast1",
+					"cast2",
+					"cast3",
+					"defeat",
+					"fire",
+					"idle",
+					"jump",
+					"run"
+				],
+				"scope": "Five deterministic samples per production clip; finite/non-singular transforms do not prove visual quality or every blend.",
+				"skeleton_count": 1,
+				"zero_length_clips": []
+			},
+			"passed": true
+		},
+		{
+			"name": "forward_movement_uses_real_character_physics",
+			"observed": {
+				"distance_metres": 5.57501220703125,
+				"on_floor": true,
+				"position": [
+					0.0,
+					0.000195310218259692,
+					6.42498779296875
+				]
+			},
+			"passed": true
+		},
+		{
+			"name": "diagonal_movement_is_speed_limited",
+			"observed": {
+				"horizontal_speed": 5.99999952316284,
+				"speed_limit": 6.0
+			},
+			"passed": true
+		},
+		{
+			"name": "world_and_live_targets_block_character_motion",
+			"observed": {
+				"after_dash_z": 6.49022197723389,
+				"after_defeated_target_pass_z": 3.94998979568481,
+				"capsule_radius": 0.29,
+				"live_target_stop_z": 6.52498769760132,
+				"player_collision_mask": 5,
+				"walk_stop_z": 6.49022197723389,
+				"wall_front_z": 6.2
+			},
+			"passed": true
+		},
+		{
+			"name": "jump_leaves_floor_and_lands",
+			"observed": {
+				"final_y": 0.000850848853588104,
+				"jump_count": 1,
+				"on_floor": true,
+				"peak_y": 1.50085163116455
+			},
+			"passed": true
+		},
+		{
+			"name": "weapon_cooldown_magazine_and_reload",
+			"observed": {
+				"ammo_after_first": 11,
+				"empty_ammo": 0,
+				"empty_shot": false,
+				"final_ammo": 12,
+				"first_shot": true,
+				"immediate_repeat": false,
+				"reload_started": true,
+				"shoot_during_reload": false,
+				"successful_shots": 12
+			},
+			"passed": true
+		},
+		{
+			"name": "swept_projectiles_damage_and_target_respawns",
+			"observed": {
+				"collision_disabled_on_defeat": true,
+				"duplicate_hit_accepted": false,
+				"health_after_respawn": 3,
+				"health_after_three_hits": 0,
+				"projectile_speed_metres_per_second": 600,
+				"reset_delay_seconds": 4.0,
+				"target_thickness_metres": 0.45
+			},
+			"passed": true
+		},
+		{
+			"name": "swept_projectile_respects_world_occlusion",
+			"observed": {
+				"projectile_freed": true,
+				"target_health": 3,
+				"wall_thickness_metres": 0.1
+			},
+			"passed": true
+		},
+		{
+			"name": "source_files_unchanged_during_scenarios",
+			"observed": {
+				"files": 12
+			},
+			"passed": true
+		}
+	],
+	"elapsed_wall_ms": 1382,
+	"engine": {
+		"build": "official",
+		"hash": "7d41c59c457bd5a245092b4e7eb2d833e3b3f8c3",
+		"hex": 263683,
+		"major": 4,
+		"minor": 6,
+		"patch": 3,
+		"status": "stable",
+		"string": "4.6.3-stable (official)",
+		"timestamp": 0
+	},
+	"failures": [],
+	"input_method": "Godot Input.action_press/action_release plus explicitly labelled public-API/isolated-world fixtures; not physical OS input",
+	"kind": "native-scripted-scenario-acceptance",
+	"limits": [
+		"One production Rama rig; nine clips sampled at five times each, not all possible blends or all heroes. Original source bytes are hash-checked separately.",
+		"Original offline courtyard foundation, not reconstruction or fidelity validation of commercial games.",
+		"Rendering quality, camera feel and native hardware input require separate visible-window evidence."
+	],
+	"passed": true,
+	"renderer": "headless dummy; no visual or GPU performance evidence",
+	"schema_version": 1,
+	"source_sha256": {
+		"assets/environment/lanka_courtyard.glb": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+		"assets/heroes/rama-production.glb": "6657f4bf2fdb41b1f8b1bbd64777b35b5b4acfe00b3e3e22e4bc793fd4df3e8e",
+		"assets/heroes/rama.glb": "a366dc927cb34208742e5617decefb2580e1cdab97f946ed4eb14687dc7abfbc",
+		"project.godot": "c92ab831d891265fc66b3e7f9a6f63a09dddb2202bdbf30b77eb5a4882103b27",
+		"scenes/courtyard.tscn": "8a901cbe8bd5a44d50b6d2f46fc728e7430810bf5b794bdedb6839e7722be0f5",
+		"scripts/courtyard.gd": "4f1fce80324a1fe2a475ef680f0b8f37a85c353c00b0d8f40fe2c13b1549da9a",
+		"scripts/player.gd": "8561ec5cf206619d9475f9643c26446f3fd029c6e8835936474e6f08748a844c",
+		"scripts/production_lighting.gd": "74aa8e4d6691721e42d6dc5e0a9be04ed49e6330fa1429d8240dd11ca4a79321",
+		"scripts/projectile.gd": "39b651bf014b91352e3cd62d15ec22966e5de4707a6dd1b9bcfb2dddd438695a",
+		"scripts/target.gd": "6d96be5379232438d68c5dfc28f29e46ec239f89f485b2ff2b2f078b874295a6",
+		"shaders/production_water.gdshader": "9aa1fc26ceb2f528cdec7da5c1318c429a4dc40204f86ce42a68737fe149a275",
+		"tests/native_acceptance.gd": "dc7c5434be4f144b27a8d41cf316d377195d20d77ae97525845cc04870caa183"
+	},
+	"timing": "60 Hz physics; runner --fixed-fps 60; no time scale change"
+}

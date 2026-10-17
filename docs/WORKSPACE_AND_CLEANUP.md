@@ -30,6 +30,8 @@ The reproducible recovery route for current public delivery files is the [traver
 
 ## This cleanup
 
-The machine-readable receipt will be stored at [cloud-cleanup-2026-10-17.json](evidence/cloud-cleanup-2026-10-17.json). It distinguishes deleted duplicates/caches from retained local-only captures and records actual storage measurements. The receipt is an audit of this operation, not a blanket deletion policy for future sessions.
+The completed cleanup removed **1,408,483,328 allocated bytes (about 1.41 GB)** from 18 audited paths. Installed engines, rendering libraries, Python dependencies, Node dependencies and Godot imports remain. Unique raw render and diagnostic material was moved with exact SHA verification into `/workspace/scratch/yuga-retained` (116,492,110 logical bytes, locally retained only). Six small package metadata/log files were pushed before deleting local package copies.
+
+The machine-readable receipt is stored at [cloud-cleanup-2026-10-17.json](evidence/cloud-cleanup-2026-10-17.json). It distinguishes deleted duplicates/caches from retained local-only captures and records actual storage measurements. The receipt is an audit of this operation, not a blanket deletion policy for future sessions.
 
 Reusable cloud settings should point new agents to `AGENTS.md` and `docs/START_HERE.md`, keep the tested installation script, and record the current checkout. Saving the draft does not publish a new environment snapshot. Review/save and Publish in environment settings activates the prepared snapshot; future processes still need to be started as documented.

@@ -87,7 +87,7 @@ One ordinary public Reddit request and three independent official GitHub-hosted 
 | <https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/TwoBoneIK3D.xml> — solver description, pole/target/joint getters and virtual-bone behavior | HTTP 200 / 8,932 | `87ff27d074217c4b1fd26f9bb56188920f51b72ea07d69f7adf236e9da1ccb76` |
 | <https://raw.githubusercontent.com/KhronosGroup/glTF-Validator/602c54043ba66856b2e68c40fdf2bced975cdb8a/README.md> — introduction, implemented features and CLI outcome | HTTP 200 / 7,271 | `1f90625f23ac971c42e304aff18cf448c1d6d7ece6116fab7c6cff8d35e935e3` |
 
-CharacterBody3D's tag URL is recorded with the returned hash; the other two URLs are immutable commits. The separately pinned Godot source documentation must not be relabelled as the installed binary's exact commit. Actual API compatibility is established by the existing executed fixtures. Temporary download/metadata copies are in `/tmp/yuga-research-brief/`; the durable retrieval record is the table above.
+CharacterBody3D's tag URL is recorded with the returned hash; the other two URLs are immutable commits. The separately pinned Godot source documentation must not be relabelled as the installed binary's exact commit. Actual API compatibility is established by the existing executed fixtures. Retained local download/metadata copies are in `/workspace/scratch/yuga-retained/diagnostics/yuga-research-brief/`; the durable retrieval record is the table above.
 
 ## Agent work packet
 
