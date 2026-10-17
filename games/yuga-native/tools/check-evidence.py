@@ -20,6 +20,7 @@ MANIFESTS = [
     "games/yuga-native/docs/evidence/combat-guard-r3-rejected/archive-manifest.json",
     "games/yuga-native/docs/evidence/combat-film-r4/archive-manifest.json",
     "games/yuga-native/docs/evidence/combat-film-package/archive-manifest.json",
+    "games/yuga-native/docs/evidence/combat-film-published-r2/evidence-manifest.json",
     "games/yuga-native/tests/evidence/combat-film-qa-revision3-manifest.json",
     "games/yuga-native/tests/evidence/combat-film-qa-final-manifest.json",
 ]

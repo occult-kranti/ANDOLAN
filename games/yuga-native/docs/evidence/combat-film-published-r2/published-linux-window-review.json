@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "scope": "Bounded actual OS-input review of downloaded published Linux ZIP. No injected game state. Passed list below only; this is not full native-world or Windows execution acceptance.",
+  "release_tag": "yuga-confluence-duel-2026-10-17-r2",
+  "commit": "58fbe631bda2efcc23563be0958c3f403e4a6361",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "pck_sha256": "0671f9a6558eeac6709f1ab31c1b60d44f0e1ff448bf673a2ace7fe3ffe353c0",
+  "linux_zip_sha256": "f00459d6977ef8c56e60bc602f0689fd9647bf588b1e7f8dfeacf411209a27a6",
+  "checks": [
+    "All14 extracted payload SHA256/lengths and ZIP CRC verified",
+    "Title opens, Watch Confluence Duel enters visible film",
+    "Space pauses timeline",
+    "Right seeks forward1second, Left returns exact identical frame",
+    "Slider15.8 shows projectile beforehit and Ravana100",
+    "Slider16.6 shows standing recoil and Ravana55/HIT",
+    "Replay restarts timeline",
+    "Escape returns title, subsequent Settings opens",
+    "Settings savedvolume0.0 persists; reopened film plays visual timeline with muted:true and playing:false soundtrack"
+  ],
+  "second_entry_audio": {
+    "configured_volume": 0.0,
+    "muted": true,
+    "paused": false,
+    "playing": false
+  },
+  "unexpected_log_errors": [],
+  "limits": [
+    "Software Vulkan llvmpipe and Dummy audio: no hardware-GPU FPS or listening-quality claim.",
+    "Cold title captures01/02 show engine splash; subsequent03 title loaded.",
+    "Capture12 is an in-flight title/settings transition, not settings-open proof;14 confirms open Settings with volume0.",
+    "Courtyard click was issued after second entry, but capture16 still shows film during return loading and process cleanup followed. That final button return is not claimed verified in this run; prior local package execution and CI callbacks cover it separately.",
+    "Windows was not executed.",
+    "Helper terminated its owned game intentionally after review; exit-15 is cleanup."
+  ]
+}

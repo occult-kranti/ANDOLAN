@@ -113,10 +113,17 @@ passes after extraction and actual keyboard/mouse testing of playback, seeking,
 replay, accessibility toggles, saved mute, returns and courtyard movement.
 Windows archives and resources validate; Windows execution remains untested.
 
-The [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17-r2)
-is awaiting publication. The tested local package hashes are recorded in the
-direction review; a later CI rebuild needs a pack-hash comparison or its own
-execution check. Existing map-preview downloads above are unchanged.
+The [r2 cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17-r2)
+is published. Its [build and release workflow](https://github.com/occult-kranti/ANDOLAN/actions/runs/39002862685)
+succeeded for tag `yuga-confluence-duel-2026-10-17-r2`. All 26 uploaded release
+assets were independently downloaded and their manifests/checksums verified. The
+[published Linux ZIP](docs/evidence/combat-film-published-r2/published-linux-window-review.json)
+was extracted and run: title entry, pause, seeking, pre/post-hit health, replay,
+Escape return and saved mute pass. This is a bounded repeat; it does not claim
+that every earlier local flow was rerun. Windows remains unexecuted. See the
+[published release review](docs/evidence/combat-film-published-r2/REVIEW.md) for
+exact hashes and the explained import differences from the local pack. Existing
+map-preview downloads are unchanged.
 
 This is a scripted animation prototype. Visual health receipts are separate from
 multiplayer authority; the commercial visual target, native multiplayer and full
