@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "reviewer": "quality_qa",
+  "recorded_at_utc": "2026-10-17T18:41:59.679604+00:00",
+  "finding": "NATIVE-TIMEOUT-CLEANUP",
+  "decision": "CLOSED for ordinary owned Linux process-group descendants in the tested scenario",
+  "original_source_review": {
+    "path": "docs/evidence/reuse-study/qa/native-wrapper-source-review.json",
+    "sha256": "c03b8fc92738a1dc9129e8a1d2fad65dd9851e9cab68df53f5688a0e5b49957d"
+  },
+  "current_runner": {
+    "path": "tools/native-analysis/inspect-component.py",
+    "sha256": "ccf54faf854870b7ea07378f2b4f84746708fdc3c6523923640b902771603535"
+  },
+  "current_test": {
+    "path": "tests/native_component_analysis_cases.py",
+    "sha256": "41bc8ae586565f86277fd17c48b0e77376912578e6394c5cba1545edad101ad1"
+  },
+  "independent_execution": {
+    "command": [
+      "taskset",
+      "-c",
+      "0,1",
+      "python3",
+      "tests/native_component_analysis_cases.py",
+      "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/reuse-study/qa/native-wrapper-repeat-r1.json"
+    ],
+    "exit_code": 0,
+    "report_path": "docs/evidence/reuse-study/qa/native-wrapper-repeat-r1.json",
+    "report_sha256": "6219f39963fedf77eac99e5af18d7fbbd76cc0fe13853837833e4c6216a3c9f4",
+    "checks": 7,
+    "passed": true
+  },
+  "actual_counterexample": {
+    "name": "timeout_stops_TERM_ignoring_parent_and_child",
+    "passed": true,
+    "exit_code": 124,
+    "pids": [
+      100979,
+      100980
+    ],
+    "elapsed_seconds": 1.104,
+    "retained_stdout": "pids=100979,100980\nchild-ready\n"
+  },
+  "source_review_closure": "Popen starts a new session; timeout sends TERM then KILL to the process group and retains partial stdout/stderr. The repeat verifies both TERM-ignoring parent and child are nonrunning. Selected symbol is now required in pseudocode text as well as the separate function record.",
+  "limits": [
+    "No original old-source timeout failure was executed; first finding was a static source finding.",
+    "This tests ordinary same-process-group descendants on Linux, not malicious children that escape into a new session or Windows process ownership.",
+    "No REA/Ghidra provider or input component was executed by these seven helper cases.",
+    "Matching symbol/nonempty pseudocode remains provider/selection evidence, not source or algorithmic behavior equivalence."
+  ]
+}

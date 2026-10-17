@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "non_ELF_input",
+      "passed": true,
+      "exit_code": 1,
+      "diagnostic": "An accessible ELF input is required"
+    },
+    {
+      "name": "invalid_symbol",
+      "passed": true,
+      "exit_code": 1,
+      "diagnostic": "Select one C identifier, not a command or address expression"
+    },
+    {
+      "name": "preserve_existing_output",
+      "passed": true,
+      "exit_code": 1,
+      "diagnostic": "Use a fresh output directory to preserve prior evidence"
+    },
+    {
+      "name": "missing_REA",
+      "passed": true,
+      "exit_code": 1,
+      "diagnostic": "The pinned REA CLI is not installed at --rea"
+    },
+    {
+      "name": "normal_provider_output",
+      "passed": true
+    },
+    {
+      "name": "preserve_provider_failure",
+      "passed": true
+    },
+    {
+      "name": "timeout_stops_TERM_ignoring_parent_and_child",
+      "passed": true,
+      "exit_code": 124,
+      "pids": [
+        102429,
+        102430
+      ],
+      "elapsed_seconds": 1.104,
+      "retained_stdout": "pids=102429,102430\nchild-ready\n"
+    }
+  ],
+  "runner_sha256": "ccf54faf854870b7ea07378f2b4f84746708fdc3c6523923640b902771603535",
+  "test_sha256": "41bc8ae586565f86277fd17c48b0e77376912578e6394c5cba1545edad101ad1",
+  "scope": "Linux CLI preservation and owned process-group timeout checks. No REA/Ghidra provider, game target or decompilation-equivalence acceptance."
+}

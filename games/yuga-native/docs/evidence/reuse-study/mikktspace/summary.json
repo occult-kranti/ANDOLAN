@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "status": "tool-tested; actual tangent-only candidate refused; runtime unchanged",
+  "sourceSha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+  "sourceUnchanged": true,
+  "candidateWritten": false,
+  "actualExitCode": 2,
+  "tests": {
+    "passed": true,
+    "checks": 54
+  },
+  "totals": {
+    "vertices": 234846,
+    "triangles": 408316,
+    "corners": 1224948,
+    "degenerateGeometryFaces": 5400,
+    "degenerateUVFaces": 18360,
+    "degenerateUnionFaces": 22912,
+    "unresolvedCorners": 68739,
+    "ambiguousSourceVertices": 6,
+    "directionConflictVertices": 6,
+    "handednessConflictVertices": 0,
+    "invalidOutputOnCleanCorners": 3,
+    "cleanFacesWithInvalidOutputCorner": 3
+  },
+  "nonorthogonalSourceRecords": 7797,
+  "nonorthogonalRecordsTouchingUnresolvedCorners": 7693,
+  "toolFiles": {
+    "art/hero-rama-tangents/README.md": "4b9ddbaf3c475358ae3b0847d700b9156d93851c7140e07166327c0db0508199",
+    "art/hero-rama-tangents/bridge.c": "72cb7c7d5cc4df378ae95362b0ad29e611c44cd301c13e901fa8355b8240a362",
+    "art/hero-rama-tangents/build_bridge.py": "a80dbfcb09884aeede2e5d1c7c4cffadff4d84983f5bdb8841bca12e0850e14e",
+    "art/hero-rama-tangents/mikk_frames.py": "54d85a85f2b1fdf5bf7935a3ed16a8bb53a6842232dd91208629703860ca436a",
+    "art/hero-rama-tangents/regenerate.py": "54300a0cb524e76942f1f0305787c0797a204e174898a7bd5a6cecca6852b688",
+    "art/hero-rama-tangents/vendor/README.md": "295d4e37ac1980e1f811c340f618ffa68fc10bf906b34bc93a64c6960351bdfc",
+    "art/hero-rama-tangents/vendor/mikktspace.c": "de87e74107df766ce68108801262bd8d53899414236b59810509a8fc2a51e288",
+    "art/hero-rama-tangents/vendor/mikktspace.h": "17fc433894f24c73753d548086cc4d8c5c0379f4a6edfb98b5da243e4f0bc3d0",
+    "art/hero-rama-tangents/vendor/upstream.json": "bf354ed29e657c33d3dea4e9f2513e441b76f9a993775dc56596c95a2e646c34"
+  },
+  "testFile": {
+    "path": "tests/hero_tangent_cases.py",
+    "sha256": "53e1a1afd094c9cc197251fa090ddc735cbb5a9f2c3a6440b4e22a5e866488ae"
+  },
+  "evidence": {
+    "synthetic-tests.json": "d5a2e411f2f3a9736e02f999c7e2dd9b0972dab9a063725034be31e549114148",
+    "invalid-clean-corners.json": "01897a958109ee2d9b8f14fc821a5efabe1be33999073a055c49a9d5c684957f",
+    "rama-source-diagnostic.json": "abaefdbc424e645ab22d94fbbcfcb18d2a59e6aebdfc9dab2ede52f98f0b53cb",
+    "native-build.json": "e65d1a0a845669f88691b14075a4a802d4c2964ec15d5c103b23dfbb36f25bba"
+  },
+  "cornerArchive": {
+    "path": "/workspace/scratch/rama-mikk-final/corner-frames.npz",
+    "sha256": "e8645dc037a8edff25443c65373c5738f74214da110287a9c4d5f7235d284317",
+    "scope": "Per-corner outputs; NaNs explicitly mark unresolved corners, never candidate values"
+  },
+  "cornerArchiveCommitted": false,
+  "reason": "7.9MB full per-corner archive retained as scratch/reproducible artifact; compact conflict examples and all domain counts committed in diagnostic.",
+  "independentNativeEvidence": {
+    "path": "docs/evidence/reuse-study/rea/native-component/summary.json",
+    "sha256": "22bc54c0964671c5c6e34522b828af7f6cfd291ee4b81dd8db0742918d8fab4e",
+    "scope": "Independent REA/Ghidra9+8checks and finite ABI oracle7checks; decompiler types/finite pseudocode limitations explicit."
+  },
+  "limits": [
+    "No rendered candidate, native import, UV rewrite, source edit or runtime promotion.",
+    "Strict epsilon and exact-index agreement are this tool policy; upstream supports degenerate inheritance.",
+    "Source-corner tangent agreement and synthetic tests do not accept final art or hardware performance."
+  ],
+  "countClarification": "Degenerate geometry/UV union=22,912 faces. Unresolved corners=22,912*3+3. The3 extra zero-tangent corners lie on3 distinct nondegenerate Ivory silk faces; unresolvedCorners/3 is not a face count. Earlier informal22,913 union statement corrected; original reports unchanged."
+}

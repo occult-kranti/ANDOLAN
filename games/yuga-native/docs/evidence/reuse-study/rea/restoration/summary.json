@@ -1,0 +1,90 @@
+{
+  "timestamp_utc": "2026-10-17T18:35:58.706442+00:00",
+  "task": "Pinned REA/native-provider restore only",
+  "status": "restored; ready for separately assigned analysis",
+  "repository_head_at_start": "a9dd94d8580e72cc109e8c271eb338a471611bfc",
+  "repository_head_at_end": "a9dd94d8580e72cc109e8c271eb338a471611bfc",
+  "owned_paths": [
+    "/workspace/tooling/rea-runtime",
+    "/workspace/tooling/yuga-native-analysis",
+    "/workspace/scratch/rea-reuse-restore-r1"
+  ],
+  "tool_paths": {
+    "rea_cli": "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+    "ghidra_install_dir": "/workspace/tooling/yuga-native-analysis/ghidra_12.1.4_PUBLIC",
+    "ghidra_headless": "/workspace/tooling/yuga-native-analysis/ghidra_12.1.4_PUBLIC/support/analyzeHeadless",
+    "java_home": "/workspace/tooling/yuga-native-analysis/jdk-21.0.12.1+1",
+    "native_python": "/workspace/tooling/yuga-native-analysis/python/bin/python"
+  },
+  "checks": {
+    "recorded_commands_exit_zero": 9,
+    "rea_version": "6.5.0",
+    "root_package_sha512_and_registry_signatures_verified": true,
+    "root_registry_signatures_verified": 2,
+    "rea_regular_files_verified_against_root_tarball": 1650,
+    "saved_manifest_and_lockfile_unchanged": true,
+    "native_official_archives_exact_bytes_and_sha256": true,
+    "ghidra_metadata_version": "12.1.4",
+    "jdk_executed_version": "21.0.12.1+1-LTS",
+    "python_pinned_versions_match": 34,
+    "python_provider_imports": [
+      "capstone",
+      "elftools",
+      "unicorn",
+      "pwnlib"
+    ],
+    "pip_dependency_check_passed": true,
+    "npm_dependency_tree_passed": true,
+    "repository_setup_input_files_unchanged": true
+  },
+  "archive_pins": [
+    {
+      "name": "ghidra",
+      "directory": "ghidra_12.1.4_PUBLIC",
+      "url": "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.1.4_build/ghidra_12.1.4_PUBLIC_20260921.zip",
+      "metadata_url": "https://api.github.com/repos/NationalSecurityAgency/ghidra/releases/tags/Ghidra_12.1.4_build",
+      "sha256": "ddac49f903da9d5bac833e5cc79395098b9c33cfd3279be5f31bd00387d2d4db",
+      "bytes": 569649598,
+      "kind": "zip",
+      "download_bytes": 569649598,
+      "checksum_verified": true,
+      "path": "/workspace/tooling/yuga-native-analysis/ghidra_12.1.4_PUBLIC"
+    },
+    {
+      "name": "jdk",
+      "directory": "jdk-21.0.12.1+1",
+      "url": "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1%2B1/OpenJDK21U-jdk_x64_linux_hotspot_21.0.12.1_1.tar.gz",
+      "metadata_url": "https://api.github.com/repos/adoptium/temurin21-binaries/releases/tags/jdk-21.0.12.1%2B1",
+      "sha256": "ce79869e1307ed8ee1e2baa86a412b1eb5b75d10a01006d788a6f968bcfaee94",
+      "bytes": 207473347,
+      "kind": "tar",
+      "download_bytes": 207473347,
+      "checksum_verified": true,
+      "path": "/workspace/tooling/yuga-native-analysis/jdk-21.0.12.1+1"
+    }
+  ],
+  "evidence": {
+    "root_package_verification_sha256": "77a87a234df89282979b27aa5f12ad3381087c42f12ba0689a78b97b2bc509cc",
+    "installed_rea_source_integrity_sha256": "483c330762f61508acf771e3a8e440981b9d3152796b16e42756dcfda11aeced",
+    "native_installed_file_pins_sha256": "afc9180ecfea22eb187f3ad9298fdd67a57eba4bad4caaf57068f17a22d7d128",
+    "python_provider_readiness_sha256": "eea0e7fe0ef1cb176694eea025893357bedc224f1516931e8a9cb7639f340856",
+    "python_install_report_sha256": "ec5c178644ec942666f026f0cc102b74857f15d9b82695084abfea06a73a57dd",
+    "commands_sha256": "8e75926d80515b8c64d6d921c3d7be2da9856c3a247b0fc5044b5019a2b638f9"
+  },
+  "disk_free_bytes_after": 19431153664,
+  "configuration": {
+    "draft_fields_saved": [],
+    "reason": "Existing repository-supported restore commands were reused. No service startup or new environment settings are needed for the installed static tools; no prior cloud configuration was replaced."
+  },
+  "limits": [
+    "No C fixture or native-game binary analyzed in this packet.",
+    "No Ghidra headless analysis process launched.",
+    "No game-client files, models, gameplay recovery or graphics-parity progress established.",
+    "CLI lifecycle scripts deliberately disabled as documented; Frida, terminal/native-addon, browser and all other optional REA providers remain unqualified.",
+    "Root package registry signatures and lockfile tarball integrity verified; whole-install dependency signature audit was not rerun.",
+    "Python requirements are exact version pins without repository-supplied wheel hashes; pip report records downloaded archive SHA-256 values and pip check verifies dependencies, not publisher provenance.",
+    "Ghidra/JDK checks use unchanged repository-pinned official release archives; current GitHub API release metadata was not fetched.",
+    "No repository files were edited; other workers may change unrelated files concurrently.",
+    "No import/export/render, OS-input, listening or hardware-performance test ran."
+  ]
+}

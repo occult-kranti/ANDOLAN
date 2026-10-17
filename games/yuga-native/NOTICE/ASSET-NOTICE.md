@@ -61,3 +61,7 @@ those notices even while the runtime does not select its clips.
 
 Godot 4.6.3 is distributed under the MIT license, with its dependency notices
 preserved in `GODOT-LICENSE.txt` and `GODOT-COPYRIGHT.txt`.
+
+The separate offline tangent authoring tool reuses unmodified MikkTSpace code;
+see `MIKKTSPACE-AUTHORING.md` and the preserved upstream source notices. Adopting
+this tool does not automatically replace or approve a runtime hero asset.

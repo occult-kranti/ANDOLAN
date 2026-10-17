@@ -1,0 +1,508 @@
+{
+  "schema": 1,
+  "kind": "offline-mikktspace-authoring-contract",
+  "passed": true,
+  "checks": [
+    {
+      "name": "official vendor hashes verified during offline build",
+      "passed": true
+    },
+    {
+      "name": "planar analytic tangent and handedness",
+      "passed": true
+    },
+    {
+      "name": "rotated 3D analytic derivative oracle",
+      "passed": true,
+      "detail": {
+        "independentTangent": [
+          0.2672612419124244,
+          0.5345224838248488,
+          0.8017837257372732
+        ],
+        "normal": [
+          -0.8944271909999159,
+          0.4472135954999579,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "face permutation preserves planar per-vertex result",
+      "passed": true
+    },
+    {
+      "name": "mirrored shared index retains opposite corner signs and rejects collapse",
+      "passed": true,
+      "detail": {
+        "vertices": 5,
+        "triangles": 2,
+        "corners": 6,
+        "cleanFacesSentToMikk": 2,
+        "degenerateGeometryFaces": 0,
+        "degenerateUVFaces": 0,
+        "unresolvedCorners": 0,
+        "degenerateUnionFaces": 0,
+        "invalidOutputOnCleanCorners": 0,
+        "ambiguousSourceVertices": 1,
+        "directionConflictVertices": 1,
+        "handednessConflictVertices": 1,
+        "unresolvedSourceVertices": 0,
+        "unusedSourceVertices": 0,
+        "candidateCompatible": false,
+        "nativeError": "",
+        "maximumAbsNormalTangentDotOnValidCorners": 0.0,
+        "cornerOutputSha256": "a77c214c105085d24132d0f62427996eb24fa27085298cf421be426cfba978b7",
+        "maximumValidCornerDirectionDeltaFromFirst": 2.0,
+        "exampleCornerConflicts": [
+          {
+            "vertex": 0,
+            "validCornerCount": 2,
+            "maximumDirectionDeltaFromFirst": 2.0,
+            "handedness": [
+              -1.0,
+              1.0
+            ]
+          }
+        ],
+        "exampleDegenerateGeometryFaces": [],
+        "exampleDegenerateUVFaces": [],
+        "exampleAmbiguousVertices": [
+          0
+        ],
+        "exampleUnresolvedVertices": []
+      }
+    },
+    {
+      "name": "authored mirrored split preserves distinct valid frames",
+      "passed": true
+    },
+    {
+      "name": "reject negative indices",
+      "passed": true
+    },
+    {
+      "name": "reject out of bounds indices",
+      "passed": true
+    },
+    {
+      "name": "reject fractional indices",
+      "passed": true
+    },
+    {
+      "name": "reject bool indices",
+      "passed": true
+    },
+    {
+      "name": "reject mixed bool indices",
+      "passed": true
+    },
+    {
+      "name": "reject partial indices",
+      "passed": true
+    },
+    {
+      "name": "reject empty indices",
+      "passed": true
+    },
+    {
+      "name": "reject object indices",
+      "passed": true
+    },
+    {
+      "name": "reject three-dimensional indices",
+      "passed": true
+    },
+    {
+      "name": "reject NaN position",
+      "passed": true
+    },
+    {
+      "name": "reject Inf normal",
+      "passed": true
+    },
+    {
+      "name": "reject Inf UV",
+      "passed": true
+    },
+    {
+      "name": "reject float32 overflow",
+      "passed": true
+    },
+    {
+      "name": "reject finite beyond bound",
+      "passed": true
+    },
+    {
+      "name": "reject zero normal",
+      "passed": true
+    },
+    {
+      "name": "reject nonunit normal",
+      "passed": true
+    },
+    {
+      "name": "reject mismatched vertex domains",
+      "passed": true
+    },
+    {
+      "name": "reject complex geometry",
+      "passed": true
+    },
+    {
+      "name": "reject boolean UV",
+      "passed": true
+    },
+    {
+      "name": "zero UV explicitly unresolved",
+      "passed": true,
+      "detail": {
+        "vertices": 4,
+        "triangles": 2,
+        "corners": 6,
+        "cleanFacesSentToMikk": 0,
+        "degenerateGeometryFaces": 0,
+        "degenerateUVFaces": 2,
+        "unresolvedCorners": 6,
+        "degenerateUnionFaces": 2,
+        "invalidOutputOnCleanCorners": 0,
+        "ambiguousSourceVertices": 0,
+        "directionConflictVertices": 0,
+        "handednessConflictVertices": 0,
+        "unresolvedSourceVertices": 4,
+        "unusedSourceVertices": 0,
+        "candidateCompatible": false,
+        "nativeError": "",
+        "maximumAbsNormalTangentDotOnValidCorners": 0.0,
+        "cornerOutputSha256": "138ba82feac6d5f808fdd33f844e82f9700ecb49f5c6e1c1a5ada5c95887473a",
+        "maximumValidCornerDirectionDeltaFromFirst": 0.0,
+        "exampleCornerConflicts": [],
+        "exampleDegenerateGeometryFaces": [],
+        "exampleDegenerateUVFaces": [
+          0,
+          1
+        ],
+        "exampleAmbiguousVertices": [],
+        "exampleUnresolvedVertices": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "name": "zero geometry explicitly unresolved",
+      "passed": true,
+      "detail": {
+        "vertices": 4,
+        "triangles": 2,
+        "corners": 6,
+        "cleanFacesSentToMikk": 0,
+        "degenerateGeometryFaces": 2,
+        "degenerateUVFaces": 0,
+        "unresolvedCorners": 6,
+        "degenerateUnionFaces": 2,
+        "invalidOutputOnCleanCorners": 0,
+        "ambiguousSourceVertices": 0,
+        "directionConflictVertices": 0,
+        "handednessConflictVertices": 0,
+        "unresolvedSourceVertices": 4,
+        "unusedSourceVertices": 0,
+        "candidateCompatible": false,
+        "nativeError": "",
+        "maximumAbsNormalTangentDotOnValidCorners": 0.0,
+        "cornerOutputSha256": "138ba82feac6d5f808fdd33f844e82f9700ecb49f5c6e1c1a5ada5c95887473a",
+        "maximumValidCornerDirectionDeltaFromFirst": 0.0,
+        "exampleCornerConflicts": [],
+        "exampleDegenerateGeometryFaces": [
+          0,
+          1
+        ],
+        "exampleDegenerateUVFaces": [],
+        "exampleAmbiguousVertices": [],
+        "exampleUnresolvedVertices": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "name": "float32-collapsed UV explicitly unresolved",
+      "passed": true,
+      "detail": {
+        "vertices": 4,
+        "triangles": 2,
+        "corners": 6,
+        "cleanFacesSentToMikk": 0,
+        "degenerateGeometryFaces": 0,
+        "degenerateUVFaces": 2,
+        "unresolvedCorners": 6,
+        "degenerateUnionFaces": 2,
+        "invalidOutputOnCleanCorners": 0,
+        "ambiguousSourceVertices": 0,
+        "directionConflictVertices": 0,
+        "handednessConflictVertices": 0,
+        "unresolvedSourceVertices": 4,
+        "unusedSourceVertices": 0,
+        "candidateCompatible": false,
+        "nativeError": "",
+        "maximumAbsNormalTangentDotOnValidCorners": 0.0,
+        "cornerOutputSha256": "138ba82feac6d5f808fdd33f844e82f9700ecb49f5c6e1c1a5ada5c95887473a",
+        "maximumValidCornerDirectionDeltaFromFirst": 0.0,
+        "exampleCornerConflicts": [],
+        "exampleDegenerateGeometryFaces": [],
+        "exampleDegenerateUVFaces": [
+          0,
+          1
+        ],
+        "exampleAmbiguousVertices": [],
+        "exampleUnresolvedVertices": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "name": "tiny finite geometry below policy area explicitly unresolved",
+      "passed": true,
+      "detail": {
+        "vertices": 4,
+        "triangles": 2,
+        "corners": 6,
+        "cleanFacesSentToMikk": 0,
+        "degenerateGeometryFaces": 2,
+        "degenerateUVFaces": 0,
+        "unresolvedCorners": 6,
+        "degenerateUnionFaces": 2,
+        "invalidOutputOnCleanCorners": 0,
+        "ambiguousSourceVertices": 0,
+        "directionConflictVertices": 0,
+        "handednessConflictVertices": 0,
+        "unresolvedSourceVertices": 4,
+        "unusedSourceVertices": 0,
+        "candidateCompatible": false,
+        "nativeError": "",
+        "maximumAbsNormalTangentDotOnValidCorners": 0.0,
+        "cornerOutputSha256": "138ba82feac6d5f808fdd33f844e82f9700ecb49f5c6e1c1a5ada5c95887473a",
+        "maximumValidCornerDirectionDeltaFromFirst": 0.0,
+        "exampleCornerConflicts": [],
+        "exampleDegenerateGeometryFaces": [
+          0,
+          1
+        ],
+        "exampleDegenerateUVFaces": [],
+        "exampleAmbiguousVertices": [],
+        "exampleUnresolvedVertices": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "name": "unused source vertex disallows invented tangent",
+      "passed": true
+    },
+    {
+      "name": "native valid direct ABI",
+      "passed": true,
+      "detail": {
+        "nativeReturn": 0
+      }
+    },
+    {
+      "name": "native rejects wrong output capacity before callback",
+      "passed": true,
+      "detail": {
+        "nativeReturn": 1
+      }
+    },
+    {
+      "name": "native rejects partial face before callback",
+      "passed": true,
+      "detail": {
+        "nativeReturn": 1
+      }
+    },
+    {
+      "name": "native rejects NaN position before callback",
+      "passed": true,
+      "detail": {
+        "nativeReturn": 2
+      }
+    },
+    {
+      "name": "native rejects Inf position before callback",
+      "passed": true,
+      "detail": {
+        "nativeReturn": 2
+      }
+    },
+    {
+      "name": "native rejects negative Inf position before callback",
+      "passed": true,
+      "detail": {
+        "nativeReturn": 2
+      }
+    },
+    {
+      "name": "native rejects out-of-bounds index before callback",
+      "passed": true,
+      "detail": {
+        "nativeReturn": 3
+      }
+    },
+    {
+      "name": "native rejects zero normals before callback",
+      "passed": true,
+      "detail": {
+        "nativeReturn": 4
+      }
+    },
+    {
+      "name": "native rejects degenerate UV before callback",
+      "passed": true,
+      "detail": {
+        "nativeReturn": 7
+      }
+    },
+    {
+      "name": "binary receipt tamper rejected before native load",
+      "passed": true
+    },
+    {
+      "name": "tangent-only GLB candidate preserves JSON skin morph mask geometry and source",
+      "passed": true,
+      "detail": {
+        "path": "/tmp/yuga-mikk-tests-0ex2wcto/candidate.glb",
+        "sha256": "63fcd260113c6572c715ed9ccadc73d1d8e226450a5c0cfa8cc43d888dd759ba",
+        "bytes": 2228,
+        "changedBytes": 16,
+        "allowedTangentRecordBytes": 64,
+        "allOtherBytesIdentical": true,
+        "geometrySkinMorphFaceMetadataIdentical": true
+      }
+    },
+    {
+      "name": "report cannot equal source",
+      "passed": true
+    },
+    {
+      "name": "candidate cannot equal source",
+      "passed": true
+    },
+    {
+      "name": "hardlinked output source alias rejected",
+      "passed": true
+    },
+    {
+      "name": "symlink output source alias rejected",
+      "passed": true
+    },
+    {
+      "name": "report and candidate cannot alias each other",
+      "passed": true
+    },
+    {
+      "name": "existing output never overwritten",
+      "passed": true
+    },
+    {
+      "name": "ambiguous GLB corner domain never writes candidate",
+      "passed": true,
+      "detail": [
+        "mesh0-primitive0: unresolved/ambiguous existing indexed corners"
+      ]
+    },
+    {
+      "name": "degenerate GLB domain never writes candidate",
+      "passed": true,
+      "detail": [
+        "mesh0-primitive0: unresolved/ambiguous existing indexed corners"
+      ]
+    },
+    {
+      "name": "existing tangent morph blocks unposed overwrite",
+      "passed": true,
+      "detail": [
+        "mesh0-primitive0: existing tangent morph deltas require a separate posed rebake"
+      ]
+    },
+    {
+      "name": "no supported tangent domain cannot write empty candidate",
+      "passed": true,
+      "detail": [
+        "No supported source tangent domains were processed"
+      ]
+    },
+    {
+      "name": "oversized zero-filled source accessor rejects before allocation",
+      "passed": true,
+      "detail": [
+        "mesh0-primitive0: Source vertex accessor exceeds bounded capacity",
+        "No supported source tangent domains were processed"
+      ]
+    },
+    {
+      "name": "tangent storage aliasing protected COLOR mask rejects before publication",
+      "passed": true
+    },
+    {
+      "name": "source identity retained after all alias counterexamples",
+      "passed": true
+    }
+  ],
+  "count": 54,
+  "build": {
+    "schema": 1,
+    "upstreamRepository": "https://github.com/mmikk/MikkTSpace",
+    "upstreamCommit": "3e895b49d05ea07e4c2133156cfa94369e19e409",
+    "license": "Unmodified upstream zlib-style permissive notices retained in both C/header; original YUGA bridge CC0-1.0",
+    "upstreamFiles": {
+      "mikktspace.h": "17fc433894f24c73753d548086cc4d8c5c0379f4a6edfb98b5da243e4f0bc3d0",
+      "mikktspace.c": "de87e74107df766ce68108801262bd8d53899414236b59810509a8fc2a51e288",
+      "README.md": "295d4e37ac1980e1f811c340f618ffa68fc10bf906b34bc93a64c6960351bdfc"
+    },
+    "adapter": "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-tangents/bridge.c",
+    "adapterSha256": "72cb7c7d5cc4df378ae95362b0ad29e611c44cd301c13e901fa8355b8240a362",
+    "builderSha256": "a80dbfcb09884aeede2e5d1c7c4cffadff4d84983f5bdb8841bca12e0850e14e",
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "command": [
+      "/usr/bin/cc",
+      "-std=c99",
+      "-O2",
+      "-g",
+      "-fPIC",
+      "-shared",
+      "-Wl,--build-id=sha1",
+      "-I",
+      "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-tangents/vendor",
+      "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-tangents/bridge.c",
+      "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-tangents/vendor/mikktspace.c",
+      "-lm",
+      "-o",
+      "/tmp/yuga-mikk-tests-0ex2wcto/build/libyuga_mikktspace.so"
+    ],
+    "binary": "/tmp/yuga-mikk-tests-0ex2wcto/build/libyuga_mikktspace.so",
+    "binarySha256": "0f038e6f83f5fce5e10d0b8c14028f96ed7368229c59bded44a2512dda91bb4a",
+    "exportedBridge": "yuga_mikk_generate",
+    "symbolVisibility": "Default ELF symbols, unstripped debug info; source/native analysis only, no game runtime dependency",
+    "scope": "Offline per-corner authoring tool. Successful compilation does not establish tangent correctness or art acceptance."
+  },
+  "testSourceSha256": "53e1a1afd094c9cc197251fa090ddc735cbb5a9f2c3a6440b4e22a5e866488ae",
+  "toolSources": {
+    "build_bridge.py": "a80dbfcb09884aeede2e5d1c7c4cffadff4d84983f5bdb8841bca12e0850e14e",
+    "mikk_frames.py": "54d85a85f2b1fdf5bf7935a3ed16a8bb53a6842232dd91208629703860ca436a",
+    "regenerate.py": "54300a0cb524e76942f1f0305787c0797a204e174898a7bd5a6cecca6852b688"
+  },
+  "limits": [
+    "Synthetic tool/ABI and source immutability evidence; no native render, hardware FPS, final-art or runtime promotion acceptance.",
+    "Actual indexed authoring domains are diagnosed separately; synthetic success does not make an ambiguous production mesh compatible."
+  ]
+}

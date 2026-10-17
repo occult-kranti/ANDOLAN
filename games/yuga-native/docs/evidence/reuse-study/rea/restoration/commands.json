@@ -1,0 +1,169 @@
+[
+  {
+    "label": "npm-ci",
+    "argv": [
+      "taskset",
+      "-c",
+      "0,1",
+      "npm",
+      "--cache",
+      "/workspace/tooling/rea-runtime/.npm-cache",
+      "--prefix",
+      "/workspace/tooling/rea-runtime",
+      "ci",
+      "--ignore-scripts",
+      "--no-fund"
+    ],
+    "exit_code": 0,
+    "error": null,
+    "elapsed_seconds": 5.582,
+    "log": "/workspace/scratch/rea-reuse-restore-r1/logs/npm-ci.log.txt",
+    "log_sha256": "9cf08a5810f6a443d9a6852e308bb2243828d761b7e0742c001d0181c3df5503"
+  },
+  {
+    "label": "native-tools-install",
+    "argv": [
+      "taskset",
+      "-c",
+      "0,1",
+      "python3",
+      "games/yuga-native/tools/native-analysis/install-toolchain.py",
+      "--root",
+      "/workspace/tooling/yuga-native-analysis"
+    ],
+    "exit_code": 0,
+    "error": null,
+    "elapsed_seconds": 60.741,
+    "log": "/workspace/scratch/rea-reuse-restore-r1/logs/native-tools-install.log.txt",
+    "log_sha256": "aba910797e13fb368881789312ac994a6462c3e9e34f4154479d0cac46a10346"
+  },
+  {
+    "label": "python-venv",
+    "argv": [
+      "taskset",
+      "-c",
+      "0,1",
+      "python3",
+      "-m",
+      "venv",
+      "/workspace/tooling/yuga-native-analysis/python"
+    ],
+    "exit_code": 0,
+    "error": null,
+    "elapsed_seconds": 2.652,
+    "log": "/workspace/scratch/rea-reuse-restore-r1/logs/python-venv.log.txt",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "python-requirements",
+    "argv": [
+      "taskset",
+      "-c",
+      "0,1",
+      "/workspace/tooling/yuga-native-analysis/python/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "--quiet",
+      "--no-input",
+      "--disable-pip-version-check",
+      "--cache-dir",
+      "/workspace/tooling/yuga-native-analysis/.pip-cache",
+      "--report",
+      "/workspace/scratch/rea-reuse-restore-r1/python-install-report.json",
+      "-r",
+      "games/yuga-native/tools/native-analysis/python-requirements.txt"
+    ],
+    "exit_code": 0,
+    "error": null,
+    "elapsed_seconds": 15.219,
+    "log": "/workspace/scratch/rea-reuse-restore-r1/logs/python-requirements.log.txt",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "rea-version",
+    "argv": [
+      "taskset",
+      "-c",
+      "0,1",
+      "node",
+      "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+      "--version"
+    ],
+    "exit_code": 0,
+    "error": null,
+    "elapsed_seconds": 1.623,
+    "log": "/workspace/scratch/rea-reuse-restore-r1/logs/rea-version.log.txt",
+    "log_sha256": "3eb8e06ca1e02f0a30b0e3eebd289494b35d4fd1466ed907b9148e03b2459b00"
+  },
+  {
+    "label": "rea-help",
+    "argv": [
+      "taskset",
+      "-c",
+      "0,1",
+      "node",
+      "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+      "--help"
+    ],
+    "exit_code": 0,
+    "error": null,
+    "elapsed_seconds": 1.822,
+    "log": "/workspace/scratch/rea-reuse-restore-r1/logs/rea-help.log.txt",
+    "log_sha256": "80df18834181c29915f800d49d0dbd54de6133465f8826c2a8f2b27c686d40da"
+  },
+  {
+    "label": "python-dependency-check",
+    "argv": [
+      "taskset",
+      "-c",
+      "0,1",
+      "/workspace/tooling/yuga-native-analysis/python/bin/python",
+      "-m",
+      "pip",
+      "check",
+      "--disable-pip-version-check"
+    ],
+    "exit_code": 0,
+    "error": null,
+    "elapsed_seconds": 0.53,
+    "log": "/workspace/scratch/rea-reuse-restore-r1/logs/python-dependency-check.log.txt",
+    "log_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+  },
+  {
+    "label": "java-version",
+    "argv": [
+      "taskset",
+      "-c",
+      "0,1",
+      "/workspace/tooling/yuga-native-analysis/jdk-21.0.12.1+1/bin/java",
+      "--version"
+    ],
+    "exit_code": 0,
+    "error": null,
+    "elapsed_seconds": 0.067,
+    "log": "/workspace/scratch/rea-reuse-restore-r1/logs/java-version.log.txt",
+    "log_sha256": "31c56f92082dd196281086e4714d9ad56668dc30ffc27699367ee081dfc3a5ae"
+  },
+  {
+    "label": "npm-dependency-tree",
+    "argv": [
+      "taskset",
+      "-c",
+      "0,1",
+      "npm",
+      "--cache",
+      "/workspace/tooling/rea-runtime/.npm-cache",
+      "--prefix",
+      "/workspace/tooling/rea-runtime",
+      "ls",
+      "--all",
+      "--json"
+    ],
+    "exit_code": 0,
+    "error": null,
+    "elapsed_seconds": 0.365,
+    "log": "/workspace/scratch/rea-reuse-restore-r1/logs/npm-dependency-tree.log.txt",
+    "log_sha256": "bd73df6f359d2af929649c90d444ba1928d75d69a5b5384049b0957334cad9ba"
+  }
+]

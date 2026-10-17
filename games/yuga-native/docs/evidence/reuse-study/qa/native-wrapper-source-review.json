@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "reviewer": "quality_qa",
+  "recorded_at_utc": "2026-10-17T18:37:06.870283+00:00",
+  "source": {
+    "path": "tools/native-analysis/inspect-component.py",
+    "sha256": "7c15c9cf4ec76437890896f77c31ac14e47332b1b1b6b1ce56833cd171ad891b"
+  },
+  "method": "Static source review only; no target/provider execution or heavy import/render by QA.",
+  "bounded_pass": [
+    "ELF magic admission and one C-identifier symbol",
+    "Shell-free explicit argv; target binary is not invoked by this wrapper",
+    "Fresh output directory and raw stdout/stderr preservation",
+    "Input SHA from all returned subjects must match initial binary; final unchanged check",
+    "Pinned Ghidra12.1.4 provider for decompile and function records",
+    "Selected procedure name, nonempty pseudocode and nonempty basic-block list",
+    "Unresolved calls are returned as observations, not forced to zero",
+    "Source/behavior/full-game claims explicitly limited"
+  ],
+  "open_findings": [
+    {
+      "id": "NATIVE-TIMEOUT-CLEANUP",
+      "state": "OPEN source robustness limit",
+      "finding": "Python subprocess.run(timeout) kills the direct process, but the wrapper does not start/clean a process group. Descendant Python/Java/Ghidra processes may outlive a timed-out Node CLI.",
+      "evidence": "TimeoutExpired handler records124 and stops commands; no descendant cleanup is present.",
+      "actual_timeout_reproduction": "UNRUN; no current failed provider run is asserted.",
+      "next": "A bounded process-group cleanup implementation/fixture or explicit retained timeout-cleanup limitation."
+    },
+    {
+      "id": "NATIVE-DECOMPILE-SCOPE",
+      "state": "LIMITED verification scope",
+      "finding": "Command argv requests the selected symbol and the separate function record validates procedure.name. The reconstructed pseudocode is checked only for nonempty text, so this gate is provider invocation/identity evidence, not independent pseudocode/source or behavioral equivalence.",
+      "next": "Keep that scope explicit; any algorithm-equivalence claim requires source/native behavioral comparison."
+    }
+  ],
+  "art_and_recovery_claims": "No recovered commercial clients/models, source-equivalent decompilation, finished art or final promotion inferred."
+}

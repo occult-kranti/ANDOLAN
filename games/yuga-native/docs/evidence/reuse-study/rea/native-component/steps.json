@@ -1,0 +1,53 @@
+[
+  {
+    "name": "binary-layout",
+    "command": [
+      "node",
+      "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+      "inspect-binary-layout",
+      "/workspace/tooling/mikktspace-yuga-r1/libyuga_mikktspace.so",
+      "--format",
+      "json"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 1.511,
+    "stdout_sha256": "218929bd6e617f96a3e3939a5ce0d5666e20c552556905555386e17683126de6",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "decompile",
+    "command": [
+      "node",
+      "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+      "decompile",
+      "/workspace/tooling/mikktspace-yuga-r1/libyuga_mikktspace.so",
+      "yuga_mikk_generate",
+      "--provider",
+      "ghidra",
+      "--format",
+      "json"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 22.368,
+    "stdout_sha256": "c461c08f0a1724983113595d4ae069d6e706ec6aaedfd5c9b25272f8c861b07f",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "function",
+    "command": [
+      "node",
+      "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+      "function",
+      "/workspace/tooling/mikktspace-yuga-r1/libyuga_mikktspace.so",
+      "yuga_mikk_generate",
+      "--provider",
+      "ghidra",
+      "--format",
+      "json"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 17.447,
+    "stdout_sha256": "be52f7086f0585ac143314746a0a3202648f61989fbeadafd31234ea230bb810",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

@@ -67,6 +67,12 @@ The [original audio design](../TRAVERSAL_AUDIO_DESIGN.md) and [source ledger](..
 
 ## REA, reconstructed games and reuse decisions
 
+Current refresh: [reuse/adoption guide](../REUSE_ADOPTION_GUIDE.md),
+[REA plus ten forks](REA_REUSE_REFRESH.md), [five game source audit](OPEN_GAME_CODE_REUSE.md)
+and [selected book/design notes](GAME_DESIGN_REUSE_NOTES.md). The refreshed native
+analysis uses the actual compiled MikkTSpace adapter, with separate execution
+oracles; the original fixture below remains historical evidence.
+
 | Resource | Actual scope already evidenced | Reuse boundary / next step |
 | --- | --- | --- |
 | [REA upstream](https://github.com/morluto/rea/tree/0c7b6d834af2d044b23196e0e522cc2468327a1e), [native-analysis runbook](../../tools/native-analysis/README.md), [fixture evidence](../evidence/native-analysis-toolchain.json) | REA 6.5.0/Ghidra 12.1.4 exercised an original symbol-bearing C fixture: five executable cases/ten evidence assertions; selected function yielded six blocks and 36 assembly lines. Earlier Sketchbook/Tank Battle static graphs had ambiguous semantic results; commands succeeding did not prove behavior. | No supplied Deadlock/Overwatch/Dota 2 clients, commercial rigs or server implementation were recovered. For another study require an accessible input, provenance/hash, a bounded question and behavior comparison. Three inspected REA forks offered no relevant improvement; see [reusable systems](REUSABLE_GAME_SYSTEMS.md). |

@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "scope": "One unchanged GPLv3 OpenMW header in a standalone research executable; no game runtime integration or engine build.",
+  "compile_command": [
+    "g++",
+    "-std=c++20",
+    "-O1",
+    "-g",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-fsanitize=address,undefined",
+    "-fno-omit-frame-pointer",
+    "-I",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/reuse-study/games/module-check/vendor/openmw",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/reuse-study/games/module-check/openmw-pool-check.cpp",
+    "-o",
+    "/workspace/scratch/reuse-qa-openmw-r1/openmw-pool-check"
+  ],
+  "compile_exit_code": 0,
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "input_manifest_sha256": "97d2833f9b3eefc4deba9650dfa00f773781b3987f297526877880afda9b3d2a",
+  "script_sha256": "45916f29aeb8fcb5e557cec198ecf48f46019a55d359ab821649cf7e8e31b215",
+  "cpu_affinity": [
+    0,
+    1
+  ],
+  "run_exit_code": 0,
+  "checks": [
+    {
+      "case": "default_null_and_duplicate_null_reset_are_safe",
+      "passed": true
+    },
+    {
+      "case": "two_live_borrows_are_distinct",
+      "passed": true
+    },
+    {
+      "case": "duplicate_reset_does_not_duplicate_free_entry",
+      "passed": true
+    },
+    {
+      "case": "recycle_avoids_new_construction",
+      "passed": true
+    },
+    {
+      "case": "pool_does_not_reset_payload_for_the_caller",
+      "passed": true
+    },
+    {
+      "case": "unique_borrow_move_transfers_ownership",
+      "passed": true
+    },
+    {
+      "case": "pool_has_no_hard_capacity_guard",
+      "passed": true
+    },
+    {
+      "case": "fixed_concurrency_reuse_has_no_further_item_growth",
+      "passed": true
+    },
+    {
+      "case": "pool_destruction_releases_retained_items",
+      "passed": true
+    }
+  ],
+  "totals": {
+    "passed": true,
+    "checks": 9,
+    "failures": 0
+  },
+  "executable_sha256": "75d4d27820201ffd87ab1e1d8c5dc9085ba8934178a8fe98695aa474d09bc6e7",
+  "sanitizer_stderr_bytes": 0,
+  "sources_unchanged": true
+}

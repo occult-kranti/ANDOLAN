@@ -1,5 +1,37 @@
 # Native REA toolchain acceptance
 
+For the fresh source/fork review and actual rendering-component analysis, read
+[REA reuse refresh](../../docs/research/REA_REUSE_REFRESH.md). The older fixture
+record below retains its original scope. The generic component workflow is:
+
+```sh
+python3 games/yuga-native/art/hero-rama-tangents/build_bridge.py \
+  --output /workspace/scratch/mikk-inspection-build-new
+taskset -c 2,3 python3 games/yuga-native/tools/native-analysis/inspect-component.py \
+  --binary /workspace/scratch/mikk-inspection-build-new/libyuga_mikktspace.so \
+  --symbol yuga_mikk_generate \
+  --rea /workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs \
+  --tool-root /workspace/tooling/yuga-native-analysis \
+  --output /workspace/scratch/mikk-inspection-evidence-new
+```
+
+Choose fresh output paths. Restore the pinned toolchain using the instructions
+below when absent. The inspector does not execute the selected ELF. It retains
+layout/decompilation/function outputs, checks input identities, selected symbols
+and providers, and terminates its ordinary provider process group on timeout.
+Its small Linux counterexample suite runs without REA/Ghidra installed:
+
+```sh
+python3 games/yuga-native/tests/native_component_analysis_cases.py \
+  --report=/absolute/fresh/native-component-analysis.json
+```
+
+Reconstructed pseudocode can obscure types and floating-point predicates.
+Keep unresolved/indirect-flow limits and compare behavior with independent
+execution tests; a nonempty decompilation is not source equivalence. The new
+MikkTSpace experiment inspects an accessible open-source authoring component,
+not a commercial game client or server.
+
 This folder verifies actual binary inspection and Ghidra decompilation using an
 original, small C fixture. It is **not a reconstruction of Deadlock or Overwatch**.
 The source has debug symbols, uses `-O0`, and contains a deliberately simple damage

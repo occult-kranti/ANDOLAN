@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "reviewer": "quality_qa",
+  "scope": "Independent repeat of unchanged OpenMW header in isolated GPL3 C++ research harness; no engine build, game asset or runtime adoption.",
+  "command": [
+    "taskset",
+    "-c",
+    "0,1",
+    "python3",
+    "docs/evidence/reuse-study/games/module-check/check.py",
+    "--output",
+    "/workspace/scratch/reuse-qa-openmw-r1"
+  ],
+  "exit_code": 0,
+  "checks": 9,
+  "passed": true,
+  "sanitizers": "ASan+UBSan with zero stderr",
+  "report_sha256": "9b18cfce17b54116960db428786bcf0c8e508d635c4ac6a7c7ba85e057f91f6c",
+  "header_sha256": "931d8baa4791a55479199287c92311ea18ea2fe2ddb1933d31ee4fc9cee65bda",
+  "harness_sha256": "397cb27b597c24e1b76060da3eec253c349b9162aeca90593926c98f3eb9ad40",
+  "test_script_sha256": "45916f29aeb8fcb5e557cec198ecf48f46019a55d359ab821649cf7e8e31b215",
+  "limits": [
+    "No fixed capacity guard or automatic payload reset is supplied by this pool.",
+    "The pool owner must outlive borrowers at a stable address; invalid dangling-owner behavior was not executed.",
+    "No thread-safety or full-engine performance claim.",
+    "The standalone executable remains scratch-only; full corresponding source/notice stays in the separate GPL research directory."
+  ]
+}

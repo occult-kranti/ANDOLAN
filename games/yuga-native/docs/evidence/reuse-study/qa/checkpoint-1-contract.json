@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "checkpoint": "1 / independent critical contracts before implementation review",
+  "recorded_at_utc": "2026-10-17T18:33:44.557965+00:00",
+  "reviewer": "quality_qa",
+  "source_commit": "a9dd94d8580e72cc109e8c271eb338a471611bfc",
+  "product": "YUGA native reusable tool/source study",
+  "scope": "Only new reuse-study QA evidence. No old Rama quality record, product source, GLB, import or renderer mutation.",
+  "MikkTSpace_gate": [
+    {
+      "id": "MIKK-PROVENANCE",
+      "required": "Official mmikk source commit, exact C/header bytes and retained upstream license; clearly identified local adapter. Checksums/Git blobs verified. A source-library license is not a game-asset grant.",
+      "state": "PENDING owner receipt"
+    },
+    {
+      "id": "MIKK-CORNERS",
+      "required": "Actual native algorithm callbacks index face/corner data. Output count equals triangle corners and mapping is explicit. Never average discontinuous corner tangents/handedness into a shared source vertex.",
+      "counterexample": "Two adjacent +Z triangles with XY positions [(0,0,0),(1,0,0),(0,1,0),(-1,0,0)], UV[(0,0),(1,0),(0,1),(1,0)], indices[0,1,2,0,2,3]. Analytic tangent+X/w+1 on first triangle, -X/w-1 on second; shared source vertices require distinct output corners.",
+      "state": "PENDING implementation and execution"
+    },
+    {
+      "id": "MIKK-ANALYTIC",
+      "required": "An independently rotated planar triangle reconstructs the correct UV tangent and handedness within explicit float32 tolerance. Tests must not merely compare the adapter to itself.",
+      "counterexample": "p0=0, p1=(sqrt(.5),sqrt(.5),0), p2=(0,0,1), N=(sqrt(.5),-sqrt(.5),0), UV[(0,0),(1,0),(0,1)]; expected T=(sqrt(.5),sqrt(.5),0), sign+1.",
+      "state": "PENDING"
+    },
+    {
+      "id": "MIKK-ADMISSION",
+      "required": "Invalid indices, short triangles/rows, nonfinite values, huge float32-overflowing values and unusable normals reject safely before native callbacks or follow a documented non-mutating policy.",
+      "counterexamples": [
+        "negative and index==vertex_count",
+        "noninteger/fractional and bool index coercion",
+        "NaN/Inf positions, normals and UV",
+        "finite Python float beyond float32 range",
+        "zero normal or invalid normal normalization"
+      ],
+      "state": "PENDING"
+    },
+    {
+      "id": "MIKK-DEGENERATE",
+      "required": "Zero-area geometry and collapsed UV have an explicit reject/marked-fallback contract; no arbitrary basis is mislabeled as recovered UV-correct detail. Mixed valid/degenerate triangles cannot contaminate valid corners.",
+      "state": "PENDING"
+    },
+    {
+      "id": "MIKK-IMMUTABLE",
+      "required": "Actual read-only source diagnosis preserves all GLB bytes and reports per-corner discrepancies without silently applying/averaging tangents. Rendered improvement and final asset promotion remain unrun.",
+      "state": "PENDING"
+    },
+    {
+      "id": "REA-CLAIMS",
+      "required": "Differentiate current source/fork inspection, old fixture evidence and present provider execution. No current native commercial binary analysis or recovered clients/models without actual accessible inputs and source-bound results.",
+      "state": "PENDING owner report"
+    },
+    {
+      "id": "GAME-REUSE",
+      "required": "Per repository distinguish available engine/game code, exact code license, separately licensed demo assets and proprietary original game data. Identify actual code/tool adoption versus conceptual architecture study.",
+      "state": "PENDING owner report"
+    }
+  ],
+  "available_owner_context": {
+    "REA": "Desk reports current GitHub metadata access but prior /workspace/tooling/rea, rea-runtime and yuga-native-analysis directories absent. Historical reports are not current provider execution.",
+    "game_sources": "Owner auditing Source SDK2013, ioquake3, OpenMW, OpenRA, Godot TPS; final primary-source pins pending.",
+    "native_Mikk_execution": "Owner adapter not yet submitted; QA does not claim a run."
+  },
+  "commercial_art_target": "OPEN / no inference from tool tests, repo counts or source diagnostics",
+  "source_glb_before": {
+    "path": "assets/heroes/rama-hero.glb",
+    "sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5"
+  }
+}

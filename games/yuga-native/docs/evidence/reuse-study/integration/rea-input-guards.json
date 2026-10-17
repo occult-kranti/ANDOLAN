@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "runner_sha256": "7c15c9cf4ec76437890896f77c31ac14e47332b1b1b6b1ce56833cd171ad891b",
+  "checks": [
+    {
+      "name": "non_ELF_input",
+      "passed": true,
+      "exit_code": 1,
+      "diagnostic": "An accessible ELF input is required"
+    },
+    {
+      "name": "invalid_symbol",
+      "passed": true,
+      "exit_code": 1,
+      "diagnostic": "Select one C identifier, not a command or address expression"
+    },
+    {
+      "name": "preserve_existing_output",
+      "passed": true,
+      "exit_code": 1,
+      "diagnostic": "Use a fresh output directory to preserve prior evidence"
+    },
+    {
+      "name": "missing_REA",
+      "passed": true,
+      "exit_code": 1,
+      "diagnostic": "The pinned REA CLI is not installed at --rea"
+    }
+  ],
+  "scope": "CLI rejection and output preservation only; no native provider or target execution in these four counterexamples."
+}

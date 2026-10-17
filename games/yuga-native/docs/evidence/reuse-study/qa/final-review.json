@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "reviewer": "independent quality_qa",
+  "frozen_at_utc": "2026-10-17T18:56:42.469385+00:00",
+  "base_commit": "a9dd94d8580e72cc109e8c271eb338a471611bfc",
+  "product": "YUGA native reuse-source and tangent-tool study",
+  "decision": "PASS for bounded source/license distinctions, tested authoring-tool contracts and correct actual-asset refusal; final art/runtime promotion OPEN",
+  "reviewed_owner_inputs": {
+    "docs/research/rea-reuse-refresh.json": "a44a6b2cc7c94fb4818ec8302887345ae18d38de4b8b72accdcde21737d2762d",
+    "docs/research/REA_REUSE_REFRESH.md": "1ba876c855bee1e5e1bc6a0d7fdf25b27f4aa8c113f00377975e55b2cad4f249",
+    "docs/evidence/reuse-study/rea/native-component/summary.json": "22bc54c0964671c5c6e34522b828af7f6cfd291ee4b81dd8db0742918d8fab4e",
+    "docs/research/open-game-code-reuse.json": "c94a0dfa7d24aa7418eaa4bca7995b1d8cf2d3ec1ac1e6b930b84bbb3b82cc82",
+    "docs/research/OPEN_GAME_CODE_REUSE.md": "4b316a535d3aae78382646f50bcdf0cd3334876f9620d6baad80af0b01e2543f",
+    "docs/evidence/reuse-study/mikktspace/rama-source-diagnostic.json": "abaefdbc424e645ab22d94fbbcfcb18d2a59e6aebdfc9dab2ede52f98f0b53cb",
+    "docs/evidence/reuse-study/mikktspace/summary.json": "479a44d04b3dd02f6dcbe505b9fb645fdd1fe57eca6937e5df05744c38bb88f8"
+  },
+  "qa_evidence": {
+    "checkpoint-1-contract.json": "4da0dfabf7cb1972d43985ecee6c4fd273ca6397d73105090c6269bc20014949",
+    "rea-source-checkpoint2.json": "bc700c0894a72a9b93d7e45e9a62272e63350a14c027bf1c7bb7bb567010c376",
+    "native-wrapper-source-review.json": "c03b8fc92738a1dc9129e8a1d2fad65dd9851e9cab68df53f5688a0e5b49957d",
+    "native-wrapper-repeat-r1.json": "6219f39963fedf77eac99e5af18d7fbbd76cc0fe13853837833e4c6216a3c9f4",
+    "native-wrapper-closure.json": "898109a7b29fa08bd63e5e67b2217b8fc8142c68b06d913b5c0617ad075bcab6",
+    "game-reuse-source-review.json": "05213de368235ac440ab67119746989571730d4d9e5bbbdeca6e4e2381111c7e",
+    "openmw-repeat-r1/qa-summary.json": "f2ea2f9ab996caa7bfa091596d543a1b4b216c532f8b34eb4652061f0a405ae3",
+    "mikktspace-repeat-r1.json": "f5cb374a6ba7e958a48929a5bdd077fe73459c85a97599be1e3b7acb61f33f99",
+    "mikktspace-actual-refusal-r1.json": "d2a2dfbf3ada6e0c36ab8f9115169d28b7e8a641151dbbe660ae71c365376a98",
+    "independent-mikk-cases-r1.json": "2dc2e24b95d960a0ae88975db54fa02e59feb6b523bd72aa826c0819d22d4967",
+    "independent-mikk-import-failure-r1.json": "36dedde30e1adcf833f9e314611e1d1d54158ab7be5862eb33d9f24868ec7625",
+    "independent_mikk_cases-import-failed.py.txt": "3bac94e6694fd7337f4b048a7fae9a8e7fcebac4f2f16f37aa9a4f3d2d170646",
+    "independent_mikk_cases.py": "5fa0ec5d7097a7ec6e70579678b9fa6ed0ee5fe078bad228369667515b79190a"
+  },
+  "executed_by_QA": [
+    {
+      "item": "native wrapper helper",
+      "checks": 7,
+      "exit_code": 0,
+      "result": "PASS",
+      "scope": "Linux CLI/fresh-output and actual TERM-ignoring parent/child process-group cleanup; no REA provider executed by QA"
+    },
+    {
+      "item": "isolated OpenMW pool",
+      "checks": 9,
+      "exit_code": 0,
+      "result": "PASS",
+      "scope": "Separate GPL3 source module with ASan/UBSan; no runtime adoption/art/memory-performance claim"
+    },
+    {
+      "item": "final Mikk authoring fixture",
+      "checks": 54,
+      "exit_code": 0,
+      "result": "PASS",
+      "test_source_sha256": "53e1a1afd094c9cc197251fa090ddc735cbb5a9f2c3a6440b4e22a5e866488ae",
+      "build_binary_sha256": "0d83c650728cff5c6bd7410ef0be8569f2a595d224b4df8638c5d048b80b9657",
+      "scope": "Independent fresh C build and synthetic corner/admission/GLB preservation cases. This rebuilt binary hash differs from the canonical REA-analyzed build; no byte-equivalence or extra unique-coverage claim."
+    },
+    {
+      "item": "independent analytic Mikk cases",
+      "properties": 4,
+      "exit_code": 0,
+      "result": "PASS",
+      "binary_sha256": "0f038e6f83f5fce5e10d0b8c14028f96ed7368229c59bded44a2512dda91bb4a",
+      "scope": "Two shared mirrored source vertices retain analytic opposite tangent/sign corners; explicit seam split;45degree closed-form plane; mixed clean/degenerate triangles. Input arrays unchanged."
+    },
+    {
+      "item": "actual Rama candidate request",
+      "exit_code": 2,
+      "result": "EXPECTED REFUSAL",
+      "report": "mikktspace-actual-refusal-r1.json",
+      "candidateWritten": false,
+      "sourceUnchanged": true,
+      "scope": "Read-only production source diagnosis and refusal to write unsafe tangent-only scratch candidate, not an art repair."
+    }
+  ],
+  "Mikk_review": {
+    "upstream": "mmikk/MikkTSpace@3e895b49d05ea07e4c2133156cfa94369e19e409",
+    "official_source_hashes_verified": true,
+    "license": "Original zlib-style notices retained in both unmodified C/header; original bridge is separately identified CC0. No game-asset rights inferred.",
+    "corner_semantics": "Native callbacks map((face*3)+corner)*4 float outputs. Python keeps per-corner arrays; strict indexed collapse requires exact direction/sign agreement and no unused/unresolved vertex. Mirrored conflicts reject, never average.",
+    "input_and_storage_gates": "Float32 finite/range/unit-normal/index/size validation; post-conversion collapsed domains marked unresolved; no source/candidate/report alias or overwrite; dense tangent/morph/minmax/protected-accessor/image invariants checked before candidate publication.",
+    "native_abi_limit": "Caller pointer lengths remain C caller responsibility; Python validates array shapes/capacity. No arbitrary bad pointers or underallocated buffers were passed.",
+    "actual_source_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "domains": 18,
+    "blocked_domains": 15,
+    "geometry_faces_below_policy": 5400,
+    "UV_faces_below_policy": 18360,
+    "geometry_UV_union_faces": 22912,
+    "unresolved_corners": 68739,
+    "invalid_clean_corners": 3,
+    "direction_conflicting_vertices": 6,
+    "handedness_conflicting_vertices": 0,
+    "actual_candidate_exists": false,
+    "promotion": "NONE; UV/geometry/frame-domain authoring and actual normal-map/pose renders remain required."
+  },
+  "REA_review": {
+    "source_fork_audit": "Ten selected source files/hash/Git blobs and ten pinned fork comparisons checked; bounded fork sample and source-main-vs-npm distinction correct.",
+    "actual_provider_evidence": "Reviewed owner raw source-bound static layout/decompile/function results for the canonical component0f038e\u2026 with Ghidra12.1.4. Main9 metadata/identity checks and callback8 are separate from native behavior evidence. Raw provider hashes/subject/provider were checked; QA did not rerun Ghidra.",
+    "canonical_binary_sha256": "0f038e6f83f5fce5e10d0b8c14028f96ed7368229c59bded44a2512dda91bb4a",
+    "main_blocks": 46,
+    "callback_scope": "Selected source/static callback offset16B percorner and handedness+12 agree; no full algorithm source equivalence inferred.",
+    "native_oracle_scope": "Owner7 checks comprise5 safe fixed-size component calls and2predicate/identity checks; archived helper repeat is not doubled unique coverage. QA separately executes the exact canonical binary through analytic cases and actual source diagnosis.",
+    "pseudocode_limit": "Optimized stack-slot types and the printed finite guard are not assumed source-equivalent; raw assembly/NaN counterexample qualification is preserved.",
+    "no_commercial_game_input": "No Deadlock/Overwatch/Dota2/TF2 client, replay, model or original game source recovered/analyzed by this study."
+  },
+  "game_license_review": "All30 successful raw source SHA/bytes and49 selected-section hashes verified. Restricted Source1 SDK, GPL engines/reimplementations, separate proprietary data and Godot MITcode/CCBY3assets are correctly distinguished. Only one OpenMW header is newly executed as separate GPL research code; new game runtime imports remain0.",
+  "preserved_failure": {
+    "item": "First QA-only analytic harness import-root error",
+    "record": "independent-mikk-import-failure-r1.json",
+    "old_source_snapshot": "independent_mikk_cases-import-failed.py.txt",
+    "disposition": "Corrected evidence-script root depth, then4analytic properties pass. It failed before importing/native execution and is not a tool/product failure."
+  },
+  "remaining_limits": [
+    "No tangent candidate accepted or product GLB/runtime/old Rama acceptance edited.",
+    "No Blender/import/render or final normal-map/pose/art review in this packet.",
+    "No native online/full-game recovery or physical-GPU performance evidence.",
+    "Decompiled function metadata and synthetic passing counts do not establish numerical all-input equivalence or final art."
+  ],
+  "handoff": "Current reuse QA frozen. Root may archive/commit. Next open-art-wave role05 uses only its newly assigned evidence/test paths and separate contracts."
+}

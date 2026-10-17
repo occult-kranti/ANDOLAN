@@ -8,6 +8,12 @@ The active track is **YUGA native**, an original mythology-inspired third-person
 
 The next production pass uses [fifteen rotating specialist roles](../games/yuga-native/docs/PRODUCTION_SQUADS.md) and [P0–P6 quality gates](../games/yuga-native/docs/DEADLOCK_QUALITY_TARGET.md). Start with the [quality-pass handoff](../games/yuga-native/docs/RAMA_QUALITY_MILESTONE.md) for current integration, asset dependencies and exact source evidence. Component tests and staged art do not qualify the published preview or close native online/full-game gates.
 
+The [reuse guide](../games/yuga-native/docs/REUSE_ADOPTION_GUIDE.md) connects
+selected books, five open game repositories, REA/forks and an actually adopted
+MikkTSpace authoring tool to the [next fifteen implementation assignments](../games/yuga-native/docs/OPEN_ART_WAVE.md).
+The strict tangent-only replacement was refused on the current hero; safe
+geometry/UV authoring work and open-material candidates have separate evidence.
+
 **Download:** [Rama hero preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17) for Linux or Windows. Public file hashes, ZIP contents and both videos are verified in the [publication receipt](../games/yuga-native/docs/evidence/rama-hero/published/REVIEW.md). Linux execution was reviewed; Windows remains unexecuted.
 
 **Play:** choose **Bow training** or **Explore Confluence**. LMB draws/shoots; Q pierces, E steps, C places a protective field and X fires three paced arrows. R reloads; F/G fly and grapple. F3 opens Rama’s guide, F2 opens Help/remapping, Escape pauses, and F5 resets practice. Enemy siege blasts damage Rama; defeat respawns him after three simulation seconds. Ordinary troops target other troops. Ground casts still use planar receivers.

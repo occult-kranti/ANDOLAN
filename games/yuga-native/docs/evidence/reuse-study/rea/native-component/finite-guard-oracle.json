@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "valid_triangle",
+      "native_return": 0,
+      "expected_return": 0,
+      "passed": true
+    },
+    {
+      "name": "nan_position",
+      "native_return": 2,
+      "expected_return": 2,
+      "passed": true
+    },
+    {
+      "name": "positive_inf_position",
+      "native_return": 2,
+      "expected_return": 2,
+      "passed": true
+    },
+    {
+      "name": "nan_normal",
+      "native_return": 2,
+      "expected_return": 2,
+      "passed": true
+    },
+    {
+      "name": "nan_uv",
+      "native_return": 2,
+      "expected_return": 2,
+      "passed": true
+    },
+    {
+      "name": "ieee_nan_maxfloat_less_abs_is_false",
+      "passed": true,
+      "rendered_predicate_result": false,
+      "scope": "Predicate-level explanation for why this decompiler text alone cannot certify native isfinite behavior."
+    },
+    {
+      "name": "binary_unchanged",
+      "passed": true
+    }
+  ],
+  "binary_sha256": "0f038e6f83f5fce5e10d0b8c14028f96ed7368229c59bded44a2512dda91bb4a",
+  "bridge_source_sha256": "72cb7c7d5cc4df378ae95362b0ad29e611c44cd301c13e901fa8355b8240a362",
+  "target_executed": true,
+  "execution_scope": "Five safe fixed-size ctypes calls into the reviewed authoring component; all buffers fully allocated. This is separate from the static inspector which did not execute its input.",
+  "finding": "Actual NaN/Inf rejection is observed. The selected decompiler text lacks an explicit unordered/NaN branch in its max-float predicate; preserve assembly and this counterexample rather than assuming source-equivalent pseudocode.",
+  "limits": [
+    "No arbitrary invalid pointers or caller-buffer underallocation used.",
+    "No all-input semantic equivalence or full Mikk numerical validation established.",
+    "No game runtime or art promoted."
+  ]
+}
