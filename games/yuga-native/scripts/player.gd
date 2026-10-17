@@ -4,6 +4,10 @@ extends CharacterBody3D
 signal fired(origin: Vector3, direction: Vector3, empowered: bool)
 signal pulse(origin: Vector3)
 signal changed
+signal traversal_event(kind: String, position: Vector3)
+
+const TraversalController = preload("res://scripts/player_traversal.gd")
+const TraversalPose = preload("res://scripts/traversal_pose.gd")
 
 const HERO_PATH := "res://assets/heroes/rama-production.glb"
 const SPEED := 6.0
@@ -35,6 +39,9 @@ var shots_fired := 0
 var jump_count := 0
 var model_ready := false
 var current_speed := 0.0
+var traversal = TraversalController.new()
+var traversal_pose: SkeletonModifier3D
+var last_finite_position := Vector3.ZERO
 
 func _ready() -> void:
 	collision_layer = 2
@@ -63,6 +70,10 @@ func _ready() -> void:
 			animator.speed_scale = 1.0
 			model_ready = clips.has("idle") and clips.has("run") and clips.has("fire")
 			_play("idle", 0.0)
+		traversal_pose = TraversalPose.new()
+		if not traversal_pose.configure(visual, animator):
+			traversal_pose.free()
+			traversal_pose = null
 	else:
 		push_error("Required skinned Rama GLB is missing: " + HERO_PATH)
 	visual.rotation.y = PI
@@ -91,6 +102,36 @@ func _ready() -> void:
 	spring.add_child(camera)
 	camera.current = true
 	_update_camera()
+	traversal.initialize(self)
+	last_finite_position = global_position
+	if not get_window().focus_exited.is_connected(_on_focus_lost):
+		get_window().focus_exited.connect(_on_focus_lost)
+
+func configure_traversal(anchors: Array, bounds: AABB) -> bool:
+	return traversal.configure(anchors, bounds)
+
+func toggle_flight() -> bool:
+	return traversal.toggle_flight()
+
+func try_grapple() -> bool:
+	return traversal.try_grapple()
+
+func cancel_traversal(reason := "cancelled") -> void:
+	traversal.cancel(reason)
+	if is_instance_valid(traversal_pose):
+		traversal_pose.cancel()
+
+func traversal_report() -> Dictionary:
+	var result: Dictionary = traversal.report()
+	result["pose"] = traversal_pose.diagnostics() if is_instance_valid(traversal_pose) else {}
+	return result
+
+func _on_focus_lost() -> void:
+	cancel_traversal("Window focus lost")
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PAUSED and is_instance_valid(traversal):
+		cancel_traversal("Paused")
 
 func _find_animation(node: Node) -> AnimationPlayer:
 	if node is AnimationPlayer:
@@ -105,16 +146,32 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not active or get_tree().paused:
 		return
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		if not event.relative.is_finite() or not is_finite(sensitivity):
+			return
 		yaw -= event.relative.x * sensitivity
 		pitch -= event.relative.y * sensitivity * (-1.0 if invert_y else 1.0)
 		pitch = clampf(pitch, -0.85, 0.6)
 		_update_camera()
 
 func _update_camera() -> void:
+	if not is_finite(yaw) or not is_finite(pitch):
+		yaw = 0.0
+		pitch = -0.10
 	pivot.rotation = Vector3(pitch, yaw, 0)
 
 func _physics_process(delta: float) -> void:
 	if not active:
+		if traversal.mode != "ground":
+			cancel_traversal("Player inactive")
+		return
+	if not is_finite(delta) or delta <= 0 or delta > 0.1:
+		cancel_traversal("Invalid physics step")
+		return
+	if not global_position.is_finite() or not velocity.is_finite() or not is_finite(yaw) or not is_finite(pitch):
+		if not global_position.is_finite():
+			global_position = last_finite_position
+		cancel_traversal("Invalid movement state")
+		_update_camera()
 		return
 	fire_remaining = maxf(0, fire_remaining - delta)
 	pulse_remaining = maxf(0, pulse_remaining - delta)
@@ -128,13 +185,16 @@ func _physics_process(delta: float) -> void:
 	var move_input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var desired := Basis(Vector3.UP, yaw) * Vector3(move_input.x, 0, move_input.y)
 	var speed := SPRINT_SPEED if Input.is_action_pressed("sprint") else SPEED
-	if Input.is_action_just_pressed("dash") and dash_remaining <= 0:
+	var traversal_owns_motion: bool = traversal.step(delta, desired)
+	if not traversal_owns_motion and Input.is_action_just_pressed("dash") and dash_remaining <= 0:
 		dash_direction = desired.normalized() if desired.length_squared() > 0.01 else -pivot.global_basis.z
 		dash_direction.y = 0
 		dash_direction = dash_direction.normalized()
 		dash_time = 0.18
 		dash_remaining = 5.0
-	if dash_time > 0:
+	if traversal_owns_motion:
+		pass
+	elif dash_time > 0:
 		dash_time = maxf(0, dash_time - delta)
 		velocity.x = dash_direction.x * 21.0
 		velocity.z = dash_direction.z * 21.0
@@ -142,14 +202,19 @@ func _physics_process(delta: float) -> void:
 		var accel := 38.0 if is_on_floor() else 12.0
 		velocity.x = move_toward(velocity.x, desired.x * speed, accel * delta)
 		velocity.z = move_toward(velocity.z, desired.z * speed, accel * delta)
-	if is_on_floor():
+	if traversal_owns_motion:
+		pass
+	elif is_on_floor():
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = 7.2
 			jump_count += 1
 			_play("jump", 0.12)
 	else:
 		velocity.y -= 18.0 * delta
+	traversal.limit_to_bounds(delta)
 	move_and_slide()
+	last_finite_position = global_position
+	traversal.after_step()
 	current_speed = Vector2(velocity.x, velocity.z).length()
 	if Input.is_action_just_pressed("reload"):
 		start_reload()
@@ -165,6 +230,9 @@ func _physics_process(delta: float) -> void:
 	forward.y = 0
 	if action_time > 0:
 		_rotate_visual(forward, delta * 16.0)
+	elif traversal.mode in ["flight", "grapple"]:
+		_rotate_visual(forward, delta * 10.0)
+		_play("idle", 0.18)
 	elif not is_on_floor():
 		_play("jump", 0.14)
 	elif current_speed > 0.15:
@@ -176,6 +244,8 @@ func _physics_process(delta: float) -> void:
 		_play("idle", 0.20)
 		if animator:
 			animator.speed_scale = 1.0
+	if is_instance_valid(traversal_pose):
+		traversal_pose.set_state(traversal.mode, velocity.length(), velocity.y, delta, 1.0 if action_time > 0 else 0.0)
 	if global_position.y < -8:
 		reset()
 
@@ -225,6 +295,7 @@ func start_reload() -> bool:
 	return true
 
 func reset() -> void:
+	cancel_traversal("Reset")
 	position = Vector3(0, 0.05, 12)
 	velocity = Vector3.ZERO
 	yaw = 0
@@ -241,4 +312,6 @@ func reset() -> void:
 	visual.rotation.y = PI
 	_update_camera()
 	_play("idle", 0.12)
+	traversal.reset()
+	last_finite_position = global_position
 	changed.emit()
