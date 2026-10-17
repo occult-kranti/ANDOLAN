@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "id": "original-native-lane-army",
+  "content_origin": "Original procedural geometry, materials, articulated animation and deterministic lane simulation authored for YUGA. No commercial game models, textures, animation data, code or recordings are included by these files.",
+  "source_files": [
+    {
+      "path": "scripts/lane_army.gd",
+      "sha256": "5368cd0870ddb27c07b4c8563d331f758001eccacfa3ff0c70e05b5d93eaa85a"
+    },
+    {
+      "path": "scripts/lane_minion.gd",
+      "sha256": "897c189481e1f1b53da7a0361182777cee5da62d0586e7a3bc3bd49f0b096410"
+    },
+    {
+      "path": "scripts/lane_unit_art.gd",
+      "sha256": "63f9b8834688a567debab0d6603250eaf85fb3cae6918f938be519190043c3dc"
+    },
+    {
+      "path": "tests/lane_army_cases.gd",
+      "sha256": "7f1028ff559306f45a228e2eaa329f785072ffaaed427b1ca4ff0840f52d4fd7"
+    },
+    {
+      "path": "assets/world/confluence-map.json",
+      "sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c"
+    }
+  ],
+  "art": {
+    "generator": "scripts/lane_unit_art.gd",
+    "roles": [
+      "spearman",
+      "bow_guard",
+      "commander"
+    ],
+    "visual_direction": "Fantasy ancient infantry: wrapped cloth, quilted cuirass, dhoti silhouette, spears and round shields, bows and quivers, crowned banner commander. Warm sun and cool moon team palettes.",
+    "animation": "Original deterministic joint poses for walk, aim, windup, attack, hit, fall and banner motion; shared meshes/materials and reused arrow geometry.",
+    "historical_claim": "Stylized invented costumes, not a reconstruction of one historical army.",
+    "quality_limit": "Procedural prototype art; does not establish commercial hero-shooter visual parity."
+  },
+  "mechanics": {
+    "step_seconds": 0.05,
+    "target_decision_seconds": 0.2,
+    "wave_interval_seconds": 30,
+    "initial_units": 30,
+    "alive_cap": 72,
+    "corpse_cap": 24,
+    "unit_node_cap": 96,
+    "attack_intent_cap": 72,
+    "overflow": "Defer whole mirrored five-unit team pairs; never spawn a partial team. Retire oldest corpses when necessary.",
+    "reward": "Only a confirmed final player hit on a Moon unit grants gold, once. Army kills and assists do not grant gold.",
+    "scope": "Offline opposing armies attack each other and cores; they do not damage the player. No live network integration."
+  },
+  "consulted_sources": [
+    {
+      "title": "Godot navigation demo character",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-demo-projects/master/3d/navigation/character.gd",
+      "sha256": "aecf6d5d63a302b53cf6677807040e554e5fecde1a5a02851cb0caadf14f3495",
+      "application": "Read fixed physics update and next-path orientation approach; implementation here instead uses original fixed polylines. No source copied."
+    },
+    {
+      "title": "Game Programming Patterns \u2014 Game Loop",
+      "url": "https://raw.githubusercontent.com/munificent/game-programming-patterns/master/book/game-loop.markdown",
+      "sha256": "79693a60713c71b1e0e9a66a1f254325449f66ff8ed7f67444aa70a9d0f2b465",
+      "application": "Fixed simulation timestep separated from interpolated visuals."
+    },
+    {
+      "title": "Game Programming Patterns \u2014 Object Pool",
+      "url": "https://raw.githubusercontent.com/munificent/game-programming-patterns/master/book/object-pool.markdown",
+      "sha256": "275c403ebb947627e64280ed23486f3f610b6d2076affc3d8379b2df104b256d",
+      "application": "Explicit capacity and overflow policy; cleanup clears pending actions and retained unit state. Unit nodes are bounded and destroyed, not a reused object pool."
+    },
+    {
+      "title": "Game Programming Patterns \u2014 Spatial Partition",
+      "url": "https://raw.githubusercontent.com/munificent/game-programming-patterns/master/book/spatial-partition.markdown",
+      "sha256": "cabe529bc5d1a1b464c7ac1207f30f74ea366dbdbd8a86a36203d29a9d1a7581",
+      "application": "Per-lane target buckets and a local spatial grid for separation."
+    }
+  ],
+  "validation": {
+    "owner_report": "tests/evidence/lane-army-cases.json",
+    "checks_passed": 21,
+    "simulated_seconds": 1200,
+    "ticks": 24000,
+    "command": "godot --headless --path games/yuga-native --script res://tests/lane_army_cases.gd -- --report=/tmp/yuga-lane-army-cases.json",
+    "interpretation": "Deterministic simulation and finite-articulation tests. This is not a rendered performance benchmark, network test or visual quality approval. Symmetric soak contests all three lanes; separate seeded arrival fixtures exercise core damage."
+  }
+}
