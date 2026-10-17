@@ -14,6 +14,8 @@
 
 These are supporting prototype tasks, not substitutes for the dependency-ready production tasks in `ROADMAP_BACKLOG.json`. Round 1 fixes interfaces and failure cases; round 2 implements; round 3 challenges the integrated result. A defect triggers a bounded correction and rerun. The root integrator owns source freeze, roadmap, package and release evidence.
 
+For the bounded offline prototype, SIEGE-01, SIEGE-03, SIEGE-04 and SIEGE-05 are complete with source-pinned evidence in the backlog. SIEGE-02 remains in progress: close continuous vehicle motion/contact and final materials require further review. No FG production gate is closed by these supporting statuses; public-release verification remains separate.
+
 ## Gameplay contract
 
 Ordinary practice retains its initial thirty soldiers. A cannon pair can reinforce each lane on every third wave; a royal-chariot pair can reinforce the centre on every fifth. Each pair must fit both teams' spawn clearance and the global capacity. A rejected pair does not produce a one-sided reinforcement. The existing bounds remain 72 live units, 24 corpses, 96 total units and 72 pending attacks, with a separate cap of 32 pending siege attacks.
@@ -44,10 +46,14 @@ Review the estimate after the first accepted hero and arena benchmark. Record ac
 
 ## Evidence and current status
 
-The implementation checkpoint is `9e8f54e72f6388eebf329003f4879c31793ba1dd`; [native branch CI passed](https://github.com/occult-kranti/ANDOLAN/actions/runs/39009864974). The repeated cloud setup passed all 27 report files and 225 browser-authority tests; [exact summary](evidence/siege-setup/summary.json). New direct gates passed: combat 31, integrated poses 27, vehicle art 48, effects 63, UI 25 and release counterexamples 74. These checks have distinct scopes and are not a single visual score.
+The runtime checkpoint is `9e8f54e72f6388eebf329003f4879c31793ba1dd`; [native branch CI passed](https://github.com/occult-kranti/ANDOLAN/actions/runs/39009864974). The repeated cloud setup passed all 27 report files and 225 browser-authority tests; [exact summary](evidence/siege-setup/summary.json). New direct gates passed: combat 31, integrated poses 27, vehicle art 48, effects 63 and UI 25. The later [release counterexample suite](evidence/siege-integration/release-gates-display-fix.json) passes 78 cases, including the display-state fixes. These checks have distinct scopes and are not a single visual score.
 
 [Independent siege QA](evidence/siege-qa/REVIEW.md) records 24,000 advancing simulation steps (20 simulated minutes), 556 windups and 537 impacts, all lanes fighting, and bounded lifetimes. Tests exposed and corrected overlapping shared-endpoint spawns, same-tick queued audio escaping pause, and release-record validation gaps. Retained failed runs distinguish actual defects from source edits made during a test.
 
 The [r2 siege render](evidence/siege-render-r2/SIEGE-RENDER-REVIEW.md) passed capture validation: 180 frames over 360 advancing physics ticks, covering six seconds at 30 playback frames per second. The first take was rejected for camera clipping. The bounded review of two actual r2 stills retains overlapping telegraph-ring clarity and limited surface/detail quality as open concerns. This silent capture does not establish audio listening quality, measured hardware frame rate or the final graphics target.
 
-Exported application controls and public package verification remain in progress. The previous public release remains the verified download until the new release is independently checked.
+The [exported Linux window review](evidence/siege-window-r2/REVIEW.md) passes the bounded practice flow on package source `9520d616c88d058cc6943ddc3017303eba68c026`, with unchanged runtime. [CI also passed that exact source](https://github.com/occult-kranti/ANDOLAN/actions/runs/39010810923). The extracted portable application ran at 960 × 600 using Forward+ on llvmpipe. Actual keyboard/mouse input entered the drill, restarted it, saved volume 0.0, restored ordinary practice with F5, opened/dismissed Help, wrapped keyboard focus after the renderer settled, and returned to the title. The process log contains no engine/script errors. Windows archives/resources validate, but Windows execution remains untested.
+
+Follow-up work remains explicit: distinguish overlapping warning/map rings, correct the compact Help footer's outdated “F5 respawn” wording, and review close continuous vehicle motion and materials. The footer wording does not describe the actual verified round-reset behavior. The window run used Dummy audio and does not establish listening quality; delivered movement/fire inputs did not isolate new locomotion or damage outcomes.
+
+Public-download verification remains pending. The previous public release remains the verified download until the new release is independently checked.

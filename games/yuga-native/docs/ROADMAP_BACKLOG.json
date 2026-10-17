@@ -2119,12 +2119,33 @@
     {
       "id": "SIEGE-01",
       "title": "Siege combat and mirrored reinforcements",
-      "status": "in_progress",
+      "status": "complete",
       "supports": [
         "FG08-T01",
         "FG13-T01"
       ],
-      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md",
+      "owner": "Native gameplay",
+      "acceptance_scope": "The bounded offline siege simulation passes combat, symmetry, lifetime, cancellation, origin and regular-reset checks; production authority and complete army art remain open.",
+      "source_commit": "9e8f54e72f6388eebf329003f4879c31793ba1dd",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/siege-qa/army-final.json",
+          "sha256": "bdfacf94fa2dee1f16b33990aa834ed5935fe135857934836012a6eb08b13da6",
+          "scope": "31 real-simulation checks, including fixed-target AoE, wall and death cancellation, mirrored reinforcement, exact-once rewards, queue caps and reset."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-qa/lane-army-regression-final.json",
+          "sha256": "0c0cc38700c4c9a318e4bad3292f6191dafe02f3213ea3c23e6490b0bd966671",
+          "scope": "21 existing regression checks with a 20-simulated-minute advancing soak and bounded lifetimes."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-qa/pose-final.json",
+          "sha256": "fa7dd8f8ed6ac68e98a15cc501a3b61a04e371082413bebb8ca5807a6c229c48",
+          "scope": "27 integrated articulation checks, including emitted weapon origins under translated/rotated parents."
+        }
+      ],
+      "next_action": "Retain these offline contracts while the production authority/economy tasks proceed; do not treat local siege completion as FG08-T01 acceptance."
     },
     {
       "id": "SIEGE-02",
@@ -2134,37 +2155,153 @@
         "FG08-T01",
         "FG13-T01"
       ],
-      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md",
+      "owner": "Vehicle art and technical animation",
+      "acceptance_scope": "Original vehicles, finite articulation and broad prototype framing are verified; close continuous animation/contact and final materials are not accepted.",
+      "source_commit": "9e8f54e72f6388eebf329003f4879c31793ba1dd",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/siege-setup/vehicle-art.json",
+          "sha256": "c3075a459513ac8871df4ea39ce2af89b01afd82a62b6e6e2e1563e0853f61bb",
+          "scope": "48 structural and pose checks for original vehicle art."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-qa/pose-final.json",
+          "sha256": "fa7dd8f8ed6ac68e98a15cc501a3b61a04e371082413bebb8ca5807a6c229c48",
+          "scope": "27 integrated vehicle articulation cases; numeric evidence does not establish continuous appearance."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-render-r2/SIEGE-RENDER-REVIEW.md",
+          "sha256": "73ac0546f9f4f2e1f1ed1ebc1d0b39393d68f4963931f5ee197e392340fe9689",
+          "scope": "Bounded actual-still framing review; simplified materials, distant details and continuous contact/attack phases remain unapproved."
+        }
+      ],
+      "next_action": "Capture close continuous cannon/chariot locomotion, wheel contact, recoil, hit, defeat and reset for both teams; revise mechanical detail, surfaces and contact against the approved visual target before closing this packet."
     },
     {
       "id": "SIEGE-03",
       "title": "Bounded siege effects and original sound",
-      "status": "in_progress",
+      "status": "complete",
       "supports": [
         "FG08-T01",
         "FG13-T01"
       ],
-      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md",
+      "owner": "Siege effects and audio",
+      "acceptance_scope": "Bounded offline telegraph/impact presentation, original cue assets, mute, cancellation and pause/resume lifecycle are verified. No audio-listening or final crowd-readability claim.",
+      "source_commit": "9e8f54e72f6388eebf329003f4879c31793ba1dd",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/siege-integration/effects-normal.json",
+          "sha256": "ebff9d01ef0d6526be8b0a9043dcb986d15033efc4b8637fabc84f0497577e25",
+          "scope": "63 effects/audio cases at normal clock, including pause/reset/mute/cancel and bounded pools."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-integration/effects-fixed60.json",
+          "sha256": "ebff9d01ef0d6526be8b0a9043dcb986d15033efc4b8637fabc84f0497577e25",
+          "scope": "Same 63 effects cases at fixed 60 Hz."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-integration/audio.json",
+          "sha256": "2b85666f131907dc229a9d5dc15d90658671c335c64ef1d203e553fd2ef32b4e",
+          "scope": "Original deterministic cue generation and four audio assets verified."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-window-r2/REVIEW.md",
+          "sha256": "2d6c364678b72e57870b9a05bfb73aa63b6e2c8c3cf072cfa4f8a1cba1c253e1",
+          "scope": "Actual packaged Linux mute/restart flow retained visible units/effects; Dummy audio means no listening acceptance."
+        }
+      ],
+      "next_action": "Separate overlapping map and attack rings with threat priority and distinguishable shapes; review moving crowded fights with sound muted and enabled, then commission actual audio listening review."
     },
     {
       "id": "SIEGE-04",
       "title": "Immediate siege practice and accessible controls",
-      "status": "in_progress",
+      "status": "complete",
       "supports": [
         "FG08-T01",
         "FG13-T01"
       ],
-      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md",
+      "owner": "World UX and integration",
+      "acceptance_scope": "Bounded local Linux practice entry/reset/help/focus/mute/return flow and headless two-size layout are accepted; native multiplayer and Windows execution are excluded.",
+      "source_commit": "9e8f54e72f6388eebf329003f4879c31793ba1dd",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/siege-integration/ui.json",
+          "sha256": "924e5e964b8c007dd1fda57a087b16e215068f44d9f16fcbcdedd2dba68c0ab4",
+          "scope": "25 real-scene UI cases, injected forward/reverse focus, two logical viewports, rejected-entry preservation and presentation lifecycle."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-integration/world-scene.json",
+          "sha256": "f4fe6c535620637b6c69f8574b8bb097b36047c57d3543c03dbfabacba4b7b5e",
+          "scope": "27 real world physics/layout and input lifecycle checks."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-integration/world-flow.json",
+          "sha256": "c77042b548fad0e72f1ffc1ffa3e4f39601a852817e974773c42320cda9c6694",
+          "scope": "13 transition checks covering three clean courtyard/world/return cycles."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-window-r2/REVIEW.md",
+          "sha256": "2d6c364678b72e57870b9a05bfb73aa63b6e2c8c3cf072cfa4f8a1cba1c253e1",
+          "scope": "Actual extracted Linux package, 960x600 window, keyboard/mouse drill entry, restart, saved mute, F5 normal reset, help, settled Tab wrap and return."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-window-r2/input-review.json",
+          "sha256": "896c1fa996b1842fa94a3d1837fb6c11c4282913340aaffb6cb3eee4e3d8076b",
+          "scope": "Exact executable/PCK and 13 screenshot hashes plus XTest input order; intermediate focus frames are not asserted final states."
+        }
+      ],
+      "next_action": "Correct the compact Help footer from F5 respawn to the actual regular-round reset wording; retain current bindings and repeat the focused Help/reset/focus checks after that copy change.",
+      "package_commit": "9520d616c88d058cc6943ddc3017303eba68c026"
     },
     {
       "id": "SIEGE-05",
       "title": "Independent siege combat and lifecycle QA",
-      "status": "in_progress",
+      "status": "complete",
       "supports": [
         "FG08-T01",
         "FG13-T01"
       ],
-      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md",
+      "owner": "Independent QA and release integration",
+      "acceptance_scope": "Independent local combat/lifecycle/pose, render-source identity and Linux package flow verification are complete for this offline prototype. Public-download verification remains a separate release gate.",
+      "source_commit": "9e8f54e72f6388eebf329003f4879c31793ba1dd",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/siege-qa/REVIEW.md",
+          "sha256": "f71c8bb8b34aff4643ea2a4285450e7e9a32ef49f66244dd8de83bf42025dab0",
+          "scope": "Independent three-round combat/articulation review with exact executed scopes, rejected attempts and a 20-minute simulation soak."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-setup/summary.json",
+          "sha256": "5116b8da1c190dd7fe84ce6baf060b81ef802746fc8a8b1937ca4eac2357be79",
+          "scope": "Complete setup passed 27 report files and 225 TypeScript tests on runtime checkpoint 9e8f54e."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-integration/release-gates-display-fix.json",
+          "sha256": "4922047cd2de8b29df86325091c0ed8861f237d2e74987ccece18b8fd354dfe3",
+          "scope": "78 release-helper counterexamples and valid controls pass after display-state validation fixes."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-render-r2/siege-render-review.json",
+          "sha256": "9d37773310c77fa362161ceb2a97503800e73446fc73791a69aef0d3d8e3b5b3",
+          "scope": "180 actual Forward+ frames, 360 advancing physics ticks and source-pinned attack/movement ledger."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-window-r2/export-capture-verification.json",
+          "sha256": "fbcd59b50c52d1db3fd60287e68eca462a72985061384669d497da76e08583d9",
+          "scope": "Both fresh capture archives decoded and matched against the actual exported source inventory."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/siege-window-r2/REVIEW.md",
+          "sha256": "2d6c364678b72e57870b9a05bfb73aa63b6e2c8c3cf072cfa4f8a1cba1c253e1",
+          "scope": "Actual local Linux package input review; excludes Windows, hardware performance and unisolated movement/fire outcomes."
+        }
+      ],
+      "next_action": "Verify every public release download and execute the exact published Linux artifact after publication; retain Windows execution, physical-GPU profiling and detailed visual review as open gates.",
+      "package_commit": "9520d616c88d058cc6943ddc3017303eba68c026"
     }
   ]
 }
