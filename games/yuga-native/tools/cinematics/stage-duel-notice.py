@@ -32,7 +32,8 @@ def document():
         'anatomy':'Existing MakeHuman CC0 anatomy, rig and skin weights from the original YUGA Rama production asset. See MAKEHUMAN-ASSET-LICENSE.md and RAMA-PRODUCTION-PROVENANCE.json.',
         'new_work':'Original sentinel costume, crown and armour; film-specific authored/IK animation libraries; deterministic effects; timeline, camera direction and captions.',
         'audio':'Original deterministic mathematical synthesis. No downloaded recordings, samples, voices or commercial game music.',
-        'unchanged_rama_sha256':record(ROOT/'assets/heroes/rama-production.glb')['sha256'],
+        'runtime_rama_sha256':record(ROOT/'assets/heroes/rama-production.glb')['sha256'],
+        'rama_revision_scope':'Current playable film resource; historical rendered films retain their own source hashes. Surface reconstruction and rig-preservation evidence are in RAMA-PRODUCTION-PROVENANCE.json.',
         'source_records':[record(ROOT/'art/cinematics/actor-manifest.json'),record(ROOT/'art/cinematics/audio-manifest.json')],
         'assets':[record(p) for p in paths]}
 
