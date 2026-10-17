@@ -16,19 +16,21 @@ would need to demonstrate.
 The production target is now a downloadable PC game. Browser compatibility is
 optional. This branch establishes the native engine, original 3D environment,
 asset import and analysis toolchain. **The current native build contains local
-training, a combat film and offline three-lane army practice with flight and grappling. Online native matches and the
+training, a combat film and offline three-lane army practice with flight, grappling and siege vehicles. Online native matches and the
 full production visual target remain open.** The existing browser game remains
 on `game/yuga-confluence`.
 
-[Download the traversal and lane-army preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17)
-for Linux or Windows. All 46 public release files pass checksum verification;
-the exact public Linux package was executed; Windows is archive-validated but
-unexecuted. See the
-[milestone verification](docs/TRAVERSAL_ARMY_VERIFICATION.md),
-[actual rendered review](docs/evidence/traversal-armies-render-r2/REVIEW.md),
-[Linux window review](docs/evidence/traversal-armies-window-r2/REVIEW.md) and
-[public package verification](docs/evidence/traversal-armies-published/REVIEW.md).
-Earlier map and courtyard previews remain available in Releases.
+[Download the siege and lane-army preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-siege)
+for Linux or Windows, tagged at `35b20429d2b34f06f2907d5739cf4877aac597ab`.
+All 62 public release assets pass independent checksum verification. The exact
+downloaded Linux package passed actual title/world entry, keyboard siege entry,
+F5 ordinary reset and title return. This bounded repeat is separate from the
+broader local review. Windows is archive/resource-validated and unexecuted.
+See the [milestone verification](docs/SIEGE_MILESTONE.md),
+[actual rendered review](docs/evidence/siege-render-r2/SIEGE-RENDER-REVIEW.md),
+[local Linux window review](docs/evidence/siege-window-r2/REVIEW.md) and
+[public package verification](docs/evidence/siege-published/REVIEW.md).
+Earlier traversal, cinematic, map and courtyard archives remain historical releases.
 
 The current [siege milestone](docs/SIEGE_MILESTONE.md) adds cannon carts, royal chariots and immediate Siege practice. It also records the five parallel tasks and a staffing-dependent estimate for reaching the concept-art target; completion and release evidence are tracked there.
 
@@ -63,8 +65,8 @@ flight and grappling use capsule collision and bounded speeds. Day/night lightin
 animated coast/swamp water, an overview and travel shortcuts remain available.
 
 Paired 30-second waves of spear soldiers, bow guards and banner commanders fight,
-threaten local cores and grant once-only player last-hit gold. In the current
-source build, mirrored cannon carts can reinforce each lane every third wave;
+threaten local cores and grant once-only player last-hit gold. Mirrored cannon
+carts can reinforce each lane every third wave;
 royal chariots can reinforce the centre every fifth. Both sides must have spawn
 clearance and capacity for a reinforcement pair to appear.
 

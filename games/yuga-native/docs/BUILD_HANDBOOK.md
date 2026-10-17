@@ -6,9 +6,9 @@ All commands below run from the repository root, normally `/workspace/ANDOLAN`. 
 
 ## 1. What exists, and what we are building
 
-The published [traversal and army preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17) is source `395986a512ecabe874710048a19bd0fdd0a71f89`. All 46 public assets were independently downloaded and checked; the exact public Linux package was executed. Windows was packaged/validated but not executed. See [public release evidence](evidence/traversal-armies-published/REVIEW.md) for hashes and the precise tested flows.
+The published [siege and army preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-siege) is source `35b20429d2b34f06f2907d5739cf4877aac597ab`. All 62 public assets were independently downloaded and checked. The exact downloaded Linux package passed a bounded actual-window repeat of title/world entry, keyboard siege entry, F5 ordinary reset and title return. Windows was packaged/validated but not executed. See [public release evidence](evidence/siege-published/REVIEW.md) for hashes and precise tested flows. The captured runtime is `9e8f54e`; the earlier local package is `9520d616`. Nine imported scene resources differ between local/public packs, while all 227 tagged runtime source files match. This establishes source identity and the tested public behavior, not binary or visual equivalence.
 
-The playable native build contains Rama's courtyard training, a 24-second two-actor combat film, and offline Confluence practice: a 140 × 260 m three-lane city, eight landing decks, ten tether rings, finite-energy flight/grapple, local armies, local core outcomes, day/night lighting, original sound and persistent keyboard controls. It is a prototype with bounded verified behavior. The release's six-second traversal video is silent; the separate film has audio.
+The playable native build contains Rama's courtyard training, a 24-second two-actor combat film, and offline Confluence practice: a 140 × 260 m three-lane city, eight landing decks, ten tether rings, finite-energy flight/grapple, five-role local armies, cannon/chariot drill, local core outcomes, day/night lighting, original sound and persistent keyboard controls. It is a prototype with bounded verified behavior. The six-second traversal and siege videos are silent; the separate film has audio.
 
 The production target remains an original **6v6, 14-hero, three-lane, 18-minute** competitive game with high-quality characters, motion and operated online services. Native online matches, the full native roster, production art, human balance/accessibility studies, Windows execution and physical-GPU profiling remain open. Software Vulkan captures and simulated FPS do not establish commercial-game parity or hardware performance.
 
@@ -81,7 +81,7 @@ For a local machine without working Vulkan, explicitly choose `--rendering-metho
 | Map geometry and placement | `art/world/confluence-map.json` → `assets/world/confluence-map.json` via `tools/stage-world.py` |
 | Landing decks/rings | `scripts/traversal_landmarks.gd` plus manifest `traversal` section |
 | Lighting, water, paving | `scripts/world_lighting.gd`, `scripts/world_water.gdshader`, `scripts/world_ground.gdshader`, `scripts/world_ground_common.gdshaderinc` |
-| Music/cue scheduling and synthesis | `scripts/traversal_audio.gd`, `tools/audio/build-traversal-audio.py`, `art/audio/traversal-audio-manifest.json` |
+| Music/cue scheduling and synthesis | `scripts/traversal_audio.gd`, `scripts/siege_effects.gd`, `tools/audio/build-traversal-audio.py`, `tools/audio/build-siege-audio.py`; their audio manifests |
 | Rama/courtyard art | `art/production/build_rama.py`, `art/build_courtyard.py`; validators beside generators |
 | Modular world art | `art/world/build-architecture.py`, `build-nature.py`, their `*-manifest.json` |
 | Combat film script and director | `assets/cinematics/confluence-duel.json`, `scripts/combat_film.gd` |
@@ -89,7 +89,7 @@ For a local machine without working Vulkan, explicitly choose `--rendering-metho
 | Native transport/interpolation study | `scripts/arena_client.gd`, `scripts/arena_interpolator.gd`; not wired into an online rendered match |
 | Authoritative browser rules | Repository `games/yuga/shared/{types,map,heroes,simulation}.ts`, `games/yuga/server/server.ts` |
 | Build/publication | `tools/package-native.py`, `tools/release-native.py`; repository `.github/workflows/yuga-native*.yml` |
-| Current work/status | `docs/ROADMAP_BACKLOG.json`, `docs/PRODUCTION_TASK_BOARD.md`, `docs/TRAVERSAL_ARMY_VERIFICATION.md` |
+| Current work/status | `docs/ROADMAP_BACKLOG.json`, `docs/PRODUCTION_TASK_BOARD.md`, `docs/SIEGE_MILESTONE.md`, `docs/SIEGE_PRACTICE_UX.md` |
 
 ## 4. Contracts to preserve
 
@@ -99,7 +99,7 @@ Native defaults: WASD/arrows move, mouse aim, LMB fire, Space jump/ascent, Shift
 
 Map data uses metres, +Y up, base-centred props and shared +Z-forward/yaw conventions. Native camera/model orientation is a separate bridge: preserve the tested adapters rather than copying yaw blindly. Canonical native bounds are 140 × 260 m, actor x=±68/z=±128, radius 0.65 m, spawns z=±112; local core anchors z=±120. Eight copied browser SOLIDS plus eight native platform boxes define collision. Decorative meshes do not imply collision. Flight ceiling is 24 m; tether range 36 m. See manifest fields and actual tests before changing a number.
 
-Native army logic is fixed at 20 Hz, with 5 Hz target decisions, 30 s paired waves and 72-live/24-corpse/96-total caps, plus at most 72 queued attacks. Its three roles are `spearman`, `bow_guard`, `commander`. It is intentionally distinct from browser soldier/watch/minister/king, 18 s waves, contested shards and multiplayer economy. Local gold/core outcomes do not certify the complete competitive match.
+Native army logic is fixed at 20 Hz, with 5 Hz target decisions, 30 s paired waves and 72-live/24-corpse/96-total caps, plus at most 72 queued attacks and 32 pending siege attacks. Its five roles are `spearman`, `bow_guard`, `commander`, `cannon_cart` and `royal_chariot`. Initial practice has thirty infantry; mirrored cannons can reinforce each lane every third wave and chariots the centre every fifth, subject to clearance and capacity. `start_siege_drill()` validates before replacing the round with six centre-lane units; `reset()`/F5 restores ordinary waves. Committed siege events carry fixed ground points and cancellation receipts; `siege_effects.gd` presents them without applying damage. The hero has no implemented health/death receiver. Browser soldier/watch/minister/king, 18 s waves, contested shards and multiplayer economy remain separate contracts.
 
 Browser authority remains protocol 2, three heroes per team and 480 s. Production remains a versioned 6v6/1,080 s proposal. New elevation, objectives, hero selection or input rules require a shared contract migration; an offline movement feature must not silently appear as a competitive advantage.
 
@@ -132,14 +132,14 @@ python3 games/yuga-native/tools/check-roadmap.py --report "$YUGA_CHECKS/roadmap.
 
 | Changed area | Required focused checks, then integration |
 | --- | --- |
-| Input/settings/UI | `input_binding_cases.gd`; `world_flow_cases.gd`; `combat_film_audio_cases.gd` if shared reader/audio changes; actual small-window remap/pause/return |
+| Input/settings/UI | `input_binding_cases.gd`, `siege_ui_cases.gd`, `world_scene_cases.gd`, `world_flow_cases.gd`; `combat_film_audio_cases.gd` if shared reader/audio changes; actual small-window remap/pause/drill/return |
 | Player/traversal | `traversal_cases.gd`, `traversal_pose_cases.gd`, `native_acceptance.gd`, `world_scene_cases.gd`; actual motion capture |
-| Army/combat/rewards | `lane_army_cases.gd`, `projectile_cases.gd`, `traversal_army_stress.gd`; actual engagement review |
+| Army/combat/rewards | `lane_army_cases.gd`, `siege_army_cases.gd`, `siege_pose_cases.gd`, `lane_vehicle_art_cases.gd`, `projectile_cases.gd`, `traversal_army_stress.gd`; actual engagement and close continuous vehicle review |
 | Map/lighting | Python `world_map_cases.py`, `world_plan_cases.py`; Godot `world_scene_cases.gd`, `world_lighting_cases.gd`, `world_flow_cases.gd`; day/night/overview render |
-| Audio | Python `tools/audio/build-traversal-audio.py --check` using the audio venv; `traversal_audio_cases.gd` at ordinary and fixed clocks; listening reviewed separately |
+| Audio/effects | Python `tools/audio/build-traversal-audio.py --check` using the audio venv, `tools/audio/build-siege-audio.py --check`; `traversal_audio_cases.gd` and `siege_effects_cases.gd` at ordinary and fixed clocks; listening reviewed separately |
 | Film | Python `combat_script_cases.py`; Godot `combat_film_cases.gd`, `combat_film_audio_cases.gd`, `combat_motion_continuity.gd`, `duel_effects_cases.gd`; actual seek/replay and continuous render |
 | Transport/shared rules | `npm run yuga:typecheck`, `npm run yuga:test`; `tools/check-native-arena.py --engine /absolute/path/to/godot --output /tmp/NEW-native-arena` |
-| Package/release | Python `traversal_security_cases.py`, `release_traversal_cases.py`; package inspection and actual extracted-package execution |
+| Package/release | Python `traversal_security_cases.py`, `release_traversal_cases.py`, `release_siege_cases.py`; package inspection and actual extracted-package execution |
 | Roadmap/evidence | `tools/check-roadmap.py`, `tests/roadmap_cases.py`, `tools/check-evidence.py --git-ref HEAD` |
 
 GDScript names are under `games/yuga-native/tests/`; Python suite names also live there unless qualified. Most Python suites accept `--report /absolute/path.json`; `tests/roadmap_cases.py` prints JSON only, so use `python3 games/yuga-native/tests/roadmap_cases.py > "$YUGA_CHECKS/roadmap-cases.json"`. GDScript suites receive `-- --report=/absolute/path.json`. Run from the repository root. Source-rule/map tests need `npm ci`; imported-resource tests need the Godot import. Use a fresh process/report for each case; do not share writable user settings between concurrent tests.
@@ -167,7 +167,7 @@ YUGA_RUNTIME=/workspace/tooling/native-render/runtime
 LD_LIBRARY_PATH="$YUGA_RUNTIME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" VK_ICD_FILENAMES="$YUGA_RUNTIME/usr/share/vulkan/icd.d/lvp_icd.json" LP_NUM_THREADS=2 python3 games/yuga-native/tools/native-window-review.py --engine /absolute/linux-engine --pack /absolute/project.pck --output /tmp/yuga-window-NEW --xvfb "$YUGA_RUNTIME/usr/bin/Xvfb" --display :107
 ```
 
-It accepts JSON lines on stdin, for example `{"action":"capture","name":"title"}`, `{"action":"key","key":"F2"}`, and `{"action":"quit"}`. Wait for the real screen before the next event. Its exit cleanup is distinct from a crash; inspect `input-review.json` and logs. Dummy audio does not verify listening quality.
+Keep stdin interactive for the review session; closing it immediately terminates the helper. It accepts JSON lines, for example `{"action":"capture","name":"title"}`, `{"action":"key","key":"F2"}`, and `{"action":"quit"}`. Wait for the real screen before the next event, and let software-rendered focus updates settle before asserting a screenshot. Its exit cleanup is distinct from a crash; inspect `input-review.json` and logs. Dummy audio does not verify listening quality.
 
 ## 8. Package and release
 
@@ -198,6 +198,8 @@ Replace the illustrative tag value before use. Observe the actual workflow resul
 [ROADMAP_BACKLOG.json](ROADMAP_BACKLOG.json) is authoritative for dependency readiness; [the full roadmap](FULL_GAME_PRODUCTION_ROADMAP.md) defines completion. Current ready IDs are FG00-T03 (source/reuse registry), FG03-T01 (motion quality), FG02-T01/FG05-T01 (specific hero/world corrections) and FG00-T04 (rules/version contracts). Recheck `next_packets` before assigning work.
 
 The critical integration sequence remains FG00-T04 → FG04-T02/FG05-T02 (scene/entity/3D authority contract) → FG04-T03 (two rendered native clients) → FG06 full three-hero match. Offline decks do not close shared elevation; local core outcomes do not close FG06. FG01 visual targets and real hardware traces run alongside this work. Existing offline army/control evidence supports FG08/FG13 but does not close their production acceptance.
+
+For a small siege follow-up, use the supporting packets' `next_action`: SIEGE-02 needs close continuous vehicle/contact/material review; SIEGE-03 needs clearer overlapping warnings; SIEGE-04 needs Help's stale “F5 respawn” footer corrected to the actual regular-round reset. Keep these bounded improvements separate from the full-game dependency graph.
 
 Use one owner per file set. Good independent squads are player/traversal, world/UI, army/AI, art, audio and QA; reserve integration ownership for shared manifests, packaging and release. Agree API/action names/coordinates before parallel edits. Agents report after three or four rounds: inspect/contract → implement → independent test/render review → bounded correction and integration. Heavy capture/package phases use frozen source. These are bounded workers, not a permanently running swarm.
 

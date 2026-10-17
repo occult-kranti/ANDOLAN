@@ -4,9 +4,9 @@ Updated 17 October 2026. This is the short entry point for a new chat, contribut
 
 ## The current build in one minute
 
-The active production track is **YUGA native**, an original mythology-inspired third-person team game under `games/yuga-native/`, on `game/yuga-native-production`. Its current [downloadable preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17) is source **`395986a512ecabe874710048a19bd0fdd0a71f89`**. Later documentation commits do not replace that release source.
+The active production track is **YUGA native**, an original mythology-inspired third-person team game under `games/yuga-native/`, on `game/yuga-native-production`. Its current [downloadable siege preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-siege) is source **`35b20429d2b34f06f2907d5739cf4877aac597ab`**. Later documentation commits do not replace that release source.
 
-The native preview has Rama training, a separate 24-second animated duel film, and offline three-lane Confluence practice: a 140 × 260 m world, flight/grappling, animated army waves, local gold/core outcomes, original sound, day/night lighting and saved/remappable controls. Both CI workflows passed; all 46 public release assets were independently verified and the actual downloaded Linux package was exercised. [Evidence and limitations](../games/yuga-native/docs/evidence/traversal-armies-published/REVIEW.md).
+The native preview has Rama training, a separate 24-second animated duel film, and offline three-lane Confluence practice: a 140 × 260 m world, flight/grappling, five army roles including cannon carts and royal chariots, local gold/core outcomes, original sound, day/night lighting and saved/remappable controls. Press **Escape → Siege practice** for the six-unit drill; F5 restores ordinary waves. Siege blasts affect troops; native hero health/death is not implemented. Both CI workflows passed and all **62 public release assets** were independently verified. The exact downloaded Linux package passed a bounded actual-window repeat: title/world entry, keyboard drill entry, ordinary reset and title return. [Evidence and limitations](../games/yuga-native/docs/evidence/siege-published/REVIEW.md).
 
 The intended game is **6v6, fourteen heroes, three lanes and an 18-minute match**. Native online matches, the complete native hero roster, production character art/animation, Windows execution and physical-GPU performance remain open. The browser prototype has different rules. Concept paintings are art direction, not captured gameplay. No Deadlock/Overwatch/Dota 2 client binaries or commercial models were recovered here.
 
@@ -17,7 +17,7 @@ The intended game is **6v6, fourteen heroes, three lanes and an 18-minute match*
 | Build, change or test native YUGA | [Build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) | Its task-to-file and test matrices |
 | Choose the next milestone | [Production roadmap](../games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md) | [Dependency/status ledger](../games/yuga-native/docs/ROADMAP_BACKLOG.json), [design master](../games/yuga-native/docs/GAME_DESIGN_MASTER.md) |
 | Use criticism, mythology, books or open-source references | [Research brief](../games/yuga-native/docs/research/RESEARCH_BRIEF.md) | The exact source/report linked in the relevant row |
-| Verify the current feature milestone | [Traversal/army verification](../games/yuga-native/docs/TRAVERSAL_ARMY_VERIFICATION.md) | Source-pinned test reports, actual render and published-package review |
+| Verify the current feature milestone | [Siege milestone](../games/yuga-native/docs/SIEGE_MILESTONE.md) | [Practice UX](../games/yuga-native/docs/SIEGE_PRACTICE_UX.md), source-pinned tests, actual render and published-package review |
 | Work on browser YUGA | [Browser README](../games/yuga/README.md) | `games/yuga/shared/`, `client/`, `server/` and its own QA |
 | Work on the ANDOLAN protest game | [Root README](../README.md) | `apps/`, `packages/`, root `tests/` and [ANDOLAN roadmap](ROADMAP.md) |
 | Manage cloud storage or recover setup | [Workspace and cleanup guide](WORKSPACE_AND_CLEANUP.md) | Native handbook setup section and cleanup receipt |
@@ -57,6 +57,8 @@ Return: changes, source hash, executed commands/results, evidence, limits, next 
 ```
 
 The current integration bottlenecks are shared rules/elevation, two rendered native clients against authority, and accepted continuous hero motion/contact. Offline improvements provide supporting evidence; they do not close those online/production gates. Recheck the backlog's `next_packets` before assigning work.
+
+Small follow-ups are recorded under the supporting siege packets: close continuous vehicle/art review, clearer overlapping danger rings, and Help's outdated “F5 respawn” footer. Its actual F5 behavior already resets the ordinary round. Keep these separate from the full-game production gates.
 
 ## Known restoration limits
 
