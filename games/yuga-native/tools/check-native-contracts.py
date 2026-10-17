@@ -37,6 +37,10 @@ def main():
         canonical = json.dumps(profile["content_sources"], sort_keys=True, separators=(",", ":")).encode()
         check(profile["id"] + "_content_aggregate", hashlib.sha256(canonical).hexdigest() == profile["content_sha256"])
         check(profile["id"] + "_no_live_handshake_claim", profile["live_handshake"] is False)
+    check("per_profile_content_revisions", [p.get("content_revision") for p in data["profiles"]] == [1, 2, 1])
+    check("wire_versions_unchanged", data["envelope_versions"] == {key: 1 for key in ["contract", "rules", "map", "content", "replay", "input", "event", "entity"]})
+    required_native = {"games/yuga-native/" + path for path in ["scripts/lane_army.gd", "scripts/lane_minion.gd", "scripts/relay_control.gd", "scripts/player_traversal.gd", "scripts/ultimate_rules.gd", "scripts/ultimate_session.gd", "assets/design/native-ultimate-rules.json"]}
+    check("native_revision2_pins_invocation_outcomes", set(data["profiles"][1]["content_sources"]) == required_native)
     types = (ROOT / "games/yuga/shared/types.ts").read_text()
     map_text = (ROOT / "games/yuga/shared/map.ts").read_text()
     check("actual_browser_protocol_still_two", "export const YUGA_PROTOCOL = 2;" in types)

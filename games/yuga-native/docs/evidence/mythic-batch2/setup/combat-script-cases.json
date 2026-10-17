@@ -1,0 +1,242 @@
+{
+  "passed": true,
+  "scope": "Independent deterministic screenplay validation and malformed fixtures. Authored hits/health/counters are visual receipts, not gameplay damage. Native poses, runtime rejection, effects and UI are separate tests.",
+  "resources_verified": true,
+  "manifest_sha256": "6ec07cb86aa645ba23c4eec51e652bbe89ad42d0558225583f6a8dd54248af6b",
+  "test_sha256": "3c246b6c6fda6284a89d5bcb7f9a9fe67fe18c847280e0fa12622b2eb7c93c57",
+  "metrics": {
+    "actors": 2,
+    "actions": 17,
+    "cues": 10,
+    "contact_windows": 6,
+    "receipt_times": [
+      4.75,
+      8.9,
+      15.85
+    ]
+  },
+  "resources": [
+    {
+      "path": "res://assets/heroes/rama-production.glb",
+      "sha256": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc",
+      "bytes": 7901132
+    },
+    {
+      "path": "res://assets/cinematics/duel-motion-rama.tres",
+      "sha256": "3ab73222e16d6925eb972f900e385fd18d1b3df2c47a6b744663be7007f0df94",
+      "bytes": 1874926
+    },
+    {
+      "path": "res://assets/cinematics/ravana-sentinel.glb",
+      "sha256": "f00bed98cc11847da41d2f9f13ef9119e3ed983d41ca6dd7a14862a1c80672ca",
+      "bytes": 6191332
+    },
+    {
+      "path": "res://assets/cinematics/duel-motion-ravana.tres",
+      "sha256": "d0d0f3b23dff6c12bc0174f3e1cedb66475ba85c0c8e61c533800f0d0a8ea3be",
+      "bytes": 1873531
+    }
+  ],
+  "audio": {
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_width": 2,
+    "frames": 1152000,
+    "duration_seconds": 24.0,
+    "sha256": "5c35ac7fc148c2c89ef1c2f0da7dfa8059528f02787f0cc03ceea7704b98c582"
+  },
+  "checks": [
+    {
+      "name": "independent film chronology and contract",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "reject missing actor",
+      "passed": true,
+      "expected_error": "missing or duplicate actor",
+      "errors": [
+        "missing or duplicate actor",
+        "missing actor reference rama-ready-opening",
+        "missing actor reference rama-draw-opening",
+        "missing actor reference rama-release-opening",
+        "missing actor reference rama-ready-counter",
+        "missing actor reference rama-evade-wave",
+        "missing actor reference rama-ready-aim",
+        "missing actor reference rama-draw-counter",
+        "missing actor reference rama-release-counter",
+        "missing actor reference rama-resolve",
+        "missing actor reference ravana-ready-opening",
+        "missing actor reference ravana-guard",
+        "missing actor reference ravana-ready-wave",
+        "missing actor reference ravana-charge-wave",
+        "missing actor reference ravana-release-wave",
+        "missing actor reference ravana-recover-wave",
+        "missing actor reference ravana-counter-recoil",
+        "missing actor reference ravana-resolve",
+        "missing actor reference cue-rama-first-draw",
+        "missing actor reference cue-ravana-guard",
+        "missing actor reference cue-rama-first-arrow",
+        "missing actor reference cue-opening-block",
+        "missing actor reference cue-ravana-wave-warning",
+        "missing actor reference cue-ravana-wave",
+        "missing actor reference cue-rama-counter-draw",
+        "missing actor reference cue-rama-counter-arrow",
+        "missing actor reference cue-counter-hit",
+        "missing actor reference receipt-opening-block",
+        "missing actor reference receipt-wave-evaded",
+        "missing actor reference receipt-counter-hit",
+        "missing actor reference audio-guard-block",
+        "missing actor reference audio-wave-charge",
+        "missing actor reference audio-wave-release",
+        "missing actor reference audio-counter-hit",
+        "missing actor reference window-opening-guard",
+        "missing actor reference window-counter-punish",
+        "missing actor reference ravana-opening-planted",
+        "missing actor reference ravana-tracking-pivot",
+        "missing actor reference ravana-counter-planted",
+        "missing or duplicate motion track"
+      ]
+    },
+    {
+      "name": "reject invalid negative time",
+      "passed": true,
+      "expected_error": "invalid time",
+      "errors": [
+        "invalid time interval cue-rama-first-draw"
+      ]
+    },
+    {
+      "name": "reject nonfinite coordinate",
+      "passed": true,
+      "expected_error": "nonfinite",
+      "errors": [
+        "nonfinite number"
+      ]
+    },
+    {
+      "name": "reject duplicate event",
+      "passed": true,
+      "expected_error": "duplicate event",
+      "errors": [
+        "duplicate event id"
+      ]
+    },
+    {
+      "name": "reject duplicate resource",
+      "passed": true,
+      "expected_error": "duplicate actor resource",
+      "errors": [
+        "duplicate actor resource"
+      ]
+    },
+    {
+      "name": "reject unknown actor reference",
+      "passed": true,
+      "expected_error": "missing actor reference",
+      "errors": [
+        "missing actor reference cue-rama-first-draw"
+      ]
+    },
+    {
+      "name": "reject unknown clip",
+      "passed": true,
+      "expected_error": "unknown action clip",
+      "errors": [
+        "unknown action clip"
+      ]
+    },
+    {
+      "name": "reject receipt precedes arrival",
+      "passed": true,
+      "expected_error": "receipt before or after",
+      "errors": [
+        "impact and receipt chronology mismatch",
+        "receipt before or after projectile arrival"
+      ]
+    },
+    {
+      "name": "reject missing telegraph",
+      "passed": true,
+      "expected_error": "missing reciprocal telegraph",
+      "errors": [
+        "missing reciprocal telegraph link"
+      ]
+    },
+    {
+      "name": "reject shifted impact time",
+      "passed": true,
+      "expected_error": "impact time mismatch",
+      "errors": [
+        "projectile impact time mismatch"
+      ]
+    },
+    {
+      "name": "reject duplicate motion time",
+      "passed": true,
+      "expected_error": "nonincreasing",
+      "errors": [
+        "nonincreasing motion times"
+      ]
+    },
+    {
+      "name": "reject planted moving actor",
+      "passed": true,
+      "expected_error": "stationary contact",
+      "errors": [
+        "stationary contact has root displacement",
+        "planted contact has root yaw change",
+        "stationary contact has root displacement",
+        "planted contact has root yaw change"
+      ]
+    },
+    {
+      "name": "reject late guard window",
+      "passed": true,
+      "expected_error": "receipt outside",
+      "errors": [
+        "receipt outside declared counter window"
+      ]
+    },
+    {
+      "name": "reject wrong visual health",
+      "passed": true,
+      "expected_error": "health arithmetic",
+      "errors": [
+        "visual health arithmetic mismatch"
+      ]
+    },
+    {
+      "name": "reject unknown resource path",
+      "passed": true,
+      "expected_error": "invalid resource path",
+      "errors": [
+        "invalid resource path"
+      ]
+    },
+    {
+      "name": "reject duplicate JSON key",
+      "passed": true
+    },
+    {
+      "name": "reject JSON NaN",
+      "passed": true
+    },
+    {
+      "name": "reject JSON infinity",
+      "passed": true
+    },
+    {
+      "name": "audio exactly matches film length",
+      "passed": true,
+      "details": {
+        "channels": 2,
+        "sample_rate": 48000,
+        "sample_width": 2,
+        "frames": 1152000,
+        "duration_seconds": 24.0,
+        "sha256": "5c35ac7fc148c2c89ef1c2f0da7dfa8059528f02787f0cc03ceea7704b98c582"
+      }
+    }
+  ]
+}

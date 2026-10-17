@@ -32,6 +32,9 @@ var dash_remaining := 0.0
 var dash_time := 0.0
 var dash_direction := Vector3.ZERO
 var action_time := 0.0
+var invocation_remaining := 0.0
+var invocation_facing := Vector3.ZERO
+var invocation_preparing := false
 var pitch := -0.10
 var yaw := 0.0
 var sensitivity := 0.0024
@@ -117,9 +120,11 @@ func configure_traversal(anchors: Array, bounds: AABB) -> bool:
 	return traversal.configure(anchors, bounds)
 
 func toggle_flight() -> bool:
+	if invocation_preparing: return false
 	return traversal.toggle_flight()
 
 func try_grapple() -> bool:
+	if invocation_preparing: return false
 	return traversal.try_grapple()
 
 func cancel_traversal(reason := "cancelled") -> void:
@@ -186,16 +191,22 @@ func _physics_process(delta: float) -> void:
 	pulse_remaining = maxf(0, pulse_remaining - delta)
 	dash_remaining = maxf(0, dash_remaining - delta)
 	action_time = maxf(0, action_time - delta)
+	invocation_remaining = maxf(0, invocation_remaining - delta)
+	# Preparation is released by the accepted army-clock event. The visual
+	# countdown alone cannot authorize an early shot on a different frame clock.
+	var invocation_locked := invocation_preparing
+	if invocation_locked: action_time = maxf(action_time, .05)
 	if reload_remaining > 0:
 		reload_remaining = maxf(0, reload_remaining - delta)
 		if reload_remaining == 0:
 			ammo = MAGAZINE
 			changed.emit()
 	var move_input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	if invocation_locked: move_input = Vector2.ZERO
 	var desired := Basis(Vector3.UP, yaw) * Vector3(move_input.x, 0, move_input.y)
 	var speed := SPRINT_SPEED if Input.is_action_pressed("sprint") else SPEED
-	var traversal_owns_motion: bool = traversal.step(delta, desired)
-	if not traversal_owns_motion and Input.is_action_just_pressed("dash") and dash_remaining <= 0:
+	var traversal_owns_motion: bool = false if invocation_locked else traversal.step(delta, desired)
+	if not invocation_locked and not traversal_owns_motion and Input.is_action_just_pressed("dash") and dash_remaining <= 0:
 		dash_direction = desired.normalized() if desired.length_squared() > 0.01 else -pivot.global_basis.z
 		dash_direction.y = 0
 		dash_direction = dash_direction.normalized()
@@ -214,7 +225,7 @@ func _physics_process(delta: float) -> void:
 	if traversal_owns_motion:
 		pass
 	elif is_on_floor():
-		if Input.is_action_just_pressed("jump"):
+		if not invocation_locked and Input.is_action_just_pressed("jump"):
 			velocity.y = 7.2
 			jump_count += 1
 			_play("jump", 0.12)
@@ -225,11 +236,11 @@ func _physics_process(delta: float) -> void:
 	last_finite_position = global_position
 	traversal.after_step()
 	current_speed = Vector2(velocity.x, velocity.z).length()
-	if Input.is_action_just_pressed("reload"):
+	if not invocation_locked and Input.is_action_just_pressed("reload"):
 		start_reload()
-	if Input.is_action_pressed("fire"):
+	if not invocation_locked and Input.is_action_pressed("fire"):
 		shoot()
-	if Input.is_action_just_pressed("pulse") and pulse_remaining <= 0:
+	if not invocation_locked and Input.is_action_just_pressed("pulse") and pulse_remaining <= 0:
 		pulse_remaining = 8.0
 		action_time = 0.7
 		_play("cast1", 0.12)
@@ -237,6 +248,7 @@ func _physics_process(delta: float) -> void:
 		changed.emit()
 	var forward := -pivot.global_basis.z
 	forward.y = 0
+	if invocation_locked: forward = invocation_facing
 	if action_time > 0:
 		_rotate_visual(forward, delta * 16.0)
 	elif traversal.mode in ["flight", "grapple"]:
@@ -273,7 +285,7 @@ func _play(clip: String, blend: float) -> void:
 		animator.play(clips[clip], blend)
 
 func shoot() -> bool:
-	if not active or get_tree().paused or fire_remaining > 0 or reload_remaining > 0:
+	if not active or get_tree().paused or fire_remaining > 0 or reload_remaining > 0 or invocation_preparing:
 		return false
 	if ammo <= 0:
 		start_reload()
@@ -299,11 +311,37 @@ func shoot() -> bool:
 	return true
 
 func start_reload() -> bool:
-	if ammo == MAGAZINE or reload_remaining > 0 or not active:
+	if ammo == MAGAZINE or reload_remaining > 0 or not active or invocation_preparing:
 		return false
 	reload_remaining = RELOAD_TIME
 	changed.emit()
 	return true
+
+func begin_invocation(windup: float, clip := "cast2") -> bool:
+	if not active or get_tree().paused or not is_on_floor() or traversal.mode != "ground" or invocation_preparing or reload_remaining > 0 or not is_finite(windup) or windup <= 0 or windup > 2:
+		return false
+	if clip not in ["cast1", "cast2", "cast3"]: return false
+	invocation_remaining = windup
+	invocation_preparing = true
+	invocation_facing = -pivot.global_basis.z
+	invocation_facing.y = 0
+	invocation_facing = invocation_facing.normalized()
+	action_time = windup
+	dash_time = 0
+	velocity.x = 0
+	velocity.z = 0
+	_play(clip, .10)
+	if animator and clips.has(clip):
+		animator.seek(0, true)
+		animator.speed_scale = clampf(animator.get_animation(clips[clip]).length / windup, .25, 3.0)
+	return true
+
+func finish_invocation_pose() -> void:
+	if invocation_preparing:
+		invocation_preparing = false
+		invocation_remaining = 0
+		action_time = 0
+		_play("idle", .16)
 
 func reset() -> void:
 	cancel_traversal("Reset")
@@ -318,6 +356,8 @@ func reset() -> void:
 	dash_remaining = 0
 	dash_time = 0
 	action_time = 0
+	invocation_remaining = 0
+	invocation_preparing = false
 	shots_fired = 0
 	jump_count = 0
 	visual.rotation.y = PI

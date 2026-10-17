@@ -1,6 +1,6 @@
 # Native rules, identity and replay contracts
 
-FG00-T04, contract revision 1. This implements a pure Godot admission/stream validator and machine-readable specification. It does not change the browser server, connect a native match, simulate a replay or select production collision authority. The existing native `arena_client.gd` continues to speak browser protocol 2.
+FG00-T04 / MYTH06, envelope revision 1 and native-practice content revision 2. This implements a pure Godot admission/stream validator and machine-readable specification. It does not change the browser server, connect a native match, simulate a replay or select production collision authority. The existing native `arena_client.gd` continues to speak browser protocol 2.
 
 ## Distinct profiles
 
@@ -24,6 +24,8 @@ Runtime definitions:
 
 Descriptors contain `contract_id`, `profile_id`, `protocol`, `versions`, `rules_sha256`, `map_id`, `map_sha256` and `content_sha256`. `versions` has independent positive integer `contract`, `rules`, `map`, `content`, `replay`, `input`, `event` and `entity` fields. Version 1 requires an exact match for each field. There is no permissive protocol range, silent downgrade or fallback-to-offline admission. Mismatch returns a reason such as `MISMATCH_MAP_SHA256` before any world is admitted.
 
+`content_revision` is required on each profile. Native practice is revision **2**, while browser and production-proposal content remain **1**. `descriptor()` copies the envelope versions and overrides only `versions.content` from that profile. Input/event/entity/replay wire versions remain 1. Missing, malformed or wrong known revisions reject before catalogue loading. The global `envelope_versions.content=1` is the base value, not the native profile's effective revision.
+
 `rules_sha256` hashes compact, sorted-key JSON for `{profile, coordinates, limits}` using Godot `JSON.stringify(..., "", true)` and UTF-8 SHA-256. Version 1 profile numbers have finite fixed values. Changing masks, authority, dimensions, timing, coordinate conventions or caps therefore cannot retain an identical descriptor merely by leaving version numbers unchanged. The loader also rejects changes to the three known profiles' essential semantics. An intentional migration updates the catalogue, relevant version, fixtures and source pins together.
 
 The map digests have explicit scope:
@@ -32,7 +34,7 @@ The map digests have explicit scope:
 - Native: exact staged `assets/world/confluence-map.json`. Relay centres remain defined in the separately pinned `relay_control.gd`; they are not invented fields in this map.
 - Production: exact design-document bytes, labelled `design_document_not_collision_geometry`. No collision map exists for this proposal.
 
-`content_sha256` hashes compact, sorted-key JSON of the catalogue's `path → SHA-256` source ledger. This is the explicitly enumerated rules-content set, not a claim to inventory every render asset or complete production hero. The source-pin checker verifies those bytes against the checkout. A rules or map edit must refresh the affected pins deliberately; a mismatch fails the check. Packaged catalogue reads do not require development source files.
+`content_sha256` hashes compact, sorted-key JSON of the catalogue's `path → SHA-256` source ledger. Native revision 2 pins the frozen army, minion, traversal and relay sources plus `ultimate_rules.gd`, `ultimate_session.gd` and `native-ultimate-rules.json`. This is the explicitly enumerated rules-content set, not a claim to inventory every render asset or complete production hero. The source-pin checker verifies those bytes against the checkout. Adding the required profile field also changes the descriptive rules digest for browser/proposal, although their content version and actual browser wire remain unchanged. Old catalogue descriptors must therefore be rederived; this is not a live server migration. A rules or map edit must refresh the affected pins deliberately; a mismatch fails the check. Packaged catalogue reads do not require development source files.
 
 Admission API:
 
@@ -98,7 +100,7 @@ The format records arrival order with independently monotonic channels. It does 
 
 ## Handoff to the next batches
 
-FG04-T02 should consume `descriptor`, `compatibility`, `report` and the admission methods rather than mutating protocol 2 in place. Keep the actual protocol-2 adapter as a distinct profile boundary. Define actor/minion/structure/projectile/zone/pickup lifetime adapters and a checked shared-yaw/native-yaw transform: shared yaw 0 faces +Z, native camera yaw 0 faces −Z; `shared_yaw=wrap(native_yaw+π)`. Preserve room identity/acknowledged input, add honest pitch availability and clear interpolation on declared discontinuities. Authenticating a cold reconnect and mapping command receipts remain integration work.
+[The MYTH06 entity bridge](NATIVE_ENTITY_BRIDGE.md) now consumes these guards and creates bounded diagnostic native nodes. Cold authenticated transport and production payloads remain open. FG04-T02 consumers should use `descriptor`, `compatibility`, `report` and the admission methods rather than mutating protocol 2 in place. Keep the actual protocol-2 adapter as a distinct profile boundary. Define actor/minion/structure/projectile/zone/pickup lifetime adapters and a checked shared-yaw/native-yaw transform: shared yaw 0 faces +Z, native camera yaw 0 faces −Z; `shared_yaw=wrap(native_yaw+π)`. Preserve room identity/acknowledged input, add honest pitch availability and clear interpolation on declared discontinuities. Authenticating a cold reconnect and mapping command receipts remain integration work.
 
 FG05-T02 should create a new versioned collision artifact, not relabel the browser source hash as a solved vertical map. Contract axes are metres, +Y up, +Z forward, feet origin; layer bits world 1/actor 2/target 4 describe current native queries. Support surfaces must allow multiple decks at one x/z. Export identical ramp, stairs, ledge, low ceiling and bridge-over-road fixtures with stable collider/support IDs, transforms and visual-only tags. Compare TypeScript shape queries with headless Godot authority on the same two-client inputs before choosing simulation ownership. This module defines the boundary; it performs no collision experiment or online authority selection.
 
@@ -112,8 +114,8 @@ XDG_DATA_HOME=/tmp/yuga-contract-tests godot --headless --path games/yuga-native
   --script res://tests/native_contract_cases.gd -- --report=/tmp/native-contract-cases.json
 ```
 
-The final owner suite passes 182 cases, including 2,000 interleaved input/event/snapshot cycles, exact entity-history and population caps, malformed types/finite values, epoch rollback, replay corruption and unchanged source hashes. The source-pin checker passes 26 cases. Independent QA passes 170 additional probes on runtime SHA `321ffb170dc44f3f962bc19e12ac441202f213d35662ab2aaa041d0ca8fd4ec8`.
+The Batch 2 owner suite passes 228 cases, including 2,000 interleaved input/event/snapshot cycles, exact entity-history and population caps, malformed types/finite values, epoch rollback, replay corruption and unchanged source hashes. The source-pin checker passes 33 cases. New revision fixtures reject the preserved Batch 1 descriptor during open, resume, migration and replay without state mutation; changing only its version number still fails source identity. A fresh [independent Batch 2 run](evidence/mythic-batch2/contracts/independent/summary.json) passes 287 probes: the original 170 malformed/replay cases plus 117 revision and transaction checks. Runtime and catalogue hashes remain frozen. Batch 1 reports retain their original source scope.
 
 Preserved failures led to three corrections: numeric JSON arrays now compare dimensions by value; malformed Variant scalar types reject before String comparisons; rules identity now covers semantic profile data and rejects changed masks/frequencies/authority. An early checker incorrectly assumed relay sites were in map JSON; it now checks their actual pinned rules source. Reports retain those failures. Evidence is headless specification/validator evidence only; no live server migration, rendered online match, production collision or deterministic gameplay replay is claimed.
 
-Working evidence: `/workspace/scratch/yuga-contracts/` (owner), `/workspace/scratch/yuga-batch1-independent/` (independent QA). Root owns durable evidence archival, backlog acceptance and the next implementation batch.
+Current evidence: [Batch 2 contract owner report](evidence/mythic-batch2/contracts/native-contracts.json), [source pins](evidence/mythic-batch2/contracts/source-pins.json), and the [preserved content-1 descriptor](evidence/mythic-batch2/contracts/native-practice-content1-descriptor.json). Batch 1 reports remain untouched. Root owns integrated acceptance and publication.

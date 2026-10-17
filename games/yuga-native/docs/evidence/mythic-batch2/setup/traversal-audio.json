@@ -1,0 +1,297 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "missing settings use modest default",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume zero",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume fraction",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume negative",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume above one",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume NaN",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume infinity",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume string",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume bool",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume array",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved volume dictionary",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe saved config constructor syntax rejected and preserved",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe saved config oversized file rejected and preserved",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe saved config deep nesting rejected and preserved",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe saved config unterminated string rejected and preserved",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "saved zero never starts any player",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "configure before ready wins over saved volume",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "bounded pool starts one music player and six cue players",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "loop covers all twenty seconds without end fade",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "all eight imported streams preserve verified PCM bytes exactly",
+			"passed": true
+		},
+		{
+			"details": {
+				"played": 7
+			},
+			"name": "all seven distinct semantic cues can play",
+			"passed": true
+		},
+		{
+			"details": {
+				"active_music": true,
+				"dropped_events": 10000,
+				"duck_db": 0.0,
+				"focused": true,
+				"music_enabled": true,
+				"music_paused": false,
+				"muted": false,
+				"played_events": 7,
+				"playing_cues": 6,
+				"pool_size": 6,
+				"suspended": false,
+				"volume": 0.6
+			},
+			"name": "ten thousand event flood is bounded and throttled",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unknown cue and nonfinite position rejected",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "semantic events duck quiet music",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "mute immediately stops music and all cue players",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unmute while suspended does not start music",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "resume starts one music stream",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "focus loss pauses music and suppresses new cues",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "focus regain resumes owned music",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "scene tree pause freezes audio and refuses signal-triggered cues",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "settings changes during tree pause remain silent",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "scene tree resume restores single loop",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "music off leaves gameplay cues enabled",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "nonfinite API volume safely defaults",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "infinite API volume safely defaults",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "negative API volume is mute",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "high API volume clamps without positive cue gain",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "scene return releases all players and focus callbacks",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "four muted scene recreations leave no player or callback accumulation",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": true,
+	"scope": "Headless actual AudioStreamPlayer/AudioStreamPlayer3D state, 10000-event flood, settings and scene lifecycle. Focus signals explicitly emitted. No audible-quality, spatial-listening, GPU or OS-focus claim. Saved settings restored.",
+	"sources": {
+		"loop": "f1046002578906bd7147cb7bb874746a04e9d4e6309b39300b73e5eb00e1c454",
+		"runner": "3b2dfea1972badb0a1ce1ec6bce47732ee433e32f01f4f636b27974833b894d5",
+		"runtime": "067ff9f82cb73305418330de32fa7d59b4c492b16985d64e58bd09c1df77fd2a",
+		"settings_validator": "42628b17fecfa806d95773395ca323ff39cb32a41fe8e171f4cc7fd96a4beadd"
+	}
+}

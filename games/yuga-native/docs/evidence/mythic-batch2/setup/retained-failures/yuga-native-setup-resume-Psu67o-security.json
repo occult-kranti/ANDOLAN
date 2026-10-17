@@ -1,0 +1,230 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "name": "structurally valid explicit native resource bundle",
+      "passed": false,
+      "expected": "accept",
+      "rejection": "ValueError: Required runtime resource missing: scripts/ultimate_rules.gd"
+    },
+    {
+      "name": "magic rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Missing Godot PCK magic/header"
+    },
+    {
+      "name": "truncated header rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Missing Godot PCK magic/header"
+    },
+    {
+      "name": "encrypted pack rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsupported/encrypted pack flags: 1"
+    },
+    {
+      "name": "unknown pack version rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected pack version/engine: 99, 4.6.3"
+    },
+    {
+      "name": "resource count above 10000 rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected packed resource count: 10001"
+    },
+    {
+      "name": "zero resource count rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected packed resource count: 0"
+    },
+    {
+      "name": "encrypted entry rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Encrypted/removal/delta entry is not allowed: res://assets/audio/siege/provenance.json"
+    },
+    {
+      "name": "duplicate entry rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://assets/audio/siege/provenance.json"
+    },
+    {
+      "name": "parent path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts/../escape.gd"
+    },
+    {
+      "name": "absolute path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res:///scripts/escape.gd"
+    },
+    {
+      "name": "backslash path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts\\escape.gd"
+    },
+    {
+      "name": "unapproved directory rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected runtime resource directory: res://tools/escape.py"
+    },
+    {
+      "name": "unapproved Godot cache directory rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected Godot cache resource: res://.godot/editor/config.cfg"
+    },
+    {
+      "name": "credential filename rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential filename in pack: res://scripts/access-token.txt"
+    },
+    {
+      "name": "dotenv filename rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential filename in pack: res://assets/.env"
+    },
+    {
+      "name": "overlong resource path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Invalid packed resource entry bounds"
+    },
+    {
+      "name": "synthetic credential marker rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential marker in payload: res://assets/marker.txt"
+    },
+    {
+      "name": "private-key header marker rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential marker in payload: res://assets/marker.txt"
+    },
+    {
+      "name": "missing essential army resource rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/lane_army.gd"
+    },
+    {
+      "name": "missing native platform stone shader rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/traversal_stone.gdshader"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/relay_control.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/relay_control.gd"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/relay_session.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/relay_session.gd"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/relay_art.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/relay_art.gd"
+    },
+    {
+      "name": "missing siege resource rejected: assets/audio/siege/provenance.json",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: assets/audio/siege/provenance.json"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/lane_vehicle_art.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/lane_vehicle_art.gd"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/siege_effects.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/siege_effects.gd"
+    },
+    {
+      "name": "missing siege resource rejected: .godot/imported/cannon_windup.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: cannon_windup.wav-"
+    },
+    {
+      "name": "missing siege resource rejected: .godot/imported/cannon_impact.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: cannon_impact.wav-"
+    },
+    {
+      "name": "missing siege resource rejected: .godot/imported/chariot_windup.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: chariot_windup.wav-"
+    },
+    {
+      "name": "missing siege resource rejected: .godot/imported/chariot_impact.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: chariot_impact.wav-"
+    },
+    {
+      "name": "payload checksum corruption rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Packed payload MD5 mismatch: res://scripts/relay_art.gd"
+    },
+    {
+      "name": "payload offset beyond file rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Packed payload exceeds file bounds: res://assets/audio/siege/provenance.json"
+    },
+    {
+      "name": "oversize payload length rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Packed payload exceeds file bounds: res://assets/audio/siege/provenance.json"
+    },
+    {
+      "name": "truncated directory rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "error: unpack_from requires a buffer of at least 104 bytes for unpacking 4 bytes at offset 100 (actual buffer size is 103)"
+    },
+    {
+      "name": "canonical fixture remains accepted after mutations",
+      "passed": false,
+      "expected": "accept",
+      "rejection": "ValueError: Required runtime resource missing: scripts/ultimate_rules.gd"
+    },
+    {
+      "name": "tested packager unchanged",
+      "passed": true
+    }
+  ],
+  "sources": {
+    "tools/package-native.py": "b7af9a37635805552db0ce9fabe7054d4a4fd646c0b100a73816657aa719112b",
+    "tests/traversal_security_cases.py": "9532281874b64191f6ff0324ad558358a1461adafa322510a4123ffa377faaf8"
+  },
+  "scope": "Bounded structural PCK acceptance fixtures only. No pack execution, extraction, production secrets, runtime security certificate, online security or full parser fuzzing claim."
+}

@@ -1,0 +1,34 @@
+extends SceneTree
+var world: Node3D
+var rows:=[]
+func _initialize(): call_deferred("run")
+func frames(n:int):
+ for i in range(n): await process_frame
+func sample(label:String):
+ var focus:Control=root.gui_get_focus_owner()
+ var first:Control=world.pause_actions[0]
+ var row={"label":label,"window_size":str(root.size),"logical_size":str(root.get_visible_rect().size),"content_scale_size":str(root.content_scale_size),"scroll":world.pause_scroll.scroll_vertical,"first":str(first.get_global_rect()),"scroll_rect":str(world.pause_scroll.get_global_rect()),"focus":str(focus.get_path()) if focus else "none","visible":world.pause_scroll.get_global_rect().encloses(first.get_global_rect())}
+ rows.append(row);print(JSON.stringify(row))
+func run():
+ root.size=Vector2i(960,600)
+ var previous_script=GDScript.new()
+ previous_script.source_code=FileAccess.get_file_as_string("res://docs/evidence/mythic-batch2/pause-focus/confluence-world-before.gd.txt")
+ assert(previous_script.reload()==OK)
+ world=Node3D.new();world.set_script(previous_script);world.name="ConfluenceWorld";root.add_child(world)
+ await frames(8)
+ world.player.set_physics_process(false)
+ world.set_paused(true)
+ await frames(8);sample("initial pause")
+ world.pause_scroll.scroll_vertical=10000;await frames(4);sample("same focus after scrolling")
+ world._focus_lost();await frames(8);sample("focus loss reopening with same focus")
+ world.pause_scroll.ensure_control_visible(world.pause_actions[0]);await frames(4);sample("explicit reveal correction")
+ world.pause_actions[-1].grab_focus();await frames(8);sample("last focused")
+ world.set_paused(false);await frames(4)
+ world.set_paused(true);await frames(8);sample("reopened pause")
+ world.pause_actions[9].grab_focus();await frames(8);sample("volume focused")
+ world.set_paused(false);await frames(4)
+ world._open_invocations();await frames(4)
+ world.invocation_panel.close();await frames(4)
+ world.set_paused(true);await frames(8);sample("pause after selector")
+ var f=FileAccess.open("/workspace/scratch/yuga-next/pause-focus-replay-before.json",FileAccess.WRITE);f.store_string(JSON.stringify(rows,"\t"));f.close()
+ paused=false;world.queue_free();await frames(3);quit()

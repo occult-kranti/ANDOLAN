@@ -1,0 +1,964 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "case": "tag selection requires exact bounded Triad suffix",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "evidence": {}
+    },
+    {
+      "case": "valid continuous capture control",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "valid fresh decoder control",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "evidence": {
+        "decoder_calls": 1
+      }
+    },
+    {
+      "case": "fresh decoder rejection blocks capture",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Synthetic decoder rejects bytes",
+      "evidence": {
+        "decoder_calls": 1
+      }
+    },
+    {
+      "case": "valid Triad stage and verification binds all three movies and sources",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "evidence": {
+        "decoder_calls": 3,
+        "three_movies_decoded": true,
+        "triad_archive_and_sources_checked_as_tracked": true
+      }
+    },
+    {
+      "case": "incomplete capture",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture failed, incomplete or preview-only",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "preview capture",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture failed, incomplete or preview-only",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "reported capture failure",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture failed, incomplete or preview-only",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "headless display",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture lacks an actual Forward+ X11 display",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "wrong renderer",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture lacks an actual Forward+ X11 display",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "zero timescale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture timing, resolution or time scale differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "boolean timescale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture timing, resolution or time scale differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "nonfinite timescale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture timing, resolution or time scale differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "wrong dimensions",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture timing, resolution or time scale differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "missing frame",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame count or starting tick is invalid",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "wrong total ticks",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture timing, resolution or time scale differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "negative start tick",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame count or starting tick is invalid",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "physics sequence gap",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame sequence or finite state is invalid",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "one physics tick per frame",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame sequence or finite state is invalid",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "nonadvancing render counter",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad renderer frame counter did not advance",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "nonfinite frame flag",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame sequence or finite state is invalid",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "numeric finite flag",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame sequence or finite state is invalid",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "unsafe frame image name",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad image name or dimensions differ",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "missing image hash",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad image hash is invalid",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "no actual draw calls",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad image lacks actual renderer counters",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "capture outcome absent",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture did not observe capture, supply and finite state",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "numeric supply outcome",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture did not observe capture, supply and finite state",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "already owned before take",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad take must begin before Lotus ownership and supplies",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "already supplied before take",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad take must begin before Lotus ownership and supplies",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "outcome flag cannot substitute for actual ownership",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad owner and signed progress contradict one another",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "outcome flag cannot substitute for applied arrows",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad take must end with Sun Lotus ownership and applied arrows",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "rule reset during take",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame resets or regresses relay time/receipts/supplies",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "rule clock discontinuity",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad rule clock differs from fixed 0.1 second steps",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "capture progress nonfinite",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad site has invalid ownership, progress or supply state",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "capture progress out of bounds",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad site has invalid ownership, progress or supply state",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "unbounded supply clock",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad site has invalid ownership, progress or supply state",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "missing relay site",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad report must contain three fixed sites",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "wrong relay position",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad site identity or geometry differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "boolean relay position",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad site identity or geometry differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "wrong relay label",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad site identity or geometry differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "owner contradicts signed progress",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad owner and signed progress contradict one another",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "supply receipt counter regresses",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame resets or regresses relay time/receipts/supplies",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "unbounded per-frame receipt jump",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame resets or regresses relay time/receipts/supplies",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "applied arrows regress",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame resets or regresses relay time/receipts/supplies",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "negative ammo",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame ammo differs from initially staged three arrows and applied supplies",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "floating ammo",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame ammo differs from initially staged three arrows and applied supplies",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "ammo differs from applied supply",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad frame ammo differs from initially staged three arrows and applied supplies",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "ending snapshot does not match last frame",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad ending snapshot or three-to-six arrow demonstration differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "missing still",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture must retain the four specified relay views",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "duplicate still name",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture must retain the four specified relay views",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "missing source inventory",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad source inventory differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "wrong captured source hash",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad captured source changed: scripts/relay_control.gd",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "unsafe source path",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad source inventory differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "missing import proof",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture omits its three imported-asset proofs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "stale imported hero",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad imported-asset proof is stale, malformed or unsafe",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "unsafe imported path",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad imported-asset proof is stale, malformed or unsafe",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "invalid import hash",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad imported-asset proof is stale, malformed or unsafe",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "required capture file: TRIAD-RENDER-REVIEW.md",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: TRIAD-RENDER-REVIEW.md",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit TRIAD-RENDER-REVIEW.md",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: still-lotus-day.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-lotus-day.png",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit still-lotus-day.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: still-lotus-night.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-lotus-night.png",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit still-lotus-night.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: still-reed-day.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-reed-day.png",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit still-reed-day.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: still-sky-day.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-sky-day.png",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit still-sky-day.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: triad-frame-00015.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: triad-frame-00015.png",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit triad-frame-00015.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: triad-frame-00090.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: triad-frame-00090.png",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit triad-frame-00090.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: triad-frame-00175.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: triad-frame-00175.png",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit triad-frame-00175.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: triad-render-review.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: triad-render-review.json",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit triad-render-review.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: triad-video.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: triad-video.json",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit triad-video.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "required capture file: yuga-triad-preview.mp4",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: yuga-triad-preview.mp4",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "self-consistent release cannot omit yuga-triad-preview.mp4",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad release omits required capture assets",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "failed stage check: relay-control",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Required release check failed/missing: relay-control",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "published check cannot be removed: relay-control",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "failed stage check: relay-art",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Required release check failed/missing: relay-art",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "published check cannot be removed: relay-art",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "failed stage check: relay-integration",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Required release check failed/missing: relay-integration",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "published check cannot be removed: relay-integration",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "failed stage check: triad-release-gates",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Required release check failed/missing: triad-release-gates",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "published check cannot be removed: triad-release-gates",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "retained frame substitution",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Retained Triad image differs: triad-frame-00015.png",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "retained still substitution",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Retained Triad image differs: still-lotus-night.png",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "changed actual relay source",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad captured source changed: scripts/relay_control.gd",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "changed capture helper source",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad captured source changed: tools/capture-triad.gd",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "missing required relay runtime",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad source inventory differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "exported source hash differs",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad exported source differs: scripts/relay_control.gd",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "export omits relay runtime",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad exported runtime source set differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "export adds unrecorded runtime",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad exported runtime source set differs",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "movie bytes changed",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad movie bytes differ",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "movie report links other capture",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad movie links a different capture report",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "decoded metadata rejects nb_read_frames",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Traversal video dimensions, decoded frames or frame rate differ",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "decoded metadata rejects width",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Traversal video dimensions, decoded frames or frame rate differ",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "decoded metadata rejects avg_frame_rate",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Traversal video dimensions, decoded frames or frame rate differ",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "decoded metadata rejects codec_name",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Traversal preview is not the expected silent H.264 video",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "nonfinite movie duration",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Traversal video must be six seconds",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "untracked Triad archive blocks staging",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Command '['git', 'ls-files', '--error-unmatch', '--', 'games/yuga-native/docs/evidence/triad-relay-render-r2/TRIAD-RENDER-REVIEW.md', 'games/yuga-native/docs/evidence/triad-relay-render-r2/still-lotus-day.png', 'games/yuga-native/docs/evidence/triad-relay-render-r2/still-lotus-night.png', 'games/yuga-native/docs/evidence/triad-relay-render-r2/still-reed-day.png', 'games/yuga-native/docs/evidence/triad-relay-render-r2/still-sky-day.png', 'games/yuga-native/docs/evidence/triad-relay-render-r2/triad-frame-00015.png', 'games/yuga-native/docs/evidence/triad-relay-render-r2/triad-frame-00090.png', 'games/yuga-native/docs/evidence/triad-relay-render-r2/triad-frame-00175.png', 'games/yuga-native/docs/evidence/triad-relay-render-r2/triad-render-review.json', 'games/yuga-native/docs/evidence/triad-relay-render-r2/triad-video.json', 'games/yuga-native/docs/evidence/triad-relay-render-r2/yuga-triad-preview.mp4', 'games/yuga-native/art/world/confluence-map.json', 'games/yuga-native/assets/audio/siege/provenance.json', 'games/yuga-native/assets/audio/traversal/lane-procession-loop.wav', 'games/yuga-native/assets/heroes/rama-production.glb', 'games/yuga-native/assets/world/architecture.glb', 'games/yuga-native/assets/world/confluence-map.json', 'games/yuga-native/assets/world/nature.glb', 'games/yuga-native/project.godot', 'games/yuga-native/scenes/confluence_world.tscn', 'games/yuga-native/scripts/confluence_world.gd', 'games/yuga-native/scripts/lane_army.gd', 'games/yuga-native/scripts/lane_minion.gd', 'games/yuga-native/scripts/lane_vehicle_art.gd', 'games/yuga-native/scripts/player.gd', 'games/yuga-native/scripts/player_traversal.gd', 'games/yuga-native/scripts/relay_art.gd', 'games/yuga-native/scripts/relay_control.gd', 'games/yuga-native/scripts/relay_session.gd', 'games/yuga-native/scripts/siege_effects.gd', 'games/yuga-native/scripts/traversal_audio.gd', 'games/yuga-native/scripts/traversal_landmarks.gd', 'games/yuga-native/scripts/traversal_pose.gd', 'games/yuga-native/tools/capture-traversal.gd', 'games/yuga-native/tools/capture-triad.gd', 'games/yuga-native/tools/run-traversal-capture.py', 'games/yuga-native/tools/run-triad-capture.py']' returned non-zero exit status 1.",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "changed committed Triad archive blocks staging",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Triad capture/source differs from committed checkout",
+      "evidence": {
+        "decoder_calls": 3
+      }
+    },
+    {
+      "case": "wrong tag commit blocks staging",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Release tag differs from checkout",
+      "evidence": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "case": "validator source remains unchanged throughout fixtures",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "evidence": {}
+    }
+  ],
+  "source_sha256": {
+    "tests/release_triad_cases.py": "6149019bbeaf6aa09e2f9ddadfda6bad13f9128a229580b1db95a35f59805300",
+    "tools/release-native.py": "62e5865352b833845f9aa2a1dd2efed52363797ad7dafe4747f927c097eac0f9",
+    "tests/release_siege_cases.py": "7122437ca59972c5a584ebd110b2b8823dff62f2a6a72b4931ea6642ef7717b9",
+    "tests/release_traversal_cases.py": "b818d25df0cc3351a62025b87264d10ec983c75c51943121745b99d1c5165e63"
+  },
+  "scope": "Synthetic bounded fixtures exercise source/archive/export, checksums, playback evidence and staged-publication rejection. Decoder and Git queries mocked; no network, actual render, package, Git mutation or real release claim."
+}

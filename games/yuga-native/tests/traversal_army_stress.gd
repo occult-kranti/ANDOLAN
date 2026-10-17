@@ -230,7 +230,7 @@ func run() -> void:
 		var layout: Dictionary = scene.controls_overlay.diagnostics()
 		var card: Rect2 = layout.card_rect
 		var viewport: Rect2 = layout.viewport
-		record("controls card remains inside viewport %dx%d" % [size_.x,size_.y], viewport.encloses(card) and layout.button_count == 12, {"card": str(card), "viewport": str(viewport)})
+		record("controls card remains inside viewport with thirteen bindings %dx%d" % [size_.x,size_.y], viewport.encloses(card) and layout.button_count == 13, {"card": str(card), "viewport": str(viewport), "binding_buttons": layout.button_count})
 	await input_key(KEY_ESCAPE)
 	record("closing controls after focus loss returns to pause", not scene.controls_overlay.visible and scene.paused and scene.pause_panel.visible)
 	scene.set_paused(false)

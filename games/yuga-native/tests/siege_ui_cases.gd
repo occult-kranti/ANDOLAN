@@ -51,7 +51,7 @@ func _run() -> void:
 		await frames(5)
 		var rect: Rect2 = scene.pause_panel.get_global_rect()
 		check("pause panel fits " + str(viewport),Rect2(Vector2.ZERO,Vector2(viewport)).encloses(rect),{"rect":str(rect)})
-		check("eleven focus targets including relay, siege and volume " + str(viewport),scene.pause_actions.size()==11 and scene.siege_practice_button in scene.pause_actions)
+		check("twelve focus targets including invocation, relay, siege and volume " + str(viewport),scene.pause_actions.size()==12 and scene.siege_practice_button in scene.pause_actions and scene.invocation_button in scene.pause_actions)
 		var reached := []
 		var focus_ok := true
 		var scroll_ok := true

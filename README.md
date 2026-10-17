@@ -1,6 +1,8 @@
 # ANDOLAN — City of Consequences
 
-Native YUGA development continues through [two mythic work batches](games/yuga-native/docs/MYTHIC_BATCHES.md): fourteen creative hero directions and verified art/animation foundations, followed by native invocation practice and integration. [First-batch evidence](games/yuga-native/docs/evidence/mythic-batch1/REVIEW.md) is newer than the published Triad preview linked below.
+Native YUGA has accepted both bounded batches covering [ten mythic work packets](games/yuga-native/docs/MYTHIC_BATCHES.md): hero/art foundations, fourteen troop invocations through Rama, distinct effects, sixteen original cues, an entity presentation bridge and a 3D physics comparison. In the source build, choose **Explore Confluence → F3 → Use invocation**, then press **X** to cast; F2 opens remapping. Native content revision 2 is separate from the browser protocol. See the [milestone](games/yuga-native/docs/MYTHIC_MILESTONE.md) and [Batch 2 evidence/status](games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md).
+
+**Mythic release: pending.** The planned tag is `yuga-traversal-armies-2026-10-17-mythic`; both bounded batches, final source-matched captures and local packaged-input review are accepted. Publication and verification of the public downloads remain pending. The verified Triad release below remains the public download. Fourteen invocations use one avatar; the full hero roster, native online matches and commercial-quality graphics remain open.
 
 **New chat, contributor or agent:** read [START_HERE](docs/START_HERE.md) for the current build, product boundaries and task routing. The active native YUGA track has a [build handbook](games/yuga-native/docs/BUILD_HANDBOOK.md), [research brief](games/yuga-native/docs/research/RESEARCH_BRIEF.md) and [workspace guide](docs/WORKSPACE_AND_CLEANUP.md). The ANDOLAN protest-game documentation below describes its separate release.
 

@@ -1,0 +1,943 @@
+{
+  "schema_version": 1,
+  "fixture_id": "yuga-stacked-physics-v1",
+  "status": "offline_query_experiment_not_production_map",
+  "coordinates": {
+    "units": "metres",
+    "up": "+Y",
+    "forward": "+Z",
+    "position": "feet_origin",
+    "yaw": "radians_positive_toward_+X",
+    "pitch": "radians_positive_up"
+  },
+  "layers": {
+    "world": 1,
+    "actor": 2,
+    "target": 4
+  },
+  "query_contract": {
+    "actor_shape": "axis_aligned_box",
+    "actor_size": [
+      0.6,
+      1.8,
+      0.6
+    ],
+    "shape_margin": 0,
+    "ray_hit_from_inside": false,
+    "sweep_initial_overlap": "Godot cast_motion ignores existing overlap; separately query overlap before movement",
+    "step_up": false,
+    "gravity": false,
+    "tolerance_position_m": 0.005,
+    "tolerance_fraction": 0.002,
+    "tolerance_normal": 0.005
+  },
+  "colliders": [
+    {
+      "id": "road",
+      "shape": "box",
+      "center": [
+        30,
+        -0.5,
+        4
+      ],
+      "size": [
+        100,
+        1,
+        40
+      ],
+      "layer": 1,
+      "visual_only": false
+    },
+    {
+      "id": "bridge",
+      "shape": "box",
+      "center": [
+        0,
+        4,
+        3
+      ],
+      "size": [
+        8,
+        0.6,
+        10
+      ],
+      "layer": 1,
+      "visual_only": false,
+      "support_id": "bridge-top"
+    },
+    {
+      "id": "deck-lower",
+      "shape": "box",
+      "center": [
+        12,
+        3,
+        3
+      ],
+      "size": [
+        6,
+        0.4,
+        6
+      ],
+      "layer": 1,
+      "visual_only": false,
+      "support_id": "deck-lower-top"
+    },
+    {
+      "id": "deck-upper",
+      "shape": "box",
+      "center": [
+        12,
+        6,
+        3
+      ],
+      "size": [
+        6,
+        0.4,
+        6
+      ],
+      "layer": 1,
+      "visual_only": false,
+      "support_id": "deck-upper-top"
+    },
+    {
+      "id": "ramp",
+      "shape": "convex",
+      "vertices": [
+        [
+          21,
+          0,
+          0
+        ],
+        [
+          27,
+          0,
+          0
+        ],
+        [
+          21,
+          0,
+          8
+        ],
+        [
+          27,
+          0,
+          8
+        ],
+        [
+          21,
+          4,
+          8
+        ],
+        [
+          27,
+          4,
+          8
+        ]
+      ],
+      "faces": [
+        [
+          0,
+          1,
+          3,
+          2
+        ],
+        [
+          0,
+          2,
+          4
+        ],
+        [
+          1,
+          5,
+          3
+        ],
+        [
+          2,
+          3,
+          5,
+          4
+        ],
+        [
+          0,
+          4,
+          5,
+          1
+        ]
+      ],
+      "layer": 1,
+      "visual_only": false,
+      "support_id": "ramp-top"
+    },
+    {
+      "id": "stair-1",
+      "shape": "box",
+      "center": [
+        36,
+        0.25,
+        1
+      ],
+      "size": [
+        6,
+        0.5,
+        2
+      ],
+      "layer": 1,
+      "visual_only": false,
+      "support_id": "stair-1-top"
+    },
+    {
+      "id": "stair-2",
+      "shape": "box",
+      "center": [
+        36,
+        0.5,
+        3
+      ],
+      "size": [
+        6,
+        1.0,
+        2
+      ],
+      "layer": 1,
+      "visual_only": false,
+      "support_id": "stair-2-top"
+    },
+    {
+      "id": "stair-3",
+      "shape": "box",
+      "center": [
+        36,
+        0.75,
+        5
+      ],
+      "size": [
+        6,
+        1.5,
+        2
+      ],
+      "layer": 1,
+      "visual_only": false,
+      "support_id": "stair-3-top"
+    },
+    {
+      "id": "stair-4",
+      "shape": "box",
+      "center": [
+        36,
+        1.0,
+        7
+      ],
+      "size": [
+        6,
+        2.0,
+        2
+      ],
+      "layer": 1,
+      "visual_only": false,
+      "support_id": "stair-4-top"
+    },
+    {
+      "id": "ledge",
+      "shape": "box",
+      "center": [
+        48,
+        0.75,
+        2
+      ],
+      "size": [
+        6,
+        1.5,
+        4
+      ],
+      "layer": 1,
+      "visual_only": false,
+      "support_id": "ledge-top"
+    },
+    {
+      "id": "low-ceiling",
+      "shape": "box",
+      "center": [
+        60,
+        2,
+        4
+      ],
+      "size": [
+        6,
+        0.4,
+        8
+      ],
+      "layer": 1,
+      "visual_only": false
+    },
+    {
+      "id": "target-low",
+      "shape": "box",
+      "center": [
+        72,
+        1,
+        8
+      ],
+      "size": [
+        1,
+        2,
+        1
+      ],
+      "layer": 4,
+      "visual_only": false
+    },
+    {
+      "id": "target-high",
+      "shape": "box",
+      "center": [
+        72,
+        5,
+        8
+      ],
+      "size": [
+        1,
+        2,
+        1
+      ],
+      "layer": 4,
+      "visual_only": false
+    },
+    {
+      "id": "actor-a",
+      "shape": "box",
+      "center": [
+        -2,
+        0.9,
+        -4
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "layer": 2,
+      "visual_only": false
+    },
+    {
+      "id": "actor-b",
+      "shape": "box",
+      "center": [
+        -2,
+        5.2,
+        -4
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "layer": 2,
+      "visual_only": false
+    },
+    {
+      "id": "visual-canopy",
+      "shape": "box",
+      "center": [
+        72,
+        2,
+        3
+      ],
+      "size": [
+        6,
+        4,
+        1
+      ],
+      "layer": 1,
+      "visual_only": true,
+      "tag": "never-in-physics"
+    }
+  ],
+  "queries": [
+    {
+      "id": "bridge-road-support",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        0,
+        1,
+        3
+      ],
+      "to": [
+        0,
+        -1,
+        3
+      ],
+      "mask": 1
+    },
+    {
+      "id": "bridge-deck-support",
+      "actor": "B",
+      "kind": "ray",
+      "from": [
+        0,
+        5,
+        3
+      ],
+      "to": [
+        0,
+        3,
+        3
+      ],
+      "mask": 1
+    },
+    {
+      "id": "stack-lower-support",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        12,
+        4,
+        3
+      ],
+      "to": [
+        12,
+        2,
+        3
+      ],
+      "mask": 1
+    },
+    {
+      "id": "stack-upper-support",
+      "actor": "B",
+      "kind": "ray",
+      "from": [
+        12,
+        7,
+        3
+      ],
+      "to": [
+        12,
+        5,
+        3
+      ],
+      "mask": 1
+    },
+    {
+      "id": "stack-road-support",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        12,
+        1,
+        3
+      ],
+      "to": [
+        12,
+        -1,
+        3
+      ],
+      "mask": 1
+    },
+    {
+      "id": "ramp-support",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        24,
+        7,
+        4
+      ],
+      "to": [
+        24,
+        -1,
+        4
+      ],
+      "mask": 1
+    },
+    {
+      "id": "stair-1-support",
+      "actor": "B",
+      "kind": "ray",
+      "from": [
+        36,
+        5,
+        1
+      ],
+      "to": [
+        36,
+        -1,
+        1
+      ],
+      "mask": 1
+    },
+    {
+      "id": "stair-2-support",
+      "actor": "B",
+      "kind": "ray",
+      "from": [
+        36,
+        5,
+        3
+      ],
+      "to": [
+        36,
+        -1,
+        3
+      ],
+      "mask": 1
+    },
+    {
+      "id": "stair-3-support",
+      "actor": "B",
+      "kind": "ray",
+      "from": [
+        36,
+        5,
+        5
+      ],
+      "to": [
+        36,
+        -1,
+        5
+      ],
+      "mask": 1
+    },
+    {
+      "id": "stair-4-support",
+      "actor": "B",
+      "kind": "ray",
+      "from": [
+        36,
+        5,
+        7
+      ],
+      "to": [
+        36,
+        -1,
+        7
+      ],
+      "mask": 1
+    },
+    {
+      "id": "ledge-top",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        48,
+        3,
+        3
+      ],
+      "to": [
+        48,
+        -1,
+        3
+      ],
+      "mask": 1
+    },
+    {
+      "id": "ledge-after-drop",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        48,
+        3,
+        5
+      ],
+      "to": [
+        48,
+        -1,
+        5
+      ],
+      "mask": 1
+    },
+    {
+      "id": "underpass-clear",
+      "actor": "A",
+      "kind": "sweep",
+      "feet": [
+        0,
+        0.01,
+        -4
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "motion": [
+        0,
+        0,
+        12
+      ],
+      "mask": 1
+    },
+    {
+      "id": "bridge-walk-clear",
+      "actor": "B",
+      "kind": "sweep",
+      "feet": [
+        0,
+        4.31,
+        -4
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "motion": [
+        0,
+        0,
+        12
+      ],
+      "mask": 1
+    },
+    {
+      "id": "bridge-side-block",
+      "actor": "A",
+      "kind": "sweep",
+      "feet": [
+        -6,
+        3.9,
+        3
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "motion": [
+        12,
+        0,
+        0
+      ],
+      "mask": 1
+    },
+    {
+      "id": "ramp-rising-block",
+      "actor": "A",
+      "kind": "sweep",
+      "feet": [
+        24,
+        0.01,
+        -2
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "motion": [
+        0,
+        0,
+        8
+      ],
+      "mask": 1
+    },
+    {
+      "id": "stairs-do-not-invent-step",
+      "actor": "B",
+      "kind": "sweep",
+      "feet": [
+        36,
+        0.01,
+        -2
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "motion": [
+        0,
+        0,
+        8
+      ],
+      "mask": 1
+    },
+    {
+      "id": "ceiling-up-block",
+      "actor": "A",
+      "kind": "sweep",
+      "feet": [
+        60,
+        0.01,
+        4
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "motion": [
+        0,
+        2,
+        0
+      ],
+      "mask": 1
+    },
+    {
+      "id": "ceiling-horizontal-clear",
+      "actor": "B",
+      "kind": "sweep",
+      "feet": [
+        60,
+        0.001,
+        -3
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "motion": [
+        0,
+        0,
+        2
+      ],
+      "mask": 1
+    },
+    {
+      "id": "wall-highspeed-no-tunnel",
+      "actor": "A",
+      "kind": "sweep",
+      "feet": [
+        -20,
+        3.9,
+        3
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "motion": [
+        100,
+        0,
+        0
+      ],
+      "mask": 1
+    },
+    {
+      "id": "ceiling-initial-overlap",
+      "actor": "A",
+      "kind": "overlap",
+      "feet": [
+        60,
+        1,
+        4
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "mask": 1
+    },
+    {
+      "id": "ceiling-overlap-sweep-policy",
+      "actor": "A",
+      "kind": "sweep",
+      "feet": [
+        60,
+        1,
+        4
+      ],
+      "size": [
+        0.6,
+        1.8,
+        0.6
+      ],
+      "motion": [
+        0,
+        0.5,
+        0
+      ],
+      "mask": 1
+    },
+    {
+      "id": "target-only-low",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        72,
+        1,
+        -2
+      ],
+      "to": [
+        72,
+        1,
+        12
+      ],
+      "mask": 4
+    },
+    {
+      "id": "target-only-high",
+      "actor": "B",
+      "kind": "ray",
+      "from": [
+        72,
+        5,
+        -2
+      ],
+      "to": [
+        72,
+        5,
+        12
+      ],
+      "mask": 4
+    },
+    {
+      "id": "visual-canopy-does-not-block",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        72,
+        1,
+        -2
+      ],
+      "to": [
+        72,
+        1,
+        12
+      ],
+      "mask": 5
+    },
+    {
+      "id": "mask-world-ignores-target",
+      "actor": "B",
+      "kind": "ray",
+      "from": [
+        72,
+        1,
+        -2
+      ],
+      "to": [
+        72,
+        1,
+        12
+      ],
+      "mask": 1
+    },
+    {
+      "id": "actor-layer-low",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        -2,
+        0.9,
+        -8
+      ],
+      "to": [
+        -2,
+        0.9,
+        0
+      ],
+      "mask": 2
+    },
+    {
+      "id": "actor-layer-high",
+      "actor": "B",
+      "kind": "ray",
+      "from": [
+        -2,
+        5.2,
+        -8
+      ],
+      "to": [
+        -2,
+        5.2,
+        0
+      ],
+      "mask": 2
+    },
+    {
+      "id": "bridge-occludes-vertical-aim",
+      "actor": "A",
+      "kind": "ray",
+      "from": [
+        0,
+        1,
+        3
+      ],
+      "to": [
+        0,
+        7,
+        3
+      ],
+      "mask": 5
+    },
+    {
+      "id": "remote-pitch-up",
+      "actor": "A",
+      "kind": "aim",
+      "origin": [
+        72,
+        1,
+        -2
+      ],
+      "yaw": 0,
+      "pitch": 0.3805063771123649,
+      "distance": 16,
+      "mask": 5
+    },
+    {
+      "id": "remote-pitch-down",
+      "actor": "B",
+      "kind": "aim",
+      "origin": [
+        72,
+        5,
+        -2
+      ],
+      "yaw": 0,
+      "pitch": -0.3805063771123649,
+      "distance": 16,
+      "mask": 5
+    },
+    {
+      "id": "remote-yaw-quarter",
+      "actor": "A",
+      "kind": "aim",
+      "origin": [
+        70,
+        1,
+        8
+      ],
+      "yaw": 1.5707963267948966,
+      "pitch": 0,
+      "distance": 5,
+      "mask": 4
+    }
+  ],
+  "paired_stream": {
+    "id": "underpass-and-bridge-simultaneous",
+    "tick_hz": 60,
+    "ticks": 240,
+    "mask": 1,
+    "actors": [
+      {
+        "id": "A",
+        "feet": [
+          0,
+          0.01,
+          -3
+        ],
+        "velocity": [
+          0,
+          0,
+          3
+        ]
+      },
+      {
+        "id": "B",
+        "feet": [
+          0,
+          4.31,
+          -3
+        ],
+        "velocity": [
+          0,
+          0,
+          3
+        ]
+      }
+    ],
+    "support_drop_m": 6,
+    "scope": "Two logical actor input streams, no sockets, gravity, step-up, client prediction or reconciliation"
+  }
+}

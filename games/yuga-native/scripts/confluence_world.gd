@@ -12,6 +12,10 @@ const TraversalAudio = preload("res://scripts/traversal_audio.gd")
 const SiegeEffects = preload("res://scripts/siege_effects.gd")
 const RelaySession = preload("res://scripts/relay_session.gd")
 const MythicEnvironment = preload("res://scripts/mythic_environment.gd")
+const UltimateSession = preload("res://scripts/ultimate_session.gd")
+const UltimateEffects = preload("res://scripts/ultimate_effects.gd")
+const InvocationPanel = preload("res://scripts/invocation_panel.gd")
+const InvocationAudio = preload("res://scripts/invocation_audio.gd")
 const RUNTIME_MANIFEST := "res://assets/world/confluence-map.json"
 const SOURCE_MANIFEST := "res://art/world/confluence-map.json"
 const CREAM := Color("f0e5d0")
@@ -30,6 +34,15 @@ var army: Node3D
 var audio: Node
 var siege_effects: Node3D
 var relays: Node3D
+var invocations: Node
+var ultimate_fx: Node3D
+var invocation_audio: Node
+var invocation_panel: Control
+var invocation_button: Button
+var invocation_label: Label
+var invocation_detail: Label
+var invocation_return_to_pause := false
+var invocation_notice := ""
 var relay_labels: Array[Label] = []
 var relay_hint: Label
 var siege_practice_button: Button
@@ -164,6 +177,9 @@ func _ready() -> void:
 	relays.name="TriadRelays"
 	world.add_child(relays)
 	relays.configure(army,player)
+	if not _build_invocations():
+		push_error("Confluence invocation practice could not be configured.")
+		return
 	_build_ui()
 	for template in kit_templates.values(): template.free()
 	kit_templates.clear()
@@ -171,6 +187,103 @@ func _ready() -> void:
 	world_ready=true
 	Input.mouse_mode=Input.MOUSE_MODE_CAPTURED
 	print("YUGA_CONFLUENCE_READY ",JSON.stringify(build_report()))
+
+func _build_invocations() -> bool:
+	invocations = UltimateSession.new()
+	invocations.name = "InvocationPractice"
+	world.add_child(invocations)
+	if not invocations.configure(army): return false
+	ultimate_fx = UltimateEffects.new()
+	ultimate_fx.name = "InvocationEffects"
+	world.add_child(ultimate_fx)
+	invocation_audio = InvocationAudio.new()
+	invocation_audio.name = "InvocationAudio"
+	world.add_child(invocation_audio)
+	invocation_audio.set_volume(audio.volume if audio else .35)
+	if not invocation_audio.report().get("ready", false): return false
+	invocations.invocation_event.connect(_invocation_event)
+	return true
+
+func _invocation_event(event: Dictionary) -> void:
+	if ultimate_fx: ultimate_fx.consume_event(event)
+	if invocation_audio: invocation_audio.consume_event(event)
+	if not player: return
+	var kind: String = event.get("kind", "")
+	if kind == "begin":
+		invocation_notice = "Preparing · aim locked"
+		var hero: String = event.get("hero_id", "rama")
+		var clip := "cast3" if hero in ["sita", "draupadi", "chitrangada", "ulupi"] else ("cast2" if hero in ["rama", "arjuna", "meghnad"] else "cast1")
+		player.begin_invocation(float(event.get("timing", {}).get("windup_s", .8)), clip)
+	elif kind in ["release", "cancel", "reset"]:
+		player.finish_invocation_pose()
+	if kind in ["impact", "tick"]:
+		var receipts: Array = event.get("receipts", [])
+		if not receipts.is_empty(): invocation_notice = "%d troop effects applied" % receipts.size()
+	elif kind == "cancel": invocation_notice = String(event.get("reason", "Invocation cancelled"))
+	elif kind == "release": invocation_notice = "Released · movement restored"
+	elif kind == "end": invocation_notice = "Invocation ended"
+	elif kind == "reset": invocation_notice = "Ready · aim, then cast"
+
+func cast_invocation() -> Dictionary:
+	var reason := ""
+	if not world_ready or not invocations: reason = "Invocation practice is loading."
+	elif paused or overview or get_tree().paused or not player.active: reason = "Return to practice to cast."
+	elif not player.is_on_floor() or player.traversal.mode != "ground" or player.position.y > .35: reason = "Land on the street to cast."
+	elif player.reload_remaining > 0: reason = "Finish reloading before casting."
+	elif player.invocation_preparing: reason = "An invocation is preparing."
+	if not reason.is_empty():
+		invocation_notice = reason
+		return {"accepted":false,"reason":reason}
+	var state: Dictionary = invocations.report()
+	var distance := clampf(float(state.get("selected_range_m", 8.0)), 1.0, 32.0)
+	var forward: Vector3 = -player.pivot.global_basis.z
+	forward.y = 0
+	if forward.length_squared() < .001: forward = Vector3.FORWARD
+	forward = forward.normalized()
+	var target: Vector3 = player.global_position + forward * distance
+	var centre := get_viewport().get_visible_rect().size * .5
+	var start: Vector3 = player.camera.project_ray_origin(centre)
+	var direction: Vector3 = player.camera.project_ray_normal(centre)
+	var hit := get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(start, start + direction * 80.0, 1, [player.get_rid()]))
+	if not hit.is_empty():
+		var offset: Vector3 = hit.position - player.global_position
+		offset.y = 0
+		target = player.global_position + offset.limit_length(distance)
+	target.y = 0
+	var result: Dictionary = invocations.request_cast(player.global_position, forward, target)
+	invocation_notice = "Preparing · aim locked" if result.get("accepted", false) else String(result.get("reason", "Cannot cast here."))
+	_update_invocation_hud()
+	return result
+
+func _open_invocations() -> void:
+	if not world_ready or not invocation_panel or invocation_panel.visible: return
+	invocation_return_to_pause = paused
+	set_paused(true)
+	pause_panel.hide()
+	invocation_panel.update_session(invocations.report())
+	invocation_panel.open(invocation_button if invocation_return_to_pause else null)
+
+func _close_invocations() -> void:
+	set_paused(invocation_return_to_pause)
+	if invocation_return_to_pause and invocation_button: invocation_button.grab_focus()
+
+func _select_invocation(hero: String) -> void:
+	if not invocations.select_invocation(hero):
+		invocation_panel.set_notice("This invocation is unavailable.", true)
+		return
+	invocation_notice = "Aim, then cast · affects lane troops"
+	invocation_panel.update_session(invocations.report())
+	invocation_panel.close()
+	_update_invocation_hud()
+
+func _update_invocation_hud() -> void:
+	if not invocations or not invocation_label: return
+	var state: Dictionary = invocations.report()
+	var hero := String(state.get("selected_hero", "rama")).capitalize()
+	var cooldown := float(state.get("cooldown_remaining", 0.0))
+	invocation_label.text = "%s  /  %s" % [hero.to_upper(), "%.1fs" % cooldown if cooldown > 0 else "READY"]
+	invocation_detail.text = "%s cast · %s choose\n%s" % [Bindings.label("ultimate"), Bindings.label("open_invocations"), invocation_notice if not invocation_notice.is_empty() else "Channel a legend through Rama"]
+	if invocation_panel and invocation_panel.visible: invocation_panel.update_session(state)
 
 func _v(data: Array) -> Vector3:
 	return Vector3(float(data[0]),float(data[1]),float(data[2]))
@@ -349,6 +462,9 @@ func _start_siege_practice() -> bool:
 
 func _clear_combat_presentation() -> void:
 	if siege_effects: siege_effects.clear()
+	if invocations: invocations.cancel_active("Practice changed.")
+	if ultimate_fx: ultimate_fx.reset()
+	if invocation_audio: invocation_audio.reset()
 	for parent in [projectiles,effects]:
 		if not parent: continue
 		for child in parent.get_children(): child.queue_free()
@@ -621,6 +737,17 @@ func _build_ui() -> void:
 	goal_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	goal_label.custom_minimum_size=Vector2(220,48)
 	energy_column.add_child(goal_label)
+	var invocation_card := _card(hud, Vector2(20,-206), Vector2(330,100))
+	invocation_card.name = "InvocationStatus"
+	invocation_card.set_anchors_preset(Control.PRESET_BOTTOM_LEFT, true)
+	var invocation_column := VBoxContainer.new()
+	invocation_card.add_child(invocation_column)
+	invocation_label = _label("RAMA / READY", 14, GOLD)
+	invocation_column.add_child(invocation_label)
+	invocation_detail = _label("", 12, CREAM)
+	invocation_detail.custom_minimum_size = Vector2(290,48)
+	invocation_detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	invocation_column.add_child(invocation_detail)
 	var crosshair:=_label("·",30,CREAM)
 	crosshair.name="Crosshair"
 	hud.add_child(crosshair)
@@ -648,6 +775,8 @@ func _build_ui() -> void:
 	practice_mode_label=_label("OFFLINE LANE PRACTICE",12,Color("aec2c3"))
 	menu.add_child(practice_mode_label)
 	_button(menu,"Continue practice",func():set_paused(false))
+	invocation_button = _button(menu,"Choose invocation · 14 legends",_open_invocations)
+	invocation_button.name = "ChooseInvocation"
 	siege_practice_button=_button(menu,"Siege practice · enter drill",_start_siege_practice)
 	siege_practice_button.name="SiegePractice"
 	practice_hint_label=_label("Try cannon carts and royal chariots in the central court. Blasts damage troops; your hero takes no damage.",13,CREAM)
@@ -680,6 +809,15 @@ func _build_ui() -> void:
 	ui.add_child(controls_overlay)
 	controls_overlay.closed.connect(_close_controls)
 	controls_overlay.bindings_changed.connect(_refresh_control_labels)
+	invocation_panel = InvocationPanel.new()
+	invocation_panel.name = "InvocationSelection"
+	ui.add_child(invocation_panel)
+	if not invocation_panel.configure(): push_error("Invocation selector could not load its catalogue.")
+	invocation_panel.invocation_selected.connect(_select_invocation)
+	invocation_panel.closed.connect(_close_invocations)
+	invocation_panel.effects_options_changed.connect(func(options: Dictionary): ultimate_fx.set_options(options))
+	ultimate_fx.set_options(invocation_panel.options())
+	_update_invocation_hud()
 	_wire_pause_focus()
 	_layout_pause_panel()
 
@@ -704,6 +842,7 @@ func _close_controls() -> void:
 func _set_volume(value: float,save: bool=true) -> void:
 	if audio: audio.set_volume(value)
 	if siege_effects: siege_effects.set_volume(value)
+	if invocation_audio: invocation_audio.set_volume(value)
 	if volume_label: volume_label.text="Sound · muted" if value<=0 else "Sound · %d%%" % roundi(value*100)
 	if save:
 		var result: Dictionary=Bindings.merge_settings({"audio":{"volume":value}})
@@ -775,6 +914,15 @@ func _layout_pause_panel() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo: return
 	if controls_overlay and controls_overlay.visible: return
+	if invocation_panel and invocation_panel.visible: return
+	if event.is_action_pressed("open_invocations"):
+		_open_invocations()
+		get_viewport().set_input_as_handled()
+		return
+	if event.is_action_pressed("ultimate"):
+		cast_invocation()
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("help_controls"):
 		_open_controls()
 		get_viewport().set_input_as_handled()
@@ -803,6 +951,7 @@ func _process(delta: float) -> void:
 		var drill: bool=army.report().get("siege_drill",false) if army else false
 		status_label.text="OFFLINE %s · %s · %d / 12 arrows" % ["SIEGE DRILL" if drill else "PRACTICE","Moonlight" if phase>.5 else "Golden hour",player.ammo]
 		_update_practice_hud()
+		_update_invocation_hud()
 		map_control.hero_position=player.position
 		map_control.queue_redraw()
 
@@ -950,13 +1099,28 @@ func set_paused(value: bool) -> void:
 	if player: player.active=not value and not overview
 	if audio: audio.set_suspended(value or overview)
 	if siege_effects: siege_effects.set_suspended(value or overview)
+	if invocations: invocations.set_suspended(value or overview)
+	if ultimate_fx: ultimate_fx.set_suspended(value or overview)
+	if invocation_audio: invocation_audio.set_suspended(value or overview)
 	Input.mouse_mode=Input.MOUSE_MODE_VISIBLE if value or overview else Input.MOUSE_MODE_CAPTURED
 	if not value: get_viewport().gui_release_focus()
 	if value and pause_panel:
 		_layout_pause_panel()
 		_update_practice_hud()
-		var buttons:=pause_panel.find_children("*","Button",true,false)
-		if not buttons.is_empty(): buttons[0].grab_focus()
+		if not (controls_overlay and controls_overlay.visible) and not (invocation_panel and invocation_panel.visible):
+			var buttons:=pause_panel.find_children("*","Button",true,false)
+			if not buttons.is_empty(): buttons[0].grab_focus()
+			call_deferred("_reveal_pause_focus")
+
+func _reveal_pause_focus() -> void:
+	# Focus can predate the visible container's final sort, or already belong to
+	# an offscreen button. Reveal after layout without stealing a newer focus.
+	await get_tree().process_frame
+	if not paused or not pause_panel.visible: return
+	if controls_overlay and controls_overlay.visible: return
+	if invocation_panel and invocation_panel.visible: return
+	var focus:=get_viewport().gui_get_focus_owner()
+	if focus in pause_actions: pause_scroll.ensure_control_visible(focus)
 
 func _focus_lost() -> void:
 	if not world_ready: return
@@ -965,9 +1129,13 @@ func _focus_lost() -> void:
 		controls_return_to_pause=true
 	set_paused(true)
 	if controls_overlay and controls_overlay.visible: pause_panel.hide()
+	if invocation_panel and invocation_panel.visible:
+		invocation_return_to_pause = true
+		pause_panel.hide()
 
 func teleport_to(position_: Vector3, yaw_degrees: float=180.0) -> void:
 	if not position_.is_finite() or not is_finite(yaw_degrees): return
+	if invocations: invocations.cancel_active("Travel cancelled the invocation.")
 	if overview: set_overview(false)
 	release_actions()
 	player.reset()
@@ -996,6 +1164,9 @@ func set_overview(value: bool) -> void:
 	if relays and relays.art: relays.art.process_mode=Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_PAUSABLE
 	if audio: audio.set_suspended(value or paused)
 	if siege_effects: siege_effects.set_suspended(value or paused)
+	if invocations: invocations.set_suspended(value or paused)
+	if ultimate_fx: ultimate_fx.set_suspended(value or paused)
+	if invocation_audio: invocation_audio.set_suspended(value or paused)
 	player.active=not value and not paused
 	if value:
 		review_camera.position=Vector3(118,155,195)
@@ -1059,7 +1230,7 @@ func _pulse(origin: Vector3) -> void:
 	tween.tween_callback(ring.queue_free)
 
 func build_report() -> Dictionary:
-	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"relays":relays.report() if relays else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
+	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"relays":relays.report() if relays else {},"invocations":invocations.report() if invocations else {},"ultimate_effects":ultimate_fx.report() if ultimate_fx else {},"invocation_ui":invocation_panel.report() if invocation_panel else {},"invocation_audio":invocation_audio.report() if invocation_audio else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
 
 func get_build_report() -> Dictionary:
 	return build_report()

@@ -310,7 +310,7 @@ func _save_image(filename: String) -> Dictionary:
 
 func _source_hashes() -> Dictionary:
 	var paths: Array[String] = ["res://project.godot","res://tools/capture-traversal.gd","res://tools/run-traversal-capture.py","res://art/world/confluence-map.json"]
-	for directory in ["res://scripts","res://scenes","res://assets"]:
+	for directory in ["res://scripts","res://shaders","res://scenes","res://assets"]:
 		_collect(directory,paths)
 	paths.sort()
 	var result := {}

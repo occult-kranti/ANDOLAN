@@ -3,6 +3,8 @@ const Contracts = preload("res://scripts/native_contracts.gd")
 var checks: Array = []
 var sources: Dictionary = {}
 const PROFILE := "native-offline-triad"
+# Exact Batch 1 descriptor, preserved before revision-2 migration.
+const CONTENT1_DESCRIPTOR := {"content_sha256":"d6943aafc45ead1b40f87a37ea0bdd6d7724e81eac86a434bfd6f04fc247520d","contract_id":"yuga-native-contracts-v1","map_id":"native-confluence-140x260","map_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","profile_id":"native-offline-triad","protocol":0.0,"rules_sha256":"5b692277e0257a893eabef198e353673c21359807f998c799f899f71164d84a1","versions":{"content":1.0,"contract":1.0,"entity":1.0,"event":1.0,"input":1.0,"map":1.0,"replay":1.0,"rules":1.0}}
 const SCOPE := {"room":"FIXTURE","epoch":1,"identity":"hero"}
 
 func _initialize() -> void:
@@ -69,6 +71,30 @@ func run() -> void:
 		check("reject_changed_catalog_%d"%alteration,not Contracts.validate_catalog(bad).ok)
 	var local: Dictionary=g.descriptor(PROFILE)
 	check("exact_descriptor_match",Contracts.compatibility(local,local.duplicate(true)).ok)
+	check("native_content_revision2_separate_from_unchanged_wire",local.versions.content==2 and local.versions.input==1 and local.versions.entity==1 and local.versions.event==1 and local.versions.replay==1)
+	check("browser_and_proposal_content_stay_revision1",g.descriptor("browser-p2-3v3").versions.content==1 and g.descriptor("production-6v6").versions.content==1)
+	for profile_index in 3:
+		for invalid in [null,0,-1,1.5,true,"2",[],{},NAN,INF,65536]:
+			var malformed: Dictionary=catalog.duplicate(true)
+			malformed.profiles[profile_index].content_revision=invalid
+			check("content_revision_type_%d_%s"%[profile_index,str(invalid)],not Contracts.validate_catalog(malformed).ok)
+		var missing: Dictionary=catalog.duplicate(true);missing.profiles[profile_index].erase("content_revision")
+		check("required_content_revision_%d"%profile_index,not Contracts.validate_catalog(missing).ok)
+		var stale: Dictionary=catalog.duplicate(true);stale.profiles[profile_index].content_revision=1 if profile_index==1 else 2
+		check("wrong_known_content_revision_%d"%profile_index,not Contracts.validate_catalog(stale).ok)
+	var old_open := Contracts.new();assert(old_open.load_catalog().ok)
+	var empty_before: Dictionary=old_open.report()
+	var mismatch: Dictionary=old_open.open_session(PROFILE,CONTENT1_DESCRIPTOR,SCOPE)
+	check("old_content1_cannot_open_revision2",not mismatch.ok and mismatch.code=="MISMATCH_VERSIONS" and mismatch.details.field=="content" and old_open.report()==empty_before)
+	var before_revision_reject: Dictionary=g.report()
+	check("old_content1_resume_transactional",not g.resume_session(CONTENT1_DESCRIPTOR,SCOPE).ok and before_revision_reject==g.report())
+	var next_epoch: Dictionary=SCOPE.duplicate(true);next_epoch.epoch=2
+	check("old_content1_migration_cannot_downgrade",not g.migrate_session(PROFILE,CONTENT1_DESCRIPTOR,next_epoch).ok and before_revision_reject==g.report())
+	var old_replay: Dictionary={"format":1,"descriptor":CONTENT1_DESCRIPTOR.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
+	check("old_content1_replay_rejected_before_reconstruction",not g.validate_replay(old_replay,[]).ok and before_revision_reject==g.report())
+	var forged_current: Dictionary=CONTENT1_DESCRIPTOR.duplicate(true);forged_current.versions.content=2
+	check("revision_number_alone_does_not_bypass_source_identity",not Contracts.compatibility(local,forged_current).ok)
+
 	for field in ["contract_id","profile_id","protocol","rules_sha256","map_id","map_sha256","content_sha256"]:
 		var bad := local.duplicate(true)
 		if field=="protocol": bad[field]=2

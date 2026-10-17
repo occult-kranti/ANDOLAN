@@ -1,0 +1,387 @@
+{
+	"checks": [
+		{
+			"evidence": {
+				"report": {
+					"active": {
+
+					},
+					"epoch": -1,
+					"errors": [],
+					"last_cast_id": 0,
+					"last_event_seq": -1,
+					"played": 0,
+					"players": 3,
+					"playing": 0,
+					"ready": true,
+					"rejected": 0,
+					"streams": 16,
+					"suppressed": 0,
+					"suspended": false,
+					"voices": [
+						{
+							"cast_id": 0,
+							"cue": "",
+							"playing": false,
+							"serial": -1
+						},
+						{
+							"cast_id": 0,
+							"cue": "",
+							"playing": false,
+							"serial": -1
+						},
+						{
+							"cast_id": 0,
+							"cue": "",
+							"playing": false,
+							"serial": -1
+						}
+					],
+					"volume": 0.35
+				}
+			},
+			"name": "sixteen_original_streams_and_exact_three_players",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "all_pcm_are_short_nonlooping_unique_and_48khz",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "begin_plays_one_original_windup",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "duplicate_begin_does_not_replay",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "release_selects_rama_timbre_once",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "DUPLICATE_RELEASE"
+			},
+			"name": "higher_sequence_duplicate_release_is_silent",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "200_tick_and_impact_events_do_not_restart_sound",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "end_retires_cast_and_stops_sound",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "NO_MATCHING_CAST"
+			},
+			"name": "late_release_after_end_rejected",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "CAST_REUSE"
+			},
+			"name": "cast_id_cannot_be_reused",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "next_cast_begin_accepted",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "cancel_retires_and_plays_short_cue",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_kind",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_epoch",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_cast_id",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_event_seq",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_hero_id",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_effect_id",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_team",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_time_s",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_origin",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_nonfinite_time_nan",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_nonfinite_time_inf",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_nonfinite_time_-1.0",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_nonfinite_vector",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "effect_version_mismatch_rejected",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "unknown_hero_cannot_load_resource",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "nonfinite_volume_preserves_previous_setting",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "volume_clamps_high",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "zero_volume_truly_stops_voices",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "muted_begin_and_release_consume_silently",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "unmute_cannot_replay_consumed_release",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "unmute_does_not_restart_old_voice",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "suspension_stops_current_sound",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "suspended_release_consumed_without_voice",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "resume_cannot_replay_release",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "local_reset_clears_voices_keeps_epoch_and_watermark",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "late_event_after_local_reset_rejected",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "same_epoch_reset_cannot_retire_current_session",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "higher_epoch_reset_starts_new_serial_space",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "old_epoch_never_plays",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "all_fourteen_heroes_select_distinct_original_release",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"maximum_playing": 1,
+				"nodes": 4,
+				"players": 3
+			},
+			"name": "1000_casts_no_node_or_voice_growth",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "paused_tree_onsets_consumed_without_playback",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "tree_resume_cannot_replay_suppressed_release",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "resume_has_no_delayed_audio_queue",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "source_frozen",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "teardown_frees_all_audio_players",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": true,
+	"scope": "Original PCM structural checks and actual Dummy AudioStreamPlayer lifecycle/event/mute tests. No listening or perceptual quality claim.",
+	"source_sha256": {
+		"res://assets/audio/invocations/manifest.json": "5431df91ae0710c266a7767ee64f3aa479c54e73d054f03b45843af33e19217a",
+		"res://scripts/invocation_audio.gd": "2eb88e715d766fb4ed6feaf307e32912fd66dd3ddc5a8155b1ebb4993b78614e",
+		"res://tests/invocation_audio_cases.gd": "7347b49ab8fd7ecfe5bde2f14cb64159895a2f3f2f62b4391f25b665087b9afa"
+	}
+}

@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "checks": 287,
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/scripts/native_contracts.gd": "7a4e829c35e7d9385c832e0aaeae8b2ba5d380c6c5eaff2a1f9cd0d56a3734e9",
+    "/workspace/ANDOLAN/games/yuga-native/assets/contracts/native-contracts-v1.json": "0dd3c82b0fc9b4d7448476bdfaa5d63925173e89ac32169c78208217f25cb1a0",
+    "/workspace/scratch/yuga-bridge/native-practice-content1-descriptor.json": "4758b1caa95f119c48dd48fa8d45f29b9fad651c6f3f9d5555a371c34be5da87"
+  },
+  "sources_unchanged": true,
+  "source_commit": "eedfd1f94181cddfad293e3e95f126b96c72baed",
+  "reports": [
+    {
+      "name": "contracts-probe-r2",
+      "passed": true,
+      "checks": 43,
+      "report": "/workspace/scratch/yuga-contracts-b2-independent/contracts-probe-r2.json",
+      "log": "/workspace/scratch/yuga-contracts-b2-independent/contracts-probe-r2.log.txt",
+      "diagnostics": [],
+      "command": "XDG_DATA_HOME=/workspace/scratch/yuga-contracts-b2-independent/user-malformed GODOT_SILENCE_ROOT_WARNING=1 /usr/local/bin/godot --headless --path /workspace/ANDOLAN/games/yuga-native --script /workspace/scratch/yuga-contracts-b2-independent/contracts-probe-r2.gd > /workspace/scratch/yuga-contracts-b2-independent/contracts-probe-r2.log.txt 2>&1",
+      "exit_code": 0
+    },
+    {
+      "name": "contracts-replay-r2",
+      "passed": true,
+      "checks": 127,
+      "report": "/workspace/scratch/yuga-contracts-b2-independent/contracts-replay-r2.json",
+      "log": "/workspace/scratch/yuga-contracts-b2-independent/contracts-replay-r2.log.txt",
+      "diagnostics": [],
+      "command": "XDG_DATA_HOME=/workspace/scratch/yuga-contracts-b2-independent/user-replay GODOT_SILENCE_ROOT_WARNING=1 /usr/local/bin/godot --headless --path /workspace/ANDOLAN/games/yuga-native --script /workspace/scratch/yuga-contracts-b2-independent/contracts-replay-probe.gd > /workspace/scratch/yuga-contracts-b2-independent/contracts-replay-r2.log.txt 2>&1",
+      "exit_code": 0
+    },
+    {
+      "name": "content-revision-r2",
+      "passed": true,
+      "checks": 117,
+      "report": "/workspace/scratch/yuga-contracts-b2-independent/content-revision-r2.json",
+      "log": "/workspace/scratch/yuga-contracts-b2-independent/content-revision-r2.log.txt",
+      "diagnostics": [],
+      "command": "XDG_DATA_HOME=/workspace/scratch/yuga-contracts-b2-independent/user-revision-r2 GODOT_SILENCE_ROOT_WARNING=1 /usr/local/bin/godot --headless --path /workspace/ANDOLAN/games/yuga-native --script /workspace/scratch/yuga-contracts-b2-independent/content-revision-probe-r2.gd > /workspace/scratch/yuga-contracts-b2-independent/content-revision-r2.log.txt 2>&1",
+      "exit_code": 0
+    }
+  ],
+  "retained_failed_run": {
+    "report": "/workspace/scratch/yuga-contracts-b2-independent/content-revision.json",
+    "checks": 117,
+    "failing_checks": 36,
+    "diagnosis": "Scratch fixture JSON serialization used default precision; Godot reparsing returned CATALOG_LIMITS before content validation. Explicit full_precision serialization restores original numeric representation; source unchanged. Original report, log and fixtures retained."
+  }
+}

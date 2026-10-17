@@ -17,7 +17,19 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGER = ROOT / "tools/package-native.py"
+INVOCATION_NAMES = [
+    "assets/design/hero-codex.json", "assets/design/native-ultimate-rules.json",
+    "assets/audio/invocations/manifest.json",
+    *[f"scripts/{name}.gd" for name in (
+        "ultimate_rules", "ultimate_session", "ultimate_effects", "invocation_panel", "invocation_audio")],
+    *[f".godot/imported/{name}.wav-fixture.sample" for name in (
+        "windup", "cancel", "rama-release", "ravana-release", "arjuna-release",
+        "duryodhana-release", "hanuman-release", "karna-release", "bhima-release",
+        "meghnad-release", "sita-release", "draupadi-release", "subhadra-release",
+        "hidimbi-release", "chitrangada-release", "ulupi-release")],
+]
 NAMES = [
+    *INVOCATION_NAMES,
     "assets/audio/siege/provenance.json", "project.binary", "scenes/courtyard.tscn", "scenes/confluence_world.tscn",
     "scenes/combat_film.tscn", "assets/world/confluence-map.json",
     "assets/cinematics/confluence-duel.json", "shaders/production_water.gdshader",
@@ -121,6 +133,8 @@ def main() -> int:
             entry for entry in entries if entry[0] != "scripts/traversal_stone.gdshader"])[0])
         for missing in ("scripts/relay_control.gd", "scripts/relay_session.gd", "scripts/relay_art.gd", "assets/audio/siege/provenance.json", "scripts/lane_vehicle_art.gd", "scripts/siege_effects.gd", ".godot/imported/cannon_windup.wav-fixture.sample", ".godot/imported/cannon_impact.wav-fixture.sample", ".godot/imported/chariot_windup.wav-fixture.sample", ".godot/imported/chariot_impact.wav-fixture.sample"):
             evaluate("missing siege resource rejected: " + missing, pack([entry for entry in entries if entry[0] != missing])[0])
+        for missing in INVOCATION_NAMES:
+            evaluate("missing invocation resource rejected: " + missing, pack([entry for entry in entries if entry[0] != missing])[0])
         corrupt = bytearray(baseline)
         corrupt[-1] ^= 1
         evaluate("payload checksum corruption rejected", bytes(corrupt))

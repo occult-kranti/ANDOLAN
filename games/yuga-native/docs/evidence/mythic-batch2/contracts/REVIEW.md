@@ -1,0 +1,9 @@
+# Native content revision 2
+
+The required per-profile `content_revision` is now native practice 2, browser 1 and production proposal 1. Descriptors override only the content version; the input/event/entity/replay wire versions remain 1. Native revision 2 pins all seven explicitly enumerated gameplay sources, including the new invocation receivers, session and rule data. The runtime cannot silently reuse the old digest.
+
+`native-contracts.json` passes 228 owner cases and `source-pins.json` passes 33 checks. The preserved `native-practice-content1-descriptor.json` is the actual pre-migration descriptor, not a synthesized current descriptor with one altered field. Fixtures reject its open/resume/migration/replay attempts transactionally; merely changing its content number cannot bypass the changed rules/content identity. Malformed, missing and wrong known profile revisions reject before load.
+
+The required extra profile field changes descriptive rules hashes for browser/proposal too. Their content version stays 1 and the actual browser wire remains protocol 2. Existing catalogue consumers must derive the new descriptor; this does not migrate the browser server. Batch 1 accepted reports remain untouched. [The independent rerun](independent/summary.json) passes 287/287 probes (original 170 plus 117 revision/transaction cases) with frozen runtime/catalogue hashes. Its first scratch-fixture serialization failure remains retained and explained in `independent/REVIEW.txt`; changing only the fixture writer to full-precision JSON corrected that harness, with no runtime edit.
+
+This packet specifies and validates contracts; it does not authenticate clients, connect a native online match, select production physics or replay gameplay simulation. See [the architecture contract](../../../NATIVE_CONTRACTS.md).

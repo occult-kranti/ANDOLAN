@@ -1,0 +1,1453 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "workflow writes all mandatory mythic reports",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {}
+    },
+    {
+      "name": "workflow pins Node22 and installs locked dependencies",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {}
+    },
+    {
+      "name": "mythic traversal demands shader coverage without changing historical default",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {}
+    },
+    {
+      "name": "exact mythic suffix and old routing preserved",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {}
+    },
+    {
+      "name": "valid actual full-only schema without preview key",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "explicit false preview remains accepted",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "fresh decoder invoked",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {
+        "decoder_calls": 1
+      }
+    },
+    {
+      "name": "fresh decode failure rejects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Synthetic decoder rejection",
+      "details": {
+        "decoder_calls": 1
+      }
+    },
+    {
+      "name": "valid mythic stage binds fresh traversal plus ultimate",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "incomplete",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture is incomplete, preview-only or failed",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "preview",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture is incomplete, preview-only or failed",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "numeric preview",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture is incomplete, preview-only or failed",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "string preview",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture is incomplete, preview-only or failed",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "null preview",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture is incomplete, preview-only or failed",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "failure",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture is incomplete, preview-only or failed",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "fake gameplay claim",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture must identify staged presentation-only scope",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "headless",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture lacks actual Forward+ X11 display",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "fallback renderer",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture lacks actual Forward+ X11 display",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "wrong frames",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate take lacks 120 consecutive frames",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "wrong ticks",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate timing or dimensions differ",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "bad time scale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate time scale must be one",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "zero time scale",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate time scale must be one",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "invalid start",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate starting physics tick is invalid",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "tick gap",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate physics sequence is discontinuous",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "draw did not advance",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate render counter did not advance",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "nonfinite pose",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate frame finite/timing evidence differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "wrong sample time",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate frame finite/timing evidence differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "zero counters",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate image lacks actual renderer counters",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "missing source",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate source inventory differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "changed source hash",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate captured source changed: scripts/ultimate_effects.gd",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "missing hero",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate studies omit or duplicate a hero",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "duplicate hero",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate studies omit or duplicate a hero",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "wrong effect identity",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate still identity/shape/age differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "wrong shape",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate still identity/shape/age differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "nonfinite age",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate still identity/shape/age differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "zero age",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate still identity/shape/age differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "missing events",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate scripted event ledger is missing/incomplete",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "events reordered",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate event sequence/lifetime identity differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "wrong event sequence",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate event sequence/lifetime identity differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "wrong projectile contact",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate event choreography/index differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "no persistent cancel disclosure",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate staged choreography outcomes missing",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "no active hero",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Each hero study must contain its active effect",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "too many effects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate FX population/budget differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "unbounded triangles",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate FX population/budget differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "nonfinite FX",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate FX state is nonfinite or absent",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "fake phase",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate effect phases are invalid",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "phase population mismatch",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate phase count differs from active effects",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "no expired tail",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate phase count differs from active effects",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "no contact outcome",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate staged choreography outcomes missing",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "missing variant",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate mode/overlap studies missing or duplicated",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "low effects not applied",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate low-effects setting was not applied",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "reduced motion not applied",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate reduced-motion setting was not applied",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "four overlap missing",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate variant population differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "missing import",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate capture omits exact Rama import proof",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "stale import",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate import proof stale/malformed/unsafe",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "unsafe import",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate import proof stale/malformed/unsafe",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "required capture file yuga-ultimate-studies.mp4",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: yuga-ultimate-studies.mp4",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit yuga-ultimate-studies.mp4",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file ULTIMATE-RENDER-REVIEW.md",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: ULTIMATE-RENDER-REVIEW.md",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit ULTIMATE-RENDER-REVIEW.md",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file ultimate-video.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: ultimate-video.json",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit ultimate-video.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file ultimate-frame-00090.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: ultimate-frame-00090.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit ultimate-frame-00090.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file ultimate-frame-00119.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: ultimate-frame-00119.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit ultimate-frame-00119.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-sita.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-sita.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-sita.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-ravana.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-ravana.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-ravana.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-hidimbi.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-hidimbi.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-hidimbi.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-hanuman.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-hanuman.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-hanuman.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-reduced-motion.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-reduced-motion.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-reduced-motion.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-ulupi.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-ulupi.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-ulupi.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-chitrangada.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-chitrangada.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-chitrangada.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-subhadra.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-subhadra.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-subhadra.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-arjuna.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-arjuna.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-arjuna.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file ultimate-frame-00040.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: ultimate-frame-00040.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit ultimate-frame-00040.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-bhima.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-bhima.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-bhima.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file ultimate-frame-00000.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: ultimate-frame-00000.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit ultimate-frame-00000.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-duryodhana.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-duryodhana.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-duryodhana.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-rama.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-rama.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-rama.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-four-overlap.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-four-overlap.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-four-overlap.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file ultimate-frame-00020.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: ultimate-frame-00020.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit ultimate-frame-00020.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-meghnad.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-meghnad.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-meghnad.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-karna.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-karna.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-karna.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-draupadi.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-draupadi.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-draupadi.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file ultimate-render-review.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: ultimate-render-review.json",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit ultimate-render-review.json",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file ultimate-frame-00060.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: ultimate-frame-00060.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit ultimate-frame-00060.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "required capture file still-low-effects.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: still-low-effects.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit still-low-effects.png",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic release omits required capture assets",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check hero-codex",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: hero-codex",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check hero-codex",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check hero-codex-cases",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: hero-codex-cases",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check hero-codex-cases",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check hero-reconstruction",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: hero-reconstruction",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check hero-reconstruction",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check native-contract-pins",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: native-contract-pins",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check native-contract-pins",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check native-contracts",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: native-contracts",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check native-contracts",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check hero-pose",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: hero-pose",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check hero-pose",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check world-presentation",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: world-presentation",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check world-presentation",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check entity-bridge",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: entity-bridge",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check entity-bridge",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check physics",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: physics",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check physics",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check ultimate",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: ultimate",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check ultimate",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check ultimate-effects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: ultimate-effects",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check ultimate-effects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check invocation-ui",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: invocation-ui",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check invocation-ui",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check invocation-audio",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: invocation-audio",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check invocation-audio",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check invocation-audio-build",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: invocation-audio-build",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check invocation-audio-build",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check mythic-integration",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: mythic-integration",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check mythic-integration",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "failed required check mythic-release-gates",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check is missing/failed: mythic-release-gates",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "resealed package cannot omit check mythic-release-gates",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Feature release omits required assets/reports",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "empty successful gameplay report rejects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic test checks are empty, malformed or failed",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "stale gameplay source pin rejects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check source changed: scripts/ultimate_session.gd",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "missing mandatory gameplay source pin rejects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic required source pins missing: ultimate",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "actual source changed",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate captured source changed: scripts/ultimate_effects.gd",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "export source differs",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate export differs from capture: scripts/ultimate_effects.gd",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "export omits runtime",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate exported runtime source set differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "retained PNG substituted",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate retained image differs: still-rama.png",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "movie substituted",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate movie bytes/completion differ",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "cannot substitute historical traversal directory",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Missing/nonregular file: traversal-render-review.json",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "changed committed mythic capture rejects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic capture/source differs from committed checkout",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "untracked mythic capture rejects",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Command '['git', 'ls-files', '--error-unmatch', '--', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/ULTIMATE-RENDER-REVIEW.md', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-arjuna.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-bhima.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-chitrangada.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-draupadi.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-duryodhana.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-four-overlap.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-hanuman.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-hidimbi.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-karna.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-low-effects.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-meghnad.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-rama.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-ravana.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-reduced-motion.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-sita.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-subhadra.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/still-ulupi.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/ultimate-frame-00000.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/ultimate-frame-00020.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/ultimate-frame-00040.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/ultimate-frame-00060.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/ultimate-frame-00090.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/ultimate-frame-00119.png', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/ultimate-render-review.json', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/ultimate-video.json', 'games/yuga-native/docs/evidence/mythic-ultimates-render-r1/yuga-ultimate-studies.mp4', 'games/yuga-native/art/world/confluence-map.json', 'games/yuga-native/assets/audio/invocations/arjuna-release.wav', 'games/yuga-native/assets/audio/invocations/bhima-release.wav', 'games/yuga-native/assets/audio/invocations/cancel.wav', 'games/yuga-native/assets/audio/invocations/chitrangada-release.wav', 'games/yuga-native/assets/audio/invocations/draupadi-release.wav', 'games/yuga-native/assets/audio/invocations/duryodhana-release.wav', 'games/yuga-native/assets/audio/invocations/hanuman-release.wav', 'games/yuga-native/assets/audio/invocations/hidimbi-release.wav', 'games/yuga-native/assets/audio/invocations/karna-release.wav', 'games/yuga-native/assets/audio/invocations/manifest.json', 'games/yuga-native/assets/audio/invocations/meghnad-release.wav', 'games/yuga-native/assets/audio/invocations/rama-release.wav', 'games/yuga-native/assets/audio/invocations/ravana-release.wav', 'games/yuga-native/assets/audio/invocations/sita-release.wav', 'games/yuga-native/assets/audio/invocations/subhadra-release.wav', 'games/yuga-native/assets/audio/invocations/ulupi-release.wav', 'games/yuga-native/assets/audio/invocations/windup.wav', 'games/yuga-native/assets/audio/traversal/lane-procession-loop.wav', 'games/yuga-native/assets/contracts/native-contracts-v1.json', 'games/yuga-native/assets/contracts/physics-fixture-v1.json', 'games/yuga-native/assets/design/hero-codex.json', 'games/yuga-native/assets/design/native-ultimate-rules.json', 'games/yuga-native/assets/heroes/rama-production.glb', 'games/yuga-native/assets/world/confluence-map.json', 'games/yuga-native/project.godot', 'games/yuga-native/scenes/confluence_world.tscn', 'games/yuga-native/scripts/confluence_world.gd', 'games/yuga-native/scripts/entity_bridge.gd', 'games/yuga-native/scripts/hero_pose.gd', 'games/yuga-native/scripts/input_bindings.gd', 'games/yuga-native/scripts/invocation_audio.gd', 'games/yuga-native/scripts/invocation_panel.gd', 'games/yuga-native/scripts/lane_army.gd', 'games/yuga-native/scripts/lane_minion.gd', 'games/yuga-native/scripts/mythic_environment.gd', 'games/yuga-native/scripts/native_contracts.gd', 'games/yuga-native/scripts/player.gd', 'games/yuga-native/scripts/player_traversal.gd', 'games/yuga-native/scripts/traversal_audio.gd', 'games/yuga-native/scripts/traversal_landmarks.gd', 'games/yuga-native/scripts/traversal_pose.gd', 'games/yuga-native/scripts/ultimate_effects.gd', 'games/yuga-native/scripts/ultimate_rules.gd', 'games/yuga-native/scripts/ultimate_session.gd', 'games/yuga-native/scripts/world_lighting.gd', 'games/yuga-native/tools/capture-ultimates.gd', 'games/yuga-native/tools/run-traversal-capture.py', 'games/yuga-native/tools/run-ultimate-capture.py']' returned non-zero exit status 1.",
+      "details": {
+        "traversal_decodes": 1,
+        "ultimate_decodes": 1
+      }
+    },
+    {
+      "name": "validator source unchanged during test",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {}
+    }
+  ],
+  "source_sha256": {
+    "tests/release_mythic_cases.py": "54d717d650ebb1bbef6c2080ff1221769edac2c6b2683de9373ec7ec591f1e81",
+    "tools/release-native.py": "62e5865352b833845f9aa2a1dd2efed52363797ad7dafe4747f927c097eac0f9",
+    "tests/release_traversal_cases.py": "b818d25df0cc3351a62025b87264d10ec983c75c51943121745b99d1c5165e63"
+  },
+  "scope": "Synthetic packages/images and mocked decoder/Git; validates fail-closed publication behavior, not pixels, builds or a real release."
+}

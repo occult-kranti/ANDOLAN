@@ -24,6 +24,12 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # pinned Node setup
+        with:
+          node-version: '22.14.0'
+          cache: npm
+      - name: Install locked catalogue and physics dependencies
+        run: npm ci
       - name: Prepare fixed tools and check directories
         run: |
           set -euo pipefail
@@ -89,6 +95,28 @@ jobs:
           "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tools/test-relay-art.gd -- --report="$RUNNER_TEMP/checks/relay-art.json"
           "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tools/test-relay-integration.gd -- --report="$RUNNER_TEMP/checks/relay-integration.json"
           python3 games/yuga-native/tests/release_triad_cases.py --report="$RUNNER_TEMP/checks/triad-release-gates.json"
+      - name: Verify all mythic catalogue contracts physics and gameplay packets
+        if: startsWith(github.ref, 'refs/tags/yuga-traversal-armies-') && endsWith(github.ref, '-mythic')
+        run: |
+          set -euo pipefail
+          engine="$RUNNER_TEMP/engines/Godot_v4.6.3-stable_linux.x86_64"
+          python3 games/yuga-native/tools/check-hero-codex.py --report="$RUNNER_TEMP/checks/hero-codex.json"
+          python3 games/yuga-native/tests/hero_codex_cases.py --report="$RUNNER_TEMP/checks/hero-codex-cases.json"
+          python3 games/yuga-native/tests/hero_reconstruction_cases.py --report="$RUNNER_TEMP/checks/hero-reconstruction.json"
+          python3 games/yuga-native/tools/check-native-contracts.py --report="$RUNNER_TEMP/checks/native-contract-pins.json"
+          "$engine" --headless --path games/yuga-native --script res://tests/native_contract_cases.gd -- --report="$RUNNER_TEMP/checks/native-contracts.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/hero_pose_cases.gd -- --report="$RUNNER_TEMP/checks/hero-pose.json"
+          "$engine" --headless --path games/yuga-native --script res://tests/world_presentation_cases.gd -- --report="$RUNNER_TEMP/checks/world-presentation.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/entity_bridge_cases.gd -- --report="$RUNNER_TEMP/checks/entity-bridge.json"
+          python3 games/yuga-native/tools/physics/run.py --godot "$engine" --output "$RUNNER_TEMP/checks/physics-run"
+          cp "$RUNNER_TEMP/checks/physics-run/comparison.json" "$RUNNER_TEMP/checks/physics.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/ultimate_cases.gd -- --report="$RUNNER_TEMP/checks/ultimate.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/ultimate_effects_cases.gd -- --report="$RUNNER_TEMP/checks/ultimate-effects.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/invocation_ui_cases.gd -- --report="$RUNNER_TEMP/checks/invocation-ui.json"
+          python3 games/yuga-native/tools/audio/build-invocation-audio.py --check --report="$RUNNER_TEMP/checks/invocation-audio-build.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/invocation_audio_cases.gd -- --report="$RUNNER_TEMP/checks/invocation-audio.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/mythic_integration_cases.gd -- --report="$RUNNER_TEMP/checks/mythic-integration.json"
+          python3 games/yuga-native/tests/release_mythic_cases.py --report="$RUNNER_TEMP/checks/mythic-release-gates.json"
       - name: Export, inspect and package both native platforms
         run: |
           set -euo pipefail

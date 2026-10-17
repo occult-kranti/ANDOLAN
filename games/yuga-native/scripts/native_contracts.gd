@@ -3,6 +3,7 @@ extends RefCounted
 const CATALOG_PATH := "res://assets/contracts/native-contracts-v1.json"
 const MAX_SAFE := 9007199254740991
 const PROFILE_IDS := ["browser-p2-3v3", "native-offline-triad", "production-6v6"]
+const CONTENT_REVISIONS := {"browser-p2-3v3":1,"native-offline-triad":2,"production-6v6":1}
 const ENTITY_CAPS := {"actor":12,"minion":96,"neutral":32,"structure":32,"projectile":192,"zone":128,"pickup":32,"gold_shard":96}
 const EVENT_KINDS := ["spawn","despawn","shot","hit","defeat","objective","reward","match_end"]
 const DESCRIPTOR_KEYS := ["contract_id","profile_id","versions","protocol","rules_sha256","map_id","map_sha256","content_sha256"]
@@ -77,6 +78,7 @@ static func validate_catalog(data: Variant) -> Dictionary:
 	for p in data.profiles:
 		if not p is Dictionary or not _choice(p.get("id"),PROFILE_IDS) or found.has(p.id): return _result(false,"CATALOG_PROFILE")
 		found[p.id]=true
+		if not _integer(p.get("content_revision"),CONTENT_REVISIONS[p.id],CONTENT_REVISIONS[p.id]): return _result(false,"CATALOG_CONTENT_REVISION")
 		if not p.get("live_handshake") is bool or p.live_handshake or not _hash(p.get("map_sha256")) or not _hash(p.get("content_sha256")) or not _id(p.get("map_id")): return _result(false,"CATALOG_IDENTITY")
 		if not p.get("content_sources") is Dictionary or p.content_sources.is_empty() or p.content_sources.size()>32: return _result(false,"CATALOG_CONTENT")
 		for path in p.content_sources:
@@ -118,7 +120,9 @@ func profile(id: String) -> Dictionary:
 func descriptor(id: String) -> Dictionary:
 	var p := profile(id)
 	if p.is_empty(): return {}
-	return {"contract_id":_catalog.contract_id,"profile_id":p.id,"versions":_catalog.envelope_versions.duplicate(true),"protocol":p.protocol,"rules_sha256":JSON.stringify({"profile":p,"coordinates":_catalog.coordinate_contract,"limits":_catalog.limits},"",true).sha256_text(),"map_id":p.map_id,"map_sha256":p.map_sha256,"content_sha256":p.content_sha256}
+	var versions: Dictionary=_catalog.envelope_versions.duplicate(true)
+	versions.content=int(p.content_revision)
+	return {"contract_id":_catalog.contract_id,"profile_id":p.id,"versions":versions,"protocol":p.protocol,"rules_sha256":JSON.stringify({"profile":p,"coordinates":_catalog.coordinate_contract,"limits":_catalog.limits},"",true).sha256_text(),"map_id":p.map_id,"map_sha256":p.map_sha256,"content_sha256":p.content_sha256}
 
 static func validate_descriptor(value: Variant) -> Dictionary:
 	if not _keys(value,DESCRIPTOR_KEYS) or not _text(value.get("contract_id"),"yuga-native-contracts-v1") or not _choice(value.get("profile_id"),PROFILE_IDS): return _result(false,"DESCRIPTOR_SCHEMA")

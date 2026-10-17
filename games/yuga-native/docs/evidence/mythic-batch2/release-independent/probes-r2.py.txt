@@ -1,0 +1,24 @@
+from pathlib import Path
+import hashlib,importlib.util,json,copy
+root=Path('/workspace/ANDOLAN');source=root/'games/yuga-native/tests/release_mythic_cases.py'
+spec=importlib.util.spec_from_file_location('owner_fixture',source);f=importlib.util.module_from_spec(spec);spec.loader.exec_module(f)
+f.direct('independent_baseline',expected=True)
+f.direct('actual_producer_no_preview_field',lambda c,p,e:f.mutate(c,lambda r:r.pop('preview',None)),expected=True)
+def actual_fixed_sources(c,p,e):
+ for name in ('art/world/confluence-map.json','tools/run-traversal-capture.py'):
+  if not (p/name).exists():f.write(p/name,'Synthetic actual producer source '+name)
+ f.mutate(c,lambda r:r['source_sha256'].update({'res://'+name:f.release.digest(p/name) for name in ('art/world/confluence-map.json','tools/run-traversal-capture.py')}))
+f.direct('actual_producer_fixed_source_set',actual_fixed_sources,expected=True)
+f.direct('missing_scripted_event_ledger',lambda c,p,e:f.mutate(c,lambda r:r.update(events=[])),expected=False)
+def reversed_order(r):
+ for frame in r['frames']:
+  frame['effect_phases']=[{'begin':'impact','impact':'begin'}.get(x,x) for x in frame['effect_phases']]
+f.direct('contact_before_begin_chronology',lambda c,p,e:f.mutate(c,reversed_order),expected=False)
+f.direct('zero_age_hero_warning_still',lambda c,p,e:f.mutate(c,lambda r:r['stills'][0].update(sample_age_s=0)),expected=False)
+def stale(c,p,a):
+ f.write(a.checks/'ultimate.json',{'passed':True,'source_sha256':{'res://scripts/ultimate_session.gd':'0'*64},'checks':[{'case':'old build','passed':True}]})
+f.staged('stale_successful_ultimate_report',fn=stale,expected=False)
+def blank(c,p,a):f.write(a.checks/'ultimate.json',{'passed':True,'checks':[]})
+f.staged('empty_successful_ultimate_report',fn=blank,expected=False)
+report={'scope':'Independent bounded synthetic release probes. Owner fixtures supply synthetic images/packages and mock git/decoder; no actual render/build/network/publication. Expected_success denotes desired contract, not present acceptance.','source_sha256':{str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [source,root/'games/yuga-native/tools/release-native.py',Path(__file__)] if p.is_relative_to(root)},'results':f.CHECKS}
+out=Path('/workspace/scratch/yuga-mythic-release-independent/probes-r2.json');out.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

@@ -28,6 +28,22 @@ CHECKS = ("archive", "media", "script", "film", "motion", "vfx", "audio", "nativ
 TRAVERSAL_CHECKS = ("traversal", "traversal-pose", "army", "controls", "traversal-audio", "stress",
                     "security", "release-gates", "siege-army", "vehicle-art", "siege-effects", "siege-audio", "siege-ui", "siege-release-gates", "siege-pose",
                     "relay-control", "relay-art", "relay-integration", "triad-release-gates")
+MYTHIC_CHECKS = ("hero-codex", "hero-codex-cases", "hero-reconstruction", "native-contract-pins", "native-contracts",
+                  "hero-pose", "world-presentation", "entity-bridge", "physics", "ultimate", "ultimate-effects",
+                  "invocation-ui", "invocation-audio", "invocation-audio-build", "mythic-integration", "mythic-release-gates")
+MYTHIC_TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/mythic-traversal-render-r2"
+MYTHIC_ULTIMATE_CAPTURE_DIRECTORY = "docs/evidence/mythic-ultimates-render-r3"
+MYTHIC_HERO_IDS = ("rama", "ravana", "arjuna", "duryodhana", "hanuman", "karna", "bhima", "meghnad",
+                   "sita", "draupadi", "subhadra", "hidimbi", "chitrangada", "ulupi")
+MYTHIC_SELECTED_FRAMES = (0, 20, 40, 60, 90, 119)
+MYTHIC_CAPTURE_ASSETS = {"yuga-ultimate-studies.mp4", "ultimate-render-review.json", "ultimate-video.json", "ULTIMATE-RENDER-REVIEW.md"}
+MYTHIC_CAPTURE_ASSETS |= {"still-" + hero + ".png" for hero in MYTHIC_HERO_IDS}
+MYTHIC_CAPTURE_ASSETS |= {"still-low-effects.png", "still-reduced-motion.png", "still-four-overlap.png"}
+MYTHIC_CAPTURE_ASSETS |= {f"ultimate-frame-{index:05d}.png" for index in MYTHIC_SELECTED_FRAMES}
+MYTHIC_FIXED_SOURCES = {"project.godot", "tools/capture-ultimates.gd", "tools/run-ultimate-capture.py", "tools/run-traversal-capture.py", "art/world/confluence-map.json"}
+MYTHIC_REQUIRED_RUNTIME = {"scripts/ultimate_rules.gd", "scripts/ultimate_session.gd", "scripts/ultimate_effects.gd",
+                          "scripts/invocation_panel.gd", "scripts/entity_bridge.gd", "assets/design/hero-codex.json",
+                          "assets/design/native-ultimate-rules.json", "assets/contracts/physics-fixture-v1.json"}
 TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/triad-traversal-render-r2"
 SIEGE_CAPTURE_DIRECTORY = "docs/evidence/triad-siege-render-r2"
 TRIAD_CAPTURE_DIRECTORY = "docs/evidence/triad-relay-render-r2"
@@ -67,6 +83,20 @@ def siege_release(tag):
 
 def triad_release(tag):
     return traversal_release(tag) and TAG.fullmatch(tag) is not None and tag.endswith("-triad-siege")
+
+
+def mythic_release(tag):
+    return traversal_release(tag) and TAG.fullmatch(tag) is not None and tag.endswith("-mythic")
+
+
+def release_checks(tag):
+    return CHECKS + (TRAVERSAL_CHECKS if traversal_release(tag) else ()) + (MYTHIC_CHECKS if mythic_release(tag) else ())
+
+
+def traversal_capture_directory(tag):
+    return MYTHIC_TRAVERSAL_CAPTURE_DIRECTORY if mythic_release(tag) else TRAVERSAL_CAPTURE_DIRECTORY
+
+
 REQUIRED_ARCHIVE = {
     "yuga-confluence-duel.mp4", "combat-film-render.json", "combat-film-video.json",
     "confluence-duel.json", "capture-combat-film.gd", "cinematic_actor.gd",
@@ -220,7 +250,7 @@ def probe_traversal_movie(path):
     return traversal_probe_signature(probe)
 
 
-def validate_traversal_capture(directory, exported, decode=False):
+def validate_traversal_capture(directory, exported, decode=False, require_shaders=False):
     """Check retained capture facts and bind them to this checkout/export source.
 
     Raw sequential PNGs need not be distributed. Their recorded sequence and the
@@ -289,14 +319,14 @@ def validate_traversal_capture(directory, exported, decode=False):
 
     source_hashes = render.get("source_sha256", {})
     expected_sources = set(CAPTURE_FIXED_SOURCES)
-    for folder in ("scripts", "scenes", "assets"):
+    for folder in (("scripts", "scenes", "assets", "shaders") if require_shaders else ("scripts", "scenes", "assets")):
         expected_sources.update(path.relative_to(PROJECT).as_posix() for path in (PROJECT / folder).rglob("*") if path.is_file())
     require(CAPTURE_REQUIRED_RUNTIME <= expected_sources and isinstance(source_hashes, dict) and
             set(source_hashes) == {"res://" + name for name in expected_sources},
             "Traversal capture source inventory differs from the checkout")
     export_files = exported.get("source", {}).get("files", {})
-    shared = {name for name in expected_sources if name == "project.godot" or name.split("/")[0] in ("scripts", "scenes", "assets")}
-    export_shared = {name for name in export_files if name == "project.godot" or name.split("/")[0] in ("scripts", "scenes", "assets")}
+    shared = {name for name in expected_sources if name == "project.godot" or name.split("/")[0] in (("scripts", "scenes", "assets", "shaders") if require_shaders else ("scripts", "scenes", "assets"))}
+    export_shared = {name for name in export_files if name == "project.godot" or name.split("/")[0] in (("scripts", "scenes", "assets", "shaders") if require_shaders else ("scripts", "scenes", "assets"))}
     require(shared == export_shared, "Traversal capture/export runtime source sets differ")
     for name in expected_sources:
         actual = record(member(PROJECT, name))
@@ -519,6 +549,221 @@ def validate_triad_capture(directory, exported, decode=False):
             "scope":"Recorded continuous relay simulation, retained image bytes, decoded media and source/export identity. No rerender, OS-input, audio or hardware-performance claim."}
 
 
+def validate_mythic_checks(directory, exported, prefix=""):
+    """Require actual nonempty test schemas and bind their declared sources to this export."""
+    export_sources = exported.get("source",{}).get("files",{})
+    mandatory = {
+        "native-contract-pins":{"tools/check-native-contracts.py","assets/contracts/native-contracts-v1.json"},
+        "native-contracts":{"scripts/native_contracts.gd","assets/contracts/native-contracts-v1.json","tests/native_contract_cases.gd"},
+        "hero-pose":{"scripts/hero_pose.gd","assets/heroes/rama-production.glb"},
+        "world-presentation":{"scripts/mythic_environment.gd","scripts/world_lighting.gd","tests/world_presentation_cases.gd"},
+        "entity-bridge":{"scripts/entity_bridge.gd","scripts/native_contracts.gd","assets/contracts/native-contracts-v1.json","tests/entity_bridge_cases.gd"},
+        "ultimate":{"scripts/ultimate_rules.gd","scripts/ultimate_session.gd","scripts/lane_army.gd","scripts/lane_minion.gd","assets/design/native-ultimate-rules.json","tests/ultimate_cases.gd"},
+        "invocation-ui":{"scripts/invocation_panel.gd","scripts/input_bindings.gd","assets/design/hero-codex.json","assets/design/native-ultimate-rules.json","tests/invocation_ui_cases.gd"},
+        "invocation-audio":{"scripts/invocation_audio.gd","assets/audio/invocations/manifest.json","tests/invocation_audio_cases.gd"},
+        "mythic-integration":{"scripts/confluence_world.gd","scripts/player.gd","scripts/ultimate_session.gd","scripts/ultimate_effects.gd","scripts/lane_minion.gd","tests/mythic_integration_cases.gd"},
+        "mythic-release-gates":{"tools/release-native.py","tests/release_mythic_cases.py","tests/release_traversal_cases.py"},
+    }
+    def pin(path, value):
+        require(isinstance(path,str) and isinstance(value,str) and re.fullmatch(r"[a-f0-9]{64}",value) is not None,"Mythic check has malformed source pin")
+        relative = path.removeprefix("res://").removeprefix("games/yuga-native/")
+        root = REPO if relative.startswith("games/") else PROJECT
+        actual = member(root,relative)
+        require(digest(actual)==value,"Mythic check source changed: "+path)
+        if root==PROJECT and (relative=="project.godot" or relative.split("/")[0] in ("scripts","scenes","assets","shaders")):
+            require(export_sources.get(relative)==record(actual),"Mythic check source differs from export: "+relative)
+        return relative
+    def rows(report):
+        checks = report.get("checks")
+        if type(checks) is int:
+            require(checks>0 and isinstance(report.get("cases"),list) and checks==len(report["cases"]),"Mythic numeric check count differs")
+            checks=report["cases"]
+        require(isinstance(checks,list) and len(checks)>0 and all(isinstance(c,dict) and c.get("passed") is True for c in checks),"Mythic test checks are empty, malformed or failed")
+        require("failed" not in report or (type(report["failed"]) is int and report["failed"]==0),"Mythic test failure count is not zero")
+    for name in MYTHIC_CHECKS:
+        report=json.loads(member(directory,prefix+name+".json").read_text())
+        require(isinstance(report,dict) and report.get("passed") is True,"Mythic check is missing/failed: "+name)
+        if name=="hero-codex":
+            require(report.get("heroes")==14 and report.get("ability_slots")==42 and report.get("errors")==[],"Catalogue check coverage differs")
+            pin("assets/design/hero-codex.json",report.get("catalogue_sha256"))
+        elif name=="hero-codex-cases":
+            rows(report);pin("assets/design/hero-codex.json",report.get("catalogue_sha256"));pin("tools/check-hero-codex.py",report.get("validator_sha256"))
+        elif name=="hero-reconstruction":
+            rows(report);pin("assets/heroes/rama-production.glb",report.get("asset_sha256"));pin("art/production/reconstruct_rama.py",report.get("generator_sha256"))
+        elif name=="ultimate-effects":
+            rows(report);pin("scripts/ultimate_effects.gd",report.get("effect_source_sha256"));pin("assets/design/native-ultimate-rules.json",report.get("rules_source_sha256"))
+        elif name=="invocation-audio-build":
+            require(report.get("mode")=="check" and report.get("files")==16 and report.get("failures")==[] and type(report.get("sum_of_three_maximum_peaks")) in (int,float) and 0<report["sum_of_three_maximum_peaks"]<1,"Audio reproduction evidence differs")
+            pin("assets/audio/invocations/manifest.json",report.get("manifest_sha256"))
+            manifest=json.loads(member(PROJECT,"assets/audio/invocations/manifest.json").read_text())
+            pin("tools/audio/build-invocation-audio.py",manifest.get("generator_sha256"))
+            require(isinstance(manifest.get("files"),dict) and len(manifest["files"])==16,"Audio asset inventory differs")
+            for filename,item in manifest["files"].items():
+                require(NAME.fullmatch(filename) is not None and filename.endswith(".wav"),"Unsafe audio asset name")
+                pin("assets/audio/invocations/"+filename,item.get("sha256"))
+                require(record(member(PROJECT,"assets/audio/invocations/"+filename))=={k:item.get(k) for k in ("bytes","sha256")},"Audio asset bytes differ")
+        elif name=="physics":
+            rows(report);require(report.get("cross_engine_equivalence") is False,"Physics comparison cannot claim solver parity")
+            inputs=report.get("inputs",{})
+            for key,path in {"fixture":"assets/contracts/physics-fixture-v1.json","typescript_source":"tools/physics/reference.ts","godot_source":"tests/physics_authority_cases.gd","comparison_source":"tools/physics/compare.py"}.items():
+                require(isinstance(inputs.get(key),dict),"Physics source provenance missing: "+key);pin(path,inputs[key].get("sha256"))
+            summary=report.get("summary",{})
+            require(summary.get("queries")==34 and summary.get("paired_actor_samples")==480 and summary.get("query_count_per_implementation")==1474,"Physics fixture coverage differs")
+        else:
+            rows(report)
+            sources=report.get("source_sha256",report.get("sources"))
+            require(isinstance(sources,dict) and len(sources)>0,"Mythic source inventory is absent: "+name)
+            observed={pin(path,value) for path,value in sources.items()}
+            require(mandatory.get(name,set())<=observed,"Mythic required source pins missing: "+name)
+            if name=="hero-pose":pin("tests/hero_pose_cases.gd",report.get("test_sha256"))
+    return {"passed":True,"reports":len(MYTHIC_CHECKS),"scope":"Nonempty successful check payloads and their declared runtime/tool source provenance match checkout/export."}
+
+
+def mythic_probe_signature(probe):
+    streams = probe.get("streams", [])
+    require(isinstance(streams, list) and len(streams) == 1 and isinstance(streams[0], dict), "Ultimate study must have one silent video stream")
+    stream = streams[0]
+    require(stream.get("codec_type") == "video" and stream.get("codec_name") == "h264", "Ultimate study is not H.264 video")
+    require((stream.get("width"), stream.get("height"), str(stream.get("nb_read_frames")), stream.get("avg_frame_rate")) == (1280, 720, "120", "30/1"), "Ultimate video dimensions/count/rate differ")
+    try:
+        duration = float(probe["format"]["duration"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("Ultimate video duration is invalid") from error
+    require(math.isfinite(duration) and abs(duration - 4.0) <= .02, "Ultimate study must be four seconds")
+    return {"width":1280,"height":720,"frames":120,"fps":30,"duration_seconds":duration}
+
+
+def probe_mythic_movie(path):
+    probe = json.loads(subprocess.check_output(["ffprobe", "-v", "error", "-count_frames", "-show_streams", "-show_format", "-of", "json", str(path)], timeout=60))
+    return mythic_probe_signature(probe)
+
+
+def validate_mythic_capture(directory, exported, decode=False):
+    """Source-bound staged VFX evidence, explicitly separate from gameplay tests."""
+    render_path = member(directory, "ultimate-render-review.json")
+    render = json.loads(render_path.read_text())
+    video = json.loads(member(directory, "ultimate-video.json").read_text())
+    member(directory, "ULTIMATE-RENDER-REVIEW.md")
+    require(render.get("complete") is True and ("preview" not in render or render["preview"] is False) and not render.get("failure"), "Ultimate capture is incomplete, preview-only or failed")
+    require(render.get("kind") == "actual-staged-native-ultimate-vfx" and render.get("gameplay_applied") is False, "Ultimate capture must identify staged presentation-only scope")
+    require(render.get("renderer") == "forward_plus" and str(render.get("display", "")).lower() == "x11", "Ultimate capture lacks actual Forward+ X11 display")
+    require((render.get("fps"), render.get("physics_hz"), render.get("take_physics_ticks"), render.get("width"), render.get("height")) == (30,60,240,1280,720), "Ultimate timing or dimensions differ")
+    require(type(render.get("time_scale")) in (int,float) and render["time_scale"] == 1.0, "Ultimate time scale must be one")
+    frames = render.get("frames")
+    require(render.get("expected_frames")==120 and isinstance(frames,list) and len(frames)==120, "Ultimate take lacks 120 consecutive frames")
+    start = render.get("take_start_tick")
+    require(type(start) is int and start >= 0, "Ultimate starting physics tick is invalid")
+
+    def finite_number(value, low, high):
+        return type(value) in (int,float) and math.isfinite(value) and low <= value <= high
+
+    def image_metadata(image, filename):
+        require(isinstance(image,dict) and image.get("file")==filename and (image.get("width"),image.get("height"))==(1280,720), "Ultimate image name/dimensions differ")
+        require(isinstance(image.get("sha256"),str) and re.fullmatch(r"[a-f0-9]{64}",image["sha256"]) is not None, "Ultimate image lacks a hash")
+        require(all(type(image.get(key)) is int and image[key]>0 for key in ("draw_calls","rendered_objects","rendered_primitives")), "Ultimate image lacks actual renderer counters")
+
+    def retained_image(image, filename):
+        path = member(directory,filename)
+        with path.open("rb") as stream: header = stream.read(24)
+        require(len(header)==24 and header[:8]==b"\x89PNG\r\n\x1a\n" and struct.unpack(">II",header[16:24])==(1280,720) and digest(path)==image["sha256"], "Ultimate retained image differs: "+filename)
+
+    def fx_record(fx):
+        require(isinstance(fx,dict) and fx.get("finite") is True, "Ultimate FX state is nonfinite or absent")
+        require(all(type(fx.get(key)) is int and 0<=fx[key]<=bound for key,bound in (("active",4),("nodes",196),("triangles",72000))), "Ultimate FX population/budget differs")
+        require(all(type(fx.get(key)) is int and fx[key]==0 for key in ("particles","lights","voices")), "Ultimate study exceeds zero particle/light/audio budget")
+        require(type(fx.get("reduced_effects")) is bool and type(fx.get("reduced_motion")) is bool, "Ultimate accessibility mode state is absent")
+        require(fx["active"]==0 or (fx["nodes"]>0 and fx["triangles"]>0), "Ultimate active study has no geometry")
+
+    events = render.get("events")
+    require(isinstance(events,list) and len(events)==10, "Ultimate scripted event ledger is missing/incomplete")
+    timelines = {"rama":[("begin",0.0,-1),("release",1.0,-1),("impact",36/30,0),("impact",38/30,1),("impact",40/30,2),("end",76/30,-1)],
+                 "sita":[("begin",0.0,-1),("release",24/30,-1),("impact",24/30,-1),("cancel",114/30,-1)]}
+    seen = {"rama":[],"sita":[]}
+    previous_time = -1.0
+    cast_ids = {}
+    for event in events:
+        require(isinstance(event,dict) and event.get("hero_id") in seen and finite_number(event.get("time_s"),0,4) and event["time_s"]>=previous_time, "Ultimate events are malformed/reordered")
+        previous_time = event["time_s"]
+        hero = event["hero_id"]
+        sequence = len(seen[hero])
+        require(sequence<len(timelines[hero]) and type(event.get("event_seq")) is int and event["event_seq"]==sequence and type(event.get("cast_id")) is int and event["cast_id"]>0, "Ultimate event sequence/lifetime identity differs")
+        cast_ids.setdefault(hero,event["cast_id"])
+        require(cast_ids[hero]==event["cast_id"], "Ultimate cast identity changed during take")
+        kind,at,projectile = timelines[hero][sequence]
+        require(event.get("kind")==kind and abs(event["time_s"]-at)<1e-6 and type(event.get("projectile_index")) is int and event["projectile_index"]==projectile, "Ultimate event choreography/index differs")
+        require(event.get("reason")==("scripted_study_contact" if projectile>=0 else "scripted_visual_fixture"), "Ultimate event scope/reason differs")
+        seen[hero].append(event)
+    require(all(len(seen[hero])==len(timelines[hero]) for hero in seen) and len(set(cast_ids.values()))==2, "Ultimate event ledger lacks both distinct study lifetimes")
+    event_cursor = 0
+    expected_phases = {}
+    previous_draw = -1
+    phases = set()
+    for index, frame in enumerate(frames):
+        require(frame.get("index")==index and frame.get("physics_tick_delta")==2 and frame.get("physics_tick")==start+2*(index+1), "Ultimate physics sequence is discontinuous")
+        require(type(frame.get("render_frame")) is int and frame["render_frame"]>previous_draw, "Ultimate render counter did not advance")
+        previous_draw = frame["render_frame"]
+        require(frame.get("finite") is True and finite_number(frame.get("presentation_seconds"),0,4) and abs(frame["presentation_seconds"]-index/30)<1e-5, "Ultimate frame finite/timing evidence differs")
+        image_metadata(frame.get("image"),f"frame-{index:05d}.png")
+        fx_record(frame.get("fx"))
+        observed = frame.get("effect_phases")
+        require(isinstance(observed,list) and len(observed)<=4 and all(type(p) is str and p in {"begin","release","impact","tick","end","cancel"} for p in observed), "Ultimate effect phases are invalid")
+        require(len(observed)==frame["fx"]["active"], "Ultimate phase count differs from active effects")
+        while event_cursor<len(events) and events[event_cursor]["time_s"]<=index/30+1e-6:
+            event=events[event_cursor]
+            if event["kind"] in ("end","cancel"): expected_phases.pop(event["cast_id"],None)
+            else: expected_phases[event["cast_id"]]=event["kind"]
+            event_cursor+=1
+        require(sorted(observed)==sorted(expected_phases.values()), "Ultimate rendered phases contradict ordered event ledger")
+        phases.update(observed)
+        if index in MYTHIC_SELECTED_FRAMES: retained_image(frame["image"],f"ultimate-frame-{index:05d}.png")
+    require({"begin","release","impact"}<=phases and frames[-1]["fx"]["active"]==0, "Ultimate take omits staged begin/release/contact/expiry progression")
+    require(all(render.get("outcomes",{}).get(key) is True for key in ("begin","release","contact","expired","persistent_zone_cancelled_for_take_end")), "Ultimate staged choreography outcomes missing")
+    codex = json.loads(member(PROJECT,"assets/design/hero-codex.json").read_text())
+    shapes = {hero["id"]:next(a["native_demo"]["shape"] for a in hero["abilities"] if a["slot"]=="R") for hero in codex["heroes"]}
+    require(set(shapes)==set(MYTHIC_HERO_IDS), "Ultimate catalogue roster differs")
+    stills = render.get("stills")
+    require(isinstance(stills,list) and len(stills)==14 and {row.get("hero_id") for row in stills}==set(MYTHIC_HERO_IDS), "Ultimate studies omit or duplicate a hero")
+    for row in stills:
+        hero = row["hero_id"]
+        require(row.get("effect_id")==hero+".r.v1" and row.get("codex_shape")==shapes[hero] and finite_number(row.get("sample_age_s"),0.000001,12), "Ultimate still identity/shape/age differs")
+        image_metadata(row.get("image"),"still-"+hero+".png")
+        retained_image(row["image"],row["image"]["file"])
+        fx_record(row.get("fx"))
+        require(row["fx"]["active"]==1, "Each hero study must contain its active effect")
+    variants = render.get("variants")
+    require(isinstance(variants,list) and len(variants)==3 and {row.get("id") for row in variants}=={"low-effects","reduced-motion","four-overlap"}, "Ultimate mode/overlap studies missing or duplicated")
+    for row in variants:
+        name = row["id"]
+        image_metadata(row.get("image"),"still-"+name+".png")
+        retained_image(row["image"],row["image"]["file"])
+        fx_record(row.get("fx"))
+        require(row["fx"]["active"]==(4 if name=="four-overlap" else 1), "Ultimate variant population differs")
+        require(name!="low-effects" or row["fx"]["reduced_effects"] is True, "Ultimate low-effects setting was not applied")
+        require(name!="reduced-motion" or row["fx"]["reduced_motion"] is True, "Ultimate reduced-motion setting was not applied")
+    expected = set(MYTHIC_FIXED_SOURCES)
+    for folder in ("scripts","scenes","assets","shaders"):
+        expected.update(path.relative_to(PROJECT).as_posix() for path in (PROJECT/folder).rglob("*") if path.is_file())
+    sources = render.get("source_sha256",{})
+    require(MYTHIC_REQUIRED_RUNTIME<=expected and isinstance(sources,dict) and set(sources)=={"res://"+name for name in expected}, "Ultimate source inventory differs")
+    export_sources = exported.get("source",{}).get("files",{})
+    shared = {name for name in expected if name=="project.godot" or name.split("/")[0] in ("scripts","scenes","assets","shaders")}
+    require(shared=={name for name in export_sources if name=="project.godot" or name.split("/")[0] in ("scripts","scenes","assets","shaders")}, "Ultimate exported runtime source set differs")
+    for name in expected:
+        actual = record(member(PROJECT,name))
+        require(sources["res://"+name]==actual["sha256"], "Ultimate captured source changed: "+name)
+        if name in shared: require(export_sources[name]==actual, "Ultimate export differs from capture: "+name)
+    imports = render.get("imports",{})
+    require(isinstance(imports,dict) and set(imports)=={"res://assets/heroes/rama-production.glb"}, "Ultimate capture omits exact Rama import proof")
+    entry = imports["res://assets/heroes/rama-production.glb"]
+    require(isinstance(entry,dict) and entry.get("fresh") is True and isinstance(entry.get("sha256"),str) and re.fullmatch(r"[a-f0-9]{64}",entry["sha256"]) is not None and isinstance(entry.get("imported"),str) and re.fullmatch(r"res://\.godot/imported/[A-Za-z0-9._-]+\.scn",entry["imported"]) is not None, "Ultimate import proof stale/malformed/unsafe")
+    movie = member(directory,"yuga-ultimate-studies.mp4")
+    require(video.get("complete") is True and video.get("file")==movie.name and record(movie)=={key:video.get(key) for key in ("bytes","sha256")}, "Ultimate movie bytes/completion differ")
+    require(video.get("capture_report_sha256")==digest(render_path), "Ultimate movie links another capture report")
+    signature = mythic_probe_signature(video.get("probe",{}))
+    if decode: require(probe_mythic_movie(movie)==signature, "Fresh ultimate decode differs from recorded probe")
+    return {"passed":True,"frames":120,"physics_ticks":240,"retained_frames":len(MYTHIC_SELECTED_FRAMES),"hero_studies":14,"variants":3,"sources":len(expected),"video":record(movie),"decoded_this_run":decode,"scope":"Source-bound staged VFX presentation; gameplay/session tests are separate mandatory gates, not established by these pixels."}
+
+
 def stage(args):
     require(TAG.fullmatch(args.tag), "Unexpected release tag")
     commit = git("rev-parse", "HEAD")
@@ -548,7 +793,8 @@ def stage(args):
     for name in ("native-package-manifest.json", "native-export-manifest.json"):
         copy(args.build / name)
     copy(args.engines / "engine-downloads.json")
-    for name in CHECKS + (TRAVERSAL_CHECKS if traversal_release(args.tag) else ()):
+    if mythic_release(args.tag): validate_mythic_checks(args.checks, exported)
+    for name in release_checks(args.tag):
         path = args.checks / (name + ".json")
         require(json.loads(path.read_text()).get("passed") is True, "Required release check failed/missing: " + name)
         copy(path, "ci-" + name + ".json")
@@ -562,8 +808,8 @@ def stage(args):
         copy(PROJECT / "assets/audio/traversal/lane-procession-loop.wav")
         copy(PROJECT / "NOTICE/TRAVERSAL-AUDIO-PROVENANCE.json")
         copy(PROJECT / "docs/TRAVERSAL_ARMY_VERIFICATION.md", "TRAVERSAL-VERIFICATION.md")
-        capture = PROJECT / TRAVERSAL_CAPTURE_DIRECTORY
-        validate_traversal_capture(capture, exported, decode=True)
+        capture = PROJECT / traversal_capture_directory(args.tag)
+        validate_traversal_capture(capture, exported, decode=True, require_shaders=mythic_release(args.tag))
         archive_names = (TRAVERSAL_CAPTURE_ASSETS - {"TRAVERSAL-RENDER-REVIEW.md"}) | {"REVIEW.md"}
         captured_sources = json.loads(member(capture, "traversal-render-review.json").read_text())["source_sha256"]
         tracked = [str(member(capture, name).relative_to(REPO)) for name in sorted(archive_names)]
@@ -590,7 +836,17 @@ def stage(args):
         git("ls-files", "--error-unmatch", "--", *tracked)
         require(not git("diff", "--name-only", "HEAD", "--", *tracked), "Triad capture/source differs from committed checkout")
         for name in sorted(TRIAD_CAPTURE_ASSETS): copy(capture/name)
-    notes = PROJECT / ("docs/RELEASE_TRAVERSAL_ARMIES.md" if traversal_release(args.tag) else "docs/RELEASE_CONFLUENCE_DUEL.md")
+    if mythic_release(args.tag):
+        capture = PROJECT / MYTHIC_ULTIMATE_CAPTURE_DIRECTORY
+        validate_mythic_capture(capture, exported, decode=True)
+        captured_sources = json.loads(member(capture, "ultimate-render-review.json").read_text())["source_sha256"]
+        tracked = [str(member(capture, name).relative_to(REPO)) for name in sorted(MYTHIC_CAPTURE_ASSETS)]
+        tracked += [str(member(PROJECT, name.removeprefix("res://")).relative_to(REPO)) for name in sorted(captured_sources)]
+        git("ls-files", "--error-unmatch", "--", *tracked)
+        require(not git("diff", "--name-only", "HEAD", "--", *tracked), "Mythic capture/source differs from committed checkout")
+        for name in sorted(MYTHIC_CAPTURE_ASSETS): copy(capture / name)
+    notes = PROJECT / ("docs/RELEASE_MYTHIC_INVOCATIONS.md" if mythic_release(args.tag) else "docs/RELEASE_TRAVERSAL_ARMIES.md" if traversal_release(args.tag) else "docs/RELEASE_CONFLUENCE_DUEL.md")
+    if mythic_release(args.tag): require(notes.is_file(), "Mythic release notes are required")
     text = notes.read_text() if notes.exists() else (
         "# YUGA — Confluence duel preview\n\nDownload yuga-confluence-duel.mp4 for the original 24-second film. "
         "Extract either native ZIP and run launch.sh (Linux) or launch.bat (Windows). Windows is packaged, not execution-verified here.\n\n"
@@ -607,6 +863,11 @@ def stage(args):
         text += ("\nThe separate yuga-triad-preview.mp4 shows six seconds of continuous offline relay capture and applied arrow supply, "
                  "with 180 rendered frames and 360 actual physics ticks. Three retained take frames and four separately staged relay views "
                  "are source-bound to this tagged runtime. The video is silent; multiplayer, Windows execution, final art and hardware performance remain separate gates.\n")
+    if mythic_release(args.tag):
+        text += ("\nThe separate yuga-ultimate-studies.mp4 and fourteen themed stills are source-matched original staged VFX studies. "
+                 "Their graphics playback does not itself establish gameplay hits, counters or fourteen finished character models. "
+                 "Fresh native rules/session/effects/UI/audio and integration test reports are required separately. "
+                 "The older duel film remains historical art evidence for its own pinned sources.\n")
     (args.output / "RELEASE-NOTES.md").write_text(text)
     sources["RELEASE-NOTES.md"] = "Generated release scope with committed notes when available"
     files = {name: record(args.output / name) for name in sorted(sources)}
@@ -631,21 +892,25 @@ def verify(directory, tag, commit):
     if traversal_release(tag):
         required = {"native-package-manifest.json", "native-export-manifest.json", "engine-downloads.json",
                     "RELEASE-NOTES.md", "TRAVERSAL-VERIFICATION.md", "TRAVERSAL-AUDIO-PROVENANCE.json",
-                    "lane-procession-loop.wav"} | {"ci-" + name + ".json" for name in CHECKS + TRAVERSAL_CHECKS}
+                    "lane-procession-loop.wav"} | {"ci-" + name + ".json" for name in release_checks(tag)}
         required |= TRAVERSAL_CAPTURE_ASSETS
         require(required <= set(inventory["files"]), "Feature release omits required assets/reports")
-        for name in CHECKS + TRAVERSAL_CHECKS:
+        for name in release_checks(tag):
             require(json.loads(member(directory, "ci-" + name + ".json").read_text()).get("passed") is True,
                     "Feature release report failed: " + name)
         packages = json.loads(member(directory, "native-package-manifest.json").read_text())
         exported = json.loads(member(directory, "native-export-manifest.json").read_text())
-        validate_traversal_capture(directory, exported)
+        validate_traversal_capture(directory, exported, require_shaders=mythic_release(tag))
         if siege_release(tag):
             require(SIEGE_CAPTURE_ASSETS | {"SIEGE-MILESTONE.md","SIEGE-AUDIO-PROVENANCE.json"} <= set(inventory["files"]), "Siege release omits required assets")
             validate_siege_capture(directory, exported)
         if triad_release(tag):
             require(TRIAD_CAPTURE_ASSETS <= set(inventory["files"]), "Triad release omits required capture assets")
             validate_triad_capture(directory, exported)
+        if mythic_release(tag):
+            validate_mythic_checks(directory, exported, prefix="ci-")
+            require(MYTHIC_CAPTURE_ASSETS <= set(inventory["files"]), "Mythic release omits required capture assets")
+            validate_mythic_capture(directory, exported)
         require(packages["git"]["head"] == commit and exported["git"]["head"] == commit,
                 "Feature package source mismatch")
         for platform in ("linux", "windows"):
@@ -694,7 +959,7 @@ def publish(args):
         require("HTTP 404" in existing.stderr, "Cannot determine release state; refusing publication")
         subprocess.run(["gh", "release", "create", args.tag, "--repo", args.repository,
                         "--draft", "--prerelease", "--verify-tag", "--target", args.commit,
-                        "--title", ("YUGA traversal and lane armies — native preview" if traversal_release(args.tag) else "YUGA Confluence duel — native preview"),
+                        "--title", ("YUGA mythic invocations — native preview" if mythic_release(args.tag) else "YUGA traversal and lane armies — native preview" if traversal_release(args.tag) else "YUGA Confluence duel — native preview"),
                         "--notes-file", str(args.directory / "RELEASE-NOTES.md")], check=True)
     assets = sorted(str(path) for path in args.directory.iterdir())
     subprocess.run(["gh", "release", "upload", args.tag, "--repo", args.repository, "--clobber", *assets], check=True)

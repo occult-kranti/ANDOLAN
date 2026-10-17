@@ -1,0 +1,84 @@
+{
+  "format": 1,
+  "source_commit": "eedfd1f94181cddfad293e3e95f126b96c72baed",
+  "uncommitted_sources": true,
+  "sources": {
+    "games/yuga-native/assets/contracts/physics-fixture-v1.json": "aeeea1a0b105b4015a79bee3289809aeba585abdc00b5d4b3e6c92faf061ee9e",
+    "games/yuga-native/tools/physics/reference.ts": "5626edc19c0126d26add9117c832c59d751fb611f5d36a8b94d031b034058146",
+    "games/yuga-native/tests/physics_authority_cases.gd": "744bc9531a7e4b67be0542278e234ebbd93425fa573a94bbc14c876612c976b5",
+    "games/yuga-native/tools/physics/reference.test.ts": "aa348441deebfb9fdb6c9f7c6590327a88b49203c2be73e377d29dc220b29fc1",
+    "games/yuga-native/tools/physics/compare.py": "cb7711d9c52830f38fff439cb134a472ea42feddaa547f7f4f4b5919391c4be3",
+    "games/yuga-native/tools/physics/run.py": "1d9fc1a9807c99b45ab6d57cb18dc3cc83e5552f7deb263f82dc9186f1f66025"
+  },
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "--test",
+        "/workspace/ANDOLAN/games/yuga-native/tools/physics/reference.test.ts"
+      ],
+      "exit_code": 0,
+      "log": "01.log"
+    },
+    {
+      "argv": [
+        "/workspace/ANDOLAN/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--allowImportingTsExtensions",
+        "--strict",
+        "--skipLibCheck",
+        "/workspace/ANDOLAN/games/yuga-native/tools/physics/reference.ts",
+        "/workspace/ANDOLAN/games/yuga-native/tools/physics/reference.test.ts"
+      ],
+      "exit_code": 0,
+      "log": "02.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/workspace/ANDOLAN/games/yuga-native/tools/physics/reference.ts",
+        "/workspace/ANDOLAN/games/yuga-native/assets/contracts/physics-fixture-v1.json",
+        "/workspace/scratch/yuga-physics-authority/r6-final/typescript.json"
+      ],
+      "exit_code": 0,
+      "log": "03.log"
+    },
+    {
+      "argv": [
+        "godot",
+        "--headless",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--script",
+        "res://tests/physics_authority_cases.gd",
+        "--",
+        "--report=/workspace/scratch/yuga-physics-authority/r6-final/godot.json"
+      ],
+      "exit_code": 0,
+      "log": "04.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "/workspace/ANDOLAN/games/yuga-native/tools/physics/compare.py",
+        "--fixture",
+        "/workspace/ANDOLAN/games/yuga-native/assets/contracts/physics-fixture-v1.json",
+        "--typescript",
+        "/workspace/scratch/yuga-physics-authority/r6-final/typescript.json",
+        "--godot",
+        "/workspace/scratch/yuga-physics-authority/r6-final/godot.json",
+        "--report",
+        "/workspace/scratch/yuga-physics-authority/r6-final/comparison.json"
+      ],
+      "exit_code": 0,
+      "log": "05.log"
+    }
+  ],
+  "passed": true
+}

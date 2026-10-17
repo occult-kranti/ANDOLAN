@@ -1,6 +1,10 @@
 # YUGA native production track
 
-Current work: [two verified mythic batches](docs/MYTHIC_BATCHES.md). The first five packets add fourteen distinct ultimate concepts, editable Rama reconstruction, corrected materials and carry, world ornaments/lighting and version contracts. [Actual evidence and remaining art limits](docs/evidence/mythic-batch1/REVIEW.md). The next five bring those ideas into practice; the public Triad download below remains its own earlier build.
+Both bounded batches are accepted, covering [ten mythic packets](docs/MYTHIC_BATCHES.md). Batch 1 passed its [bounded art/animation/contract review](docs/evidence/mythic-batch1/REVIEW.md). Batch 2 adds fourteen troop invocations through Rama, distinct effects, sixteen original cues, a native entity presentation bridge and a measured 3D physics comparison. See the [milestone](docs/MYTHIC_MILESTONE.md) and [Batch 2 evidence/status](docs/evidence/mythic-batch2/REVIEW.md).
+
+**Mythic release: pending.** Planned tag: `yuga-traversal-armies-2026-10-17-mythic`. Final pause/focus, source-matched captures and the [local Linux packaged-input review](docs/evidence/mythic-window-r3/REVIEW.md) are accepted. Publication and verification of the public downloads remain pending. The verified Triad download below remains the public release.
+
+**Try the source build:** choose **Explore Confluence**, press **F3**, choose a legend and select **Use invocation**. Aim while grounded and press **X**. F2 opens controls/remapping; the displayed binding takes precedence over this default. All fourteen invocations share a 12-second recovery. They affect lane troops through the current Rama avatar; selecting a legend does not change the hero model.
 
 **Start a new task:** [repository handoff](../../docs/START_HERE.md) → [build handbook](docs/BUILD_HANDBOOK.md). The handbook maps features to files and provides setup, tests, art, capture, packaging and agent handoff instructions. Use the [research brief](docs/research/RESEARCH_BRIEF.md) for Reddit findings, mythology, selected reading and reuse decisions; use the [workspace guide](../../docs/WORKSPACE_AND_CLEANUP.md) for cloud cleanup and recovery.
 
@@ -18,7 +22,7 @@ would need to demonstrate.
 The production target is now a downloadable PC game. Browser compatibility is
 optional. This branch establishes the native engine, original 3D environment,
 asset import and analysis toolchain. **The current native build contains local
-training, a combat film and offline three-lane army practice with flight, grappling, siege vehicles and capture/supply relays. Online native matches and the
+training, a combat film and offline three-lane army practice with flight, grappling, siege vehicles, capture/supply relays and fourteen troop invocations. Online native matches, fourteen production hero models and the
 full production visual target remain open.** The existing browser game remains
 on `game/yuga-confluence`.
 
@@ -71,6 +75,14 @@ contain eight landable stone decks and ten glowing tether anchors. Finite-energy
 flight and grappling use capsule collision and bounded speeds. Day/night lighting,
 animated coast/swamp water, an overview and travel shortcuts remain available.
 
+F3 opens invocation practice. Damage, capped healing, shields, slows and temporary
+guards use actual lane-troop receivers. Warning shapes, team/line-of-sight checks
+and shared cooldown belong to separate native practice rules. Travel cancels an
+active cast without bypassing recovery; F5 resets the round. Reduced effects and
+reduced motion are saved in the selector, and the world volume controls the
+sixteen original synthesized cues. Hero health/death and spell damage to cores
+remain unimplemented. [Exact practice rules](docs/ULTIMATE_PRACTICE.md).
+
 Press **Escape → Visit Lotus relay**, then move forward into the marked zone.
 A neutral relay takes 8 seconds to capture alone or 4 with a friendly contributor;
 enemy ownership must first be neutralized. Opposing presence contests the point
@@ -110,6 +122,7 @@ are described in [the art record](art/README.md).
 | Sprint / jump | Shift / Space |
 | Sunburst / dash | Q / E |
 | Reload | R |
+| Confluence invocation selector / cast | F3 / X (cast can be remapped) |
 | Confluence flight / tether | F / G |
 | Rise / descend while flying | Space / Ctrl |
 | Help and persistent keyboard remapping | F2 |
@@ -119,8 +132,11 @@ are described in [the art record](art/README.md).
 | Confluence atlas view | F1 |
 | Reset Confluence practice round | F5 |
 
-The native training controls and ability rules are explicit experiments. They
-are not a port of all fourteen browser hero kits. Assets retain their provenance
+The native training controls and invocation rules are explicit experiments,
+separate from the fourteen browser hero kits. Native-practice content is revision
+2; input/event/entity/replay envelope versions remain 1. The diagnostic entity
+bridge and collision comparison prepare future authority work without creating
+a native online match. Assets retain their provenance
 in [NOTICE](NOTICE/ASSET-NOTICE.md). The current Rama revision adds original
 cobalt/ivory costume, hair, bow-grip details and PBR textures while retaining
 the existing anatomy, 164-bone rig and nine animation curves. It is an incremental
@@ -212,8 +228,9 @@ inspect, build, verify, then report/integrate, with separate file ownership.
 
 The earlier [native milestone roadmap](docs/NATIVE_PRODUCTION_ROADMAP.md)
 records the foundation sequence. Use the full-game roadmap above for current
-priorities: native protocol-2 integration, a shared 3D collision/elevation
-contract, production hero and motion quality, then a complete native match.
+priorities: adopting the native authority/controller profile and shared 3D
+collision contract, two actual native clients, production hero/motion quality,
+then a complete native match.
 Production sculpting/retopology, gameplay content, operated services and physical
 hardware profiling require their own gates. The roadmap checker verifies the
 ledger structure; it does not certify that the game or its art is finished:

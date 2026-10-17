@@ -451,7 +451,7 @@ func check_layout() -> void:
 			action.grab_focus()
 			await frames(3)
 			reachable = reachable and root.gui_get_focus_owner()==action and scene.pause_scroll.get_global_rect().grow(1).encloses(action.get_global_rect())
-		record("all_pause_actions_scroll_into_view_"+str(size_),reachable and scene.pause_actions.size()==11,{"actions":scene.pause_actions.size()})
+		record("all_pause_actions_scroll_into_view_"+str(size_),reachable and scene.pause_actions.size()==12 and is_instance_valid(scene.invocation_button),{"actions":scene.pause_actions.size()})
 		scene.set_paused(false)
 
 func finish() -> void:

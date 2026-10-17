@@ -321,7 +321,7 @@ func _check_layout_and_state() -> void:
 		await _frames(4)
 		var viewport_rect := root.get_visible_rect()
 		var visual_controls: Array[Control] = [scene.map_control,scene.pause_panel]
-		for card_name in ["TitleCard","RelayStatus","ControlsCard","TraversalStatus","AtlasLegend"]:
+		for card_name in ["TitleCard","RelayStatus","ControlsCard","TraversalStatus","InvocationStatus","AtlasLegend"]:
 			var card: Node = scene.hud.find_child(card_name,true,false)
 			if card is Control: visual_controls.append(card)
 		var crosshair := _crosshair()
@@ -360,7 +360,7 @@ func _check_layout_and_state() -> void:
 		if is_instance_valid(continue_button): continue_button.grab_focus()
 		await _frames(4)
 		var focus_ready := is_instance_valid(continue_button) and continue_button.has_focus() and scroll_rect.grow(1).encloses(continue_button.get_global_rect())
-		_record("UI inside viewport and focused controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==10 and scene.pause_actions.size()==11 and focus_reachable and centered and focus_ready,
+		_record("UI inside viewport and focused controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==11 and scene.pause_actions.size()==12 and is_instance_valid(scene.invocation_button) and focus_reachable and centered and focus_ready,
 			{"logical_viewport":[viewport_rect.size.x,viewport_rect.size.y],"outside_or_small":failures,"overlaps":overlaps,"crosshair_near_center":centered,"resume_keyboard_focus":focus_ready,"all_targets_reachable":focus_reachable,"focused_rectangles":rectangles})
 	# Resume the actual character controller, then use input actions rather than
 	# assigning a fake position to prove held movement had an effect before pause.

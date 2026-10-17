@@ -1,0 +1,27 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ERROR: Object is locked and can't be freed.
+   at: callp (core/object/object.cpp:912)
+   GDScript backtrace (most recent call first):
+       [0] _reset_state (res://scripts/lane_army.gd:158)
+       [1] reset (res://scripts/lane_army.gd:151)
+       [2] on_defeat (/workspace/scratch/yuga-batch2-qa/reentrant-reset-probe.gd:9)
+       [3] receive_damage (res://scripts/lane_minion.gd:157)
+       [4] take_hit (res://scripts/lane_minion.gd:135)
+       [5] _apply_payload (res://scripts/ultimate_session.gd:231)
+       [6] _on_army_step (res://scripts/ultimate_session.gd:186)
+       [7] step_simulation (res://scripts/lane_army.gd:342)
+       [8] run (/workspace/scratch/yuga-batch2-qa/reentrant-reset-probe.gd:21)
+SCRIPT ERROR: Attempted to free a locked object (calling or emitting).
+          at: _reset_state (res://scripts/lane_army.gd:158)
+          GDScript backtrace (most recent call first):
+              [0] _reset_state (res://scripts/lane_army.gd:158)
+              [1] reset (res://scripts/lane_army.gd:151)
+              [2] on_defeat (/workspace/scratch/yuga-batch2-qa/reentrant-reset-probe.gd:9)
+              [3] receive_damage (res://scripts/lane_minion.gd:157)
+              [4] take_hit (res://scripts/lane_minion.gd:135)
+              [5] _apply_payload (res://scripts/ultimate_session.gd:231)
+              [6] _on_army_step (res://scripts/ultimate_session.gd:186)
+              [7] step_simulation (res://scripts/lane_army.gd:342)
+              [8] run (/workspace/scratch/yuga-batch2-qa/reentrant-reset-probe.gd:21)
+REENTRANT_PROBE {"accepted":{"accepted":true,"cast_id":1,"epoch":1,"reason":"Crownfire invoked for lane troops"},"alive":0,"events":[{"cast_id":1,"epoch":1,"kind":"begin","receipts":0},{"cast_id":1,"epoch":1,"kind":"release","receipts":0},{"cast_id":1,"epoch":1,"kind":"cancel","receipts":0},{"cast_id":0,"epoch":2,"kind":"reset","receipts":0},{"cast_id":0,"epoch":2,"kind":"impact","receipts":1}],"session":{"accepted_casts":1,"active_cast_id":0,"active_phase":"ready","applied_receipts":1,"configured":true,"cooldown_remaining":0.0,"elapsed":0.1,"epoch":2,"hero_health_enabled":false,"history_capacity":64,"history_size":2,"last_reason":"army_reset","network_enabled":false,"rejected_casts":0,"scope":"Offline invocation practice through the current Rama avatar; troop effects only.","selected_hero":"ravana","selected_range_m":7.0,"selected_rule":{"effect_id":"ravana.r.v1","effects":[{"amount":90.0,"kind":"damage","team":"enemy"}],"geometry":{"anchor":"caster","height_m":2.5,"kind":"disk","radius_m":7.0},"hero_id":"ravana","name":"Crownfire","timing":{"active_s":0.8,"recovery_s":0.7,"travel_s":0.0,"windup_s":0.9}},"supported_receivers":"living_lane_troops","suspended":false,"target_kind":"caster"}}

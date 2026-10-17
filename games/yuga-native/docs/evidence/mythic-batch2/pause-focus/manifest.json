@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "scope": "Retained actual OS failure plus bounded source-pinned headless pause focus-reveal correction; final fixed-package OS acceptance is separate.",
+  "runtime_before_sha256": "81bbe6eb298bdef50bc0ec124578a83229fb0c05d8bf32d4a619de50eaa8c376",
+  "runtime_fixed_sha256": "c5469ed557bba6fb3510f537b6845354631a580d0a2a738ff2b411ce3b6099b2",
+  "runtime_unchanged": true,
+  "working_directory": "/workspace/ANDOLAN",
+  "commands": [
+    {
+      "kind": "before probe",
+      "command": "godot --headless --path games/yuga-native --script /workspace/scratch/yuga-next/pause-focus-probe-r2.gd > /workspace/scratch/yuga-next/pause-focus-probe-r2.log 2>&1"
+    },
+    {
+      "kind": "fixed probe",
+      "command": "godot --headless --path games/yuga-native --script /workspace/scratch/yuga-next/pause-focus-fixed.gd > /workspace/scratch/yuga-next/pause-focus-fixed.log 2>&1"
+    },
+    {
+      "kind": "fixed verbose diagnostic",
+      "command": "godot --headless --verbose --path games/yuga-native --script /workspace/scratch/yuga-next/pause-focus-fixed.gd > /workspace/scratch/yuga-next/pause-focus-fixed-verbose.log 2>&1"
+    },
+    {
+      "kind": "archived before-source replay",
+      "command": "godot --headless --path games/yuga-native --script /workspace/scratch/yuga-next/pause-focus-replay-before.gd > /workspace/scratch/yuga-next/pause-focus-replay-before.log 2>&1"
+    }
+  ],
+  "files": {
+    "REVIEW.md": {
+      "sha256": "13a0c7c2e515a3d326683c7059e06e2cc4882b71298c530b8218fabcf596d23c",
+      "bytes": 2769
+    },
+    "confluence-world-before.gd.txt": {
+      "sha256": "81bbe6eb298bdef50bc0ec124578a83229fb0c05d8bf32d4a619de50eaa8c376",
+      "bytes": 56727
+    },
+    "confluence-world-fixed.gd.txt": {
+      "sha256": "c5469ed557bba6fb3510f537b6845354631a580d0a2a738ff2b411ce3b6099b2",
+      "bytes": 57392
+    },
+    "probe-before.gd.txt": {
+      "sha256": "cc1cf4ba30d8044952c48c3bb090c7f61156503f3b4aba5e7c12e15c85657528",
+      "bytes": 1951
+    },
+    "probe-before.json": {
+      "sha256": "2b623126080d980d8410e3be46915648ffcc69b67671227139e573a894388dac",
+      "bytes": 3118
+    },
+    "probe-before.log.txt": {
+      "sha256": "2a6668bdf4604a947c3114fbea487ef211f546e30591e9e14a4a5167cd949d5e",
+      "bytes": 12427
+    },
+    "probe-fixed-verbose.log.txt": {
+      "sha256": "af13a3fcbd05971484cf579fc6d6dd339626dc8b70e44cb3e19ddc4451a7518b",
+      "bytes": 24407
+    },
+    "probe-fixed-verdict.json": {
+      "sha256": "ef51381b80adf5e2861f4170f410a7d85c590d87ac22fdeeafa25d2e2d8c3bff",
+      "bytes": 555
+    },
+    "probe-fixed.gd.txt": {
+      "sha256": "9f113a39bfe32f816a273e05797151179d99437394cf88dc561e5d8814b7d4c4",
+      "bytes": 1948
+    },
+    "probe-fixed.json": {
+      "sha256": "130e5139a36a06c52115fb0488e50f77d3ee36c88d1d8682fe5d81178efa1ef8",
+      "bytes": 3117
+    },
+    "probe-fixed.log.txt": {
+      "sha256": "efa2e219d48559758a2c26008608d4b26687c7f60c8c3fcee7caffc4365ccaf6",
+      "bytes": 12548
+    },
+    "rejected-11-pause.png": {
+      "sha256": "adcf8e70a8ed7c0c04cfd8921e12b5e34f98ad9e5806e975b10468c7e46a9af6",
+      "bytes": 226384
+    },
+    "rejected-17-fresh-pause-settled.png": {
+      "sha256": "2000dcc0b4ed24a61cd7a6317769b4233377478d8e8de0442cd01ea3b17b3d29",
+      "bytes": 222079
+    },
+    "rejected-window-input-review.json": {
+      "sha256": "f8cd48fa79f92b31646118acdcecb2b79e1eb5984fb00842d9260c91785a8d94",
+      "bytes": 11228
+    },
+    "replay-before.gd.txt": {
+      "sha256": "2f128feb7b2d8c741883a17d2b91cf96fcfbc1f6260242ba2cae0267dac89ebd",
+      "bytes": 2188
+    },
+    "replay-before.json": {
+      "sha256": "2b623126080d980d8410e3be46915648ffcc69b67671227139e573a894388dac",
+      "bytes": 3118
+    },
+    "replay-before.log.txt": {
+      "sha256": "0468c827c49d450abda8e581d7ed9526f7133956aec5056818d4d71fd5cacae7",
+      "bytes": 12549
+    }
+  }
+}

@@ -8,6 +8,17 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[3]
 MANIFESTS = [
+    "games/yuga-native/docs/evidence/mythic-batch2/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-ultimates-render-r1-rejected/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-ultimates-render-r1/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-ultimates-render-r2/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-ultimates-render-r3/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-traversal-render-r1-rejected/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-traversal-render-r1/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-traversal-render-r2/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-window-r1-rejected/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-window-r2-rejected/archive-manifest.json",
+    "games/yuga-native/docs/evidence/mythic-window-r3/archive-manifest.json",
     "games/yuga-native/docs/evidence/mythic-batch1/archive-manifest.json",
     "games/yuga-native/docs/evidence/triad-published/archive-manifest.json",
     "games/yuga-native/docs/evidence/triad-window-r2/archive-manifest.json",

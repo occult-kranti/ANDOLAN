@@ -1,0 +1,1456 @@
+
+added 170 packages in 7s
+Requirement already satisfied: numpy==2.3.5 in /workspace/tooling/yuga-native-python/lib/python3.12/site-packages (2.3.5)
+Requirement already satisfied: scipy==1.15.3 in /workspace/tooling/yuga-native-python/lib/python3.12/site-packages (1.15.3)
+{"pass": true, "mode": "check", "source": "art/world/confluence-map.json", "runtime": "assets/world/confluence-map.json", "sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c", "bytes": 53971}
+Serialized editor import already passed; see /workspace/scratch/yuga-next/batch2-integration/import-r1.log
+{
+  "passed": true,
+  "scope": "Dependency structure, status consistency and evidence file existence/hash only; not content, visual or game acceptance",
+  "backlog_sha256": "0513ca628066267d6d853ec73b0fadcc44284f83a8426d8bd65354d7d9a6b3e5",
+  "milestones": 16,
+  "tasks": 70,
+  "evidence_files": 25,
+  "errors": []
+}
+{
+  "status": "pass",
+  "glb_sha256": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+  "bytes": 17036264,
+  "triangles": 135654,
+  "exported_vertices": 266311,
+  "mesh_primitives": 22,
+  "embedded_images": 12,
+  "collision_meshes": 8,
+  "checks": [
+    "GLB header/chunks",
+    "all images embedded",
+    "triangle index ranges",
+    "finite positions/UVs",
+    "unit normals/tangents",
+    "metadata counts and SHA-256",
+    "no cameras/animations/punctual lights",
+    "size and triangle budgets"
+  ]
+}
+{
+  "status": "pass",
+  "sha256": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc",
+  "vertices": 59759,
+  "triangles": 100938,
+  "joints": 164,
+  "clips": [
+    "cast",
+    "cast1",
+    "cast2",
+    "cast3",
+    "defeat",
+    "fire",
+    "idle",
+    "jump",
+    "run"
+  ],
+  "embeddedImages": 15,
+  "handAnatomyVerticesPreserved": 3274,
+  "lowerLegFaceCoverage": {
+    "eligibleFaces": 334,
+    "omittedFaces": 0,
+    "selector": "height band plus |x|<0.25m on fixed 1.85m Rama anatomy",
+    "eligibility": "dominant aggregated face joint starts with lowerleg"
+  },
+  "checks": [
+    "GLB length and hashes",
+    "generator and original texture hashes",
+    "finite accessors",
+    "normalized normals/tangents/weights",
+    "joint and triangle indices",
+    "strictly increasing animation times",
+    "45 recorded bounded pose samples",
+    "recorded hand preservation and garment exclusion assertions",
+    "zero omitted eligible lower-leg faces"
+  ],
+  "limitation": "Structural validation does not certify concept likeness, clipping, anatomy or visual quality."
+}
+
+> andolan-city-of-consequences@0.3.0 yuga:typecheck
+> tsc --noEmit -p tsconfig.yuga.json
+
+
+> andolan-city-of-consequences@0.3.0 yuga:test
+> vitest run --config vitest.yuga.config.ts
+
+
+ RUN  v5.0.5 /workspace/ANDOLAN
+
+
+ Test Files  14 passed (14)
+      Tests  225 passed (225)
+   Start at  09:45:40
+   Duration  7.28s (tests 92%, transform 4%, import 3%, worker 1%)
+
+    Isolate  14 workers spawned · ~124ms startup each (spawn + environment, per file)
+             at least ~747ms faster with isolate: false — reuses workers across files instead of one per file
+
+{
+  "passed": true,
+  "scope": "Catalogue/source compatibility, complete IDs, safe numeric bounds and design contracts only; not rendered art, balance or native gameplay acceptance",
+  "catalogue_sha256": "b83e0f06f25f3978a16479f97e7bf76c349f651040b2253bedf5d1c1879ff72c",
+  "heroes": 14,
+  "ability_slots": 42,
+  "errors": []
+}
+{
+  "passed": true,
+  "checks": 71,
+  "scope": "Real catalogue versus current TypeScript plus adversarial data/parser cases; no visual, performance or balance acceptance",
+  "catalogue_sha256": "b83e0f06f25f3978a16479f97e7bf76c349f651040b2253bedf5d1c1879ff72c",
+  "validator_sha256": "ac7e03904d9de8d64ae9f891704472107fe62821ee454fb54ebbba51d72e8851"
+}
+{
+  "schema": 1,
+  "passed": true,
+  "checks": [
+    {
+      "name": "Runtime rig/skin/animation bytes, image CRCs, finite bounded colours and topology preserved",
+      "passed": true,
+      "detail": {
+        "vertices": 59759,
+        "triangles": 100938,
+        "joints": 164,
+        "clips": 9,
+        "animation_output_samples_finite": 15801,
+        "generated_images": 10,
+        "vertex_colors": 28201,
+        "preserved_binary_bytes": 6500208,
+        "bytes": 7901132,
+        "preserved_binary_sha256": "5d887c43f23001e826007a2b4fbb343a2f60569b6aca00e4b5cbcf8983506df2",
+        "preserved_section_sha256": {
+          "nodes": "a84cd77377b46a8ddc19f9f48ec358235999221d60810c13e7cd5544bf48d58b",
+          "skins": "99bf2eac8b4117d3ccb22c07e6bfb02f7b0edeb4d90234ae46d02908b3e0f75c",
+          "animations": "05607aae7652b00c3c3d8730c357b8b1d3bb547cde1e8005a0cbe5193420b87a",
+          "accessors": "4a73dfe5cf1f8dd86af986c323987798f75827796e8a97e6007aa5e479e28ee2",
+          "bufferViews": "b83880789759b0dd201fc06ce22fa705b0574a43aa110205418a6f3a2ddd83e5"
+        }
+      }
+    },
+    {
+      "name": "Two clean generations match each other and the supplied runtime asset byte-for-byte",
+      "passed": true,
+      "detail": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc"
+    },
+    {
+      "name": "Changed reconstruction input rejected",
+      "passed": true,
+      "detail": "Rejected changed source"
+    },
+    {
+      "name": "Original-data mutation rejected even when GLB length remains valid",
+      "passed": true,
+      "detail": "Rejected changed binary geometry/animation data"
+    },
+    {
+      "name": "Corrupt material image rejected",
+      "passed": true,
+      "detail": "Rejected corrupt image CRC"
+    },
+    {
+      "name": "Encoded sRGB palette ranges prevent the rejected extra-transfer pale skin/pastel cloth",
+      "passed": true,
+      "detail": {
+        "warm-living-skin-albedo": [
+          151,
+          98,
+          68
+        ],
+        "cobalt-woven-silk-albedo": [
+          18,
+          42,
+          91
+        ],
+        "ivory-folded-silk-albedo": [
+          212,
+          202,
+          166
+        ]
+      }
+    }
+  ],
+  "asset": "/workspace/ANDOLAN/games/yuga-native/assets/heroes/rama-production.glb",
+  "asset_sha256": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc",
+  "generator_sha256": "62205c6e1e85c0634ff8fd143868cd9a94f1d171bb40a68e71ba8acf50a17546",
+  "scope": "Actual GLB preservation/reproducibility/negative-input checks. No visual, contact, continuous-motion or commercial-quality acceptance."
+}
+{
+  "passed": true,
+  "checks": 33,
+  "failures": []
+}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS catalog_loads_three_separate_rulesets
+PASS browser_defaults_remain_2_3v3_480
+PASS native_offline_not_a_competitive_team_size
+PASS production_6v6_1080_is_unimplemented_proposal
+PASS reject_changed_catalog_0
+PASS reject_changed_catalog_1
+PASS reject_changed_catalog_2
+PASS reject_changed_catalog_3
+PASS reject_changed_catalog_4
+PASS reject_changed_catalog_5
+PASS reject_changed_catalog_6
+PASS reject_changed_catalog_7
+PASS reject_changed_catalog_8
+PASS reject_changed_catalog_9
+PASS reject_changed_catalog_10
+PASS reject_changed_catalog_11
+PASS reject_changed_catalog_12
+PASS reject_changed_catalog_13
+PASS reject_changed_catalog_14
+PASS reject_changed_catalog_15
+PASS reject_changed_catalog_16
+PASS exact_descriptor_match
+PASS native_content_revision2_separate_from_unchanged_wire
+PASS browser_and_proposal_content_stay_revision1
+PASS content_revision_type_0_<null>
+PASS content_revision_type_0_0
+PASS content_revision_type_0_-1
+PASS content_revision_type_0_1.5
+PASS content_revision_type_0_true
+PASS content_revision_type_0_2
+PASS content_revision_type_0_[]
+PASS content_revision_type_0_{  }
+PASS content_revision_type_0_nan
+PASS content_revision_type_0_inf
+PASS content_revision_type_0_65536
+PASS required_content_revision_0
+PASS wrong_known_content_revision_0
+PASS content_revision_type_1_<null>
+PASS content_revision_type_1_0
+PASS content_revision_type_1_-1
+PASS content_revision_type_1_1.5
+PASS content_revision_type_1_true
+PASS content_revision_type_1_2
+PASS content_revision_type_1_[]
+PASS content_revision_type_1_{  }
+PASS content_revision_type_1_nan
+PASS content_revision_type_1_inf
+PASS content_revision_type_1_65536
+PASS required_content_revision_1
+PASS wrong_known_content_revision_1
+PASS content_revision_type_2_<null>
+PASS content_revision_type_2_0
+PASS content_revision_type_2_-1
+PASS content_revision_type_2_1.5
+PASS content_revision_type_2_true
+PASS content_revision_type_2_2
+PASS content_revision_type_2_[]
+PASS content_revision_type_2_{  }
+PASS content_revision_type_2_nan
+PASS content_revision_type_2_inf
+PASS content_revision_type_2_65536
+PASS required_content_revision_2
+PASS wrong_known_content_revision_2
+PASS old_content1_cannot_open_revision2
+PASS old_content1_resume_transactional
+PASS old_content1_migration_cannot_downgrade
+PASS old_content1_replay_rejected_before_reconstruction
+PASS revision_number_alone_does_not_bypass_source_identity
+PASS handshake_reject_contract_id
+PASS handshake_reject_profile_id
+PASS handshake_reject_protocol
+PASS handshake_reject_rules_sha256
+PASS handshake_reject_map_id
+PASS handshake_reject_map_sha256
+PASS handshake_reject_content_sha256
+PASS handshake_reject_version_contract
+PASS handshake_reject_version_rules
+PASS handshake_reject_version_map
+PASS handshake_reject_version_content
+PASS handshake_reject_version_replay
+PASS handshake_reject_version_input
+PASS handshake_reject_version_event
+PASS handshake_reject_version_entity
+PASS unknown_handshake_field_rejected
+PASS no_automatic_cross_profile_downgrade
+PASS profile_snapshot_is_detached
+PASS first_input_zero_accepted
+PASS input_gap_permitted_for_coalescing
+PASS duplicate_input_rejected
+PASS stale_input_rejected
+PASS oversized_sequence_jump_requires_resync
+PASS malformed_input_0
+PASS malformed_input_1
+PASS malformed_input_2
+PASS malformed_input_3
+PASS malformed_input_4
+PASS malformed_input_5
+PASS malformed_input_6
+PASS malformed_input_7
+PASS malformed_input_8
+PASS malformed_input_9
+PASS malformed_input_10
+PASS malformed_input_11
+PASS malformed_input_12
+PASS malformed_input_13
+PASS malformed_input_14
+PASS malformed_input_15
+PASS typed_room_input_2
+PASS typed_room_event_2
+PASS typed_room_snapshot_2
+PASS typed_actor_2
+PASS typed_event_target_2
+PASS typed_entity_owner_2
+PASS typed_room_input_28
+PASS typed_room_event_28
+PASS typed_room_snapshot_28
+PASS typed_actor_28
+PASS typed_event_target_28
+PASS typed_entity_owner_28
+PASS typed_room_input_27
+PASS typed_room_event_27
+PASS typed_room_snapshot_27
+PASS typed_actor_27
+PASS typed_event_target_27
+PASS typed_entity_owner_27
+PASS typed_room_input_1
+PASS typed_room_event_1
+PASS typed_room_snapshot_1
+PASS typed_actor_1
+PASS typed_event_target_1
+PASS typed_entity_owner_1
+PASS typed_room_input_0
+PASS typed_room_event_0
+PASS typed_room_snapshot_0
+PASS typed_actor_0
+PASS typed_event_target_0
+PASS typed_entity_owner_0
+PASS offline_flight_cannot_leak_into_browser_rules
+PASS json_float_numeric_roundtrip
+PASS oversized_packet_rejected_before_parse
+PASS invalid_json_rejected
+PASS unknown_packet_channel_rejected
+PASS event_zero_accepted
+PASS duplicate_event_cannot_reapply_reward
+PASS event_gap_requires_reliable_replay
+PASS contiguous_reward_receipt_accepted_once
+PASS same_reward_receipt_replay_rejected
+PASS malformed_event_0
+PASS malformed_event_1
+PASS malformed_event_2
+PASS malformed_event_3
+PASS malformed_event_4
+PASS malformed_event_5
+PASS malformed_event_6
+PASS malformed_event_7
+PASS malformed_event_8
+PASS malformed_event_9
+PASS 128_event_tick_budget_accepts_exact_boundary
+PASS 129th_event_same_tick_rejected
+PASS next_tick_budget_recovers
+PASS event_tick_cannot_go_backwards
+PASS snapshot_accepts_issued_input_ack
+PASS duplicate_snapshot_rejected
+PASS malformed_snapshot_0
+PASS malformed_snapshot_1
+PASS malformed_snapshot_2
+PASS malformed_snapshot_3
+PASS malformed_snapshot_4
+PASS malformed_snapshot_5
+PASS malformed_snapshot_6
+PASS malformed_snapshot_7
+PASS malformed_snapshot_8
+PASS malformed_snapshot_9
+PASS malformed_snapshot_10
+PASS malformed_snapshot_11
+PASS malformed_snapshot_12
+PASS malformed_snapshot_13
+PASS malformed_snapshot_14
+PASS malformed_snapshot_15
+PASS malformed_snapshot_16
+PASS malformed_snapshot_17
+PASS malformed_snapshot_18
+PASS explicit_remote_pitch_and_teleport_counter_accepted
+PASS discontinuity_counter_regression_rejected
+PASS explicit_death_discontinuity_accepted
+PASS explicit_respawn_discontinuity_accepted
+PASS caller_cannot_mutate_accepted_pose
+PASS new_projectile_lifetime_accepted
+PASS full_snapshot_absence_despawns
+PASS absent_id_cannot_resurrect_same_generation
+PASS new_generation_reuses_slot_safely
+PASS old_generation_cannot_overwrite_new_entity
+PASS per_kind_projectile_cap_even_below_total
+PASS 192_projectile_limit_accepted
+PASS browser-p2-3v3_exact_actor_limit
+PASS browser-p2-3v3_excess_actor_rejected
+PASS native-offline-triad_exact_actor_limit
+PASS native-offline-triad_excess_actor_rejected
+PASS production-6v6_exact_actor_limit
+PASS production-6v6_excess_actor_rejected
+PASS 4096_lifetime_history_boundary
+PASS history_cannot_grow_without_new_epoch
+PASS resume_keeps_ack_tick_events_and_room
+PASS resume_json_numbers_preserve_scope
+PASS resume_rejects_changed_room
+PASS resume_rejects_changed_epoch
+PASS resume_rejects_changed_identity
+PASS active_session_cannot_silent_reopen
+PASS rollback_same_epoch_rejected
+PASS explicit_version_rollback_requires_new_epoch
+PASS old_epoch_reward_rejected_after_rollback
+PASS old_epoch_input_rejected_after_rollback
+PASS resume_requires_new_profile_after_rollback
+PASS replay_validates_ordered_records_without_active_mutation
+PASS replay_seek_revalidates_from_epoch_start_deterministically
+PASS replay_record_budget_rejects_before_iteration
+PASS replay_rejects_corruption_0
+PASS replay_rejects_corruption_1
+PASS replay_rejects_corruption_2
+PASS replay_rejects_corruption_3
+PASS replay_rejects_corruption_4
+PASS replay_rejects_corruption_5
+PASS replay_rejects_corruption_6
+PASS replay_rejects_corruption_7
+PASS replay_rejects_corruption_8
+PASS 2000_interleaved_cycles_keep_bounded_state
+PASS explicit_reset_clears_all_epoch_state
+PASS source_unchanged_during_run
+{"checks":228,"passed":true}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS configure resolves original arm finger and string contracts
+PASS reconfigure cannot duplicate modifiers or mappings
+PASS missing skeleton or animator fails without attachment
+PASS grip and contact probes use actual weighted skin vertices
+PASS authored grip materially reduces actual distal surface gap
+PASS calibrated distal skin stays within two millimetres of handle surface
+PASS dense native and candidate carry samples remain finite
+PASS all spine root lower-body and unmapped bone poses remain unchanged
+PASS all scales and body translations stay animation-owned
+PASS actual skinned soles are unchanged by upper-body carry
+PASS grip remains wrist-relative through native and candidate motion
+PASS carry upper-body poses close at exact clip endpoints
+PASS all original actions regain exact pose ownership after fade
+PASS first fire and cast tick retain exact arms and string ownership
+PASS ten rapid fire retriggers cannot inherit carry arm or string pose
+PASS action and traversal guards fade carry to zero
+PASS invalid delta cancels safely nan
+PASS invalid delta cancels safely inf
+PASS invalid delta cancels safely -1.0
+PASS invalid delta cancels safely 0.2
+PASS engine restores base pose between repeated modifier frames
+PASS scene pause stops pose callbacks
+PASS cancel is idempotent and restores zero contribution
+PASS source asset library and native clips remain unchanged
+YUGA_HERO_POSE_CASES {"checks":24,"passed":true,"report":"/tmp/yuga-native-setup-UNusTo/hero-pose.json"}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+YUGA_WORLD_PRESENTATION_CASES {"checks":32,"geometry":{"confluence":{"collision_objects":0,"lights":0,"mesh_budget":6,"meshes":6,"motifs":7,"phase":0.0,"triangle_budget":18000,"triangles":5902},"courtyard":{"collision_objects":0,"lights":0,"mesh_budget":6,"meshes":3,"motifs":11,"phase":0.0,"triangle_budget":18000,"triangles":1692}},"passed":true}
+{
+  "passed": true,
+  "scope": "Executed TypeScript baseline and its .5m grid with live structures, separately from extended native ground grid with sixteen blockers. Native objective markers do not add ground colliders. Does not prove continuous navigation, gameplay AI, native physics, renders or performance.",
+  "manifest": "games/yuga-native/art/world/confluence-map.json",
+  "manifest_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+  "test_sha256": "26ca24f71e2a4788594b06560989257e59a3ea252a33b1e77fbe71a864eb0ff8",
+  "authority_sha256": {
+    "games/yuga/shared/map.ts": "8de16e1ebedfbe3ddfb42f683c6d0e1947cb2ca9d9ed70ca8218adcb4209ca7d",
+    "games/yuga/shared/simulation.ts": "e3fa766b06333eb00b5b9b8b03d938b22d5595bdef98b0ae07c0733d0e41a260"
+  },
+  "checks": [
+    {
+      "name": "native manifest preserves copied authority fields and declares extensions",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "sun source authority navigation",
+      "passed": true,
+      "grid_step_m": 0.5,
+      "reachable_cells": 76853,
+      "anchors_and_approaches": 80,
+      "unreachable": []
+    },
+    {
+      "name": "moon source authority navigation",
+      "passed": true,
+      "grid_step_m": 0.5,
+      "reachable_cells": 76853,
+      "anchors_and_approaches": 80,
+      "unreachable": []
+    },
+    {
+      "name": "all source-authority walkable sampled cells connected",
+      "passed": true,
+      "open_cells": 76853
+    },
+    {
+      "name": "living objective centers blocked in authority",
+      "passed": true,
+      "incorrect_open": []
+    },
+    {
+      "name": "negative disconnected-world fixture is detected",
+      "passed": true,
+      "reachable_cells_after_cut": 38292
+    },
+    {
+      "name": "sun extended native ground navigation",
+      "passed": true,
+      "unreachable": [],
+      "reachable_cells": 124453,
+      "targets": 56
+    },
+    {
+      "name": "moon extended native ground navigation",
+      "passed": true,
+      "unreachable": [],
+      "reachable_cells": 124453,
+      "targets": 56
+    },
+    {
+      "name": "all sampled extended native ground connected",
+      "passed": true,
+      "open_cells": 124453,
+      "step_m": 0.5,
+      "blockers": 16
+    },
+    {
+      "name": "new native deck centers block ground routing",
+      "passed": true,
+      "incorrect_open": []
+    },
+    {
+      "name": "negative disconnected native ground fixture detected",
+      "passed": true
+    },
+    {
+      "name": "canonical and packaged manifests identical",
+      "passed": true
+    },
+    {
+      "name": "reject missing blocker",
+      "passed": true,
+      "expected_error": "box count",
+      "errors": [
+        "authority box count mismatch",
+        "authority box 7 geometry mismatch",
+        "authority box 7 collision metadata mismatch",
+        "authority box 7 style mismatch",
+        "block-7 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject shifted blocker",
+      "passed": true,
+      "expected_error": "geometry mismatch",
+      "errors": [
+        "authority box 0 geometry mismatch",
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject height mismatch",
+      "passed": true,
+      "expected_error": "geometry mismatch",
+      "errors": [
+        "authority box 0 geometry mismatch",
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject stale source",
+      "passed": true,
+      "expected_error": "source hash",
+      "errors": [
+        "map source hash mismatch"
+      ]
+    },
+    {
+      "name": "reject blocked camp anchor",
+      "passed": true,
+      "expected_error": "camp mismatch",
+      "errors": [
+        "west-reeds camp mismatch"
+      ]
+    },
+    {
+      "name": "reject shifted spawn",
+      "passed": true,
+      "expected_error": "spawn mismatch",
+      "errors": [
+        "sun spawn mismatch"
+      ]
+    },
+    {
+      "name": "reject wrong objective radius",
+      "passed": true,
+      "expected_error": "radius mismatch",
+      "errors": [
+        "sun-tower-0 radius mismatch"
+      ]
+    },
+    {
+      "name": "reject rotated authority visual",
+      "passed": true,
+      "expected_error": "footprint mismatch",
+      "errors": [
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject nonfinite placement",
+      "passed": true,
+      "expected_error": "nonfinite",
+      "errors": [
+        "nonfinite number"
+      ]
+    },
+    {
+      "name": "reject zero scale",
+      "passed": true,
+      "expected_error": "nonpositive scale",
+      "errors": [
+        "block-0 nonpositive scale",
+        "block-0 rendered authority footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject narrow native capsule",
+      "passed": true,
+      "expected_error": "hero radius",
+      "errors": [
+        "hero radius mismatch"
+      ]
+    },
+    {
+      "name": "reject changed bounds",
+      "passed": true,
+      "expected_error": "movement bounds",
+      "errors": [
+        "native movement bounds mismatch"
+      ]
+    },
+    {
+      "name": "reject conflated browser baseline",
+      "passed": true,
+      "expected_error": "browser baseline",
+      "errors": [
+        "browser baseline mismatch"
+      ]
+    },
+    {
+      "name": "reject missing native platform",
+      "passed": true,
+      "expected_error": "platform/anchor count",
+      "errors": [
+        "native platform/anchor count mismatch",
+        "moon-shrine-east native platform mismatch",
+        "moon-shrine-east native visual footprint mismatch"
+      ]
+    },
+    {
+      "name": "reject shifted native platform",
+      "passed": true,
+      "expected_error": "native platform mismatch",
+      "errors": [
+        "sun-lift-west native platform mismatch"
+      ]
+    },
+    {
+      "name": "reject misplaced native anchor",
+      "passed": true,
+      "expected_error": "native anchor mismatch",
+      "errors": [
+        "sun-lift-west native anchor mismatch"
+      ]
+    },
+    {
+      "name": "reject false native lane length",
+      "passed": true,
+      "expected_error": "lane length mismatch",
+      "errors": [
+        "native lane length mismatch"
+      ]
+    },
+    {
+      "name": "authority sources unchanged during checks",
+      "passed": true
+    }
+  ]
+}
+{
+  "passed": true,
+  "scope": "Native planning: district coverage, combined ground-blocker route clearance, anchor/deck contracts and decorative placement. Browser-authority parity is not claimed. No rendered art, dynamic-authority physics, GPU or multiplayer acceptance.",
+  "map_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+  "script_sha256": "b056b7b1ff0bbd54627a703552602a26c0df7411951763736da56aadeef543d6",
+  "protected_design_observed_hashes": {
+    "games/yuga-native/docs/GAME_DESIGN_MASTER.md": "5a9958fb61c23a751a5f4f0497187092b44a32bbc6ecce115c28089fb3ebe759",
+    "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md": "585547dcede8362f8d4fe094d7f3b42c484907e72f8db12d9e108ed07ed63b3b"
+  },
+  "counts": {
+    "props": 63,
+    "lights": 16,
+    "districts": 7,
+    "rotations": 2,
+    "authority_collision_boxes": 8
+  },
+  "checks": [
+    {
+      "name": "canonical_layout_placement_and_route_contract",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reject_unknown_kit",
+      "passed": true,
+      "details": [
+        "block-0 unknown preset"
+      ]
+    },
+    {
+      "name": "reject_hard_prop_in_open_route",
+      "passed": true,
+      "details": [
+        "bad-hard hard decorative prop in free traversal area"
+      ]
+    },
+    {
+      "name": "reject_route_through_building",
+      "passed": true,
+      "details": [
+        "mid-confluence-loop corridor intersects native ground collision",
+        "mid-confluence-loop corridor intersects native ground collision"
+      ]
+    },
+    {
+      "name": "reject_unreadable_camp_foliage",
+      "passed": true,
+      "details": [
+        "swamp-reed--1-0 vegetation in camp clearance",
+        "swamp-reed--1-0 vegetation in mid crossing"
+      ]
+    },
+    {
+      "name": "reject_hidden_swamp_water",
+      "passed": true,
+      "details": [
+        "west-reed-water ambiguous swamp traversal"
+      ]
+    },
+    {
+      "name": "reject_oversized_wall_fixture",
+      "passed": true,
+      "details": [
+        "block-0-lamp--1 mount projects beyond exclusion"
+      ]
+    },
+    {
+      "name": "reject_activated_future_geometry",
+      "passed": true,
+      "details": [
+        "future geometry silently active"
+      ]
+    },
+    {
+      "name": "reject_omitted_base_corners",
+      "passed": true,
+      "details": [
+        "unthemed floor -68,-128",
+        "unthemed floor -68,-124",
+        "unthemed floor -68,-120",
+        "unthemed floor -68,-116",
+        "unthemed floor -68,-112"
+      ]
+    },
+    {
+      "name": "reject_native_deck_visual_mismatch",
+      "passed": true,
+      "details": [
+        "native deck visual collision mismatch"
+      ]
+    },
+    {
+      "name": "reject_unreachable_high_anchor",
+      "passed": true,
+      "details": [
+        "anchor above flight ceiling"
+      ]
+    },
+    {
+      "name": "reject_lane_through_native_deck",
+      "passed": true,
+      "details": [
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision"
+      ]
+    }
+  ]
+}
+{
+  "passed": true,
+  "scope": "Independent deterministic screenplay validation and malformed fixtures. Authored hits/health/counters are visual receipts, not gameplay damage. Native poses, runtime rejection, effects and UI are separate tests.",
+  "resources_verified": true,
+  "manifest_sha256": "6ec07cb86aa645ba23c4eec51e652bbe89ad42d0558225583f6a8dd54248af6b",
+  "test_sha256": "3c246b6c6fda6284a89d5bcb7f9a9fe67fe18c847280e0fa12622b2eb7c93c57",
+  "metrics": {
+    "actors": 2,
+    "actions": 17,
+    "cues": 10,
+    "contact_windows": 6,
+    "receipt_times": [
+      4.75,
+      8.9,
+      15.85
+    ]
+  },
+  "resources": [
+    {
+      "path": "res://assets/heroes/rama-production.glb",
+      "sha256": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc",
+      "bytes": 7901132
+    },
+    {
+      "path": "res://assets/cinematics/duel-motion-rama.tres",
+      "sha256": "3ab73222e16d6925eb972f900e385fd18d1b3df2c47a6b744663be7007f0df94",
+      "bytes": 1874926
+    },
+    {
+      "path": "res://assets/cinematics/ravana-sentinel.glb",
+      "sha256": "f00bed98cc11847da41d2f9f13ef9119e3ed983d41ca6dd7a14862a1c80672ca",
+      "bytes": 6191332
+    },
+    {
+      "path": "res://assets/cinematics/duel-motion-ravana.tres",
+      "sha256": "d0d0f3b23dff6c12bc0174f3e1cedb66475ba85c0c8e61c533800f0d0a8ea3be",
+      "bytes": 1873531
+    }
+  ],
+  "audio": {
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_width": 2,
+    "frames": 1152000,
+    "duration_seconds": 24.0,
+    "sha256": "5c35ac7fc148c2c89ef1c2f0da7dfa8059528f02787f0cc03ceea7704b98c582"
+  },
+  "checks": [
+    {
+      "name": "independent film chronology and contract",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "reject missing actor",
+      "passed": true,
+      "expected_error": "missing or duplicate actor",
+      "errors": [
+        "missing or duplicate actor",
+        "missing actor reference rama-ready-opening",
+        "missing actor reference rama-draw-opening",
+        "missing actor reference rama-release-opening",
+        "missing actor reference rama-ready-counter",
+        "missing actor reference rama-evade-wave",
+        "missing actor reference rama-ready-aim",
+        "missing actor reference rama-draw-counter",
+        "missing actor reference rama-release-counter",
+        "missing actor reference rama-resolve",
+        "missing actor reference ravana-ready-opening",
+        "missing actor reference ravana-guard",
+        "missing actor reference ravana-ready-wave",
+        "missing actor reference ravana-charge-wave",
+        "missing actor reference ravana-release-wave",
+        "missing actor reference ravana-recover-wave",
+        "missing actor reference ravana-counter-recoil",
+        "missing actor reference ravana-resolve",
+        "missing actor reference cue-rama-first-draw",
+        "missing actor reference cue-ravana-guard",
+        "missing actor reference cue-rama-first-arrow",
+        "missing actor reference cue-opening-block",
+        "missing actor reference cue-ravana-wave-warning",
+        "missing actor reference cue-ravana-wave",
+        "missing actor reference cue-rama-counter-draw",
+        "missing actor reference cue-rama-counter-arrow",
+        "missing actor reference cue-counter-hit",
+        "missing actor reference receipt-opening-block",
+        "missing actor reference receipt-wave-evaded",
+        "missing actor reference receipt-counter-hit",
+        "missing actor reference audio-guard-block",
+        "missing actor reference audio-wave-charge",
+        "missing actor reference audio-wave-release",
+        "missing actor reference audio-counter-hit",
+        "missing actor reference window-opening-guard",
+        "missing actor reference window-counter-punish",
+        "missing actor reference ravana-opening-planted",
+        "missing actor reference ravana-tracking-pivot",
+        "missing actor reference ravana-counter-planted",
+        "missing or duplicate motion track"
+      ]
+    },
+    {
+      "name": "reject invalid negative time",
+      "passed": true,
+      "expected_error": "invalid time",
+      "errors": [
+        "invalid time interval cue-rama-first-draw"
+      ]
+    },
+    {
+      "name": "reject nonfinite coordinate",
+      "passed": true,
+      "expected_error": "nonfinite",
+      "errors": [
+        "nonfinite number"
+      ]
+    },
+    {
+      "name": "reject duplicate event",
+      "passed": true,
+      "expected_error": "duplicate event",
+      "errors": [
+        "duplicate event id"
+      ]
+    },
+    {
+      "name": "reject duplicate resource",
+      "passed": true,
+      "expected_error": "duplicate actor resource",
+      "errors": [
+        "duplicate actor resource"
+      ]
+    },
+    {
+      "name": "reject unknown actor reference",
+      "passed": true,
+      "expected_error": "missing actor reference",
+      "errors": [
+        "missing actor reference cue-rama-first-draw"
+      ]
+    },
+    {
+      "name": "reject unknown clip",
+      "passed": true,
+      "expected_error": "unknown action clip",
+      "errors": [
+        "unknown action clip"
+      ]
+    },
+    {
+      "name": "reject receipt precedes arrival",
+      "passed": true,
+      "expected_error": "receipt before or after",
+      "errors": [
+        "impact and receipt chronology mismatch",
+        "receipt before or after projectile arrival"
+      ]
+    },
+    {
+      "name": "reject missing telegraph",
+      "passed": true,
+      "expected_error": "missing reciprocal telegraph",
+      "errors": [
+        "missing reciprocal telegraph link"
+      ]
+    },
+    {
+      "name": "reject shifted impact time",
+      "passed": true,
+      "expected_error": "impact time mismatch",
+      "errors": [
+        "projectile impact time mismatch"
+      ]
+    },
+    {
+      "name": "reject duplicate motion time",
+      "passed": true,
+      "expected_error": "nonincreasing",
+      "errors": [
+        "nonincreasing motion times"
+      ]
+    },
+    {
+      "name": "reject planted moving actor",
+      "passed": true,
+      "expected_error": "stationary contact",
+      "errors": [
+        "stationary contact has root displacement",
+        "planted contact has root yaw change",
+        "stationary contact has root displacement",
+        "planted contact has root yaw change"
+      ]
+    },
+    {
+      "name": "reject late guard window",
+      "passed": true,
+      "expected_error": "receipt outside",
+      "errors": [
+        "receipt outside declared counter window"
+      ]
+    },
+    {
+      "name": "reject wrong visual health",
+      "passed": true,
+      "expected_error": "health arithmetic",
+      "errors": [
+        "visual health arithmetic mismatch"
+      ]
+    },
+    {
+      "name": "reject unknown resource path",
+      "passed": true,
+      "expected_error": "invalid resource path",
+      "errors": [
+        "invalid resource path"
+      ]
+    },
+    {
+      "name": "reject duplicate JSON key",
+      "passed": true
+    },
+    {
+      "name": "reject JSON NaN",
+      "passed": true
+    },
+    {
+      "name": "reject JSON infinity",
+      "passed": true
+    },
+    {
+      "name": "audio exactly matches film length",
+      "passed": true,
+      "details": {
+        "channels": 2,
+        "sample_rate": 48000,
+        "sample_width": 2,
+        "frames": 1152000,
+        "duration_seconds": 24.0,
+        "sha256": "5c35ac7fc148c2c89ef1c2f0da7dfa8059528f02787f0cc03ceea7704b98c582"
+      }
+    }
+  ]
+}
+{"passed": true, "assets": 11, "cues": 10, "duration_seconds": 24, "sample_rate": 48000, "master_sha256": "5c35ac7fc148c2c89ef1c2f0da7dfa8059528f02787f0cc03ceea7704b98c582", "headroom_db": 2.8533500713746314}
+{"passed": true, "cases": [{"case": "stale_source_pin", "rejected": true, "reason": "Audio manifest source pins are stale; rebuild after contract/source changes"}, {"case": "one_sample_cue_shift", "rejected": true, "reason": "Cue samples differ from contract"}, {"case": "truncated_pcm", "rejected": true, "reason": "Truncated PCM payload despite declared WAV frame count"}, {"case": "nonzero_edge", "rejected": true, "reason": "Audio clips or has nonzero edges"}, {"case": "clipped_sample", "rejected": true, "reason": "Audio clips or has nonzero edges"}, {"case": "wrong_channels", "rejected": true, "reason": "Audio PCM header mismatch"}], "frozen_assets_modified": false}
+{"passed": true, "check": true, "assets": 27, "notice": "/workspace/ANDOLAN/games/yuga-native/NOTICE/CONFLUENCE-DUEL-PROVENANCE.json"}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS rama imported rig and clip coverage
+PASS rama actual skinned sole cohort exists
+PASS rama all loaded animation bone poses finite
+PASS rama anatomical segments retain length
+PASS rama root branch translations are coordinated controls
+PASS rama stationary clips have grounded fixed soles
+PASS ravana imported rig and clip coverage
+PASS ravana actual skinned sole cohort exists
+PASS ravana all loaded animation bone poses finite
+PASS ravana anatomical segments retain length
+PASS ravana root branch translations are coordinated controls
+PASS ravana stationary clips have grounded fixed soles
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+YUGA_COMBAT_FILM_READY {"active_actions":{"rama":"rama-ready-opening","ravana":"ravana-ready-opening"},"actors":{"rama":{"actor_id":"rama","bones":164,"clip":"ready","film_material_overrides":5,"finite":true,"phase":0.0,"pose_sha256":"f4f9b38187f52d3ab43bc315f6886ab3db60cf43447d76c19b186afb8cc3bc65","position":[-3.0,0.0,-6.0],"yaw":0.463647603988647},"ravana":{"actor_id":"ravana","bones":164,"clip":"ready","film_material_overrides":7,"finite":true,"phase":0.0,"pose_sha256":"f4b4d6062f34c8524fc6dbd43b6b68bff2ad7ed0a36b921b3b58144d835c615e","position":[3.0,0.0,6.0],"yaw":-2.67794513702393}},"audio":{"configured_volume":0.7,"muted":false,"paused":false,"playing":true},"camera":{"fov":48.0,"id":"camera-establish","position":[12.0,4.69999980926514,-6.0],"rotation":[-0.262152910232544,2.03444385528564,0.0]},"caption":"CONFLUENCE","capture_mode":false,"duration":24.0,"effects":{"active_ids":[],"configured":true,"cue_count":10,"errors":[],"max_cues":32,"max_meshes":128,"mesh_count":57,"reduced_flash":true,"reduced_motion":false,"scope":"Deterministic choreography VFX, not authority hit or damage validation.","state_sha256":"f0f3bb2a6f2e25c3dadd91836473edf165c6bbc1891b9bf91203211167ae6bb1","time":0.0},"errors":[],"finite":true,"playing":true,"ready":true,"receipt":"","reduced_flash":true,"reduced_motion":false,"scope":"Scripted cinematic; visual receipts are not authoritative combat.","time":0.0,"visual_health":{"rama":100.0,"ravana":100.0}}
+PASS watch button enters ready film and frees title
+PASS runtime rejects missing actor
+PASS runtime rejects negative action time
+PASS runtime rejects zero action duration
+PASS runtime rejects nonfinite actor coordinate
+PASS runtime rejects duplicate event
+PASS runtime rejects duplicate actor resource
+PASS runtime rejects duplicate motion time
+PASS runtime rejects missing actions
+PASS runtime rejects missing model resource
+PASS runtime rejects missing animation clip
+PASS runtime rejects overlapping actor actions
+PASS runtime rejects camera target equals position
+PASS integrated timeline bones finite and actors in bounds
+PASS exact cue and health chronology including event boundaries
+PASS absolute capture sampling remains silent and paused
+PASS actual viewer stationary contact windows
+PASS rewind replay reproduces actual bones camera effects and health
+PASS seeking does not allocate scene nodes or mesh materials
+PASS reduced motion fixes camera while preserving critical effects
+PASS film viewer controls fit (1280, 720)
+PASS film viewer controls fit (960, 600)
+PASS actual play and pause buttons advance then freeze
+PASS actual scrub slider seeks paused film without audio
+PASS actual replay button restarts single timeline
+PASS film endpoint holds both survivors and final receipt
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS actual return button restores title and frees film
+ERROR: YUGA_COMBAT_FILM: rama: missing model_path
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _show_error (res://scripts/combat_film.gd:519)
+       [1] _ready (res://scripts/combat_film.gd:53)
+       [2] _viewer_ui_flow (res://tests/combat_film_cases.gd:468)
+       [3] _frames (res://tests/combat_film_cases.gd:127)
+PASS invalid resource viewer fails visibly without placeholders
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS fatal viewer return remains usable
+PASS sampled sources unchanged
+YUGA_COMBAT_FILM_CASES {"actors_only":false,"checks":[{"details":{"bones":164,"clips":["cast_release","cast_windup","defeat","draw","evade","guard","ready","recoil","release"]},"name":"rama imported rig and clip coverage","passed":true},{"details":{"lowest_rest_foot_vertex_count":1136,"selection_depth_metres":0.015},"name":"rama actual skinned sole cohort exists","passed":true},{"details":{"bone_samples":60516,"invalid_transforms":0,"max_local_segment_length_error":0.40919354557991,"segment_errors_by_bone":{"bowstring":0.40919354557991,"pelvis.L":0.385023638606071,"pelvis.R":0.385023579001427,"spine05":0.385023579001427},"track_path_errors":[]},"name":"rama all loaded animation bone poses finite","passed":true},{"details":{"limit_metres":0.005,"maximum_anatomical_local_segment_length_error":0.000000417232513427734,"separately_disclosed_translation_controls":["pelvis.L","pelvis.R","spine05","bowstring"]},"name":"rama anatomical segments retain length","passed":true},{"details":{"branch_parents":{"pelvis.L":"root","pelvis.R":"root","spine05":"root"},"maximum_body_control_offset":0.464364647865295,"maximum_branch_translation_disagreement":0.000000524847450833477,"root_weighted_vertex_influences":0,"scope":"These three child branches translate together under an unweighted root for authored crouch. They are not treated as physical limb segments; their rest offsets and within-clip variations remain explicitly reported. Bowstring translation is separately intentional."},"name":"rama root branch translations are coordinated controls","passed":true},{"details":{"clips":[{"clip":"ready","length":1.0,"maximum_foot_minimum_y":0.00849365442991257,"maximum_sole_centroid_horizontal_drift":0.000000314340326212914,"minimum_sole_y":0.00849304348230362,"translation_controls":{"bowstring":{"max_rest_offset":0.000000189816248052921,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.000000189816248052921},"pelvis.L":{"max_rest_offset":0.035000067204237,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.035000067204237},"pelvis.R":{"max_rest_offset":0.035000067204237,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.035000067204237},"spine05":{"max_rest_offset":0.034999955445528,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.034999955445528}}},{"clip":"draw","length":1.0,"maximum_foot_minimum_y":0.00849360227584839,"maximum_sole_centroid_horizontal_drift":0.000000337832688046547,"minimum_sole_y":0.00849304348230362,"translation_controls":{"bowstring":{"max_rest_offset":0.511545598506927,"max_within_clip_displacement":0.511545777320862,"phase0_rest_offset":0.00000018507795118694},"pelvis.L":{"max_rest_offset":0.035000067204237,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.035000067204237},"pelvis.R":{"max_rest_offset":0.035000067204237,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.035000067204237},"spine05":{"max_rest_offset":0.034999955445528,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.034999955445528}}},{"clip":"release","length":1.0,"maximum_foot_minimum_y":0.0084935799241066,"maximum_sole_centroid_horizontal_drift":0.000000313278974317655,"minimum_sole_y":0.00849304348230362,"translation_controls":{"bowstring":{"max_rest_offset":0.280374437570572,"max_within_clip_displacement":0.25129646062851,"phase0_rest_offset":0.251296371221542},"pelvis.L":{"max_rest_offset":0.035000067204237,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.035000067204237},"pelvis.R":{"max_rest_offset":0.035000067204237,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.035000067204237},"spine05":{"max_rest_offset":0.034999955445528,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.034999955445528}}},{"clip":"guard","length":1.0,"maximum_foot_minimum_y":0.00849374383687973,"maximum_sole_centroid_horizontal_drift":0.00000246198578679468,"minimum_sole_y":0.00849295407533646,"translation_controls":{"bowstring":{"max_rest_offset":0.000000193006357562808,"max_within_clip_displacement":0.000000199920052068592,"phase0_rest_offset":0.00000018507795118694},"pelvis.L":{"max_rest_offset":0.0782922208309174,"max_within_clip_displacement":0.0432921536266804,"phase0_rest_offset":0.035000067204237},"pelvis.R":{"max_rest_offset":0.0782922208309174,"max_within_clip_displacement":0.0432921536266804,"phase0_rest_offset":0.035000067204237},"spine05":{"max_rest_offset":0.0782921090722084,"max_within_clip_displacement":0.0432921536266804,"phase0_rest_offset":0.034999955445528}}},{"clip":"recoil","length":1.0,"maximum_foot_minimum_y":0.00849365442991257,"maximum_sole_centroid_horizontal_drift":0.000000314340326212914,"minimum_sole_y":0.00849304348230362,"translation_controls":{"bowstring":{"max_rest_offset":0.000000205541851983071,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.000000205541851983071},"pelvis.L":{"max_rest_offset":0.035000067204237,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.035000067204237},"pelvis.R":{"max_rest_offset":0.035000067204237,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.035000067204237},"spine05":{"max_rest_offset":0.034999955445528,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.034999955445528}}},{"clip":"evade","length":1.0,"maximum_foot_minimum_y":0.00849360227584839,"maximum_sole_centroid_horizontal_drift":0.00000797239954408724,"minimum_sole_y":0.00849304348230362,"translation_controls":{"bowstring":{"max_rest_offset":0.000000211924486848147,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.000000211924486848147},"pelvis.L":{"max_rest_offset":0.195000052452087,"max_within_clip_displacement":0.16000010073185,"phase0_rest_offset":0.0349999479949474},"pelvis.R":{"max_rest_offset":0.195000052452087,"max_within_clip_displacement":0.16000010073185,"phase0_rest_offset":0.0349999479949474},"spine05":{"max_rest_offset":0.195000052452087,"max_within_clip_displacement":0.16000010073185,"phase0_rest_offset":0.034999955445528}}},{"clip":"cast_windup","length":1.0,"maximum_foot_minimum_y":0.00849374383687973,"maximum_sole_centroid_horizontal_drift":0.00000324425514008908,"minimum_sole_y":0.00849299132823944,"translation_controls":{"bowstring":{"max_rest_offset":0.000000252778164622214,"max_within_clip_displacement":0.000000232763582630469,"phase0_rest_offset":0.00000018507795118694},"pelvis.L":{"max_rest_offset":0.0937116891145706,"max_within_clip_displacement":0.0587116181850433,"phase0_rest_offset":0.035000067204237},"pelvis.R":{"max_rest_offset":0.0937116891145706,"max_within_clip_displacement":0.0587116219103336,"phase0_rest_offset":0.035000067204237},"spine05":{"max_rest_offset":0.0937116965651512,"max_within_clip_displacement":0.0587117411196232,"phase0_rest_offset":0.034999955445528}}},{"clip":"cast_release","length":1.0,"maximum_foot_minimum_y":0.00849379599094391,"maximum_sole_centroid_horizontal_drift":0.00000350313598573848,"minimum_sole_y":0.0084928572177887,"translation_controls":{"bowstring":{"max_rest_offset":0.000000252778164622214,"max_within_clip_displacement":0.000000232763582630469,"phase0_rest_offset":0.000000252778164622214},"pelvis.L":{"max_rest_offset":0.0937116891145706,"max_within_clip_displacement":0.0587116181850433,"phase0_rest_offset":0.0937116891145706},"pelvis.R":{"max_rest_offset":0.0937116891145706,"max_within_clip_displacement":0.0587116219103336,"phase0_rest_offset":0.0937116891145706},"spine05":{"max_rest_offset":0.0937116965651512,"max_within_clip_displacement":0.0587117411196232,"phase0_rest_offset":0.0937116965651512}}},{"clip":"defeat","length":1.0,"maximum_foot_minimum_y":0.00849366933107376,"maximum_sole_centroid_horizontal_drift":0.0000192589959624456,"minimum_sole_y":0.00849317014217377,"translation_controls":{"bowstring":{"max_rest_offset":0.000000154509748995224,"max_within_clip_displacement":0.000000111758708953857,"phase0_rest_offset":0.000000154509748995224},"pelvis.L":{"max_rest_offset":0.464364647865295,"max_within_clip_displacement":0.429364591836929,"phase0_rest_offset":0.035000067204237},"pelvis.R":{"max_rest_offset":0.464364647865295,"max_within_clip_displacement":0.429364562034607,"phase0_rest_offset":0.035000067204237},"spine05":{"max_rest_offset":0.464364647865295,"max_within_clip_displacement":0.429364711046219,"phase0_rest_offset":0.034999955445528}}}],"maximum_stationary_foot_minimum_y":0.00849379599094391,"maximum_stationary_horizontal_drift":0.00000350313598573848,"minimum_stationary_sole_y":0.0084928572177887,"scope":"CPU skinning of actual loaded lowest-rest foot/toe vertex cohort at41phases perclip; numerical contact evidence, not visual acceptance."},"name":"rama stationary clips have grounded fixed soles","passed":true},{"details":{"bones":164,"clips":["cast_release","cast_windup","defeat","draw","evade","guard","ready","recoil","release"]},"name":"ravana imported rig and clip coverage","passed":true},{"details":{"lowest_rest_foot_vertex_count":1144,"selection_depth_metres":0.015},"name":"ravana actual skinned sole cohort exists","passed":true},{"details":{"bone_samples":60516,"invalid_transforms":0,"max_local_segment_length_error":0.4091931656003,"segment_errors_by_bone":{"bowstring":0.4091931656003,"pelvis.L":0.38502361625433,"pelvis.R":0.385023556649685,"spine05":0.385023526847363},"track_path_errors":[]},"name":"ravana all loaded animation bone poses finite","passed":true},{"details":{"limit_metres":0.005,"maximum_anatomical_local_segment_length_error":0.000000908970832824707,"separately_disclosed_translation_controls":["pelvis.L","pelvis.R","spine05","bowstring"]},"name":"ravana anatomical segments retain length","passed":true},{"details":{"branch_parents":{"pelvis.L":"root","pelvis.R":"root","spine05":"root"},"maximum_body_control_offset":0.464364588260651,"maximum_branch_translation_disagreement":0.000000524847166616382,"root_weighted_vertex_influences":0,"scope":"These three child branches translate together under an unweighted root for authored crouch. They are not treated as physical limb segments; their rest offsets and within-clip variations remain explicitly reported. Bowstring translation is separately intentional."},"name":"ravana root branch translations are coordinated controls","passed":true},{"details":{"clips":[{"clip":"ready","length":1.0,"maximum_foot_minimum_y":0.00849331915378571,"maximum_sole_centroid_horizontal_drift":0.000000465527165260937,"minimum_sole_y":0.0084928572177887,"translation_controls":{"bowstring":{"max_rest_offset":0.000000331278641851895,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.000000331278641851895},"pelvis.L":{"max_rest_offset":0.0350000746548176,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.0350000746548176},"pelvis.R":{"max_rest_offset":0.0350000709295273,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.0350000709295273},"spine05":{"max_rest_offset":0.034999955445528,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.034999955445528}}},{"clip":"draw","length":1.0,"maximum_foot_minimum_y":0.00849307328462601,"maximum_sole_centroid_horizontal_drift":0.00000112009263375512,"minimum_sole_y":0.00849273800849915,"translation_controls":{"bowstring":{"max_rest_offset":0.511545360088348,"max_within_clip_displacement":0.511545598506927,"phase0_rest_offset":0.000000376457137463149},"pelvis.L":{"max_rest_offset":0.0350000746548176,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.0350000746548176},"pelvis.R":{"max_rest_offset":0.0350000709295273,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.0350000709295273},"spine05":{"max_rest_offset":0.034999955445528,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.034999955445528}}},{"clip":"release","length":1.0,"maximum_foot_minimum_y":0.00849307328462601,"maximum_sole_centroid_horizontal_drift":0.00000108318215552572,"minimum_sole_y":0.00849277526140213,"translation_controls":{"bowstring":{"max_rest_offset":0.280374586582184,"max_within_clip_displacement":0.251296490430832,"phase0_rest_offset":0.25129646062851},"pelvis.L":{"max_rest_offset":0.0350000746548176,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.0350000746548176},"pelvis.R":{"max_rest_offset":0.0350000709295273,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.0350000709295273},"spine05":{"max_rest_offset":0.034999955445528,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.034999955445528}}},{"clip":"guard","length":1.0,"maximum_foot_minimum_y":0.00849345326423645,"maximum_sole_centroid_horizontal_drift":0.00000267167479250929,"minimum_sole_y":0.00849271565675735,"translation_controls":{"bowstring":{"max_rest_offset":0.000000377432769482766,"max_within_clip_displacement":0.0000000842936955791629,"phase0_rest_offset":0.000000376457137463149},"pelvis.L":{"max_rest_offset":0.0782922208309174,"max_within_clip_displacement":0.0432921536266804,"phase0_rest_offset":0.0350000746548176},"pelvis.R":{"max_rest_offset":0.078292228281498,"max_within_clip_displacement":0.043292161077261,"phase0_rest_offset":0.0350000709295273},"spine05":{"max_rest_offset":0.078292116522789,"max_within_clip_displacement":0.043292161077261,"phase0_rest_offset":0.034999955445528}}},{"clip":"recoil","length":1.0,"maximum_foot_minimum_y":0.00849331915378571,"maximum_sole_centroid_horizontal_drift":0.000000465527165260937,"minimum_sole_y":0.0084928572177887,"translation_controls":{"bowstring":{"max_rest_offset":0.000000331278641851895,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.000000331278641851895},"pelvis.L":{"max_rest_offset":0.0350000746548176,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.0350000746548176},"pelvis.R":{"max_rest_offset":0.0350000709295273,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.0350000709295273},"spine05":{"max_rest_offset":0.034999955445528,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.034999955445528}}},{"clip":"evade","length":1.0,"maximum_foot_minimum_y":0.00849337875843048,"maximum_sole_centroid_horizontal_drift":0.00000779549009166658,"minimum_sole_y":0.00849264115095139,"translation_controls":{"bowstring":{"max_rest_offset":0.000000331278641851895,"max_within_clip_displacement":0.0,"phase0_rest_offset":0.000000331278641851895},"pelvis.L":{"max_rest_offset":0.194999992847443,"max_within_clip_displacement":0.160000041127205,"phase0_rest_offset":0.0349999517202377},"pelvis.R":{"max_rest_offset":0.194999992847443,"max_within_clip_displacement":0.160000041127205,"phase0_rest_offset":0.0349999517202377},"spine05":{"max_rest_offset":0.194999992847443,"max_within_clip_displacement":0.160000041127205,"phase0_rest_offset":0.034999955445528}}},{"clip":"cast_windup","length":1.0,"maximum_foot_minimum_y":0.0084933266043663,"maximum_sole_centroid_horizontal_drift":0.00000352506162926147,"minimum_sole_y":0.00849276781082153,"translation_controls":{"bowstring":{"max_rest_offset":0.000000376457137463149,"max_within_clip_displacement":0.000000223020165890375,"phase0_rest_offset":0.000000376457137463149},"pelvis.L":{"max_rest_offset":0.0937116891145706,"max_within_clip_displacement":0.058711614459753,"phase0_rest_offset":0.0350000746548176},"pelvis.R":{"max_rest_offset":0.0937116891145706,"max_within_clip_displacement":0.0587116219103336,"phase0_rest_offset":0.0350000709295273},"spine05":{"max_rest_offset":0.0937117040157318,"max_within_clip_displacement":0.0587117448449135,"phase0_rest_offset":0.034999955445528}}},{"clip":"cast_release","length":1.0,"maximum_foot_minimum_y":0.00849331915378571,"maximum_sole_centroid_horizontal_drift":0.00000385655903301085,"minimum_sole_y":0.00849273055791855,"translation_controls":{"bowstring":{"max_rest_offset":0.000000376457137463149,"max_within_clip_displacement":0.000000223020165890375,"phase0_rest_offset":0.000000360795866072294},"pelvis.L":{"max_rest_offset":0.0937116891145706,"max_within_clip_displacement":0.058711614459753,"phase0_rest_offset":0.0937116891145706},"pelvis.R":{"max_rest_offset":0.0937116891145706,"max_within_clip_displacement":0.0587116219103336,"phase0_rest_offset":0.0937116891145706},"spine05":{"max_rest_offset":0.0937117040157318,"max_within_clip_displacement":0.0587117448449135,"phase0_rest_offset":0.0937117040157318}}},{"clip":"defeat","length":1.0,"maximum_foot_minimum_y":0.00849349796772003,"maximum_sole_centroid_horizontal_drift":0.0000190686841960996,"minimum_sole_y":0.0084928423166275,"translation_controls":{"bowstring":{"max_rest_offset":0.000000423111629288542,"max_within_clip_displacement":0.000000111510082945188,"phase0_rest_offset":0.000000423111629288542},"pelvis.L":{"max_rest_offset":0.464364588260651,"max_within_clip_displacement":0.429364532232285,"phase0_rest_offset":0.0350000746548176},"pelvis.R":{"max_rest_offset":0.464364558458328,"max_within_clip_displacement":0.429364502429962,"phase0_rest_offset":0.0350000709295273},"spine05":{"max_rest_offset":0.464364588260651,"max_within_clip_displacement":0.429364651441574,"phase0_rest_offset":0.034999955445528}}}],"maximum_stationary_foot_minimum_y":0.00849345326423645,"maximum_stationary_horizontal_drift":0.00000385655903301085,"minimum_stationary_sole_y":0.00849271565675735,"scope":"CPU skinning of actual loaded lowest-rest foot/toe vertex cohort at41phases perclip; numerical contact evidence, not visual acceptance."},"name":"ravana stationary clips have grounded fixed soles","passed":true},{"details":{"errors":[],"scene":"res://scenes/combat_film.tscn"},"name":"watch button enters ready film and frees title","passed":true},{"details":{"errors":["This film requires exactly two declared actors.","rama-ready-opening: unknown aim_target_id","rama-draw-opening: unknown aim_target_id","rama-release-opening: unknown aim_target_id","rama-ready-counter: unknown aim_target_id","rama-evade-wave: unknown aim_target_id","rama-ready-aim: unknown aim_target_id","rama-draw-counter: unknown aim_target_id","rama-release-counter: unknown aim_target_id","rama-resolve: unknown aim_target_id","ravana-ready-opening: unknown actor_id","ravana-ready-opening: action requires actor and clip","ravana-guard: unknown actor_id","ravana-guard: action requires actor and clip","ravana-ready-wave: unknown actor_id","ravana-ready-wave: action requires actor and clip","ravana-charge-wave: unknown actor_id","ravana-charge-wave: action requires actor and clip","ravana-release-wave: unknown actor_id","ravana-release-wave: action requires actor and clip","ravana-recover-wave: unknown actor_id","ravana-recover-wave: action requires actor and clip","ravana-counter-recoil: unknown actor_id","ravana-counter-recoil: action requires actor and clip","ravana-resolve: unknown actor_id","ravana-resolve: action requires actor and clip","cue-rama-first-draw: unknown target_id","cue-ravana-guard: unknown actor_id","cue-rama-first-arrow: unknown target_id","cue-opening-block: unknown actor_id","cue-ravana-wave-warning: unknown actor_id","cue-ravana-wave: unknown actor_id","cue-rama-counter-draw: unknown target_id","cue-rama-counter-arrow: unknown target_id","cue-counter-hit: unknown target_id","receipt-opening-block: unknown target_id","receipt-wave-evaded: unknown actor_id","receipt-counter-hit: unknown target_id","Invalid motion track"]},"name":"runtime rejects missing actor","passed":true},{"details":{"errors":["rama-ready-opening: invalid time window"]},"name":"runtime rejects negative action time","passed":true},{"details":{"errors":["rama-ready-opening: missing positive duration","rama-ready-opening: duration must be positive"]},"name":"runtime rejects zero action duration","passed":true},{"details":{"errors":["rama: invalid initial transform","rama: nonfinite position"]},"name":"runtime rejects nonfinite actor coordinate","passed":true},{"details":{"errors":["Duplicate film ID: cue-rama-first-draw"]},"name":"runtime rejects duplicate event","passed":true},{"details":{"errors":["ravana: duplicate actor resource model_path"]},"name":"runtime rejects duplicate actor resource","passed":true},{"details":{"errors":["Invalid motion key: rama"]},"name":"runtime rejects duplicate motion time","passed":true},{"details":{"errors":["No actions declared for rama","No actions declared for ravana"]},"name":"runtime rejects missing actions","passed":true},{"details":{"errors":["rama: missing model_path"]},"name":"runtime rejects missing model resource","passed":true},{"details":{"errors":["rama-ready-opening: missing film clip"]},"name":"runtime rejects missing animation clip","passed":true},{"details":{"errors":["Overlapping or unordered actor actions: rama"]},"name":"runtime rejects overlapping actor actions","passed":true},{"details":{"errors":["Camera position equals its target"]},"name":"runtime rejects camera target equals position","passed":true},{"details":{"bone_samples":124640,"invalid_bones":0,"out_of_bounds":[],"sample_times":380},"name":"integrated timeline bones finite and actors in bounds","passed":true},{"details":{"mismatched_times":[],"receipt_times":[4.75,8.9,15.85]},"name":"exact cue and health chronology including event boundaries","passed":true},{"details":{},"name":"absolute capture sampling remains silent and paused","passed":true},{"details":{"actual_world_geometry_at_8_55_seconds":{"rama":{"actor_origin_y":0.0,"left_sole_y":0.00849368423223495,"right_sole_y":0.00849324464797974},"ravana":{"actor_origin_y":0.0,"left_sole_y":0.0084870308637619,"right_sole_y":0.00848720967769623}},"ground_contract_y":0,"scope":"CPU-skinned loaded shoe/toe cohort in actual director world transforms. This checks geometric clearance and horizontal drift, not the visual appearance of shadow contact.","windows":{"rama-counter-planted":{"actor":"rama","maximum_foot_minimum_y":0.00849379599094391,"maximum_horizontal_drift":0.000000715255737304688,"minimum_sole_y":0.00849301367998123,"samples":235},"rama-opening-planted":{"actor":"rama","maximum_foot_minimum_y":0.00849384069442749,"maximum_horizontal_drift":0.000000983024960987677,"minimum_sole_y":0.00849305838346481,"samples":134},"ravana-counter-planted":{"actor":"ravana","maximum_foot_minimum_y":0.0084935650229454,"maximum_horizontal_drift":0.000000674349564633303,"minimum_sole_y":0.00849288702011108,"samples":193},"ravana-opening-planted":{"actor":"ravana","maximum_foot_minimum_y":0.00849363952875137,"maximum_horizontal_drift":0.000563738925848156,"minimum_sole_y":0.00675883144140244,"samples":175}}},"name":"actual viewer stationary contact windows","passed":true},{"details":{"errors":[],"repeated_seeks":50},"name":"rewind replay reproduces actual bones camera effects and health","passed":true},{"details":{"audio_players":1,"nodes":132,"unique_mesh_material_resources":176},"name":"seeking does not allocate scene nodes or mesh materials","passed":true},{"details":{},"name":"reduced motion fixes camera while preserving critical effects","passed":true},{"details":{"outside":[],"overlaps":[],"rectangles":{"CaptionPanel":[90.0,488.0,1100.0,80.0],"FilmCaptions":[394.0,638.0,116.0,31.0],"FilmPlayPause":[42.0,596.0,90.0,38.0],"FilmReducedEffects":[42.0,638.0,174.0,31.0],"FilmReducedMotion":[228.0,638.0,154.0,31.0],"FilmReplay":[142.0,596.0,90.0,38.0],"FilmReturn":[242.0,596.0,90.0,38.0],"FilmTimeline":[42.0,673.0,1196.0,16.0]}},"name":"film viewer controls fit (1280, 720)","passed":true},{"details":{"outside":[],"overlaps":[],"rectangles":{"CaptionPanel":[90.0,368.0,780.0,80.0],"FilmCaptions":[394.0,518.0,116.0,31.0],"FilmPlayPause":[42.0,476.0,90.0,38.0],"FilmReducedEffects":[42.0,518.0,174.0,31.0],"FilmReducedMotion":[228.0,518.0,154.0,31.0],"FilmReplay":[142.0,476.0,90.0,38.0],"FilmReturn":[242.0,476.0,90.0,38.0],"FilmTimeline":[42.0,553.0,876.0,16.0]}},"name":"film viewer controls fit (960, 600)","passed":true},{"details":{"advanced_seconds":0.133333333333333,"paused_seconds":0.133333333333333},"name":"actual play and pause buttons advance then freeze","passed":true},{"details":{"time":8.55},"name":"actual scrub slider seeks paused film without audio","passed":true},{"details":{"time":0.0666666666666667},"name":"actual replay button restarts single timeline","passed":true},{"details":{"audio_playing":false,"health":{"rama":100.0,"ravana":55.0},"playing":false},"name":"film endpoint holds both survivors and final receipt","passed":true},{"details":{},"name":"actual return button restores title and frees film","passed":true},{"details":{"errors":["rama: missing model_path"],"intentional_error_diagnostic":true},"name":"invalid resource viewer fails visibly without placeholders","passed":true},{"details":{},"name":"fatal viewer return remains usable","passed":true},{"details":{},"name":"sampled sources unchanged","passed":true}],"engine":"4.6.3-stable (official)","passed":true,"scope":"Actual imported rigs and animation libraries evaluated numerically. CPU-skinned sole samples are bounded numerical evidence, not rendered art quality or gameplay physics. Viewer integration recorded separately when actors_only=false.","sources":{"res://assets/cinematics/confluence-duel.json":"6ec07cb86aa645ba23c4eec51e652bbe89ad42d0558225583f6a8dd54248af6b","res://assets/cinematics/duel-motion-rama.tres":"3ab73222e16d6925eb972f900e385fd18d1b3df2c47a6b744663be7007f0df94","res://assets/cinematics/duel-motion-ravana.tres":"d0d0f3b23dff6c12bc0174f3e1cedb66475ba85c0c8e61c533800f0d0a8ea3be","res://assets/cinematics/ravana-sentinel.glb":"f00bed98cc11847da41d2f9f13ef9119e3ed983d41ca6dd7a14862a1c80672ca","res://assets/heroes/rama-production.glb":"3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc","res://scenes/combat_film.tscn":"cb2fac9df0192f82c495f481f3c0ba725b6caf6a22a17daf2b33e7265540b32d","res://scripts/cinematic_actor.gd":"f050e4d5fb75ea84c4837423d887805fa986f8389b95371b33179d98c7bd6433","res://scripts/combat_film.gd":"05d0b6f8a812085f905cba39df4e04a8ac5f89e776a5327cebffd39bc23fea8b","res://scripts/courtyard.gd":"832bbc128931066b036a0a4e0f2297ab32b1b2644eb7de1587396766a193c219","res://scripts/duel_effects.gd":"ee3f875c63466cd8732634c1695999d95671780a381f99ba66afdb2c9fd039cf","res://scripts/film_lighting.gd":"b0878fe87257689825458401a92d02a0d8367a0cb647d5e49d2466999d48519d","res://tests/combat_film_cases.gd":"94f64f91bbaa50d57cacbaff471d286448e5c016630b2c69945ad5894cb7b4d2"}}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS missing settings preserve courtyard default
+PASS saved volume zero
+PASS saved volume fraction
+PASS saved volume one
+PASS saved volume negative clamped
+PASS saved volume above one clamped
+PASS saved volume NaN defaults
+PASS saved volume infinity defaults
+PASS saved volume numeric string rejected
+PASS saved volume boolean rejected
+PASS unsafe settings oversize default without rewriting
+PASS unsafe settings constructor default without rewriting
+PASS unsafe settings deep nesting default without rewriting
+PASS unsafe settings malformed default without rewriting
+YUGA_COMBAT_FILM_READY {"active_actions":{"rama":"rama-ready-opening","ravana":"ravana-ready-opening"},"actors":{"rama":{"actor_id":"rama","bones":164,"clip":"ready","film_material_overrides":5,"finite":true,"phase":0.0,"pose_sha256":"f4f9b38187f52d3ab43bc315f6886ab3db60cf43447d76c19b186afb8cc3bc65","position":[-3.0,0.0,-6.0],"yaw":0.463647603988647},"ravana":{"actor_id":"ravana","bones":164,"clip":"ready","film_material_overrides":7,"finite":true,"phase":0.0,"pose_sha256":"f4b4d6062f34c8524fc6dbd43b6b68bff2ad7ed0a36b921b3b58144d835c615e","position":[3.0,0.0,6.0],"yaw":-2.67794513702393}},"audio":{"configured_volume":0.0,"muted":true,"paused":false,"playing":false},"camera":{"fov":48.0,"id":"camera-establish","position":[12.0,4.69999980926514,-6.0],"rotation":[-0.262152910232544,2.03444385528564,0.0]},"caption":"CONFLUENCE","capture_mode":false,"duration":24.0,"effects":{"active_ids":[],"configured":true,"cue_count":10,"errors":[],"max_cues":32,"max_meshes":128,"mesh_count":57,"reduced_flash":true,"reduced_motion":false,"scope":"Deterministic choreography VFX, not authority hit or damage validation.","state_sha256":"f0f3bb2a6f2e25c3dadd91836473edf165c6bbc1891b9bf91203211167ae6bb1","time":0.0},"errors":[],"finite":true,"playing":true,"ready":true,"receipt":"","reduced_flash":true,"reduced_motion":false,"scope":"Scripted cinematic; visual receipts are not authoritative combat.","time":0.0,"visual_health":{"rama":100.0,"ravana":100.0}}
+PASS zero-volume startup is stopped with visible timeline active
+PASS zero remains silent across seek resume replay and focus
+PASS focus loss pauses muted visual timeline
+PASS freed muted viewer disconnects window callback
+YUGA_COMBAT_FILM_READY {"active_actions":{"rama":"rama-ready-opening","ravana":"ravana-ready-opening"},"actors":{"rama":{"actor_id":"rama","bones":164,"clip":"ready","film_material_overrides":5,"finite":true,"phase":0.0,"pose_sha256":"f4f9b38187f52d3ab43bc315f6886ab3db60cf43447d76c19b186afb8cc3bc65","position":[-3.0,0.0,-6.0],"yaw":0.463647603988647},"ravana":{"actor_id":"ravana","bones":164,"clip":"ready","film_material_overrides":7,"finite":true,"phase":0.0,"pose_sha256":"f4b4d6062f34c8524fc6dbd43b6b68bff2ad7ed0a36b921b3b58144d835c615e","position":[3.0,0.0,6.0],"yaw":-2.67794513702393}},"audio":{"configured_volume":0.35,"muted":false,"paused":false,"playing":true},"camera":{"fov":48.0,"id":"camera-establish","position":[12.0,4.69999980926514,-6.0],"rotation":[-0.262152910232544,2.03444385528564,0.0]},"caption":"CONFLUENCE","capture_mode":false,"duration":24.0,"effects":{"active_ids":[],"configured":true,"cue_count":10,"errors":[],"max_cues":32,"max_meshes":128,"mesh_count":57,"reduced_flash":true,"reduced_motion":false,"scope":"Deterministic choreography VFX, not authority hit or damage validation.","state_sha256":"f0f3bb2a6f2e25c3dadd91836473edf165c6bbc1891b9bf91203211167ae6bb1","time":0.0},"errors":[],"finite":true,"playing":true,"ready":true,"receipt":"","reduced_flash":true,"reduced_motion":false,"scope":"Scripted cinematic; visual receipts are not authoritative combat.","time":0.0,"visual_health":{"rama":100.0,"ravana":100.0}}
+PASS nonzero setting applies expected gain and one player
+PASS nonzero play and pause synchronize timeline and stream
+PASS paused seek stops nonzero soundtrack
+PASS resume restarts one stream at timeline position
+PASS focus loss pauses nonzero soundtrack
+PASS capture remains silent at nonzero saved volume
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS Return frees film and retains only active courtyard-owned focus callbacks
+PASS scene cleanup releases remaining focus callback
+YUGA_COMBAT_FILM_AUDIO_CASES {"checks":[{"details":{},"name":"missing settings preserve courtyard default","passed":true},{"details":{"actual":0.0,"expected":0.0},"name":"saved volume zero","passed":true},{"details":{"actual":0.35,"expected":0.35},"name":"saved volume fraction","passed":true},{"details":{"actual":1.0,"expected":1.0},"name":"saved volume one","passed":true},{"details":{"actual":0.0,"expected":0.0},"name":"saved volume negative clamped","passed":true},{"details":{"actual":1.0,"expected":1.0},"name":"saved volume above one clamped","passed":true},{"details":{"actual":0.7,"expected":0.7},"name":"saved volume NaN defaults","passed":true},{"details":{"actual":0.7,"expected":0.7},"name":"saved volume infinity defaults","passed":true},{"details":{"actual":0.7,"expected":0.7},"name":"saved volume numeric string rejected","passed":true},{"details":{"actual":0.7,"expected":0.7},"name":"saved volume boolean rejected","passed":true},{"details":{},"name":"unsafe settings oversize default without rewriting","passed":true},{"details":{},"name":"unsafe settings constructor default without rewriting","passed":true},{"details":{},"name":"unsafe settings deep nesting default without rewriting","passed":true},{"details":{},"name":"unsafe settings malformed default without rewriting","passed":true},{"details":{},"name":"zero-volume startup is stopped with visible timeline active","passed":true},{"details":{"audio_players":1},"name":"zero remains silent across seek resume replay and focus","passed":true},{"details":{},"name":"focus loss pauses muted visual timeline","passed":true},{"details":{},"name":"freed muted viewer disconnects window callback","passed":true},{"details":{"volume_db":-11.1186389923096},"name":"nonzero setting applies expected gain and one player","passed":true},{"details":{},"name":"nonzero play and pause synchronize timeline and stream","passed":true},{"details":{},"name":"paused seek stops nonzero soundtrack","passed":true},{"details":{"audio_position":8.55266666412354,"timeline":8.55},"name":"resume restarts one stream at timeline position","passed":true},{"details":{},"name":"focus loss pauses nonzero soundtrack","passed":true},{"details":{},"name":"capture remains silent at nonzero saved volume","passed":true},{"details":{},"name":"Return frees film and retains only active courtyard-owned focus callbacks","passed":true},{"details":{},"name":"scene cleanup releases remaining focus callback","passed":true}],"engine":"4.6.3-stable (official)","passed":true,"scope":"Headless actual AudioStreamPlayer state and director lifecycle. Zero volume never starts playback. Focus events are explicitly emitted notifications; OS input and audible quality require separate review. Settings are restored after fixtures.","sources":{"courtyard_settings_source":"832bbc128931066b036a0a4e0f2297ab32b1b2644eb7de1587396766a193c219","director":"05d0b6f8a812085f905cba39df4e04a8ac5f89e776a5327cebffd39bc23fea8b","runner":"4f647424cc6f2951550ad511e59612195d7020c46cc297f5adb95b2a702030e9","shared_settings_reader":"42628b17fecfa806d95773395ca323ff39cb32a41fe8e171f4cc7fd96a4beadd","soundtrack":"5c35ac7fc148c2c89ef1c2f0da7dfa8059528f02787f0cc03ceea7704b98c582"}}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_COMBAT_FILM_READY {"active_actions":{"rama":"rama-ready-opening","ravana":"ravana-ready-opening"},"actors":{"rama":{"actor_id":"rama","bones":164,"clip":"ready","film_material_overrides":5,"finite":true,"phase":0.0,"pose_sha256":"f4f9b38187f52d3ab43bc315f6886ab3db60cf43447d76c19b186afb8cc3bc65","position":[-3.0,0.0,-6.0],"yaw":0.463647603988647},"ravana":{"actor_id":"ravana","bones":164,"clip":"ready","film_material_overrides":7,"finite":true,"phase":0.0,"pose_sha256":"f4b4d6062f34c8524fc6dbd43b6b68bff2ad7ed0a36b921b3b58144d835c615e","position":[3.0,0.0,6.0],"yaw":-2.67794513702393}},"audio":{"configured_volume":0.7,"muted":false,"paused":false,"playing":true},"camera":{"fov":48.0,"id":"camera-establish","position":[12.0,4.69999980926514,-6.0],"rotation":[-0.262152910232544,2.03444385528564,0.0]},"caption":"CONFLUENCE","capture_mode":false,"duration":24.0,"effects":{"active_ids":[],"configured":true,"cue_count":10,"errors":[],"max_cues":32,"max_meshes":128,"mesh_count":57,"reduced_flash":true,"reduced_motion":false,"scope":"Deterministic choreography VFX, not authority hit or damage validation.","state_sha256":"f0f3bb2a6f2e25c3dadd91836473edf165c6bbc1891b9bf91203211167ae6bb1","time":0.0},"errors":[],"finite":true,"playing":true,"ready":true,"receipt":"","reduced_flash":true,"reduced_motion":false,"scope":"Scripted cinematic; visual receipts are not authoritative combat.","time":0.0,"visual_health":{"rama":100.0,"ravana":100.0}}
+COMBAT_MOTION_CONTINUITY {"boundary_maxima":{"angle_deg":{"actor":"rama","bone":"upperleg02.L","from_action":"rama-evade-wave","from_seconds":7.94999,"to_action":"rama-ready-aim","to_seconds":7.95,"value":0.00138949920439693},"local_angle_deg":{"actor":"rama","bone":"lowerleg01.L","from_action":"rama-evade-wave","from_seconds":7.94999,"to_action":"rama-ready-aim","to_seconds":7.95,"value":0.00270899251292691},"position_m":{"actor":"rama","bone":"finger3-2.R","from_action":"rama-evade-wave","from_seconds":7.94999,"to_action":"rama-ready-aim","to_seconds":7.95,"value":0.0000125935175674385}},"checks":5,"passed":true,"report":"/tmp/yuga-native-setup-UNusTo/combat-motion-continuity.json","successive_frame_maxima":{"angle_deg":{"actor":"rama","bone":"lowerarm02.L","from_action":"rama-release-opening","from_seconds":4.20833333333333,"to_action":"rama-release-opening","to_seconds":4.25,"value":44.8082374860971},"local_angle_deg":{"actor":"rama","bone":"lowerarm01.L","from_action":"rama-release-opening","from_seconds":4.20833333333333,"to_action":"rama-release-opening","to_seconds":4.25,"value":43.8688136376365},"position_m":{"actor":"rama","bone":"lowerarm01.L","from_action":"rama-release-opening","from_seconds":4.20833333333333,"to_action":"rama-release-opening","to_seconds":4.25,"value":0.173927262425423}}}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_DUEL_EFFECTS_CASES {"checks":32,"passed":true}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_CONFLUENCE_READY {"army":{"alive":30,"alive_by_lane":[10,10,10],"cap":72,"configured":true,"core_arrivals":[0,0,0],"cores":{"moon":100.0,"sun":100.0},"corpse_cap":24,"elapsed":0.0,"finite":true,"gold":0,"invalid_damage":0,"invalid_pulses":0,"invalid_steps":0,"kills":0,"kills_by_lane":[0,0,0],"max_alive_seen":30,"max_attacks_seen":0,"max_corpses_seen":0,"max_nodes_seen":30,"next_wave_seconds":30.0,"pending_cleanup":0,"queued_attacks":0,"queued_for_deletion":0,"rejected_wave_pairs":0,"roles_alive":{"bow_guard":12,"cannon_cart":0,"commander":6,"royal_chariot":0,"spearman":12},"route_blocked_moves":0,"scope":"Offline deterministic original lane armies; no live network or commercial-game reconstruction.","separation_waits":0,"siege":{"cancelled":0,"hits":0,"impacts":0,"next_attack_id":1,"pending":0,"pending_cap":32,"rejected_pairs":0,"spawned_pairs":0,"windups":0},"siege_drill":false,"temporary_units":0,"total_cap":96,"unit_nodes":30,"wave_events":1,"waves":1,"winner":""},"audio":{"active_music":true,"dropped_events":0,"duck_db":0.0,"focused":true,"music_enabled":true,"music_paused":false,"muted":false,"played_events":0,"playing_cues":0,"pool_size":6,"suspended":false,"volume":0.35},"authority_boxes":8,"builtin_procedural_props":5,"camps":4,"floor_bodies":1,"hero_model_ready":true,"hero_radius":0.65,"imported_props":58,"invocation_audio":{"active":{},"epoch":-1,"errors":[],"last_cast_id":0,"last_event_seq":-1,"played":0,"players":3,"playing":0,"ready":true,"rejected":0,"streams":16,"suppressed":0,"suspended":false,"voices":[{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1}],"volume":0.35},"invocation_ui":{"active_phase":"ready","available":true,"card_rect":"[P: (120.0, 50.0), S: (1040.0, 620.0)]","choose_disabled":false,"configured":true,"control_rects":{"@CheckButton@520":"[P: (120.0, 50.0), S: (192.0, 44.0)]","@CheckButton@521":"[P: (120.0, 50.0), S: (192.0, 44.0)]","ChooseInvocation":"[P: (120.0, 50.0), S: (202.0, 40.0)]","CloseInvocations":"[P: (120.0, 50.0), S: (116.0, 42.0)]","InvocationReading":"[P: (120.0, 50.0), S: (98.0, 140.0)]","Invocation_arjuna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_bhima":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_chitrangada":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_draupadi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_duryodhana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hanuman":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hidimbi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_karna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_meghnad":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_rama":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ravana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_sita":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_subhadra":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ulupi":"[P: (120.0, 50.0), S: (140.0, 39.0)]"},"cooldown_remaining":0.0,"counterplay":"Sidestep the locked firing lane or use solid cover. Each arrow stops at its first target or wall.","effects_options":{"reduced_effects":false,"reduced_motion":false},"focusable_count":19,"geometry":"3 arrows · 28 m lane · 1 s preparation","hero_count":14,"payload":"32 damage to enemy troops per arrow.","preview_id":"rama","receiver_scope":"living lane troops; current Rama avatar; offline practice","selected_hero":"rama","status":"Ready after returning · X to invoke\nArrows browse · Enter selects · Tab moves focus · Esc / F3 back","suspended":false,"visible":false},"invocations":{"accepted_casts":0,"active_cast_id":0,"active_phase":"ready","applied_receipts":0,"configured":true,"cooldown_remaining":0.0,"elapsed":0.0,"epoch":1,"hero_health_enabled":false,"history_capacity":64,"history_size":1,"last_reason":"configure","network_enabled":false,"rejected_casts":0,"scope":"Offline invocation practice through the current Rama avatar; troop effects only.","selected_hero":"rama","selected_range_m":28.0,"selected_rule":{"effect_id":"rama.r.v1","effects":[{"amount":32.0,"kind":"damage","team":"enemy"}],"geometry":{"anchor":"caster","height_m":2.5,"kind":"projectile_volley","radius_m":0.5,"range_m":28.0,"speed_mps":62.0,"yaw_offsets_rad":[-0.12,0.0,0.12]},"hero_id":"rama","name":"Dawn Volley","timing":{"active_s":0.6,"recovery_s":0.45,"travel_s":0.451612903225806,"windup_s":1.0}},"supported_receivers":"living_lane_troops","suspended":false,"target_kind":"caster"},"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","kit_sha256":{"architecture":"8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a","nature":"856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f"},"landmarks":{"anchors":10,"landmarks":8,"materials":7,"mesh_budget":300,"mesh_instances":238,"scope":"Original procedural stone decks, chhatri facade relief, lotus courts and luminous fictional traversal relics. No historical reconstruction."},"lanes":3,"lighting":{"day_phase":0.0,"directional_budget":2,"night_phase":1.0,"phase":0.0,"practical_budget":12,"practical_count":12,"practical_shadow_count":0,"screen_space_reflections":false,"shadow_distance_m":72.0,"volumetric_fog":false,"water_geometry_displacement":false},"manifest_path":"res://assets/world/confluence-map.json","manifest_revision":3.0,"manifest_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","missing_presets":[],"native_bounds":[-68.0,68.0,-128.0,128.0],"native_platforms":8,"objectives":8,"procedural_props":5,"props":63,"ready":true,"relays":{"arrows_total":0,"art":{"animation_seconds":0.0,"cached_meshes":23,"collision_shapes":9,"finite":true,"invalid_states":0,"materials":13,"mesh_instances":156,"night_blend":0.0,"nodes":214,"ready":true,"scope":"Original offline relay presentation; state/damage authority belongs to relay_session. Flat capture tiles are non-solid; stepped plinths share explicit collision boxes.","sites":3,"states":[{"capture_team":"neutral","contested":false,"id":0,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":1,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":2,"owner":"neutral","progress":0.0}],"static_bodies":3},"healing_total":0.0,"last_event":"Capture a relay with your soldiers","last_receipt":0,"receipts_applied":0,"receipts_rejected":0,"rules":{"actors":{"conflicting_ids":0,"duplicate_rows":0,"input":0,"invalid_rows":0,"unique_alive":0},"captures":0,"contests":0,"elapsed":0.0,"epoch":2,"last_support_id":0,"limits":{"actors":97,"contributors_per_team":2,"events_per_step":3,"max_delta":0.25,"sites":3,"support_requests_per_step":3},"neutralizations":0,"schema":1,"sites":[{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":0,"label":"Reed Relay","owner":"neutral","position":"(-40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":1,"label":"Lotus Relay","owner":"neutral","position":"(0.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":2,"label":"Sky Relay","owner":"neutral","position":"(40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0}],"steps":0},"scope":"Offline relay capture and supplies; no hero health or network authority."},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim.","siege_effects":{"accepted":0,"active_events":0,"cancelled":0,"dropped_audio":0,"history_size":0,"impacts":0,"muted":false,"paused_voices":0,"peak_events":0,"played_cues":0,"playing_voices":0,"rejected":0,"states":[],"suspended":false,"tree_paused":false,"voice_pool":6,"volume":0.35,"windups":0},"siege_ui":{"focus_targets":12,"pause_rect":"[P: (400.0, 60.0), S: (480.0, 600.0)]","practice_label":"OFFLINE LANE PRACTICE"},"traversal":{"altitude":0.0500000007450581,"altitude_cap":24.0,"anchor_count":10,"candidate":{},"carry_pose":{"clip":"","configured":true,"fade_seconds":0.22,"mapped_rotations":29,"modified_samples":0,"rejected_states":0,"scope":"Original optional upper-body carry and authored grip; native lower body is unchanged. Rendering/contact acceptance is separate.","suppressed":true,"weight":0.0},"enabled":true,"energy":100.0,"flight_cooldown":0.0,"grapple_cooldown":0.0,"max_energy":100.0,"max_range":36.0,"mode":"ground","pose":{"action_suppressed":false,"hard_angle_limit":0.733038285837618,"mapped_bones":10,"maximum_angle_radians":0.0,"mode":"ground","modified_samples":0,"phase":0.0,"scope":"Original additive body pose; upper-body grip and continuous visual quality require rendered review.","weight":0.0},"rope_visible":false,"speed_cap":12.0,"status":"Traversal ready","target":{}},"ultimate_effects":{"active":0,"casts":[],"counts":{"accepted":0,"capacity":0,"duplicate":0,"expired":0,"invalid":0,"stale":0},"elapsed":0.0,"epoch":-1,"finite":true,"lights":0,"nodes":0,"particles":0,"peak_active":0,"reduced_effects":false,"reduced_motion":false,"scope":"Original local invocation presentation only; no authority, hero models or online claim.","suspended":false,"triangles":0,"voices":0}}
+PASS offline army and traversal initialized
+PASS loaded runtime manifest equals canonical source
+PASS world collision groups
+PASS actual authority box surfaces
+PASS actual floor covers open arena
+PASS capsule sweeps all lane and rotation segments
+PASS spawns camps and review objectives stand on floor
+PASS eight real landing decks match native specification
+PASS world player uses authority radius
+PASS negative missing blocker detected by real rays
+PASS negative missing floor detected
+PASS negative accidental prop blocker detected
+PASS player bounded after external displacement (200.0, 0.0, 200.0)
+PASS player bounded after external displacement (-200.0, 0.0, -200.0)
+PASS player bounded after external displacement (200.0, 0.0, -200.0)
+PASS player bounded after external displacement (-200.0, 0.0, 200.0)
+PASS restored scene collision passes after mutations
+PASS UI inside viewport and focused controls separated (1280, 720)
+PASS UI inside viewport and focused controls separated (960, 600)
+PASS held fire creates actual shooter-excluded projectiles
+PASS pause freezes held movement and fire
+PASS resume button clears stale actions
+PASS F1 overview clears live dash and movement
+PASS F1 returns active camera with neutral movement
+PASS Visit Lanka coast button arrives neutral
+PASS Visit Metro gardens button arrives neutral
+PASS sources unchanged during run
+YUGA_WORLD_PHYSICS {"checks":[{"details":{"army":true,"traversal":true},"name":"offline army and traversal initialized","passed":true},{"details":{"canonical_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","loaded_path":"res://assets/world/confluence-map.json","loaded_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c"},"name":"loaded runtime manifest equals canonical source","passed":true},{"details":{"blockers":8,"floors":1,"native_platforms":8},"name":"world collision groups","passed":true},{"details":{"errors":[],"rays":40},"name":"actual authority box surfaces","passed":true},{"details":{"errors":[],"grid_spacing_metres":2.0,"sample_count":7826},"name":"actual floor covers open arena","passed":true},{"details":{"errors":[],"hero_height":1.79999995231628,"hero_radius":0.649999976158142},"name":"capsule sweeps all lane and rotation segments","passed":true},{"details":{"anchors":14,"errors":[]},"name":"spawns camps and review objectives stand on floor","passed":true},{"details":{"errors":[]},"name":"eight real landing decks match native specification","passed":true},{"details":{"authority_radius":0.65,"native_radius":0.649999976158142},"name":"world player uses authority radius","passed":true},{"details":{"errors_detected":5},"name":"negative missing blocker detected by real rays","passed":true},{"details":{},"name":"negative missing floor detected","passed":true},{"details":{},"name":"negative accidental prop blocker detected","passed":true},{"details":{"position":[67.3499984741211,0.0500000007450581,127.349998474121]},"name":"player bounded after external displacement (200.0, 0.0, 200.0)","passed":true},{"details":{"position":[-67.3499984741211,0.0500000007450581,-127.349998474121]},"name":"player bounded after external displacement (-200.0, 0.0, -200.0)","passed":true},{"details":{"position":[67.3499984741211,0.0500000007450581,-127.349998474121]},"name":"player bounded after external displacement (200.0, 0.0, -200.0)","passed":true},{"details":{"position":[-67.3499984741211,0.0500000007450581,127.349998474121]},"name":"player bounded after external displacement (-200.0, 0.0, 200.0)","passed":true},{"details":{},"name":"restored scene collision passes after mutations","passed":true},{"details":{"all_targets_reachable":true,"crosshair_near_center":true,"focused_rectangles":{"AtlasLegend":[1096.0,292.0,152.0,54.0],"Choose invocation · 14 legends":[418.0,140.0,436.0,40.0],"Continue practice":[418.0,94.0,436.0,40.0],"Controls / remap keys":[418.0,461.0,436.0,40.0],"ControlsCard":[20.0,626.0,330.0,74.0],"Crosshair":[635.0,340.0,10.0,42.0],"Day / night":[418.0,277.0,436.0,40.0],"InvocationStatus":[365.0,600.0,280.0,100.0],"PausePanel":[400.0,60.0,480.0,600.0],"Quit game":[418.0,606.0,436.0,40.0],"RelayStatus":[20.0,164.0,535.0,82.0],"Restart lane practice":[418.0,507.0,436.0,40.0],"Return to courtyard":[418.0,606.0,436.0,40.0],"Siege practice · enter drill":[418.0,186.0,436.0,40.0],"TitleCard":[20.0,20.0,535.0,132.0],"TraversalStatus":[1000.0,566.0,260.0,134.0],"Visit Lanka coast":[418.0,369.0,436.0,40.0],"Visit Lotus relay":[418.0,323.0,436.0,40.0],"Visit Metro gardens":[418.0,415.0,436.0,40.0],"WorldAtlas":[1084.0,20.0,176.0,336.0],"WorldVolume":[418.0,576.0,436.0,24.0]},"logical_viewport":[1280.0,720.0],"outside_or_small":[],"overlaps":[],"resume_keyboard_focus":true},"name":"UI inside viewport and focused controls separated (1280, 720)","passed":true},{"details":{"all_targets_reachable":true,"crosshair_near_center":true,"focused_rectangles":{"AtlasLegend":[776.0,292.0,152.0,54.0],"Choose invocation · 14 legends":[258.0,76.0,436.0,40.0],"Continue practice":[258.0,30.0,436.0,40.0],"Controls / remap keys":[258.0,397.0,436.0,40.0],"ControlsCard":[20.0,506.0,330.0,74.0],"Crosshair":[475.0,280.0,10.0,42.0],"Day / night":[258.0,213.0,436.0,40.0],"InvocationStatus":[365.0,480.0,280.0,100.0],"PausePanel":[240.0,16.0,480.0,568.0],"Quit game":[258.0,530.0,436.0,40.0],"RelayStatus":[20.0,164.0,535.0,82.0],"Restart lane practice":[258.0,443.0,436.0,40.0],"Return to courtyard":[258.0,530.0,436.0,40.0],"Siege practice · enter drill":[258.0,122.0,436.0,40.0],"TitleCard":[20.0,20.0,535.0,132.0],"TraversalStatus":[680.0,446.0,260.0,134.0],"Visit Lanka coast":[258.0,305.0,436.0,40.0],"Visit Lotus relay":[258.0,259.0,436.0,40.0],"Visit Metro gardens":[258.0,351.0,436.0,40.0],"WorldAtlas":[764.0,20.0,176.0,336.0],"WorldVolume":[258.0,512.0,436.0,24.0]},"logical_viewport":[960.0,600.0],"outside_or_small":[],"overlaps":[],"resume_keyboard_focus":true},"name":"UI inside viewport and focused controls separated (960, 600)","passed":true},{"details":{"projectile_count":1,"shooter_excluded":true,"shots":2},"name":"held fire creates actual shooter-excluded projectiles","passed":true},{"details":{"movement_before_pause":1.57498168945312,"movement_during_pause":0.0,"shots_after":2,"shots_before":2},"name":"pause freezes held movement and fire","passed":true},{"details":{"movement_after_resume":0.0,"shots_after":2},"name":"resume button clears stale actions","passed":true},{"details":{"dash_was_active":true,"movement_during_overview":0.0,"overview":true},"name":"F1 overview clears live dash and movement","passed":true},{"details":{},"name":"F1 returns active camera with neutral movement","passed":true},{"details":{"expected_xz":[-40.0,14.0],"from_overview":true,"position":[-40.0,0.000195310218259692,14.0],"returned_to_walking":true},"name":"Visit Lanka coast button arrives neutral","passed":true},{"details":{"expected_xz":[40.0,14.0],"from_overview":false,"position":[40.0,0.000195310218259692,14.0],"returned_to_walking":true},"name":"Visit Metro gardens button arrives neutral","passed":true},{"details":{},"name":"sources unchanged during run","passed":true}],"engine":"4.6.3-stable (official)","passed":true,"scope":"Real headless Godot physics queries in _physics_process against instantiated native world. Expanded140×260m floor, eight preserved browser-source boxes plus eight native landing decks, capsule route sweeps and native-only bounds. Army state is offline; tower markers remain nonblocking. This does not assert browser-authority parity. UI rectangles at two logical viewport sizes and injected actions/button signals are checked, not OS input. No renderer, AI, online match, continuous exhaustive proof or performance claim.","sources":{"res://art/world/confluence-map.json":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","res://assets/world/confluence-map.json":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","res://scenes/confluence_world.tscn":"06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3","res://scripts/confluence_world.gd":"f1a23bc6f14c8d1c77b18076c069b52f2e9a57fb88aadf722c9a46b987486c75","res://scripts/lane_army.gd":"f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c","res://scripts/player.gd":"a4742d0bcd11e79b697fd28813b8164d35aaf7c826a288e40c6420661b57848b","res://scripts/player_traversal.gd":"46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f","res://scripts/projectile.gd":"39b651bf014b91352e3cd62d15ec22966e5de4707a6dd1b9bcfb2dddd438695a","res://scripts/relay_art.gd":"32e42d32a4a1e52414c2e274d076c1aac4531fd10084b052082f0cc08cd31cb6","res://scripts/relay_control.gd":"42d68a7d034c31033c5e105fd227e9e179d35d88209428544f396fa39f2fe000","res://scripts/relay_session.gd":"3c15d66e32e59f0b593fa7e3a815a4163edaaf427e50c9e8a5186908330ff0a3","res://scripts/traversal_landmarks.gd":"ee070b0a4b1c0bb07ac645681e6ef3dcf0311adb88afe07ece3ecc75b4ab971b","res://scripts/traversal_stone.gdshader":"711a5cc8bbdeff0d7456379c7a921ec26f2019c59695363ec0b3e59a3327f548","res://scripts/world_ground_common.gdshaderinc":"35c6be19eb8e40785f5d3c3b4c6975aae1a7ff3dc2eeb4c2bd5fe6c6cb473557","res://scripts/world_lighting.gd":"822d6d2550b2a01da97b25fb7a8b2163c26b8c44b8ecc0b38e484207ca356feb","res://tests/world_scene_cases.gd":"81eb86b7c739e1d82344266708ed92cbbe7d9dcb2572ca583531f6830fe4c01e"}}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_WORLD_LIGHTING_CASES {"checks":30,"passed":true}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS menu ready before transition 1
+YUGA_CONFLUENCE_READY {"army":{"alive":30,"alive_by_lane":[10,10,10],"cap":72,"configured":true,"core_arrivals":[0,0,0],"cores":{"moon":100.0,"sun":100.0},"corpse_cap":24,"elapsed":0.0,"finite":true,"gold":0,"invalid_damage":0,"invalid_pulses":0,"invalid_steps":0,"kills":0,"kills_by_lane":[0,0,0],"max_alive_seen":30,"max_attacks_seen":0,"max_corpses_seen":0,"max_nodes_seen":30,"next_wave_seconds":30.0,"pending_cleanup":0,"queued_attacks":0,"queued_for_deletion":0,"rejected_wave_pairs":0,"roles_alive":{"bow_guard":12,"cannon_cart":0,"commander":6,"royal_chariot":0,"spearman":12},"route_blocked_moves":0,"scope":"Offline deterministic original lane armies; no live network or commercial-game reconstruction.","separation_waits":0,"siege":{"cancelled":0,"hits":0,"impacts":0,"next_attack_id":1,"pending":0,"pending_cap":32,"rejected_pairs":0,"spawned_pairs":0,"windups":0},"siege_drill":false,"temporary_units":0,"total_cap":96,"unit_nodes":30,"wave_events":1,"waves":1,"winner":""},"audio":{"active_music":true,"dropped_events":0,"duck_db":0.0,"focused":true,"music_enabled":true,"music_paused":false,"muted":false,"played_events":0,"playing_cues":0,"pool_size":6,"suspended":false,"volume":0.35},"authority_boxes":8,"builtin_procedural_props":5,"camps":4,"floor_bodies":1,"hero_model_ready":true,"hero_radius":0.65,"imported_props":58,"invocation_audio":{"active":{},"epoch":-1,"errors":[],"last_cast_id":0,"last_event_seq":-1,"played":0,"players":3,"playing":0,"ready":true,"rejected":0,"streams":16,"suppressed":0,"suspended":false,"voices":[{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1}],"volume":0.35},"invocation_ui":{"active_phase":"ready","available":true,"card_rect":"[P: (120.0, 50.0), S: (1040.0, 620.0)]","choose_disabled":false,"configured":true,"control_rects":{"@CheckButton@695":"[P: (120.0, 50.0), S: (192.0, 44.0)]","@CheckButton@696":"[P: (120.0, 50.0), S: (192.0, 44.0)]","ChooseInvocation":"[P: (120.0, 50.0), S: (202.0, 40.0)]","CloseInvocations":"[P: (120.0, 50.0), S: (116.0, 42.0)]","InvocationReading":"[P: (120.0, 50.0), S: (98.0, 140.0)]","Invocation_arjuna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_bhima":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_chitrangada":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_draupadi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_duryodhana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hanuman":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hidimbi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_karna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_meghnad":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_rama":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ravana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_sita":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_subhadra":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ulupi":"[P: (120.0, 50.0), S: (140.0, 39.0)]"},"cooldown_remaining":0.0,"counterplay":"Sidestep the locked firing lane or use solid cover. Each arrow stops at its first target or wall.","effects_options":{"reduced_effects":false,"reduced_motion":false},"focusable_count":19,"geometry":"3 arrows · 28 m lane · 1 s preparation","hero_count":14,"payload":"32 damage to enemy troops per arrow.","preview_id":"rama","receiver_scope":"living lane troops; current Rama avatar; offline practice","selected_hero":"rama","status":"Ready after returning · X to invoke\nArrows browse · Enter selects · Tab moves focus · Esc / F3 back","suspended":false,"visible":false},"invocations":{"accepted_casts":0,"active_cast_id":0,"active_phase":"ready","applied_receipts":0,"configured":true,"cooldown_remaining":0.0,"elapsed":0.0,"epoch":1,"hero_health_enabled":false,"history_capacity":64,"history_size":1,"last_reason":"configure","network_enabled":false,"rejected_casts":0,"scope":"Offline invocation practice through the current Rama avatar; troop effects only.","selected_hero":"rama","selected_range_m":28.0,"selected_rule":{"effect_id":"rama.r.v1","effects":[{"amount":32.0,"kind":"damage","team":"enemy"}],"geometry":{"anchor":"caster","height_m":2.5,"kind":"projectile_volley","radius_m":0.5,"range_m":28.0,"speed_mps":62.0,"yaw_offsets_rad":[-0.12,0.0,0.12]},"hero_id":"rama","name":"Dawn Volley","timing":{"active_s":0.6,"recovery_s":0.45,"travel_s":0.451612903225806,"windup_s":1.0}},"supported_receivers":"living_lane_troops","suspended":false,"target_kind":"caster"},"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","kit_sha256":{"architecture":"8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a","nature":"856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f"},"landmarks":{"anchors":10,"landmarks":8,"materials":7,"mesh_budget":300,"mesh_instances":238,"scope":"Original procedural stone decks, chhatri facade relief, lotus courts and luminous fictional traversal relics. No historical reconstruction."},"lanes":3,"lighting":{"day_phase":0.0,"directional_budget":2,"night_phase":1.0,"phase":0.0,"practical_budget":12,"practical_count":12,"practical_shadow_count":0,"screen_space_reflections":false,"shadow_distance_m":72.0,"volumetric_fog":false,"water_geometry_displacement":false},"manifest_path":"res://assets/world/confluence-map.json","manifest_revision":3.0,"manifest_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","missing_presets":[],"native_bounds":[-68.0,68.0,-128.0,128.0],"native_platforms":8,"objectives":8,"procedural_props":5,"props":63,"ready":true,"relays":{"arrows_total":0,"art":{"animation_seconds":0.0,"cached_meshes":23,"collision_shapes":9,"finite":true,"invalid_states":0,"materials":13,"mesh_instances":156,"night_blend":0.0,"nodes":214,"ready":true,"scope":"Original offline relay presentation; state/damage authority belongs to relay_session. Flat capture tiles are non-solid; stepped plinths share explicit collision boxes.","sites":3,"states":[{"capture_team":"neutral","contested":false,"id":0,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":1,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":2,"owner":"neutral","progress":0.0}],"static_bodies":3},"healing_total":0.0,"last_event":"Capture a relay with your soldiers","last_receipt":0,"receipts_applied":0,"receipts_rejected":0,"rules":{"actors":{"conflicting_ids":0,"duplicate_rows":0,"input":0,"invalid_rows":0,"unique_alive":0},"captures":0,"contests":0,"elapsed":0.0,"epoch":2,"last_support_id":0,"limits":{"actors":97,"contributors_per_team":2,"events_per_step":3,"max_delta":0.25,"sites":3,"support_requests_per_step":3},"neutralizations":0,"schema":1,"sites":[{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":0,"label":"Reed Relay","owner":"neutral","position":"(-40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":1,"label":"Lotus Relay","owner":"neutral","position":"(0.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":2,"label":"Sky Relay","owner":"neutral","position":"(40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0}],"steps":0},"scope":"Offline relay capture and supplies; no hero health or network authority."},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim.","siege_effects":{"accepted":0,"active_events":0,"cancelled":0,"dropped_audio":0,"history_size":0,"impacts":0,"muted":false,"paused_voices":0,"peak_events":0,"played_cues":0,"playing_voices":0,"rejected":0,"states":[],"suspended":false,"tree_paused":false,"voice_pool":6,"volume":0.35,"windups":0},"siege_ui":{"focus_targets":12,"pause_rect":"[P: (400.0, 60.0), S: (480.0, 600.0)]","practice_label":"OFFLINE LANE PRACTICE"},"traversal":{"altitude":0.0500000007450581,"altitude_cap":24.0,"anchor_count":10,"candidate":{},"carry_pose":{"clip":"","configured":true,"fade_seconds":0.22,"mapped_rotations":29,"modified_samples":0,"rejected_states":0,"scope":"Original optional upper-body carry and authored grip; native lower body is unchanged. Rendering/contact acceptance is separate.","suppressed":true,"weight":0.0},"enabled":true,"energy":100.0,"flight_cooldown":0.0,"grapple_cooldown":0.0,"max_energy":100.0,"max_range":36.0,"mode":"ground","pose":{"action_suppressed":false,"hard_angle_limit":0.733038285837618,"mapped_bones":10,"maximum_angle_radians":0.0,"mode":"ground","modified_samples":0,"phase":0.0,"scope":"Original additive body pose; upper-body grip and continuous visual quality require rendered review.","weight":0.0},"rope_visible":false,"speed_cap":12.0,"status":"Traversal ready","target":{}},"ultimate_effects":{"active":0,"casts":[],"counts":{"accepted":0,"capacity":0,"duplicate":0,"expired":0,"invalid":0,"stale":0},"elapsed":0.0,"epoch":-1,"finite":true,"lights":0,"nodes":0,"particles":0,"peak_active":0,"reduced_effects":false,"reduced_motion":false,"scope":"Original local invocation presentation only; no authority, hero models or online claim.","suspended":false,"triangles":0,"voices":0}}
+PASS Explore button enters actual world 1
+PASS Escape opens world pause menu 1
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS return button restores clean courtyard menu 1
+PASS menu ready before transition 2
+YUGA_CONFLUENCE_READY {"army":{"alive":30,"alive_by_lane":[10,10,10],"cap":72,"configured":true,"core_arrivals":[0,0,0],"cores":{"moon":100.0,"sun":100.0},"corpse_cap":24,"elapsed":0.0,"finite":true,"gold":0,"invalid_damage":0,"invalid_pulses":0,"invalid_steps":0,"kills":0,"kills_by_lane":[0,0,0],"max_alive_seen":30,"max_attacks_seen":0,"max_corpses_seen":0,"max_nodes_seen":30,"next_wave_seconds":30.0,"pending_cleanup":0,"queued_attacks":0,"queued_for_deletion":0,"rejected_wave_pairs":0,"roles_alive":{"bow_guard":12,"cannon_cart":0,"commander":6,"royal_chariot":0,"spearman":12},"route_blocked_moves":0,"scope":"Offline deterministic original lane armies; no live network or commercial-game reconstruction.","separation_waits":0,"siege":{"cancelled":0,"hits":0,"impacts":0,"next_attack_id":1,"pending":0,"pending_cap":32,"rejected_pairs":0,"spawned_pairs":0,"windups":0},"siege_drill":false,"temporary_units":0,"total_cap":96,"unit_nodes":30,"wave_events":1,"waves":1,"winner":""},"audio":{"active_music":true,"dropped_events":0,"duck_db":0.0,"focused":true,"music_enabled":true,"music_paused":false,"muted":false,"played_events":0,"playing_cues":0,"pool_size":6,"suspended":false,"volume":0.35},"authority_boxes":8,"builtin_procedural_props":5,"camps":4,"floor_bodies":1,"hero_model_ready":true,"hero_radius":0.65,"imported_props":58,"invocation_audio":{"active":{},"epoch":-1,"errors":[],"last_cast_id":0,"last_event_seq":-1,"played":0,"players":3,"playing":0,"ready":true,"rejected":0,"streams":16,"suppressed":0,"suspended":false,"voices":[{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1}],"volume":0.35},"invocation_ui":{"active_phase":"ready","available":true,"card_rect":"[P: (120.0, 50.0), S: (1040.0, 620.0)]","choose_disabled":false,"configured":true,"control_rects":{"@CheckButton@1390":"[P: (120.0, 50.0), S: (192.0, 44.0)]","@CheckButton@1391":"[P: (120.0, 50.0), S: (192.0, 44.0)]","ChooseInvocation":"[P: (120.0, 50.0), S: (202.0, 40.0)]","CloseInvocations":"[P: (120.0, 50.0), S: (116.0, 42.0)]","InvocationReading":"[P: (120.0, 50.0), S: (98.0, 140.0)]","Invocation_arjuna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_bhima":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_chitrangada":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_draupadi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_duryodhana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hanuman":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hidimbi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_karna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_meghnad":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_rama":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ravana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_sita":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_subhadra":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ulupi":"[P: (120.0, 50.0), S: (140.0, 39.0)]"},"cooldown_remaining":0.0,"counterplay":"Sidestep the locked firing lane or use solid cover. Each arrow stops at its first target or wall.","effects_options":{"reduced_effects":false,"reduced_motion":false},"focusable_count":19,"geometry":"3 arrows · 28 m lane · 1 s preparation","hero_count":14,"payload":"32 damage to enemy troops per arrow.","preview_id":"rama","receiver_scope":"living lane troops; current Rama avatar; offline practice","selected_hero":"rama","status":"Ready after returning · X to invoke\nArrows browse · Enter selects · Tab moves focus · Esc / F3 back","suspended":false,"visible":false},"invocations":{"accepted_casts":0,"active_cast_id":0,"active_phase":"ready","applied_receipts":0,"configured":true,"cooldown_remaining":0.0,"elapsed":0.0,"epoch":1,"hero_health_enabled":false,"history_capacity":64,"history_size":1,"last_reason":"configure","network_enabled":false,"rejected_casts":0,"scope":"Offline invocation practice through the current Rama avatar; troop effects only.","selected_hero":"rama","selected_range_m":28.0,"selected_rule":{"effect_id":"rama.r.v1","effects":[{"amount":32.0,"kind":"damage","team":"enemy"}],"geometry":{"anchor":"caster","height_m":2.5,"kind":"projectile_volley","radius_m":0.5,"range_m":28.0,"speed_mps":62.0,"yaw_offsets_rad":[-0.12,0.0,0.12]},"hero_id":"rama","name":"Dawn Volley","timing":{"active_s":0.6,"recovery_s":0.45,"travel_s":0.451612903225806,"windup_s":1.0}},"supported_receivers":"living_lane_troops","suspended":false,"target_kind":"caster"},"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","kit_sha256":{"architecture":"8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a","nature":"856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f"},"landmarks":{"anchors":10,"landmarks":8,"materials":7,"mesh_budget":300,"mesh_instances":238,"scope":"Original procedural stone decks, chhatri facade relief, lotus courts and luminous fictional traversal relics. No historical reconstruction."},"lanes":3,"lighting":{"day_phase":0.0,"directional_budget":2,"night_phase":1.0,"phase":0.0,"practical_budget":12,"practical_count":12,"practical_shadow_count":0,"screen_space_reflections":false,"shadow_distance_m":72.0,"volumetric_fog":false,"water_geometry_displacement":false},"manifest_path":"res://assets/world/confluence-map.json","manifest_revision":3.0,"manifest_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","missing_presets":[],"native_bounds":[-68.0,68.0,-128.0,128.0],"native_platforms":8,"objectives":8,"procedural_props":5,"props":63,"ready":true,"relays":{"arrows_total":0,"art":{"animation_seconds":0.0,"cached_meshes":23,"collision_shapes":9,"finite":true,"invalid_states":0,"materials":13,"mesh_instances":156,"night_blend":0.0,"nodes":214,"ready":true,"scope":"Original offline relay presentation; state/damage authority belongs to relay_session. Flat capture tiles are non-solid; stepped plinths share explicit collision boxes.","sites":3,"states":[{"capture_team":"neutral","contested":false,"id":0,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":1,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":2,"owner":"neutral","progress":0.0}],"static_bodies":3},"healing_total":0.0,"last_event":"Capture a relay with your soldiers","last_receipt":0,"receipts_applied":0,"receipts_rejected":0,"rules":{"actors":{"conflicting_ids":0,"duplicate_rows":0,"input":0,"invalid_rows":0,"unique_alive":0},"captures":0,"contests":0,"elapsed":0.0,"epoch":2,"last_support_id":0,"limits":{"actors":97,"contributors_per_team":2,"events_per_step":3,"max_delta":0.25,"sites":3,"support_requests_per_step":3},"neutralizations":0,"schema":1,"sites":[{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":0,"label":"Reed Relay","owner":"neutral","position":"(-40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":1,"label":"Lotus Relay","owner":"neutral","position":"(0.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":2,"label":"Sky Relay","owner":"neutral","position":"(40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0}],"steps":0},"scope":"Offline relay capture and supplies; no hero health or network authority."},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim.","siege_effects":{"accepted":0,"active_events":0,"cancelled":0,"dropped_audio":0,"history_size":0,"impacts":0,"muted":false,"paused_voices":0,"peak_events":0,"played_cues":0,"playing_voices":0,"rejected":0,"states":[],"suspended":false,"tree_paused":false,"voice_pool":6,"volume":0.35,"windups":0},"siege_ui":{"focus_targets":12,"pause_rect":"[P: (400.0, 60.0), S: (480.0, 600.0)]","practice_label":"OFFLINE LANE PRACTICE"},"traversal":{"altitude":0.0500000007450581,"altitude_cap":24.0,"anchor_count":10,"candidate":{},"carry_pose":{"clip":"","configured":true,"fade_seconds":0.22,"mapped_rotations":29,"modified_samples":0,"rejected_states":0,"scope":"Original optional upper-body carry and authored grip; native lower body is unchanged. Rendering/contact acceptance is separate.","suppressed":true,"weight":0.0},"enabled":true,"energy":100.0,"flight_cooldown":0.0,"grapple_cooldown":0.0,"max_energy":100.0,"max_range":36.0,"mode":"ground","pose":{"action_suppressed":false,"hard_angle_limit":0.733038285837618,"mapped_bones":10,"maximum_angle_radians":0.0,"mode":"ground","modified_samples":0,"phase":0.0,"scope":"Original additive body pose; upper-body grip and continuous visual quality require rendered review.","weight":0.0},"rope_visible":false,"speed_cap":12.0,"status":"Traversal ready","target":{}},"ultimate_effects":{"active":0,"casts":[],"counts":{"accepted":0,"capacity":0,"duplicate":0,"expired":0,"invalid":0,"stale":0},"elapsed":0.0,"epoch":-1,"finite":true,"lights":0,"nodes":0,"particles":0,"peak_active":0,"reduced_effects":false,"reduced_motion":false,"scope":"Original local invocation presentation only; no authority, hero models or online claim.","suspended":false,"triangles":0,"voices":0}}
+PASS Explore button enters actual world 2
+PASS Escape opens world pause menu 2
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS return button restores clean courtyard menu 2
+PASS menu ready before transition 3
+YUGA_CONFLUENCE_READY {"army":{"alive":30,"alive_by_lane":[10,10,10],"cap":72,"configured":true,"core_arrivals":[0,0,0],"cores":{"moon":100.0,"sun":100.0},"corpse_cap":24,"elapsed":0.0,"finite":true,"gold":0,"invalid_damage":0,"invalid_pulses":0,"invalid_steps":0,"kills":0,"kills_by_lane":[0,0,0],"max_alive_seen":30,"max_attacks_seen":0,"max_corpses_seen":0,"max_nodes_seen":30,"next_wave_seconds":30.0,"pending_cleanup":0,"queued_attacks":0,"queued_for_deletion":0,"rejected_wave_pairs":0,"roles_alive":{"bow_guard":12,"cannon_cart":0,"commander":6,"royal_chariot":0,"spearman":12},"route_blocked_moves":0,"scope":"Offline deterministic original lane armies; no live network or commercial-game reconstruction.","separation_waits":0,"siege":{"cancelled":0,"hits":0,"impacts":0,"next_attack_id":1,"pending":0,"pending_cap":32,"rejected_pairs":0,"spawned_pairs":0,"windups":0},"siege_drill":false,"temporary_units":0,"total_cap":96,"unit_nodes":30,"wave_events":1,"waves":1,"winner":""},"audio":{"active_music":true,"dropped_events":0,"duck_db":0.0,"focused":true,"music_enabled":true,"music_paused":false,"muted":false,"played_events":0,"playing_cues":0,"pool_size":6,"suspended":false,"volume":0.35},"authority_boxes":8,"builtin_procedural_props":5,"camps":4,"floor_bodies":1,"hero_model_ready":true,"hero_radius":0.65,"imported_props":58,"invocation_audio":{"active":{},"epoch":-1,"errors":[],"last_cast_id":0,"last_event_seq":-1,"played":0,"players":3,"playing":0,"ready":true,"rejected":0,"streams":16,"suppressed":0,"suspended":false,"voices":[{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1}],"volume":0.35},"invocation_ui":{"active_phase":"ready","available":true,"card_rect":"[P: (120.0, 50.0), S: (1040.0, 620.0)]","choose_disabled":false,"configured":true,"control_rects":{"@CheckButton@2085":"[P: (120.0, 50.0), S: (192.0, 44.0)]","@CheckButton@2086":"[P: (120.0, 50.0), S: (192.0, 44.0)]","ChooseInvocation":"[P: (120.0, 50.0), S: (202.0, 40.0)]","CloseInvocations":"[P: (120.0, 50.0), S: (116.0, 42.0)]","InvocationReading":"[P: (120.0, 50.0), S: (98.0, 140.0)]","Invocation_arjuna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_bhima":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_chitrangada":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_draupadi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_duryodhana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hanuman":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hidimbi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_karna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_meghnad":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_rama":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ravana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_sita":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_subhadra":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ulupi":"[P: (120.0, 50.0), S: (140.0, 39.0)]"},"cooldown_remaining":0.0,"counterplay":"Sidestep the locked firing lane or use solid cover. Each arrow stops at its first target or wall.","effects_options":{"reduced_effects":false,"reduced_motion":false},"focusable_count":19,"geometry":"3 arrows · 28 m lane · 1 s preparation","hero_count":14,"payload":"32 damage to enemy troops per arrow.","preview_id":"rama","receiver_scope":"living lane troops; current Rama avatar; offline practice","selected_hero":"rama","status":"Ready after returning · X to invoke\nArrows browse · Enter selects · Tab moves focus · Esc / F3 back","suspended":false,"visible":false},"invocations":{"accepted_casts":0,"active_cast_id":0,"active_phase":"ready","applied_receipts":0,"configured":true,"cooldown_remaining":0.0,"elapsed":0.0,"epoch":1,"hero_health_enabled":false,"history_capacity":64,"history_size":1,"last_reason":"configure","network_enabled":false,"rejected_casts":0,"scope":"Offline invocation practice through the current Rama avatar; troop effects only.","selected_hero":"rama","selected_range_m":28.0,"selected_rule":{"effect_id":"rama.r.v1","effects":[{"amount":32.0,"kind":"damage","team":"enemy"}],"geometry":{"anchor":"caster","height_m":2.5,"kind":"projectile_volley","radius_m":0.5,"range_m":28.0,"speed_mps":62.0,"yaw_offsets_rad":[-0.12,0.0,0.12]},"hero_id":"rama","name":"Dawn Volley","timing":{"active_s":0.6,"recovery_s":0.45,"travel_s":0.451612903225806,"windup_s":1.0}},"supported_receivers":"living_lane_troops","suspended":false,"target_kind":"caster"},"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","kit_sha256":{"architecture":"8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a","nature":"856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f"},"landmarks":{"anchors":10,"landmarks":8,"materials":7,"mesh_budget":300,"mesh_instances":238,"scope":"Original procedural stone decks, chhatri facade relief, lotus courts and luminous fictional traversal relics. No historical reconstruction."},"lanes":3,"lighting":{"day_phase":0.0,"directional_budget":2,"night_phase":1.0,"phase":0.0,"practical_budget":12,"practical_count":12,"practical_shadow_count":0,"screen_space_reflections":false,"shadow_distance_m":72.0,"volumetric_fog":false,"water_geometry_displacement":false},"manifest_path":"res://assets/world/confluence-map.json","manifest_revision":3.0,"manifest_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","missing_presets":[],"native_bounds":[-68.0,68.0,-128.0,128.0],"native_platforms":8,"objectives":8,"procedural_props":5,"props":63,"ready":true,"relays":{"arrows_total":0,"art":{"animation_seconds":0.0,"cached_meshes":23,"collision_shapes":9,"finite":true,"invalid_states":0,"materials":13,"mesh_instances":156,"night_blend":0.0,"nodes":214,"ready":true,"scope":"Original offline relay presentation; state/damage authority belongs to relay_session. Flat capture tiles are non-solid; stepped plinths share explicit collision boxes.","sites":3,"states":[{"capture_team":"neutral","contested":false,"id":0,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":1,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":2,"owner":"neutral","progress":0.0}],"static_bodies":3},"healing_total":0.0,"last_event":"Capture a relay with your soldiers","last_receipt":0,"receipts_applied":0,"receipts_rejected":0,"rules":{"actors":{"conflicting_ids":0,"duplicate_rows":0,"input":0,"invalid_rows":0,"unique_alive":0},"captures":0,"contests":0,"elapsed":0.0,"epoch":2,"last_support_id":0,"limits":{"actors":97,"contributors_per_team":2,"events_per_step":3,"max_delta":0.25,"sites":3,"support_requests_per_step":3},"neutralizations":0,"schema":1,"sites":[{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":0,"label":"Reed Relay","owner":"neutral","position":"(-40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":1,"label":"Lotus Relay","owner":"neutral","position":"(0.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":2,"label":"Sky Relay","owner":"neutral","position":"(40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0}],"steps":0},"scope":"Offline relay capture and supplies; no hero health or network authority."},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim.","siege_effects":{"accepted":0,"active_events":0,"cancelled":0,"dropped_audio":0,"history_size":0,"impacts":0,"muted":false,"paused_voices":0,"peak_events":0,"played_cues":0,"playing_voices":0,"rejected":0,"states":[],"suspended":false,"tree_paused":false,"voice_pool":6,"volume":0.35,"windups":0},"siege_ui":{"focus_targets":12,"pause_rect":"[P: (400.0, 60.0), S: (480.0, 600.0)]","practice_label":"OFFLINE LANE PRACTICE"},"traversal":{"altitude":0.0500000007450581,"altitude_cap":24.0,"anchor_count":10,"candidate":{},"carry_pose":{"clip":"","configured":true,"fade_seconds":0.22,"mapped_rotations":29,"modified_samples":0,"rejected_states":0,"scope":"Original optional upper-body carry and authored grip; native lower body is unchanged. Rendering/contact acceptance is separate.","suppressed":true,"weight":0.0},"enabled":true,"energy":100.0,"flight_cooldown":0.0,"grapple_cooldown":0.0,"max_energy":100.0,"max_range":36.0,"mode":"ground","pose":{"action_suppressed":false,"hard_angle_limit":0.733038285837618,"mapped_bones":10,"maximum_angle_radians":0.0,"mode":"ground","modified_samples":0,"phase":0.0,"scope":"Original additive body pose; upper-body grip and continuous visual quality require rendered review.","weight":0.0},"rope_visible":false,"speed_cap":12.0,"status":"Traversal ready","target":{}},"ultimate_effects":{"active":0,"casts":[],"counts":{"accepted":0,"capacity":0,"duplicate":0,"expired":0,"invalid":0,"stale":0},"elapsed":0.0,"epoch":-1,"finite":true,"lights":0,"nodes":0,"particles":0,"peak_active":0,"reduced_effects":false,"reduced_motion":false,"scope":"Original local invocation presentation only; no authority, hero models or online claim.","suspended":false,"triangles":0,"voices":0}}
+PASS Explore button enters actual world 3
+PASS Escape opens world pause menu 3
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS return button restores clean courtyard menu 3
+PASS flow sources unchanged during run
+YUGA_WORLD_FLOW {"checks":[{"details":{"button_visible":true},"name":"menu ready before transition 1","passed":true},{"details":{"courtyard_freed":true,"scene":"res://scenes/confluence_world.tscn"},"name":"Explore button enters actual world 1","passed":true},{"details":{},"name":"Escape opens world pause menu 1","passed":true},{"details":{"world_collision_groups_removed":true,"world_freed":true},"name":"return button restores clean courtyard menu 1","passed":true},{"details":{"button_visible":true},"name":"menu ready before transition 2","passed":true},{"details":{"courtyard_freed":true,"scene":"res://scenes/confluence_world.tscn"},"name":"Explore button enters actual world 2","passed":true},{"details":{},"name":"Escape opens world pause menu 2","passed":true},{"details":{"world_collision_groups_removed":true,"world_freed":true},"name":"return button restores clean courtyard menu 2","passed":true},{"details":{"button_visible":true},"name":"menu ready before transition 3","passed":true},{"details":{"courtyard_freed":true,"scene":"res://scenes/confluence_world.tscn"},"name":"Explore button enters actual world 3","passed":true},{"details":{},"name":"Escape opens world pause menu 3","passed":true},{"details":{"world_collision_groups_removed":true,"world_freed":true},"name":"return button restores clean courtyard menu 3","passed":true},{"details":{},"name":"flow sources unchanged during run","passed":true}],"engine":"4.6.3-stable (official)","passed":true,"scope":"Three complete courtyard -> wired Explore button -> real world -> injected Escape -> wired Return button -> fresh courtyard cycles, with old instances and collision groups removed. Headless scene lifecycle and callback proof; not OS input, image quality or online match evidence.","sources":{"res://assets/world/confluence-map.json":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","res://scenes/confluence_world.tscn":"06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3","res://scenes/courtyard.tscn":"8a901cbe8bd5a44d50b6d2f46fc728e7430810bf5b794bdedb6839e7722be0f5","res://scripts/confluence_world.gd":"f1a23bc6f14c8d1c77b18076c069b52f2e9a57fb88aadf722c9a46b987486c75","res://scripts/courtyard.gd":"832bbc128931066b036a0a4e0f2297ab32b1b2644eb7de1587396766a193c219","res://scripts/player.gd":"a4742d0bcd11e79b697fd28813b8164d35aaf7c826a288e40c6420661b57848b","res://tests/world_flow_cases.gd":"9d18f8b55f36f497a2acdb540895ed8392d8b6f85bacee9a8cc11995ccf193bf"}}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+NATIVE_QA PASS required_source_files_are_present
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+NATIVE_QA PASS gameplay_input_actions_exist
+NATIVE_QA PASS courtyard_contract
+YUGA_NATIVE_TRAINING_STARTED
+NATIVE_QA PASS training_starts_with_skinned_rama
+YUGA_NATIVE_PAUSE true
+NATIVE_QA PASS pause_freezes_physics_and_weapon
+YUGA_NATIVE_PAUSE false
+NATIVE_QA PASS resume_clears_stale_held_input
+YUGA_NATIVE_RESET
+NATIVE_QA PASS restart_resets_player_targets_and_projectiles
+YUGA_NATIVE_RESET
+NATIVE_QA PASS menu_does_not_simulate_player_input
+NATIVE_QA PASS production_rama_selected_and_original_source_preserved
+NATIVE_QA PASS rama_rig_and_nine_animations_are_finite
+NATIVE_QA PASS forward_movement_uses_real_character_physics
+NATIVE_QA PASS diagonal_movement_is_speed_limited
+NATIVE_QA PASS world_and_live_targets_block_character_motion
+NATIVE_QA PASS jump_leaves_floor_and_lands
+NATIVE_QA PASS weapon_cooldown_magazine_and_reload
+NATIVE_QA PASS swept_projectiles_damage_and_target_respawns
+NATIVE_QA PASS swept_projectile_respects_world_occlusion
+NATIVE_QA PASS source_files_unchanged_during_scenarios
+NATIVE_QA_SUMMARY 18/18 checks passed; /tmp/yuga-native-setup-UNusTo/native-acceptance.json
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS final_partial_lifetime_still_hits
+PASS expiry_does_not_overshoot_range
+PASS fast_sweep_respects_thin_wall
+PASS shooter_exclusion_preserved
+PASS partitioned_expiry_preserves_total_range
+PASS already_expired_has_no_travel_or_damage
+PASS source_unchanged_during_cases
+YUGA_PROJECTILE_CASES {"checks":[{"details":{"damage":1,"impacts":1,"maximum_travel_metres":2.7,"remaining_seconds":0.05,"tick_seconds":0.1},"name":"final_partial_lifetime_still_hits","passed":true},{"details":{"damage":0,"first_out_of_range_surface_metres":2.71,"travel_metres":2.70000004768372},"name":"expiry_does_not_overshoot_range","passed":true},{"details":{"target_damage":0,"tick_travel_metres":10.0,"wall_damage":1,"wall_thickness_metres":0.02},"name":"fast_sweep_respects_thin_wall","passed":true},{"details":{"shooter_damage":0,"target_damage":1},"name":"shooter_exclusion_preserved","passed":true},{"details":{"substep_seconds":0.01,"substeps":5,"travel_metres":2.69999980926514},"name":"partitioned_expiry_preserves_total_range","passed":true},{"details":{"damage":0,"travel_metres":0.0},"name":"already_expired_has_no_travel_or_damage","passed":true},{"details":{},"name":"source_unchanged_during_cases","passed":true}],"engine":"4.6.3-stable (official)","passed":true,"projectile_sha256":"39b651bf014b91352e3cd62d15ec22966e5de4707a6dd1b9bcfb2dddd438695a","scope":"Explicit isolated fixtures and injected physics deltas. Ray queries run inside a real _physics_process callback. No renderer, normal-input, multiplayer or frame-rate claim."}
+{
+  "passed": true,
+  "mode": "check",
+  "assets": 8,
+  "source_sha256": "b15d469d827313bba0c10f810ceaa0231b29701e8b0877e4789028c3655212b3",
+  "total_wav_bytes": 2039392,
+  "loop": {
+    "asset": "assets/audio/traversal/lane-procession-loop.wav",
+    "kind": "lane-procession-loop",
+    "sha256": "f1046002578906bd7147cb7bb874746a04e9d4e6309b39300b73e5eb00e1c454",
+    "bytes": 1920044,
+    "sample_rate": 24000,
+    "channels": 2,
+    "sample_frames": 480000,
+    "duration_seconds": 20.0,
+    "peak_linear": 0.160008545183,
+    "rms_linear": 0.036342549179,
+    "seam_step_linear": 0.004425183874,
+    "within_clip_difference_p99": 0.012970366527,
+    "endpoint_zero": false
+  },
+  "mix": {
+    "music_gain_db": -20,
+    "cue_gain_db": -6,
+    "max_cue_players": 6,
+    "conservative_amplitude_bound": 0.5603893357192176,
+    "minimum_headroom_db": 5.030202759744013,
+    "scope": "This subsystem at volume1, all six cue peaks aligned; other scene buses must be budgeted separately"
+  },
+  "all_cues_zero_endpoints": true,
+  "all_assets_distinct_and_deterministic": true,
+  "limitations": "Numerical PCM verification; no human listening or physiological-benefit claim"
+}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS disabled_until_valid_world_configuration
+PASS empty_anchor_configuration_rejected
+PASS nonfinite_anchor_rejected
+PASS duplicate_anchor_id_rejected
+PASS out_of_bounds_anchor_rejected
+PASS invalid_bounds_rejected
+PASS anchor_pool_is_bounded
+PASS finite_configuration_enables_traversal
+PASS flight_starts_and_charges_energy
+PASS flight_uses_real_ascent_and_planar_motion
+PASS flight_diagonal_speed_is_capped
+PASS flight_cannot_add_dash_acceleration
+PASS feet_ceiling_is_enforced_without_teleport
+PASS finite_fuel_exhausts_flight
+PASS ground_recharges_bounded_energy
+PASS eligible_ring_requires_actual_camera_aim
+PASS grapple_locks_visible_ring
+PASS grapple_pulls_through_character_physics
+PASS grapple_speed_and_rope_are_bounded
+PASS grapple_toggle_releases_once
+PASS grapple_cooldown_blocks_reentry
+PASS solid_wall_blocks_grapple_los
+PASS thin_wall_stops_flight_without_tunneling
+PASS out_of_range_ring_is_not_candidate
+PASS off_aim_ring_is_not_candidate
+PASS cancel_clears_velocity_dash_rope_and_held_actions
+PASS tree_pause_cancels_active_traversal
+PASS focus_loss_cancels_traversal
+PASS inactive_player_cancels_traversal
+PASS external_teleport_cancels_traversal
+PASS nonfinite_energy_fails_closed
+PASS nonfinite_delta_fails_closed
+PASS horizontal_feet_bounds_are_enforced
+PASS weapon_remains_available_in_flight
+PASS all_observed_physics_are_finite
+PASS runtime_sources_did_not_change_during_run
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS production_hero_and_pose_loaded
+PASS actual_target_rig_has_164_bones
+PASS ten_named_body_bones_mapped
+PASS original_nine_clips_preserved
+PASS flight_actual_modifier_executes
+PASS flight_body_pose_changes
+PASS flight_angles_stay_bounded
+PASS flight_finite_nonsingular_global_bones
+PASS flight_translations_and_scales_preserved
+PASS flight_arms_wrists_and_other_rotations_preserved
+PASS grapple_actual_modifier_executes
+PASS grapple_body_pose_changes
+PASS grapple_angles_stay_bounded
+PASS grapple_finite_nonsingular_global_bones
+PASS grapple_translations_and_scales_preserved
+PASS grapple_arms_wrists_and_other_rotations_preserved
+PASS fire_or_cast_suppresses_additive_pose
+PASS recovery_blends_from_previous_pose
+PASS recovery_reaches_zero_overlay
+PASS cancel_clears_overlay_immediately
+PASS nonfinite_pose_input_fails_closed
+PASS invalid_delta_fails_closed
+PASS all_modifier_samples_are_bounded_finite
+PASS sources_unchanged_during_pose_checks
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_LANE_ARMY_CASES {"checks":21,"passed":true}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS missing settings install all defaults
+PASS repeated scene install does not duplicate actions
+PASS flight grapple descent and fixed help labels
+PASS legacy X remap survives new invocation binding without rewriting saves
+PASS migrated invocation layout persists as version2 with other settings
+PASS invocation action resets and fixed selector stays discoverable
+PASS remap persists while preserving other settings
+PASS duplicate key rejects atomically
+PASS reserved navigation key rejects atomically
+PASS unknown action rejected
+PASS reset defaults persists immediately
+PASS outgoing object constructor variant rejected
+PASS unsafe persisted oversize rejected without overwrite
+PASS unsafe persisted constructor rejected without overwrite
+PASS unsafe persisted deep nesting rejected without overwrite
+PASS unsafe persisted malformed rejected without overwrite
+PASS explicit reset recovers malformed file with exact unique backup
+PASS preferences can save after malformed reset
+PASS explicit reset recovers oversized file with exact unique backup
+PASS preferences can save after oversized reset
+PASS bounded backup-path failure leaves original bytes untouched
+PASS invalid key types fall back to defaults
+PASS unknown saved actions fall back to defaults
+PASS reset repairs invalid saved binding map and clears notice
+PASS all held gameplay and traversal actions released
+PASS controls modal fits 960 by 600
+PASS keyboard Tab navigates next mapping
+PASS Shift Tab navigates previous mapping
+PASS capture duplicate keeps existing binding and capture
+PASS Escape cancels capture without closing modal
+PASS capture commits new key and dynamic button label
+PASS reset button restores persisted defaults
+PASS controls modal fits 1280 by 720
+PASS Escape closes idle controls modal
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS courtyard controls return to Settings with focus and label
+PASS ordinary settings preserve remapped controls
+YUGA_NATIVE_TRAINING_STARTED
+PASS help freezes live practice and releases held input
+YUGA_NATIVE_PAUSE false
+PASS closing live help resumes practice
+YUGA_NATIVE_PAUSE true
+PASS held Escape repeat cannot toggle pause
+YUGA_NATIVE_PAUSE true
+PASS help opened from pause returns to pause
+PASS focus loss cancels capture and preserves paused settings context
+PASS courtyard Settings modal fits 960 by 600
+YUGA_INPUT_BINDINGS {"checks":[{"details":{},"name":"missing settings install all defaults","passed":true},{"details":{},"name":"repeated scene install does not duplicate actions","passed":true},{"details":{},"name":"flight grapple descent and fixed help labels","passed":true},{"details":{},"name":"legacy X remap survives new invocation binding without rewriting saves","passed":true},{"details":{},"name":"migrated invocation layout persists as version2 with other settings","passed":true},{"details":{},"name":"invocation action resets and fixed selector stays discoverable","passed":true},{"details":{},"name":"remap persists while preserving other settings","passed":true},{"details":{},"name":"duplicate key rejects atomically","passed":true},{"details":{},"name":"reserved navigation key rejects atomically","passed":true},{"details":{},"name":"unknown action rejected","passed":true},{"details":{},"name":"reset defaults persists immediately","passed":true},{"details":{},"name":"outgoing object constructor variant rejected","passed":true},{"details":{},"name":"unsafe persisted oversize rejected without overwrite","passed":true},{"details":{},"name":"unsafe persisted constructor rejected without overwrite","passed":true},{"details":{},"name":"unsafe persisted deep nesting rejected without overwrite","passed":true},{"details":{},"name":"unsafe persisted malformed rejected without overwrite","passed":true},{"details":{},"name":"explicit reset recovers malformed file with exact unique backup","passed":true},{"details":{},"name":"preferences can save after malformed reset","passed":true},{"details":{},"name":"explicit reset recovers oversized file with exact unique backup","passed":true},{"details":{},"name":"preferences can save after oversized reset","passed":true},{"details":{},"name":"bounded backup-path failure leaves original bytes untouched","passed":true},{"details":{},"name":"invalid key types fall back to defaults","passed":true},{"details":{},"name":"unknown saved actions fall back to defaults","passed":true},{"details":{},"name":"reset repairs invalid saved binding map and clears notice","passed":true},{"details":{},"name":"all held gameplay and traversal actions released","passed":true},{"details":{"rect":"[P: (140.0, 16.0), S: (680.0, 568.0)]"},"name":"controls modal fits 960 by 600","passed":true},{"details":{},"name":"keyboard Tab navigates next mapping","passed":true},{"details":{},"name":"Shift Tab navigates previous mapping","passed":true},{"details":{},"name":"capture duplicate keeps existing binding and capture","passed":true},{"details":{},"name":"Escape cancels capture without closing modal","passed":true},{"details":{},"name":"capture commits new key and dynamic button label","passed":true},{"details":{},"name":"reset button restores persisted defaults","passed":true},{"details":{},"name":"controls modal fits 1280 by 720","passed":true},{"details":{},"name":"Escape closes idle controls modal","passed":true},{"details":{},"name":"courtyard controls return to Settings with focus and label","passed":true},{"details":{},"name":"ordinary settings preserve remapped controls","passed":true},{"details":{},"name":"help freezes live practice and releases held input","passed":true},{"details":{},"name":"closing live help resumes practice","passed":true},{"details":{},"name":"held Escape repeat cannot toggle pause","passed":true},{"details":{},"name":"help opened from pause returns to pause","passed":true},{"details":{},"name":"focus loss cancels capture and preserves paused settings context","passed":true},{"details":{},"name":"courtyard Settings modal fits 960 by 600","passed":true}],"passed":true,"scope":"Recovered implementation; headless state, focus, layout and config fixtures. No OS-input or rendered visual acceptance implied.","sources":{"res://scripts/controls_overlay.gd":"6d14246339aecda7cfafec1be386e976037f3b0bf47b982b9ed07a40ce4a6c07","res://scripts/courtyard.gd":"832bbc128931066b036a0a4e0f2297ab32b1b2644eb7de1587396766a193c219","res://scripts/input_bindings.gd":"42628b17fecfa806d95773395ca323ff39cb32a41fe8e171f4cc7fd96a4beadd","res://tests/input_binding_cases.gd":"bb76caf540929149d10b8da6933e7170deb40a55cc1e94ff8a4068ee0eab016f"}}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS missing settings use modest default
+PASS saved volume zero
+PASS saved volume fraction
+PASS saved volume negative
+PASS saved volume above one
+PASS saved volume NaN
+PASS saved volume infinity
+PASS saved volume string
+PASS saved volume bool
+PASS saved volume array
+PASS saved volume dictionary
+PASS unsafe saved config constructor syntax rejected and preserved
+PASS unsafe saved config oversized file rejected and preserved
+PASS unsafe saved config deep nesting rejected and preserved
+PASS unsafe saved config unterminated string rejected and preserved
+PASS saved zero never starts any player
+PASS configure before ready wins over saved volume
+PASS bounded pool starts one music player and six cue players
+PASS loop covers all twenty seconds without end fade
+PASS all eight imported streams preserve verified PCM bytes exactly
+PASS all seven distinct semantic cues can play
+PASS ten thousand event flood is bounded and throttled
+PASS unknown cue and nonfinite position rejected
+PASS semantic events duck quiet music
+PASS mute immediately stops music and all cue players
+PASS unmute while suspended does not start music
+PASS resume starts one music stream
+PASS focus loss pauses music and suppresses new cues
+PASS focus regain resumes owned music
+PASS scene tree pause freezes audio and refuses signal-triggered cues
+PASS settings changes during tree pause remain silent
+PASS scene tree resume restores single loop
+PASS music off leaves gameplay cues enabled
+PASS nonfinite API volume safely defaults
+PASS infinite API volume safely defaults
+PASS negative API volume is mute
+PASS high API volume clamps without positive cue gain
+PASS scene return releases all players and focus callbacks
+PASS four muted scene recreations leave no player or callback accumulation
+YUGA_TRAVERSAL_AUDIO_CASES {"checks":[{"details":{},"name":"missing settings use modest default","passed":true},{"details":{},"name":"saved volume zero","passed":true},{"details":{},"name":"saved volume fraction","passed":true},{"details":{},"name":"saved volume negative","passed":true},{"details":{},"name":"saved volume above one","passed":true},{"details":{},"name":"saved volume NaN","passed":true},{"details":{},"name":"saved volume infinity","passed":true},{"details":{},"name":"saved volume string","passed":true},{"details":{},"name":"saved volume bool","passed":true},{"details":{},"name":"saved volume array","passed":true},{"details":{},"name":"saved volume dictionary","passed":true},{"details":{},"name":"unsafe saved config constructor syntax rejected and preserved","passed":true},{"details":{},"name":"unsafe saved config oversized file rejected and preserved","passed":true},{"details":{},"name":"unsafe saved config deep nesting rejected and preserved","passed":true},{"details":{},"name":"unsafe saved config unterminated string rejected and preserved","passed":true},{"details":{},"name":"saved zero never starts any player","passed":true},{"details":{},"name":"configure before ready wins over saved volume","passed":true},{"details":{},"name":"bounded pool starts one music player and six cue players","passed":true},{"details":{},"name":"loop covers all twenty seconds without end fade","passed":true},{"details":{},"name":"all eight imported streams preserve verified PCM bytes exactly","passed":true},{"details":{"played":7},"name":"all seven distinct semantic cues can play","passed":true},{"details":{"active_music":true,"dropped_events":10000,"duck_db":0.0,"focused":true,"music_enabled":true,"music_paused":false,"muted":false,"played_events":7,"playing_cues":6,"pool_size":6,"suspended":false,"volume":0.6},"name":"ten thousand event flood is bounded and throttled","passed":true},{"details":{},"name":"unknown cue and nonfinite position rejected","passed":true},{"details":{},"name":"semantic events duck quiet music","passed":true},{"details":{},"name":"mute immediately stops music and all cue players","passed":true},{"details":{},"name":"unmute while suspended does not start music","passed":true},{"details":{},"name":"resume starts one music stream","passed":true},{"details":{},"name":"focus loss pauses music and suppresses new cues","passed":true},{"details":{},"name":"focus regain resumes owned music","passed":true},{"details":{},"name":"scene tree pause freezes audio and refuses signal-triggered cues","passed":true},{"details":{},"name":"settings changes during tree pause remain silent","passed":true},{"details":{},"name":"scene tree resume restores single loop","passed":true},{"details":{},"name":"music off leaves gameplay cues enabled","passed":true},{"details":{},"name":"nonfinite API volume safely defaults","passed":true},{"details":{},"name":"infinite API volume safely defaults","passed":true},{"details":{},"name":"negative API volume is mute","passed":true},{"details":{},"name":"high API volume clamps without positive cue gain","passed":true},{"details":{},"name":"scene return releases all players and focus callbacks","passed":true},{"details":{},"name":"four muted scene recreations leave no player or callback accumulation","passed":true}],"engine":"4.6.3-stable (official)","passed":true,"scope":"Headless actual AudioStreamPlayer/AudioStreamPlayer3D state, 10000-event flood, settings and scene lifecycle. Focus signals explicitly emitted. No audible-quality, spatial-listening, GPU or OS-focus claim. Saved settings restored.","sources":{"loop":"f1046002578906bd7147cb7bb874746a04e9d4e6309b39300b73e5eb00e1c454","runner":"3b2dfea1972badb0a1ce1ec6bce47732ee433e32f01f4f636b27974833b894d5","runtime":"067ff9f82cb73305418330de32fa7d59b4c492b16985d64e58bd09c1df77fd2a","settings_validator":"42628b17fecfa806d95773395ca323ff39cb32a41fe8e171f4cc7fd96a4beadd"}}
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_CONFLUENCE_READY {"army":{"alive":30,"alive_by_lane":[10,10,10],"cap":72,"configured":true,"core_arrivals":[0,0,0],"cores":{"moon":100.0,"sun":100.0},"corpse_cap":24,"elapsed":0.0,"finite":true,"gold":0,"invalid_damage":0,"invalid_pulses":0,"invalid_steps":0,"kills":0,"kills_by_lane":[0,0,0],"max_alive_seen":30,"max_attacks_seen":0,"max_corpses_seen":0,"max_nodes_seen":30,"next_wave_seconds":30.0,"pending_cleanup":0,"queued_attacks":0,"queued_for_deletion":0,"rejected_wave_pairs":0,"roles_alive":{"bow_guard":12,"cannon_cart":0,"commander":6,"royal_chariot":0,"spearman":12},"route_blocked_moves":0,"scope":"Offline deterministic original lane armies; no live network or commercial-game reconstruction.","separation_waits":0,"siege":{"cancelled":0,"hits":0,"impacts":0,"next_attack_id":1,"pending":0,"pending_cap":32,"rejected_pairs":0,"spawned_pairs":0,"windups":0},"siege_drill":false,"temporary_units":0,"total_cap":96,"unit_nodes":30,"wave_events":1,"waves":1,"winner":""},"audio":{"active_music":true,"dropped_events":0,"duck_db":0.0,"focused":true,"music_enabled":true,"music_paused":false,"muted":false,"played_events":0,"playing_cues":0,"pool_size":6,"suspended":false,"volume":0.35},"authority_boxes":8,"builtin_procedural_props":5,"camps":4,"floor_bodies":1,"hero_model_ready":true,"hero_radius":0.65,"imported_props":58,"invocation_audio":{"active":{},"epoch":-1,"errors":[],"last_cast_id":0,"last_event_seq":-1,"played":0,"players":3,"playing":0,"ready":true,"rejected":0,"streams":16,"suppressed":0,"suspended":false,"voices":[{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1},{"cast_id":0,"cue":"","playing":false,"serial":-1}],"volume":0.35},"invocation_ui":{"active_phase":"ready","available":true,"card_rect":"[P: (120.0, 50.0), S: (1040.0, 620.0)]","choose_disabled":false,"configured":true,"control_rects":{"@CheckButton@520":"[P: (120.0, 50.0), S: (192.0, 44.0)]","@CheckButton@521":"[P: (120.0, 50.0), S: (192.0, 44.0)]","ChooseInvocation":"[P: (120.0, 50.0), S: (202.0, 40.0)]","CloseInvocations":"[P: (120.0, 50.0), S: (116.0, 42.0)]","InvocationReading":"[P: (120.0, 50.0), S: (98.0, 140.0)]","Invocation_arjuna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_bhima":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_chitrangada":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_draupadi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_duryodhana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hanuman":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_hidimbi":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_karna":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_meghnad":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_rama":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ravana":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_sita":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_subhadra":"[P: (120.0, 50.0), S: (140.0, 39.0)]","Invocation_ulupi":"[P: (120.0, 50.0), S: (140.0, 39.0)]"},"cooldown_remaining":0.0,"counterplay":"Sidestep the locked firing lane or use solid cover. Each arrow stops at its first target or wall.","effects_options":{"reduced_effects":false,"reduced_motion":false},"focusable_count":19,"geometry":"3 arrows · 28 m lane · 1 s preparation","hero_count":14,"payload":"32 damage to enemy troops per arrow.","preview_id":"rama","receiver_scope":"living lane troops; current Rama avatar; offline practice","selected_hero":"rama","status":"Ready after returning · X to invoke\nArrows browse · Enter selects · Tab moves focus · Esc / F3 back","suspended":false,"visible":false},"invocations":{"accepted_casts":0,"active_cast_id":0,"active_phase":"ready","applied_receipts":0,"configured":true,"cooldown_remaining":0.0,"elapsed":0.0,"epoch":1,"hero_health_enabled":false,"history_capacity":64,"history_size":1,"last_reason":"configure","network_enabled":false,"rejected_casts":0,"scope":"Offline invocation practice through the current Rama avatar; troop effects only.","selected_hero":"rama","selected_range_m":28.0,"selected_rule":{"effect_id":"rama.r.v1","effects":[{"amount":32.0,"kind":"damage","team":"enemy"}],"geometry":{"anchor":"caster","height_m":2.5,"kind":"projectile_volley","radius_m":0.5,"range_m":28.0,"speed_mps":62.0,"yaw_offsets_rad":[-0.12,0.0,0.12]},"hero_id":"rama","name":"Dawn Volley","timing":{"active_s":0.6,"recovery_s":0.45,"travel_s":0.451612903225806,"windup_s":1.0}},"supported_receivers":"living_lane_troops","suspended":false,"target_kind":"caster"},"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","kit_sha256":{"architecture":"8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a","nature":"856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f"},"landmarks":{"anchors":10,"landmarks":8,"materials":7,"mesh_budget":300,"mesh_instances":238,"scope":"Original procedural stone decks, chhatri facade relief, lotus courts and luminous fictional traversal relics. No historical reconstruction."},"lanes":3,"lighting":{"day_phase":0.0,"directional_budget":2,"night_phase":1.0,"phase":0.0,"practical_budget":12,"practical_count":12,"practical_shadow_count":0,"screen_space_reflections":false,"shadow_distance_m":72.0,"volumetric_fog":false,"water_geometry_displacement":false},"manifest_path":"res://assets/world/confluence-map.json","manifest_revision":3.0,"manifest_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","missing_presets":[],"native_bounds":[-68.0,68.0,-128.0,128.0],"native_platforms":8,"objectives":8,"procedural_props":5,"props":63,"ready":true,"relays":{"arrows_total":0,"art":{"animation_seconds":0.0,"cached_meshes":23,"collision_shapes":9,"finite":true,"invalid_states":0,"materials":13,"mesh_instances":156,"night_blend":0.0,"nodes":214,"ready":true,"scope":"Original offline relay presentation; state/damage authority belongs to relay_session. Flat capture tiles are non-solid; stepped plinths share explicit collision boxes.","sites":3,"states":[{"capture_team":"neutral","contested":false,"id":0,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":1,"owner":"neutral","progress":0.0},{"capture_team":"neutral","contested":false,"id":2,"owner":"neutral","progress":0.0}],"static_bodies":3},"healing_total":0.0,"last_event":"Capture a relay with your soldiers","last_receipt":0,"receipts_applied":0,"receipts_rejected":0,"rules":{"actors":{"conflicting_ids":0,"duplicate_rows":0,"input":0,"invalid_rows":0,"unique_alive":0},"captures":0,"contests":0,"elapsed":0.0,"epoch":2,"last_support_id":0,"limits":{"actors":97,"contributors_per_team":2,"events_per_step":3,"max_delta":0.25,"sites":3,"support_requests_per_step":3},"neutralizations":0,"schema":1,"sites":[{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":0,"label":"Reed Relay","owner":"neutral","position":"(-40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":1,"label":"Lotus Relay","owner":"neutral","position":"(0.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0},{"capture_team":"neutral","contested":false,"contributors":{"moon":0,"sun":0},"id":2,"label":"Sky Relay","owner":"neutral","position":"(40.0, 0.0, 0.0)","pressure_team":"neutral","progress":0.0,"radius":5.0,"supply_clock":0.0}],"steps":0},"scope":"Offline relay capture and supplies; no hero health or network authority."},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim.","siege_effects":{"accepted":0,"active_events":0,"cancelled":0,"dropped_audio":0,"history_size":0,"impacts":0,"muted":false,"paused_voices":0,"peak_events":0,"played_cues":0,"playing_voices":0,"rejected":0,"states":[],"suspended":false,"tree_paused":false,"voice_pool":6,"volume":0.35,"windups":0},"siege_ui":{"focus_targets":12,"pause_rect":"[P: (400.0, 60.0), S: (480.0, 600.0)]","practice_label":"OFFLINE LANE PRACTICE"},"traversal":{"altitude":0.0500000007450581,"altitude_cap":24.0,"anchor_count":10,"candidate":{},"carry_pose":{"clip":"","configured":true,"fade_seconds":0.22,"mapped_rotations":29,"modified_samples":0,"rejected_states":0,"scope":"Original optional upper-body carry and authored grip; native lower body is unchanged. Rendering/contact acceptance is separate.","suppressed":true,"weight":0.0},"enabled":true,"energy":100.0,"flight_cooldown":0.0,"grapple_cooldown":0.0,"max_energy":100.0,"max_range":36.0,"mode":"ground","pose":{"action_suppressed":false,"hard_angle_limit":0.733038285837618,"mapped_bones":10,"maximum_angle_radians":0.0,"mode":"ground","modified_samples":0,"phase":0.0,"scope":"Original additive body pose; upper-body grip and continuous visual quality require rendered review.","weight":0.0},"rope_visible":false,"speed_cap":12.0,"status":"Traversal ready","target":{}},"ultimate_effects":{"active":0,"casts":[],"counts":{"accepted":0,"capacity":0,"duplicate":0,"expired":0,"invalid":0,"stale":0},"elapsed":0.0,"epoch":-1,"finite":true,"lights":0,"nodes":0,"particles":0,"peak_active":0,"reduced_effects":false,"reduced_motion":false,"scope":"Original local invocation presentation only; no authority, hero models or online claim.","suspended":false,"triangles":0,"voices":0}}
+PASS world owns configured traversal army audio and controls
+PASS six lane-team formations are live on actual scene entry
+PASS native bounds and separate collision domains present
+PASS actual capsule lands on all eight native decks
+PASS platform takeoff spends stamina and never grounded-recharges in flight
+PASS visible native ring pulls player from sun-lift-west-ring
+PASS visible native ring pulls player from moon-lift-east-ring
+PASS all four expanded edges retain the full capsule
+PASS world ceiling and flight dash exclusion hold together
+PASS pause freezes army and movement while cancelling traversal and audio
+PASS resume releases held horizontal movement
+PASS atlas freezes army and suppresses traversal input and sound
+PASS atlas exit resumes army with neutral movement
+PASS Escape cancels remap capture without unpausing world
+PASS focus loss cancels pending capture and retains visible paused controls
+FAIL controls card remains inside viewport 1280x720
+FAIL controls card remains inside viewport 960x600
+PASS closing controls after focus loss returns to pause
+PASS world projectile damages opposing unit through actual collision
+PASS projectile impact reaches bounded world audio pool
+PASS all roles award exact last-hit gold once through world wallet
+PASS player pulse signal damages nearby enemy through integrated army
+PASS muted event burst stays silent with fixed audio allocation
+PASS same-frame projectile and impact bursts obey world caps
+PASS world teleport clears queued projectiles and active traversal
+PASS fifty same-frame resets never retain old army nodes or attacks
+PASS same-frame army death burst retains at most24 corpses and96 nodes
+PASS independent accelerated army uses the actual manifest
+PASS independent20-minute army sweep has bounded finite live state
+PASS independent soak includes combat in every lane without static obstruction
+PASS simultaneous opposing core arrivals settle as draw once
+PASS finished army cannot continue scoring or scheduling
+PASS post-outcome reset restores two cores and no previous attacks
+PASS restart restores world spawn and clean wallet
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS return disposes world army and audio ownership
+PASS integrated sources remain unchanged during test
+YUGA_TRAVERSAL_ARMY_STRESS {"army_ticks":24000,"checks":36,"passed":false,"physics_frames":1187}

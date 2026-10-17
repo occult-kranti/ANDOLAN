@@ -1,0 +1,13 @@
+# Pause focus reveal correction
+
+Actual packaged 960×600 screenshots `rejected-11-pause.png` and the fresh, settled `rejected-17-fresh-pause-settled.png` show **Continue practice** focused but clipped above the pause viewport. The second independent occurrence rejected the transient-frame explanation. The retained input ledger binds those screenshots to the reviewed package. Tab still reached the volume slider and keyboard return worked; the defect was visibility of the initially focused action.
+
+A headless real-world probe reproduced the related same-focus edge under physical 960×600 / logical 1280×720: Continue already owned focus, the scroll was deliberately moved to its bottom, and `_focus_lost()` called `set_paused(true)`. Re-grabbing the same focused control did not trigger `follow_focus`. Its logical rectangle stayed y=48–88 against a scroll viewport beginning at y=74. Explicitly revealing it moved the rectangle to y=74–114. This staged scroll fixture proves the edge; it does not prove that the first OS screenshot used that exact sequence.
+
+The narrow change in `confluence_world.gd` keeps the existing pause navigation, then defers a reveal until a process frame has passed. It only reveals the **current** focused pause action if pause and its panel remain active and both other modals are hidden. It does not grab focus again, so newer Tab navigation or the selector's return button wins. The immediate initial grab also skips an already-open selector/controls modal, preventing focus loss from stealing that modal's focus.
+
+`probe-fixed-verdict.json` passes the four observed reveal cases plus unchanged-source verification. The fixed same-focus case now reveals Continue at y=74. A separate execution loads the archived before-script into the original Node3D world and reproduces the failure without rewriting current runtime source; see `replay-before.*`. Both script versions are retained as `.gd.txt` evidence, with hashes in the manifest.
+
+The first short fixed probe logged an ObjectDB warning at exit. Its same-source verbose diagnostic rerun was clean. Loading the old script in the before-replay fixture also produced an exit warning, so this tiny fixture does not establish leak-free teardown. Independent canonical integration subsequently passed 113/113 checks with clean logs, including sixteen pause/selector/controls focus cases at both logical sizes, newer focus, rapid resume, key-capture cancellation and return focus. That independent report is archived by its owner, separately from this focused probe.
+
+Root owns the new packaged OS check and final source-matched captures. This packet does not claim that the fixed package has been visually accepted yet. No editor import or renderer was run for this correction.

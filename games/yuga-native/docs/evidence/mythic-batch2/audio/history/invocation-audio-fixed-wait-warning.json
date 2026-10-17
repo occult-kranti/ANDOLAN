@@ -1,0 +1,532 @@
+{
+	"checks": [
+		{
+			"evidence": {
+				"report": {
+					"active": {
+
+					},
+					"epoch": -1,
+					"errors": [],
+					"last_cast_id": 0,
+					"last_event_seq": -1,
+					"played": 0,
+					"players": 3,
+					"playing": 0,
+					"ready": true,
+					"rejected": 0,
+					"streams": 16,
+					"suppressed": 0,
+					"suspended": false,
+					"voices": [
+						{
+							"cast_id": 0,
+							"cue": "",
+							"playing": false,
+							"serial": -1
+						},
+						{
+							"cast_id": 0,
+							"cue": "",
+							"playing": false,
+							"serial": -1
+						},
+						{
+							"cast_id": 0,
+							"cue": "",
+							"playing": false,
+							"serial": -1
+						}
+					],
+					"volume": 0.35
+				}
+			},
+			"name": "sixteen_original_streams_and_exact_three_players",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"streams": [
+					{
+						"cue": "windup.wav",
+						"format": 1,
+						"length": 0.24,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "cancel.wav",
+						"format": 1,
+						"length": 0.16,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "rama-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "ravana-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "arjuna-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "duryodhana-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "hanuman-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "karna-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "bhima-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "meghnad-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "sita-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "draupadi-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "subhadra-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "hidimbi-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "chitrangada-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					},
+					{
+						"cue": "ulupi-release.wav",
+						"format": 1,
+						"length": 0.48,
+						"loop_mode": 0,
+						"rate": 48000,
+						"stereo": false
+					}
+				]
+			},
+			"name": "all_pcm_are_short_nonlooping_unique_and_48khz",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "begin_plays_one_original_windup",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "duplicate_begin_does_not_replay",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "release_selects_rama_timbre_once",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "DUPLICATE_RELEASE"
+			},
+			"name": "higher_sequence_duplicate_release_is_silent",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "200_tick_and_impact_events_do_not_restart_sound",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "end_retires_cast_and_stops_sound",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "NO_MATCHING_CAST"
+			},
+			"name": "late_release_after_end_rejected",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "CAST_REUSE"
+			},
+			"name": "cast_id_cannot_be_reused",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "next_cast_begin_accepted",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "cancel_retires_and_plays_short_cue",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_kind",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_epoch",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_cast_id",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_event_seq",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_hero_id",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_effect_id",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_team",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_time_s",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_malformed_origin",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_nonfinite_time_nan",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_nonfinite_time_inf",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_nonfinite_time_-1.0",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "reject_nonfinite_vector",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "effect_version_mismatch_rejected",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "INVALID_EVENT"
+			},
+			"name": "unknown_hero_cannot_load_resource",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "nonfinite_volume_preserves_previous_setting",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "volume_clamps_high",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "zero_volume_truly_stops_voices",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "muted_begin_and_release_consume_silently",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "unmute_cannot_replay_consumed_release",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "unmute_does_not_restart_old_voice",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "suspension_stops_current_sound",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "suspended_release_consumed_without_voice",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "resume_cannot_replay_release",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "local_reset_clears_voices_keeps_epoch_and_watermark",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "late_event_after_local_reset_rejected",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "same_epoch_reset_cannot_retire_current_session",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "higher_epoch_reset_starts_new_serial_space",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "old_epoch_never_plays",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "all_fourteen_heroes_select_distinct_original_release",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"maximum_playing": 1,
+				"nodes": 4,
+				"players": 3
+			},
+			"name": "1000_casts_no_node_or_voice_growth",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "paused_tree_onsets_consumed_without_playback",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"code": "STALE_EVENT"
+			},
+			"name": "tree_resume_cannot_replay_suppressed_release",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "resume_has_no_delayed_audio_queue",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "source_frozen",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"name": "teardown_frees_all_audio_players",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": true,
+	"scope": "Original PCM structural checks and actual Dummy AudioStreamPlayer lifecycle/event/mute tests. No listening or perceptual quality claim.",
+	"source_sha256": {
+		"res://assets/audio/invocations/arjuna-release.wav.import": "efa1a32e5a78b4c84b63a2f67d241acc0ff2e71b086a82e4e78716003cbaaf53",
+		"res://assets/audio/invocations/bhima-release.wav.import": "f5b345f8e8cc4ef1acb77b3262deecc3c5f325c30328b345d4fc9a946ca9ce84",
+		"res://assets/audio/invocations/cancel.wav.import": "c83c70ebc5b7ef7bf46ef7ed3894169942ea18ca39a60205eeecf2987be01af3",
+		"res://assets/audio/invocations/chitrangada-release.wav.import": "818b49a29593139d58712453bc306a20ac647d01b33c945c46d364fbf473709f",
+		"res://assets/audio/invocations/draupadi-release.wav.import": "f82eab90b207948ba2810bb723d4e23a1f915cecc04fea6f0147bfe9f2e36b59",
+		"res://assets/audio/invocations/duryodhana-release.wav.import": "51dab4bf75129a7f4f7d9ae9477fc49cc0805143c119884be7b36f2904c4f382",
+		"res://assets/audio/invocations/hanuman-release.wav.import": "259fe8305a04cff421ff96b52db1f2c47e4185dcb46517b5490d67edf925292b",
+		"res://assets/audio/invocations/hidimbi-release.wav.import": "0bdd6c77c4ebc8701f4c868ade0f4ea35d1f35a95a31f1969c4818339f6aaa6e",
+		"res://assets/audio/invocations/karna-release.wav.import": "ec350223cb820635ccad9380cb3212c63cc5c8cebe6b11cbe9c8cf658cc27d1d",
+		"res://assets/audio/invocations/manifest.json": "5431df91ae0710c266a7767ee64f3aa479c54e73d054f03b45843af33e19217a",
+		"res://assets/audio/invocations/meghnad-release.wav.import": "24949bb1d658e856598c46f4b6ba30e6994258c7a459947cb818238588080668",
+		"res://assets/audio/invocations/rama-release.wav.import": "de24e5f91bf1d0d1658395274bec832ab7d4dff523fe3f5e3b075d7e66b54828",
+		"res://assets/audio/invocations/ravana-release.wav.import": "94c116fa79791a0a3f090cd06cf92ec7fbe642448ba9f1f553f667b9653bb0c6",
+		"res://assets/audio/invocations/sita-release.wav.import": "9f4bbecaf66aaf4a329348326b02254dd7a7bbd3c1c45b7b2cad1df0b5627c71",
+		"res://assets/audio/invocations/subhadra-release.wav.import": "4d89ccf4b54db7d4afe3256ffa10fd819a44ac675b671f4fc59f5922618f0b21",
+		"res://assets/audio/invocations/ulupi-release.wav.import": "86c4f6431a19f52b57392546b534b327f8d4db1be0b0067b09d6839de65816af",
+		"res://assets/audio/invocations/windup.wav.import": "8675ec14d155b57eea7d80458bbebc03b087a8cf176c50129e1459c37c38e833",
+		"res://scripts/invocation_audio.gd": "2eb88e715d766fb4ed6feaf307e32912fd66dd3ddc5a8155b1ebb4993b78614e",
+		"res://tests/invocation_audio_cases.gd": "03042b8d32389dc0f2352df097e3f4dea8b844b77d38c547cf3dc4ef5f196eca"
+	}
+}

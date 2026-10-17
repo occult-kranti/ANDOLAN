@@ -1,0 +1,83 @@
+{
+  "scope": "Independent bounded synthetic release probes. Owner fixtures supply synthetic images/packages and mock git/decoder; no actual render/build/network/publication. Expected_success denotes desired contract, not present acceptance.",
+  "source_sha256": {
+    "games/yuga-native/tests/release_mythic_cases.py": "d216488de8e4dd6799c19d9c8db0d124dbeeed304ecb08ac702fa56c2b313be2",
+    "games/yuga-native/tools/release-native.py": "62e5865352b833845f9aa2a1dd2efed52363797ad7dafe4747f927c097eac0f9"
+  },
+  "results": [
+    {
+      "name": "independent_baseline",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "actual_producer_no_preview_field",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "actual_producer_fixed_source_set",
+      "passed": true,
+      "expected_success": true,
+      "rejection": null,
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "missing_scripted_event_ledger",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate scripted event ledger is missing/incomplete",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "contact_before_begin_chronology",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate rendered phases contradict ordered event ledger",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "zero_age_hero_warning_still",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Ultimate still identity/shape/age differs",
+      "details": {
+        "decoder_calls": 0
+      }
+    },
+    {
+      "name": "stale_successful_ultimate_report",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic check source changed: res://scripts/ultimate_session.gd",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    },
+    {
+      "name": "empty_successful_ultimate_report",
+      "passed": true,
+      "expected_success": false,
+      "rejection": "Mythic test checks are empty, malformed or failed",
+      "details": {
+        "traversal_decodes": 0,
+        "ultimate_decodes": 0
+      }
+    }
+  ]
+}

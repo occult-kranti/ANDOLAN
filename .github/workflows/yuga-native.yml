@@ -90,6 +90,19 @@ jobs:
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/native_contract_cases.gd -- --report="$RUNNER_TEMP/native-contracts.json"
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/hero_pose_cases.gd -- --report="$RUNNER_TEMP/hero-pose.json"
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/world_presentation_cases.gd -- --report="$RUNNER_TEMP/world-presentation.json"
+      - name: Mythic entity physics invocation effects UI audio and integration gates
+        run: |
+          set -euo pipefail
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/entity_bridge_cases.gd -- --report="$RUNNER_TEMP/entity-bridge.json"
+          python3 games/yuga-native/tools/physics/run.py --godot Godot_v4.6.3-stable_linux.x86_64 --output "$RUNNER_TEMP/physics-run"
+          cp "$RUNNER_TEMP/physics-run/comparison.json" "$RUNNER_TEMP/physics.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/ultimate_cases.gd -- --report="$RUNNER_TEMP/ultimate.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/ultimate_effects_cases.gd -- --report="$RUNNER_TEMP/ultimate-effects.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/invocation_ui_cases.gd -- --report="$RUNNER_TEMP/invocation-ui.json"
+          python3 games/yuga-native/tools/audio/build-invocation-audio.py --check --report="$RUNNER_TEMP/invocation-audio-build.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/invocation_audio_cases.gd -- --report="$RUNNER_TEMP/invocation-audio.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/mythic_integration_cases.gd -- --report="$RUNNER_TEMP/mythic-integration.json"
+          python3 games/yuga-native/tests/release_mythic_cases.py --report="$RUNNER_TEMP/mythic-release-gates.json"
       - name: Combat film seek, pose, effect and scene lifecycle checks
         run: |
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/combat_film_cases.gd -- --report=${{ runner.temp }}/combat-film-cases.json
@@ -142,6 +155,16 @@ jobs:
           name: yuga-native-acceptance
           path: |
             ${{ runner.temp }}/native-acceptance.json
+            ${{ runner.temp }}/entity-bridge.json
+            ${{ runner.temp }}/physics.json
+            ${{ runner.temp }}/ultimate.json
+            ${{ runner.temp }}/ultimate-effects.json
+            ${{ runner.temp }}/invocation-ui.json
+            ${{ runner.temp }}/invocation-audio-build.json
+            ${{ runner.temp }}/invocation-audio.json
+            ${{ runner.temp }}/mythic-integration.json
+            ${{ runner.temp }}/mythic-release-gates.json
+            ${{ runner.temp }}/physics-run/
             ${{ runner.temp }}/hero-codex.json
             ${{ runner.temp }}/hero-codex-cases.json
             ${{ runner.temp }}/hero-reconstruction.json

@@ -1,0 +1,11 @@
+Independent Batch 2 native content revision review
+
+Result: 287/287 passing checks; no ERROR, WARNING, SCRIPT ERROR or Parse Error diagnostics in the three accepted logs. Runtime and catalogue hashes match the assigned freeze before and after review. No source edits, imports, renders or commits were performed.
+
+43 original malformed input/catalogue probes and 127 original replay probes were copied from Batch 1; output paths were changed before execution. The 43-check harness now explicitly computes passed/checks and nonzero failure exit. Both reports include the catalogue hash.
+
+117 additional checks cover every profile's missing, mistyped, nonfinite and incorrect known content revision; failed catalogue loads preserving state and descriptors; native content=2 with browser/proposal content=1; all other descriptor versions=1; real preserved content1 and isolated revision-only descriptor rejection in open/resume/migrate/replay; active state preserved after rejection; valid input/event/entity/replay version1 controls; positive resume/migration controls.
+
+The first 117-check run is retained as content-revision.json / .log.txt with its script and fixtures. It has 36 harness failures: default Godot JSON stringify emitted safe_integer as 9007199254740991.0; Godot reparsing failed CATALOG_LIMITS before content_revision validation. The corrected r2 fixture writer uses JSON.stringify full_precision=true, emitting 9.007199254740991e+15, and all 117 checks pass. Only scratch harness files changed. This is not claimed as a new runtime implementation fix.
+
+Summary and exact commands: summary.json. Source hashes: source-before.json and source-after.json. Scope: pure validator; no online transport, rendering or authority simulation exercised.

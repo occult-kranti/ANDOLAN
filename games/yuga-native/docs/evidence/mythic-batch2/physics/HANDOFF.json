@@ -1,0 +1,30 @@
+{
+  "task": "MYTH-07 supporting FG05-T02",
+  "source_commit": "eedfd1f94181cddfad293e3e95f126b96c72baed",
+  "sources": {
+    "games/yuga-native/assets/contracts/physics-fixture-v1.json": "aeeea1a0b105b4015a79bee3289809aeba585abdc00b5d4b3e6c92faf061ee9e",
+    "games/yuga-native/tools/physics/reference.ts": "5626edc19c0126d26add9117c832c59d751fb611f5d36a8b94d031b034058146",
+    "games/yuga-native/tools/physics/reference.test.ts": "aa348441deebfb9fdb6c9f7c6590327a88b49203c2be73e377d29dc220b29fc1",
+    "games/yuga-native/tools/physics/compare.py": "cb7711d9c52830f38fff439cb134a472ea42feddaa547f7f4f4b5919391c4be3",
+    "games/yuga-native/tools/physics/run.py": "8c18d940cdc5ee409c3e61550ae98f3f052d06fad67bc773a5dd8405389e1f53",
+    "games/yuga-native/tests/physics_authority_cases.gd": "744bc9531a7e4b67be0542278e234ebbd93425fa573a94bbc14c876612c976b5",
+    "games/yuga-native/docs/PHYSICS_AUTHORITY_DECISION.md": "861db24182a27af9985d4fc1025c19965cb00f7b3dd06546aac03a0586964a77"
+  },
+  "final_evidence": "node22-compatible-r7",
+  "owner_checks": {
+    "typescript": 48,
+    "strict_tsc": "pass",
+    "godot": 24,
+    "comparison": 1586,
+    "queries_per_implementation": 1474
+  },
+  "independent_evidence": [
+    "/workspace/scratch/yuga-bridge/physics-independent-probe.json",
+    "/workspace/scratch/yuga-bridge/physics-independent-probe-r2.json"
+  ],
+  "cross_review": "/workspace/scratch/yuga-physics-authority/bridge-axis-review.json",
+  "scope": "Offline query experiment; proposed single headless Godot physics authority; no production contract/server/map/player migration",
+  "remaining": "two real network clients, actual controller shape/steps/gravity, full collision export, explicit engine backend, stress capacity",
+  "previous_evidence": "final (r6), unchanged implementation and fixture; original runner retained in historical-run-r6.py",
+  "node22_check": "48 reference tests execute under npm-provided Node22.14.0 with explicit --experimental-strip-types"
+}

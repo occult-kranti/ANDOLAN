@@ -45,6 +45,16 @@ var reward_emitted := false
 var render_art := true
 var radius := .39
 var vehicle_art: Dictionary = {}
+# Invocation practice statuses use the army clock, never render time.
+var shield := 0.0
+var shield_until := 0.0
+var slow_multiplier := 1.0
+var slow_until := 0.0
+var practice_summon := false
+var summon_expires_at := 0.0
+var summon_attack_damage := 0.0
+var shield_fill: MeshInstance3D
+var invalid_status := 0
 
 func setup(owner_army: Node3D, identity: int, team_value: String, role_value: String, lane_value: int) -> void:
 	army = owner_army
@@ -97,6 +107,17 @@ func _ready() -> void:
 		color.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 		health_fill.material_override = color
 		bar.add_child(health_fill)
+		shield_fill = MeshInstance3D.new()
+		var shield_mesh := BoxMesh.new()
+		shield_mesh.size = Vector3(.78,.022,.07)
+		shield_fill.mesh = shield_mesh
+		var shield_color := StandardMaterial3D.new()
+		shield_color.albedo_color = Color("b8ecfa")
+		shield_color.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		shield_fill.material_override = shield_color
+		shield_fill.position.y = .065
+		shield_fill.visible = false
+		bar.add_child(shield_fill)
 		if role == "bow_guard":
 			arrow = MeshInstance3D.new()
 			var shaft := CylinderMesh.new()
@@ -121,24 +142,86 @@ func receive_damage(amount, source := "army") -> bool:
 		return false
 	if is_instance_valid(army) and not army.winner.is_empty():
 		return false
-	health = maxf(0.0,health-float(amount))
+	var absorbed := minf(shield,float(amount))
+	shield -= absorbed
+	health = maxf(0.0,health-(float(amount)-absorbed))
 	hit_time = .18
 	if health <= 0:
 		alive = false
 		state = "fall"
+		clear_statuses()
 		collision_layer = 0
 		target = null
 		if not reward_emitted:
 			reward_emitted = true
+			if is_instance_valid(army):army._receiver_depth += 1
 			defeated.emit(self,source == "player")
+			if is_instance_valid(army):army._receiver_depth -= 1
 	return true
 
 func arrive() -> void:
+	clear_statuses()
 	alive = false
 	state = "arrived"
 	collision_layer = 0
 	dead_age = 1.21
 	target = null
+
+func _status_number(value, lower: float, upper: float) -> bool:
+	return typeof(value) in [TYPE_INT,TYPE_FLOAT] and is_finite(float(value)) and float(value)>=lower and float(value)<=upper
+
+func _status_available() -> bool:
+	return alive and is_instance_valid(army) and army.winner.is_empty()
+
+func receive_heal(amount) -> float:
+	if not _status_number(amount,.000001,1000):invalid_status += 1;return 0.0
+	if not _status_available():return 0.0
+	var before := health
+	health = minf(max_health,health+float(amount))
+	_update_health_bar()
+	return health-before
+
+func apply_shield(amount, duration) -> bool:
+	if not _status_number(amount,.000001,100) or not _status_number(duration,.000001,12):invalid_status += 1;return false
+	if not _status_available():return false
+	shield = maxf(shield,float(amount))
+	shield_until = maxf(shield_until,float(army.elapsed)+float(duration))
+	_update_health_bar()
+	return true
+
+func apply_slow(multiplier, duration) -> bool:
+	if not _status_number(multiplier,.1,1) or not _status_number(duration,.000001,12):invalid_status += 1;return false
+	if not _status_available():return false
+	slow_multiplier = minf(slow_multiplier,float(multiplier))
+	slow_until = maxf(slow_until,float(army.elapsed)+float(duration))
+	return true
+
+func step_statuses(now: float) -> void:
+	if not is_finite(now) or now<0:return
+	if not alive:clear_statuses();return
+	if now+1e-8>=shield_until:shield = 0.0;shield_until = 0.0
+	if now+1e-8>=slow_until:slow_multiplier = 1.0;slow_until = 0.0
+	_update_health_bar()
+
+func clear_statuses() -> void:
+	shield = 0.0
+	shield_until = 0.0
+	slow_multiplier = 1.0
+	slow_until = 0.0
+	_update_health_bar()
+
+func movement_multiplier() -> float:
+	return slow_multiplier
+
+func attack_damage() -> float:
+	return summon_attack_damage if practice_summon else float(STATS[role].damage)
+
+func core_damage() -> float:
+	return 0.0 if practice_summon else float(STATS[role].core_damage)
+
+func status_report() -> Dictionary:
+	return {"shield":shield,"shield_until":shield_until,"speed_multiplier":slow_multiplier,"slow_until":slow_until,
+		"temporary":practice_summon,"expires_at":summon_expires_at,"invalid_status":invalid_status}
 
 func start_attack(point: Vector3) -> float:
 	if not point.is_finite() or not alive:
@@ -199,6 +282,10 @@ func update_pose(time: float, alpha := 1.0) -> void:
 				arrow.quaternion = Quaternion(Vector3.UP,direction.normalized())
 
 func _update_health_bar() -> void:
+	if is_instance_valid(shield_fill):
+		shield_fill.visible = alive and shield>0
+		shield_fill.scale.x = maxf(.001,shield/100.0)
+		shield_fill.position.x = -(1.0-shield/100.0)*.39
 	if health_fill:
 		health_fill.scale.x = maxf(.001,health/max_health)
 		health_fill.position.x = -(1.0-health/max_health)*.39
@@ -213,7 +300,7 @@ func _joint_finite(value) -> bool:
 	return false
 
 func articulation_finite() -> bool:
-	if not position.is_finite() or not is_finite(health) or not is_finite(heading):
+	if not position.is_finite() or not is_finite(health) or not is_finite(heading) or not is_finite(shield) or not is_finite(slow_multiplier):
 		return false
 	for joint in joints.values():
 		if not _joint_finite(joint):

@@ -762,7 +762,13 @@
         "Accepted server event IDs drive release/projectile/sound/VFX once, with reject/timeout recovery.",
         "Interrupt, hit reaction, death and respawn release constraints and clear stale effects."
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        }
+      ],
       "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
@@ -831,7 +837,7 @@
       "id": "FG04-T02",
       "milestone": "FG04",
       "title": "Define native entity and authority bridge",
-      "status": "planned",
+      "status": "complete",
       "priority": "P0",
       "owner": "network/gameplay",
       "depends_on": [
@@ -839,15 +845,23 @@
         "FG00-T04"
       ],
       "deliverables": [
-        "planned: entity presentation contract and map-version handshake"
+        "games/yuga-native/scripts/entity_bridge.gd",
+        "games/yuga-native/docs/NATIVE_ENTITY_BRIDGE.md",
+        "games/yuga-native/docs/PHYSICS_AUTHORITY_DECISION.md"
       ],
       "acceptance": [
         "Define actor/minion/structure/projectile/zone/pickup/event ownership and lifetime.",
         "Version remote aim pitch and discontinuities; preserve acknowledged input and room identity.",
         "Define simulationselection experiment with the worldphysics owner before vertical productionmap."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        }
+      ],
+      "next_action": "Integrate a chosen authority/controller and two actual rendered native clients under FG05-T02 and FG04-T03. This closes the bridge definition and tested diagnostic adapter only.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
@@ -950,22 +964,30 @@
       "id": "FG05-T02",
       "milestone": "FG05",
       "title": "Resolve shared three-dimensional collision authority",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P0",
       "owner": "physics/research-engineering",
       "depends_on": [
         "FG00-T04"
       ],
       "deliverables": [
-        "planned: stacked-deck fixture collisioncontract and architecture decision"
+        "games/yuga-native/assets/contracts/physics-fixture-v1.json",
+        "games/yuga-native/tools/physics/",
+        "games/yuga-native/docs/PHYSICS_AUTHORITY_DECISION.md"
       ],
       "acceptance": [
         "Export versioned ramps/stairs/ledge/low ceiling/stacked decks with sharedunits and collisionlayers.",
         "Compare TSshape queries and headless Godotauthority using identicaltwo-client inputs.",
         "Select by correctness, profile and migrationcost; demonstrate bridgeoverroad and remote aim contract."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        }
+      ],
+      "next_action": "Adopt and profile the headless Godot authority/controller, then demonstrate two native clients traversing bridge/underpass with accepted remote aim. Query comparison is complete; solver equivalence and full integration are not.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
@@ -1761,7 +1783,13 @@
         "Threat priority survives12-hero effects; audio voices/particles/lights are bounded and culled.",
         "Critical information has visual/audio alternatives; cue duplication and late cancel tests pass."
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        }
+      ],
       "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
@@ -1928,6 +1956,11 @@
           "path": "games/yuga-native/docs/evidence/traversal-armies-window-r2/REVIEW.md",
           "sha256": "8362c2e0656641a92e5767a714a91629d65edda545e6495d52dd7621741dec93",
           "scope": "Actual packaged Linux 960 x 600 OS-input flow: entry, remap/movement/flight/pause/reset/mute/return. No online lifecycle or Windows execution."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
         }
       ],
       "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
@@ -1962,6 +1995,11 @@
           "path": "games/yuga-native/docs/evidence/traversal-armies-window-r2/REVIEW.md",
           "sha256": "8362c2e0656641a92e5767a714a91629d65edda545e6495d52dd7621741dec93",
           "scope": "Actual OS remapping W to J, movement, reopen persistence, reset, flight/pause and mute; no restart/controller or complete accessibility acceptance."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
         }
       ],
       "next_action": "Retain tested keyboard/settings behavior while adding supported controller/device paths and remaining accessibility options; verify critical cues and all complete-match states at actual scales.",
@@ -2156,8 +2194,9 @@
   "next_packets": [
     "FG00-T03",
     "FG03-T01",
-    "FG04-T02",
-    "FG05-T02"
+    "FG05-T02",
+    "FG01-T01",
+    "FG01-T02"
   ],
   "upcoming_packets": [
     "FG01-T01",
@@ -2716,6 +2755,123 @@
         }
       ],
       "next_action": "Proceed to the second five packets while retaining larger production limits."
+    },
+    {
+      "id": "MYTH-06",
+      "title": "Native entity presentation and lifetime bridge",
+      "status": "complete",
+      "phase": "bounded_packet_accepted",
+      "supports": [
+        "FG04-T02"
+      ],
+      "depends_on": [
+        "MYTH-05"
+      ],
+      "contract": "games/yuga-native/docs/MYTHIC_BATCHES.md",
+      "owner": "Native bridge and contract owner",
+      "acceptance_scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        }
+      ],
+      "next_action": "Preserve this acceptance and continue the parent production tasks under their unmet conditions; publish the verified milestone separately."
+    },
+    {
+      "id": "MYTH-07",
+      "title": "Three-dimensional physics comparison and authority decision",
+      "status": "complete",
+      "phase": "bounded_packet_accepted",
+      "supports": [
+        "FG05-T02"
+      ],
+      "depends_on": [
+        "MYTH-05"
+      ],
+      "contract": "games/yuga-native/docs/MYTHIC_BATCHES.md",
+      "owner": "Physics research and independent bridge review",
+      "acceptance_scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        }
+      ],
+      "next_action": "Preserve this acceptance and continue the parent production tasks under their unmet conditions; publish the verified milestone separately."
+    },
+    {
+      "id": "MYTH-08",
+      "title": "Fourteen native troop invocation lifecycles",
+      "status": "complete",
+      "phase": "bounded_packet_accepted",
+      "supports": [
+        "FG03-T03",
+        "FG11-T03"
+      ],
+      "depends_on": [
+        "MYTH-05"
+      ],
+      "contract": "games/yuga-native/docs/MYTHIC_BATCHES.md",
+      "owner": "Combat rules and independent integration",
+      "acceptance_scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        }
+      ],
+      "next_action": "Preserve this acceptance and continue the parent production tasks under their unmet conditions; publish the verified milestone separately."
+    },
+    {
+      "id": "MYTH-09",
+      "title": "Original invocation geometry, motion and cues",
+      "status": "complete",
+      "phase": "bounded_packet_accepted",
+      "supports": [
+        "FG11-T03"
+      ],
+      "depends_on": [
+        "MYTH-05"
+      ],
+      "contract": "games/yuga-native/docs/MYTHIC_BATCHES.md",
+      "owner": "Effects artist and audio owner",
+      "acceptance_scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        }
+      ],
+      "next_action": "Preserve this acceptance and continue the parent production tasks under their unmet conditions; publish the verified milestone separately."
+    },
+    {
+      "id": "MYTH-10",
+      "title": "Invocation selector and complete local input flow",
+      "status": "complete",
+      "phase": "bounded_packet_accepted",
+      "supports": [
+        "FG13-T01",
+        "FG13-T02"
+      ],
+      "depends_on": [
+        "MYTH-05"
+      ],
+      "contract": "games/yuga-native/docs/MYTHIC_BATCHES.md",
+      "owner": "Practice UX and packaged review",
+      "acceptance_scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
+          "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
+          "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        }
+      ],
+      "next_action": "Preserve this acceptance and continue the parent production tasks under their unmet conditions; publish the verified milestone separately."
     }
   ]
 }

@@ -6,6 +6,8 @@ signal changed
 signal gold_changed(total: int)
 signal outcome(winning_team: String)
 signal siege_event(event: Dictionary)
+signal simulation_stepped(delta: float)
+signal simulation_reset(reason: String)
 
 const Unit = preload("res://scripts/lane_minion.gd")
 const STEP := .05
@@ -60,6 +62,8 @@ var siege_hits := 0
 var siege_spawned_pairs := 0
 var siege_rejected_pairs := 0
 var _next_siege_id := 1
+var _receiver_depth := 0
+var _pending_reset := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -71,6 +75,7 @@ func _vector(value) -> bool:
 	return value is Array and value.size() == 3 and _number(value[0]) and _number(value[1]) and _number(value[2])
 
 func configure(manifest: Dictionary, player_value: Node3D) -> bool:
+	if _receiver_depth>0:return false
 	# Validate candidate data before mutating the current game, including NaN.
 	var proposed = manifest.get("lanes",null)
 	if not proposed is Array or proposed.size() != 3:
@@ -146,9 +151,16 @@ func configure(manifest: Dictionary, player_value: Node3D) -> bool:
 	return true
 
 func reset() -> void:
+	if _receiver_depth>0:
+		_pending_reset = true
+		# Invalidate callbacks immediately; free signal emitters after unwinding.
+		simulation_reset.emit("army_reset_pending")
+		return
 	_reset_state(true)
 
 func _reset_state(normal_wave: bool) -> void:
+	_pending_reset = false
+	simulation_reset.emit("army_reset")
 	# Immediate destruction outside unit callbacks bounds same-frame repeated resets.
 	for unit in units:
 		if is_instance_valid(unit):
@@ -198,6 +210,7 @@ func _emit_siege_reset() -> void:
 	siege_event.emit({"kind":"reset","id":0,"role":"","team":"","origin":Vector3.ZERO,"target":Vector3.ZERO,"delay":0.0,"radius":0.0,"damage":0.0})
 
 func start_siege_drill() -> bool:
+	if _receiver_depth>0:return false
 	if not configured or lanes.size() != 3 or float(lanes[1].length) < 40.0:
 		return false
 	var specification: Array = []
@@ -232,6 +245,9 @@ func step_simulation(delta := STEP) -> bool:
 	if not configured or not is_finite(delta) or delta <= 0 or delta > STEP+.000001:
 		invalid_steps += 1
 		return false
+	if _pending_reset:
+		_reset_state(true)
+		return true
 	if not winner.is_empty():
 		return true
 	elapsed += delta
@@ -240,6 +256,10 @@ func step_simulation(delta := STEP) -> bool:
 		unit.previous_position = unit.position
 		unit.previous_yaw = unit.heading
 		unit.moved = 0
+		unit.step_statuses(elapsed)
+		if unit.alive and unit.practice_summon and elapsed+1e-8>=unit.summon_expires_at:
+			_cancel_source_attacks(unit.get_instance_id())
+			unit.arrive()
 		unit.attack_cooldown = maxf(0,unit.attack_cooldown-delta)
 		unit.attack_time = maxf(0,unit.attack_time-delta)
 		unit.hit_time = maxf(0,unit.hit_time-delta)
@@ -274,8 +294,12 @@ func step_simulation(delta := STEP) -> bool:
 	_attacks = remaining
 	# Resolve valid simultaneous attacks after eligibility, avoiding first-team order bias.
 	for attack in attacks_due:
+		if _pending_reset:break
 		if is_instance_valid(attack.target) and attack.target.receive_damage(attack.damage,"army") and attack.get("siege",false):
 			siege_hits += 1
+	if _pending_reset:
+		_reset_state(true)
+		return true
 	_rebuild_buckets()
 	var core_damage := {"sun":0.0,"moon":0.0}
 	for unit in units:
@@ -292,11 +316,11 @@ func step_simulation(delta := STEP) -> bool:
 				if siege:
 					_queue_siege_attack(unit,unit.target.position,windup)
 				else:
-					_attacks.append({"kind":"normal","source":unit.get_instance_id(),"target":unit.target.get_instance_id(),"at":elapsed+windup,"damage":stats.damage,"reach":stats.range})
+					_attacks.append({"kind":"normal","source":unit.get_instance_id(),"target":unit.target.get_instance_id(),"at":elapsed+windup,"damage":unit.attack_damage(),"reach":stats.range})
 			continue
 		if unit.attack_time > .1:continue
 		var old_position: Vector3 = unit.position
-		var next_progress := minf(float(lanes[unit.lane_id].length),unit.progress+float(stats.speed)*delta)
+		var next_progress := minf(float(lanes[unit.lane_id].length),unit.progress+float(stats.speed)*unit.movement_multiplier()*delta)
 		var sample := route_sample(unit.lane_id,next_progress,unit.team,unit.lateral)
 		if _blocked_with(sample.position,boxes,actor_bounds,unit.radius) or not line_clear(old_position,sample.position,unit.radius):
 			route_blocked_moves += 1
@@ -313,7 +337,7 @@ func step_simulation(delta := STEP) -> bool:
 		_grid_add(unit)
 		if unit.progress >= float(lanes[unit.lane_id].length)-.05:
 			var enemy := "moon" if unit.team == "sun" else "sun"
-			core_damage[enemy] += float(stats.core_damage)
+			core_damage[enemy] += unit.core_damage()
 			core_arrivals[unit.lane_id] += 1
 			unit.arrive()
 	cores.sun = maxf(0,cores.sun-core_damage.sun)
@@ -332,6 +356,8 @@ func step_simulation(delta := STEP) -> bool:
 		_spawn_wave()
 	_cleanup()
 	_record_limits()
+	if winner.is_empty():simulation_stepped.emit(delta)
+	if _pending_reset:_reset_state(true)
 	return true
 
 func _pending_siege_count() -> int:
@@ -494,7 +520,7 @@ func _on_defeated(unit: Node3D, by_player: bool) -> void:
 		units.erase(retired)
 		retired.free()
 	_record_limits()
-	if by_player and unit.team == "moon":
+	if by_player and unit.team == "moon" and not unit.practice_summon:
 		gold += int(Unit.STATS[unit.role].gold)
 		kills += 1
 		gold_changed.emit(gold)
@@ -602,6 +628,98 @@ func pulse(origin: Vector3, radius: float, damage) -> int:
 			if unit.take_hit(damage):hits += 1
 	return hits
 
+func clear_practice_effects() -> void:
+	# Explicit lifecycle teardown; no defeat/gold receipt is emitted for expiry.
+	for unit in units.duplicate():
+		if not is_instance_valid(unit):continue
+		unit.clear_statuses()
+		if unit.practice_summon:
+			_cancel_source_attacks(unit.get_instance_id())
+			if _receiver_depth>0:unit.arrive()
+			else:
+				units.erase(unit)
+				unit.free()
+	_rebuild_buckets()
+
+func plan_temporary_pair(origin: Vector3, role: String) -> Dictionary:
+	if not configured or not winner.is_empty() or not origin.is_finite() or role not in ["spearman","bow_guard"]:
+		return {"valid":false,"reason":"Invalid summon source"}
+	var local_origin := to_local(origin)
+	var nearest := INF
+	var best_lane := -1
+	var best_progress := 0.0
+	for lane_id in lanes.size():
+		var lane: Dictionary = lanes[lane_id]
+		var accumulated := 0.0
+		for j in range(lane.points.size()-1):
+			var first: Vector3 = lane.points[j]
+			var segment: Vector3 = lane.points[j+1]-first
+			var fraction := clampf((local_origin-first).dot(segment)/segment.length_squared(),0,1)
+			var point := first+segment*fraction
+			var distance := Vector2(point.x-local_origin.x,point.z-local_origin.z).length_squared()
+			if distance<nearest:
+				nearest = distance
+				best_lane = lane_id
+				best_progress = accumulated+segment.length()*fraction
+			accumulated += segment.length()
+	if best_lane<0 or nearest>25.0:return {"valid":false,"reason":"Move within 5 m of a lane to summon"}
+	for shift in [0.0,1.5,-1.5,3.0,-3.0]:
+		var specifications: Array = []
+		var placements: Array = []
+		var legal := true
+		for lateral in [-1.3,1.3]:
+			var progress := clampf(best_progress+shift,0,float(lanes[best_lane].length))
+			var point: Vector3 = route_sample(best_lane,progress,"sun",lateral).position
+			if point.distance_to(local_origin)>5.0 or not line_clear(local_origin,point):legal = false
+			specifications.append({"team":"sun","role":role,"lane":best_lane,"progress":progress,"lateral":lateral})
+			placements.append(to_global(point))
+		if legal and _placements_clear(specifications):return {"valid":true,"specifications":specifications,"placements":placements}
+	return {"valid":false,"reason":"Two clear lane placements are required"}
+
+func spawn_temporary_pair(specifications: Array, attack_damage, max_health, lifetime) -> Array:
+	if not configured or not winner.is_empty() or specifications.size()!=2:return []
+	if not _number(attack_damage) or attack_damage<=0 or attack_damage>40 or not _number(max_health) or max_health!=105 or not _number(lifetime) or lifetime!=9:return []
+	for spec in specifications:
+		if not spec is Dictionary or spec.get("team")!="sun" or spec.get("role") not in ["bow_guard","spearman"]:return []
+	if specifications[0].role!=specifications[1].role or not _placements_clear(specifications):return []
+	var start := units.size()
+	if not _spawn_specifications(specifications):return []
+	var created: Array = []
+	for i in range(start,units.size()):
+		var unit = units[i]
+		unit.practice_summon = true
+		unit.summon_expires_at = elapsed+float(lifetime)
+		unit.summon_attack_damage = float(attack_damage)
+		unit.max_health = float(max_health)
+		unit.health = float(max_health)
+		created.append(unit)
+	_rebuild_buckets()
+	_record_limits()
+	return created
+
+func segment_wall_fraction(start: Vector3, finish: Vector3, margin := 0.0) -> float:
+	# Same XZ slab contract as line_clear, with exact first-contact fraction.
+	if not start.is_finite() or not finish.is_finite() or not is_finite(margin) or margin<0:return 0.0
+	var closest := INF
+	for box in boxes:
+		var minimum: Vector3 = box.position-box.size*.5-Vector3(margin,0,margin)
+		var maximum: Vector3 = box.position+box.size*.5+Vector3(margin,0,margin)
+		var low := 0.0
+		var high := 1.0
+		var hit := true
+		for axis in [0,2]:
+			var direction: float = finish[axis]-start[axis]
+			if absf(direction)<1e-9:
+				if start[axis]<minimum[axis] or start[axis]>maximum[axis]:hit = false
+			else:
+				var a: float = (minimum[axis]-start[axis])/direction
+				var b: float = (maximum[axis]-start[axis])/direction
+				low = maxf(low,minf(a,b))
+				high = minf(high,maxf(a,b))
+				if low>high:hit = false
+		if hit:closest = minf(closest,low)
+	return closest
+
 func _alive_count() -> int:
 	var count := 0
 	for unit in units:
@@ -642,7 +760,7 @@ func report() -> Dictionary:
 		"invalid_damage":invalid,"invalid_steps":invalid_steps,"invalid_pulses":invalid_pulses,
 		"route_blocked_moves":route_blocked_moves,"separation_waits":separation_waits,"alive_by_lane":alive_by_lane,
 		"kills_by_lane":kills_by_lane.duplicate(),"core_arrivals":core_arrivals.duplicate(),"finite":finite,
-		"siege_drill":siege_drill,"roles_alive":roles_alive,
+		"siege_drill":siege_drill,"roles_alive":roles_alive,"temporary_units":units.filter(func(u):return u.alive and u.practice_summon).size(),
 		"siege":{"windups":siege_windups,"impacts":siege_impacts,"cancelled":siege_cancelled,"hits":siege_hits,
 			"spawned_pairs":siege_spawned_pairs,"rejected_pairs":siege_rejected_pairs,"pending":_pending_siege_count(),"pending_cap":SIEGE_ATTACK_CAP,"next_attack_id":_next_siege_id},
 		"scope":"Offline deterministic original lane armies; no live network or commercial-game reconstruction."}

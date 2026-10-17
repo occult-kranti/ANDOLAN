@@ -291,7 +291,7 @@ def workflow_cases():
     check('workflow privilege separation and successful-build dependency',
           '\npermissions: {}\n' in text and '    permissions:\n      contents: read\n' in build
           and '    permissions:\n      contents: write\n' in publish and '    needs: build\n' in publish)
-    check('workflow immutable official action pins',all(re.fullmatch(r'actions/(checkout|upload-artifact|download-artifact)@[0-9a-f]{40}',pin)
+    check('workflow immutable official action pins',all(re.fullmatch(r'actions/(checkout|setup-node|upload-artifact|download-artifact)@[0-9a-f]{40}',pin)
           for pin in re.findall(r'uses: (\S+)',text)))
     check('workflow keeps checkout credentials disabled',text.count('persist-credentials: false')==2)
     check('workflow has no continue-on-error bypass','continue-on-error' not in text)
