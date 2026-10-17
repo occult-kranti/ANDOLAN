@@ -1,6 +1,6 @@
 # Combat film direction and acceptance review
 
-Status: **revised still-frame composition accepted; revision 4 screenplay, native-viewer and numerical motion checks pass; full video and packaged-window review pending**. This is a native animation/presentation prototype. It does not establish Deadlock-level graphics, a finished Ravana hero, live multiplayer combat or the full game's visual target.
+Status: **the complete revision 4 film is rendered and encoded; selected frames and numerical motion checks pass; independent media validation and packaged-window review pending**. This is a native animation/presentation prototype. It does not establish Deadlock-level graphics, a finished Ravana hero, live multiplayer combat or the full game's visual target.
 
 The [screenplay](COMBAT_FILM_SCRIPT.md) describes the intended action. The canonical runtime manifest is [confluence-duel.json](../assets/cinematics/confluence-duel.json), revision 4, SHA-256 `6ec07cb86aa645ba23c4eec51e652bbe89ad42d0558225583f6a8dd54248af6b` at this review. The accepted R2 still-frame composition used revision 3 (`a7f9c8263f0117fa322f5a51ff765710bfe619026c076eda32d207aaf8be5826`). Revision 2 (`5a641d8febad461b633bf5fb5edd80e9a3429ab3754ad21b01e2e90e5aecaea4`) is the captured first preview. Revision 3 changes cameras and the revision number only; cue, action, receipt and audio content is identical. Evidence from another manifest/actor/library revision must be identified separately.
 
@@ -16,7 +16,7 @@ The [screenplay](COMBAT_FILM_SCRIPT.md) describes the intended action. The canon
 | `build/film-poses-r2/combat-film-render.json` | Actual Forward+ studio report contains eight static poses; this reviewer inspected Rama draw/release and Ravana guard | Detached red/gold pieces are visible beside Ravana. Static poses do not establish smooth transitions or staged-film framing |
 | `build/film-scene-r1/combat-film-render.json` | Twelve actual integrated frames at 960 × 540 on Godot 4.6.3 Forward+ / llvmpipe, revision 2 | Sampled frames reveal composition defects; they are not a 24 fps continuous recording or a real-time hardware benchmark |
 | `build/film-scene-r2/combat-film-render.json` | All 12 revised actual full-scene frames independently inspected; footroom, two-shot profiles and reaction framing corrected | Bounded still-frame acceptance only; continuous motion, sound listening and native controls remain separate gates |
-| Continuous render, sound listening and game UI | Pending exact evidence from the revised integrated build | Do not mark these complete from the source manifest or isolated test counts |
+| `docs/evidence/combat-film-r4/combat-film-render.json` and `combat-film-video.json` | Complete 576-frame, 1280 × 720, 24 fps, 24-second render and H.264/AAC encode verified; exact video hash checked | Selected-frame inspection is not a complete real-time aesthetic audition; independent media checks and actual package playback are separate |
 
 This milestone contains two skinned actors, two libraries with nine clips each, a 24-second deterministic director, ten visual cues, three scripted outcome receipts, captions and original synthesized audio. The planned [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17) is not recorded as published until its video/package evidence is supplied. Existing map-preview download facts remain unchanged. Audio has numerical duration, level and cue-timing evidence; this review makes no listening-quality claim.
 
@@ -71,7 +71,15 @@ The preserved [revision 3 continuity report](../tests/evidence/combat-film-motio
 
 Revision 4 changes only `ravana-ready-wave.blend_in_seconds` from 0.12 to 0.32 seconds, inside its existing 5.5–6.0 s action window. The action start/end, every effect/receipt/audio time and all cameras remain unchanged. A deep equality assertion checked that the revision number and this single blend field were the only manifest changes. The revision 3 evidence is preserved. Independent QA reran unchanged tests and thresholds on revision 4: 20 screenplay, 42 native integration and 5 continuity checks pass. The guard-reset maximum 24 Hz travel falls from 0.266273 to 0.106485 m, accumulated rotation from 50.2016° to 19.4095°, and local rotation from 49.6560° to 19.1736°. No frame-speed alerts remain; action boundaries and planted-contact gates still pass. The final continuity report SHA-256 is `4e54fddd377249740cc032f235126753a7ee9d5456c08359d221678805fa8dec`. This accepts the bounded numerical correction; the continuous render still needs visual review.
 
-With revision 4 passing the independent transition checks, the next gate is a continuous 24-second recording of the frozen revision. Review the whole bow release, transition into and out of the evade, sentinel pivot, both camera cuts, effect/audio contact and final settling. During native-window testing, exercise pause, seek, restart, captions and return; verify that exit stops audio and clears temporary effects. A contact sheet supports pose review but cannot establish smoothness or sound synchronization.
+### Complete rendered film
+
+The [MP4](evidence/combat-film-r4/yuga-confluence-duel.mp4) now exists with **576 actual frames at 1280 × 720, 24 fps and 24 seconds**, encoded as H.264 with 48 kHz stereo AAC. Its size is 2,719,092 bytes and SHA-256 is `9bb618a6d7b8edc37f798ca05869ba5eeaac2f88fd6e0543a4ae778aaf960544`. The file hash was checked directly. The [render report](evidence/combat-film-r4/combat-film-render.json) and [encoder report](evidence/combat-film-r4/combat-film-video.json) preserve source pins and media metadata.
+
+This is the complete fixed-time render, rather than the earlier 12-frame preview. It took 422,631 ms on llvmpipe; that offline elapsed time is not a consumer-GPU frame-rate measurement. The exact captured director is archived alongside the movie with SHA-256 `3fdfbe2571c57ee80d959b9af106aca98c1c59ea3a060b754bca8a9fe32dbaca`; the timeline is revision 4. A subsequent saved-volume fix in the interactive viewer is separate from this frozen video snapshot and requires its own runtime checks.
+
+Root inspected opening, guard reset, evade/wave, counter, recoil and resolution frames. This reviewer independently inspected frames 135, 184, 214 and 386 from the final capture: feet and captions remain clear, the fixed warning corridor and post-evade location read correctly, and the sentinel remains standing at 55 health after the counter. Floor aliasing, broad empty paving and simple material/character finish remain visible. Selected-frame inspection does not claim a complete real-time aesthetic audition or audio listening.
+
+Independent media validation is pending. Native-window testing must still exercise pause, seek, restart, captions and return, including audio cleanup on exit. The video is a complete rendered prototype artifact; publication and platform execution are separate release gates.
 
 ## Release evidence checkpoint
 
@@ -79,7 +87,7 @@ The planned tag is [`yuga-confluence-duel-2026-10-17`](https://github.com/occult
 
 | Deliverable | Current status | Required release record |
 | --- | --- | --- |
-| Complete film | Rendering in progress | Exact video hash, resolution, frame count, duration, audio stream and source manifest; actual transition review |
+| Complete film | Rendered and encoded; metadata and exact file hash verified | 576 frames, 1280 × 720, 24 fps, 24 s; H.264 + stereo AAC. Selected frames reviewed; independent media check pending |
 | Linux native package | Pending final package/window evidence | ZIP hash, extracted launch and actual film controls/return behavior |
 | Windows native package | Pending final package evidence | ZIP hash and archive/resource validation; execution status stated separately |
 | Public release | Planned | Published URL and downloadable asset names/hashes |

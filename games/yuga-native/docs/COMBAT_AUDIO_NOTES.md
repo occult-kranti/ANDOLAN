@@ -56,3 +56,19 @@ The stereo master peaks at 0.72, approximately 2.85 dB below full scale, using o
 ## Review status
 
 Round 1 established the cue contract; round 2 synthesized the original score and effects; round 3 checked saved PCM, timing and headroom. Round 4 requires human headphone/speaker audition and review against the actual rendered film. No listening review is claimed from waveform measurements. Review should compare the guard clang with the 4.75 s block, the evade/wave pair at 7.25/8.10 s, and the 15.85 s hit; check that the score stays below these cues and that pause, seek and restart do not stack playback.
+
+## Independent encoded-media verification
+
+After the final MP4 is complete, run:
+
+```sh
+python3 games/yuga-native/tools/cinematics/verify-film-media.py --video /absolute/path/confluence-duel.mp4 --capture-report /absolute/path/combat-film-render.json
+```
+
+This separate checker reads decoded frame timestamps with FFprobe: 576 video frames at 24 Hz, 1280×720 resolution, exactly 24 seconds, and 1,152,000 stereo AAC sample frames at 48 kHz. Video and audio must begin at zero, and each decoded frame's timestamp must match the expected sample position. The optional capture report must represent a complete capture, and every source PNG is checked against its recorded hash along with the film/audio source pins.
+
+FFmpeg then decodes AAC to PCM. The checker compares it with the approved lossless WAV using normalized cross-correlation over the whole track and separate guard, wave, impact and resolution windows. The best offset must be within one audio sample, correlation at least 0.97 and fitted gain within 0.94–1.06. These bounds accommodate lossy AAC while detecting a delayed, replaced or materially altered soundtrack. Reports include the measured values and tool/source hashes under `tests/evidence/combat-film/`.
+
+This verifies media timing and correspondence to the authored soundtrack. A 24 Hz picture samples events between frames, and these numerical checks do not establish artistic timing, perceptual loudness, or listening quality.
+
+The final revision 4 MP4 passed this check: 576 frames, 24 seconds, 1,152,000 decoded audio sample frames and all 576 original PNG hashes verified. Whole-track waveform correlation is 0.999221685 with zero measured sample offset; all four critical windows also have zero offset, with correlations at least 0.9988802. The exact video SHA-256 is `9bb618a6d7b8edc37f798ca05869ba5eeaac2f88fd6e0543a4ae778aaf960544`. See `tests/evidence/combat-film/media-release-check.json`. Human auditory audition remains open.

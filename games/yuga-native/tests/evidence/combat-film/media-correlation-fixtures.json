@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "identical",
+      "expected_pass": true,
+      "matched": true
+    },
+    {
+      "case": "lossy_scale",
+      "expected_pass": true,
+      "matched": true
+    },
+    {
+      "case": "20_sample_delay",
+      "expected_pass": false,
+      "matched": true,
+      "reason": "Encoded audio differs by more than one sample from source timing"
+    },
+    {
+      "case": "replaced_audio",
+      "expected_pass": false,
+      "matched": true,
+      "reason": "Encoded audio differs by more than one sample from source timing"
+    },
+    {
+      "case": "half_volume",
+      "expected_pass": false,
+      "matched": true,
+      "reason": "Encoded audio level differs materially from approved master"
+    },
+    {
+      "case": "silence",
+      "expected_pass": false,
+      "matched": true,
+      "reason": "Missing/near-silent audio in comparison window"
+    }
+  ],
+  "scope": "Numerical correlation-gate fixtures only; not a rendered movie or listening review."
+}

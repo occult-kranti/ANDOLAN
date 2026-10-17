@@ -4,6 +4,7 @@ const Actor = preload("res://scripts/cinematic_actor.gd")
 const Effects = preload("res://scripts/duel_effects.gd")
 const Lighting = preload("res://scripts/film_lighting.gd")
 const FILM_PATH := "res://assets/cinematics/confluence-duel.json"
+const AUDIO_SETTINGS_PATH := "user://courtyard-settings.cfg"
 var manifest_override: Dictionary = {}
 var manifest: Dictionary = {}
 var errors: Array[String] = []
@@ -28,6 +29,7 @@ var play_button: Button
 var timeline_slider: HSlider
 var receipt_label: Label
 var audio_player: AudioStreamPlayer
+var audio_volume := 0.7
 var reduced_flash_button: CheckButton
 var reduced_motion_button: CheckButton
 var visual_health: Dictionary = {}
@@ -217,8 +219,25 @@ func _build_stage() -> void:
 	audio_player=AudioStreamPlayer.new()
 	audio_player.name="FilmAudio"
 	audio_player.stream=load(manifest.audio_mix_path)
-	audio_player.volume_db=-2
+	audio_volume=_read_saved_audio_volume()
+	audio_player.volume_db=-80.0 if audio_volume<=0.0 else -2.0+linear_to_db(audio_volume)
 	add_child(audio_player)
+
+func _read_saved_audio_volume() -> float:
+	var config:=ConfigFile.new()
+	if config.load(AUDIO_SETTINGS_PATH)!=OK: return 0.7
+	var value=config.get_value("audio","volume",0.7)
+	if not _number(value): return 0.7
+	return clampf(float(value),0.0,1.0)
+
+func _play_audio_at_current_time() -> void:
+	# A zero user setting must be silent, not merely an attenuated active stream.
+	if capture_mode or not playing or audio_volume<=0.0:
+		audio_player.stop()
+		audio_player.stream_paused=true
+		return
+	audio_player.stream_paused=false
+	audio_player.play(current_time)
 
 func _cache_release_sockets() -> void:
 	release_sockets.clear()
@@ -345,9 +364,7 @@ func set_playing(value: bool) -> void:
 	controls.visible=true
 	if value and current_time>=duration: sample_time(0,false)
 	playing=value
-	if value:
-		audio_player.stream_paused=false
-		audio_player.play(current_time)
+	if value: _play_audio_at_current_time()
 	else: audio_player.stream_paused=true
 	play_button.text="Pause" if playing else "Play"
 
@@ -355,8 +372,7 @@ func seek(time: float) -> void:
 	if not ready_to_play: return
 	sample_time(time,false)
 	if playing:
-		audio_player.stream_paused=false
-		audio_player.play(current_time)
+		_play_audio_at_current_time()
 	else:
 		audio_player.stop()
 		audio_player.stream_paused=true
@@ -510,7 +526,7 @@ func get_diagnostics() -> Dictionary:
 	if effect_state.has("state"):
 		effect_state.state_sha256=JSON.stringify(effect_state.state).sha256_text()
 		effect_state.erase("state")
-	return {"ready":ready_to_play,"errors":errors.duplicate(),"time":current_time,"duration":duration,"playing":playing,"capture_mode":capture_mode,"actors":actor_states,"active_actions":active_actions.duplicate(),"finite":finite and (camera.global_transform.is_finite() if camera else true),"camera":{"id":active_camera,"position":[camera.position.x,camera.position.y,camera.position.z],"rotation":[camera.rotation.x,camera.rotation.y,camera.rotation.z],"fov":camera.fov} if camera else {},"effects":effect_state,"visual_health":visual_health.duplicate(),"caption":caption_label.text if caption_label else "","receipt":last_receipt,"reduced_flash":reduced_flash,"reduced_motion":reduced_motion,"scope":"Scripted cinematic; visual receipts are not authoritative combat."}
+	return {"ready":ready_to_play,"errors":errors.duplicate(),"time":current_time,"duration":duration,"playing":playing,"capture_mode":capture_mode,"audio":{"configured_volume":audio_volume,"muted":audio_volume<=0.0,"playing":audio_player.playing if audio_player else false,"paused":audio_player.stream_paused if audio_player else true},"actors":actor_states,"active_actions":active_actions.duplicate(),"finite":finite and (camera.global_transform.is_finite() if camera else true),"camera":{"id":active_camera,"position":[camera.position.x,camera.position.y,camera.position.z],"rotation":[camera.rotation.x,camera.rotation.y,camera.rotation.z],"fov":camera.fov} if camera else {},"effects":effect_state,"visual_health":visual_health.duplicate(),"caption":caption_label.text if caption_label else "","receipt":last_receipt,"reduced_flash":reduced_flash,"reduced_motion":reduced_motion,"scope":"Scripted cinematic; visual receipts are not authoritative combat."}
 
 func get_state() -> Dictionary:
 	return get_diagnostics()

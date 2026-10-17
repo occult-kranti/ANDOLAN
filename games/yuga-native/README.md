@@ -105,9 +105,13 @@ Revision 4 passes 20 screenplay/resource, 42 native animation/viewer and five
 motion-continuity checks. Those checks include a repaired guard-reset transition;
 all action, effect and audio times remain unchanged.
 
-The [cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17)
-is planned; its full video and final package evidence are pending. The existing
-map-preview downloads above are unchanged. This milestone is a scripted animation
+The [complete 24-second film](docs/evidence/combat-film-r4/yuga-confluence-duel.mp4)
+is rendered at 1280 × 720 and 24 fps, with original stereo audio. Exact source and
+media hashes are in the direction review. Independent media validation and final
+package tests remain pending. The
+[cinematic preview release](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-duel-2026-10-17)
+is planned; publication is not yet verified. The existing map-preview downloads
+above are unchanged. This milestone is a scripted animation
 prototype: visual health receipts are separate from multiplayer authority. It
 does not establish the commercial visual target, live native multiplayer or a
 finished hero roster. Audio timing is checked numerically; listening quality and
