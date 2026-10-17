@@ -2,7 +2,7 @@
 """Own one X11 server/game process and record actual window/input review.
 
 This is a Linux review aid, not a GPU benchmark or an automatic visual pass.
-Commands on stdin are JSON: capture, key, click, or quit. All input goes to the
+Commands on stdin are JSON: capture, key, motion, click, or quit. All input goes to the
 single YUGA window on the owned display. No simulation state is injected.
 """
 import argparse
@@ -21,8 +21,24 @@ import time
 
 from PIL import ImageGrab
 
+REVIEW_KEYS = frozenset([
+    'w', 'a', 's', 'd', 'q', 'e', 'r', 'n', 'Escape', 'Return', 'Tab', 'space',
+    'Left', 'Right', 'F1', 'F2', 'F5', 'f', 'g', 'j', 'x', 'v', 'b', 'c', 'F3',
+    'Up', 'Down', 'Control_L', 'Shift_L', 'Page_Up', 'Page_Down', 'Home', 'End',
+])
 
-def main():
+
+def bounded_dimension(value, minimum, maximum):
+    try:
+        dimension = int(value)
+    except (TypeError, ValueError) as error:
+        raise argparse.ArgumentTypeError('Window dimensions must be integers.') from error
+    if not minimum <= dimension <= maximum:
+        raise argparse.ArgumentTypeError(f'Window dimension must be between {minimum} and {maximum}.')
+    return dimension
+
+
+def build_parser():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--engine', required=True)
     parser.add_argument('--pack', required=True)
@@ -31,6 +47,22 @@ def main():
     parser.add_argument('--display', default=':107')
     parser.add_argument('--renderer', choices=['forward_plus', 'gl_compatibility'], default='forward_plus')
     parser.add_argument('--shader-cache-seed', type=Path)
+    parser.add_argument('--width', type=lambda value: bounded_dimension(value, 960, 1920), default=960,
+                        help='Owned screen and game width, 960–1920 pixels (default: 960).')
+    parser.add_argument('--height', type=lambda value: bounded_dimension(value, 600, 1080), default=600,
+                        help='Owned screen and game height, 600–1080 pixels (default: 600).')
+    return parser
+
+
+def click_position(command, width, height):
+    px, py = int(command['x']), int(command['y'])
+    if not (0 <= px < width and 0 <= py < height):
+        raise ValueError('Click outside owned window.')
+    return px, py
+
+
+def main():
+    parser = build_parser()
     args = parser.parse_args()
     if not args.xvfb:
         parser.error('Xvfb is required; supply --xvfb for a task-local installation.')
@@ -48,6 +80,7 @@ def main():
         'engine': {'file': engine.name, 'sha256': hashlib.sha256(engine.read_bytes()).hexdigest()},
         'pack': {'file': pack.name, 'sha256': hashlib.sha256(pack.read_bytes()).hexdigest()},
         'rendererRequested': args.renderer, 'events': [], 'startedAtUnix': time.time(),
+        'resolutionRequested': {'width': args.width, 'height': args.height},
     }
     if args.shader_cache_seed:
         helper_path = Path(__file__).with_name('run-traversal-capture.py')
@@ -57,7 +90,8 @@ def main():
         record['shaderCacheSeed'] = helper.seed_shader_cache(args.shader_cache_seed, out / 'user/cache/mesa')
     log = (out / 'game.log').open('w')
     xlog = (out / 'xvfb.log').open('w')
-    server = subprocess.Popen([args.xvfb, args.display, '-screen', '0', '960x600x24', '-nolisten', 'tcp', '-extension', 'MIT-SHM', '-ac'], env=env, stdout=xlog, stderr=subprocess.STDOUT)
+    resolution = f'{args.width}x{args.height}'
+    server = subprocess.Popen([args.xvfb, args.display, '-screen', '0', resolution + 'x24', '-nolisten', 'tcp', '-extension', 'MIT-SHM', '-ac'], env=env, stdout=xlog, stderr=subprocess.STDOUT)
     game = None
     display = None
     x = C.CDLL(ctypes.util.find_library('X11'))
@@ -102,7 +136,7 @@ def main():
         display = x.XOpenDisplay(args.display.encode())
         if not display:
             raise RuntimeError('Cannot open owned X display.')
-        game = subprocess.Popen([str(engine), '--main-pack', str(pack), '--display-driver', 'x11', '--rendering-method', args.renderer, '--audio-driver', 'Dummy', '--resolution', '960x600', '--position', '0,0', '--disable-vsync', '--max-fps', '30'], env=env, cwd=out, stdout=log, stderr=subprocess.STDOUT)
+        game = subprocess.Popen([str(engine), '--main-pack', str(pack), '--display-driver', 'x11', '--rendering-method', args.renderer, '--audio-driver', 'Dummy', '--resolution', resolution, '--position', '0,0', '--disable-vsync', '--max-fps', '30'], env=env, cwd=out, stdout=log, stderr=subprocess.STDOUT)
         print(json.dumps({'readyForCommands': True, 'output': str(out), 'gamePid': game.pid}), flush=True)
         for line in sys.stdin:
             command = json.loads(line)
@@ -121,11 +155,12 @@ def main():
                 path = out / (name + '.png')
                 if path.exists():
                     raise ValueError('Do not overwrite earlier review frames.')
-                ImageGrab.grab(xdisplay=args.display).save(path)
-                record['events'].append({'action': action, 'file': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'time': time.time()})
+                capture = ImageGrab.grab(xdisplay=args.display)
+                capture.save(path)
+                record['events'].append({'action': action, 'file': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'size': list(capture.size), 'time': time.time()})
             elif action == 'key':
                 name = command['key']
-                if name not in ['w', 'a', 's', 'd', 'q', 'e', 'r', 'n', 'Escape', 'Return', 'Tab', 'space', 'Left', 'Right', 'F1', 'F2', 'F5', 'f', 'g', 'j', 'x', 'v', 'b', 'F3', 'Up', 'Down', 'Control_L', 'Shift_L']:
+                if name not in REVIEW_KEYS:
                     raise ValueError('Unsupported review key.')
                 duration = max(0.05, min(5.0, float(command.get('seconds', 0.15))))
                 code = x.XKeysymToKeycode(display, x.XStringToKeysym(name.encode()))
@@ -150,9 +185,7 @@ def main():
                 duration = max(0.05, min(5.0, duration))
                 px, py = None, None
                 if move:
-                    px, py = int(command['x']), int(command['y'])
-                    if not (0 <= px < 960 and 0 <= py < 600):
-                        raise ValueError('Click outside owned window.')
+                    px, py = click_position(command, args.width, args.height)
                     xt.XTestFakeMotionEvent(display, -1, px, py, 0)
                 xt.XTestFakeButtonEvent(display, 1, 1, 0); x.XFlush(display)
                 time.sleep(duration)

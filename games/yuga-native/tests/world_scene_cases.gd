@@ -18,12 +18,15 @@ var checks: Array[Dictionary] = []
 var manifest: Dictionary
 var before: Dictionary = {}
 var capsule: CapsuleShape3D
+var rama_fire_events: Array[Dictionary] = []
 
 func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
 	for path in ["res://art/world/confluence-map.json", "res://assets/world/confluence-map.json", "res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/projectile.gd", "res://scripts/world_lighting.gd", "res://scripts/traversal_landmarks.gd", "res://scripts/traversal_stone.gdshader", "res://scripts/world_ground_common.gdshaderinc", "res://scripts/player_traversal.gd", "res://scripts/lane_army.gd", "res://scenes/confluence_world.tscn", "res://tests/world_scene_cases.gd", "res://scripts/relay_control.gd", "res://scripts/relay_art.gd", "res://scripts/relay_session.gd"]:
+		before[path] = FileAccess.get_sha256(path)
+	for path in ["res://scripts/rama_ability_kit.gd","res://scripts/rama_ability_effects.gd","res://scripts/rama_hero_runtime.gd","res://scripts/rama_hero_hud.gd","res://scripts/rama_hero_panel.gd","res://scripts/rama_vitals.gd","res://assets/design/rama-ability-kit.json"]:
 		before[path] = FileAccess.get_sha256(path)
 	manifest = JSON.parse_string(FileAccess.get_file_as_string("res://art/world/confluence-map.json"))
 	var packed = load("res://scenes/confluence_world.tscn")
@@ -320,7 +323,7 @@ func _check_layout_and_state() -> void:
 		scene.set_paused(true)
 		await _frames(4)
 		var viewport_rect := root.get_visible_rect()
-		var visual_controls: Array[Control] = [scene.map_control,scene.pause_panel]
+		var visual_controls: Array[Control] = [scene.map_control,scene.pause_panel,scene.rama_hud]
 		for card_name in ["TitleCard","RelayStatus","ControlsCard","TraversalStatus","InvocationStatus","AtlasLegend"]:
 			var card: Node = scene.hud.find_child(card_name,true,false)
 			if card is Control: visual_controls.append(card)
@@ -360,7 +363,7 @@ func _check_layout_and_state() -> void:
 		if is_instance_valid(continue_button): continue_button.grab_focus()
 		await _frames(4)
 		var focus_ready := is_instance_valid(continue_button) and continue_button.has_focus() and scroll_rect.grow(1).encloses(continue_button.get_global_rect())
-		_record("UI inside viewport and focused controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==11 and scene.pause_actions.size()==12 and is_instance_valid(scene.invocation_button) and focus_reachable and centered and focus_ready,
+		_record("UI inside viewport and focused controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==12 and scene.pause_actions.size()==13 and is_instance_valid(scene.invocation_button) and scene.rama_button in scene.pause_actions and focus_reachable and centered and focus_ready,
 			{"logical_viewport":[viewport_rect.size.x,viewport_rect.size.y],"outside_or_small":failures,"overlaps":overlaps,"crosshair_near_center":centered,"resume_keyboard_focus":focus_ready,"all_targets_reachable":focus_reachable,"focused_rectangles":rectangles})
 	# Resume the actual character controller, then use input actions rather than
 	# assigning a fake position to prove held movement had an effect before pause.
@@ -369,32 +372,42 @@ func _check_layout_and_state() -> void:
 	scene.teleport_to(Vector3(0,.05,55),180)
 	await _frames(8)
 	var initial: Vector3=scene.player.position
+	var initial_ammo: int=scene.player.ammo
+	var effects_accepted: int=scene.rama_effects.report().counts.accepted
+	scene.rama_kit.ability_event.connect(_on_rama_fire_event)
 	Input.action_press("move_forward")
 	Input.action_press("fire")
 	await _frames(20)
 	var moved := _horizontal_distance(initial,scene.player.position)
-	var projectile_count: int=scene.projectiles.get_child_count()
-	var shooter_excluded := projectile_count>0
-	for projectile in scene.projectiles.get_children():
-		shooter_excluded = shooter_excluded and projectile.ignore.has(scene.player.get_rid())
-	_record("held fire creates actual shooter-excluded projectiles", scene.player.shots_fired>0 and projectile_count>0 and shooter_excluded,{"shots":scene.player.shots_fired,"projectile_count":projectile_count,"shooter_excluded":shooter_excluded})
+	var draws := {}
+	var releases := {}
+	var unique_releases := true
+	for event in rama_fire_events:
+		var identity := "%s:%s" % [event.generation,event.cast_id]
+		if event.kind=="begin": draws[identity]=true
+		elif event.kind=="release":
+			unique_releases=unique_releases and draws.has(identity) and not releases.has(identity) and event.get("effect_release_observed",false)
+			releases[identity]=true
+	var fire_state: Dictionary=scene.rama_kit.report()
+	var presentation: Dictionary=scene.rama_effects.report()
+	_record("held fire reserves ammo and routes unique Rama releases into presentation", not draws.is_empty() and not releases.is_empty() and unique_releases and scene.player.shots_fired==draws.size() and initial_ammo-scene.player.ammo==draws.size() and fire_state.release_count>=releases.size() and presentation.counts.accepted>effects_accepted and presentation.generation==fire_state.generation and scene.projectiles.get_child_count()==0,
+		{"shots":scene.player.shots_fired,"accepted_draws":draws.size(),"release_receipts":releases.size(),"unique_releases":unique_releases,"ammo_reserved":initial_ammo-scene.player.ammo,"accepted_effect_events":presentation.counts.accepted-effects_accepted,"legacy_projectile_nodes":scene.projectiles.get_child_count()})
 	await _key(KEY_ESCAPE)
 	var stopped: Vector3=scene.player.position
 	var shots: int=scene.player.shots_fired
 	var remaining: float=scene.player.fire_remaining
+	var paused_kit: Dictionary=scene.rama_kit.report()
 	await _frames(30)
-	_record("pause freezes held movement and fire", moved>.5 and scene.paused and paused and _horizontal_distance(stopped,scene.player.position)<.00001 and shots==scene.player.shots_fired and is_equal_approx(remaining,scene.player.fire_remaining),
+	var frozen_kit: Dictionary=scene.rama_kit.report()
+	_record("pause freezes held movement and fire", moved>.5 and scene.paused and paused and _horizontal_distance(stopped,scene.player.position)<.00001 and shots==scene.player.shots_fired and is_equal_approx(remaining,scene.player.fire_remaining) and frozen_kit.elapsed==paused_kit.elapsed and frozen_kit.cooldowns==paused_kit.cooldowns and frozen_kit.release_count==paused_kit.release_count,
 		{"movement_before_pause":moved,"movement_during_pause":_horizontal_distance(stopped,scene.player.position),"shots_before":shots,"shots_after":scene.player.shots_fired})
 	var resume := _button_named("Continue practice")
 	if is_instance_valid(resume): resume.pressed.emit()
 	await _frames(15)
-	_record("resume button clears stale actions", not scene.paused and not paused and not Input.is_action_pressed("move_forward") and not Input.is_action_pressed("fire") and _horizontal_distance(stopped,scene.player.position)<.02 and scene.player.shots_fired==shots,
+	_record("resume button clears stale actions", not scene.paused and not paused and not Input.is_action_pressed("move_forward") and not Input.is_action_pressed("fire") and _horizontal_distance(stopped,scene.player.position)<.02 and scene.player.shots_fired==shots and scene.rama_kit.report().accepted_casts==paused_kit.accepted_casts,
 		{"movement_after_resume":_horizontal_distance(stopped,scene.player.position),"shots_after":scene.player.shots_fired})
 	# A dash is deliberately in progress when the real F1 action is dispatched.
-	Input.action_press("move_forward")
-	Input.action_press("dash")
-	await _frames(2)
-	var had_dash: bool=scene.player.dash_time>0
+	var had_dash: bool=await _begin_real_step()
 	await _key(KEY_F1)
 	var overview_position: Vector3=scene.player.position
 	await _frames(10)
@@ -404,11 +417,8 @@ func _check_layout_and_state() -> void:
 	await _frames(8)
 	_record("F1 returns active camera with neutral movement", not scene.overview and scene.player.active and scene.player.camera.current and _horizontal_distance(overview_position,scene.player.position)<.02,{})
 	for label in ["Visit Lanka coast","Visit Metro gardens"]:
-		# Explicit fixture setup: make a fresh dash available for each transition.
-		scene.player.dash_remaining=0
-		Input.action_press("move_forward")
-		Input.action_press("dash")
-		await _frames(2)
+		# Reset the actual kit, then await its real step release before transition.
+		var step_started: bool=await _begin_real_step()
 		if label=="Visit Lanka coast": await _key(KEY_F1)
 		var from_overview: bool=scene.overview
 		scene.set_paused(true)
@@ -416,6 +426,31 @@ func _check_layout_and_state() -> void:
 		if is_instance_valid(button): button.pressed.emit()
 		await _frames(8)
 		var expected:=Vector3(-40 if label=="Visit Lanka coast" else 40,0,14)
-		_record(label+" button arrives neutral", is_instance_valid(button) and not scene.paused and not paused and not scene.overview and scene.player.active and scene.player.camera.current and _horizontal_distance(expected,scene.player.position)<.02 and scene.player.dash_time==0 and scene.player.dash_direction==Vector3.ZERO and Vector2(scene.player.velocity.x,scene.player.velocity.z).length()<.00001 and not Input.is_action_pressed("move_forward") and not Input.is_action_pressed("dash"),
+		_record(label+" button arrives neutral", step_started and is_instance_valid(button) and not scene.paused and not paused and not scene.overview and scene.player.active and scene.player.camera.current and _horizontal_distance(expected,scene.player.position)<.02 and scene.player.dash_time==0 and scene.player.dash_direction==Vector3.ZERO and Vector2(scene.player.velocity.x,scene.player.velocity.z).length()<.00001 and not Input.is_action_pressed("move_forward") and not Input.is_action_pressed("dash"),
 			{"position":_xyz(scene.player.position),"expected_xz":[expected.x,expected.z],"from_overview":from_overview,"returned_to_walking":scene.player.active and not scene.overview})
 	scene.release_actions()
+	scene.rama_kit.ability_event.disconnect(_on_rama_fire_event)
+
+func _on_rama_fire_event(event: Dictionary) -> void:
+	if event.get("ability_id")=="kodanda" and rama_fire_events.size()<64:
+		var observed := event.duplicate(true)
+		if event.kind=="release":
+			# Runtime was connected first; inspect its actual event consumer at the
+			# release boundary instead of sampling an arbitrary later arrow frame.
+			var presentation: Dictionary=scene.rama_effects.report()
+			observed.effect_release_observed=presentation.generation==event.generation and presentation.casts.any(func(cast): return cast.cast_id==event.cast_id and cast.ability_id==event.ability_id and cast.released)
+		rama_fire_events.append(observed)
+
+func _begin_real_step() -> bool:
+	scene.release_actions()
+	scene.rama_runtime.reset("transition fixture")
+	var releases_before: int=scene.rama_kit.report().release_count
+	Input.action_press("move_forward")
+	Input.action_press("dash")
+	# Measured Step has an actual 0.1-second draw on the 20 Hz authority clock.
+	# A bounded wait observes its release instead of assigning dash state.
+	for unused in range(18):
+		await _frames(1)
+		if scene.player.dash_time>0:
+			return scene.rama_kit.report().release_count==releases_before+1
+	return false

@@ -199,7 +199,7 @@ func _v(value: Vector3) -> Array:
 
 func _hashes() -> Dictionary:
 	var result := {}
-	for path in ["scripts/player.gd", "scripts/player_traversal.gd", "scripts/traversal_pose.gd", "tests/traversal_cases.gd", "assets/heroes/rama-production.glb"]:
+	for path in ["scripts/player.gd", "scripts/player_traversal.gd", "scripts/traversal_pose.gd", "tests/traversal_cases.gd", "assets/heroes/rama-production.glb", "assets/heroes/rama-hero.glb", "scripts/rama_motion.gd", "assets/animations/rama_hero_motion.tres"]:
 		result[path] = FileAccess.get_sha256("res://" + path)
 	return result
 

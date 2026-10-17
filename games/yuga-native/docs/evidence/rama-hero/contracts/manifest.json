@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "source_context_commit": "e765a23264cf3c3c38fab1ded677832a24fdd64e",
+  "source_context": "Uncommitted Rama working-tree candidate; individual report source hashes identify tested bytes.",
+  "engine": "4.6.3.stable.official.7d41c59c4",
+  "reports": [
+    {
+      "path": "native-contracts.json",
+      "bytes": 28372,
+      "sha256": "e07d305ef6fd4ab21d3c201ba44ae047d4d7e50fb4e33d1b1dd1fc6540b6b095",
+      "checks": 235
+    },
+    {
+      "path": "native-contract-pins.json",
+      "bytes": 6148,
+      "sha256": "f35d4a18fe1d2af3026118b0e618f4c76cd1b9ecb62bfea9d3324118292c68fe",
+      "checks": 41
+    },
+    {
+      "path": "rama-package.json",
+      "bytes": 3612,
+      "sha256": "e048475658c93de37cd0bc2bfb6195685056df0a2c289b6444002ae890022e25",
+      "checks": 19
+    },
+    {
+      "path": "rama-practice.json",
+      "bytes": 3275,
+      "sha256": "b905ab9b663efc587ede98495ae16a8015091a493fd94ca16354c758c32614ac",
+      "checks": 23
+    },
+    {
+      "path": "setup-parity.json",
+      "bytes": 2404,
+      "sha256": "25ca0daa49f9f9fc3c32187d1eed94103f9a3ffa78935d5182a32a87fa866bc3",
+      "checks": 19
+    },
+    {
+      "path": "rama-provenance.json",
+      "bytes": 904,
+      "sha256": "8ce6e7c57656913ae02350076479f40eca905145316ae16829a61a84f1113df4",
+      "checks": null
+    }
+  ],
+  "scope": "Actual local headless contract, practice and package-identity checks plus setup shell syntax/CI parity. No export, rendered capture, physical-GPU, network or platform execution claim.",
+  "full_setup_reexecuted": false,
+  "commands": [
+    "godot --headless --path games/yuga-native --script res://tests/native_contract_cases.gd -- --report=<absolute-output>",
+    "python3 games/yuga-native/tools/check-native-contracts.py --report=<absolute-output>",
+    "python3 games/yuga-native/tests/rama_package_cases.py --report=<absolute-output>",
+    "godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_practice_cases.gd -- --report=<absolute-output>",
+    "bash -n tools/cloud/setup-native.sh"
+  ],
+  "setup_scope": "Six Rama Godot suites, selected hero motion asset, package cases and retained prior Godot suite commands checked in CI/setup. Setup installation/import/render stages were not rerun."
+}

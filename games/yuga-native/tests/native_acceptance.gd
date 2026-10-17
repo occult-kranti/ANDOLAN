@@ -6,11 +6,11 @@ const PlayerScript = preload("res://scripts/player.gd")
 const ProjectileScript = preload("res://scripts/projectile.gd")
 const TargetScript = preload("res://scripts/target.gd")
 const REQUIRED_CLIPS := ["cast", "cast1", "cast2", "cast3", "defeat", "fire", "idle", "jump", "run"]
-const EXPECTED_BONES := 164
-const PRODUCTION_HERO_PATH := "res://assets/heroes/rama-production.glb"
+const REQUIRED_BONES := ["root", "spine05", "spine03", "spine01", "head", "wrist.L", "wrist.R", "foot.L", "foot.R", "bowstring"]
+const PRODUCTION_HERO_PATH := "res://assets/heroes/rama-hero.glb"
 const SOURCE_HERO_PATH := "res://assets/heroes/rama.glb"
 const SOURCE_HERO_SHA256 := "a366dc927cb34208742e5617decefb2580e1cdab97f946ed4eb14687dc7abfbc"
-const ACTIONS := ["move_left", "move_right", "move_forward", "move_back", "jump", "sprint", "fire", "reload", "pulse", "dash"]
+const ACTIONS := ["move_left", "move_right", "move_forward", "move_back", "jump", "sprint", "fire", "reload", "pulse", "dash", "guardian_circle", "ultimate"]
 
 var checks: Array[Dictionary] = []
 var failures: Array[String] = []
@@ -73,6 +73,7 @@ func _check_courtyard_controls() -> void:
 	await _frames(10)
 	var actor = courtyard.player
 	_record("training_starts_with_skinned_rama", actor.active and actor.model_ready and not paused and actor.ammo == actor.MAGAZINE, {"ammo": actor.ammo, "model_ready": actor.model_ready, "targets": courtyard.targets.size()})
+	_record("training_uses_authoritative_rama_kit_and_full_body_motion", actor.ability_request.is_valid() and actor.rama_motion != null and actor.rama_motion.diagnostics().configured and courtyard.rama_runtime.report().configured, {"scope":"Current courtyard owns the new kit; the isolated physics fixture below deliberately keeps its legacy fallback weapon path."})
 	Input.action_press("move_forward")
 	Input.action_press("fire")
 	await _frames(10)
@@ -90,13 +91,17 @@ func _check_courtyard_controls() -> void:
 	# Explicit scenario setup: dirty state through ordinary public combat APIs.
 	actor.shoot()
 	actor.start_reload()
-	courtyard.targets[0].take_hit(3)
+	var training_receiver: Node3D = courtyard.practice_army.units[0]
+	training_receiver.take_hit(28.0)
 	await _frames(2)
+	_record("restart_fixture_mutates_real_rama_target_receiver", training_receiver.health < training_receiver.max_health and courtyard.targets[0].health == ceili(training_receiver.health), {"receiver_health":training_receiver.health, "visible_health":courtyard.targets[0].health})
 	courtyard.reset_training()
 	await _frames(2)
 	var targets_reset := true
 	for target in courtyard.targets:
 		targets_reset = targets_reset and target.health == target.max_health and target.reset_remaining == 0 and not target.collision.disabled
+	for receiver in courtyard.practice_army.units:
+		targets_reset = targets_reset and receiver.health == receiver.max_health and receiver.alive and receiver.shield == 0
 	_record("restart_resets_player_targets_and_projectiles", actor.active and not paused and actor.ammo == actor.MAGAZINE and actor.reload_remaining == 0 and actor.shots_fired == 0 and actor.jump_count == 0 and courtyard.hit_count == 0 and courtyard.defeat_count == 0 and courtyard.projectiles.get_child_count() == 0 and targets_reset and actor.global_position.distance_to(Vector3(0, 0.05, 12)) < 0.15, {"ammo": actor.ammo, "projectiles": courtyard.projectiles.get_child_count(), "targets_reset": targets_reset, "hit_count": courtyard.hit_count, "defeat_count": courtyard.defeat_count, "position": _vector(actor.global_position)})
 	courtyard.return_to_menu()
 	await _frames(3)
@@ -127,8 +132,11 @@ func _check_animations() -> void:
 	var skeletons: Array[Skeleton3D] = []
 	_collect_skeletons(player.visual, skeletons)
 	var bone_count := 0
+	var missing_bones: Array[String] = []
 	for skeleton in skeletons:
 		bone_count += skeleton.get_bone_count()
+	for required in REQUIRED_BONES:
+		if not skeletons.any(func(skeleton): return skeleton.find_bone(required) >= 0): missing_bones.append(required)
 	var missing: Array[String] = []
 	var gameplay_clips: Array[String] = []
 	for clip in player.clips:
@@ -161,7 +169,7 @@ func _check_animations() -> void:
 					samples += 1
 					if not pose.is_equal_approx(skeleton.get_bone_global_rest(bone)):
 						moved_samples += 1
-	_record("rama_rig_and_nine_animations_are_finite", player.model_ready and skeletons.size() > 0 and bone_count == EXPECTED_BONES and gameplay_clips.size() == REQUIRED_CLIPS.size() and missing.is_empty() and zero_length.is_empty() and finite and moved_samples > 0, {"model_path": player.HERO_PATH, "skeleton_count": skeletons.size(), "bone_count": bone_count, "expected_bones": EXPECTED_BONES, "imported_clip_count": player.clips.size(), "gameplay_clips": gameplay_clips, "required_clips": REQUIRED_CLIPS, "missing_clips": missing, "zero_length_clips": zero_length, "clip_lengths_seconds": clip_lengths, "bone_transform_samples": samples, "non_rest_samples": moved_samples, "scope": "Five deterministic samples per production clip; finite/non-singular transforms do not prove visual quality or every blend."})
+	_record("rama_compatible_rig_and_retained_imported_clips_are_finite", player.model_ready and player.rama_motion != null and player.rama_motion.diagnostics().configured and skeletons.size() > 0 and missing_bones.is_empty() and missing.is_empty() and zero_length.is_empty() and finite and moved_samples > 0, {"model_path": player.HERO_PATH, "skeleton_count": skeletons.size(), "bone_count": bone_count, "missing_required_bones":missing_bones, "imported_clip_count": player.clips.size(), "gameplay_clips": gameplay_clips, "required_clips": REQUIRED_CLIPS, "missing_clips": missing, "zero_length_clips": zero_length, "clip_lengths_seconds": clip_lengths, "bone_transform_samples": samples, "non_rest_samples": moved_samples, "scope": "New hero binds its full-body controller; retained imported clips get five finite samples each. Rig compatibility and sample counts do not prove finished art or continuous motion."})
 	player.active_clip = "" # The scenario sampled AnimationPlayer directly; restore normal ownership.
 	player.reset()
 	player.active = true
@@ -241,7 +249,7 @@ func _check_weapon() -> void:
 	var reload_started: bool = player.reload_remaining > 0
 	var during_reload: bool = player.shoot()
 	await _frames(100)
-	_record("weapon_cooldown_magazine_and_reload", first and not immediate_repeat and ammo_after_first == 11 and empty_ammo == 0 and not empty_shot and reload_started and not during_reload and player.ammo == player.MAGAZINE and player.shots_fired == 12 and player.reload_remaining == 0, {"first_shot": first, "immediate_repeat": immediate_repeat, "ammo_after_first": ammo_after_first, "empty_ammo": empty_ammo, "empty_shot": empty_shot, "reload_started": reload_started, "shoot_during_reload": during_reload, "final_ammo": player.ammo, "successful_shots": player.shots_fired})
+	_record("isolated_legacy_fallback_weapon_cooldown_magazine_and_reload", first and not immediate_repeat and ammo_after_first == 11 and empty_ammo == 0 and not empty_shot and reload_started and not during_reload and player.ammo == player.MAGAZINE and player.shots_fired == 12 and player.reload_remaining == 0, {"first_shot": first, "immediate_repeat": immediate_repeat, "ammo_after_first": ammo_after_first, "empty_ammo": empty_ammo, "empty_shot": empty_shot, "reload_started": reload_started, "shoot_during_reload": during_reload, "final_ammo": player.ammo, "successful_shots": player.shots_fired, "scope":"Player instantiated without a Rama kit. Actual delayed-release kit behavior is covered by rama_hero_integration_cases.gd."})
 
 func _check_projectile_and_target() -> void:
 	player.active = false
@@ -333,6 +341,6 @@ func _finish() -> void:
 
 func _source_hashes() -> Dictionary:
 	var hashes := {}
-	for path in ["project.godot", "scenes/courtyard.tscn", "scripts/courtyard.gd", "scripts/player.gd", "scripts/projectile.gd", "scripts/target.gd", "scripts/production_lighting.gd", "shaders/production_water.gdshader", "assets/heroes/rama.glb", "assets/heroes/rama-production.glb", "assets/environment/lanka_courtyard.glb", "tests/native_acceptance.gd"]:
+	for path in ["project.godot", "scenes/courtyard.tscn", "scripts/courtyard.gd", "scripts/player.gd", "scripts/projectile.gd", "scripts/target.gd", "scripts/rama_motion.gd", "scripts/rama_ability_kit.gd", "scripts/rama_hero_runtime.gd", "scripts/rama_practice_army.gd", "assets/animations/rama_hero_motion.tres", "assets/design/rama-ability-kit.json", "scripts/production_lighting.gd", "shaders/production_water.gdshader", "assets/heroes/rama.glb", "assets/heroes/rama-production.glb", "assets/heroes/rama-hero.glb", "assets/environment/lanka_courtyard.glb", "tests/native_acceptance.gd"]:
 		hashes[path] = FileAccess.get_sha256("res://" + path)
 	return hashes

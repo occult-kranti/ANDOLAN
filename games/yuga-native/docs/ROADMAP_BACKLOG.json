@@ -112,7 +112,7 @@
     {
       "id": "FG01",
       "title": "Visual and performance target",
-      "status": "planned",
+      "status": "in_progress",
       "depends_on": [
         "FG00"
       ],
@@ -127,7 +127,7 @@
     {
       "id": "FG02",
       "title": "Production Rama",
-      "status": "planned",
+      "status": "in_progress",
       "depends_on": [
         "FG01"
       ],
@@ -438,8 +438,8 @@
         },
         {
           "path": "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md",
-          "scope": "Sixteen production gates, owners and measurable acceptance requirements; dated offline progress addendum preserves production rules and open gates.",
-          "sha256": "585547dcede8362f8d4fe094d7f3b42c484907e72f8db12d9e108ed07ed63b3b"
+          "scope": "Sixteen production gates and measurable acceptance requirements, with a bounded Rama supporting milestone; production rules, dependencies and open hardware/LOD/network gates are preserved.",
+          "sha256": "804f3bb08448cc1b853004ef07a6d6cbb04a75cb40983c10b61bfb1ce190cc16"
         },
         {
           "path": "games/yuga-native/docs/PRODUCTION_GUIDE_REVIEW.md",
@@ -467,7 +467,9 @@
       ],
       "deliverables": [
         "planned: source registry and research/BRUTAL_STACK_DECISION.md",
-        "games/yuga-native/docs/MYTHIC_BATCHES.md"
+        "games/yuga-native/docs/MYTHIC_BATCHES.md",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Pin tool/code/model/texture/motion licenses separately with exact versions and hashes.",
@@ -479,9 +481,13 @@
           "path": "games/yuga-native/docs/evidence/mythic-batch1/REVIEW.md",
           "sha256": "46c40a4df57081195764bedaf319a9fda1e64c4bf8fdf0a879d9e4873bb592a9",
           "scope": "Five bounded foundation/design/art packets; actual source-pinned views, motion and adversarial checks. Does not accept complete native roster, commercial-quality art or online game."
+        },
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
         }
       ],
-      "next_action": "Creative14hero source catalogue complete; maintain full tool/code/asset/motion reuse registry as production sources change.",
+      "next_action": "Maintain the dated Rama source/reuse ledger; resolve unavailable wiki/live-roster checks and remaining tool/asset-license registry without claiming complete commercial-game analysis.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
@@ -508,53 +514,77 @@
           "path": "games/yuga-native/docs/evidence/mythic-batch1/REVIEW.md",
           "sha256": "46c40a4df57081195764bedaf319a9fda1e64c4bf8fdf0a879d9e4873bb592a9",
           "scope": "Five bounded foundation/design/art packets; actual source-pinned views, motion and adversarial checks. Does not accept complete native roster, commercial-quality art or online game."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/contracts/native-contracts.json",
+          "scope": "235 current-source contract cases: native content revision 3, old-content rejection and unchanged wire versions; no native multiplayer claim.",
+          "sha256": "e07d305ef6fd4ab21d3c201ba44ae047d4d7e50fb4e33d1b1dd1fc6540b6b095"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/contracts/native-contract-pins.json",
+          "scope": "41 source/descriptor checks for fourteen pinned native content sources, including actual Rama health and practice adapters.",
+          "sha256": "f35d4a18fe1d2af3026118b0e618f4c76cd1b9ecb62bfea9d3324118292c68fe"
         }
       ],
-      "next_action": "Use explicit versioned contracts in the native entity/physics bridge. This contract definition does not migrate the current browser protocol or enable native online matches.",
+      "next_action": "Keep native content revision 3 distinct from unchanged browser/proposed profiles and wire versions. Re-pin and re-run compatibility cases after covered source changes; online matches remain a separate gate.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
       "id": "FG01-T01",
       "milestone": "FG01",
       "title": "Approve actual-render visual target scene",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P0",
       "owner": "art director",
       "depends_on": [
         "FG00-T02"
       ],
       "deliverables": [
-        "planned: visual target contact sheets and signed review"
+        "planned: visual target contact sheets and signed review",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Compare approved Rama/Hanuman/Sita concept family with actual neutral, dusk and night views.",
         "Record anatomy, cloth, materials, silhouette, pose and world-depth defects explicitly.",
         "Define an art approval checklist for portrait and normal gameplay distance."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
+        }
+      ],
+      "next_action": "Review the final R7 game-camera and continuous source-matched captures against the concept family; neutral/dusk/night production target and human art-direction approval remain open.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
       "id": "FG01-T02",
       "milestone": "FG01",
       "title": "Instrument representative performance replay",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P0",
       "owner": "renderer/performance",
       "depends_on": [
         "FG00-T01"
       ],
       "deliverables": [
-        "planned: profiling harness and benchmark replay"
+        "planned: profiling harness and benchmark replay",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Capture CPU/GPU frame stages, draw/skinning/effect counts, memory and source/settings metadata.",
         "Replay a reproducible12-hero/wave/effect worst case and an18-minute match.",
         "Software-render timings are labeled and excluded from physical GPU acceptance."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
+        }
+      ],
+      "next_action": "Extend the bounded Rama headless/render capture instrumentation to declared hardware, representative twelve-hero overlap and a full eighteen-minute replay.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
@@ -613,7 +643,7 @@
       "id": "FG02-T02",
       "milestone": "FG02",
       "title": "Author production sculpt retopology and PBR",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P0",
       "owner": "character artist",
       "depends_on": [
@@ -621,37 +651,51 @@
         "FG02-T01"
       ],
       "deliverables": [
-        "planned: Rama source sculpt retopology UVs and PBR set"
+        "planned: Rama source sculpt retopology UVs and PBR set",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Face/shoulders/hands and cloth construction meet approved forms.",
         "UVs, baked normals, skin/cloth/metal roughness and hair mass hold under neutral/dusk/night lighting.",
         "Editable high/low sources and export reproduce the approved runtime result."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
+        }
+      ],
+      "next_action": "Retain the editable R7 hero and PBR sources; qualify sculpt/retopology, fitted cloth/hair and all required lighting views against the approved production target.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
       "id": "FG02-T03",
       "milestone": "FG02",
       "title": "Build deformation sockets and correctives",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P0",
       "owner": "technical artist",
       "depends_on": [
         "FG02-T02"
       ],
       "deliverables": [
-        "planned: Rama deformation rig and contact fixtures"
+        "planned: Rama deformation rig and contact fixtures",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Rig contract records rest matrices, units, hierarchy and weapon/grip/string sockets.",
         "Extreme aim/crouch/twist/jump/death tests avoid material limb/cloth penetration.",
         "FootIK and hand-grip constraints preserve proportions and do not move authoritative hitboxes."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
+        }
+      ],
+      "next_action": "Retain exact rest/sockets, corrected dhoti weights and measured hand/sole contacts; finish extreme-pose, cloth-intersection and continuous final-source review.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
@@ -744,14 +788,14 @@
           "scope": "Five bounded foundation/design/art packets; actual source-pinned views, motion and adversarial checks. Does not accept complete native roster, commercial-quality art or online game."
         }
       ],
-      "next_action": "Native closed upper-body carry trial accepted; retain abrupt first-shot/action-contact limits and unpromoted TPS full-body run. Qualify moving-ground contact and authored anticipation before production animation acceptance.",
-      "risk": "Numerical minima and support contacts do not establish natural run timing or weapon grip; original player clips remain selected."
+      "next_action": "Keep the licensed TPS carry/retarget experiment and rejected full-body run as historical comparisons. The selected Rama now uses a separately authored controller under RAMA-03; this does not retroactively accept the old adaptation.",
+      "risk": "Historical retarget measurements and stills do not establish motion acceptance. Current selected Rama uses the authored controller; its review is recorded separately."
     },
     {
       "id": "FG03-T02",
       "milestone": "FG03",
       "title": "Author locomotion and aim blend graph",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P0",
       "owner": "animation/gameplay",
       "depends_on": [
@@ -759,22 +803,29 @@
         "FG03-T01"
       ],
       "deliverables": [
-        "planned: AnimationTree locomotion and aim resources"
+        "planned: AnimationTree locomotion and aim resources",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Idle/walk/run/strafe/start/stop/turn/jump/land/dash blend without root jumps.",
         "Movement follows authority; remote pose interpolation does not delay local camera.",
         "Lower-body locomotion and upper-body aim preserve grip at supported extreme angles."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
+        }
+      ],
+      "next_action": "Retain authored layered locomotion/aim and the corrected pre-aim transition cache; qualify remaining turns/stops, extreme aim and remote-presentation behavior.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
       "id": "FG03-T03",
       "milestone": "FG03",
       "title": "Author archery and ability event sequences",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P0",
       "owner": "animation/combat/audio",
       "depends_on": [
@@ -782,7 +833,9 @@
         "FG00-T04"
       ],
       "deliverables": [
-        "planned: authored combat clips and tick-stamped cue contract"
+        "planned: authored combat clips and tick-stamped cue contract",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Ready/draw/hold/release/recover and three ability anticipations/actives/recoveries are distinct.",
@@ -794,16 +847,20 @@
           "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
           "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
           "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        },
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
         }
       ],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "next_action": "Retain one primary plus four offline ability event sequences and lifecycle counterexamples; native server-owned event integration and complete production audio remain open.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
       "id": "FG03-T04",
       "milestone": "FG03",
       "title": "Approve continuous motion and combat-feel gate",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P0",
       "owner": "animation director/QA",
       "depends_on": [
@@ -812,7 +869,9 @@
         "FG02-T05"
       ],
       "deliverables": [
-        "planned: motion acceptance reel trace and defect closure"
+        "planned: motion acceptance reel trace and defect closure",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Inspect real continuous reels at gameplay and diagnostic camera views across representative frame rates.",
@@ -820,8 +879,13 @@
         "Input release, pause, death, reconnect and interruption leave no stuck weapon or pose.",
         "Approve complete Rama hero kit and counters, portrait/audio/tutorial, and source-pinned integrated hero package after model gate FG02-T05."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
+        }
+      ],
+      "next_action": "Complete the final R7 continuous game-camera, input and reaction review; human combat-feel, production model/LOD approval and network reconnect remain separate unmet conditions.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
@@ -1971,7 +2035,9 @@
         "FG00-T02"
       ],
       "deliverables": [
-        "planned: native flow stategraph screens and journey tests"
+        "planned: native flow stategraph screens and journey tests",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Every install/train/select/party/queue/load/play/pause/death/reconnect/result/rematch/support state exists.",
@@ -1988,9 +2054,13 @@
           "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
           "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
           "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        },
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
         }
       ],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "next_action": "Preserve the Rama title/courtyard/world/HUD/guide/pause/reset/death flow; implement the remaining party/queue/load/reconnect/results/rematch/support journey.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision.",
       "supporting_preproduction_packet": "Local courtyard/world/settings/help/return flows are exercised in the packaged Linux window; party, queue, selection, reconnect, match result/rematch and support flows remain open."
     },
@@ -1998,14 +2068,16 @@
       "id": "FG13-T02",
       "milestone": "FG13",
       "title": "Implement controls accessibility and settings",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P1",
       "owner": "UX/accessibility",
       "depends_on": [
         "FG13-T01"
       ],
       "deliverables": [
-        "planned: accessible native settings controls and audit"
+        "planned: accessible native settings controls and audit",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Remapping/sensitivity/inversion/audio/video/subtitles persist and are resettable.",
@@ -2027,9 +2099,13 @@
           "path": "games/yuga-native/docs/evidence/mythic-batch2/REVIEW.md",
           "sha256": "c766843bd255f8d1076509fb32fee75d0efb8fed8ceded81a95417cd2ca712d2",
           "scope": "Five bounded second-batch packets: entity bridge/physics experiment, fourteen troop invocations, event-driven effects and selector/input flow. Actual current-source captures and Linux package review; excludes full production roster, hero health/death, online matches, hardware or AAA visual acceptance."
+        },
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
         }
       ],
-      "next_action": "Retain tested keyboard/settings behavior while adding supported controller/device paths and remaining accessibility options; verify critical cues and all complete-match states at actual scales.",
+      "next_action": "Retain saved keyboard bindings, modal focus and HUD geometry checks; complete controller/device, subtitle/audio, scale/contrast and human accessibility review.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision.",
       "supporting_preproduction_packet": "Persistent keyboard remapping, contextual help, safe settings and local focus/pause are implemented. Production task remains open: controller/device paths, full subtitle/audio/accessibility options, scale/contrast and human playtesting remain unqualified."
     },
@@ -2037,7 +2113,7 @@
       "id": "FG13-T03",
       "milestone": "FG13",
       "title": "Implement replay telemetry and reproducible defect capture",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P1",
       "owner": "QA/tools",
       "depends_on": [
@@ -2045,22 +2121,29 @@
         "FG04-T02"
       ],
       "deliverables": [
-        "planned: replay/telemetry schema capture tools and defect template"
+        "planned: replay/telemetry schema capture tools and defect template",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Tick-stamped inputs/events/snapshots capture version/hash without tokens or unnecessary personal data.",
         "Replay determinism limits and drift detection documented; failed cases reproducible.",
         "Bug report bundles identify source/content/hardware/settings and player-facing symptom."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
+        }
+      ],
+      "next_action": "Preserve source-pinned Rama events, deterministic frame-rate comparisons and reproducible defect captures; extend them to complete replay/network drift and hardware metadata.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
       "id": "FG13-T04",
       "milestone": "FG13",
       "title": "Implement integrated edge and soak harness",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P1",
       "owner": "QA/performance",
       "depends_on": [
@@ -2068,15 +2151,22 @@
         "FG06-T05"
       ],
       "deliverables": [
-        "planned: integrated QA harness and regression suites"
+        "planned: integrated QA harness and regression suites",
+        "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+        "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md"
       ],
       "acceptance": [
         "Exercise long matches/restarts/reconnect churn/map edges/focus/input device changes.",
         "Asset validators and intentional bad fixtures catch corruption and animation/numeric defects.",
         "Reports separate structural/rendered/hardware/external evidence and retain failed attempts."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current Rama working-candidate evidence map with explicit PASS/LIMITED/OPEN/UNRUN boundaries; does not close production dependencies."
+        }
+      ],
+      "next_action": "Retain bounded cast/reset/pause/death and owned-node checks; qualify long matches, reconnect churn and supported input devices before integrated production acceptance.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
     },
     {
@@ -2233,7 +2323,7 @@
     "FG04-T03",
     "FG01-T03"
   ],
-  "queue_policy": "next_packets contains only incomplete tasks whose task dependencies are complete. upcoming_packets is an ordered horizon; its tasks are not claimed ready and retain explicit dependency/hardware blocks. Starting investigation does not authorize marking an unmet dependency complete. The MYTH-06 through MYTH-10 supporting experiments follow the verified first batch; they do not bypass incomplete parent production dependencies.",
+  "queue_policy": "next_packets contains only incomplete tasks whose task dependencies are complete. upcoming_packets is an ordered horizon; its tasks are not claimed ready and retain explicit dependency/hardware blocks. Starting investigation does not authorize marking an unmet dependency complete. The MYTH-06 through MYTH-10 supporting experiments follow the verified first batch; they do not bypass incomplete parent production dependencies. The current Rama supporting packets focus on one offline hero; completed bounded research and source checks, plus passed functional tests, do not bypass production model/LOD, server, hardware or full-roster dependencies.",
   "supporting_packets": [
     {
       "id": "SIEGE-01",
@@ -2899,6 +2989,214 @@
         }
       ],
       "next_action": "Preserve bounded acceptance and continue the parent production tasks under their unmet conditions; the Mythic milestone is published separately from full-game completion."
+    },
+    {
+      "id": "RAMA-01",
+      "title": "Dated hero-system research and original Rama kit design",
+      "status": "complete",
+      "phase": "bounded_text_research_complete",
+      "supports": [
+        "FG00-T03"
+      ],
+      "depends_on": [],
+      "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+      "owner": "Research and combat design",
+      "acceptance_scope": "41 complete candidate four-slot kits / 164 slots in pinned accessible Deadlock data, six detailed comparisons and an original one-primary/four-ability design. Wiki/live roster, video/gameplay observation and full commercial-engine understanding are explicitly unverified.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/research/RAMA_HERO_DESIGN_STUDY.md",
+          "scope": "Original design analysis and explicit implementation/proposal boundaries.",
+          "sha256": "b837a95fecab00d5f5e2d418e947aab9a91e8635c2735bb65a547f8e39e1b4d2"
+        },
+        {
+          "path": "games/yuga-native/docs/research/rama-hero-sources.json",
+          "scope": "Dated hashes, identities, ability-token references, coverage exclusions and failed requests; no imported commercial art.",
+          "sha256": "543d08ba8eb2b62c09e366f84ee6019fa51e503b09af3d562bd423ebf017a370"
+        }
+      ],
+      "next_action": "Preserve the bounded corpus and resolve coverage gaps only with accessible evidence; do not relabel candidate records as a verified live roster."
+    },
+    {
+      "id": "RAMA-02",
+      "title": "Original editable Rama hero and R7 deformation correction",
+      "status": "in_progress",
+      "phase": "r7_source_verified_visual_review_open",
+      "supports": [
+        "FG01-T01",
+        "FG02-T02",
+        "FG02-T03"
+      ],
+      "depends_on": [
+        "RAMA-01"
+      ],
+      "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+      "owner": "Character artist and independent art review",
+      "acceptance_scope": "R7 original hero is imported with exact editable/generator/weight-correction provenance, 164-bone rest preservation and 450084 triangles / 13 materials / 18 maps. This single-hero candidate has no accepted LOD, twelve-player performance or commercial-quality parity.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/NOTICE/RAMA-HERO-PROVENANCE.json",
+          "scope": "Exact R7 asset, editable source, generators, weight correction and explicit limitations.",
+          "sha256": "2295bae5b45ecfe4a988c9eda2b31b2de80a8bf06d65389cbdc507eabcfd8074"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/qa/r7-independent-byte-audit.json",
+          "scope": "Independent R6-to-R7 binary scope audit; only skin joint/weight data changed, not appearance acceptance.",
+          "sha256": "9e8dcb58f31bc1e0dff68e4f64ac0f8736694b7eb02904d98e165d69d8f87380"
+        },
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current actual-view findings and remaining final-source render gates."
+        }
+      ],
+      "next_action": "Complete final R7 gameplay and continuous deformation review; keep production model, LOD, hair/cloth simulation and hardware gates open."
+    },
+    {
+      "id": "RAMA-03",
+      "title": "Authored full-body motion and accepted-event presentation",
+      "status": "in_progress",
+      "phase": "authored_controller_verified_final_reel_open",
+      "supports": [
+        "FG02-T03",
+        "FG03-T02",
+        "FG03-T03",
+        "FG03-T04"
+      ],
+      "depends_on": [
+        "RAMA-01"
+      ],
+      "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+      "owner": "Animation and independent QA",
+      "acceptance_scope": "Twenty-three original clips, layered upper/lower-body ownership, real grip/string/sole sampling and corrected aim-transition caching support the selected Rama. Numeric contact and finite-state checks do not replace final continuous rendered review.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current contact, frame-clock, transition and R7 motion findings, retaining rejected R6 drape evidence."
+        },
+        {
+          "path": "games/yuga-native/scripts/rama_motion.gd",
+          "scope": "Selected controller source; source identity alone is not visual acceptance.",
+          "sha256": "d3a898b640de9c62aa3a919786b5a3b7c56dea823349472e361ba33906010f22"
+        }
+      ],
+      "next_action": "Archive and review final R7 forward movement, side movement, every action/reaction and rapid transitions at gameplay distance; retain authored timing and material limitations."
+    },
+    {
+      "id": "RAMA-04",
+      "title": "One coherent offline kit with real receivers and lifecycle",
+      "status": "in_progress",
+      "phase": "functional_checks_passed_integrated_acceptance_open",
+      "supports": [
+        "FG03-T03",
+        "FG04-T02",
+        "FG13-T04"
+      ],
+      "depends_on": [
+        "RAMA-01"
+      ],
+      "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+      "owner": "Combat, practice adapters and independent integration",
+      "acceptance_scope": "Bounded offline function: one primary plus four fixed abilities share the 20 Hz authority clock across lanes and courtyard; real troop/target health, hero shields/healing, siege damage, death/respawn, collision, pause/reset and reentrancy are exercised. Ordinary troops still target troops; elevated/airborne combat and online authority remain open.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/qa/integration/report.json",
+          "scope": "135 actual-world integration checks, including all ability/phase interruptions, real siege death/respawn, deterministic presentation comparisons and bounded owned-node cycles.",
+          "sha256": "f47f78cc6e39c0563b7d91860806ec99c57f6d9cf867ca441f7dd9e5a7abb848"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/contracts/rama-practice.json",
+          "scope": "23 fresh R7-era practice-adapter cases: actual float damage, shields, occlusion, reset, no automatic target respawn and original callback preservation.",
+          "sha256": "b905ab9b663efc587ede98495ae16a8015091a493fd94ca16354c758c32614ac"
+        }
+      ],
+      "next_action": "Finish final current-source gameplay capture and independent integrated acceptance before closing this packet; qualify human combat feel, balance, audio, elevation and network authority separately."
+    },
+    {
+      "id": "RAMA-05",
+      "title": "Consistent Rama screens and saved controls",
+      "status": "in_progress",
+      "phase": "headless_ui_verified_visual_input_review_open",
+      "supports": [
+        "FG13-T01",
+        "FG13-T02"
+      ],
+      "depends_on": [
+        "RAMA-04"
+      ],
+      "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+      "owner": "Native UI and independent input review",
+      "acceptance_scope": "Title, kit guide, shared courtyard/world HUD and persistent bindings expose the same hero. Headless geometry/focus checks are distinct from final visual and actual OS-input evidence.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+          "scope": "Current screen/focus acceptance boundary; archived final UI and OS-input evidence will be linked after promotion."
+        }
+      ],
+      "next_action": "Attach the final UI archive and actual current-source OS input sequence; retain controller, physical-device accessibility and full-match journey gaps."
+    },
+    {
+      "id": "RAMA-06",
+      "title": "Current source identity, contracts and setup gate parity",
+      "status": "complete",
+      "phase": "bounded_source_gates_complete",
+      "supports": [
+        "FG00-T04",
+        "FG13-T03",
+        "FG13-T04"
+      ],
+      "depends_on": [
+        "RAMA-01"
+      ],
+      "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+      "owner": "Contract, packaging and setup validation",
+      "acceptance_scope": "235 contract, 41 source-pin, 19 package-provenance, 23 practice and 19 setup-consistency checks pass. The R7 generator dependency and weight-correction evidence are verified. This closes source-only gates, not export, package execution, platform release or hardware qualification.",
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/contracts/manifest.json",
+          "scope": "Six archived reports with exact byte hashes, engine, commands and scope; no full setup-install or export claim.",
+          "sha256": "b4c9187a5ba3f5675c22a337b823834ccca4b66616827b86cea664762c6bef6d"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/contracts/rama-package.json",
+          "scope": "19 positive/negative schema, dependency, tamper and safe-path provenance cases.",
+          "sha256": "e048475658c93de37cd0bc2bfb6195685056df0a2c289b6444002ae890022e25"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/contracts/rama-provenance.json",
+          "scope": "Exact R7 GLB/editable/build/rebind/weight-correction identity verification.",
+          "sha256": "8ce6e7c57656913ae02350076479f40eca905145316ae16829a61a84f1113df4"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/contracts/setup-parity.json",
+          "scope": "Shell syntax and six Rama Godot plus package-gate CI/setup parity; prior Godot gates retained.",
+          "sha256": "25ca0daa49f9f9fc3c32187d1eed94103f9a3ffa78935d5182a32a87fa866bc3"
+        }
+      ],
+      "next_action": "Keep source gates reproducible; final export, captured-source identity, Linux/Windows execution and publication belong to release review."
     }
-  ]
+  ],
+  "current_rama_candidate": {
+    "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
+    "acceptance": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
+    "evidence_root": "games/yuga-native/docs/evidence/rama-hero",
+    "status": "in_progress",
+    "scope": "Current working-tree single-hero offline candidate; historical published baseline is unchanged.",
+    "asset_sha256": "667f3a215a7b868e3bdbcde880a73d42b68b29af1303db4e1d99b93f73cf2b50",
+    "native_content_revision": 3,
+    "content_sha256": "c2c6c42ac59e75c31f2afcd63e2131777c171fe8359547700cb99906f3d9efec",
+    "supporting_packets": [
+      "RAMA-01",
+      "RAMA-02",
+      "RAMA-03",
+      "RAMA-04",
+      "RAMA-05",
+      "RAMA-06"
+    ],
+    "open_gates": [
+      "Final current-source continuous visual and OS-input review",
+      "Production sculpt/retopology and complete model approval",
+      "Authored LOD and twelve-player physical-hardware budgets",
+      "Full roster, elevation authority and native online match flow",
+      "Controller/device accessibility, Windows execution and auditory review"
+    ]
+  }
 }

@@ -195,7 +195,19 @@ Use a lead integrator, art director/character artist, animation/technical art, e
 
 Each report records task ID, round, source revision/hash, changed files, passed/failed checks, evidence paths, remaining limitation and next owner. `complete` requires all acceptance conditions and linked evidence; `in_progress` means active implementation with remaining gates; `planned` means not started; `blocked` names a concrete unmet input/dependency. Do not invent a date or percentage. Research scope is stated as read, executed, inferred or unverified.
 
-## Current supporting siege milestone
+## Current supporting Rama hero milestone
+
+The newer [Rama hero milestone](RAMA_HERO_MILESTONE.md) concentrates the current
+working candidate on one original hero, its authored motion, a coherent offline
+kit and consistent native screens. [Independent acceptance](RAMA_HERO_ACCEPTANCE.md)
+separates actual source, numerical, rendered and input evidence. Supporting
+RAMA-01 through RAMA-06 packets in the ledger track this bounded work without
+closing the production dependencies below. R7 has 450,084 triangles, 13 materials
+and 18 embedded maps; it has no authored LODs or accepted twelve-player hardware
+budget. Offline siege damage and respawn do not establish native server authority.
+The prior Mythic release and its evidence remain historical and unchanged.
+
+## Earlier supporting siege milestone
 
 [Siege vehicles and visual-target plan](SIEGE_MILESTONE.md) defines the five parallel implementation packets, cannon/chariot counterplay, independent checks and conditional staffing/time estimates. SIEGE-01/03/04/05 are complete for their bounded local prototype scope with hashed evidence; SIEGE-02 remains in progress for close continuous animation/contact and material review. This offline milestone supports FG08/FG13 while every larger production dependency and visual gate remains unchanged. Public-release verification has its own exact-package evidence and does not promote the production game.
 

@@ -3,7 +3,7 @@ extends RefCounted
 const CATALOG_PATH := "res://assets/contracts/native-contracts-v1.json"
 const MAX_SAFE := 9007199254740991
 const PROFILE_IDS := ["browser-p2-3v3", "native-offline-triad", "production-6v6"]
-const CONTENT_REVISIONS := {"browser-p2-3v3":1,"native-offline-triad":2,"production-6v6":1}
+const CONTENT_REVISIONS := {"browser-p2-3v3":1,"native-offline-triad":3,"production-6v6":1}
 const ENTITY_CAPS := {"actor":12,"minion":96,"neutral":32,"structure":32,"projectile":192,"zone":128,"pickup":32,"gold_shard":96}
 const EVENT_KINDS := ["spawn","despawn","shot","hit","defeat","objective","reward","match_end"]
 const DESCRIPTOR_KEYS := ["contract_id","profile_id","versions","protocol","rules_sha256","map_id","map_sha256","content_sha256"]
@@ -99,7 +99,7 @@ static func validate_catalog(data: Variant) -> Dictionary:
 		if not _integer(p.get("buttons_mask"),mask_,mask_) or not _integer(p.get("simulation_hz"),hz_,hz_) or not _text(p.get("authority"),authority_): return _result(false,"PROFILE_SEMANTICS")
 		if not _keys(p.get("features"),["relays","flight","grapple","hero_health"]): return _result(false,"PROFILE_FEATURES")
 		for key in p.features:
-			if not p.features[key] is bool or p.features[key]!=(not offline if key=="hero_health" else offline): return _result(false,"PROFILE_FEATURES")
+			if not p.features[key] is bool or p.features[key]!=(true if key=="hero_health" else offline): return _result(false,"PROFILE_FEATURES")
 	return _result(true)
 
 func load_catalog(path: String = CATALOG_PATH) -> Dictionary:

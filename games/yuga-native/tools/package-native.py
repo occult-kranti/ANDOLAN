@@ -42,6 +42,45 @@ def record(path: Path) -> dict:
     return {'bytes': path.stat().st_size, 'sha256': digest(path)}
 
 
+def validate_rama_hero_notice(project: Path | None = None) -> dict:
+    """Verify the active hero, editable source, and generator dependencies.
+
+    This checks identity and availability, not anatomy or visual acceptance.
+    Historical rama.glb/rama-production.glb keep their independent checks below.
+    """
+    project = (project or PROJECT).resolve()
+    notice_path = project / 'NOTICE/RAMA-HERO-PROVENANCE.json'
+    notice = json.loads(notice_path.read_text())
+    if not isinstance(notice, dict) or type(notice.get('schema')) is not int or notice['schema'] != 1:
+        raise ValueError('Rama hero provenance must be a schema-1 object')
+    expected = {
+        'asset': ('assets/heroes/rama-hero.glb', 'sha256'),
+        'editableSource': ('art/hero-rama/rama-hero.blend', 'editableSha256'),
+        'generator': ('art/hero-rama/build_hero.py', 'generatorSha256'),
+        'weightCorrectionGenerator': ('art/hero-rama/rebind_dhoti.py', 'weightCorrectionGeneratorSha256'),
+        'weightCorrection': ('art/hero-rama/weight-correction.json', 'weightCorrectionSha256'),
+    }
+    sources = {}
+    for field, (relative, hash_field) in expected.items():
+        if notice.get(field) != relative:
+            raise ValueError(f'Rama hero provenance has unexpected {field}')
+        expected_hash = notice.get(hash_field)
+        if not isinstance(expected_hash, str) or not re.fullmatch(r'[0-9a-f]{64}', expected_hash):
+            raise ValueError(f'Rama hero provenance has invalid {hash_field}')
+        path = project / relative
+        if path.is_symlink() or not path.resolve().is_relative_to(project) or not path.is_file():
+            raise ValueError(f'Rama hero source is missing or unsafe: {relative}')
+        actual = record(path)
+        if actual['sha256'] != expected_hash:
+            raise ValueError(f'Rama hero provenance differs from source: {relative}')
+        sources[relative] = actual
+    dependencies = [{'path': notice['weightCorrectionGenerator'],
+                     'sha256': notice['weightCorrectionGeneratorSha256']}]
+    if notice.get('generatedDependencies') != dependencies:
+        raise ValueError('Rama hero generated dependencies differ from the required weight correction source')
+    return {'notice': record(notice_path), 'sources': sources}
+
+
 def json_write(path: Path, value: dict) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n', encoding='utf-8')
 
@@ -124,7 +163,7 @@ def inspect_pack(path: Path) -> dict:
             raise ValueError(f'Potential credential marker in payload: {name}')
         entries.append({'path': name, 'bytes': size, 'sha256': hashlib.sha256(payload).hexdigest(),
                         'stored_md5_verified': True})
-    required = ('rama.glb-', 'rama-production.glb-', 'lanka_courtyard.glb-',
+    required = ('rama.glb-', 'rama-production.glb-', 'rama-hero.glb-', 'lanka_courtyard.glb-',
                 'architecture.glb-', 'nature.glb-', 'assets/world/confluence-map.json',
                 'production_water.gdshader', 'world_water.gdshader', 'project.binary',
                 'world_ground.gdshader', 'world_ground_common.gdshaderinc',
@@ -142,6 +181,13 @@ def inspect_pack(path: Path) -> dict:
                 'chariot_windup.wav-', 'chariot_impact.wav-', 'assets/audio/siege/provenance.json',
                 'scripts/ultimate_rules.gd', 'scripts/ultimate_session.gd', 'scripts/ultimate_effects.gd',
                 'scripts/invocation_panel.gd', 'scripts/invocation_audio.gd',
+                'scripts/rama_ability_kit.gd', 'scripts/rama_ability_effects.gd',
+                'scripts/rama_hero_runtime.gd', 'scripts/rama_vitals.gd',
+                'scripts/rama_motion.gd', 'assets/animations/rama_hero_motion.tres',
+                'scripts/rama_hero_hud.gd', 'scripts/rama_hero_panel.gd',
+                'scripts/hero_ui_theme.gd', 'scripts/rama_practice_army.gd',
+                'scripts/rama_practice_target.gd', 'shaders/rama_ribbon.gdshader',
+                'assets/design/rama-ability-kit.json',
                 'assets/design/hero-codex.json', 'assets/design/native-ultimate-rules.json',
                 'assets/audio/invocations/manifest.json',
                 *[f'.godot/imported/{cue}.wav-' for cue in (
@@ -184,6 +230,7 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
     production = json.loads((PROJECT / 'NOTICE/RAMA-PRODUCTION-PROVENANCE.json').read_text())
     if digest(PROJECT / 'assets/heroes/rama-production.glb') != production['sha256']:
         raise ValueError('Production Rama notice differs from the active model')
+    rama_hero_notice = validate_rama_hero_notice()
     world_notice = json.loads((PROJECT / 'NOTICE/CONFLUENCE-WORLD-PROVENANCE.json').read_text())
     for entry in world_notice['assets']:
         if digest(PROJECT / entry['asset']) != entry['sha256']:
@@ -211,9 +258,12 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
     after = source_state()
     if before['sha256'] != after['sha256']:
         raise ValueError('Runtime source changed during export; rerun on a frozen/imported tree')
+    if rama_hero_notice != validate_rama_hero_notice():
+        raise ValueError('Rama hero provenance changed during export; rerun on a frozen tree')
     manifest = {'schema': 1, 'kind': 'native-pck-export', 'godot_version': version,
                 'git': git_context(), 'source': after, 'packs': packs,
                 'rama_matches_existing_yuga_source': True,
+                'rama_hero_provenance': rama_hero_notice,
                 'limits': ['No Windows execution performed by this tool.',
                            'PCK and archive checks do not establish visual quality or gameplay acceptance.']}
     json_write(build / 'native-export-manifest.json', manifest)
@@ -222,13 +272,13 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
 
 def start_readme(platform: str) -> str:
     start = './launch.sh' if platform == 'linux' else 'launch.bat'
-    return f'''YUGA — CONFLUENCE DUEL + WORLD\nOriginal animated combat film, world exploration and training / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. The bundled official Godot 4.6.3\nengine opens yuga-native.pck directly using --main-pack. This portable package\ncontains the full engine binary and is larger than a release-template export.\n\nControls\nWASD / arrows: move; mouse: aim; left mouse: solar bow; Space: jump;\nShift: sprint; R: reload; Q: sunburst; E: dash; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: choose one of 14 invocations; X: cast (both in Confluence);\nF5: reset. Settings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nChoose WATCH CONFLUENCE DUEL for a 24-second choreographed Rama-versus-\nRavana Sentinel film with animated actors, camera direction, visual effects and\nan original synthesized soundtrack. Its playback controls pause, seek and replay;\nreturn opens the title again. This is a scripted film, not a playable battle.\n\nChoose EXPLORE CONFLUENCE from the title to walk the three-lane coastal city,\ntemple avenue, metro gardens and reed courts. N changes daylight; Esc pauses.\nThe courtyard has Rama and five practice targets. Confluence is an offline 140 x 260 m arena with paired army waves,\nfive animated unit roles including cannon carts and royal chariots, last-hit gold, core outcomes and reset. Three lane relays can be captured and contested by heroes and soldiers. Held relays supply arrows and troop health every five seconds within range and line of sight. Escape > Visit Lotus relay gives immediate access; Escape > Siege practice opens a vehicle encounter. F5 restores ordinary waves and neutral relays. Siege blasts currently damage troops, not the hero. Flying and\ngrappling use finite energy, collision limits and landable platforms. F3 opens the invocation selector: Rama channels 14 original troop abilities with\nshared 12-second cooldown, distinct warnings, effects and original short cues.\nChoose reduced effects/motion there; X casts on flat street ground. Payloads\ninclude damage, healing, shields, slows and temporary guards. These are not\n14 separate production hero models; hero health/combat and native online matches\nremain unfinished. Live\nonline matches are not integrated into this native world.\nThis release is not a full match, multiplayer server, commercial-engine reconstruction,\nor evidence of Deadlock/Overwatch visual parity. Windows is packaged and archive-\nvalidated from Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
+    return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. The bundled official Godot 4.6.3\nengine opens yuga-native.pck directly using --main-pack. This portable package\ncontains the full engine binary and is larger than a release-template export.\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. Flight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWATCH CONFLUENCE DUEL opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
 
 
 def safe_notice_copy(destination: Path) -> None:
     notices = PROJECT / 'NOTICE'
     required = ['GODOT-LICENSE.txt', 'GODOT-COPYRIGHT.txt', 'MAKEHUMAN-ASSET-LICENSE.md',
-                'HERO-PROVENANCE.json', 'RAMA-PRODUCTION-PROVENANCE.json',
+                'HERO-PROVENANCE.json', 'RAMA-PRODUCTION-PROVENANCE.json', 'RAMA-HERO-PROVENANCE.json',
                 'CONFLUENCE-WORLD-PROVENANCE.json', 'CONFLUENCE-DUEL-PROVENANCE.json',
                 'TPS-MOTION-NOTICE.txt', 'GODOT-TPS-UPSTREAM-LICENSE.md',
                 'TRAVERSAL-AUDIO-PROVENANCE.json', 'TRAVERSAL-ARMIES.txt', 'SIEGE-VEHICLES.txt', 'MYTHIC-INVOCATIONS.txt']
@@ -279,6 +329,8 @@ def zip_directory(staging: Path, output: Path) -> dict:
 def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
     if source_state()['sha256'] != exported['source']['sha256']:
         raise ValueError('Runtime sources changed since PCK export; export again before packaging')
+    if exported.get('rama_hero_provenance') != validate_rama_hero_notice():
+        raise ValueError('Rama hero provenance changed since PCK export; export again before packaging')
     results = {}
     windows_provenance = args.windows_engine.parent / 'godot-windows-provenance.json'
     verified_windows = json.loads(windows_provenance.read_text())

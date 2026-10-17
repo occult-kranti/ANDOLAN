@@ -1,0 +1,260 @@
+{
+	"actual_modifier_samples": 454,
+	"checks": [
+		{
+			"evidence": {
+
+			},
+			"id": "historical_production_hero_and_additive_pose_loaded",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "actual_target_rig_has_164_bones",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "ten_named_body_bones_mapped",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "original_nine_clips_preserved",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"samples": 181
+			},
+			"id": "flight_actual_modifier_executes",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"changed_bones": 10,
+				"max_angle": 0.523598806509068
+			},
+			"id": "flight_body_pose_changes",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "flight_angles_stay_bounded",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "flight_finite_nonsingular_global_bones",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "flight_translations_and_scales_preserved",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "flight_arms_wrists_and_other_rotations_preserved",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"samples": 180
+			},
+			"id": "grapple_actual_modifier_executes",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"changed_bones": 10,
+				"max_angle": 0.663225158478864
+			},
+			"id": "grapple_body_pose_changes",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "grapple_angles_stay_bounded",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "grapple_finite_nonsingular_global_bones",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "grapple_translations_and_scales_preserved",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "grapple_arms_wrists_and_other_rotations_preserved",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "fire_or_cast_suppresses_additive_pose",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "recovery_blends_from_previous_pose",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "recovery_reaches_zero_overlay",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "cancel_clears_overlay_immediately",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "nonfinite_pose_input_fails_closed",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "invalid_delta_fails_closed",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"bone_samples": 74292,
+				"maximum_angle": 0.663225158478864,
+				"samples": 453
+			},
+			"id": "all_modifier_samples_are_bounded_finite",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "current_hero_resource_available",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "current_player_binds_complete_rama_motion",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "current_player_has_one_exclusive_pose_owner",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"samples": 90
+			},
+			"id": "current_flight_executes_complete_modifier",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "current_flight_finite_global_bones",
+			"passed": true
+		},
+		{
+			"evidence": {
+				"samples": 90
+			},
+			"id": "current_grapple_executes_complete_modifier",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "current_grapple_finite_global_bones",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "current_traversal_cancel_recovers_idle",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "current_pose_callbacks_stop_while_paused",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "current_pose_callbacks_resume_after_pause",
+			"passed": true
+		},
+		{
+			"evidence": {
+
+			},
+			"id": "sources_unchanged_during_pose_checks",
+			"passed": true
+		}
+	],
+	"current_rama_modifier_samples": 202,
+	"passed": true,
+	"scope": "Historical additive component checks retain the original production mesh. Current player checks independently observe RamaMotion flight/grapple, exclusive pose ownership, reset and actual paused modifier callbacks on the new hero. Numerical checks do not establish visual quality.",
+	"source_hashes": {
+		"assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+		"assets/heroes/rama-hero.glb": "667f3a215a7b868e3bdbcde880a73d42b68b29af1303db4e1d99b93f73cf2b50",
+		"assets/heroes/rama-production.glb": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc",
+		"scripts/player.gd": "d01515e971d8150b192dda3c64e0d0d790525da9e510ba91b176578b05f16777",
+		"scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+		"scripts/rama_motion.gd": "d3a898b640de9c62aa3a919786b5a3b7c56dea823349472e361ba33906010f22",
+		"scripts/traversal_pose.gd": "92502267f318fef5ce822f698457a7fc07f8129cebd20c17a6b187ef333e2cdf",
+		"tests/traversal_pose_cases.gd": "2807ee1e079a641af44c9486410370f794f9f8f32fe001c606e49a6c3fe08b0a"
+	}
+}

@@ -5,6 +5,8 @@ var sources: Dictionary = {}
 const PROFILE := "native-offline-triad"
 # Exact Batch 1 descriptor, preserved before revision-2 migration.
 const CONTENT1_DESCRIPTOR := {"content_sha256":"d6943aafc45ead1b40f87a37ea0bdd6d7724e81eac86a434bfd6f04fc247520d","contract_id":"yuga-native-contracts-v1","map_id":"native-confluence-140x260","map_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","profile_id":"native-offline-triad","protocol":0.0,"rules_sha256":"5b692277e0257a893eabef198e353673c21359807f998c799f899f71164d84a1","versions":{"content":1.0,"contract":1.0,"entity":1.0,"event":1.0,"input":1.0,"map":1.0,"replay":1.0,"rules":1.0}}
+# Exact Mythic descriptor, preserved before Rama revision-3 migration.
+const CONTENT2_DESCRIPTOR := {"content_sha256":"f8664b894a5db300974fceb4fee1c8df31ed960b85d6e6f493554066ed86a15b","contract_id":"yuga-native-contracts-v1","map_id":"native-confluence-140x260","map_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","profile_id":"native-offline-triad","protocol":0.0,"rules_sha256":"3b269f5922e3420948dbc80ddc912aeb1b913ede47ff1705a451fe0c620bf060","versions":{"content":2,"contract":1.0,"entity":1.0,"event":1.0,"input":1.0,"map":1.0,"replay":1.0,"rules":1.0}}
 const SCOPE := {"room":"FIXTURE","epoch":1,"identity":"hero"}
 
 func _initialize() -> void:
@@ -48,7 +50,7 @@ func run() -> void:
 	check("browser_defaults_remain_2_3v3_480",g.profile("browser-p2-3v3").protocol==2 and g.profile("browser-p2-3v3").team_size==3 and g.profile("browser-p2-3v3").duration_seconds==480)
 	check("native_offline_not_a_competitive_team_size",g.profile(PROFILE).map_size_xz==[140.0,260.0] and g.profile(PROFILE).team_size==0 and not g.profile(PROFILE).live_handshake)
 	check("production_6v6_1080_is_unimplemented_proposal",g.profile("production-6v6").state=="proposed" and g.profile("production-6v6").protocol==0 and g.profile("production-6v6").duration_seconds==1080 and g.profile("production-6v6").map_size_xz==[])
-	for alteration in 17:
+	for alteration in 18:
 		var bad: Dictionary=catalog.duplicate(true)
 		match alteration:
 			0: bad.schema_version=2
@@ -68,10 +70,11 @@ func run() -> void:
 			14: bad.profiles[0].buttons_mask=511
 			15: bad.profiles[0].simulation_hz=120
 			16: bad.profiles[0].authority="unexpected"
+			17: bad.profiles[1].features.hero_health=false
 		check("reject_changed_catalog_%d"%alteration,not Contracts.validate_catalog(bad).ok)
 	var local: Dictionary=g.descriptor(PROFILE)
 	check("exact_descriptor_match",Contracts.compatibility(local,local.duplicate(true)).ok)
-	check("native_content_revision2_separate_from_unchanged_wire",local.versions.content==2 and local.versions.input==1 and local.versions.entity==1 and local.versions.event==1 and local.versions.replay==1)
+	check("native_content_revision3_separate_from_unchanged_wire",local.versions.content==3 and local.versions.input==1 and local.versions.entity==1 and local.versions.event==1 and local.versions.replay==1)
 	check("browser_and_proposal_content_stay_revision1",g.descriptor("browser-p2-3v3").versions.content==1 and g.descriptor("production-6v6").versions.content==1)
 	for profile_index in 3:
 		for invalid in [null,0,-1,1.5,true,"2",[],{},NAN,INF,65536]:
@@ -85,14 +88,26 @@ func run() -> void:
 	var old_open := Contracts.new();assert(old_open.load_catalog().ok)
 	var empty_before: Dictionary=old_open.report()
 	var mismatch: Dictionary=old_open.open_session(PROFILE,CONTENT1_DESCRIPTOR,SCOPE)
-	check("old_content1_cannot_open_revision2",not mismatch.ok and mismatch.code=="MISMATCH_VERSIONS" and mismatch.details.field=="content" and old_open.report()==empty_before)
+	check("old_content1_cannot_open_revision3",not mismatch.ok and mismatch.code=="MISMATCH_VERSIONS" and mismatch.details.field=="content" and old_open.report()==empty_before)
 	var before_revision_reject: Dictionary=g.report()
 	check("old_content1_resume_transactional",not g.resume_session(CONTENT1_DESCRIPTOR,SCOPE).ok and before_revision_reject==g.report())
 	var next_epoch: Dictionary=SCOPE.duplicate(true);next_epoch.epoch=2
 	check("old_content1_migration_cannot_downgrade",not g.migrate_session(PROFILE,CONTENT1_DESCRIPTOR,next_epoch).ok and before_revision_reject==g.report())
 	var old_replay: Dictionary={"format":1,"descriptor":CONTENT1_DESCRIPTOR.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
 	check("old_content1_replay_rejected_before_reconstruction",not g.validate_replay(old_replay,[]).ok and before_revision_reject==g.report())
-	var forged_current: Dictionary=CONTENT1_DESCRIPTOR.duplicate(true);forged_current.versions.content=2
+	var stale_content2: Dictionary=catalog.duplicate(true);stale_content2.profiles[1].content_revision=2
+	check("native_revision2_catalog_rejected",not Contracts.validate_catalog(stale_content2).ok)
+	var old2_open := Contracts.new();assert(old2_open.load_catalog().ok)
+	var old2_before: Dictionary=old2_open.report()
+	var old2_mismatch: Dictionary=old2_open.open_session(PROFILE,CONTENT2_DESCRIPTOR,SCOPE)
+	check("old_content2_cannot_open_revision3",not old2_mismatch.ok and old2_mismatch.code=="MISMATCH_VERSIONS" and old2_mismatch.details.field=="content" and old2_open.report()==old2_before)
+	check("old_content2_resume_transactional",not g.resume_session(CONTENT2_DESCRIPTOR,SCOPE).ok and before_revision_reject==g.report())
+	check("old_content2_migration_cannot_downgrade",not g.migrate_session(PROFILE,CONTENT2_DESCRIPTOR,next_epoch).ok and before_revision_reject==g.report())
+	var old2_replay: Dictionary={"format":1,"descriptor":CONTENT2_DESCRIPTOR.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
+	check("old_content2_replay_rejected_before_reconstruction",not g.validate_replay(old2_replay,[]).ok and before_revision_reject==g.report())
+	var forged_content2: Dictionary=CONTENT2_DESCRIPTOR.duplicate(true);forged_content2.versions.content=3
+	check("old_content2_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content2).ok)
+	var forged_current: Dictionary=CONTENT1_DESCRIPTOR.duplicate(true);forged_current.versions.content=3
 	check("revision_number_alone_does_not_bypass_source_identity",not Contracts.compatibility(local,forged_current).ok)
 
 	for field in ["contract_id","profile_id","protocol","rules_sha256","map_id","map_sha256","content_sha256"]:

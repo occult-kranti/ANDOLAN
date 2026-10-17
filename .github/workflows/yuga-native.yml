@@ -76,11 +76,21 @@ jobs:
       - name: Independently validate GLB format with pinned Khronos package
         run: |
           python3 games/yuga-native/tools/research/prepare-gltf-validator.py --destination "$RUNNER_TEMP/gltf-validator"
-          node games/yuga-native/tools/research/check-gltf.mjs --validator-dir "$RUNNER_TEMP/gltf-validator" --report "$RUNNER_TEMP/gltf-validation.json" --asset games/yuga-native/assets/heroes/rama-production.glb --asset games/yuga-native/assets/environment/lanka_courtyard.glb --asset games/yuga-native/assets/world/architecture.glb --asset games/yuga-native/assets/world/nature.glb --asset games/yuga-native/assets/cinematics/ravana-sentinel.glb
+          node games/yuga-native/tools/research/check-gltf.mjs --validator-dir "$RUNNER_TEMP/gltf-validator" --report "$RUNNER_TEMP/gltf-validation.json" --asset games/yuga-native/assets/heroes/rama-production.glb --asset games/yuga-native/assets/heroes/rama-hero.glb --asset games/yuga-native/assets/environment/lanka_courtyard.glb --asset games/yuga-native/assets/world/architecture.glb --asset games/yuga-native/assets/world/nature.glb --asset games/yuga-native/assets/cinematics/ravana-sentinel.glb
       - name: Import native project
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --editor --import --quit
       - name: Native physics and animation acceptance
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report=${{ runner.temp }}/native-acceptance.json
+      - name: Rama combat motion interface practice and provenance gates
+        run: |
+          set -euo pipefail
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_ability_cases.gd -- --report="$RUNNER_TEMP/rama-ability.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_motion_cases.gd -- --asset=res://assets/heroes/rama-hero.glb --report="$RUNNER_TEMP/rama-motion.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_screen_cases.gd -- --report="$RUNNER_TEMP/rama-screen.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hero_integration_cases.gd -- --report="$RUNNER_TEMP/rama-integration.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_practice_cases.gd -- --report="$RUNNER_TEMP/rama-practice.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_layout_cases.gd -- --report="$RUNNER_TEMP/rama-hud-layout.json"
+          python3 games/yuga-native/tests/rama_package_cases.py --report="$RUNNER_TEMP/rama-package.json"
       - name: Mythic catalogue, editable hero, carry and version contracts
         run: |
           python3 games/yuga-native/tools/check-hero-codex.py --report="$RUNNER_TEMP/hero-codex.json"
@@ -155,6 +165,13 @@ jobs:
           name: yuga-native-acceptance
           path: |
             ${{ runner.temp }}/native-acceptance.json
+            ${{ runner.temp }}/rama-ability.json
+            ${{ runner.temp }}/rama-motion.json
+            ${{ runner.temp }}/rama-screen.json
+            ${{ runner.temp }}/rama-integration.json
+            ${{ runner.temp }}/rama-practice.json
+            ${{ runner.temp }}/rama-hud-layout.json
+            ${{ runner.temp }}/rama-package.json
             ${{ runner.temp }}/entity-bridge.json
             ${{ runner.temp }}/physics.json
             ${{ runner.temp }}/ultimate.json

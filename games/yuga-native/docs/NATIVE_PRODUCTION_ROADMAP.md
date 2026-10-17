@@ -8,6 +8,15 @@ scene integration remains open. The licensed carry adaptation has been rendered
 and remains experimental pending grip and motion-quality work. The earlier
 foundation handoffs below do not supersede those current records.
 
+The October 17 Rama focus is recorded in [RAMA_HERO_MILESTONE.md](RAMA_HERO_MILESTONE.md)
+and its [acceptance record](RAMA_HERO_ACCEPTANCE.md). The current working candidate
+has a new editable hero, authored motion, one primary attack plus four abilities,
+shared courtyard/lane receivers, and explicitly wired offline health/death/respawn.
+Its research covers 41 complete candidate kits in pinned accessible Deadlock data;
+the wiki and live selectable roster were not verified. This advances the one-hero
+prototype. The historical foundation snapshots below do not describe its current
+controls or replace the remaining production, LOD, hardware and online gates.
+
 The user has removed browser compatibility as a requirement and requests an
 original Indian-mythology game at Deadlock/Overwatch visual quality. Their latest
 direction is to create our own assets in the cloud. Community code and observed

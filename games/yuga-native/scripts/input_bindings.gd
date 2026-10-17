@@ -2,8 +2,8 @@ extends RefCounted
 ## Shared keyboard controls and bounded, data-only local settings.
 const SAVE_PATH := "user://courtyard-settings.cfg"
 const MAX_CONFIG_BYTES := 65536
-const DEFAULTS := {"move_forward":KEY_W,"move_back":KEY_S,"move_left":KEY_A,"move_right":KEY_D,"jump":KEY_SPACE,"sprint":KEY_SHIFT,"reload":KEY_R,"pulse":KEY_Q,"dash":KEY_E,"grapple":KEY_G,"fly":KEY_F,"descend":KEY_CTRL,"ultimate":KEY_X}
-const TITLES := {"move_forward":"Move forward","move_back":"Move back","move_left":"Move left","move_right":"Move right","jump":"Jump / ascend in flight","sprint":"Sprint","reload":"Reload","pulse":"Sunburst","dash":"Dash","grapple":"Grapple / release","fly":"Toggle flight","descend":"Descend in flight","ultimate":"Cast invocation (Confluence)"}
+const DEFAULTS := {"move_forward":KEY_W,"move_back":KEY_S,"move_left":KEY_A,"move_right":KEY_D,"jump":KEY_SPACE,"sprint":KEY_SHIFT,"reload":KEY_R,"pulse":KEY_Q,"dash":KEY_E,"grapple":KEY_G,"fly":KEY_F,"descend":KEY_CTRL,"ultimate":KEY_X,"guardian_circle":KEY_C}
+const TITLES := {"move_forward":"Move forward","move_back":"Move back","move_left":"Move left","move_right":"Move right","jump":"Jump / ascend in flight","sprint":"Sprint","reload":"Reload","pulse":"Piercing Dawn","dash":"Measured Step","grapple":"Grapple / release","fly":"Toggle flight","descend":"Descend in flight","ultimate":"Dawn Volley","guardian_circle":"Guardian Circle"}
 const FIXED := {"pause_game":KEY_ESCAPE,"reset_training":KEY_F5,"world_respawn":KEY_F5,"world_night":KEY_N,"world_overview":KEY_F1,"help_controls":KEY_F2,"open_invocations":KEY_F3}
 const ALIASES := {"move_forward":KEY_UP,"move_back":KEY_DOWN,"move_left":KEY_LEFT,"move_right":KEY_RIGHT}
 static var bindings: Dictionary = DEFAULTS.duplicate()
@@ -28,20 +28,21 @@ static func current() -> Dictionary:
 	return bindings.duplicate()
 
 static func _extend_legacy_bindings(candidate: Variant) -> Variant:
-	# Old saved layouts may already use X. Preserve every old assignment and
-	# choose a deterministic free key only for the newly introduced action.
-	# Ordinary rebinding still rejects duplicates; invalid old data stays invalid.
-	if not candidate is Dictionary or candidate.has("ultimate"): return candidate
+	# Introduce new controls without stealing an existing user's binding.
+	if not candidate is Dictionary: return candidate
 	var extended: Dictionary = candidate.duplicate()
 	var used: Array[int] = []
 	for action in DEFAULTS:
-		if action == "ultimate": continue
+		if action in ["ultimate", "guardian_circle"] and not candidate.has(action): continue
 		var value: Variant = candidate.get(action, DEFAULTS[action])
 		if value is int: used.append(value)
-	for key in [KEY_X, KEY_V, KEY_B, KEY_C, KEY_Z, KEY_T, KEY_Y, KEY_U, KEY_I, KEY_O, KEY_P, KEY_H, KEY_J, KEY_K, KEY_L, KEY_1, KEY_2, KEY_3]:
-		if key not in used:
-			extended["ultimate"] = key
-			break
+	for action in ["ultimate", "guardian_circle"]:
+		if extended.has(action): continue
+		for key in [DEFAULTS[action], KEY_X, KEY_C, KEY_V, KEY_B, KEY_Z, KEY_T, KEY_Y, KEY_U, KEY_I, KEY_O, KEY_P, KEY_H, KEY_J, KEY_K, KEY_L, KEY_1, KEY_2, KEY_3]:
+			if key not in used:
+				extended[action] = key
+				used.append(key)
+				break
 	return extended
 
 static func label(action: String) -> String:
@@ -70,7 +71,7 @@ static func set_binding(action: String, keycode: int) -> Dictionary:
 	candidate[action] = keycode
 	var valid := _validate(candidate)
 	if not valid.ok: return valid
-	var saved := merge_settings({"controls":{"bindings":candidate,"binding_version":2}},config_path)
+	var saved := merge_settings({"controls":{"bindings":candidate,"binding_version":3}},config_path)
 	if not saved.ok: return saved
 	bindings = candidate
 	load_notice = ""
@@ -80,7 +81,7 @@ static func set_binding(action: String, keycode: int) -> Dictionary:
 static func reset_defaults() -> Dictionary:
 	var result: Dictionary
 	if read_config(config_path).ok:
-		result = merge_settings({"controls":{"bindings":DEFAULTS.duplicate(),"binding_version":2}},config_path)
+		result = merge_settings({"controls":{"bindings":DEFAULTS.duplicate(),"binding_version":3}},config_path)
 	else:
 		result = _recover_invalid_config(config_path)
 	if result.ok:
@@ -111,7 +112,7 @@ static func _recover_invalid_config(path: String) -> Dictionary:
 	if backup.is_empty(): return failure
 	var config := ConfigFile.new()
 	config.set_value("controls","bindings",DEFAULTS.duplicate())
-	config.set_value("controls","binding_version",2)
+	config.set_value("controls","binding_version",3)
 	if config.save(temporary) != OK:
 		DirAccess.remove_absolute(temporary)
 		return failure
@@ -223,5 +224,5 @@ static func merge_settings(updates: Dictionary, path: String = SAVE_PATH) -> Dic
 static func help_text() -> String:
 	var lines := PackedStringArray()
 	for action in DEFAULTS: lines.append(label(action) + "  ·  " + TITLES[action])
-	lines.append("LMB  ·  Fire / aim with mouse\nArrow keys  ·  Move\nEsc  ·  Pause / back\nF2  ·  Help\nF3  ·  Invocation selection (Confluence)\nF1  ·  World overview\nF5  ·  Reset / respawn\nN  ·  World day / night")
+	lines.append("LMB  ·  Fire / aim with mouse\nArrow keys  ·  Move\nEsc  ·  Pause / back\nF2  ·  Help\nF3  ·  Rama abilities\nF1  ·  World overview\nF5  ·  Reset / respawn\nN  ·  World day / night")
 	return "\n".join(lines)

@@ -1,0 +1,3935 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-10-17T11:07:35.473638+00:00",
+  "project_source_commit": "e765a23264cf3c3c38fab1ded677832a24fdd64e",
+  "task": "Original Rama hero design study; no commercial art/code import",
+  "network": {
+    "startup_policy": "restricted",
+    "runtime_policy_observation": "unknown, not asserted enforced",
+    "no_secrets_or_identities": true,
+    "blocked_hosts_no_bypass": [
+      "deadlock.wiki",
+      "pbr-book.org",
+      "www.routledge.com"
+    ]
+  },
+  "corpus": {
+    "repository": "SteamTracking/GameTracking-Deadlock",
+    "revision": "0ba033e3eea00d658d63e03719295cf5039e8057",
+    "client_version": 6793,
+    "server_version": 6793,
+    "source_revision": 11140748,
+    "version_date": "2026-10-16",
+    "version_time": "16:05:45, source timezone unspecified",
+    "hero_records": 68,
+    "unflagged_excluding_base_and_dummy": 42,
+    "complete_four_signature_candidates": 41,
+    "signature_slots": 164,
+    "complexity_distribution": {
+      "1": 12,
+      "2": 16,
+      "3": 12,
+      "4": 1
+    },
+    "live_selectable_roster_verified": false,
+    "wiki_read": false,
+    "video_watched": false,
+    "game_played": false,
+    "caveat": "Data flags and bindings establish corpus coverage, not current client/server selectability. Nurse Harrow is unflagged but has no signatures. Rake lacks a base description in this localization snapshot."
+  },
+  "sources": [
+    {
+      "id": "deadlock_wiki",
+      "url": "https://deadlock.wiki/Heroes",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "local_record_written_at_utc": "2026-10-17T10:56:01.932064+00:00",
+      "read_scope": "Access failed; no source content read."
+    },
+    {
+      "id": "deadlock_org",
+      "url": "https://github.com/deadlock-api",
+      "status": 200,
+      "bytes": 270085,
+      "sha256": "d28484e78192cb139d15d992e98c29cf6d21323d80078febf3db9575f4269b81",
+      "path": "/workspace/scratch/rama-hero-research-20261017/deadlock_org.txt",
+      "local_record_written_at_utc": "2026-10-17T10:56:01.932064+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "deadlock_data_org",
+      "url": "https://github.com/SteamDatabase/GameTracking-Deadlock",
+      "status": 200,
+      "bytes": 257094,
+      "sha256": "e2f300850d66bd6d996d32a657e3e12e9c49ed2644aaafb81fa10305590de418",
+      "path": "/workspace/scratch/rama-hero-research-20261017/deadlock_data_org.txt",
+      "local_record_written_at_utc": "2026-10-17T10:56:01.932064+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "filament_license",
+      "url": "https://raw.githubusercontent.com/google/filament/9680e59f3fae866ef8f801524e77dd6fbbf760d3/LICENSE",
+      "status": 200,
+      "bytes": 11362,
+      "sha256": "02d70b593dd8e9355dd8e1ca8d13c303bee5bcaf3065b66ff6e4f534e1e6a2c1",
+      "local_record_written_at_utc": "2026-10-17T11:02:18.877013+00:00",
+      "read_scope": "Apache License 2.0 heading and terms checked; no code adopted."
+    },
+    {
+      "id": "gpp_license",
+      "url": "https://raw.githubusercontent.com/munificent/game-programming-patterns/898b1f2e1818c80d7eed5eba98e9903ec13b7771/LICENSE",
+      "status": 200,
+      "bytes": 4402,
+      "sha256": "38d0c2db8c6f5aaf7ac649e5f44a0d3a982c837f6510cc9f6aefd563ea1a5b1e",
+      "local_record_written_at_utc": "2026-10-17T11:02:18.877013+00:00",
+      "read_scope": "Lines 1–105: prose/style CC BY-NC-ND 4.0 versus other code MIT license split."
+    },
+    {
+      "id": "godot_ik",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/TwoBoneIK3D.xml",
+      "status": 200,
+      "bytes": 8932,
+      "sha256": "87ff27d074217c4b1fd26f9bb56188920f51b72ea07d69f7adf236e9da1ccb76",
+      "local_record_written_at_utc": "2026-10-17T11:02:18.877013+00:00",
+      "read_scope": "Lines 1–160: solver description, pole/target/joint requirements and getters/setters."
+    },
+    {
+      "id": "deadlock_api_repo",
+      "url": "https://github.com/deadlock-api/deadlock-api",
+      "status": 200,
+      "bytes": 313856,
+      "sha256": "75e48fa92ddb0387ffcddbecaa6c134eaeec2f5dbf8b74c052102be60c5e352d",
+      "path": "/workspace/scratch/rama-hero-research-20261017/deadlock_api_repo.txt",
+      "local_record_written_at_utc": "2026-10-17T10:56:45.042279+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "deadlock_assets_repo",
+      "url": "https://github.com/deadlock-api/assets",
+      "error": "HTTP Error 404: Not Found",
+      "local_record_written_at_utc": "2026-10-17T10:56:45.042279+00:00",
+      "read_scope": "Access failed; no source content read."
+    },
+    {
+      "id": "tracking_heroes",
+      "url": "https://raw.githubusercontent.com/SteamDatabase/GameTracking-Deadlock/master/game/citadel/scripts/heroes.vdata",
+      "error": "HTTP Error 404: Not Found",
+      "local_record_written_at_utc": "2026-10-17T10:56:45.042279+00:00",
+      "read_scope": "Access failed; no source content read."
+    },
+    {
+      "id": "tracking_english",
+      "url": "https://raw.githubusercontent.com/SteamDatabase/GameTracking-Deadlock/master/game/citadel/pak01_dir/resource/localization/citadel_heroes_english.txt",
+      "error": "HTTP Error 404: Not Found",
+      "local_record_written_at_utc": "2026-10-17T10:56:45.042279+00:00",
+      "read_scope": "Access failed; no source content read."
+    },
+    {
+      "id": "tracking_readme",
+      "url": "https://raw.githubusercontent.com/SteamDatabase/GameTracking-Deadlock/master/README.md",
+      "status": 200,
+      "bytes": 363,
+      "sha256": "44d386edce76a2bbf61dbef021da060fa7ec8dcca0030c664b2ea3bcbac605ad",
+      "path": "/workspace/scratch/rama-hero-research-20261017/tracking_readme.txt",
+      "local_record_written_at_utc": "2026-10-17T10:56:45.042279+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "tracking_files",
+      "url": "https://raw.githubusercontent.com/SteamTracking/GameTracking-Deadlock/0ba033e3eea00d658d63e03719295cf5039e8057/files.json",
+      "status": 200,
+      "bytes": 385,
+      "sha256": "df1ade750b4e40cf23fe3c46d569e8200e6e7f1a1f57cc2dbfc8eb5b63be23fa",
+      "path": "/workspace/scratch/rama-hero-research-20261017/tracking_files.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:02.908862+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "tracking_game",
+      "url": "https://github.com/SteamTracking/GameTracking-Deadlock/tree/0ba033e3eea00d658d63e03719295cf5039e8057/game",
+      "status": 200,
+      "bytes": 248325,
+      "sha256": "34d0c81411d8da1649604e03fdbe36cf171798e9513809914be8ddc31bf97c7e",
+      "path": "/workspace/scratch/rama-hero-research-20261017/tracking_game.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:02.908862+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "api_readme",
+      "url": "https://raw.githubusercontent.com/deadlock-api/deadlock-api/2f5affb08086d5b0985115532714614986fd5c72/README.md",
+      "status": 200,
+      "bytes": 1759,
+      "sha256": "d55d3403d63c007a84f7ad11b5461306f0b1131076defa0545543d52e60c9e0d",
+      "path": "/workspace/scratch/rama-hero-research-20261017/api_readme.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:02.908862+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "api_cargo",
+      "url": "https://raw.githubusercontent.com/deadlock-api/deadlock-api/2f5affb08086d5b0985115532714614986fd5c72/api/Cargo.toml",
+      "status": 200,
+      "bytes": 4746,
+      "sha256": "ee7f511df81b977444de680624ec8b3b32d5ae2f24fac02a6bf33a6946b4cebc",
+      "path": "/workspace/scratch/rama-hero-research-20261017/api_cargo.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:02.908862+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "tracking_citadel",
+      "url": "https://github.com/SteamTracking/GameTracking-Deadlock/tree/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel",
+      "status": 200,
+      "bytes": 232108,
+      "sha256": "9be85dda74d785c0df02b5cb3ad0cdf87e11315613c8830ee33be8525eedc3ad",
+      "local_record_written_at_utc": "2026-10-17T10:57:12.765439+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "tracking_scripts",
+      "url": "https://github.com/SteamTracking/GameTracking-Deadlock/tree/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/scripts",
+      "error": "HTTP Error 404: Not Found",
+      "local_record_written_at_utc": "2026-10-17T10:57:12.765439+00:00",
+      "read_scope": "Access failed; no source content read."
+    },
+    {
+      "id": "tracking_resource",
+      "url": "https://github.com/SteamTracking/GameTracking-Deadlock/tree/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/resource",
+      "status": 200,
+      "bytes": 213251,
+      "sha256": "58d443518ecf46aa30b3ff2c1993aa9e100c70e46a738ab079b638f559f3d02e",
+      "local_record_written_at_utc": "2026-10-17T10:57:12.765439+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "gpp_game_loop",
+      "url": "https://raw.githubusercontent.com/munificent/game-programming-patterns/898b1f2e1818c80d7eed5eba98e9903ec13b7771/book/game-loop.markdown",
+      "status": 200,
+      "bytes": 29665,
+      "sha256": "79693a60713c71b1e0e9a66a1f254325449f66ff8ed7f67444aa70a9d0f2b465",
+      "path": "/workspace/scratch/rama-hero-research-20261017/gpp_game_loop.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:32.754565+00:00",
+      "read_scope": "Lines 300–490: variable-step hazards, bounded fixed catch-up and render prediction/interpolation discussion."
+    },
+    {
+      "id": "gpp_state",
+      "url": "https://raw.githubusercontent.com/munificent/game-programming-patterns/898b1f2e1818c80d7eed5eba98e9903ec13b7771/book/state.markdown",
+      "status": 200,
+      "bytes": 26377,
+      "sha256": "840ecefee38e3b7cea938008c42a481427b24d8d6e80714806194e27a0a0e0f8",
+      "path": "/workspace/scratch/rama-hero-research-20261017/gpp_state.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:32.754565+00:00",
+      "read_scope": "Lines 424–540: concurrent and hierarchical state machines, shared-input consumption."
+    },
+    {
+      "id": "godot_oneshot",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/AnimationNodeOneShot.xml",
+      "status": 200,
+      "bytes": 6973,
+      "sha256": "777ebe5d329aa1dcee0a614a1ce0e5175f3b7a9205f4b518fffef40fe018451d",
+      "path": "/workspace/scratch/rama-hero-research-20261017/godot_oneshot.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:32.754565+00:00",
+      "read_scope": "All 113 lines: requests, blend/add filters, abort/fade/reset and timings."
+    },
+    {
+      "id": "godot_interpolation",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/4.6/tutorials/physics/interpolation/using_physics_interpolation.rst",
+      "status": 200,
+      "bytes": 8241,
+      "sha256": "a0e1a9578e8831442a69f2b84741d6c99570513b10c31c8366a0eec13fe729cc",
+      "path": "/workspace/scratch/rama-hero-research-20261017/godot_interpolation.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:32.754565+00:00",
+      "read_scope": "Lines 1–159: transform tick ownership, teleport reset, low-TPS diagnostic and presentation blends."
+    },
+    {
+      "id": "filament",
+      "url": "https://github.com/google/filament",
+      "status": 200,
+      "bytes": 443715,
+      "sha256": "317071c3f4d7a560334243d0d3759ba9ecefceba48ca9a67e44268e5a3642222",
+      "path": "/workspace/scratch/rama-hero-research-20261017/filament.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:32.754565+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "pbrt",
+      "url": "https://pbr-book.org/4ed/contents",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "local_record_written_at_utc": "2026-10-17T10:57:32.754565+00:00",
+      "read_scope": "Access failed; no source content read."
+    },
+    {
+      "id": "game_feel",
+      "url": "https://www.routledge.com/Game-Feel-A-Game-Designers-Guide-to-Virtual-Sensation/Swink/p/book/9780123743282",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "local_record_written_at_utc": "2026-10-17T10:57:32.754565+00:00",
+      "read_scope": "Access failed; no source content read."
+    },
+    {
+      "id": "tracking_localization",
+      "url": "https://github.com/SteamTracking/GameTracking-Deadlock/tree/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/resource/localization",
+      "status": 200,
+      "bytes": 231725,
+      "sha256": "f3c5f6aff2ddf0c1bf41b974220997baf371adf4967012b86c471f753647226e",
+      "path": "/workspace/scratch/rama-hero-research-20261017/tracking_localization.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:44.666955+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "tracking_pak",
+      "url": "https://github.com/SteamTracking/GameTracking-Deadlock/tree/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir",
+      "status": 200,
+      "bytes": 234476,
+      "sha256": "85f247248a5e95b052b00d8f459a287f7cbc2925c7410b183a862d5e32b74aaf",
+      "path": "/workspace/scratch/rama-hero-research-20261017/tracking_pak.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:44.666955+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "tracking_version",
+      "url": "https://raw.githubusercontent.com/SteamTracking/GameTracking-Deadlock/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/steam.inf",
+      "status": 200,
+      "bytes": 176,
+      "sha256": "48cd2b9e71064c98d459c427ba1d00919a908dd5ce8f90e78679c1a03c1ec9af",
+      "path": "/workspace/scratch/rama-hero-research-20261017/tracking_version.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:44.666955+00:00",
+      "read_scope": "All 8 lines; client/server6793, SourceRevision11140748, Oct16 2026."
+    },
+    {
+      "id": "tracking_commit",
+      "url": "https://github.com/SteamTracking/GameTracking-Deadlock/commit/0ba033e3eea00d658d63e03719295cf5039e8057",
+      "status": 200,
+      "bytes": 248629,
+      "sha256": "03db5072a3b29a0b023439bb8b8905e4c0a73880592c196b388cc855e396ecd8",
+      "path": "/workspace/scratch/rama-hero-research-20261017/tracking_commit.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:44.666955+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "hero_english",
+      "url": "https://raw.githubusercontent.com/SteamTracking/GameTracking-Deadlock/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/resource/localization/citadel_heroes_english.txt",
+      "error": "HTTP Error 404: Not Found",
+      "local_record_written_at_utc": "2026-10-17T10:57:44.666955+00:00",
+      "read_scope": "Access failed; no source content read."
+    },
+    {
+      "id": "tracking_heroes_dir",
+      "url": "https://github.com/SteamTracking/GameTracking-Deadlock/tree/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/resource/localization/citadel_heroes",
+      "status": 200,
+      "bytes": 211720,
+      "sha256": "e9c5c4abaa07e4633092f0c454b323325e4820ec2d24741e5721ce5445eb587a",
+      "path": "/workspace/scratch/rama-hero-research-20261017/tracking_heroes_dir.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:54.446128+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "tracking_pakscripts",
+      "url": "https://github.com/SteamTracking/GameTracking-Deadlock/tree/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts",
+      "status": 200,
+      "bytes": 328193,
+      "sha256": "7949339fec9f746003f5680fd5f859e160320265ee6b323439f4a0f11bf0d90f",
+      "path": "/workspace/scratch/rama-hero-research-20261017/tracking_pakscripts.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:54.446128+00:00",
+      "read_scope": "Discovery metadata/path listing only; not substantive game or book evidence."
+    },
+    {
+      "id": "filament_pbr",
+      "url": "https://raw.githubusercontent.com/google/filament/9680e59f3fae866ef8f801524e77dd6fbbf760d3/docs/Filament.md.html",
+      "status": 200,
+      "bytes": 248093,
+      "sha256": "64e2843fd054e921821fb58a06ed974f3a036e06d7b62ae71a5260cf4e2e42ff",
+      "path": "/workspace/scratch/rama-hero-research-20261017/filament_pbr.txt",
+      "local_record_written_at_utc": "2026-10-17T10:57:54.446128+00:00",
+      "read_scope": "Lines 1–201 and 596–670: goals, roughness, conductor/dielectric, conservation, material parameters and colour-space conversion. Images linked by text were not viewed."
+    },
+    {
+      "id": "deadlock_heroes",
+      "url": "https://raw.githubusercontent.com/SteamTracking/GameTracking-Deadlock/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata",
+      "status": 200,
+      "bytes": 2605674,
+      "sha256": "f4997ebe72e95f79708b3369a0556f9cdd8f96b30cd160379f05121695883353",
+      "path": "/workspace/scratch/rama-hero-research-20261017/deadlock_heroes.txt",
+      "local_record_written_at_utc": "2026-10-17T10:58:06.385396+00:00",
+      "read_scope": "All 68 top-level hero records: identity, flags, raw complexity and four signature bindings; not complete model/animation data."
+    },
+    {
+      "id": "deadlock_abilities",
+      "url": "https://raw.githubusercontent.com/SteamTracking/GameTracking-Deadlock/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/abilities.vdata",
+      "status": 200,
+      "bytes": 8071494,
+      "sha256": "39eeb3eb73b2f7bc4bce13ed82cdd9f971aa9b2b86a71b4846f6d48b54299ee8",
+      "path": "/workspace/scratch/rama-hero-research-20261017/deadlock_abilities.txt",
+      "local_record_written_at_utc": "2026-10-17T10:58:06.385396+00:00",
+      "read_scope": "Downloaded complete text; read Charged Shot properties lines 87885–88050 and Assassinate lines 65248–65380 only. Not a full 8 MB audit."
+    },
+    {
+      "id": "deadlock_hero_text",
+      "url": "https://raw.githubusercontent.com/SteamTracking/GameTracking-Deadlock/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/resource/localization/citadel_heroes/citadel_heroes_english.txt",
+      "status": 200,
+      "bytes": 433616,
+      "sha256": "f2ac8c257aaf69bc2796fc0187033ab44355daa8eeb78ed802d9233d589c4b5a",
+      "path": "/workspace/scratch/rama-hero-research-20261017/deadlock_hero_text.txt",
+      "local_record_written_at_utc": "2026-10-17T10:58:06.385396+00:00",
+      "read_scope": "Base descriptions and selected active/passive/release/cancel tokens for all 41 complete eligible-data kits; six detailed examples; no lore or upgrade-wide audit."
+    },
+    {
+      "id": "deadlock_ability_text",
+      "url": "https://raw.githubusercontent.com/SteamTracking/GameTracking-Deadlock/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/resource/localization/citadel_mods/citadel_mods_english.txt",
+      "status": 200,
+      "bytes": 68720,
+      "sha256": "a317457cbcbbbc3d9db16528e6b02812e491ad500d9f166274ba684a4d8e2060",
+      "path": "/workspace/scratch/rama-hero-research-20261017/deadlock_ability_text.txt",
+      "local_record_written_at_utc": "2026-10-17T10:58:06.385396+00:00",
+      "read_scope": "First 90 lines inspected; item-data scope not used for roster conclusions."
+    },
+    {
+      "id": "hero_names",
+      "url": "https://raw.githubusercontent.com/SteamTracking/GameTracking-Deadlock/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/resource/localization/citadel_gc_hero_names/citadel_gc_hero_names_english.txt",
+      "status": 200,
+      "bytes": 10203,
+      "sha256": "d270ce41b8b4bcc1b92f5657301d0634701cb28dbd85d303f4e0bc65292c6e9b",
+      "local_record_written_at_utc": "2026-10-17T10:58:52.769523+00:00",
+      "read_scope": "Name lookup for each of the 68 data entries, including excluded records."
+    }
+  ],
+  "roster": [
+    {
+      "id": "hero_inferno",
+      "name": "Infernus",
+      "line": 1718,
+      "m_HeroID": "1",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L1718",
+      "analysis": {
+        "movement": "Flame Dash; forward extends travel",
+        "aim_and_complexity": "Bullet buildup plus near cone",
+        "release_cancel_rules": "Delayed ultimate cannot be interrupted",
+        "counterplay_and_readability_inference": "Trail and bomb countdown; leave close range"
+      },
+      "abilities": [
+        {
+          "id": "ability_incendiary_projectile",
+          "name": "Napalm",
+          "description_token_refs": [
+            {
+              "token": "ability_incendiary_projectile_quip",
+              "line": 689
+            },
+            {
+              "token": "ability_incendiary_projectile_desc",
+              "line": 690
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_flame_dash",
+          "name": "Flame Dash",
+          "description_token_refs": [
+            {
+              "token": "ability_flame_dash_quip",
+              "line": 697
+            },
+            {
+              "token": "ability_flame_dash_desc",
+              "line": 698
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_afterburn",
+          "name": "Afterburn",
+          "description_token_refs": [
+            {
+              "token": "ability_afterburn_quip",
+              "line": 746
+            },
+            {
+              "token": "ability_afterburn_desc",
+              "line": 747
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_fire_bomb",
+          "name": "Concussive Combustion",
+          "description_token_refs": [
+            {
+              "token": "ability_fire_bomb_quip",
+              "line": 786
+            },
+            {
+              "token": "ability_fire_bomb_desc",
+              "line": 787
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_gigawatt",
+      "name": "Seven",
+      "line": 3802,
+      "m_HeroID": "2",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L3802",
+      "analysis": {
+        "movement": "Shared movement; stationary storm commitment",
+        "aim_and_complexity": "Line projectile and timed target charge",
+        "release_cancel_rules": "Sustained storm channel",
+        "counterplay_and_readability_inference": "Storm needs line of sight; show its growing edge"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_lightning_ball",
+          "name": "Lightning Ball",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_lightning_ball_quip",
+              "line": 107
+            },
+            {
+              "token": "citadel_ability_lightning_ball_desc",
+              "line": 108
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_static_charge",
+          "name": "Static Charge",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_static_charge_desc",
+              "line": 96
+            },
+            {
+              "token": "citadel_ability_static_charge_quip",
+              "line": 97
+            },
+            {
+              "token": "citadel_ability_static_charge_v2_desc",
+              "line": 103
+            },
+            {
+              "token": "citadel_ability_static_charge_v2_quip",
+              "line": 104
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_power_surge",
+          "name": "Power Surge",
+          "description_token_refs": [
+            {
+              "token": "ability_power_surge_quip",
+              "line": 114
+            },
+            {
+              "token": "ability_power_surge_desc",
+              "line": 115
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_storm_cloud",
+          "name": "Storm Cloud",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_storm_cloud_quip",
+              "line": 134
+            },
+            {
+              "token": "citadel_ability_storm_cloud_desc",
+              "line": 135
+            },
+            {
+              "token": "citadel_ability_storm_cloud_lightning_strike_desc",
+              "line": 139
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_hornet",
+      "name": "Vindicta",
+      "line": 5978,
+      "m_HeroID": "3",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L5978",
+      "analysis": {
+        "movement": "Flight with enhanced weapon",
+        "aim_and_complexity": "Scoped finishing shot; tether landing",
+        "release_cancel_rules": "Scoped shot gains damage with charge; cancel unspecified",
+        "counterplay_and_readability_inference": "Cover and flight exposure; distinguish charge from ready"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_hornet_chain",
+          "name": "Stake",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_hornet_chain_quip",
+              "line": 2075
+            },
+            {
+              "token": "citadel_ability_hornet_chain_desc",
+              "line": 2076
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_hornet_leap",
+          "name": "Flight",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_hornet_leap_quip",
+              "line": 2095
+            },
+            {
+              "token": "citadel_ability_hornet_leap_desc",
+              "line": 2096
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_hornet_sting",
+          "name": "Crow Familiar",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_hornet_sting_quip",
+              "line": 2128
+            },
+            {
+              "token": "citadel_ability_hornet_sting_desc",
+              "line": 2129
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_hornet_snipe",
+          "name": "Assassinate",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_hornet_snipe_quip",
+              "line": 2140
+            },
+            {
+              "token": "citadel_ability_hornet_snipe_desc",
+              "line": 2141
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_ghost",
+      "name": "Lady Geist",
+      "line": 8099,
+      "m_HeroID": "4",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L8099",
+      "analysis": {
+        "movement": "Slower movement during drain",
+        "aim_and_complexity": "Health spending, tether, close health swap",
+        "release_cancel_rules": "Drain permits firing/other abilities",
+        "counterplay_and_readability_inference": "Break drain line/range; clearly show health cost"
+      },
+      "abilities": [
+        {
+          "id": "ability_blood_bomb",
+          "name": "Essence Bomb",
+          "description_token_refs": [
+            {
+              "token": "ability_blood_bomb_quip",
+              "line": 1954
+            },
+            {
+              "token": "ability_blood_bomb_desc",
+              "line": 1955
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_life_drain",
+          "name": "Life Drain",
+          "description_token_refs": [
+            {
+              "token": "ability_life_drain_quip",
+              "line": 1960
+            },
+            {
+              "token": "ability_life_drain_desc",
+              "line": 1961
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_blood_shards",
+          "name": "Malice",
+          "description_token_refs": [
+            {
+              "token": "ability_blood_shards_quip",
+              "line": 2019
+            },
+            {
+              "token": "ability_blood_shards_desc",
+              "line": 2020
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_health_swap",
+          "name": "Soul Exchange",
+          "description_token_refs": [
+            {
+              "token": "ability_health_swap_quip",
+              "line": 1985
+            },
+            {
+              "token": "ability_health_swap_desc",
+              "line": 1986
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_atlas",
+      "name": "Abrams",
+      "line": 10229,
+      "m_HeroID": "6",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L10229",
+      "analysis": {
+        "movement": "Charge plus leap/crash",
+        "aim_and_complexity": "Close aura; wall collision setup",
+        "release_cancel_rules": "Contact-dependent charge payoff",
+        "counterplay_and_readability_inference": "Avoid wall pin; separate startup from impact"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_bull_heal",
+          "name": "Siphon Life",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_bull_heal_quip",
+              "line": 39
+            },
+            {
+              "token": "citadel_ability_bull_heal_desc",
+              "line": 40
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_bull_charge",
+          "name": "Shoulder Charge",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_bull_charge_quip",
+              "line": 14
+            },
+            {
+              "token": "citadel_ability_bull_charge_desc",
+              "line": 15
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_passive_beefy",
+          "name": "Infernal Resilience",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_passive_beefy_quip",
+              "line": 54
+            },
+            {
+              "token": "citadel_ability_passive_beefy_desc",
+              "line": 55
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_bull_leap",
+          "name": "Seismic Impact",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_bull_leap_quip",
+              "line": 65
+            },
+            {
+              "token": "citadel_ability_bull_leap_desc",
+              "line": 66
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_wraith",
+      "name": "Wraith",
+      "line": 12382,
+      "m_HeroID": "7",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L12382",
+      "analysis": {
+        "movement": "Target-position teleport",
+        "aim_and_complexity": "Weapon builds cards; crosshair directs throws",
+        "release_cancel_rules": "Card alternate cast; targeted slam",
+        "counterplay_and_readability_inference": "Track teleport endpoint and card availability"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_card_toss",
+          "name": "Card Trick",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_card_toss_quip",
+              "line": 372
+            },
+            {
+              "token": "citadel_ability_card_toss_desc",
+              "line": 373
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_projectmind",
+          "name": "Project Mind",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_projectmind_quip",
+              "line": 347
+            },
+            {
+              "token": "citadel_ability_projectmind_desc",
+              "line": 348
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_wraith_rapidfire",
+          "name": "Full Auto",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_wraith_rapidfire_quip",
+              "line": 365
+            },
+            {
+              "token": "citadel_ability_wraith_rapidfire_desc",
+              "line": 366
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_psychic_lift",
+          "name": "Telekinesis",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_psychic_lift_quip",
+              "line": 330
+            },
+            {
+              "token": "citadel_ability_psychic_lift_desc",
+              "line": 331
+            },
+            {
+              "token": "citadel_ability_psychic_lift_slam_desc",
+              "line": 342
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_forge",
+      "name": "McGinnis",
+      "line": 14487,
+      "m_HeroID": "8",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L14487",
+      "analysis": {
+        "movement": "Barrage slows but permits stamina",
+        "aim_and_complexity": "Place turret, healer, wall; aim barrage",
+        "release_cancel_rules": "Attack/Ability3 erupts wall early",
+        "counterplay_and_readability_inference": "Wall is melee destructible; show placement/active phases"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_shieldedsentry",
+          "name": "Mini Turret",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_shieldedsentry_quip",
+              "line": 270
+            },
+            {
+              "token": "citadel_ability_shieldedsentry_desc",
+              "line": 271
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_mobile_resupply",
+          "name": "Medicinal Specter",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_mobile_resupply_quip",
+              "line": 249
+            },
+            {
+              "token": "citadel_ability_mobile_resupply_desc",
+              "line": 250
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_fissure_wall",
+          "name": "Spectral Wall",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_fissure_wall_quip",
+              "line": 234
+            },
+            {
+              "token": "citadel_ability_fissure_wall_desc",
+              "line": 235
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_rocket_barrage",
+          "name": "Heavy Barrage",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_rocket_barrage_quip",
+              "line": 304
+            },
+            {
+              "token": "citadel_ability_rocket_barrage_desc",
+              "line": 305
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_chrono",
+      "name": "Paradox",
+      "line": 16659,
+      "m_HeroID": "10",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L16659",
+      "analysis": {
+        "movement": "Charge increases speed; aerial aim changes time",
+        "aim_and_complexity": "Carbine shot, wall, position swap",
+        "release_cancel_rules": "Carbine charge plus projectile swap",
+        "counterplay_and_readability_inference": "Missed line costs setup; wall must read as projectile modifier"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_chrono_pulse_grenade",
+          "name": "Pulse Grenade",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_chrono_pulse_grenade_quip",
+              "line": 564
+            },
+            {
+              "token": "citadel_ability_chrono_pulse_grenade_desc",
+              "line": 565
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_chrono_time_wall",
+          "name": "Time Wall",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_chrono_time_wall_quip",
+              "line": 512
+            },
+            {
+              "token": "citadel_ability_chrono_time_wall_desc",
+              "line": 513
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_chrono_kinetic_carbine",
+          "name": "Kinetic Carbine",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_chrono_kinetic_carbine_quip",
+              "line": 607
+            },
+            {
+              "token": "citadel_ability_chrono_kinetic_carbine_desc",
+              "line": 608
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_chrono_swap",
+          "name": "Paradoxical Swap",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_chrono_swap_quip",
+              "line": 591
+            },
+            {
+              "token": "citadel_ability_chrono_swap_desc",
+              "line": 593
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_dynamo",
+      "name": "Dynamo",
+      "line": 18814,
+      "m_HeroID": "11",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L18814",
+      "analysis": {
+        "movement": "Untargetable short teleport",
+        "aim_and_complexity": "Ground pulse; nearby heal and pull",
+        "release_cancel_rules": "Dash/melee preserve heal channel; ally alternate teleport",
+        "counterplay_and_readability_inference": "Spread before pull; telegraph channel/radius"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_stomp",
+          "name": "Kinetic Pulse",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_stomp_quip",
+              "line": 985
+            },
+            {
+              "token": "citadel_ability_stomp_desc",
+              "line": 986
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_void_sphere",
+          "name": "Quantum Entanglement",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_void_sphere_quip",
+              "line": 1003
+            },
+            {
+              "token": "citadel_ability_void_sphere_desc",
+              "line": 1004
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_nikuman",
+          "name": "Rejuvenating Aurora",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_nikuman_quip",
+              "line": 1047
+            },
+            {
+              "token": "citadel_ability_nikuman_desc",
+              "line": 1048
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_self_vacuum",
+          "name": "Singularity",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_self_vacuum_quip",
+              "line": 1039
+            },
+            {
+              "token": "citadel_ability_self_vacuum_desc",
+              "line": 1040
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_kelvin",
+      "name": "Kelvin",
+      "line": 20945,
+      "m_HeroID": "12",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L20945",
+      "analysis": {
+        "movement": "Controllable rising/falling ice route",
+        "aim_and_complexity": "Grenade, sustained beam, shelter target",
+        "release_cancel_rules": "Beam slows caster; route uses existing movement inputs",
+        "counterplay_and_readability_inference": "Both teams use ice; dome boundary must be unambiguous"
+      },
+      "abilities": [
+        {
+          "id": "ability_ice_grenade",
+          "name": "Frost Grenade",
+          "description_token_refs": [
+            {
+              "token": "ability_ice_grenade_quip",
+              "line": 1420
+            },
+            {
+              "token": "ability_ice_grenade_desc",
+              "line": 1421
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_icepath",
+          "name": "Ice Path",
+          "description_token_refs": [
+            {
+              "token": "ability_icepath_quip",
+              "line": 1461
+            },
+            {
+              "token": "ability_icepath_desc",
+              "line": 1462
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_icebeam",
+          "name": "Arctic Beam",
+          "description_token_refs": [
+            {
+              "token": "ability_icebeam_quip",
+              "line": 1431
+            },
+            {
+              "token": "ability_icebeam_desc",
+              "line": 1432
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_ice_dome",
+          "name": "Frozen Shelter",
+          "description_token_refs": [
+            {
+              "token": "ability_ice_dome_quip",
+              "line": 1486
+            },
+            {
+              "token": "ability_ice_dome_desc",
+              "line": 1487
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_haze",
+      "name": "Haze",
+      "line": 23076,
+      "m_HeroID": "13",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L23076",
+      "analysis": {
+        "movement": "Invisibility and sprint",
+        "aim_and_complexity": "Precision dagger; sustained target stacking",
+        "release_cancel_rules": "Attacking ends stealth; dagger preserves it",
+        "counterplay_and_readability_inference": "Nearby enemies detect stealth; distinguish sleep from stun"
+      },
+      "abilities": [
+        {
+          "id": "ability_sleep_dagger",
+          "name": "Sleep Dagger",
+          "description_token_refs": [
+            {
+              "token": "ability_sleep_dagger_quip",
+              "line": 910
+            },
+            {
+              "token": "ability_sleep_dagger_desc",
+              "line": 911
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_smoke_bomb",
+          "name": "Smoke Bomb",
+          "description_token_refs": [
+            {
+              "token": "ability_smoke_bomb_quip",
+              "line": 952
+            },
+            {
+              "token": "ability_smoke_bomb_desc",
+              "line": 953
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_stacking_damage",
+          "name": "Fixation",
+          "description_token_refs": [
+            {
+              "token": "ability_stacking_damage_quip",
+              "line": 937
+            },
+            {
+              "token": "ability_stacking_damage_desc",
+              "line": 938
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_bullet_flurry",
+          "name": "Bullet Dance",
+          "description_token_refs": [
+            {
+              "token": "ability_bullet_flurry_quip",
+              "line": 965
+            },
+            {
+              "token": "ability_bullet_flurry_desc",
+              "line": 966
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_astro",
+      "name": "Holliday",
+      "line": 25210,
+      "m_HeroID": "14",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L25210",
+      "analysis": {
+        "movement": "Bounce pad launches any hero",
+        "aim_and_complexity": "Shootable barrel and headshot reward",
+        "release_cancel_rules": "Attack/shot/melee detonates barrel; pad extends lasso",
+        "counterplay_and_readability_inference": "Shared pad and explosive prop need ownership clarity"
+      },
+      "abilities": [
+        {
+          "id": "ability_explosive_barrel",
+          "name": "Powder Keg",
+          "description_token_refs": [
+            {
+              "token": "ability_explosive_barrel_quip",
+              "line": 1599
+            },
+            {
+              "token": "ability_explosive_barrel_desc",
+              "line": 1600
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_bounce_pad",
+          "name": "Bounce Pad",
+          "description_token_refs": [
+            {
+              "token": "ability_bounce_pad_quip",
+              "line": 1622
+            },
+            {
+              "token": "ability_bounce_pad_desc",
+              "line": 1623
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_crackshot",
+          "name": "Crackshot",
+          "description_token_refs": [
+            {
+              "token": "ability_crackshot_quip",
+              "line": 1640
+            },
+            {
+              "token": "ability_crackshot_desc",
+              "line": 1641
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_gravity_lasso",
+          "name": "Spirit Lasso",
+          "description_token_refs": [
+            {
+              "token": "ability_gravity_lasso_quip",
+              "line": 1706
+            },
+            {
+              "token": "ability_gravity_lasso_desc",
+              "line": 1707
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_bebop",
+      "name": "Bebop",
+      "line": 27380,
+      "m_HeroID": "15",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L27380",
+      "analysis": {
+        "movement": "Hook/uppercut move others",
+        "aim_and_complexity": "First-character hook; attached bomb; beam",
+        "release_cancel_rules": "Delayed bomb; sustained beam",
+        "counterplay_and_readability_inference": "Avoid hook line; allies can be moved too"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_uppercut",
+          "name": "Exploding Uppercut",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_uppercut_quip",
+              "line": 1504
+            },
+            {
+              "token": "citadel_ability_uppercut_desc",
+              "line": 1505
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_sticky_bomb",
+          "name": "Sticky Bomb",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_sticky_bomb_quip",
+              "line": 1528
+            },
+            {
+              "token": "citadel_ability_sticky_bomb_desc",
+              "line": 1529
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_hook",
+          "name": "Grapple Arm",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_hook_quip",
+              "line": 1558
+            },
+            {
+              "token": "citadel_ability_hook_desc",
+              "line": 1559
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_bebop_laser_beam",
+          "name": "Hyper Beam",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_bebop_laser_beam_quip",
+              "line": 1545
+            },
+            {
+              "token": "citadel_ability_bebop_laser_beam_desc",
+              "line": 1546
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_nano",
+      "name": "Calico",
+      "line": 29555,
+      "m_HeroID": "16",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L29555",
+      "analysis": {
+        "movement": "Dash/slash; cat and shadow forms",
+        "aim_and_complexity": "Bomb placement and close ring",
+        "release_cancel_rules": "Damage resets cat speed; shadow returns after delay",
+        "counterplay_and_readability_inference": "Track reappearance timing; keep form silhouette legible"
+      },
+      "abilities": [
+        {
+          "id": "ability_nano_clustergrenade",
+          "name": "Gloom Bombs",
+          "description_token_refs": [
+            {
+              "token": "ability_nano_clustergrenade_desc",
+              "line": 1834
+            },
+            {
+              "token": "ability_nano_clustergrenade_quip",
+              "line": 1837
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_nano_dash",
+          "name": "Leaping Slash",
+          "description_token_refs": [
+            {
+              "token": "ability_nano_dash_desc",
+              "line": 1859
+            },
+            {
+              "token": "ability_nano_dash_quip",
+              "line": 1865
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_nano_catform",
+          "name": "Ava",
+          "description_token_refs": [
+            {
+              "token": "ability_nano_catform_desc",
+              "line": 1843
+            },
+            {
+              "token": "ability_nano_catform_quip",
+              "line": 1848
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_nano_shadow_pulse",
+          "name": "Return to Shadows",
+          "description_token_refs": [
+            {
+              "token": "ability_nano_shadow_pulse_desc",
+              "line": 1871
+            },
+            {
+              "token": "ability_nano_shadow_pulse_quip",
+              "line": 1880
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_orion",
+      "name": "Grey Talon",
+      "line": 31606,
+      "m_HeroID": "17",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L31606",
+      "analysis": {
+        "movement": "Launch/glide; controllable owl",
+        "aim_and_complexity": "Piercing charged arrow; armed snare",
+        "release_cancel_rules": "Hold Attack/Ability1; Mantle ends glide/owl control",
+        "counterplay_and_readability_inference": "Dodge shot; trap has arm phase and early shot detonation"
+      },
+      "abilities": [
+        {
+          "id": "ability_charged_shot",
+          "name": "Charged Shot",
+          "description_token_refs": [
+            {
+              "token": "ability_charged_shot_quip",
+              "line": 1892
+            },
+            {
+              "token": "ability_charged_shot_desc",
+              "line": 1893
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_power_jump",
+          "name": "Rain of Arrows",
+          "description_token_refs": [
+            {
+              "token": "ability_power_jump_quip",
+              "line": 1901
+            },
+            {
+              "token": "ability_power_jump_desc",
+              "line": 1902
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_immobilize_trap",
+          "name": "Spirit Snare",
+          "description_token_refs": [
+            {
+              "token": "ability_immobilize_trap_quip",
+              "line": 1917
+            },
+            {
+              "token": "ability_immobilize_trap_desc",
+              "line": 1918
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_guided_arrow",
+          "name": "Guided Owl",
+          "description_token_refs": [
+            {
+              "token": "ability_guided_arrow_quip",
+              "line": 1935
+            },
+            {
+              "token": "ability_guided_arrow_desc",
+              "line": 1936
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_krill",
+      "name": "Mo & Krill",
+      "line": 33697,
+      "m_HeroID": "18",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L33697",
+      "analysis": {
+        "movement": "Burrow, emerge and knock up",
+        "aim_and_complexity": "Close drain/disarm; held victim",
+        "release_cancel_rules": "Channel holds target; damage reduces burrow speed",
+        "counterplay_and_readability_inference": "Keep distance; read underground/exit phases"
+      },
+      "abilities": [
+        {
+          "id": "ability_intimidate",
+          "name": "Scorn",
+          "description_token_refs": [
+            {
+              "token": "ability_intimidate_quip",
+              "line": 2194
+            },
+            {
+              "token": "ability_intimidate_desc",
+              "line": 2195
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_burrow",
+          "name": "Burrow",
+          "description_token_refs": [
+            {
+              "token": "ability_burrow_quip",
+              "line": 2177
+            },
+            {
+              "token": "ability_burrow_desc",
+              "line": 2178
+            },
+            {
+              "token": "ability_burrow2_desc",
+              "line": 2179
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_throw_sand",
+          "name": "Sand Blast",
+          "description_token_refs": [
+            {
+              "token": "ability_throw_sand_quip",
+              "line": 2207
+            },
+            {
+              "token": "ability_throw_sand_desc",
+              "line": 2208
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_ult_combo",
+          "name": "Combo",
+          "description_token_refs": [
+            {
+              "token": "ability_ult_combo_quip",
+              "line": 2218
+            },
+            {
+              "token": "ability_ult_combo_desc",
+              "line": 2219
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_shiv",
+      "name": "Shiv",
+      "line": 35804,
+      "m_HeroID": "19",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L35804",
+      "analysis": {
+        "movement": "Dash and execution leap",
+        "aim_and_complexity": "Knife stacks; deferred-damage resource",
+        "release_cancel_rules": "Execute recast window; active clears deferred damage",
+        "counterplay_and_readability_inference": "Execution threshold and stored damage need separate cues"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_shiv_dagger",
+          "name": "Serrated Knives",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_shiv_dagger_quip",
+              "line": 2263
+            },
+            {
+              "token": "citadel_ability_shiv_dagger_desc",
+              "line": 2264
+            },
+            {
+              "token": "citadel_ability_shiv_dagger_max_rage_desc",
+              "line": 2265
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_shiv_dash",
+          "name": "Slice and Dice",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_shiv_dash_quip",
+              "line": 2286
+            },
+            {
+              "token": "citadel_ability_shiv_dash_desc",
+              "line": 2287
+            },
+            {
+              "token": "citadel_ability_shiv_dash_ult_desc",
+              "line": 2288
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_shiv_defer_damage",
+          "name": "Bloodletting",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_shiv_defer_damage_quip",
+              "line": 2314
+            },
+            {
+              "token": "citadel_ability_shiv_defer_damage_desc",
+              "line": 2315
+            },
+            {
+              "token": "citadel_ability_shiv_defer_damage_max_rage_desc",
+              "line": 2316
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_shiv_killing_blow",
+          "name": "Killing Blow",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_shiv_killing_blow_quip",
+              "line": 2334
+            },
+            {
+              "token": "citadel_ability_shiv_killing_blow_active_desc",
+              "line": 2335
+            },
+            {
+              "token": "citadel_ability_shiv_killing_blow_passive_desc",
+              "line": 2336
+            },
+            {
+              "token": "citadel_ability_shiv_killing_blow_passive_desc_footer",
+              "line": 2337
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_tengu",
+      "name": "Ivy",
+      "line": 37921,
+      "m_HeroID": "20",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L37921",
+      "analysis": {
+        "movement": "Stone landing; allied flight",
+        "aim_and_complexity": "Thorn patch, ally link, carry target",
+        "release_cancel_rules": "Link needs line of sight; damage briefly blocks flight start",
+        "counterplay_and_readability_inference": "Carry constrains ally attacks; link/radius must stay readable"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_tengu_urn",
+          "name": "Entangling Thorns",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_tengu_urn_quip",
+              "line": 2553
+            },
+            {
+              "token": "citadel_ability_tengu_urn_desc",
+              "line": 2554
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_tangotether",
+          "name": "Kudzu Connection",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_tangotether_quip",
+              "line": 2568
+            },
+            {
+              "token": "citadel_ability_tangotether_desc",
+              "line": 2569
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_tengu_stone_form",
+          "name": "Stone Form",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_tengu_stone_form_quip",
+              "line": 2559
+            },
+            {
+              "token": "citadel_ability_tengu_stone_form_desc",
+              "line": 2560
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_tengu_airlift",
+          "name": "Air Drop",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_tengu_airlift_quip",
+              "line": 2593
+            },
+            {
+              "token": "citadel_ability_tengu_airlift_desc",
+              "line": 2594
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_warden",
+      "name": "Warden",
+      "line": 41831,
+      "m_HeroID": "25",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L41831",
+      "analysis": {
+        "movement": "Barrier plus pursuit speed",
+        "aim_and_complexity": "Flask; position-based curse; self pulses",
+        "release_cancel_rules": "Enemy gets escape interval; ultimate charges first",
+        "counterplay_and_readability_inference": "Leave marked origin before root; show deadline and boundary"
+      },
+      "abilities": [
+        {
+          "id": "ability_warden_crowd_control",
+          "name": "Alchemical Flask",
+          "description_token_refs": [
+            {
+              "token": "ability_warden_crowd_control_quip",
+              "line": 1168
+            },
+            {
+              "token": "ability_warden_crowd_control_desc",
+              "line": 1169
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_warden_high_alert",
+          "name": "Willpower",
+          "description_token_refs": [
+            {
+              "token": "ability_warden_high_alert_quip",
+              "line": 1159
+            },
+            {
+              "token": "ability_warden_high_alert_desc",
+              "line": 1160
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_warden_lock_down",
+          "name": "Binding Word",
+          "description_token_refs": [
+            {
+              "token": "ability_warden_lock_down_quip",
+              "line": 1136
+            },
+            {
+              "token": "ability_warden_lock_down_desc",
+              "line": 1137
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_warden_riot_protocol",
+          "name": "Last Stand",
+          "description_token_refs": [
+            {
+              "token": "ability_warden_riot_protocol_quip",
+              "line": 1186
+            },
+            {
+              "token": "ability_warden_riot_protocol_desc",
+              "line": 1187
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_yamato",
+      "name": "Yamato",
+      "line": 43961,
+      "m_HeroID": "27",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L43961",
+      "analysis": {
+        "movement": "Target grapple approach",
+        "aim_and_complexity": "Charged slash, close heal, transformation",
+        "release_cancel_rules": "Attack/Ability1 releases weaker slash early",
+        "counterplay_and_readability_inference": "Charge exposure creates opening; show partial/full readiness"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_power_slash",
+          "name": "Power Slash",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_power_slash_quip",
+              "line": 3053
+            },
+            {
+              "token": "citadel_ability_power_slash_desc",
+              "line": 3054
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_flying_strike",
+          "name": "Flying Slash",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_flying_strike_quip",
+              "line": 3080
+            },
+            {
+              "token": "citadel_ability_flying_strike_desc",
+              "line": 3081
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_healing_slash",
+          "name": "Crimson Slash",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_healing_slash_quip",
+              "line": 3118
+            },
+            {
+              "token": "citadel_ability_healing_slash_desc",
+              "line": 3122
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_infinity_slash",
+          "name": "Shadow Transformation",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_infinity_slash_quip",
+              "line": 3089
+            },
+            {
+              "token": "citadel_ability_infinity_slash_desc",
+              "line": 3090
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_lash",
+      "name": "Lash",
+      "line": 46113,
+      "m_HeroID": "31",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L46113",
+      "analysis": {
+        "movement": "Grapple resets air jumps/dashes; dive",
+        "aim_and_complexity": "Ground strike scales with height; multi-target latch",
+        "release_cancel_rules": "Attack slams early; latch drops out-of-range/occluded targets",
+        "counterplay_and_readability_inference": "Break latch line/range; show connected targets"
+      },
+      "abilities": [
+        {
+          "id": "citadel_ability_lash_down_strike",
+          "name": "Ground Strike",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_lash_down_strike_quip",
+              "line": 1333
+            },
+            {
+              "token": "citadel_ability_lash_down_strike_desc",
+              "line": 1334
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_lash",
+          "name": "Grapple",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_lash_quip",
+              "line": 1313
+            },
+            {
+              "token": "citadel_ability_lash_desc",
+              "line": 1314
+            },
+            {
+              "token": "citadel_ability_lash_down_strike_quip",
+              "line": 1333
+            },
+            {
+              "token": "citadel_ability_lash_down_strike_desc",
+              "line": 1334
+            },
+            {
+              "token": "citadel_ability_lash_ultimate_quip",
+              "line": 1391
+            },
+            {
+              "token": "citadel_ability_lash_ultimate_desc",
+              "line": 1392
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_lash_flog",
+          "name": "Flog",
+          "description_token_refs": [
+            {
+              "token": "ability_lash_flog_quip",
+              "line": 1359
+            },
+            {
+              "token": "ability_lash_flog_desc",
+              "line": 1360
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "citadel_ability_lash_ultimate",
+          "name": "Death Slam",
+          "description_token_refs": [
+            {
+              "token": "citadel_ability_lash_ultimate_quip",
+              "line": 1391
+            },
+            {
+              "token": "citadel_ability_lash_ultimate_desc",
+              "line": 1392
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_viscous",
+      "name": "Viscous",
+      "line": 48194,
+      "m_HeroID": "35",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L48194",
+      "analysis": {
+        "movement": "Ball bounces/double-jumps; self/ally punch",
+        "aim_and_complexity": "Goo placement, cube protection, melee punch",
+        "release_cancel_rules": "Mantle exits cube; cube prevents new actions",
+        "counterplay_and_readability_inference": "Punch can be parried; cube must show protection/lockout"
+      },
+      "abilities": [
+        {
+          "id": "viscous_goo_grenade",
+          "name": "Splatter",
+          "description_token_refs": [
+            {
+              "token": "viscous_goo_grenade_desc",
+              "line": 3198
+            },
+            {
+              "token": "viscous_goo_grenade_bounce_desc",
+              "line": 3199
+            },
+            {
+              "token": "viscous_goo_grenade_quip",
+              "line": 3200
+            },
+            {
+              "token": "viscous_goo_grenade_puddle_desc",
+              "line": 3201
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "viscous_restorative_goo",
+          "name": "The Cube",
+          "description_token_refs": [
+            {
+              "token": "viscous_restorative_goo_desc",
+              "line": 3215
+            },
+            {
+              "token": "viscous_restorative_goo_quip",
+              "line": 3216
+            },
+            {
+              "token": "viscous_restorative_goo_buff_desc",
+              "line": 3220
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "viscous_telepunch",
+          "name": "Puddle Punch",
+          "description_token_refs": [
+            {
+              "token": "viscous_telepunch_desc",
+              "line": 3240
+            },
+            {
+              "token": "viscous_telepunch_quip",
+              "line": 3241
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "viscous_goo_bowling_ball",
+          "name": "Goo Ball",
+          "description_token_refs": [
+            {
+              "token": "viscous_goo_bowling_ball_desc",
+              "line": 3232
+            },
+            {
+              "token": "viscous_goo_bowling_ball_quip",
+              "line": 3233
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_synth",
+      "name": "Pocket",
+      "line": 59035,
+      "m_HeroID": "50",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L59035",
+      "analysis": {
+        "movement": "Cloak teleport; aerial float; suitcase",
+        "aim_and_complexity": "Projectile channel and close affliction",
+        "release_cancel_rules": "Recast cloak teleports; any action ends suitcase; dash/cloak preserve barrage",
+        "counterplay_and_readability_inference": "Track cloak endpoint and return burst; affliction non-lethal"
+      },
+      "abilities": [
+        {
+          "id": "synth_barrage",
+          "name": "Barrage",
+          "description_token_refs": [
+            {
+              "token": "synth_barrage_quip",
+              "line": 2411
+            },
+            {
+              "token": "synth_barrage_desc",
+              "line": 2412
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "synth_plasma_flux",
+          "name": "Flying Cloak",
+          "description_token_refs": [
+            {
+              "token": "synth_plasma_flux_quip",
+              "line": 2393
+            },
+            {
+              "token": "synth_plasma_flux_desc",
+              "line": 2394
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "synth_pulse",
+          "name": "Enchanter's Satchel",
+          "description_token_refs": [
+            {
+              "token": "synth_pulse_quip",
+              "line": 2403
+            },
+            {
+              "token": "synth_pulse_desc",
+              "line": 2404
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "synth_affliction",
+          "name": "Affliction",
+          "description_token_refs": [
+            {
+              "token": "synth_affliction_quip",
+              "line": 2430
+            },
+            {
+              "token": "synth_affliction_desc",
+              "line": 2431
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_mirage",
+      "name": "Mirage",
+      "line": 62859,
+      "m_HeroID": "52",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L62859",
+      "analysis": {
+        "movement": "Forward whirlwind; map teleport",
+        "aim_and_complexity": "Scarab target and marks",
+        "release_cancel_rules": "Activate consumes marks; damage interrupts teleport wait",
+        "counterplay_and_readability_inference": "Attack during travel windup; mark count/arrival cue"
+      },
+      "abilities": [
+        {
+          "id": "mirage_fire_beetles",
+          "name": "Fire Scarabs",
+          "description_token_refs": [
+            {
+              "token": "mirage_fire_beetles_quip",
+              "line": 2469
+            },
+            {
+              "token": "mirage_fire_beetles_desc",
+              "line": 2470
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "mirage_tornado",
+          "name": "Dust Devil",
+          "description_token_refs": [
+            {
+              "token": "mirage_tornado_quip",
+              "line": 2444
+            },
+            {
+              "token": "mirage_tornado_desc",
+              "line": 2445
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "mirage_sand_phantom",
+          "name": "Djinn's Mark",
+          "description_token_refs": [
+            {
+              "token": "mirage_sand_phantom_quip",
+              "line": 2497
+            },
+            {
+              "token": "mirage_sand_phantom_desc",
+              "line": 2498
+            },
+            {
+              "token": "mirage_sand_phantom_passive_desc",
+              "line": 2499
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "mirage_teleport",
+          "name": "Traveler",
+          "description_token_refs": [
+            {
+              "token": "mirage_teleport_quip",
+              "line": 2486
+            },
+            {
+              "token": "mirage_teleport_desc",
+              "line": 2487
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_viper",
+      "name": "Vyper",
+      "line": 73544,
+      "m_HeroID": "58",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L73544",
+      "analysis": {
+        "movement": "Long controllable uphill slides",
+        "aim_and_complexity": "Stacking daggers; delayed venom; direct-hit bola",
+        "release_cancel_rules": "Venom delayed; petrify prevents actions and blocks damage",
+        "counterplay_and_readability_inference": "Differentiate splash slow from direct petrify"
+      },
+      "abilities": [
+        {
+          "id": "ability_viper_debuffdagger",
+          "name": "Screwjab Dagger",
+          "description_token_refs": [
+            {
+              "token": "ability_viper_debuffdagger_desc",
+              "line": 3540
+            },
+            {
+              "token": "ability_viper_debuffdagger_quip",
+              "line": 3543
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_viper_venom",
+          "name": "Lethal Venom",
+          "description_token_refs": [
+            {
+              "token": "ability_viper_venom_desc",
+              "line": 3497
+            },
+            {
+              "token": "ability_viper_venom_quip",
+              "line": 3512
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_viper_snakedash",
+          "name": "Slither",
+          "description_token_refs": [
+            {
+              "token": "ability_viper_snakedash_desc",
+              "line": 3483
+            },
+            {
+              "token": "ability_viper_snakedash_quip",
+              "line": 3485
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_viper_petrifybola",
+          "name": "Petrifying Bola",
+          "description_token_refs": [
+            {
+              "token": "ability_viper_petrifybola_desc",
+              "line": 3529
+            },
+            {
+              "token": "ability_viper_petrifybola_quip",
+              "line": 3537
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_magician",
+      "name": "Sinclair",
+      "line": 77427,
+      "m_HeroID": "60",
+      "m_nComplexity": "4",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L77427",
+      "analysis": {
+        "movement": "Swap with summoned assistant",
+        "aim_and_complexity": "Redirect bolt; duplicate aim; hex area; copied ultimate",
+        "release_cancel_rules": "Recast bolt redirects, assistant swaps, ultimate uses copied action",
+        "counterplay_and_readability_inference": "Clone ownership and currently copied power dominate reading load"
+      },
+      "abilities": [
+        {
+          "id": "ability_magician_magicbolt",
+          "name": "Vexing Bolt",
+          "description_token_refs": [
+            {
+              "token": "ability_magician_magicbolt_desc",
+              "line": 3554
+            },
+            {
+              "token": "ability_magician_magicbolt_quip",
+              "line": 3557
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_magician_cloneturret",
+          "name": "Spectral Assistant",
+          "description_token_refs": [
+            {
+              "token": "ability_magician_cloneturret_desc",
+              "line": 3579
+            },
+            {
+              "token": "ability_magician_cloneturret_quip",
+              "line": 3580
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_magician_animalhexarea",
+          "name": "Rabbit Hex",
+          "description_token_refs": [
+            {
+              "token": "ability_magician_animalhexarea_desc",
+              "line": 3618
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_magician_copyult",
+          "name": "Audience Participation",
+          "description_token_refs": [
+            {
+              "token": "ability_magician_copyult_desc",
+              "line": 3648
+            },
+            {
+              "token": "ability_magician_copyult_quip",
+              "line": 3655
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_vampirebat",
+      "name": "Mina",
+      "line": 83030,
+      "m_HeroID": "63",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L83030",
+      "analysis": {
+        "movement": "Untargetable retreat with short recast window",
+        "aim_and_complexity": "Per-target bite buildup; seeking bat ultimate",
+        "release_cancel_rules": "Retreat can recast; Rake base description absent",
+        "counterplay_and_readability_inference": "Show bite cooldown per target and retreat destination"
+      },
+      "abilities": [
+        {
+          "id": "ability_vampirebat_steallife",
+          "name": "Rake",
+          "description_token_refs": [],
+          "base_description_available": false
+        },
+        {
+          "id": "ability_vampirebat_batblink",
+          "name": "Sanguine Retreat",
+          "description_token_refs": [
+            {
+              "token": "ability_vampirebat_batblink_desc",
+              "line": 3758
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_vampirebat_lovebites",
+          "name": "Love Bites",
+          "description_token_refs": [
+            {
+              "token": "ability_vampirebat_lovebites_desc",
+              "line": 3745
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_vampirebat_batswarm",
+          "name": "Nox Nostra",
+          "description_token_refs": [
+            {
+              "token": "ability_vampirebat_batswarm_desc",
+              "line": 3762
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_drifter",
+      "name": "Drifter",
+      "line": 85068,
+      "m_HeroID": "64",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L85068",
+      "analysis": {
+        "movement": "Mark reactivation moves behind victim",
+        "aim_and_complexity": "Close cone, bleeding mark, isolation detection",
+        "release_cancel_rules": "Recast mark only during bleed; vision-limiting ultimate",
+        "counterplay_and_readability_inference": "Stay grouped; mark expiry and darkness boundary need cues"
+      },
+      "abilities": [
+        {
+          "id": "drifter_blood_blast",
+          "name": "Rend",
+          "description_token_refs": [
+            {
+              "token": "drifter_blood_blast_desc",
+              "line": 4091
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "drifter_shadow_mark",
+          "name": "Stalker's Mark",
+          "description_token_refs": [
+            {
+              "token": "drifter_shadow_mark_desc",
+              "line": 4108
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_drifter_hunger",
+          "name": "Bloodscent",
+          "description_token_refs": [
+            {
+              "token": "ability_drifter_hunger_passive_desc",
+              "line": 4118
+            },
+            {
+              "token": "ability_drifter_hunger_active_desc",
+              "line": 4119
+            },
+            {
+              "token": "ability_drifter_hunger_on_kill_desc",
+              "line": 4121
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "drifter_darkness",
+          "name": "Eternal Night",
+          "description_token_refs": [
+            {
+              "token": "drifter_darkness_desc",
+              "line": 4168
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_priest",
+      "name": "Venator",
+      "line": 87268,
+      "m_HeroID": "65",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L87268",
+      "analysis": {
+        "movement": "Shotgun knockback creates space",
+        "aim_and_complexity": "Bouncing grenade, trap, three-stake crossbow",
+        "release_cancel_rules": "Trap arms; final stake receives distinct payoff",
+        "counterplay_and_readability_inference": "Avoid wall pin and trap; count remaining empowered stakes"
+      },
+      "abilities": [
+        {
+          "id": "ability_priest_flashbang",
+          "name": "Consecrating Grenade",
+          "description_token_refs": [
+            {
+              "token": "ability_priest_flashbang_desc",
+              "line": 4714
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_priest_knockback",
+          "name": "Gutshot",
+          "description_token_refs": [
+            {
+              "token": "ability_priest_knockback_desc",
+              "line": 4657
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_priest_beartrap",
+          "name": "Hex-Lined Snap Trap",
+          "description_token_refs": [
+            {
+              "token": "ability_priest_beartrap_desc",
+              "line": 4723
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_priest_weaponswap",
+          "name": "Ira Domini",
+          "description_token_refs": [
+            {
+              "token": "ability_priest_weaponswap_desc",
+              "line": 4694
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_frank",
+      "name": "Victor",
+      "line": 89404,
+      "m_HeroID": "66",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L89404",
+      "analysis": {
+        "movement": "Self-damage produces speed/regen",
+        "aim_and_complexity": "Damage intake charges battery; growing aura",
+        "release_cancel_rules": "Aura also hurts self; lethal event triggers reanimation channel",
+        "counterplay_and_readability_inference": "Leave reanimation area; distinguish health and battery"
+      },
+      "abilities": [
+        {
+          "id": "ability_frank_shocktarget2",
+          "name": "Pain Battery",
+          "description_token_refs": [
+            {
+              "token": "ability_frank_shocktarget2_desc",
+              "line": 4004
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_frank_selfzap",
+          "name": "Jumpstart",
+          "description_token_refs": [
+            {
+              "token": "ability_frank_selfzap_desc",
+              "line": 4039
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_frank_painaura",
+          "name": "Aura of Suffering",
+          "description_token_refs": [
+            {
+              "token": "ability_frank_painaura_desc",
+              "line": 4047
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_frank_revive",
+          "name": "Shocking Reanimation",
+          "description_token_refs": [
+            {
+              "token": "ability_frank_revive_desc",
+              "line": 4063
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_bookworm",
+      "name": "Paige",
+      "line": 91536,
+      "m_HeroID": "67",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L91536",
+      "analysis": {
+        "movement": "Shared movement; map-length team wave",
+        "aim_and_complexity": "Directed dragon, ally barrier, delayed root",
+        "release_cancel_rules": "Area detonates after delay; wave strength grows with travel",
+        "counterplay_and_readability_inference": "Exit marked zone; barrier and moving wave need separate forms"
+      },
+      "abilities": [
+        {
+          "id": "ability_bookworm_dragonfire",
+          "name": "Bookwyrm",
+          "description_token_refs": [
+            {
+              "token": "ability_bookworm_dragonfire_desc",
+              "line": 4213
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_bookworm_knightbarrier",
+          "name": "Plot Armor",
+          "description_token_refs": [
+            {
+              "token": "ability_bookworm_knightbarrier_desc",
+              "line": 4226
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_bookworm_aoemagic",
+          "name": "Captivating Read",
+          "description_token_refs": [
+            {
+              "token": "ability_bookworm_aoemagic_desc",
+              "line": 4238
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_bookworm_knightcharge",
+          "name": "Rallying Charge",
+          "description_token_refs": [
+            {
+              "token": "ability_bookworm_knightcharge_desc",
+              "line": 4243
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_doorman",
+      "name": "The Doorman",
+      "line": 95437,
+      "m_HeroID": "69",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L95437",
+      "analysis": {
+        "movement": "Two connected portals transport players/projectiles",
+        "aim_and_complexity": "Shootable bell; cart path; target exile",
+        "release_cancel_rules": "Bell shoots early; portal pair placement constrained",
+        "counterplay_and_readability_inference": "Read both portal ends; exile has return/deadline rule"
+      },
+      "abilities": [
+        {
+          "id": "ability_doorman_bomb",
+          "name": "Call Bell",
+          "description_token_refs": [
+            {
+              "token": "ability_doorman_bomb_desc",
+              "line": 3906
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_doorman_doorway",
+          "name": "Doorway",
+          "description_token_refs": [
+            {
+              "token": "ability_doorman_doorway_desc",
+              "line": 3931
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_doorman_luggage_cart",
+          "name": "Luggage Cart",
+          "description_token_refs": [
+            {
+              "token": "ability_doorman_luggage_cart_desc",
+              "line": 3921
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_doorman_hotel",
+          "name": "Hotel Guest",
+          "description_token_refs": [
+            {
+              "token": "ability_doorman_hotel_desc",
+              "line": 3942
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_punkgoat",
+      "name": "Billy",
+      "line": 101034,
+      "m_HeroID": "72",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L101034",
+      "analysis": {
+        "movement": "Rising charge and descending bat slam",
+        "aim_and_complexity": "Melee-to-ammo loop; nearby chain",
+        "release_cancel_rules": "Chain yanks after delay; line-of-sight loss breaks it",
+        "counterplay_and_readability_inference": "Break sight and avoid grouped chain; distinct taut/slack states"
+      },
+      "abilities": [
+        {
+          "id": "ability_punkgoat_ult",
+          "name": "Bashdown",
+          "description_token_refs": [
+            {
+              "token": "ability_punkgoat_ult_desc",
+              "line": 3860
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_punkgoat_goatflip",
+          "name": "Rising Ram",
+          "description_token_refs": [
+            {
+              "token": "ability_punkgoat_goatflip_desc",
+              "line": 3877
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_punkgoat_blasted",
+          "name": "Blasted",
+          "description_token_refs": [
+            {
+              "token": "ability_punkgoat_blastedactive_desc",
+              "line": 3828
+            },
+            {
+              "token": "ability_punkgoat_blasted_desc",
+              "line": 3829
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_punkgoat_tether",
+          "name": "Chain Gang",
+          "description_token_refs": [
+            {
+              "token": "ability_punkgoat_tether_desc",
+              "line": 3803
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_necro",
+      "name": "Graves",
+      "line": 108416,
+      "m_HeroID": "76",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L108416",
+      "analysis": {
+        "movement": "Shared movement; summons advance lanes",
+        "aim_and_complexity": "Jar summons follow weapon target; line snare; grave",
+        "release_cancel_rules": "Jar resource fills from deaths; grave spawns over time",
+        "counterplay_and_readability_inference": "Grave destroyed by two heavy melees; identify summon owner"
+      },
+      "abilities": [
+        {
+          "id": "ability_necro_hauntingskull",
+          "name": "Jar of Dead",
+          "description_token_refs": [
+            {
+              "token": "ability_necro_hauntingskull_desc",
+              "line": 4377
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_necro_zombiewall",
+          "name": "Grasping Hands",
+          "description_token_refs": [
+            {
+              "token": "ability_necro_zombiewall_desc",
+              "line": 4423
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_necro_fear",
+          "name": "Essence Theft",
+          "description_token_refs": [
+            {
+              "token": "ability_necro_fear_desc",
+              "line": 4440
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_necro_gravestone",
+          "name": "Borrowed Decree",
+          "description_token_refs": [
+            {
+              "token": "ability_necro_gravestone_desc_1",
+              "line": 4461
+            },
+            {
+              "token": "ability_necro_gravestone_desc_2",
+              "line": 4462
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_fencer",
+      "name": "Apollo",
+      "line": 110554,
+      "m_HeroID": "77",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L110554",
+      "analysis": {
+        "movement": "Back leap, riposte dash, directional lunges",
+        "aim_and_complexity": "Timed holds and precision slashes",
+        "release_cancel_rules": "Perfect release window; recast lunges; hold ultimate delays",
+        "counterplay_and_readability_inference": "Bait deflection; show release window without hiding opponents"
+      },
+      "abilities": [
+        {
+          "id": "ability_fencer_throwblade",
+          "name": "Disengaging Sigil",
+          "description_token_refs": [
+            {
+              "token": "ability_fencer_throwblade_desc",
+              "line": 4795
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_fencer_riposte",
+          "name": "Riposte",
+          "description_token_refs": [
+            {
+              "token": "ability_fencer_riposte_desc",
+              "line": 4846
+            },
+            {
+              "token": "ability_fencer_riposte_attack_desc",
+              "line": 4866
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_fencer_lunge",
+          "name": "Flawless Advance",
+          "description_token_refs": [
+            {
+              "token": "ability_fencer_lunge_desc",
+              "line": 4808
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_fencer_ultimate",
+          "name": "Itani Lo Sahn",
+          "description_token_refs": [
+            {
+              "token": "ability_fencer_ultimate_desc",
+              "line": 4881
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_deadpack",
+      "name": "Deadman Danny",
+      "line": 112674,
+      "m_HeroID": "78",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L112674",
+      "analysis": {
+        "movement": "Heat-limited jetpack, dive, recoil blast",
+        "aim_and_complexity": "Drag-to-orient salvo; charged mark consumption",
+        "release_cancel_rules": "Dive early; empty landing stuns self; jetpack cools after heat",
+        "counterplay_and_readability_inference": "Predict forced landing; show heat, fuel, mark distinctly"
+      },
+      "abilities": [
+        {
+          "id": "ability_deadpack_chargeblast",
+          "name": "Strix Salvo",
+          "description_token_refs": [
+            {
+              "token": "ability_deadpack_chargeblast_desc",
+              "line": 5272
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_deadpack_rocketeer",
+          "name": "Chimera Mk1",
+          "description_token_refs": [
+            {
+              "token": "ability_deadpack_rocketeer_desc",
+              "line": 5316
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_deadpack_flamethrower",
+          "name": "Jettison Fuel",
+          "description_token_refs": [
+            {
+              "token": "ability_deadpack_flamethrower_desc",
+              "line": 5301
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_deadpack_ultimate",
+          "name": "Close The Deal",
+          "description_token_refs": [
+            {
+              "token": "ability_deadpack_ultimate_desc",
+              "line": 5356
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_familiar",
+      "name": "Rem",
+      "line": 114760,
+      "m_HeroID": "79",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L114760",
+      "analysis": {
+        "movement": "Attach and hop among allies",
+        "aim_and_complexity": "Pillow knockback, helpers, forward gaze",
+        "release_cancel_rules": "One heal per ally; ultimate stun detaches; gaze ends in sleep",
+        "counterplay_and_readability_inference": "Watch attachment and channel direction; distinguish helper tasks"
+      },
+      "abilities": [
+        {
+          "id": "ability_familiar_ability02",
+          "name": "Pillow Toss",
+          "description_token_refs": [
+            {
+              "token": "ability_familiar_ability02_desc",
+              "line": 4287
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_familiar_attach",
+          "name": "Tag Along",
+          "description_token_refs": [
+            {
+              "token": "ability_familiar_attach_desc",
+              "line": 4294
+            },
+            {
+              "token": "ability_familiar_attach_trigger_desc",
+              "line": 4345
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_familiar_helpinghands",
+          "name": "Lil Helpers",
+          "description_token_refs": [
+            {
+              "token": "ability_familiar_helpinghands_desc",
+              "line": 4348
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_familiar_ability01",
+          "name": "Naptime",
+          "description_token_refs": [
+            {
+              "token": "ability_familiar_ability01_desc",
+              "line": 4266
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_werewolf",
+      "name": "Silver",
+      "line": 116944,
+      "m_HeroID": "80",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L116944",
+      "analysis": {
+        "movement": "Kick approaches then pushes self away",
+        "aim_and_complexity": "Mark-and-shoot loop; disabling bola",
+        "release_cancel_rules": "Bloodlust auto-transforms or active transforms; replaces kit",
+        "counterplay_and_readability_inference": "Transformation changes threat; mark/bloodlust visible"
+      },
+      "abilities": [
+        {
+          "id": "ability_werewolf_unloadgun",
+          "name": "Slam Fire",
+          "description_token_refs": [
+            {
+              "token": "ability_werewolf_unloadgun_desc",
+              "line": 4601
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_werewolf_kickflip",
+          "name": "Boot Kick",
+          "description_token_refs": [
+            {
+              "token": "ability_werewolf_kickflip_desc_1",
+              "line": 4592
+            },
+            {
+              "token": "ability_werewolf_kickflip_desc_2",
+              "line": 4593
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_werewolf_netshot",
+          "name": "Entangling Bola",
+          "description_token_refs": [
+            {
+              "token": "ability_werewolf_netshot_desc",
+              "line": 4586
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_werewolf_transformation",
+          "name": "Lycan Curse",
+          "description_token_refs": [
+            {
+              "token": "ability_werewolf_transformation_desc",
+              "line": 4565
+            },
+            {
+              "token": "ability_werewolf_transformation_trigger_desc",
+              "line": 4571
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_unicorn",
+      "name": "Celeste",
+      "line": 119092,
+      "m_HeroID": "81",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L119092",
+      "analysis": {
+        "movement": "Shared movement; personal protective prism",
+        "aim_and_complexity": "Cone mark; delayed beam; bouncing orb",
+        "release_cancel_rules": "Barrier destruction triggers silence/burst; beam forms after delay",
+        "counterplay_and_readability_inference": "Leave beam marker; avoid feeding prism burst nearby"
+      },
+      "abilities": [
+        {
+          "id": "ability_unicorn_radiantblast",
+          "name": "Light Eater",
+          "description_token_refs": [
+            {
+              "token": "ability_unicorn_radiantblast_desc",
+              "line": 4735
+            },
+            {
+              "token": "ability_unicorn_radiantblast_on_bullet_hit_desc",
+              "line": 4736
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_unicorn_prismaticguard",
+          "name": "Dazzling Trick",
+          "description_token_refs": [
+            {
+              "token": "ability_unicorn_prismaticguard_desc",
+              "line": 4745
+            },
+            {
+              "token": "ability_unicorn_prismaticguard_on_explode_desc",
+              "line": 4746
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_unicorn_luminousstrike",
+          "name": "Radiant Daggers",
+          "description_token_refs": [
+            {
+              "token": "ability_unicorn_luminousstrike_desc",
+              "line": 4770
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_unicorn_dazzlingorb",
+          "name": "Shining Wonder",
+          "description_token_refs": [
+            {
+              "token": "ability_unicorn_dazzlingorb_desc",
+              "line": 4759
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_ratking",
+      "name": "Rat King",
+      "line": 124702,
+      "m_HeroID": "84",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L124702",
+      "analysis": {
+        "movement": "Shared movement; team speed banner",
+        "aim_and_complexity": "Bouncing multi-burst grenade, rats, barrier",
+        "release_cancel_rules": "Grenade can be meleed; dash shakes off rats",
+        "counterplay_and_readability_inference": "Dash/melee are direct answers; rat count and banner radius visible"
+      },
+      "abilities": [
+        {
+          "id": "ability_ratking_scrap_grenade",
+          "name": "Scrap Grenade",
+          "description_token_refs": [
+            {
+              "token": "ability_ratking_scrap_grenade_desc",
+              "line": 4912
+            },
+            {
+              "token": "ability_ratking_scrap_grenade_big_explosion_desc",
+              "line": 4914
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_ratking_ratnibble",
+          "name": "Rat Swarm",
+          "description_token_refs": [
+            {
+              "token": "ability_ratking_ratnibble_desc",
+              "line": 4933
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_ratking_ratarmor",
+          "name": "Royal Pestments",
+          "description_token_refs": [
+            {
+              "token": "ability_ratking_ratarmor_desc",
+              "line": 4958
+            },
+            {
+              "token": "ability_ratking_ratarmor_cap_desc",
+              "line": 4959
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_ratking_standard_bearer",
+          "name": "Rule, Ratannia!",
+          "description_token_refs": [
+            {
+              "token": "ability_ratking_standard_bearer_desc",
+              "line": 4980
+            },
+            {
+              "token": "ability_ratking_standard_bearer_slam_desc",
+              "line": 4984
+            },
+            {
+              "token": "ability_ratking_standard_bearer_flag_desc",
+              "line": 4987
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    },
+    {
+      "id": "hero_chessmaster",
+      "name": "Solomon",
+      "line": 126852,
+      "m_HeroID": "85",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L126852",
+      "analysis": {
+        "movement": "Moves allied/self pieces with existing aim input",
+        "aim_and_complexity": "Persistent bishop, knight, split rooks, relocating queen",
+        "release_cancel_rules": "Recast recalls bishop/queen or splits rooks; ADS moves pieces",
+        "counterplay_and_readability_inference": "Track ownership and active piece; show affected squares"
+      },
+      "abilities": [
+        {
+          "id": "ability_chessmaster_throwbishop",
+          "name": "Setup Bishop",
+          "description_token_refs": [
+            {
+              "token": "ability_chessmaster_throwbishop_desc",
+              "line": 5179
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_chessmaster_knightbuff",
+          "name": "Kingside Knight",
+          "description_token_refs": [
+            {
+              "token": "ability_chessmaster_knightbuff_desc",
+              "line": 5201
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_chessmaster_forkpiece",
+          "name": "Rook Battery",
+          "description_token_refs": [
+            {
+              "token": "ability_chessmaster_forkpiece_desc",
+              "line": 5209
+            }
+          ],
+          "base_description_available": true
+        },
+        {
+          "id": "ability_chessmaster_queen",
+          "name": "Develop Queen",
+          "description_token_refs": [
+            {
+              "token": "ability_chessmaster_queen_desc_active",
+              "line": 5234
+            }
+          ],
+          "base_description_available": true
+        }
+      ]
+    }
+  ],
+  "excluded_records": [
+    {
+      "id": "hero_base",
+      "name": "hero_base",
+      "line": 4,
+      "m_HeroID": "0",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L4",
+      "bound_signature_count": 0,
+      "reason": "base_or_dummy"
+    },
+    {
+      "id": "hero_kali",
+      "name": "Kali",
+      "line": 40104,
+      "m_HeroID": "21",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L40104",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_gunslinger",
+      "name": "Gunslinger",
+      "line": 50389,
+      "m_HeroID": "38",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "true",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L50389",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_yakuza",
+      "name": "The Boss",
+      "line": 52116,
+      "m_HeroID": "39",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L52116",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_genericperson",
+      "name": "Generic Person",
+      "line": 53844,
+      "m_HeroID": "46",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "true",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L53844",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_wrecker",
+      "name": "Wrecker",
+      "line": 55572,
+      "m_HeroID": "48",
+      "m_nComplexity": "3",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L55572",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_rutger",
+      "name": "Rutger",
+      "line": 57307,
+      "m_HeroID": "49",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "true",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L57307",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_thumper",
+      "name": "Thumper",
+      "line": 61131,
+      "m_HeroID": "51",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "true",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L61131",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_slork",
+      "name": "Fathom",
+      "line": 64905,
+      "m_HeroID": "53",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L64905",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_cadence",
+      "name": "Cadence",
+      "line": 66638,
+      "m_HeroID": "54",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "true",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L66638",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_targetdummy",
+      "name": "TargetDummy",
+      "line": 68366,
+      "m_HeroID": "55",
+      "m_nComplexity": "2",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L68366",
+      "bound_signature_count": 4,
+      "reason": "base_or_dummy"
+    },
+    {
+      "id": "hero_bomber",
+      "name": "Bomber",
+      "line": 70096,
+      "m_HeroID": "56",
+      "m_nComplexity": "1",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L70096",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_shieldguy",
+      "name": "Shield Guy",
+      "line": 71820,
+      "m_HeroID": "57",
+      "m_nComplexity": "1",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L71820",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_vandal",
+      "name": "Vandal",
+      "line": 75692,
+      "m_HeroID": "59",
+      "m_nComplexity": "1",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L75692",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_trapper",
+      "name": "Trapper",
+      "line": 79562,
+      "m_HeroID": "61",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L79562",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_operative",
+      "name": "Raven",
+      "line": 81298,
+      "m_HeroID": "62",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L81298",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_boho",
+      "name": "Boho",
+      "line": 93698,
+      "m_HeroID": "68",
+      "m_nComplexity": "1",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L93698",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_skyrunner",
+      "name": "Skyrunner",
+      "line": 97560,
+      "m_HeroID": "70",
+      "m_nComplexity": "3",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L97560",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_swan",
+      "name": "Swan",
+      "line": 99298,
+      "m_HeroID": "71",
+      "m_nComplexity": "3",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L99298",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_druid",
+      "name": "Druid",
+      "line": 103186,
+      "m_HeroID": "73",
+      "m_nComplexity": "1",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L103186",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_graf",
+      "name": "Graf",
+      "line": 104919,
+      "m_HeroID": "74",
+      "m_nComplexity": "3",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L104919",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_fortuna",
+      "name": "Fortuna",
+      "line": 106661,
+      "m_HeroID": "75",
+      "m_nComplexity": "1",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L106661",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_opera",
+      "name": "Opera",
+      "line": 121228,
+      "m_HeroID": "82",
+      "m_nComplexity": "1",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L121228",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_testhero",
+      "name": "hero_testhero",
+      "line": 122952,
+      "m_HeroID": "83",
+      "m_nComplexity": "2",
+      "m_bDisabled": "true",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L122952",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_artist",
+      "name": "Violet",
+      "line": 129008,
+      "m_HeroID": "86",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L129008",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    },
+    {
+      "id": "hero_nurse",
+      "name": "Nurse Harrow",
+      "line": 131122,
+      "m_HeroID": "87",
+      "m_nComplexity": "3",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "false",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L131122",
+      "bound_signature_count": 0,
+      "reason": "no_four_signature_kit"
+    },
+    {
+      "id": "hero_baba",
+      "name": "Baba",
+      "line": 132851,
+      "m_HeroID": "88",
+      "m_nComplexity": "1",
+      "m_bDisabled": "false",
+      "m_bInDevelopment": "true",
+      "m_bNeedsTesting": "false",
+      "m_bLimitedTesting": "false",
+      "hero_source_url": "https://github.com/SteamTracking/GameTracking-Deadlock/blob/0ba033e3eea00d658d63e03719295cf5039e8057/game/citadel/pak01_dir/scripts/heroes.vdata#L132851",
+      "bound_signature_count": 4,
+      "reason": "disabled_or_development_or_testing"
+    }
+  ],
+  "copyright_and_reuse": "Mechanics study and original paraphrase only. No Valve source text, models, textures, sounds, rigs, icons or game code imported into YUGA runtime. Public availability is not a redistribution license. Raw responses remain scratch research evidence. Engine/book documentation is discussed, not incorporated as runtime code.",
+  "implementation_boundary": "Design proposals below do not establish shipped kit, art acceptance, gameplay smoothness, human testing or GPU performance."
+}

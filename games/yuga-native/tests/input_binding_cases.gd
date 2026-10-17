@@ -39,7 +39,16 @@ func _run() -> void:
 	Bindings.merge_settings({"controls":{"bindings":legacy,"binding_version":1},"audio":{"volume":.2}})
 	var legacy_bytes := FileAccess.get_file_as_bytes(SETTINGS)
 	_record("legacy X remap survives new invocation binding without rewriting saves",Bindings.install().ok and Bindings.label("reload") == "X" and Bindings.label("ultimate") == "V" and FileAccess.get_file_as_bytes(SETTINGS) == legacy_bytes)
-	_record("migrated invocation layout persists as version2 with other settings",Bindings.set_binding("ultimate",KEY_B).ok and Bindings.install().ok and Bindings.label("reload") == "X" and Bindings.label("ultimate") == "B" and Bindings.read_config().config.get_value("controls","binding_version") == 2 and Bindings.read_config().config.get_value("audio","volume") == .2)
+	_record("migrated invocation layout persists as version3 with other settings",Bindings.set_binding("ultimate",KEY_B).ok and Bindings.install().ok and Bindings.label("reload") == "X" and Bindings.label("ultimate") == "B" and Bindings.read_config().config.get_value("controls","binding_version") == 3 and Bindings.read_config().config.get_value("audio","volume") == .2)
+	var before_guardian := Bindings.DEFAULTS.duplicate()
+	before_guardian.erase("guardian_circle")
+	before_guardian.reload = KEY_C
+	Bindings.merge_settings({"controls":{"bindings":before_guardian,"binding_version":2},"audio":{"volume":.4}})
+	var before_guardian_bytes := FileAccess.get_file_as_bytes(SETTINGS)
+	_record("version2 C reload retains mapping and adds guardian on free V without rewriting save",Bindings.install().ok and Bindings.label("reload") == "C" and Bindings.label("ultimate") == "X" and Bindings.label("guardian_circle") == "V" and FileAccess.get_file_as_bytes(SETTINGS) == before_guardian_bytes)
+	var preserved := true
+	for action in before_guardian: preserved = preserved and Bindings.current()[action] == before_guardian[action]
+	_record("guardian migration preserves every existing key and persists version3",preserved and Bindings.set_binding("guardian_circle",KEY_B).ok and Bindings.install().ok and Bindings.label("guardian_circle") == "B" and Bindings.label("reload") == "C" and Bindings.read_config().config.get_value("controls","binding_version") == 3 and Bindings.read_config().config.get_value("audio","volume") == .4)
 	Bindings.reset_defaults()
 	_record("invocation action resets and fixed selector stays discoverable",Bindings.label("ultimate") == "X" and Bindings.label("open_invocations") == "F3")
 	Bindings.merge_settings({"audio":{"volume":.35},"film":{"reduced_motion":true},"controls":{"sensitivity":1.4}})

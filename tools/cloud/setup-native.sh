@@ -44,6 +44,13 @@ godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/wo
 godot --headless --path games/yuga-native --script res://tests/world_lighting_cases.gd -- --report="$validation_dir/world-lighting-cases.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_flow_cases.gd -- --report="$validation_dir/world-flow-cases.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report="$validation_dir/native-acceptance.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_ability_cases.gd -- --report="$validation_dir/rama-ability.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_motion_cases.gd -- --asset=res://assets/heroes/rama-hero.glb --report="$validation_dir/rama-motion.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_screen_cases.gd -- --report="$validation_dir/rama-screen.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hero_integration_cases.gd -- --report="$validation_dir/rama-integration.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_practice_cases.gd -- --report="$validation_dir/rama-practice.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_layout_cases.gd -- --report="$validation_dir/rama-hud-layout.json"
+python3 games/yuga-native/tests/rama_package_cases.py --report="$validation_dir/rama-package.json"
 godot --headless --path games/yuga-native --script res://tests/projectile_cases.gd -- --report="$validation_dir/projectile-cases.json"
 "$native_python_root/bin/python" games/yuga-native/tools/audio/build-traversal-audio.py --check
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_cases.gd -- --report="$validation_dir/traversal.json"

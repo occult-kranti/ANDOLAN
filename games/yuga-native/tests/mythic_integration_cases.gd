@@ -11,6 +11,7 @@ const SOURCE_PATHS := [
 	"res://scripts/confluence_world.gd", "res://scripts/player.gd",
 	"res://scripts/ultimate_session.gd", "res://scripts/ultimate_rules.gd",
 	"res://scripts/invocation_audio.gd", "res://assets/audio/invocations/manifest.json",
+	"res://scripts/rama_hero_hud.gd", "res://scripts/rama_hero_panel.gd", "res://scripts/rama_hero_runtime.gd",
 	"res://scripts/controls_overlay.gd",
 	"res://scripts/lane_army.gd", "res://scripts/lane_minion.gd",
 	"res://assets/design/native-ultimate-rules.json", "res://assets/design/hero-codex.json",
@@ -299,7 +300,9 @@ func hud_notice_and_layout_cases() -> void:
 	scene._restart_army()
 	scene._process(.13)
 	record("round reset restores ready notice and ready HUD",events.back().kind=="reset" and session.report().cooldown_remaining==0 and not scene.player.invocation_preparing and scene.invocation_notice=="Ready · aim, then cast" and scene.invocation_detail.text.ends_with(scene.invocation_notice) and scene.invocation_label.text.ends_with("READY"),{"notice":scene.invocation_notice,"heading":scene.invocation_label.text})
-	var card: Control=scene.hud.find_child("InvocationStatus",true,false)
+	var legacy_card: Control=scene.hud.find_child("InvocationStatus",true,false)
+	var card: Control=scene.rama_hud
+	record("legacy invocation diagnostics do not replace visible Rama kit HUD",not legacy_card.visible and card.visible and card.slots.size()==5)
 	var old_size:=root.size
 	var old_scale:=root.content_scale_size
 	for dimensions in [Vector2i(960,600),Vector2i(1280,720)]:
@@ -307,16 +310,16 @@ func hud_notice_and_layout_cases() -> void:
 		root.content_scale_size=dimensions
 		await frames(4)
 		var view:=root.get_visible_rect()
+		card._refresh()
 		var card_rect:=card.get_global_rect()
 		var overlaps:=[]
 		for other_name in ["TitleCard","RelayStatus","ControlsCard","TraversalStatus","AtlasLegend","Crosshair"]:
 			var other: Control=scene.hud.find_child(other_name,true,false)
 			if other!=null and other.is_visible_in_tree() and card_rect.intersects(other.get_global_rect()):overlaps.append(other_name)
-		# This central lower band is a layout reserve, not a measured hero silhouette.
-		var centre_reserve:=Rect2(Vector2(view.size.x*.5-100,view.size.y*.5),Vector2(200,view.size.y*.5))
-		var expected:=Vector2(20,view.size.y-206)
-		var contained:=card_rect.encloses(scene.invocation_label.get_global_rect()) and card_rect.encloses(scene.invocation_detail.get_global_rect())
-		record("invocation HUD lower-left slot fits logical "+str(dimensions),view.size.is_equal_approx(Vector2(dimensions)) and view.encloses(card_rect) and card_rect.position.is_equal_approx(expected) and card_rect.size.is_equal_approx(Vector2(330,100)) and contained and overlaps.is_empty() and not card_rect.intersects(centre_reserve),{"viewport":str(view),"card":str(card_rect),"overlaps":overlaps,"labels_contained":contained,"central_reserve":str(centre_reserve)})
+		var contained:=card_rect.grow(1).encloses(card.life_text.get_global_rect()) and card_rect.grow(1).encloses(card.note.get_global_rect())
+		for slot in card.slots: contained=contained and card_rect.grow(1).encloses(slot.get_global_rect()) and not slot.text.is_empty()
+		var hero_torso: Vector2=scene.player.camera.unproject_position(scene.player.global_position+Vector3.UP*1.1)
+		record("current five-ability Rama HUD fits logical "+str(dimensions),view.size.is_equal_approx(Vector2(dimensions)) and view.encloses(card_rect) and contained and overlaps.is_empty() and not card_rect.has_point(hero_torso),{"viewport":str(view),"card":str(card_rect),"overlaps":overlaps,"labels_contained":contained,"hero_torso_projection":str(hero_torso)})
 	root.size=old_size
 	root.content_scale_size=old_scale
 	await frames(3)
@@ -384,6 +387,17 @@ func pause_focus_cases() -> void:
 	scene.controls_overlay.close()
 	await frames(8)
 	record("controls close restores a fully visible Continue action",not scene.controls_overlay.visible and scene.pause_panel.visible and first.has_focus() and pause_action_visible(first))
+	scene.set_paused(true)
+	scene._open_rama_panel()
+	await frames(8)
+	var rama_focus: Control=scene.rama_panel.ability_buttons.guardian_circle
+	rama_focus.grab_focus()
+	scene._focus_lost()
+	await frames(8)
+	record("new Rama modal retains focus across OS focus loss",scene.rama_panel.visible and not scene.pause_panel.visible and rama_focus.has_focus() and rama_focus.is_visible_in_tree() and paused)
+	scene.rama_panel.close()
+	await frames(8)
+	record("new Rama modal returns a visible pause action",not scene.rama_panel.visible and scene.pause_panel.visible and scene.rama_button.has_focus() and pause_action_visible(scene.rama_button))
 	scene.set_paused(false)
 	root.size=old_size
 	root.content_scale_size=old_scale
@@ -416,8 +430,14 @@ func reset_and_reconfigure_cases() -> void:
 	record("invalid reconfigure preserves live session",rejected and session.report()==state_before and fixture.ally.shield==shield_before)
 	var foreign=load("res://scripts/lane_army.gd").new()
 	foreign.visual_enabled=false;root.add_child(foreign);foreign.set_physics_process(false);foreign.configure(scene.manifest,null)
+	var unrelated_callbacks: Array[Callable]=[]
+	for connection in scene.army.simulation_stepped.get_connections():
+		if connection.callable.get_object()!=session:unrelated_callbacks.append(connection.callable)
 	var connected: bool=session.configure(foreign)
-	record("successful reconfigure clears previous receivers and subscriptions",connected and shield_before==80 and fixture.ally.shield==0 and scene.army.simulation_stepped.get_connections().is_empty() and foreign.simulation_stepped.get_connections().size()==1)
+	var remaining_callbacks: Array[Callable]=[]
+	for connection in scene.army.simulation_stepped.get_connections():remaining_callbacks.append(connection.callable)
+	var new_callbacks: Array=foreign.simulation_stepped.get_connections()
+	record("successful reconfigure clears previous receivers and only its owned subscription",connected and shield_before==80 and fixture.ally.shield==0 and remaining_callbacks==unrelated_callbacks and new_callbacks.size()==1 and new_callbacks[0].callable.get_object()==session,{"unrelated_callbacks_preserved":remaining_callbacks.size(),"new_session_callbacks":new_callbacks.size()})
 	session.configure(scene.army)
 	foreign.free()
 	var bounded:=true
@@ -507,7 +527,7 @@ func run() -> void:
 	for node in [fx,scene.invocation_panel]:source_hashes[node.get_script().resource_path]=FileAccess.get_sha256(node.get_script().resource_path)
 	scene.set_process(false);scene.set_physics_process(false);scene.army.set_physics_process(false);scene.player.set_physics_process(false);fx.set_process(false)
 	session.invocation_event.connect(collect_event)
-	record("catalogue exposes fourteen invocation buttons",scene.invocation_panel.hero_buttons.size()==14 and HEROES.all(func(id):return scene.invocation_panel.hero_buttons.has(id)))
+	record("retained legacy API catalogue exposes fourteen invocation buttons",scene.invocation_panel.hero_buttons.size()==14 and HEROES.all(func(id):return scene.invocation_panel.hero_buttons.has(id)))
 	payload_cases()
 	malformed_and_cooldown_cases()
 	warning_and_attachment_cases()

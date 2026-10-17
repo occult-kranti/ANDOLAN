@@ -35,7 +35,7 @@ func _tab(reverse: bool=false) -> void:
 	await frames(2)
 
 func _run() -> void:
-	for path in ["res://scripts/confluence_world.gd","res://scripts/lane_army.gd","res://scripts/siege_effects.gd","res://scripts/lane_minion.gd","res://scripts/lane_vehicle_art.gd","res://tests/siege_ui_cases.gd"]:
+	for path in ["res://scripts/confluence_world.gd","res://scripts/lane_army.gd","res://scripts/siege_effects.gd","res://scripts/lane_minion.gd","res://scripts/lane_vehicle_art.gd","res://scripts/rama_hero_runtime.gd","res://scripts/rama_hero_panel.gd","res://scripts/rama_hero_hud.gd","res://scripts/rama_ability_kit.gd","res://scripts/rama_vitals.gd","res://tests/siege_ui_cases.gd"]:
 		source_hashes[path] = FileAccess.get_sha256(path)
 	root.size = Vector2i(1280,720)
 	var packed = load("res://scenes/confluence_world.tscn")
@@ -51,7 +51,7 @@ func _run() -> void:
 		await frames(5)
 		var rect: Rect2 = scene.pause_panel.get_global_rect()
 		check("pause panel fits " + str(viewport),Rect2(Vector2.ZERO,Vector2(viewport)).encloses(rect),{"rect":str(rect)})
-		check("twelve focus targets including invocation, relay, siege and volume " + str(viewport),scene.pause_actions.size()==12 and scene.siege_practice_button in scene.pause_actions and scene.invocation_button in scene.pause_actions)
+		check("thirteen focus targets including Rama abilities, invocation, relay, siege and volume " + str(viewport),scene.pause_actions.size()==13 and scene.rama_button in scene.pause_actions and scene.siege_practice_button in scene.pause_actions and scene.invocation_button in scene.pause_actions)
 		var reached := []
 		var focus_ok := true
 		var scroll_ok := true
@@ -88,7 +88,7 @@ func _run() -> void:
 	var army: Dictionary=scene.army.report()
 	check("pause siege action starts six-unit drill",army.get("siege_drill",false) and army.alive==6 and not scene.paused and not paused,{"army":army})
 	var roles: Dictionary=army.get("roles_alive",{})
-	check("drill role counts and visible copy",roles.get("cannon_cart",0)==2 and roles.get("royal_chariot",0)==2 and scene.practice_mode_label.text=="OFFLINE SIEGE DRILL" and "Enemy siege 2" in scene.score_label.text and "takes no damage" in scene.practice_hint_label.text)
+	check("drill role counts and visible damage guidance",roles.get("cannon_cart",0)==2 and roles.get("royal_chariot",0)==2 and scene.practice_mode_label.text=="OFFLINE SIEGE DRILL" and "Siege 2" in scene.score_label.text and "Enemy siege blasts damage Rama" in scene.practice_hint_label.text and scene.player.vitals != null, {"score":scene.score_label.text,"hint":scene.practice_hint_label.text})
 	check("drill spawn enters centre court",scene.player.position.distance_to(Vector3(7,.05,-15))<.02,{"position":str(scene.player.position)})
 	check("minimap carries two distinct siege roles",scene.map_control.units.filter(func(u):return u.get("role","") in ["cannon_cart","royal_chariot"]).size()==4)
 	# The event source is the real army signal; this isolates UI routing from attack logic.
@@ -115,7 +115,7 @@ func _run() -> void:
 	await frames()
 	army=scene.army.report()
 	check("regular restart restores normal round",not army.get("siege_drill",true) and army.alive==30 and army.waves==1,{"army":army})
-	check("regular restart clears old presentation",scene.siege_effects.report().active_events==0 and scene.projectiles.get_child_count()==0 and scene.effects.get_child_count()==0)
+	check("regular restart clears old and Rama presentation",scene.siege_effects.report().active_events==0 and scene.projectiles.get_child_count()==0 and scene.effects.get_child_count()==0 and scene.rama_kit.report().casts.is_empty() and scene.rama_effects.report().active==0)
 	check("regular restart returns arrival spawn",scene.player.position.distance_to(Vector3(0,.05,-112))<.02)
 	scene._start_siege_practice()
 	var key:=InputEventKey.new()

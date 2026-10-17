@@ -5,12 +5,14 @@ signal fired(origin: Vector3, direction: Vector3, empowered: bool)
 signal pulse(origin: Vector3)
 signal changed
 signal traversal_event(kind: String, position: Vector3)
+signal hero_reset
 
 const TraversalController = preload("res://scripts/player_traversal.gd")
 const TraversalPose = preload("res://scripts/traversal_pose.gd")
 const HeroCarryPose = preload("res://scripts/hero_pose.gd")
+const RamaMotion = preload("res://scripts/rama_motion.gd")
 
-const HERO_PATH := "res://assets/heroes/rama-production.glb"
+const HERO_PATH := "res://assets/heroes/rama-hero.glb"
 const SPEED := 6.0
 const SPRINT_SPEED := 9.0
 const MAGAZINE := 12
@@ -47,6 +49,12 @@ var traversal = TraversalController.new()
 var traversal_pose: SkeletonModifier3D
 var hero_pose: SkeletonModifier3D
 var last_finite_position := Vector3.ZERO
+var rama_motion: SkeletonModifier3D
+var vitals: Node
+var ability_request := Callable()
+var dash_speed := 21.0
+var rama_committed := false
+var rama_action_locked := false
 
 func _ready() -> void:
 	collision_layer = 2
@@ -75,14 +83,11 @@ func _ready() -> void:
 			animator.speed_scale = 1.0
 			model_ready = clips.has("idle") and clips.has("run") and clips.has("fire")
 			_play("idle", 0.0)
-		traversal_pose = TraversalPose.new()
-		if not traversal_pose.configure(visual, animator):
-			traversal_pose.free()
-			traversal_pose = null
-		hero_pose = HeroCarryPose.new()
-		if not hero_pose.configure(visual, animator):
-			hero_pose.free()
-			hero_pose = null
+		rama_motion = RamaMotion.new()
+		if not rama_motion.configure(visual, animator):
+			rama_motion.free()
+			rama_motion = null
+			push_error("Rama motion could not bind the hero rig")
 	else:
 		push_error("Required skinned Rama GLB is missing: " + HERO_PATH)
 	visual.rotation.y = PI
@@ -120,15 +125,25 @@ func configure_traversal(anchors: Array, bounds: AABB) -> bool:
 	return traversal.configure(anchors, bounds)
 
 func toggle_flight() -> bool:
-	if invocation_preparing: return false
+	if invocation_preparing or rama_committed: return false
 	return traversal.toggle_flight()
 
 func try_grapple() -> bool:
-	if invocation_preparing: return false
+	if invocation_preparing or rama_committed: return false
 	return traversal.try_grapple()
 
 func cancel_traversal(reason := "cancelled") -> void:
+	# Measured Step belongs to the accepted hero action, not the flight/tether
+	# controller. Pausing ground traversal must not consume the remaining step.
+	var preserve_step: bool = ability_request.is_valid() and traversal.mode == "ground" and dash_time > 0
+	var remaining := dash_time
+	var direction := dash_direction
+	var speed := dash_speed
 	traversal.cancel(reason)
+	if preserve_step:
+		dash_time = remaining
+		dash_direction = direction
+		dash_speed = speed
 	if is_instance_valid(hero_pose):
 		hero_pose.cancel()
 	if is_instance_valid(traversal_pose):
@@ -138,6 +153,7 @@ func traversal_report() -> Dictionary:
 	var result: Dictionary = traversal.report()
 	result["pose"] = traversal_pose.diagnostics() if is_instance_valid(traversal_pose) else {}
 	result["carry_pose"] = hero_pose.diagnostics() if is_instance_valid(hero_pose) else {}
+	result["rama_motion"] = rama_motion.diagnostics() if is_instance_valid(rama_motion) else {}
 	return result
 
 func _on_focus_lost() -> void:
@@ -175,6 +191,8 @@ func _update_camera() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not active:
+		if is_finite(delta) and delta > 0 and delta <= .1:
+			_update_rama_motion(delta)
 		if traversal.mode != "ground":
 			cancel_traversal("Player inactive")
 		return
@@ -194,7 +212,7 @@ func _physics_process(delta: float) -> void:
 	invocation_remaining = maxf(0, invocation_remaining - delta)
 	# Preparation is released by the accepted army-clock event. The visual
 	# countdown alone cannot authorize an early shot on a different frame clock.
-	var invocation_locked := invocation_preparing
+	var invocation_locked := invocation_preparing or rama_committed
 	if invocation_locked: action_time = maxf(action_time, .05)
 	if reload_remaining > 0:
 		reload_remaining = maxf(0, reload_remaining - delta)
@@ -206,18 +224,22 @@ func _physics_process(delta: float) -> void:
 	var desired := Basis(Vector3.UP, yaw) * Vector3(move_input.x, 0, move_input.y)
 	var speed := SPRINT_SPEED if Input.is_action_pressed("sprint") else SPEED
 	var traversal_owns_motion: bool = false if invocation_locked else traversal.step(delta, desired)
-	if not invocation_locked and not traversal_owns_motion and Input.is_action_just_pressed("dash") and dash_remaining <= 0:
+	if not invocation_locked and not traversal_owns_motion and Input.is_action_just_pressed("dash") and ability_request.is_valid():
+		ability_request.call("measured_step")
+	elif not invocation_locked and not traversal_owns_motion and Input.is_action_just_pressed("dash") and dash_remaining <= 0:
 		dash_direction = desired.normalized() if desired.length_squared() > 0.01 else -pivot.global_basis.z
 		dash_direction.y = 0
 		dash_direction = dash_direction.normalized()
 		dash_time = 0.18
+		dash_speed = 21.0
 		dash_remaining = 5.0
 	if traversal_owns_motion:
 		pass
 	elif dash_time > 0:
+		var fraction := minf(delta, dash_time) / delta
 		dash_time = maxf(0, dash_time - delta)
-		velocity.x = dash_direction.x * 21.0
-		velocity.z = dash_direction.z * 21.0
+		velocity.x = dash_direction.x * dash_speed * fraction
+		velocity.z = dash_direction.z * dash_speed * fraction
 	else:
 		var accel := 38.0 if is_on_floor() else 12.0
 		velocity.x = move_toward(velocity.x, desired.x * speed, accel * delta)
@@ -241,15 +263,21 @@ func _physics_process(delta: float) -> void:
 	if not invocation_locked and Input.is_action_pressed("fire"):
 		shoot()
 	if not invocation_locked and Input.is_action_just_pressed("pulse") and pulse_remaining <= 0:
-		pulse_remaining = 8.0
-		action_time = 0.7
-		_play("cast1", 0.12)
-		pulse.emit(global_position + Vector3.UP)
-		changed.emit()
+		if ability_request.is_valid():
+			ability_request.call("piercing_dawn")
+		else:
+			pulse_remaining = 8.0
+			action_time = 0.7
+			_play("cast1", 0.12)
+			pulse.emit(global_position + Vector3.UP)
+			changed.emit()
+	if not invocation_locked and ability_request.is_valid():
+		if Input.is_action_just_pressed("guardian_circle"): ability_request.call("guardian_circle")
+		if Input.is_action_just_pressed("ultimate"): ability_request.call("dawn_volley")
 	var forward := -pivot.global_basis.z
 	forward.y = 0
 	if invocation_locked: forward = invocation_facing
-	if action_time > 0:
+	if action_time > 0 or Input.is_action_pressed("fire"):
 		_rotate_visual(forward, delta * 16.0)
 	elif traversal.mode in ["flight", "grapple"]:
 		_rotate_visual(forward, delta * 10.0)
@@ -269,6 +297,7 @@ func _physics_process(delta: float) -> void:
 		traversal_pose.set_state(traversal.mode, velocity.length(), velocity.y, delta, 1.0 if action_time > 0 else 0.0)
 	if is_instance_valid(hero_pose):
 		hero_pose.set_state(active_clip, delta, traversal.mode, action_time > 0.0)
+	_update_rama_motion(delta)
 	if global_position.y < -8:
 		reset()
 
@@ -279,17 +308,24 @@ func _rotate_visual(direction: Vector3, weight: float) -> void:
 	visual.rotation.y = lerp_angle(visual.rotation.y, atan2(direction.x, direction.z), clampf(weight, 0, 1))
 
 func _play(clip: String, blend: float) -> void:
+	if is_instance_valid(rama_motion):
+		active_clip = clip
+		return
 	if animator and clips.has(clip) and active_clip != clip:
 		active_clip = clip
 		animator.speed_scale = 1.0
 		animator.play(clips[clip], blend)
 
 func shoot() -> bool:
-	if not active or get_tree().paused or fire_remaining > 0 or reload_remaining > 0 or invocation_preparing:
+	if not active or get_tree().paused or fire_remaining > 0 or reload_remaining > 0 or invocation_preparing or rama_committed:
 		return false
 	if ammo <= 0:
 		start_reload()
 		return false
+	if ability_request.is_valid():
+		var result: Dictionary = ability_request.call("kodanda")
+		if not result.get("accepted", false): return false
+		return true
 	var center := get_viewport().get_visible_rect().size * 0.5
 	var start := camera.project_ray_origin(center)
 	var direction := camera.project_ray_normal(center)
@@ -311,7 +347,7 @@ func shoot() -> bool:
 	return true
 
 func start_reload() -> bool:
-	if ammo == MAGAZINE or reload_remaining > 0 or not active or invocation_preparing:
+	if ammo == MAGAZINE or reload_remaining > 0 or not active or invocation_preparing or rama_action_locked:
 		return false
 	reload_remaining = RELOAD_TIME
 	changed.emit()
@@ -344,6 +380,8 @@ func finish_invocation_pose() -> void:
 		_play("idle", .16)
 
 func reset() -> void:
+	hero_reset.emit()
+	if is_instance_valid(rama_motion): rama_motion.cancel("reset")
 	cancel_traversal("Reset")
 	position = Vector3(0, 0.05, 12)
 	velocity = Vector3.ZERO
@@ -358,6 +396,8 @@ func reset() -> void:
 	action_time = 0
 	invocation_remaining = 0
 	invocation_preparing = false
+	rama_committed = false
+	rama_action_locked = false
 	shots_fired = 0
 	jump_count = 0
 	visual.rotation.y = PI
@@ -366,3 +406,26 @@ func reset() -> void:
 	traversal.reset()
 	last_finite_position = global_position
 	changed.emit()
+
+func _update_rama_motion(delta: float) -> void:
+	if not is_instance_valid(rama_motion): return
+	var aim_forward: Vector3 = invocation_facing if rama_committed else -pivot.global_basis.z
+	var aim_offset := wrapf(atan2(aim_forward.x, aim_forward.z) - visual.rotation.y, -PI, PI)
+	rama_motion.update_motion(delta, {"velocity":velocity, "local_velocity":visual.global_basis.inverse()*velocity, "grounded":is_on_floor() or not active, "traversal":traversal.mode, "aim_pitch":pitch, "aim_yaw":aim_offset, "aiming":Input.is_action_pressed("fire") and active or action_time>0, "dash":dash_time>0, "floor_y":global_position.y})
+
+func accept_measured_step(origin: Vector3, destination: Vector3, duration: float) -> Dictionary:
+	if not active or not origin.is_finite() or not destination.is_finite() or not is_finite(duration) or duration <= 0 or duration > 1:
+		return {"accepted":false}
+	var motion := destination - global_position
+	motion.y = 0
+	if motion.length() < .2 or motion.length() > 5: return {"accepted":false}
+	# The static-world sweep limits the planned destination; CharacterBody's
+	# continuous move_and_slide still owns each movement frame and new collisions.
+	var collision := KinematicCollision3D.new()
+	if test_move(global_transform, motion, collision): motion = collision.get_travel()
+	if motion.length() < .2: return {"accepted":false}
+	dash_direction = motion.normalized()
+	dash_time = duration
+	dash_speed = motion.length() / duration
+	dash_remaining = 5.0
+	return {"accepted":true,"destination":global_position+motion}

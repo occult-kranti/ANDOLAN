@@ -1,0 +1,91 @@
+# Rama hero milestone: independent acceptance
+
+This gate evaluates the requested single Rama milestone in native YUGA. The current candidate is a functional offline hero preview; production art polish remains **LIMITED** against the supplied reference. Test results cannot override visible art, motion, camera or screen defects. The requested finished-art target remains open until its perceptual requirements are met.
+
+## Baseline inspected
+
+The starting checkout was `e765a23264cf3c3c38fab1ded677832a24fdd64e` on `game/yuga-native-production`. Independent review opened these actual images before setting the gate:
+
+- Direction: [`rama-hanuman-sita.png`](../../yuga/art/references/rama-hanuman-sita.png), Rama on the left. This painting guides shape and material identity; it is not gameplay evidence.
+- Actual face: [`03-face-material.png`](evidence/mythic-batch1/hero/03-face-material.png).
+- Actual gameplay camera: [`02-public-world.png`](evidence/mythic-published/window/02-public-world.png).
+- Actual body/motion: [`frame-00076.png`](evidence/mythic-batch1/motion/frame-00076.png), plus sequential frames decoded from [`yuga-native-carry-preview.mp4`](evidence/mythic-batch1/motion/yuga-native-carry-preview.mp4).
+
+The existing face has protruding eyeballs, weak eyelid integration, planar cheeks and shoulders, grooved helmet-like hair and tubular jewelry. The game view shows split cape strips and a trouser-like ivory silhouette rather than the reference's layered drape. The carry/run sequence is supporting baseline evidence, not acceptance of the new full-body actions. Those defects remain blockers for this milestone until fresh actual renders show their correction. Old accepted releases and rejected experiments retain their historical status and files.
+
+The independent R2 studio review (`/workspace/scratch/rama-hero-art/r2/review-face.png`, `review-front.png`, `review-rear.png`) confirms smoother integrated anatomy and recessed eyes. It still rejects the parallel crown/nape hair shapes, plain rear trouser tubes, flat rectangular ivory chest strip and smooth shoulder shells as finished art. The owner identified a hair-winding correction and a final bounded costume/hair/relief pass. These are intermediate Blender observations, not an imported-game-asset pass; fresh final images must replace the open findings with actual evidence.
+
+The independent final R6 front/face review (`/workspace/scratch/rama-hero-art/r6/review-front.png`, `review-face.png`) confirms the subsequent fixes: the flat chest strip is removed, hair waves and shoulder relief are modeled, the front ivory layer no longer exposes blue slits, and detached dark hair fragments above the tiara are gone. The R6 GLB is `e0d25a39ec750f05d8ef6f5251530620f7b1357c523499e86f38abc71fc8cb8d`. Hair remains broadly sculpted, the long sash stiff, and the material/ornament detail below the painting's richness. These are explicit style/polish limits; studio views alone do not pass the game-camera gate.
+
+## Finite required gates
+
+| Gate | Required observation | Reject when |
+| --- | --- | --- |
+| A. Recognizable finished hero | Current imported game asset in front, rear, three-quarter, face and gameplay-camera views. Smooth integrated shoulders/arms/torso; readable eyelids, iris placement, brow, nose and mouth; layered black hair; blue-and-ivory draped volume; shaped gold with visible material separation; bow and quiver identifiable at normal play distance. | A primitive assembly, flat shoulder/cheek planes, floating eyes, rigid helmet grooves, painted-on cloth folds, disconnected trim, empty mitten grip or generic trouser silhouette remains dominant. A larger vertex count or texture resolution alone is insufficient. |
+| B. Continuous full-body motion | An uninterrupted take includes idle → walk/run → stop, primary fire, each ability, a traversal transition and recovery. Inspect anticipation, release, follow-through and return at normal speed and around transition frames. Hips, spine, shoulders, both arms, legs, feet, hair and cloth form one coherent action. | Visible snapping, clip restart loops, action pose missing on the first frame, frozen lower body during a committed ability, obvious support-foot skating/penetration, bow leaving the hand, or release detached from string/hand motion. |
+| C. Actual playable kit | From the actual Confluence world entry, LMB/Kodanda, Q/Piercing Dawn, E/Measured Step, C/Guardian Circle and X/Dawn Volley trigger their documented native behavior. Each accepted cast has one begin and one release; real target health/shield/status changes have matching receipts. Cooldowns, movement commitment and recovery agree with HUD and animation. | Presentation advances gameplay early, a held/repeated action bypasses the action lock, duplicate releases apply twice, effects appear before commitment, movement crosses collision, or a label describes behavior absent from the actual world. |
+| D. Interruptions and lifecycle | For every ability, pause during windup, immediately after release, and during recovery; resume without replay. Cancel/reset each phase. Open/close help and kit panels while committed. Reset restores a usable hero, clean effects and ready cooldowns. Death/respawn clears action and presentation ownership. | Any clock, damage, projectile, pose or cooldown advances while paused; stale releases survive reset; an orphan effect remains; an action never unlocks; or closing a panel accidentally fires a held action. |
+| E. Finished screens and camera | Review title, gameplay HUD, pause, Rama kit details, controls/settings and return flow at 960 × 600 and 1280 × 720. Primary action is clear; labels fit; keyboard focus is visible and reaches every action; modal close restores the correct visible focus; HUD leaves hero, reticle and combat readable. Verify actual OS mouse/keyboard entry on the final Linux package when packaged. | Clipped text/actions, overlapping cards, focus hidden off-screen, modal click-through, a placeholder portrait presented as the game asset, unreadable cooldown/health state, or a camera angle concealing the hero's revised art. |
+| F. Stable time and bounded lifetime | Compare identical deterministic actions with 30, 60 and 120 Hz presentation steps against the same 20 Hz gameplay clock. Verify corresponding pose/effect samples within explicit numerical tolerances. Run repeated cast/cancel/reset cycles after warmup and inspect owned nodes/resources. Source hashes and imported-asset freshness accompany reports/captures. | Per-frame rather than elapsed-time motion, different release/damage results at different presentation rates, growing owned effect nodes after cleanup, stale imports, or evidence from different source bytes. |
+
+The finite corrective loop is source/contract review, implementation plus counterexamples, then independent integration and visual review. A fourth pass is justified only by a concrete remaining defect. Visual review records the exact image/video and frame range, finding, owner and resolution. Record **PASS**, **FAIL**, **UNRUN** or **LIMITED** separately; do not average them into a quality score.
+
+## Functional evidence owner and command
+
+The new independent suite is [`tests/rama_hero_integration_cases.gd`](../tests/rama_hero_integration_cases.gd). It instantiates the actual world, observes public ability events and real receivers, and exercises lifecycle/input glue. Its report is useful for gates C, D and F and selected layout/focus checks in E. It cannot pass A or B.
+
+After root integration and serialized imports, run from the repository root with an isolated user directory and a fresh output path:
+
+```sh
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hero_integration_cases.gd -- --report=/absolute/fresh/rama-hero-integration.json
+```
+
+Use the cloud handbook's isolated XDG directories. Do not run editor imports or heavy software renderers concurrently with another owner. Report the executed engine version, test source hashes, exit status and failed assertions; a syntax-only run is not acceptance.
+
+## Performance boundary
+
+This cloud machine reports five Intel Xeon Platinum 8573C virtual CPUs and has no `/dev/dri` device. Existing actual captures use software Vulkan/llvmpipe and Dummy audio. These can establish rendering correctness and measured CPU/software-renderer cost for the reported resolution and scene. They cannot establish consumer-GPU frame rate, frame pacing, auditory quality or Windows execution. A fixed-fps encoded video describes simulation sampling, not achieved real-time performance. Hardware performance remains **UNRUN** until a named physical GPU, driver, resolution, settings, workload and wall-clock frame-time distribution are recorded.
+
+## Current independent execution
+
+Godot 4.6.3 executed the following fresh reports against imported **R7** (`667f3a215a7b868e3bdbcde880a73d42b68b29af1303db4e1d99b93f73cf2b50`), with fixed physics sampling at 60 Hz and two CPU worker threads. All exited successfully without engine errors or warnings. [The archived summary](evidence/rama-hero/qa/summary.json) records report hashes. Exact report/log copies are archived under `docs/evidence/rama-hero/qa`; original run paths inside source-bound JSON remain unchanged.
+
+| Suite | Result | Archived report under `docs/evidence/rama-hero/qa/` |
+| --- | --- | --- |
+| Actual Rama world integration | 135/135 | `integration/report.json` |
+| Native acceptance, current hero and courtyard | 20/20 | `native/report.json` |
+| Retained legacy invocation integration and current modal glue | 116/116 | `mythic/report.json` |
+| Retained legacy invocation panel component | 62/62 | `invocation-ui/report.json` |
+
+The independent integration proves the actual world cast path, real receivers, authoritative hold/release/recovery, all fifteen ability/phase pause-reset cases, all fifteen cancellation cases, physical Measured Step movement, actual enemy cannon interruption/death/respawn, exact modal focus ownership, current import/source freshness and reentrant reset safety. Resetting from Kodanda's begin observer cannot reserve stale ammunition; resetting from Guardian Circle's release observer cannot apply payload into the replacement round.
+
+This gate caught two production defects and verifies their correction. Traversal cancellation previously consumed an accepted Measured Step during pause; remaining step state now survives pause while explicit cancellation still stops it. The actual preview also exposed a HUD notice stuck on “drawing” after contact/completion. The visible label now changes from “Piercing Dawn · drawing” to “Piercing Dawn · released” and then “Rama is ready”.
+
+At identical elapsed time, Dawn Volley and Guardian Circle receiver states, corresponding effect transforms, visibility and every generated mesh vertex agree at 30/60/120 Hz. Maximum transform and vertex discrepancy was zero across 1,210 Volley and 850 Guardian vertices; cast ages agree within `0.00001` seconds. Structural child paths avoid Godot's process-specific generated names. Thirty-two uninterrupted primary casts and real reloads retain five owned nodes after warming the intentional contact pool. One hundred mixed cast/reset cycles return to three owned nodes after every cleanup; world teardown returns to the original one-node tree. These checks establish bounded owned-node lifetime, not absence of every possible engine/resource allocation.
+
+The final integration run sampled 5,213 synchronous army/player/effect steps: median `0.705 ms`, p95 `1.924 ms`, maximum `13.422 ms`. This is shared-container headless wall cost, excludes rendering, and must not be converted into consumer-GPU FPS. All listed runtime, motion-library, effect-shader, test and imported-model hashes remained stable during this run.
+
+## Visual findings and correction
+
+The imported R6 staged take `/tmp/rama-motion-render-r2/rama-motion.mp4` contains 421 hashed 640×640 frames at 24 Hz. Independent sequential-frame review found coherent hand/bow/string contact and readable draw → release → return in frames 385–420, plus cancellation recovery in frames 335–367. Frames 97 and 105 exposed a concrete failure: the ivory front drape stretched into a nearly planar triangular fan with sharply folded facets while strafing. That take remains rejected for this finding.
+
+R7 changes only binding of the central dhoti and its matching borders; the motion controller adds a noncrossing, low sidestep. Independent binary comparison ([archived byte audit](evidence/rama-hero/qa/r7-independent-byte-audit.json)) verifies that every changed GLB byte belongs to skin joint/weight attributes; JSON, file size and all other binary data are identical. This is scope verification, not appearance acceptance.
+
+The corrected actual R7 take `/tmp/rama-motion-side-r3` contains 118 hashed frames. Independent review of full-size frame 25, every frame 12–40 (right), 49–77 (left), and 78–117 (walk/stop) confirms the triangular fan/striped inner fold is gone, feet remain on their own sides, and the drape stays continuous. [The independent review ledger](evidence/rama-hero/qa/review.json) records every inspected frame hash and exact critical rejected/corrected images. No new concrete defect was observed in those intervals. The expanded current-source take is recorded separately below.
+
+Independent review of the actual R6 Confluence preview `/tmp/rama-gameplay-owner-preview-r1` covered all five abilities at windup/release/contact and side-angle Piercing Dawn, Guardian Circle and Dawn Volley replays. Hero, reticle, targets, ward boundary, projectile wake and lower HUD remain readable. Hit/defeat/respawn stills show the expected health/countdown/location states and clean effects. These preview stills establish appearance only; they cannot establish temporal continuity and must be superseded by the final corrected-source take. Hair remains broadly sculpted and the sash stiff; no reference-parity or physical cloth-simulation claim is made.
+
+The final expanded R7 staged take `/tmp/rama-motion-render-r4` contains 539 source-pinned frames. Independent QA reviewed every frame 421–538: three rapid primary episodes, hit, defeat, respawn and return to idle, plus full-size frame 488. The repeated actions retain bow-ready posture, defeat lowers and holds, and respawn rises continuously; no new concrete snap, grip disconnection or cloth tear was observed in these intervals. Motion-owner review covers the earlier locomotion, traversal, ability and contact sequences. The QA ledger records exact inspected-frame hashes. Sculpted hair, stiff sash, strongly stylized high-knee drape and material richness still limit production polish relative to the reference.
+
+## Current disposition
+
+| Area | Status | Evidence still required |
+| --- | --- | --- |
+| New art and material identity | LIMITED | R6 shape/material fixes and R7 strafe deformation correction verified; final R7 actual game-camera evidence remains required. |
+| Continuous motion and contact | LIMITED | Corrected R7 side/stop and expanded rapid-action/reaction continuity reviewed; actual gameplay sequence remains pending and production cloth polish remains limited. |
+| Playable kit and lifecycle | PASS | Current-source actual-world integration, including real siege damage/death and all pause/cancel/reset phases. |
+| Screens and actual input | OPEN | Exact headless focus/layout passes; current-source visual screen review and OS input sequence remain required. |
+| Bounded lifetime/software cost | LIMITED | Owned nodes and headless step cost measured; rendered wall-frame cost remains separate. |
+| Physical GPU and Windows | UNRUN | External execution evidence; no claim from this container. |
+
+Acceptance remains open while any required gate is unresolved. Missing external GPU/Windows evidence limits those claims; it does not turn a completed Linux offline milestone into a full-platform release.
