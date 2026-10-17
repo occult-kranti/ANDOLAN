@@ -1,5 +1,7 @@
 # Cloud workspace and cleanup
 
+Current round cleanup: [R2 cache receipt](evidence/visual-round2-cache-cleanup.json) records 13 obsolete Godot import caches removed after checkpoint6046171 was pushed and remote-verified. About895MB of regenerable cache bytes were removed; all source, original frames, failure evidence, installed tools and active caches remain.
+
 Latest visual-campaign cleanup: [verified receipt](evidence/visual-campaign-cleanup/README.md).
 Nine obsolete render-clone/cache paths were removed after source `09dac722`
 was pushed and all recovery bytes were checked: about **793 MB logical /

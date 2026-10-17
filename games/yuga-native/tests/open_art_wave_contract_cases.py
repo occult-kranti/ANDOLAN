@@ -30,6 +30,14 @@ PINS = {
     "assets/heroes/rama-hero-far.glb": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
     "shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
 }
+# These tools intentionally still accept only their original input. Later,
+# separately reviewed authoring stages retain those inputs in the provenance
+# chain; promoting a stage must not silently retarget the old repair tool.
+HISTORICAL_INPUTS = {
+    "assets/heroes/rama-hero.glb": "art/hero-rama-face/rama-hero-face.glb",
+    "assets/heroes/rama-hero-mid.glb": "art/visual-rounds/face/principal-form-v1/input/rama-hero-mid.glb",
+    "assets/heroes/rama-hero-far.glb": "art/visual-rounds/face/principal-form-v1/input/rama-hero-far.glb",
+}
 CANDIDATE_PINS = {
     "source-manifest.json": "30d7b5bdd3062aafbcf75185932deadfeced5dd5bc850eeed0acc73fe05aafcb",
     "build-manifest.json": "ef1b0144a113110962c63e60602228298437d019742a4a8f06e02dfb9b1bef20",
@@ -82,6 +90,7 @@ def main():
     if not args.report.is_absolute() or args.report.exists():
         parser.error("--report must be a fresh absolute path")
     source_paths = [Path(__file__), REPAIR, DOMAIN, BINDER, SHADER,
+                    PROJECT / "tools/package-native.py", PROJECT / "NOTICE/RAMA-HERO-PROVENANCE.json",
                     ART / "source-manifest.json", ART / "build-manifest.json", BOOTSTRAP,
                     BOOTSTRAP.parent / "rea-runtime/package.json",
                     BOOTSTRAP.parent / "rea-runtime/package-lock.json"]
@@ -104,11 +113,25 @@ def main():
             raise AssertionError(message)
 
     def runtime_pins():
-        require(all(sha(PROJECT / p) == expected for p, expected in PINS.items()))
+        advanced = []
+        for relative, expected in PINS.items():
+            if sha(PROJECT / relative) == expected:
+                continue
+            require(relative in HISTORICAL_INPUTS, "Unreviewed shader/source change: " + relative)
+            retained = HISTORICAL_INPUTS[relative]
+            require(sha(PROJECT / retained) == expected, "Original authoring input was not retained: " + relative)
+            advanced.append(relative)
+        if advanced:
+            packaging = load("open_art_contract_packaging", PROJECT / "tools/package-native.py")
+            provenance = packaging.validate_rama_hero_notice(PROJECT)
+            for relative in advanced:
+                require(provenance["sources"][relative]["sha256"] == sha(PROJECT / relative),
+                        "Current asset lacks validated stage ancestry: " + relative)
         require(repair.YUGA_SOURCE == PINS["assets/heroes/rama-hero.glb"])
         require(repair.YUGA_SHADER == PINS["shaders/rama_secondary_cloth.gdshader"])
-        return {"scope": "Byte/source identity only; no engine behavior.", "pins": PINS}
-    check("Accepted runtime GLBs and deformation shader remain pinned", "source_boundary", runtime_pins)
+        return {"scope": "Historical tool inputs remain exact; later runtime assets require the strict package provenance gate. No engine behavior.", "pins": PINS,
+                "advanced_runtime_assets": {relative:sha(PROJECT / relative) for relative in advanced}}
+    check("Original tool inputs remain pinned and later runtime stages have validated ancestry", "source_boundary", runtime_pins)
 
     def licensed_sources():
         require(all(sha(ART / p) == expected for p, expected in CANDIDATE_PINS.items()))
