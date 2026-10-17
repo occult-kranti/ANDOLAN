@@ -2,16 +2,24 @@
   "schema_version": 1,
   "updated_at": "2026-10-17",
   "baseline": {
-    "published_source": "bd6740f",
-    "native_release_source": "079cc0a44feb75fc1ddbdcd534cfab7f79da2302",
-    "release_url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-art-2026-10-17",
+    "published_source": "395986a512ecabe874710048a19bd0fdd0a71f89",
+    "native_release_source": "395986a512ecabe874710048a19bd0fdd0a71f89",
+    "release_url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17",
     "browser": {
       "team_size": 3,
       "duration_seconds": 480,
       "protocol": 2
     },
-    "native": "Offline Rama training courtyard; the full game target remains open.",
-    "workspace_recovery": "Published native branch restored at bd6740f. Earlier uncommitted art/motion/network artifacts must be recovered or reproduced; no current-pass completion is inferred from pre-reset reports."
+    "native": "Offline Rama courtyard, combat film and 140 x 260 m three-lane Confluence practice; native flight/tether, three-role lane armies and persistent keyboard remapping implemented. Native online matches, production rules and visual target remain open.",
+    "workspace_recovery": "Initial roadmap recovery bd6740f retained historically. Traversal/army/input implementation has fresh recovered-source tests, actual render and local portable Linux OS-input evidence. Missing earlier art corrections remain separate.",
+    "historical_native_release": {
+      "source": "079cc0a44feb75fc1ddbdcd534cfab7f79da2302",
+      "release_url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-art-2026-10-17",
+      "scope": "Earlier courtyard preview; retained historical baseline."
+    },
+    "initial_recovery_source": "bd6740f",
+    "release_status": "Published; all 46 public assets independently verified, both CI workflows passed, exact published Linux package exercised. Windows execution and hardware profiling remain open.",
+    "captured_and_local_package_source": "0124fd4d63384a988223eb76ceb72b2510659ac3"
   },
   "target": {
     "team_size": 6,
@@ -378,13 +386,13 @@
       "evidence": [
         {
           "path": "games/yuga-native/docs/GAME_DESIGN_MASTER.md",
-          "scope": "Complete design baseline for14heroes/42abilities and fulljourney; current-versus-proposed explicit",
-          "sha256": "bc51f4befc524ba9fecc44e45ee3b0faa4ae4508a64976980a73106245fba310"
+          "scope": "Complete design baseline for14heroes/42abilities and fulljourney; current-versus-proposed explicit; dated offline progress addendum preserves production rules and open gates.",
+          "sha256": "5a9958fb61c23a751a5f4f0497187092b44a32bbc6ecce115c28089fb3ebe759"
         },
         {
           "path": "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md",
-          "scope": "Sixteen production gates, owners and measurable acceptance requirements",
-          "sha256": "97d92fcd0344ee4cdcb341a01e58538a4b257762504d8f28306ad6c91d1a7769"
+          "scope": "Sixteen production gates, owners and measurable acceptance requirements; dated offline progress addendum preserves production rules and open gates.",
+          "sha256": "29b9a6e4c8994535f6de949ca1ed564be715e78c8fdcbcff96ae07ca11951d40"
         },
         {
           "path": "games/yuga-native/docs/PRODUCTION_GUIDE_REVIEW.md",
@@ -939,11 +947,31 @@
           "path": "games/yuga-native/docs/evidence/confluence-r2/world-render-review.json",
           "sha256": "435b2da8bfd449211a50a35ded9ea9b27ce48ec8301dd221dbc0360f175cb930",
           "scope": "Nine actual software-rendered views on frozen sources; no hardware performance or commercial art acceptance."
+        },
+        {
+          "path": "games/yuga-native/tests/evidence/world-map-traversal-recovered.json",
+          "sha256": "e7417307fe123c326b2a168719b17bb8bd2036bb1539b697d92beb92f87a099a",
+          "scope": "30 source/native map and sampled navigation checks; explicitly separate 140 x 170 browser baseline from 140 x 260 native ground geometry."
+        },
+        {
+          "path": "games/yuga-native/tests/evidence/world-plan-traversal-recovered.json",
+          "sha256": "301ca250ac0843d94af84c4f432e614fe561645c51179fc44ef2100baa846294",
+          "scope": "12 district, placement, native lane-corridor and deck/anchor checks with rejection fixtures."
+        },
+        {
+          "path": "games/yuga-native/tests/evidence/traversal-cases-recovered.json",
+          "sha256": "ba2ac25fae9c23d12b77ccec6a00ca42e57ac7c30c3ffdd05d39a7a0e995ab13",
+          "scope": "36 native physical traversal cases; local collision/landing/energy/bounds, not shared authoritative elevation."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/traversal-armies-render-r2/REVIEW.md",
+          "sha256": "ca7f40dd2aae598a33c664c07bcdbb11b73c4ceb24ffeca7164a385739c9d27b",
+          "scope": "180-frame actual software-rendered take and separate staged views; bounded prototype review, not production art or gaming-GPU qualification."
         }
       ],
-      "next_action": "Complete the shared elevation/collision/version contract, integrate live objective blockers and camera/cover/spawn-protection cases, then promote the reviewed native traversal scene into the gameplay blockout.",
+      "next_action": "Use the tested native geometry as an explicit experiment while completing the versioned shared elevation/collision contract; integrate authoritative objectives and camera/cover/spawn-protection cases before promoting it to competitive gameplay.",
       "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision.",
-      "supporting_preproduction_packet": "Original current-authority flat traversal scene is implemented and reviewed. Task remains planned behind FG05-T02; production gameplay acceptance is incomplete."
+      "supporting_preproduction_packet": "Extended offline field, eight native landing decks, ten rings and flight/tether are implemented and reviewed. Browser coordinates remain separate. Production task remains planned behind FG05-T02; shared elevation, objective collision, cover and spawn protection remain incomplete."
     },
     {
       "id": "FG05-T04",
@@ -1223,9 +1251,26 @@
         "Attack animations follow server receipts and support effects visibly precede buffs.",
         "Army LOD/animation throttling preserves readable siege threat at target load."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
-      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+      "evidence": [
+        {
+          "path": "games/yuga-native/tests/evidence/lane-army-cases.json",
+          "sha256": "f938c37afae88334062d3202a630ffe53630fb65f630e3fad70a5421d97afff3",
+          "scope": "21 offline army cases and 24000 fixed simulation ticks; spearman/bow_guard/commander, not the complete four-role server-owned production roster."
+        },
+        {
+          "path": "games/yuga-native/tests/evidence/traversal-army-stress-final.json",
+          "sha256": "2d1341c950d2bd05dd30e5b573ca972a5e471e8adca901b120f830895c7bb6f1",
+          "scope": "36 independent integrated checks: caps, once-only gold, projectile/pulse coupling, resets and local core outcomes; accelerated simulation is not a live hardware soak."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/traversal-armies-render-r2/REVIEW.md",
+          "sha256": "ca7f40dd2aae598a33c664c07bcdbb11b73c4ceb24ffeca7164a385739c9d27b",
+          "scope": "Sampled actual role/weapon/team readability and motion review; detailed contacts, LOD and commercial quality remain open."
+        }
+      ],
+      "next_action": "Port or explicitly version the intended four-role authoritative unit contracts, then bind native animation events to server receipts and qualify full-population readability/LOD.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision.",
+      "supporting_preproduction_packet": "Three original offline unit roles and bounded local waves are implemented. Browser minister/king behavior, server-owned animation receipts, full production deformation and LOD/load acceptance remain open."
     },
     {
       "id": "FG08-T02",
@@ -1268,9 +1313,16 @@
         "Purchases are idempotent/server priced and survive reconnect/death correctly.",
         "Item choice and counter tradeoffs match master design with readable tutorial/UI."
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "games/yuga-native/tests/evidence/traversal-army-stress-final.json",
+          "sha256": "2d1341c950d2bd05dd30e5b573ca972a5e471e8adca901b120f830895c7bb6f1",
+          "scope": "Supporting local once-only last-hit reward checks across three unit roles; no production shard/item/steal/reconnect economy acceptance."
+        }
+      ],
       "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
-      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision.",
+      "supporting_preproduction_packet": "Local last-hit gold and duplicate-award prevention exist. Contested shards, purchases, buffs, server ledger and reconnect invariants remain planned."
     },
     {
       "id": "FG08-T04",
@@ -1817,9 +1869,16 @@
         "Transitions include loading/error/cancel/timeout/device focus and accessibility states.",
         "Native implementation is reviewed from actualscreens and interaction, not document wireframes alone."
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "games/yuga-native/docs/evidence/traversal-armies-window-r2/REVIEW.md",
+          "sha256": "8362c2e0656641a92e5767a714a91629d65edda545e6495d52dd7621741dec93",
+          "scope": "Actual packaged Linux 960 x 600 OS-input flow: entry, remap/movement/flight/pause/reset/mute/return. No online lifecycle or Windows execution."
+        }
+      ],
       "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
-      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision.",
+      "supporting_preproduction_packet": "Local courtyard/world/settings/help/return flows are exercised in the packaged Linux window; party, queue, selection, reconnect, match result/rematch and support flows remain open."
     },
     {
       "id": "FG13-T02",
@@ -1839,9 +1898,21 @@
         "Supported keyboard/controller focus and device changes work across menus/gameplay.",
         "Criticalteam/threat/reward cues do not depend only on color or sound; font/UI scaling readable."
       ],
-      "evidence": [],
-      "next_action": "Implement the first unmet acceptance condition; attach source-pinned evidence before requesting completion.",
-      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision."
+      "evidence": [
+        {
+          "path": "games/yuga-native/tests/evidence/input-bindings-recovered.json",
+          "sha256": "79cb830424c3e64dc3c68ed7d88ef1aa8eb50fd2a330c6fb092acee9492fb2b2",
+          "scope": "39 shared-input/settings checks including duplicate/reserved keys, keyboard focus, small viewport, explicit invalid-file backup/reset and unchanged-original failure cases."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/traversal-armies-window-r2/REVIEW.md",
+          "sha256": "8362c2e0656641a92e5767a714a91629d65edda545e6495d52dd7621741dec93",
+          "scope": "Actual OS remapping W to J, movement, reopen persistence, reset, flight/pause and mute; no restart/controller or complete accessibility acceptance."
+        }
+      ],
+      "next_action": "Retain tested keyboard/settings behavior while adding supported controller/device paths and remaining accessibility options; verify critical cues and all complete-match states at actual scales.",
+      "risk": "Integration or evidence can invalidate a local pass; re-run affected gates on the frozen revision.",
+      "supporting_preproduction_packet": "Persistent keyboard remapping, contextual help, safe settings and local focus/pause are implemented. Production task remains open: controller/device paths, full subtitle/audio/accessibility options, scale/contrast and human playtesting remain unqualified."
     },
     {
       "id": "FG13-T03",

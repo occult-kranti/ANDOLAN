@@ -14,17 +14,19 @@ would need to demonstrate.
 The production target is now a downloadable PC game. Browser compatibility is
 optional. This branch establishes the native engine, original 3D environment,
 asset import and analysis toolchain. **The current native build contains local
-training and a traversable three-lane map preview. Online native matches and the
+training, a combat film and offline three-lane army practice with flight and grappling. Online native matches and the
 full production visual target remain open.** The existing browser game remains
 on `game/yuga-confluence`.
 
-[Download the Confluence map development preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-map-2026-10-17)
-for Linux or Windows. The extracted Linux ZIP was exercised through its actual
-game window; Windows is archive-validated but unexecuted. See the
-[package review](docs/evidence/confluence-package/REVIEW.md) and
-[map review](docs/CONFLUENCE_MAP_REVIEW.md) for scope and evidence. The
-[earlier courtyard-only preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-art-2026-10-17)
-remains available separately.
+[Download the traversal and lane-army preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17)
+for Linux or Windows. All 46 public release files pass checksum verification;
+the exact public Linux package was executed; Windows is archive-validated but
+unexecuted. See the
+[milestone verification](docs/TRAVERSAL_ARMY_VERIFICATION.md),
+[actual rendered review](docs/evidence/traversal-armies-render-r2/REVIEW.md),
+[Linux window review](docs/evidence/traversal-armies-window-r2/REVIEW.md) and
+[public package verification](docs/evidence/traversal-armies-published/REVIEW.md).
+Earlier map and courtyard previews remain available in Releases.
 
 ## Run the source
 
@@ -50,15 +52,17 @@ rates, latency or visual parity with a commercial game.
 
 ## Current playable content
 
-Choose **EXPLORE CONFLUENCE** from the title to walk a 140 × 170 m city with
-coastal ghats, temple avenue, metro gardens and reed courts. The scene combines
-eight original architecture presets and seven nature presets across 63 deliberate
-placements, animated coast/swamp water, day/night lighting, an atlas and travel
-shortcuts. It uses the current authority's static map coordinates; objective and
-camp markers are visual previews. Live armies, objective collision/state and
-networked matches are still separate integrations. See the
-[world production plan](docs/WORLD_PRODUCTION_PLAN.md) and
-[actual map review](docs/CONFLUENCE_MAP_REVIEW.md).
+Choose **EXPLORE CONFLUENCE** from the title for a 140 × 260 m city with
+coastal ghats, temple avenue, metro gardens and reed courts. Three longer routes
+contain eight landable stone decks and ten glowing tether anchors. Finite-energy
+flight and grappling use capsule collision and bounded speeds. Day/night lighting,
+animated coast/swamp water, an overview and travel shortcuts remain available.
+
+Paired 30-second waves of spear soldiers, bow guards and banner commanders fight,
+threaten local cores and grant once-only player last-hit gold. F5 resets the round.
+This is offline practice: the browser's 140 × 170 m baseline and production army,
+economy and network rules remain separate. Native online matches, jungle combat
+and the full competitive rules are still open roadmap work.
 
 In the courtyard:
 
@@ -76,11 +80,14 @@ are described in [the art record](art/README.md).
 | Sprint / jump | Shift / Space |
 | Sunburst / dash | Q / E |
 | Reload | R |
+| Confluence flight / tether | F / G |
+| Rise / descend while flying | Space / Ctrl |
+| Help and persistent keyboard remapping | F2 |
 | Pause and release cursor | Escape |
 | Reset courtyard | F5 |
 | Confluence day / night | N |
 | Confluence atlas view | F1 |
-| Return to Confluence arrival point | F5 |
+| Reset Confluence practice round | F5 |
 
 The native training controls and ability rules are explicit experiments. They
 are not a port of all fourteen browser hero kits. Assets retain their provenance

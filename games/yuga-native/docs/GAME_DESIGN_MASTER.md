@@ -22,7 +22,7 @@ The primary production platform is native desktop with keyboard/mouse and contro
 
 | Area | Audited current baseline | Approved design default for production |
 | --- | --- | --- |
-| Native build | Offline Rama courtyard, training targets, local controls, original production model and render/evidence tools | Complete online and bot matches using the same authoritative rule version |
+| Native build | Rama courtyard, combat film and 140 × 260 m offline Confluence practice with local lane armies, flight/tether and persistent keyboard remapping; see the dated scope below | Complete online and bot matches using the same authoritative rule version |
 | Browser authority | Protocol 2; three heroes per team including bots; 480-second matches | **6v6**, initially two players per lane; no duplicate hero within one team, opposing mirrored picks allowed |
 | Roster | Fourteen definitions, 42 abilities, five Vanguards/four Strikers/five Keepers; fourteen existing GLBs | All fourteen accepted at production art, animation, networking and gameplay gates |
 | Distinct timed mechanics | Rama R, Hanuman R and Sita R; other 39 slots use shared ability kinds | Preserve all 42 kit contracts initially; distinct authored motion/effects and later mechanically distinct revisions only through tested rule changes |
@@ -35,7 +35,17 @@ The primary production platform is native desktop with keyboard/mouse and contro
 
 The native vertical slice is **3v3, all three lanes, Rama/Hanuman/Sita**, using the current rules first. That slice permits duplicate hero selections when necessary and must say so. The next content step is six accepted heroes: Rama, Hanuman, Sita, Ravana, Arjuna and Duryodhana. Duplicate-free 6v6 cannot begin before six accepted heroes exist. The remaining eight heroes complete the release roster. Existing browser assets are starting material, not automatically production-approved native characters.
 
-The proposed team count, objective topology and tiebreak are a rules migration. They must not silently appear on a protocol-2 server or mix incompatible clients in one room. Keep the old eight-minute practice preset separately named while validating the new format. The restored published baseline is the last evidenced runtime; uncommitted work lost during the cloud-worker reset is not counted as delivered.
+The proposed team count, objective topology and tiebreak are a rules migration. They must not silently appear on a protocol-2 server or mix incompatible clients in one room. Keep the old eight-minute practice preset separately named while validating the new format. Historical recovery reports are distinguished from newly reproduced evidence. The offline prototype progress below is delivered locally; it does not migrate protocol 2 or complete the production ruleset.
+
+### Dated offline prototype scope
+
+At published preview `395986a512ecabe874710048a19bd0fdd0a71f89` (`yuga-traversal-armies-2026-10-17`), native Confluence includes three extended lanes, eight landing decks, ten tether rings and finite-energy flight. Native bounds are 140 × 260 m, spawns are z=±112, tower markers z=±68 and local cores z=±120. These are explicitly separate from the browser coordinates and authoritative objective rules in this document. The shared 3D authority, online match and production art gates remain open.
+
+The local army uses spearmen, bow guards and banner commanders, immediate initial waves followed by 30 s waves, 72 live units and at most 24 corpses. It supports local attacks, once-only last-hit gold and core outcomes. The browser mechanics in §5 remain the reference for the planned authoritative match; no minister support, king siege behavior, jungle rewards, item system or server ownership is inferred from the local experiment.
+
+Native practice binds F to flight, G to tether, Ctrl to descent, Space to jump/ascent, Q to pulse, E to dash and R to reload. These keyboard bindings are configurable; F1 overview, F2 Help/remapping, F5 reset, N lighting and Escape pause remain fixed. They do not replace the production Q/E/R skills and proposed F interaction in §4. Settings safely preserve valid preferences; explicit Reset backs up malformed/oversized files before writing defaults. Keyboard remapping and selected local flows are tested, while controller, complete accessibility, human playtesting and online lifecycle acceptance remain open.
+
+[Milestone verification](TRAVERSAL_ARMY_VERIFICATION.md), [render review](evidence/traversal-armies-render-r2/REVIEW.md) and [portable Linux window review](evidence/traversal-armies-window-r2/REVIEW.md) delimit acceptance. The captured/local-package source is `0124fd4d63384a988223eb76ceb72b2510659ac3`. Public CI rebuild, all 46 public asset checks and the exact published Linux window repeat passed ([review](evidence/traversal-armies-published/REVIEW.md)); Windows execution and physical-GPU profiling remain unverified. The proposed 6v6/18-minute rules, fourteen-hero roster and all production gates are unchanged.
 
 ## 3. Complete player journey
 
@@ -104,7 +114,7 @@ The first complete native release may retain the three upgrade tracks if human c
 
 Soldiers, watch, ministers and kings are fictional old-city court units. They are not real politicians or police likenesses. They have individual silhouettes, equipment, gait, attack anticipation, hit response and defeat. Repeated units share optimized assets without becoming miniature copies of the heroes.
 
-| Unit | Current mechanics | Animation and information requirement |
+| Unit | Current browser mechanics | Animation and information requirement |
 | --- | --- | --- |
 | Spear Soldier | 130 HP; 14 damage; 11 m acquisition/7 m stopping distance | Brisk march, readable spear shot, recover and collapse; projectile launch matches authority |
 | City Watch | 90 HP; 10 damage; 17 m acquisition/13 m stopping distance | Square shield/baton silhouette, measured stride and shot; shield prop does not imply unimplemented protection |
@@ -112,7 +122,7 @@ Soldiers, watch, ministers and kings are fictional old-city court units. They ar
 | King siege unit | 240 HP; 3.4 m/s; visible-structure preference; 12 projectile damage to actors/32 to structures | Deliberate weight, crown readability, heavy recoil; shot can be intercepted |
 | Hero sentinel | Two temporary units per accepted summon; 105 HP; nine-second current lifetime | Owner/team identity, independent attack, readable expiry; disappear exactly with authority |
 
-Current waves begin at one second and recur every eighteen seconds. Each lane/team receives soldier, watch and minister; every third wave adds a king, first at 37 seconds. Current admission reserves mirrored pairs under the 96-actor cap. For 6v6, wave quantity, cap and timing are retuned only after a full-population benchmark and lane pressure study; a larger team must not silently inherit an overloaded cap or asymmetric spawning.
+Current browser-authority waves begin at one second and recur every eighteen seconds. Each lane/team receives soldier, watch and minister; every third wave adds a king, first at 37 seconds. Current admission reserves mirrored pairs under the 96-actor cap. For 6v6, wave quantity, cap and timing are retuned only after a full-population benchmark and lane pressure study; a larger team must not silently inherit an overloaded cap or asymmetric spawning.
 
 There are four current wild courts: West Reed Court at (-54,0), Stone Grove at (-20,0), Sky Garden at (20,0), East Reed Court at (54,0). Reed Naga grants ward, Grove Yaksha grants regeneration, Cloudwing grants haste. First spawn is 30 s, respawn 40 s after defeat; aggro 8 m, leash 12 m. Returning home resets the creature without a reward. A creature's identity is inspired by motifs; its stats and combat are game inventions.
 
@@ -173,7 +183,7 @@ For every hero, exercise neutral/aimed idle, all travel directions, start/stop, 
 
 ## 8. Sangam City map and world design
 
-The current map is140 ×170 m with lane centres x=-40,0,40, spawns z=±69 and a flat shared collision layout. The production city uses this as a proven gameplay reference, not an obligation to stretch a courtyard into a finished arena. Establish an approved greybox before environment art hides the routes.
+The current browser-authority map is 140 × 170 m with lane centres x=-40,0,40, spawns z=±69 and a flat shared collision layout. The separate 140 × 260 m native offline experiment is recorded in §2; it does not change shared authority. The production city uses this as a proven gameplay reference, not an obligation to stretch a courtyard into a finished arena. Establish an approved greybox before environment art hides the routes.
 
 | District | Play purpose | Visual direction and readability |
 | --- | --- | --- |
@@ -185,7 +195,7 @@ The current map is140 ×170 m with lane centres x=-40,0,40, spawns z=±69 and a 
 
 The target topology is three identifiable lanes joined by a circular middle rotation route and bounded outer alternatives. Looping paths need more than decorative circles: each exit must reconnect to a meaningful lane/camp decision. Foreground cover, middle-distance fight spaces and far skyline layers create depth without crowding the playable corridor. Asymmetric art can coexist with measured equivalent travel, cover and objective access; visual symmetry alone is not balance proof.
 
-Raised routes must expose an opportunity and a cost: a flank with a visible exit, cover that blocks actual shots, and a return path that does not trap a slower hero. Bridges over roads require multiple support surfaces at one x/z position. A single heightfield cannot represent that topology. Do not build traversable rooftops, stairs, bridges or elevated camps until the authority contract below is implemented and tested.
+Raised routes must expose an opportunity and a cost: a flank with a visible exit, cover that blocks actual shots, and a return path that does not trap a slower hero. Bridges over roads require multiple support surfaces at one x/z position. A single heightfield cannot represent that topology. Do not promote traversable rooftops, stairs, bridges or elevated camps into the competitive map until the authority contract below is implemented and tested. The isolated native landing-deck experiment is supporting physics evidence, not competitive elevation acceptance.
 
 Day/night is presentation only for the initial complete rule set. Diya and lantern placement establishes warm navigational accents, cool ambient fill and clear enemy edges. Dynamic time must not grant a hidden visibility advantage or alter target eligibility. Fixed daylight/night preferences preserve equivalent actionable contrast. Reduced motion removes flicker/shake but retains events. Fog/water/specular detail cannot erase a distant hero or cause temporal shimmer; evaluate moving cameras, not only screenshots. Decorative lamps have a bounded shadow/light budget and must not require many overlapping shadow casters.
 

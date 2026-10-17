@@ -1,6 +1,6 @@
 # Longer lanes, traversal and army verification
 
-Release status: local implementation, stress tests, full rendered capture and portable Linux window review complete; public CI rebuild and release-byte verification pending. Only a completed report tied to current source establishes a passing gate. Earlier pre-outage results in `TRAVERSAL_ARMY_RECOVERY_2026-10-17.md` are historical, not the acceptance evidence for recovered source.
+Release status: published at `yuga-traversal-armies-2026-10-17` from `395986a512ecabe874710048a19bd0fdd0a71f89`. Local and CI gates, full capture, public release bytes and actual published Linux window checks passed. Only a completed report tied to current source establishes a passing gate. Earlier pre-outage results in `TRAVERSAL_ARMY_RECOVERY_2026-10-17.md` are historical, not the acceptance evidence for recovered source.
 
 ## Design contract
 
@@ -66,6 +66,6 @@ The independent soak recorded maxima of 64 live units, 64 unit nodes, eight corp
 
 The first real preview is preserved under `docs/evidence/traversal-armies-render-r1/`: its HUD and art shortcomings are documented rather than replaced by the generated concept. Final capture is archived in `docs/evidence/traversal-armies-render-r2/`: 180 rendered frames, 360 physics ticks, six seconds at 1280 × 720 and five supplementary stills. All 214 captured sources match the real local export inventory. Maximum recorded speed was 18 m/s; every sampled player/rig state was finite. The capture uses software Vulkan and does not establish hardware FPS. The release validator passes 125 adversarial checks, including mismatched source, substituted media and omitted failed reports.
 
-Portable Linux OS-input review is archived separately in `docs/evidence/traversal-armies-window-r2/`. It exercises title-to-world, remap/persistence/reset, movement, flight, pause, day/night, overview, round reset and return to the courtyard using XTest input to the actual packaged window. Public CI rebuild and remote release-byte verification remain the publication gates. Windows has archive validation but no execution review.
+Portable Linux OS-input review is archived separately in `docs/evidence/traversal-armies-window-r2/`. It exercises title-to-world, remap/persistence/reset, movement, flight, pause, day/night, overview, round reset and return to the courtyard using XTest input to the actual packaged window. Public CI rebuild passed. All 46 public assets were independently downloaded and verified; the exact published Linux build passed a bounded OS-input repeat. See `docs/evidence/traversal-armies-published/REVIEW.md`. Windows has archive validation but no execution review.
 
 No proprietary Deadlock/Overwatch binaries, rigs, animation clips or textures were analyzed or copied by this milestone. It does not complete the full roster, online native authority, production art, accessibility playtesting or commercial visual-quality roadmap.
