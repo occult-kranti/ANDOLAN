@@ -466,12 +466,21 @@ func hud_phase_case() -> void:
 	var expiry := release_tick + float(begin.timing.active_s)
 	advance(expiry-STEP)
 	scene.rama_hud._refresh()
-	check("Guardian HUD remains active through the final live authority tick", accepted.get("accepted", false) and targets.ally.shield > 0 and scene.player.vitals.shield > 0 and scene.rama_hud.note.text == "Guardian Circle · field active" and event_count("end", accepted.cast_id, accepted.generation) == 0, {"note":scene.rama_hud.note.text, "shield":targets.ally.shield, "hero_shield":scene.player.vitals.shield, "elapsed":kit.report().elapsed})
+	var field_warning := false
+	for cast in effects.report().casts:
+		if int(cast.cast_id) == int(accepted.cast_id): field_warning = cast.warning_visible
+	check("Guardian HUD and boundary remain active through the final live authority tick", accepted.get("accepted", false) and targets.ally.shield > 0 and scene.player.vitals.shield > 0 and field_warning and scene.rama_hud.note.text == "Guardian Circle · field active" and event_count("end", accepted.cast_id, accepted.generation) == 0, {"note":scene.rama_hud.note.text, "shield":targets.ally.shield, "hero_shield":scene.player.vitals.shield, "warning_visible":field_warning, "elapsed":kit.report().elapsed})
+	# Start below the HUD's former 80 ms throttle and use its normal render callback.
+	# Forcing _refresh here would hide a stale visible notice/shield after expiry.
+	scene.rama_hud.clock = 0.0
 	advance(STEP)
-	scene.rama_hud._refresh()
+	scene.rama_hud._process(1.0/60.0)
 	var presentation_remains := false
 	for cast in kit.report().casts: presentation_remains = presentation_remains or int(cast.cast_id) == int(accepted.cast_id)
-	check("Guardian HUD is ready at ward expiry before presentation retirement", targets.ally.shield == 0 and scene.player.vitals.shield == 0 and presentation_remains and event_count("end", accepted.cast_id, accepted.generation) == 0 and scene.rama_hud.note.text == "Rama is ready", {"note":scene.rama_hud.note.text, "shield":targets.ally.shield, "hero_shield":scene.player.vitals.shield, "presentation_remains":presentation_remains, "elapsed":kit.report().elapsed})
+	field_warning = false
+	for cast in effects.report().casts:
+		if int(cast.cast_id) == int(accepted.cast_id): field_warning = cast.warning_visible
+	check("Guardian HUD is visibly ready at ward expiry before presentation retirement", targets.ally.shield == 0 and scene.player.vitals.shield == 0 and not field_warning and presentation_remains and event_count("end", accepted.cast_id, accepted.generation) == 0 and scene.rama_hud.note.text == "Rama is ready" and not scene.rama_hud.life_text.text.contains("+55"), {"note":scene.rama_hud.note.text, "shield":targets.ally.shield, "hero_shield":scene.player.vitals.shield, "life_text":scene.rama_hud.life_text.text, "warning_visible":field_warning, "presentation_remains":presentation_remains, "elapsed":kit.report().elapsed})
 	await fixture()
 	var ward: Dictionary = scene.cast_rama_ability("guardian_circle")
 	begin = latest("begin")

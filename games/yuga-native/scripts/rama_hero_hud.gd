@@ -54,16 +54,24 @@ func configure(value: Node3D) -> void:
 	runtime = value
 	_refresh()
 func _process(delta: float) -> void:
+	# Authority can expire a ward or change life between slot-format updates.
+	# Critical status must describe that state on the very next rendered frame.
+	_refresh_vitals()
 	clock += delta
-	if clock >= .08: clock = 0; _refresh()
+	if clock >= .08: clock = 0; _refresh_slots()
 func _refresh() -> void:
+	_refresh_vitals()
+	_refresh_slots()
+func _refresh_vitals() -> void:
 	if not life or not runtime or not runtime.configured: return
-	var state: Dictionary = runtime.kit.report()
 	var vitality: Dictionary = runtime.vitals.report()
 	life.max_value = vitality.max_health
 	life.value = vitality.health
 	life_text.text = "%.0f / %.0f%s" % [vitality.health, vitality.max_health, " +%.0f" % vitality.shield if vitality.shield > 0 else ""]
 	note.text = runtime.notice if vitality.alive else "RETURNING IN %.1fs" % vitality.respawn_remaining
+func _refresh_slots() -> void:
+	if not life or not runtime or not runtime.configured: return
+	var state: Dictionary = runtime.kit.report()
 	for i in IDS.size():
 		var cooldown := float(state.cooldowns.get(IDS[i], 0))
 		var status := "%.1fs" % cooldown if cooldown > .05 else "READY"

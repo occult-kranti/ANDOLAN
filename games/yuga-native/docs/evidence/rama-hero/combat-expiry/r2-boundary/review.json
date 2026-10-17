@@ -1,0 +1,172 @@
+{
+  "status": "rejected_for_exact_expiry",
+  "run_completed_cleanly": true,
+  "source_commit": "78b49fb",
+  "video_retained_path": "/tmp/rama-gameplay-owner-full-r2/rama-five-abilities.mp4",
+  "video_sha256": "4a2add48911262911283e9ad972335901c70d9a2e28bb2eda0f59f93e49a1454",
+  "finding": "Decorative fade is smooth, but FX boundary uses extrapolated age and disappears at frame270 before authority expiry. HUD still shows field active/+55 through272 due its refresh throttle. Owner and independent QA both observed this; root requested bounded fixes and a small rendered expiry probe before full R3.",
+  "timeline": [
+    {
+      "frame": 268,
+      "sample_time_s": 4.96666666666667,
+      "physics_tick": 697,
+      "last_authority_age_s": 4.94999999999999,
+      "release_age_s": 0.55,
+      "active_s": 4.5,
+      "fx": [
+        {
+          "ability_id": "guardian_circle",
+          "age_s": 4.98333333333332,
+          "cast_id": 1,
+          "released": true,
+          "warning_visible": true
+        }
+      ]
+    },
+    {
+      "frame": 269,
+      "sample_time_s": 5.0,
+      "physics_tick": 699,
+      "last_authority_age_s": 4.99999999999999,
+      "release_age_s": 0.55,
+      "active_s": 4.5,
+      "fx": [
+        {
+          "ability_id": "guardian_circle",
+          "age_s": 5.03333333333332,
+          "cast_id": 1,
+          "released": true,
+          "warning_visible": true
+        }
+      ]
+    },
+    {
+      "frame": 270,
+      "sample_time_s": 5.03333333333333,
+      "physics_tick": 701,
+      "last_authority_age_s": 4.99999999999999,
+      "release_age_s": 0.55,
+      "active_s": 4.5,
+      "fx": [
+        {
+          "ability_id": "guardian_circle",
+          "age_s": 5.04999999999999,
+          "cast_id": 1,
+          "released": true,
+          "warning_visible": false
+        }
+      ]
+    },
+    {
+      "frame": 271,
+      "sample_time_s": 5.06666666666667,
+      "physics_tick": 703,
+      "last_authority_age_s": 5.04999999999999,
+      "release_age_s": 0.55,
+      "active_s": 4.5,
+      "fx": [
+        {
+          "ability_id": "guardian_circle",
+          "age_s": 5.08333333333332,
+          "cast_id": 1,
+          "released": true,
+          "warning_visible": false
+        }
+      ]
+    },
+    {
+      "frame": 272,
+      "sample_time_s": 5.1,
+      "physics_tick": 705,
+      "last_authority_age_s": 5.09999999999999,
+      "release_age_s": 0.55,
+      "active_s": 4.5,
+      "fx": [
+        {
+          "ability_id": "guardian_circle",
+          "age_s": 5.13333333333332,
+          "cast_id": 1,
+          "released": true,
+          "warning_visible": false
+        }
+      ]
+    },
+    {
+      "frame": 273,
+      "sample_time_s": 5.13333333333333,
+      "physics_tick": 707,
+      "last_authority_age_s": 5.09999999999999,
+      "release_age_s": 0.55,
+      "active_s": 4.5,
+      "fx": [
+        {
+          "ability_id": "guardian_circle",
+          "age_s": 5.14999999999999,
+          "cast_id": 1,
+          "released": true,
+          "warning_visible": false
+        }
+      ]
+    },
+    {
+      "frame": 274,
+      "sample_time_s": 5.16666666666667,
+      "physics_tick": 709,
+      "last_authority_age_s": 5.14999999999999,
+      "release_age_s": 0.55,
+      "active_s": 4.5,
+      "fx": [
+        {
+          "ability_id": "guardian_circle",
+          "age_s": 5.18333333333332,
+          "cast_id": 1,
+          "released": true,
+          "warning_visible": false
+        }
+      ]
+    },
+    {
+      "frame": 275,
+      "sample_time_s": 5.2,
+      "physics_tick": 711,
+      "last_authority_age_s": 5.19999999999999,
+      "release_age_s": 0.55,
+      "active_s": 4.5,
+      "fx": [
+        {
+          "ability_id": "guardian_circle",
+          "age_s": 5.23333333333332,
+          "cast_id": 1,
+          "released": true,
+          "warning_visible": false
+        }
+      ]
+    },
+    {
+      "frame": 276,
+      "sample_time_s": 5.23333333333333,
+      "physics_tick": 713,
+      "last_authority_age_s": 5.19999999999999,
+      "release_age_s": 0.55,
+      "active_s": 4.5,
+      "fx": [
+        {
+          "ability_id": "guardian_circle",
+          "age_s": 5.24999999999999,
+          "cast_id": 1,
+          "released": true,
+          "warning_visible": false
+        }
+      ]
+    }
+  ],
+  "scope": "Actual Confluence gameplay; authoritative20Hz clock, physics60Hz, rendered30fps. Raw full capture and25stills retained in scratch; decisive failure frames and exact report/source copies retained here.",
+  "component_repair": {
+    "report": "rama-ability-owner-r20-authority-boundary.json",
+    "passed": 85,
+    "total": 85,
+    "behavior": "Authority age governs boundary and recipient validity; expiry invalidates the geometry cache so zero-opacity recipient geometry is also retired. Tests cover interpolation between final live and expiry ticks plus30/60/120Hz both update orders.",
+    "fx_sha256": "a1d0e2424c5de390b2a51fcaaeeba86be6ff499bfa250c0aeaa113116990e82e",
+    "rendered_verification": "Owner and independent QA accepted ../guardian-probe/review.json; full-five R3 remains pending."
+  }
+}

@@ -32,9 +32,9 @@ The initial roadmap recovery restored **`bd6740f`** with Rama v4 (`6657f4bf…`)
 
 The current items in [PRODUCTION_TASK_BOARD.md](PRODUCTION_TASK_BOARD.md) are bounded implementation packets. **FG00–FG15 below are the larger full-game gates.** Completing a packet does not silently close its parent gate. The browser game remains a working rules/reference product while the native game advances; it is not reskinned and relabeled as the requested visual outcome.
 
-## Offline prototype progress — 17 October 2026
+## Earlier offline prototype progress — 17 October 2026
 
-Current published preview **`yuga-traversal-armies-2026-10-17-siege`** is tagged at **`35b20429d2b34f06f2907d5739cf4877aac597ab`**. Both CI workflows passed, and all 62 downloaded assets were independently verified against the tagged source. The exact public Linux package passed actual title/world entry, keyboard siege entry, F5 ordinary reset and title return; see [published review](evidence/siege-published/REVIEW.md). This bounded repeat does not rerun every earlier local flow. The captured runtime is `9e8f54e72f6388eebf329003f4879c31793ba1dd`; the separately executed local package is `9520d616c88d058cc6943ddc3017303eba68c026`. Their archives retain exact tested sources and payloads.
+The earlier published preview **`yuga-traversal-armies-2026-10-17-siege`** is tagged at **`35b20429d2b34f06f2907d5739cf4877aac597ab`**. Both CI workflows passed, and all 62 downloaded assets were independently verified against the tagged source. The exact public Linux package passed actual title/world entry, keyboard siege entry, F5 ordinary reset and title return; see [published review](evidence/siege-published/REVIEW.md). This bounded repeat does not rerun every earlier local flow. The captured runtime is `9e8f54e72f6388eebf329003f4879c31793ba1dd`; the separately executed local package is `9520d616c88d058cc6943ddc3017303eba68c026`. Their archives retain exact tested sources and payloads.
 
 The earlier traversal/army preview at `395986a512ecabe874710048a19bd0fdd0a71f89`, with captures/local package at `0124fd4d63384a988223eb76ceb72b2510659ac3`, remains a [historical verified release](evidence/traversal-armies-published/REVIEW.md). Its 46-asset and window results are not substituted for the newer release's checks.
 
@@ -197,15 +197,32 @@ Each report records task ID, round, source revision/hash, changed files, passed/
 
 ## Current supporting Rama hero milestone
 
-The newer [Rama hero milestone](RAMA_HERO_MILESTONE.md) concentrates the current
-working candidate on one original hero, its authored motion, a coherent offline
-kit and consistent native screens. [Independent acceptance](RAMA_HERO_ACCEPTANCE.md)
-separates actual source, numerical, rendered and input evidence. Supporting
-RAMA-01 through RAMA-06 packets in the ledger track this bounded work without
-closing the production dependencies below. R7 has 450,084 triangles, 13 materials
-and 18 embedded maps; it has no authored LODs or accepted twelve-player hardware
-budget. Offline siege damage and respawn do not establish native server authority.
-The prior Mythic release and its evidence remain historical and unchanged.
+The [Rama hero milestone](RAMA_HERO_MILESTONE.md) concentrates work
+on one original hero, 23 authored clips, one primary attack and four
+abilities shared by training and lane practice. [Independent acceptance](RAMA_HERO_ACCEPTANCE.md)
+separates source, numerical, rendered and input evidence. The six supporting
+RAMA packets do not close their parent FG production tasks or dependencies.
+
+RAMA-01's bounded source study, RAMA-03's continuous motion review and RAMA-06's
+source gates are complete within their recorded scopes. The [motion archive](evidence/rama-hero/motion/REVIEW.md)
+contains a 539-frame full take and 118-frame side correction, with 39 motion and
+34 traversal checks. RAMA-04's earlier 138 integration and 78 combat checks
+remain archived; the actual R2 capture exposed residual Guardian boundary/HUD
+timing that the earlier forced HUD refresh masked. Candidate `78b49fbe` is
+superseded while corrected regression, short rendered probe and R3 review are
+pending. RAMA-05's
+[packaged-window follow-up](evidence/rama-hero/window/R2-REVIEW.md) passes at
+960 × 600 and 1280 × 720; the packet awaits that gameplay dependency.
+Complete candidate CI and publication also remain separate release gates.
+
+RAMA-02 remains **LIMITED / in progress** against the production visual target.
+R7 has 450,084 triangles, 13 materials and 18 embedded maps. Sculpted hair, a
+stiff long sash, stylized skinned drape and material richness remain quality
+limits; no authored LOD or twelve-player physical-hardware budget is accepted.
+Offline siege damage and respawn do not establish native server authority.
+The full roster, elevation authority, online journey, Windows execution,
+controller/device accessibility and auditory review remain open. The prior
+Mythic release and its evidence remain historical and unchanged.
 
 ## Earlier supporting siege milestone
 

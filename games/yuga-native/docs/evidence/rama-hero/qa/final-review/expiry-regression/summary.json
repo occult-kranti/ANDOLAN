@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "scope": "Unchanged actual-world fixture; oldsource failedtwo visible-boundary/HUD assertions, correctedsource passesall138. Normal render callback replaces forcedHUDrefresh at expiry. Visual probe remains separate.",
+  "test_sha256": "96b0dd6632db9b4a43d2d2304153050e8761d7bb0c762307ac2bc9c26ce4c66d",
+  "before": {
+    "report": "before/report.json",
+    "sha256": "f2f775f1bc57802b2a53455476afdf9455db3d5c3894f2c9fd45a393029662ca",
+    "passed": false,
+    "checks": 138,
+    "failed": 2,
+    "exit_code": 1
+  },
+  "after": {
+    "report": "after/report.json",
+    "sha256": "5b9b16a84b413f838bf9f95c5393c3a40ad22d5ece7f291eadc31a7524b45803",
+    "passed": true,
+    "checks": 138,
+    "failed": 0,
+    "exit_code": 0,
+    "log_sha256": "7dddb492c80c67d580d005b398054fbec032473025919bbf718ba0eff8657117"
+  },
+  "changed_sources": {
+    "res://scripts/rama_ability_effects.gd": {
+      "before": "ab7829ca7ebc18a7ca7f7719f8329a073ba5431e06625948f5ecb3ec8047c56f",
+      "after": "a1d0e2424c5de390b2a51fcaaeeba86be6ff499bfa250c0aeaa113116990e82e"
+    },
+    "res://scripts/rama_hero_hud.gd": {
+      "before": "627695253459722de39c40d1350315c813df092dd097a7b23920fa94a5eb3278",
+      "after": "8a5fe7c9363045ee75d602431e226a4dc1ef2e8d1b254ddb7a5fc3d3680afa0a"
+    }
+  },
+  "boundary_checks": [
+    {
+      "details": {
+        "elapsed": 4.99999999999999,
+        "hero_shield": 55.0,
+        "note": "Guardian Circle \u00b7 field active",
+        "shield": 55.0,
+        "warning_visible": true
+      },
+      "name": "Guardian HUD and boundary remain active through the final live authority tick",
+      "passed": true
+    },
+    {
+      "details": {
+        "elapsed": 5.04999999999999,
+        "hero_shield": 0.0,
+        "life_text": "300 / 300",
+        "note": "Rama is ready",
+        "presentation_remains": true,
+        "shield": 0.0,
+        "warning_visible": false
+      },
+      "name": "Guardian HUD is visibly ready at ward expiry before presentation retirement",
+      "passed": true
+    },
+    {
+      "details": {
+        "active_ability": "kodanda",
+        "note": "Kodanda \u00b7 drawing"
+      },
+      "name": "older Guardian expiry cannot replace a later primary notice",
+      "passed": true
+    }
+  ]
+}

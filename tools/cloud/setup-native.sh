@@ -50,6 +50,7 @@ godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/ra
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hero_integration_cases.gd -- --report="$validation_dir/rama-integration.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_practice_cases.gd -- --report="$validation_dir/rama-practice.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_layout_cases.gd -- --report="$validation_dir/rama-hud-layout.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_expiry_cases.gd -- --report="$validation_dir/rama-hud-expiry.json"
 python3 games/yuga-native/tests/rama_package_cases.py --report="$validation_dir/rama-package.json"
 godot --headless --path games/yuga-native --script res://tests/projectile_cases.gd -- --report="$validation_dir/projectile-cases.json"
 "$native_python_root/bin/python" games/yuga-native/tools/audio/build-traversal-audio.py --check

@@ -1,0 +1,85 @@
+{
+  "accepted": true,
+  "completed_at_utc": "2026-10-17T12:52:56.255735+00:00",
+  "limits": [
+    "Software Vulkan llvmpipe Forward+ with Dummy audio; no listening, physical-GPU performance or Windows claim.",
+    "Only affected Settings/title/world-entry flows were repeated on R2. Remapping, saved slider values, five ability casts, reset and full pause/menu returns remain the recorded R1 review scope.",
+    "Settings needs scrolling to reveal the entire Back button at these sizes; actual Tab focus scrolls it into full view. The eyebrow leaves view during that intentional scroll, then becomes fully visible on reopen.",
+    "960 title return focuses Bow training. Pressing Return entered training; the recorded run exited training normally, then clicked Explore Confluence. This is not mislabeled as direct keyboard world entry."
+  ],
+  "package_manifest": {
+    "file": "package-r2-manifest.json",
+    "sha256": "1a6d54d29f690d2551c0d842ae99fa5129647fd35b5814f40b9f62c8ef28e692"
+  },
+  "runs": {
+    "1280": {
+      "captures": 6,
+      "checks": {
+        "confluence_entry_and_hud": true,
+        "keyboard_scroll_reveals_full_back_button": true,
+        "reopen_restores_heading_and_eyebrow": true,
+        "settings_full_heading_and_eyebrow_on_first_entry": true,
+        "title_loaded": true,
+        "title_return": true
+      },
+      "command": "LD_LIBRARY_PATH=/workspace/tooling/native-render/runtime/usr/lib/x86_64-linux-gnu VK_ICD_FILENAMES=/workspace/tooling/native-render/runtime/usr/share/vulkan/icd.d/lvp_icd.json LP_NUM_THREADS=2 python3 games/yuga-native/tools/native-window-review.py --engine /workspace/scratch/rama-hero-package-r2/yuga-native-linux-x86_64/godot --pack /workspace/scratch/rama-hero-package-r2/yuga-native-linux-x86_64/yuga-native.pck --output /workspace/scratch/rama-window-1280-r2 --xvfb /workspace/tooling/native-render/runtime/usr/bin/Xvfb --display :110 --width 1280 --height 720 --shader-cache-seed /workspace/scratch/rama-window-960-r2/user/cache/mesa",
+      "engine": {
+        "file": "godot",
+        "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3"
+      },
+      "engine_errors_or_warnings": [],
+      "events": 18,
+      "game_cleanup_exit": -15,
+      "game_log_sha256": "007fb1dfb799a10d2e0695a6ada3483f7551cbb88ff5e68be79f4df60237a05c",
+      "helper_exit": 0,
+      "input_review_sha256": "ad1ae03b539fa7ac825494f117f5a46d5ea70da9508f7851b01c90aaac844b2c",
+      "pack": {
+        "file": "yuga-native.pck",
+        "sha256": "dc40798bfdc5927300eeecf6c768d006c61903dc5fcd0f8c7b3ce72ddeaa2f3a"
+      },
+      "path": "1280x720-r2",
+      "resolution_requested": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    "960": {
+      "captures": 6,
+      "checks": {
+        "confluence_entry_and_hud": true,
+        "keyboard_scroll_reveals_full_back_button": true,
+        "reopen_restores_heading_and_eyebrow": true,
+        "settings_full_heading_and_eyebrow_on_first_entry": true,
+        "title_loaded": true,
+        "title_return": true
+      },
+      "command": "LD_LIBRARY_PATH=/workspace/tooling/native-render/runtime/usr/lib/x86_64-linux-gnu VK_ICD_FILENAMES=/workspace/tooling/native-render/runtime/usr/share/vulkan/icd.d/lvp_icd.json LP_NUM_THREADS=2 python3 games/yuga-native/tools/native-window-review.py --engine /workspace/scratch/rama-hero-package-r2/yuga-native-linux-x86_64/godot --pack /workspace/scratch/rama-hero-package-r2/yuga-native-linux-x86_64/yuga-native.pck --output /workspace/scratch/rama-window-960-r2 --xvfb /workspace/tooling/native-render/runtime/usr/bin/Xvfb --display :109 --width 960 --height 600 --shader-cache-seed /workspace/scratch/rama-window-960-r1/user/cache/mesa",
+      "engine": {
+        "file": "godot",
+        "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3"
+      },
+      "engine_errors_or_warnings": [],
+      "events": 21,
+      "game_cleanup_exit": -15,
+      "game_log_sha256": "59be05de0656c50c4dc452c298d5f3c011cd408b74c578075b61235bef7b1636",
+      "helper_exit": 0,
+      "input_review_sha256": "948696c81c971b9fcf9bc1e8249bb68786a2521015ebb1007179a7c3b5b43bf5",
+      "pack": {
+        "file": "yuga-native.pck",
+        "sha256": "dc40798bfdc5927300eeecf6c768d006c61903dc5fcd0f8c7b3ce72ddeaa2f3a"
+      },
+      "path": "960x600-r2",
+      "resolution_requested": {
+        "height": 600,
+        "width": 960
+      }
+    }
+  },
+  "runtime_source": {
+    "file_count": 352,
+    "sha256": "9ca7ac699d3bbde68be710cd1ca25c8e9ddbc4c383a2797f1b2e338449469e9e"
+  },
+  "scope": "Accepted affected-screen repeat of packaged native Linux Settings first entry, keyboard scroll, Settings reopen, title return and Confluence entry at960x600 and1280x720. R1 broader flows and its rejected Settings entry remain historical.",
+  "source_commit": "78b49fbe8b9edeb78b09c2363b878bf73c158602",
+  "tool_sha256": "bdf4d22647baaf3a329172597d721e9929c9375620d08cc1d788e4482a313211"
+}

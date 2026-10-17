@@ -17,7 +17,7 @@ spec.loader.exec_module(helpers)
 IDS = ['kodanda','piercing_dawn','measured_step','guardian_circle','dawn_volley']
 
 
-def validate(report, output, project, preview):
+def validate(report, output, project, preview, guardian_probe=False):
     if not report.get('complete') or report.get('failure') or report.get('kind') != 'actual-rama-native-gameplay':
         raise ValueError('Capture failed: ' + str(report.get('failure')))
     if report.get('renderer') != 'forward_plus' or str(report.get('display', '')).lower() != 'x11' or not report.get('gameplay_applied'):
@@ -30,8 +30,8 @@ def validate(report, output, project, preview):
     for entry in report['imports'].values():
         if not entry['fresh'] or helpers.sha256(project / entry['imported'].removeprefix('res://')) != entry['sha256']:
             raise ValueError('Imported resource changed')
-    if [take['ability_id'] for take in report['takes']] != IDS:
-        raise ValueError('Five exact ability takes required')
+    if bool(report.get('guardian_probe', False)) != guardian_probe or [take['ability_id'] for take in report['takes']] != (['guardian_circle'] if guardian_probe else IDS):
+        raise ValueError('Exact requested ability takes required')
     for take in report['takes']:
         if take['release_count'] != 1 or take['physics_ticks'] != take['frame_count'] * 2:
             raise ValueError('Wrong release or real physics chronology')
@@ -40,12 +40,25 @@ def validate(report, output, project, preview):
     for index, frame in enumerate(report['frames']):
         if frame['index'] != index or frame['physics_tick_delta'] != 2 or not frame['fx']['finite']:
             raise ValueError('Invalid sequential frame')
+        truth=frame.get('truth',{})
+        if not truth or truth['displayed_notice'] != truth['runtime_notice']:
+            raise ValueError('Rendered HUD notice differs from current authority at frame '+str(index))
+        shield=truth['vitals']['shield']
+        if (shield>0 and ('+%.0f'%shield) not in truth['displayed_life']) or (shield<=0 and '+' in truth['displayed_life']):
+            raise ValueError('Rendered shield label is stale at frame '+str(index))
+        for field in truth['fields']:
+            authority=next(c for c in truth['casts'] if c['ability_id']=='guardian_circle')
+            guardian=next(t for t in report['takes'] if t['ability_id']=='guardian_circle')
+            active=guardian['events'][0]['timing']['active_s']
+            live=not authority['released'] or field['authority_age_s']-field['release_age_s']+1e-6<active
+            if field['warning_visible'] != live or (not live and (field['main_opacity']>1e-6 or field['recipient_surfaces']!=0)):
+                raise ValueError('Guardian boundary/recipient expiry disagrees with authority at frame '+str(index))
         if not preview:
             helpers.verify_image(output, frame['image'], (1280,720))
     for still in report['stills']:
         helpers.verify_image(output, still['image'], (1280,720))
-    if len(report['stills']) != 25:
-        raise ValueError('Expected fifteen ability gameplay, seven review and three hero lifecycle stills')
+    if len(report['stills']) != (3 if guardian_probe else 25):
+        raise ValueError('Unexpected gameplay/review still count')
 
 
 def main():
@@ -56,9 +69,11 @@ def main():
     parser.add_argument('--godot', default=shutil.which('godot'))
     parser.add_argument('--display', type=int, default=128)
     parser.add_argument('--preview', action='store_true')
+    parser.add_argument('--guardian-probe', action='store_true', help='One complete actual Guardian take, with per-frame authority/HUD evidence')
     parser.add_argument('--shader-cache-seed', type=Path)
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
+    if args.preview and args.guardian_probe:parser.error('Guardian probe requires a complete natural lifetime')
     if not args.output.is_absolute():parser.error('Output must be absolute')
     output, project, runtime = args.output.resolve(), args.project.resolve(), args.runtime.resolve()
     user = output.with_name(output.name + '-user')
@@ -68,6 +83,7 @@ def main():
         parser.error('Choose fresh output and unused display 90–199')
     command = [args.godot,'--path',str(project),'--display-driver','x11','--rendering-method','forward_plus','--audio-driver','Dummy','--disable-vsync','--fixed-fps','30','--script','res://tools/capture-rama-gameplay.gd','--','--output='+str(output)]
     if args.preview:command.append('--preview')
+    if args.guardian_probe:command.append('--guardian-probe')
     if args.dry_run:
         print(json.dumps({'command':command,'output':str(output),'starts_renderer':False},indent=2));return
     xvfb, icd = runtime/'usr/bin/Xvfb', runtime/'usr/share/vulkan/icd.d/lvp_icd.json'
@@ -99,16 +115,17 @@ def main():
     log=log_path.read_text()
     if result.returncode or 'SCRIPT ERROR:' in log or '\nERROR:' in log:raise RuntimeError('Renderer failed; preserve '+str(log_path))
     report=json.loads(report_path.read_text())
-    validate(report,output,project,args.preview)
+    validate(report,output,project,args.preview,args.guardian_probe)
     video=None
     if not args.preview:
-        video=output/'rama-five-abilities.mp4'
+        video=output/('rama-guardian-expiry.mp4' if args.guardian_probe else 'rama-five-abilities.mp4')
         subprocess.run([ffmpeg,'-hide_banner','-loglevel','error','-nostdin','-n','-framerate','30','-i',str(output/'frame-%05d.png'),'-an','-c:v','libx264','-threads','2','-preset','medium','-crf','18','-pix_fmt','yuv420p','-movflags','+faststart',str(video)],check=True,timeout=300)
         probe=json.loads(subprocess.check_output([ffprobe,'-v','error','-count_frames','-show_streams','-show_format','-of','json',str(video)],timeout=30))
         if len(probe['streams'])!=1 or int(probe['streams'][0]['nb_read_frames'])!=len(report['frames']):raise ValueError('Video frame mismatch')
         subprocess.run([ffmpeg,'-hide_banner','-loglevel','error','-xerror','-nostdin','-i',str(video),'-f','null','-'],check=True,timeout=60)
-        helpers.write_new_json(output/'rama-video.json',{'complete':True,'file':video.name,'sha256':helpers.sha256(video),'probe':probe,'scope':'Five separate actual ability takes concatenated in kit order; scene resets are deliberate cuts. Silent, simulated30fps, not real-time performance.'})
-    helpers.write_new_json(output/'capture-run.json',{'complete':True,'command':command,'preview':args.preview,'report_sha256':helpers.sha256(report_path),'runner_sha256':helpers.sha256(Path(__file__)),'log_sha256':helpers.sha256(log_path),'frames':len(report['frames']),'stills':len(report['stills']),'video_sha256':helpers.sha256(video) if video else None,'shader_cache_seed':seed})
+        scope='One complete actual Guardian take with natural expiry.' if args.guardian_probe else 'Five separate actual ability takes concatenated in kit order; scene resets are deliberate cuts.'
+        helpers.write_new_json(output/'rama-video.json',{'complete':True,'file':video.name,'sha256':helpers.sha256(video),'probe':probe,'scope':scope+' Silent, simulated30fps, not real-time performance.'})
+    helpers.write_new_json(output/'capture-run.json',{'complete':True,'command':command,'preview':args.preview,'guardian_probe':args.guardian_probe,'report_sha256':helpers.sha256(report_path),'runner_sha256':helpers.sha256(Path(__file__)),'log_sha256':helpers.sha256(log_path),'frames':len(report['frames']),'stills':len(report['stills']),'video_sha256':helpers.sha256(video) if video else None,'shader_cache_seed':seed})
     print(json.dumps({'complete':True,'output':str(output),'frames':len(report['frames']),'stills':len(report['stills']),'video':str(video) if video else None}))
 
 if __name__=='__main__':main()

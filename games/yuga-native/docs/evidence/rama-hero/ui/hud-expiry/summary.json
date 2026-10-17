@@ -1,0 +1,50 @@
+{
+  "completed_at_utc": "2026-10-17T13:08:15.239395+00:00",
+  "runs": {
+    "after": {
+      "command": "XDG_DATA_HOME=/workspace/scratch/rama-hero-validation/hud-expiry-r1/after-user taskset -c 0,1 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_expiry_cases.gd -- --report=/workspace/scratch/rama-hero-validation/hud-expiry-r1/after.json",
+      "engine_errors_or_warnings": [],
+      "exit_code": 0,
+      "failed": 0,
+      "failed_checks": [],
+      "hud_source_sha256": "8a5fe7c9363045ee75d602431e226a4dc1ef2e8d1b254ddb7a5fc3d3680afa0a",
+      "log": "after.log",
+      "log_sha256": "69d9274255d1031af03d902c1189d7ec509f021a8ac2af93d30399ccdef1e815",
+      "passed": 9,
+      "report": "after.json",
+      "report_sha256": "61d68a8bd759959e53258bd2d0763786a317c0a218928a06e78fc48c5d19d9d6"
+    },
+    "before": {
+      "command": "XDG_DATA_HOME=/workspace/scratch/rama-hero-validation/hud-expiry-r1/before-user taskset -c 0,1 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_expiry_cases.gd -- --report=/workspace/scratch/rama-hero-validation/hud-expiry-r1/before.json",
+      "engine_errors_or_warnings": [],
+      "exit_code": 1,
+      "failed": 4,
+      "failed_checks": [
+        "First 16.7 ms render after expiry removes visible shield and active note",
+        "First render after real damage updates health bar and number",
+        "First render after defeat displays the live return timer",
+        "First render after real reset clears stale defeat and shield data"
+      ],
+      "hud_source_sha256": "627695253459722de39c40d1350315c813df092dd097a7b23920fa94a5eb3278",
+      "log": "before.log",
+      "log_sha256": "3819746f514c5828d0bd8724b1ef9eedcec5dff380f758090740b11a855cbc3c",
+      "passed": 5,
+      "report": "before.json",
+      "report_sha256": "2fc7e9e6948cd9aa85ceaf1b11f0616a41c027aa7d3db5099f3dfe8294f3884d"
+    }
+  },
+  "scope": "Focused actual kit/army/vitals HUD regression for the R2 Guardian-expiry timing finding. No renderer, OS input or animation-quality claim.",
+  "source_commit": "78b49fbe8b9edeb78b09c2363b878bf73c158602",
+  "source_state": "HUD correction working tree; before/after exact hashes are in reports.",
+  "sources": {
+    "res://assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "res://scripts/confluence_world.gd": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7",
+    "res://scripts/lane_army.gd": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+    "res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "res://scripts/rama_hero_hud.gd": "8a5fe7c9363045ee75d602431e226a4dc1ef2e8d1b254ddb7a5fc3d3680afa0a",
+    "res://scripts/rama_hero_runtime.gd": "26ad1d4c0eb99de140e90a9dfe5f6092c8a9f4aeabc63d21652188a642a6f05b",
+    "res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+    "res://tests/rama_hud_expiry_cases.gd": "18d40bfbba13784ab25dfbbf0aba884d64d6c5a36089c1d60d55122ed873058c"
+  },
+  "sources_verified_after_run": true
+}

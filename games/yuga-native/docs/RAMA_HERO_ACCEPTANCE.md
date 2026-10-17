@@ -48,14 +48,15 @@ This cloud machine reports five Intel Xeon Platinum 8573C virtual CPUs and has n
 
 ## Current independent execution
 
-The latest [138-check actual-world repeat](evidence/rama-hero/qa/integration-expiry/report.json) passes on the corrected Guardian expiry runtime, effects and hero-vitals sources, with no engine errors or warnings. Its [log](evidence/rama-hero/qa/integration-expiry/run.log) and exact hashes are retained separately. The preceding 135-check report remains unchanged.
+The preceding [138-check actual-world repeat](evidence/rama-hero/qa/integration-expiry/report.json) passes on the corrected Guardian expiry runtime, effects and hero-vitals sources, with no engine errors or warnings. Its [log](evidence/rama-hero/qa/integration-expiry/run.log) and exact hashes are retained separately. The preceding 135-check report remains unchanged.
 
 Godot 4.6.3 executed the following fresh reports against imported **R7** (`667f3a215a7b868e3bdbcde880a73d42b68b29af1303db4e1d99b93f73cf2b50`), with fixed physics sampling at 60 Hz and two CPU worker threads. All exited successfully without engine errors or warnings. [The archived summary](evidence/rama-hero/qa/summary.json) records report hashes. Exact report/log copies are archived under `docs/evidence/rama-hero/qa`; original run paths inside source-bound JSON remain unchanged.
 
 | Suite | Result | Archived report under `docs/evidence/rama-hero/qa/` |
 | --- | --- | --- |
 | Actual Rama world integration, preceding candidate | 135/135 | `integration/report.json` |
-| Current world integration, expiry correction | 138/138 | `integration-expiry/report.json` |
+| World integration, first expiry correction | 138/138 | `integration-expiry/report.json` |
+| Current visible-expiry regression, unchanged test before/after fix | 136/138 → 138/138 | `final-review/expiry-regression/summary.json` |
 | Native acceptance, current hero and courtyard | 20/20 | `native/report.json` |
 | Retained legacy invocation integration and current modal glue | 116/116 | `mythic/report.json` |
 | Retained legacy invocation panel component | 62/62 | `invocation-ui/report.json` |
@@ -86,14 +87,22 @@ The final expanded R7 staged take `/tmp/rama-motion-render-r4` contains 539 sour
 
 The first full R7 gameplay take `/tmp/rama-gameplay-owner-full-r1` is preserved as a rejected presentation candidate. Independent QA inspected every Guardian Circle frame 120–287 and Dawn Volley frame 288–362, with full-size checks at 191, 317 and 323. Volley charge, contact and recovery show no additional concrete defect. Guardian Circle’s decorative ribbons visibly disappear between frames 270 and 271 while the HUD retains “field active” until presentation retirement. The exact field boundary correctly expires; the decorative fade and label timing require correction. The [QA ledger](evidence/rama-hero/qa/review.json) retains those frame hashes and both critical images. A new three-assertion integration regression checks live-before/ready-at-expiry and protects a later primary action’s notice. The 138-check actual-world repeat now passes, including the hero shield clock correction. The corrected-source decorative fade still requires rendered review.
 
+The complete second gameplay take `/tmp/rama-gameplay-owner-full-r2` remains **rejected for residual expiry presentation**. QA reviewed all 168 Guardian frames 120–287. Ribbons now fade smoothly, but the gold boundary disappears at frame 270 while “field active” and +55 remain on the HUD through 274; the HUD updates at 275. The [R2 review](evidence/rama-hero/qa/final-review/gameplay-r2-review.json) pins every inspected frame and retains critical images. This exposed two mechanisms: boundary visibility used cosmetic age extrapolated up to 50 ms ahead of authority, and critical HUD fields refreshed only every 80 ms. The preceding integration forced the HUD to refresh, so it could not detect that visual delay. The strengthened same-138-check regression now uses the normal render callback and checks authority-boundary visibility; [the preserved old-source run](evidence/rama-hero/qa/final-review/expiry-regression/before/report.json) fails exactly those two assertions while the other 136 pass. The [unchanged strengthened repeat](evidence/rama-hero/qa/final-review/expiry-regression/summary.json) now passes 138/138 without engine errors or warnings. On the final live authority tick the boundary and both wards remain present. At expiry the boundary and wards are gone, and the next normal HUD render shows ready without +55 while the presentation tail remains. The [actual rendered Guardian probe](evidence/rama-hero/qa/final-review/guardian-expiry-probe-review.json) now passes independent review of every frame 143–157 and the clean tail 167. Full-size 150 retains the gold boundary and active/+55 HUD while authority remains at 5.00 seconds; 151 removes the boundary and shows ready/no55 together at authority 5.05. The decorative fade is continuous and the recipient mesh is empty at expiry. The final full five-ability R3 capture remains pending.
+
+## Final Linux screen and input review
+
+Independent QA inspected all twelve current-package screenshots at 960 × 600 and 1280 × 720, including initial Settings entry, Back focused after Tab scrolling, reopened Settings, loaded/returned title and actual Confluence entry. The heading and eyebrow now remain visible on initial entry and reopening; keyboard focus reveals the complete Back button. Actions and HUD are readable. [The independent screen ledger](evidence/rama-hero/qa/final-review/os-review.json) pins every image and the final PCK `dc40798bfdc5927300eeecf6c768d006c61903dc5fcd0f8c7b3ce72ddeaa2f3a`. The [actual-window repeat](evidence/rama-hero/window/R2-REVIEW.md) records real XTest input and preserves the earlier rejected Settings evidence. Earlier unaffected remap, ability-sheet, pause, reset and return flows retain their own source-pinned package evidence.
+
+This is a bounded Linux screen/navigation pass. Settings and Help return to the title with **Bow training** focused; they do not restore the exact opener or the primary Explore action. At 960, the recorded Return briefly entered training before the operator returned and clicked Explore. That navigation-polish limitation remains documented. The result establishes readable/reachable controls and correct scene/modal return, not fully finished production UX or exact-opener focus restoration.
+
 ## Current disposition
 
 | Area | Status | Evidence still required |
 | --- | --- | --- |
-| New art and material identity | LIMITED | R6 shape/material fixes and R7 strafe deformation correction verified; final R7 actual game-camera evidence remains required. |
+| New art and material identity | LIMITED | R6 shape/material fixes, R7 strafe correction and current-package title/world camera reviewed; sculpted hair, stiff sash, stylized high-knee cloth and material richness remain below the reference target. |
 | Continuous motion and contact | LIMITED | Corrected R7 side/stop and expanded rapid-action/reaction continuity reviewed; actual gameplay sequence remains pending and production cloth polish remains limited. |
 | Playable kit and lifecycle | PASS | Current-source actual-world integration, including real siege damage/death and all pause/cancel/reset phases. |
-| Screens and actual input | OPEN | Exact headless focus/layout passes; current-source visual screen review and OS input sequence remain required. |
+| Screens and actual input | PASS, bounded Linux flow | Final affected screen/input repeat and earlier unaffected flows reviewed; exact title opener-focus restoration and broader production UX polish remain limited. |
 | Bounded lifetime/software cost | LIMITED | Owned nodes and headless step cost measured; rendered wall-frame cost remains separate. |
 | Physical GPU and Windows | UNRUN | External execution evidence; no claim from this container. |
 

@@ -287,7 +287,12 @@ func _animate(cast: Dictionary) -> void:
 	var prepare:=clampf(age/maxf(.01,float(cast.timing.windup_s)),0,1)
 	var after:=maxf(0,age-float(cast.release_age_s)) if cast.released else 0.0
 	var fade:=clampf((cast.duration-age)/.30,0,1)
-	var field_active: bool=not cast.released or after+.000001<float(cast.timing.active_s)
+	var authority_after:=maxf(0,float(cast.authority_age)-float(cast.release_age_s)) if cast.released else 0.0
+	var field_active: bool=not cast.released or authority_after+.000001<float(cast.timing.active_s)
+	if cast.id=="guardian_circle" and cast.warning.visible!=field_active:
+		# An authoritative expiry must clear recipients even when interpolation
+		# has already reached this geometry frame and is waiting for the next tick.
+		cast.last_geometry_frame=-1
 	if cast.id=="guardian_circle" and cast.released:
 		# Decoration settles before the exact gameplay boundary expires.
 		fade=minf(fade,smoothstep(0,.25,maxf(0,float(cast.timing.active_s)-after))) if field_active else 0.0

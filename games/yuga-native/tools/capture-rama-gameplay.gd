@@ -9,6 +9,7 @@ const ORIGIN := Vector3(-40,.05,-10)
 const REQUIRED_IMPORTS := ["res://assets/heroes/rama-hero.glb","res://assets/world/architecture.glb","res://assets/world/nature.glb"]
 var output_path := ""
 var preview := false
+var guardian_probe := false
 var scene: Node3D
 var camera: Camera3D
 var sources := {}
@@ -29,6 +30,7 @@ func run() -> void:
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--output="):output_path=arg.trim_prefix("--output=")
 		elif arg=="--preview":preview=true
+		elif arg=="--guardian-probe":guardian_probe=true
 		else:push_error("Unknown argument "+arg);quit(1);return
 	if not output_path.is_absolute_path() or DirAccess.dir_exists_absolute(output_path):push_error("Choose new absolute output");quit(1);return
 	DirAccess.make_dir_recursive_absolute(output_path)
@@ -51,7 +53,7 @@ func run() -> void:
 		var entry: Dictionary=event.duplicate(true)
 		entry.physics_tick=Engine.get_physics_frames()
 		events.append(_normal(entry));current_events.append(entry))
-	for id in IDS:
+	for id in (["guardian_circle"] if guardian_probe else IDS):
 		await fixture(id)
 		if not failure.is_empty():finish(false);return
 		label.text="RAMA · "+id.replace("_"," ").to_upper()+" · REAL OFFLINE RECEIVERS"
@@ -77,7 +79,7 @@ func run() -> void:
 			if not fx_state.finite or not scene.player.rama_motion.diagnostics().get("finite",false):fail("Nonfinite effect or skeletal state");return
 			var image_data: Dictionary={}
 			if not preview:image_data=save_image("frame-%05d.png"%frame_index)
-			frames.append({"index":frame_index,"take":id,"local_index":local_index,"sample_time_s":age,"physics_tick":tick,"physics_tick_delta":tick-prior_tick,"render_frame":draw,"image":image_data,"fx":fx_state,"motion":scene.player.rama_motion.diagnostics(),"hero_position":_normal(scene.player.global_position)})
+			frames.append({"index":frame_index,"take":id,"local_index":local_index,"sample_time_s":age,"physics_tick":tick,"physics_tick_delta":tick-prior_tick,"render_frame":draw,"image":image_data,"fx":fx_state,"motion":scene.player.rama_motion.diagnostics(),"hero_position":_normal(scene.player.global_position),"truth":_frame_truth()})
 			for s in still_ages.size():
 				if not still_done.has(s) and age>=float(still_ages[s]):
 					var phase: String=["windup","release","contact"][s]
@@ -92,6 +94,9 @@ func run() -> void:
 		if id in ["kodanda","piercing_dawn","dawn_volley","guardian_circle"] and receipts==0:fail("No actual receiver receipt for "+id);return
 		takes.append({"ability_id":id,"cast":_normal(accepted),"start_frame":start_frame,"frame_count":count,"start_tick":start_tick,"physics_ticks":prior_tick-start_tick,"release_count":releases.size(),"receipt_count":receipts,"normal_expiry":ended,"receivers_before":receiver_before,"receivers_after":receivers(),"events":_normal(current_events),"scope":"Actual world cast entry, normal army clock, real staged receivers, player gameplay camera."})
 		print("RAMA_GAMEPLAY_CAPTURE ",id," frames=",count," receipts=",receipts)
+	if guardian_probe:
+		if sources!=_source_hashes():fail("Runtime sources changed during capture; this run is not source-pinned");return
+		finish(true);return
 	# Separate replayed low-angle presentation stills; these are outside the video.
 	for id in ["piercing_dawn","guardian_circle","dawn_volley"]:
 		await fixture(id)
@@ -168,6 +173,14 @@ func receivers() -> Array:
 		if is_instance_valid(unit):result.append({"unit_id":unit.unit_id,"team":unit.team,"health":unit.health,"shield":unit.shield,"alive":unit.alive,"position":_normal(unit.global_position)})
 	result.append({"receiver":"hero","vitals":scene.rama_runtime.vitals.report()})
 	return result
+func _frame_truth() -> Dictionary:
+	var authority: Dictionary=scene.rama_runtime.kit.report()
+	var casts: Array=[]
+	for cast in authority.casts:casts.append({"cast_id":cast.cast_id,"ability_id":cast.ability_id,"age_s":cast.age_s,"released":cast.released,"phase":cast.phase})
+	var fields: Array=[]
+	for cast in scene.rama_effects._casts.values():
+		if cast.id=="guardian_circle":fields.append({"authority_age_s":cast.authority_age,"presentation_age_s":cast.age,"release_age_s":cast.release_age_s,"warning_visible":cast.warning.visible,"main_opacity":cast.main.get_shader_parameter("opacity"),"recipient_opacity":cast.detail.get_shader_parameter("opacity"),"recipient_surfaces":cast.recipients.mesh.get_surface_count()})
+	return _normal({"authority_elapsed":authority.elapsed,"casts":casts,"fields":fields,"vitals":scene.rama_runtime.vitals.report(),"runtime_notice":scene.rama_runtime.notice,"displayed_notice":scene.rama_hud.note.text,"displayed_life":scene.rama_hud.life_text.text})
 func draw_frames(count: int) -> void:
 	for _index in count:
 		await process_frame
@@ -217,7 +230,7 @@ func _normal(value: Variant) -> Variant:
 func fail(message: String) -> void:failure=message;finish(false)
 func finish(success: bool) -> void:
 	var after:=_source_hashes()
-	var report:={"schema":1,"kind":"actual-rama-native-gameplay","complete":success,"failure":failure,"preview":preview,"gameplay_applied":true,"fps":FPS,"physics_hz":Engine.physics_ticks_per_second,"width":capture_size.x,"height":capture_size.y,"renderer":RenderingServer.get_current_rendering_method(),"display":DisplayServer.get_name(),"adapter":RenderingServer.get_video_adapter_name(),"godot":Engine.get_version_info(),"source_sha256":sources,"source_after_sha256":after,"source_unchanged":sources==after,"imports":imports,"frames":frames,"stills":stills,"takes":takes,"events":events,"wall_elapsed_ms":Time.get_ticks_msec()-started,"scope":"Five separate actual Confluence takes with real current hero, staged live lane receivers, normal gameplay clock and real accepted damage/heal/movement. Script invokes actual world cast entry; this is not human OS input, one uninterrupted fight, audio audition or physical-GPU performance. Low-angle replays are outside video. Preview ends before normal ability lifetimes."}
+	var report:={"schema":1,"kind":"actual-rama-native-gameplay","complete":success,"failure":failure,"preview":preview,"guardian_probe":guardian_probe,"gameplay_applied":true,"fps":FPS,"physics_hz":Engine.physics_ticks_per_second,"width":capture_size.x,"height":capture_size.y,"renderer":RenderingServer.get_current_rendering_method(),"display":DisplayServer.get_name(),"adapter":RenderingServer.get_video_adapter_name(),"godot":Engine.get_version_info(),"source_sha256":sources,"source_after_sha256":after,"source_unchanged":sources==after,"imports":imports,"frames":frames,"stills":stills,"takes":takes,"events":events,"wall_elapsed_ms":Time.get_ticks_msec()-started,"scope":("One complete actual Guardian take with natural expiry and per-frame authority/HUD snapshots." if guardian_probe else "Five separate actual Confluence takes with real current hero, staged live lane receivers, normal gameplay clock and real accepted damage/heal/movement. Low-angle replays are outside video. Preview ends before normal ability lifetimes.")+" Script invokes actual world cast entry; this is not human OS input, one uninterrupted fight, audio audition or physical-GPU performance."}
 	var file:=FileAccess.open(output_path.path_join("rama-gameplay-review.json"),FileAccess.WRITE)
 	if file:file.store_string(JSON.stringify(report,"  ")+"\n");file.close()
 	if not success:push_error(failure)

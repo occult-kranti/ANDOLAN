@@ -1,5 +1,7 @@
 # Rama packaged native-window review
 
+The affected-screen follow-up on package R2 is **accepted at both sizes**: see [R2 review](R2-REVIEW.md) and [exact receipt](r2-review.json). The R1 failure and broader-flow evidence below remain preserved.
+
 17 October 2026. Original Linux package R1: source `2d9353cb6723cf89d6967994f2c773d9bd66c6e6`, PCK SHA-256 `8a7aa2efa23daf4370dee8d7b74f0583a6ea44185863d96df483de942bee98a9`. [package-r1-manifest.json](package-r1-manifest.json) pins its payloads and runtime sources. [review.json](review.json) records run hashes, owners, scope, Settings correction evidence and limits.
 
 These are real X11/XTest keyboard and mouse interactions with the extracted package, rendered using software Vulkan llvmpipe/Forward+ and Dummy audio. Capture event hashes and actual PNG dimensions are retained in each `input-review.json`. Both helpers exited normally; their game cleanup exit of −15 is the requested termination, not a crash. Neither game log has engine errors or warnings. Local game preferences are retained only under `local-saves`; shader caches and unrelated user files are excluded.
@@ -8,7 +10,7 @@ These are real X11/XTest keyboard and mouse interactions with the extracted pack
 
 Opening Settings before any intentional scrolling clips `YOUR PREFERENCES` at both sizes. The main Settings heading, values and actions remain visible in the OS captures. This is an unwanted initial focus/layout scroll state, not a deliberate user-scrolled view. See [960 first entry](960x600-r1/04-settings.png), [960 return from remapping](960x600-r1/07-settings-saved.png) and [1280 first entry](1280x720-r1/02-settings.png). These original runs are **rejected for Settings presentation**; they do not establish all-label visual acceptance.
 
-The narrow correction resets Settings scroll after two container layout passes, only while the panel remains visible and Sensitivity retains focus. It changes no other screen. The expanded [screen regression before](settings-entry-fix/before.json) fails six meaningful checks: complete entry heading/eyebrow and clean reopen at 960 × 600, 1280 × 720 and 1920 × 1080. [After correction](settings-entry-fix/after.json), **36/36 pass**, exit 0, no engine errors or warnings. Before/after logs and exact source hashes are retained beside the reports. Fresh-package actual Settings/reopen, title and world-entry confirmation remains pending; headless success alone does not close that gate.
+The narrow correction resets Settings scroll after two container layout passes, only while the panel remains visible and Sensitivity retains focus. It changes no other screen. The expanded [screen regression before](settings-entry-fix/before.json) fails six meaningful checks: complete entry heading/eyebrow and clean reopen at 960 × 600, 1280 × 720 and 1920 × 1080. [After correction](settings-entry-fix/after.json), **36/36 pass**, exit 0, no engine errors or warnings. Before/after logs and exact source hashes are retained beside the reports. The later [fresh-package actual repeat](R2-REVIEW.md) closes this affected-screen gate; headless success alone did not establish that result.
 
 ## Other bounded R1 flow findings
 

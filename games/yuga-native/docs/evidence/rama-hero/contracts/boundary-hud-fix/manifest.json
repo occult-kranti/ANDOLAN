@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "source_context_commit": "78b49fbe8b9edeb78b09c2363b878bf73c158602",
+  "scope": "Source-only revalidation after the rejected R2 gameplay boundary/HUD timing. FX now retains authority boundary visibility; HUD critical fields refresh on each normal render callback. No capture/export performed here. Earlier reports remain preserved. The new nine-case normal-render HUD expiry fixture is wired into both CI and setup, and its CI report is archived; command parity and shell syntax were validated.",
+  "native_content_revision": 3,
+  "native_content_sha256": "9f3151f3cd14cf707e5a794453dda40078f7595d84c613af5f1314fd39e05279",
+  "native_content_sources": 14,
+  "content_inventory_scope": "Gameplay and outcome sources only; FX/HUD presentation is pinned in the complete runtime manifest. Rules and wire versions are unchanged.",
+  "runtime_source_sha256": "65b5b8f4baff7bf5393b2051b96181bfed6fc48436869428835177e3a05566e3",
+  "runtime_files": 352,
+  "runtime_manifest": {
+    "path": "runtime-source.json",
+    "sha256": "0ef2bfb9f2e891979e2d993cd626e92b8fa11a1a602eff54678c1185b43cb6f9"
+  },
+  "sources": {
+    "scripts/rama_ability_effects.gd": "a1d0e2424c5de390b2a51fcaaeeba86be6ff499bfa250c0aeaa113116990e82e",
+    "scripts/rama_hero_hud.gd": "8a5fe7c9363045ee75d602431e226a4dc1ef2e8d1b254ddb7a5fc3d3680afa0a",
+    "scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+    "scripts/rama_hero_runtime.gd": "26ad1d4c0eb99de140e90a9dfe5f6092c8a9f4aeabc63d21652188a642a6f05b",
+    "assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "assets/contracts/native-contracts-v1.json": "df2e0d24a29413e5d0cfd166a52747e030c129b20ab9fbb9e85a830d3ea17aa6"
+  },
+  "reports": [
+    {
+      "path": "native-contract-pins.json",
+      "checks": 41,
+      "sha256": "bbb8f79da31ed723c860cfc3298964e664192de50ce1070b23447928741628e3",
+      "bytes": 6148
+    },
+    {
+      "path": "native-contracts.json",
+      "checks": 235,
+      "sha256": "e110b32c6dfa81f1a117f6723a80c6bc6009c46ebf23e4cb01fa7dc32179471a",
+      "bytes": 28372
+    },
+    {
+      "path": "rama-package.json",
+      "checks": 19,
+      "sha256": "e048475658c93de37cd0bc2bfb6195685056df0a2c289b6444002ae890022e25",
+      "bytes": 3612
+    },
+    {
+      "path": "setup-parity.json",
+      "checks": 28,
+      "sha256": "4dc8a536a9c099477af4ad4e4ce85a821d007cceeb6fc4e7ed0cc0b7c0cd87af",
+      "bytes": 3306
+    }
+  ],
+  "commands": [
+    "python3 games/yuga-native/tools/check-native-contracts.py --report=<this-directory>/native-contract-pins.json",
+    "LP_NUM_THREADS=2 XDG_DATA_HOME=<isolated-user> godot --headless --path games/yuga-native --script res://tests/native_contract_cases.gd -- --report=<absolute-this-directory>/native-contracts.json",
+    "python3 games/yuga-native/tests/rama_package_cases.py --report=<this-directory>/rama-package.json"
+  ],
+  "unverified": [
+    "Fresh Guardian probe, R3 rendered review and exported-package identities remain pending.",
+    "Local source gates do not assert complete CI or public-release acceptance."
+  ],
+  "setup_gate_sources": {
+    ".github/workflows/yuga-native.yml": "06ebef80ebfb21db3aec6423b98afbb211ff21293607bf37bab207e1a17177ce",
+    "tools/cloud/setup-native.sh": "e06c78cdab7181246ddc9dc2f940ed73c3e9c4792724980ba5ad426389801ee6"
+  }
+}

@@ -439,7 +439,7 @@
         {
           "path": "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md",
           "scope": "Sixteen production gates and measurable acceptance requirements, with a bounded Rama supporting milestone; production rules, dependencies and open hardware/LOD/network gates are preserved.",
-          "sha256": "804f3bb08448cc1b853004ef07a6d6cbb04a75cb40983c10b61bfb1ce190cc16"
+          "sha256": "f1f81ec62d18cf977cf9121a5b0947a2fef1234bf9fdcd7caad48e2f18b81baa"
         },
         {
           "path": "games/yuga-native/docs/PRODUCTION_GUIDE_REVIEW.md",
@@ -3025,7 +3025,7 @@
       "id": "RAMA-02",
       "title": "Original editable Rama hero and R7 deformation correction",
       "status": "in_progress",
-      "phase": "r7_source_verified_visual_review_open",
+      "phase": "r7_art_target_limited",
       "supports": [
         "FG01-T01",
         "FG02-T02",
@@ -3036,7 +3036,7 @@
       ],
       "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
       "owner": "Character artist and independent art review",
-      "acceptance_scope": "R7 original hero is imported with exact editable/generator/weight-correction provenance, 164-bone rest preservation and 450084 triangles / 13 materials / 18 maps. This single-hero candidate has no accepted LOD, twelve-player performance or commercial-quality parity.",
+      "acceptance_scope": "R7 original hero is imported with exact editable/generator/weight-correction provenance, 164-bone rest preservation and 450084 triangles / 13 materials / 18 maps. Continuous staged motion accepts the bounded R7 deformation correction, while production visual acceptance remains LIMITED: sculpted hair, stiff long sash, stylized drape and material richness remain below the target. No authored LOD, twelve-player hardware budget or commercial-quality parity is accepted.",
       "evidence": [
         {
           "path": "games/yuga-native/NOTICE/RAMA-HERO-PROVENANCE.json",
@@ -3053,13 +3053,13 @@
           "scope": "Current actual-view findings and remaining final-source render gates."
         }
       ],
-      "next_action": "Complete final R7 gameplay and continuous deformation review; keep production model, LOD, hair/cloth simulation and hardware gates open."
+      "next_action": "Improve the production sculpt, topology, materials and cloth/hair secondary motion; author LODs and qualify twelve-player hardware budgets. The bounded single-hero correction does not close the production model gate."
     },
     {
       "id": "RAMA-03",
       "title": "Authored full-body motion and accepted-event presentation",
-      "status": "in_progress",
-      "phase": "authored_controller_verified_final_reel_open",
+      "status": "complete",
+      "phase": "bounded_continuous_motion_accepted",
       "supports": [
         "FG02-T03",
         "FG03-T02",
@@ -3071,25 +3071,36 @@
       ],
       "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
       "owner": "Animation and independent QA",
-      "acceptance_scope": "Twenty-three original clips, layered upper/lower-body ownership, real grip/string/sole sampling and corrected aim-transition caching support the selected Rama. Numeric contact and finite-state checks do not replace final continuous rendered review.",
+      "acceptance_scope": "Twenty-three original clips, layered upper/lower-body ownership, real grip/string/sole sampling and corrected aim-transition caching support the selected R7 Rama. The 539-frame full take plus 118-frame side correction and independent continuous-frame review support bounded motion acceptance; 39 motion and 34 traversal checks pass. Stylized high-knee movement, skinned drape, sculpted hair and a stiff sash remain production quality limits; this is not simulated cloth, commercial animation parity or physical-GPU performance.",
       "evidence": [
         {
-          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
-          "scope": "Current contact, frame-clock, transition and R7 motion findings, retaining rejected R6 drape evidence."
+          "path": "games/yuga-native/docs/evidence/rama-hero/motion/REVIEW.md",
+          "scope": "Final staged R7 review: 539 full-take frames plus 118 side-correction frames, stated independent review coverage, rejected R6 evidence and retained quality limits.",
+          "sha256": "2450a27c74f22bea62e04e119bc230ea10191b1b0d7373aea400610a0e25fdaf"
         },
         {
-          "path": "games/yuga-native/scripts/rama_motion.gd",
-          "scope": "Selected controller source; source identity alone is not visual acceptance.",
-          "sha256": "d3a898b640de9c62aa3a919786b5a3b7c56dea823349472e361ba33906010f22"
+          "path": "games/yuga-native/docs/evidence/rama-hero/motion/selection.json",
+          "scope": "Exact selected asset/controller/library, source snapshots, all raw-frame hashes, representative-frame mapping and encoded video frame counts.",
+          "sha256": "9dd9a87a5d7580104e566d92296ae38cc53fed67a28e20b47555e97238ff84b7"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/motion/motion-cases.json",
+          "scope": "39 motion checks on the selected original controller and R7 asset.",
+          "sha256": "68dc92516e0826cfa776a185a650b234c5ec6917a1040761a3fc7301fcf9f839"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/motion/traversal-cases.json",
+          "scope": "34 migrated traversal checks; deterministic contact/state checks remain distinct from rendered motion review.",
+          "sha256": "864b26dd129135a4f0795582ce1f151e24182a262bad6563aac0e13d512332bc"
         }
       ],
-      "next_action": "Archive and review final R7 forward movement, side movement, every action/reaction and rapid transitions at gameplay distance; retain authored timing and material limitations."
+      "next_action": "Preserve the accepted bounded motion and its source pins. Production expressiveness, cloth/hair secondary motion, full-roster interactions and measured hardware performance remain under the parent FG02/FG03 gates."
     },
     {
       "id": "RAMA-04",
       "title": "One coherent offline kit with real receivers and lifecycle",
       "status": "in_progress",
-      "phase": "functional_checks_passed_integrated_acceptance_open",
+      "phase": "r2_guardian_boundary_and_hud_rejected_correction_open",
       "supports": [
         "FG03-T03",
         "FG04-T02",
@@ -3103,23 +3114,33 @@
       "acceptance_scope": "Bounded offline function: one primary plus four fixed abilities share the 20 Hz authority clock across lanes and courtyard; real troop/target health, hero shields/healing, siege damage, death/respawn, collision, pause/reset and reentrancy are exercised. Ordinary troops still target troops; elevated/airborne combat and online authority remain open.",
       "evidence": [
         {
-          "path": "games/yuga-native/docs/evidence/rama-hero/qa/integration/report.json",
-          "scope": "135 actual-world integration checks, including all ability/phase interruptions, real siege death/respawn, deterministic presentation comparisons and bounded owned-node cycles.",
-          "sha256": "f47f78cc6e39c0563b7d91860806ec99c57f6d9cf867ca441f7dd9e5a7abb848"
+          "path": "games/yuga-native/docs/evidence/rama-hero/qa/integration-expiry/report.json",
+          "scope": "Historical 138 actual-world integration checks after the first Guardian expiry fix; its forced HUD refresh masked the residual render delay exposed by R2. Superseded for final visual expiry acceptance.",
+          "sha256": "29245868fd4373eafa2cbd3d07e2151ef2317ba1353f37e02eab17b1f4ac7cfd"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/source/final/rama-ability-cases.json",
+          "scope": "Historical 78 focused combat/lifecycle checks after the first field fade and shield-clock fixes; R2 subsequently exposed a distinct boundary/HUD timing mismatch.",
+          "sha256": "417e16d7f274dcc842d938298d7ecc4ef7ed5684ab813d81bdcbe1e07ced28d7"
         },
         {
           "path": "games/yuga-native/docs/evidence/rama-hero/contracts/rama-practice.json",
           "scope": "23 fresh R7-era practice-adapter cases: actual float damage, shields, occlusion, reset, no automatic target respawn and original callback preservation.",
           "sha256": "b905ab9b663efc587ede98495ae16a8015091a493fd94ca16354c758c32614ac"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/qa/final-review/gameplay-r2-review.json",
+          "sha256": "3038d5c7f8ddc61e2505d7547c1335d7876d93dfebf2938d181565dffbffe596",
+          "scope": "Independent rejection after all 168 Guardian frames: decorative fade improved, but the gold gameplay boundary disappears while field-active/shield HUD remains. The strengthened real-process regression exposes two failures hidden by the earlier forced HUD refresh."
         }
       ],
-      "next_action": "Finish final current-source gameplay capture and independent integrated acceptance before closing this packet; qualify human combat feel, balance, audio, elevation and network authority separately."
+      "next_action": "Correct the authority-boundary and normal-render HUD timing, pass the strengthened regression and short Guardian probe, then obtain independent R3 gameplay acceptance before closing. Human combat feel, balance, audio, elevation and network authority remain separate."
     },
     {
       "id": "RAMA-05",
       "title": "Consistent Rama screens and saved controls",
       "status": "in_progress",
-      "phase": "headless_ui_verified_visual_input_review_open",
+      "phase": "packaged_input_accepted_waiting_gameplay_dependency",
       "supports": [
         "FG13-T01",
         "FG13-T02"
@@ -3129,14 +3150,35 @@
       ],
       "contract": "games/yuga-native/docs/RAMA_HERO_MILESTONE.md",
       "owner": "Native UI and independent input review",
-      "acceptance_scope": "Title, kit guide, shared courtyard/world HUD and persistent bindings expose the same hero. Headless geometry/focus checks are distinct from final visual and actual OS-input evidence.",
+      "acceptance_scope": "Title, Rama guide, shared courtyard/world HUD and persistent bindings expose the same hero. Broader actual Linux R1 flows include training, five-ability input, remapping, saved settings, reset, pause/menu scrolling and returns, with narrower 1280 coverage explicitly recorded. The rejected initial Settings eyebrow clipping is corrected and accepted in the affected R2 repeat at both 960x600 and 1280x720 (12 inspected PNGs / 39 XTest events). Only Settings/title/world-entry flows were repeated on frozen package 78b49fbe; earlier flow evidence retains its exact R1 source. Controller, full-match journey, Windows and listening/hardware review remain open. Settings/Help still return focus to Bow training rather than the exact opener; this navigation-polish limit is retained.",
       "evidence": [
         {
-          "path": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
-          "scope": "Current screen/focus acceptance boundary; archived final UI and OS-input evidence will be linked after promotion."
+          "path": "games/yuga-native/docs/evidence/rama-hero/window/R2-REVIEW.md",
+          "scope": "Accepted affected-screen repeat at 960x600 and 1280x720: full Settings heading/eyebrow, keyboard scrolling to Back, reopen, title return and world entry; broader R1 flows are not relabeled as rerun.",
+          "sha256": "dcb516fd9995098531c8230a0b9a2d3f487adfb394e27e03a58f8d43cca26fe4"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/window/r2-review.json",
+          "scope": "Final 78b49fbe package identity, 352-file runtime hash, per-run event/screenshot/log receipts and explicit platform/performance/audio limitations.",
+          "sha256": "7fb0402fc39ea2bafdc90b87f61a444a8a30dc12de17c4e27c5998ae2b338500"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/window/REVIEW.md",
+          "scope": "Broader R1 960 and narrower 1280 flow coverage, exact original package, preserved rejected Settings states and qualified capture labels.",
+          "sha256": "807cb0c38e3c441dbc76b0d468108f5817f2ab07e638766a0489177db802a6c1"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/window/settings-entry-fix/after.json",
+          "scope": "36 screen checks after the narrow Settings correction; six entry/reopen assertions failed before the fix.",
+          "sha256": "013a4a01c24caa60d8b501d3c38c68dab8827b56618cbea09108b54f0e04b305"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/qa/final-review/os-review.json",
+          "sha256": "1a5cec3dead7dd266832621c9123fb340056b1d46dfdaa830f651c22d4cab154",
+          "scope": "Independent bounded Linux screen/input acceptance of all 12 affected R2 images plus five explicitly selected earlier images and source-pinned receipts; exact-opener focus restoration remains a known polish limit."
         }
       ],
-      "next_action": "Attach the final UI archive and actual current-source OS input sequence; retain controller, physical-device accessibility and full-match journey gaps."
+      "next_action": "Close RAMA-04 after the final R2 gameplay review before closing this dependent bounded packet. Preserve the accepted package-specific input evidence and retain controller, physical-device accessibility and full-match journey gaps."
     },
     {
       "id": "RAMA-06",
@@ -3179,6 +3221,16 @@
           "path": "games/yuga-native/docs/evidence/rama-hero/contracts/expiry-fix/manifest.json",
           "sha256": "0c2499bba8ddd2ad6242c586f155a1e8082a414b9bde389478c7a59f499db961",
           "scope": "Post-expiry-fix 41 source-pin, 235 contract and 19 package cases on refreshed revision-3 source identity; prior reports retained, kit/rules unchanged, no capture/export or full-CI claim."
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/ci-package-fixture/review.json",
+          "scope": "Preserved failed CI and corrected synthetic PCK inventory: 75 security, 19 provenance and 169 release-gate checks; runtime and packager unchanged by the fixture correction.",
+          "sha256": "d89e989093ea4726572eafaadd9e5212c8eae8c44d911263dc247e24ae55b981"
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-hero/ci-relay-fixture/review.json",
+          "scope": "Preserved 36/38 failure and corrected 38/38 relay fixture: exact 13-action menu inventory with all focus/scroll bounds checks retained; no runtime change or complete-CI claim.",
+          "sha256": "47446ee1a015df1bb5378b36cb7d753736520369a1d76e47ebcd5ce670158bf4"
         }
       ],
       "next_action": "Keep source gates reproducible; final export, captured-source identity, Linux/Windows execution and publication belong to release review."
@@ -3189,7 +3241,7 @@
     "acceptance": "games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md",
     "evidence_root": "games/yuga-native/docs/evidence/rama-hero",
     "status": "in_progress",
-    "scope": "Current working-tree single-hero offline candidate; historical published baseline is unchanged.",
+    "scope": "Single-hero offline milestone with bounded staged motion accepted and production art LIMITED. Candidate 78b49fbe is superseded after R2 exposed residual Guardian boundary/HUD timing; publication is held for correction, R3 evidence and a newly frozen candidate. Historical published baselines are unchanged.",
     "asset_sha256": "667f3a215a7b868e3bdbcde880a73d42b68b29af1303db4e1d99b93f73cf2b50",
     "native_content_revision": 3,
     "content_sha256": "9f3151f3cd14cf707e5a794453dda40078f7595d84c613af5f1314fd39e05279",
@@ -3202,11 +3254,15 @@
       "RAMA-06"
     ],
     "open_gates": [
-      "Final current-source continuous visual and OS-input review",
+      "Correct residual Guardian boundary/HUD timing; pass strengthened regression, short rendered probe and final R3 gameplay review",
       "Production sculpt/retopology and complete model approval",
       "Authored LOD and twelve-player physical-hardware budgets",
       "Full roster, elevation authority and native online match flow",
-      "Controller/device accessibility, Windows execution and auditory review"
-    ]
+      "Controller/device accessibility, Windows execution and auditory review",
+      "Complete current-candidate CI and public-release verification"
+    ],
+    "source_commit": "78b49fbe8b9edeb78b09c2363b878bf73c158602",
+    "runtime_files": 352,
+    "runtime_sha256": "9ca7ac699d3bbde68be710cd1ca25c8e9ddbc4c383a2797f1b2e338449469e9e"
   }
 }

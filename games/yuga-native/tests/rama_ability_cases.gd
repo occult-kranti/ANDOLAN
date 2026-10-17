@@ -173,8 +173,30 @@ func run() -> void:
 	advance(.10,false)
 	var final_main: float=ward.main.get_shader_parameter("opacity")
 	check("guardian_fade_progresses_without_shortening_boundary",final_main>0 and final_main<late_main*.5 and ward.warning.visible and ally.shield==55 and vitals.shield==55,{"late_opacity":late_main,"final_opacity":final_main,"boundary_visible":ward.warning.visible,"ally_shield":ally.shield,"hero_shield":vitals.shield,"army_elapsed":army.elapsed,"hero_elapsed":vitals.elapsed,"hero_shield_until":vitals.shield_until})
+	fx.step(.05)
+	check("guardian_interpolation_cannot_retire_authoritative_boundary",ward.warning.visible and ally.shield==55 and vitals.shield==55,{"authority_age_s":ward.authority_age,"presentation_age_s":ward.age,"boundary_visible":ward.warning.visible})
 	advance(.05,false)
 	check("guardian_boundary_and_decoration_retire_at_exact_active_expiry",not ward.warning.visible and float(ward.main.get_shader_parameter("opacity"))<.000001 and float(ward.detail.get_shader_parameter("opacity"))<.000001 and ward.motif.mesh.get_surface_count()==0 and ward.recipients.mesh.get_surface_count()==0 and ally.shield==0 and vitals.shield==0,{"age_s":ward.age,"boundary_visible":ward.warning.visible})
+	for fps in [30,60,120]:
+		for presentation_first in [false,true]:
+			fresh();ally=unit_at("sun",Vector3(1,0,1),90)
+			cast("guardian_circle",Vector3.ZERO)
+			var accumulator:=0.0
+			var mismatch: Dictionary={}
+			for frame in int(ceil(5.2*fps)):
+				var dt: float=1.0/fps
+				if presentation_first:fx.step(dt)
+				accumulator+=dt
+				while accumulator+.000001>=.05:
+					army.step_simulation(.05);accumulator-=.05
+				if not presentation_first:fx.step(dt)
+				var field: Dictionary=fx._casts.values()[0]
+				var expected_live: bool=army.elapsed+.000001<5.05
+				var valid: bool=field.warning.visible==expected_live
+				if army.elapsed>=.55 and expected_live:valid=valid and ally.shield==55 and vitals.shield==55
+				if not expected_live:valid=valid and ally.shield==0 and vitals.shield==0 and field.recipients.mesh.get_surface_count()==0
+				if not valid and mismatch.is_empty():mismatch={"frame":frame,"army_elapsed":army.elapsed,"authority_age_s":field.authority_age,"presentation_age_s":field.age,"boundary_visible":field.warning.visible,"hero_shield":vitals.shield,"ally_shield":ally.shield}
+			check("guardian_boundary_tracks_authority_"+str(fps)+"fps_presentation_first_"+str(presentation_first),mismatch.is_empty(),mismatch)
 	fresh()
 	cast("guardian_circle",Vector3.ZERO);advance(1)
 	cast("piercing_dawn");advance(.2)

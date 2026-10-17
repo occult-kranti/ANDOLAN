@@ -55,7 +55,7 @@ Kodanda uses a small curved nock marker, gold arrow and split blue feather wake.
 
 Curves are original cubic Bézier and analytic constructions, rebuilt at up to 30 Hz; projectile transforms and shader phase advance smoothly between authority updates. The renderer extrapolates at most one .05-second army tick. A delayed presentation frame cannot create an unreleased projectile. The shader uses an explicit phase uniform, not global `TIME`, so pause also freezes ribbon motion.
 
-Guardian's decorative arches and recipient marks fade smoothly over the final .25 seconds of the field. The exact boundary remains visible through its active duration, then retires with the shield; the decoration does not outlive that boundary.
+Guardian's decorative arches and recipient marks fade smoothly over the final .25 seconds of the field. The exact boundary and recipient validity follow the last authoritative age, so presentation interpolation cannot remove a live boundary between simulation ticks. An authoritative expiry forces recipient geometry cleanup even if interpolation is already waiting at the same geometry frame.
 
 The cap is twelve casts and eighteen pooled contact blooms. Expired contact meshes are reused within that same eighteen-object allocation cap. There are no lights, particles, voices, opaque solar disks, camera shake, screen textures or full-screen flashes. Reduced effects removes secondary contours while retaining the actual warning. Reduced motion freezes ribbon oscillation/rotation and contact growth while preserving travel, release, boundaries and expiry. A missing end event has an eight-second watchdog. Invalid, duplicate, stale, mutated-geometry and retired-generation events are rejected.
 
@@ -79,3 +79,5 @@ python3 games/yuga-native/tools/run-rama-gameplay.py --output /absolute/new/rama
 ```
 
 Reserve the shared renderer, import the final hero, and freeze runtime source first. Preview captures release/contact studies and ends early; full mode records five separate complete ability takes, 363 frames at simulated 30 fps, plus separate low-angle replays and actual hit/defeat/respawn stills. Those deliberate scene-reset cuts are documented in the report. Both modes retain real receiver receipts and before/after source hashes. Full mode verifies the encoded frame count and decodes the entire silent video. Neither mode is a human-input or real-time-performance claim.
+
+Use `--guardian-probe` for one complete 168-frame Guardian take and three gameplay stills before repeating the full capture after an expiry correction. Each captured frame records authoritative cast ages, current vitals, displayed health/shield and notice, plus Guardian material opacity and boundary state. The runner rejects stale HUD text/shield labels or a boundary that disagrees with authoritative expiry. The probe and full capture both render the normal world continuously; neither advances the simulation through a substitute clock.
