@@ -1,0 +1,12 @@
+{
+  "scope": "Preserved failed full-CI job log before the stale binding fixture migration.",
+  "source_commit": "eedc653ddf34d6782615d475c32542f92c6db4e2",
+  "log": "ci-eedc-failed.log",
+  "log_sha256": "750eed072fbc65298f78445ddaba460284fa4f7c76c7cae2e09afa57eb216392",
+  "stress_test_source_sha256": "108b2fa8b4142c40a458a70cced27a31f1a100b6c56752badc8799019facc50c",
+  "failed_assertions": [
+    "native-core\tValidate original traversal audio and new play systems\t2026-10-17T12:07:30.9206496Z FAIL controls card remains inside viewport with thirteen bindings 1280x720",
+    "native-core\tValidate original traversal audio and new play systems\t2026-10-17T12:07:30.9226567Z FAIL controls card remains inside viewport with thirteen bindings 960x600"
+  ],
+  "diagnosis": "Literal 13 was obsolete. Current overlay has fourteen remappable keyboard actions; fixed LMB fire is the fifteenth gameplay control. Corrected assertion retains viewport containment and verifies the complete explicit keyboard action set."
+}

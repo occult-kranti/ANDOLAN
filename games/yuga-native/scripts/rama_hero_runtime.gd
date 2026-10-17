@@ -126,6 +126,12 @@ func _event(event: Dictionary) -> void:
 				if vitals.alive: notice = "Guardian Circle · field active" if id == "guardian_circle" else "Rama is ready"
 				player.rama_committed = false
 				player.rama_action_locked = false
+		"tick":
+			# The owned field ends before the cast's presentation cleanup tail.
+			# Read its authority tick rather than leaving an obsolete active label.
+			if id == "guardian_circle" and int(event.cast_id) == _last_cast and int(event.generation) == _hero_generation and vitals.alive:
+				if float(event.age_s) + 1e-8 >= float(timing.windup_s) + float(timing.active_s):
+					notice = "Rama is ready"
 		"cancel":
 			if int(event.cast_id) == _last_cast and int(event.generation) == _hero_generation:
 				if vitals.alive: notice = "Action cancelled"

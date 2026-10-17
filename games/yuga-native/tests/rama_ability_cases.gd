@@ -18,6 +18,10 @@ var callback_accepted:=false
 var sample_reset:=false
 var sampler_calls:=0
 var heal_reset:=false
+var lethal_pending:=false
+var lethal_at:=0.0
+var respawn_announcements:=0
+var reset_at_respawn:=false
 func _initialize() -> void:call_deferred("run")
 func check(label: String, passed: bool, evidence: Dictionary={}) -> void:
 	checks.append({"case":label,"passed":passed,"evidence":evidence})
@@ -60,6 +64,16 @@ func reset_during_heal() -> void:
 	if heal_reset:
 		heal_reset=false
 		vitals.reset()
+func lethal_from_step(_delta: float) -> void:
+	if lethal_pending:
+		lethal_pending=false
+		lethal_at=vitals.receive_damage(500,"ordered_tick").time_s
+func count_respawn_ready() -> void:
+	respawn_announcements+=1
+	if reset_at_respawn:
+		reset_at_respawn=false
+		vitals.reset()
+		vitals.apply_shield(30,.10)
 func run() -> void:
 	army=Army.new();army.visual_enabled=false;root.add_child(army);army.set_physics_process(false)
 	var manifest: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/world/confluence-map.json"))
@@ -147,6 +161,21 @@ func run() -> void:
 	check("guardian_natural_expiry_restores_prior_status",ally.shield==20 and absf(ally.shield_until-8)<.0001)
 	check("guardian_healing_stops_at_field_expiry",absf(ally.health-135)<.001)
 	fresh()
+	ally=unit_at("sun",Vector3(1,0,1),90)
+	cast("guardian_circle",Vector3.ZERO);advance(4.75,false)
+	var ward: Dictionary=fx._casts.values()[0]
+	var full_main: float=ward.main.get_shader_parameter("opacity")
+	var full_detail: float=ward.detail.get_shader_parameter("opacity")
+	advance(.15,false)
+	var late_main: float=ward.main.get_shader_parameter("opacity")
+	var late_detail: float=ward.detail.get_shader_parameter("opacity")
+	check("guardian_decoration_fades_while_boundary_and_shield_remain",late_main>0 and late_main<full_main*.8 and late_detail>0 and late_detail<full_detail*.8 and ward.warning.visible and ally.shield==55 and vitals.shield==55,{"full_opacity":full_main,"late_opacity":late_main})
+	advance(.10,false)
+	var final_main: float=ward.main.get_shader_parameter("opacity")
+	check("guardian_fade_progresses_without_shortening_boundary",final_main>0 and final_main<late_main*.5 and ward.warning.visible and ally.shield==55 and vitals.shield==55,{"late_opacity":late_main,"final_opacity":final_main,"boundary_visible":ward.warning.visible,"ally_shield":ally.shield,"hero_shield":vitals.shield,"army_elapsed":army.elapsed,"hero_elapsed":vitals.elapsed,"hero_shield_until":vitals.shield_until})
+	advance(.05,false)
+	check("guardian_boundary_and_decoration_retire_at_exact_active_expiry",not ward.warning.visible and float(ward.main.get_shader_parameter("opacity"))<.000001 and float(ward.detail.get_shader_parameter("opacity"))<.000001 and ward.motif.mesh.get_surface_count()==0 and ward.recipients.mesh.get_surface_count()==0 and ally.shield==0 and vitals.shield==0,{"age_s":ward.age,"boundary_visible":ward.warning.visible})
+	fresh()
 	cast("guardian_circle",Vector3.ZERO);advance(1)
 	cast("piercing_dawn");advance(.2)
 	check("cancel_windup_preserves_existing_ward",kit.cancel_windup("damage") and kit.report().casts.size()==1 and kit.report().casts[0].ability_id=="guardian_circle" and vitals.shield==55)
@@ -195,6 +224,38 @@ func run() -> void:
 	check("vitals_defeat_and_no_early_respawn",not vitals.alive and not vitals.respawn() and vitals.receive_heal(50)==0)
 	advance(3)
 	check("vitals_respawn_after_three_army_seconds",vitals.respawn() and vitals.alive and vitals.health==300)
+	vitals.respawn_ready.connect(count_respawn_ready)
+	for vitals_first in [false,true]:
+		army.simulation_stepped.disconnect(kit._on_step)
+		army.simulation_stepped.disconnect(vitals._on_step)
+		if vitals_first:army.simulation_stepped.connect(vitals._on_step)
+		army.simulation_stepped.connect(kit._on_step)
+		army.simulation_stepped.connect(lethal_from_step)
+		if not vitals_first:army.simulation_stepped.connect(vitals._on_step)
+		fresh();vitals.apply_shield(20,8)
+		cast("guardian_circle",Vector3.ZERO);advance(5.0,false)
+		check("hero_guardian_last_live_tick_with_prior_shield_order_"+str(vitals_first),vitals.shield==55 and absf(vitals.shield_until-8)<.000001,{"shield":vitals.shield,"until":vitals.shield_until})
+		advance(.05,false)
+		check("hero_prior_shield_restored_at_exact_expiry_order_"+str(vitals_first),vitals.shield==20 and absf(vitals.shield_until-8)<.000001)
+		fresh();respawn_announcements=0;advance(1,false);lethal_pending=true;advance(.05,false)
+		check("death_uses_current_simulation_instant_order_"+str(vitals_first),not vitals.alive and absf(lethal_at-1.05)<.000001,{"receipt_time":lethal_at})
+		advance(2.95,false)
+		check("respawn_never_one_tick_early_order_"+str(vitals_first),respawn_announcements==0 and not vitals.respawn())
+		advance(.05,false)
+		check("respawn_at_exact_three_seconds_order_"+str(vitals_first),respawn_announcements==1 and vitals.respawn() and vitals.health==300)
+		army.simulation_stepped.disconnect(lethal_from_step)
+	vitals.reset();vitals.apply_shield(30,.10);advance(.05,false)
+	check("vitals_reset_rebases_nonzero_army_clock",vitals.shield==30 and absf(vitals.elapsed-.05)<.000001 and absf(vitals.shield_until-.10)<.000001)
+	advance(.05,false);check("rebased_shield_expires_on_local_deadline",vitals.shield==0)
+	fresh();vitals.apply_shield(30,.20);vitals.set_suspended(true);advance(1,false);vitals.set_suspended(false)
+	vitals.receive_damage(10,"after_suspend");advance(.15,false)
+	check("suspended_army_time_does_not_enter_receipt_clock",vitals.health==300 and vitals.shield==20 and absf(vitals.elapsed-.15)<.000001)
+	advance(.05,false);check("shield_retains_only_running_time_after_suspend",vitals.shield==0)
+	fresh();vitals.receive_damage(500,"reentrant_respawn");reset_at_respawn=true;advance(3,false)
+	advance(.05,false)
+	check("respawn_ready_reset_preserves_new_clock_generation",vitals.alive and vitals.health==300 and vitals.shield==30 and absf(vitals.elapsed-.05)<.000001)
+	advance(.05,false);check("reentrant_reset_shield_expires_once",vitals.shield==0)
+	vitals.respawn_ready.disconnect(count_respawn_ready)
 	fresh();kit.ability_event.connect(reentrant_cancel)
 	cast("kodanda");cancel_spawn=true;kit.reset("reentrant_reset")
 	check("reset_rejects_reentrant_cancel_listener_cast",not callback_accepted and kit.report().casts.is_empty() and not kit.report().action_locked)

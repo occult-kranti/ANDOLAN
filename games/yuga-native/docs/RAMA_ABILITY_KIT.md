@@ -45,6 +45,8 @@ Guardian cleanup restores the prior shield contribution only while the current e
 
 Signals are `damaged(receipt)`, `defeated(receipt)`, `respawn_ready`, `respawned` and `changed`. Damage consumes shield before health. Defeat occurs once at zero health. Healing does not resurrect. After three running army seconds, `respawn_ready` fires once; `respawn()` restores health and increments generation, and the world restores position/input/ammo. The world must keep vitals ticking while dead. Pause freezes this timer.
 
+Receipts use the current simulation instant even when an earlier army listener delivers them before the vitals listener. Only one finite pending 20 Hz tick can enter that calculation. Reset rebases the local clock at the current army time, and suspension discards paused army time. Shield expiry and the three-second return timer therefore do not depend on signal connection order.
+
 ## Original visual construction
 
 `RamaAbilityEffects.consume_event(event)` is a bounded event consumer. Its only runtime dependencies are the event data and the original `rama_ribbon.gdshader`. It contains no army/player receiver reference and no damage calls.
@@ -52,6 +54,8 @@ Signals are `damaged(receipt)`, `defeated(receipt)`, `respawn_ready`, `respawned
 Kodanda uses a small curved nock marker, gold arrow and split blue feather wake. Piercing Dawn gathers two smooth helical filaments into a narrow arrow. Measured Step lays two curved sash ribbons along the accepted path. Guardian Circle uses six low shelter arches, an exact open ground boundary, and position-following marks on actual shield recipients. Dawn Volley gathers three curved iris vanes and collapses them into the three separately timed arrows. Contact feedback uses a brief curved bloom at the accepted contact point.
 
 Curves are original cubic Bézier and analytic constructions, rebuilt at up to 30 Hz; projectile transforms and shader phase advance smoothly between authority updates. The renderer extrapolates at most one .05-second army tick. A delayed presentation frame cannot create an unreleased projectile. The shader uses an explicit phase uniform, not global `TIME`, so pause also freezes ribbon motion.
+
+Guardian's decorative arches and recipient marks fade smoothly over the final .25 seconds of the field. The exact boundary remains visible through its active duration, then retires with the shield; the decoration does not outlive that boundary.
 
 The cap is twelve casts and eighteen pooled contact blooms. Expired contact meshes are reused within that same eighteen-object allocation cap. There are no lights, particles, voices, opaque solar disks, camera shake, screen textures or full-screen flashes. Reduced effects removes secondary contours while retaining the actual warning. Reduced motion freezes ribbon oscillation/rotation and contact growth while preserving travel, release, boundaries and expiry. A missing end event has an eight-second watchdog. Invalid, duplicate, stale, mutated-geometry and retired-generation events are rejected.
 

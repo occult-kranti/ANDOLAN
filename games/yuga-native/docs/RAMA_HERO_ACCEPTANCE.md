@@ -48,22 +48,29 @@ This cloud machine reports five Intel Xeon Platinum 8573C virtual CPUs and has n
 
 ## Current independent execution
 
+The latest [138-check actual-world repeat](evidence/rama-hero/qa/integration-expiry/report.json) passes on the corrected Guardian expiry runtime, effects and hero-vitals sources, with no engine errors or warnings. Its [log](evidence/rama-hero/qa/integration-expiry/run.log) and exact hashes are retained separately. The preceding 135-check report remains unchanged.
+
 Godot 4.6.3 executed the following fresh reports against imported **R7** (`667f3a215a7b868e3bdbcde880a73d42b68b29af1303db4e1d99b93f73cf2b50`), with fixed physics sampling at 60 Hz and two CPU worker threads. All exited successfully without engine errors or warnings. [The archived summary](evidence/rama-hero/qa/summary.json) records report hashes. Exact report/log copies are archived under `docs/evidence/rama-hero/qa`; original run paths inside source-bound JSON remain unchanged.
 
 | Suite | Result | Archived report under `docs/evidence/rama-hero/qa/` |
 | --- | --- | --- |
-| Actual Rama world integration | 135/135 | `integration/report.json` |
+| Actual Rama world integration, preceding candidate | 135/135 | `integration/report.json` |
+| Current world integration, expiry correction | 138/138 | `integration-expiry/report.json` |
 | Native acceptance, current hero and courtyard | 20/20 | `native/report.json` |
 | Retained legacy invocation integration and current modal glue | 116/116 | `mythic/report.json` |
 | Retained legacy invocation panel component | 62/62 | `invocation-ui/report.json` |
 
+The additional retained [world-flow and physical-traversal regressions](evidence/rama-hero/qa/regressions/summary.json) pass 13/13 and 36/36 with clean logs. Traversal assertions remain unchanged; its source list now also pins the new hero, motion controller and library.
+
 The independent integration proves the actual world cast path, real receivers, authoritative hold/release/recovery, all fifteen ability/phase pause-reset cases, all fifteen cancellation cases, physical Measured Step movement, actual enemy cannon interruption/death/respawn, exact modal focus ownership, current import/source freshness and reentrant reset safety. Resetting from Kodanda's begin observer cannot reserve stale ammunition; resetting from Guardian Circle's release observer cannot apply payload into the replacement round.
 
-This gate caught two production defects and verifies their correction. Traversal cancellation previously consumed an accepted Measured Step during pause; remaining step state now survives pause while explicit cancellation still stops it. The actual preview also exposed a HUD notice stuck on “drawing” after contact/completion. The visible label now changes from “Piercing Dawn · drawing” to “Piercing Dawn · released” and then “Rama is ready”.
+This gate caught production defects and verifies their correction. Traversal cancellation previously consumed an accepted Measured Step during pause; remaining step state now survives pause while explicit cancellation still stops it. The actual preview also exposed a HUD notice stuck on “drawing” after contact/completion. The visible label now changes from “Piercing Dawn · drawing” to “Piercing Dawn · released” and then “Rama is ready”.
+
+The expiry review then exposed a one-tick-early hero shield clock and a stale Guardian Circle HUD label. The current repeat stages the actual player and an allied troop inside the accepted field. At 5.00 seconds both have 55 shield and the label reads “field active”; at 5.05 seconds both shields are zero and the label reads “Rama is ready” while the presentation cast still exists. An older field’s expiry cannot replace the notice of a newer Kodanda draw. These assertions exercise real world listener order and receiver glue; the combat-owner suite separately covers both listener orders and exact respawn timing.
 
 At identical elapsed time, Dawn Volley and Guardian Circle receiver states, corresponding effect transforms, visibility and every generated mesh vertex agree at 30/60/120 Hz. Maximum transform and vertex discrepancy was zero across 1,210 Volley and 850 Guardian vertices; cast ages agree within `0.00001` seconds. Structural child paths avoid Godot's process-specific generated names. Thirty-two uninterrupted primary casts and real reloads retain five owned nodes after warming the intentional contact pool. One hundred mixed cast/reset cycles return to three owned nodes after every cleanup; world teardown returns to the original one-node tree. These checks establish bounded owned-node lifetime, not absence of every possible engine/resource allocation.
 
-The final integration run sampled 5,213 synchronous army/player/effect steps: median `0.705 ms`, p95 `1.924 ms`, maximum `13.422 ms`. This is shared-container headless wall cost, excludes rendering, and must not be converted into consumer-GPU FPS. All listed runtime, motion-library, effect-shader, test and imported-model hashes remained stable during this run.
+The preceding 135-check integration run sampled 5,213 synchronous army/player/effect steps: median `0.705 ms`, p95 `1.924 ms`, maximum `13.422 ms`. This is shared-container headless wall cost, excludes rendering, and must not be converted into consumer-GPU FPS. All listed runtime, motion-library, effect-shader, test and imported-model hashes remained stable during that run. The current 138-check repeat sampled 5,415 steps: median `0.752 ms`, p95 `2.323 ms`, maximum `14.382 ms`; the same headless/shared-container limitation applies.
 
 ## Visual findings and correction
 
@@ -76,6 +83,8 @@ The corrected actual R7 take `/tmp/rama-motion-side-r3` contains 118 hashed fram
 Independent review of the actual R6 Confluence preview `/tmp/rama-gameplay-owner-preview-r1` covered all five abilities at windup/release/contact and side-angle Piercing Dawn, Guardian Circle and Dawn Volley replays. Hero, reticle, targets, ward boundary, projectile wake and lower HUD remain readable. Hit/defeat/respawn stills show the expected health/countdown/location states and clean effects. These preview stills establish appearance only; they cannot establish temporal continuity and must be superseded by the final corrected-source take. Hair remains broadly sculpted and the sash stiff; no reference-parity or physical cloth-simulation claim is made.
 
 The final expanded R7 staged take `/tmp/rama-motion-render-r4` contains 539 source-pinned frames. Independent QA reviewed every frame 421–538: three rapid primary episodes, hit, defeat, respawn and return to idle, plus full-size frame 488. The repeated actions retain bow-ready posture, defeat lowers and holds, and respawn rises continuously; no new concrete snap, grip disconnection or cloth tear was observed in these intervals. Motion-owner review covers the earlier locomotion, traversal, ability and contact sequences. The QA ledger records exact inspected-frame hashes. Sculpted hair, stiff sash, strongly stylized high-knee drape and material richness still limit production polish relative to the reference.
+
+The first full R7 gameplay take `/tmp/rama-gameplay-owner-full-r1` is preserved as a rejected presentation candidate. Independent QA inspected every Guardian Circle frame 120–287 and Dawn Volley frame 288–362, with full-size checks at 191, 317 and 323. Volley charge, contact and recovery show no additional concrete defect. Guardian Circle’s decorative ribbons visibly disappear between frames 270 and 271 while the HUD retains “field active” until presentation retirement. The exact field boundary correctly expires; the decorative fade and label timing require correction. The [QA ledger](evidence/rama-hero/qa/review.json) retains those frame hashes and both critical images. A new three-assertion integration regression checks live-before/ready-at-expiry and protects a later primary action’s notice. The 138-check actual-world repeat now passes, including the hero shield clock correction. The corrected-source decorative fade still requires rendered review.
 
 ## Current disposition
 

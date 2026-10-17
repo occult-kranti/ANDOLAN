@@ -3,6 +3,9 @@ extends SceneTree
 ## physics frames; the long army sweep below is explicitly accelerated 20 Hz.
 ## No OS-input, audible-quality, hardware-performance or multiplayer claim.
 
+# Complete remappable keyboard contract. LMB fire remains a fixed mouse action.
+const ACTIONS := ["move_forward", "move_back", "move_left", "move_right", "jump", "sprint", "reload", "pulse", "dash", "grapple", "fly", "descend", "ultimate", "guardian_circle"]
+
 var checks: Array[Dictionary] = []
 var output := ""
 var scene
@@ -47,7 +50,7 @@ func act(callback: Callable) -> void:
 	await process_frame
 
 func release() -> void:
-	for action in ["move_left", "move_right", "move_forward", "move_back", "jump", "sprint", "dash", "fire", "fly", "grapple", "descend", "pulse"]:
+	for action in ACTIONS + ["fire"]:
 		if InputMap.has_action(action): Input.action_release(action)
 
 func vec(values: Array) -> Vector3:
@@ -230,7 +233,11 @@ func run() -> void:
 		var layout: Dictionary = scene.controls_overlay.diagnostics()
 		var card: Rect2 = layout.card_rect
 		var viewport: Rect2 = layout.viewport
-		record("controls card remains inside viewport with thirteen bindings %dx%d" % [size_.x,size_.y], viewport.encloses(card) and layout.button_count == 13, {"card": str(card), "viewport": str(viewport), "binding_buttons": layout.button_count})
+		var expected_actions: Array = ACTIONS.duplicate()
+		var actual_actions: Array = scene.controls_overlay.binding_buttons.keys()
+		expected_actions.sort()
+		actual_actions.sort()
+		record("controls card remains inside viewport with every remappable binding %dx%d" % [size_.x,size_.y], viewport.encloses(card) and layout.button_count == ACTIONS.size() and actual_actions == expected_actions, {"card": str(card), "viewport": str(viewport), "binding_buttons": layout.button_count, "expected_binding_buttons": ACTIONS.size(), "actions": actual_actions})
 	await input_key(KEY_ESCAPE)
 	record("closing controls after focus loss returns to pause", not scene.controls_overlay.visible and scene.paused and scene.pause_panel.visible)
 	scene.set_paused(false)

@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "source_context_commit": "eedc653ddf34d6782615d475c32542f92c6db4e2",
+  "scope": "Source-only revalidation after Guardian decorative fade, HUD expiry notice and hero shield-clock phase corrections. Previous reports remain immutable. No export or rendered review executed here.",
+  "native_content_revision": 3,
+  "native_content_sha256": "9f3151f3cd14cf707e5a794453dda40078f7595d84c613af5f1314fd39e05279",
+  "runtime_source_sha256": "5aaeec270783a727cb06095e2c541628069eeb20e6d6443060e62a25f4ad2b86",
+  "runtime_files": 352,
+  "kit_and_ability_rules_unchanged_from_source_context": true,
+  "sources": {
+    "scripts/rama_hero_runtime.gd": "26ad1d4c0eb99de140e90a9dfe5f6092c8a9f4aeabc63d21652188a642a6f05b",
+    "scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+    "scripts/rama_ability_effects.gd": "ab7829ca7ebc18a7ca7f7719f8329a073ba5431e06625948f5ecb3ec8047c56f",
+    "scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "assets/contracts/native-contracts-v1.json": "df2e0d24a29413e5d0cfd166a52747e030c129b20ab9fbb9e85a830d3ea17aa6"
+  },
+  "notice": {
+    "bytes": 8730,
+    "sha256": "2295bae5b45ecfe4a988c9eda2b31b2de80a8bf06d65389cbdc507eabcfd8074"
+  },
+  "reports": [
+    {
+      "path": "native-contract-pins.json",
+      "checks": 41,
+      "sha256": "bbb8f79da31ed723c860cfc3298964e664192de50ce1070b23447928741628e3",
+      "bytes": 6148
+    },
+    {
+      "path": "native-contracts.json",
+      "checks": 235,
+      "sha256": "e110b32c6dfa81f1a117f6723a80c6bc6009c46ebf23e4cb01fa7dc32179471a",
+      "bytes": 28372
+    },
+    {
+      "path": "rama-package.json",
+      "checks": 19,
+      "sha256": "e048475658c93de37cd0bc2bfb6195685056df0a2c289b6444002ae890022e25",
+      "bytes": 3612
+    }
+  ],
+  "commands": [
+    "python3 games/yuga-native/tools/check-native-contracts.py --report=<this-directory>/native-contract-pins.json",
+    "godot --headless --path games/yuga-native --script res://tests/native_contract_cases.gd -- --report=<absolute-this-directory>/native-contracts.json",
+    "python3 games/yuga-native/tests/rama_package_cases.py --report=<this-directory>/rama-package.json"
+  ],
+  "unverified": [
+    "Post-fix capture and package identities require refreshed exports/captures and release-owner review.",
+    "Successful local gates do not assert full CI success."
+  ]
+}

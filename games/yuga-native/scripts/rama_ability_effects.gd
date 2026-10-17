@@ -287,12 +287,16 @@ func _animate(cast: Dictionary) -> void:
 	var prepare:=clampf(age/maxf(.01,float(cast.timing.windup_s)),0,1)
 	var after:=maxf(0,age-float(cast.release_age_s)) if cast.released else 0.0
 	var fade:=clampf((cast.duration-age)/.30,0,1)
+	var field_active: bool=not cast.released or after+.000001<float(cast.timing.active_s)
+	if cast.id=="guardian_circle" and cast.released:
+		# Decoration settles before the exact gameplay boundary expires.
+		fade=minf(fade,smoothstep(0,.25,maxf(0,float(cast.timing.active_s)-after))) if field_active else 0.0
 	cast.main.set_shader_parameter("opacity",(.62 if _reduced_effects else .88)*fade)
 	cast.detail.set_shader_parameter("opacity",.70*fade)
 	for material in [cast.main,cast.detail]:
 		material.set_shader_parameter("phase",age)
 		material.set_shader_parameter("reduced_motion",_reduced_motion)
-	cast.warning.visible=not cast.released or (cast.id=="guardian_circle" and after<float(cast.timing.active_s))
+	cast.warning.visible=not cast.released or (cast.id=="guardian_circle" and field_active)
 	if cast.id=="kodanda":cast.warning.visible=false
 	var geometry_frame:=int(age*30)
 	if geometry_frame!=cast.last_geometry_frame:
@@ -302,7 +306,8 @@ func _animate(cast: Dictionary) -> void:
 		cast.accent.mesh=_ribbon(shapes.detail,.065,true,true)
 		var recipients: Array=[]
 		var inverse: Transform3D=cast.root.global_transform.affine_inverse()
-		for a in cast.attachments:
+		var attachments: Array=cast.attachments if cast.id!="guardian_circle" or field_active else []
+		for a in attachments:
 			if not a is Dictionary or not a.get("position") is Vector3:continue
 			var p: Vector3=inverse*a.position
 			var path:=_arc(.65,1.1,-1.1,1.1,16)
@@ -364,7 +369,7 @@ func _shapes(cast: Dictionary, prepare: float, after: float) -> Dictionary:
 		"guardian_circle":
 			var radius: float=cast.geometry.radius_m
 			var growth:=smoothstep(0,1,prepare)
-			if not cast.released or after<float(cast.timing.active_s):
+			if not cast.released or after+.000001<float(cast.timing.active_s):
 				for index in range(6):
 					var a:=TAU*index/6.0
 					var out:=Vector3(sin(a),0,cos(a))

@@ -455,6 +455,33 @@ func hud_phase_case() -> void:
 	advance(6.0)
 	scene.rama_hud._refresh()
 	check("visible HUD does not retain a completed action phase", kit.report().casts.is_empty() and not kit.report().action_locked and not scene.rama_hud.note.text.is_empty() and scene.rama_hud.note.text != windup_note and not scene.rama_hud.note.text.to_lower().contains("drawing"), {"completed_note":scene.rama_hud.note.text})
+	var targets := await fixture()
+	accepted = scene.cast_rama_ability("guardian_circle")
+	var begin := latest("begin")
+	align_receivers(targets, begin)
+	# Stage the actual hero receiver inside the accepted field as well as the ally.
+	# This catches a one-tick-early local shield clock even when troop timing agrees.
+	scene.player.global_position = begin.target + Vector3(0, .0002, 0)
+	var release_tick := ceilf(float(begin.timing.windup_s)/STEP-1e-7)*STEP
+	var expiry := release_tick + float(begin.timing.active_s)
+	advance(expiry-STEP)
+	scene.rama_hud._refresh()
+	check("Guardian HUD remains active through the final live authority tick", accepted.get("accepted", false) and targets.ally.shield > 0 and scene.player.vitals.shield > 0 and scene.rama_hud.note.text == "Guardian Circle · field active" and event_count("end", accepted.cast_id, accepted.generation) == 0, {"note":scene.rama_hud.note.text, "shield":targets.ally.shield, "hero_shield":scene.player.vitals.shield, "elapsed":kit.report().elapsed})
+	advance(STEP)
+	scene.rama_hud._refresh()
+	var presentation_remains := false
+	for cast in kit.report().casts: presentation_remains = presentation_remains or int(cast.cast_id) == int(accepted.cast_id)
+	check("Guardian HUD is ready at ward expiry before presentation retirement", targets.ally.shield == 0 and scene.player.vitals.shield == 0 and presentation_remains and event_count("end", accepted.cast_id, accepted.generation) == 0 and scene.rama_hud.note.text == "Rama is ready", {"note":scene.rama_hud.note.text, "shield":targets.ally.shield, "hero_shield":scene.player.vitals.shield, "presentation_remains":presentation_remains, "elapsed":kit.report().elapsed})
+	await fixture()
+	var ward: Dictionary = scene.cast_rama_ability("guardian_circle")
+	begin = latest("begin")
+	release_tick = ceilf(float(begin.timing.windup_s)/STEP-1e-7)*STEP
+	expiry = release_tick + float(begin.timing.active_s)
+	advance(expiry-.10)
+	var primary: Dictionary = scene.cast_rama_ability("kodanda")
+	advance(.10)
+	scene.rama_hud._refresh()
+	check("older Guardian expiry cannot replace a later primary notice", ward.get("accepted", false) and primary.get("accepted", false) and kit.report().active_ability == "kodanda" and event_count("release", primary.cast_id, primary.generation) == 0 and scene.rama_hud.note.text.begins_with("Kodanda") and not scene.rama_hud.note.text.contains("field active"), {"note":scene.rama_hud.note.text, "active_ability":kit.report().active_ability})
 
 func _run() -> void:
 	started_usec = Time.get_ticks_usec()
