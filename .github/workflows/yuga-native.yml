@@ -43,6 +43,7 @@ jobs:
         run: |
           python3 games/yuga-native/tools/check-roadmap.py --report "$RUNNER_TEMP/roadmap-check.json"
           python3 games/yuga-native/tests/roadmap_cases.py > "$RUNNER_TEMP/roadmap-cases.json"
+          python3 games/yuga-native/tools/check-evidence.py --git-ref HEAD --report "$RUNNER_TEMP/evidence-check.json"
       - name: Check authoritative game rules and projectile boundaries
         run: |
           npm run yuga:typecheck
@@ -88,6 +89,7 @@ jobs:
             ${{ runner.temp }}/motion-cases.json
             ${{ runner.temp }}/roadmap-check.json
             ${{ runner.temp }}/roadmap-cases.json
+            ${{ runner.temp }}/evidence-check.json
             ${{ runner.temp }}/gltf-validation.json
             ${{ runner.temp }}/native-arena/integration-report.json
             games/yuga-native/build/native-export-manifest.json
