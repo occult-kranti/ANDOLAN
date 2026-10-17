@@ -1,0 +1,280 @@
+{
+  "schema": 1,
+  "status": "FAIL_WITH_PRESERVED_COUNTEREXAMPLES",
+  "passed": false,
+  "count": 14,
+  "checks": [
+    {
+      "name": "CLI strict removes only repeated-index face in independent interleaved+sparse fixture",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/repair_mesh.py",
+          "/tmp/qa-art-adversarial-pxw7v69o/independent-source.glb",
+          "--candidate",
+          "/tmp/qa-art-adversarial-pxw7v69o/repaired.glb",
+          "--report",
+          "/tmp/qa-art-adversarial-pxw7v69o/repair.json"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"candidateWritten\": true, \"removedPairProven\": 1, \"trianglesBefore\": 3, \"trianglesAfter\": 2, \"candidateSha256\": \"fc6ea7bb853ab0c3bdfea3ca32043d35c62e4ba7e89658659781baed6687c854\", \"noOpExactCopy\": false, \"blockedEmptyPrimitive\": false}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "CLI seam splits reflected handedness while preserving all interleaved/sparse/shared rows",
+      "passed": true,
+      "detail": {
+        "process": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py",
+            "--source",
+            "/tmp/qa-art-adversarial-pxw7v69o/repaired.glb",
+            "--library",
+            "/workspace/tooling/mikktspace-yuga-r1/libyuga_mikktspace.so",
+            "--output",
+            "/tmp/qa-art-adversarial-pxw7v69o/split.glb",
+            "--report",
+            "/tmp/qa-art-adversarial-pxw7v69o/split.json"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"candidateWritten\": true,\n  \"noOp\": false,\n  \"duplicatedVertices\": 1,\n  \"beforeConflictVertices\": 1,\n  \"afterConflictVertices\": 0,\n  \"remainingUnresolvedCorners\": 0,\n  \"sourceUnchanged\": true\n}\n",
+          "stderr": ""
+        },
+        "asserted": "All attrs and sparse morph independently equal old[[0,1,2,3,4,0]], TANGENT sentinel exact, interleaved/shared UV storage handled; source face/skin same."
+      }
+    },
+    {
+      "name": "repair refuses short-logical-buffer before candidate publication",
+      "passed": true,
+      "detail": {
+        "process": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/repair_mesh.py",
+            "/tmp/qa-art-adversarial-pxw7v69o/short-logical-buffer-repair.glb",
+            "--candidate",
+            "/tmp/qa-art-adversarial-pxw7v69o/short-logical-buffer-repair-out.glb",
+            "--report",
+            "/tmp/qa-art-adversarial-pxw7v69o/short-logical-buffer-repair.json"
+          ],
+          "exit_code": 2,
+          "stdout": "",
+          "stderr": "Refused: Invalid buffer length or padding\n"
+        },
+        "candidate_written": false,
+        "source_unchanged": true
+      }
+    },
+    {
+      "name": "seam refuses short-logical-buffer before candidate publication",
+      "passed": false,
+      "error": "AssertionError: Malformed input was accepted or candidate published; raw outcome /workspace/ANDOLAN/games/yuga-native/docs/evidence/open-art-wave/adversarial/short-logical-buffer-seam-failure.json"
+    },
+    {
+      "name": "repair refuses external-buffer-URI before candidate publication",
+      "passed": true,
+      "detail": {
+        "process": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/repair_mesh.py",
+            "/tmp/qa-art-adversarial-pxw7v69o/external-buffer-URI-repair.glb",
+            "--candidate",
+            "/tmp/qa-art-adversarial-pxw7v69o/external-buffer-URI-repair-out.glb",
+            "--report",
+            "/tmp/qa-art-adversarial-pxw7v69o/external-buffer-URI-repair.json"
+          ],
+          "exit_code": 2,
+          "stdout": "",
+          "stderr": "Refused: Expected one embedded buffer\n"
+        },
+        "candidate_written": false,
+        "source_unchanged": true
+      }
+    },
+    {
+      "name": "seam refuses external-buffer-URI before candidate publication",
+      "passed": true,
+      "detail": {
+        "process": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py",
+            "--source",
+            "/tmp/qa-art-adversarial-pxw7v69o/external-buffer-URI-seam.glb",
+            "--library",
+            "/workspace/tooling/mikktspace-yuga-r1/libyuga_mikktspace.so",
+            "--output",
+            "/tmp/qa-art-adversarial-pxw7v69o/external-buffer-URI-seam-out.glb",
+            "--report",
+            "/tmp/qa-art-adversarial-pxw7v69o/external-buffer-URI-seam.json"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 160, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 157, in main\n    result=split_asset(NativeMikk(args.library),args.source,args.output,args.report)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 85, in split_asset\n    source=GLB(source_path);identity=sha(source_path);doc=copy.deepcopy(source.doc);binary=bytearray(source.binary)\n           ^^^^^^^^^^^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-lod/glb_lod.py\", line 39, in __init__\n    raise ValueError(\"Only one embedded binary buffer is supported\")\nValueError: Only one embedded binary buffer is supported\n"
+        },
+        "candidate_written": false,
+        "source_unchanged": true
+      }
+    },
+    {
+      "name": "repair refuses accessor-stride-too-short before candidate publication",
+      "passed": true,
+      "detail": {
+        "process": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/repair_mesh.py",
+            "/tmp/qa-art-adversarial-pxw7v69o/accessor-stride-too-short-repair.glb",
+            "--candidate",
+            "/tmp/qa-art-adversarial-pxw7v69o/accessor-stride-too-short-repair-out.glb",
+            "--report",
+            "/tmp/qa-art-adversarial-pxw7v69o/accessor-stride-too-short-repair.json"
+          ],
+          "exit_code": 2,
+          "stdout": "",
+          "stderr": "Refused: Invalid accessor layout\n"
+        },
+        "candidate_written": false,
+        "source_unchanged": true
+      }
+    },
+    {
+      "name": "seam refuses accessor-stride-too-short before candidate publication",
+      "passed": true,
+      "detail": {
+        "process": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py",
+            "--source",
+            "/tmp/qa-art-adversarial-pxw7v69o/accessor-stride-too-short-seam.glb",
+            "--library",
+            "/workspace/tooling/mikktspace-yuga-r1/libyuga_mikktspace.so",
+            "--output",
+            "/tmp/qa-art-adversarial-pxw7v69o/accessor-stride-too-short-seam-out.glb",
+            "--report",
+            "/tmp/qa-art-adversarial-pxw7v69o/accessor-stride-too-short-seam.json"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 160, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 157, in main\n    result=split_asset(NativeMikk(args.library),args.source,args.output,args.report)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 95, in split_asset\n    arrays,idx,targets=read_domain(source,primitive)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 56, in read_domain\n    arrays[semantic]=source.array(ai)\n                     ^^^^^^^^^^^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-lod/glb_lod.py\", line 53, in array\n    raise ValueError(\"Accessor exceeds buffer view\")\nValueError: Accessor exceeds buffer view\n"
+        },
+        "candidate_written": false,
+        "source_unchanged": true
+      }
+    },
+    {
+      "name": "repair refuses sparse-index-out-of-bounds before candidate publication",
+      "passed": true,
+      "detail": {
+        "process": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/repair_mesh.py",
+            "/tmp/qa-art-adversarial-pxw7v69o/sparse-index-out-of-bounds-repair.glb",
+            "--candidate",
+            "/tmp/qa-art-adversarial-pxw7v69o/sparse-index-out-of-bounds-repair-out.glb",
+            "--report",
+            "/tmp/qa-art-adversarial-pxw7v69o/sparse-index-out-of-bounds-repair.json"
+          ],
+          "exit_code": 2,
+          "stdout": "",
+          "stderr": "Refused: Sparse indices must be strictly increasing and bounded\n"
+        },
+        "candidate_written": false,
+        "source_unchanged": true
+      }
+    },
+    {
+      "name": "seam refuses sparse-index-out-of-bounds before candidate publication",
+      "passed": true,
+      "detail": {
+        "process": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py",
+            "--source",
+            "/tmp/qa-art-adversarial-pxw7v69o/sparse-index-out-of-bounds-seam.glb",
+            "--library",
+            "/workspace/tooling/mikktspace-yuga-r1/libyuga_mikktspace.so",
+            "--output",
+            "/tmp/qa-art-adversarial-pxw7v69o/sparse-index-out-of-bounds-seam-out.glb",
+            "--report",
+            "/tmp/qa-art-adversarial-pxw7v69o/sparse-index-out-of-bounds-seam.json"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 160, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 157, in main\n    result=split_asset(NativeMikk(args.library),args.source,args.output,args.report)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 95, in split_asset\n    arrays,idx,targets=read_domain(source,primitive)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/split_seams.py\", line 69, in read_domain\n    values[semantic]=source.array(ai)\n                     ^^^^^^^^^^^^^^^^\n  File \"/workspace/ANDOLAN/games/yuga-native/art/hero-rama-lod/glb_lod.py\", line 73, in array\n    if int(indices[-1]) >= a[\"count\"] or not bool(np.all(indices[1:] > indices[:-1])): raise ValueError(\"Sparse indices must be strictly increasing and bounded\")\n                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Sparse indices must be strictly increasing and bounded\n"
+        },
+        "candidate_written": false,
+        "source_unchanged": true
+      }
+    },
+    {
+      "name": "repair refuses nonfinite-source-tangent before candidate publication",
+      "passed": true,
+      "detail": {
+        "process": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/repair_mesh.py",
+            "/tmp/qa-art-adversarial-pxw7v69o/nonfinite-source-tangent-repair.glb",
+            "--candidate",
+            "/tmp/qa-art-adversarial-pxw7v69o/nonfinite-source-tangent-repair-out.glb",
+            "--report",
+            "/tmp/qa-art-adversarial-pxw7v69o/nonfinite-source-tangent-repair.json"
+          ],
+          "exit_code": 2,
+          "stdout": "",
+          "stderr": "Refused: Nonfinite accessor data\n"
+        },
+        "candidate_written": false,
+        "source_unchanged": true
+      }
+    },
+    {
+      "name": "seam refuses nonfinite-source-tangent before candidate publication",
+      "passed": false,
+      "error": "AssertionError: Malformed input was accepted or candidate published; raw outcome /workspace/ANDOLAN/games/yuga-native/docs/evidence/open-art-wave/adversarial/nonfinite-source-tangent-seam-failure.json"
+    },
+    {
+      "name": "Seam CLI refuses dangling report symlink before any output",
+      "passed": false,
+      "error": "AssertionError: Dangling report symlink followed; see retained failure"
+    },
+    {
+      "name": "Accepted runtime byte pins remain unchanged",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "sources_before": {
+    "art/hero-rama-repair/repair_mesh.py": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+    "art/hero-rama-repair/split_seams.py": "0c159c259e60e6a055561f1a4adfb16edb5a026c3e53be6d86a4f29a663b7ba6",
+    "art/hero-rama-tangents/regenerate.py": "54300a0cb524e76942f1f0305787c0797a204e174898a7bd5a6cecca6852b688",
+    "art/hero-rama-lod/glb_lod.py": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7"
+  },
+  "sources_after": {
+    "art/hero-rama-repair/repair_mesh.py": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+    "art/hero-rama-repair/split_seams.py": "0c159c259e60e6a055561f1a4adfb16edb5a026c3e53be6d86a4f29a663b7ba6",
+    "art/hero-rama-tangents/regenerate.py": "54300a0cb524e76942f1f0305787c0797a204e174898a7bd5a6cecca6852b688",
+    "art/hero-rama-lod/glb_lod.py": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7"
+  },
+  "source_changed_during_run": false,
+  "test_sha256": "1fc4fa964da3b5a4be00fd6421ceabe14fc1469247eff2c1f345e49a12ec1d81",
+  "native_library": {
+    "path": "/workspace/tooling/mikktspace-yuga-r1/libyuga_mikktspace.so",
+    "sha256": "0f038e6f83f5fce5e10d0b8c14028f96ed7368229c59bded44a2512dda91bb4a"
+  },
+  "runtime_pins": {
+    "assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "assets/heroes/rama-hero-mid.glb": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+    "assets/heroes/rama-hero-far.glb": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+    "shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+  },
+  "scope": "Independent synthetic CLI data/path tests. No engine/import/render, full deformation or art acceptance."
+}

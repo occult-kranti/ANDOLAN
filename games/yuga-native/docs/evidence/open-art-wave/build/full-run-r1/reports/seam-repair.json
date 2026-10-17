@@ -1,0 +1,242 @@
+{
+  "schema": 1,
+  "kind": "exact-corner-seam-contract",
+  "passed": true,
+  "checks": [
+    {
+      "name": "valid distinct corner signs and directions split exactly once",
+      "passed": true
+    },
+    {
+      "name": "cloned group changes only required corner",
+      "passed": true
+    },
+    {
+      "name": "unresolved corner remains original and NaN is never copied as a frame",
+      "passed": true
+    },
+    {
+      "name": "numeric signed-zero identity does not invent a seam",
+      "passed": true
+    },
+    {
+      "name": "reject negative index plan",
+      "passed": true
+    },
+    {
+      "name": "reject out-of-range index plan",
+      "passed": true
+    },
+    {
+      "name": "reject fractional index plan",
+      "passed": true
+    },
+    {
+      "name": "reject bool index plan",
+      "passed": true
+    },
+    {
+      "name": "reject partial index plan",
+      "passed": true
+    },
+    {
+      "name": "reject rank2 index plan",
+      "passed": true
+    },
+    {
+      "name": "reject float64 output frame contract",
+      "passed": true
+    },
+    {
+      "name": "reject nonboolean valid mask",
+      "passed": true
+    },
+    {
+      "name": "reject NaN labelled valid",
+      "passed": true
+    },
+    {
+      "name": "reject nonunit labelled valid frame",
+      "passed": true
+    },
+    {
+      "name": "reject oversized vertex domain before output allocation",
+      "passed": true
+    },
+    {
+      "name": "actual official mirrored corner conflict resolves 1 to 0",
+      "passed": true
+    },
+    {
+      "name": "original binary prefix and metadata receipt preserved",
+      "passed": true
+    },
+    {
+      "name": "original tangent rows copied without generated-frame writes",
+      "passed": true
+    },
+    {
+      "name": "every target channel including tangent morph is duplicated exactly",
+      "passed": true
+    },
+    {
+      "name": "one original face node and one original skin remain unchanged",
+      "passed": true
+    },
+    {
+      "name": "source immutable after candidate generation",
+      "passed": true
+    },
+    {
+      "name": "clean source explicitly returns no-op without meaningless candidate",
+      "passed": true
+    },
+    {
+      "name": "output cannot alias source",
+      "passed": true
+    },
+    {
+      "name": "report cannot alias source",
+      "passed": true
+    },
+    {
+      "name": "hardlinked output cannot alias source",
+      "passed": true
+    },
+    {
+      "name": "existing candidate is never overwritten",
+      "passed": true
+    },
+    {
+      "name": "shared accessors across primitives and extra UV channels copy safely",
+      "passed": true
+    },
+    {
+      "name": "sparse morph expands exact original and cloned row values",
+      "passed": true
+    },
+    {
+      "name": "enormous zero-filled source accessor rejected before expansion",
+      "passed": true
+    },
+    {
+      "name": "mismatched morph count rejects before candidate publication",
+      "passed": true
+    },
+    {
+      "name": "public API refuses candidate inside native assets before native use",
+      "passed": true
+    },
+    {
+      "name": "public API refuses candidate anywhere inside native project",
+      "passed": true
+    },
+    {
+      "name": "resolved symlink parent cannot bypass native-project boundary",
+      "passed": true
+    },
+    {
+      "name": "dangling candidate symlink refused without following target",
+      "passed": true
+    },
+    {
+      "name": "dangling report symlink refused before candidate publication",
+      "passed": true
+    },
+    {
+      "name": "fresh report and candidate aliases refused",
+      "passed": true
+    },
+    {
+      "name": "native library cannot alias candidate",
+      "passed": true
+    },
+    {
+      "name": "native library cannot alias report",
+      "passed": true
+    },
+    {
+      "name": "source and native library aliases refused",
+      "passed": true
+    },
+    {
+      "name": "short declared logical BIN length refuses before publication",
+      "passed": true
+    },
+    {
+      "name": "logical BIN length beyond actual payload refuses before publication",
+      "passed": true
+    },
+    {
+      "name": "nonfinite protected TANGENT refuses before publication",
+      "passed": true
+    },
+    {
+      "name": "nonfinite protected COLOR_0 refuses before publication",
+      "passed": true
+    },
+    {
+      "name": "nonfinite protected WEIGHTS_0 refuses before publication",
+      "passed": true
+    },
+    {
+      "name": "nonfinite morph channel refuses before publication",
+      "passed": true
+    },
+    {
+      "name": "nonfinite protected inverse bind matrix refuses before publication",
+      "passed": true
+    },
+    {
+      "name": "nonfinite unreferenced accessor also refuses publication",
+      "passed": true
+    },
+    {
+      "name": "valid interleaved sparse reflected-chart shared-UV normalized-COLOR fixture still passes",
+      "passed": true
+    }
+  ],
+  "count": 48,
+  "testSourceSha256": "798db75e6e350ff60d4c9c2f5ad4ca3e1b6db52b2262fdd2ff76cce4e84d4dec",
+  "splitterSha256": "2cfd81f04b4bcb0f404f8438cd34727df2ec06166d1ef28f140561bd7077e33d",
+  "build": {
+    "schema": 1,
+    "upstreamRepository": "https://github.com/mmikk/MikkTSpace",
+    "upstreamCommit": "3e895b49d05ea07e4c2133156cfa94369e19e409",
+    "license": "Unmodified upstream zlib-style permissive notices retained in both C/header; original YUGA bridge CC0-1.0",
+    "upstreamFiles": {
+      "mikktspace.h": "17fc433894f24c73753d548086cc4d8c5c0379f4a6edfb98b5da243e4f0bc3d0",
+      "mikktspace.c": "de87e74107df766ce68108801262bd8d53899414236b59810509a8fc2a51e288",
+      "README.md": "295d4e37ac1980e1f811c340f618ffa68fc10bf906b34bc93a64c6960351bdfc"
+    },
+    "adapter": "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-tangents/bridge.c",
+    "adapterSha256": "72cb7c7d5cc4df378ae95362b0ad29e611c44cd301c13e901fa8355b8240a362",
+    "builderSha256": "a80dbfcb09884aeede2e5d1c7c4cffadff4d84983f5bdb8841bca12e0850e14e",
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "command": [
+      "/usr/bin/cc",
+      "-std=c99",
+      "-O2",
+      "-g",
+      "-fPIC",
+      "-shared",
+      "-Wl,--build-id=sha1",
+      "-I",
+      "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-tangents/vendor",
+      "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-tangents/bridge.c",
+      "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-tangents/vendor/mikktspace.c",
+      "-lm",
+      "-o",
+      "/tmp/yuga-seam-tests-vqc6wfyn/build/libyuga_mikktspace.so"
+    ],
+    "binary": "/tmp/yuga-seam-tests-vqc6wfyn/build/libyuga_mikktspace.so",
+    "binarySha256": "0f038e6f83f5fce5e10d0b8c14028f96ed7368229c59bded44a2512dda91bb4a",
+    "exportedBridge": "yuga_mikk_generate",
+    "symbolVisibility": "Default ELF symbols, unstripped debug info; source/native analysis only, no game runtime dependency",
+    "scope": "Offline per-corner authoring tool. Successful compilation does not establish tangent correctness or art acceptance."
+  },
+  "limits": [
+    "Offline synthetic authoring proof only; actual source candidate and native visual review are separate.",
+    "No UV/tangent rewrite, commercial quality or GPU performance claim."
+  ]
+}

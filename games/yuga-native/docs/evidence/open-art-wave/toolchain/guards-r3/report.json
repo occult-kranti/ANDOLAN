@@ -1,0 +1,150 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "help",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "passed": true
+    },
+    {
+      "name": "dry",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "passed": true
+    },
+    {
+      "name": "dry-no-executable-probes",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "passed": true
+    },
+    {
+      "name": "existing-restored-runtime",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "existing-directory",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "inside-repository",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "dangling-symlink",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "symlink-parent-to-repository",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "relative-path",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "timeout-bounds",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "tls-disabled",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "missing-node",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "unsupported-node",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "tampered-lock",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "npm-nonzero",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "npm-empty-success",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "npm-timeout",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "npm-mutates-lock",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "passed": true,
+      "expected_rejection_observed": true
+    },
+    {
+      "name": "original-source-inputs-unchanged",
+      "passed": true
+    },
+    {
+      "name": "existing-restored-runtime-inputs-unchanged",
+      "passed": true
+    }
+  ],
+  "script_sha256": "c20d4fdf0586ee36c8dc4587461c416e780447e83dec4a570c4e9b7eeb19f212",
+  "harness_sha256": "f4ad2e3a975a08a4083d537d6400f696bbbb62b1430bceaab7ea32bd2187ae3e",
+  "source_before": {
+    "/workspace/ANDOLAN/games/yuga-native/tools/native-analysis/setup-rea.sh": "c20d4fdf0586ee36c8dc4587461c416e780447e83dec4a570c4e9b7eeb19f212",
+    "/workspace/ANDOLAN/games/yuga-native/tools/native-analysis/inspect-component.py": "ccf54faf854870b7ea07378f2b4f84746708fdc3c6523923640b902771603535",
+    "/workspace/ANDOLAN/games/yuga-native/tools/native-analysis/rea-runtime/package.json": "04df3d8e8a559cd75824d810268a49519164930cf09386e76b56bc8e086836ed",
+    "/workspace/ANDOLAN/games/yuga-native/tools/native-analysis/rea-runtime/package-lock.json": "73fa03d670870e8234e7823bca98e8cd846773fb661819ffe48a5bbb6728c7dd"
+  },
+  "existing_runtime_pins": {
+    "/workspace/tooling/rea-runtime/package.json": "04df3d8e8a559cd75824d810268a49519164930cf09386e76b56bc8e086836ed",
+    "/workspace/tooling/rea-runtime/package-lock.json": "73fa03d670870e8234e7823bca98e8cd846773fb661819ffe48a5bbb6728c7dd",
+    "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs": "526105418604cc6e5a202a6275b700814e27450bfaffd45e7510530ba669de8d"
+  },
+  "scope": "Controlled guard/failure tests, real local Node/npm version probes and no package network/install. No Ghidra/game execution or positive install acceptance."
+}

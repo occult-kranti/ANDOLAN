@@ -14,6 +14,11 @@ MikkTSpace authoring tool to the [next fifteen implementation assignments](../ga
 The strict tangent-only replacement was refused on the current hero; safe
 geometry/UV authoring work and open-material candidates have separate evidence.
 
+The [completed open-art handoff](../games/yuga-native/docs/OPEN_ART_WAVE_HANDOFF.md)
+records 259 authoring assertions, conservative mesh/seam preparation and an
+independently reviewed optional cloth treatment with matched day/night frames.
+Default playable assets and the published preview retain their earlier identity.
+
 **Download:** [Rama hero preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17) for Linux or Windows. Public file hashes, ZIP contents and both videos are verified in the [publication receipt](../games/yuga-native/docs/evidence/rama-hero/published/REVIEW.md). Linux execution was reviewed; Windows remains unexecuted.
 
 **Play:** choose **Bow training** or **Explore Confluence**. LMB draws/shoots; Q pierces, E steps, C places a protective field and X fires three paced arrows. R reloads; F/G fly and grapple. F3 opens Rama’s guide, F2 opens Help/remapping, Escape pauses, and F5 resets practice. Enemy siege blasts damage Rama; defeat respawns him after three simulation seconds. Ordinary troops target other troops. Ground casts still use planar receivers.

@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "status": "candidate topology preparation; no runtime promotion or tangent rebake",
+  "sourceSha256": "47cd393b975a9b505216a6051e0376a3020724a8c3400afc7422471dfbd9423d",
+  "sourceUnchanged": true,
+  "candidate": {
+    "path": "/workspace/scratch/rama-seam-r1/rama-seams.glb",
+    "sha256": "5fc60979b7e258144e01a5ffb46752c263635e848c983cbd24aad52c5827c792",
+    "bytes": 47956392,
+    "sourceBytes": 36398424,
+    "growthBytes": 11557968,
+    "sourceBinaryPrefixIdentical": true,
+    "originalAccessorViewMetadataIdentical": true,
+    "rigClipsMaterialsImagesFaceOwnershipIdentical": true
+  },
+  "beforeConflictVertices": 6,
+  "afterConflictVertices": 0,
+  "duplicatedVertices": 11,
+  "tests": {
+    "passed": true,
+    "checks": 30
+  },
+  "sourceFiles": {
+    "art/hero-rama-repair/split_seams.py": "0c159c259e60e6a055561f1a4adfb16edb5a026c3e53be6d86a4f29a663b7ba6",
+    "tests/hero_seam_cases.py": "dd115742c533920025996ca4504e84658ad01a4cd599b9d84653c1edd1d413c1"
+  },
+  "afterTotals": {
+    "vertices": 234857,
+    "triangles": 403060,
+    "degenerateGeometryFaces": 144,
+    "degenerateUVFaces": 17512,
+    "degenerateUnionFaces": 17656,
+    "unresolvedCorners": 52971,
+    "invalidOutputOnCleanCorners": 3,
+    "unusedSourceVertices": 1170
+  },
+  "ownership": {
+    "skinJointCounts": [
+      164
+    ],
+    "embeddedAnimationClips": 9,
+    "uniqueRamaFace": 1,
+    "sourceClipAndNodeMetadataPreserved": true
+  },
+  "verification": [
+    "Every original BIN byte, accessor and buffer-view descriptor is preserved as a prefix.",
+    "Each affected semantic and every morph channel equals original[rowMap] byte-for-byte; source-lineage maps exactly match every original triangle corner.",
+    "Fresh official Mikk calls before/after produce exactly equal per-corner values and valid masks; existing-index direction conflicts become0.",
+    "Unresolved corners retain original source indices. Original tangent values are copied, never replaced with generated Mikk frames."
+  ],
+  "limitations": [
+    "Remaining144geometrydegenerates/17512UVdegenerates/3invalidcleanoutputs are unresolved;1170unusedvertices retained.",
+    "Append-only candidate grows11,557,968bytes, so it is not optimized delivery or runtime residency evidence.",
+    "9embedded source clips preserved; no claim to independently verify runtime motion-state count.",
+    "No native render/import, UV rewrite, final shading/animation/GPU acceptance or runtime promotion."
+  ],
+  "evidence": {
+    "synthetic-tests.json": "16b475ae101470b603c88daca1b281ee8a4ee8e349ab0c7c25326e60f85a16ad",
+    "actual-candidate.json": "0ddcb84b301958d65e89c9d230f5a0b2cb98373e7a819b3a20162190f3558cfa"
+  }
+}

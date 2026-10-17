@@ -1,0 +1,343 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "checks": 1,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/tmp/yuga-authoring-runner-wzuy397j/1/child.py",
+          "/tmp/yuga-authoring-runner-wzuy397j/1/reports/result.json"
+        ],
+        "executed": true,
+        "exit_code": 0,
+        "id": "fixture",
+        "log_limit_exceeded": false,
+        "logged_errors": [],
+        "passed": true,
+        "problems": [],
+        "process_error": null,
+        "report": "reports/result.json",
+        "report_sha256": "c83236c38f9a6b2778939dc190008d955188a19115bb38ae0f4477cb2248f368",
+        "stderr": "logs/fixture.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "logs/fixture.stdout",
+        "stdout_sha256": "d6acb337f8bb4db16628d4bb2af1aba05c95c5ca3a1077fa76f0c8d0db09787a",
+        "timed_out": false,
+        "wall_seconds": 0.062
+      },
+      "name": "actual passing report and native process accepted",
+      "passed": true
+    },
+    {
+      "detail": {
+        "exit_code": 9,
+        "problems": [
+          "native_process_failed"
+        ]
+      },
+      "name": "passing JSON cannot hide nonzero native exit and both logs survive",
+      "passed": true
+    },
+    {
+      "detail": [
+        "suite_report_not_passed"
+      ],
+      "name": "reject failed summary despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "suite_contains_failed_or_unrecognized_check"
+      ],
+      "name": "reject failed assertion despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "empty_or_unrecognized_suite_checks"
+      ],
+      "name": "reject empty checks despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "suite_contains_failed_or_unrecognized_check"
+      ],
+      "name": "reject check is not object despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "empty_or_unrecognized_suite_checks"
+      ],
+      "name": "reject checks is count despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "suite_report_not_passed"
+      ],
+      "name": "reject truthy nonboolean pass despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "suite_check_count_mismatch"
+      ],
+      "name": "reject count mismatch despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "suite_check_count_mismatch"
+      ],
+      "name": "reject boolean count despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "suite_reports_errors"
+      ],
+      "name": "reject errors present despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "suite_report_is_not_object"
+      ],
+      "name": "reject top-level array despite native exit zero",
+      "passed": true
+    },
+    {
+      "detail": [
+        "invalid_suite_json"
+      ],
+      "name": "reject malformed JSON",
+      "passed": true
+    },
+    {
+      "detail": [
+        "invalid_suite_json"
+      ],
+      "name": "reject nonfinite JSON",
+      "passed": true
+    },
+    {
+      "detail": [
+        "invalid_suite_json"
+      ],
+      "name": "reject contradictory duplicate summary key",
+      "passed": true
+    },
+    {
+      "detail": [
+        "invalid_suite_json"
+      ],
+      "name": "reject contradictory duplicate nested assertion key",
+      "passed": true
+    },
+    {
+      "detail": [
+        "missing_or_nonregular_suite_report"
+      ],
+      "name": "zero exit without report is failure",
+      "passed": true
+    },
+    {
+      "detail": [
+        "  SCRIPT ERROR: fixture-invalid"
+      ],
+      "name": "engine error on stdout rejects otherwise passing JSON",
+      "passed": true
+    },
+    {
+      "detail": [
+        "  SCRIPT ERROR: fixture-invalid"
+      ],
+      "name": "engine error on stderr rejects otherwise passing JSON",
+      "passed": true
+    },
+    {
+      "detail": {
+        "descendant_running": false,
+        "exit_code": -9,
+        "timeout": true
+      },
+      "name": "timeout kills TERM-ignoring parent and ordinary descendant with partial logs retained",
+      "passed": true
+    },
+    {
+      "detail": {
+        "log_limit_exceeded": true,
+        "retained_bytes": 65536
+      },
+      "name": "excessive child logging is bounded and retained",
+      "passed": true
+    },
+    {
+      "detail": [
+        "missing_or_nonregular_suite_report",
+        "native_process_failed",
+        "suite_process_error"
+      ],
+      "name": "spawn failure produces a retained failed suite",
+      "passed": true
+    },
+    {
+      "detail": {
+        "checks": [
+          {
+            "name": "authoring_suite.Tests.test_pass",
+            "passed": true
+          }
+        ],
+        "count": 1,
+        "passed": true,
+        "source_sha256": "a35a23e03bd187072ed7f77c88ec19fd5807096a503180e2090b339fa5790f5a",
+        "tests_run": 1
+      },
+      "name": "real unittest success and positive subtests create JSON assertions",
+      "passed": true
+    },
+    {
+      "detail": {
+        "checks": [
+          {
+            "detail": "Traceback (most recent call last):\n  File \"/tmp/yuga-authoring-runner-wzuy397j/unit-fail/unit.py\", line 5, in test_error\n    def test_error(self):raise RuntimeError('independent-fixture-error')\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: independent-fixture-error\n",
+            "name": "authoring_suite.Tests.test_error",
+            "outcome": "error",
+            "passed": false
+          },
+          {
+            "detail": "Traceback (most recent call last):\n  File \"/tmp/yuga-authoring-runner-wzuy397j/unit-fail/unit.py\", line 4, in test_subtest\n    with self.subTest(n=3):self.assertEqual(3,4)\n                           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 3 != 4\n",
+            "name": "authoring_suite.Tests.test_subtest (n=3)",
+            "outcome": "subtest_failure",
+            "passed": false
+          }
+        ],
+        "count": 2,
+        "passed": false,
+        "source_sha256": "3b13b701b4f558f7348332dbd482de8b42b286a2e8ad6758b55029211fe00199",
+        "tests_run": 2
+      },
+      "name": "real unittest subtest failure and exception are preserved",
+      "passed": true
+    },
+    {
+      "detail": {
+        "checks": [],
+        "count": 0,
+        "passed": false,
+        "source_sha256": "e1d92481cfd5db7ec574fbd3ddef3734c629ec779e84eaa6ad92c125936320c7",
+        "tests_run": 0
+      },
+      "name": "empty unittest discovery cannot pass",
+      "passed": true
+    },
+    {
+      "detail": {
+        "checks": [
+          {
+            "name": "authoring_suite.Tests.test_skip",
+            "outcome": "unexercised_skip",
+            "passed": false
+          }
+        ],
+        "count": 1,
+        "passed": false,
+        "source_sha256": "4cdff0fffaf5cced25fcfeb925e68f6463217cc050f47cfec6c934835ad47cf8",
+        "tests_run": 1
+      },
+      "name": "skipped unittest cannot establish an exercised gate",
+      "passed": true
+    },
+    {
+      "detail": {
+        "duplicate_builder_receipt_rejected": true,
+        "exit_code": 1
+      },
+      "name": "duplicate builder JSON cannot hide an exact reproduction mismatch",
+      "passed": true
+    },
+    {
+      "detail": {
+        "exit_code": 2
+      },
+      "name": "existing output directory is refused without replacement",
+      "passed": true
+    },
+    {
+      "detail": {
+        "exit_code": 2
+      },
+      "name": "nonfinite timeout is refused before output creation",
+      "passed": true
+    },
+    {
+      "detail": {
+        "checks": [
+          {
+            "name": "minimal_fixture_exact_source_copies",
+            "passed": true
+          },
+          {
+            "name": "minimal_fixture_project_configuration",
+            "passed": true
+          },
+          {
+            "name": "minimal_fixture_has_no_ancestor_art_ignore",
+            "passed": true
+          },
+          {
+            "name": "all_three_maps_have_real_imported_payloads",
+            "passed": false
+          }
+        ],
+        "editor_native_exit": 0
+      },
+      "name": "editor exit zero without real texture payloads rejects material fixture",
+      "passed": true
+    },
+    {
+      "detail": [
+        {
+          "name": "minimal_fixture_exact_source_copies",
+          "passed": true
+        },
+        {
+          "name": "minimal_fixture_project_configuration",
+          "passed": true
+        },
+        {
+          "name": "minimal_fixture_has_no_ancestor_art_ignore",
+          "passed": false
+        }
+      ],
+      "name": "ancestor art ignore rejects staged fixture before engine execution",
+      "passed": true
+    },
+    {
+      "detail": {
+        "editor_native_exit": 0,
+        "error_logged": true
+      },
+      "name": "editor script error cannot hide behind native exit zero",
+      "passed": true
+    },
+    {
+      "detail": {
+        "stage_receipt_rejected_before_engine": true
+      },
+      "name": "duplicate stage JSON cannot hide a failed source receipt",
+      "passed": true
+    }
+  ],
+  "count": 33,
+  "passed": true,
+  "schema": 1,
+  "scope": "Real child-process/report boundary counterexamples; no game rendering or art acceptance.",
+  "sources": {
+    "cases": "5ec1090eab72c31afa5ffc3bae21e76373598382c5de9ca1be30b6e6dc4e765e",
+    "runner": "f756914c39a724461db3251d7b543c6c49597c1b6cab7a3e548d69e6eef19062"
+  }
+}

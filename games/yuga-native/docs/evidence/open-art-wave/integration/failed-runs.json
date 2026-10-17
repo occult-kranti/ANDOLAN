@@ -1,0 +1,23 @@
+{
+  "acceptance": false,
+  "r1": {
+    "observed_exit_code": 134,
+    "assertion_report_written_before_cleanup": true,
+    "failure": "Typed Node array attempted erase after referenced Node.free(); cleanup emitted validation errors and native signal11. Fixed by erasing before freeing.",
+    "raw_log_retained": false,
+    "transcript_source": "functions.exec tool response for open-cloth-cases-r1, retained here as an explicit excerpt",
+    "error_excerpt": [
+      "ERROR: Attempted to erase an invalid (previously freed?) object instance into a TypedArray.",
+      "GDScript backtrace: run (res://tests/open_cloth_material_cases.gd:181 and :190)",
+      "handle_crash: Program crashed with signal 11",
+      "GDScript backtrace: run (res://tests/open_cloth_material_cases.gd:203)"
+    ]
+  },
+  "r3": {
+    "native_exit_code": null,
+    "outer_shell_exit_code": 0,
+    "acceptance": false,
+    "failure": "Optional resource was automatically detected while another owner was authoring/import had not run; PNG loader errors and actual-resource assertion failure. Native exit not captured because old outer shell returned cat log status. Raw log/report retained.",
+    "correction": "Actual resource gate now requires explicit --candidate-resource; synthetic default never loads artist resources."
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "mode": "INSTALL",
+  "destination": "/workspace/tooling/rea-bootstrap-real-r2",
+  "rea_version": "6.5.0",
+  "node_version": "v24.19.0",
+  "npm_version": "11.9.0",
+  "runtime_probes_executed": true,
+  "source_inputs": {
+    "package.json": "04df3d8e8a559cd75824d810268a49519164930cf09386e76b56bc8e086836ed",
+    "package-lock.json": "73fa03d670870e8234e7823bca98e8cd846773fb661819ffe48a5bbb6728c7dd"
+  },
+  "root_archive_integrity": "sha512-C6BG7LyrAdR74mSjertM6PrxJkcNZ2bfQNOJornPo9erDEp2tyPRVYPnV5Yodr+1RqewCQla68WulXlVnveD+A==",
+  "locked_package_entries": 179,
+  "lifecycle_scripts": false,
+  "tls_verification": true,
+  "process_helper_sha256": "ccf54faf854870b7ea07378f2b4f84746708fdc3c6523923640b902771603535",
+  "bootstrap_sha256": "c20d4fdf0586ee36c8dc4587461c416e780447e83dec4a570c4e9b7eeb19f212",
+  "persistent_agent_configuration": false,
+  "native_providers_installed": false,
+  "status": "READY",
+  "steps": [
+    {
+      "name": "npm-ci",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/npm",
+        "--prefix",
+        "/workspace/tooling/rea-bootstrap-real-r2",
+        "--cache",
+        "/workspace/tooling/rea-bootstrap-real-r2/.npm-cache",
+        "ci",
+        "--ignore-scripts",
+        "--no-fund",
+        "--no-audit",
+        "--strict-ssl=true"
+      ],
+      "exit_code": 0,
+      "seconds": 4.315,
+      "stdout_sha256": "e6396f02833d64bed55dc03392f9bc4430a6ede5ec8fb26199d5145d1c316434",
+      "stderr_sha256": "d031bee09ef721cf960615b8880c511a60c9c58b8607c4c513371eef8163ab52"
+    },
+    {
+      "name": "rea-version",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/tooling/rea-bootstrap-real-r2/node_modules/rea-agents/scripts/rea.mjs",
+        "--version"
+      ],
+      "exit_code": 0,
+      "seconds": 1.159,
+      "stdout_sha256": "3eb8e06ca1e02f0a30b0e3eebd289494b35d4fd1466ed907b9148e03b2459b00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rea-help",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/tooling/rea-bootstrap-real-r2/node_modules/rea-agents/scripts/rea.mjs",
+        "--help"
+      ],
+      "exit_code": 0,
+      "seconds": 1.107,
+      "stdout_sha256": "80df18834181c29915f800d49d0dbd54de6133465f8826c2a8f2b27c686d40da",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "started_at_utc": "2026-10-17T18:57:30.254478+00:00",
+  "cli": "/workspace/tooling/rea-bootstrap-real-r2/node_modules/rea-agents/scripts/rea.mjs",
+  "verified_script_sha256": {
+    "scripts/rea.mjs": "526105418604cc6e5a202a6275b700814e27450bfaffd45e7510530ba669de8d",
+    "dist/cli-runtime/cli.js": "168cd322a29c9baed02d7e44ab5ae9b2634b3f5b872ff5fcfa3bd20b718e2204",
+    "dist/cli-runtime/cliOutput.js": "aac5314e8632c2f1b450d1e4f460b028ebc55b695d67c14fd0c3f2cdb486abab",
+    "dist/cli-runtime/cliResultOutput.js": "86ab4a94d49d2e722d9df05bf40a1dc79802b3ed6019bf2a153142984d0c6c58",
+    "dist/mcp/main.js": "9643ab2e6050c8b882fe242a1e784178317e0a3be06ed62993ac65f7f1b7a12c"
+  },
+  "completed_at_utc": "2026-10-17T18:57:36.841885+00:00",
+  "scope": "Pinned CLI install and version/help checks. Optional lifecycle-built addons, native providers, target analysis, MCP registration and game reconstruction are not established."
+}

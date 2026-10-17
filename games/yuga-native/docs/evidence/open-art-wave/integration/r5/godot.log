@@ -1,0 +1,35 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS Null visual rejects without allocation {}
+PASS Detached visual rejects because lifecycle ownership is unavailable {}
+PASS Secondary fixture owns the intended material {}
+PASS Shared three-LOD target binds one existing unique material {"bound":true,"candidate_filter":3,"candidate_path":"","candidate_sha256":"","filter_conversion":false,"last_reason":"bound explicitly for review","last_unbind":{},"material_ids":[-9223372009289808442],"scope":"Optional review-only woven-map conversion on existing secondary-owned cloth materials. No mesh, skin, mask, face, shader, LOD, offset, input or default game-flow writes.","shader_filter":"linear with mipmaps, repeat","surface_slots":3,"touched_fields":["base_color","roughness_value","metallic_value","normal_strength","specular_value","rough_channel","metal_channel","base_texture","rough_texture","metal_texture","normal_texture","use_base_texture","use_rough_texture","use_metal_texture","use_normal_texture"],"unique_materials":1}
+PASS Cloth PBR channels map into exact existing shader uniforms {}
+PASS Material identity shader masks mesh face and other cloth owners are preserved {}
+PASS Same-candidate repeated binding is idempotent {}
+PASS Bound component refuses a different visual without partial writes {}
+PASS Bound component refuses a changed candidate without partial writes {}
+PASS Secondary writer remains live while optional cloth maps are bound {}
+PASS Unbind restores every owned field and retains latest secondary offset {"already_unbound":false,"conflicts":[],"invalidated_materials":[],"materials":1,"restored_fields":15}
+PASS Repeated unbind performs no writes {}
+PASS Component can rebind after explicit rollback {}
+PASS Foreign owned-field edit invalidates idempotent re-entry {}
+PASS Conditional rollback preserves foreign roughness and reports exact conflict {"already_unbound":false,"conflicts":[{"material_id":-9223372009289808442,"uniform":"roughness_value"}],"invalidated_materials":[],"materials":1,"restored_fields":14}
+PASS Unsupported candidate 0 rejects atomically {"reason":"unsupported candidate property: emission_enabled"}
+PASS Unsupported candidate 1 rejects atomically {"reason":"unsupported candidate property: uv1_scale"}
+PASS Unsupported candidate 2 rejects atomically {"reason":"unsupported candidate texture filter"}
+PASS Unsupported candidate 3 rejects atomically {"reason":"candidate must be two sided"}
+PASS Unsupported candidate 4 rejects atomically {"reason":"enabled candidate normal map is missing"}
+PASS Unsupported candidate 5 rejects atomically {"reason":"candidate base color must be finite, opaque and normalized"}
+PASS Unsupported candidate 6 rejects atomically {"reason":"candidate base color must be finite, opaque and normalized"}
+PASS Unsupported candidate 7 rejects atomically {"reason":"unsupported candidate property: next_pass"}
+PASS Anisotropic sampler request is an explicit reported linear conversion {}
+PASS Later unrecognized target shader rejects all earlier staged materials {}
+PASS Authoring StandardMaterial target requires secondary ownership first {}
+PASS Distinct LOD material instances bind once each {}
+PASS Every distinct LOD material rolls back {}
+PASS Withdrawn secondary owner cannot pass idempotent re-entry {}
+PASS Withdrawn secondary slot invalidates rollback without stale-material writes {"already_unbound":false,"conflicts":[],"invalidated_materials":[-9223372004340529521],"materials":1,"restored_fields":0}
+PASS Foreign shader replacement is preserved and reported invalidated {}
+PASS Component exit disconnects and restores the secondary-owned material {}
+PASS Visual tree exit disconnects and restores candidate fields {}

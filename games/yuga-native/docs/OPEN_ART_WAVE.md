@@ -1,7 +1,7 @@
-# Open art implementation: next fifteen assignments
+# Open art implementation: fifteen completed assignments
 
-The target remains the same Rama hero/arena slice. Fifteen bounded specialist
-assignments rotate through at most six workers plus the moderator. This is
+The target remains the same Rama hero/arena slice. All fifteen bounded specialist
+assignments were executed through at most six workers plus the moderator. This is
 three implementation/review groups, not fifteen concurrent workers or fifteen
 finished characters. Group 2 responds to group 1's actual findings; group 3
 tests and integrates the changed artifacts. The moderator owns shared docs,
@@ -34,3 +34,17 @@ The [reuse guide](REUSE_ADOPTION_GUIDE.md) explains adopted tools and studies.
 Production sculpt, hair, drape, expression, continuous contact/motion, listening,
 hardware and native multiplayer gates remain open. Passing this finite wave
 does not imply commercial-game visual parity or completion of the full game.
+
+## Verified result
+
+The shared authoring runner passes **259 assertions in ten suites**; its separate
+33 process/report counterexamples and independent nine-probe review also pass.
+The corrected seam tool closes four independent admission findings and reproduces
+the same data-conserving candidate. R1 and R2 each retain eight actual raw native
+frames. Independent image review accepts **R2 as an optional surface profile**: it
+softens broad highlights while retaining original indigo/gold albedo. Overall hero
+art remains LIMITED, and default asset adoption is not approved.
+
+Read the [source-bound handoff](OPEN_ART_WAVE_HANDOFF.md) for commands, exact
+evidence, preserved failures and the next UV/material/deformation gates. The
+unchanged public preview retains its earlier source and acceptance.

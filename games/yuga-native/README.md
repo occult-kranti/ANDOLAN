@@ -7,6 +7,9 @@
 **Current implementation wave:** [next fifteen assignments](docs/OPEN_ART_WAVE.md)
 use [selected open art and adopted tools](docs/REUSE_ADOPTION_GUIDE.md) to repair
 the hero's authoring data and review actual native material/render candidates.
+The [completed wave handoff](docs/OPEN_ART_WAVE_HANDOFF.md) contains verification
+and run commands. R2 is accepted as an optional cloth surface treatment; default
+adoption and the overall production art target remain open.
 
 The current source builds **one Rama hero** across courtyard practice and Confluence: a new smooth-skinned model, detailed blue/ivory garments and goldwork, continuous locomotion/archery, five coherent abilities, health/shield, siege damage and respawn. Read the [milestone and code map](docs/RAMA_HERO_MILESTONE.md), [actual art review](art/hero-rama/REVIEW.md), [independent acceptance](docs/RAMA_HERO_ACCEPTANCE.md), and [source-pinned character-design research](docs/research/RAMA_HERO_DESIGN_STUDY.md).
 

@@ -21,6 +21,20 @@ dependency; REA/Ghidra inspect owned compiled inputs. Neither is a game runtime
 dependency. Candidate mesh/material changes require their own deformation and
 actual-render review before runtime promotion.
 
+The [completed wave handoff](OPEN_ART_WAVE_HANDOFF.md) records the ten-suite,
+259-assertion authoring run and independent optional R2 image acceptance. Run
+that focused gate with a fresh absolute directory after ordinary setup:
+
+```sh
+/workspace/tooling/yuga-native-python/bin/python games/yuga-native/tools/run-authoring-checks.py \
+  --python /workspace/tooling/yuga-native-python/bin/python --engine godot \
+  --cloth-resource --output /absolute/fresh/authoring-checks
+```
+
+The runner stages an isolated material project because `art/.gdignore` excludes
+authoring textures from normal product imports. Preserve that boundary. Actual
+render comparisons use the separate commands in `art/open-art-wave/render/README.md`.
+
 The following Mythic and Triad releases are historical. [MYTHIC_BATCHES.md](MYTHIC_BATCHES.md) preserves their bounded scope; the old `rama-production.glb`, carry overlay and fourteen-invocation research components remain available for comparisons and the existing film. They are not the current default hero or controls.
 
 The published [Mythic native preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-mythic) is source `e2dc0ecd3f6903e0c8af68b2c5717ba5947108ed`. It implements fourteen **invocations through the current Rama avatar**, a selector, actual troop receivers, distinct event-driven effects, sixteen original synthesized cues, a diagnostic entity bridge and a 3D physics experiment. Both bounded batches are accepted, including final pause/focus, source-matched captures and [local Linux packaged input](evidence/mythic-window-r3/REVIEW.md). [Foundation CI](https://github.com/occult-kranti/ANDOLAN/actions/runs/39025311081) and [prerelease CI](https://github.com/occult-kranti/ANDOLAN/actions/runs/39025531829) passed. All 100 downloaded assets, 290 runtime sources, two fresh source-bound decodes and sixteen required reports are verified. The exact downloaded Linux build passes title/world entry, fully visible Continue, keyboard selector entry, a visible Sita cast with release/cooldown, pause retaining that state, F5 reset to READY and title return. The 960 × 600 software Forward+/Dummy-audio run reports no engine errors or warnings. It does not repeat remapping/settings or establish listening/GPU quality; see [public release evidence](evidence/mythic-published/REVIEW.md). Windows remains unexecuted. The quick-start is **Explore Confluence → F3 → Use invocation → X**; F2 opens remapping. [Practice rules](ULTIMATE_PRACTICE.md) and [selector UX](INVOCATION_UX.md) describe this one-avatar prototype.

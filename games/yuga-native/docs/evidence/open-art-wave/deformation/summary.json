@@ -1,0 +1,50 @@
+{
+  "status": "PASS_bounded_independent_deformation_and_lineage",
+  "testSourceSha256": "394d5c0bf89790897c671293512b24aa4c631141eccab449215f779ef812e095",
+  "syntheticChecks": 26,
+  "actualChecksIncludingSynthetic": 38,
+  "actualReportSha256": "4fc06dfb633ffaf22f00b5a30117c0d53815c4a23c782057486776363af9fdab",
+  "syntheticReportSha256": "8d5f0016c1163d14d1090146dbe6cbf07bc258822bb447553be10bf5b3cb044f",
+  "actualCounts": {
+    "repairVertices": 234846,
+    "seamVertices": 234857,
+    "unusedSourceVerticesRetained": 1170
+  },
+  "processExitCodes": {
+    "synthetic": 0,
+    "actual": 0
+  },
+  "execution": {
+    "cwd": "/workspace/ANDOLAN",
+    "cpuAffinity": [
+      0,
+      1
+    ],
+    "OPENBLAS_NUM_THREADS": "1",
+    "engineImportOrRender": false,
+    "compilerOrNativeMikkExecution": false
+  },
+  "actualCommand": [
+    "taskset",
+    "-c",
+    "0,1",
+    "env",
+    "OPENBLAS_NUM_THREADS=1",
+    "python3",
+    "games/yuga-native/tests/hero_deformation_proof_cases.py",
+    "--report",
+    "/workspace/scratch/rama-deformation-proof-final.json",
+    "--source",
+    "/workspace/ANDOLAN/games/yuga-native/assets/heroes/rama-hero.glb",
+    "--repair-candidate",
+    "/workspace/scratch/rama-mesh-repair-r2/rama-secondary.glb",
+    "--seam-candidate",
+    "/workspace/scratch/rama-seam-r1/rama-seams.glb"
+  ],
+  "history": "PrototypeR2 failed only because an attempted actual cloned-morph counterexample had no such primitive in the real candidate. Final tests use an explicit synthetic decoded-data cloned-morph fixture and report actual clonedMorphChannels=0. Earlier reports are preserved as history, not additional unique coverage.",
+  "limits": [
+    "Source GLB embeds9animations; separate runtime23-state library is outside this audit.",
+    "No pose rendering, continuous animation playback, material/tangent acceptance or runtime promotion.",
+    "Pair proof is specific to exact source/shader/core glTF position-driving semantics; unknown vertex-ID/custom displacement is excluded."
+  ]
+}

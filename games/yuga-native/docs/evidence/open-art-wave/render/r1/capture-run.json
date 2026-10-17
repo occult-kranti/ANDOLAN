@@ -1,0 +1,107 @@
+{
+  "complete": true,
+  "pairs": 4,
+  "raw_images": [
+    {
+      "file": "courtyard-day-baseline.png",
+      "sha256": "02dfb2de4529faef56e2adf64974899298b4260da312af5a8fbeea4c25349e09"
+    },
+    {
+      "file": "courtyard-day-candidate.png",
+      "sha256": "2f1368322d6f6b044fcf4a59482b6f807fd194449775ba0201b5983252b4ab11"
+    },
+    {
+      "file": "courtyard-night-baseline.png",
+      "sha256": "b04daf47cca244656f99a3a845e8e849af816d5179c5dc8d973fe250cafcfc17"
+    },
+    {
+      "file": "courtyard-night-candidate.png",
+      "sha256": "b86336163c1f97ce0caef81c1a4b56e7b2b0de9f00c507d48ef54b4a875e331a"
+    },
+    {
+      "file": "confluence-day-baseline.png",
+      "sha256": "63be8660337eabb7eb44326244492be3ae26cba0813d9e89836f4cc0cd911a19"
+    },
+    {
+      "file": "confluence-day-candidate.png",
+      "sha256": "2b1060e803cbcf24b47a91524f7a7f27be1d89233bf9286766782dd2d06cdf7a"
+    },
+    {
+      "file": "confluence-night-baseline.png",
+      "sha256": "7b581729b418660b370f02572db73f52c3051307a64f6606232c3e85fbfc99e2"
+    },
+    {
+      "file": "confluence-night-candidate.png",
+      "sha256": "489e71877d96d12d0c6c94e8da714685b0821d64fe9ded00acce71d8e591ffcb"
+    }
+  ],
+  "differences": [
+    {
+      "pair": "courtyard-day",
+      "pixel_difference_bounds": [
+        505,
+        220,
+        884,
+        852
+      ],
+      "scope": "Raw difference includes temporal renderer effects; not isolated cloth quality measurement"
+    },
+    {
+      "pair": "courtyard-night",
+      "pixel_difference_bounds": [
+        0,
+        220,
+        1280,
+        959
+      ],
+      "scope": "Raw difference includes temporal renderer effects; not isolated cloth quality measurement"
+    },
+    {
+      "pair": "confluence-day",
+      "pixel_difference_bounds": [
+        582,
+        359,
+        752,
+        643
+      ],
+      "scope": "Raw difference includes temporal renderer effects; not isolated cloth quality measurement"
+    },
+    {
+      "pair": "confluence-night",
+      "pixel_difference_bounds": [
+        0,
+        89,
+        1280,
+        959
+      ],
+      "scope": "Raw difference includes temporal renderer effects; not isolated cloth quality measurement"
+    }
+  ],
+  "scope": "Source/import/functional state and actual framebuffer validation; art review remains independent",
+  "command": [
+    "/usr/local/bin/godot",
+    "--path",
+    "/workspace/scratch/open-art-material-fixture-r1",
+    "--display-driver",
+    "x11",
+    "--rendering-method",
+    "forward_plus",
+    "--audio-driver",
+    "Dummy",
+    "--disable-vsync",
+    "--fixed-fps",
+    "15",
+    "--max-threads",
+    "2",
+    "--script",
+    "res://art/open-art-wave/render/capture.gd",
+    "--",
+    "--output=/workspace/scratch/open-art-material-r1"
+  ],
+  "runner_sha256": "dfc97e0399cc721cb109a92abf98be805fc096785470cfe1b0ef4284100db9f6",
+  "report_sha256": "ebec00ae7bdf446e48a61284163fdc22e3073ca162d67be8905fa95860b89b12",
+  "godot_log_sha256": "2a2681f513c2f8b25e5e641af8d6cacfe52a8123f2a706885d4eedf5b0c15715",
+  "xvfb_log_sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+  "warnings": [],
+  "shader_cache_seed": "/workspace/scratch/rama-lod-native-r1-user/cache/mesa"
+}

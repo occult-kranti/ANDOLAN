@@ -1,0 +1,179 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "Accepted runtime GLBs and deformation shader remain pinned",
+      "kind": "source_boundary",
+      "passed": true,
+      "detail": {
+        "scope": "Byte/source identity only; no engine behavior.",
+        "pins": {
+          "assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+          "assets/heroes/rama-hero-mid.glb": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+          "assets/heroes/rama-hero-far.glb": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+          "shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+        }
+      }
+    },
+    {
+      "name": "CC0 texture files and CCBY metadata retain separate exact provenance",
+      "kind": "resource_boundary",
+      "passed": true,
+      "detail": {
+        "scope": "Selected map/license bytes only; no historical-silk or commercial-model claim."
+      }
+    },
+    {
+      "name": "Candidate resources stay in authoring tree and retain semantic masks",
+      "kind": "resource_boundary",
+      "passed": true,
+      "detail": {
+        "scope": "Resource/source references, not imported samplers or material appearance."
+      }
+    },
+    {
+      "name": "Optional cloth binder maps fragment uniforms without owning displacement",
+      "kind": "source_boundary",
+      "passed": true,
+      "detail": {
+        "mapped_uniforms": [
+          "base_color",
+          "base_texture",
+          "metal_channel",
+          "metal_texture",
+          "metallic_value",
+          "normal_strength",
+          "normal_texture",
+          "rough_channel",
+          "rough_texture",
+          "roughness_value",
+          "specular_value",
+          "use_base_texture",
+          "use_metal_texture",
+          "use_normal_texture",
+          "use_rough_texture"
+        ],
+        "scope": "Static source boundary only; real material lifetime/rollback needs engine cases."
+      }
+    },
+    {
+      "name": "Exact complete records prove the coincident pair",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "position differs despite tiny area",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "primary joint differs",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "primary weight differs",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "semantic alpha mask differs",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "UV seam blocks default strict proof",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "normal seam only permitted by bounded position policy",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "tangent seam only permitted by bounded position policy",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "Additional JOINTS_1 is part of position proof",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "Additional WEIGHTS_1 is part of position proof",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "Morph POSITION has explicit policy scope",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "Morph NORMAL has explicit policy scope",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "Zero rest area without coincident pair is retained",
+      "kind": "numerical_fixture",
+      "passed": true
+    },
+    {
+      "name": "Report cannot alias source",
+      "kind": "output_boundary",
+      "passed": true
+    },
+    {
+      "name": "Candidate cannot enter runtime asset tree",
+      "kind": "output_boundary",
+      "passed": true
+    },
+    {
+      "name": "Symlink parent cannot hide an in-project candidate",
+      "kind": "output_boundary",
+      "passed": true
+    },
+    {
+      "name": "Existing candidate is refused without overwrite",
+      "kind": "output_boundary",
+      "passed": true
+    },
+    {
+      "name": "REA bootstrap dry-run preserves outside destination and never invokes node/npm",
+      "kind": "output_boundary",
+      "passed": true,
+      "detail": {
+        "scope": "Actual offline dry-run with adversarial node/npm sentinels; no install/provider/network readiness claim."
+      }
+    },
+    {
+      "name": "All sampled source/resource files stayed unchanged during this run",
+      "kind": "source_boundary",
+      "passed": true
+    }
+  ],
+  "count": 23,
+  "sources": {
+    "tests/open_art_wave_contract_cases.py": "8e5eda2e1069a441dff738f0136c7364994a4956fa3c5b9cd62a7a5169583e77",
+    "art/hero-rama-repair/repair_mesh.py": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+    "art/hero-rama-repair/diagnose_domains.py": "374e6abb513f9ab6a97eb7ee832131b76d6c697fd96cb18eb92a6b67d48409bc",
+    "art/open-art-wave/integration/cloth_candidate.gd": "8a14fbeb0422f86d4ecc98934991e4592ce39ca674cfbe204697819942bb8eec",
+    "shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+    "art/open-art-wave/source-manifest.json": "30d7b5bdd3062aafbcf75185932deadfeced5dd5bc850eeed0acc73fe05aafcb",
+    "art/open-art-wave/build-manifest.json": "ef1b0144a113110962c63e60602228298437d019742a4a8f06e02dfb9b1bef20",
+    "tools/native-analysis/setup-rea.sh": "c20d4fdf0586ee36c8dc4587461c416e780447e83dec4a570c4e9b7eeb19f212",
+    "tools/native-analysis/rea-runtime/package.json": "04df3d8e8a559cd75824d810268a49519164930cf09386e76b56bc8e086836ed",
+    "tools/native-analysis/rea-runtime/package-lock.json": "73fa03d670870e8234e7823bca98e8cd846773fb661819ffe48a5bbb6728c7dd"
+  },
+  "test_sha256": "8e5eda2e1069a441dff738f0136c7364994a4956fa3c5b9cd62a7a5169583e77",
+  "runtime_pins": {
+    "assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "assets/heroes/rama-hero-mid.glb": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+    "assets/heroes/rama-hero-far.glb": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+    "shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+  },
+  "scope": "Source/resource/output guards and analytic exact-channel corner fixtures. Opt-in helper cases do not authorize a different asset; the public repair requires exact source/shader pins. No engine/material rollback/posed deformation/render/provider/runtime promotion acceptance."
+}

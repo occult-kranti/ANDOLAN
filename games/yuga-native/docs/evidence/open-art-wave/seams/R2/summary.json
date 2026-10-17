@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "status": "bounded role06 admission correction verified; candidate data unchanged; no runtime promotion",
+  "sourceFiles": {
+    "art/hero-rama-repair/split_seams.py": "2cfd81f04b4bcb0f404f8438cd34727df2ec06166d1ef28f140561bd7077e33d",
+    "tests/hero_seam_cases.py": "798db75e6e350ff60d4c9c2f5ad4ca3e1b6db52b2262fdd2ff76cce4e84d4dec"
+  },
+  "unchangedDependencies": {
+    "art/hero-rama-repair/repair_mesh.py": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+    "art/hero-rama-tangents/regenerate.py": "54300a0cb524e76942f1f0305787c0797a204e174898a7bd5a6cecca6852b688",
+    "art/hero-rama-lod/glb_lod.py": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7"
+  },
+  "regressionsFixed": [
+    "Public API rejects candidate under entire native project after resolving parents including symlink-parent aliases.",
+    "Candidate/report existing directory entries including dangling symlinks are refused with lexists. Resolved source/library/candidate/report aliases are refused; report creation is exclusive.",
+    "Bounded shared repair read_checked validates logical BIN size/padding, views/accessor strides and sparse storage before data expansion.",
+    "All source accessors including protected TANGENT/COLOR/WEIGHTS, morphs, inverse binds and unused data must be finite."
+  ],
+  "ownTests": {
+    "passed": true,
+    "count": 48,
+    "path": "synthetic-tests.json",
+    "sha256": "3a04c06460feb78e8835e299508491e9a5bce310c2ae4a6acfdb4abec62d8782"
+  },
+  "independentAdversarial": {
+    "passed": true,
+    "count": 16,
+    "path": "docs/evidence/open-art-wave/adversarial/cases-r2.json",
+    "sha256": "975962bb54eb9a1a939b2baace1e877b85abb0d33a2211713f282721134eab82"
+  },
+  "independentActual": {
+    "passed": true,
+    "count": 42,
+    "path": "docs/evidence/open-art-wave/adversarial/actual-seam-cli-r2.json",
+    "sha256": "8d01dd096383bbf8a3730d666ccf5a82c4e15186c9bbea56ce04aa6f88191e76"
+  },
+  "actualReport": {
+    "path": "docs/evidence/open-art-wave/adversarial/actual-seam-report-r2.json",
+    "sha256": "838acfeb3a5fe7d7dbd4aef64355a22ceae8d19b422dc3b9e31958c8cec1913e"
+  },
+  "sourceSha256": "47cd393b975a9b505216a6051e0376a3020724a8c3400afc7422471dfbd9423d",
+  "sourceUnchanged": true,
+  "candidate": {
+    "path": "/workspace/scratch/open-art-adversarial-seam-r2/rama-seams.glb",
+    "sha256": "5fc60979b7e258144e01a5ffb46752c263635e848c983cbd24aad52c5827c792",
+    "bytes": 47956392,
+    "sourceBytes": 36398424,
+    "growthBytes": 11557968,
+    "sourceBinaryPrefixIdentical": true,
+    "originalAccessorViewMetadataIdentical": true,
+    "rigClipsMaterialsImagesFaceOwnershipIdentical": true
+  },
+  "candidateIdenticalToR1": true,
+  "oldCandidateDataProof": {
+    "path": "docs/evidence/open-art-wave/deformation/summary.json",
+    "sha256": "7d55a03017925e56e32eed8bf98ca12fa60e6f32d214a8127e3932f54d504d26",
+    "scope": "Original38-check deformation/lineage data proof applies by exact candidate byte identity; not a new render or promotion check."
+  },
+  "historicalEvidence": "Original R1 reports and adversarial failure receipts remain untouched; source-before preserves original splitter/test bytes.",
+  "limits": [
+    "Guard correction does not repair existing UV degenerates, tangent zeros or authoring frame quality.",
+    "No renderer/import/physicalGPU/art acceptance or playable asset change."
+  ]
+}

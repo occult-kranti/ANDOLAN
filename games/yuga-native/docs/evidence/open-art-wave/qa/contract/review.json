@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "status": "PASS_BOUNDED_CONTRACTS",
+  "art_target": "OPEN",
+  "timestamp_utc": "2026-10-17T19:08:45.585942+00:00",
+  "execution": {
+    "timestamp_utc": "2026-10-17T19:08:45.585734+00:00",
+    "cwd": "/workspace/ANDOLAN/games/yuga-native",
+    "command": [
+      "taskset",
+      "-c",
+      "0,1",
+      "python3",
+      "tests/open_art_wave_contract_cases.py",
+      "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/open-art-wave/qa/contract/cases-r2.json"
+    ],
+    "exit_code": 0,
+    "result": {
+      "passed": true,
+      "checks": 23
+    },
+    "report_sha256": "ba22b9cbfcc8cf1879f494900fa83b8edba39f6546a30cb7ecb76d0b0c849113",
+    "test_sha256": "8e5eda2e1069a441dff738f0136c7364994a4956fa3c5b9cd62a7a5169583e77",
+    "scope": "Independent authoring contract fixture; no engine/import/provider/render/network or candidate generation."
+  },
+  "check_kinds": {
+    "source_boundary": 3,
+    "resource_boundary": 2,
+    "numerical_fixture": 13,
+    "output_boundary": 5
+  },
+  "source_pins": {
+    "tests/open_art_wave_contract_cases.py": "8e5eda2e1069a441dff738f0136c7364994a4956fa3c5b9cd62a7a5169583e77",
+    "art/hero-rama-repair/repair_mesh.py": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+    "art/hero-rama-repair/diagnose_domains.py": "374e6abb513f9ab6a97eb7ee832131b76d6c697fd96cb18eb92a6b67d48409bc",
+    "art/open-art-wave/integration/cloth_candidate.gd": "029bc16dab6c403d1b4b40ff6ab17a0893f885645c6eb5db9696faca671a0392",
+    "shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+    "art/open-art-wave/source-manifest.json": "30d7b5bdd3062aafbcf75185932deadfeced5dd5bc850eeed0acc73fe05aafcb",
+    "art/open-art-wave/build-manifest.json": "ef1b0144a113110962c63e60602228298437d019742a4a8f06e02dfb9b1bef20",
+    "tools/native-analysis/setup-rea.sh": "c20d4fdf0586ee36c8dc4587461c416e780447e83dec4a570c4e9b7eeb19f212",
+    "tools/native-analysis/rea-runtime/package.json": "04df3d8e8a559cd75824d810268a49519164930cf09386e76b56bc8e086836ed",
+    "tools/native-analysis/rea-runtime/package-lock.json": "73fa03d670870e8234e7823bca98e8cd846773fb661819ffe48a5bbb6728c7dd"
+  },
+  "runtime_pins": {
+    "assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "assets/heroes/rama-hero-mid.glb": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+    "assets/heroes/rama-hero-far.glb": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+    "shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+  },
+  "evidence": {
+    "docs/evidence/open-art-wave/qa/contract/cases-r1.json": "c90c95cff02ecb4c00b8d6f6e644b1e870febac89b62c53ba44d2b555edeb9f0",
+    "docs/evidence/open-art-wave/qa/contract/contract-cases-r1.py.txt": "6cf6984044b06a6c7865a8125c97284423f5e3e6c2e698d99ea193fe2f860f8b",
+    "docs/evidence/open-art-wave/qa/contract/cases-r2.json": "ba22b9cbfcc8cf1879f494900fa83b8edba39f6546a30cb7ecb76d0b0c849113",
+    "docs/evidence/open-art-wave/qa/contract/contract-cases-r2.py.txt": "8e5eda2e1069a441dff738f0136c7364994a4956fa3c5b9cd62a7a5169583e77",
+    "docs/evidence/open-art-wave/qa/contract/run-receipt-r2.json": "9a14ee1b6535b99b2735b23e7d49d62c76e86e4d7a15c352761719b87e3c8b27"
+  },
+  "findings": [
+    {
+      "status": "PASS",
+      "scope": "13 analytic fixtures",
+      "finding": "Complete coincident records pass; tiny POSITION changes, all joint/weight sets, semantic alpha, and morph POSITION changes block removal. Strict default rejects UV/normal/tangent/morph-normal seams; bounded position-only helper admits only the documented non-position seams. Zero-area collinear faces without a coincident pair remain. Arrays are not mutated. Expected outcomes were specified independently of implementation."
+    },
+    {
+      "status": "PASS",
+      "scope": "Source/resource boundaries",
+      "finding": "Selected Microsoft maps retain exact immutable source/hash/license pins with CC0 map versus CC-BY metadata separation. Candidate resource paths stay in the authoring tree. Only Cobalt handwoven silk is targeted; binder fragment uniform mapping excludes the displacement owner secondary_offset. These are static admission checks, not engine behavior."
+    },
+    {
+      "status": "PASS",
+      "scope": "Output boundaries",
+      "finding": "Public fresh-path guard refuses source alias, runtime destination, symlink-hidden runtime destination and overwriting an existing output. Actual REA offline dry-run with adversarial node/npm sentinels created no install destination and invoked neither tool."
+    },
+    {
+      "status": "PASS",
+      "scope": "Runtime boundary",
+      "finding": "Accepted base/mid/far GLBs and existing secondary shader retain the exact four byte pins. No candidate was written to the runtime, and no runtime or author source changed in the test."
+    }
+  ],
+  "history": [
+    {
+      "artifact": "cases-r1.json",
+      "result": "22/22 PASS",
+      "source_snapshot": "contract-cases-r1.py.txt",
+      "note": "Initial finite run before the newly frozen bootstrap dry-run case. Preserved unchanged."
+    },
+    {
+      "artifact": "cases-r2.json",
+      "result": "23/23 PASS",
+      "source_snapshot": "contract-cases-r2.py.txt",
+      "note": "Adds actual offline bootstrap dry-run and explicit frozen candidate/lock pins. No prior product failure is hidden."
+    }
+  ],
+  "limits": [
+    "Numerical fixtures are exact-channel proof boundaries, not a posed skinning/morph/animation/deformation proof; independent role09 owns deeper deformation.",
+    "The opt-in helper fixtures do not authorize different assets or shaders. Public mesh repair admission remains pinned to accepted de61 source and c171 shader.",
+    "Static binder checks cannot establish live engine bind/unbind, rollback, imported masks, sampler filtering, material lifecycle, or rendered appearance.",
+    "No actual mesh repair/seam/tangent candidate generation was executed in this role05 packet; independent role11 will test tools and data adversarially.",
+    "REA execution was only an offline dry-run. This does not claim an install/provider/native-analysis/Ghidra/network readiness result.",
+    "No normal-speed animation review, human listening, online multiplayer, GPU performance, or AAA/Deadlock-level visual approval."
+  ],
+  "ownership": "Only new tests/open_art_wave_contract_cases.py and docs/evidence/open-art-wave/qa/contract/. Old Rama/reuse evidence unchanged."
+}

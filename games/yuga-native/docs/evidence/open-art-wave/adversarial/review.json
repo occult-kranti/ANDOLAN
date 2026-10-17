@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "timestamp_utc": "2026-10-17T19:40:44.247420+00:00",
+  "status": "PASS_BOUNDED_AUTHORING_ADVERSARIAL",
+  "art_target": "OPEN",
+  "sources_before": {
+    "art/hero-rama-repair/repair_mesh.py": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+    "art/hero-rama-repair/split_seams.py": "0c159c259e60e6a055561f1a4adfb16edb5a026c3e53be6d86a4f29a663b7ba6",
+    "art/hero-rama-tangents/regenerate.py": "54300a0cb524e76942f1f0305787c0797a204e174898a7bd5a6cecca6852b688",
+    "art/hero-rama-lod/glb_lod.py": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7"
+  },
+  "sources_after": {
+    "art/hero-rama-repair/repair_mesh.py": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+    "art/hero-rama-repair/split_seams.py": "2cfd81f04b4bcb0f404f8438cd34727df2ec06166d1ef28f140561bd7077e33d",
+    "art/hero-rama-tangents/regenerate.py": "54300a0cb524e76942f1f0305787c0797a204e174898a7bd5a6cecca6852b688",
+    "art/hero-rama-lod/glb_lod.py": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7"
+  },
+  "original_failures_preserved": true,
+  "findings": [
+    {
+      "id": "SEAM-PATH-01",
+      "initial": "FAIL",
+      "final": "CLOSED_IN_BOUNDED_REPEAT",
+      "finding": "Fresh in-project candidate was admitted by original imported output guard. Corrected public splitter rejects native-project and symlink-parent destinations before native calls or writes.",
+      "original_evidence": "first-output-boundary-counterexample.json",
+      "closure_evidence": "cases-r2.json",
+      "closed_by_source_sha256": "2cfd81f04b4bcb0f404f8438cd34727df2ec06166d1ef28f140561bd7077e33d"
+    },
+    {
+      "id": "SEAM-BIN-02",
+      "initial": "FAIL",
+      "final": "CLOSED_IN_BOUNDED_REPEAT",
+      "finding": "Original splitter accepted short declared logical buffer length and published candidate. Corrected bounded source admission refuses it before publication.",
+      "original_evidence": "short-logical-buffer-seam-failure.json",
+      "closure_evidence": "cases-r2.json"
+    },
+    {
+      "id": "SEAM-FINITE-03",
+      "initial": "FAIL",
+      "final": "CLOSED_IN_BOUNDED_REPEAT",
+      "finding": "Original splitter accepted NaN in old TANGENT and copied it to output. Corrected all-accessor finite admission refuses it before publication.",
+      "original_evidence": "nonfinite-source-tangent-seam-failure.json",
+      "closure_evidence": "cases-r2.json"
+    },
+    {
+      "id": "SEAM-SYMLINK-04",
+      "initial": "FAIL",
+      "final": "CLOSED_IN_BOUNDED_REPEAT",
+      "finding": "Original splitter followed dangling report symlink and wrote target plus candidate. Corrected lexists/resolved/exclusive-output policy refuses before either output.",
+      "original_evidence": "dangling-report-symlink-failure.json",
+      "closure_evidence": "cases-r2.json"
+    }
+  ],
+  "execution": [
+    {
+      "artifact": "cases-r1.json",
+      "exit_code": 1,
+      "result": "11/14 PASS, three concrete failures",
+      "note": "Original failures retained. A separate guard-only native-project admission failure is also preserved; it created no runtime file."
+    },
+    {
+      "artifact": "cases-r2.json",
+      "exit_code": 0,
+      "result": "16/16 PASS",
+      "note": "Same 14 CLI data cases plus two explicit public native-project/symlink-parent admission counterexamples. Valid nonuniform reflected geometry, interleaved POSITION/NORMAL/TANGENT, shared UV accessor, normalized uint8 mask and sparse morph still pass."
+    },
+    {
+      "artifact": "actual-repair-cli-r1.json",
+      "exit_code": 0,
+      "result": "Actual de61 source -> exact 47cd candidate",
+      "note": "5,256 persistent-pair faces removed;408,316 ->403,060 triangles; source unchanged. Existing executed receipt retained; no duplicate repeat."
+    },
+    {
+      "artifact": "actual-seam-cli-r2.json",
+      "exit_code": 0,
+      "result": "Actual 47cd -> exact 5fc609 candidate;42 bounded checks PASS",
+      "note": "Independent raw GLB JSON/BIN decoder confirms all18 domains original TANGENT and every UV channel equal old[rowMap], existing binary prefix and face/rig/clip metadata unchanged. No tool reader used for this independent tangent/UV comparison."
+    }
+  ],
+  "actual_candidate": {
+    "source_sha256": "47cd393b975a9b505216a6051e0376a3020724a8c3400afc7422471dfbd9423d",
+    "candidate_sha256": "5fc60979b7e258144e01a5ffb46752c263635e848c983cbd24aad52c5827c792",
+    "clones": 11,
+    "conflicting_vertices_before": 6,
+    "conflicting_vertices_after": 0,
+    "remaining_unresolved_corners": 52971,
+    "source_unchanged": true,
+    "tool_unchanged": true,
+    "native_library_sha256": "0f038e6f83f5fce5e10d0b8c14028f96ed7368229c59bded44a2512dda91bb4a",
+    "scope": "Exact corner topology preparation; original tangents/UVs copied, not rebaked, repaired or normalized."
+  },
+  "runtime_pins": {
+    "assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "assets/heroes/rama-hero-mid.glb": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+    "assets/heroes/rama-hero-far.glb": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+    "shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+  },
+  "historical_refusal": {
+    "path": "docs/evidence/reuse-study/qa/mikktspace-actual-refusal-r1.json",
+    "sha256": "d2a2dfbf3ada6e0c36ab8f9115169d28b7e8a641151dbbe660ae71c365376a98",
+    "scope": "Retained earlier actual de61 unsafe tangent rewrite refusal, not a new execution on the seam candidate."
+  },
+  "limits": [
+    "These are bounded offline Python/native-component software and data checks. No Godot, editor/import, Blender, renderer, gameplay, online session or provider execution.",
+    "No universal glTF validator or complete security audit; malformed cases cover logical BIN length, external buffer URI, short interleaved stride, sparse index bounds, nonfinite original tangent and output alias/symlink/project boundaries.",
+    "Exact all-channel/deep deformation proofs are a separate role09 packet. Here actual independent decoded comparison is specifically original TANGENT and every UV channel plus metadata/prefix.",
+    "UV/geometry problems and three invalid clean native tangent outputs remain unresolved:52971 corners. Zero conflicts after cloning does not establish a valid tangent rebake or clean shading.",
+    "Original R1 synthetic malformed input/candidate binaries lived in temporary directories and were removed by the frozen fixture; exact generator/source snapshots and raw process outcomes are retained. No unrecorded original malformed artifact hash is asserted.",
+    "No shader appearance, animation smoothness, live material lifecycle/rollback, silhouette, GPU performance or Deadlock/AAA visual acceptance. Source asset and candidate remain outside runtime promotion."
+  ],
+  "scope_boundary": "Role05 frozen contract packet and older Rama/reuse evidence unchanged. Only new docs/evidence/open-art-wave/adversarial/** owned in this role.",
+  "evidence": {
+    "actual-repair-cli-r1.json": "b448232b2b636ce8d240d0e430e1800e536ca98170d35e3ecd4fb6dfdb2a2130",
+    "actual-repair-report-r1.json": "2f03ee0e311f6b5d748c21ad756a2e37a4722afae7891b250533dec3b451f8bb",
+    "actual-seam-cli-r2.json": "8d01dd096383bbf8a3730d666ccf5a82c4e15186c9bbea56ce04aa6f88191e76",
+    "actual-seam-report-r2.json": "838acfeb3a5fe7d7dbd4aef64355a22ceae8d19b422dc3b9e31958c8cec1913e",
+    "actual_seam_check.py": "20ef80bd10f4fcd87d61617ca1b2214c2bdc053b50eed449c498d53e867acde5",
+    "adversarial_cases-r1.py.txt": "1fc4fa964da3b5a4be00fd6421ceabe14fc1469247eff2c1f345e49a12ec1d81",
+    "adversarial_cases-r2.py.txt": "996fca4bcf0e13396ed21156d82a8d5db4e19f039adcbfa2151fa97f3fcb25a5",
+    "adversarial_cases.py": "996fca4bcf0e13396ed21156d82a8d5db4e19f039adcbfa2151fa97f3fcb25a5",
+    "cases-r1.json": "f2831d29607e32cad35e9bd027b7b2b5b1f6fd9e786369683de4e4ec1c7f9e09",
+    "cases-r2.json": "975962bb54eb9a1a939b2baace1e877b85abb0d33a2211713f282721134eab82",
+    "dangling-report-symlink-failure.json": "efbc32cb3c303c3903b0d2d85e6e5c16440ac03a6c35e5ebe8253d071f8fdd83",
+    "first-output-boundary-counterexample.json": "d2d5269ee83d8b5c3b0b3f33931e3753f87c615e2b00c08a1a3a91c82224fc28",
+    "nonfinite-source-tangent-seam-failure.json": "b182f670488b66121779d2b4bae950fe83e2086a91f4782e4f0b453f9a6ad17d",
+    "short-logical-buffer-seam-failure.json": "cd031958c87faa28a51e72abdf23be0cd8cb7a3634354226768583cd50becad4",
+    "source-after/art/hero-rama-repair/repair_mesh.py": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+    "source-after/art/hero-rama-repair/split_seams.py": "2cfd81f04b4bcb0f404f8438cd34727df2ec06166d1ef28f140561bd7077e33d",
+    "source-before/art/hero-rama-lod/glb_lod.py": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7",
+    "source-before/art/hero-rama-repair/repair_mesh.py": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+    "source-before/art/hero-rama-repair/split_seams.py": "0c159c259e60e6a055561f1a4adfb16edb5a026c3e53be6d86a4f29a663b7ba6",
+    "source-before/art/hero-rama-tangents/regenerate.py": "54300a0cb524e76942f1f0305787c0797a204e174898a7bd5a6cecca6852b688"
+  }
+}

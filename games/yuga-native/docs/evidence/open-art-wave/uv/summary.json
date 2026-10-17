@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "status": "read-only role03 diagnosis complete; no asset change",
+  "sourceSha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+  "sourceUnchanged": true,
+  "script": {
+    "path": "art/hero-rama-repair/diagnose_domains.py",
+    "sha256": "374e6abb513f9ab6a97eb7ee832131b76d6c697fd96cb18eb92a6b67d48409bc"
+  },
+  "selfTests": {
+    "passed": true,
+    "checks": 13
+  },
+  "totals": {
+    "geometryAbsoluteDegenerate": 5400,
+    "geometryExactlyZero": 5292,
+    "geometryEpsilonOnly": 108,
+    "geometryScaleRelativeSliver": 5400,
+    "uvAbsoluteDegenerate": 18360,
+    "uvExactlyZeroDeterminant": 18360,
+    "uvEpsilonOnly": 0,
+    "uvScaleRelativeSliver": 18360,
+    "geometryUVUnion": 22912,
+    "repeatedSourceIndex": 0,
+    "identicalPositionPair": 5256,
+    "skeletalMorphCoincidentPair": 5256,
+    "restDegenerateNotSkeletalMorphProven": 144,
+    "skeletalMorphColor0CoincidentPair": 5256,
+    "allAttributeMorphByteIdenticalPair": 0,
+    "uvPointCollapsed": 0,
+    "uvCollinearNonpoint": 18360,
+    "uvConstantU": 8792,
+    "uvConstantV": 9008,
+    "uvDegenerateWithNondegenerateGeometry": 17512,
+    "uvDegenerateNonzeroSurfaceNotRemovableByPairProof": 17512,
+    "coincidentPairDifferentColorMask": 0
+  },
+  "conflicts": [
+    {
+      "mesh": 0,
+      "primitive": 1,
+      "material": "Polished sapphire",
+      "vertex": 3781,
+      "maximumPairwiseAngleDegrees": 10.938940865592134,
+      "maximumPairwiseFloat32ComponentDelta": 0.17285317182540894
+    },
+    {
+      "mesh": 2,
+      "primitive": 0,
+      "material": "Swept black hair",
+      "vertex": 6484,
+      "maximumPairwiseAngleDegrees": 0.006716751230187954,
+      "maximumPairwiseFloat32ComponentDelta": 0.0001145675778388977
+    },
+    {
+      "mesh": 2,
+      "primitive": 0,
+      "material": "Swept black hair",
+      "vertex": 35634,
+      "maximumPairwiseAngleDegrees": 9.79306188578293,
+      "maximumPairwiseFloat32ComponentDelta": 0.11651718616485596
+    },
+    {
+      "mesh": 2,
+      "primitive": 0,
+      "material": "Swept black hair",
+      "vertex": 38801,
+      "maximumPairwiseAngleDegrees": 0.24867454637806355,
+      "maximumPairwiseFloat32ComponentDelta": 0.004021763801574707
+    },
+    {
+      "mesh": 2,
+      "primitive": 2,
+      "material": "Worked warm gold",
+      "vertex": 24571,
+      "maximumPairwiseAngleDegrees": 1.444045208152225,
+      "maximumPairwiseFloat32ComponentDelta": 0.025199712254107
+    },
+    {
+      "mesh": 2,
+      "primitive": 2,
+      "material": "Worked warm gold",
+      "vertex": 64553,
+      "maximumPairwiseAngleDegrees": 1.5672283242868117,
+      "maximumPairwiseFloat32ComponentDelta": 0.027347620576620102
+    }
+  ],
+  "zeroOutputCorners": [
+    {
+      "mesh": 2,
+      "primitive": 1,
+      "face": 6550,
+      "vertex": 8188,
+      "weightConditioning": {
+        "float32ProjectedEdgeCosine": 1.0,
+        "float32ClampedCornerWeightRadians": 0.0,
+        "normalDotGeometricFaceNormal": 0.0029173647799763916,
+        "formulaSource": "Pinned MikkTSpace EvalTspace projected edge angle; float32 dot/reciprocal normalization reproduced, not runtime instrumentation."
+      },
+      "isolatedNativeOutput": [
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 1,
+      "face": 7731,
+      "vertex": 8875,
+      "weightConditioning": {
+        "float32ProjectedEdgeCosine": 1.0,
+        "float32ClampedCornerWeightRadians": 0.0,
+        "normalDotGeometricFaceNormal": -0.004126334479999491,
+        "formulaSource": "Pinned MikkTSpace EvalTspace projected edge angle; float32 dot/reciprocal normalization reproduced, not runtime instrumentation."
+      },
+      "isolatedNativeOutput": [
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 1,
+      "face": 25390,
+      "vertex": 7489,
+      "weightConditioning": {
+        "float32ProjectedEdgeCosine": 1.0,
+        "float32ClampedCornerWeightRadians": 0.0,
+        "normalDotGeometricFaceNormal": 0.00293770626369104,
+        "formulaSource": "Pinned MikkTSpace EvalTspace projected edge angle; float32 dot/reciprocal normalization reproduced, not runtime instrumentation."
+      },
+      "isolatedNativeOutput": [
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ]
+    }
+  ],
+  "keyFindings": [
+    "All18,360 UV-degenerate faces have exactlyzero determinant, not merely epsilon-small UVs.17,512 have nonzero geometric area.",
+    "5,256 pairs are coincident under core skeletal/morph POSITION proof and equal COLOR_0, but0have every attribute/morph record byte-identical. Removal requires separatelypinned shader semantics; core proof is not universal permission.",
+    "Native isolated-face calls reproduce all3zero outputs. Pinned Mikk projected-corner-angle formula in float32 yields cosine1and zero angle at all3; source vertex normals are almost tangent to the corresponding face (normal/geometricnormal dot magnitude~0.003\u20130.004). This supports poor corner-weight conditioning, not large-mesh cancellation. No upstream branch instrumented or normals silently replaced.",
+    "Author text proves cap UV construction and sphere pole duplication mechanisms, but joined GLB has no exact original object/face-range provenance; source mechanism is not perface author intent or visibility proof."
+  ],
+  "evidence": {
+    "rama-baseline-domains.json": "40461f7e5e3160a3c482d5dac4e3c8894939f8d52b4d7e99882d0712de1f68cb",
+    "self-tests.json": "24bbc0655fd868a2b824f8bc9c67a48e27e80f2960f9cc6963d9aa940800622f"
+  },
+  "limits": [
+    "No Blender/import/render or native screen visibility checks.",
+    "No UV rewrite, index deletion, tangent substitution or runtime promotion.",
+    "Source-normal/geometry correction requires bounded editable-source review and same-camera native A/B."
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "schema": 1,
+  "date": "2026-10-17",
+  "task": "NEXT15 role08 actual native cloth candidate comparison",
+  "source_commit": "658804fd6e454c6d584ac3245601506b22075c0b",
+  "status": "COMPLETE_RENDER_EVIDENCE_ONLY; DEFAULT_RUNTIME_UNCHANGED",
+  "rounds": [
+    {
+      "id": "r1",
+      "profile": "Full candidate albedo plus surface maps",
+      "actual_images": 8,
+      "pairs": 4,
+      "result": "LIMITED; reject default promotion because indigo shifted brighter and original gold motif was lost",
+      "preserved": "All originals, source snapshots, state/import pins and logs retained",
+      "process_limit": "Terminal result was lost during transport reconnect; completed guarded runner receipt and final report survive. No repeated capture or synthetic replacement."
+    },
+    {
+      "id": "r2",
+      "profile": "preserve-original-albedo_cc0-roughness-normal-v1",
+      "actual_images": 8,
+      "pairs": 4,
+      "result": "Finite approved correction preserves original albedo; actual native capture and restoration checks pass",
+      "godot_exit_code": 0,
+      "warnings": [],
+      "errors": [],
+      "independent_visual_acceptance": "Separate role12 review; this authoring/renderer report does not grant production art acceptance"
+    }
+  ],
+  "actual_artifact": {
+    "candidate": "res://art/open-art-wave/materials/indigo-woven-cloth.tres",
+    "candidate_maps_license": "Microsoft2020 CC0-1.0; see separate source manifest/notice",
+    "integration": "Optional role07 fixture only; no runtime scene/controller/material default loads it",
+    "r2_owned_uniforms": [
+      "roughness_value",
+      "metallic_value",
+      "normal_strength",
+      "specular_value",
+      "rough_channel",
+      "metal_channel",
+      "rough_texture",
+      "metal_texture",
+      "normal_texture",
+      "use_rough_texture",
+      "use_metal_texture",
+      "use_normal_texture"
+    ],
+    "r2_original_albedo_exact": [
+      "base_color",
+      "base_texture",
+      "use_base_texture"
+    ],
+    "r2_material_instances": 3,
+    "fields_written_per_instance": 12,
+    "fields_restored_per_pair": 36,
+    "actual_changed_fields": [
+      "metal_channel",
+      "metal_texture",
+      "use_metal_texture",
+      "normal_strength",
+      "normal_texture",
+      "rough_channel",
+      "rough_texture"
+    ],
+    "metallic_scalar_unchanged": 0.0
+  },
+  "actual_checks": {
+    "r1_pairs": 4,
+    "r1_raw_pngs": 8,
+    "r2_pairs": 4,
+    "r2_raw_pngs": 8,
+    "r2_report_source_pins": 495,
+    "r2_original_copy_pins": 492,
+    "fixture_only_import_sidecars": 3,
+    "fresh_imports": 12,
+    "fresh_glbs": 9,
+    "fresh_candidate_pngs": 3,
+    "generated_and_loaded_mipmaps": true,
+    "candidate_import_compression_mode": "0 lossless; actual imported format RGB8 for albedo/normal and L8 for roughness",
+    "rigs": 1,
+    "bones": 164,
+    "unique_native_face": 1,
+    "lods_rendered": [
+      0,
+      1
+    ],
+    "nonowned_uniforms_and_secondary_offsets": "Frozen exact within each pair",
+    "full_material_restore": "Exact after each unbind",
+    "controlled_water_TIME_materials": 4,
+    "uncontrolled_TIME": [],
+    "exposure": 1.0,
+    "r1_r2_all4_baseline_raw_png_bytes": "Exact equality in this bounded run",
+    "actual_material_resource_test": "39/39 passed in separate role07 R2 receipt; synthetic masked mesh with actual StandardMaterial3D/map resource",
+    "python_material_integrity_checks": "36/36 in role02; do not add these counts to runtime suite counts"
+  },
+  "views": [
+    {
+      "id": "courtyard-day",
+      "camera_height_target_px": 780.0,
+      "actual_projected_rest_aabb_height_px": 986.3505325317383,
+      "selected_lod": 0,
+      "sun_energy": 1.350000023841858,
+      "exposure": 1.0
+    },
+    {
+      "id": "courtyard-night",
+      "camera_height_target_px": 780.0,
+      "actual_projected_rest_aabb_height_px": 986.3505325317383,
+      "selected_lod": 0,
+      "sun_energy": 0.5,
+      "exposure": 1.0
+    },
+    {
+      "id": "confluence-day",
+      "camera_height_target_px": 350.0,
+      "actual_projected_rest_aabb_height_px": 386.260009765625,
+      "selected_lod": 1,
+      "sun_energy": 1.25,
+      "exposure": 1.0
+    },
+    {
+      "id": "confluence-night",
+      "camera_height_target_px": 350.0,
+      "actual_projected_rest_aabb_height_px": 386.260009765625,
+      "selected_lod": 1,
+      "sun_energy": 0.47999998927116394,
+      "exposure": 1.0
+    }
+  ],
+  "own_image_inspection": {
+    "scope": "Author/renderer observation, not independent art acceptance",
+    "reviewed": [
+      "R1 courtyard day baseline/candidate",
+      "R2 courtyard day/night candidates",
+      "R2 Confluence day/night baseline/candidate"
+    ],
+    "r2_observation": "Original indigo/gold motifs remain visible in near day/night images; bright broad cloth sheen is reduced. Mid-distance view does not establish fine weave detail.",
+    "retained_limits": [
+      "Native target graphics gate remains open",
+      "Known182.3px mid material-frame glint was not captured with forced-near reference here",
+      "No active-ability or moving/deforming cloth comparison",
+      "No back closeup or fine fabric seam qualification",
+      "No real-time physical-GPU performance or Windows execution",
+      "Technical fabric is not an authentic historical silk scan; no KHR sheen equivalence"
+    ],
+    "coverage_limit": "Role12 independently reviews all8 original images per round; the renderer author inspected the listed selection and decoded all raw-image/hash contracts."
+  },
+  "process": {
+    "r2_renderer": "Godot4.6.3 Forward+ X11, llvmpipe LLVM19.1.7,1280x960, fixed15Hz capture",
+    "r2_elapsed_ms": 117934,
+    "owned_cpu": "2,3; LP_NUM_THREADS2; maxthreads2",
+    "display": 148,
+    "fresh_user_cache": "/workspace/scratch/open-art-material-r2-user",
+    "r2_process_exit_directly_observed": 0,
+    "engine_slot": "Released to role10 CI; no further engine/import/render by this role",
+    "staging": "New isolated source-identical project; real art/.gdignore unchanged; only3 isolated texture import mipmap flags were authored",
+    "first_staging_warning": "R1 initial isolated import lacked copied testUID and warned once; original UID was copied before clean second import. Warning retained in staging logs."
+  },
+  "pins": [
+    {
+      "path": "art/open-art-wave/render/capture.gd",
+      "sha256": "d456d077ab183a2dd08bf2abaa0c28c40fe00220483f617a86dd42d99543596b"
+    },
+    {
+      "path": "art/open-art-wave/render/run.py",
+      "sha256": "148b9adc2773a0968b05c0496dfa6d6b1928b1cc7b5479fc5323a5c0d2ec293d"
+    },
+    {
+      "path": "art/open-art-wave/render/README.md",
+      "sha256": "54ea2de9515d0a85db6412ceae7baace02958d5a41eaa7ddd143e61b948eae8d"
+    },
+    {
+      "path": "docs/evidence/open-art-wave/render/r1/archive-receipt.json",
+      "sha256": "b0cb7a39edf2b8af735f65a9da51839622aeb9dc45e518fed888b37725e61724"
+    },
+    {
+      "path": "docs/evidence/open-art-wave/render/r2/archive-receipt.json",
+      "sha256": "584b24db7fc8572c028c245c0442aeba20078ce2f2a9b9cd3396a20a340c273c"
+    },
+    {
+      "path": "docs/evidence/open-art-wave/render/r2/material-capture.json",
+      "sha256": "b98faf187365d05fd8c9df34da3d9774349ee111e6e3db83b21686f4f772df51"
+    },
+    {
+      "path": "docs/evidence/open-art-wave/render/r2/capture-run.json",
+      "sha256": "8b4ba87f911a5e08c9eecb618aabae14fabedcd01967c667de757591a437f075"
+    },
+    {
+      "path": "docs/evidence/open-art-wave/render/r2/source-identity.json",
+      "sha256": "3c8dd62f1b999ee235b84f658f882c5e9f9baa98e4d0021e6e90a9b234d045be"
+    },
+    {
+      "path": "docs/evidence/open-art-wave/render/baseline-cross-round-checks.json",
+      "sha256": "c8dd24a2d9681e7c9dd6490fb5e23122656952c632c07bd4d4f2e236e45bc26b"
+    }
+  ],
+  "next_owner": "Root plus independent pixel/QA review. Preserve R1 rejection and R2 bounded corrective evidence; production promotion needs a separate integration pass and art acceptance."
+}

@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "sourceCommit": "658804fd6e454c6d584ac3245601506b22075c0b",
+  "runs": [
+    {
+      "label": "cases",
+      "command": [
+        "taskset",
+        "-c",
+        "0,1",
+        "env",
+        "LP_NUM_THREADS=2",
+        "OPENBLAS_NUM_THREADS=1",
+        "python3",
+        "/workspace/ANDOLAN/games/yuga-native/tests/hero_mesh_repair_cases.py"
+      ],
+      "exitCode": 0,
+      "elapsedWallSeconds": 0.246467
+    },
+    {
+      "label": "strict",
+      "command": [
+        "taskset",
+        "-c",
+        "0,1",
+        "env",
+        "LP_NUM_THREADS=2",
+        "OPENBLAS_NUM_THREADS=1",
+        "python3",
+        "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/repair_mesh.py",
+        "/workspace/ANDOLAN/games/yuga-native/assets/heroes/rama-hero.glb",
+        "--candidate",
+        "/workspace/scratch/rama-mesh-repair-r2/rama-strict.glb",
+        "--report",
+        "/workspace/scratch/rama-mesh-repair-r2/strict-report.json"
+      ],
+      "exitCode": 0,
+      "elapsedWallSeconds": 2.869719
+    },
+    {
+      "label": "secondary",
+      "command": [
+        "taskset",
+        "-c",
+        "0,1",
+        "env",
+        "LP_NUM_THREADS=2",
+        "OPENBLAS_NUM_THREADS=1",
+        "python3",
+        "/workspace/ANDOLAN/games/yuga-native/art/hero-rama-repair/repair_mesh.py",
+        "/workspace/ANDOLAN/games/yuga-native/assets/heroes/rama-hero.glb",
+        "--candidate",
+        "/workspace/scratch/rama-mesh-repair-r2/rama-secondary.glb",
+        "--report",
+        "/workspace/scratch/rama-mesh-repair-r2/secondary-report.json",
+        "--deformation-policy",
+        "yuga-secondary-v1"
+      ],
+      "exitCode": 0,
+      "elapsedWallSeconds": 2.62457
+    }
+  ],
+  "sourcePins": {
+    "games/yuga-native/art/hero-rama-repair/repair_mesh.py": {
+      "sha256": "3503d4243c0a080eccc8f3f2a384ebddd654de90b66e6c5aa8ce0b5c54c3727c",
+      "bytes": 20147
+    },
+    "games/yuga-native/art/hero-rama-repair/README.md": {
+      "sha256": "499b55b9dbcf0c475929fe60abf2f95f4e0774c05b7e690f2703ebf7424841a0",
+      "bytes": 5759
+    },
+    "games/yuga-native/tests/hero_mesh_repair_cases.py": {
+      "sha256": "930dd548808cb5a287c6268e64c05645c322eea1199106eb439241571ccbde7a",
+      "bytes": 21997
+    },
+    "games/yuga-native/art/hero-rama-lod/glb_lod.py": {
+      "sha256": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7",
+      "bytes": 17623
+    },
+    "games/yuga-native/shaders/rama_secondary_cloth.gdshader": {
+      "sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+      "bytes": 2247
+    },
+    "games/yuga-native/assets/heroes/rama-hero.glb": {
+      "sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "bytes": 34322216,
+      "snapshot": "Retained tracked asset; no duplicate large asset copied into evidence."
+    }
+  },
+  "candidateStoredOutsideRuntime": "/workspace/scratch/rama-mesh-repair-r2/rama-secondary.glb",
+  "limits": [
+    "Offline structural tests only; no Godot/Blender import, renderer, human pose review or runtime promotion.",
+    "Elapsed time is process wall time, not game frame timing."
+  ]
+}

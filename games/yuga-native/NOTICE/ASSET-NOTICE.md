@@ -65,3 +65,9 @@ preserved in `GODOT-LICENSE.txt` and `GODOT-COPYRIGHT.txt`.
 The separate offline tangent authoring tool reuses unmodified MikkTSpace code;
 see `MIKKTSPACE-AUTHORING.md` and the preserved upstream source notices. Adopting
 this tool does not automatically replace or approve a runtime hero asset.
+
+The separate `art/open-art-wave/` cloth candidate adapts three Microsoft CC0
+technical-fabric maps from the pinned Khronos sample collection. Its source
+metadata has separate CC-BY-4.0 terms; `OPEN-ART-WAVE.md` preserves attribution,
+license distinctions and changes. This is a review material outside the selected
+runtime hero, and does not establish historical silk authenticity.

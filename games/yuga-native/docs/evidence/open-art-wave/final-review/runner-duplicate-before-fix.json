@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "independent_observed_counterexample",
+  "date_utc": "2026-10-17",
+  "passed": false,
+  "finding": "Contradictory duplicate JSON keys could hide a failed summary and failed check behind final true values.",
+  "runner_sha256": "de389397e59f3bae2e74fb9e910ae0d575cee34c93f697c5e53916ca405358b2",
+  "raw_report": "{\"passed\":false,\"passed\":true,\"checks\":[{\"name\":\"contradictory\",\"passed\":false,\"passed\":true}],\"count\":1}",
+  "observed_execute_suite_result": {
+    "accepted": true,
+    "native_exit": 0,
+    "problems": []
+  },
+  "capture_method": "Transcribed exact structured terminal result of the independent Python probe executed before the fix. The temporary child and output directory were removed by TemporaryDirectory after its observed completion. This is not the later nine-case script result.",
+  "executed_probe": "python3 from repository root imported tools/run-authoring-checks.py by absolute path; created fresh temporary reports/logs directories; invoked execute_suite with an actual Python child writing raw_report; timeout=3 and inherited environment; printed accepted, problems and source hash as structured JSON.",
+  "limits": "A report-integrity counterexample. It does not show that an authored suite emitted duplicate keys or change any art acceptance result.",
+  "resolution": "CI owner replaced default loads with strict_json for suite reports, material builder stdout and staging stdout/manifest; independent nine-case follow-up is runner-review-after-fix.json."
+}

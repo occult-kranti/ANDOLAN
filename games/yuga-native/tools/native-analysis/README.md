@@ -19,6 +19,19 @@ Choose fresh output paths. Restore the pinned toolchain using the instructions
 below when absent. The inspector does not execute the selected ELF. It retains
 layout/decompilation/function outputs, checks input identities, selected symbols
 and providers, and terminates its ordinary provider process group on timeout.
+For a fresh REA CLI, use the [locked external bootstrap](rea-runtime/README.md):
+
+```sh
+bash games/yuga-native/tools/native-analysis/setup-rea.sh \
+  --destination /workspace/tooling/rea-runtime-NEW --dry-run
+bash games/yuga-native/tools/native-analysis/setup-rea.sh \
+  --destination /workspace/tooling/rea-runtime-NEW
+```
+
+Existing installations are preserved. A dry run executes no Node/npm probes;
+the real install verifies the locked package and actual CLI version/help. This
+does not install Ghidra or optional native providers.
+
 Its small Linux counterexample suite runs without REA/Ghidra installed:
 
 ```sh

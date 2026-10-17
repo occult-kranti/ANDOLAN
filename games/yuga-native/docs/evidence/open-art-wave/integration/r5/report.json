@@ -1,0 +1,294 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "Null visual rejects without allocation",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Detached visual rejects because lifecycle ownership is unavailable",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Secondary fixture owns the intended material",
+			"passed": true
+		},
+		{
+			"details": {
+				"bound": true,
+				"candidate_filter": 3,
+				"candidate_path": "",
+				"candidate_sha256": "",
+				"filter_conversion": false,
+				"last_reason": "bound explicitly for review",
+				"last_unbind": {
+
+				},
+				"material_ids": [
+					-9223372009289808442
+				],
+				"scope": "Optional review-only woven-map conversion on existing secondary-owned cloth materials. No mesh, skin, mask, face, shader, LOD, offset, input or default game-flow writes.",
+				"shader_filter": "linear with mipmaps, repeat",
+				"surface_slots": 3,
+				"touched_fields": [
+					"base_color",
+					"roughness_value",
+					"metallic_value",
+					"normal_strength",
+					"specular_value",
+					"rough_channel",
+					"metal_channel",
+					"base_texture",
+					"rough_texture",
+					"metal_texture",
+					"normal_texture",
+					"use_base_texture",
+					"use_rough_texture",
+					"use_metal_texture",
+					"use_normal_texture"
+				],
+				"unique_materials": 1
+			},
+			"name": "Shared three-LOD target binds one existing unique material",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Cloth PBR channels map into exact existing shader uniforms",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Material identity shader masks mesh face and other cloth owners are preserved",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Same-candidate repeated binding is idempotent",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Bound component refuses a different visual without partial writes",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Bound component refuses a changed candidate without partial writes",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Secondary writer remains live while optional cloth maps are bound",
+			"passed": true
+		},
+		{
+			"details": {
+				"already_unbound": false,
+				"conflicts": [],
+				"invalidated_materials": [],
+				"materials": 1,
+				"restored_fields": 15
+			},
+			"name": "Unbind restores every owned field and retains latest secondary offset",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Repeated unbind performs no writes",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Component can rebind after explicit rollback",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Foreign owned-field edit invalidates idempotent re-entry",
+			"passed": true
+		},
+		{
+			"details": {
+				"already_unbound": false,
+				"conflicts": [
+					{
+						"material_id": -9223372009289808442,
+						"uniform": "roughness_value"
+					}
+				],
+				"invalidated_materials": [],
+				"materials": 1,
+				"restored_fields": 14
+			},
+			"name": "Conditional rollback preserves foreign roughness and reports exact conflict",
+			"passed": true
+		},
+		{
+			"details": {
+				"reason": "unsupported candidate property: emission_enabled"
+			},
+			"name": "Unsupported candidate 0 rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+				"reason": "unsupported candidate property: uv1_scale"
+			},
+			"name": "Unsupported candidate 1 rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+				"reason": "unsupported candidate texture filter"
+			},
+			"name": "Unsupported candidate 2 rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+				"reason": "candidate must be two sided"
+			},
+			"name": "Unsupported candidate 3 rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+				"reason": "enabled candidate normal map is missing"
+			},
+			"name": "Unsupported candidate 4 rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+				"reason": "candidate base color must be finite, opaque and normalized"
+			},
+			"name": "Unsupported candidate 5 rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+				"reason": "candidate base color must be finite, opaque and normalized"
+			},
+			"name": "Unsupported candidate 6 rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+				"reason": "unsupported candidate property: next_pass"
+			},
+			"name": "Unsupported candidate 7 rejects atomically",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Anisotropic sampler request is an explicit reported linear conversion",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Later unrecognized target shader rejects all earlier staged materials",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Authoring StandardMaterial target requires secondary ownership first",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Distinct LOD material instances bind once each",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Every distinct LOD material rolls back",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Withdrawn secondary owner cannot pass idempotent re-entry",
+			"passed": true
+		},
+		{
+			"details": {
+				"already_unbound": false,
+				"conflicts": [],
+				"invalidated_materials": [
+					-9223372004340529521
+				],
+				"materials": 1,
+				"restored_fields": 0
+			},
+			"name": "Withdrawn secondary slot invalidates rollback without stale-material writes",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Foreign shader replacement is preserved and reported invalidated",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Component exit disconnects and restores the secondary-owned material",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Visual tree exit disconnects and restores candidate fields",
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Synthetic actual ShaderMaterial/ArrayMesh/secondary-motion lifecycle, rollback and counterexamples. Separate renderer evidence is required for the current hero maps and appearance. No art, human feel, GPU, real-time performance or production promotion claim.",
+	"sources": {
+		"res://art/open-art-wave/integration/cloth_candidate.gd": "029bc16dab6c403d1b4b40ff6ab17a0893f885645c6eb5db9696faca671a0392",
+		"res://scripts/rama_secondary_motion.gd": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+		"res://shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+		"res://tests/open_cloth_material_cases.gd": "93c05af39a46ac35ae6343c3b3ad0d8a2f0474a30451a8efe113a1cedb7ad9a7"
+	}
+}

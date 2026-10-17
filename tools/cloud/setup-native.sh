@@ -14,7 +14,7 @@ native_python_root="/workspace/tooling/yuga-native-python"
 if [[ ! -x "$native_python_root/bin/python" ]]; then
   python3 -m venv "$native_python_root"
 fi
-"$native_python_root/bin/python" -m pip install --disable-pip-version-check numpy==2.3.5 scipy==1.15.3
+"$native_python_root/bin/python" -m pip install --disable-pip-version-check numpy==2.3.5 scipy==1.15.3 Pillow==12.3.0
 python3 games/yuga-native/tools/stage-world.py --check
 godot --headless --path games/yuga-native --editor --import --quit
 python3 games/yuga-native/tools/check-roadmap.py
@@ -55,8 +55,8 @@ python3 games/yuga-native/tests/rama_package_cases.py --report="$validation_dir/
 # Each new Godot component suite uses isolated XDG state. Headless checks do not
 # accept rendered art, OS input, human feel/listening, native online play or GPU FPS.
 "$native_python_root/bin/python" games/yuga-native/tools/run-quality-checks.py --engine godot --python "$native_python_root/bin/python" --output "$validation_dir/rama-quality"
-"$native_python_root/bin/python" games/yuga-native/tests/hero_tangent_cases.py --report="$validation_dir/hero-tangents.json"
-python3 games/yuga-native/tests/native_component_analysis_cases.py --report="$validation_dir/native-component-analysis.json"
+"$native_python_root/bin/python" games/yuga-native/tests/authoring_runner_cases.py --report="$validation_dir/authoring-runner-cases.json"
+"$native_python_root/bin/python" games/yuga-native/tools/run-authoring-checks.py --engine godot --python "$native_python_root/bin/python" --cloth-resource --output "$validation_dir/authoring-checks"
 godot --headless --path games/yuga-native --script res://tests/projectile_cases.gd -- --report="$validation_dir/projectile-cases.json"
 "$native_python_root/bin/python" games/yuga-native/tools/audio/build-traversal-audio.py --check
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_cases.gd -- --report="$validation_dir/traversal.json"

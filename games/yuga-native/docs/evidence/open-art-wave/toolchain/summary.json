@@ -1,0 +1,53 @@
+{
+  "status": "PASS_bounded_bootstrap_actual_adoption",
+  "source_files": {
+    "games/yuga-native/tools/native-analysis/setup-rea.sh": {
+      "bytes": 8978,
+      "sha256": "c20d4fdf0586ee36c8dc4587461c416e780447e83dec4a570c4e9b7eeb19f212"
+    },
+    "games/yuga-native/tools/native-analysis/rea-runtime/package.json": {
+      "bytes": 54,
+      "sha256": "04df3d8e8a559cd75824d810268a49519164930cf09386e76b56bc8e086836ed"
+    },
+    "games/yuga-native/tools/native-analysis/rea-runtime/package-lock.json": {
+      "bytes": 78047,
+      "sha256": "73fa03d670870e8234e7823bca98e8cd846773fb661819ffe48a5bbb6728c7dd"
+    },
+    "games/yuga-native/tools/native-analysis/rea-runtime/README.md": {
+      "bytes": 3666,
+      "sha256": "52540cbf945de85cf48fc6db4e7a563af869ca0cc846102709cffeda24477994"
+    },
+    "games/yuga-native/tools/native-analysis/inspect-component.py": {
+      "bytes": 7705,
+      "sha256": "ccf54faf854870b7ea07378f2b4f84746708fdc3c6523923640b902771603535"
+    }
+  },
+  "guard_checks": 20,
+  "actual_install": {
+    "destination": "/workspace/tooling/rea-bootstrap-real-r2",
+    "rea_version": "6.5.0",
+    "node_version": "v24.19.0",
+    "npm_version": "11.9.0",
+    "seconds": 6.74,
+    "all_three_steps_exit0": true,
+    "five_compiled_scripts_verified": true,
+    "receipt_sha256": "ee55f1add4a9050f1799cdefd29237602ba26ae2f8c9d641d6b20e0cb9cac5b4"
+  },
+  "exact_lock_sha256": "73fa03d670870e8234e7823bca98e8cd846773fb661819ffe48a5bbb6728c7dd",
+  "root_archive_integrity": "sha512-C6BG7LyrAdR74mSjertM6PrxJkcNZ2bfQNOJornPo9erDEp2tyPRVYPnV5Yodr+1RqewCQla68WulXlVnveD+A==",
+  "source_inputs_and_existing_restored_runtime_unchanged": true,
+  "dry_run": "No executable subprocess probes, destination writes or requested network; tested with node/npm sentinels.",
+  "failure_scope": "Existing/inside/symlink/relative/timeout/TLS/lock/node guards and controlled npm nonzero/empty-success/timeout/copied-lock mutation fail with named expected reasons; retained FAILED receipts/logs.",
+  "history": "R1 prototype passed19 guards and install, before stronger no-subprocess dryrun. R2 passed20; R3 adds expected rejection-reason assertions without changing bootstrap. Final positiveR2 matches final script bytes. Older reports are historical, not additional unique case coverage.",
+  "local_links": [
+    {
+      "target": "../../../docs/evidence/open-art-wave/toolchain/",
+      "exists": true
+    },
+    {
+      "target": "../../../docs/research/REA_REUSE_REFRESH.md",
+      "exists": true
+    }
+  ],
+  "scope": "Actual locked CLI installation and version/help only; no optional lifecycle/native-addon/provider setup, persistent MCP registration, Ghidra reinstall, game execution/render/graphics or multiplayer acceptance."
+}
