@@ -112,6 +112,12 @@ godot --headless --audio-driver Dummy --path games/yuga-native \
   --report=/tmp/traversal-audio-runtime.json
 ```
 
+The same 39 checks also pass with `--fixed-fps 60`. The music-disable test waits
+for the cue's real monotonic cooldown instead of a simulated SceneTree timer:
+fixed-FPS testing can advance 0.45 simulated seconds before the 80 ms coin
+cooldown has elapsed in real time. This test correction does not change runtime
+throttling, audio bytes or playback behavior.
+
 The generator's `--check` reconstructs every WAV in memory, compares exact bytes
 and source pins, verifies distinct cues, zero cue endpoints, loop seam, PCM
 headroom and the lossless import settings. Regeneration and CI checks pin
@@ -133,5 +139,6 @@ The cloud workspace rollback removed these uncommitted assets. The generator,
 runtime and test were reconstructed byte for byte from this conversation's tool
 records and their prior SHA-256 values. Regeneration reproduced all eight original
 WAV hashes; fresh native and PCM checks passed after restoring lossless imports.
+The subsequent fixed-FPS test-timebase correction is documented above.
 The research ledger records fresh public-source retrievals after recovery; it does
 not present the lost temporary files as surviving evidence.

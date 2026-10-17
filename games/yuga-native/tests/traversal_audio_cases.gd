@@ -26,6 +26,12 @@ func _count_players(node: Node) -> int:
 	for child in node.get_children(): result += _count_players(child)
 	return result
 
+func _wait_wall_clock(seconds: float) -> void:
+	# Audio cooldowns use real monotonic time. --fixed-fps can advance many
+	# simulated seconds before one physical audio buffer has elapsed.
+	var deadline := Time.get_ticks_usec() + int(seconds * 1000000.0)
+	while Time.get_ticks_usec() < deadline: await process_frame
+
 func _run() -> void:
 	had_settings = FileAccess.file_exists(SETTINGS)
 	if had_settings: saved_settings = FileAccess.get_file_as_bytes(SETTINGS)
@@ -128,7 +134,7 @@ func _run() -> void:
 	await process_frame
 	_record("scene tree resume restores single loop",audio.music_player.playing and not audio.music_player.stream_paused)
 	audio.set_music_enabled(false)
-	await create_timer(.45).timeout
+	await _wait_wall_clock(.09)
 	before = audio.get_diagnostics().played_events
 	audio.play_event("coin")
 	_record("music off leaves gameplay cues enabled",not audio.music_player.playing and audio.get_diagnostics().played_events==before+1)

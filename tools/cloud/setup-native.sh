@@ -10,6 +10,11 @@ case "$engine_version" in
   *) echo 'The prepared native environment requires Godot4.6.3 standard.' >&2; exit 1 ;;
 esac
 npm ci
+native_python_root="/workspace/tooling/yuga-native-python"
+if [[ ! -x "$native_python_root/bin/python" ]]; then
+  python3 -m venv "$native_python_root"
+fi
+"$native_python_root/bin/python" -m pip install --disable-pip-version-check numpy==2.3.5 scipy==1.15.3
 python3 games/yuga-native/tools/stage-world.py --check
 godot --headless --path games/yuga-native --editor --import --quit
 python3 games/yuga-native/tools/check-roadmap.py
@@ -33,7 +38,7 @@ godot --headless --path games/yuga-native --script res://tests/world_lighting_ca
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_flow_cases.gd -- --report="$validation_dir/world-flow-cases.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report="$validation_dir/native-acceptance.json"
 godot --headless --path games/yuga-native --script res://tests/projectile_cases.gd -- --report="$validation_dir/projectile-cases.json"
-python3 games/yuga-native/tools/audio/build-traversal-audio.py --check
+"$native_python_root/bin/python" games/yuga-native/tools/audio/build-traversal-audio.py --check
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_cases.gd -- --report="$validation_dir/traversal.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_pose_cases.gd -- --report="$validation_dir/traversal-pose.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/lane_army_cases.gd -- --report="$validation_dir/army.json"
