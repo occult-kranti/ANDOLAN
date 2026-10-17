@@ -70,9 +70,10 @@ class Atlas extends Control:
 	var data: Dictionary = {}
 	var hero_position := Vector3.ZERO
 	var units: Array = []
+	var footer_height := 52.0
 	func project(point: Vector3) -> Vector2:
 		var bounds: Array=data.get("bounds",{}).get("nominal_xz",[-70,70,-130,130])
-		return Vector2(12+(point.x-bounds[0])/(bounds[1]-bounds[0])*(size.x-24),12+(point.z-bounds[2])/(bounds[3]-bounds[2])*(size.y-24))
+		return Vector2(12+(point.x-bounds[0])/(bounds[1]-bounds[0])*(size.x-24),12+(point.z-bounds[2])/(bounds[3]-bounds[2])*(size.y-24-footer_height))
 	func _draw() -> void:
 		draw_style_box(_background(),Rect2(Vector2.ZERO,size))
 		if data.is_empty(): return
@@ -502,25 +503,27 @@ func _build_ui() -> void:
 	map_control.offset_left=-196
 	map_control.offset_right=-20
 	map_control.offset_top=20
-	map_control.offset_bottom=286
+	map_control.offset_bottom=338
 	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You",11,CREAM)
 	legend.name="AtlasLegend"
 	hud.add_child(legend)
 	legend.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	legend.offset_left=-196
-	legend.offset_right=-20
+	legend.offset_left=-184
+	legend.offset_right=-32
 	legend.offset_top=292
 	legend.offset_bottom=326
-	var help:=_card(hud,Vector2(20,-126),Vector2(620,106))
+	var help:=_card(hud,Vector2(20,-94),Vector2(330,74))
 	help.name="ControlsCard"
 	help.set_anchors_preset(Control.PRESET_BOTTOM_LEFT,true)
 	var bottom:=VBoxContainer.new()
 	help.add_child(bottom)
-	for index in range(3):
+	for index in range(2):
 		var row:=_label("",13,CREAM if index==0 else Color("aec2c3"))
+		row.clip_text=true
+		row.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 		bottom.add_child(row)
 		help_labels.append(row)
-	phase_label=help_labels[2]
+	phase_label=help_labels[1]
 	_refresh_control_labels()
 	var ability:=_card(hud,Vector2(-280,-154),Vector2(260,134))
 	ability.name="TraversalStatus"
@@ -588,10 +591,12 @@ func _build_ui() -> void:
 	controls_overlay.bindings_changed.connect(_refresh_control_labels)
 
 func _refresh_control_labels() -> void:
-	if help_labels.size()!=3: return
-	help_labels[0].text="%s / %s / %s / %s move · %s sprint · %s jump / rise" % [Bindings.label("move_forward"),Bindings.label("move_left"),Bindings.label("move_back"),Bindings.label("move_right"),Bindings.label("sprint"),Bindings.label("jump")]
-	help_labels[1].text="%s flight · %s tether / release · %s descend · %s dash · %s pulse" % [Bindings.label("fly"),Bindings.label("grapple"),Bindings.label("descend"),Bindings.label("dash"),Bindings.label("pulse")]
-	help_labels[2].text="LMB fire · %s reload · F2 controls · F1 atlas · N light · Esc pause" % Bindings.label("reload")
+	if help_labels.size()!=2: return
+	var mode: String=String(player.traversal_report().get("mode","grounded")) if player and player.has_method("traversal_report") else "grounded"
+	if mode=="flight": help_labels[0].text="%s rise · %s descend" % [Bindings.label("jump"),Bindings.label("descend")]
+	elif mode=="grapple": help_labels[0].text="%s release tether" % Bindings.label("grapple")
+	else: help_labels[0].text="LMB fire · %s pulse · %s dash" % [Bindings.label("pulse"),Bindings.label("dash")]
+	help_labels[1].text="F2 controls & remap · Esc pause"
 
 func _open_controls() -> void:
 	controls_return_to_pause=paused
@@ -694,6 +699,7 @@ func _physics_process(_delta: float) -> void:
 	if player.position.y<-.5: visit_anchor("sun-spawn")
 
 func _update_practice_hud() -> void:
+	_refresh_control_labels()
 	if army:
 		var battle: Dictionary=army.report()
 		var cores: Dictionary=battle.get("cores",{})

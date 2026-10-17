@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Capture actual native traversal inputs on an owned software Vulkan display.
 
-The full take is 180 consecutive frames at a simulated 30 fps with 60 Hz physics.
-It produces a silent six-second MP4; it does not measure realtime performance.
-Use --preview for 24 frames and three stills without encoding a video.
+The full take is 180 consecutive 1280x720 frames at a simulated 30 fps with
+60 Hz physics. It produces a silent six-second MP4; it does not measure realtime
+performance. Use --preview for 24 frames at 960x540 and three stills without video.
+Every image records actual renderer draw calls, object and primitive counts.
 """
 from __future__ import annotations
 
@@ -33,27 +34,35 @@ def write_new_json(path: Path, value: dict) -> None:
         handle.write('\n')
 
 
-def verify_image(output: Path, image: dict) -> None:
+def verify_image(output: Path, image: dict, dimensions: tuple[int, int]) -> None:
     name = image['file']
     if Path(name).name != name:
         raise ValueError('Image path must be a direct child of the evidence directory')
     path = output / name
     with path.open('rb') as source:
         header = source.read(24)
-    if header[:8] != b'\x89PNG\r\n\x1a\n' or struct.unpack('>II', header[16:24]) != (960, 540):
+    if header[:8] != b'\x89PNG\r\n\x1a\n' or struct.unpack('>II', header[16:24]) != dimensions:
         raise ValueError(f'Invalid actual PNG dimensions: {name}')
+    if (image['width'], image['height']) != dimensions:
+        raise ValueError(f'Image metadata does not match actual dimensions: {name}')
     if sha256(path) != image['sha256']:
         raise ValueError(f'Image checksum mismatch: {name}')
+    for key in ('draw_calls', 'rendered_objects', 'rendered_primitives'):
+        if not isinstance(image.get(key), int) or image[key] <= 0:
+            raise ValueError(f'Missing actual renderer counter {key}: {name}')
 
 
 def validate_capture(report: dict, output: Path, project: Path, preview: bool) -> None:
     expected = 24 if preview else 180
+    dimensions = (960, 540) if preview else (1280, 720)
     if not report.get('complete') or report.get('failure'):
         raise ValueError('Capture did not pass: ' + str(report.get('failure')))
     if report.get('renderer') != 'forward_plus' or report.get('display') == 'headless':
         raise ValueError('A genuine Forward+ display capture is required')
     if report.get('physics_hz') != 60 or report.get('fps') != 30:
         raise ValueError('Unexpected simulation clock configuration')
+    if (report.get('width'), report.get('height')) != dimensions:
+        raise ValueError('Capture resolution does not match preview/full mode')
     frames = report['frames']
     if len(frames) != expected or report.get('take_physics_ticks') != 2 * expected:
         raise ValueError('Frame count or measured physics advancement is wrong')
@@ -68,14 +77,14 @@ def validate_capture(report: dict, output: Path, project: Path, preview: bool) -
             raise ValueError('Rendered frame counter did not advance')
         if frame['image']['file'] != f'frame-{index:05d}.png':
             raise ValueError('Unexpected frame filename/order')
-        verify_image(output, frame['image'])
+        verify_image(output, frame['image'], dimensions)
         previous_tick, previous_draw = frame['physics_tick'], frame['render_frame']
     if len(list(output.glob('frame-*.png'))) != expected:
         raise ValueError('Extra or missing frame files')
     if len(report['stills']) != (3 if preview else 5):
         raise ValueError('Expected three preview stills or five full review stills')
     for still in report['stills']:
-        verify_image(output, still['image'])
+        verify_image(output, still['image'], dimensions)
     for resource, expected_hash in report['source_sha256'].items():
         if not resource.startswith('res://'):
             raise ValueError('Invalid source resource path')
@@ -107,7 +116,7 @@ def encode_video(output: Path, report_path: Path, ffmpeg: str, ffprobe: str) -> 
     if len(streams) != 1 or streams[0]['codec_type'] != 'video':
         raise ValueError('The preview must contain exactly one silent video stream')
     stream = streams[0]
-    if (stream['width'], stream['height']) != (960, 540) or int(stream['nb_read_frames']) != 180:
+    if (stream['width'], stream['height']) != (1280, 720) or int(stream['nb_read_frames']) != 180:
         raise ValueError('Encoded video frame count or dimensions are wrong')
     if Fraction(stream['avg_frame_rate']) != 30 or abs(float(probe['format']['duration']) - 6.0) > .02:
         raise ValueError('Encoded video must be exactly six seconds at 30 fps')
@@ -121,6 +130,37 @@ def encode_video(output: Path, report_path: Path, ffmpeg: str, ffprobe: str) -> 
     return result
 
 
+def seed_shader_cache(source: Path | None, destination: Path) -> dict:
+    """Copy only regular cache files into a new isolated cache; never reuse settings."""
+    if source is None:
+        return {'seeded': False}
+    source = source.resolve()
+    if not source.is_dir():
+        raise ValueError('Shader cache seed must be an existing directory')
+    paths = sorted(source.rglob('*'))
+    if any(path.is_symlink() for path in paths):
+        raise ValueError('Shader cache seed must not contain symbolic links')
+    files = [path for path in paths if path.is_file()]
+    total_bytes = sum(path.stat().st_size for path in files)
+    if total_bytes > 512 * 1024 * 1024 or len(files) > 100000:
+        raise ValueError('Shader cache seed exceeds the bounded copy budget')
+    destination.mkdir()
+    entries = {}
+    for path in files:
+        relative = path.relative_to(source)
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        expected = sha256(path)
+        shutil.copyfile(path, target)
+        if sha256(target) != expected:
+            raise ValueError('Shader cache seed changed during copy')
+        entries[str(relative)] = expected
+    digest = hashlib.sha256(json.dumps(entries, sort_keys=True).encode()).hexdigest()
+    return {'seeded': True, 'source': str(source), 'files': len(files), 'bytes': total_bytes,
+            'file_hash_manifest_sha256': digest,
+            'scope': 'Copied shader compilation cache only; Mesa validates compatibility. No gameplay assets or user preferences are copied.'}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True, help='New absolute evidence directory; never overwritten')
@@ -128,7 +168,8 @@ def main() -> None:
     parser.add_argument('--runtime', type=Path, default=Path('/workspace/tooling/native-render/runtime'))
     parser.add_argument('--godot', default=shutil.which('godot'))
     parser.add_argument('--display', type=int, default=117, help='Unused owned Xvfb display [90,199]')
-    parser.add_argument('--preview', action='store_true', help='24 sequential frames plus three stills; no MP4')
+    parser.add_argument('--preview', action='store_true', help='24 frames at 960x540 plus three stills; full mode is 1280x720')
+    parser.add_argument('--shader-cache-seed', type=Path, help='Optional prior Mesa cache directory, copied and hash-checked into the fresh isolated cache')
     parser.add_argument('--dry-run', action='store_true', help='Print the exact renderer command without starting processes')
     args = parser.parse_args()
     if not args.output.is_absolute():
@@ -147,8 +188,12 @@ def main() -> None:
                '--fixed-fps', '30', '--script', 'res://tools/capture-traversal.gd', '--', '--output=' + str(output)]
     if args.preview:
         command.append('--preview')
+    dimensions = (960, 540) if args.preview else (1280, 720)
+    screen = f'{dimensions[0]}x{dimensions[1]}x24'
     if args.dry_run:
-        print(json.dumps({'command': command, 'output': str(output), 'starts_renderer': False}, indent=2))
+        print(json.dumps({'command': command, 'output': str(output), 'dimensions': dimensions,
+                          'xvfb_screen': screen, 'shader_cache_seed': str(args.shader_cache_seed) if args.shader_cache_seed else None,
+                          'starts_renderer': False}, indent=2))
         return
     xvfb = runtime / 'usr/bin/Xvfb'
     icd = runtime / 'usr/share/vulkan/icd.d/lvp_icd.json'
@@ -168,8 +213,9 @@ def main() -> None:
         environment[variable] = str(user / folder)
         Path(environment[variable]).mkdir()
     environment['MESA_SHADER_CACHE_DIR'] = str(user / 'cache/mesa')
+    cache_seed = seed_shader_cache(args.shader_cache_seed, user / 'cache/mesa')
     with xlog_path.open('x') as xlog, log_path.open('x') as log:
-        server = subprocess.Popen([str(xvfb), environment['DISPLAY'], '-screen', '0', '960x540x24',
+        server = subprocess.Popen([str(xvfb), environment['DISPLAY'], '-screen', '0', screen,
                                    '-nolisten', 'tcp', '-extension', 'MIT-SHM', '-ac'],
                                   env=environment, stdout=xlog, stderr=subprocess.STDOUT)
         try:
@@ -203,6 +249,7 @@ def main() -> None:
         'capture_report_sha256': sha256(report_path), 'runner_sha256': sha256(Path(__file__)),
         'godot_log_sha256': sha256(log_path), 'frames': len(report['frames']),
         'physics_ticks': report['take_physics_ticks'], 'video_sha256': video['sha256'] if video else None,
+        'dimensions': dimensions, 'shader_cache_seed': cache_seed,
         'settings_scope': 'Fresh isolated XDG data/config/cache; existing user preferences were not read or written.'})
     print(json.dumps({'complete': True, 'frames': len(report['frames']), 'stills': len(report['stills']),
                       'physics_ticks': report['take_physics_ticks'], 'output': str(output),

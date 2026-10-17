@@ -13,7 +13,7 @@
     },
     {
       "path": "scripts/lane_unit_art.gd",
-      "sha256": "63f9b8834688a567debab0d6603250eaf85fb3cae6918f938be519190043c3dc"
+      "sha256": "5861731faf1fc4dc77be7d99861a8c8eb885dba95c82cd074fe2b260e805482d"
     },
     {
       "path": "tests/lane_army_cases.gd",
@@ -34,7 +34,51 @@
     "visual_direction": "Fantasy ancient infantry: wrapped cloth, quilted cuirass, dhoti silhouette, spears and round shields, bows and quivers, crowned banner commander. Warm sun and cool moon team palettes.",
     "animation": "Original deterministic joint poses for walk, aim, windup, attack, hit, fall and banner motion; shared meshes/materials and reused arrow geometry.",
     "historical_claim": "Stylized invented costumes, not a reconstruction of one historical army.",
-    "quality_limit": "Procedural prototype art; does not establish commercial hero-shooter visual parity."
+    "quality_limit": "Procedural prototype art; does not establish commercial hero-shooter visual parity.",
+    "revision": 2,
+    "revision_changes": [
+      "Flattened tapered cuirass and narrower shoulder caps",
+      "Rounded turban, defined neck and rounded shoes",
+      "Linen lower garments, leather waist and aged metal with restrained team color",
+      "Original leaf spearhead, shaped shield rim and notched banner",
+      "Thin muted team annulus replaces solid gold disc"
+    ],
+    "geometry_budget": {
+      "method": "Godot 4.6.3 headless instantiation, recursive MeshInstance3D count and mesh.get_faces().size()/3; source geometry counts, not draw-call or frame-rate measurements",
+      "baseline": {
+        "spearman": {
+          "meshes": 29,
+          "triangles": 3780
+        },
+        "bow_guard": {
+          "meshes": 40,
+          "triangles": 5352
+        },
+        "commander": {
+          "meshes": 38,
+          "triangles": 4884
+        }
+      },
+      "revision_2": {
+        "spearman": {
+          "meshes": 31,
+          "triangles": 4300
+        },
+        "bow_guard": {
+          "meshes": 42,
+          "triangles": 6044
+        },
+        "commander": {
+          "meshes": 40,
+          "triangles": 5398
+        }
+      },
+      "maximum_mesh_instance_increase_percent": 6.9,
+      "five_unit_wave_triangles_before": 23148,
+      "five_unit_wave_triangles_after": 26086,
+      "five_unit_wave_triangle_increase_percent": 12.69
+    },
+    "review_status": "Bounded revision complete; actual gameplay render review pending. No commercial-quality parity claim."
   },
   "mechanics": {
     "step_seconds": 0.05,

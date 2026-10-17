@@ -1,9 +1,20 @@
 extends RefCounted
 ## Original raised courts and luminous tether relics. Eight solid decks are
 ## declared separately in the manifest; this builder adds no hidden collision.
+const DeckShader = preload("res://scripts/traversal_stone.gdshader")
 
 var materials: Dictionary = {}
 var meshes := 0
+
+func _deck_material(dimensions: Vector3) -> ShaderMaterial:
+	var key := "deck:"+str(dimensions)
+	if materials.has(key): return materials[key]
+	var value := ShaderMaterial.new()
+	value.shader=DeckShader
+	value.set_shader_parameter("deck_height",dimensions.y)
+	value.set_shader_parameter("deck_width",dimensions.x)
+	materials[key]=value
+	return value
 
 func _material(color: Color, glow: float=0.0) -> StandardMaterial3D:
 	var key := str(color)+":"+str(glow)
@@ -36,7 +47,6 @@ func build(parent: Node3D, data: Dictionary) -> Dictionary:
 	var root := Node3D.new()
 	root.name="TraversalRelics"
 	parent.add_child(root)
-	var stone := _material(Color("afa080"))
 	var shade := _material(Color("756f63"))
 	var warm := _material(Color("d1ad68"))
 	var cool := _material(Color("71adb3"))
@@ -48,7 +58,7 @@ func build(parent: Node3D, data: Dictionary) -> Dictionary:
 		var size_ := Vector3(entry.size[0],entry.size[1],entry.size[2])
 		var trim := warm if entry.team=="sun" else cool
 		# All opaque architectural volume stays within the matching deck AABB.
-		_box(node,Vector3(0,size_.y*.5,0),size_,stone,"SolidLandingDeck")
+		_box(node,Vector3(0,size_.y*.5,0),size_,_deck_material(size_),"SolidLandingDeck")
 		for level in [0.18,size_.y*.45,size_.y-.18]:
 			# Recessed trim faces prevent coplanar overlay/z-fighting.
 			for side in [-1.0,1.0]:

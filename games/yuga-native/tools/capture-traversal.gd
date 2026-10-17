@@ -8,6 +8,7 @@ const ACTIONS := ["grapple", "fly", "jump", "move_right"]
 const REQUIRED_IMPORTS := ["res://assets/heroes/rama-production.glb", "res://assets/world/architecture.glb", "res://assets/world/nature.glb"]
 var output_path := ""
 var preview := false
+var capture_size := Vector2i(1280, 720)
 var scene: Node3D
 var sources := {}
 var imports := {}
@@ -62,7 +63,8 @@ func _run() -> void:
 		if not _validate_import(path):
 			_finish(false)
 			return
-	root.size = Vector2i(960, 540)
+	capture_size = Vector2i(960, 540) if preview else Vector2i(1280, 720)
+	root.size = capture_size
 	root.content_scale_size = Vector2i(1280, 720)
 	root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	root.msaa_3d = Viewport.MSAA_2X
@@ -293,14 +295,18 @@ func _draw_frames(count: int) -> void:
 
 func _save_image(filename: String) -> Dictionary:
 	var rendered := root.get_texture().get_image()
-	if rendered.is_empty() or rendered.get_size() != Vector2i(960,540):
-		failure = "Renderer did not produce the requested 960x540 image"
+	if rendered.is_empty() or rendered.get_size() != capture_size:
+		failure = "Renderer did not produce the requested %dx%d image" % [capture_size.x, capture_size.y]
 		return {}
 	var path := output_path.path_join(filename)
 	if FileAccess.file_exists(path) or rendered.save_png(path) != OK:
 		failure = "Image save refused or failed: " + filename
 		return {}
-	return {"file":filename,"sha256":FileAccess.get_sha256(path),"width":960,"height":540,"render_frame":Engine.get_frames_drawn()}
+	return {"file":filename,"sha256":FileAccess.get_sha256(path),"width":capture_size.x,"height":capture_size.y,
+		"render_frame":Engine.get_frames_drawn(),
+		"draw_calls":RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME),
+		"rendered_objects":RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME),
+		"rendered_primitives":RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME)}
 
 func _source_hashes() -> Dictionary:
 	var paths: Array[String] = ["res://project.godot","res://tools/capture-traversal.gd","res://tools/run-traversal-capture.py","res://art/world/confluence-map.json"]
@@ -357,7 +363,7 @@ func _fail(message: String) -> void:
 func _finish(success: bool) -> void:
 	_release()
 	var report := {"schema":1,"kind":"actual-staged-native-traversal-input","complete":success,"failure":failure,
-		"preview":preview,"fps":FPS,"expected_frames":PREVIEW_FRAMES if preview else FULL_FRAMES,"width":960,"height":540,
+		"preview":preview,"fps":FPS,"expected_frames":PREVIEW_FRAMES if preview else FULL_FRAMES,"width":capture_size.x,"height":capture_size.y,
 		"physics_hz":Engine.physics_ticks_per_second,"take_physics_ticks":take_ticks,"take_start_tick":take_start_tick,
 		"source_sha256":sources,"imports":imports,"frames":frames,"stills":stills,"input_schedule":inputs,"events":events,
 		"outcomes":{"grapple":saw_grapple,"flight":saw_flight,"visible_rope":saw_rope,"pose_overlay":saw_overlay,"pose_finite":pose_finite,"maximum_speed":max_speed,"minimum_energy":min_energy},

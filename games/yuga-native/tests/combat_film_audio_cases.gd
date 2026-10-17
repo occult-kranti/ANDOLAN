@@ -139,7 +139,7 @@ func _run() -> void:
 	else: DirAccess.remove_absolute(ProjectSettings.globalize_path(SETTINGS))
 	var passed:=true
 	for check in checks: passed=passed and check.passed
-	var report:={"passed":passed,"engine":Engine.get_version_info().string,"sources":{"director":FileAccess.get_sha256(director_path),"runner":FileAccess.get_sha256(get_script().resource_path),"courtyard_settings_source":FileAccess.get_sha256("res://scripts/courtyard.gd"),"soundtrack":FileAccess.get_sha256("res://assets/cinematics/audio/confluence-duel-mix.wav")},"checks":checks,"scope":"Headless actual AudioStreamPlayer state and director lifecycle. Zero volume never starts playback. Focus events are explicitly emitted notifications; OS input and audible quality require separate review. Settings are restored after fixtures."}
+	var report:={"passed":passed,"engine":Engine.get_version_info().string,"sources":{"director":FileAccess.get_sha256(director_path),"runner":FileAccess.get_sha256(get_script().resource_path),"courtyard_settings_source":FileAccess.get_sha256("res://scripts/courtyard.gd"),"shared_settings_reader":FileAccess.get_sha256("res://scripts/input_bindings.gd"),"soundtrack":FileAccess.get_sha256("res://assets/cinematics/audio/confluence-duel-mix.wav")},"checks":checks,"scope":"Headless actual AudioStreamPlayer state and director lifecycle. Zero volume never starts playback. Focus events are explicitly emitted notifications; OS input and audible quality require separate review. Settings are restored after fixtures."}
 	if not output.is_empty():
 		var file:=FileAccess.open(output,FileAccess.WRITE)
 		if file: file.store_string(JSON.stringify(report,"\t")+"\n")

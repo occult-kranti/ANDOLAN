@@ -48,7 +48,7 @@ vec3 world_paving(vec2 p) {
 	float lane = 1.0 - smoothstep(3.80 - aa, 3.90 + aa, lane_distance);
 	float rotation = 1.0 - smoothstep(1.33 - aa, 1.45 + aa, rotation_distance);
 	vec3 paving = paving_stones(p, vec2(1.65, 1.10), vec3(0.265, 0.280, 0.266));
-	vec3 avenue = paving_stones(p, vec2(2.40, 1.20), vec3(0.218, 0.238, 0.229));
+	vec3 avenue = paving_stones(p, vec2(2.40, 1.20), vec3(0.194, 0.214, 0.207));
 	// A single union mask resolves intersections without overlapping geometry.
 	paving = mix(paving, avenue, max(lane, rotation * 0.55));
 	// Quiet arrival-court inlays are descriptive scenery, never combat markers.

@@ -23,7 +23,7 @@ func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
-	for path in ["res://art/world/confluence-map.json", "res://assets/world/confluence-map.json", "res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/projectile.gd", "res://scripts/world_lighting.gd", "res://scripts/traversal_landmarks.gd", "res://scripts/player_traversal.gd", "res://scripts/lane_army.gd", "res://scenes/confluence_world.tscn", "res://tests/world_scene_cases.gd"]:
+	for path in ["res://art/world/confluence-map.json", "res://assets/world/confluence-map.json", "res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/projectile.gd", "res://scripts/world_lighting.gd", "res://scripts/traversal_landmarks.gd", "res://scripts/traversal_stone.gdshader", "res://scripts/world_ground_common.gdshaderinc", "res://scripts/player_traversal.gd", "res://scripts/lane_army.gd", "res://scenes/confluence_world.tscn", "res://tests/world_scene_cases.gd"]:
 		before[path] = FileAccess.get_sha256(path)
 	manifest = JSON.parse_string(FileAccess.get_file_as_string("res://art/world/confluence-map.json"))
 	var packed = load("res://scenes/confluence_world.tscn")
@@ -187,6 +187,10 @@ func _landing_errors() -> Array:
 	for item in manifest.traversal.native_collision_boxes:
 		var base:=_v(item.position)
 		var dimensions:=_v(item.size)
+		var visual: MeshInstance3D=scene.world.get_node("TraversalRelics/"+String(item.landmark_id)+"/SolidLandingDeck")
+		var material: Material=visual.material_override
+		if not material is ShaderMaterial or material.shader.resource_path!="res://scripts/traversal_stone.gdshader" or not is_equal_approx(float(material.get_shader_parameter("deck_height")),dimensions.y) or not is_equal_approx(float(material.get_shader_parameter("deck_width")),dimensions.x):
+			errors.append(item.id+" facade material contract")
 		for offset in [Vector3.ZERO,Vector3(1.5,0,1.5),Vector3(-1.5,0,-1.5)]:
 			var hit:=_ray(base+offset+Vector3.UP*(dimensions.y+2),base+offset+Vector3.UP*(dimensions.y-1))
 			if hit.is_empty() or abs(hit.position.y-(base.y+dimensions.y))>.002 or not hit.collider.is_in_group("confluence_native_platform"):

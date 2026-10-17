@@ -61,13 +61,53 @@ static func set_binding(action: String, keycode: int) -> Dictionary:
 	return {"ok":true,"message":String(TITLES[action]) + ": " + label(action)}
 
 static func reset_defaults() -> Dictionary:
-	var result := merge_settings({"controls":{"bindings":DEFAULTS.duplicate(),"binding_version":1}},config_path)
+	var result: Dictionary
+	if read_config(config_path).ok:
+		result = merge_settings({"controls":{"bindings":DEFAULTS.duplicate(),"binding_version":1}},config_path)
+	else:
+		result = _recover_invalid_config(config_path)
 	if result.ok:
 		bindings = DEFAULTS.duplicate()
 		load_notice = ""
 		_apply()
-		result.message = "Default controls restored and saved."
+		if not result.has("backup_path"): result.message = "Default controls restored and saved."
 	return result
+
+static func _recover_invalid_config(path: String) -> Dictionary:
+	# Explicit Reset is the only operation allowed to replace invalid bytes.
+	# Rename on the same filesystem preserves even oversized files without
+	# loading/copying them. Stage the small valid replacement before mutation.
+	var failure := {"ok":false,"message":"Could not preserve invalid settings. Original file is unchanged."}
+	if not path.begins_with("user://") or path.get_file().to_utf8_buffer().size() > 160:
+		return failure
+	if not FileAccess.file_exists(path): return failure
+	var backup := ""
+	var temporary := ""
+	var stamp := str(int(Time.get_unix_time_from_system())) + "-" + str(Time.get_ticks_usec())
+	for attempt in range(16):
+		var candidate := path + ".invalid-" + stamp + "-" + str(attempt) + ".bak"
+		var staged := candidate + ".new"
+		if not FileAccess.file_exists(candidate) and not DirAccess.dir_exists_absolute(candidate) and not FileAccess.file_exists(staged) and not DirAccess.dir_exists_absolute(staged):
+			backup = candidate
+			temporary = staged
+			break
+	if backup.is_empty(): return failure
+	var config := ConfigFile.new()
+	config.set_value("controls","bindings",DEFAULTS.duplicate())
+	config.set_value("controls","binding_version",1)
+	if config.save(temporary) != OK:
+		DirAccess.remove_absolute(temporary)
+		return failure
+	if DirAccess.rename_absolute(path,backup) != OK:
+		DirAccess.remove_absolute(temporary)
+		return failure
+	if DirAccess.rename_absolute(temporary,path) != OK:
+		var restored := DirAccess.rename_absolute(backup,path)
+		DirAccess.remove_absolute(temporary)
+		if restored != OK:
+			return {"ok":false,"backup_path":backup,"message":"Reset could not finish. Your original settings are preserved at " + backup + "."}
+		return failure
+	return {"ok":true,"backup_path":backup,"message":"Defaults saved. Invalid settings preserved as " + backup.get_file() + "."}
 
 static func _apply() -> void:
 	release_gameplay()
