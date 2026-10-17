@@ -81,6 +81,15 @@ jobs:
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --editor --import --quit
       - name: Native physics and animation acceptance
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report=${{ runner.temp }}/native-acceptance.json
+      - name: Mythic catalogue, editable hero, carry and version contracts
+        run: |
+          python3 games/yuga-native/tools/check-hero-codex.py --report="$RUNNER_TEMP/hero-codex.json"
+          python3 games/yuga-native/tests/hero_codex_cases.py --report="$RUNNER_TEMP/hero-codex-cases.json"
+          python3 games/yuga-native/tests/hero_reconstruction_cases.py --report="$RUNNER_TEMP/hero-reconstruction.json"
+          python3 games/yuga-native/tools/check-native-contracts.py --report="$RUNNER_TEMP/native-contract-pins.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/native_contract_cases.gd -- --report="$RUNNER_TEMP/native-contracts.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/hero_pose_cases.gd -- --report="$RUNNER_TEMP/hero-pose.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/world_presentation_cases.gd -- --report="$RUNNER_TEMP/world-presentation.json"
       - name: Combat film seek, pose, effect and scene lifecycle checks
         run: |
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/combat_film_cases.gd -- --report=${{ runner.temp }}/combat-film-cases.json
@@ -133,6 +142,13 @@ jobs:
           name: yuga-native-acceptance
           path: |
             ${{ runner.temp }}/native-acceptance.json
+            ${{ runner.temp }}/hero-codex.json
+            ${{ runner.temp }}/hero-codex-cases.json
+            ${{ runner.temp }}/hero-reconstruction.json
+            ${{ runner.temp }}/native-contract-pins.json
+            ${{ runner.temp }}/native-contracts.json
+            ${{ runner.temp }}/hero-pose.json
+            ${{ runner.temp }}/world-presentation.json
             ${{ runner.temp }}/traversal.json
             ${{ runner.temp }}/traversal-pose.json
             ${{ runner.temp }}/army.json

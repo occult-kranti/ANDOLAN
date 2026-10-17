@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "passed": true,
+  "checks": [
+    {
+      "name": "Runtime rig/skin/animation bytes, image CRCs, finite bounded colours and topology preserved",
+      "passed": true,
+      "detail": {
+        "vertices": 59759,
+        "triangles": 100938,
+        "joints": 164,
+        "clips": 9,
+        "animation_output_samples_finite": 15801,
+        "generated_images": 10,
+        "vertex_colors": 28201,
+        "preserved_binary_bytes": 6500208,
+        "bytes": 7901132,
+        "preserved_binary_sha256": "5d887c43f23001e826007a2b4fbb343a2f60569b6aca00e4b5cbcf8983506df2",
+        "preserved_section_sha256": {
+          "nodes": "a84cd77377b46a8ddc19f9f48ec358235999221d60810c13e7cd5544bf48d58b",
+          "skins": "99bf2eac8b4117d3ccb22c07e6bfb02f7b0edeb4d90234ae46d02908b3e0f75c",
+          "animations": "05607aae7652b00c3c3d8730c357b8b1d3bb547cde1e8005a0cbe5193420b87a",
+          "accessors": "4a73dfe5cf1f8dd86af986c323987798f75827796e8a97e6007aa5e479e28ee2",
+          "bufferViews": "b83880789759b0dd201fc06ce22fa705b0574a43aa110205418a6f3a2ddd83e5"
+        }
+      }
+    },
+    {
+      "name": "Two clean generations match each other and the supplied runtime asset byte-for-byte",
+      "passed": true,
+      "detail": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc"
+    },
+    {
+      "name": "Changed reconstruction input rejected",
+      "passed": true,
+      "detail": "Rejected changed source"
+    },
+    {
+      "name": "Original-data mutation rejected even when GLB length remains valid",
+      "passed": true,
+      "detail": "Rejected changed binary geometry/animation data"
+    },
+    {
+      "name": "Corrupt material image rejected",
+      "passed": true,
+      "detail": "Rejected corrupt image CRC"
+    },
+    {
+      "name": "Encoded sRGB palette ranges prevent the rejected extra-transfer pale skin/pastel cloth",
+      "passed": true,
+      "detail": {
+        "warm-living-skin-albedo": [
+          151,
+          98,
+          68
+        ],
+        "cobalt-woven-silk-albedo": [
+          18,
+          42,
+          91
+        ],
+        "ivory-folded-silk-albedo": [
+          212,
+          202,
+          166
+        ]
+      }
+    }
+  ],
+  "asset": "/workspace/ANDOLAN/games/yuga-native/assets/heroes/rama-production.glb",
+  "asset_sha256": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc",
+  "generator_sha256": "62205c6e1e85c0634ff8fd143868cd9a94f1d171bb40a68e71ba8acf50a17546",
+  "scope": "Actual GLB preservation/reproducibility/negative-input checks. No visual, contact, continuous-motion or commercial-quality acceptance."
+}

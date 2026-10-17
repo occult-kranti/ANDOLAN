@@ -1,5 +1,7 @@
 # YUGA native production track
 
+Current work: [two verified mythic batches](docs/MYTHIC_BATCHES.md). The first five packets add fourteen distinct ultimate concepts, editable Rama reconstruction, corrected materials and carry, world ornaments/lighting and version contracts. [Actual evidence and remaining art limits](docs/evidence/mythic-batch1/REVIEW.md). The next five bring those ideas into practice; the public Triad download below remains its own earlier build.
+
 **Start a new task:** [repository handoff](../../docs/START_HERE.md) → [build handbook](docs/BUILD_HANDBOOK.md). The handbook maps features to files and provides setup, tests, art, capture, packaging and agent handoff instructions. Use the [research brief](docs/research/RESEARCH_BRIEF.md) for Reddit findings, mythology, selected reading and reuse decisions; use the [workspace guide](../../docs/WORKSPACE_AND_CLEANUP.md) for cloud cleanup and recovery.
 
 The [full-game production roadmap](docs/FULL_GAME_PRODUCTION_ROADMAP.md) is the

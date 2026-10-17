@@ -20,6 +20,24 @@ var samples := []
 var sole_samples := []
 var passed := true
 var started := Time.get_ticks_msec()
+var validated_bake_target := ""
+const COMPATIBILITY := "res://art/motion/compatible-targets.json"
+
+func target_binding(target_sha: String, manifest: Dictionary, compatibility: Dictionary) -> bool:
+	if target_sha==manifest.target.sha256: return true
+	if compatibility.get("base_target_sha256")!=manifest.target.sha256 or compatibility.get("library_sha256")!=manifest.library.sha256: return false
+	for entry in compatibility.get("compatible_targets",[]):
+		if not entry is Dictionary or entry.get("sha256")!=target_sha: continue
+		var proof_path: String=entry.get("proof","")
+		if not proof_path.begins_with("res://art/production/") or ".." in proof_path or not proof_path.ends_with(".json"): return false
+		if FileAccess.get_sha256(proof_path)!=entry.get("proof_sha256",""): return false
+		var proof=JSON.parse_string(FileAccess.get_file_as_string(proof_path))
+		if not proof is Dictionary or proof.get("passed")!=true or proof.get("asset_sha256")!=target_sha: return false
+		if not proof.get("checks") is Array or proof.checks.size()<5: return false
+		for item in proof.checks:
+			if not item is Dictionary or item.get("passed")!=true: return false
+		return true
+	return false
 
 func _initialize() -> void:
 	for arg in OS.get_cmdline_user_args():
@@ -192,7 +210,7 @@ func inspect_run_support() -> void:
 		timeline.append({"seconds":seconds,"left_min_sole_y":sole.left_min_y,"right_min_sole_y":sole.right_min_y,"both_feet_clearance":both,"source_inferred_support":candidate.source_support_candidate})
 	var metrics:={"kind":"all-foot-and-toe-dominant-vertices-reconstructed-from-loaded-library","sole_vertex_count":sole_samples.size(),"samples_including_duplicate_endpoint":timeline.size(),"sample_hz":60,"near_floor_threshold_metres":near_floor_threshold,"minimum_left_sole_y":minimum_left,"minimum_right_sole_y":minimum_right,"maximum_both_feet_clearance":maximum_both,"maximum_both_feet_clearance_seconds":maximum_both_time,"source_inferred_support_samples":support_count,"source_inferred_support_near_floor_samples":support_near_floor_count,"maximum_support_sample_clearance":maximum_support,"maximum_support_sample_clearance_seconds":maximum_support_time,"left_near_floor_samples":near_floor_left,"right_near_floor_samples":near_floor_right,"both_feet_above_near_floor_samples":both_airborne_count,"max_difference_from_baker_all_sole_heights":max_baker_difference,"max_source_sample_time_difference":max_time_difference,"scope":"Support labels are inferred from source bone heights, not authored contact events. Near-floor counts are vertical-clearance diagnostics, not horizontal foot lock, plausible flight, physical contact, or art acceptance.","timeline":timeline}
 	measurements.run_support_diagnostic=metrics
-	record("run_support_evidence_resolves",finite and sole_samples.size()==source.sole_vertex_count and source.samples.size()==51 and evidence.target_sha256==FileAccess.get_sha256(HERO) and max_baker_difference<=0.002 and max_time_difference<=0.00001,{"sole_vertices":sole_samples.size(),"samples":timeline.size(),"max_baker_difference_metres":max_baker_difference,"max_time_difference_seconds":max_time_difference})
+	record("run_support_evidence_resolves",finite and sole_samples.size()==source.sole_vertex_count and source.samples.size()==51 and evidence.target_sha256==validated_bake_target and max_baker_difference<=0.002 and max_time_difference<=0.00001,{"sole_vertices":sole_samples.size(),"samples":timeline.size(),"max_baker_difference_metres":max_baker_difference,"max_time_difference_seconds":max_time_difference,"recorded_bake_target":evidence.target_sha256,"validated_bake_target":validated_bake_target})
 	var neutral_pose:=at_time(0)
 	var neutral:=all_soles(neutral_pose)
 	for bone in neutral_pose.global.size(): neutral_pose.global[bone].origin.y+=0.1
@@ -338,7 +356,21 @@ func run() -> void:
 		record("manifest_exists",false)
 		finish(source_hashes)
 		return
-	record("exact_source_target_library_binding",manifest.source.sha256==SOURCE_SHA and manifest.target.sha256==source_hashes[HERO] and manifest.library.sha256==source_hashes[library_path])
+	var compatibility := {}
+	if FileAccess.file_exists(COMPATIBILITY):
+		var parsed=JSON.parse_string(FileAccess.get_file_as_string(COMPATIBILITY))
+		if parsed is Dictionary: compatibility=parsed
+		source_hashes[COMPATIBILITY]=FileAccess.get_sha256(COMPATIBILITY)
+		for entry in compatibility.get("compatible_targets",[]):
+			if entry is Dictionary and String(entry.get("proof","")).begins_with("res://art/production/") and not ".." in entry.proof:
+				source_hashes[entry.proof]=FileAccess.get_sha256(entry.proof)
+	var binding_valid: bool=manifest.source.sha256==SOURCE_SHA and target_binding(source_hashes[HERO],manifest,compatibility) and manifest.library.sha256==source_hashes[library_path]
+	if binding_valid: validated_bake_target=manifest.target.sha256
+	record("exact_source_target_library_binding",binding_valid,{"bake_target":manifest.target.sha256,"tested_target":source_hashes[HERO],"compatible_derivative":source_hashes[HERO]!=manifest.target.sha256})
+	record("unregistered_target_is_rejected",not target_binding("unregistered-target",manifest,compatibility))
+	var changed_proof: Dictionary=compatibility.duplicate(true)
+	for entry in changed_proof.get("compatible_targets",[]): entry.proof_sha256="changed-proof"
+	if source_hashes[HERO]!=manifest.target.sha256: record("changed_compatibility_proof_is_rejected",not target_binding(source_hashes[HERO],manifest,changed_proof))
 	record("original_rama_bytes_preserved",source_hashes[ORIGINAL]==ORIGINAL_SHA)
 	hero=load(HERO).instantiate()
 	var original: Node3D=load(ORIGINAL).instantiate()

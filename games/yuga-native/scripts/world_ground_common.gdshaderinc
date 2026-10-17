@@ -28,7 +28,9 @@ vec3 paving_stones(vec2 p, vec2 slab_size, vec3 tint) {
 	// The narrow joints disappear gradually in the distance instead of aliasing.
 	grout *= 1.0 - smoothstep(0.18, 0.55, screen_step);
 	float variation = (stone_random(cell) - 0.5) * 0.045;
-	float weathering = sin(p.x * 0.16 + p.y * 0.11) * sin(p.y * 0.21) * 0.008;
+	float weathering = sin(p.x * 0.16 + p.y * 0.11) * sin(p.y * 0.21) * 0.035;
+	// Broad mineral layers add age without a noisy repeating high-frequency texture.
+	weathering += sin(p.x * 0.43 - p.y * 0.27 + sin(p.y * 0.12)) * 0.012;
 	vec3 stone = tint * (1.0 + variation + weathering);
 	return mix(stone, stone * 0.78, grout);
 }

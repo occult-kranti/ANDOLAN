@@ -23,6 +23,13 @@ python3 games/yuga-native/art/production/validate_rama.py
 npm run yuga:typecheck
 npm run yuga:test
 validation_dir="$(mktemp -d /tmp/yuga-native-setup-XXXXXX)"
+python3 games/yuga-native/tools/check-hero-codex.py --report="$validation_dir/hero-codex.json"
+python3 games/yuga-native/tests/hero_codex_cases.py --report="$validation_dir/hero-codex-cases.json"
+python3 games/yuga-native/tests/hero_reconstruction_cases.py --report="$validation_dir/hero-reconstruction.json"
+python3 games/yuga-native/tools/check-native-contracts.py --report="$validation_dir/native-contract-pins.json"
+godot --headless --path games/yuga-native --script res://tests/native_contract_cases.gd -- --report="$validation_dir/native-contracts.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/hero_pose_cases.gd -- --report="$validation_dir/hero-pose.json"
+godot --headless --path games/yuga-native --script res://tests/world_presentation_cases.gd -- --report="$validation_dir/world-presentation.json"
 python3 games/yuga-native/tests/world_map_cases.py --report="$validation_dir/world-map-cases.json"
 python3 games/yuga-native/tests/world_plan_cases.py --report="$validation_dir/world-plan-cases.json"
 python3 games/yuga-native/tests/combat_script_cases.py --report="$validation_dir/combat-script-cases.json"

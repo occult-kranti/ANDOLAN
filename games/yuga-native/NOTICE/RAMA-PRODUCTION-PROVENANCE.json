@@ -1,15 +1,15 @@
 {
   "schema": 1,
-  "asset": "Original Rama native production revision",
-  "scope": "Incremental authored hero art; not target concept likeness or commercial-game parity.",
+  "asset": "Original Rama reconstructed surface revision",
+  "scope": "Material/fold-tint correction of committed licensed GLB. Editable scene reconstructed, not recovered. Geometry/rig/skin/animation retained; visual acceptance separate.",
   "output": "games/yuga-native/assets/heroes/rama-production.glb",
-  "bytes": 7541640,
-  "sha256": "6657f4bf2fdb41b1f8b1bbd64777b35b5b4acfe00b3e3e22e4bc793fd4df3e8e",
+  "bytes": 7901132,
+  "sha256": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc",
   "blender": "4.3.2",
-  "sourceBlend": "/workspace/tooling/yuga-art/output/rama-authored.blend",
-  "sourceBlendSha256": "29af71991c4b224eb98fa6af0b3173822f01d604107c1884609e075c8162cd20",
-  "generator": "games/yuga-native/art/production/build_rama.py",
-  "generatorSha256": "af2156cb36f0eafbddadc5385d085c5bf0335630a31492bac6fab7ebee1211b9",
+  "sourceBlend": "games/yuga-native/art/production/reconstruction-rama.blend",
+  "sourceBlendSha256": "4a9a4af12a737fdb01ff5f4b3ad94a0657bfda9b2bf4086dfbd48e054fa9973b",
+  "generator": "games/yuga-native/art/production/reconstruct_rama.py",
+  "generatorSha256": "62205c6e1e85c0634ff8fd143868cd9a94f1d171bb40a68e71ba8acf50a17546",
   "sourcePipelineHashes": {
     "geometry.py": "c92b79e2b57062fcf674a161f9e1fcbb9762f5897034032d88cfa414d9b8e5e2",
     "anatomy.py": "ae1d8b0e403bbb000f7e9a481167c0fb7e201f9f867ce341a3ba4678c45c11cf"
@@ -820,5 +820,106 @@
     "Pose samples prove finite bounded deformation, not exhaustive clipping or anatomy quality.",
     "The inherited animation motions are unchanged; no commercial animations were extracted.",
     "Production naming identifies this development track, not a declaration of finished art."
-  ]
+  ],
+  "reconstruction": {
+    "manifest": "games/yuga-native/art/production/reconstruction-manifest.json",
+    "manifestSha256": "802e5507f2918b6587864dfb92f5df222137d4a270d397cbc16122f28fdb8e5e",
+    "inputGLB": "games/yuga-native/art/production/reconstruction-source.glb",
+    "inputGLBSha256": "6657f4bf2fdb41b1f8b1bbd64777b35b5b4acfe00b3e3e22e4bc793fd4df3e8e",
+    "inputProvenance": "games/yuga-native/art/production/reconstruction-source-provenance.json",
+    "inputProvenanceSha256": "aa46881d0353f9ab915b0ae24c3fe285288991c74a5002c705a9cab3a3df521f",
+    "previous": {
+      "sha256": "6657f4bf2fdb41b1f8b1bbd64777b35b5b4acfe00b3e3e22e4bc793fd4df3e8e",
+      "sourceBlend": "/workspace/tooling/yuga-art/output/rama-authored.blend",
+      "sourceBlendSha256": "29af71991c4b224eb98fa6af0b3173822f01d604107c1884609e075c8162cd20",
+      "generator": "games/yuga-native/art/production/build_rama.py",
+      "generatorSha256": "af2156cb36f0eafbddadc5385d085c5bf0335630a31492bac6fab7ebee1211b9"
+    },
+    "originalEditableSourceRecovered": false,
+    "editableSourceStatus": "Imported from the licensed committed GLB, packed and pose-sampled with Blender 4.3.2. Original modeling history/modifiers are not recovered.",
+    "originalMeshAndAnimationBinaryPreserved": true,
+    "historicalFields": "originalAuthoredMeshPieces, sourcePipelineHashes, referenceImageHashes, preservedAnimationCurveHashes and 45 poseSamples describe the retained predecessor. New reconstruction tests separately check 81 Blender-evaluated poses and exact original runtime data preservation.",
+    "generatedEmbeddedTextures": [
+      {
+        "name": "warm-living-skin-albedo",
+        "image_index": 1,
+        "bytes": 3771,
+        "sha256": "27631bfddcbe64224934a6c63c01e37caefd8bfa41d1a4a21aa858b64d8dad1f",
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "warm-living-skin-roughness",
+        "image_index": 2,
+        "bytes": 902,
+        "sha256": "472f3687205c31e1cbada8d134e2bacce351704303192d12efca96ba0eb464f8",
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "brushed-antique-gold-albedo",
+        "image_index": 4,
+        "bytes": 3547,
+        "sha256": "f746fee1af5d6e15de30d41a6192f7ec250de1ae34ee60085fec5761c1038621",
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "brushed-antique-gold-roughness",
+        "image_index": 5,
+        "bytes": 901,
+        "sha256": "42ce944142a8b3c610cbddbb4712919b2030fe5f312e560cac39c692e6888869",
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "ivory-folded-silk-albedo",
+        "image_index": 7,
+        "bytes": 4757,
+        "sha256": "c9da7dc055e0a5fbfadb31377bca9481494fd825a751367ed83c45508745d604",
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "ivory-folded-silk-roughness",
+        "image_index": 8,
+        "bytes": 903,
+        "sha256": "8189df829e6a223374028aa2cd79439fe79fdf2311be9d2aea418c54056cf9ad",
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "grouped-black-hair-albedo",
+        "image_index": 10,
+        "bytes": 568,
+        "sha256": "b12343f501d0786b285c79fea4010f5f60aeb44534bc77089208416bc924e65e",
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "grouped-black-hair-roughness",
+        "image_index": 11,
+        "bytes": 903,
+        "sha256": "bcb472a803d3bc1085580e193ce14b2f4fff0cc21587423a409eb0cc0a1a2a27",
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "cobalt-woven-silk-albedo",
+        "image_index": 13,
+        "bytes": 3008,
+        "sha256": "83eb271d61a953c519fb189cfd5f63f5a2a1990411094d98104f8e0ebc680879",
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "cobalt-woven-silk-roughness",
+        "image_index": 14,
+        "bytes": 903,
+        "sha256": "7359c4b49cac0e398b0eb298f0e22e7dee7d32a0028eb3dd90551a6d65fe991b",
+        "width": 256,
+        "height": 256
+      }
+    ]
+  }
 }

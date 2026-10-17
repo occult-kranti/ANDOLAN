@@ -8,6 +8,7 @@ const TargetScript = preload("res://scripts/target.gd")
 const ProjectileScript = preload("res://scripts/projectile.gd")
 const CoastalWater = preload("res://shaders/production_water.gdshader")
 const ProductionLighting = preload("res://scripts/production_lighting.gd")
+const MythicEnvironment = preload("res://scripts/mythic_environment.gd")
 const ENVIRONMENT_PATH := "res://assets/environment/lanka_courtyard.glb"
 const SAVE_PATH := "user://courtyard-settings.cfg"
 const INK := Color("10282e")
@@ -162,6 +163,7 @@ func _create_world() -> void:
 			lamp.omni_attenuation = 1.4
 			lamp.shadow_enabled = false
 			world.add_child(lamp)
+	MythicEnvironment.configure(world, "courtyard")
 	projectiles = Node3D.new()
 	projectiles.name = "Projectiles"
 	world.add_child(projectiles)
@@ -810,6 +812,7 @@ func _apply_settings() -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if full_screen else DisplayServer.WINDOW_MODE_WINDOWED)
 	if is_instance_valid(sun):
 		ProductionLighting.apply(world_environment.environment, sun, world, night, shadows)
+		MythicEnvironment.set_phase(world, 1.0 if night else 0.0)
 
 func _quit() -> void:
 	get_tree().paused = false

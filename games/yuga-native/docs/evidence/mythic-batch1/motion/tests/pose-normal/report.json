@@ -1,0 +1,240 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "configure resolves original arm finger and string contracts",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "reconfigure cannot duplicate modifiers or mappings",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "missing skeleton or animator fails without attachment",
+			"passed": true
+		},
+		{
+			"details": {
+				"distal_finger_vertices": 644,
+				"sole_vertices": 3798
+			},
+			"name": "grip and contact probes use actual weighted skin vertices",
+			"passed": true
+		},
+		{
+			"details": {
+				"after": {
+					"distal_penetration_by_finger_m": {
+						"finger1-3.R": 0.000872608184814452,
+						"finger2-3.R": 0.000279093280434607,
+						"finger3-3.R": 0.000225167840719222,
+						"finger4-3.R": 0.0,
+						"finger5-3.R": 0.00035500144958496
+					},
+					"distal_surface_gap_by_finger_m": {
+						"finger1-3.R": 0.0000799260139465324,
+						"finger2-3.R": 0.000252634170465171,
+						"finger3-3.R": 0.000213597089052199,
+						"finger4-3.R": 0.000131456064991653,
+						"finger5-3.R": 0.0000397005096601788
+					},
+					"finite": true,
+					"max_penetration_m": 0.000872608184814452,
+					"mean_gap_m": 0.000143462769623147,
+					"sampled_vertices": 644
+				},
+				"before": {
+					"distal_penetration_by_finger_m": {
+						"finger1-3.R": 0.0,
+						"finger2-3.R": 0.0,
+						"finger3-3.R": 0.0,
+						"finger4-3.R": 0.0,
+						"finger5-3.R": 0.0
+					},
+					"distal_surface_gap_by_finger_m": {
+						"finger1-3.R": 0.00422082515433431,
+						"finger2-3.R": 0.0493405014276505,
+						"finger3-3.R": 0.0550768449902534,
+						"finger4-3.R": 0.040364433079958,
+						"finger5-3.R": 0.024044144898653
+					},
+					"finite": true,
+					"max_penetration_m": 0.0,
+					"mean_gap_m": 0.0346093499101698,
+					"sampled_vertices": 644
+				}
+			},
+			"name": "authored grip materially reduces actual distal surface gap",
+			"passed": true
+		},
+		{
+			"details": {
+				"distal_penetration_by_finger_m": {
+					"finger1-3.R": 0.000872608184814452,
+					"finger2-3.R": 0.000279093280434607,
+					"finger3-3.R": 0.000225167840719222,
+					"finger4-3.R": 0.0,
+					"finger5-3.R": 0.00035500144958496
+				},
+				"distal_surface_gap_by_finger_m": {
+					"finger1-3.R": 0.0000799260139465324,
+					"finger2-3.R": 0.000252634170465171,
+					"finger3-3.R": 0.000213597089052199,
+					"finger4-3.R": 0.000131456064991653,
+					"finger5-3.R": 0.0000397005096601788
+				},
+				"finite": true,
+				"max_penetration_m": 0.000872608184814452,
+				"mean_gap_m": 0.000143462769623147,
+				"sampled_vertices": 644
+			},
+			"name": "calibrated distal skin stays within two millimetres of handle surface",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "dense native and candidate carry samples remain finite",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "all spine root lower-body and unmapped bone poses remain unchanged",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "all scales and body translations stay animation-owned",
+			"passed": true
+		},
+		{
+			"details": {
+				"maximum_vertex_delta_m": 0.0
+			},
+			"name": "actual skinned soles are unchanged by upper-body carry",
+			"passed": true
+		},
+		{
+			"details": {
+				"maximum_mean_gap_drift_m": 0.00000205375254154204
+			},
+			"name": "grip remains wrist-relative through native and candidate motion",
+			"passed": true
+		},
+		{
+			"details": {
+				"max_local_angle_radians": 0.000690533954184502
+			},
+			"name": "carry upper-body poses close at exact clip endpoints",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "all original actions regain exact pose ownership after fade",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "first fire and cast tick retain exact arms and string ownership",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "ten rapid fire retriggers cannot inherit carry arm or string pose",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "action and traversal guards fade carry to zero",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "invalid delta cancels safely nan",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "invalid delta cancels safely inf",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "invalid delta cancels safely -1.0",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "invalid delta cancels safely 0.2",
+			"passed": true
+		},
+		{
+			"details": {
+				"callbacks": 30,
+				"wrist_drift_m": 0.0
+			},
+			"name": "engine restores base pose between repeated modifier frames",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "scene pause stops pose callbacks",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "cancel is idempotent and restores zero contribution",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "source asset library and native clips remain unchanged",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": true,
+	"scope": "Actual upper-body modifier and CPU-skinned finger/sole probes. Cylinder distances are geometric proxies, not tactile grip or full skin penetration acceptance. Original lower-body animation is unchanged; flawed candidate run remains unpromoted. Rendered motion, moving-ground foot locking and performance are separate gates.",
+	"sources": {
+		"res://assets/animations/tps_rama_motion_library.tres": "95ffda72b8fc5d4d41e9702ce30918cffb22e75d907545dc5ff28fb01411554f",
+		"res://assets/heroes/rama-production.glb": "3424d72e74bb425c7e6bb2ff2fddc05c792657c437a888c56671fbd7d3ec3bcc",
+		"res://scripts/hero_pose.gd": "c07def74a71e755cd323c7e730d0884ea737fb8efd1342ed36d87dd8da22fceb",
+		"res://scripts/player.gd": "6b7206ff94ae5a79733c1e2ea8d4e10a842e65c3e5cf5ce6d28748bef0deea2c"
+	},
+	"test_sha256": "dfa7498c9f4851880ae831171c162d7e1f6c4a209f0ed8702c48f94997fef917"
+}

@@ -8,6 +8,7 @@ signal traversal_event(kind: String, position: Vector3)
 
 const TraversalController = preload("res://scripts/player_traversal.gd")
 const TraversalPose = preload("res://scripts/traversal_pose.gd")
+const HeroCarryPose = preload("res://scripts/hero_pose.gd")
 
 const HERO_PATH := "res://assets/heroes/rama-production.glb"
 const SPEED := 6.0
@@ -41,6 +42,7 @@ var model_ready := false
 var current_speed := 0.0
 var traversal = TraversalController.new()
 var traversal_pose: SkeletonModifier3D
+var hero_pose: SkeletonModifier3D
 var last_finite_position := Vector3.ZERO
 
 func _ready() -> void:
@@ -74,6 +76,10 @@ func _ready() -> void:
 		if not traversal_pose.configure(visual, animator):
 			traversal_pose.free()
 			traversal_pose = null
+		hero_pose = HeroCarryPose.new()
+		if not hero_pose.configure(visual, animator):
+			hero_pose.free()
+			hero_pose = null
 	else:
 		push_error("Required skinned Rama GLB is missing: " + HERO_PATH)
 	visual.rotation.y = PI
@@ -118,12 +124,15 @@ func try_grapple() -> bool:
 
 func cancel_traversal(reason := "cancelled") -> void:
 	traversal.cancel(reason)
+	if is_instance_valid(hero_pose):
+		hero_pose.cancel()
 	if is_instance_valid(traversal_pose):
 		traversal_pose.cancel()
 
 func traversal_report() -> Dictionary:
 	var result: Dictionary = traversal.report()
 	result["pose"] = traversal_pose.diagnostics() if is_instance_valid(traversal_pose) else {}
+	result["carry_pose"] = hero_pose.diagnostics() if is_instance_valid(hero_pose) else {}
 	return result
 
 func _on_focus_lost() -> void:
@@ -246,6 +255,8 @@ func _physics_process(delta: float) -> void:
 			animator.speed_scale = 1.0
 	if is_instance_valid(traversal_pose):
 		traversal_pose.set_state(traversal.mode, velocity.length(), velocity.y, delta, 1.0 if action_time > 0 else 0.0)
+	if is_instance_valid(hero_pose):
+		hero_pose.set_state(active_clip, delta, traversal.mode, action_time > 0.0)
 	if global_position.y < -8:
 		reset()
 

@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "contract_cases": 170,
+  "codex_cases": 9,
+  "native_contract_source_sha256": "321ffb170dc44f3f962bc19e12ac441202f213d35662ab2aaa041d0ca8fd4ec8",
+  "codex_validator_sha256": "ac7e03904d9de8d64ae9f891704472107fe62821ee454fb54ebbba51d72e8851",
+  "catalogue_sha256": "b83e0f06f25f3978a16479f97e7bf76c349f651040b2253bedf5d1c1879ff72c",
+  "engine_logs_clean": true,
+  "closed_findings": [
+    "Malformed contract scalar types emitted GDScript errors and empty responses; explicit type guards now reject transactionally.",
+    "Browser input mask, clock and authority tampering previously preserved EXACT_MATCH; exact profile semantics and rules_sha256 now prevent it.",
+    "Large JSON integer caused codex OverflowError; bounded numeric checks now reject.",
+    "Contradictory effect family/geometry/travel, false primary production status and malformed palette/type fields passed codex gate; cross-field rules now reject."
+  ],
+  "files": {
+    "contracts-probe.gd": {
+      "bytes": 2782,
+      "sha256": "307600ff44378d511bdd4ec9d7b51340e6c1f7e66a47906c728164739b1b8f74"
+    },
+    "contracts-probe-r1.json": {
+      "bytes": 10214,
+      "sha256": "13f3513534433d3b571d1d63f4d2ded2d256079d68601045191f39f063bae6d9"
+    },
+    "contracts-probe-r1.log": {
+      "bytes": 15376,
+      "sha256": "698e1af057ccb1929774266d0d577c89ff1d95869cd2ad1c8a6f432a799bfa7d"
+    },
+    "contracts-probe-r2.gd": {
+      "bytes": 2782,
+      "sha256": "7ceae95f3bbb36619d9b675077d658e946d5a9be97f5800c6fff589ff23e95cd"
+    },
+    "contracts-probe-r2.json": {
+      "bytes": 12383,
+      "sha256": "f467c48375f8b05631e534a64341b041d4f43e3f5e8beef53dc72b4306c1f735"
+    },
+    "contracts-probe-r2.log": {
+      "bytes": 1308,
+      "sha256": "9b702d9b0d83ae5204052c5f9d418f112907d23e763c47c5a84ea1f9afb428ba"
+    },
+    "contracts-replay-probe.gd": {
+      "bytes": 4416,
+      "sha256": "02dadac4b9078ee480d8241d1a138bb6a41990a9078f1705643a711a9cdb57fc"
+    },
+    "contracts-replay-r2.json": {
+      "bytes": 36411,
+      "sha256": "0cb4c381e5a20c578a99ba9f0af94b5aa7c16b033fe18ae384e18981a89c38ec"
+    },
+    "contracts-replay-r2.log": {
+      "bytes": 102,
+      "sha256": "db986e4725ae5872d9adffc73134e1783fd4d50d764dfb468ec0bc444befff4e"
+    },
+    "codex-probe.py": {
+      "bytes": 1904,
+      "sha256": "55d57cf6bc4fe84e931c609d710a1a49988314ddcc69ab9bb05d2d289ce4ae2d"
+    },
+    "codex-probe-r1.json": {
+      "bytes": 1493,
+      "sha256": "38f101aa90a6f7792f68b55529f765a01842a0fa83741cf6ecfaf7393a2df748"
+    },
+    "codex-probe-r2.py": {
+      "bytes": 1904,
+      "sha256": "bb5d2dddb6c16fd6b1b72eb532302e20d455ff0f79a75784e3f18024bb1501da"
+    },
+    "codex-probe-r2.json": {
+      "bytes": 2128,
+      "sha256": "76b9b6b445d22c88ac70a516f58b237d075ed305b31c31802f6e590f2f870c9f"
+    }
+  },
+  "commands": [
+    "XDG_DATA_HOME=/workspace/scratch/yuga-batch1-independent/user godot --headless --path games/yuga-native --script /workspace/scratch/yuga-batch1-independent/contracts-probe-r2.gd",
+    "XDG_DATA_HOME=/workspace/scratch/yuga-batch1-independent/user godot --headless --path games/yuga-native --script /workspace/scratch/yuga-batch1-independent/contracts-replay-probe.gd",
+    "python3 /workspace/scratch/yuga-batch1-independent/codex-probe-r2.py"
+  ],
+  "scope": "Independent read-only source review plus scratch malformed/state/compatibility/replay/catalogue probes. No shared source modifications, imports, renders, live networking, authority re-simulation, game balance or finished art acceptance. R1 reports/logs preserve actual defects."
+}

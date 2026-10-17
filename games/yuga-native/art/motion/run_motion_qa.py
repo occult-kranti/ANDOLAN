@@ -23,6 +23,15 @@ def main() -> None:
     if work==NATIVE or NATIVE in work.parents: raise ValueError('Use a separate project outside native source.')
     project=work/'godot'
     files={NATIVE/'assets/heroes/rama-production.glb':'assets/heroes/rama-production.glb',NATIVE/'assets/heroes/rama.glb':'assets/heroes/rama.glb',a.library:'assets/animations/tps_rama_motion_library.tres',a.manifest:'art/motion/motion-retarget-manifest.json',a.contacts:'art/motion/support-contact-samples.json',NATIVE/'tests/motion_retarget_cases.gd':'tests/motion_retarget_cases.gd'}
+    compatibility=NATIVE/'art/motion/compatible-targets.json'
+    if compatibility.exists():
+        files[compatibility]='art/motion/compatible-targets.json'
+        for entry in json.loads(compatibility.read_text()).get('compatible_targets',[]):
+            relative=entry['proof'].removeprefix('res://')
+            proof=(NATIVE/relative).resolve()
+            if not relative.startswith('art/production/') or '..' in Path(relative).parts or not proof.is_relative_to(NATIVE):
+                raise ValueError('Compatibility proof must stay inside native art/production')
+            files[proof]=relative
     for source,destination in files.items():
         dest=project/destination
         dest.parent.mkdir(parents=True,exist_ok=True)

@@ -11,6 +11,7 @@ const ControlsOverlay = preload("res://scripts/controls_overlay.gd")
 const TraversalAudio = preload("res://scripts/traversal_audio.gd")
 const SiegeEffects = preload("res://scripts/siege_effects.gd")
 const RelaySession = preload("res://scripts/relay_session.gd")
+const MythicEnvironment = preload("res://scripts/mythic_environment.gd")
 const RUNTIME_MANIFEST := "res://assets/world/confluence-map.json"
 const SOURCE_MANIFEST := "res://art/world/confluence-map.json"
 const CREAM := Color("f0e5d0")
@@ -153,6 +154,7 @@ func _ready() -> void:
 	_build_props()
 	_build_objectives()
 	_build_water()
+	MythicEnvironment.configure(world, "confluence")
 	_build_lighting()
 	_build_player()
 	if not _build_army_audio() or not player.traversal_report().get("enabled",false):

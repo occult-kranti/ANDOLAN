@@ -1,0 +1,81 @@
+{
+  "validator_sha256": "ac7e03904d9de8d64ae9f891704472107fe62821ee454fb54ebbba51d72e8851",
+  "catalogue_sha256": "b83e0f06f25f3978a16479f97e7bf76c349f651040b2253bedf5d1c1879ff72c",
+  "rows": [
+    {
+      "case": "baseline",
+      "returned_errors": [],
+      "accepted": true,
+      "exception": null
+    },
+    {
+      "case": "huge_integer_radius",
+      "returned_errors": [
+        "rama.r: invalid radius_m"
+      ],
+      "accepted": false,
+      "exception": null
+    },
+    {
+      "case": "wrong_baseline_effect_family",
+      "returned_errors": [
+        "rama.r: effect family contradicts baseline"
+      ],
+      "accepted": false,
+      "exception": null
+    },
+    {
+      "case": "zero_complete_effect_geometry",
+      "returned_errors": [
+        "rama.r: invalid range_m",
+        "rama.r: invalid radius_m",
+        "rama.r: invalid width_m",
+        "rama.r: invalid height_m",
+        "rama.r: projectile travel must be positive with bounded nominal speed"
+      ],
+      "accepted": false,
+      "exception": null
+    },
+    {
+      "case": "positive_projectile_range_zero_travel",
+      "returned_errors": [
+        "rama.r: projectile travel must be positive with bounded nominal speed"
+      ],
+      "accepted": false,
+      "exception": null
+    },
+    {
+      "case": "bool_telegraph_lead",
+      "returned_errors": [
+        "rama.r: telegraph timing disagrees"
+      ],
+      "accepted": false,
+      "exception": null
+    },
+    {
+      "case": "bool_global_light_cap",
+      "returned_errors": [
+        "unexpected global resource cap max_lights"
+      ],
+      "accepted": false,
+      "exception": null
+    },
+    {
+      "case": "invalid_palette_color",
+      "returned_errors": [
+        "rama: invalid/palette identity drift body"
+      ],
+      "accepted": false,
+      "exception": null
+    },
+    {
+      "case": "primary_claims_implemented",
+      "returned_errors": [
+        "rama: primary must retain proposal scope"
+      ],
+      "accepted": false,
+      "exception": null
+    }
+  ],
+  "scope": "Independent catalogue validator mutations; no native rendering or gameplay claim"
+}

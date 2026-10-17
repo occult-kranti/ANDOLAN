@@ -1,0 +1,364 @@
+{
+  "passed": true,
+  "checks": 71,
+  "scope": "Real catalogue versus current TypeScript plus adversarial data/parser cases; no visual, performance or balance acceptance",
+  "catalogue_sha256": "b83e0f06f25f3978a16479f97e7bf76c349f651040b2253bedf5d1c1879ff72c",
+  "validator_sha256": "ac7e03904d9de8d64ae9f891704472107fe62821ee454fb54ebbba51d72e8851",
+  "cases": [
+    {
+      "name": "complete current catalogue accepted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fourteen exact identities and six women retained",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "42 slots and14 independent primary concepts",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "missing hero",
+      "passed": true,
+      "detail": "heroes must contain exactly 14 objects"
+    },
+    {
+      "name": "duplicate hero identity",
+      "passed": true,
+      "detail": "hero IDs/order must preserve the complete browser roster; rama: browser baseline changed; rama: identity/role changed"
+    },
+    {
+      "name": "unknown hero identity",
+      "passed": true,
+      "detail": "hero IDs/order must preserve the complete browser roster; catalogue must contain all 42 stable ability/effect IDs; fourteen unique signature shapes must retain their hero mapping"
+    },
+    {
+      "name": "array instead of hero identity",
+      "passed": true,
+      "detail": "hero IDs/order must preserve the complete browser roster; catalogue must contain all 42 stable ability/effect IDs; fourteen unique signature shapes must retain their hero mapping"
+    },
+    {
+      "name": "role drift",
+      "passed": true,
+      "detail": "rama: identity/role changed"
+    },
+    {
+      "name": "missing Q slot",
+      "passed": true,
+      "detail": "rama: exactly three ability objects required; catalogue must contain all 42 stable ability/effect IDs; fourteen unique signature shapes must retain their hero mapping"
+    },
+    {
+      "name": "Q/E reorder",
+      "passed": true,
+      "detail": "rama: slots must be Q/E/R; rama.q: invalid/duplicate stable ID; rama.q: ability baseline changed"
+    },
+    {
+      "name": "duplicate ability identity",
+      "passed": true,
+      "detail": "rama.r: invalid/duplicate stable ID"
+    },
+    {
+      "name": "duplicate effect identity",
+      "passed": true,
+      "detail": "rama.r: invalid/duplicate effect ID; catalogue must contain all 42 stable ability/effect IDs"
+    },
+    {
+      "name": "missing primary",
+      "passed": true,
+      "detail": "rama: missing stable primary; rama: missing primary effect; rama: missing primary telegraph"
+    },
+    {
+      "name": "renamed browser skill",
+      "passed": true,
+      "detail": "rama.r: ability baseline changed"
+    },
+    {
+      "name": "silent damage buff",
+      "passed": true,
+      "detail": "rama.r: ability baseline changed"
+    },
+    {
+      "name": "silent whole-hero health buff",
+      "passed": true,
+      "detail": "rama: browser baseline changed"
+    },
+    {
+      "name": "stale source hash",
+      "passed": true,
+      "detail": "browser_roster source hash is stale"
+    },
+    {
+      "name": "arbitrary source path",
+      "passed": true,
+      "detail": "browser_roster source must use the fixed repository path"
+    },
+    {
+      "name": "incorrect coordinate convention",
+      "passed": true,
+      "detail": "coordinate/time units differ from the native contract"
+    },
+    {
+      "name": "falsely accepted production art",
+      "passed": true,
+      "detail": "design-only scope must keep production_art_accepted false"
+    },
+    {
+      "name": "catalogue claims native damage authority",
+      "passed": true,
+      "detail": "rama.r: presentation must not claim gameplay authority"
+    },
+    {
+      "name": "missing counterplay",
+      "passed": true,
+      "detail": "rama.r: missing executable counter explanation"
+    },
+    {
+      "name": "blank primary counter",
+      "passed": true,
+      "detail": "rama: missing primary counterplay"
+    },
+    {
+      "name": "missing silhouette",
+      "passed": true,
+      "detail": "rama: missing art silhouette"
+    },
+    {
+      "name": "missing materials",
+      "passed": true,
+      "detail": "rama: missing material separation"
+    },
+    {
+      "name": "duplicate signature shape",
+      "passed": true,
+      "detail": "fourteen unique signature shapes must retain their hero mapping"
+    },
+    {
+      "name": "unknown effect family",
+      "passed": true,
+      "detail": "rama.r: unknown effect family; rama.r: effect family contradicts baseline"
+    },
+    {
+      "name": "malformed effect family",
+      "passed": true,
+      "detail": "rama.r: unknown effect family; rama.r: effect family contradicts baseline"
+    },
+    {
+      "name": "projectile relabelled as summons",
+      "passed": true,
+      "detail": "rama.r: effect family contradicts baseline"
+    },
+    {
+      "name": "aimed projectile relabelled self-centred",
+      "passed": true,
+      "detail": "rama.r: effect anchor contradicts baseline"
+    },
+    {
+      "name": "nonfinite effect radius",
+      "passed": true,
+      "detail": "nonfinite value anywhere in catalogue; rama.r: invalid radius_m"
+    },
+    {
+      "name": "huge valid JSON integer rejected without overflow",
+      "passed": true,
+      "detail": "rama.r: invalid radius_m"
+    },
+    {
+      "name": "infinite particle budget",
+      "passed": true,
+      "detail": "nonfinite value anywhere in catalogue; rama.r: invalid resource budget max_particles"
+    },
+    {
+      "name": "bool masquerading as radius",
+      "passed": true,
+      "detail": "rama.r: invalid radius_m"
+    },
+    {
+      "name": "negative range",
+      "passed": true,
+      "detail": "rama.r: invalid range_m; rama.r: projectile travel must be positive with bounded nominal speed"
+    },
+    {
+      "name": "unbounded vertical spectacle",
+      "passed": true,
+      "detail": "rama.r: invalid height_m"
+    },
+    {
+      "name": "zero-sized complete effect",
+      "passed": true,
+      "detail": "rama.r: invalid range_m; rama.r: invalid radius_m; rama.r: invalid width_m"
+    },
+    {
+      "name": "footprint hidden by undersized width",
+      "passed": true,
+      "detail": "rama.r: width cannot hide the declared diameter"
+    },
+    {
+      "name": "negative preparation",
+      "passed": true,
+      "detail": "rama.r: invalid/nonfinite timing"
+    },
+    {
+      "name": "nonfinite preparation",
+      "passed": true,
+      "detail": "nonfinite value anywhere in catalogue; rama.r: invalid/nonfinite timing"
+    },
+    {
+      "name": "payload before warning",
+      "passed": true,
+      "detail": "rama.r: payload must follow preparation and travel"
+    },
+    {
+      "name": "telegraph disagrees with release",
+      "passed": true,
+      "detail": "rama.r: telegraph timing disagrees"
+    },
+    {
+      "name": "bool masquerading as one-second warning",
+      "passed": true,
+      "detail": "rama.r: telegraph timing disagrees"
+    },
+    {
+      "name": "zero-travel positive-range projectile",
+      "passed": true,
+      "detail": "rama.r: projectile travel must be positive with bounded nominal speed"
+    },
+    {
+      "name": "unbounded nominal projectile speed",
+      "passed": true,
+      "detail": "rama.r: projectile travel must be positive with bounded nominal speed"
+    },
+    {
+      "name": "instant browser Q described as advance warning",
+      "passed": true,
+      "detail": "rama.q: payload must follow preparation and travel; rama.q: cannot invent Q/E advance warning; rama.q: telegraph timing disagrees"
+    },
+    {
+      "name": "demo windup labelled as existing rule",
+      "passed": true,
+      "detail": "ravana.r: misleading current/proposed timing mode"
+    },
+    {
+      "name": "Hanuman authoritative leap altered",
+      "passed": true,
+      "detail": "hanuman.r: payload must follow preparation and travel; hanuman.r: existing leap travel changed; hanuman.r: budget expires before choreography or exceeds cap"
+    },
+    {
+      "name": "Sita sanctuary extended",
+      "passed": true,
+      "detail": "sita.r: existing sanctuary duration changed; sita.r: budget expires before choreography or exceeds cap"
+    },
+    {
+      "name": "effect pool overflow",
+      "passed": true,
+      "detail": "rama.r: invalid resource budget max_instances"
+    },
+    {
+      "name": "light budget overflow",
+      "passed": true,
+      "detail": "rama.r: invalid resource budget max_lights"
+    },
+    {
+      "name": "draw budget overflow",
+      "passed": true,
+      "detail": "rama.r: invalid resource budget max_draw_calls"
+    },
+    {
+      "name": "audio budget overflow",
+      "passed": true,
+      "detail": "rama.r: invalid resource budget max_audio_voices"
+    },
+    {
+      "name": "triangle budget overflow",
+      "passed": true,
+      "detail": "rama.r: invalid resource budget max_triangles"
+    },
+    {
+      "name": "pool expires before choreography",
+      "passed": true,
+      "detail": "rama.r: budget expires before choreography or exceeds cap"
+    },
+    {
+      "name": "unbounded lifetime",
+      "passed": true,
+      "detail": "rama.r: budget expires before choreography or exceeds cap"
+    },
+    {
+      "name": "global pool cap silently raised",
+      "passed": true,
+      "detail": "unexpected global resource cap max_instances"
+    },
+    {
+      "name": "bool masquerading as global light cap",
+      "passed": true,
+      "detail": "unexpected global resource cap max_lights"
+    },
+    {
+      "name": "primary silently declared production accepted",
+      "passed": true,
+      "detail": "rama: primary must retain proposal scope"
+    },
+    {
+      "name": "malformed palette colour",
+      "passed": true,
+      "detail": "rama: invalid/palette identity drift body"
+    },
+    {
+      "name": "baseline palette silently changed",
+      "passed": true,
+      "detail": "rama: invalid/palette identity drift accent"
+    },
+    {
+      "name": "low quality drops warning",
+      "passed": true,
+      "detail": "rama.r: low settings must retain boundary"
+    },
+    {
+      "name": "opaque centre hides targets",
+      "passed": true,
+      "detail": "rama.r: invalid readability opacity"
+    },
+    {
+      "name": "Rama gains phantom arrows",
+      "passed": true,
+      "detail": "rama.r: projectile count misrepresents baseline"
+    },
+    {
+      "name": "Subhadra gains third summon",
+      "passed": true,
+      "detail": "subhadra.r: summon count misrepresents baseline"
+    },
+    {
+      "name": "Hidimbi gains permanent summons",
+      "passed": true,
+      "detail": "hidimbi.r: temporary summons must last nine seconds"
+    },
+    {
+      "name": "duplicate JSON keys",
+      "passed": true,
+      "detail": "duplicate JSON key: schema_version"
+    },
+    {
+      "name": "NaN JSON literal",
+      "passed": true,
+      "detail": "nonfinite JSON number: NaN"
+    },
+    {
+      "name": "Infinity JSON literal",
+      "passed": true,
+      "detail": "nonfinite JSON number: Infinity"
+    },
+    {
+      "name": "oversized file rejected before parsing",
+      "passed": true,
+      "detail": "catalogue exceeds 2 MiB"
+    },
+    {
+      "name": "valid JSON round trip retains catalogue",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}

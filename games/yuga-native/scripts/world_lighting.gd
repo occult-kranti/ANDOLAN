@@ -6,6 +6,7 @@ extends RefCounted
 const MAX_PRACTICALS := 12
 const SHADOW_DISTANCE := 72.0
 const WATER_SHADER := preload("res://scripts/world_water.gdshader")
+const MythicEnvironment = preload("res://scripts/mythic_environment.gd")
 
 var _environment: Environment
 var _sun: DirectionalLight3D
@@ -42,6 +43,7 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	if environment == null or not is_instance_valid(sun) or not is_instance_valid(world):
 		return
 	var phase := clampf(night_blend, 0.0, 1.0) if is_finite(night_blend) else 0.0
+	var dusk := sin(phase * PI)
 	var forward_plus := RenderingServer.get_current_rendering_method() == "forward_plus"
 	environment.background_mode = Environment.BG_SKY
 	if environment.sky == null:
@@ -53,7 +55,7 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	# Keep clear silhouettes at both endpoints. Blue night is a lighting mood,
 	# never a vision or combat advantage. Constant ambient avoids black alleys.
 	sky.sky_top_color = Color("426b8c").lerp(Color("18273e"), phase)
-	sky.sky_horizon_color = Color("dec3a0").lerp(Color("667b91"), phase)
+	sky.sky_horizon_color = Color("dec3a0").lerp(Color("667b91"), phase).lerp(Color("c78e86"), dusk * 0.42)
 	sky.ground_bottom_color = Color("354553").lerp(Color("1b2a40"), phase)
 	sky.ground_horizon_color = sky.sky_horizon_color
 	sky.sky_energy_multiplier = lerpf(0.92, 0.64, phase)
@@ -92,14 +94,14 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	environment.ssao_detail = 0.4
 	environment.ssao_light_affect = 0.1
 	sun.rotation_degrees = Vector3(-42.0, -38.0, 0.0).lerp(Vector3(-34.0, -55.0, 0.0), phase)
-	sun.light_color = Color("ffdfad").lerp(Color("bacff2"), phase)
+	sun.light_color = Color("ffdfad").lerp(Color("bacff2"), phase).lerp(Color("ffc08d"), dusk * 0.35)
 	sun.light_energy = lerpf(1.25, 0.48, phase)
 	sun.light_angular_distance = 0.6
 	sun.shadow_enabled = shadows
 	# Directional shadow distance is camera-local, not all 170 m of the arena.
 	# Bias values are initial art settings: captured views must confirm contact.
 	sun.shadow_bias = 0.035
-	sun.shadow_normal_bias = 0.8
+	sun.shadow_normal_bias = 0.55
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
 	sun.directional_shadow_max_distance = SHADOW_DISTANCE
 	sun.directional_shadow_blend_splits = true
@@ -113,6 +115,7 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	fill.light_energy = lerpf(0.10, 0.12, phase)
 	fill.shadow_enabled = false
 	fill.sky_mode = DirectionalLight3D.SKY_MODE_LIGHT_ONLY
+	MythicEnvironment.set_phase(world, phase)
 	var practicals := world.get_node_or_null("WorldPracticals")
 	if practicals != null:
 		for child in practicals.get_children():
