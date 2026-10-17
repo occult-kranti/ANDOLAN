@@ -58,6 +58,15 @@ two directional lights are allowed; one directional light casts bounded shadows.
 
 ## Run and reproduce
 
+[Download the native map preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-map-2026-10-17).
+Its frozen source is `7f17c12394c1f52e150ce3dd3267b6ace062d899`;
+[GitHub Actions passed](https://github.com/occult-kranti/ANDOLAN/actions/runs/38998089810).
+The [extracted Linux ZIP review](evidence/confluence-package/REVIEW.md) records
+actual window input for entering the map, movement, firing, night, pause, travel,
+atlas and return. Both platform packs contain 114 integrity-checked resources.
+Windows execution remains unverified. Full refreshed cloud setup also completed
+successfully in this worker.
+
 From the repository root:
 
 ```sh

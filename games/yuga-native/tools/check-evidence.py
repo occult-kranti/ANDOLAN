@@ -12,6 +12,7 @@ MANIFESTS = [
     "games/yuga-native/docs/evidence/motion-carry-restored/archive-manifest.json",
     "games/yuga-native/docs/evidence/confluence-r1/archive-manifest.json",
     "games/yuga-native/docs/evidence/confluence-r2/archive-manifest.json",
+    "games/yuga-native/docs/evidence/confluence-package/archive-manifest.json",
 ]
 
 

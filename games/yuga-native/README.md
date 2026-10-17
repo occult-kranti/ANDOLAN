@@ -18,10 +18,13 @@ training and a traversable three-lane map preview. Online native matches and the
 full production visual target remain open.** The existing browser game remains
 on `game/yuga-confluence`.
 
-[Download the native art development preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-art-2026-10-17)
-for Linux or Windows, with rendered review evidence. The extracted Linux package
-was exercised in this cloud worker; Windows is archive-validated but unexecuted.
-See the [production review](docs/PRODUCTION_REVIEW.md) for exact scope and hashes.
+[Download the Confluence map development preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-confluence-map-2026-10-17)
+for Linux or Windows. The extracted Linux ZIP was exercised through its actual
+game window; Windows is archive-validated but unexecuted. See the
+[package review](docs/evidence/confluence-package/REVIEW.md) and
+[map review](docs/CONFLUENCE_MAP_REVIEW.md) for scope and evidence. The
+[earlier courtyard-only preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-art-2026-10-17)
+remains available separately.
 
 ## Run the source
 
