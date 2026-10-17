@@ -1,0 +1,99 @@
+{
+  "status": "confirmed-shadow-acne-in-two-fixed-views",
+  "actual_capture": {
+    "scenes": 2,
+    "variants_per_scene": 4,
+    "images": 8,
+    "sources": 481,
+    "fresh_glb_imports": 9,
+    "renderer": "Forward+",
+    "adapter": "llvmpipe software Vulkan",
+    "source_unchanged": true,
+    "exit_code": 0,
+    "cpu_affinity": "2,3",
+    "display": 139,
+    "user": "/workspace/scratch/rama-quality-floor-probe-r1-user"
+  },
+  "observation_by_variant": {
+    "candidate": "Strong radial/banded pattern reproduced on both floors.",
+    "restored_bias": "Strong title bands removed; Confluence bands substantially reduced but faint distant pattern remains. Hero/building shadows retained.",
+    "shadows_off": "Radial floor bands removed. Hero cast shadow also removed, so this is a diagnostic and not a product recommendation.",
+    "ground_cast_off": "Radial floor bands removed while retaining sun shadows from hero/buildings. Only five courtyard floor/foundation MeshInstances or two flat Confluence ground meshes have casting disabled; receiving shadows remains unchanged."
+  },
+  "causal_conclusion": "The introduced strong floor bands are directional self-shadow acne, exposed by lower bias. Ground-casting and sun-shadow counterexamples remove the pattern without changing any floor geometry, textures, mipmaps, camera, pose, exposure or SSAO. The intended primary floors are not exactly coplanar, and missing mipmaps cannot explain the procedural Confluence floor.",
+  "smallest_corrections": {
+    "minimal_numeric_change": "Restore former shadow_bias0.035 and normalbias0.7courtyard/0.55Confluence in both lighting helpers. This removes the newly amplified strong bands while preserving previous shadow behaviour; it does not guarantee every distant floor artifact is gone.",
+    "targeted_floor_fix": "Disable cast_shadow on exactly the identified flat floor/foundation meshes at scene construction, preserving receiving of hero/building shadows; this probe observes clean floor bands at current bias. Avoid per-frame world-tree scans or disabling all scene shadows."
+  },
+  "scope": "Observed software-render causality for title-day and Confluencephase0.5 only. No consumerGPU, continuousmotion, allcamera/daynight, or commercial-quality claim. No runtime product edits were made in the probe.",
+  "files": {
+    "floor-probe-run.json": {
+      "bytes": 852,
+      "sha256": "040ace15be5f5c3366bb2c0d33190f5ad1e525c76c28921525a4acec52fc1ea4"
+    },
+    "floor-probe.json": {
+      "bytes": 79951,
+      "sha256": "c9ed7e8313766f29d311dd60ba589b9b0dce0070542b1cdc9cae2d4d6f6edcea"
+    },
+    "godot.log": {
+      "bytes": 14260,
+      "sha256": "04cbf500d0cd967eb3f2a62eec90d529a87ca54f3a59358f0ee723b75f8a57ae"
+    },
+    "title-day-candidate.png": {
+      "bytes": 641576,
+      "sha256": "5a8f4da7d540f2826a38209b35b2448d4359c565dc253f32b621421980472390"
+    },
+    "title-day-ground_cast_off.png": {
+      "bytes": 511714,
+      "sha256": "35049a35edf9f458a0f4bef9e4315eb3f09270b654d41e381e8f8dc4b28f08f4"
+    },
+    "title-day-restored_bias.png": {
+      "bytes": 553733,
+      "sha256": "b203e9ba370f4df18540ab96cb2bc2363104fd13091ad85c3e02e1159275e9d2"
+    },
+    "title-day-shadows_off.png": {
+      "bytes": 489903,
+      "sha256": "521d89f18a70887f7fde8b033d091b8ed7d41677a0b0474234c8cd7e9fc263ad"
+    },
+    "world-50-candidate.png": {
+      "bytes": 424662,
+      "sha256": "d68d64491fe4fb2f999be32f1e32ce2caa12631472dede84b20d3dd24f97f87d"
+    },
+    "world-50-ground_cast_off.png": {
+      "bytes": 398821,
+      "sha256": "5646c987922c65e7c08bbcc6f39d7fa8486775142da5214cfb922e92455acfa3"
+    },
+    "world-50-restored_bias.png": {
+      "bytes": 407914,
+      "sha256": "3f23e182b17cdae4d4064b88785706c5aaf1b6b7958f8eee9e9e04bf3081f110"
+    },
+    "world-50-shadows_off.png": {
+      "bytes": 374688,
+      "sha256": "ebac7f5dc7971590cf08321602ff2b5cadb7af9a5c5faf0afdeb468298b9e871"
+    },
+    "xvfb.log": {
+      "bytes": 64,
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+    },
+    "games/yuga-native/art/lookdev/capture_floor_probe.gd": {
+      "bytes": 6007,
+      "sha256": "9a0404e556026f3daba9eda2fc714de74446f804857c0b6fb89d99645ebd9e8f"
+    },
+    "games/yuga-native/art/lookdev/run_floor_probe.py": {
+      "bytes": 5006,
+      "sha256": "309d352ba3ec71ec7f2f6d84735c37d49ff3df7eb76c9c055ab8779c8a4c8bbc"
+    }
+  },
+  "warning_note": "The completed8-image run has an ObjectDB leaked-at-exit warning. Its visual causality/hash checks remain, but this was not a warning-free render. A later harness-only cleanup change was parse-checked without rerendering these images.",
+  "capture_time_tool_sources": {
+    "tool-source/capture_floor_probe.gd.txt": {
+      "bytes": 6007,
+      "sha256": "9a0404e556026f3daba9eda2fc714de74446f804857c0b6fb89d99645ebd9e8f"
+    },
+    "tool-source/run_floor_probe.py.txt": {
+      "bytes": 5006,
+      "sha256": "309d352ba3ec71ec7f2f6d84735c37d49ff3df7eb76c9c055ab8779c8a4c8bbc"
+    }
+  },
+  "historical_tool_hash_scope": "Outside-path tool entries refer to the capture-time versions preserved undertool-source. Current editable probe cleanup differs; original raw floor-probe.json and floor-probe-run.json remain unchanged."
+}

@@ -1,0 +1,89 @@
+{
+  "task": "Q08 / Role 12 native screen quality",
+  "baseline_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "sources": {
+    "games/yuga-native/scripts/courtyard.gd": {
+      "bytes": 40471,
+      "sha256": "66a9cbbb9e3919904201aed2f304df4c973dae2dda133d27a04df8ff101c00fb"
+    },
+    "games/yuga-native/scripts/hero_ui_theme.gd": {
+      "bytes": 3997,
+      "sha256": "8795f64e85a9103f3f97a9ad0b4a0bca5c2f8e1ef25b3cbba61eb0375c8d0c71"
+    },
+    "games/yuga-native/tests/rama_screen_quality_cases.gd": {
+      "bytes": 11324,
+      "sha256": "6ee44a1a95959179fc4cc1b2ce930934ddc749b42be605a4297e3eed65bc27ce"
+    }
+  },
+  "results": [
+    {
+      "suite": "rama_screen_quality_cases",
+      "exit_code": 0,
+      "passed": 49,
+      "checks": 49,
+      "engine_diagnostics": []
+    },
+    {
+      "suite": "rama_screen_cases",
+      "exit_code": 0,
+      "passed": 36,
+      "checks": 36,
+      "engine_diagnostics": []
+    },
+    {
+      "suite": "input_binding_cases",
+      "exit_code": 0,
+      "passed": 44,
+      "checks": 44,
+      "engine_diagnostics": []
+    },
+    {
+      "suite": "rama_hud_layout_cases",
+      "exit_code": 0,
+      "passed": 9,
+      "checks": 9,
+      "engine_diagnostics": []
+    },
+    {
+      "suite": "rama_hud_expiry_cases",
+      "exit_code": 0,
+      "passed": 9,
+      "checks": 9,
+      "engine_diagnostics": []
+    }
+  ],
+  "scope": "Headless Godot actual scene focus, layout and saved controls. No OS-input, rendered appearance, audio listening, multiplayer or hardware-performance acceptance.",
+  "remaining": [
+    "Independent actual window review from final source/package after integration freeze.",
+    "Broader production online journey and gamepad/device support remain open."
+  ],
+  "negative_regression": {
+    "source": "before-courtyard.gd",
+    "exit_code": 1,
+    "passed": 29,
+    "checks": 49,
+    "expected_failures": [
+      "Actual portrait face stays clear of title and dark wash at (960, 600)",
+      "Escape restores exact Settings opener at (960, 600)",
+      "Escape restores exact Help opener at (960, 600)",
+      "Actual portrait face stays clear of title and dark wash at (1280, 720)",
+      "Escape restores exact Settings opener at (1280, 720)",
+      "Escape restores exact Help opener at (1280, 720)",
+      "Actual portrait face stays clear of title and dark wash at (1920, 1080)",
+      "Escape restores exact Settings opener at (1920, 1080)",
+      "Escape restores exact Help opener at (1920, 1080)",
+      "Actual portrait face stays clear of title and dark wash at (2560, 1440)",
+      "Escape restores exact Settings opener at (2560, 1440)",
+      "Escape restores exact Help opener at (2560, 1440)",
+      "Deleted opener safely falls back to the primary title action",
+      "Disabled opener safely falls back to the primary title action",
+      "Guide cannot override the disabled-opener fallback",
+      "Guide cannot restore an opener moved outside its owning screen",
+      "Nested controls and preference route retains original title opener",
+      "Pause help restores its exact opener and frozen owner",
+      "Pause settings restores its exact opener and frozen owner",
+      "Guide return to live play releases interface focus and resumes"
+    ],
+    "engine_diagnostics": []
+  }
+}

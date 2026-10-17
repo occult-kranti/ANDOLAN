@@ -1,0 +1,11 @@
+# Dummy audio teardown warning
+
+The original 45 behavior checks passed, but a verbose repeat exposed shutdown cleanup warnings: two `AudioStreamPlaybackWAV` instances and two `AudioStreamWAV` references remained, including `release_kodanda.wav`. No leaked Node appeared in the verbose list. The test stopped/reset the real sound owners and exited after six uncapped process frames, which did not guarantee a real Dummy audio block had retired playback references.
+
+The repair changes only `tests/rama_action_buffer_integration_cases.gd`. It captures weak playback references before final reset and world teardown, frees the scene, verifies that the scene and all owned Nodes are gone, then waits up to one real second for the stopped playback references to retire. All original 45 assertions remain. Two additional teardown assertions bring this suite to **47**.
+
+The accepted verbose repeat returned the Node count from one to one and retired the sampled Lantern Procession and Kodanda release playbacks after **48 ms** of additional real-time waiting. Its log contains **no `WARNING:`, `ERROR:`, leaked-instance or resource-in-use findings**. Four verbose SDL controller-mapping diagnostics about `misc2` appear in both baseline and corrected startup; they are retained explicitly and are unrelated to resource retirement. An intermediate fixture-only WeakRef type-inference parse error was corrected with an explicit type annotation; its rejected log is preserved.
+
+The required shared runner also passes **47/47**, exits zero, preserves all runtime source bytes and produces a complete log with **zero warnings or errors**. In that run, the mixer had already retired the sampled references during the six teardown frames, so no extra wait was needed. The test observes retirement rather than assuming a fixed frame count or suppressing the warning.
+
+[review.json](review.json) records the exact command, source hashes and before/after findings. [runner/summary.json](runner/summary.json) is the shared-runner receipt; [harness-only.diff](harness-only.diff) shows the limited change. Prior reports remain unchanged. Product code was not edited. This establishes headless ownership/retirement behavior, not listening quality, OS input, rendered continuity or hardware performance.

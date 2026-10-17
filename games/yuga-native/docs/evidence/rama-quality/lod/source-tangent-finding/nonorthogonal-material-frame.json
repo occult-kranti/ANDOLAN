@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "task": "Q02 material-frame quality",
+  "status": "OPEN: source frame-quality finding; not repaired by LOD pipeline",
+  "source": "/workspace/scratch/rama-native-face-r4f/rama-hero-face.glb",
+  "sourceSha256": "1fdb01ccb894004a618a594cb41b2e955810c7bdc76855c42f7ce19b0516d92b",
+  "sourceScope": "R4f before separatelyauthorized3zero-tangent UV-frame repair. Broaderunitbutnonorthogonalframesareunchangedbythatpatch.",
+  "definition": "Absolute dot of suppliedunitNORMAL andunitTANGENT.xyz above0.01. Zero vectors are separatelydiagnosedandnotcountedhere.",
+  "totalAbove0_01": 7797,
+  "totalAbove0_5": 2734,
+  "perMaterial": [
+    {
+      "mesh": 2,
+      "primitive": 0,
+      "material": "Swept black hair",
+      "vertexCount": 40895,
+      "aboveAbsDot0_01": 100,
+      "aboveAbsDot0_5": 45,
+      "maxAbsNormalTangentDot": 0.9685807824134827,
+      "exampleVertices": [
+        31,
+        67,
+        93,
+        103,
+        133,
+        229,
+        300,
+        417,
+        481,
+        502
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 1,
+      "material": "Ivory silk",
+      "vertexCount": 17737,
+      "aboveAbsDot0_01": 851,
+      "aboveAbsDot0_5": 542,
+      "maxAbsNormalTangentDot": 0.9989034533500671,
+      "exampleVertices": [
+        6,
+        616,
+        685,
+        1797,
+        2657,
+        3347,
+        3832,
+        4425,
+        5323,
+        5325
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 2,
+      "material": "Worked warm gold",
+      "vertexCount": 67366,
+      "aboveAbsDot0_01": 4491,
+      "aboveAbsDot0_5": 1013,
+      "maxAbsNormalTangentDot": 0.9326461553573608,
+      "exampleVertices": [
+        2215,
+        2217,
+        2219,
+        2221,
+        2225,
+        2227,
+        2229,
+        2231,
+        2234,
+        2243
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 3,
+      "material": "Cobalt handwoven silk",
+      "vertexCount": 22370,
+      "aboveAbsDot0_01": 1278,
+      "aboveAbsDot0_5": 572,
+      "maxAbsNormalTangentDot": 0.9977846741676331,
+      "exampleVertices": [
+        1845,
+        1847,
+        1849,
+        1851,
+        1853,
+        1855,
+        1857,
+        1859,
+        1861,
+        1863
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 4,
+      "material": "Cobalt lotus brocade",
+      "vertexCount": 5970,
+      "aboveAbsDot0_01": 1074,
+      "aboveAbsDot0_5": 562,
+      "maxAbsNormalTangentDot": 0.9990620613098145,
+      "exampleVertices": [
+        14,
+        186,
+        188,
+        190,
+        192,
+        194,
+        196,
+        201,
+        203,
+        208
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 5,
+      "material": "Recessed antique gold",
+      "vertexCount": 6319,
+      "aboveAbsDot0_01": 2,
+      "aboveAbsDot0_5": 0,
+      "maxAbsNormalTangentDot": 0.014883195050060749,
+      "exampleVertices": [
+        856,
+        1297
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 6,
+      "material": "Polished sapphire",
+      "vertexCount": 3158,
+      "aboveAbsDot0_01": 1,
+      "aboveAbsDot0_5": 0,
+      "maxAbsNormalTangentDot": 0.01740354113280773,
+      "exampleVertices": [
+        1688
+      ]
+    }
+  ],
+  "decision": "Root explicitly bounded this packet to3zero-tangent repair. LODs preserve suppliedvertexrecords; material productiongate remainsLIMITED/open.",
+  "nextBoundedExperiment": [
+    "Inspect source evaluatedloop NORMAL/UV/MikkTspace basis on representative cloth/gold/hair seams before modifyinganyruntimeasset.",
+    "Export a candidate with recalculatedcorrectloop tangent frames and signedbitangents, verify everyothergeometry/skin/morph/texturebyte or evaluatedattribute remains unchanged.",
+    "Checkunitlength,normalorthogonality,handedness,UVdegeneracy and mirroredobject transforms; do not silently invent missingUV parameterization.",
+    "Capture samecamera/material/light/pose A/B closeups and gameplaysequence in native renderer; reject shadingseams/normal-mapflips beforepromotion.",
+    "Keep current and candidate source hashes, basis metrics and actualvisualreviews; separate this material-frame acceptance fromLODgeometry preservation."
+  ],
+  "limits": [
+    "Numeric frame diagnostics do not identifyrootcause or prove visibleartifact severity.",
+    "No broadtangent recompute, rebake, sourcealteration or materialgateclosure performed."
+  ]
+}

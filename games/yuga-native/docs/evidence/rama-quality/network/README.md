@@ -1,0 +1,13 @@
+# Rama remote pose component: 41 checks passed
+
+Godot 4.6.3, clean exit 0. The [final report](component-r3.json), [raw stdout](component-r3.log.txt), [reading ledger](source-reading.json) and [handoff](handoff.json) pin the executed component and its scope.
+
+This adds an original presentation adapter for the actual Rama skeleton through the real `RamaMotion.configure` API. The component tests reconstruct the exact 164 rest bones from the existing animation library metadata; they do **not** load the GLB, render a test avatar or establish skin/material/motion quality. Production callers must supply the actual hero model. No fallback mesh is created.
+
+The 41 passing cases cover source API admission, duplicate binding, model/shared yaw, accepted-pose interpolation, unsupported action authority, rejected nonfinite wire data, out-of-order packets, invalid frame/clock inputs, ignored forged signal payload, stale hide/reappearance, bounded resets, authority death/respawn, full-snapshot omission, hero mismatch, same-room reconnect/reused ID, long-pause recovery, 32-snapshot retention, final-pose hold, freed/queued transport, shortest yaw arc, validated bridge pitch, teleport/discontinuity/generation/new epoch, bridge closure and freed visual/motion.
+
+The adapter consumes actual accepted client snapshots, or separately the existing validated bridge's public pose API. The tests use those real validator scripts with explicit local fixtures. They open no network socket, do not run a match/server, do not change shared protocols and do not exercise the actual hero GLB. Numerical passes do not establish perceived smoothness, Deadlock visual quality, native online integration, authoritative Rama action replication, full match/WAN stability or hardware performance.
+
+Round 1 audited existing API gaps and agreed the pose-only contract with the integration owner. Round 2 implemented the adapter and passed 32 checks. Round 3 source review tightened dirty-copy cadence, repeated stale holds, stale/pause history resets, queued-object handling, local-identity guard, bridge closure and numerical clock/delta bounds; the expanded source-frozen suite passed 41/41. The final report is the acceptance evidence for the current component. The earlier intermediate 32-case result is not substituted for these bytes.
+
+The current native game remains offline. See [integration notes and remaining gates](../../../research/NATIVE_HERO_REPLICATION.md). The bridge retains diagnostic geometry and a full public report; this component does not promote that geometry to the game or give it damage authority. Bridge-owned child nodes must remain under bridge ownership; its existing public report is not robust against arbitrary external deletion of those children.

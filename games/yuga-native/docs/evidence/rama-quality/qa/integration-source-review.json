@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "reviewer": "/root/quality_qa",
+  "date": "2026-10-17",
+  "status": "STATIC_REVIEW_COMPLETE_ACTUAL_POSITIVE_PENDING",
+  "scope": "Independent source review plus a separately pinned actual-world historical R7 negative fixture. No final-asset positive, import or rendering was executed by QA for this packet.",
+  "source_pins_at_read_review": {
+    "games/yuga-native/tools/capture-rama-lookdev.gd": "9f06469736e41c3bd3e07188bb88710b9a736fc5c637cf0df715b25f28033135",
+    "games/yuga-native/tools/run-rama-lookdev.py": "f71ebc353020104141b2c679ca8b069a88c37f2f5141a9641204cad576d42847",
+    "games/yuga-native/scripts/player.gd": "eb7ff422c6d1efc85c69d4e89c75ac5b551ff697c93a21efe48590c05952842f",
+    "games/yuga-native/scripts/rama_hero_runtime.gd": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+    "games/yuga-native/scripts/rama_surface_materials.gd": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a",
+    "games/yuga-native/scripts/rama_secondary_motion.gd": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+    "games/yuga-native/scripts/rama_facial_performance.gd": "4026e0fa590f7b0a357b40632633437945e9332c7f9336fcff60fa2723d7d63a",
+    "games/yuga-native/scripts/rama_lod_binding.gd": "8c4c725a845fc920d4a473b38af11f388d6f8f1f5b889a9e572d1001c72832da",
+    "games/yuga-native/scripts/rama_action_audio.gd": "bc4a89f2092c12b25014109d49ebf7b642d35ce02c846b2d55e1e3993ffc4d9a",
+    "games/yuga-native/tests/rama_quality_integration_cases.gd": "6af53e21e81a80cb454d82d1444ddbbd39b0da485d7d8637e96f842be14e9ba7"
+  },
+  "findings": [
+    {
+      "id": "pause-and-focus-quality-snap",
+      "state": "CORRECTED_IN_SOURCE_PENDING_POSITIVE_EXECUTION",
+      "finding": "The initial player pause/focus callbacks reset the secondary spring and facial blink, contradicting the component pause-hold contract and visibly snapping a nonneutral pose.",
+      "resolution": "Root removed quality reset calls from pause and focus callbacks. The reviewed source retains explicit reset/teleport/death handling and pausable updates. A real combined nonneutral pause/focus regression is now in the new integration fixture."
+    },
+    {
+      "id": "silent-missing-quality-feature-admission",
+      "state": "NEGATIVE_REPRODUCED_FINAL_POSITIVE_PENDING",
+      "finding": "Player creation ignored configure return values for secondary/facial/material controllers, so a functional older hero could run with the two new features absent.",
+      "resolution": "New actual-world suite requires all three configured controllers, exactly one 164-bone rig and one motion modifier, one small skinned four-morph face, actual semantic masks, six material profile domains and shared live skeleton binding. The fresh R7 counterexample passes 7 of10 and fails the three expected feature admissions.",
+      "evidence": "r7-admission-negative/summary.json"
+    },
+    {
+      "id": "lookdev-source-freshness-and-visible-pose",
+      "state": "CORRECTED_IN_SOURCE_PENDING_RENDER",
+      "finding": "The first capture version pinned raw assets and skeleton pose but omitted imported-scene freshness, morph/secondary offsets and loaded scene files.",
+      "resolution": "Reviewed capture now verifies source and destination MD5 stamps, pins imported SCN SHA256, hashes source scenes, includes full-precision skeleton/morph/secondary state and checks source/import bytes unchanged. Python runner independently checks recorded imported SCN and stamp SHA256, all images and six matched pair camera/pose/exposure/phase fields."
+    }
+  ],
+  "composition_observations": [
+    "PBR calibration owns six named non-secondary profile types; secondary owns four different domains, including the trailing Cobalt lotus brocade border. The sets are disjoint.",
+    "LOD binding extracts only named body and bow mesh clones, discards candidate facial nodes/rigs, validates named bind order/rest and attaches clones to the existing skeleton before material/secondary calibration. The single original face remains the sole facial-controller target. Actual LOD images and switch behavior remain separate pending gates.",
+    "The runtime connects its recovery handler before ActionBuffer so movement unlock precedes a legitimate queued dispatch. Pending input never selects action audio directly.",
+    "Actual kit events reach action audio after runtime phase changes and before public combat_event observers. Lethal damage receipts reach consume_damage before the alive guard; defeat stops voices and respawn/reset set the real receiver generation. This source ordering does not establish audible quality."
+  ],
+  "new_fixture": {
+    "path": "games/yuga-native/tests/rama_quality_integration_cases.gd",
+    "current_sha256": "6af53e21e81a80cb454d82d1444ddbbd39b0da485d7d8637e96f842be14e9ba7",
+    "positive_status": "UNRUN pending final accepted source and fresh imports",
+    "checks_designed": [
+      "Actual source/import freshness and one-rig/controller admission.",
+      "Actual imported white-RGB semantic-alpha domains with anchored non-secondary surfaces and per-instance profile separation.",
+      "Real movement and accepted draw seed nonzero spring and facial effort through actual player updates.",
+      "Pause and focus callback preserve complete spring, facial, shader-uniform and morph state; resume advances one tick.",
+      "Actual teleport/reset, lethal receiver/audio ordering, death facial state and authority respawn preserve owned resource identity.",
+      "One hundred actual player resets retain the same face, mesh, skin and material resources; teardown releases owned nodes."
+    ],
+    "dependent_execution_policy": "Lifecycle checks run only after every admission and present import-freshness check passes. Old R7 rejection does not execute these branches."
+  },
+  "limits": [
+    "The archived R7 negative pins its exact earlier fixture/source hashes; the current fixture adds dependency pinning and stricter fail-closed sequencing. No unchanged-test before/after claim is made until the final positive is executed.",
+    "A later scratch run occurred after raw R4f staging but before editor import. It is not classified as R7, and is not substituted for the preserved fresh-R7 negative or a positive run.",
+    "No production art, cloth collision, facial realism, actual LOD performance, physical GPU, Windows, listening or native online acceptance."
+  ]
+}

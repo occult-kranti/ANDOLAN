@@ -1,0 +1,285 @@
+{
+  "notice": "Selected exact source passages, attributed to immutable URLs in the companion source ledger; formatting/whitespace normalized only for XML text. Full responses are hashed in that ledger.",
+  "excerpts": [
+    {
+      "source": "Environment.xml",
+      "parts": [
+        {
+          "element": "member",
+          "name": "ambient_light_color",
+          "text": "The ambient light's [Color]. Only effective if [member ambient_light_sky_contribution] is lower than [code]1.0[/code] (exclusive)."
+        },
+        {
+          "element": "member",
+          "name": "ambient_light_energy",
+          "text": "The ambient light's energy. The higher the value, the stronger the light. Only effective if [member ambient_light_sky_contribution] is lower than [code]1.0[/code] (exclusive)."
+        },
+        {
+          "element": "member",
+          "name": "ambient_light_sky_contribution",
+          "text": "Defines the amount of light that the sky brings on the scene. A value of [code]0.0[/code] means that the sky's light emission has no effect on the scene illumination, thus all ambient illumination is provided by the ambient light. On the contrary, a value of [code]1.0[/code] means that [i]all[/i] the light that affects the scene is provided by the sky, thus the ambient light parameter has no effect on the scene. [b]Note:[/b] [member ambient_light_sky_contribution] is internally clamped between [code]0.0[/code] and [code]1.0[/code] (inclusive)."
+        },
+        {
+          "element": "member",
+          "name": "ambient_light_source",
+          "text": "The ambient light source to use for rendering materials and global illumination."
+        },
+        {
+          "element": "member",
+          "name": "reflected_light_source",
+          "text": "The reflected (specular) light source."
+        },
+        {
+          "element": "member",
+          "name": "tonemap_exposure",
+          "text": "Adjusts the brightness of values before they are provided to the tonemapper. Higher [member tonemap_exposure] values result in a brighter image. See also [member tonemap_white]. [b]Note:[/b] Values provided to the tonemapper will also be multiplied by [code]2.0[/code] and [code]1.8[/code] for [constant TONE_MAPPER_FILMIC] and [constant TONE_MAPPER_ACES] respectively to produce a similar apparent brightness as [constant TONE_MAPPER_LINEAR]."
+        },
+        {
+          "element": "member",
+          "name": "tonemap_white",
+          "text": "The white reference value for tonemapping, which indicates where bright white is located in the scale of values provided to the tonemapper. For photorealistic lighting, it is recommended to set [member tonemap_white] to at least [code]6.0[/code]. Higher values result in less blown out highlights, but may make the scene appear lower contrast. [member tonemap_agx_white] will be used instead when using the [constant TONE_MAPPER_AGX] tonemapper. See also [member tonemap_exposure]. [b]Note:[/b] [member tonemap_white] must be set to [code]2.0[/code] or lower on the Mobile renderer to produce bright images."
+        },
+        {
+          "element": "constant",
+          "name": "TONE_MAPPER_FILMIC",
+          "text": "Uses a film-like tonemapping curve to prevent clipping of bright values and provide better contrast than [constant TONE_MAPPER_REINHARDT]. Slightly slower than [constant TONE_MAPPER_REINHARDT]."
+        }
+      ]
+    },
+    {
+      "source": "DirectionalLight3D.xml",
+      "parts": [
+        {
+          "element": "member",
+          "name": "directional_shadow_max_distance",
+          "text": "The maximum distance for shadow splits. Increasing this value will make directional shadows visible from further away, at the cost of lower overall shadow detail and performance (since more objects need to be included in the directional shadow rendering)."
+        },
+        {
+          "element": "member",
+          "name": "sky_mode",
+          "text": "Whether this [DirectionalLight3D] is visible in the sky, in the scene, or both in the sky and in the scene."
+        },
+        {
+          "element": "constant",
+          "name": "SKY_MODE_LIGHT_ONLY",
+          "text": "Makes the light visible in scene lighting only (including direct lighting and global illumination). When using this mode, the light will not be visible from sky shaders."
+        }
+      ]
+    },
+    {
+      "source": "Light3D.xml",
+      "parts": [
+        {
+          "element": "member",
+          "name": "shadow_bias",
+          "text": "Used to adjust shadow appearance. Too small a value results in self-shadowing (\"shadow acne\"), while too large a value causes shadows to separate from casters (\"peter-panning\"). Adjust as needed."
+        },
+        {
+          "element": "member",
+          "name": "shadow_normal_bias",
+          "text": "Offsets the lookup into the shadow map by the object's normal. This can be used to reduce self-shadowing artifacts without using [member shadow_bias]. In practice, this value should be tweaked along with [member shadow_bias] to reduce artifacts as much as possible."
+        }
+      ]
+    },
+    {
+      "source": "GeometryInstance3D.xml",
+      "parts": [
+        {
+          "element": "member",
+          "name": "lod_bias",
+          "text": "Changes how quickly the mesh transitions to a lower level of detail. A value of 0 will force the mesh to its lowest level of detail, a value of 1 will use the default settings, and larger values will keep the mesh in a higher level of detail at farther distances. Useful for testing level of detail transitions in the editor."
+        },
+        {
+          "element": "member",
+          "name": "visibility_range_begin_margin",
+          "text": "Margin for the [member visibility_range_begin] threshold. The GeometryInstance3D will only change its visibility state when it goes over or under the [member visibility_range_begin] threshold by this amount. If [member visibility_range_fade_mode] is [constant VISIBILITY_RANGE_FADE_DISABLED], this acts as a hysteresis distance. If [member visibility_range_fade_mode] is [constant VISIBILITY_RANGE_FADE_SELF] or [constant VISIBILITY_RANGE_FADE_DEPENDENCIES], this acts as a fade transition distance and must be set to a value greater than [code]0.0[/code] for the effect to be noticeable."
+        },
+        {
+          "element": "member",
+          "name": "visibility_range_end_margin",
+          "text": "Margin for the [member visibility_range_end] threshold. The GeometryInstance3D will only change its visibility state when it goes over or under the [member visibility_range_end] threshold by this amount. If [member visibility_range_fade_mode] is [constant VISIBILITY_RANGE_FADE_DISABLED], this acts as a hysteresis distance. If [member visibility_range_fade_mode] is [constant VISIBILITY_RANGE_FADE_SELF] or [constant VISIBILITY_RANGE_FADE_DEPENDENCIES], this acts as a fade transition distance and must be set to a value greater than [code]0.0[/code] for the effect to be noticeable."
+        },
+        {
+          "element": "member",
+          "name": "visibility_range_fade_mode",
+          "text": "Controls which instances will be faded when approaching the limits of the visibility range."
+        }
+      ]
+    },
+    {
+      "source": "Mesh.xml",
+      "parts": [
+        {
+          "element": "constant",
+          "name": "ARRAY_BONES",
+          "text": "[PackedFloat32Array] or [PackedInt32Array] of bone indices. Contains either 4 or 8 numbers per vertex depending on the presence of the [constant ARRAY_FLAG_USE_8_BONE_WEIGHTS] flag."
+        },
+        {
+          "element": "constant",
+          "name": "ARRAY_WEIGHTS",
+          "text": "[PackedFloat32Array] or [PackedFloat64Array] of bone weights in the range [code]0.0[/code] to [code]1.0[/code] (inclusive). Contains either 4 or 8 numbers per vertex depending on the presence of the [constant ARRAY_FLAG_USE_8_BONE_WEIGHTS] flag."
+        },
+        {
+          "element": "constant",
+          "name": "ARRAY_FLAG_USE_8_BONE_WEIGHTS",
+          "text": "Flag used to mark that the mesh contains up to 8 bone influences per vertex. This flag indicates that [constant ARRAY_BONES] and [constant ARRAY_WEIGHTS] elements will have double length."
+        }
+      ]
+    },
+    {
+      "source": "ArrayMesh.xml",
+      "parts": [
+        {
+          "element": "method",
+          "name": "add_surface_from_arrays",
+          "text": "Creates a new surface. [method Mesh.get_surface_count] will become the [code]surf_idx[/code] for this new surface. Surfaces are created to be rendered using a [param primitive], which may be any of the values defined in [enum Mesh.PrimitiveType]. The [param arrays] argument is an array of arrays. Each of the [constant Mesh.ARRAY_MAX] elements contains an array with some of the mesh data for this surface as described by the corresponding member of [enum Mesh.ArrayType] or [code]null[/code] if it is not used by the surface. For example, [code]arrays[0][/code] is the array of vertices. That first vertex sub-array is always required; the others are optional. Adding an index array puts this surface into \"index mode\" where the vertex and other arrays become the sources of data and the index array defines the vertex order. All sub-arrays must have the same length as the vertex array (or be an exact multiple of the vertex array's length, when multiple elements of a sub-array correspond to a single vertex) or be empty, except for [constant Mesh.ARRAY_INDEX] if it is used. The [param blend_shapes] argument is an array of vertex data for each blend shape. Each element is an array of the same structure as [param arrays], but [constant Mesh.ARRAY_VERTEX], [constant Mesh.ARRAY_NORMAL], and [constant Mesh.ARRAY_TANGENT] are set if and only if they are set in [param arrays] and all other entries are [code]null[/code]. The [param lods] argument is a dictionary with [float] keys and [PackedInt32Array] values. Each entry in the dictionary represents an LOD level of the surface, where the value is the [constant Mesh.ARRAY_INDEX] array to use for the LOD level and the key is roughly proportional to the distance at which the LOD stats being used. I.e., increasing the key of an LOD also increases the distance that the objects has to be from the camera before the LOD is used. The [param flags] argument is the bitwise OR of, as required: One value of [enum Mesh.ArrayCustomFormat] left shifted by [code]ARRAY_FORMAT_CUSTOMn_SHIFT[/code] for each custom channel in use, [constant Mesh.ARRAY_FLAG_USE_DYNAMIC_UPDATE], [constant Mesh.ARRAY_FLAG_USE_8_BONE_WEIGHTS], or [constant Mesh.ARRAY_FLAG_USES_EMPTY_VERTEX_ARRAY]. [b]Note:[/b] When using indices, it is recommended to only use points, lines, or triangles."
+        }
+      ]
+    },
+    {
+      "source": "ImporterMesh.xml",
+      "parts": [
+        {
+          "element": "method",
+          "name": "generate_lods",
+          "text": "Generates all lods for this ImporterMesh. [param normal_merge_angle] is in degrees and used in the same way as the importer settings in [code]lods[/code]. [param normal_split_angle] is not used and only remains for compatibility with older versions of the API. The number of generated lods can be accessed using [method get_surface_lod_count], and each LOD is available in [method get_surface_lod_size] and [method get_surface_lod_indices]. [param bone_transform_array] is an [Array] which can be either empty or contain [Transform3D]s which, for each of the mesh's bone IDs, will apply mesh skinning when generating the LOD mesh variations. This is usually used to account for discrepancies in scale between the mesh itself and its skinning data."
+        }
+      ]
+    },
+    {
+      "source": "BaseMaterial3D.xml",
+      "parts": [
+        {
+          "element": "member",
+          "name": "metallic",
+          "text": "A high value makes the material appear more like a metal. Non-metals use their albedo as the diffuse color and add diffuse to the specular reflection. With non-metals, the reflection appears on top of the albedo color. Metals use their albedo as a multiplier to the specular reflection and set the diffuse color to black resulting in a tinted reflection. Materials work better when fully metal or fully non-metal, values between [code]0[/code] and [code]1[/code] should only be used for blending between metal and non-metal sections. To alter the amount of reflection use [member roughness]."
+        },
+        {
+          "element": "member",
+          "name": "metallic_specular",
+          "text": "Adjusts the strength of specular reflections. Specular reflections are composed of scene reflections and the specular lobe which is the bright spot that is reflected from light sources. When set to [code]0.0[/code], no specular reflections will be visible. This differs from the [constant SPECULAR_DISABLED] [enum SpecularMode] as [constant SPECULAR_DISABLED] only applies to the specular lobe from the light source. [b]Note:[/b] Unlike [member metallic], this is not energy-conserving, so it should be left at [code]0.5[/code] in most cases. See also [member roughness]."
+        },
+        {
+          "element": "member",
+          "name": "normal_scale",
+          "text": "The strength of the normal map's effect."
+        },
+        {
+          "element": "member",
+          "name": "normal_texture",
+          "text": "Texture used to specify the normal at a given pixel. The [member normal_texture] only uses the red and green channels; the blue and alpha channels are ignored. The normal read from [member normal_texture] is oriented around the surface normal provided by the [Mesh]. [b]Note:[/b] The mesh must have both normals and tangents defined in its vertex data. Otherwise, the normal map won't render correctly and will only appear to darken the whole surface. If creating geometry with [SurfaceTool], you can use [method SurfaceTool.generate_normals] and [method SurfaceTool.generate_tangents] to automatically generate normals and tangents respectively. [b]Note:[/b] Godot expects the normal map to use X+, Y+, and Z+ coordinates. See [url=http://wiki.polycount.com/wiki/Normal_Map_Technical_Details#Common_Swizzle_Coordinates]this page[/url] for a comparison of normal map coordinates expected by popular engines. [b]Note:[/b] If [member detail_enabled] is [code]true[/code], the [member detail_albedo] texture is drawn [i]below[/i] the [member normal_texture]. To display a normal map [i]above[/i] the [member detail_albedo] texture, use [member detail_normal] instead."
+        },
+        {
+          "element": "member",
+          "name": "roughness",
+          "text": "Surface reflection. A value of [code]0[/code] represents a perfect mirror while a value of [code]1[/code] completely blurs the reflection. See also [member metallic]."
+        },
+        {
+          "element": "member",
+          "name": "subsurf_scatter_enabled",
+          "text": "If [code]true[/code], subsurface scattering is enabled. Emulates light that penetrates an object's surface, is scattered, and then emerges. Subsurface scattering quality is controlled by [member ProjectSettings.rendering/environment/subsurface_scattering/subsurface_scattering_quality]. [b]Note:[/b] Subsurface scattering is not supported on viewports that have a transparent background (where [member Viewport.transparent_bg] is [code]true[/code])."
+        },
+        {
+          "element": "member",
+          "name": "transparency",
+          "text": "The material's transparency mode. Some transparency modes will disable shadow casting. Any transparency mode other than [constant TRANSPARENCY_DISABLED] has a greater performance impact compared to opaque rendering. See also [member blend_mode]."
+        }
+      ]
+    },
+    {
+      "source": "Specification.adoc",
+      "parts": [
+        {
+          "line_start": 1955,
+          "line_end": 1981,
+          "text": "[[skins-overview]]\n==== Overview\n\nglTF 2.0 meshes support Linear Blend Skinning via skin objects, joint hierarchies, and designated vertex attributes.\n\nSkins are stored in the `skins` array of the asset. Each skin is defined by a **REQUIRED** `joints` property that lists the indices of nodes used as joints to pose the skin and an **OPTIONAL** `inverseBindMatrices` property that points to an accessor with inverse bind matrices data used to bring coordinates being skinned into the same space as each joint.\n\nThe order of joints is defined by the `skin.joints` array and it **MUST** match the order of `inverseBindMatrices` accessor elements (when the latter is present). The `skeleton` property (if present) points to the node that is the common root of a joints hierarchy or to a direct or indirect parent node of the common root.\n\n[NOTE]\n.Implementation Note\n====\nAlthough the `skeleton` property is not needed for computing skinning transforms, it may be used to provide a specific \"`pivot point`\" for the skinned geometry.\n====\n\nAn accessor referenced by `inverseBindMatrices` **MUST** have floating-point components of `\"MAT4\"` type. The number of elements of the accessor referenced by `inverseBindMatrices` **MUST** be greater than or equal to the number of `joints` elements. The fourth row of each matrix **MUST** be set to `[0.0, 0.0, 0.0, 1.0]`. The accessed matrices **MUST NOT** contain infinite or NaN values.\n\n[NOTE]\n.Implementation Note\n====\nThe matrix defining how to pose the skin's geometry for use with the joints (also known as \"`Bind Shape Matrix`\") should be premultiplied to mesh data or to Inverse Bind Matrices.\n====\n\n[[joint-hierarchy]]\n==== Joint Hierarchy\n\nThe joint hierarchy used for controlling skinned mesh pose is simply the node hierarchy, with each node designated as a _joint_ by a reference from the `skin.joints` array. Each skin's joints **MUST** have a common parent node (direct or indirect) called _common root_, which may or may not be a joint node itself. When a skin is referenced by a node within a scene, the common root **MUST** belong to the same scene."
+        },
+        {
+          "line_start": 2040,
+          "line_end": 2103,
+          "text": "[[skinned-mesh-attributes]]\n==== Skinned Mesh Attributes\n\nThe skinned mesh **MUST** have vertex attributes that are used in skinning calculations. The `JOINTS_n` attribute data contains the indices of the joints from the corresponding `skin.joints` array that affect the vertex. The `WEIGHTS_n` attribute data defines the weights indicating how strongly the joint influences the vertex.\n\nTo apply skinning, a transformation matrix is computed for each joint. Then, the per-vertex transformation matrices are computed as weighted linear sums of the joint transformation matrices. Note that per-joint inverse bind matrices (when present) **MUST** be applied before the base node transforms.\n\nIn the following example, a mesh primitive defines `JOINTS_0` and `WEIGHTS_0` vertex attributes:\n\n[source,json]\n----\n{\n    \"meshes\": [\n        {\n            \"name\": \"skinned-mesh_1\",\n            \"primitives\": [\n                {\n                    \"attributes\": {\n                        \"JOINTS_0\": 179,\n                        \"NORMAL\": 165,\n                        \"POSITION\": 163,\n                        \"TEXCOORD_0\": 167,\n                        \"WEIGHTS_0\": 176\n                    },\n                    \"indices\": 161,\n                    \"material\": 1,\n                    \"mode\": 4\n                }\n            ]\n        }\n    ]\n}\n----\n\nThe number of joints that influence one vertex is limited to 4 per set, so the referenced accessors **MUST** have `VEC4` type and following component types:\n\n* *`JOINTS_n`*: _uint8_ or _uint16_\n* *`WEIGHTS_n`*: _float32_, or _unorm8_, or _unorm16_\n\nThe joint weights for each vertex **MUST NOT** be negative.\n\nJoints **MUST NOT** contain more than one non-zero weight for a given vertex.\n\nWhen the weights are stored using _float_ component type, their linear sum **SHOULD** be as close as reasonably possible to `1.0` for a given vertex.\n\nWhen the weights are stored using _unorm8_, or _unorm16_ component types, their linear sum before normalization **MUST** be `255` or `65535`, respectively. Without these requirements, vertices would be deformed significantly because the weight error would get multiplied by the joint position. For example, an error of `1/255` in the weight sum would result in an unacceptably large difference in the joint position.\n\n[NOTE]\n.Implementation Note\n====\nThe threshold in the official validation tool is set to `2e-7` times the number of non-zero weights per vertex.\n====\n\n[NOTE]\n.Implementation Note\n====\nSince the allowed threshold is much lower than minimum possible step for quantized component types, weight sum should be renormalized after quantization.\n====\n\nWhen any of the vertices are influenced by more than four joints, the additional joint and weight information are stored in subsequent sets. For example, `JOINTS_1` and `WEIGHTS_1` if present will reference the accessor for up to 4 additional joints that influence the vertices. For a given primitive, the number of `JOINTS_n` attribute sets **MUST** be equal to the number of `WEIGHTS_n` attribute sets.\n\nClient implementations **MAY** support only a single set of up to four weights and joints, however not supporting all weight and joint sets present in the file may have an impact on the asset's animation.\n\nAll joint values **MUST** be within the range of joints in the skin. Unused joint values (i.e., joints with a weight of zero) **SHOULD** be set to zero."
+        },
+        {
+          "line_start": 2573,
+          "line_end": 2586,
+          "text": "If a mesh primitive specifies a vertex color using the `COLOR_0` attribute semantic name, its per-vertex values are interpolated across topology primitives and used as an extra multiplier for the base color value. Vertex colors that use the `COLOR_0` attribute semantic name are encoded with the linear transfer function, i.e., their values are used as-is.\n\n[NOTE]\n.Implementation Note\n====\nAs defined in the vertex attributes section, all `COLOR_0` components are always in the stem:[[0.0, 1.0\\]] range.\n====\n\nThe _base color_ texture is represented by the `baseColorTexture` property. The red, green, and blue components of the texture **MUST** be encoded with the piecewise <<srgb, sRGB opto-electronic transfer function>>. Client implementations **SHOULD** apply the inverse of that function to get linear base color texture values before multiplying them with base color factors or vertex colors. When the texture sampler uses linear filtering, the transfer function **SHOULD** be decoded prior to linear interpolation. The alpha channel, if present, **MUST** be encoded with the linear transfer function.\n\n[NOTE]\n.Implementation Note\n====\nGraphics APIs usually support dedicated sRGB texture format enums that enable correct transfer function decoding and texture filtering."
+        },
+        {
+          "line_start": 2605,
+          "line_end": 2665,
+          "text": "\nThe textures for metalness and roughness parameters are packed together in a single texture represented by the `metallicRoughnessTexture` property. Its green channel contains roughness values and its blue channel contains metalness values. This texture **MUST** be encoded with the linear transfer function. The red and alpha channels are ignored.\n\n[NOTE]\n.Example\n====\nThe following example shows a material that uses two textures.\n\n[source,json]\n----\n{\n    \"materials\": [\n        {\n            \"pbrMetallicRoughness\": {\n                \"baseColorTexture\": {\n                    \"index\": 0\n                },\n                \"metallicRoughnessTexture\": {\n                    \"index\": 1\n                }\n            }\n        }\n    ],\n    \"textures\": [\n        {\n            \"source\": 0\n        },\n        {\n            \"source\": 1\n        }\n    ],\n    \"images\": [\n        {\n            \"uri\": \"base_color.png\"\n        },\n        {\n            \"uri\": \"metallic_roughness.png\"\n        }\n    ]\n}\n----\n====\n\nImplementations of the bidirectional reflectance distribution function (BRDF) itself **MAY** vary based on device performance and resource constraints. See <<appendix-b-brdf-implementation,Appendix B>> for more details on the BRDF calculations.\n\n[[emissive]]\n=== Emissive Parameter\n\nThe _emissive_ parameter controls the color and intensity of the light being emitted by the material. This parameter is provided by the `emissiveFactor` and `emissiveTexture` properties.\n\nIf the `emissiveTexture` property is not defined, the emissive texture components implicitly have a value of stem:[1.0].\n\nThe red, green, and blue components of the emissive texture **MUST** be encoded with the piecewise <<srgb, sRGB opto-electronic transfer function>>. Client implementations **SHOULD** apply the inverse of that function to get linear emissive texture values before multiplying them with the factors. When the texture sampler uses linear filtering, the transfer function **SHOULD** be decoded prior to linear interpolation. The alpha channel is ignored.\n\nThe units for the multiplicative product of the emissive texture and factor are candela per square meter (**cd / m^2^**), sometimes called _nits_.\n\n[NOTE]\n.Implementation Note\n====\nBecause the value is specified per square meter, it indicates the brightness of any given point along the surface. However, the exact conversion from scene-referred photometric units to the brightness of rendered screen pixels requires knowledge of the camera's exposure settings, which are left as an implementation detail unless otherwise defined by a glTF extension.\n"
+        }
+      ]
+    },
+    {
+      "source": "scene_forward_lights_inc.glsl",
+      "parts": [
+        {
+          "line_start": 50,
+          "line_end": 60,
+          "text": "\thalf m = half(1.0) - u;\n\thalf m2 = m * m;\n\treturn m2 * m2 * m; // pow(m,5)\n}\n\nhvec3 F0(half metallic, half specular, hvec3 albedo) {\n\thalf dielectric = half(0.16) * specular * specular;\n\t// use albedo * metallic as colored specular reflectance at 0 angle for metallic materials;\n\t// see https://google.github.io/filament/Filament.md.html\n\treturn mix(hvec3(dielectric), albedo, hvec3(metallic));\n}"
+        }
+      ]
+    },
+    {
+      "source": "Filament.md.html",
+      "parts": [
+        {
+          "line_start": 650,
+          "line_end": 697,
+          "text": "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nvec3 diffuseColor = (1.0 - metallic) * baseColor.rgb;\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n[Listing [baseColorToDiffuse]: Conversion of base color to diffuse in GLSL]\n\n#### Reflectance remapping\n\n**Dielectrics**\n\nThe Fresnel term relies on $\\fNormal$, the specular reflectance at normal incidence angle, and is achromatic for dielectrics. We will use the remapping for dielectric surfaces described in [#Lagarde14] :\n\n$$\\begin{equation}\n\\fNormal = 0.16 \\cdot reflectance^2\n\\end{equation}$$\n\nThe goal is to map $\\fNormal$ onto a range that can represent the Fresnel values of both common dielectric surfaces (4% reflectance) and gemstones (8% to 16%). The mapping function is chosen to yield a 4% Fresnel reflectance value for an input reflectance of 0.5 (or 128 on a linear RGB gray scale). Figure [reflectance] show those common values and how they relate to the mapping function.\n\n![Figure [reflectance]: Common reflectance values](images/diagram_reflectance.png)\n\nIf the index of refraction is known (for instance, an air-water interface has an IOR of 1.33), the Fresnel reflectance can be calculated as follows:\n\n$$\\begin{equation}\\label{fresnelEquation}\n\\fNormal(n_{ior}) = \\frac{(\\nior - 1)^2}{(\\nior + 1)^2}\n\\end{equation}$$\n\nAnd if the reflectance value is known, we can compute the corresponding IOR:\n\n$$\\begin{equation}\nn_{ior} = \\frac{2}{1 - \\sqrt{\\fNormal}} - 1 \n\\end{equation}$$\n\nTable [commonMatReflectance] describes acceptable Fresnel reflectance values for various types of materials (no real world material has a value under 2%).\n\n\n          Material         |    Reflectance   |        IOR       |   Linear value\n--------------------------:|:-----------------|:-----------------|:----------------\nWater                      | 2%               | 1.33             | 0.35\nFabric                     | 4% to 5.6%       | 1.5 to 1.62      | 0.5 to 0.59\nCommon liquids             | 2% to 4%         | 1.33 to 1.5      | 0.35 to 0.5\nCommon gemstones           | 5% to 16%        | 1.58 to 2.33     | 0.56 to 1.0\nPlastics, glass            | 4% to 5%         | 1.5 to 1.58      | 0.5 to 0.56\nOther dielectric materials | 2% to 5%         | 1.33 to 1.58     | 0.35 to 0.56\nEyes                       | 2.5%             | 1.38             | 0.39\nSkin                       | 2.8%             | 1.4              | 0.42\nHair                       | 4.6%             | 1.55             | 0.54\nTeeth                      | 5.8%             | 1.63             | 0.6\nDefault value              | 4%               | 1.5              | 0.5\n[Table [commonMatReflectance]: Reflectance of common materials (source: Real-Time Rendering 4th Edition)]"
+        }
+      ]
+    },
+    {
+      "source": "importing_images.rst",
+      "parts": [
+        {
+          "line_start": 157,
+          "line_end": 179,
+          "text": "\n- **Lossless:** This is the default and most common compression mode for 2D assets.\n  It shows assets without any kind of artifacting, and disk compression is\n  decent. It will use considerably more amount of video memory than\n  VRAM Compression, though. This is also the recommended setting for pixel art.\n- **Lossy:** This is a good choice for large 2D assets. It has some artifacts,\n  but less than VRAM compression and the file size is several times lower\n  compared to Lossless or VRAM Uncompressed. Video memory usage isn't decreased\n  by this mode; it's the same as with Lossless or VRAM Uncompressed.\n- **VRAM Compressed:** This is the default and most common compression mode for\n  3D assets. Size on disk is reduced and video memory usage is also decreased\n  considerably (usually by a factor between 4 and 6). This mode should be\n  avoided for 2D as it exhibits noticeable artifacts, especially for\n  lower-resolution textures.\n- **VRAM Uncompressed:** Only useful for formats that can't be compressed, such\n  as raw floating-point images.\n- **Basis Universal:** This alternative VRAM compression mode encodes the\n  texture to a format that can be transcoded to most GPU-compressed formats at\n  load-time. This provides very small files that make use of VRAM compression,\n  at the cost of lower quality compared to VRAM Compressed and slow compression\n  times. VRAM usage is usually the same as VRAM Compressed. Basis Universal does\n  not support floating-point image formats (the engine will internally fall back\n  to VRAM Compressed instead)."
+        },
+        {
+          "line_start": 212,
+          "line_end": 244,
+          "text": "Estimated memory usage for a single RGBA8 texture with mipmaps enabled:\n\n+---------------+---------------------+---------------------+---------------------+---------------------+---------------------+\n| Texture size  | Lossless            | Lossy               | VRAM Compressed     | VRAM Uncompressed   | Basis Universal     |\n+===============+=====================+=====================+=====================+=====================+=====================+\n| **128\u00d7128**   | |good| 85 KiB       | |good| 85 KiB       | |good| 21 KiB       | |good| 85 KiB       | |good| 21 KiB       |\n+---------------+---------------------+---------------------+---------------------+---------------------+---------------------+\n| **256\u00d7256**   | |good| 341 KiB      | |good| 341 KiB      | |good| 85 KiB       | |good| 341 KiB      | |good| 85 KiB       |\n+---------------+---------------------+---------------------+---------------------+---------------------+---------------------+\n| **512\u00d7512**   | |good| 1.33 MiB     | |good| 1.33 MiB     | |good| 341 KiB      | |good| 1.33 MiB     | |good| 341 KiB      |\n+---------------+---------------------+---------------------+---------------------+---------------------+---------------------+\n| **1024\u00d71024** | |regular| 5.33 MiB  | |regular| 5.33 MiB  | |good| 1.33 MiB     | |regular| 5.33 MiB  | |good| 1.33 MiB     |\n+---------------+---------------------+---------------------+---------------------+---------------------+---------------------+\n| **2048\u00d72048** | |bad| 21.33 MiB     | |bad| 21.33 MiB     | |regular| 5.33 MiB  | |bad| 21.33 MiB     | |regular| 5.33 MiB  |\n+---------------+---------------------+---------------------+---------------------+---------------------+---------------------+\n| **4096\u00d74096** | |bad| 85.33 MiB     | |bad| 85.33 MiB     | |bad| 21.33 MiB     | |bad| 85.33 MiB     | |bad| 21.33 MiB     |\n+---------------+---------------------+---------------------+---------------------+---------------------+---------------------+\n\n.. note::\n\n    In the above table, memory usage will be reduced by 25% for images that do\n    not have an alpha channel (RGB8). Memory usage will be further decreased by\n    25% for images that have mipmaps disabled.\n\nNotice how at larger resolutions, the impact of VRAM compression is much\ngreater. With a 4:1 compression ratio (6:1 for opaque textures with S3TC), VRAM\ncompression effectively allows a texture to be twice as large on each axis,\nwhile using the same amount of memory on the GPU.\n\nVRAM compression also reduces the memory bandwidth required to sample the\ntexture, which can speed up rendering in memory bandwidth-constrained scenarios\n(which are frequent on integrated graphics and mobile). These factors combined\nmake VRAM compression a must-have for 3D games with high-resolution textures."
+        }
+      ]
+    },
+    {
+      "source": "mesh_lod.rst",
+      "parts": [
+        {
+          "line_start": 77,
+          "line_end": 110,
+          "text": "default, but only as individual mesh resources to load into a MeshInstance3D\nnode (or GPUParticles3D, CPUParticles3D, ...).\n\nTo make an OBJ file have mesh LOD generated for it, select it in the FileSystem\ndock, go to the Import dock, change its **Import As** option to **Scene** then\nclick **Reimport**:\n\n.. figure:: img/mesh_lod_obj_import.png\n   :align: center\n   :alt: Changing the import type on an OBJ file in the Import dock\n\n   Changing the import type on an OBJ file in the Import dock\n\nThis will require restarting the editor after clicking **Reimport**.\n\n.. note::\n\n   The mesh LOD generation process is not perfect, and may occasionally\n   introduce rendering issues (especially in skinned meshes). Mesh LOD\n   generation can also take a while on complex meshes.\n\n   If mesh LOD causes a specific mesh to look broken, you can disable LOD\n   generation for it in the Import dock. This will also speed up resource\n   importing. This can be done globally in the 3D scene's import options, or on\n   a per-mesh basis using the Advanced Import Settings dialog.\n\n   See :ref:`Importing 3D scenes <doc_importing_3d_scenes_using_the_import_dock>`\n   for more information.\n\nComparing mesh LOD visuals and performance\n------------------------------------------\n\nTo disable mesh LOD in the editor for comparison purposes, use the\n**Disable Mesh LOD** advanced debug draw mode. This can be done using the menu"
+        },
+        {
+          "line_start": 154,
+          "line_end": 185,
+          "text": "lossless; it provides a significant performance gain with an unnoticeable loss\nin quality. Higher values will make LOD transitions happen sooner when the\ncamera moves away, resulting in higher performance, but lower quality.\n\nIf you need to perform per-object adjustments to mesh LOD, you can adjust how\naggressive LOD transitions should be by adjusting the **LOD Bias** property on\nany node that inherits from GeometryInstance3D. Values *above* ``1.0`` will make\nLOD transitions happen later than usual (resulting in higher quality, but lower\nperformance). Values *below* ``1.0`` will make LOD transitions happen sooner than\nusual (resulting in lower quality, but higher performance).\n\nAdditionally, ReflectionProbe nodes have their own **Mesh LOD Threshold** property\nthat can be adjusted to improve rendering performance when the reflection probe\nupdates. This is especially important for ReflectionProbes that use the **Always**\nupdate mode.\n\n.. note::\n\n    When rendering the scene, mesh LOD selection uses a screen-space metric.\n    This means it automatically takes camera field of view and viewport\n    resolution into account. Higher camera FOV and lower viewport resolutions\n    will make LOD selection more aggressive; the engine will display heavily\n    decimated models earlier when the camera moves away.\n\n    As a result, unlike :ref:`doc_visibility_ranges`, you don't need to do\n    anything specific in your project to take camera FOV and viewport resolution\n    into account.\n\nUsing mesh LOD with MultiMesh and particles\n-------------------------------------------\n\nFor LOD selection, the point of the node's :abbr:`AABB (Axis-Aligned Bounding Box)`"
+        }
+      ]
+    },
+    {
+      "source": "optimizing_3d_performance.rst",
+      "parts": [
+        {
+          "line_start": 38,
+          "line_end": 48,
+          "text": "\n.. note::\n\n    In some cases, you may have to adapt your level design to add more occlusion\n    opportunities. For example, you may have to add more walls to prevent the player\n    from seeing too far away, which would decrease performance due to the lost\n    opportunities for occlusion culling.\n\nTransparent objects\n-------------------\n"
+        },
+        {
+          "line_start": 112,
+          "line_end": 136,
+          "text": "If you have many identical objects in your scene, you can use automatic\ninstancing to reduce the number of draw calls. This automatically happens for\nMeshInstance3D nodes that use the same mesh and material: no manual setup is required.\n\nFor automatic instancing to be effective, the material must be opaque or\nalpha-tested (alpha scissor or alpha hash). Alpha-blended or depth pre-pass\nmaterials are never instanced this way. Instead, you must use MultiMesh as\ndescribed below.\n\nUse manual instancing (MultiMesh)\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nIf several identical objects have to be drawn in the same place or nearby, try\nusing :ref:`MultiMesh <class_MultiMesh>` instead. MultiMesh allows the drawing\nof many thousands of objects at very little performance cost, making it ideal\nfor flocks, grass, particles, and anything else where you have thousands of\nidentical objects.\n\nSee also the :ref:`Using MultiMesh <doc_using_multimesh>` documentation.\n\nBake lighting\n-------------\n\nLighting objects is one of the most costly rendering operations. Realtime\nlighting, shadows (especially multiple lights), and"
+        },
+        {
+          "line_start": 164,
+          "line_end": 176,
+          "text": "\nThe :ref:`class_VisibleOnScreenEnabler3D` and :ref:`class_VisibleOnScreenNotifier3D`\nnodes can be useful for this purpose.\n\nLarge worlds\n------------\n\nIf you are making large worlds, there are different considerations than what you\nmay be familiar with from smaller games.\n\nLarge worlds may need to be built in tiles that can be loaded on demand as you\nmove around the world. This can prevent memory use from getting out of hand, and\nalso limit the processing needed to the local area."
+        }
+      ]
+    }
+  ]
+}

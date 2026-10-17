@@ -1,0 +1,53 @@
+{
+  "status": "146-case-headless-harness-cleanup-verified",
+  "findings": {
+    "r1": "Verbose before run passed146/146 but warned ObjectDB leak at exit: one AudioStreamWAV and one AudioStreamPlaybackWAV, both referencecount1. Not warning-free.",
+    "r2": "WeakRef-only retirement sampled0 because paused scene music had already stopped; fast shutdown still leaked a WAV/referencecount2 plus two playbacks. This was not accepted warning-free.",
+    "r3": "Stop all scene audio, queue-free, processframes, then request0.1second real SceneTreeTimer interval before optional WeakRef retirement.146/146 pass, exit0, zero warnings/errors/leakedinstances in verbose output."
+  },
+  "scope": "Harness-only teardown. No product code, gameplay content pins, lighting or rendering changes. Existing production lifecycle31 checks remain a separate parent result. The floor probe cleanup source was updated and parse-checked only; its8image render was NOT repeated.",
+  "commands": [
+    "LP_NUM_THREADS=1 taskset -c 4 godot --verbose --headless --single-threaded-scene --path games/yuga-native --script res://tests/production_lighting_quality_cases.gd -- --report=/workspace/scratch/rama-quality-lookdev-cleanup-r3/quality.json",
+    "LP_NUM_THREADS=1 taskset -c 4 godot --headless --check-only --path games/yuga-native --script res://art/lookdev/capture_floor_probe.gd"
+  ],
+  "current_sources": {
+    "tests/production_lighting_quality_cases.gd": {
+      "bytes": 14434,
+      "sha256": "6e4c3dd62cb507eb3de449ad917187ca18382db8bd690d5c7d472827e390dade"
+    },
+    "art/lookdev/capture_floor_probe.gd": {
+      "bytes": 7338,
+      "sha256": "b54dc9f55aaaa6774efe3953868fc1677e48c09a601f5794a74a0e5ed832ce13"
+    }
+  },
+  "files": {
+    "probe-check.log": {
+      "bytes": 73,
+      "sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+    },
+    "r1/quality.json": {
+      "bytes": 14164,
+      "sha256": "07ad8fd6b28750ef3001c8b5ca7c772db559d561c53425676489157a609b4cb4"
+    },
+    "r1/verbose.log": {
+      "bytes": 53041,
+      "sha256": "442e92c9747dde61eab45ac7346622290bf1d57456c381ea804a6db07b1b98c4"
+    },
+    "r2/quality.json": {
+      "bytes": 14438,
+      "sha256": "dcb8c17bb58efba1962f97638e3d85ff3db52b6b3c7cb6bf08e4183d10c0a023"
+    },
+    "r2/verbose.log": {
+      "bytes": 53122,
+      "sha256": "9ecfedeadf6727b85a701c2172ed79ec6656afb6c83aa5f04847cb344f1c96de"
+    },
+    "r3/quality.json": {
+      "bytes": 14505,
+      "sha256": "bee157530fed190c797d2c7ec7c295483c08527079ba75acc6154941c3dd3aa9"
+    },
+    "r3/verbose.log": {
+      "bytes": 52515,
+      "sha256": "4d0593e6d8bcf15e5b54f064c3088b2529f20baa3f874a7fef8645dee966ec44"
+    }
+  }
+}

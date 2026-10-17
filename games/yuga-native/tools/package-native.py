@@ -42,17 +42,57 @@ def record(path: Path) -> dict:
     return {'bytes': path.stat().st_size, 'sha256': digest(path)}
 
 
-def validate_rama_hero_notice(project: Path | None = None) -> dict:
-    """Verify the active hero, editable source, and generator dependencies.
+RAMA_HERO_STAGE_PATHS = (
+    ('r7', 'art/hero-rama/history/r7-runtime/rama-hero.glb',
+     'art/hero-rama/rama-hero.blend', 'art/hero-rama/build_hero.py',
+     'art/hero-rama/history/r7-runtime/RAMA-HERO-PROVENANCE.json',
+     ('art/hero-rama/rebind_dhoti.py', 'art/hero-rama/weight-correction.json')),
+    ('q3', 'art/hero-rama-quality/rama-hero-quality.glb',
+     'art/hero-rama-quality/rama-hero-quality.blend', 'art/hero-rama-quality/build_quality.py',
+     'art/hero-rama-quality/provenance.json', ('art/hero-rama/build_hero.py',)),
+    ('face', 'art/hero-rama-face/rama-hero-face.glb',
+     'art/hero-rama-face/rama-hero-face.blend', 'art/hero-rama-face/build_native_face.py',
+     'art/hero-rama-face/candidate.json',
+     ('art/hero-rama-face/build_face.py', 'art/hero-rama-face/sources/face-poseunits.json',
+      'art/hero-rama-face/sources/face-poseunits.bvh',
+      'art/hero-rama-face/history/r4f-reviewed-before-tangents.glb')),
+)
+RAMA_FACE_REVIEWED_INPUT = {
+    'path': 'art/hero-rama-face/history/r4f-reviewed-before-tangents.glb',
+    'sha256': '1fdb01ccb894004a618a594cb41b2e955810c7bdc76855c42f7ce19b0516d92b',
+    'bytes': 34322216,
+}
+RAMA_FACE_REVIEWED_GENERATOR_SHA256 = 'f872fa0da92d23a5f03866288c099c9bf7de29f99415b9fd3888d56a6452d036'
+RAMA_FACE_POSE_REVISION = 'a8bc2d54ff0ac92e78ff71431b1023eda42bf482'
+RAMA_FACE_POSE_FILES = (
+    {'path': 'art/hero-rama-face/sources/face-poseunits.json',
+     'upstream_path': 'makehuman/data/poseunits/face-poseunits.json',
+     'sha256': 'e7224f76e9610049b79e5f9e8ac2985d1e9a367333395c07537919258cb42cc3', 'bytes': 1590},
+    {'path': 'art/hero-rama-face/sources/face-poseunits.bvh',
+     'upstream_path': 'makehuman/data/poseunits/face-poseunits.bvh',
+     'sha256': '42a8e69692e30010371ee6993a6e5d3b468d35065559ec0953c936e31b8d903f', 'bytes': 310826},
+)
 
-    This checks identity and availability, not anatomy or visual acceptance.
-    Historical rama.glb/rama-production.glb keep their independent checks below.
-    """
-    project = (project or PROJECT).resolve()
-    notice_path = project / 'NOTICE/RAMA-HERO-PROVENANCE.json'
-    notice = json.loads(notice_path.read_text())
+
+def _rama_source(project: Path, relative: str, expected_hash: str) -> dict:
+    if not isinstance(expected_hash, str) or not re.fullmatch(r'[0-9a-f]{64}', expected_hash):
+        raise ValueError(f'Rama hero provenance has invalid source hash: {relative}')
+    if (not isinstance(relative, str) or relative.startswith('/') or '\\' in relative
+            or '..' in PurePosixPath(relative).parts or not PurePosixPath(relative).parts):
+        raise ValueError('Rama hero source path is unsafe')
+    path = project / relative
+    if path.is_symlink() or not path.resolve().is_relative_to(project) or not path.is_file():
+        raise ValueError(f'Rama hero source is missing or unsafe: {relative}')
+    actual = record(path)
+    if actual['sha256'] != expected_hash:
+        raise ValueError(f'Rama hero provenance differs from source: {relative}')
+    return actual
+
+
+def _validate_rama_schema1(project: Path, notice: dict, asset_relocation: str | None = None) -> dict:
+    """Keep the original R7 identity/dependency contract, including archival use."""
     if not isinstance(notice, dict) or type(notice.get('schema')) is not int or notice['schema'] != 1:
-        raise ValueError('Rama hero provenance must be a schema-1 object')
+        raise ValueError('Rama hero historical provenance must be a schema-1 object')
     expected = {
         'asset': ('assets/heroes/rama-hero.glb', 'sha256'),
         'editableSource': ('art/hero-rama/rama-hero.blend', 'editableSha256'),
@@ -67,18 +107,153 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
         expected_hash = notice.get(hash_field)
         if not isinstance(expected_hash, str) or not re.fullmatch(r'[0-9a-f]{64}', expected_hash):
             raise ValueError(f'Rama hero provenance has invalid {hash_field}')
-        path = project / relative
-        if path.is_symlink() or not path.resolve().is_relative_to(project) or not path.is_file():
-            raise ValueError(f'Rama hero source is missing or unsafe: {relative}')
-        actual = record(path)
-        if actual['sha256'] != expected_hash:
-            raise ValueError(f'Rama hero provenance differs from source: {relative}')
-        sources[relative] = actual
+        stored_relative = asset_relocation if field == 'asset' and asset_relocation else relative
+        sources[stored_relative] = _rama_source(project, stored_relative, expected_hash)
     dependencies = [{'path': notice['weightCorrectionGenerator'],
                      'sha256': notice['weightCorrectionGeneratorSha256']}]
     if notice.get('generatedDependencies') != dependencies:
         raise ValueError('Rama hero generated dependencies differ from the required weight correction source')
-    return {'notice': record(notice_path), 'sources': sources}
+    return sources
+
+
+def validate_rama_hero_notice(project: Path | None = None) -> dict:
+    """Verify source identity and ordered authoring, not anatomy or art acceptance.
+
+    Schema 1 preserves the R7 contract. Schema 2 records R7 -> Q3 -> final face
+    authoring, so the R7 generator is never mislabeled as the final generator.
+    Historical rama.glb/rama-production.glb retain their separate checks.
+    """
+    project = (project or PROJECT).resolve()
+    notice_path = project / 'NOTICE/RAMA-HERO-PROVENANCE.json'
+    if notice_path.is_symlink() or not notice_path.resolve().is_relative_to(project):
+        raise ValueError('Rama hero notice is unsafe')
+    notice = json.loads(notice_path.read_text())
+    if not isinstance(notice, dict) or type(notice.get('schema')) is not int:
+        raise ValueError('Rama hero provenance must declare an integer schema')
+    if notice['schema'] == 1:
+        return {'notice': record(notice_path), 'sources': _validate_rama_schema1(project, notice)}
+    if notice['schema'] != 2:
+        raise ValueError('Rama hero provenance has an unknown schema')
+    obsolete = {'generator', 'generatorSha256', 'weightCorrectionGenerator',
+                'weightCorrectionGeneratorSha256', 'weightCorrection',
+                'weightCorrectionSha256', 'generatedDependencies'}
+    if obsolete.intersection(notice):
+        raise ValueError('Schema-2 generators/dependencies belong to their authoring stage')
+    if notice.get('asset') != 'assets/heroes/rama-hero.glb':
+        raise ValueError('Rama hero provenance has unexpected asset')
+    sources = {notice['asset']: _rama_source(project, notice['asset'], notice.get('sha256'))}
+    if type(notice.get('bytes')) is not int or notice['bytes'] != sources[notice['asset']]['bytes']:
+        raise ValueError('Rama hero provenance byte count differs from active asset')
+    stages = notice.get('authoringStages')
+    if not isinstance(stages, list) or len(stages) != len(RAMA_HERO_STAGE_PATHS):
+        raise ValueError('Rama hero requires exactly the ordered R7/Q3/face authoring stages')
+    required_keys = {'id', 'parent', 'asset', 'sha256', 'editableSource', 'editableSha256',
+                     'generator', 'generatorSha256', 'metadata', 'metadataSha256',
+                     'generatedDependencies', 'inputEditableSha256'}
+    reviewed_stages = []
+    previous = None
+    for stage, (stage_id, asset, editable, generator, metadata_path, dependencies) in zip(stages, RAMA_HERO_STAGE_PATHS):
+        face_keys = {'sourceLedger', 'sourceLedgerSha256', 'licenseNotice', 'licenseNoticeSha256',
+                     'reviewedMetadata', 'reviewedMetadataSha256', 'reviewedGenerator', 'reviewedGeneratorSha256'}
+        stage_keys = required_keys | (face_keys if stage_id == 'face' else set())
+        if not isinstance(stage, dict) or set(stage) != stage_keys or stage.get('id') != stage_id:
+            raise ValueError('Rama hero authoring stage is malformed or out of order')
+        if stage.get('parent') != (previous['id'] if previous else None):
+            raise ValueError('Rama hero authoring parent does not match its previous stage')
+        if stage.get('inputEditableSha256') != (previous['editableSha256'] if previous else None):
+            raise ValueError('Rama hero editable input does not match its previous stage')
+        for field, relative, hash_field in (
+                ('asset', asset, 'sha256'), ('editableSource', editable, 'editableSha256'),
+                ('generator', generator, 'generatorSha256'), ('metadata', metadata_path, 'metadataSha256')):
+            if stage.get(field) != relative:
+                raise ValueError(f'Rama hero stage {stage_id} has unexpected {field}')
+            sources[relative] = _rama_source(project, relative, stage.get(hash_field))
+        ledger = stage.get('generatedDependencies')
+        if not isinstance(ledger, list) or len(ledger) != len(dependencies):
+            raise ValueError(f'Rama hero stage {stage_id} has missing/extra dependencies')
+        for dependency, relative in zip(ledger, dependencies):
+            if not isinstance(dependency, dict) or set(dependency) != {'path', 'sha256'} or dependency.get('path') != relative:
+                raise ValueError(f'Rama hero stage {stage_id} dependency is malformed or unsafe')
+            sources[relative] = _rama_source(project, relative, dependency.get('sha256'))
+        if stage_id == 'face':
+            reviewed_input = sources[RAMA_FACE_REVIEWED_INPUT['path']]
+            if reviewed_input != {key: RAMA_FACE_REVIEWED_INPUT[key] for key in ('sha256', 'bytes')}:
+                raise ValueError('Rama face repair input differs from the pinned reviewed R4f export')
+            for field, relative, hash_field in (
+                    ('sourceLedger', 'art/hero-rama-face/sources/source-ledger.json', 'sourceLedgerSha256'),
+                    ('licenseNotice', 'art/hero-rama-face/NOTICE.md', 'licenseNoticeSha256'),
+                    ('reviewedMetadata', 'art/hero-rama-face/history/r4f-reviewed/candidate.json', 'reviewedMetadataSha256'),
+                    ('reviewedGenerator', 'art/hero-rama-face/history/r4f-reviewed/build_native_face.py', 'reviewedGeneratorSha256')):
+                if stage.get(field) != relative:
+                    raise ValueError(f'Rama face stage has unexpected {field}')
+                sources[relative] = _rama_source(project, relative, stage.get(hash_field))
+            if stage['reviewedGeneratorSha256'] != RAMA_FACE_REVIEWED_GENERATOR_SHA256:
+                raise ValueError('Rama face original geometry generator differs from its reviewed identity')
+            source_ledger = json.loads((project / stage['sourceLedger']).read_text())
+            if (not isinstance(source_ledger, dict) or type(source_ledger.get('schema')) is not int
+                    or source_ledger['schema'] != 1
+                    or source_ledger.get('repository') != 'https://github.com/makehumancommunity/makehuman'
+                    or source_ledger.get('revision') != RAMA_FACE_POSE_REVISION
+                    or source_ledger.get('license') != 'CC0'
+                    or source_ledger.get('files') != list(RAMA_FACE_POSE_FILES)):
+                raise ValueError('Rama face pose source/license ledger differs from the pinned CC0 inputs')
+            for entry in RAMA_FACE_POSE_FILES:
+                if sources[entry['path']] != {key: entry[key] for key in ('sha256', 'bytes')}:
+                    raise ValueError('Rama face pose data differs from its pinned upstream source')
+            pose_metadata = json.loads((project / RAMA_FACE_POSE_FILES[0]['path']).read_text())
+            license_text = (project / stage['licenseNotice']).read_text()
+            if (not isinstance(pose_metadata, dict) or pose_metadata.get('license') != 'CC0'
+                    or 'Data Collection AB, Joel Palmius, Jonas Hauquier' not in license_text
+                    or 'License: CC0' not in license_text or RAMA_FACE_POSE_REVISION not in license_text):
+                raise ValueError('Rama face pose CC0 attribution/evidence is missing')
+        metadata = json.loads((project / metadata_path).read_text())
+        if not isinstance(metadata, dict):
+            raise ValueError(f'Rama hero stage {stage_id} metadata must be an object')
+        if stage_id == 'r7':
+            sources.update(_validate_rama_schema1(project, metadata, asset_relocation=asset))
+            identities = {'sha256': stage['sha256'], 'editableSha256': stage['editableSha256'],
+                          'generatorSha256': stage['generatorSha256']}
+        elif stage_id == 'q3':
+            identities = {'acceptedInputGlbSha256': previous['sha256'],
+                          'acceptedInputEditableSha256': previous['editableSha256'],
+                          'candidateGlbSha256': stage['sha256'],
+                          'candidateEditableSha256': stage['editableSha256'],
+                          'generatorSha256': stage['generatorSha256']}
+        else:
+            identities = {'inputBlendSha256': previous['editableSha256'],
+                          'outputSha256': stage['sha256'], 'editableSha256': stage['editableSha256'],
+                          'generatorSha256': stage['generatorSha256']}
+            repair = metadata.get('zeroTangentRepair')
+            if (not isinstance(repair, dict)
+                    or repair.get('sourceSha256') != RAMA_FACE_REVIEWED_INPUT['sha256']
+                    or repair.get('resultSha256') != stage['sha256']
+                    or type(repair.get('allowedRecords')) is not int or repair['allowedRecords'] != 3
+                    or type(repair.get('changedBytes')) is not int or not 1 <= repair['changedBytes'] <= 48
+                    or repair.get('allOtherBytesIdentical') is not True
+                    or repair.get('positionsNormalsUVsSkinMorphsFaceUnchanged') is not True):
+                raise ValueError('Rama face tangent-repair metadata does not match its reviewed input/output contract')
+            reviewed_metadata = json.loads((project / stage['reviewedMetadata']).read_text())
+            original_identities = {'inputBlendSha256': previous['editableSha256'],
+                                   'outputSha256': RAMA_FACE_REVIEWED_INPUT['sha256'],
+                                   'editableSha256': stage['editableSha256'],
+                                   'generatorSha256': stage['reviewedGeneratorSha256']}
+            if (not isinstance(reviewed_metadata, dict) or type(reviewed_metadata.get('schema')) is not int
+                    or reviewed_metadata['schema'] != 1
+                    or any(reviewed_metadata.get(key) != value for key, value in original_identities.items())
+                    or metadata.get('nativeGeometryGeneratorSha256') != stage['reviewedGeneratorSha256']
+                    or metadata.get('postExportProcessorSha256') != stage['generatorSha256']):
+                raise ValueError('Rama face reviewed authoring metadata/unchanged editable/repair ancestry differs')
+        if any(metadata.get(key) != value for key, value in identities.items()):
+            raise ValueError(f'Rama hero stage {stage_id} metadata identity/ancestry differs')
+        reviewed_stages.append({'id': stage_id, 'parent': stage['parent'],
+                                'asset': asset, 'sha256': stage['sha256'],
+                                'editableSource': editable, 'editableSha256': stage['editableSha256']})
+        previous = stage
+    if (notice.get('sha256') != previous['sha256']
+            or notice.get('editableSource') != previous['editableSource']
+            or notice.get('editableSha256') != previous['editableSha256']):
+        raise ValueError('Rama hero active asset/editable differs from terminal authoring stage')
+    return {'notice': record(notice_path), 'sources': sources, 'authoringStages': reviewed_stages}
 
 
 def json_write(path: Path, value: dict) -> None:

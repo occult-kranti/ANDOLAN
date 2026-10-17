@@ -3,7 +3,7 @@ extends Node3D
 ## No gameplay references, lights, particles, camera shake, screen read or audio.
 const RibbonShader = preload("res://shaders/rama_ribbon.gdshader")
 const IDS := ["kodanda", "piercing_dawn", "measured_step", "guardian_circle", "dawn_volley"]
-const COLORS := {"kodanda":Color("e8c373"),"piercing_dawn":Color("8fdce7"),"measured_step":Color("77b8df"),"guardian_circle":Color("8de4c4"),"dawn_volley":Color("f4bf6a")}
+const COLORS := {"kodanda":Color("e8c373"),"piercing_dawn":Color("f2c46e"),"measured_step":Color("77b8df"),"guardian_circle":Color("8de4c4"),"dawn_volley":Color("ffc271")}
 const MAX_CASTS := 12
 const MAX_IMPACTS := 18
 const MAX_LIFETIME := 8.0
@@ -190,6 +190,22 @@ func _material(color: Color, opacity := .8, flow := .7) -> ShaderMaterial:
 	material.set_shader_parameter("opacity",opacity)
 	material.set_shader_parameter("flow",flow)
 	return material
+
+# The indigo contour is a restrained silhouette against warm paving, not another
+# gameplay outline. These authored paths are packed into the existing meshes.
+func _solar_arc(radius: float, center: Vector3, start: float, end: float, count:=24) -> Array:
+	var path: Array=[]
+	for i in range(count+1):
+		var a:=lerpf(start,end,float(i)/count)
+		path.append(center+Vector3(cos(a)*radius,sin(a)*radius,0))
+	return path
+func _quill_paths(length: float, spread: float) -> Array:
+	var paths: Array=[]
+	for sign_ in [-1,1]:
+		paths.append([Vector3(sign_*spread,0,.05),Vector3(0,0,.62),Vector3(sign_*spread*.35,0,.20)])
+		paths.append([Vector3(0,-sign_*spread,.05),Vector3(0,0,.62)])
+	paths.append([Vector3(0,0,-length),Vector3(0,0,.62)])
+	return paths
 func _ribbon(paths: Array, width: float, vertical := false, taper := false) -> ArrayMesh:
 	var vertices:=PackedVector3Array()
 	var uv:=PackedVector2Array()
@@ -262,8 +278,13 @@ func _build(event: Dictionary) -> Dictionary:
 	add_child(root_);root_.top_level=true
 	root_.global_transform=Transform3D(_basis(event.forward),event.target if event.geometry.kind=="circle" else event.origin)
 	var main:=_material(COLORS[event.ability_id])
-	var detail_color: Color={"kodanda":Color("74bde1"),"piercing_dawn":Color("eef5ec"),"measured_step":Color("b4dfef"),"guardian_circle":Color("c2e8b5"),"dawn_volley":Color("9cd9ea")}[event.ability_id]
+	var detail_color: Color={"kodanda":Color("74bde1"),"piercing_dawn":Color("8490dd"),"measured_step":Color("b4dfef"),"guardian_circle":Color("c2e8b5"),"dawn_volley":Color("8d9bea")}[event.ability_id]
 	var detail:=_material(detail_color,.75,.25)
+	if event.ability_id in ["piercing_dawn","dawn_volley"]:
+		main.set_shader_parameter("core_strength",.62)
+		main.set_shader_parameter("luminous",.8)
+		detail.set_shader_parameter("core_strength",.18)
+		detail.set_shader_parameter("luminous",.3)
 	var warning_material:=_material(Color("edc875"),.82,0.0)
 	warning_material.set_shader_parameter("luminous",.1)
 	var warning:=_part(root_,"ExactSweepBoundary",_warning(event.geometry),.11,warning_material)
@@ -273,10 +294,8 @@ func _build(event: Dictionary) -> Dictionary:
 	var arrows: Array=[]
 	for p in event.geometry.get("projectiles",[]):
 		var group:=Node3D.new();root_.add_child(group)
-		var shaft: Array=[Vector3(0,0,-.85),Vector3(0,0,.50)]
-		var head: Array=[Vector3(-.16,0,.20),Vector3(0,0,.65),Vector3(.16,0,.20)]
-		var shaft_node:=_part(group,"ArrowShaft",[shaft,head],.065,main,false)
-		var feather:=_part(group,"SplitFeatherWake",[],.12,detail,true,true)
+		var shaft_node:=_part(group,"ArrowShaft",_quill_paths(1.10 if event.ability_id=="piercing_dawn" else .85,.17),.055,main,false)
+		var feather:=_part(group,"SplitFeatherWake",[],.08,detail,true,true)
 		arrows.append({"root":group,"shaft":shaft_node,"feather":feather})
 	var cast:={"root":root_,"id":event.ability_id,"cast_id":event.cast_id,"geometry":event.geometry.duplicate(true),"timing":event.timing.duplicate(true),"duration":float(event.duration_s),"age":float(event.age_s),"authority_age":float(event.age_s),"released":false,"release_age_s":float(event.timing.windup_s),"contacts":{},"main":main,"detail":detail,"warning_material":warning_material,"warning":warning,"motif":motif,"accent":accent,"recipients":recipients,"attachments":[],"arrows":arrows,"last":event.duplicate(true),"last_geometry_frame":-1,"since_event":0.0}
 	_animate(cast)
@@ -296,7 +315,8 @@ func _animate(cast: Dictionary) -> void:
 	if cast.id=="guardian_circle" and cast.released:
 		# Decoration settles before the exact gameplay boundary expires.
 		fade=minf(fade,smoothstep(0,.25,maxf(0,float(cast.timing.active_s)-after))) if field_active else 0.0
-	cast.main.set_shader_parameter("opacity",(.62 if _reduced_effects else .88)*fade)
+	var charge:=lerpf(.26,1.0,smoothstep(0,.82,prepare)) if not cast.released and cast.id in ["piercing_dawn","dawn_volley"] else 1.0
+	cast.main.set_shader_parameter("opacity",(.62 if _reduced_effects else .88)*fade*charge)
 	cast.detail.set_shader_parameter("opacity",.70*fade)
 	for material in [cast.main,cast.detail]:
 		material.set_shader_parameter("phase",age)
@@ -304,11 +324,13 @@ func _animate(cast: Dictionary) -> void:
 	cast.warning.visible=not cast.released or (cast.id=="guardian_circle" and field_active)
 	if cast.id=="kodanda":cast.warning.visible=false
 	var geometry_frame:=int(age*30)
-	if geometry_frame!=cast.last_geometry_frame:
+	var geometry_changed: bool=geometry_frame!=cast.last_geometry_frame
+	if geometry_changed:
 		cast.last_geometry_frame=geometry_frame
 		var shapes:=_shapes(cast,prepare,after)
-		cast.motif.mesh=_ribbon(shapes.main,.14 if cast.id!="guardian_circle" else .18,false,true)
-		cast.accent.mesh=_ribbon(shapes.detail,.065,true,true)
+		var solar: bool=cast.id in ["piercing_dawn","dawn_volley"]
+		cast.motif.mesh=_ribbon(shapes.main,.075 if solar else (.18 if cast.id=="guardian_circle" else .14),false,true)
+		cast.accent.mesh=_ribbon(shapes.detail,.045 if solar else .065,true,true)
 		var recipients: Array=[]
 		var inverse: Transform3D=cast.root.global_transform.affine_inverse()
 		var attachments: Array=cast.attachments if cast.id!="guardian_circle" or field_active else []
@@ -328,15 +350,17 @@ func _animate(cast: Dictionary) -> void:
 		var distance:=minf(float(cast.geometry.range_m),maxf(0,travel)*float(cast.geometry.speed_mps))
 		var point: Vector3=p.origin+p.forward*distance
 		arrow.root.global_transform=Transform3D(_basis(p.forward),point)
-		var wake: Array=[]
-		for sign_ in [-1,1]:
-			var path: Array=[]
-			for k in range(17):
-				var t:=k/16.0
-				var wave:=sin(t*PI*2.0-age*6.0)*.08 if not _reduced_motion else 0.0
-				path.append(Vector3(sign_*(.08+t*.18)+wave,.03*sin(t*PI),-.3-t*(2.2 if cast.id=="piercing_dawn" else 1.4)))
-			wake.append(path)
-		arrow.feather.mesh=_ribbon(wake,.15,true,true)
+		arrow.feather.visible=not _reduced_effects
+		if geometry_changed:
+			var wake: Array=[]
+			for sign_ in [-1,1]:
+				var path: Array=[]
+				for k in range(17):
+					var t:=k/16.0
+					var wave:=sin(t*PI*2.0-age*5.0)*.028*sin(t*PI) if not _reduced_motion else 0.0
+					path.append(Vector3(sign_*(.045+sin(t*PI)*.16)+wave,.035*sin(t*PI),-.15-t*(2.0 if cast.id=="piercing_dawn" else 1.35)))
+				wake.append(path)
+			arrow.feather.mesh=_ribbon(wake,.065,true,true)
 
 func _shapes(cast: Dictionary, prepare: float, after: float) -> Dictionary:
 	var main: Array=[]
@@ -352,17 +376,22 @@ func _shapes(cast: Dictionary, prepare: float, after: float) -> Dictionary:
 				main.append(path)
 		"piercing_dawn":
 			if not cast.released:
+				# An incomplete solar seal gathers toward the arrow point. Open
+				# gaps and an empty centre preserve the aim/receiver silhouette.
+				var r:=lerpf(.16,.57,smoothstep(0,1,prepare))
+				var turn:=age*.32 if not _reduced_motion else 0.0
+				for index in range(3):
+					var a:=TAU*index/3.0+turn
+					main.append(_solar_arc(r,Vector3(0,1.30,.70),a,a+1.18,24))
+					detail.append(_solar_arc(r*1.12,Vector3(0,1.30,.72),a+.08,a+.92,18))
 				for sign_ in [-1,1]:
-					var path: Array=[]
-					for i in range(49):
-						var t:=i/48.0
-						var a: float=t*TAU+sign_*PI*.5+(age*2 if not _reduced_motion else 0.0)
-						var r: float=(.38-.25*t)*prepare
-						path.append(Vector3(cos(a)*r,1.25+sin(a)*r,.1+t*2.1))
-					main.append(path)
-					detail.append(_curve(Vector3(sign_*.4,.4,-.4),Vector3(sign_*1.15,1.5,0),Vector3(sign_*.35,1.7,1),Vector3(0,1.25,2.1)))
-			elif after<.35:
-				for sign_ in [-1,1]:main.append(_curve(Vector3(0,1.25,.4),Vector3(sign_*.5,1.5,1),Vector3(sign_*.7,.9,1.5),Vector3(sign_*.8,1.25,2)))
+					main.append(_curve(Vector3(sign_*.44,.94,.12),Vector3(sign_*.62,1.08,.55),Vector3(sign_*.22,1.48,1.0),Vector3(0,1.30,1.48),24))
+					detail.append(_curve(Vector3(sign_*.25,1.58,.16),Vector3(sign_*.46,1.73,.6),Vector3(sign_*.13,1.40,1.10),Vector3(0,1.30,1.48),20))
+			elif after<.24:
+				var settle:=1.0-smoothstep(0,.24,after)
+				for index in range(3):
+					var a:=TAU*index/3.0
+					main.append(_solar_arc(.57+after*.8,Vector3(0,1.30,.70+after),a,a+1.18*settle,18))
 		"measured_step":
 			var destination: Vector3=cast.root.global_basis.inverse()*(cast.geometry.center-cast.geometry.origin)
 			var t:=clampf(after/maxf(.01,float(cast.timing.movement_s)),0,1) if cast.released else 0.0
@@ -386,20 +415,29 @@ func _shapes(cast: Dictionary, prepare: float, after: float) -> Dictionary:
 					if index%2==0:detail.append(_arc(radius*.78,.15+growth*.05,a-.35,a+.35,20))
 				main.append(_arc(radius*.88,.10+growth*.02))
 		"dawn_volley":
-			var collapse:=1.0-smoothstep(0,.38,after) if cast.released else 1.0
+			var collapse:=1.0-smoothstep(0,.30,after) if cast.released else 1.0
 			if collapse>0:
-				# Three curved iris vanes gather toward the nock; no opaque solar disk.
+				# Three distinct open sun-blades fold into one nock. Each blade
+				# has a short engraved indigo echo, not a second broad ribbon.
+				var growth:=lerpf(.32,1.0,smoothstep(0,1,prepare))
 				for index in range(3):
-					var a:=TAU*index/3.0+(age*.35 if not _reduced_motion else 0.0)
+					var a:=TAU*index/3.0+(age*.24 if not _reduced_motion else 0.0)
 					var path: Array=[]
 					var inner: Array=[]
-					for i in range(49):
-						var t:=i/48.0
-						var angle:=a+t*2.45
-						var r: float=(.35+sin(t*PI)*.74)*(.4+.6*prepare)*collapse
-						path.append(Vector3(cos(angle)*r,1.35+sin(angle)*r,.28+t*.48))
-						inner.append(Vector3(cos(angle)*r*.84,1.35+sin(angle)*r*.84,.30+t*.48))
+					for i in range(33):
+						var t:=i/32.0
+						var angle:=a+t*1.62
+						var r: float=(.23+sin(t*PI)*.59)*growth*collapse
+						path.append(Vector3(cos(angle)*r,1.35+sin(angle)*r,.48+t*.62))
+						inner.append(Vector3(cos(angle)*r*.84,1.35+sin(angle)*r*.84,.51+t*.62))
 					main.append(path);detail.append(inner)
+					var out:=Vector3(cos(a+.7),sin(a+.7),0)
+					# Fine detached rays stay behind the forward muzzle and do not
+					# impersonate the three unreleased gameplay arrows.
+					if not _reduced_effects:
+						for ray in range(2):
+							var center:=Vector3(0,1.35,.62)+out*(.94+ray*.13)*growth*collapse
+							detail.append([center-out*.045,center+out*.045])
 	return {"main":main,"detail":detail}
 func _impact(point: Vector3, color: Color, hit: bool) -> void:
 	var recycled: Dictionary={}
@@ -413,12 +451,15 @@ func _impact(point: Vector3, color: Color, hit: bool) -> void:
 	root_.global_position=point;root_.scale=Vector3.ONE*.3;root_.visible=true
 	material.set_shader_parameter("tint",color);material.set_shader_parameter("opacity",.85)
 	var paths: Array=[]
-	for i in range(7 if hit else 4):
-		var angle:=TAU*i/(7.0 if hit else 4.0)
-		var direction:=Vector3(cos(angle),sin(angle),.12)
-		paths.append(_curve(direction*.12,direction*.30+Vector3(0,.12,0),direction*.6+Vector3(0,.08,0),direction*.85,12))
-	if root_.get_child_count()==0:_part(root_,"AcceptedContactBloom",paths,.09,material,true,true)
-	else:root_.get_child(0).mesh=_ribbon(paths,.09,true,true)
+	for i in range(8 if hit else 4):
+		var angle:=TAU*i/(8.0 if hit else 4.0)
+		var direction:=Vector3(cos(angle),sin(angle),.20*sin(angle*2))
+		var reach:=.88 if i%2==0 else .62
+		paths.append(_curve(direction*.20,direction*.36+Vector3(0,.07,0),direction*reach, direction*(reach+.08),10))
+	paths.append(_solar_arc(.24,Vector3.ZERO,-.35,2.1,18))
+	paths.append(_solar_arc(.24,Vector3.ZERO,2.8,5.25,18))
+	if root_.get_child_count()==0:_part(root_,"AcceptedContactBloom",paths,.055,material,true,true)
+	else:root_.get_child(0).mesh=_ribbon(paths,.055,true,true)
 	_impacts.append({"root":root_,"material":material,"age":0.0})
 func report() -> Dictionary:
 	var meshes:=0

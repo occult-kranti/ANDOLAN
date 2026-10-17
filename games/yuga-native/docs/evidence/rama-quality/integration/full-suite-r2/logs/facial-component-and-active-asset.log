@@ -1,0 +1,43 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS Unbound driver cannot write a hero {}
+PASS Released no-morph mesh fails closed without ownership {}
+PASS Body-wide morph payload is rejected {}
+PASS Incomplete half-blink corrective pair fails closed {}
+PASS Closing arc uses authored half shape instead of a direct full-shape chord {}
+PASS Full closure retires half correctives without double deformation {}
+PASS Small authored two-lid mesh binds at neutral {}
+PASS Same driver cannot bind twice {}
+PASS Second driver cannot steal a bound mesh {}
+PASS Authored blink has an intermediate closing sample {"blink_clock":3.17499999999999,"blink_index":0,"configured":true,"defeat_age":0.0,"effort":0.0,"elapsed":3.17499999999999,"half_correctives":false,"last_reason":"configure","owned_meshes":1,"rejected_states":0,"reset_count":1,"scope":"Authored eyelid morph performance only, optional authored half-blink arc correctives. No eye scaling, facial shader warp, skeleton modification, gaze or jaw expression.","weights":{"rama_blink_left":0.432006010518177,"rama_blink_right":0.432006010518177}}
+PASS Pause freezes actual partial eyelid and all clocks {}
+PASS Closed blink reaches both authored endpoints {"blink_clock":3.21666666666666,"blink_index":0,"configured":true,"defeat_age":0.0,"effort":0.0,"elapsed":3.21666666666666,"half_correctives":false,"last_reason":"configure","owned_meshes":1,"rejected_states":0,"reset_count":1,"scope":"Authored eyelid morph performance only, optional authored half-blink arc correctives. No eye scaling, facial shader warp, skeleton modification, gaze or jaw expression.","weights":{"rama_blink_left":1.0,"rama_blink_right":1.0}}
+PASS Blink returns to neutral instead of accumulating closure {"blink_clock":0.0766666666666576,"blink_index":1,"configured":true,"defeat_age":0.0,"effort":0.0,"elapsed":3.41666666666666,"half_correctives":false,"last_reason":"configure","owned_meshes":1,"rejected_states":0,"reset_count":1,"scope":"Authored eyelid morph performance only, optional authored half-blink arc correctives. No eye scaling, facial shader warp, skeleton modification, gaze or jaw expression.","weights":{"rama_blink_left":0.0,"rama_blink_right":0.0}}
+PASS Effort uses bounded subtle authored partial closure {"blink_clock":0.6,"blink_index":0,"configured":true,"defeat_age":0.0,"effort":0.999253414191623,"elapsed":0.6,"half_correctives":false,"last_reason":"effort test","owned_meshes":1,"rejected_states":0,"reset_count":2,"scope":"Authored eyelid morph performance only, optional authored half-blink arc correctives. No eye scaling, facial shader warp, skeleton modification, gaze or jaw expression.","weights":{"rama_blink_left":0.139895477986827,"rama_blink_right":0.139895477986827}}
+PASS Recovery smoothly returns effort toward neutral {"blink_clock":1.6,"blink_index":0,"configured":true,"defeat_age":0.0,"effort":0.00000613962517158152,"elapsed":1.6,"half_correctives":false,"last_reason":"effort test","owned_meshes":1,"rejected_states":0,"reset_count":2,"scope":"Authored eyelid morph performance only, optional authored half-blink arc correctives. No eye scaling, facial shader warp, skeleton modification, gaze or jaw expression.","weights":{"rama_blink_left":0.000000859547524021413,"rama_blink_right":0.000000859547524021413}}
+PASS Matched 17-second blink and effort path agrees at 30/120 Hz {"maximum_weight_difference":0.00000000000101429975529754,"samples":510,"tolerance":0.00001}
+PASS Matched 17-second blink and effort path agrees at 60/120 Hz {"maximum_weight_difference":0.00000000000140579214935599,"samples":510,"tolerance":0.00001}
+PASS Invalid delta nan clears stored expression without catch-up {}
+PASS Invalid delta inf clears stored expression without catch-up {}
+PASS Invalid delta -0.01 clears stored expression without catch-up {}
+PASS Invalid delta 0.0 clears stored expression without catch-up {}
+PASS Invalid delta 0.101 clears stored expression without catch-up {}
+PASS Invalid effort strong is rejected before writing morphs {}
+PASS Invalid effort (1.0, 1.0, 1.0) is rejected before writing morphs {}
+PASS Invalid effort nan is rejected before writing morphs {}
+PASS Invalid effort inf is rejected before writing morphs {}
+PASS Death closes proper lids over time without jaw or eye warp {"blink_clock":0.0,"blink_index":0,"configured":true,"defeat_age":0.35,"effort":0.0,"elapsed":0.35,"half_correctives":false,"last_reason":"invalid effort input","owned_meshes":1,"rejected_states":9,"reset_count":12,"scope":"Authored eyelid morph performance only, optional authored half-blink arc correctives. No eye scaling, facial shader warp, skeleton modification, gaze or jaw expression.","weights":{"rama_blink_left":1.0,"rama_blink_right":1.0}}
+PASS Respawn clears stale corpse closure and blink clock {}
+PASS Teleport explicitly clears stored expression {}
+PASS One hundred reset cycles retain one owner and fixed two-shape state {}
+PASS Mesh arrays, mask, material and skeleton rest remain unchanged {}
+PASS Release removes only owned state and restores neutral {}
+PASS Released mesh can bind to a new owner {}
+PASS Freed face fails safely without accumulating replacement nodes {}
+PASS Duplicate authored face nodes are rejected without partial ownership {}
+PASS Existing artist expression is preserved by rejecting nonneutral binding {}
+PASS Death from partial blink continues monotonically to closed {"consecutive_60hz_samples":[[0.437803775219726,0.437803775219726],[0.454238786751193,0.454238786751193],[0.479873571501442,0.479873571501442],[0.513270664905037,0.513270664905037],[0.552992602396544,0.552992602396544],[0.597601919410528,0.597601919410528],[0.645661151381554,0.645661151381554],[0.695732833744189,0.695732833744189],[0.746379501932998,0.746379501932998],[0.796163691382547,0.796163691382547],[0.8436479375274,0.8436479375274],[0.887394775802123,0.887394775802123],[0.925966741641282,0.925966741641282],[0.957926370479442,0.957926370479442],[0.98183619775117,0.98183619775117],[0.996258758891029,0.996258758891029],[1.0,1.0],[1.0,1.0]],"start":{"rama_blink_left":0.432006010518177,"rama_blink_right":0.432006010518177}}
+PASS Death from full blink never reopens authored lids {"consecutive_60hz_samples":[[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0],[1.0,1.0]],"start":{"rama_blink_left":1.0,"rama_blink_right":1.0}}
+PASS Requested actual GLB imports through the runtime importer {"asset_sha256":"de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5"}
+PASS Actual imported eyelid mesh binds alongside one 164-bone rig {}
+PASS Actual imported morphs close/reset without modifying skeletal poses {}

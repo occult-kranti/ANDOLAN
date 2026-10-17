@@ -1,0 +1,64 @@
+{
+  "source_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "status": "component-properties-pass-rendered-review-pending",
+  "engine": "4.6.3.stable.official.7d41c59c4",
+  "commands": [
+    "taskset -c 0,1 godot --headless --single-threaded-scene --path games/yuga-native --script res://tests/production_lighting_quality_cases.gd -- --report=/workspace/scratch/rama-quality-lookdev-r1/quality.json",
+    "taskset -c 0,1 godot --headless --single-threaded-scene --path games/yuga-native --script res://tests/world_lighting_cases.gd -- --report=/workspace/scratch/rama-quality-lookdev-r1/existing-world.json",
+    "taskset -c 0,1 godot --headless --single-threaded-scene --path /workspace/scratch/rama-quality-lookdev-before-test --script res://tests/production_lighting_quality_cases.gd -- --report=/workspace/scratch/rama-quality-lookdev-r1/before-counterexample-complete.json"
+  ],
+  "results": {
+    "quality_cases": {
+      "passed": 108,
+      "total": 108,
+      "exit_code": 0
+    },
+    "existing_world_cases": {
+      "passed": 30,
+      "total": 30,
+      "exit_code": 0
+    },
+    "baseline_counterexample": {
+      "passed": 48,
+      "failed": 60,
+      "total": 108,
+      "exit_code": 1,
+      "isolated_project": true
+    }
+  },
+  "files": {
+    "scripts/production_lighting.gd": {
+      "sha256": "9966282802b1920c7f81567779940796259238f982d67a31b9e886e9ab37cd9f",
+      "bytes": 4751
+    },
+    "scripts/world_lighting.gd": {
+      "sha256": "8604f86cf8231941be9e7edf7c160b4b46bba9ea4fbe93ad2f7e19f518e3d5c0",
+      "bytes": 8528
+    },
+    "tests/production_lighting_quality_cases.gd": {
+      "sha256": "fb3047e358d2b54a5da2a7f780306c7333eac9e0265a35911edda132644aab84",
+      "bytes": 6245
+    },
+    "art/lookdev/production_lighting-before.gd.txt": {
+      "sha256": "74aa8e4d6691721e42d6dc5e0a9be04ed49e6330fa1429d8240dd11ca4a79321",
+      "bytes": 4062
+    },
+    "art/lookdev/world_lighting-before.gd.txt": {
+      "sha256": "822d6d2550b2a01da97b25fb7a8b2163c26b8c44b8ecc0b38e484207ca356feb",
+      "bytes": 8367
+    },
+    "evidence/quality.json": {
+      "sha256": "4729e98be00379451e4ffe9fa81d52bfeac521df19cc14001075fd9bc7c14559",
+      "bytes": 9281
+    },
+    "evidence/existing-world.json": {
+      "sha256": "ceca45075a4759f7f7d3524f28dab95e4c6bc01088bee603ce8b1b7e45bf69fd",
+      "bytes": 2785
+    },
+    "evidence/before-counterexample-complete.json": {
+      "sha256": "ca3f60b2a219847b64946edf9ff1565c6a61b437d738bb38e173658137e90b5a",
+      "bytes": 9342
+    }
+  },
+  "scope": "Resource/API/budget tests only. Same-camera final-art A/B, shadows/skin/gold/silk/hair appearance and day/dusk/night cast readability are pending. No absolute radiance, GPU, performance or final visual quality claim."
+}

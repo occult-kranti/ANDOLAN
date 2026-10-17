@@ -37,10 +37,10 @@ def main():
         canonical = json.dumps(profile["content_sources"], sort_keys=True, separators=(",", ":")).encode()
         check(profile["id"] + "_content_aggregate", hashlib.sha256(canonical).hexdigest() == profile["content_sha256"])
         check(profile["id"] + "_no_live_handshake_claim", profile["live_handshake"] is False)
-    check("per_profile_content_revisions", [p.get("content_revision") for p in data["profiles"]] == [1, 3, 1])
+    check("per_profile_content_revisions", [p.get("content_revision") for p in data["profiles"]] == [1, 4, 1])
     check("wire_versions_unchanged", data["envelope_versions"] == {key: 1 for key in ["contract", "rules", "map", "content", "replay", "input", "event", "entity"]})
-    required_native = {"games/yuga-native/" + path for path in ["scripts/lane_army.gd", "scripts/lane_minion.gd", "scripts/relay_control.gd", "scripts/player_traversal.gd", "scripts/ultimate_rules.gd", "scripts/ultimate_session.gd", "assets/design/native-ultimate-rules.json", "scripts/player.gd", "scripts/rama_ability_kit.gd", "scripts/rama_hero_runtime.gd", "scripts/rama_vitals.gd", "scripts/rama_practice_army.gd", "scripts/rama_practice_target.gd", "assets/design/rama-ability-kit.json"]}
-    check("native_revision3_pins_rama_and_invocation_outcomes", set(data["profiles"][1]["content_sources"]) == required_native)
+    required_native = {"games/yuga-native/" + path for path in ["scripts/lane_army.gd", "scripts/lane_minion.gd", "scripts/relay_control.gd", "scripts/player_traversal.gd", "scripts/ultimate_rules.gd", "scripts/ultimate_session.gd", "assets/design/native-ultimate-rules.json", "scripts/player.gd", "scripts/rama_ability_kit.gd", "scripts/rama_hero_runtime.gd", "scripts/rama_vitals.gd", "scripts/rama_practice_army.gd", "scripts/rama_practice_target.gd", "assets/design/rama-ability-kit.json", "scripts/rama_action_buffer.gd"]}
+    check("native_revision4_retains_rama_invocation_and_pins_input_buffer", set(data["profiles"][1]["content_sources"]) == required_native)
     check("native_hero_health_declared_and_vitals_pinned", data["profiles"][1]["features"]["hero_health"] is True and "scripts/rama_vitals.gd" in " ".join(required_native))
     types = (ROOT / "games/yuga/shared/types.ts").read_text()
     map_text = (ROOT / "games/yuga/shared/map.ts").read_text()

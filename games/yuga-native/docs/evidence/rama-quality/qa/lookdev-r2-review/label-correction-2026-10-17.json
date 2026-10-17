@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "reviewer": "independent quality_qa",
+  "correction_date": "2026-10-17",
+  "recorded_at_utc": "2026-10-17T18:04:34.601122+00:00",
+  "decision": "RETRACT missing-label finding; exact stored label-region equality PASS on all eight R1/R2 title PNGs",
+  "supersedes": [
+    {
+      "path": "docs/evidence/rama-quality/qa/lookdev-r1-review/review.json",
+      "sha256": "15dbee7b3795c1e899458b152ada138555bc5f27be4105b9743a49968eb74899",
+      "superseded_scope": "All QA-LIGHT-02 missing-primary-label and strict-label-draw FAIL assertions, including their title-pair dispositions. Other visual and shutdown findings remain bounded as originally recorded."
+    },
+    {
+      "path": "docs/evidence/rama-quality/qa/lookdev-r2-review/review.json",
+      "sha256": "26c624eb967a51778be3aabd0ebac075c2aa5edd941d019cbb97202a2843720d",
+      "superseded_scope": "All QA-LIGHT-02 missing-primary-label and strict-label-draw FAIL assertions, including their title-pair dispositions. Other visual and shutdown findings remain bounded as originally recorded."
+    }
+  ],
+  "correction": "I incorrectly treated my visual interpretation of the displayed previews as a missing label in the stored PNGs. Independent decoding contradicts that conclusion. The stored images all contain the same label pixels; no product or capture defect causing a missing label is established.",
+  "verified_evidence": {
+    "proof_path": "docs/evidence/rama-quality/qa/lookdev-r2-review/label-pixel-proof.json",
+    "proof_sha256": "b1da1314c50a12ca4186fefce6c1df133b2b3bc0c9bcba61534fdd186b5a2e23",
+    "verifier_path": "docs/evidence/rama-quality/qa/lookdev-r2-review/verify_label_rois.py",
+    "verifier_sha256": "4f1bd88cc199c521841ebcadc6e6036ea0ea5a4f2c35f066bcd6feee54cd8b4c",
+    "ascii_path": "docs/evidence/rama-quality/qa/lookdev-r2-review/label-threshold-ascii.txt",
+    "ascii_sha256": "406dca0002a60e45b53b08a0b39c3d90556dc3403b6dca19876e6bfd330fd367",
+    "images": 8,
+    "roi_xyxy": [
+      160,
+      314,
+      400,
+      348
+    ],
+    "decoded_mode": "RGB",
+    "decoded_bytes_per_roi": 24480,
+    "roi_rgb_sha256": "d9fe0d724cc0a29d899488a004a7b715b0a931e35f6c593e99b56eef9cfa75dc",
+    "all_eight_roi_bytes_identical": true,
+    "threshold": "max(R,G,B)<100",
+    "dark_pixels_per_roi": 630,
+    "independently_read_ascii_text": "Explore Confluence and right arrow",
+    "png_hashes_match_captured_manifests": true,
+    "original_images_unchanged": true,
+    "executed_verifier_exit_code": 0
+  },
+  "corroborating_owner_record": {
+    "path": "docs/evidence/rama-quality/lookdev/title-label-diagnosis/summary.json",
+    "sha256": "9cd2ee8a3009de19007feb9925f3c4d41483acfbf5bb2049d2c25078e9978ab9",
+    "scope": "Owner audited twelve including floor-probe shots. QA independently verified eight R1/R2 title shots; QA does not claim to have executed the extra four floor-probe checks."
+  },
+  "current_disposition": {
+    "primary_button_label_roi": "PASS exact pixel equality for both R1 and R2; missing-label finding RETRACTED",
+    "whole_screen_ux": "Not established by a label ROI audit",
+    "R2_ground_bands": "Observed static improvement retained; no new conclusion about temporal behavior",
+    "hero_art_materials": "LIMITED; neutral smooth skin, stylized eyelids/hair, glossy cloth/metal remain",
+    "original_R2_ObjectDB_warning": "Preserved unresolved original capture-harness cleanup warning; no live-world leak inferred",
+    "commercial_quality_and_hardware": "OPEN / no AAA or physical-GPU claim"
+  },
+  "remaining_cause_unknown": "The reason my initial preview interpretation differed from decoded PNG contents is unestablished. This correction does not assign a renderer, UI code, upload or tool fault.",
+  "actions": "No original PNG, product runtime or engine execution changed. Initial review JSONs are preserved unchanged and explicitly superseded for the named finding. Acceptance document corrected. Await five-ability movie assignment."
+}

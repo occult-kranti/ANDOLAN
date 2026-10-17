@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "round": "2 of3",
+  "status": "Tooling candidate only; final source and actual native candidate review pending",
+  "sourceCommit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "sources": {
+    "games/yuga-native/art/hero-rama-lod/README.md": {
+      "bytes": 8075,
+      "sha256": "9e66a952bdab571ece2e05d715b9f85f97a50f2861b9c2b801c1172a9407dd03"
+    },
+    "games/yuga-native/art/hero-rama-lod/bootstrap_meshoptimizer.py": {
+      "bytes": 2434,
+      "sha256": "a25820e889b238fc5dbaa014a577ec5e8c55b1ceef12752af3b0c4e58c1631b1"
+    },
+    "games/yuga-native/art/hero-rama-lod/glb_lod.py": {
+      "bytes": 16003,
+      "sha256": "ffa1f37ea5d2acbe12f0da12cd5acb973c0d586867738683a84cf57e3326ceba"
+    },
+    "games/yuga-native/art/hero-rama-lod/build_lods.py": {
+      "bytes": 8679,
+      "sha256": "77f0f5b8b0b155dbc0f2afb3028f54de90e987e9e9656f92add831bd2ef59975"
+    },
+    "games/yuga-native/art/hero-rama-lod/measure_source.py": {
+      "bytes": 791,
+      "sha256": "264344bed290c9350f02ff3cb675a018d78c3e89ba23d4ec9893fae67f13ff7d"
+    },
+    "games/yuga-native/scripts/rama_visual_lod.gd": {
+      "bytes": 2690,
+      "sha256": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5"
+    },
+    "games/yuga-native/tests/hero_lod_cases.py": {
+      "bytes": 6714,
+      "sha256": "d8ad3c3057aa24fbc1a5ea7742e40575e508e94308711c9cb8c5295020004735"
+    },
+    "games/yuga-native/tests/hero_lod_cases.gd": {
+      "bytes": 3842,
+      "sha256": "93a40f6d993e600ff5415b5ea2ed1db88232b8b13820751ef484272ee5b0a41d"
+    }
+  },
+  "executed": [
+    "python3 games/yuga-native/tests/hero_lod_cases.py --report /tmp/rama-lod-round2-cases.json",
+    "LP_NUM_THREADS=2 godot --headless --path games/yuga-native --script res://tests/hero_lod_cases.gd -- --report=/tmp/rama-lod-round2-selector.json",
+    "python3 games/yuga-native/art/hero-rama-lod/measure_source.py --source games/yuga-native/assets/heroes/rama-hero.glb --report /tmp/rama-lod-round1-source.json",
+    "python3 games/yuga-native/art/hero-rama-lod/bootstrap_meshoptimizer.py --output /workspace/tooling/meshoptimizer-v0.24-yuga-lod --fetch-only"
+  ],
+  "findings": [
+    "R7 actually450084triangles,257139vertices,17primitive submissions/view/pass,13materials.",
+    "Measured source vertex channels17485452bytes; indices3351336bytes.",
+    "Unique image payloads explicitRGBA8+fullmips estimate57322132bytes; not measuredVRAM.",
+    "Python15/15malformationcounterexamples pass; selector27/27hysteresis/projection/ownership checks pass."
+  ],
+  "pending": [
+    "Final art\u2192facial source SHA/freeze",
+    "Compile pinned meshoptimizer during exclusive heavy slot",
+    "Generate and independentlyvalidate actualcandidateLODs",
+    "Native samecamera posednear/mid/far andtransitionreview",
+    "Root promotion usesone liveSkeleton3D only",
+    "PhysicalGPU/multiplayerframebudgetUNRUN"
+  ],
+  "promotedRuntimeAssets": [],
+  "limits": [
+    "No LOD generation, Blender/export/import or native visual review executed in this tooling round.",
+    "Isolated selector is not hooked to player; no runtime LOD success claim."
+  ]
+}

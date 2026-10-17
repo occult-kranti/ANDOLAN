@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "scope": "Unpromoted original Rama action audio component; root stages/integrates. Human listening, device behavior, dense-fight and wholeworld mix UNRUN.",
+  "baseline_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "component_checks": 115,
+  "passed": true,
+  "commands": [
+    "python3 games/yuga-native/art/audio/rama-quality/build_audio.py --check --report /tmp/rama-quality-audio-check-2.json",
+    "LP_NUM_THREADS=2 taskset -c 0,1 python3 games/yuga-native/tools/run-quality-checks.py --suite action-audio-component --output /workspace/scratch/rama-quality-audio-validation-fix-r1 --max-cpus 2",
+    "ffmpeg -v error -i EACH_SOURCE_WAV -f null - (all15files)"
+  ],
+  "actual_fixed_mix": {
+    "captured_stereo_frames": 28672,
+    "headroom_db": 35.9485929386146,
+    "mix_rate_hz": 44100.0,
+    "peak_linear": 0.0159430112689734,
+    "rms_linear": 0.00173328824140404,
+    "scope": "One fixed four-voice Dummy mix with listener and test-only capture bus; no whole-game/device/listening acceptance."
+  },
+  "files": {
+    "games/yuga-native/scripts/rama_action_audio.gd": {
+      "bytes": 17435,
+      "sha256": "6091e288e9236ee54ea11839db3eef31a59b306b738d7008ae46287c8f5e3c89"
+    },
+    "games/yuga-native/tests/rama_action_audio_cases.gd": {
+      "bytes": 21776,
+      "sha256": "a2599be22c697f0bf89f6a17880b95f8be157e3d13c6e47beb03a6eec9e8d8b4"
+    },
+    "games/yuga-native/art/audio/rama-quality/build_audio.py": {
+      "bytes": 7826,
+      "sha256": "229eb5a3b3e6c2acb98a293ad357d0e7f78e10f77570f0ba39b4002c99b2d137"
+    },
+    "games/yuga-native/art/audio/rama-quality/README.md": {
+      "bytes": 6739,
+      "sha256": "0a26f6b388cdf63f3513e891ebe7ca1698de4f2a04f81d0f2c7b74a8162692fd"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/blocked.wav": {
+      "bytes": 19244,
+      "sha256": "46f92c5de93bd760aeef391518ac30b5dae2d452de0c523f3e57f5e0a7e41811"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/cancel.wav": {
+      "bytes": 11564,
+      "sha256": "e904b81a932a211dcc4d0a355137f6adc149de340c4b9075f54b7e4ab62f764a"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/confirm.wav": {
+      "bytes": 9644,
+      "sha256": "7710de239832100fc38f503cf2cf37668902e4e7cc6100dcdb2b7a905dae8c20"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/contact.wav": {
+      "bytes": 15404,
+      "sha256": "f03b2d7a84fbed558318f5a4f85720eebea27405d734f94290aa90fc0e0266cd"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/draw_dawn_volley.wav": {
+      "bytes": 91244,
+      "sha256": "78a5eb254505d60403e975e82af3185d673e785218a0b195d48a4a11e3014193"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/draw_guardian_circle.wav": {
+      "bytes": 52844,
+      "sha256": "89df09de3303c162482dac899c8be6392dcf7da326d25ae8f5421a9f217920e2"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/draw_kodanda.wav": {
+      "bytes": 17324,
+      "sha256": "5f34621c8dcd86a9b547fc79bbb43ba06557cf180336f59b608195151f357bd7"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/draw_measured_step.wav": {
+      "bytes": 9644,
+      "sha256": "a5c4c3a348c89a95751619f2a7ceb3431187ca6dbbde5ae42dcb8c944b4e3cc2"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/draw_piercing_dawn.wav": {
+      "bytes": 62444,
+      "sha256": "ba8c7cc86fced066813dcefb1814ce7acc09866cf582b269cdcd9e635ed54133"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/manifest.json": {
+      "bytes": 9693,
+      "sha256": "9c29ad40bef9e524a1216c6ea45ae4adfb1663987b26a81c37c3c93d710b7c8b"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/release_dawn_volley.wav": {
+      "bytes": 28844,
+      "sha256": "92118f35c8a7726384caac4c2e243b3fc59c7bc75c75671ecf225ba94a55ee2e"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/release_guardian_circle.wav": {
+      "bytes": 69164,
+      "sha256": "012357565f977a2cc830709e4a3fa97416353b22154ce225899bfeae80cbccbb"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/release_kodanda.wav": {
+      "bytes": 32684,
+      "sha256": "636bd972fe69c81ceba89e38a0db3f74101d8d7992c705731dd45912b865b610"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/release_measured_step.wav": {
+      "bytes": 30764,
+      "sha256": "066564ad5db1b262dc8f78e9e3ddcfa5447cc68a74013fda7dbf8711dc4d3a17"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/release_piercing_dawn.wav": {
+      "bytes": 57644,
+      "sha256": "caa7071f1acdf5a40e3f69f88ef46ea4bcc9634b758b6a3ed0a695f4f45d6c56"
+    },
+    "games/yuga-native/art/audio/rama-quality/runtime/threat.wav": {
+      "bytes": 19244,
+      "sha256": "fb077b936353fba38b45cd861db0c1e1daf822523d2da4aa666377c4465a6217"
+    }
+  },
+  "reports": {
+    "pcm-full-decode.json": {
+      "bytes": 2939,
+      "sha256": "d3ec593ec5f2f8723501ac9ddb9ed76e10ef880855c23fdc23b51661e2889955"
+    },
+    "REVIEW.md": {
+      "bytes": 6381,
+      "sha256": "3f75d48c2e8a4d2d74242d4767fcd554940424cdae7c2a2db48fcb9c4e568f8f"
+    },
+    "shared-runner-source-after.json": {
+      "bytes": 81146,
+      "sha256": "d38208135d7f2af5ff6a0d40691ef1908754b70c3d74d6f3e5a118898dfe4682"
+    },
+    "component-final.json": {
+      "bytes": 20351,
+      "sha256": "cea2782ea794c584cf180a18055e1c40707e457c733f01db4ece11148297ea65"
+    },
+    "pcm-check.json": {
+      "bytes": 421,
+      "sha256": "f6e376e69d61a235028d57aedda3ab756f044f95124dbc61d69a60bb048d4422"
+    },
+    "shared-runner-summary.json": {
+      "bytes": 1728,
+      "sha256": "6c91cfd9a94e38483f07b9312728d03a896e9e62862a8e483ca7f1533e1240f9"
+    },
+    "component-final.txt": {
+      "bytes": 5658,
+      "sha256": "0b80066c2093ebef12f01176d45f39758426ac2ffeeddafd4b1d4069b3ee962f"
+    },
+    "pcm-generated.json": {
+      "bytes": 425,
+      "sha256": "01709b0ca10912077306551f0f932dbc4d263e02a8deb43701b14cf25090ab6f"
+    },
+    "shared-runner-source-before.json": {
+      "bytes": 81146,
+      "sha256": "d38208135d7f2af5ff6a0d40691ef1908754b70c3d74d6f3e5a118898dfe4682"
+    }
+  },
+  "validation_correction": "Prior91/72 report-only acceptance superseded: malformedepoch/heroDictionary values raised SCRIPTERROR despiteJSONpassed. Explicit typeguards+24newscalarcases; strictsharedrunner enforcesfull-logerrorrejection.",
+  "engine_log_clean": true
+}

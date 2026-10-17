@@ -1,0 +1,109 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS fifteen_original_cues_exact_four_player_budget
+PASS actual_loaded_pcm_48k_mono16_unique_finite_nonlooping
+PASS three_spatial_one_local_feedback_no_added_bus
+PASS accepted_begin_plays_tension_once
+PASS duplicate_begin_does_not_replay
+PASS release_before_authority_windup_rejected
+PASS actual_primary_release_replaces_its_draw
+PASS higher_sequence_duplicate_release_rejected
+PASS fifty_projectile_ticks_do_not_restart_sound
+PASS accepted_damage_receipt_selects_contact_and_local_confirm
+PASS same_unit_and_projectile_cannot_repeat_confirm
+PASS missing_damage_receipt_is_silent
+PASS cover_impact_uses_dull_contact_without_success
+PASS end_retires_cast_and_voices
+PASS retired_cast_cannot_sound_again
+PASS cast_identity_cannot_be_reused
+PASS malformed_kind_has_no_audio_or_state_change
+PASS malformed_generation_has_no_audio_or_state_change
+SCRIPT ERROR: Invalid operands 'Dictionary' and 'int' in operator '!='.
+          at: _valid (res://scripts/rama_action_audio.gd:89)
+          GDScript backtrace (most recent call first):
+              [0] _valid (res://scripts/rama_action_audio.gd:89)
+              [1] consume_event (res://scripts/rama_action_audio.gd:120)
+              [2] reject (res://tests/rama_action_audio_cases.gd:32)
+              [3] run (res://tests/rama_action_audio_cases.gd:77)
+PASS malformed_epoch_has_no_audio_or_state_change
+PASS malformed_cast_id_has_no_audio_or_state_change
+PASS malformed_event_seq_has_no_audio_or_state_change
+SCRIPT ERROR: Invalid operands 'Dictionary' and 'String' in operator '!='.
+          at: _valid (res://scripts/rama_action_audio.gd:90)
+          GDScript backtrace (most recent call first):
+              [0] _valid (res://scripts/rama_action_audio.gd:90)
+              [1] consume_event (res://scripts/rama_action_audio.gd:120)
+              [2] reject (res://tests/rama_action_audio_cases.gd:32)
+              [3] run (res://tests/rama_action_audio_cases.gd:77)
+PASS malformed_hero_id_has_no_audio_or_state_change
+PASS malformed_ability_id_has_no_audio_or_state_change
+PASS malformed_age_s_has_no_audio_or_state_change
+PASS malformed_origin_has_no_audio_or_state_change
+PASS malformed_timing_has_no_audio_or_state_change
+PASS malformed_receipts_has_no_audio_or_state_change
+PASS nonfinite_or_negative_clock_nan_rejected
+PASS nonfinite_or_negative_clock_inf_rejected
+PASS nonfinite_or_negative_clock_-1.0_rejected
+PASS nonfinite_spatial_position_rejected
+PASS next_valid_cast_survives_malformed_attempts
+PASS changed_volley_stagger_cannot_emit_early_pulse
+PASS volley_first_pulse_on_authority_release
+PASS volley_early_tick_silent
+PASS volley_second_pulse_on_existing_tick
+PASS volley_third_pulse_on_existing_tick
+PASS volley_later_tick_does_not_repeat_pulses
+PASS changed_release_age_cannot_retime_existing_cast
+PASS cancel_stops_cast_and_damps_tension
+PASS advance_generation_2
+PASS reset_clears_all_voices
+PASS nonfinite_volume_preserves_setting
+PASS volume_clamps_high
+PASS zero_volume_stops_existing_players_immediately
+PASS muted_release_is_consumed_silently
+PASS unmute_cannot_replay_consumed_release
+PASS unmute_has_no_delayed_queue
+PASS advance_generation_3
+PASS pause_stops_every_voice
+PASS paused_volley_pulses_consumed_without_queue
+PASS resume_does_not_replay_suppressed_volley
+PASS advance_generation_4
+PASS focus_loss_stops_every_voice
+PASS focus_return_does_not_replay_sound
+PASS real_vitals_shape_selects_local_damage_cue
+PASS repeated_damage_receipt_is_silent
+PASS inconsistent_damage_math_cannot_create_threat
+PASS hit_confirmation_cannot_evict_local_incoming_damage
+PASS defeat_stops_all_no_orphan_voices
+PASS advance_generation_5
+PASS dead_hero_cannot_sound_until_explicit_respawn
+PASS explicit_respawn_allows_new_receipts_only
+PASS advance_generation_6
+PASS lower_priority_draw_cannot_evict_three_releases
+PASS damage_watermarks_bounded_to_64_sources
+PASS advance_generation_7
+PASS active_cast_state_capped_at_twelve
+PASS thirteenth_cast_cannot_grow_state
+PASS local_cleanup_preserves_watermarks
+PASS advance_generation_8
+PASS actual_tree_pause_stops_playing_voices
+PASS tree_pause_receipt_consumed_without_delayed_replay
+PASS advance_generation_9
+PASS per_cast_contact_dedup_state_never_exceeds_eighteen
+PASS advance_generation_10
+PASS 1000_casts_no_node_voice_or_state_growth
+FAIL all_voice_gains_and_variation_remain_bounded
+PASS actual_dummy_four_voice_mixer_fixture_has_numeric_headroom
+PASS actual_army_and_kit_configure_for_audio_receipts
+PASS all_five_real_kit_lifecycles_select_expected_onsets
+PASS all_actual_kit_snapshots_accepted_without_schema_translation
+PASS actual_vitals_receiver_configures
+PASS actual_vitals_damage_receipt_selects_local_cue
+PASS actual_vitals_defeat_stops_entire_audio_pool
+PASS explicit_receiver_reset_rejects_delayed_prior_life_damage
+PASS future_damage_generation_cannot_rebind_live_receiver
+PASS receiver_generation_cannot_move_backwards
+PASS sources_frozen_for_run
+PASS teardown_frees_entire_player_pool
+{"checks":90,"passed":false}
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2663)

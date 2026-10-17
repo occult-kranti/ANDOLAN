@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "diagnosis": "Harness exits after six uncapped process frames before stopped AudioStreamPlaybackWAV references always retire on a real Dummy mixer block. No leaked Node was reported. Test-only weak refs verify both scene ownership and bounded playback retirement. No product code was edited.",
+  "preserved_behavior_assertions": 45,
+  "new_teardown_assertions": 2,
+  "accepted_checks": 47,
+  "test_sha256": "dbf05cca6cf4b8ed6a4fe8724c63b9cd16db570a598f2a17f169d7b42e8e6da9",
+  "runtime_sha256": "93dce51be3dc2dab4b3dbb7420c77499ac296fa9a5a41ad8cf6a9a8cbdb23672",
+  "before_findings": [
+    "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+    "ERROR: 1 resources still in use at exit.",
+    "Leaked instance: AudioStreamWAV:9223372120539531760 - Reference count: 1",
+    "Leaked instance: AudioStreamPlaybackWAV:9223372121797822998 - Reference count: 1",
+    "Leaked instance: AudioStreamPlaybackWAV:9223372970070641423 - Reference count: 1",
+    "Leaked instance: AudioStreamWAV:9223372171827483458 - Reference count: 1",
+    "Resource still in use: res://assets/audio/rama-quality/release_kodanda.wav (AudioStreamWAV)"
+  ],
+  "intermediate_harness_compile_error": "First teardown edit inferred WeakRef from Variant using :=; explicit WeakRef annotation repaired the fixture parse error. The rejected log is retained as after-verbose.log.",
+  "after_verbose": {
+    "passed": true,
+    "checks": 47,
+    "warnings": [],
+    "retirement": {
+      "playbacks": [
+        {
+          "node": "/root/ConfluenceWorld/World/TraversalAudio/LanternProcession",
+          "playback_class": "AudioStreamPlaybackWAV",
+          "stream": ""
+        },
+        {
+          "node": "/root/ConfluenceWorld/World/@Node3D@400/RamaActionAudio/RamaActionWorld0",
+          "playback_class": "AudioStreamPlaybackWAV",
+          "stream": "res://assets/audio/rama-quality/release_kodanda.wav"
+        },
+        {
+          "node": "/root/ConfluenceWorld/World/TraversalAudio/LanternProcession",
+          "playback_class": "AudioStreamPlaybackWAV",
+          "stream": ""
+        }
+      ],
+      "sampled_playbacks": 3,
+      "wait_ms": 48
+    },
+    "controller_mapping_diagnostics": 4
+  },
+  "shared_runner": {
+    "passed": true,
+    "checks": 47,
+    "exit_code": 0,
+    "source_unchanged": true,
+    "warnings": [],
+    "command": "LP_NUM_THREADS=2 taskset -c 0,1 python3 games/yuga-native/tools/run-quality-checks.py --suite action-buffer-offline-integration --output /tmp/rama-quality-buffer-teardown-runner-r1 --max-cpus 2",
+    "retirement": {
+      "playbacks": [
+        {
+          "node": "/root/ConfluenceWorld/World/TraversalAudio/LanternProcession",
+          "playback_class": "AudioStreamPlaybackWAV",
+          "stream": ""
+        },
+        {
+          "node": "/root/ConfluenceWorld/World/@Node3D@400/RamaActionAudio/RamaActionWorld0",
+          "playback_class": "AudioStreamPlaybackWAV",
+          "stream": "res://assets/audio/rama-quality/release_kodanda.wav"
+        },
+        {
+          "node": "/root/ConfluenceWorld/World/TraversalAudio/LanternProcession",
+          "playback_class": "AudioStreamPlaybackWAV",
+          "stream": ""
+        }
+      ],
+      "sampled_playbacks": 3,
+      "wait_ms": 0
+    }
+  },
+  "scope": "Headless real-world assertions and actual Dummy mixer object retirement. No OS input, listening, rendered continuity or hardware performance acceptance."
+}

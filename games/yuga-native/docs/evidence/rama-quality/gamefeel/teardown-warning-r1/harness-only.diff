@@ -1,0 +1,62 @@
+--- before-45-assertion-fixture.gd
++++ after-47-assertion-fixture.gd
+@@ -11,6 +11,9 @@
+ var checks: Array = []
+ var sources: Dictionary = {}
+ var output := ""
++var baseline_nodes := 0
++var retiring_playbacks: Array[WeakRef] = []
++var retiring_details: Array = []
+ 
+ func _initialize() -> void: call_deferred("run")
+ 
+@@ -83,7 +86,16 @@
+ 	await tap("ultimate")
+ 	return result.get("accepted", false) and not buffer.report().pending.is_empty()
+ 
++func capture_playback_retirement(node: Node) -> void:
++	if (node is AudioStreamPlayer or node is AudioStreamPlayer3D or node is AudioStreamPlayer2D) and node.playing:
++		var playback: AudioStreamPlayback = node.get_stream_playback()
++		if playback != null:
++			retiring_playbacks.append(weakref(playback))
++			retiring_details.append({"node":String(node.get_path()), "stream":node.stream.resource_path if node.stream != null else "", "playback_class":playback.get_class()})
++	for child in node.get_children(): capture_playback_retirement(child)
++
+ func run() -> void:
++	baseline_nodes = int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT))
+ 	for arg in OS.get_cmdline_user_args():
+ 		if arg.begins_with("--report="): output = arg.trim_prefix("--report=")
+ 	for path in ["res://scripts/player.gd", "res://scripts/rama_hero_runtime.gd", "res://scripts/rama_action_buffer.gd", "res://scripts/rama_ability_kit.gd", "res://scripts/rama_vitals.gd", "res://scripts/rama_action_audio.gd", "res://scripts/confluence_world.gd", "res://assets/design/rama-ability-kit.json", "res://assets/audio/rama-quality/manifest.json", get_script().resource_path]: sources[path] = FileAccess.get_sha256(path)
+@@ -238,6 +250,9 @@
+ 	await fresh()
+ 	var reset_queued: bool = await primary_then_queue()
+ 	var before_runtime_reset: int = audio.report().played
++	# Stop is synchronous at the Node API; the Dummy mixer releases its
++	# playback ref on a later real audio block, not after N synthetic frames.
++	capture_playback_retirement(scene)
+ 	runtime.reset()
+ 	var reset_audio: Dictionary = audio.report()
+ 	check("Actual runtime reset clears voices and pending casts without a queued onset", reset_queued and reset_audio.playing == 0 and reset_audio.active_casts == 0 and reset_audio.alive and reset_audio.generation == kit.generation and reset_audio.receiver_generation == runtime.vitals.generation and reset_audio.played == before_runtime_reset and buffer.report().pending.is_empty(), {"audio":reset_audio,"kit_generation":kit.generation,"hero_generation":runtime.vitals.generation})
+@@ -247,6 +262,15 @@
+ 	var unchanged := true
+ 	for path in sources: unchanged = unchanged and FileAccess.get_sha256(path) == sources[path]
+ 	check("Input/runtime/authority source bytes remain unchanged during this fixture", unchanged)
++	capture_playback_retirement(scene)
++	var scene_weak: WeakRef = weakref(scene)
++	paused = false; scene.release_actions(); scene.queue_free(); current_scene = null
++	for unused in 6: await process_frame
++	check("World teardown frees the scene and every owned Node", scene_weak.get_ref() == null and int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)) == baseline_nodes, {"baseline_nodes":baseline_nodes,"remaining_nodes":int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT))})
++	var retire_start: int = Time.get_ticks_msec()
++	while retiring_playbacks.any(func(ref_: WeakRef): return ref_.get_ref() != null) and Time.get_ticks_msec() - retire_start < 1000:
++		await create_timer(.025).timeout
++	check("Stopped Dummy playback refs retire within one real second", not retiring_playbacks.is_empty() and not retiring_playbacks.any(func(ref_: WeakRef): return ref_.get_ref() != null), {"sampled_playbacks":retiring_playbacks.size(),"wait_ms":Time.get_ticks_msec()-retire_start,"playbacks":retiring_details})
+ 	var passed := true
+ 	for item in checks: passed = passed and item.passed
+ 	var report := {"passed":passed,"checks":checks,"sources":sources,"scope":"Actual Confluence scene, CharacterBody grounding, Input.action_press/release, existing player polling and real 20 Hz army/kit/vitals/action-audio receipts. Focus is an explicitly emitted window signal; audio is the actual Dummy-driver owner, not listening evidence. No OS input, rendered continuity, human-feel, online or hardware performance claim."}
+@@ -254,6 +278,4 @@
+ 		var file := FileAccess.open(output, FileAccess.WRITE)
+ 		if file: file.store_string(JSON.stringify(report, "\t") + "\n")
+ 		else: passed = false
+-	paused = false; scene.release_actions(); scene.queue_free(); current_scene = null
+-	for unused in 6: await process_frame
+ 	quit(0 if passed else 1)

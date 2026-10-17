@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "role": 5,
+  "round": 2,
+  "source_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e plus owned working-tree VFX change",
+  "suites": [
+    {
+      "name": "vfx-quality",
+      "exit": 0,
+      "passed": true,
+      "checks": 33,
+      "report_sha256": "cba8d23c3568a843be04aafc8be4a00946f6332f47da820bf21eb801cdc413b0"
+    },
+    {
+      "name": "rama_ability_cases",
+      "exit": 0,
+      "passed": true,
+      "checks": 85,
+      "report_sha256": "c7ad131aad83bfd029a3862cb50c0614bd1d92346f660e63da4b3e50d1a9c922"
+    },
+    {
+      "name": "rama_hero_integration_cases",
+      "exit": 0,
+      "passed": true,
+      "checks": 138,
+      "report_sha256": "efce63a0af47ab67603247b78cf5bb3bc38cb7f5173e136eb3ede733dfcbe9ff"
+    }
+  ],
+  "runtime_sources": {
+    "scripts/rama_ability_effects.gd": "5c8ac077f208d7674ebb463354e98054e5d9ce7ee4ef9f74780f1226bc1555d7",
+    "shaders/rama_ribbon.gdshader": "6fa1b9f1064a5b4396a36eebe1e0d232b1bf5ef8fda5a0e6ab03b0a7ac53e7de",
+    "tests/rama_vfx_quality_cases.gd": "0c94935bfbfd9387c200b12592fe808a4830c412dcd74f73e2c9a3a8b223a5b4",
+    "tests/rama_ability_cases.gd": "9cabe5b547bc88378100c4cbd3663b4a8257fd68ee9e48aa3e39749f1028469d",
+    "tests/rama_hero_integration_cases.gd": "96b0dd6632db9b4a43d2d2304153050e8761d7bb0c762307ac2bc9c26ce4c66d"
+  },
+  "command": "taskset -c 0,1 godot --headless --single-threaded-scene --path games/yuga-native --script res://tests/NAME.gd -- --report=/workspace/scratch/rama-vfx-quality-r1/NAME.json",
+  "engine": "4.6.3.stable.official.7d41c59c4",
+  "actual_visual_review": "UNRUN for new candidate; released baseline five images opened in round1. Forward+ shader compile, A/B visuals and near/far/night/crowded readability remain pending.",
+  "preserved": "No authority, kit, vitals, HUD, tuning, capture-tool or existing test edits. Existing 30/60/120 presentation equality, Guardian authority boundary and 100cast/reset integration passed."
+}

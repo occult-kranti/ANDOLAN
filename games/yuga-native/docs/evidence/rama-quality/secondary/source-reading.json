@@ -1,0 +1,17 @@
+{
+  "scope": "Godot Forward+ skinning order; source read directly, not inferred from shader syntax.",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.6.3-stable/servers/rendering/renderer_rd/shaders/skeleton.glsl",
+      "bytes": 10803,
+      "sha256": "a36b5b2ac9141314b63f7e8b67607eb405a1664a575318e5165f71c75851fcf6",
+      "evidence": "Compute skin writes deformed vertex buffer before Forward+ custom vertex code consumes vertex_input."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.6.3-stable/servers/rendering/renderer_rd/shaders/forward_clustered/scene_forward_clustered.glsl",
+      "bytes": 105847,
+      "sha256": "444bff95b71d7109ec32e009edd25cb3e0eb61612133aba1a2ba38e041102600",
+      "evidence": "Vertex input initialized before custom VERTEX section; model/view transforms follow."
+    }
+  ]
+}

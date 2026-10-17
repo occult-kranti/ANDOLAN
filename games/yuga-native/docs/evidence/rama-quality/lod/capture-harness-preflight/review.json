@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "status": "Source/parser preflight only; no renderer, import or actual capture executed",
+  "sourceCommit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "sources": {
+    "games/yuga-native/art/hero-rama-lod/capture_lods.gd": {
+      "bytes": 19064,
+      "sha256": "1455feca2fec81e937c80290ae2ffacba9d7523c3746f11f2b43f5dda346587b"
+    },
+    "games/yuga-native/art/hero-rama-lod/run_capture.py": {
+      "bytes": 12980,
+      "sha256": "289df08775d6669bab98c43ee7e348888c832bc2a30856207c7fb72e2e75a838"
+    }
+  },
+  "executed": [
+    {
+      "command": "taskset -c 4 env LP_NUM_THREADS=1 XDG_DATA_HOME=/tmp/rama-lod-capture-parse-r3-user godot --headless --max-threads 1 --path games/yuga-native --check-only --script res://art/hero-rama-lod/capture_lods.gd",
+      "exitCode": 0,
+      "kind": "Parser only"
+    },
+    {
+      "command": "python3 -m py_compile games/yuga-native/art/hero-rama-lod/run_capture.py",
+      "exitCode": 0,
+      "kind": "Python compilation"
+    },
+    {
+      "command": "python3 games/yuga-native/art/hero-rama-lod/run_capture.py --output /tmp/rama-lod-render-DONT-RUN --display 143 --dry-run",
+      "exitCode": 0,
+      "startsRenderer": false
+    }
+  ],
+  "plannedActualOutput": {
+    "pairs": 6,
+    "screenshots": 12,
+    "poses": [
+      "idle",
+      "actual PiercingDawn windup"
+    ],
+    "heroPixelTargets": [
+      780,
+      350,
+      120
+    ],
+    "viewport": [
+      1280,
+      960
+    ],
+    "optionalCameraFrames": 30,
+    "simulatedVideoHz": 15,
+    "report": "lod-capture.json"
+  },
+  "gates": [
+    "Fresh unchanged exact runtime/GLB/import/texture bytes and generatedLOD=false for allthreehero imports.",
+    "One live164bone rig, unique nativeface,4LODclones/2namedskins.",
+    "Exact camera and frozen rig/morph/secondary/material/controller state within every pair.",
+    "Candidate geometry selected by actual screen-space helper; near reference is capture-only visibility override.",
+    "KnownwaterTIME speed frozen and uncontrolled backgroundTIME recorded.",
+    "CameraTake frozenpose and15Hzsampleclock explicitly distinct from advancinggameplay and achievedFPS."
+  ],
+  "nextOwner": "Root heavy-slot owner: run actual capture, then independently inspect all matchedpairs and switch sequence.",
+  "limits": [
+    "No visible quality, actual capture completion, hardware performance, memory residency or production acceptance established by this preflight."
+  ]
+}

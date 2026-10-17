@@ -1,0 +1,46 @@
+{
+  "checked_sources_unchanged": true,
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "python_version": "Python 3.12.14",
+  "runner_sha256": "e8b4a85a30b313c540c4786730cfc3f67cb079ee928af011b0081ccc90cd19f7",
+  "schema": 1,
+  "scope": "Headless component and offline-scene assertions only. No rendered art, OS input, human feel/listening, integrated native multiplayer/AI, Windows or physical-GPU acceptance.",
+  "selected_suites": [
+    "action-audio-component"
+  ],
+  "source_unchanged": true,
+  "suite_sources": {
+    "tests/rama_action_audio_cases.gd": "a2599be22c697f0bf89f6a17880b95f8be157e3d13c6e47beb03a6eec9e8d8b4",
+    "tools/run-quality-checks.py": "e8b4a85a30b313c540c4786730cfc3f67cb079ee928af011b0081ccc90cd19f7"
+  },
+  "suites": [
+    {
+      "checks": 115,
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--script",
+        "res://tests/rama_action_audio_cases.gd",
+        "--",
+        "--report=/workspace/scratch/rama-quality-audio-validation-fix-r1/reports/action-audio-component.json"
+      ],
+      "engine_errors": [],
+      "exit_code": 0,
+      "id": "action-audio-component",
+      "kind": "godot",
+      "log": "logs/action-audio-component.log",
+      "log_sha256": "0b80066c2093ebef12f01176d45f39758426ac2ffeeddafd4b1d4069b3ee962f",
+      "passed": true,
+      "report": "reports/action-audio-component.json",
+      "report_sha256": "cea2782ea794c584cf180a18055e1c40707e457c733f01db4ece11148297ea65",
+      "source": "tests/rama_action_audio_cases.gd",
+      "wall_seconds": 1.319
+    }
+  ]
+}

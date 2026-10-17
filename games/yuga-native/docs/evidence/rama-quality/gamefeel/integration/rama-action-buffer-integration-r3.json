@@ -1,0 +1,370 @@
+{
+	"checks": [
+		{
+			"case": "Actual world owns a configured separate Q/X input adapter",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual CharacterBody is grounded in the existing world",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A fresh Q input starts the existing kit without spending primary ammo",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "X pressed during real Q windup rejects with truthful feedback",
+			"evidence": {
+				"notice": "Finish the current draw"
+			},
+			"passed": true
+		},
+		{
+			"case": "X during early recovery never becomes pending",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Final-recovery input reaches the adapter through normal player polling",
+			"evidence": {
+				"buffer": {
+					"cleared_count": 0,
+					"configured": true,
+					"dispatched_count": 0,
+					"dispatching": false,
+					"last_edge": 4,
+					"last_reason": "Dawn Volley · queued after recovery",
+					"pending": {
+						"ability_id": "dawn_volley",
+						"cast_id": 1,
+						"edge_token": 4,
+						"expires_at": 0.97,
+						"generation": 5,
+						"queued_at": 0.85,
+						"serial": 18
+					},
+					"queued_count": 1,
+					"rejected_count": 2,
+					"scope": "One deliberate Q/X edge near accepted recovery; no gameplay authority",
+					"window_s": 0.12
+				},
+				"note": "Dawn Volley · queued after recovery"
+			},
+			"passed": true
+		},
+		{
+			"case": "Queued UI feedback does not fake begin, sound or animation",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual recovery produces one synchronized real X begin",
+			"evidence": {
+				"authority_s": 0.95,
+				"notice": "Dawn Volley · drawing"
+			},
+			"passed": true
+		},
+		{
+			"case": "The real dispatch samples the changed current camera aim",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Only the actual accepted dispatch starts the windup cue",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Later updates never repeat a released queued edge",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A held or same-tick repeated poll creates one deliberate input edge",
+			"evidence": {
+				"begins": 0,
+				"buffer": {
+					"cleared_count": 0,
+					"configured": true,
+					"dispatched_count": 1,
+					"dispatching": false,
+					"last_edge": 4,
+					"last_reason": "Reset",
+					"pending": {
+
+					},
+					"queued_count": 1,
+					"rejected_count": 2,
+					"scope": "One deliberate Q/X edge near accepted recovery; no gameplay authority",
+					"window_s": 0.12
+				},
+				"edge": 4,
+				"held_edge": 4,
+				"notice": "Rama is ready"
+			},
+			"passed": false
+		},
+		{
+			"case": "Buffer integration preserves committed E/C/LMB and movement locks",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Direct runtime and kit APIs retain immediate busy rejection",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Cooldown-blocked Q input gives feedback without arming a retry",
+			"evidence": {
+				"begins": 0,
+				"buffer": {
+					"cleared_count": 0,
+					"configured": true,
+					"dispatched_count": 1,
+					"dispatching": false,
+					"last_edge": 7,
+					"last_reason": "Piercing Dawn · queued after recovery",
+					"pending": {
+						"ability_id": "piercing_dawn",
+						"cast_id": 2,
+						"edge_token": 7,
+						"expires_at": 1.37,
+						"generation": 17,
+						"queued_at": 1.25,
+						"serial": 76
+					},
+					"queued_count": 2,
+					"rejected_count": 3,
+					"scope": "One deliberate Q/X edge near accepted recovery; no gameplay authority",
+					"window_s": 0.12
+				},
+				"kit": {
+					"accepted_casts": 5,
+					"action_locked": true,
+					"active_ability": "kodanda",
+					"active_cast_id": 2,
+					"casts": [
+						{
+							"ability_id": "kodanda",
+							"age_s": 0.3,
+							"cast_id": 2,
+							"geometry": {
+								"center": "(-40.6194, 0.0, -5.359305)",
+								"forward": "(-0.142126, 0.0, 0.989849)",
+								"height_m": 2.7,
+								"kind": "projectiles",
+								"origin": "(-40.6194, 0.0, -5.359305)",
+								"projectiles": [
+									{
+										"delay_s": 0.0,
+										"forward": "(-0.142126, 0.0, 0.989849)",
+										"index": 0,
+										"origin": "(-40.71064, 1.312821, -4.647827)"
+									}
+								],
+								"radius_m": 0.22,
+								"range_m": 40.0,
+								"speed_mps": 60.0
+							},
+							"phase": "recovery",
+							"released": true
+						}
+					],
+					"configured": true,
+					"cooldowns": {
+						"dawn_volley": 0.0,
+						"guardian_circle": 0.0,
+						"kodanda": 0.0999999999999999,
+						"measured_step": 3.75,
+						"piercing_dawn": 0.0
+					},
+					"elapsed": 1.25,
+					"generation": 17,
+					"history_capacity": 96,
+					"history_size": 22,
+					"last_reason": "Kodanda · drawing",
+					"max_casts": 12,
+					"network_enabled": false,
+					"receipts_count": 0,
+					"receiver_scope": "lane_troops_and_explicit_movement_receiver",
+					"rejected_casts": 4,
+					"release_count": 4,
+					"suspended": false
+				},
+				"notice": "Piercing Dawn · queued after recovery"
+			},
+			"passed": false
+		},
+		{
+			"case": "Recovery never retries the cooldown-blocked input",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after pause",
+			"evidence": {
+				"hero_generation": 21,
+				"kit_generation": 21,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after controls modal",
+			"evidence": {
+				"hero_generation": 25,
+				"kit_generation": 25,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after hero guide",
+			"evidence": {
+				"hero_generation": 29,
+				"kit_generation": 29,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after overview",
+			"evidence": {
+				"hero_generation": 33,
+				"kit_generation": 33,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after window focus",
+			"evidence": {
+				"hero_generation": 37,
+				"kit_generation": 37,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after teleport",
+			"evidence": {
+				"hero_generation": 42,
+				"kit_generation": 42,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after hit",
+			"evidence": {
+				"hero_generation": 46,
+				"kit_generation": 46,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after defeat",
+			"evidence": {
+				"hero_generation": 50,
+				"kit_generation": 50,
+				"notice": "Defeated · returning in 3 seconds"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after actor generation",
+			"evidence": {
+				"hero_generation": 55,
+				"kit_generation": 54,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after army reset",
+			"evidence": {
+				"hero_generation": 60,
+				"kit_generation": 59,
+				"notice": "Rama is ready"
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual lifecycle prevents queued execution after round outcome",
+			"evidence": {
+				"hero_generation": 64,
+				"kit_generation": 63,
+				"notice": "Action cancelled"
+			},
+			"passed": true
+		},
+		{
+			"case": "Player reset preserves monotonic edge identity",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Real reload blocks Q before it can become pending",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual airborne state blocks discrete kit input",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Input/runtime/authority source bytes remain unchanged during this fixture",
+			"evidence": {
+
+			},
+			"passed": true
+		}
+	],
+	"passed": false,
+	"scope": "Actual Confluence scene, CharacterBody grounding, Input.action_press/release and existing player physics polling with real 20 Hz army/kit. Focus is an explicitly emitted window signal. No OS input, rendered continuity, listening, human-feel, online or hardware performance claim.",
+	"sources": {
+		"res://assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+		"res://scripts/confluence_world.gd": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7",
+		"res://scripts/player.gd": "97248b4c1cf2ac3f953a3cc1ca1068fe2b9cd787ddf30bfbca427428e09ce6d8",
+		"res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+		"res://scripts/rama_action_buffer.gd": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+		"res://scripts/rama_hero_runtime.gd": "407e94aca93b00130159184618ce6e0a7e8d93b6dc07da9412876a34afe32123",
+		"res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+		"res://tests/rama_action_buffer_integration_cases.gd": "452b173c68aed909b5b8ea92a97521aa45799c55dfa067c831bb6e0c584f6f27"
+	}
+}

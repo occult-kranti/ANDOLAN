@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "EXPECTED_NEGATIVE",
+  "engine": "4.6.3-stable (official)",
+  "exit_code": 1,
+  "passed": 7,
+  "checks": 10,
+  "expected_failures": [
+    "Actual imported hero admits facial, secondary and material controllers",
+    "One unique face has the four authored full and half blink morphs",
+    "Actual masks anchor skin, bow and fitted parts while all four moving domains bind"
+  ],
+  "command": "LP_NUM_THREADS=2 taskset -c 0,1 godot --headless --single-threaded-scene --path games/yuga-native --script res://tests/rama_quality_integration_cases.gd -- --report=/workspace/scratch/rama-quality-integration-r7-negative-r2/report.json",
+  "fresh_xdg_root": "/workspace/scratch/rama-quality-integration-r7-negative-r2",
+  "report_sha256": "624e6c0e8e27c165e39d3bcec7554fe3af3c9d9b994801ead57723ba83e396c9",
+  "log_sha256": "6cccd4323ec3a2617008131ae98a7d8abbf99b04ba25f11b4a8ed40e7e0752b3",
+  "engine_errors_or_warnings": [],
+  "scope": "Actual current world and R7 imported hero prove the new feature-admission gate rejects missing masks and missing unique facial morphs despite a functional kit. Dependent positive lifecycle assertions are intentionally not executed after failed asset admission; no art/visual approval.",
+  "fixture_source": "games/yuga-native/docs/evidence/rama-quality/qa/r7-admission-negative/source/tests/rama_quality_integration_cases.gd.txt",
+  "exact_source_snapshots": [
+    "res://tests/rama_quality_integration_cases.gd",
+    "res://scripts/rama_hero_runtime.gd",
+    "res://scripts/rama_secondary_motion.gd",
+    "res://scripts/rama_surface_materials.gd",
+    "res://scripts/rama_facial_performance.gd"
+  ],
+  "dependencies_changed_after_run": [
+    {
+      "path": "res://scripts/player.gd",
+      "tested_sha256": "a5d15c3186badc01bb0c397a3e1e47262a1d4f20d4a624a88b6abd84d1be0cf9",
+      "state": "changed after completed run; no mismatched source copy substituted"
+    }
+  ],
+  "positive_status": "UNRUN pending accepted final-face runtime promotion"
+}

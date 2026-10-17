@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "head_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "source_status": "Uncommitted combined runtime quality candidate; immutable per-resource SHA256 pins and text snapshots identify tested bytes. Not a published package acceptance.",
+  "results": {
+    "buffer-integration": {
+      "passed": true,
+      "checks": 45,
+      "exit_code": 0,
+      "runtime_errors": 0
+    },
+    "hero-integration": {
+      "passed": true,
+      "checks": 138,
+      "exit_code": 0,
+      "runtime_errors": 0
+    },
+    "combat": {
+      "passed": true,
+      "checks": 85,
+      "exit_code": 0,
+      "runtime_errors": 0
+    },
+    "motion": {
+      "passed": true,
+      "checks": 39,
+      "exit_code": 0,
+      "runtime_errors": 0
+    },
+    "bindings": {
+      "passed": true,
+      "checks": 44,
+      "exit_code": 0,
+      "runtime_errors": 0
+    }
+  },
+  "commands": {
+    "buffer-integration": "XDG_DATA_HOME=/tmp/rama-quality-combined-gamefeel-r1/user LP_NUM_THREADS=2 taskset -c 0,1 timeout 120s godot --headless --path games/yuga-native --script res://tests/rama_action_buffer_integration_cases.gd -- --report=/tmp/rama-quality-combined-gamefeel-r1/buffer-integration.json",
+    "hero-integration": "XDG_DATA_HOME=/tmp/rama-quality-combined-gamefeel-r1/user-hero-integration LP_NUM_THREADS=2 taskset -c 0,1 timeout 120s godot --headless --path games/yuga-native --script res://tests/rama_hero_integration_cases.gd -- --report=/tmp/rama-quality-combined-gamefeel-r1/hero-integration.json",
+    "combat": "XDG_DATA_HOME=/tmp/rama-quality-combined-gamefeel-r1/user-combat LP_NUM_THREADS=2 taskset -c 0,1 timeout 120s godot --headless --path games/yuga-native --script res://tests/rama_ability_cases.gd -- --report=/tmp/rama-quality-combined-gamefeel-r1/combat.json",
+    "motion": "XDG_DATA_HOME=/tmp/rama-quality-combined-gamefeel-r1/user-motion LP_NUM_THREADS=2 taskset -c 0,1 timeout 120s godot --headless --path games/yuga-native --script res://tests/rama_motion_cases.gd -- --report=/tmp/rama-quality-combined-gamefeel-r1/motion.json",
+    "bindings": "XDG_DATA_HOME=/tmp/rama-quality-combined-gamefeel-r1/user-bindings LP_NUM_THREADS=2 taskset -c 0,1 timeout 90s godot --headless --path games/yuga-native --script res://tests/input_binding_cases.gd -- --report=/tmp/rama-quality-combined-gamefeel-r1/bindings.json"
+  },
+  "source_sha256": {
+    "res://assets/audio/rama-quality/manifest.json": "9c29ad40bef9e524a1216c6ea45ae4adfb1663987b26a81c37c3c93d710b7c8b",
+    "res://assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "res://scripts/confluence_world.gd": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7",
+    "res://scripts/player.gd": "a5d15c3186badc01bb0c397a3e1e47262a1d4f20d4a624a88b6abd84d1be0cf9",
+    "res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "res://scripts/rama_action_audio.gd": "bc4a89f2092c12b25014109d49ebf7b642d35ce02c846b2d55e1e3993ffc4d9a",
+    "res://scripts/rama_action_buffer.gd": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+    "res://scripts/rama_hero_runtime.gd": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+    "res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+    "res://tests/rama_action_buffer_integration_cases.gd": "2d56f3a80b32ea02b6d85389ec9617aaa5f7f9ac294824ebf93f5732fd3c3e58"
+  },
+  "affinity": "CPU 0,1 only; LP_NUM_THREADS=2; serial processes; isolated XDG per process. Facial heavy work used CPU2,3 separately.",
+  "scope": "Actual Confluence scene, CharacterBody grounding, Input.action_press/release, existing player polling and real 20 Hz army/kit/vitals/action-audio receipts. Focus is an explicitly emitted window signal; audio is the actual Dummy-driver owner, not listening evidence. No OS input, rendered continuity, human-feel, online or hardware performance claim.",
+  "findings": "No defects observed in root integration by these bounded tests. No product sources edited by this follow-up; only the new integration fixture was adapted to the public audio report and expanded.",
+  "prior_evidence": "gamefeel/integration and standalone r3 are preserved unchanged; their pre-action-audio source snapshots remain historical.",
+  "remaining": [
+    "Actual OS key input around the recovery boundary",
+    "Continuous rendered transition and secondary/facial artifact review",
+    "Listening and human combat-feel review",
+    "Physical GPU profiling, native online authority and production art target"
+  ]
+}

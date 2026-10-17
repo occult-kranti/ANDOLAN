@@ -1,0 +1,39 @@
+{
+  "task": "Role09of15 native competitive-game remote hero presentation foundation",
+  "status": "POSE_COMPONENT_PASS_NOT_INTEGRATED",
+  "source_commit_at_assignment": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "source_files": {
+    "res://assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+    "res://scripts/arena_client.gd": "b0482d783a9e9bf9b64be8f07c8878259cd417f39bb90ae7b4752d1b7e34cbb0",
+    "res://scripts/arena_interpolator.gd": "563b2097e5180cbba285e57bdebc3dafe07c919cabeec1d89d5a8d4b021e0619",
+    "res://scripts/entity_bridge.gd": "fc89950bf586745a9056bd1909c345dfd2ba34a74875e21a9b0193e0eb6adfd9",
+    "res://scripts/native_contracts.gd": "e4e5a197f42ca908e12caa647252070ee7eeb91e825302340a1deda5316a8197",
+    "res://scripts/rama_motion.gd": "d3a898b640de9c62aa3a919786b5a3b7c56dea823349472e361ba33906010f22",
+    "res://scripts/rama_remote_replica.gd": "b62842e378f220f0895bb5d2906d313b38bceb6f76b511334d02614d079fa9d5",
+    "res://tests/rama_remote_replica_cases.gd": "6958fe1bdc0e0a4eb829a723c2dadf6eb48470b6cdf6efcfecd03cdb54518298"
+  },
+  "executed_command": "OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 godot --headless --path games/yuga-native --script res://tests/rama_remote_replica_cases.gd -- --report=/tmp/rama-remote-replica-r3.json",
+  "exit_code": 0,
+  "passed": true,
+  "checks": 41,
+  "engine": "4.6.3.stable.official.7d41c59c4",
+  "fixture": "Real164boneRamaMotion libraryrest metadata + actual ArenaClient/EntityBridge validators; no GLB, mesh, import, renderer, network socket or authority server.",
+  "actual_visuals_reviewed": false,
+  "new_damage_authority": false,
+  "native_online_complete": false,
+  "open": [
+    "Independent source review and root integration decision.",
+    "Actual accepted hero GLB deformation/continuous rendered remote locomotion.",
+    "Authenticated native authority/bootstrap/map-content parity and authoritative hero identity.",
+    "Native Rama four-ability action lifecycle, elevation/traversal authority and real VFX events.",
+    "Two rendered clients, local reconciliation/camera/input UX, WAN/full-match/GPU stress.",
+    "Bridge public report currently copies full bounded diagnostic world; production single-entity read API remains open."
+  ],
+  "next_owner": "Root integration owner; role09 waits for actual-source render assignment.",
+  "owned_paths": [
+    "games/yuga-native/scripts/rama_remote_replica.gd",
+    "games/yuga-native/tests/rama_remote_replica_cases.gd",
+    "games/yuga-native/docs/research/NATIVE_HERO_REPLICATION.md",
+    "games/yuga-native/docs/evidence/rama-quality/network/"
+  ]
+}

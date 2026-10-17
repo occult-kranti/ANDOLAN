@@ -1,0 +1,69 @@
+{
+  "status": "policy-and-actual-scene-resource-pass-rendered-r2-pending",
+  "source_base": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "results": {
+    "new_and_preserved_tests": {
+      "passed": 146,
+      "total": 146,
+      "prior_checks_preserved": 108,
+      "new_checks": 38,
+      "exit_code": 0,
+      "engine_errors": 0
+    },
+    "existing_world_lighting": {
+      "passed": 30,
+      "total": 30,
+      "exit_code": 0,
+      "engine_errors": 0
+    }
+  },
+  "commands": [
+    "LP_NUM_THREADS=2 taskset -c 0,1 godot --headless --single-threaded-scene --path games/yuga-native --script res://tests/production_lighting_quality_cases.gd -- --report=/workspace/scratch/rama-quality-lookdev-ground-r3/quality.json",
+    "LP_NUM_THREADS=2 taskset -c 0,1 godot --headless --single-threaded-scene --path games/yuga-native --script res://tests/world_lighting_cases.gd -- --report=/workspace/scratch/rama-quality-lookdev-ground-r3/existing-world.json"
+  ],
+  "implementation": "Exact relative paths and large flat world-space bounds identify only five known courtyard floor/foundation meshes and two flat world grounds. Only cast_shadow becomes OFF; receiving materials, transforms, visibility, collision graph, other casters and light/shadow settings remain unchanged. World applies once in configure; courtyard on settings apply. No whole-world traversal in the runtime helper.",
+  "rejected_teardown_run": "First new actual-scene test version counted146/146 but freed Confluence before its two deferred HUD-layout awaits completed, producing an engine error. That run is rejected and preserved underteardown-finding. Waiting three processframes in the test before teardown gives the clean accepted resource result; product UI code was unchanged.",
+  "scope": "Headless resource/actual-scene policy checks only. The preceding source-pinned8image causality probe establishes the ground-casting choice; the corrected runtime still requires root current-source R2actual-render and gameplay verification. No GPU-performance or final commercial art quality claim.",
+  "files": {
+    "scripts/production_lighting.gd": {
+      "bytes": 4936,
+      "sha256": "3c7be39d908be38ed72a49268814576720cb7141470f05646174ad7832573a0f"
+    },
+    "scripts/world_lighting.gd": {
+      "bytes": 8712,
+      "sha256": "20cd813830d2e433d29ea60201a6e8f14ef6bf5c94d5bb2628d24f256cda5d70"
+    },
+    "scripts/ground_shadow_policy.gd": {
+      "bytes": 1961,
+      "sha256": "06265b42063a54e61cf5325a9d251cb8323cf52ac628184700ff47c0230770e3"
+    },
+    "tests/production_lighting_quality_cases.gd": {
+      "bytes": 12862,
+      "sha256": "1e0ea56a1ccc86f7555a6225e68a080741e4ac8488240938c94df713a6d18cba"
+    },
+    "evidence/existing-world.json": {
+      "bytes": 2785,
+      "sha256": "5073a836a5c7a0575db310535ad247fc4628ed6616853d2e9e4280688d74b607"
+    },
+    "evidence/existing-world.log": {
+      "bytes": 127,
+      "sha256": "e539c8834dfd6b1a802f009853dfded7569b39e55a9fe9f7e44ef9f05cd6ed8b"
+    },
+    "evidence/quality.json": {
+      "bytes": 14164,
+      "sha256": "07ad8fd6b28750ef3001c8b5ca7c772db559d561c53425676489157a609b4cb4"
+    },
+    "evidence/quality.log": {
+      "bytes": 14217,
+      "sha256": "4f5291b685bcced087cd2046a7e282fdcc8017d457c43f032307f4724199b7db"
+    },
+    "evidence/teardown-finding/quality.json": {
+      "bytes": 14164,
+      "sha256": "774430fb9250ddca470343bbe032f62482ca77785d14073e3ddc077dd05cdb20"
+    },
+    "evidence/teardown-finding/quality.log": {
+      "bytes": 14291,
+      "sha256": "18d51ba86e300e630939bc7b19ea9b5da00e6485db88d423449f7bd7995ebc74"
+    }
+  }
+}

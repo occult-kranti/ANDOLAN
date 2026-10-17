@@ -1,0 +1,368 @@
+{
+  "schema": 1,
+  "reviewer": "independent quality_qa",
+  "reviewed_at_utc": "2026-10-17T18:00:57.926470+00:00",
+  "product": "YUGA native Rama production hero slice",
+  "source_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "branch": "game/yuga-native-production",
+  "decision": "LIMITED / bounded native lighting and static paving improvement; strict title UI equality FAIL; final art target OPEN",
+  "qa_scope": "All twelve original 1280x720 PNGs opened independently with view_image. Lightweight source/hash checks only; no Godot run or runtime edits by QA.",
+  "capture": {
+    "path": "docs/evidence/rama-quality/lookdev/capture-r2/lookdev-capture.json",
+    "sha256": "e635331f690a2bb1e661a54d704749de139ab79224ee41f92c15306a1133942d",
+    "run_manifest_path": "docs/evidence/rama-quality/lookdev/capture-r2/capture-run.json",
+    "run_manifest_sha256": "442d0ecd2dd7db7b0c9268b928559e4bba6a9fdfe8d97766722258261ff06b5a",
+    "complete": true,
+    "captured_source_unchanged": true,
+    "source_count": 483,
+    "fresh_import_count": 9,
+    "renderer": "forward_plus",
+    "display": "X11",
+    "adapter": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "resolution": [
+      1280,
+      720
+    ],
+    "image_hashes_verified_against_original_and_archive": true,
+    "all_six_pairs_geometry_camera_phase_exposure_pin_equal": true,
+    "geometry_pin_covers": [
+      "skeleton poses",
+      "facial morph values",
+      "secondary offsets",
+      "mesh resource paths and visibility"
+    ],
+    "not_pinned": [
+      "UI text/glyph/render-cache state",
+      "renderer temporal history",
+      "global shader TIME"
+    ]
+  },
+  "captured_hero_sources": {
+    "res://assets/heroes/rama-hero-far.glb": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+    "res://assets/heroes/rama-hero-mid.glb": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+    "res://assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "res://scripts/ground_shadow_policy.gd": "06265b42063a54e61cf5325a9d251cb8323cf52ac628184700ff47c0230770e3",
+    "res://scripts/production_lighting.gd": "3c7be39d908be38ed72a49268814576720cb7141470f05646174ad7832573a0f",
+    "res://scripts/rama_surface_materials.gd": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a",
+    "res://scripts/world_lighting.gd": "20cd813830d2e433d29ea60201a6e8f14ef6bf5c94d5bb2628d24f256cda5d70",
+    "res://tools/capture-rama-lookdev.gd": "2e114e1f4155a4b378293e423503ed7642b61c2a24fe68491041b3f8e923100d"
+  },
+  "source_changes_from_r1": [
+    {
+      "path": "res://assets/contracts/native-contracts-v1.json",
+      "r1_sha256": "cc9cd271e5509198a5fe5228b1fbe0effe786aff4efa8afdf289cf618f9816e9",
+      "r2_sha256": "f28949365043db23b379f68aadee4be8bfccd7c4fce5cd53322dd66882d51371"
+    },
+    {
+      "path": "res://scripts/ground_shadow_policy.gd",
+      "r1_sha256": null,
+      "r2_sha256": "06265b42063a54e61cf5325a9d251cb8323cf52ac628184700ff47c0230770e3"
+    },
+    {
+      "path": "res://scripts/production_lighting.gd",
+      "r1_sha256": "9966282802b1920c7f81567779940796259238f982d67a31b9e886e9ab37cd9f",
+      "r2_sha256": "3c7be39d908be38ed72a49268814576720cb7141470f05646174ad7832573a0f"
+    },
+    {
+      "path": "res://scripts/rama_action_audio.gd",
+      "r1_sha256": "bc4a89f2092c12b25014109d49ebf7b642d35ce02c846b2d55e1e3993ffc4d9a",
+      "r2_sha256": "6091e288e9236ee54ea11839db3eef31a59b306b738d7008ae46287c8f5e3c89"
+    },
+    {
+      "path": "res://scripts/world_lighting.gd",
+      "r1_sha256": "8604f86cf8231941be9e7edf7c160b4b46bba9ea4fbe93ad2f7e19f518e3d5c0",
+      "r2_sha256": "20cd813830d2e433d29ea60201a6e8f14ef6bf5c94d5bb2628d24f256cda5d70"
+    }
+  ],
+  "current_source_differences_at_review": [],
+  "ground_comparison_boundary": "Current courtyard/world initialization applies the new exact flat-ground receiver shadow policy before the lighting loops. Both R2 before/after inherit it. The independent visible observation is that R1 broad concentric bands are absent in these sampled R2 images; the six R2 pairs are not an isolated ground-policy before/after experiment and do not establish temporal stability. Root owns the separate floor diagnostic probe.",
+  "pairs": [
+    {
+      "id": "title-day",
+      "phase": 0.0,
+      "comparison": "lighting",
+      "camera_transform": "[X: (-0.957371, 0.0, -0.288862), Y: (-0.026117, 0.995904, 0.086559), Z: (0.287679, 0.090413, -0.95345), O: (3.4, 1.75, 6.8)]",
+      "camera_fov": 34.0,
+      "exposure": 1.0,
+      "pose_morph_secondary_mesh_visibility_sha256": "8d1cc7d7a2696d833a20ac2c541c9c69779c6b4be1597139d4e3481f6b93f9b9",
+      "pair_pin_equality": {
+        "pose_sha256": true,
+        "phase": true,
+        "camera_transform": true,
+        "camera_fov": true,
+        "exposure": true,
+        "comparison": true
+      },
+      "images": [
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/title-day-before.png",
+          "sha256": "fff31954373e6847fb4fbf8ba99220fa5f0bf844b93aee442abc0ab36b670af1",
+          "independently_opened_full_size": true,
+          "rendered_counter": 10
+        },
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/title-day-after.png",
+          "sha256": "082c5e558d63504351fc281ab15f9d58d427ec4e378d76ee2788d1c029b4388c",
+          "independently_opened_full_size": true,
+          "rendered_counter": 13
+        }
+      ],
+      "state": "LIMITED lighting; FAIL strict UI draw equality",
+      "observed": [
+        "The after Rama has clearer chest, face, ivory and blue visibility with less orange portrait fill. The frozen outline and jewelry placement remain stable.",
+        "The R1 large concentric paving bands are absent in these R2 title images; fine distant stippling/edge aliasing remains.",
+        "The before primary gold button displays Explore Confluence; the after primary button is visibly blank."
+      ],
+      "limits": [
+        "The title remains a simple floor/horizon presentation. Glossy costume response and solid stylized hair remain.",
+        "Label mismatch prevents a strict screen/UI-equality pass; the geometry/camera pin does not cover glyph rendering."
+      ]
+    },
+    {
+      "id": "title-night",
+      "phase": 1.0,
+      "comparison": "lighting",
+      "camera_transform": "[X: (-0.957371, 0.0, -0.288862), Y: (-0.026117, 0.995904, 0.086559), Z: (0.287679, 0.090413, -0.95345), O: (3.4, 1.75, 6.8)]",
+      "camera_fov": 34.0,
+      "exposure": 1.0,
+      "pose_morph_secondary_mesh_visibility_sha256": "8d1cc7d7a2696d833a20ac2c541c9c69779c6b4be1597139d4e3481f6b93f9b9",
+      "pair_pin_equality": {
+        "pose_sha256": true,
+        "phase": true,
+        "camera_transform": true,
+        "camera_fov": true,
+        "exposure": true,
+        "comparison": true
+      },
+      "images": [
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/title-night-before.png",
+          "sha256": "6e1e70db7eeac2739e9475a31888b82a2cb9d9c403f5c40efa9d3974db77d0ca",
+          "independently_opened_full_size": true,
+          "rendered_counter": 16
+        },
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/title-night-after.png",
+          "sha256": "2edbce7c8ba8a4496c56a211b2e0380bb598dd767a2351e8d78d59dc884e86e5",
+          "independently_opened_full_size": true,
+          "rendered_counter": 19
+        }
+      ],
+      "state": "LIMITED lighting; FAIL strict UI draw equality",
+      "observed": [
+        "The after face/chest/ivory are more readable against the cool night scene, with recognizable blue/gold costume and bow.",
+        "The before primary gold button is blank; the after displays Explore Confluence.",
+        "The prominent R1 concentric floor bands are absent in these R2 shots; fine tile/edge stippling remains."
+      ],
+      "limits": [
+        "Night lighting improvement does not establish equal UI draw state or stable text presentation.",
+        "The hair and expression remain stylized; this still cannot establish temporal shadow behavior."
+      ]
+    },
+    {
+      "id": "face-material",
+      "phase": 0.0,
+      "comparison": "materials",
+      "camera_transform": "[X: (-0.954332, 0.0, -0.298747), Y: (-0.017325, 0.998317, 0.055344), Z: (0.298245, 0.057992, -0.952726), O: (0.36, 1.82, 10.85)]",
+      "camera_fov": 34.0,
+      "exposure": 1.0,
+      "pose_morph_secondary_mesh_visibility_sha256": "8d1cc7d7a2696d833a20ac2c541c9c69779c6b4be1597139d4e3481f6b93f9b9",
+      "pair_pin_equality": {
+        "pose_sha256": true,
+        "phase": true,
+        "camera_transform": true,
+        "camera_fov": true,
+        "exposure": true,
+        "comparison": true
+      },
+      "images": [
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/face-material-before.png",
+          "sha256": "3b6d06f9fb5084414baaa3d4a93595551774b29e5debcfb76823ec5dd60f3c29",
+          "independently_opened_full_size": true,
+          "rendered_counter": 22
+        },
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/face-material-after.png",
+          "sha256": "752b469910e4ec36f7814d3131b184304b45edeffc272776faa29bd31ad68d0b",
+          "independently_opened_full_size": true,
+          "rendered_counter": 25
+        }
+      ],
+      "state": "LIMITED / subtle calibration; production face/material target OPEN",
+      "observed": [
+        "Before/after calibration is a small visible change. Open eyes, face outline, jewelry, quiver and sash attachment appear stable.",
+        "The broad R1 background floor interference is absent.",
+        "Smooth broadly highlighted skin, puffy upper lids, neutral expression, solid grooved hair, very glossy blue cloth and intense gold highlights remain apparent."
+      ],
+      "limits": [
+        "No new obvious static eye gap or boundary tear is observed; blinking/full closure is not tested by these open-eye stills.",
+        "This pair does not establish fine skin/hair/textile detail, animation continuity or night facial readability."
+      ]
+    },
+    {
+      "id": "world-0",
+      "phase": 0.0,
+      "comparison": "lighting",
+      "camera_transform": "[X: (0.871576, 0.0, -0.490261), Y: (-0.053098, 0.994118, -0.094397), Z: (0.487377, 0.108306, 0.866449), O: (-37.3, 1.65, -5.2)]",
+      "camera_fov": 58.0,
+      "exposure": 1.0,
+      "pose_morph_secondary_mesh_visibility_sha256": "3353aa9a6e707788ef725ed6d7dad8dd29a18311781466f2f6c109deaf2f10aa",
+      "pair_pin_equality": {
+        "pose_sha256": true,
+        "phase": true,
+        "camera_transform": true,
+        "camera_fov": true,
+        "exposure": true,
+        "comparison": true
+      },
+      "images": [
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/world-0-before.png",
+          "sha256": "e45b0d7b11455c1089c637409a2716a6b7210acb072b4a1587703d0cba9b688f",
+          "independently_opened_full_size": true,
+          "rendered_counter": 37
+        },
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/world-0-after.png",
+          "sha256": "87433d203d51d4b50627457da9481a43a89e04b5c56713aeb84bc773ac01a5d8",
+          "independently_opened_full_size": true,
+          "rendered_counter": 40
+        }
+      ],
+      "state": "LIMITED / restrained day-light change",
+      "observed": [
+        "Day before/after lighting difference is small at this sampled observer distance. Rama retains the ivory/blue/gold and bow silhouette, a similar cast shadow and a plausible floor relationship.",
+        "No new gross mesh tear, detached ornament or floating change is visible in this frozen pose.",
+        "Uniform paving and repeated facade/temple forms remain simple and sparse relative to the concept target."
+      ],
+      "limits": [
+        "This hidden-UI frozen observer scene is not an active player-camera combat test or sole-contact proof.",
+        "No active ability, reticle, opponent or minion establishes combat readability."
+      ]
+    },
+    {
+      "id": "world-50",
+      "phase": 0.5,
+      "comparison": "lighting",
+      "camera_transform": "[X: (0.871576, 0.0, -0.490261), Y: (-0.053098, 0.994118, -0.094397), Z: (0.487377, 0.108306, 0.866449), O: (-37.3, 1.65, -5.2)]",
+      "camera_fov": 58.0,
+      "exposure": 1.0,
+      "pose_morph_secondary_mesh_visibility_sha256": "3353aa9a6e707788ef725ed6d7dad8dd29a18311781466f2f6c109deaf2f10aa",
+      "pair_pin_equality": {
+        "pose_sha256": true,
+        "phase": true,
+        "camera_transform": true,
+        "camera_fov": true,
+        "exposure": true,
+        "comparison": true
+      },
+      "images": [
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/world-50-before.png",
+          "sha256": "b811f09972540a4b301be1c2f72a0f3cc7984b91dcc5a88000118075db30cc3b",
+          "independently_opened_full_size": true,
+          "rendered_counter": 43
+        },
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/world-50-after.png",
+          "sha256": "03928663f72e9debe44bf459618a0f92a8a647865b6804e6d9b972d753ccf243",
+          "independently_opened_full_size": true,
+          "rendered_counter": 46
+        }
+      ],
+      "state": "LIMITED lighting; observed paving improvement versus R1",
+      "observed": [
+        "The after dusk ground/sky balance is slightly cooler; warm lantern light and hero drape/bow/shadow remain visible.",
+        "The prominent distant concentric paving interference seen in R1 is absent in these R2 dusk images.",
+        "The frozen hero outline and floor relationship remain stable with no gross new tear or float."
+      ],
+      "limits": [
+        "This does not establish continuous dusk/phase-wrap behavior or interference stability over a camera route.",
+        "Both halves inherit the current flat-ground shadow policy, so this is not an isolated old/new policy experiment."
+      ]
+    },
+    {
+      "id": "world-100",
+      "phase": 1.0,
+      "comparison": "lighting",
+      "camera_transform": "[X: (0.871576, 0.0, -0.490261), Y: (-0.053098, 0.994118, -0.094397), Z: (0.487377, 0.108306, 0.866449), O: (-37.3, 1.65, -5.2)]",
+      "camera_fov": 58.0,
+      "exposure": 1.0,
+      "pose_morph_secondary_mesh_visibility_sha256": "3353aa9a6e707788ef725ed6d7dad8dd29a18311781466f2f6c109deaf2f10aa",
+      "pair_pin_equality": {
+        "pose_sha256": true,
+        "phase": true,
+        "camera_transform": true,
+        "camera_fov": true,
+        "exposure": true,
+        "comparison": true
+      },
+      "images": [
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/world-100-before.png",
+          "sha256": "4dd410ff7eb67253fb10685301c3541d5b7fb7d9875121a584c5133b09cbfc16",
+          "independently_opened_full_size": true,
+          "rendered_counter": 49
+        },
+        {
+          "path": "docs/evidence/rama-quality/lookdev/capture-r2/world-100-after.png",
+          "sha256": "8dc2d2dfedbb2fa3352d9f13c6d4c467f00187369d1e5e5e8d5af9a071a70a59",
+          "independently_opened_full_size": true,
+          "rendered_counter": 52
+        }
+      ],
+      "state": "LIMITED / sampled night silhouette remains readable",
+      "observed": [
+        "Ivory drape, blue/gold costume, bow and cast shadow identify Rama against the cool world, with warm lantern separation. The before/after lighting change is modest.",
+        "The conspicuous R1 distant concentric paving bands are absent; broad world material/shading remains simple.",
+        "No new gross static outline or contact-relationship defect is observed."
+      ],
+      "limits": [
+        "Facial detail and dark hair are less readable at this distance; this is not detailed night-face acceptance.",
+        "There is no active ability/reticle, motion, LOD switch or human playtest."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "QA-LIGHT-01",
+      "previous": "R1 prominent concentric paving interference",
+      "state": "BOUNDED STATIC IMPROVEMENT",
+      "current": "Broad concentric bands absent in the sampled R2 title/face/dusk/night images; fine courtyard stippling/edge aliasing persists.",
+      "remaining": "Dynamic camera/phase stability and fully polished scene remain OPEN."
+    },
+    {
+      "id": "QA-LIGHT-02",
+      "state": "FAIL / still open",
+      "current": "Primary gold button label is absent in title-day-after and title-night-before; present in title-day-before and title-night-after.",
+      "required": "Preserve the images and fix or stably repeat UI draw state before claiming strict title-screen equality."
+    },
+    {
+      "id": "QA-LIGHT-03",
+      "state": "LIMITED / OPEN",
+      "current": "Smooth neutral face, puffy stylized lids, solid grooved hair, glossy blue silk and broad metal highlights remain. Calibration is subtle.",
+      "required": "Further authored surfaces/expressions and actual motion/ability review before production art acceptance."
+    }
+  ],
+  "original_shutdown_warning": {
+    "text": "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+    "log_path": "docs/evidence/rama-quality/qa/lookdev-r2-review/capture-original.log.txt",
+    "log_sha256": "9b04dd2d6fd7f664c29fa51cb8f8711479d258a03c3e3abce2914f5566ead99a",
+    "capture_complete_before_warning": true,
+    "scope": "Original capture-harness shutdown warning preserved. It does not invalidate the inspected PNG bytes, but clean capture teardown is not established. This record does not infer a live-world runtime leak or claim leak-free product behavior. Any cleanup correction/retest needs its own source-bound report."
+  },
+  "unrun_or_unproven": [
+    "new complete full-body/secondary motion and contact",
+    "actual posed LOD silhouette and threshold pop",
+    "active ability/reticle day-night readability",
+    "training appearance",
+    "continuous phase-wrap/flicker",
+    "physical-GPU performance",
+    "Windows",
+    "human listening/playtest",
+    "native online ability authority/full match"
+  ],
+  "next": "Await the parent's five-ability actual movie and inspect its sequential evidence when assigned; no further engine execution authorized by this review.",
+  "commercial_quality_target": "OPEN"
+}

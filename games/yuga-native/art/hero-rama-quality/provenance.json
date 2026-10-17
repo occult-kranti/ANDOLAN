@@ -1,0 +1,280 @@
+{
+  "schema": 1,
+  "sourceCommitBeforePass": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "status": "Incremental original art candidate; overall target quality remains open; runtime promotion requires independent actual motion/render review",
+  "acceptedInputGlbSha256": "667f3a215a7b868e3bdbcde880a73d42b68b29af1303db4e1d99b93f73cf2b50",
+  "acceptedInputEditableSha256": "ef018941de8f8b53b3bf4808139601e15ae5c398c7fb23f26a221f1e1a0c6adc",
+  "candidateGlbSha256": "4a713daad6d94401e0d7fead0283769c05814f622f08f4cb19320c1d29820cc9",
+  "candidateEditableSha256": "a5c74af28b134e3d3e6bad3c9bc415b05a1a7e18c6c1f441df2d581d78e973a2",
+  "generatorSha256": "96ace6c9036bc237c9f38d78c20c9a119036470eaeecd22b3a89e6c5f07c850d",
+  "comparisonConfig": {
+    "engine": "Blender4.3.2 CPU Cycles",
+    "threads": 2,
+    "samples": 24,
+    "denoiser": false,
+    "resolution": [
+      640,
+      800
+    ],
+    "viewTransform": "AgX",
+    "lights": [
+      {
+        "position": [
+          3,
+          -4,
+          4
+        ],
+        "power": 520,
+        "size": 4
+      },
+      {
+        "position": [
+          -3,
+          -1,
+          2.5
+        ],
+        "power": 230,
+        "size": 3
+      },
+      {
+        "position": [
+          0,
+          3,
+          3.5
+        ],
+        "power": 650,
+        "size": 3
+      }
+    ],
+    "cameras": {
+      "front": {
+        "position": [
+          2,
+          -6,
+          2.05
+        ],
+        "target": [
+          0,
+          0,
+          1.02
+        ],
+        "orthoScale": 2.32
+      },
+      "face": {
+        "position": [
+          0.36,
+          -3,
+          1.83
+        ],
+        "target": [
+          0,
+          -0.025,
+          1.735
+        ],
+        "orthoScale": 0.48
+      },
+      "side": {
+        "position": [
+          5,
+          -0.1,
+          2.05
+        ],
+        "target": [
+          0,
+          0,
+          1.0
+        ],
+        "orthoScale": 2.32
+      },
+      "back": {
+        "position": [
+          -2.6,
+          5.5,
+          2.2
+        ],
+        "target": [
+          0,
+          0.05,
+          1.0
+        ],
+        "orthoScale": 2.3
+      }
+    }
+  },
+  "baselineGeneratorSnapshot": "history/q2-intermediate/build_quality.py",
+  "baselineGeneratorSha256": "72d0bde6a484562e06d440cc666660f9399c381330b017a06829e0608ea34bc1",
+  "commands": [
+    "blender -b -t 2 --python games/yuga-native/art/hero-rama-quality/build_quality.py -- --output /workspace/scratch/rama-quality-r3 --render --views face,front,side,back",
+    "python3 games/yuga-native/art/hero-rama/validate_hero.py /workspace/scratch/rama-quality-r3/rama-hero-quality.glb",
+    "python3 games/yuga-native/art/hero-rama-quality/validate_quality.py /workspace/scratch/rama-quality-r3/rama-hero-quality.glb",
+    "blender -b -t 2 --python games/yuga-native/art/hero-rama/verify_editable.py -- /workspace/scratch/rama-quality-r3/rama-hero-quality.blend /workspace/scratch/rama-quality-r3/editable-validation.json",
+    "blender -b -t 2 --python games/yuga-native/art/hero-rama-quality/verify_quality_editable.py -- /workspace/scratch/rama-quality-r3/rama-hero-quality.blend /workspace/scratch/rama-quality-r3/quality-editable-validation.json"
+  ],
+  "actualReviewedViews": [
+    "candidate-front.png",
+    "candidate-face.png",
+    "candidate-side.png",
+    "candidate-back.png",
+    "baseline-front.png",
+    "baseline-face.png",
+    "baseline-side.png",
+    "baseline-back.png"
+  ],
+  "evidence": {
+    "REVIEW.md": {
+      "bytes": 6693,
+      "sha256": "839c4665b049e32ac596fd78add39b270b51f658c8e4f24d03562c931bd6d590"
+    },
+    "build.log": {
+      "bytes": 35258,
+      "sha256": "f2a751c285fda624763a4c9afc7a49b8794ca682b1d624819fcf918925d383b6"
+    },
+    "build_quality.py": {
+      "bytes": 17405,
+      "sha256": "96ace6c9036bc237c9f38d78c20c9a119036470eaeecd22b3a89e6c5f07c850d"
+    },
+    "candidate.json": {
+      "bytes": 2542,
+      "sha256": "ab2d8d8463451ca034e1c69c2bd65de011531a8fe21d3e2982d11afa33d52b69"
+    },
+    "editable-validation.json": {
+      "bytes": 8818,
+      "sha256": "ab90c344ac922b97e2f331ddb7e4965e7bac894865cecfe6650941a782b685b7"
+    },
+    "editable-validation.log": {
+      "bytes": 222,
+      "sha256": "ff245e4d97f4efe626e33e9330d6a077ac9c729b4321dd296443a9437d89d5da"
+    },
+    "history/q1-rejected/build.log": {
+      "bytes": 34979,
+      "sha256": "f70a54dadf4de8802e4103745128cc676a6cf03ed21fa64afe38171ed54b5f46"
+    },
+    "history/q1-rejected/build_quality.py": {
+      "bytes": 16218,
+      "sha256": "3cd004bd2546b2c39f4b05838c679291853d54325f7207b278b9c444a900ae3d"
+    },
+    "history/q1-rejected/candidate-face.png": {
+      "bytes": 976472,
+      "sha256": "28a1136614087c2d47eddbb5feafdfc467ede08ff22790c0c7bb1641966a63b3"
+    },
+    "history/q1-rejected/candidate-front.png": {
+      "bytes": 896680,
+      "sha256": "56f64dfe9b3f7f558dac0a0f90d7c35cfe3291e023b3b98e2c7e6f652ce67141"
+    },
+    "history/q1-rejected/candidate.json": {
+      "bytes": 2197,
+      "sha256": "8acfe0904e9a9fc6d173466b57b4556411b5db6c19d4d590085a09bbe67c538a"
+    },
+    "history/q1-rejected/validation.json": {
+      "bytes": 842,
+      "sha256": "1cb5596570c0da2b9a1f653b365c30282fe65376ab064877e3522484c3732237"
+    },
+    "history/q2-intermediate/build.log": {
+      "bytes": 35015,
+      "sha256": "b176ab7352641bf794c701c0f3525e5b06179737563c77c7f22a8bddd3c185ae"
+    },
+    "history/q2-intermediate/build_quality.py": {
+      "bytes": 16361,
+      "sha256": "72d0bde6a484562e06d440cc666660f9399c381330b017a06829e0608ea34bc1"
+    },
+    "history/q2-intermediate/candidate.json": {
+      "bytes": 2237,
+      "sha256": "5b7024978a1103a3dcd23edf83244ac84aaf5477dd4069dbf5b7a745ff525542"
+    },
+    "quality-editable-validation.json": {
+      "bytes": 61098,
+      "sha256": "e689fda003994947abe9d43ba406ac31016913f2276ef6d21a3b75da414e31cf"
+    },
+    "quality-editable-validation.log": {
+      "bytes": 213,
+      "sha256": "859cc7efaee475603b274b6ad4ba0d2e685ee63589124d20c4e7d425478cd52b"
+    },
+    "quality-validation.json": {
+      "bytes": 3841,
+      "sha256": "f8e919741941722774d26f407f8a1c90ecdf51f300a03fbeadc94fcfb3b45890"
+    },
+    "quality-validation.log": {
+      "bytes": 3841,
+      "sha256": "f8e919741941722774d26f407f8a1c90ecdf51f300a03fbeadc94fcfb3b45890"
+    },
+    "rama-hero-quality.blend": {
+      "bytes": 17951401,
+      "sha256": "a5c74af28b134e3d3e6bad3c9bc415b05a1a7e18c6c1f441df2d581d78e973a2"
+    },
+    "rama-hero-quality.glb": {
+      "bytes": 32491896,
+      "sha256": "4a713daad6d94401e0d7fead0283769c05814f622f08f4cb19320c1d29820cc9"
+    },
+    "reviews/baseline-back.png": {
+      "bytes": 887516,
+      "sha256": "2b10d11f44578a8cce52129cee23d2ea7ffc87ecb34fe39716b3605a044f8414"
+    },
+    "reviews/baseline-build.log": {
+      "bytes": 272074,
+      "sha256": "944b3c7bfe47d355966e05dc9aaa8ae57a33768f53c1a59aec14f5919809972c"
+    },
+    "reviews/baseline-face.png": {
+      "bytes": 966180,
+      "sha256": "3b665a81046ad80101ed34349151150b8f02a02aada0edfda9934ff21089f47f"
+    },
+    "reviews/baseline-front.png": {
+      "bytes": 894808,
+      "sha256": "b0a8f09bc69435ecc825064f8edf7ae7d3c56c62a504f6d6ffde85495d90093c"
+    },
+    "reviews/baseline-side.png": {
+      "bytes": 889794,
+      "sha256": "06019c3cb1e450326039412ae95738fea4de66519ebe86cb3d06721e16bff029"
+    },
+    "reviews/candidate-back.png": {
+      "bytes": 906081,
+      "sha256": "0c74d1b3c469f6e0e8da3f44a95240b9533de5dac4d1b0adb345378c70725217"
+    },
+    "reviews/candidate-face.png": {
+      "bytes": 951084,
+      "sha256": "c04ec5f1f261042984da2b23a90dfedd5a55024ed1b3adc742f8e63f3d4ce011"
+    },
+    "reviews/candidate-front.png": {
+      "bytes": 909727,
+      "sha256": "d1184bd87ef008afba42ac53f44b9621b4ab60948a36e58c1c20ecef7aee3a1b"
+    },
+    "reviews/candidate-side.png": {
+      "bytes": 899373,
+      "sha256": "ccc37daffc548bd3c5f7f6f18a23ffeb0cfbf76121138da3c013fc257d322ec0"
+    },
+    "textures/q1-cobalt-ornamental-weave-basecolor.png": {
+      "bytes": 919078,
+      "sha256": "f1369ca6a4b4ca838b54305ffddd2dddef7b104c5dadc9c6fd0be5ea9a6a459c"
+    },
+    "textures/q1-cobalt-ornamental-weave-normal.png": {
+      "bytes": 1180136,
+      "sha256": "3ae45b6e897d956e20cbbf70f49cca3ddebe207254fd52257a8129b31144f1f2"
+    },
+    "textures/q1-cobalt-ornamental-weave-roughness.png": {
+      "bytes": 399762,
+      "sha256": "4434d03bb53ad184ad78a7ea03ae2bd33057bd8ddda49e976a064b3a24dd7699"
+    },
+    "validate_quality.py": {
+      "bytes": 3820,
+      "sha256": "56a462a402b08d7bc05094eab4b8d1e33b8a97321367749ad20391a61a1d58a0"
+    },
+    "validation.json": {
+      "bytes": 842,
+      "sha256": "096df23358f0f757de0bc03a8c0c5630ef17b588718dab071f651c844700ef32"
+    },
+    "validation.log": {
+      "bytes": 842,
+      "sha256": "096df23358f0f757de0bc03a8c0c5630ef17b588718dab071f651c844700ef32"
+    },
+    "verify_quality_editable.py": {
+      "bytes": 4215,
+      "sha256": "1e670921c73a227c4dda3dcaec0cf230e98b0db7b1ed341a1b3733d0f9e22ae5"
+    }
+  },
+  "license": "CC0 MakeHuman-derived anatomy, original project costume/hair/ornaments/maps/animations; no commercial game assets",
+  "remaining": [
+    "Broad hair crown highlight and stylized clump construction",
+    "Neutral face awaiting independently reviewed blink/expression candidate",
+    "Simpler fabric construction, folds and ornament than target",
+    "No production art, physical GPU, native online or whole-match acceptance"
+  ]
+}

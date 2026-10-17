@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "baseline_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "results": {
+    "rama-action-buffer-integration-r5": {
+      "passed": true,
+      "checks": 31,
+      "exit_code": 0
+    },
+    "rama-buffer-existing-combat-r1": {
+      "passed": true,
+      "checks": 85,
+      "exit_code": 0
+    },
+    "rama-buffer-existing-integration-r1": {
+      "passed": true,
+      "checks": 138,
+      "exit_code": 0
+    },
+    "rama-buffer-input-bindings-r1": {
+      "passed": true,
+      "checks": 44,
+      "exit_code": 0
+    }
+  },
+  "source_sha256": {
+    "res://assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "res://scripts/confluence_world.gd": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7",
+    "res://scripts/player.gd": "97248b4c1cf2ac3f953a3cc1ca1068fe2b9cd787ddf30bfbca427428e09ce6d8",
+    "res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "res://scripts/rama_action_buffer.gd": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+    "res://scripts/rama_hero_runtime.gd": "407e94aca93b00130159184618ce6e0a7e8d93b6dc07da9412876a34afe32123",
+    "res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+    "res://tests/rama_action_buffer_integration_cases.gd": "5c3ee8de0f1343eda02134c9e33b3e9467dcd0b75d09358a936c233c1e11e50e"
+  },
+  "scope": "Actual Confluence scene, CharacterBody grounding, Input.action_press/release and existing player physics polling with real 20 Hz army/kit. Focus is an explicitly emitted window signal. No OS input, rendered continuity, listening, human-feel, online or hardware performance claim.",
+  "ownership": "player.gd and rama_hero_runtime.gd buffer hooks frozen and released to root for subsequent quality-component integration. This source snapshot predates those subsequent root edits.",
+  "failed_fixtures": "r1 used SceneTree.get_window() instead of root. r2-r4 exposed synthetic Input.action_press/current-physics-phase timing, with pressed=true and just_pressed=false, so initial Q was not sent. r5 crosses an actual physics boundary before player polling and clears prior synthetic phases before a new fixture reset. Product assertions were retained.",
+  "remaining": [
+    "Actual OS input and continuous rendered transition review",
+    "Listening and human combat-feel evaluation",
+    "Source/content pin revision by root",
+    "Fresh integration after root adds other quality components"
+  ]
+}

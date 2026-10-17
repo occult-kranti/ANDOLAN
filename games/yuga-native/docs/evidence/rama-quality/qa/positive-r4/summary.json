@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "status": "PASS_FOR_ACTUAL_WORLD_QUALITY_GLUE_31_CHECKS",
+  "reviewer": "/root/quality_qa",
+  "engine": "4.6.3-stable (official)",
+  "passed": 31,
+  "checks": 31,
+  "wall_seconds": 3.951517,
+  "command": "LP_NUM_THREADS=2 taskset -c 0,1 godot --headless --single-threaded-scene --path games/yuga-native --script res://tests/rama_quality_integration_cases.gd -- --report=/workspace/scratch/rama-quality-integration-positive-r4/report.json",
+  "isolated_xdg_root": "/workspace/scratch/rama-quality-integration-positive-r4",
+  "source_unchanged_during_run": true,
+  "engine_errors_or_warnings": [],
+  "report_sha256": "69197b442af61636b0188b04524d1bce6f64f1388a78ee2454211e772da41c7b",
+  "log_sha256": "e5e00e08717bce2ea4b29b98bfa40f53eb84482086b0ba3f12ce744684655c00",
+  "fixture_sha256": "99fa55e19edf6178c737f961b9d5ec69b0a9e75b677e3b02be67675fd9f1e6cd",
+  "base_glb_sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+  "facial_driver_sha256": "c525d720eab133c66be18e9d49a14ddc2dd20fd0616ec4a5e4f96ee5d2947128",
+  "lod_binding_sha256": "266e29dfa72cac407d3750eefcb296ec0b9cf82dc7665afb30b2eaa658956bfc",
+  "accepted_scope": [
+    "Fresh current base/mid/far source and imported-scene stamps.",
+    "One live164-bone rig and one Rama motion modifier; all three actual quality controllers configured.",
+    "One5564-vertex skinned face with four full/half blink morphs.",
+    "Three actual LOD levels,four body/bow clones,two shared named skins; actual viewport camera near/far/near selection and player reset preserve ownership/visibility/resources.",
+    "Four actual moving material domains retain anchors/free tips and bind15 secondary shader surfaces; six disjoint PBR profile types bind.",
+    "A deliberately misplaced nonzero-offset secondary shader on actual skin is rejected; restoration returns identical resources.",
+    "Real movement and accepted draw seed nonneutral facial/spring state; pause/focus hold and one-tick resume remain exact.",
+    "Actual teleport,lethal receiver/audio ordering,death,authority respawn and100 actual player resets preserve expected state and resources.",
+    "Scene teardown releases all owned nodes without engine errors."
+  ],
+  "contract_refinement": {
+    "previous_failed_records": [
+      "../positive-r2-mask-contract/",
+      "../positive-r3-fixture-scope/"
+    ],
+    "reason": "Unused COLOR alpha1 on opaque ordinary PBR skin/lips is not a secondary motion weight. Procedural nocked-arrow meshes legitimately have PBR material_override and no semantic colors. Enforce the authored four-domain mask and actual shader ownership instead.",
+    "preserved_strength": "No secondary shader on skin or other unowned surfaces; bow shader weights remain zero; all intended domains retain valid white-RGB masks and real bindings; injected moving-skin-shader negative passes.",
+    "ordinary_pbr_flags": "Recorded per actual surface in the report; vertex_color_use_as_albedo=true on imported ordinary surfaces,transparency=0/opaque,whiteRGB; unused alpha therefore does not create transparency or motion."
+  },
+  "remaining": [
+    "Actual same-camera native light/material A/B and continuous full-body/secondary/LOD appearance review.",
+    "No eyelid pixel closure,cloth collision,skin realism,hand-contact,OS input,listening,physical-GPU,Windows,native online or commercial-quality acceptance from this headless fixture.",
+    "The previous rejected startup/crash,mask-contract and fixture-scope runs retain their exact sources and outcomes."
+  ]
+}

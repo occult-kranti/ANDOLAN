@@ -1,0 +1,386 @@
+{
+  "suite": "rama_package_cases",
+  "passed": true,
+  "checks": [
+    {
+      "name": "matching asset editable and generator hashes accepted",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "boolean schema rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance must declare an integer schema"
+    },
+    {
+      "name": "unknown schema rejected",
+      "passed": true,
+      "rejection": "Schema-2 generators/dependencies belong to their authoring stage"
+    },
+    {
+      "name": "path traversal rejected before reading outside",
+      "passed": true,
+      "rejection": "Rama hero provenance has unexpected asset"
+    },
+    {
+      "name": "absolute editable path rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has unexpected editableSource"
+    },
+    {
+      "name": "missing digest rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has invalid sha256"
+    },
+    {
+      "name": "nonhex digest rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has invalid sha256"
+    },
+    {
+      "name": "omitted weight correction dependency rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has unexpected weightCorrectionGenerator"
+    },
+    {
+      "name": "weight correction dependency traversal rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has unexpected weightCorrectionGenerator"
+    },
+    {
+      "name": "omitted weight correction evidence hash rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has invalid weightCorrectionSha256"
+    },
+    {
+      "name": "generated dependency ledger mismatch rejected",
+      "passed": true,
+      "rejection": "Rama hero generated dependencies differ from the required weight correction source"
+    },
+    {
+      "name": "changed source rejects: assets/heroes/rama-hero.glb",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: assets/heroes/rama-hero.glb"
+    },
+    {
+      "name": "changed source rejects: art/hero-rama/rama-hero.blend",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/rama-hero.blend"
+    },
+    {
+      "name": "changed source rejects: art/hero-rama/build_hero.py",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/build_hero.py"
+    },
+    {
+      "name": "changed source rejects: art/hero-rama/rebind_dhoti.py",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/rebind_dhoti.py"
+    },
+    {
+      "name": "changed source rejects: art/hero-rama/weight-correction.json",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/weight-correction.json"
+    },
+    {
+      "name": "missing asset rejects",
+      "passed": true,
+      "rejection": "Rama hero source is missing or unsafe: assets/heroes/rama-hero.glb"
+    },
+    {
+      "name": "matching external symlink still rejects",
+      "passed": true,
+      "rejection": "Rama hero source is missing or unsafe: assets/heroes/rama-hero.glb"
+    },
+    {
+      "name": "restored source passes",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "ordered R7 Q3 face authoring accepted",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "schema2 boolean schema rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance must declare an integer schema"
+    },
+    {
+      "name": "schema2 unknown schema rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has an unknown schema"
+    },
+    {
+      "name": "schema2 active asset traversal rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has unexpected asset"
+    },
+    {
+      "name": "schema2 wrong active byte count rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance byte count differs from active asset"
+    },
+    {
+      "name": "schema2 boolean byte count rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance byte count differs from active asset"
+    },
+    {
+      "name": "schema2 obsolete direct generator claim rejected",
+      "passed": true,
+      "rejection": "Schema-2 generators/dependencies belong to their authoring stage"
+    },
+    {
+      "name": "schema2 stage list required",
+      "passed": true,
+      "rejection": "Rama hero requires exactly the ordered R7/Q3/face authoring stages"
+    },
+    {
+      "name": "schema2 omitted parent stage rejected",
+      "passed": true,
+      "rejection": "Rama hero requires exactly the ordered R7/Q3/face authoring stages"
+    },
+    {
+      "name": "schema2 extra stage rejected",
+      "passed": true,
+      "rejection": "Rama hero requires exactly the ordered R7/Q3/face authoring stages"
+    },
+    {
+      "name": "schema2 reordered stages rejected",
+      "passed": true,
+      "rejection": "Rama hero authoring stage is malformed or out of order"
+    },
+    {
+      "name": "schema2 nonobject stage rejected",
+      "passed": true,
+      "rejection": "Rama hero authoring stage is malformed or out of order"
+    },
+    {
+      "name": "schema2 unknown stage field rejected",
+      "passed": true,
+      "rejection": "Rama hero authoring stage is malformed or out of order"
+    },
+    {
+      "name": "schema2 skipped ancestry rejected",
+      "passed": true,
+      "rejection": "Rama hero authoring parent does not match its previous stage"
+    },
+    {
+      "name": "schema2 unrelated editable input rejected",
+      "passed": true,
+      "rejection": "Rama hero editable input does not match its previous stage"
+    },
+    {
+      "name": "schema2 nonempty R7 parent rejected",
+      "passed": true,
+      "rejection": "Rama hero authoring parent does not match its previous stage"
+    },
+    {
+      "name": "schema2 stage editable traversal rejected",
+      "passed": true,
+      "rejection": "Rama hero stage q3 has unexpected editableSource"
+    },
+    {
+      "name": "schema2 stage absolute generator rejected",
+      "passed": true,
+      "rejection": "Rama hero stage face has unexpected generator"
+    },
+    {
+      "name": "schema2 unsafe metadata rejected",
+      "passed": true,
+      "rejection": "Rama hero stage face has unexpected metadata"
+    },
+    {
+      "name": "schema2 malformed stage digest rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has invalid source hash: art/hero-rama-quality/rama-hero-quality.glb"
+    },
+    {
+      "name": "schema2 missing weight evidence dependency rejected",
+      "passed": true,
+      "rejection": "Rama hero stage r7 has missing/extra dependencies"
+    },
+    {
+      "name": "schema2 missing Q3 imported generator dependency rejected",
+      "passed": true,
+      "rejection": "Rama hero stage q3 has missing/extra dependencies"
+    },
+    {
+      "name": "schema2 extra face dependency rejected",
+      "passed": true,
+      "rejection": "Rama hero stage face has missing/extra dependencies"
+    },
+    {
+      "name": "schema2 unsafe dependency rejected",
+      "passed": true,
+      "rejection": "Rama hero stage q3 dependency is malformed or unsafe"
+    },
+    {
+      "name": "schema2 malformed dependency hash rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance has invalid source hash: art/hero-rama/build_hero.py"
+    },
+    {
+      "name": "schema2 misleading final editable rejected",
+      "passed": true,
+      "rejection": "Rama hero active asset/editable differs from terminal authoring stage"
+    },
+    {
+      "name": "schema2 final editable digest mismatch rejected",
+      "passed": true,
+      "rejection": "Rama hero active asset/editable differs from terminal authoring stage"
+    },
+    {
+      "name": "schema2 metadata contradiction 0 sha256 rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/history/r7-runtime/rama-hero.glb"
+    },
+    {
+      "name": "schema2 metadata contradiction 0 weightCorrectionSha256 rejected",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/weight-correction.json"
+    },
+    {
+      "name": "schema2 metadata contradiction 1 acceptedInputGlbSha256 rejected",
+      "passed": true,
+      "rejection": "Rama hero stage q3 metadata identity/ancestry differs"
+    },
+    {
+      "name": "schema2 metadata contradiction 1 acceptedInputEditableSha256 rejected",
+      "passed": true,
+      "rejection": "Rama hero stage q3 metadata identity/ancestry differs"
+    },
+    {
+      "name": "schema2 metadata contradiction 1 candidateEditableSha256 rejected",
+      "passed": true,
+      "rejection": "Rama hero stage q3 metadata identity/ancestry differs"
+    },
+    {
+      "name": "schema2 metadata contradiction 2 inputBlendSha256 rejected",
+      "passed": true,
+      "rejection": "Rama hero stage face metadata identity/ancestry differs"
+    },
+    {
+      "name": "schema2 metadata contradiction 2 outputSha256 rejected",
+      "passed": true,
+      "rejection": "Rama hero stage face metadata identity/ancestry differs"
+    },
+    {
+      "name": "schema2 metadata contradiction 2 generatorSha256 rejected",
+      "passed": true,
+      "rejection": "Rama hero stage face metadata identity/ancestry differs"
+    },
+    {
+      "name": "schema2 archived schema1 missing dependency still rejected",
+      "passed": true,
+      "rejection": "Rama hero generated dependencies differ from the required weight correction source"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: assets/heroes/rama-hero.glb",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: assets/heroes/rama-hero.glb"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama/rebind_dhoti.py",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/rebind_dhoti.py"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama/weight-correction.json",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/weight-correction.json"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama/history/r7-runtime/rama-hero.glb",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/history/r7-runtime/rama-hero.glb"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama/rama-hero.blend",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/rama-hero.blend"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama/build_hero.py",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/build_hero.py"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama-quality/rama-hero-quality.glb",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama-quality/rama-hero-quality.glb"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama-quality/rama-hero-quality.blend",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama-quality/rama-hero-quality.blend"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama-quality/build_quality.py",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama-quality/build_quality.py"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama-face/rama-hero-face.glb",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama-face/rama-hero-face.glb"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama-face/rama-hero-face.blend",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama-face/rama-hero-face.blend"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama-face/build_face.py",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama-face/build_face.py"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama/history/r7-runtime/RAMA-HERO-PROVENANCE.json",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama/history/r7-runtime/RAMA-HERO-PROVENANCE.json"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama-quality/provenance.json",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama-quality/provenance.json"
+    },
+    {
+      "name": "schema2 changed authoring source rejects: art/hero-rama-face/candidate.json",
+      "passed": true,
+      "rejection": "Rama hero provenance differs from source: art/hero-rama-face/candidate.json"
+    },
+    {
+      "name": "schema2 self-hashed active asset must match terminal stage",
+      "passed": true,
+      "rejection": "Rama hero active asset/editable differs from terminal authoring stage"
+    },
+    {
+      "name": "schema2 matching external symlink rejects: art/hero-rama/history/r7-runtime/rama-hero.glb",
+      "passed": true,
+      "rejection": "Rama hero source is missing or unsafe: art/hero-rama/history/r7-runtime/rama-hero.glb"
+    },
+    {
+      "name": "schema2 matching external symlink rejects: art/hero-rama-quality/provenance.json",
+      "passed": true,
+      "rejection": "Rama hero source is missing or unsafe: art/hero-rama-quality/provenance.json"
+    },
+    {
+      "name": "schema2 matching external symlink rejects: art/hero-rama-face/build_face.py",
+      "passed": true,
+      "rejection": "Rama hero source is missing or unsafe: art/hero-rama-face/build_face.py"
+    },
+    {
+      "name": "schema2 restored sources accepted",
+      "passed": true,
+      "rejection": null
+    }
+  ],
+  "source_sha256": {
+    "tools/package-native.py": "01055c7c6b0dfa4a9714be3a5786b74b77ec5ed2256625c64298e40013bc315c",
+    "tests/rama_package_cases.py": "6a3138fbe33ac58cd016ab95f1b2ec927c8b3e96a4fb5d1e57bee0a07a1d0abc"
+  },
+  "scope": "Historical schema1 and ordered schema2 authoring provenance, source identity, ancestry and safe-path counterexamples; not GLB format or art quality."
+}

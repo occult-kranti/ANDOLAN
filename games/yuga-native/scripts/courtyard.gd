@@ -72,6 +72,9 @@ var title_light: OmniLight3D
 var hero_panel: Control
 var hero_panel_return := "menu"
 var hero_button: Button
+var settings_return_focus: WeakRef
+var help_return_focus: WeakRef
+var hero_return_focus: WeakRef
 var help_back: Button
 var title_wordmark: Label
 var interface_root: Control
@@ -361,6 +364,7 @@ func _create_ui() -> void:
 	explore_button.custom_minimum_size.y = 54
 	intro.add_child(explore_button)
 	var modes := HBoxContainer.new()
+	modes.name = "PracticeModes"
 	modes.add_theme_constant_override("separation", 10)
 	intro.add_child(modes)
 	start_button = _button("Bow training", start_training)
@@ -376,10 +380,12 @@ func _create_ui() -> void:
 	HeroUITheme.button(hero_button, false, true)
 	intro.add_child(hero_button)
 	var utilities := HBoxContainer.new()
+	utilities.name = "TitleUtilities"
 	utilities.add_theme_constant_override("separation", 8)
 	intro.add_child(utilities)
 	for entry in [{"text":"Help", "action":_open_help}, {"text":"Settings", "action":func(): _open_settings(true)}, {"text":"Quit", "action":_quit}]:
 		var action := _button(entry.text, entry.action)
+		action.name = entry.text
 		action.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		HeroUITheme.button(action, false, true)
 		utilities.add_child(action)
@@ -393,9 +399,10 @@ func _create_ui() -> void:
 	resume_button = _button("RESUME TRAINING", func(): set_paused(false))
 	HeroUITheme.button(resume_button, true)
 	pause_content.add_child(resume_button)
-	pause_content.add_child(_button("RAMA’S ABILITIES", _open_hero))
-	pause_content.add_child(_button("CONTROLS & HELP", _open_help))
-	pause_content.add_child(_button("SETTINGS", func(): _open_settings(false)))
+	for entry in [{"name":"RamaAbilities", "text":"RAMA’S ABILITIES", "action":_open_hero}, {"name":"Help", "text":"CONTROLS & HELP", "action":_open_help}, {"name":"Settings", "text":"SETTINGS", "action":func(): _open_settings(false)}]:
+		var action := _button(entry.text, entry.action)
+		action.name = entry.name
+		pause_content.add_child(action)
 	pause_content.add_child(_button("RESET COURTYARD", func(): reset_training(); set_paused(false)))
 	pause_content.add_child(_button("RETURN TO TITLE", return_to_menu))
 	pause_content.add_child(_button("QUIT TO DESKTOP", _quit))
@@ -515,8 +522,10 @@ func _modal(root: Control, label: String, centered: bool) -> Control:
 		texture.fill_from = Vector2.ZERO
 		texture.fill_to = Vector2.RIGHT
 		texture.gradient = Gradient.new()
-		texture.gradient.offsets = PackedFloat32Array([0, .33, .65, 1])
-		texture.gradient.colors = PackedColorArray([Color(.015, .025, .04, .98), Color(.015, .025, .04, .9), Color(.015, .025, .04, .16), Color(.015, .025, .04, 0)])
+		# Keep the title's contrast on its left edge; the actual actor's face and
+		# costume use the scene's lighting rather than a screen-space dark veil.
+		texture.gradient.offsets = PackedFloat32Array([0, .36, .54, .67, 1])
+		texture.gradient.colors = PackedColorArray([Color(.015, .025, .04, .98), Color(.015, .025, .04, .9), Color(.015, .025, .04, .25), Color(.015, .025, .04, 0), Color(.015, .025, .04, 0)])
 		wash.texture = texture
 		wash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		wash.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -709,21 +718,25 @@ func _bindings_changed() -> void:
 func _open_hero() -> void:
 	_release_gameplay_actions()
 	hero_panel_return = "menu" if not started else ("pause" if get_tree().paused else "training")
-	var previous := get_viewport().gui_get_focus_owner()
+	var owner: Control = main_panel if hero_panel_return == "menu" else pause_panel
+	hero_return_focus = _remember_modal_opener(owner) if hero_panel_return != "training" else null
 	main_panel.hide()
 	pause_panel.hide()
 	hud.hide()
 	if started: get_tree().paused = true
 	_set_practice_suspended(true)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	hero_panel.open("courtyard" if started else "confluence", previous)
+	# The caller restores its owner first and validates the opener afterward.
+	# The shared panel must not then restore a disabled or reparented old control.
+	hero_panel.open("courtyard" if started else "confluence")
 
 func _close_hero() -> void:
 	if hero_panel_return == "menu":
 		main_panel.show()
-		hero_button.grab_focus()
+		_restore_modal_opener(hero_return_focus, main_panel, _modal_content(main_panel).get_node("ExploreConfluence"))
 	else:
 		set_paused(hero_panel_return == "pause")
+		if hero_panel_return == "pause": _restore_modal_opener(hero_return_focus, pause_panel, resume_button)
 
 func cast_rama_ability(id: String) -> Dictionary:
 	if is_instance_valid(rama_runtime): return rama_runtime.cast_ability(id)
@@ -732,6 +745,7 @@ func cast_rama_ability(id: String) -> Dictionary:
 func _open_help() -> void:
 	_release_gameplay_actions()
 	help_return = "menu" if not started else ("pause" if get_tree().paused else "training")
+	help_return_focus = _remember_modal_opener(main_panel if help_return == "menu" else pause_panel) if help_return != "training" else null
 	main_panel.hide()
 	pause_panel.hide()
 	hud.hide()
@@ -746,8 +760,24 @@ func _close_help() -> void:
 	help_panel.hide()
 	if help_return == "menu":
 		main_panel.show()
-		start_button.grab_focus()
-	else: set_paused(help_return == "pause")
+		_restore_modal_opener(help_return_focus, main_panel, _modal_content(main_panel).get_node("ExploreConfluence"))
+	else:
+		set_paused(help_return == "pause")
+		if help_return == "pause": _restore_modal_opener(help_return_focus, pause_panel, resume_button)
+
+func _remember_modal_opener(owner: Control) -> WeakRef:
+	var previous := get_viewport().gui_get_focus_owner()
+	if is_instance_valid(previous) and owner.is_ancestor_of(previous) and previous.is_visible_in_tree():
+		return weakref(previous)
+	return null
+
+func _restore_modal_opener(previous_ref: WeakRef, owner: Control, fallback: Control) -> void:
+	var previous: Control = previous_ref.get_ref() if previous_ref else null
+	if is_instance_valid(previous) and owner.is_ancestor_of(previous) and previous.is_visible_in_tree() and previous.focus_mode == Control.FOCUS_ALL:
+		if not previous is BaseButton or not previous.disabled:
+			previous.grab_focus()
+			return
+	fallback.grab_focus()
 
 func _process(_delta: float) -> void:
 	var viewport := get_viewport().get_visible_rect().size
@@ -791,6 +821,7 @@ func _focusable_children(node: Node, result: Array[Control]) -> void:
 func _open_settings(from_menu: bool) -> void:
 	_release_gameplay_actions()
 	settings_from_menu = from_menu
+	settings_return_focus = _remember_modal_opener(main_panel if from_menu else pause_panel)
 	main_panel.visible = false
 	pause_panel.visible = false
 	hud.hide()
@@ -816,10 +847,10 @@ func _close_settings() -> void:
 	settings_panel.visible = false
 	if settings_from_menu:
 		main_panel.visible = true
-		start_button.grab_focus()
+		_restore_modal_opener(settings_return_focus, main_panel, _modal_content(main_panel).get_node("ExploreConfluence"))
 	else:
 		pause_panel.visible = true
-		resume_button.grab_focus()
+		_restore_modal_opener(settings_return_focus, pause_panel, resume_button)
 
 func _physics_process(delta: float) -> void:
 	if not started or get_tree().paused:

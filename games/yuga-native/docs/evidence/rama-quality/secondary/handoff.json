@@ -1,0 +1,28 @@
+{
+  "source_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "status": "component-verified; actual candidate mask binding and rendered review pending",
+  "passed": 42,
+  "checks": 42,
+  "sources": {
+    "games/yuga-native/scripts/rama_secondary_motion.gd": {
+      "bytes": 11528,
+      "sha256": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7"
+    },
+    "games/yuga-native/shaders/rama_secondary_cloth.gdshader": {
+      "bytes": 2247,
+      "sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+    },
+    "games/yuga-native/tests/rama_secondary_motion_cases.gd": {
+      "bytes": 14207,
+      "sha256": "94b2dfeb4295155a1ec03b21cbe1818b8987ca440a622588eab2ebe654b33495"
+    }
+  },
+  "independent_findings_fixed": [
+    "Normalize finite yaw before subtraction; opposite finite extremes must not overflow.",
+    "Reject unsupported diffuse/specular modes rather than replacing them.",
+    "Reject singular/nonfinite initial mesh/visual bases; neutralize invalid dynamic basis.",
+    "Artist found trailing border uses Cobalt lotus brocade; fourth material shares cloth deformation."
+  ],
+  "next_owner": "root integration; artist semantic-mask asset; independent QA actual deformation review",
+  "report": "component-r4.json"
+}

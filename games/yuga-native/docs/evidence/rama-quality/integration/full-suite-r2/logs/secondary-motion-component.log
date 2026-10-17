@@ -1,0 +1,44 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS Unconfigured component cannot affect presentation {}
+PASS Missing semantic masks rejected without material overrides {}
+PASS Non-white color masks rejected to preserve PBR albedo {}
+PASS Unsupported material features preserved by rejecting binding {}
+PASS Nonstandard diffuse lighting rejects conversion without overriding PBR {}
+PASS Nonstandard specular lighting rejects conversion without overriding PBR {}
+PASS Authored anchors and free tips bind four target surfaces {}
+PASS Duplicate configuration rejected {}
+PASS Shared mesh, LOD resource and bow leather remain unchanged {}
+PASS PBR textures, scalars and channel selectors preserved {}
+PASS Steady travel drags free tips against motion with small lift {"cloth_offset":"(-0.0114, 0.011962, -0.0304)","hair_offset":"(-0.0027, 0.001914, -0.0072)"}
+PASS Constant velocity response agrees at 30/60 Hz {"cloth_difference_m":0.0000000022812651767623,"hair_difference_m":0.0}
+PASS Constant velocity response agrees at 30/120 Hz {"cloth_difference_m":0.00000000684379530824231,"hair_difference_m":0.00000000106696407264906}
+PASS Constant turn response agrees at 30/60 Hz {"cloth_difference_m":0.00000000279396772384644}
+PASS Constant turn response agrees at 30/120 Hz {"cloth_difference_m":0.00000000838190317153931}
+PASS Smooth varying input stays within 2 mm at 30/120 Hz {"input":"3 s sinusoidal direction, speed, vertical speed and yaw; identical 30 Hz comparison times","matched_time_samples":90,"maximum_cloth_difference_m":0.000420694821514189,"tolerance_m":0.002}
+PASS Smooth varying input stays within 2 mm at 60/120 Hz {"input":"3 s sinusoidal direction, speed, vertical speed and yaw; identical 30 Hz comparison times","matched_time_samples":90,"maximum_cloth_difference_m":0.000140319170895964,"tolerance_m":0.002}
+PASS Every zero-mask anchor remains exactly fixed {}
+PASS Hem, brocade border and cloth use the same displacement field {}
+PASS Hero-local response converts into each mesh's coordinate basis {}
+PASS Mask field is continuous, clamped and finite {}
+PASS Pause preserves positions, velocities, elapsed time and baseline {}
+PASS Pause resume does not produce a catch-up reset {}
+PASS Adversarial turn, flight and oversized speed remain finite and capped {"maximum_cloth_m":0.0530687496066093,"maximum_hair_m":0.0125948982313275,"samples":2400}
+PASS Opposite huge finite yaw inputs cannot overflow the spring or published uniform {}
+PASS Teleport clears inherited inertia before rendering {}
+PASS Death rests cloth/hair and holds without repeated resets {}
+PASS Respawn seeds a fresh stationary baseline {}
+PASS Invalid delta 0.0 resets without catch-up {}
+PASS Invalid delta -0.01 resets without catch-up {}
+PASS Invalid delta 0.10001 resets without catch-up {}
+PASS Invalid delta inf resets without catch-up {}
+PASS Invalid delta nan resets without catch-up {}
+PASS Invalid input { "local_velocity": (nan, 0.0, 0.0) } is rejected and finite {}
+PASS Invalid input { "position": (inf, 0.0, 0.0) } is rejected and finite {}
+PASS Invalid input { "yaw": nan } is rejected and finite {}
+PASS Invalid input { "local_velocity": "bad" } is rejected and finite {}
+PASS Invalid input { "yaw": (0.0, 0.0, 0.0) } is rejected and finite {}
+PASS Explicit reset clears springs and the baseline {}
+PASS Reduced motion returns smoothly to neutral despite ongoing locomotion {}
+PASS Ordinary stop settles to rest without autonomous flutter {}
+PASS Unbind restores only this component's overrides {}

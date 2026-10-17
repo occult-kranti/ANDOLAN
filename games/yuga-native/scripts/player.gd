@@ -6,13 +6,19 @@ signal pulse(origin: Vector3)
 signal changed
 signal traversal_event(kind: String, position: Vector3)
 signal hero_reset
+signal ability_input_invalidated(reason: String)
 
 const TraversalController = preload("res://scripts/player_traversal.gd")
 const TraversalPose = preload("res://scripts/traversal_pose.gd")
 const HeroCarryPose = preload("res://scripts/hero_pose.gd")
 const RamaMotion = preload("res://scripts/rama_motion.gd")
+const RamaSurface = preload("res://scripts/rama_surface_materials.gd")
+const RamaSecondary = preload("res://scripts/rama_secondary_motion.gd")
+const RamaFace = preload("res://scripts/rama_facial_performance.gd")
+const RamaLod = preload("res://scripts/rama_lod_binding.gd")
 
 const HERO_PATH := "res://assets/heroes/rama-hero.glb"
+const HERO_LODS := ["res://assets/heroes/rama-hero-mid.glb", "res://assets/heroes/rama-hero-far.glb"]
 const SPEED := 6.0
 const SPRINT_SPEED := 9.0
 const MAGAZINE := 12
@@ -50,8 +56,18 @@ var traversal_pose: SkeletonModifier3D
 var hero_pose: SkeletonModifier3D
 var last_finite_position := Vector3.ZERO
 var rama_motion: SkeletonModifier3D
+var rama_surface: Node
+var rama_secondary: Node
+var rama_face: Node
+var rama_lod: Node
+var _quality_position := Vector3.ZERO
+var _quality_has_position := false
 var vitals: Node
 var ability_request := Callable()
+var ability_input_request := Callable()
+var _ability_input_edge := 0
+var _ability_input_down := {"pulse":false, "ultimate":false}
+var _ability_input_tick := {"pulse":-1, "ultimate":-1}
 var dash_speed := 21.0
 var rama_committed := false
 var rama_action_locked := false
@@ -88,6 +104,15 @@ func _ready() -> void:
 			rama_motion.free()
 			rama_motion = null
 			push_error("Rama motion could not bind the hero rig")
+		if is_instance_valid(rama_motion):
+			rama_lod = RamaLod.new(); visual.add_child(rama_lod)
+			rama_lod.configure(visual, rama_motion.rig, HERO_LODS)
+		rama_surface = RamaSurface.new(); visual.add_child(rama_surface)
+		rama_surface.configure(visual)
+		rama_secondary = RamaSecondary.new(); visual.add_child(rama_secondary)
+		rama_secondary.configure(visual)
+		rama_face = RamaFace.new(); visual.add_child(rama_face)
+		rama_face.configure(visual)
 	else:
 		push_error("Required skinned Rama GLB is missing: " + HERO_PATH)
 	visual.rotation.y = PI
@@ -126,13 +151,18 @@ func configure_traversal(anchors: Array, bounds: AABB) -> bool:
 
 func toggle_flight() -> bool:
 	if invocation_preparing or rama_committed: return false
-	return traversal.toggle_flight()
+	var accepted: bool = traversal.toggle_flight()
+	if accepted: ability_input_invalidated.emit("Flight changed")
+	return accepted
 
 func try_grapple() -> bool:
 	if invocation_preparing or rama_committed: return false
-	return traversal.try_grapple()
+	var accepted: bool = traversal.try_grapple()
+	if accepted: ability_input_invalidated.emit("Grapple changed")
+	return accepted
 
 func cancel_traversal(reason := "cancelled") -> void:
+	ability_input_invalidated.emit(reason)
 	# Measured Step belongs to the accepted hero action, not the flight/tether
 	# controller. Pausing ground traversal must not consume the remaining step.
 	var preserve_step: bool = ability_request.is_valid() and traversal.mode == "ground" and dash_time > 0
@@ -154,6 +184,10 @@ func traversal_report() -> Dictionary:
 	result["pose"] = traversal_pose.diagnostics() if is_instance_valid(traversal_pose) else {}
 	result["carry_pose"] = hero_pose.diagnostics() if is_instance_valid(hero_pose) else {}
 	result["rama_motion"] = rama_motion.diagnostics() if is_instance_valid(rama_motion) else {}
+	result["rama_surface"] = rama_surface.diagnostics() if is_instance_valid(rama_surface) else {}
+	result["rama_secondary"] = rama_secondary.report() if is_instance_valid(rama_secondary) else {}
+	result["rama_face"] = rama_face.report() if is_instance_valid(rama_face) else {}
+	result["rama_lod"] = rama_lod.report() if is_instance_valid(rama_lod) else {}
 	return result
 
 func _on_focus_lost() -> void:
@@ -162,6 +196,12 @@ func _on_focus_lost() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PAUSED and is_instance_valid(traversal):
 		cancel_traversal("Paused")
+
+func _reset_quality_motion(reason: String) -> void:
+	if is_instance_valid(rama_secondary): rama_secondary.reset(reason)
+	if is_instance_valid(rama_face): rama_face.reset(reason)
+	if is_instance_valid(rama_lod): rama_lod.reset(reason)
+	_quality_has_position = false
 
 func _find_animation(node: Node) -> AnimationPlayer:
 	if node is AnimationPlayer:
@@ -262,7 +302,9 @@ func _physics_process(delta: float) -> void:
 		start_reload()
 	if not invocation_locked and Input.is_action_pressed("fire"):
 		shoot()
-	if not invocation_locked and Input.is_action_just_pressed("pulse") and pulse_remaining <= 0:
+	if ability_input_request.is_valid():
+		_poll_ability_input()
+	elif not invocation_locked and Input.is_action_just_pressed("pulse") and pulse_remaining <= 0:
 		if ability_request.is_valid():
 			ability_request.call("piercing_dawn")
 		else:
@@ -273,7 +315,7 @@ func _physics_process(delta: float) -> void:
 			changed.emit()
 	if not invocation_locked and ability_request.is_valid():
 		if Input.is_action_just_pressed("guardian_circle"): ability_request.call("guardian_circle")
-		if Input.is_action_just_pressed("ultimate"): ability_request.call("dawn_volley")
+		if not ability_input_request.is_valid() and Input.is_action_just_pressed("ultimate"): ability_request.call("dawn_volley")
 	var forward := -pivot.global_basis.z
 	forward.y = 0
 	if invocation_locked: forward = invocation_facing
@@ -300,6 +342,19 @@ func _physics_process(delta: float) -> void:
 	_update_rama_motion(delta)
 	if global_position.y < -8:
 		reset()
+
+func _poll_ability_input() -> void:
+	# Only discrete Q/X intent reaches the recovery adapter. LMB remains held
+	# fire; E/C and all movement retain their existing commitment rules.
+	for spec in [["pulse", "piercing_dawn"], ["ultimate", "dawn_volley"]]:
+		var action: String = spec[0]
+		if not Input.is_action_pressed(action): _ability_input_down[action] = false
+		var tick := Engine.get_physics_frames()
+		if Input.is_action_just_pressed(action) and not _ability_input_down[action] and _ability_input_tick[action] != tick:
+			_ability_input_down[action] = true
+			_ability_input_tick[action] = tick
+			_ability_input_edge += 1
+			ability_input_request.call(spec[1], _ability_input_edge, false)
 
 func _rotate_visual(direction: Vector3, weight: float) -> void:
 	if direction.length_squared() < 0.001:
@@ -381,6 +436,7 @@ func finish_invocation_pose() -> void:
 
 func reset() -> void:
 	hero_reset.emit()
+	_reset_quality_motion("player reset")
 	if is_instance_valid(rama_motion): rama_motion.cancel("reset")
 	cancel_traversal("Reset")
 	position = Vector3(0, 0.05, 12)
@@ -412,6 +468,17 @@ func _update_rama_motion(delta: float) -> void:
 	var aim_forward: Vector3 = invocation_facing if rama_committed else -pivot.global_basis.z
 	var aim_offset := wrapf(atan2(aim_forward.x, aim_forward.z) - visual.rotation.y, -PI, PI)
 	rama_motion.update_motion(delta, {"velocity":velocity, "local_velocity":visual.global_basis.inverse()*velocity, "grounded":is_on_floor() or not active, "traversal":traversal.mode, "aim_pitch":pitch, "aim_yaw":aim_offset, "aiming":Input.is_action_pressed("fire") and active or action_time>0, "dash":dash_time>0, "floor_y":global_position.y})
+	var alive: bool = not is_instance_valid(vitals) or vitals.alive
+	var teleported := _quality_has_position and global_position.distance_squared_to(_quality_position) > 9.0
+	_quality_position = global_position
+	_quality_has_position = true
+	if teleported and is_instance_valid(rama_lod): rama_lod.reset("teleport")
+	if is_instance_valid(rama_secondary) and rama_secondary.configured:
+		rama_secondary.update_secondary(delta,{"local_velocity":visual.global_basis.inverse()*velocity,"position":global_position,"yaw":visual.global_rotation.y,"grounded":is_on_floor() or not active,"alive":alive,"paused":get_tree().paused,"reset":teleported})
+	if is_instance_valid(rama_face) and rama_face.configured:
+		var effort := 1.0 if rama_motion.action_stage in ["windup","hold"] else (.35 if rama_motion.action_stage == "recovery" else 0.0)
+		rama_face.update_facial(delta,{"alive":alive,"paused":get_tree().paused,"effort":effort,"teleported":teleported})
+	if is_instance_valid(rama_lod): rama_lod.update(get_viewport().get_camera_3d(), delta)
 
 func accept_measured_step(origin: Vector3, destination: Vector3, duration: float) -> Dictionary:
 	if not active or not origin.is_finite() or not destination.is_finite() or not is_finite(duration) or duration <= 0 or duration > 1:

@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "baseline_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "scope": "New CI/setup wiring and bounded local runner verification; no full CI/setup, rendered art, OS input, integrated native network/AI or hardware acceptance.",
+  "suite_catalog": [
+    {
+      "id": "lod-interchange",
+      "kind": "python",
+      "source": "tests/hero_lod_cases.py",
+      "arguments": []
+    },
+    {
+      "id": "action-audio-build",
+      "kind": "python",
+      "source": "art/audio/rama-quality/build_audio.py",
+      "arguments": [
+        "--check"
+      ]
+    },
+    {
+      "id": "lod-selector",
+      "kind": "godot",
+      "source": "tests/hero_lod_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "lod-one-rig-binding",
+      "kind": "godot",
+      "source": "tests/hero_lod_binding_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "lighting-properties",
+      "kind": "godot",
+      "source": "tests/production_lighting_quality_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "action-audio-component",
+      "kind": "godot",
+      "source": "tests/rama_action_audio_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "action-buffer-component",
+      "kind": "godot",
+      "source": "tests/rama_action_buffer_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "action-buffer-offline-integration",
+      "kind": "godot",
+      "source": "tests/rama_action_buffer_integration_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "facial-component-and-active-asset",
+      "kind": "godot",
+      "source": "tests/rama_facial_cases.gd",
+      "arguments": [
+        "--asset=res://assets/heroes/rama-hero.glb"
+      ]
+    },
+    {
+      "id": "active-hero-offline-integration",
+      "kind": "godot",
+      "source": "tests/rama_quality_integration_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "material-component",
+      "kind": "godot",
+      "source": "tests/rama_material_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "practice-brain-component",
+      "kind": "godot",
+      "source": "tests/rama_practice_brain_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "remote-replica-component",
+      "kind": "godot",
+      "source": "tests/rama_remote_replica_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "screen-focus-and-layout",
+      "kind": "godot",
+      "source": "tests/rama_screen_quality_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "secondary-motion-component",
+      "kind": "godot",
+      "source": "tests/rama_secondary_motion_cases.gd",
+      "arguments": []
+    },
+    {
+      "id": "vfx-component",
+      "kind": "godot",
+      "source": "tests/rama_vfx_quality_cases.gd",
+      "arguments": []
+    }
+  ],
+  "catalog_counts": {
+    "total": 16,
+    "godot": 14,
+    "python": 2
+  },
+  "previous_gate_preservation": [
+    {
+      "path": ".github/workflows/yuga-native.yml",
+      "all_previous_lines_preserved_in_order": true,
+      "prior_lines": 232,
+      "current_lines": 240
+    },
+    {
+      "path": "tools/cloud/setup-native.sh",
+      "all_previous_lines_preserved_in_order": true,
+      "prior_lines": 87,
+      "current_lines": 90
+    }
+  ],
+  "local_actual_run": {
+    "passed": true,
+    "suites": 6,
+    "runtime_and_checked_sources_unchanged": true,
+    "full_catalog_run": false,
+    "result": "summary.json",
+    "reports_directory": "reports/",
+    "logs_directory": "logs/"
+  },
+  "orchestration_counterexamples": {
+    "passed": true,
+    "modes": 4,
+    "fake_invocations": 8,
+    "result": "negative-orchestration/review.json",
+    "limit": "Fake engine only challenges wrapper rejection and XDG isolation; not additional game execution."
+  },
+  "static_checks": [
+    "workflow parsed by installed PyYAML",
+    "bash -n setup-native.sh",
+    "Python compile of shared runner",
+    "all old workflow/setup lines preserved in order",
+    "16catalog entries;14Godot/2Python",
+    "no imports/renders invoked"
+  ],
+  "files": {
+    ".github/workflows/yuga-native.yml": {
+      "bytes": 19014,
+      "sha256": "bd78f1abc9a5200076565f80b52855999b21569d4add6d3bd69368edaf3e2662"
+    },
+    "tools/cloud/setup-native.sh": {
+      "bytes": 9500,
+      "sha256": "256bee63a483081afec5e2253813bd3534e4c2a8ad5da74831a8407c00f51ccd"
+    },
+    "games/yuga-native/tools/run-quality-checks.py": {
+      "bytes": 10335,
+      "sha256": "e8b4a85a30b313c540c4786730cfc3f67cb079ee928af011b0081ccc90cd19f7"
+    },
+    "games/yuga-native/docs/PRODUCTION_SQUADS.md": {
+      "bytes": 17775,
+      "sha256": "557b886d3c84c41038b008872f6f0f57de4ed48cf5672906253879a07a744a52"
+    },
+    "games/yuga-native/docs/DEADLOCK_QUALITY_TARGET.md": {
+      "bytes": 14140,
+      "sha256": "30e654d7d16d7c964216ffe6fbb2b6062952c591cd4a3accf95eecf2ad18c5dd"
+    }
+  },
+  "remaining": [
+    "Full16 catalog on accepted imported finalhero and frozen runtime, including enabled active-asset and actual-world quality gates.",
+    "Full required foundationCI and fresh platform/package/input/render checks.",
+    "Final authoring face acceptance/schema2 promotion and15rulesource pin refresh remain root-coordinated; no pin refresh performed here."
+  ]
+}

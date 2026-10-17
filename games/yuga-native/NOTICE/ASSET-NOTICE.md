@@ -11,7 +11,7 @@ derive from MakeHuman CC0 data. Costume, hair, weapon and motion were authored
 for YUGA. `HERO-PROVENANCE.json` identifies the source revision and exact model
 hash; `MAKEHUMAN-ASSET-LICENSE.md` preserves the source data license.
 
-The active `rama-production.glb` revision retains that anatomy, rig and nine
+The retained `rama-production.glb` revision keeps that anatomy, rig and nine
 animation curves, with newly authored costume, hair, bow-grip detail and original
 generated PBR textures. `RAMA-PRODUCTION-PROVENANCE.json` identifies its exact
 generator, texture and model hashes. This is an incremental art revision; it is
@@ -20,6 +20,28 @@ and structural validator are in `art/production/` in the source repository.
 
 The runtime generates its own brief interface and combat sounds. No sampled
 commercial game audio is included.
+
+The selected playable hero is `assets/heroes/rama-hero.glb`, whose exact runtime
+identity and editable authoring chain are recorded in
+`RAMA-HERO-PROVENANCE.json`. Source work under `art/hero-rama-quality/` adds
+original hair clumps, cloth folds, brocade and semantic secondary-motion masks.
+Candidate source is distinct from accepted runtime promotion.
+
+The fifteen Rama action/counter WAVs in `assets/audio/rama-quality/` are original
+deterministic oscillator and seeded-noise synthesis, with no external samples,
+recordings or transcribed melodies. Their exact generator and file identities
+are in the adjacent manifest and source `art/audio/rama-quality/`. The plucked,
+modal and bell colors are abstractions, without historical-authenticity or
+psychological-effect claims.
+
+Facial authoring source under `art/hero-rama-face/` uses the two CC0 MakeHuman
+standard face-pose data files at revision
+`a8bc2d54ff0ac92e78ff71431b1023eda42bf482`. Attribution:
+“(c) 2020 Data Collection AB, Joel Palmius, Jonas Hauquier. Standard face pose
+units. Author: MakeHuman. License: CC0.” Its source ledger and NOTICE retain
+upstream URLs and exact hashes. These are pose data; no MakeHuman application
+code or commercial game character/animation is imported. Rejected facial
+candidates are not an accepted runtime model.
 
 The Confluence duel adds a separately authored Ravana Sentinel costume on that
 same CC0 anatomy and rig, two film-specific skeletal animation libraries, original

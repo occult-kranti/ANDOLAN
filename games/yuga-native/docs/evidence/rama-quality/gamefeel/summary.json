@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "checks": 57,
+  "command": "LP_NUM_THREADS=2 timeout 45s godot --headless --path games/yuga-native --script res://tests/rama_action_buffer_cases.gd -- --report=/tmp/rama-action-buffer-r3.json",
+  "exit_code": 0,
+  "baseline_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "sources": {
+    "res://assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "res://scripts/lane_army.gd": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+    "res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "res://scripts/rama_action_buffer.gd": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+    "res://tests/rama_action_buffer_cases.gd": "f7822cd6d1cd3482ccd22b15ad0c76c167704b8c1a644564a4b991251e3db2e2"
+  },
+  "source_status": "Exclusive new module and fixture. Shared runtime/player hooks are root-owned and have not been accepted by this isolated result.",
+  "scope": "Real 20 Hz lane army and unchanged Rama kit, isolated explicit edge/eligibility callbacks. No renderer, OS input, human feel, audio, network or hardware performance claim.",
+  "prior_runs": [
+    {
+      "name": "r1",
+      "result": "Fixture error: lane_army.reset takes no arguments; invocation fixed. No product acceptance."
+    },
+    {
+      "name": "r2",
+      "result": "56/56 passed. Superseded by generation-guard reorder and one stale-reset counterexample in r3."
+    }
+  ]
+}

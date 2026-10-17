@@ -1,0 +1,406 @@
+{
+  "schema": 1,
+  "reviewer": "/root/quality_qa",
+  "date": "2026-10-17",
+  "scope": "Independent source/report hash audit of frozen isolated components. Existing owner tests were inspected, not rerun. Counts are separate suites and must not be added into integrated-game acceptance.",
+  "components": [
+    {
+      "component": "secondary",
+      "reviewed_report": "games/yuga-native/docs/evidence/rama-quality/secondary/component-r4.json",
+      "report_sha256": "331941dcb79da020fd03fb840753b08e9eb911eda69db8a790d1306d2ecd6435",
+      "owner_component_checks": 42,
+      "source_pins": [
+        {
+          "path": "res://scripts/rama_secondary_motion.gd",
+          "sha256": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+          "expected_sha256": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+          "match": true
+        },
+        {
+          "path": "res://shaders/rama_secondary_cloth.gdshader",
+          "sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+          "expected_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+          "match": true
+        },
+        {
+          "path": "res://tests/rama_secondary_motion_cases.gd",
+          "sha256": "94b2dfeb4295155a1ec03b21cbe1818b8987ca440a622588eab2ebe654b33495",
+          "expected_sha256": "94b2dfeb4295155a1ec03b21cbe1818b8987ca440a622588eab2ebe654b33495",
+          "match": true
+        }
+      ],
+      "all_pins_match": true,
+      "qa_engine_execution": false
+    },
+    {
+      "component": "materials",
+      "reviewed_report": "games/yuga-native/docs/evidence/rama-quality/materials/handoff.json",
+      "report_sha256": "ac42c6f657dc5ecf0ddb5acb480875614dff1cb9e431bafa5a2cb1b901555547",
+      "owner_component_checks": 38,
+      "source_pins": [
+        {
+          "path": "games/yuga-native/scripts/rama_surface_materials.gd",
+          "sha256": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a",
+          "expected_sha256": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/tests/rama_material_cases.gd",
+          "sha256": "da47d87a5c28ec705283f9ea4ab705557f8a0c8c2f164fe48b00974b11886235",
+          "expected_sha256": "da47d87a5c28ec705283f9ea4ab705557f8a0c8c2f164fe48b00974b11886235",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/art/hero-rama-materials/README.md",
+          "sha256": "6527427983479676b34e06de739a8997be2715f805a600005eb54298859d5903",
+          "expected_sha256": "6527427983479676b34e06de739a8997be2715f805a600005eb54298859d5903",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-quality/materials/component-r2/report.json",
+          "sha256": "aac9af6452266ca36b0ecf20a299aa4fbb3703d100e7624922164ff4d1c3dfe7",
+          "expected_sha256": "aac9af6452266ca36b0ecf20a299aa4fbb3703d100e7624922164ff4d1c3dfe7",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/docs/evidence/rama-quality/materials/component-r2/test.log",
+          "sha256": "908d93ad4a1110dd13ac4757b0d25a5cc5e4f007a2f6b0cd4e4afa9273fde530",
+          "expected_sha256": "908d93ad4a1110dd13ac4757b0d25a5cc5e4f007a2f6b0cd4e4afa9273fde530",
+          "match": true
+        }
+      ],
+      "all_pins_match": true,
+      "qa_engine_execution": false
+    },
+    {
+      "component": "network",
+      "reviewed_report": "games/yuga-native/docs/evidence/rama-quality/network/component-r3.json",
+      "report_sha256": "fc47eb2676793b966a8c40400f7ef055531eb4e8c60b4f2e6f4dac77b36bf93b",
+      "owner_component_checks": 41,
+      "source_pins": [
+        {
+          "path": "res://assets/animations/rama_hero_motion.tres",
+          "sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+          "expected_sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+          "match": true
+        },
+        {
+          "path": "res://scripts/arena_client.gd",
+          "sha256": "b0482d783a9e9bf9b64be8f07c8878259cd417f39bb90ae7b4752d1b7e34cbb0",
+          "expected_sha256": "b0482d783a9e9bf9b64be8f07c8878259cd417f39bb90ae7b4752d1b7e34cbb0",
+          "match": true
+        },
+        {
+          "path": "res://scripts/arena_interpolator.gd",
+          "sha256": "563b2097e5180cbba285e57bdebc3dafe07c919cabeec1d89d5a8d4b021e0619",
+          "expected_sha256": "563b2097e5180cbba285e57bdebc3dafe07c919cabeec1d89d5a8d4b021e0619",
+          "match": true
+        },
+        {
+          "path": "res://scripts/entity_bridge.gd",
+          "sha256": "fc89950bf586745a9056bd1909c345dfd2ba34a74875e21a9b0193e0eb6adfd9",
+          "expected_sha256": "fc89950bf586745a9056bd1909c345dfd2ba34a74875e21a9b0193e0eb6adfd9",
+          "match": true
+        },
+        {
+          "path": "res://scripts/native_contracts.gd",
+          "sha256": "e4e5a197f42ca908e12caa647252070ee7eeb91e825302340a1deda5316a8197",
+          "expected_sha256": "e4e5a197f42ca908e12caa647252070ee7eeb91e825302340a1deda5316a8197",
+          "match": true
+        },
+        {
+          "path": "res://scripts/rama_motion.gd",
+          "sha256": "d3a898b640de9c62aa3a919786b5a3b7c56dea823349472e361ba33906010f22",
+          "expected_sha256": "d3a898b640de9c62aa3a919786b5a3b7c56dea823349472e361ba33906010f22",
+          "match": true
+        },
+        {
+          "path": "res://scripts/rama_remote_replica.gd",
+          "sha256": "b62842e378f220f0895bb5d2906d313b38bceb6f76b511334d02614d079fa9d5",
+          "expected_sha256": "b62842e378f220f0895bb5d2906d313b38bceb6f76b511334d02614d079fa9d5",
+          "match": true
+        },
+        {
+          "path": "res://tests/rama_remote_replica_cases.gd",
+          "sha256": "6958fe1bdc0e0a4eb829a723c2dadf6eb48470b6cdf6efcfecd03cdb54518298",
+          "expected_sha256": "6958fe1bdc0e0a4eb829a723c2dadf6eb48470b6cdf6efcfecd03cdb54518298",
+          "match": true
+        }
+      ],
+      "all_pins_match": true,
+      "qa_engine_execution": false
+    },
+    {
+      "component": "ai",
+      "reviewed_report": "games/yuga-native/docs/evidence/rama-quality/ai/final/report.json",
+      "report_sha256": "b5a1734faa208b278092362f370b33d0d792848b12f2258fab1baf398272b213",
+      "owner_component_checks": 52,
+      "source_pins": [
+        {
+          "path": "res://assets/design/rama-ability-kit.json",
+          "sha256": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+          "expected_sha256": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+          "match": true
+        },
+        {
+          "path": "res://scripts/lane_army.gd",
+          "sha256": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+          "expected_sha256": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+          "match": true
+        },
+        {
+          "path": "res://scripts/rama_ability_kit.gd",
+          "sha256": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+          "expected_sha256": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+          "match": true
+        },
+        {
+          "path": "res://scripts/rama_practice_army.gd",
+          "sha256": "0a075ee1096c04fdbda416e5cbb932f261c7ec7aae3e14301083c90d5861f906",
+          "expected_sha256": "0a075ee1096c04fdbda416e5cbb932f261c7ec7aae3e14301083c90d5861f906",
+          "match": true
+        },
+        {
+          "path": "res://scripts/rama_practice_brain.gd",
+          "sha256": "a085481c1ee5cec2ab07d1f7a5cf206bef14105b821f6032ac2fc25e2ea202d1",
+          "expected_sha256": "a085481c1ee5cec2ab07d1f7a5cf206bef14105b821f6032ac2fc25e2ea202d1",
+          "match": true
+        },
+        {
+          "path": "res://scripts/rama_practice_target.gd",
+          "sha256": "e8cd1ad14191bd47d51ed0375889ff6938bf7c17023485638c0f57b64506721d",
+          "expected_sha256": "e8cd1ad14191bd47d51ed0375889ff6938bf7c17023485638c0f57b64506721d",
+          "match": true
+        },
+        {
+          "path": "res://scripts/target.gd",
+          "sha256": "6d96be5379232438d68c5dfc28f29e46ec239f89f485b2ff2b2f078b874295a6",
+          "expected_sha256": "6d96be5379232438d68c5dfc28f29e46ec239f89f485b2ff2b2f078b874295a6",
+          "match": true
+        },
+        {
+          "path": "res://tests/rama_practice_brain_cases.gd",
+          "sha256": "2d2cfffa5c2ee9763132cbda8f1fa67c454c34cdf8722fe92b2467a5ace17472",
+          "expected_sha256": "2d2cfffa5c2ee9763132cbda8f1fa67c454c34cdf8722fe92b2467a5ace17472",
+          "match": true
+        }
+      ],
+      "all_pins_match": true,
+      "qa_engine_execution": false
+    },
+    {
+      "component": "input_buffer",
+      "reviewed_report": "games/yuga-native/docs/evidence/rama-quality/gamefeel/summary.json",
+      "report_sha256": "54e29a3e043c1d5b726a1a62415d56d7b26b91415ec278cf2f539290bb09c6ca",
+      "owner_component_checks": 57,
+      "source_pins": [
+        {
+          "path": "res://assets/design/rama-ability-kit.json",
+          "sha256": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+          "expected_sha256": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+          "match": true
+        },
+        {
+          "path": "res://scripts/lane_army.gd",
+          "sha256": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+          "expected_sha256": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+          "match": true
+        },
+        {
+          "path": "res://scripts/rama_ability_kit.gd",
+          "sha256": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+          "expected_sha256": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+          "match": true
+        },
+        {
+          "path": "res://scripts/rama_action_buffer.gd",
+          "sha256": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+          "expected_sha256": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+          "match": true
+        },
+        {
+          "path": "res://tests/rama_action_buffer_cases.gd",
+          "sha256": "f7822cd6d1cd3482ccd22b15ad0c76c167704b8c1a644564a4b991251e3db2e2",
+          "expected_sha256": "f7822cd6d1cd3482ccd22b15ad0c76c167704b8c1a644564a4b991251e3db2e2",
+          "match": true
+        }
+      ],
+      "all_pins_match": true,
+      "qa_engine_execution": false
+    },
+    {
+      "component": "screens",
+      "reviewed_report": "games/yuga-native/docs/evidence/rama-quality/screens/summary.json",
+      "report_sha256": "37ae08235236df67fd980a611a7615843a8ac5e175c6fabaacf1d3d0d551385d",
+      "owner_component_checks": 49,
+      "source_pins": [
+        {
+          "path": "games/yuga-native/scripts/courtyard.gd",
+          "sha256": "66a9cbbb9e3919904201aed2f304df4c973dae2dda133d27a04df8ff101c00fb",
+          "expected_sha256": "66a9cbbb9e3919904201aed2f304df4c973dae2dda133d27a04df8ff101c00fb",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/scripts/hero_ui_theme.gd",
+          "sha256": "8795f64e85a9103f3f97a9ad0b4a0bca5c2f8e1ef25b3cbba61eb0375c8d0c71",
+          "expected_sha256": "8795f64e85a9103f3f97a9ad0b4a0bca5c2f8e1ef25b3cbba61eb0375c8d0c71",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/tests/rama_screen_quality_cases.gd",
+          "sha256": "6ee44a1a95959179fc4cc1b2ce930934ddc749b42be605a4297e3eed65bc27ce",
+          "expected_sha256": "6ee44a1a95959179fc4cc1b2ce930934ddc749b42be605a4297e3eed65bc27ce",
+          "match": true
+        }
+      ],
+      "all_pins_match": true,
+      "qa_engine_execution": false
+    },
+    {
+      "component": "vfx",
+      "reviewed_report": "games/yuga-native/docs/evidence/rama-quality/vfx/round2/summary.json",
+      "report_sha256": "7c7540b22d5cbe71aedf37e7fec8b6f99fbd01d63e36e8e1d89364684feacd3f",
+      "owner_component_checks": 33,
+      "source_pins": [
+        {
+          "path": "scripts/rama_ability_effects.gd",
+          "sha256": "5c8ac077f208d7674ebb463354e98054e5d9ce7ee4ef9f74780f1226bc1555d7",
+          "expected_sha256": "5c8ac077f208d7674ebb463354e98054e5d9ce7ee4ef9f74780f1226bc1555d7",
+          "match": true
+        },
+        {
+          "path": "shaders/rama_ribbon.gdshader",
+          "sha256": "6fa1b9f1064a5b4396a36eebe1e0d232b1bf5ef8fda5a0e6ab03b0a7ac53e7de",
+          "expected_sha256": "6fa1b9f1064a5b4396a36eebe1e0d232b1bf5ef8fda5a0e6ab03b0a7ac53e7de",
+          "match": true
+        },
+        {
+          "path": "tests/rama_vfx_quality_cases.gd",
+          "sha256": "0c94935bfbfd9387c200b12592fe808a4830c412dcd74f73e2c9a3a8b223a5b4",
+          "expected_sha256": "0c94935bfbfd9387c200b12592fe808a4830c412dcd74f73e2c9a3a8b223a5b4",
+          "match": true
+        },
+        {
+          "path": "tests/rama_ability_cases.gd",
+          "sha256": "9cabe5b547bc88378100c4cbd3663b4a8257fd68ee9e48aa3e39749f1028469d",
+          "expected_sha256": "9cabe5b547bc88378100c4cbd3663b4a8257fd68ee9e48aa3e39749f1028469d",
+          "match": true
+        },
+        {
+          "path": "tests/rama_hero_integration_cases.gd",
+          "sha256": "96b0dd6632db9b4a43d2d2304153050e8761d7bb0c762307ac2bc9c26ce4c66d",
+          "expected_sha256": "96b0dd6632db9b4a43d2d2304153050e8761d7bb0c762307ac2bc9c26ce4c66d",
+          "match": true
+        }
+      ],
+      "all_pins_match": true,
+      "qa_engine_execution": false
+    },
+    {
+      "component": "lod",
+      "reviewed_report": "games/yuga-native/docs/evidence/rama-quality/lod/tooling-round2/handoff.json",
+      "report_sha256": "b162e81c0c55da5b9d06cfe3f4fdf611727608b9fa9fce35d1150daa1a93790a",
+      "owner_component_checks": null,
+      "source_pins": [
+        {
+          "path": "games/yuga-native/art/hero-rama-lod/README.md",
+          "sha256": "9e66a952bdab571ece2e05d715b9f85f97a50f2861b9c2b801c1172a9407dd03",
+          "expected_sha256": "9e66a952bdab571ece2e05d715b9f85f97a50f2861b9c2b801c1172a9407dd03",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/art/hero-rama-lod/bootstrap_meshoptimizer.py",
+          "sha256": "a25820e889b238fc5dbaa014a577ec5e8c55b1ceef12752af3b0c4e58c1631b1",
+          "expected_sha256": "a25820e889b238fc5dbaa014a577ec5e8c55b1ceef12752af3b0c4e58c1631b1",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/art/hero-rama-lod/glb_lod.py",
+          "sha256": "ffa1f37ea5d2acbe12f0da12cd5acb973c0d586867738683a84cf57e3326ceba",
+          "expected_sha256": "ffa1f37ea5d2acbe12f0da12cd5acb973c0d586867738683a84cf57e3326ceba",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/art/hero-rama-lod/build_lods.py",
+          "sha256": "77f0f5b8b0b155dbc0f2afb3028f54de90e987e9e9656f92add831bd2ef59975",
+          "expected_sha256": "77f0f5b8b0b155dbc0f2afb3028f54de90e987e9e9656f92add831bd2ef59975",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/art/hero-rama-lod/measure_source.py",
+          "sha256": "264344bed290c9350f02ff3cb675a018d78c3e89ba23d4ec9893fae67f13ff7d",
+          "expected_sha256": "264344bed290c9350f02ff3cb675a018d78c3e89ba23d4ec9893fae67f13ff7d",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/scripts/rama_visual_lod.gd",
+          "sha256": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5",
+          "expected_sha256": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/tests/hero_lod_cases.py",
+          "sha256": "d8ad3c3057aa24fbc1a5ea7742e40575e508e94308711c9cb8c5295020004735",
+          "expected_sha256": "d8ad3c3057aa24fbc1a5ea7742e40575e508e94308711c9cb8c5295020004735",
+          "match": true
+        },
+        {
+          "path": "games/yuga-native/tests/hero_lod_cases.gd",
+          "sha256": "93a40f6d993e600ff5415b5ea2ed1db88232b8b13820751ef484272ee5b0a41d",
+          "expected_sha256": "93a40f6d993e600ff5415b5ea2ed1db88232b8b13820751ef484272ee5b0a41d",
+          "match": true
+        }
+      ],
+      "all_pins_match": true,
+      "qa_engine_execution": false
+    },
+    {
+      "component": "lookdev",
+      "reviewed_report": "games/yuga-native/docs/evidence/rama-quality/lookdev/summary.json",
+      "report_sha256": "7c3e0e895dd8dc9052e7571aacc4f61bca61c16e433fe293441e4321712deec1",
+      "owner_component_checks": 108,
+      "source_pins": [
+        {
+          "path": "scripts/production_lighting.gd",
+          "sha256": "9966282802b1920c7f81567779940796259238f982d67a31b9e886e9ab37cd9f",
+          "expected_sha256": "9966282802b1920c7f81567779940796259238f982d67a31b9e886e9ab37cd9f",
+          "match": true
+        },
+        {
+          "path": "scripts/world_lighting.gd",
+          "sha256": "8604f86cf8231941be9e7edf7c160b4b46bba9ea4fbe93ad2f7e19f518e3d5c0",
+          "expected_sha256": "8604f86cf8231941be9e7edf7c160b4b46bba9ea4fbe93ad2f7e19f518e3d5c0",
+          "match": true
+        },
+        {
+          "path": "tests/production_lighting_quality_cases.gd",
+          "sha256": "fb3047e358d2b54a5da2a7f780306c7333eac9e0265a35911edda132644aab84",
+          "expected_sha256": "fb3047e358d2b54a5da2a7f780306c7333eac9e0265a35911edda132644aab84",
+          "match": true
+        },
+        {
+          "path": "art/lookdev/production_lighting-before.gd.txt",
+          "sha256": "74aa8e4d6691721e42d6dc5e0a9be04ed49e6330fa1429d8240dd11ca4a79321",
+          "expected_sha256": "74aa8e4d6691721e42d6dc5e0a9be04ed49e6330fa1429d8240dd11ca4a79321",
+          "match": true
+        },
+        {
+          "path": "art/lookdev/world_lighting-before.gd.txt",
+          "sha256": "822d6d2550b2a01da97b25fb7a8b2163c26b8c44b8ecc0b38e484207ca356feb",
+          "expected_sha256": "822d6d2550b2a01da97b25fb7a8b2163c26b8c44b8ecc0b38e484207ca356feb",
+          "match": true
+        }
+      ],
+      "all_pins_match": true,
+      "qa_engine_execution": false
+    }
+  ],
+  "overall_status": "ISOLATED_COMPONENT_SOURCE_PINS_MATCH",
+  "not_accepted": [
+    "Actual final imported hero mask/material/face integration",
+    "LOD mesh-switch binding and visual transition",
+    "Final day/dusk/night and continuous action rendering",
+    "Native multiplayer/action authority or rendered practice bot",
+    "Physical-GPU performance or commercial-game visual parity"
+  ]
+}

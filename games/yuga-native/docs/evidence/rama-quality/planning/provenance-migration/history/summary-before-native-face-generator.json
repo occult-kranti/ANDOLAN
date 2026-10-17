@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "baseline_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "status": "source contract implemented; final authoring asset and frozen pin refresh pending",
+  "provenance_cases": {
+    "passed": true,
+    "checks": 88,
+    "legacy_cases_retained": 19
+  },
+  "contract_cases": {
+    "passed": true,
+    "checks": 242,
+    "engine": "Godot4.6.3 official7d41c59c4",
+    "mode": "pure headless validator;2CPUaffinity; no import/render"
+  },
+  "native_content_revision": 4,
+  "native_rules_source_count_current": 14,
+  "native_rules_source_count_required_at_freeze": 15,
+  "source_pin_check": {
+    "passed": false,
+    "checks": 41,
+    "expected_open_failures": [
+      "pinned player.gd differs",
+      "pinned rama_hero_runtime.gd differs",
+      "rama_action_buffer.gd required but not yet added before owner freeze"
+    ]
+  },
+  "preserved_revision3_rules_sha256": "81350321554767054e16de46e2b3f6a0fae7662923b30ccc76f0cfcb2cbe1a9f",
+  "wire_versions": "all1;browsercontent1/proposalcontent1; no live migration claimed",
+  "files": {
+    "tools/package-native.py": {
+      "bytes": 36760,
+      "sha256": "6efa9c11f09d6c420d3428c3be8175e93adb697ab020f9089085d92a38462a24"
+    },
+    "tests/rama_package_cases.py": {
+      "bytes": 18370,
+      "sha256": "2a4c9dc3e052a5dfec4cc5323177c398aae97a42b829f7b747407abdc6f16c69"
+    },
+    "tools/check-native-contracts.py": {
+      "bytes": 5346,
+      "sha256": "04f0b6185c97a97fe2b4ee7e0fbc32ab31514edeea000bc6790c8769410fba23"
+    },
+    "scripts/native_contracts.gd": {
+      "bytes": 19903,
+      "sha256": "778104fcd593c4c5d350166e783ed11df857f326469216af5b395019a3853312"
+    },
+    "tests/native_contract_cases.gd": {
+      "bytes": 24069,
+      "sha256": "28784362cdf79945e53c6036e2e52625cb3fffbdcffa7905e78785b5e59d70ef"
+    },
+    "assets/contracts/native-contracts-v1.json": {
+      "bytes": 6253,
+      "sha256": "cc9cd271e5509198a5fe5228b1fbe0effe786aff4efa8afdf289cf618f9816e9"
+    },
+    "tests/fixtures/contracts/native-content3-catalog.json": {
+      "bytes": 6253,
+      "sha256": "df2e0d24a29413e5d0cfd166a52747e030c129b20ab9fbb9e85a830d3ea17aa6"
+    },
+    "tests/fixtures/contracts/native-content3-descriptor.json": {
+      "bytes": 573,
+      "sha256": "e818cf703ce4049ef04f1bc50ff5818d3b85959579854d742fda0781a4cd984c"
+    }
+  },
+  "limitations": [
+    "Active schema1NOTICE/runtimeasset unchanged.",
+    "Schema2 finalface hashes intentionally null in template, pending actual independent acceptance.",
+    "Final authoring metadata/source license ledger and all runtime sources must be frozen and rehashed before package release.",
+    "No art/animation/runtime/online/hardware acceptance from pure provenance or contract tests."
+  ]
+}

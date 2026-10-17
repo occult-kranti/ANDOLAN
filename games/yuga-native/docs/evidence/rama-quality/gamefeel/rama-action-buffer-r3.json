@@ -1,0 +1,451 @@
+{
+	"buffer": {
+		"cleared_count": 14,
+		"configured": true,
+		"dispatched_count": 7,
+		"dispatching": false,
+		"last_edge": 43,
+		"last_reason": "A fresh deliberate press is required",
+		"pending": {
+
+		},
+		"queued_count": 24,
+		"rejected_count": 24,
+		"scope": "One deliberate Q/X edge near accepted recovery; no gameplay authority",
+		"window_s": 0.12
+	},
+	"checks": [
+		{
+			"case": "Actual lane authority configures",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual Rama kit configures",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Invalid source cannot configure a buffer",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Buffer configures once around the existing immediate API",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Scope is one 120 ms Q/X intent",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Ready Q takes the ordinary immediate path",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A direct kit request remains immediately busy-rejected",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A windup press is rejected instead of silently armed",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Recovery outside the 120 ms window is rejected",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Final 100 ms admits one explicit queued intent",
+			"evidence": {
+				"authority_s": 0.85,
+				"pending": {
+					"ability_id": "dawn_volley",
+					"cast_id": 1,
+					"edge_token": 4,
+					"expires_at": 0.97,
+					"generation": 2,
+					"queued_at": 0.85,
+					"serial": 1
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "Queuing emits no fake begin and spends no cooldown",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Held and autorepeat edges cannot refresh a pending intent",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "An intent cannot dispatch before actual recovery",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Recovery dispatches exactly one normal request at the army tick",
+			"evidence": {
+				"request": {
+					"forward": "(1.0, 0.0, 0.0)",
+					"id": "dawn_volley",
+					"origin": "(0.5, 0.0, 0.0)",
+					"time_s": 0.95
+				},
+				"result": {
+					"accepted": true,
+					"cast_id": 2,
+					"from_buffer": true,
+					"generation": 2,
+					"queued": false,
+					"reason": "Dawn Volley · drawing",
+					"recovery_s": 0.55,
+					"windup_s": 0.95
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "Buffered execution samples current position and aim",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A queued tap never repeats on following ticks",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A newer eligible deliberate press replaces the single intent",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Only the newest intent executes",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "E and C are never buffered without shared geometry preflight",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Excluded E/C input does not silently replace an admitted Q/X tap",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Cooldown rejection never becomes a queued intent",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A cooldown-blocked tap is not retried after recovery",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Current eligibility rejects: Not grounded",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Current eligibility rejects: Aim must be finite",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Current eligibility rejects: Reloading",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Current eligibility rejects: Legacy invocation preparing",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Current eligibility rejects: Actor inactive",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Current eligibility rejects: Actor defeated",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Current eligibility rejects: Gameplay modal visible",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Explicit lifecycle clear prevents execution after: Pause",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Explicit lifecycle clear prevents execution after: Gameplay modal",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Explicit lifecycle clear prevents execution after: Window focus lost",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Explicit lifecycle clear prevents execution after: Defeated",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Explicit lifecycle clear prevents execution after: Hit reaction",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Explicit lifecycle clear prevents execution after: Teleport",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Explicit lifecycle clear prevents execution after: Explicit player reset",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Tree pause itself clears pending input",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Resume cannot replay a pre-pause tap",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Eligibility is sampled again at dispatch and is never retried",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Suspended source rejects new input",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Suspension does not replay an old tap on resume",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual army reset discards the previous generation",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Actual cancellation cannot shortcut recovery into a new cast",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A missed recovery callback cannot cause a late cast",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Stale generation recovery cannot dispatch or erase current intent",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A stale reset event cannot erase a current-generation intent",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A current genuine recovery still dispatches after stale input",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Request callback cannot reenter and create a second cast",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Dispatch feedback cannot reenter and create another intent",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Eligibility callback cannot recursively enqueue another edge",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Clear feedback cannot reenter with a new intent",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Reset during eligibility invalidates the whole input request",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Reset inside a genuine begin cannot leave a pending replay",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "A reentrant reset never retries the consumed input",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "An invalid request result does not fabricate acceptance",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Zero, negative and older edge tokens never dispatch",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "Authority and buffer sources remained unchanged during this fixture",
+			"evidence": {
+
+			},
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Real 20 Hz lane army and unchanged Rama kit, isolated explicit edge/eligibility callbacks. No renderer, OS input, human feel, audio, network or hardware performance claim.",
+	"sources": {
+		"res://assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+		"res://scripts/lane_army.gd": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+		"res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+		"res://scripts/rama_action_buffer.gd": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+		"res://tests/rama_action_buffer_cases.gd": "f7822cd6d1cd3482ccd22b15ad0c76c167704b8c1a644564a4b991251e3db2e2"
+	}
+}

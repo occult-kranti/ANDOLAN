@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "task": "Actual world LOD helper parent teardown crash",
+  "sourceCommit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "status": "Component fix PASS; actual full-world positive rerun belongs to root/QA",
+  "finding": "Helper _exit_tree immediately freed later-added sibling clones while visual parent was busy removing children. Four remove_child/data.parent errors preceded native signal11/exit134. Prior33cases did not exercise active whole-parent teardown.",
+  "fix": "Separate internal disposal mode: explicit dispose() retains immediate synchronous free; _exit_tree clears bookkeeping synchronously and queue_free()s siblings so parent/frame cleanup owns safe removal.",
+  "executedCommand": "taskset -c 0,1 env LP_NUM_THREADS=2 XDG_DATA_HOME=/tmp/rama-lod-binding-teardown-r1-user godot --headless --max-threads 2 --path games/yuga-native --script res://tests/hero_lod_binding_cases.gd -- --report=/tmp/rama-lod-binding-teardown-r1.json",
+  "exitCode": 0,
+  "passedChecks": 38,
+  "priorChecksPreserved": 33,
+  "addedChecks": [
+    "Whole visual parent teardown releases every owned clone after two process frames.",
+    "Whole visual parent teardown releases every owned ArrayMesh and named Skin via WeakRef checks.",
+    "Helper-only queued teardown releases every owned clone after two process frames.",
+    "Helper-only queued teardown releases owned ArrayMesh and named Skin resources.",
+    "Helper-only teardown restores original near body and retains native face/live rig."
+  ],
+  "files": {
+    "fixture-after.log.txt": {
+      "bytes": 10182,
+      "sha256": "c2f74494287010f0e152ca2b2c490ecd1c3bad93277e38e8d01fc15722e34e79"
+    },
+    "binding-cases.json": {
+      "bytes": 10315,
+      "sha256": "31c4e66d6ad6e60a6c8cd767b87226d314233ba3fc93a5977038e797aba0bc3c"
+    },
+    "rama_lod_binding-after.gd": {
+      "bytes": 15703,
+      "sha256": "266e29dfa72cac407d3750eefcb296ec0b9cf82dc7665afb30b2eaa658956bfc"
+    },
+    "rama_lod_binding-before.gd": {
+      "bytes": 15212,
+      "sha256": "8c4c725a845fc920d4a473b38af11f388d6f8f1f5b889a9e572d1001c72832da"
+    },
+    "hero_lod_binding_cases.gd": {
+      "bytes": 12968,
+      "sha256": "f6bf6d713eb7da6371ec3e36a6c33ab03c2ff3d5ad974912d72aa6631ec9d329"
+    },
+    "actual-world-before.log.txt": {
+      "bytes": 3398,
+      "sha256": "3b22175845a72f8ea2bbcbb3b89ce0ff29933e805a7e7d8b7d5fd0aed2c067ca"
+    }
+  },
+  "runtimeHelperSha256": "266e29dfa72cac407d3750eefcb296ec0b9cf82dc7665afb30b2eaa658956bfc",
+  "fixtureSha256": "f6bf6d713eb7da6371ec3e36a6c33ab03c2ff3d5ad974912d72aa6631ec9d329",
+  "limits": [
+    "Synthetic actual-engine fixtures establish lifecycle/resource ownership, not final hero visual acceptance.",
+    "No GLB, animation, player or package change performed; root separately repairs WAV import and reruns full-world positive."
+  ]
+}

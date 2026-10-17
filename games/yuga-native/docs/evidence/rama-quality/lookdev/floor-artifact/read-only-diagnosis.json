@@ -1,0 +1,163 @@
+{
+  "status": "read-only-candidate-diagnosis-awaiting-isolation-render",
+  "finding": "New radial floor bands correlate with reduced directional shadow bias. Likely shadow acne / PCF pattern, awaiting a one-variable old-bias render; not yet confirmed.",
+  "counterhypotheses": {
+    "coplanar_floor_overlap": "Courtyard foundation maxY=-0.002000004 and separate slab maxY=0.0. World runtime constructs one paving PlaneMesh atY0 and a distinct apron atY\u22120.18. This excludes those intended primary surfaces being exactly coplanar; no full runtime overlap scan was executed.",
+    "texture_minification_missing_mipmaps": "Courtyard normal/roughness texture imports have mipmaps/generate=true. Confluence primary paving is procedural shader with derivative-filtered grout and no sampled textures; the same radial artifact appears there. Some other aliasing may coexist, but missing floor texture mipmaps do not explain both.",
+    "intentional_texture": "No concentric repeating radial motif exists in the courtyard floor generator. World shader has only two narrow rings around each arrival court, not the broad repeated rings shown in these distant floor regions.",
+    "shadow_acne": "The same final mesh/pose/camera/exposure has much stronger bands after lighting changes. Both profiles reduced shadow_bias0.035\u21920.025 and normalbias(title0.7/world0.55)\u21920.35. Godot official docs identify insufficient bias as acne risk. This remains a testable hypothesis until old-bias-only or shadow-off counterexample."
+  },
+  "courtyard_bounds": [
+    {
+      "node": "COL_Limestone_mortar",
+      "material": "Limestone_mortar",
+      "position_min": [
+        -22,
+        -0.4020000100135803,
+        -25
+      ],
+      "position_max": [
+        22,
+        -0.0020000040531158447,
+        25
+      ],
+      "vertex_count": 24
+    },
+    {
+      "node": "FLOOR_BEVEL_Courtyard_stone_0",
+      "material": "Courtyard_stone_0",
+      "position_min": [
+        -21.9950008392334,
+        -0.09000000357627869,
+        -24.9950008392334
+      ],
+      "position_max": [
+        21.994998931884766,
+        0,
+        24.994998931884766
+      ],
+      "vertex_count": 39618
+    },
+    {
+      "node": "FLOOR_BEVEL_Courtyard_stone_3",
+      "material": "Courtyard_stone_3",
+      "position_min": [
+        -21.9950008392334,
+        -0.09000000357627869,
+        -24.994998931884766
+      ],
+      "position_max": [
+        21.994998931884766,
+        0,
+        24.994998931884766
+      ],
+      "vertex_count": 39620
+    },
+    {
+      "node": "FLOOR_BEVEL_Courtyard_stone_2",
+      "material": "Courtyard_stone_2",
+      "position_min": [
+        -21.9950008392334,
+        -0.09000000357627869,
+        -24.994998931884766
+      ],
+      "position_max": [
+        21.994998931884766,
+        0,
+        24.994998931884766
+      ],
+      "vertex_count": 39292
+    },
+    {
+      "node": "FLOOR_BEVEL_Courtyard_stone_1",
+      "material": "Courtyard_stone_1",
+      "position_min": [
+        -21.9950008392334,
+        -0.09000000357627869,
+        -24.994998931884766
+      ],
+      "position_max": [
+        21.994998931884766,
+        0,
+        24.994998931884766
+      ],
+      "vertex_count": 39324
+    }
+  ],
+  "source_files": {
+    "scripts/production_lighting.gd": {
+      "bytes": 4751,
+      "sha256": "9966282802b1920c7f81567779940796259238f982d67a31b9e886e9ab37cd9f"
+    },
+    "scripts/world_lighting.gd": {
+      "bytes": 8528,
+      "sha256": "8604f86cf8231941be9e7edf7c160b4b46bba9ea4fbe93ad2f7e19f518e3d5c0"
+    },
+    "scripts/world_ground.gdshader": {
+      "bytes": 354,
+      "sha256": "5757ee4636fc3a9776d103aee2514340e745b6d7241496e29943094e19cf5d42"
+    },
+    "scripts/world_ground_common.gdshaderinc": {
+      "bytes": 3138,
+      "sha256": "35c6be19eb8e40785f5d3c3b4c6975aae1a7ff3dc2eeb4c2bd5fe6c6cb473557"
+    },
+    "scripts/confluence_world.gd": {
+      "bytes": 61399,
+      "sha256": "ae5b2c8b072d6d7a4a1032f17e54876732557a17c5712415eba962b5df0857e7"
+    },
+    "scripts/courtyard.gd": {
+      "bytes": 40471,
+      "sha256": "66a9cbbb9e3919904201aed2f304df4c973dae2dda133d27a04df8ff101c00fb"
+    },
+    "art/build_courtyard.py": {
+      "bytes": 22948,
+      "sha256": "f223b5e406e12402244b9679f41dfcd49f5ed54ddbc2cb921132c851fb42136e"
+    },
+    "assets/environment/lanka_courtyard.glb": {
+      "bytes": 17036264,
+      "sha256": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33"
+    },
+    "assets/environment/lanka_courtyard_Pale_limestone_normal.png.import": {
+      "bytes": 1100,
+      "sha256": "d4f299a8082580d9d9ab9c37c29f8e76aeefdc48707263483c3d02f20b00fbbb"
+    },
+    "assets/environment/lanka_courtyard_Pale_limestone_roughness.png.import": {
+      "bytes": 1108,
+      "sha256": "bb1d81551e859420faa97d5c869d33eaef8aec90e385d0ecffd7b8969326064f"
+    }
+  },
+  "images": {
+    "/workspace/scratch/rama-quality-lookdev-capture-r1/title-day-before.png": {
+      "bytes": 567174,
+      "sha256": "a8b445cc0cbc813a0134a9f9a93dff8efb44a92e39b69cb9b6f3bbb9db7b7c2d"
+    },
+    "/workspace/scratch/rama-quality-lookdev-capture-r1/title-day-after.png": {
+      "bytes": 641175,
+      "sha256": "d91bb18dad827324b4ed6de2b9310b18009c58d973ba557d0159daf9a63a8885"
+    },
+    "/workspace/scratch/rama-quality-lookdev-capture-r1/title-night-before.png": {
+      "bytes": 544482,
+      "sha256": "d7a41a872d31e7c81cc3ae05d2c57874637e9bf97690cc31a814994bbdedabbb"
+    },
+    "/workspace/scratch/rama-quality-lookdev-capture-r1/title-night-after.png": {
+      "bytes": 625089,
+      "sha256": "f4a18fca5cbc1032f6d36d1ca36614be8e0db908608a19beeb05de355162180e"
+    },
+    "/workspace/scratch/rama-quality-lookdev-capture-r1/world-50-before.png": {
+      "bytes": 399818,
+      "sha256": "104da337ed433b42fe71ec96e66c713de14b2a6463e6588606621d6a8e7dd89e"
+    },
+    "/workspace/scratch/rama-quality-lookdev-capture-r1/world-50-after.png": {
+      "bytes": 424694,
+      "sha256": "a801eede5616bc857b35dba48dc3b5a60b1db5a1c663160c15478b3da7477996"
+    },
+    "/workspace/scratch/rama-quality-lookdev-capture-r1/lookdev-capture.json": {
+      "bytes": 72704,
+      "sha256": "6288aa9d523ac60dbb5495c1566ce5ac5f95ab58413da214166dfde772698e02"
+    }
+  },
+  "proposed_smallest_diagnostic": "At fixed current candidate camera/pose/materials/exposure, restore ONLY sun.shadow_bias0.035 and old normalbias0.7title/0.55world, capture title-day and worldphase0.5. If rings vanish, restore those bias values in both lighting scripts; keep new colour/fill/fog. If they persist, shadowoff versus SSAOoff is the next bounded toggle.",
+  "render_executed_by_this_diagnostic": false,
+  "product_edits": false,
+  "scope": "Source/GLB/import inspection and actual existing 12-image capture review; no new heavy run or geometry scan."
+}

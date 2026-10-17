@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "round": "3: source-only integration helper / actual hero candidate acceptance pending",
+  "sourceCommit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "sources": {
+    "games/yuga-native/art/hero-rama-lod/README.md": {
+      "bytes": 10862,
+      "sha256": "f7f9f618f517742a0946cc649ec2c4c3296aa00a79f409763b501b8dd68022b7"
+    },
+    "games/yuga-native/art/hero-rama-lod/bootstrap_meshoptimizer.py": {
+      "bytes": 2434,
+      "sha256": "a25820e889b238fc5dbaa014a577ec5e8c55b1ceef12752af3b0c4e58c1631b1"
+    },
+    "games/yuga-native/art/hero-rama-lod/glb_lod.py": {
+      "bytes": 17623,
+      "sha256": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7"
+    },
+    "games/yuga-native/art/hero-rama-lod/build_lods.py": {
+      "bytes": 8679,
+      "sha256": "77f0f5b8b0b155dbc0f2afb3028f54de90e987e9e9656f92add831bd2ef59975"
+    },
+    "games/yuga-native/art/hero-rama-lod/measure_source.py": {
+      "bytes": 791,
+      "sha256": "264344bed290c9350f02ff3cb675a018d78c3e89ba23d4ec9893fae67f13ff7d"
+    },
+    "games/yuga-native/scripts/rama_visual_lod.gd": {
+      "bytes": 2690,
+      "sha256": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5"
+    },
+    "games/yuga-native/scripts/rama_lod_binding.gd": {
+      "bytes": 15212,
+      "sha256": "8c4c725a845fc920d4a473b38af11f388d6f8f1f5b889a9e572d1001c72832da"
+    },
+    "games/yuga-native/tests/hero_lod_cases.py": {
+      "bytes": 8379,
+      "sha256": "1963974586729cae4bcd174cca9ff2fd526d31ea70007dda991da354532690ca"
+    },
+    "games/yuga-native/tests/hero_lod_cases.gd": {
+      "bytes": 3842,
+      "sha256": "93a40f6d993e600ff5415b5ea2ed1db88232b8b13820751ef484272ee5b0a41d"
+    },
+    "games/yuga-native/tests/hero_lod_binding_cases.gd": {
+      "bytes": 11358,
+      "sha256": "700f30dc8b819ef5fea596cda568a861e33efbc076c0c5417289d5afdb183a91"
+    }
+  },
+  "checks": {
+    "plumbing": {
+      "passed": true,
+      "count": 19
+    },
+    "selector": {
+      "passed": true,
+      "count": 27
+    },
+    "realEngineBindingFixture": {
+      "passed": true,
+      "count": 33
+    }
+  },
+  "commands": [
+    "python3 games/yuga-native/tests/hero_lod_cases.py --report /tmp/rama-lod-round3-cases.json",
+    "LP_NUM_THREADS=2 godot --headless --path games/yuga-native --script res://tests/hero_lod_cases.gd -- --report=/tmp/rama-lod-round2-selector.json",
+    " taskset -c 0,1 env LP_NUM_THREADS=2 XDG_DATA_HOME=/tmp/rama-lod-binding-round3b-user godot --headless --max-threads 2 --path games/yuga-native --script res://tests/hero_lod_binding_cases.gd -- --report=/tmp/rama-lod-binding-round3b.json"
+  ],
+  "helperContract": {
+    "configure": "configure(visual: Node3D, skeleton: Skeleton3D, paths: Array = []) -> bool; true only when at least one candidate actually bound",
+    "update": "update(camera: Variant, delta: float = -1.0) -> bool; omitted delta reads process delta, no loads",
+    "reset": "reset(reason: String = \"reset\"); near only, pose/face unchanged",
+    "report": "bounded diagnostic dictionary including explicit near-only/rejected reason and resource counts",
+    "dispose": "restores source visibility, frees owned meshes/skins only",
+    "playerOrder": [
+      "RamaMotion",
+      "LOD binding",
+      "Surface calibration",
+      "Secondary motion",
+      "Face performance"
+    ]
+  },
+  "implemented": [
+    "One live supplied164-bone Skeleton3D and sole motion writer retained.",
+    "Four maximum optional body/bow MeshInstances, two shared named Skin resources.",
+    "Original ordered inverse binds and nested mesh/skeleton transforms preserved.",
+    "Candidate face/skeleton/animator nodes excluded from live scene tree.",
+    "Candidate material references replaced by existing near materials; import resources unchanged.",
+    "Atomic rejection for transform/rest/bind-order/bind-pose/material/mask/extra-rig/missing-bow defects.",
+    "Source sparse morphs explicitly expanded with strict index/count/view bounds.",
+    "Invalid/freed live ownership safely disposes; invalid/freed camera selects near."
+  ],
+  "pending": [
+    "Root final art/facial acceptance and exact source freeze.",
+    "Pinned meshoptimizer compile during granted heavy slot.",
+    "Actual final mid/far candidate generation, independent structural validation.",
+    "Same-camera native near/mid/far posed silhouettes and continuous switch review.",
+    "Disable extra auto-generated import LOD reduction when accepting exact candidate geometry.",
+    "Physical GPU frame time, residency, twelve-player budget and human quality review."
+  ],
+  "promotedRuntimeAssets": [],
+  "actualVisualReview": "None for LODs in this round. Small in-memory engine fixtures do not establish visible final hero deformation.",
+  "limits": [
+    "No game asset or player script edited by this owner.",
+    "No final hero LOD generated, imported or promoted.",
+    "Material resource sharing proven by actual engine object identity; physical VRAM residency remains unmeasured."
+  ]
+}

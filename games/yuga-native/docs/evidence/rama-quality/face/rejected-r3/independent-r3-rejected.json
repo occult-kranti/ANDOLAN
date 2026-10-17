@@ -1,0 +1,355 @@
+{
+  "task": "Independent Rama R3 runtime-imported eyelid blink visual review",
+  "product": "YUGA native",
+  "reviewer": "independent eyelid_review agent; no asset, runtime, import, or renderer changes",
+  "source_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "branch": "game/yuga-native-production",
+  "decision": "LIMITED",
+  "summary": "R3 repairs the rejected R2 black outer skin-patch outlines and exposed closed-eye globe. Neutral eyes remain aligned and closed skin hides the visible eye in all three views. The closed eyelid still reads as a narrow raised horizontal strip with conspicuous parallel boundaries and bright corner joins, especially three-quarter/profile, so the requested finished eyelid quality is not passed.",
+  "review_contract": "RAMA_QUALITY_ACCEPTANCE.md Q1 actual-import eyelid/eye appearance; Q2 every-frame visual continuity subset; Q5 remains dependent on component/lifecycle tests outside this review.",
+  "pins": {
+    "candidate_capture": {
+      "file": "/workspace/scratch/rama-face-render-r3/capture.json",
+      "sha256": "f5f787abf6cd34c507ccf0c930e875f94f9c523ee058dc3b756d9b37a12586af"
+    },
+    "candidate_sources_as_pinned_by_capture": {
+      "/workspace/scratch/rama-face-r3/rama-hero-face.glb": "addc360e6935fe3c6abe8b7a656a70fa43304eed922837c3ca3a15bf9e1bbb9e",
+      "res://art/hero-rama-face/capture_face.gd": "8a3ce9a8a1797041879daaf0052504f2812f9ef2ee751756b65b935a78c56ad8",
+      "res://scripts/rama_facial_performance.gd": "564623e0b07cc8c8a6a14f4a967fec774d7fee9890d1209d9f4b5e5f8cfe372b"
+    },
+    "baseline_capture": {
+      "file": "/workspace/scratch/rama-face-baseline-r3/capture.json",
+      "sha256": "9314bc6a792575702476deb5a4f5d5799fe5c526f4910f49ee34a7c84ac9d431"
+    },
+    "baseline_sources_as_pinned_by_capture": {
+      "/workspace/scratch/rama-quality-r3/rama-hero-quality.glb": "4a713daad6d94401e0d7fead0283769c05814f622f08f4cb19320c1d29820cc9",
+      "res://art/hero-rama-face/capture_face.gd": "8a3ce9a8a1797041879daaf0052504f2812f9ef2ee751756b65b935a78c56ad8",
+      "res://scripts/rama_facial_performance.gd": "564623e0b07cc8c8a6a14f4a967fec774d7fee9890d1209d9f4b5e5f8cfe372b"
+    },
+    "rejected_r2_capture": {
+      "file": "/workspace/scratch/rama-face-render-r2/capture.json",
+      "sha256": "a0053f2fb893d5d5d269c7d1615a6761916199078914b8cc777e680682e6a6fb"
+    }
+  },
+  "capture_context_as_recorded": {
+    "engine": {
+      "build": "official",
+      "hash": "7d41c59c457bd5a245092b4e7eb2d833e3b3f8c3",
+      "hex": 263683,
+      "major": 4,
+      "minor": 6,
+      "patch": 3,
+      "status": "stable",
+      "string": "4.6.3-stable (official)",
+      "timestamp": 0
+    },
+    "adapter": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "renderer": "forward_plus",
+    "resolution": [
+      640,
+      800
+    ],
+    "sample_hz": 60,
+    "scope": "Exact GLB runtime-imported Godot static open/half/closed and 30 sequential blink samples. Rest rig, neutral authored studio illumination. Fixed sample rate is not achieved hardware FPS or gameplay integration."
+  },
+  "viewed_images": [
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/front-open.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/front-half.png",
+      "sha256": "8cf212ff48458c2074eb4cca5b241ade4e96ac4c10fbbb3e4c2468d6836d5921",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/front-closed.png",
+      "sha256": "a2b716c1c12d9df4ea30c668697af715aff29885f1d1b51ea08e606c36bd284f",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/three-quarter-open.png",
+      "sha256": "ee291513198609ec11abb04e65cba53f9c41142045e32b1191850d6a1847c307",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/three-quarter-half.png",
+      "sha256": "9866f800e77e31902700b3cfafa6acb69617d4642151e1a9d87f9afc3dc60649",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/three-quarter-closed.png",
+      "sha256": "8a8953c4fbb46644a6c6fb8ad20d55169bf48ea18a37e65b390b9d10f52abaae",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/profile-open.png",
+      "sha256": "27a16309ea242bd3e572ebe863249e84585378ecfaeabe0dc25f4daa09ecb4f7",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/profile-half.png",
+      "sha256": "5acc64dc013d4c52ee5b50865580950066304353083abb2d1175ecbfe9c00283",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/profile-closed.png",
+      "sha256": "3b0926a49b8b4da99f93acf8a4d94a6a156486a572361f94e54388f09ea6c248",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-000.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-001.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-002.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-003.png",
+      "sha256": "23d68775560b897c9397a6a4a03252e3961cca53af12c7ffd8bb4363674dd7de",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-004.png",
+      "sha256": "477b02b393006726fd3856007c92277267770d7ed30c07647a7f4d3f041f89e6",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-005.png",
+      "sha256": "5a9c7daf4615a07e609c86713a71d35c890ddc50cdca1f9f636adf91e3f6f145",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-006.png",
+      "sha256": "a2b716c1c12d9df4ea30c668697af715aff29885f1d1b51ea08e606c36bd284f",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-007.png",
+      "sha256": "b56cd923d21e277aa55bbf176c12578130be84ed054ab3297cf8d377cbede27d",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-008.png",
+      "sha256": "5bdf87d6a09c352d531b3046e7df92593e54e5dd6ae25fd84bd2cd57e876bcf7",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-009.png",
+      "sha256": "238afe9e67f6d68425f14ef44a50aaaff33f2b39d1da04a5b4e2899305f9d33f",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-010.png",
+      "sha256": "11e5237a6d8c641eba22739eb613d451f6ff4c9eb17352bcb78dbaef2ca16513",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-011.png",
+      "sha256": "5205c14d4076bd1d37b4b1e7d45bdc4f1bc8877acff1fdbb8267885a0ae024ce",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-012.png",
+      "sha256": "40f6c89d9bac0f0bcc3af4f3c3faa898d6aa3e95a74e1e2bea4a0a1bdffadbff",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-013.png",
+      "sha256": "e8720d8df8013ce87cb268cf72a114fac284f8afcb12e86c695e07325542809a",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-014.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-015.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-016.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-017.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-018.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-019.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-020.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-021.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-022.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-023.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-024.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-025.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-026.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-027.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-028.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r3/blink-029.png",
+      "sha256": "6685f33c734120e7cc79d04ff518638b88352868c50e48e6778380a24c6c825b",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-baseline-r3/front-baseline.png",
+      "sha256": "67ca18f33753c35c0826c209e2e0f5e5630c893c296d05593d08c145676ebc74",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-baseline-r3/three-quarter-baseline.png",
+      "sha256": "016f63983cc533927e51aad7af84d73faaba2c8e3fce3a1fa7ea038982e02b9a",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-baseline-r3/profile-baseline.png",
+      "sha256": "4c91a6ee5b0545a0f32feaf0dfda156cfeff1d6dca475c01e426688cc91c16ee",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r2/front-open.png",
+      "sha256": "86b5dffdd265e1778e8d2994c1474d9c6e156eb126c73c7370c95bfe9b309519",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    },
+    {
+      "file": "/workspace/scratch/rama-face-render-r2/front-closed.png",
+      "sha256": "93191537ad620a8db8e79e9263b6d9ca408edaa0fc88e88b0fcc9f563296b1af",
+      "method": "view_image, original 640x800 individual image; no contact sheet"
+    }
+  ],
+  "inclusive_sequential_range_actually_viewed": "/workspace/scratch/rama-face-render-r3/blink-000.png through blink-029.png, all 30 frames opened individually at original resolution",
+  "findings": [
+    {
+      "criterion": "Neutral alignment",
+      "disposition": "PASS",
+      "evidence": [
+        "front-open.png",
+        "three-quarter-open.png",
+        "profile-open.png"
+      ],
+      "observation": "Pupils/irises keep consistent placement and do not visibly diverge from the matched baseline. No floating eye is apparent in these images."
+    },
+    {
+      "criterion": "Closed-eye occlusion",
+      "disposition": "PASS",
+      "evidence": [
+        "front-closed.png",
+        "three-quarter-closed.png",
+        "profile-closed.png",
+        "blink-005.png through blink-008.png"
+      ],
+      "observation": "At full closure no visible iris, pupil, or white globe remains. Skin fills the opening; the eye does not remain exposed as in rejected R2 front-closed.png."
+    },
+    {
+      "criterion": "Outer skin-patch outline",
+      "disposition": "PASS",
+      "evidence": [
+        "front-open.png",
+        "front-half.png",
+        "front-closed.png",
+        "three-quarter-open.png",
+        "three-quarter-half.png",
+        "three-quarter-closed.png",
+        "profile-open.png",
+        "profile-half.png",
+        "profile-closed.png"
+      ],
+      "observation": "The large discontinuous black polygonal ring surrounding each eye in rejected R2 front-open/front-closed is absent from R3."
+    },
+    {
+      "criterion": "Closed lid shape and corner integration",
+      "disposition": "LIMITED",
+      "evidence": [
+        "front-closed.png",
+        "three-quarter-closed.png",
+        "profile-closed.png",
+        "blink-005.png through blink-009.png"
+      ],
+      "observation": "The closure has a broad narrow skin strip between two dark, nearly horizontal lines rather than a softly integrated curved meeting edge. Its raised shelf/bulge reads most clearly at the near eye in three-quarter/profile. Pale angular joins remain at the inner corners and lower rim. These are much smaller than the R2 outline defect but remain visible at this face-close-up scale."
+    },
+    {
+      "criterion": "Frame continuity within supplied blink",
+      "disposition": "PASS",
+      "evidence": [
+        "blink-000.png through blink-029.png"
+      ],
+      "observation": "Both eyes progress together from open to closed and return open without visible asymmetric pop, detached patch, black boundary flash, or isolated broken frame. Closing is fast across 003-005 and reopening across 009-012; it remains a coherent ordered progression. Frames 014-029 hold the neutral appearance."
+    }
+  ],
+  "gate_scope": {
+    "Q1_eyelid_subset": "LIMITED: eye occlusion/alignment repaired; closed lid strip and corner integration remain visible",
+    "Q1_full_hair_face_costume": "OPEN: this review covers face-close-up eyelids only, not complete required views or gameplay camera",
+    "Q2_blink_sequential_visual_subset": "PASS for the supplied 30 front-view frames only; broader secondary-motion/contact gate unreviewed",
+    "Q5_time_and_lifecycle": "UNRUN by this reviewer; no independent 30/60/120 Hz, pause/reset/death, or 100-cycle tests executed",
+    "physical_gpu_or_hardware_fps": "UNRUN; captured with llvmpipe; fixed 60 Hz sample metadata establishes no hardware pacing",
+    "AAA_or_full_facial_animation_or_gameplay": "OPEN/unreviewed; no gaze, jaw, brow, full facial performance, or actual gameplay claim"
+  },
+  "checks_actually_run": [
+    "Read repository AGENTS.md, docs/START_HERE.md, and RAMA_QUALITY_ACCEPTANCE.md including Q1/Q2/Q5.",
+    "Inspected git status, branch, and HEAD; preserved all concurrent changes.",
+    "Opened all 9 R3 static images, all 30 R3 sequential frames, 3 matched baseline views, and 2 R2 counterexamples using view_image original resolution.",
+    "Recomputed SHA-256 for every image entry in R3, matched baseline, and R2 capture manifests: no image hash mismatches. Hash integrity checks do not constitute visual observation of unlisted R2 images."
+  ],
+  "changes": [
+    "/workspace/scratch/rama-face-independent-review.json"
+  ],
+  "remaining_action": "Face owner should soften the raised closure strip and corner joins if seeking an unconditional bounded eyelid appearance pass. Root/QA retain broader Q1/Q2/Q5 and production gates.",
+  "next_owner": "/root/facial_performance and root QA"
+}

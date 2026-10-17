@@ -1,0 +1,218 @@
+extends RefCounted
+## Deterministic grounded practice decisions, never movement or combat authority.
+## The integrating actor supplies one current authority observation and applies
+## returned intents through its real movement, reload and Rama kit admission APIs.
+
+const ABILITIES := ["kodanda", "piercing_dawn", "measured_step", "guardian_circle", "dawn_volley"]
+const MAX_CANDIDATES := 96
+const MAX_SAMPLE_AGE_S := .15
+const MAX_STEP_S := .1
+const ACTOR_RADIUS_M := .65
+const OBSERVATION_KEYS := ["actor_id", "session_id", "generation", "tick", "time_s", "paused", "ended", "alive", "grounded", "action_locked", "movement_locked", "team", "position", "yaw", "max_health", "health", "shield", "ammo", "cooldowns", "candidates"]
+const PROFILES := {
+	"easy":{"reaction_s":.35, "turn_radians_s":2.0943951024, "aim_error_rad":.0698131701, "fire_interval_s":.60, "speed_mps":4.8},
+	"standard":{"reaction_s":.22, "turn_radians_s":3.1415926536, "aim_error_rad":.0261799388, "fire_interval_s":.48, "speed_mps":5.5},
+	"hard":{"reaction_s":.14, "turn_radians_s":4.1887902048, "aim_error_rad":.0087266463, "fire_interval_s":.40, "speed_mps":6.0},
+}
+var _configured := false
+var _actor_id := ""
+var _session_id := ""
+var _generation := -1
+var _difficulty := "standard"
+var _profile: Dictionary = {}
+var _last_tick := -1
+var _last_now := -1.0
+var _target_id := ""
+var _acquired_at := 0.0
+var _next_intent_at := 0.0
+var _yaw := 0.0
+var _serial := 0
+var _deciding := false
+var _accepted := 0
+var _rejected := 0
+var _intents := 0
+var _reason := "Not configured"
+
+func configure(actor_id: String, session_id: String, generation: int, difficulty := "standard") -> bool:
+	if _configured or not _identifier(actor_id) or not _identifier(session_id) or generation < 0 or generation > 2147483647 or not PROFILES.has(difficulty): return false
+	_actor_id = actor_id; _session_id = session_id; _difficulty = difficulty
+	_profile = PROFILES[difficulty].duplicate(true)
+	_configured = true
+	return reset(generation)
+
+func reset(generation: int) -> bool:
+	if not _configured or generation < 0 or generation > 2147483647: return false
+	_generation = generation; _serial += 1; _last_tick = -1; _last_now = -1.0
+	_forget(); _next_intent_at = 0.0; _reason = "Reset"
+	return true
+
+func _identifier(value: Variant) -> bool:
+	return value is String and not value.is_empty() and value.length() <= 96 and value.strip_edges() == value
+
+func _number(value: Variant, low: float, high: float) -> bool:
+	return typeof(value) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(value)) and float(value) >= low and float(value) <= high
+
+func _position(value: Variant) -> bool:
+	return value is Vector3 and value.is_finite() and absf(value.x) <= 10000.0 and absf(value.y) <= 10000.0 and absf(value.z) <= 10000.0
+
+func _forget() -> void:
+	_target_id = ""; _acquired_at = 0.0
+
+func _neutral(reason: String, state := "idle") -> Dictionary:
+	_reason = reason
+	return {"valid":false, "state":state, "reason":reason, "actor_id":_actor_id, "session_id":_session_id, "generation":_generation, "tick":_last_tick, "move_direction":Vector3.ZERO, "speed_mps":0.0, "aim":Vector3(sin(_yaw), 0, cos(_yaw)), "yaw":_yaw, "ability_id":"", "target_id":"", "ground_target":Vector3.ZERO, "step_direction":Vector3.ZERO, "reload":false}
+
+func _reject(reason: String) -> Dictionary:
+	_rejected += 1; _forget()
+	return _neutral(reason, "rejected")
+
+func _observation_valid(observation: Dictionary, now_s: float) -> bool:
+	if observation.size() != OBSERVATION_KEYS.size(): return false
+	for key in observation:
+		if not OBSERVATION_KEYS.has(key): return false
+	if observation.get("actor_id") != _actor_id or observation.get("session_id") != _session_id or observation.get("generation") != _generation: return false
+	if not observation.get("generation") is int: return false
+	if not observation.get("tick") is int or observation.tick < 0 or observation.tick > 2147483647 or observation.tick <= _last_tick: return false
+	if not _number(observation.get("time_s"), 0, now_s + .000001) or now_s - float(observation.time_s) > MAX_SAMPLE_AGE_S + 1e-8: return false
+	for key in ["paused", "ended", "alive", "grounded", "action_locked", "movement_locked"]:
+		if not observation.get(key) is bool: return false
+	if not _identifier(observation.get("team")) or not _position(observation.get("position")) or not _number(observation.get("yaw"), -1000000, 1000000): return false
+	if not _number(observation.get("max_health"), 1, 10000) or not _number(observation.get("health"), 0, float(observation.max_health)) or not _number(observation.get("shield"), 0, 10000): return false
+	if observation.alive != (float(observation.health) > 0): return false
+	if not observation.get("ammo") is int or observation.ammo < 0 or observation.ammo > 100: return false
+	var cooldowns = observation.get("cooldowns")
+	if not cooldowns is Dictionary or cooldowns.size() != ABILITIES.size(): return false
+	for id in ABILITIES:
+		if not _number(cooldowns.get(id), 0, 60): return false
+	var candidates = observation.get("candidates")
+	if not candidates is Array or candidates.size() > MAX_CANDIDATES: return false
+	var seen := {}
+	for candidate in candidates:
+		if not candidate is Dictionary or candidate.size() != 5 or not _identifier(candidate.get("id")) or seen.has(candidate.id): return false
+		seen[candidate.id] = true
+		if not _identifier(candidate.get("team")) or not _position(candidate.get("position")) or not candidate.get("alive") is bool or not candidate.get("observed") is bool: return false
+	return true
+
+## LOS is (world_from, world_to, horizontal_margin_m) -> bool. Steering is
+## (world_origin, desired_planar_unit_direction, lookahead_m) -> Vector3.
+## Both must be side-effect-free owner adapters over validated ground geometry.
+## No callback is permitted to advance authority or mutate this observation.
+func decide(delta: float, now_s: float, observation: Dictionary, line_clear: Callable, steer: Callable) -> Dictionary:
+	if _deciding: return _neutral("Reentrant decision rejected", "rejected")
+	if not _configured: return _reject("Not configured")
+	if not _number(delta, .000001, MAX_STEP_S) or not _number(now_s, 0, 1e12) or (_last_now >= 0 and (now_s <= _last_now or delta > now_s - _last_now + .000001)): return _reject("Invalid or regressing clock")
+	if not line_clear.is_valid() or not steer.is_valid() or not _observation_valid(observation, now_s): return _reject("Invalid, duplicate or stale authority observation")
+	_deciding = true
+	var serial := _serial
+	# A detached sample prevents caller-side alias changes during a geometry query.
+	var sample: Dictionary = observation.duplicate(true)
+	var result := _decide(delta, now_s, sample, line_clear, steer, serial)
+	_deciding = false
+	return result
+
+func _clear_query(line_clear: Callable, from: Vector3, to: Vector3, margin: float, serial: int) -> bool:
+	var clear = line_clear.call(from, to, margin)
+	return _serial == serial and clear is bool and clear
+
+func _decide(delta: float, now_s: float, sample: Dictionary, line_clear: Callable, steer: Callable, serial: int) -> Dictionary:
+	if _last_now >= 0 and now_s - _last_now > .25: _forget()
+	_last_tick = sample.tick; _last_now = now_s; _accepted += 1
+	# Every turn starts at actual authority facing. A rejected/limited turn must
+	# never accumulate fictional local aim that bypasses the next turn-rate cap.
+	_yaw = wrapf(float(sample.yaw), -PI, PI)
+	if sample.paused or sample.ended or not sample.alive or not sample.grounded:
+		_forget(); _next_intent_at = now_s + float(_profile.reaction_s)
+		var state := "paused" if sample.paused else ("ended" if sample.ended else ("dead" if not sample.alive else "airborne"))
+		return _neutral("No grounded live authority actor", state)
+	var origin: Vector3 = sample.position
+	var facing := Vector3(sin(float(sample.yaw)), 0, cos(float(sample.yaw)))
+	var visible: Array = []
+	for candidate in sample.candidates:
+		if not candidate.observed or not candidate.alive or candidate.id == _actor_id or candidate.team == sample.team: continue
+		var offset: Vector3 = candidate.position - origin
+		var planar := Vector3(offset.x, 0, offset.z)
+		var distance := planar.length()
+		# Current Rama combat is grounded/planar; no guessed elevated target rules.
+		if absf(offset.y) > .4 or distance < .01 or distance > 40.0 or facing.dot(planar / distance) < cos(deg_to_rad(80)): continue
+		if _clear_query(line_clear, origin, candidate.position, .4, serial): visible.append({"id":candidate.id, "position":candidate.position, "distance":distance})
+		if _serial != serial: return _reject("Actor reset during perception")
+	# Stable IDs break exact-distance ties; candidate array order never gives an edge.
+	visible.sort_custom(func(a, b): return a.id < b.id if a.distance == b.distance else a.distance < b.distance)
+	if visible.is_empty():
+		_forget()
+		var empty := _neutral("No currently visible enemy")
+		empty.valid = true
+		return empty
+	var target: Dictionary = visible[0]
+	# Keep a visible target to avoid oscillation between near-equal opponents.
+	for candidate in visible:
+		if candidate.id == _target_id and float(candidate.distance) <= float(target.distance) + 2.0: target = candidate; break
+	if target.id != _target_id: _target_id = target.id; _acquired_at = now_s
+	if now_s - _acquired_at + 1e-8 < float(_profile.reaction_s):
+		var waiting := _neutral("Waiting for perception reaction", "react")
+		waiting.valid = true; waiting.target_id = _target_id; waiting.ground_target = origin
+		return waiting
+	var direction: Vector3 = target.position - origin; direction.y = 0; direction = direction.normalized()
+	var phase := float(_actor_id.hash() % 1024) / 1024.0 * TAU
+	var desired_yaw := atan2(direction.x, direction.z) + sin(now_s * 2.3 + phase) * float(_profile.aim_error_rad)
+	_yaw = wrapf(_yaw + clampf(angle_difference(_yaw, desired_yaw), -float(_profile.turn_radians_s) * delta, float(_profile.turn_radians_s) * delta), -PI, PI)
+	var aim := Vector3(sin(_yaw), 0, cos(_yaw))
+	var health_ratio := float(sample.health) / float(sample.max_health)
+	var state := "track"
+	var desired_move := Vector3.ZERO
+	if float(target.distance) < 7.0 or health_ratio < .35: desired_move = -direction; state = "retreat"
+	elif float(target.distance) > 19.0: desired_move = direction; state = "approach"
+	elif not sample.movement_locked:
+		# Deliberate predictable weave, rather than omniscient projectile dodging.
+		var side := -1.0 if (int(floor(now_s / 2.0)) + int(_actor_id.hash() % 2)) % 2 == 0 else 1.0
+		desired_move = Vector3(direction.z, 0, -direction.x) * side * .5
+	var movement := Vector3.ZERO
+	if not sample.movement_locked and desired_move.length_squared() > .0001:
+		var lookahead := maxf(.8, float(_profile.speed_mps) * delta + ACTOR_RADIUS_M)
+		var steered = steer.call(origin, desired_move, lookahead)
+		if _serial != serial: return _reject("Actor reset during steering")
+		if not steered is Vector3 or not steered.is_finite() or absf(steered.y) > .000001 or steered.length_squared() > 1.000001: return _reject("Invalid steering output")
+		if steered.length_squared() > .000001 and _clear_query(line_clear, origin, origin + steered * lookahead, ACTOR_RADIUS_M, serial): movement = steered
+		if _serial != serial: return _reject("Actor reset during movement query")
+	var result := _neutral("Visible target; waiting for reaction or authority admission", state)
+	result.valid = true; result.target_id = target.id; result.aim = aim; result.yaw = _yaw
+	result.move_direction = movement; result.speed_mps = float(_profile.speed_mps) if movement.length_squared() > .000001 else 0.0
+	result.ground_target = origin
+	if sample.action_locked or now_s + 1e-8 < _next_intent_at or now_s - _acquired_at + 1e-8 < float(_profile.reaction_s): return result
+	# An actual reload API must admit this. The brain never fills ammunition.
+	if sample.ammo == 0:
+		result.reload = true; _next_intent_at = now_s + float(_profile.fire_interval_s); _intents += 1
+		return result
+	var ability := ""
+	var cooldowns: Dictionary = sample.cooldowns
+	if health_ratio < .65 and float(sample.shield) <= 0 and float(cooldowns.guardian_circle) <= .000001:
+		ability = "guardian_circle"
+	elif state == "retreat" and float(target.distance) < 5.0 and movement.length_squared() > .1 and float(cooldowns.measured_step) <= .000001:
+		ability = "measured_step"; result.step_direction = movement.normalized()
+	elif absf(angle_difference(_yaw, atan2(direction.x, direction.z))) <= deg_to_rad(6):
+		# Recheck the exact proposed shot corridor; no shots at remembered enemies.
+		if not _clear_query(line_clear, origin, target.position, .4, serial): return result if _serial == serial else _reject("Actor reset during shot query")
+		if _serial != serial: return _reject("Actor reset during shot query")
+		if _volley_targets(visible, origin, aim) >= 2 and float(target.distance) <= 30.0 and float(cooldowns.dawn_volley) <= .000001: ability = "dawn_volley"
+		elif float(target.distance) >= 8.0 and float(target.distance) <= 38.0 and float(cooldowns.piercing_dawn) <= .000001: ability = "piercing_dawn"
+		elif float(cooldowns.kodanda) <= .000001: ability = "kodanda"
+	if ability.is_empty(): return result
+	result.ability_id = ability
+	if ability in ["piercing_dawn", "guardian_circle", "dawn_volley"]: result.move_direction = Vector3.ZERO; result.speed_mps = 0.0
+	_next_intent_at = now_s + float(_profile.fire_interval_s); _intents += 1
+	result.reason = "Request through authority: " + ability
+	return result
+
+func _volley_targets(visible: Array, origin: Vector3, aim: Vector3) -> int:
+	var covered := 0
+	for candidate in visible:
+		var offset: Vector3 = candidate.position - origin; offset.y = 0
+		if offset.length() > 30.0: continue
+		for angle in [-.105, 0.0, .105]:
+			var lane := aim.rotated(Vector3.UP, angle)
+			var along := offset.dot(lane)
+			if along > 0 and (offset - lane * along).length() <= .55: covered += 1; break
+	return covered
+
+func report() -> Dictionary:
+	return {"configured":_configured, "actor_id":_actor_id, "session_id":_session_id, "generation":_generation, "difficulty":_difficulty, "profile":_profile.duplicate(true), "last_tick":_last_tick, "last_time_s":_last_now, "target_id":_target_id, "accepted_observations":_accepted, "rejected_observations":_rejected, "emitted_intents":_intents, "last_reason":_reason, "direct_movement":false, "damage_authority":false, "network_connected":false, "world_integrated":false, "unsupported":["airborne_combat", "flight", "grapple", "second_native_hero_authority", "online_bot_matches"]}

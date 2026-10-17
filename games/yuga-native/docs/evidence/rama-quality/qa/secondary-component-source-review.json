@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "reviewer": "/root/quality_qa",
+  "date": "2026-10-17",
+  "scope": "Independent source/test/report inspection only. QA did not execute an engine, import or render for this review.",
+  "status": "COUNTEREXAMPLES_REQUESTED",
+  "sources": {
+    "res://scripts/rama_secondary_motion.gd": "6226e50935b9b14d3c7b419a532cb00ae2dc08cda6aa0f322ae5d62db4b63a32",
+    "res://shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+    "res://tests/rama_secondary_motion_cases.gd": "d7190793676b9aa03ea4528e5f92782a73f774056885765a612e64a6186ae6e8"
+  },
+  "owner_report": {
+    "path": "/tmp/rama-secondary-component-r1.json",
+    "sha256": "ffda7428cd24db3fc1e82f24d0bd3815941a5b9346ee37f8c1df80b0d200a4d9",
+    "passed": 38,
+    "total": 38,
+    "source_hashes_independently_matched": true,
+    "execution_attribution": "Component owner, not independently rerun by QA. Synthetic semantic-mask/material fixture."
+  },
+  "observed_strengths": [
+    "No extra SkeletonModifier or skeleton/gameplay writes. Binding is staged before overrides are applied.",
+    "Analytic critically damped constant-target integration; masks preserve zero-weight anchors; cloth and metallic hem share a displacement field.",
+    "Pause holds report state, invalid delta resets without catch-up, teleport/death/respawn clear inertia and repeated dead samples hold without reset accumulation.",
+    "Report compares varying input at 90 identical elapsed-time samples: maximum cloth differences 0.000420695 m at 30/120 Hz and 0.000140319 m at 60/120 Hz against a declared 0.002 m tolerance.",
+    "Texture/scalar/channel preservation has a synthetic check; missing masks, colored masks and an emission-enabled material have reject-without-override counterexamples."
+  ],
+  "requested_counterexamples": [
+    {
+      "id": "finite-yaw-arithmetic-overflow",
+      "state": "SOURCE_FINDING_NEEDS_EXECUTION",
+      "mechanism": "Each yaw is checked finite, but yaw minus the previous yaw is computed before angle wrapping. Consecutive finite values 1e308 then -1e308 overflow the difference. This must not send a nonfinite turn, spring offset or shader uniform to the renderer.",
+      "requested_resolution": "Normalize accepted yaw before storing/subtracting or reject a bounded input range; execute the consecutive finite-extreme counterexample and assert published state remains finite."
+    },
+    {
+      "id": "unsupported-reflection-modes",
+      "state": "SOURCE_FINDING_NEEDS_EXECUTION",
+      "mechanism": "The shader uses diffuse_burley and specular_schlick_ggx, while the conversion admission guard does not compare StandardMaterial3D diffuse_mode and specular_mode. A targeted nondefault source can therefore be silently reinterpreted.",
+      "requested_resolution": "Preserve or reject unsupported diffuse/specular modes and include an atomic no-override counterexample."
+    },
+    {
+      "id": "mesh-transform-assumption",
+      "state": "ASSUMPTION_TO_BOUND",
+      "mechanism": "Publishing transforms offset through mesh.global_basis.inverse() and visual.global_basis. Current input checks do not cover nonfinite or singular mesh transforms.",
+      "requested_resolution": "Either validate finite nonsingular transform inputs or explicitly restrict and verify the imported-asset transform contract in integration. A finite CPU spring report alone does not establish finite published GPU uniforms."
+    }
+  ],
+  "remaining_gates": [
+    "Final actual-asset mask admission, imported-source freshness and cross-component action/contact regressions.",
+    "Actual source-matched A/B sequential rendering; CPU mirror tests do not accept GPU displacement, shadow/normal response, collision or visual quality.",
+    "Production art, physical cloth/strands, physical-GPU frame pacing and commercial-game parity remain OPEN/UNRUN."
+  ]
+}

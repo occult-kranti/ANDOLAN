@@ -1,0 +1,347 @@
+{
+  "reviewer": "/root/world_lookdev",
+  "role": "Independent LOD visual reviewer; did not author or modify the LODs",
+  "status": "LIMITED",
+  "source_base": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "harness_identity": "PASS: complete6pairs+30camera frames;484runtime sources,9freshGLB imports,source/import/state unchanged; zero enginewarnings/errors.",
+  "coverage": {
+    "original_pngs_visually_inspected": 42,
+    "matched_pairs": 6,
+    "camera_frames_inspected": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "pair_poses": [
+      "idle",
+      "actual accepted PiercingDawn windup"
+    ],
+    "pair_target_pixels": [
+      780,
+      350,
+      120
+    ],
+    "selected_levels": [
+      0,
+      1,
+      2
+    ],
+    "one_live_rig": true,
+    "bone_count": 164,
+    "unique_face_meshes": 1,
+    "state_hash_count_in_camera_take": 1
+  },
+  "pair_observation": "All6same-camera/frozen-state pairs retain the recognizable full silhouette, attached bow/skin, blue/cream drape and gold accents without an obvious new hole, detached limb or large clothing/material shift at these sampled frontal views. Near-to-near pairs are pixel-identical by construction and are not evidence of reduction quality. Mid/far differ modestly in decodedpixels; diagnostic differences are not image-quality scores.",
+  "camera_observation": "All30 originalcamera PNGs inspected in order. No obvious silhouette hole, detached bow/skin, or large garment geometry pop was observed at switches6(0\u21921),12(1\u21922),20(2\u21921),26(1\u21920). A visible pale quiver/head-area glint exists at9and20; therefore the sequence is not uniformlyclean and finalLODacceptance is not granted.",
+  "glint_finding": {
+    "status": "LIMITED / controlled comparison pending",
+    "frames": [
+      9,
+      20
+    ],
+    "target_hero_pixels": 182.3192518419102,
+    "level": 1,
+    "same_camera": true,
+    "same_frozen_state": true,
+    "roi_xyxy": [
+      610,
+      390,
+      655,
+      440
+    ],
+    "decoded_rgb_sha256": "a88ea669258f042ed92a380c29f05876e0ec195c082fdaca326fda64a603c775",
+    "pixels_min_rgb_gt200": 505,
+    "brightest_min_channel_rgb": [
+      232,
+      228,
+      225
+    ],
+    "counterexample": "Frame9occurs withinlevel1; frame20occurs on2\u21921 and has the samecamera+ROI. This does not prove a switch-caused artifact. No forced-near reference was captured at182.3px, so near-vs-mid causality remains untested.",
+    "next_action": "Use the existing material-frame rebake/art packet to capture a controlled forced-near versus selected-mid pair at this exact182.3px camera and frozen windup; keep lighting/material/controller state fixed. Do not infer the cause or close the full gate from the current sequence."
+  },
+  "selected_geometry": {
+    "rama-hero.glb": {
+      "file": {
+        "bytes": 34322216,
+        "sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5"
+      },
+      "triangles_by_mesh": {
+        "RamaBow": 21232,
+        "RamaFace": 10756,
+        "RamaHero": 376328
+      },
+      "total_triangles": 408316
+    },
+    "rama-hero-mid.glb": {
+      "file": {
+        "bytes": 25049516,
+        "sha256": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd"
+      },
+      "triangles_by_mesh": {
+        "RamaBow": 16982,
+        "RamaFace": 10756,
+        "RamaHero": 188806
+      },
+      "total_triangles": 216544
+    },
+    "rama-hero-far.glb": {
+      "file": {
+        "bytes": 20507548,
+        "sha256": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa"
+      },
+      "triangles_by_mesh": {
+        "RamaBow": 9550,
+        "RamaFace": 10756,
+        "RamaHero": 120660
+      },
+      "total_triangles": 140966
+    }
+  },
+  "pair_pixel_debug": [
+    {
+      "pose": "idle",
+      "target_hero_pixels": 780.0,
+      "selected_level": 0,
+      "images": [
+        {
+          "file": "idle-780-reference.png",
+          "bytes": 594919,
+          "sha256": "97326fd77afc20269436f2eb6e95d60b933638a8b4b208f1aea50c6efb5ea9a9"
+        },
+        {
+          "file": "idle-780-selected.png",
+          "bytes": 594919,
+          "sha256": "97326fd77afc20269436f2eb6e95d60b933638a8b4b208f1aea50c6efb5ea9a9"
+        }
+      ],
+      "rest_aabb_roi_xyxy": [
+        315,
+        31,
+        965,
+        929
+      ],
+      "roi_mean_abs_channel_delta": 0.0,
+      "roi_pixels_any_channel_delta_gt32": 0,
+      "same_frozen_state_sha256": "0e916ea1feb493e8cca2a0eee63e0b1dd2e8fc9a083d7bbaba6997f2420b5f6d",
+      "reference_draw_primitives": 2260512,
+      "selected_draw_primitives": 2260512,
+      "reference_draw_calls": 441,
+      "selected_draw_calls": 441
+    },
+    {
+      "pose": "idle",
+      "target_hero_pixels": 350.0,
+      "selected_level": 1,
+      "images": [
+        {
+          "file": "idle-350-reference.png",
+          "bytes": 464559,
+          "sha256": "9a73aea1e4e2696af9b01a626c29c7d39b32f3d5d7d35d423474d488a20a2815"
+        },
+        {
+          "file": "idle-350-selected.png",
+          "bytes": 465240,
+          "sha256": "753336bc23d62b197d4eacfe801767d3edca3a5ae43746f357f125f21b5c2d57"
+        }
+      ],
+      "rest_aabb_roi_xyxy": [
+        505,
+        294,
+        775,
+        666
+      ],
+      "roi_mean_abs_channel_delta": 0.5798718969865924,
+      "roi_pixels_any_channel_delta_gt32": 422,
+      "same_frozen_state_sha256": "0e916ea1feb493e8cca2a0eee63e0b1dd2e8fc9a083d7bbaba6997f2420b5f6d",
+      "reference_draw_primitives": 2242032,
+      "selected_draw_primitives": 1283172,
+      "reference_draw_calls": 440,
+      "selected_draw_calls": 440
+    },
+    {
+      "pose": "idle",
+      "target_hero_pixels": 120.0,
+      "selected_level": 2,
+      "images": [
+        {
+          "file": "idle-120-reference.png",
+          "bytes": 385691,
+          "sha256": "09f3f78649183310f2c1bd303be38de577020234cc0388c090ce30cfe22f3864"
+        },
+        {
+          "file": "idle-120-selected.png",
+          "bytes": 385781,
+          "sha256": "add74abadbdbb481dfd4b24317fa018db9d00da47649a54785524c790a3e94c4"
+        }
+      ],
+      "rest_aabb_roi_xyxy": [
+        595,
+        418,
+        685,
+        542
+      ],
+      "roi_mean_abs_channel_delta": 1.4826463560334529,
+      "roi_pixels_any_channel_delta_gt32": 148,
+      "same_frozen_state_sha256": "0e916ea1feb493e8cca2a0eee63e0b1dd2e8fc9a083d7bbaba6997f2420b5f6d",
+      "reference_draw_primitives": 1827588,
+      "selected_draw_primitives": 758188,
+      "reference_draw_calls": 446,
+      "selected_draw_calls": 446
+    },
+    {
+      "pose": "draw",
+      "target_hero_pixels": 780.0,
+      "selected_level": 0,
+      "images": [
+        {
+          "file": "draw-780-reference.png",
+          "bytes": 593755,
+          "sha256": "82a7c5eede20f96a3f9e580a3859d80ecab60f1c1418d8ab9ebd8c61025f468f"
+        },
+        {
+          "file": "draw-780-selected.png",
+          "bytes": 593755,
+          "sha256": "82a7c5eede20f96a3f9e580a3859d80ecab60f1c1418d8ab9ebd8c61025f468f"
+        }
+      ],
+      "rest_aabb_roi_xyxy": [
+        311,
+        26,
+        961,
+        934
+      ],
+      "roi_mean_abs_channel_delta": 0.0,
+      "roi_pixels_any_channel_delta_gt32": 0,
+      "same_frozen_state_sha256": "9e5b513857a3c917fb8f91fa64dd61202567fb0df5d93ec5398ba8d6639c6bcb",
+      "reference_draw_primitives": 2260792,
+      "selected_draw_primitives": 2260792,
+      "reference_draw_calls": 451,
+      "selected_draw_calls": 451
+    },
+    {
+      "pose": "draw",
+      "target_hero_pixels": 350.0,
+      "selected_level": 1,
+      "images": [
+        {
+          "file": "draw-350-reference.png",
+          "bytes": 462524,
+          "sha256": "04997037b65f0683600d6819e199728a85afdcf4176dae376302d888509d5461"
+        },
+        {
+          "file": "draw-350-selected.png",
+          "bytes": 463168,
+          "sha256": "c435cca82eb21b8be736c8dd68949d5f475efd7a6c5d7eb1e77c9528c5b39957"
+        }
+      ],
+      "rest_aabb_roi_xyxy": [
+        502,
+        293,
+        772,
+        667
+      ],
+      "roi_mean_abs_channel_delta": 0.6124183006535948,
+      "roi_pixels_any_channel_delta_gt32": 500,
+      "same_frozen_state_sha256": "9e5b513857a3c917fb8f91fa64dd61202567fb0df5d93ec5398ba8d6639c6bcb",
+      "reference_draw_primitives": 2242312,
+      "selected_draw_primitives": 1283452,
+      "reference_draw_calls": 450,
+      "selected_draw_calls": 450
+    },
+    {
+      "pose": "draw",
+      "target_hero_pixels": 120.0,
+      "selected_level": 2,
+      "images": [
+        {
+          "file": "draw-120-reference.png",
+          "bytes": 385558,
+          "sha256": "e9521f29d403aa0462b86a5a65e223483aa9a21d61f4b05ba86633b1d8633e81"
+        },
+        {
+          "file": "draw-120-selected.png",
+          "bytes": 385831,
+          "sha256": "7a05fa4d7cde1bec6a6e0df02cd82b04fea3680501a7b262c8b2a88d5cc79333"
+        }
+      ],
+      "rest_aabb_roi_xyxy": [
+        594,
+        418,
+        684,
+        542
+      ],
+      "roi_mean_abs_channel_delta": 1.6458482676224613,
+      "roi_pixels_any_channel_delta_gt32": 171,
+      "same_frozen_state_sha256": "9e5b513857a3c917fb8f91fa64dd61202567fb0df5d93ec5398ba8d6639c6bcb",
+      "reference_draw_primitives": 1827812,
+      "selected_draw_primitives": 758412,
+      "reference_draw_calls": 454,
+      "selected_draw_calls": 454
+    }
+  ],
+  "limitations": [
+    "Only sampled frontal idle and actualQwindup poses; not all clips, rear/side views or all elevations.",
+    "30-frame sequence moves a camera around one frozen draw pose; not continuous gameplay deformation, secondary-motion evolution or a fullmatch.",
+    "15Hz sampled capture is not achieved real-timeFPS. Software Vulkan is not a physicalGPU performance ormemory/latency budget.",
+    "No newengine,import,render or video playback run by this reviewer; reviewed42originalPNGs and independentlyverifiedsource/import/image bytes. Root video decode belongs to the pinnedcapture receipt.",
+    "No commercial-grade art, finalLOD, tangent/material-frame rebake or fullproductiongate acceptance."
+  ],
+  "evidence": {
+    "proof.json": {
+      "bytes": 23793,
+      "sha256": "f482e285d42512f6977304bf0942fb6ef2f738b7b5f38079a080744df9bcb6ae"
+    },
+    "measure_review.py": {
+      "bytes": 7092,
+      "sha256": "5ac07442b0b15fa56e28b0dd0a0976baa7b2d28d521a1321eb2dacf3c6664889"
+    },
+    "frame-00009.png": {
+      "bytes": 411033,
+      "sha256": "bd130b30481665bfeef4035dd65fb79088db732c3a40acce7bb2c4b6210033bd"
+    },
+    "frame-00020.png": {
+      "bytes": 411033,
+      "sha256": "bd130b30481665bfeef4035dd65fb79088db732c3a40acce7bb2c4b6210033bd"
+    },
+    "archive/lod-capture.json": {
+      "bytes": 902213,
+      "sha256": "f196be80c72e1cf708bbd123bd392751a11bd8747c5132cafe2e991d80eef3bd"
+    },
+    "archive/capture-run.json": {
+      "bytes": 1152,
+      "sha256": "0b5905abf7616e90ebe4c9ec7206e44a1c1d9f988f37a486b4097c8245a12040"
+    },
+    "archive/camera-video.json": {
+      "bytes": 2773,
+      "sha256": "51e7e7072915ce6d5783e711c717c908e51a69063081d07320aadde050d88086"
+    }
+  },
+  "changes": "Only this independent QA evidence folder; no runtime/tool/asset or acceptance-document edits."
+}

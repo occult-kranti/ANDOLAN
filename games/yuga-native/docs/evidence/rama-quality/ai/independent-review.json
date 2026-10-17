@@ -1,0 +1,46 @@
+{
+  "scope": "Independent static read-only review of isolated practice brain, its 45-case suite, documentation and actual Rama kit tuning. No Godot, import, render or repository modifications performed.",
+  "findings": [
+    {
+      "severity": "P2",
+      "file": "games/yuga-native/scripts/rama_practice_brain.gd",
+      "line": 196,
+      "related_lines": [
+        206,
+        214
+      ],
+      "title": "Volley candidate count overestimates first-hit coverage on a shared lane",
+      "evidence": "_volley_targets increments per visible candidate, rather than counting the nearest hittable target per distinct projectile lane. Actual Dawn Volley has max_hits=1 and lane offsets -0.105/0/+0.105.",
+      "counterexample": "After hard reaction, use ready cooldowns and visible enemies at (0,0,10) and (0,0,12). Both fit only the centre lane and produce count 2; the branch requests dawn_volley, although only its centre projectile can hit the first enemy and Piercing Dawn can reach both.",
+      "suggestion": "Use distinct first-hit lane coverage, or compare estimated unique first-hit receivers against Piercing Dawn; add the collinear-target negative case alongside the existing centre/right positive test.",
+      "status": "fixed_and_statically_verified",
+      "closure": "Current lines 207-221 select the nearest candidate independently per projectile lane and deduplicate receiver IDs. The exact collinear two-target negative case at test lines 129-131 now expects Piercing Dawn, and the distinct centre/right positive case remains. Documentation line 63 describes this first-hit criterion."
+    }
+  ],
+  "no_findings_in": [
+    "authority mutation",
+    "geometry callback generation invalidation",
+    "reentrant action emission",
+    "finite/schema validation",
+    "detached input alias handling"
+  ],
+  "residual_risks": [
+    "No second native hero authority or rendered bot is integrated; documented staged scope is accurate.",
+    "Turn fairness, perceived aim, navigation around concave cover, transformed-map adapter integration and multi-actor lifecycle remain unverified.",
+    "No new runtime tests were executed by this reviewer; parent-owned reported 45/45 result is not independently rerun."
+  ],
+  "review_status": "closed_for_bounded_component",
+  "closure_scope": "Read-only inspection of exact fix, generation reset, test additions, documentation and existing parent-executed report. No Godot/import/render execution by reviewer; no new findings.",
+  "current_sha256": {
+    "scripts/rama_practice_brain.gd": "a085481c1ee5cec2ab07d1f7a5cf206bef14105b821f6032ac2fc25e2ea202d1",
+    "tests/rama_practice_brain_cases.gd": "2d2cfffa5c2ee9763132cbda8f1fa67c454c34cdf8722fe92b2467a5ace17472",
+    "docs/research/NATIVE_PRACTICE_AI.md": "769ee2d19fb91afd3303669b31d203aacc19a056ea29f772403e15e0f3821433"
+  },
+  "parent_executed_report": {
+    "path": "/tmp/rama-practice-brain-r4/report.json",
+    "sha256": "b5a1734faa208b278092362f370b33d0d792848b12f2258fab1baf398272b213",
+    "passed": true,
+    "checks": 52,
+    "reviewed_brain_and_test_hashes_match_report": true
+  }
+}

@@ -1,0 +1,701 @@
+{
+  "schema": 1,
+  "reviewer": "independent quality_qa",
+  "reviewed_at_utc": "2026-10-17T18:13:20.358920+00:00",
+  "product": "YUGA native Rama quality slice",
+  "source_commit": "1ab1f5e330d256a6ffb6a5706a07f2ff8c3bbb0e",
+  "branch": "game/yuga-native-production",
+  "decision": "LIMITED / sampled five-ability presentation and expiry observations support this checkpoint; no final hero-motion, art, human-play or performance approval",
+  "actual_review_scope": {
+    "original_stills_opened": 25,
+    "selected_original_sequence_frames_opened": 54,
+    "total_sequence_frames_hash_verified": 363,
+    "all_sequence_frames_visually_reviewed": false,
+    "human_normal_speed_movie_viewing": "UNRUN",
+    "listening": "UNRUN",
+    "engine_execution_by_QA": false,
+    "runtime_edits_by_QA": false,
+    "selection": "First two available post-begin frames, adjacent release/first-contact/natural-expiry windows for each take, plus active/authority-expiry Guardian boundaries. Every selected frame individually opened full-size, not just a collage. Pre-begin commitment frames are not present in these takes."
+  },
+  "capture": {
+    "report_path": "docs/evidence/rama-quality/gameplay/capture-r1/rama-gameplay-review.json",
+    "report_sha256": "4a5bbac1fbf919c5d94e11f38e3078355ccef5a996ca8c681e000e00b24a8088",
+    "run_manifest_path": "docs/evidence/rama-quality/gameplay/capture-r1/capture-run.json",
+    "run_manifest_sha256": "7da662d52017ba42b1e33e05cbb339ec29c049b7cfe97c00a2972b5b24b87560",
+    "video_manifest_sha256": "6ce106e18a4bbddf90b93691464aa0715777f792d6e99a0ba751f478a5bdb4f0",
+    "movie_path": "docs/evidence/rama-quality/gameplay/capture-r1/rama-five-abilities.mp4",
+    "movie_sha256": "51280d492466151137a9b16d0bcaed6daad9f64ef3adcf5b42dc43ceb264d95a",
+    "complete": true,
+    "source_unchanged": true,
+    "raw_source_count": 485,
+    "fresh_hero_import_count": 3,
+    "all_current_source_pins_match_at_review": true,
+    "all363_raw_PNG_hashes_match": true,
+    "all25_still_hashes_match_archive": true,
+    "renderer": "forward_plus",
+    "adapter": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "resolution": [
+      1280,
+      720
+    ],
+    "encoded_simulated_fps": 30,
+    "physics_hz": 60,
+    "movie_duration_s": 12.1,
+    "movie_has_audio_stream": false,
+    "takes": "Five separately reset scripted actual-world casts concatenated in kit order; low-angle and lifecycle stills are outside this movie.",
+    "scope": "Five separate actual Confluence takes with real current hero, staged live lane receivers, normal gameplay clock and real accepted damage/heal/movement. Low-angle replays are outside video. Preview ends before normal ability lifetimes. Script invokes actual world cast entry; this is not human OS input, one uninterrupted fight, audio audition or physical-GPU performance."
+  },
+  "captured_sources": {
+    "res://assets/heroes/rama-hero-far.glb": "d5888a452c2a8b711a7a5d8542652762d73c2608047b0399a2486c9ed650f9aa",
+    "res://assets/heroes/rama-hero-mid.glb": "40737faf61e660f74dbb97b7a5a507869fdedd1a27cd964bb15e27e445a2d3cd",
+    "res://assets/heroes/rama-hero.glb": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+    "res://scripts/rama_ability_effects.gd": "5c8ac077f208d7674ebb463354e98054e5d9ce7ee4ef9f74780f1226bc1555d7",
+    "res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "res://scripts/rama_facial_performance.gd": "c525d720eab133c66be18e9d49a14ddc2dd20fd0616ec4a5e4f96ee5d2947128",
+    "res://scripts/rama_hero_hud.gd": "8a5fe7c9363045ee75d602431e226a4dc1ef2e8d1b254ddb7a5fc3d3680afa0a",
+    "res://scripts/rama_motion.gd": "d3a898b640de9c62aa3a919786b5a3b7c56dea823349472e361ba33906010f22",
+    "res://scripts/rama_secondary_motion.gd": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+    "res://tools/capture-rama-gameplay.gd": "362d3bb7a2ad89ff6dad4e79b16bcbcdab3e1d6db50ad696e30987e454aaf38d"
+  },
+  "takes": [
+    {
+      "ability_id": "kodanda",
+      "start_frame": 0,
+      "frame_count": 45,
+      "normal_expiry": true,
+      "release_count": 1,
+      "receipt_count": 1,
+      "events": [
+        {
+          "kind": "begin",
+          "age_s": 0.0,
+          "physics_tick": 51,
+          "receipt_count": 0
+        },
+        {
+          "kind": "release",
+          "age_s": 0.2,
+          "physics_tick": 63,
+          "receipt_count": 0
+        },
+        {
+          "kind": "impact",
+          "age_s": 0.3,
+          "physics_tick": 69,
+          "receipt_count": 1
+        },
+        {
+          "kind": "recovery",
+          "age_s": 0.4,
+          "physics_tick": 75,
+          "receipt_count": 0
+        },
+        {
+          "kind": "end",
+          "age_s": 1.15,
+          "physics_tick": 120,
+          "receipt_count": 0
+        }
+      ],
+      "reviewed_frame_groups": {
+        "initial_post_begin": [
+          0,
+          1
+        ],
+        "release": [
+          4,
+          5,
+          6
+        ],
+        "first_contact": [
+          7,
+          8,
+          9
+        ],
+        "natural_expiry": [
+          32,
+          33,
+          34
+        ]
+      }
+    },
+    {
+      "ability_id": "piercing_dawn",
+      "start_frame": 45,
+      "frame_count": 54,
+      "normal_expiry": true,
+      "release_count": 1,
+      "receipt_count": 3,
+      "events": [
+        {
+          "kind": "begin",
+          "age_s": 0.0,
+          "physics_tick": 177,
+          "receipt_count": 0
+        },
+        {
+          "kind": "release",
+          "age_s": 0.65,
+          "physics_tick": 216,
+          "receipt_count": 0
+        },
+        {
+          "kind": "impact",
+          "age_s": 0.800000000000001,
+          "physics_tick": 225,
+          "receipt_count": 1
+        },
+        {
+          "kind": "impact",
+          "age_s": 0.850000000000001,
+          "physics_tick": 228,
+          "receipt_count": 1
+        },
+        {
+          "kind": "impact",
+          "age_s": 0.900000000000001,
+          "physics_tick": 231,
+          "receipt_count": 1
+        },
+        {
+          "kind": "recovery",
+          "age_s": 0.950000000000001,
+          "physics_tick": 234,
+          "receipt_count": 0
+        },
+        {
+          "kind": "impact",
+          "age_s": 1.4,
+          "physics_tick": 261,
+          "receipt_count": 0
+        },
+        {
+          "kind": "end",
+          "age_s": 1.7,
+          "physics_tick": 279,
+          "receipt_count": 0
+        }
+      ],
+      "reviewed_frame_groups": {
+        "initial_post_begin": [
+          45,
+          46
+        ],
+        "release": [
+          62,
+          63,
+          64
+        ],
+        "first_contact": [
+          67,
+          68,
+          69
+        ],
+        "natural_expiry": [
+          94,
+          95,
+          96
+        ]
+      }
+    },
+    {
+      "ability_id": "measured_step",
+      "start_frame": 99,
+      "frame_count": 21,
+      "normal_expiry": true,
+      "release_count": 1,
+      "receipt_count": 0,
+      "events": [
+        {
+          "kind": "begin",
+          "age_s": 0.0,
+          "physics_tick": 321,
+          "receipt_count": 0
+        },
+        {
+          "kind": "release",
+          "age_s": 0.1,
+          "physics_tick": 327,
+          "receipt_count": 0
+        },
+        {
+          "kind": "impact",
+          "age_s": 0.1,
+          "physics_tick": 327,
+          "receipt_count": 0
+        },
+        {
+          "kind": "recovery",
+          "age_s": 0.35,
+          "physics_tick": 342,
+          "receipt_count": 0
+        },
+        {
+          "kind": "end",
+          "age_s": 0.4,
+          "physics_tick": 345,
+          "receipt_count": 0
+        }
+      ],
+      "reviewed_frame_groups": {
+        "initial_post_begin": [
+          99,
+          100
+        ],
+        "release_and_movement": [
+          100,
+          101,
+          102
+        ],
+        "natural_expiry": [
+          109,
+          110,
+          111
+        ]
+      }
+    },
+    {
+      "ability_id": "guardian_circle",
+      "start_frame": 120,
+      "frame_count": 168,
+      "normal_expiry": true,
+      "release_count": 1,
+      "receipt_count": 182,
+      "events": [
+        {
+          "kind": "begin",
+          "age_s": 0.0,
+          "physics_tick": 399,
+          "receipt_count": 0
+        },
+        {
+          "kind": "release",
+          "age_s": 0.55,
+          "physics_tick": 432,
+          "receipt_count": 0
+        },
+        {
+          "kind": "impact",
+          "age_s": 0.55,
+          "physics_tick": 432,
+          "receipt_count": 2
+        },
+        {
+          "kind": "recovery",
+          "age_s": 0.850000000000001,
+          "physics_tick": 450,
+          "receipt_count": 0
+        },
+        {
+          "kind": "end",
+          "age_s": 5.34999999999999,
+          "physics_tick": 720,
+          "receipt_count": 0
+        }
+      ],
+      "reviewed_frame_groups": {
+        "initial_post_begin": [
+          120,
+          121
+        ],
+        "release_and_recipients": [
+          134,
+          135,
+          136
+        ],
+        "active_HUD": [
+          144,
+          145,
+          146
+        ],
+        "authority_field_expiry": [
+          270,
+          271,
+          272
+        ],
+        "natural_cast_disposal": [
+          278,
+          279,
+          280
+        ]
+      }
+    },
+    {
+      "ability_id": "dawn_volley",
+      "start_frame": 288,
+      "frame_count": 75,
+      "normal_expiry": true,
+      "release_count": 1,
+      "receipt_count": 3,
+      "events": [
+        {
+          "kind": "begin",
+          "age_s": 0.0,
+          "physics_tick": 771,
+          "receipt_count": 0
+        },
+        {
+          "kind": "release",
+          "age_s": 0.950000000000001,
+          "physics_tick": 828,
+          "receipt_count": 0
+        },
+        {
+          "kind": "impact",
+          "age_s": 1.2,
+          "physics_tick": 843,
+          "receipt_count": 1
+        },
+        {
+          "kind": "impact",
+          "age_s": 1.3,
+          "physics_tick": 849,
+          "receipt_count": 1
+        },
+        {
+          "kind": "impact",
+          "age_s": 1.4,
+          "physics_tick": 855,
+          "receipt_count": 1
+        },
+        {
+          "kind": "recovery",
+          "age_s": 1.5,
+          "physics_tick": 861,
+          "receipt_count": 0
+        },
+        {
+          "kind": "end",
+          "age_s": 2.35,
+          "physics_tick": 912,
+          "receipt_count": 0
+        }
+      ],
+      "reviewed_frame_groups": {
+        "initial_post_begin": [
+          288,
+          289
+        ],
+        "release": [
+          314,
+          315,
+          316
+        ],
+        "first_contact": [
+          322,
+          323,
+          324
+        ],
+        "natural_expiry": [
+          356,
+          357,
+          358
+        ]
+      }
+    }
+  ],
+  "per_ability_observations": {
+    "kodanda": [
+      "The sampled arm raise, single projectile path, target impact cue and later ready pose are coherent at this camera. Ammunition remains 11/12 after the one accepted shot.",
+      "No gross silhouette tear or new cape fan is observed in the inspected windows. Fingers, string attachment and subtle cloth lag are not resolved well enough for fine-contact approval."
+    ],
+    "piercing_dawn": [
+      "The gold lane warning and open curved solar-seal motifs precede the released projectile; sampled impact cues appear at the staged line of receivers. Warning geometry clears on release, and later sampled expiry frames have no lingering projectile effect.",
+      "The low-angle still supports costume/bow outline and open-centre VFX readability. The three source-authored arc groups overlap/occlude at this scale, so a complete three-lobe shape-quality pass is not inferred from a count."
+    ],
+    "measured_step": [
+      "The blue curved movement trail accompanies forward displacement in the player camera and clears by the later sampled return-to-ready state.",
+      "Adjacent poses maintain a recognizable cape/leg outline, with no newly observed gross explosion or tear. This short sample does not establish grounded foot friction, collision counterplay or complete locomotion blending."
+    ],
+    "guardian_circle": [
+      "The radius boundary and broad mint curves distinguish the field during windup, release and active recovery. The HUD shows released, then field active with visible shield/healing values.",
+      "At frame270 the boundary and active field label remain. At271/272 the visible boundary is absent and the HUD reads Rama is ready; recorded authority age is5.05 s, main/recipient opacity0 and recipient surfaces0. Cast data is later disposed at280. The field-object tail is not mistaken for ongoing active presentation.",
+      "The foreground field is large at this camera and shares pale values with the paving; crowded-match visual clarity needs a separate test. Reduced-effects still preserves its radius/readability, but one still cannot establish reduced-motion temporal behavior."
+    ],
+    "dawn_volley": [
+      "Three lane warnings and open curved sun-blade motifs gather before released arrows; sampled receiver impact cues appear and later expiry frames return to a clear ready scene.",
+      "The three source-authored blade groups have an open centre in these views, but they partially overlap behind/around the hero. Normal-speed choreography and fine curve/attachment quality remain LIMITED."
+    ]
+  },
+  "original_stills": [
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-kodanda-windup.png",
+      "sha256": "f78e6ccdf05db8ac9a2428eea8f4f6248bb2d688a1c954ae7afa5519250e6d0a",
+      "ability_id": "kodanda",
+      "phase": "windup",
+      "view": "gameplay",
+      "sample_age_s": 0.133333333333333,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-kodanda-release.png",
+      "sha256": "44ab81b4ecdc08978d763c9fc60b870b415cb50252a69f7c25ae3c7c953c48af",
+      "ability_id": "kodanda",
+      "phase": "release",
+      "view": "gameplay",
+      "sample_age_s": 0.266666666666667,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-kodanda-contact.png",
+      "sha256": "4c8dfaaccbee164df2bc30eaaa3388d08063fcf3be9edefe5ca56878605972d9",
+      "ability_id": "kodanda",
+      "phase": "contact",
+      "view": "gameplay",
+      "sample_age_s": 0.5,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-piercing_dawn-windup.png",
+      "sha256": "2ff6f689fae8bc430169eb7d7a84868c9312842018ac6c655f7a9dd9fa28561a",
+      "ability_id": "piercing_dawn",
+      "phase": "windup",
+      "view": "gameplay",
+      "sample_age_s": 0.6,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-piercing_dawn-release.png",
+      "sha256": "92be639dd86cee175e50147447ecd9bce2486a66dac9b3e312c312b89b14832f",
+      "ability_id": "piercing_dawn",
+      "phase": "release",
+      "view": "gameplay",
+      "sample_age_s": 0.733333333333333,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-piercing_dawn-contact.png",
+      "sha256": "34604dd31058c7a9b9d87051a31e9bfa7f2b7208c78ca7afe3dc435ccd0b86e3",
+      "ability_id": "piercing_dawn",
+      "phase": "contact",
+      "view": "gameplay",
+      "sample_age_s": 0.966666666666667,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-measured_step-windup.png",
+      "sha256": "be62ebfe346d2dc2cbc9def94cc503e700e6439e99ef9b61c76e61baaac3175d",
+      "ability_id": "measured_step",
+      "phase": "windup",
+      "view": "gameplay",
+      "sample_age_s": 0.0666666666666667,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-measured_step-release.png",
+      "sha256": "8a0b78ce68812d06618d6603247f8c24fe2c82da8e880f9e4142dfe7e82f7436",
+      "ability_id": "measured_step",
+      "phase": "release",
+      "view": "gameplay",
+      "sample_age_s": 0.166666666666667,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-measured_step-contact.png",
+      "sha256": "e1e6f1180bb7571c881175dcdeca33f709a6044bcfd4c2faf04ae468c5d797ad",
+      "ability_id": "measured_step",
+      "phase": "contact",
+      "view": "gameplay",
+      "sample_age_s": 0.4,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-guardian_circle-windup.png",
+      "sha256": "4fc630a3cddd9d447f79f0b73b06513d472849483e304cd89ec7c155dfc2e39a",
+      "ability_id": "guardian_circle",
+      "phase": "windup",
+      "view": "gameplay",
+      "sample_age_s": 0.5,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-guardian_circle-release.png",
+      "sha256": "288ae53c69db9244843784c2ed477970b34c918ef8d019169b12886cd7798a9c",
+      "ability_id": "guardian_circle",
+      "phase": "release",
+      "view": "gameplay",
+      "sample_age_s": 0.633333333333333,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-guardian_circle-contact.png",
+      "sha256": "55ff9688feb464275b030c7bad0ef3f16c305d8ef548d09090932c6f3a21f284",
+      "ability_id": "guardian_circle",
+      "phase": "contact",
+      "view": "gameplay",
+      "sample_age_s": 0.866666666666667,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-dawn_volley-windup.png",
+      "sha256": "a21238486f65ec4bd8f0065950fa22abf1165c01e37ad5ae3061dd6d99f55271",
+      "ability_id": "dawn_volley",
+      "phase": "windup",
+      "view": "gameplay",
+      "sample_age_s": 0.9,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-dawn_volley-release.png",
+      "sha256": "2bb6ab99fee4fe2b0439f3bdf5ce3f0302858374386b0e2ebcf2e61e8cd3f35d",
+      "ability_id": "dawn_volley",
+      "phase": "release",
+      "view": "gameplay",
+      "sample_age_s": 1.03333333333333,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-dawn_volley-contact.png",
+      "sha256": "7da11182d7ca6c01b14ff54ef357b28f30c837daa423067ba11cfdc0f58cf480",
+      "ability_id": "dawn_volley",
+      "phase": "contact",
+      "view": "gameplay",
+      "sample_age_s": 1.26666666666667,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-piercing_dawn-low-windup.png",
+      "sha256": "9a0c517f8a65792226643077618f5dfb85ef9e50ae4f2079aec1c5566dac8d55",
+      "ability_id": "piercing_dawn",
+      "phase": "windup",
+      "view": "low_angle",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-piercing_dawn-low-released.png",
+      "sha256": "6a920e9d647958d9253e42185ba1f6d0d6a50c547a50befca7acc96c55fbc07f",
+      "ability_id": "piercing_dawn",
+      "phase": "released",
+      "view": "low_angle",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-guardian_circle-low-windup.png",
+      "sha256": "5d2ae702f889221e5424b0c26b352c48af5c36089b2149c8d520bd3528b9757b",
+      "ability_id": "guardian_circle",
+      "phase": "windup",
+      "view": "low_angle",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-guardian_circle-low-released.png",
+      "sha256": "d7e28adbf89d0f1a58c26de48a4f8a6567dd27a3f74c3a7ab3953cd83eef6b54",
+      "ability_id": "guardian_circle",
+      "phase": "released",
+      "view": "low_angle",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-guardian-circle-reduced.png",
+      "sha256": "b7e52d941847f2a74403b30132d46ec1f4a2a895c1869c1e85f08f54e46a0ff2",
+      "ability_id": "guardian_circle",
+      "phase": "active",
+      "view": "low_reduced",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-dawn_volley-low-windup.png",
+      "sha256": "b5d03caa98ac57f5dd1f0103b84f5b72970e8619da64996e8f0cb008e32a3144",
+      "ability_id": "dawn_volley",
+      "phase": "windup",
+      "view": "low_angle",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-dawn_volley-low-released.png",
+      "sha256": "9c3003c9b8956a5dec30b410a31c69ad06e857e52518650540668d1c7f51daac",
+      "ability_id": "dawn_volley",
+      "phase": "released",
+      "view": "low_angle",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-hero-hit.png",
+      "sha256": "dd6f8c740e7cf075adea8ec608284148d565bb55391ffd088b2fde1575f16a52",
+      "ability_id": "hero_vitals",
+      "phase": "hit",
+      "view": "gameplay",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-hero-defeated.png",
+      "sha256": "e8eda9ce5217dca8e21be1911ba5aeac8ffe52e9ff0e6d554bd5564cdd1b43e7",
+      "ability_id": "hero_vitals",
+      "phase": "defeated",
+      "view": "gameplay",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    },
+    {
+      "path": "docs/evidence/rama-quality/gameplay/capture-r1/still-hero-respawned.png",
+      "sha256": "ba82b49d6dce723803a9ef625ddb376a11e8c7ae61a3f6fcbbe4cca128b3ecea",
+      "ability_id": "hero_vitals",
+      "phase": "respawned",
+      "view": "gameplay",
+      "sample_age_s": null,
+      "independently_opened_full_size": true
+    }
+  ],
+  "selected_frame_ledger": {
+    "path": "docs/evidence/rama-quality/qa/gameplay-r1-review/selected-frame-ledger.json",
+    "sha256": "2b9284d52874a9664c2e5af46f38c3cf15d5a4e1e0b1858dfff38b3a8ed368de",
+    "archived_frames": 54
+  },
+  "HUD_record_check": {
+    "all363_displayed_notice_equal_runtime_notice": true,
+    "scope": "Actual recorded Label.text and runtime notice consistency, with the named sampled images also opened. Not OCR or a pixel audit of all363 HUD rasters."
+  },
+  "lifecycle": {
+    "images_opened": [
+      "still-hero-hit.png",
+      "still-hero-defeated.png",
+      "still-hero-respawned.png"
+    ],
+    "observation": "Hit still shows150/300, defeated still shows0/300 and return countdown with a lowered raised-arm pose, returned still restores300/300 and the hero/bow/costume at the arrival court. No new gross static deformation is observed in those three images.",
+    "continuous_death_respawn_visuals": "UNRUN: lifecycle has only three saved stills, not an adjacent-frame sequence among the363 five-ability frames.",
+    "facial_death_continuity": "Not visible at this framing; prior imported component/integration evidence retains its own bounded scope."
+  },
+  "material_secondary_contact_limitations": [
+    "The hero is mostly back-facing at gameplay distance; low-angle stills also keep facial details small. Smooth skin, solid hair and glossy broad fabric forms remain below target.",
+    "Hair/cloth remain coherent in the sampled silhouette but a camera-matched secondary-on/off dynamic route is absent. Resting or minimally moving silhouettes do not prove spring quality, self-collision or strand physics.",
+    "No gross sampled hand/bow/sole detachment is observed, but fingers/string/foot friction and exact contact are too small or occluded for a new perceptual pass.",
+    "No continuous run/strafe/turn/jump/flight/grapple/stop sequence is supplied by these separately reset cast takes."
+  ],
+  "logs": {
+    "path": "docs/evidence/rama-quality/qa/gameplay-r1-review/capture-original.log.txt",
+    "sha256": "add88be4f8210746c3ace2a151cd2994196f3456edbb7a7d1cce16225174fc30",
+    "warning_or_error_lines": [],
+    "scope": "This completed gameplay capture has no WARNING/ERROR in its original log. It does not erase the preserved warning in the separate older look-development R2 capture."
+  },
+  "LOD_cross_reference": {
+    "path": "docs/evidence/rama-quality/qa/lod-r1-review/review.json",
+    "sha256": "ef0bbe1e00c13b32e7dbf5510d73b879b84a7cc0c9aea95ada5f1f42b16c477a",
+    "proof_path": "docs/evidence/rama-quality/qa/lod-r1-review/proof.json",
+    "proof_sha256": "f482e285d42512f6977304bf0942fb6ef2f738b7b5f38079a080744df9bcb6ae",
+    "review_owner": "independent world_lookdev reviewer",
+    "owner_reported_review_scope": "Six matched pairs plus all30 camera frames,42 PNGs total;484 captured sources and9 imports verified; clean log.",
+    "decision": "LIMITED; overall LOD art gate OPEN",
+    "specific_limitation": "A localized pale glint appears at182.3px selected midLOD level1 in frames9 and20, absent in adjacent8/10/19/21. The two glint ROIs are byte-identical with505 pixels above200 in every RGB channel. No forced-near reference at the same182.3px camera exists, so LOD simplification versus view/material/specular cause is not assigned.",
+    "next_evidence": "Controlled forced-near/mid comparison at the same182.3px camera/light/pose before accepting that visual gate.",
+    "scope_boundary": "Gameplay QA verifies this report/proof hash cross-reference; it does not claim to have duplicated the owner's42-image LOD visual review, nor infer physical-GPU or continuous deformation quality."
+  },
+  "unrun_or_open": [
+    "full sequential secondary/contact route and exact before/after comparison",
+    "pre-begin input/commitment delay and human keyboard/mouse feel",
+    "continuous defeat/return motion",
+    "normal-speed human viewing/listening",
+    "physical-GPU frame pacing/full12-player workload",
+    "Windows execution",
+    "online ability authority/full match",
+    "commercial-quality hero/full-game target"
+  ],
+  "commercial_quality_target": "OPEN"
+}

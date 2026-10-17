@@ -7,6 +7,7 @@ const MAX_PRACTICALS := 12
 const SHADOW_DISTANCE := 72.0
 const WATER_SHADER := preload("res://scripts/world_water.gdshader")
 const MythicEnvironment = preload("res://scripts/mythic_environment.gd")
+const GroundShadows = preload("res://scripts/ground_shadow_policy.gd")
 
 var _environment: Environment
 var _sun: DirectionalLight3D
@@ -20,6 +21,8 @@ func configure(environment: Environment, sun: DirectionalLight3D, world: Node3D,
 	_sun = sun
 	_world = world
 	_shadows = shadows
+	# Once per configure, never a traversal/mutation in the per-phase apply path.
+	GroundShadows.apply_world(world)
 	configure_practicals(world, placements)
 	set_phase(_phase)
 
@@ -54,8 +57,8 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 		environment.sky.sky_material = sky
 	# Keep clear silhouettes at both endpoints. Blue night is a lighting mood,
 	# never a vision or combat advantage. Constant ambient avoids black alleys.
-	sky.sky_top_color = Color("426b8c").lerp(Color("18273e"), phase)
-	sky.sky_horizon_color = Color("dec3a0").lerp(Color("667b91"), phase).lerp(Color("c78e86"), dusk * 0.42)
+	sky.sky_top_color = Color("3c6083").lerp(Color("1c2d49"), phase)
+	sky.sky_horizon_color = Color("d1bca8").lerp(Color("647d9b"), phase).lerp(Color("b88e91"), dusk * 0.28)
 	sky.ground_bottom_color = Color("354553").lerp(Color("1b2a40"), phase)
 	sky.ground_horizon_color = sky.sky_horizon_color
 	sky.sky_energy_multiplier = lerpf(0.92, 0.64, phase)
@@ -65,17 +68,19 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	sky.sun_angle_max = 0.8
 	sky.sun_curve = 0.08
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color("bbcbd4").lerp(Color("b1c6e7"), phase)
-	environment.ambient_light_energy = lerpf(0.32, 0.34, phase)
+	# Preserve a visibility floor through night, while key/fill direction defines
+	# the forms. Neutral daylight avoids tinting every stone and skin surface tan.
+	environment.ambient_light_color = Color("c5cbd4").lerp(Color("aec2e0"), phase)
+	environment.ambient_light_energy = lerpf(0.30, 0.32, phase)
 	environment.ambient_light_sky_contribution = 0.0
 	environment.reflected_light_source = Environment.REFLECTION_SOURCE_SKY
 	environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	environment.tonemap_exposure = 1.0
 	environment.tonemap_white = 1.0
 	environment.fog_enabled = true
-	environment.fog_light_color = Color("a0b2b9").lerp(Color("5c7292"), phase)
+	environment.fog_light_color = Color("91a8bc").lerp(Color("536f94"), phase)
 	environment.fog_light_energy = 0.4
-	environment.fog_density = lerpf(0.0015, 0.0018, phase)
+	environment.fog_density = lerpf(0.0008, 0.0013, phase)
 	environment.fog_sky_affect = 0.08
 	environment.fog_sun_scatter = 0.05
 	environment.volumetric_fog_enabled = false
@@ -83,25 +88,25 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	environment.ssil_enabled = false
 	environment.sdfgi_enabled = false
 	environment.glow_enabled = forward_plus
-	environment.glow_intensity = 0.22
-	environment.glow_strength = 0.6
+	environment.glow_intensity = 0.16
+	environment.glow_strength = 0.45
 	environment.glow_bloom = 0.0
 	environment.glow_hdr_threshold = 1.6
 	environment.ssao_enabled = forward_plus
-	environment.ssao_radius = 0.55
-	environment.ssao_intensity = 0.8
+	environment.ssao_radius = 0.45
+	environment.ssao_intensity = 0.75
 	environment.ssao_power = 1.1
 	environment.ssao_detail = 0.4
 	environment.ssao_light_affect = 0.1
 	sun.rotation_degrees = Vector3(-42.0, -38.0, 0.0).lerp(Vector3(-34.0, -55.0, 0.0), phase)
-	sun.light_color = Color("ffdfad").lerp(Color("bacff2"), phase).lerp(Color("ffc08d"), dusk * 0.35)
+	sun.light_color = Color("ffe4c2").lerp(Color("b7cbed"), phase).lerp(Color("ffd0a7"), dusk * 0.25)
 	sun.light_energy = lerpf(1.25, 0.48, phase)
 	sun.light_angular_distance = 0.6
 	sun.shadow_enabled = shadows
 	# Directional shadow distance is camera-local, not all 170 m of the arena.
 	# Bias values are initial art settings: captured views must confirm contact.
-	sun.shadow_bias = 0.035
-	sun.shadow_normal_bias = 0.55
+	sun.shadow_bias = 0.025
+	sun.shadow_normal_bias = 0.35
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
 	sun.directional_shadow_max_distance = SHADOW_DISTANCE
 	sun.directional_shadow_blend_splits = true
@@ -111,8 +116,8 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 		fill.name = "WorldSkyFill"
 		world.add_child(fill)
 	fill.rotation_degrees = Vector3(-55.0, 137.0, 0.0)
-	fill.light_color = Color("afc8e3")
-	fill.light_energy = lerpf(0.10, 0.12, phase)
+	fill.light_color = Color("a8c7e5")
+	fill.light_energy = lerpf(0.22, 0.24, phase)
 	fill.shadow_enabled = false
 	fill.sky_mode = DirectionalLight3D.SKY_MODE_LIGHT_ONLY
 	MythicEnvironment.set_phase(world, phase)
