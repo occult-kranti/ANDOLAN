@@ -76,6 +76,13 @@ jobs:
           "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/input_binding_cases.gd -- --report="$RUNNER_TEMP/checks/controls.json"
           "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_audio_cases.gd -- --report="$RUNNER_TEMP/checks/traversal-audio.json"
           "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_army_stress.gd -- --report="$RUNNER_TEMP/checks/stress.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_army_cases.gd -- --report="$RUNNER_TEMP/checks/siege-army.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/lane_vehicle_art_cases.gd -- --report="$RUNNER_TEMP/checks/vehicle-art.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_effects_cases.gd -- --report="$RUNNER_TEMP/checks/siege-effects.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_ui_cases.gd -- --report="$RUNNER_TEMP/checks/siege-ui.json"
+          python3 games/yuga-native/tests/release_siege_cases.py --report="$RUNNER_TEMP/checks/siege-release-gates.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_pose_cases.gd -- --report="$RUNNER_TEMP/checks/siege-pose.json"
+          python3 games/yuga-native/tools/audio/build-siege-audio.py --check --report="$RUNNER_TEMP/checks/siege-audio.json"
           python3 games/yuga-native/tests/traversal_security_cases.py --report="$RUNNER_TEMP/checks/security.json"
           python3 games/yuga-native/tests/release_traversal_cases.py --report="$RUNNER_TEMP/checks/release-gates.json"
       - name: Export, inspect and package both native platforms

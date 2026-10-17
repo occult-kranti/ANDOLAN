@@ -392,7 +392,7 @@
         {
           "path": "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md",
           "scope": "Sixteen production gates, owners and measurable acceptance requirements; dated offline progress addendum preserves production rules and open gates.",
-          "sha256": "29b9a6e4c8994535f6de949ca1ed564be715e78c8fdcbcff96ae07ca11951d40"
+          "sha256": "eeb47bac1b836aa78aacb1e533eaf0af01e8513dcbbe6b41d2209c98dd576787"
         },
         {
           "path": "games/yuga-native/docs/PRODUCTION_GUIDE_REVIEW.md",
@@ -2114,5 +2114,57 @@
     "FG04-T03",
     "FG01-T03"
   ],
-  "queue_policy": "next_packets contains only incomplete tasks whose task dependencies are complete. upcoming_packets is an ordered horizon; its tasks are not claimed ready and retain explicit dependency/hardware blocks. Starting investigation does not authorize marking an unmet dependency complete."
+  "queue_policy": "next_packets contains only incomplete tasks whose task dependencies are complete. upcoming_packets is an ordered horizon; its tasks are not claimed ready and retain explicit dependency/hardware blocks. Starting investigation does not authorize marking an unmet dependency complete.",
+  "supporting_packets": [
+    {
+      "id": "SIEGE-01",
+      "title": "Siege combat and mirrored reinforcements",
+      "status": "in_progress",
+      "supports": [
+        "FG08-T01",
+        "FG13-T01"
+      ],
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+    },
+    {
+      "id": "SIEGE-02",
+      "title": "Original vehicle art and continuous poses",
+      "status": "in_progress",
+      "supports": [
+        "FG08-T01",
+        "FG13-T01"
+      ],
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+    },
+    {
+      "id": "SIEGE-03",
+      "title": "Bounded siege effects and original sound",
+      "status": "in_progress",
+      "supports": [
+        "FG08-T01",
+        "FG13-T01"
+      ],
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+    },
+    {
+      "id": "SIEGE-04",
+      "title": "Immediate siege practice and accessible controls",
+      "status": "in_progress",
+      "supports": [
+        "FG08-T01",
+        "FG13-T01"
+      ],
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+    },
+    {
+      "id": "SIEGE-05",
+      "title": "Independent siege combat and lifecycle QA",
+      "status": "in_progress",
+      "supports": [
+        "FG08-T01",
+        "FG13-T01"
+      ],
+      "contract": "games/yuga-native/docs/SIEGE_MILESTONE.md"
+    }
+  ]
 }

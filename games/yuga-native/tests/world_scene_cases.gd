@@ -327,21 +327,36 @@ func _check_layout_and_state() -> void:
 			rectangles[str(control.name)]=_visible_rect(control)
 			if not viewport_rect.encloses(control.get_global_rect()): failures.append(str(control.name))
 		var buttons: Array[Node] = scene.pause_panel.find_children("*","Button",true,false)
-		for button in buttons:
-			rectangles[button.text]=_visible_rect(button)
-			if not viewport_rect.encloses(button.get_global_rect()) or not scene.pause_panel.get_global_rect().encloses(button.get_global_rect()) or button.size.y<40:
-				failures.append(button.text)
+		var scroll_rect: Rect2=scene.pause_scroll.get_global_rect()
+		if not scene.pause_panel.get_global_rect().encloses(scroll_rect): failures.append("menu scroll outside panel")
+		var focus_reachable:=true
+		# A scroll menu deliberately clips inactive rows. Every keyboard target
+		# must scroll fully into view when focused, including the volume slider.
+		for action in scene.pause_actions:
+			action.grab_focus()
+			await _frames(4)
+			var action_rect: Rect2=action.get_global_rect()
+			var label: String=action.text if action is Button else str(action.name)
+			rectangles[label]=_visible_rect(action)
+			if not viewport_rect.encloses(action_rect) or not scroll_rect.grow(1).encloses(action_rect):
+				failures.append(label+" not fully visible on focus")
+			if action is Button and action.size.y<40: failures.append(label+" small target")
+			focus_reachable=focus_reachable and action.has_focus() and action.focus_mode==Control.FOCUS_ALL
 		var overlaps := []
 		for i in range(buttons.size()):
 			for j in range(i+1,buttons.size()):
 				if buttons[i].get_global_rect().intersects(buttons[j].get_global_rect()): overlaps.append([buttons[i].text,buttons[j].text])
-			# Noninteractive HUD still must not cover any pause action visually.
-			if buttons[i].get_global_rect().intersects(scene.map_control.get_global_rect()): overlaps.append([buttons[i].text,"atlas"])
+			# Check the visible clipped part against the HUD; off-screen rows are
+			# intentionally hidden by ScrollContainer and are not UI overlap.
+			var visible_part: Rect2=buttons[i].get_global_rect().intersection(scroll_rect)
+			if visible_part.has_area() and visible_part.intersects(scene.map_control.get_global_rect()): overlaps.append([buttons[i].text,"atlas"])
 		var centered := is_instance_valid(crosshair) and crosshair.get_global_rect().get_center().distance_to(viewport_rect.get_center())<24
-		var continue_button := _button_named("Continue exploring")
-		var focus_ready := is_instance_valid(continue_button) and continue_button.has_focus()
-		_record("UI inside viewport and controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==8 and centered and focus_ready,
-			{"logical_viewport":[viewport_rect.size.x,viewport_rect.size.y],"outside_or_small":failures,"overlaps":overlaps,"crosshair_near_center":centered,"resume_keyboard_focus":focus_ready,"rectangles":rectangles})
+		var continue_button := _button_named("Continue practice")
+		if is_instance_valid(continue_button): continue_button.grab_focus()
+		await _frames(4)
+		var focus_ready := is_instance_valid(continue_button) and continue_button.has_focus() and scroll_rect.grow(1).encloses(continue_button.get_global_rect())
+		_record("UI inside viewport and focused controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==9 and scene.pause_actions.size()==10 and focus_reachable and centered and focus_ready,
+			{"logical_viewport":[viewport_rect.size.x,viewport_rect.size.y],"outside_or_small":failures,"overlaps":overlaps,"crosshair_near_center":centered,"resume_keyboard_focus":focus_ready,"all_targets_reachable":focus_reachable,"focused_rectangles":rectangles})
 	# Resume the actual character controller, then use input actions rather than
 	# assigning a fake position to prove held movement had an effect before pause.
 	scene.set_paused(false)
@@ -365,7 +380,7 @@ func _check_layout_and_state() -> void:
 	await _frames(30)
 	_record("pause freezes held movement and fire", moved>.5 and scene.paused and paused and _horizontal_distance(stopped,scene.player.position)<.00001 and shots==scene.player.shots_fired and is_equal_approx(remaining,scene.player.fire_remaining),
 		{"movement_before_pause":moved,"movement_during_pause":_horizontal_distance(stopped,scene.player.position),"shots_before":shots,"shots_after":scene.player.shots_fired})
-	var resume := _button_named("Continue exploring")
+	var resume := _button_named("Continue practice")
 	if is_instance_valid(resume): resume.pressed.emit()
 	await _frames(15)
 	_record("resume button clears stale actions", not scene.paused and not paused and not Input.is_action_pressed("move_forward") and not Input.is_action_pressed("fire") and _horizontal_distance(stopped,scene.player.position)<.02 and scene.player.shots_fired==shots,

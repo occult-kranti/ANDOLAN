@@ -26,8 +26,12 @@ NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,160}\Z")
 CHECKS = ("archive", "media", "script", "film", "motion", "vfx", "audio", "native",
           "world-scene", "world-flow", "world-lighting")
 TRAVERSAL_CHECKS = ("traversal", "traversal-pose", "army", "controls", "traversal-audio", "stress",
-                    "security", "release-gates")
-TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/traversal-armies-render-r2"
+                    "security", "release-gates", "siege-army", "vehicle-art", "siege-effects", "siege-audio", "siege-ui", "siege-release-gates", "siege-pose")
+TRAVERSAL_CAPTURE_DIRECTORY = "docs/evidence/siege-traversal-render-r1"
+SIEGE_CAPTURE_DIRECTORY = "docs/evidence/siege-render-r1"
+SIEGE_CAPTURE_ASSETS = {"yuga-siege-preview.mp4", "siege-render-review.json", "siege-video.json", "SIEGE-RENDER-REVIEW.md"}
+SIEGE_SELECTED_FRAMES = (45, 90, 145)
+SIEGE_CAPTURE_ASSETS |= {f"siege-frame-{index:05d}.png" for index in SIEGE_SELECTED_FRAMES}
 TRAVERSAL_STILLS = {
     "still-05-actual-take-hud.png", "still-city-overview.png",
     "still-sun-landing-courts.png", "still-army-engagement.png",
@@ -47,6 +51,10 @@ CAPTURE_REQUIRED_RUNTIME = {"scripts/confluence_world.gd", "scripts/player.gd",
 
 def traversal_release(tag):
     return tag.startswith("yuga-traversal-armies-")
+
+
+def siege_release(tag):
+    return traversal_release(tag) and tag.endswith("-siege")
 REQUIRED_ARCHIVE = {
     "yuga-confluence-duel.mp4", "combat-film-render.json", "combat-film-video.json",
     "confluence-duel.json", "capture-combat-film.gd", "cinematic_actor.gd",
@@ -296,6 +304,52 @@ def validate_traversal_capture(directory, exported, decode=False):
             "scope":"Full recorded input take, retained still bytes and current/exported source verified. No rerender, OS-input, audio or realtime-performance claim."}
 
 
+def validate_siege_capture(directory, exported, decode=False):
+    render_path = member(directory, "siege-render-review.json")
+    render = json.loads(render_path.read_text())
+    video = json.loads(member(directory, "siege-video.json").read_text())
+    require(render.get("complete") is True and not render.get("failure"), "Siege capture failed or incomplete")
+    require(render.get("renderer") == "forward_plus" and render.get("display") == "x11", "Siege capture lacks actual display")
+    require((render.get("fps"), render.get("physics_hz"), render.get("take_physics_ticks"), render.get("width"), render.get("height")) == (30,60,360,1280,720), "Siege capture timing/resolution differs")
+    require(render.get("time_scale") == 1.0, "Siege time scale differs")
+    require(all(render.get("outcomes", {}).get(key) is True for key in ("windup","impact","vehicles_moved","finite")), "Siege mechanics missing from capture")
+    frames = render.get("frames", [])
+    start = render.get("take_start_tick")
+    require(len(frames) == 180 and type(start) is int and start >= 0, "Siege frame count/start invalid")
+    require(member(directory,"SIEGE-RENDER-REVIEW.md").is_file(), "Siege review is missing")
+    previous_draw = -1
+    for index, frame in enumerate(frames):
+        require(frame.get("index") == index and frame.get("physics_tick_delta") == 2 and frame.get("physics_tick") == start+2*(index+1) and frame.get("finite") is True, "Siege frame sequence invalid")
+        image = frame.get("image", {})
+        require(type(frame.get("render_frame")) is int and frame["render_frame"] > previous_draw, "Siege render counter regressed")
+        previous_draw = frame["render_frame"]
+        require(image.get("file") == f"frame-{index:05d}.png" and (image.get("width"),image.get("height")) == (1280,720), "Siege frame image metadata invalid")
+        require(isinstance(image.get("sha256"),str) and re.fullmatch(r"[a-f0-9]{64}",image["sha256"]) is not None, "Siege frame hash invalid")
+        require(all(type(image.get(key)) is int and image[key] > 0 for key in ("draw_calls","rendered_objects","rendered_primitives")), "Siege frame lacks actual render counters")
+        if index in SIEGE_SELECTED_FRAMES:
+            path = member(directory, f"siege-frame-{index:05d}.png")
+            header = path.read_bytes()[:24]
+            require(header[:8] == b"\x89PNG\r\n\x1a\n" and len(header) == 24 and struct.unpack(">II",header[16:24]) == (1280,720) and digest(path) == image.get("sha256"), "Retained siege frame differs")
+    expected = set(CAPTURE_FIXED_SOURCES) | {"tools/capture-siege.gd","tools/run-siege-capture.py"}
+    for folder in ("scripts","scenes","assets"):
+        expected.update(path.relative_to(PROJECT).as_posix() for path in (PROJECT/folder).rglob("*") if path.is_file())
+    sources = render.get("source_sha256", {})
+    require(set(sources) == {"res://"+name for name in expected}, "Siege source inventory differs")
+    exported_sources = exported.get("source", {}).get("files", {})
+    shared = {name for name in expected if name == "project.godot" or name.split("/")[0] in ("scripts","scenes","assets")}
+    require(shared == {name for name in exported_sources if name == "project.godot" or name.split("/")[0] in ("scripts","scenes","assets")}, "Siege exported runtime set differs")
+    for name in expected:
+        actual = record(member(PROJECT,name))
+        require(sources["res://"+name] == actual["sha256"], "Siege source changed: "+name)
+        if name in shared: require(exported_sources.get(name) == actual, "Siege exported source changed: "+name)
+    movie = member(directory,"yuga-siege-preview.mp4")
+    require(video.get("complete") is True and video.get("file") == movie.name and video.get("sha256") == digest(movie) and video.get("bytes") == movie.stat().st_size, "Siege video bytes differ")
+    require(video.get("capture_report_sha256") == digest(render_path), "Siege movie links different capture")
+    signature = traversal_probe_signature(video.get("probe", {}))
+    if decode: require(probe_traversal_movie(movie) == signature, "Decoded siege media differs")
+    return {"passed":True,"frames":180,"physics_ticks":360,"source_files":len(expected),"decoded_this_run":decode}
+
+
 def stage(args):
     require(TAG.fullmatch(args.tag), "Unexpected release tag")
     commit = git("rev-parse", "HEAD")
@@ -349,6 +403,15 @@ def stage(args):
         require(not git("diff", "--name-only", "HEAD", "--", *tracked), "Traversal capture/source differs from committed checkout")
         for name in sorted(archive_names):
             copy(capture / name, "TRAVERSAL-RENDER-REVIEW.md" if name == "REVIEW.md" else name)
+    if siege_release(args.tag):
+        capture = PROJECT / SIEGE_CAPTURE_DIRECTORY
+        validate_siege_capture(capture, exported, decode=True)
+        tracked = [str(member(capture,name).relative_to(REPO)) for name in sorted(SIEGE_CAPTURE_ASSETS)]
+        git("ls-files", "--error-unmatch", "--", *tracked)
+        require(not git("diff", "--name-only", "HEAD", "--", *tracked), "Siege capture differs from committed checkout")
+        for name in sorted(SIEGE_CAPTURE_ASSETS): copy(capture/name)
+        copy(PROJECT/"docs/SIEGE_MILESTONE.md", "SIEGE-MILESTONE.md")
+        copy(PROJECT/"assets/audio/siege/provenance.json", "SIEGE-AUDIO-PROVENANCE.json")
     notes = PROJECT / ("docs/RELEASE_TRAVERSAL_ARMIES.md" if traversal_release(args.tag) else "docs/RELEASE_CONFLUENCE_DUEL.md")
     text = notes.read_text() if notes.exists() else (
         "# YUGA — Confluence duel preview\n\nDownload yuga-confluence-duel.mp4 for the original 24-second film. "
@@ -395,6 +458,9 @@ def verify(directory, tag, commit):
         packages = json.loads(member(directory, "native-package-manifest.json").read_text())
         exported = json.loads(member(directory, "native-export-manifest.json").read_text())
         validate_traversal_capture(directory, exported)
+        if siege_release(tag):
+            require(SIEGE_CAPTURE_ASSETS | {"SIEGE-MILESTONE.md","SIEGE-AUDIO-PROVENANCE.json"} <= set(inventory["files"]), "Siege release omits required assets")
+            validate_siege_capture(directory, exported)
         require(packages["git"]["head"] == commit and exported["git"]["head"] == commit,
                 "Feature package source mismatch")
         for platform in ("linux", "windows"):

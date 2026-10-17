@@ -192,6 +192,10 @@ Use a lead integrator, art director/character artist, animation/technical art, e
 
 Each report records task ID, round, source revision/hash, changed files, passed/failed checks, evidence paths, remaining limitation and next owner. `complete` requires all acceptance conditions and linked evidence; `in_progress` means active implementation with remaining gates; `planned` means not started; `blocked` names a concrete unmet input/dependency. Do not invent a date or percentage. Research scope is stated as read, executed, inferred or unverified.
 
+## Current supporting siege milestone
+
+[Siege vehicles and visual-target plan](SIEGE_MILESTONE.md) defines the five parallel implementation packets, cannon/chariot counterplay, independent checks and conditional staffing/time estimates. This offline milestone supports FG08/FG13 while the production dependencies below remain open. Its acceptance requires actual current-source combat, motion and package evidence.
+
 ## Immediate execution queue
 
 The JSON `next_packets` list contains dependency-ready tasks only. `upcoming_packets` is the following horizon and includes tasks whose prerequisites or hardware are still unavailable. The sequence below explains both; it is not a claim that every listed task is ready. Complete ready packets while the larger gates remain open:

@@ -77,6 +77,7 @@ For a local machine without working Vulkan, explicitly choose `--rendering-metho
 | Flight, grapple, energy, LOS, collision | `scripts/player_traversal.gd`; player delegates movement/state |
 | Additive traversal pose | `scripts/traversal_pose.gd`; inspect actual skeleton samples/render before approval |
 | Lane movement, attacks, gold, local cores | `scripts/lane_army.gd`, `scripts/lane_minion.gd` |
+| Cannon carts, royal chariots, committed blast warnings | `scripts/lane_vehicle_art.gd`, `scripts/siege_effects.gd`; [siege milestone](SIEGE_MILESTONE.md) |
 | Map geometry and placement | `art/world/confluence-map.json` → `assets/world/confluence-map.json` via `tools/stage-world.py` |
 | Landing decks/rings | `scripts/traversal_landmarks.gd` plus manifest `traversal` section |
 | Lighting, water, paving | `scripts/world_lighting.gd`, `scripts/world_water.gdshader`, `scripts/world_ground.gdshader`, `scripts/world_ground_common.gdshaderinc` |
@@ -211,3 +212,11 @@ Remaining defect/dependency and next owner:
 ```
 
 Keep reusable setup and third-party tooling under `/workspace/tooling`, runtime code/assets in their canonical folders, fresh reports/captures in unique scratch directories, and accepted source-pinned evidence in the documented archives. Push/verify the intended checkpoint before cleanup. Git status, tracked notices/manifests, accepted evidence, user saves and editable source art are not redundant caches. Cleanup ownership and retained artifacts belong in [START_HERE](../../../docs/START_HERE.md); do not delete another worker's active directories.
+
+## Siege feature checks and capture
+
+The current siege packet adds original cannon carts and royal chariots to offline waves. In Confluence, press Escape and choose **Siege practice**; F5 restores regular lanes. The [siege milestone](SIEGE_MILESTONE.md) records its scope, five owners and graphics forecast.
+
+Focused Godot suites are `siege_army_cases.gd`, `lane_vehicle_art_cases.gd`, `siege_effects_cases.gd`, `siege_pose_cases.gd` and `siege_ui_cases.gd`. Use the existing `--report=/absolute/new/path.json` pattern. `python3 games/yuga-native/tools/audio/build-siege-audio.py --check` verifies four original cues with the Python standard library; no new dependency is required.
+
+After runtime/art source freeze, `python3 games/yuga-native/tools/run-siege-capture.py --output /absolute/new/directory` records 180 actual Forward+ frames of the public drill, with a fixed camera staged before the take. It owns an isolated Xvfb/Mesa session and generates a silent six-second MP4. This is simulation/motion evidence, not human-input or hardware-performance evidence. Retain raw captures in scratch and selected reviewed frames/reports in the evidence archive.

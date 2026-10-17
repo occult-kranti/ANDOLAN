@@ -45,6 +45,13 @@ godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/la
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/input_binding_cases.gd -- --report="$validation_dir/controls.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_audio_cases.gd -- --report="$validation_dir/traversal-audio.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_army_stress.gd -- --report="$validation_dir/stress.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_army_cases.gd -- --report="$validation_dir/siege-army.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/lane_vehicle_art_cases.gd -- --report="$validation_dir/vehicle-art.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_effects_cases.gd -- --report="$validation_dir/siege-effects.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_ui_cases.gd -- --report="$validation_dir/siege-ui.json"
+python3 games/yuga-native/tests/release_siege_cases.py --report="$validation_dir/siege-release-gates.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_pose_cases.gd -- --report="$validation_dir/siege-pose.json"
+python3 games/yuga-native/tools/audio/build-siege-audio.py --check --report="$validation_dir/siege-audio.json"
 python3 games/yuga-native/tests/traversal_security_cases.py --report="$validation_dir/security.json"
 python3 games/yuga-native/tests/release_traversal_cases.py --report="$validation_dir/release-gates.json"
 python3 games/yuga-native/tools/setup-render-runtime.py

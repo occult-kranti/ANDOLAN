@@ -105,6 +105,13 @@ jobs:
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/input_binding_cases.gd -- --report="$RUNNER_TEMP/controls.json"
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_audio_cases.gd -- --report="$RUNNER_TEMP/traversal-audio.json"
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_army_stress.gd -- --report="$RUNNER_TEMP/stress.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_army_cases.gd -- --report="$RUNNER_TEMP/siege-army.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/lane_vehicle_art_cases.gd -- --report="$RUNNER_TEMP/vehicle-art.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_effects_cases.gd -- --report="$RUNNER_TEMP/siege-effects.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_ui_cases.gd -- --report="$RUNNER_TEMP/siege-ui.json"
+          python3 games/yuga-native/tests/release_siege_cases.py --report="$RUNNER_TEMP/siege-release-gates.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/siege_pose_cases.gd -- --report="$RUNNER_TEMP/siege-pose.json"
+          python3 games/yuga-native/tools/audio/build-siege-audio.py --check --report="$RUNNER_TEMP/siege-audio.json"
           python3 games/yuga-native/tests/traversal_security_cases.py --report="$RUNNER_TEMP/security.json"
           python3 games/yuga-native/tests/release_traversal_cases.py --report="$RUNNER_TEMP/release-gates.json"
       - name: Projectile lifetime, range and occlusion regression
@@ -128,6 +135,13 @@ jobs:
             ${{ runner.temp }}/controls.json
             ${{ runner.temp }}/traversal-audio.json
             ${{ runner.temp }}/stress.json
+            ${{ runner.temp }}/siege-army.json
+            ${{ runner.temp }}/vehicle-art.json
+            ${{ runner.temp }}/siege-effects.json
+            ${{ runner.temp }}/siege-audio.json
+            ${{ runner.temp }}/siege-pose.json
+            ${{ runner.temp }}/siege-ui.json
+            ${{ runner.temp }}/siege-release-gates.json
             ${{ runner.temp }}/security.json
             ${{ runner.temp }}/release-gates.json
             ${{ runner.temp }}/projectile-cases.json

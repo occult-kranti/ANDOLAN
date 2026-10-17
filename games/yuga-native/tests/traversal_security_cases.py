@@ -18,7 +18,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGER = ROOT / "tools/package-native.py"
 NAMES = [
-    "project.binary", "scenes/courtyard.tscn", "scenes/confluence_world.tscn",
+    "assets/audio/siege/provenance.json", "project.binary", "scenes/courtyard.tscn", "scenes/confluence_world.tscn",
     "scenes/combat_film.tscn", "assets/world/confluence-map.json",
     "assets/cinematics/confluence-duel.json", "shaders/production_water.gdshader",
     "shaders/world_water.gdshader", "shaders/world_ground.gdshader",
@@ -32,10 +32,10 @@ NAMES = [
     ".godot/imported/lane-procession-loop.wav-fixture.sample",
     *[f".godot/imported/{name}.wav-fixture.sample" for name in (
         "grapple_lock", "grapple_release", "flight_start", "flight_exhaust",
-        "flight_recharge", "minion_hit", "coin")],
+        "flight_recharge", "minion_hit", "coin", "cannon_windup", "cannon_impact", "chariot_windup", "chariot_impact")],
     *[f"scripts/{name}.gd" for name in (
         "input_bindings", "controls_overlay", "player_traversal", "traversal_pose", "traversal_landmarks",
-        "lane_army", "lane_minion", "lane_unit_art", "traversal_audio")],
+        "lane_army", "lane_minion", "lane_unit_art", "traversal_audio", "lane_vehicle_art", "siege_effects")],
 ]
 
 
@@ -118,6 +118,8 @@ def main() -> int:
             entry for entry in entries if entry[0] != "scripts/lane_army.gd"])[0])
         evaluate("missing native platform stone shader rejected", pack([
             entry for entry in entries if entry[0] != "scripts/traversal_stone.gdshader"])[0])
+        for missing in ("assets/audio/siege/provenance.json", "scripts/lane_vehicle_art.gd", "scripts/siege_effects.gd", ".godot/imported/cannon_windup.wav-fixture.sample", ".godot/imported/cannon_impact.wav-fixture.sample", ".godot/imported/chariot_windup.wav-fixture.sample", ".godot/imported/chariot_impact.wav-fixture.sample"):
+            evaluate("missing siege resource rejected: " + missing, pack([entry for entry in entries if entry[0] != missing])[0])
         corrupt = bytearray(baseline)
         corrupt[-1] ^= 1
         evaluate("payload checksum corruption rejected", bytes(corrupt))

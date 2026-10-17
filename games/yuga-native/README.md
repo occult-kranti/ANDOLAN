@@ -1,6 +1,6 @@
 # YUGA native production track
 
-**Start a new task:** [repository handoff](../../docs/START_HERE.md) → [build handbook](docs/BUILD_HANDBOOK.md). The handbook maps features to files and provides setup, tests, art, capture, packaging and agent handoff instructions. Use the [research brief](docs/research/RESEARCH_BRIEF.md) for Reddit findings, mythology, selected reading and reuse decisions; use the [workspace guide](../../docs/WORKSPACE_AND_CLEANUP.md) for cloud cleanup and recovery.
+**Start a new task:** [repository handoff](../../docs/START_HERE.md) → [build handbook](docs/BUILD_HANDBOOK.md). The handbook maps features to files and provides setup, tests, art, capture, packaging and agent handoff instructions. Use the [research brief](docs/research/RESEARCH_BRIEF.md) for Reddit findings, mythology, selected reading and reuse decisions; use the [workspace guide](../../../docs/WORKSPACE_AND_CLEANUP.md) for cloud cleanup and recovery.
 
 The [full-game production roadmap](docs/FULL_GAME_PRODUCTION_ROADMAP.md) is the
 execution guide from this preview to the intended competitive game. Its
@@ -29,6 +29,8 @@ unexecuted. See the
 [Linux window review](docs/evidence/traversal-armies-window-r2/REVIEW.md) and
 [public package verification](docs/evidence/traversal-armies-published/REVIEW.md).
 Earlier map and courtyard previews remain available in Releases.
+
+The current [siege milestone](docs/SIEGE_MILESTONE.md) adds cannon carts, royal chariots and immediate Siege practice. It also records the five parallel tasks and a staffing-dependent estimate for reaching the concept-art target; completion and release evidence are tracked there.
 
 ## Run the source
 

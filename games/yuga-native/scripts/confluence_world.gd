@@ -9,6 +9,7 @@ const Landmarks = preload("res://scripts/traversal_landmarks.gd")
 const Bindings = preload("res://scripts/input_bindings.gd")
 const ControlsOverlay = preload("res://scripts/controls_overlay.gd")
 const TraversalAudio = preload("res://scripts/traversal_audio.gd")
+const SiegeEffects = preload("res://scripts/siege_effects.gd")
 const RUNTIME_MANIFEST := "res://assets/world/confluence-map.json"
 const SOURCE_MANIFEST := "res://art/world/confluence-map.json"
 const CREAM := Color("f0e5d0")
@@ -25,6 +26,13 @@ var native_platform_bodies: Array[StaticBody3D] = []
 var landmark_report: Dictionary = {}
 var army: Node3D
 var audio: Node
+var siege_effects: Node3D
+var siege_practice_button: Button
+var practice_mode_label: Label
+var practice_hint_label: Label
+var practice_error := ""
+var pause_actions: Array[Control] = []
+var pause_scroll: ScrollContainer
 var controls_overlay: Control
 var controls_return_to_pause := false
 var energy_bar: ProgressBar
@@ -70,7 +78,7 @@ class Atlas extends Control:
 	var data: Dictionary = {}
 	var hero_position := Vector3.ZERO
 	var units: Array = []
-	var footer_height := 52.0
+	var footer_height := 70.0
 	func project(point: Vector3) -> Vector2:
 		var bounds: Array=data.get("bounds",{}).get("nominal_xz",[-70,70,-130,130])
 		return Vector2(12+(point.x-bounds[0])/(bounds[1]-bounds[0])*(size.x-24),12+(point.z-bounds[2])/(bounds[3]-bounds[2])*(size.y-24-footer_height))
@@ -95,6 +103,8 @@ class Atlas extends Control:
 			draw_polyline(PackedVector2Array([p+Vector2(0,-3),p+Vector2(3,0),p+Vector2(0,3),p+Vector2(-3,0),p+Vector2(0,-3)]),Color("e9c877"),1,true)
 		for unit in units:
 			var p:=project(unit.position)
+			if unit.get("role","") in ["cannon_cart","royal_chariot"]:
+				draw_circle(p,5.5,Color("efba70") if unit.team=="sun" else Color("88bded"),false,1.5,true)
 			if unit.team=="sun": draw_colored_polygon(PackedVector2Array([p+Vector2(0,-2.5),p+Vector2(2,2),p+Vector2(-2,2)]),Color("efba70"))
 			else: draw_rect(Rect2(p-Vector2(1.7,1.7),Vector2(3.4,3.4)),Color("88bded"))
 		draw_circle(project(hero_position),5,Color.WHITE)
@@ -275,6 +285,10 @@ func _build_army_audio() -> bool:
 	world.add_child(audio)
 	# Audio owns loading the saved value; do not overwrite it with a second default.
 	audio.configure(audio.volume)
+	siege_effects=SiegeEffects.new()
+	siege_effects.name="SiegeEffects"
+	world.add_child(siege_effects)
+	siege_effects.configure(audio.volume)
 	if player.has_signal("traversal_event"):
 		player.traversal_event.connect(func(kind: String,position_: Vector3): audio.play_event(kind,position_))
 	var army_script=load("res://scripts/lane_army.gd")
@@ -285,6 +299,7 @@ func _build_army_audio() -> bool:
 		world.add_child(army)
 		army.gold_changed.connect(_gold_changed)
 		army.outcome.connect(_army_outcome)
+		army.siege_event.connect(siege_effects.handle_event)
 		return army.configure(manifest,player)
 	return false
 
@@ -296,8 +311,30 @@ func _army_outcome(team: String) -> void:
 	if goal_label: goal_label.text="%s core victory · Restart lane practice from pause" % ("SUN" if team=="sun" else "MOON")
 	set_paused(true)
 
-func _restart_army() -> void:
+func _start_siege_practice() -> bool:
+	# Validate the drill before disturbing current practice. Army owns gameplay.
+	if not army or not army.has_method("start_siege_drill") or not army.start_siege_drill():
+		practice_error="Siege practice unavailable; the current round is unchanged."
+		if practice_hint_label: practice_hint_label.text=practice_error
+		return false
+	practice_error=""
 	last_gold=0
+	_clear_combat_presentation()
+	teleport_to(Vector3(7,.05,-15),-25)
+	set_paused(false)
+	_update_practice_hud()
+	return true
+
+func _clear_combat_presentation() -> void:
+	if siege_effects: siege_effects.clear()
+	for parent in [projectiles,effects]:
+		if not parent: continue
+		for child in parent.get_children(): child.queue_free()
+
+func _restart_army() -> void:
+	practice_error=""
+	last_gold=0
+	_clear_combat_presentation()
 	if army: army.reset()
 	visit_anchor("sun-spawn")
 	set_paused(false)
@@ -503,15 +540,15 @@ func _build_ui() -> void:
 	map_control.offset_left=-196
 	map_control.offset_right=-20
 	map_control.offset_top=20
-	map_control.offset_bottom=338
-	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You",11,CREAM)
+	map_control.offset_bottom=356
+	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You\n◎ Siege engine",11,CREAM)
 	legend.name="AtlasLegend"
 	hud.add_child(legend)
 	legend.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
 	legend.offset_left=-184
 	legend.offset_right=-32
 	legend.offset_top=292
-	legend.offset_bottom=326
+	legend.offset_bottom=344
 	var help:=_card(hud,Vector2(20,-94),Vector2(330,74))
 	help.name="ControlsCard"
 	help.set_anchors_preset(Control.PRESET_BOTTOM_LEFT,true)
@@ -554,16 +591,25 @@ func _build_ui() -> void:
 	ui.add_child(pause_panel)
 	pause_panel.add_theme_stylebox_override("panel",_panel_style())
 	pause_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	pause_panel.offset_left=-220
-	pause_panel.offset_top=-270
-	pause_panel.offset_right=220
-	pause_panel.offset_bottom=270
+	pause_scroll=ScrollContainer.new()
+	pause_scroll.name="MenuScroll"
+	pause_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+	pause_scroll.follow_focus=true
+	pause_panel.add_child(pause_scroll)
 	var menu:=VBoxContainer.new()
+	menu.name="MenuActions"
+	menu.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	menu.add_theme_constant_override("separation",6)
-	pause_panel.add_child(menu)
+	pause_scroll.add_child(menu)
 	menu.add_child(_label("CONFLUENCE",22,GOLD))
-	menu.add_child(_label("OFFLINE LANE PRACTICE",12,Color("aec2c3")))
-	_button(menu,"Continue exploring",func():set_paused(false))
+	practice_mode_label=_label("OFFLINE LANE PRACTICE",12,Color("aec2c3"))
+	menu.add_child(practice_mode_label)
+	_button(menu,"Continue practice",func():set_paused(false))
+	siege_practice_button=_button(menu,"Siege practice · enter drill",_start_siege_practice)
+	siege_practice_button.name="SiegePractice"
+	practice_hint_label=_label("Try cannon carts and royal chariots in the central court. Blasts damage troops; your hero takes no damage.",13,CREAM)
+	practice_hint_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	menu.add_child(practice_hint_label)
 	_button(menu,"Day / night",func():set_night(not night))
 	_button(menu,"Visit Lanka coast",func():teleport_to(Vector3(-40,.05,14),180);set_paused(false))
 	_button(menu,"Visit Metro gardens",func():teleport_to(Vector3(40,.05,14),180);set_paused(false))
@@ -579,6 +625,7 @@ func _build_ui() -> void:
 	volume.custom_minimum_size.y=24
 	volume.value=audio.volume if audio else .35
 	menu.add_child(volume)
+	pause_actions.append(volume)
 	volume.value_changed.connect(_set_volume)
 	_set_volume(volume.value,false)
 	_button(menu,"Return to courtyard",return_to_courtyard)
@@ -589,6 +636,8 @@ func _build_ui() -> void:
 	ui.add_child(controls_overlay)
 	controls_overlay.closed.connect(_close_controls)
 	controls_overlay.bindings_changed.connect(_refresh_control_labels)
+	_wire_pause_focus()
+	_layout_pause_panel()
 
 func _refresh_control_labels() -> void:
 	if help_labels.size()!=2: return
@@ -610,6 +659,7 @@ func _close_controls() -> void:
 
 func _set_volume(value: float,save: bool=true) -> void:
 	if audio: audio.set_volume(value)
+	if siege_effects: siege_effects.set_volume(value)
 	if volume_label: volume_label.text="Sound · muted" if value<=0 else "Sound · %d%%" % roundi(value*100)
 	if save:
 		var result: Dictionary=Bindings.merge_settings({"audio":{"volume":value}})
@@ -644,15 +694,42 @@ func _label(text_: String, font_size: int, color: Color) -> Label:
 	label.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	return label
 
-func _button(parent: Control, text_: String, callback: Callable) -> void:
+func _button(parent: Control, text_: String, callback: Callable) -> Button:
 	var button:=Button.new()
 	button.text=text_
 	button.custom_minimum_size=Vector2(0,40)
 	button.add_theme_font_size_override("font_size",14)
+	button.add_theme_color_override("font_color",CREAM)
+	for state in ["normal","hover","pressed","focus"]:
+		var style:=StyleBoxFlat.new()
+		style.bg_color=Color("20444a") if state!="normal" else Color("17343a")
+		style.border_color=GOLD if state=="focus" else Color("537873")
+		style.set_border_width_all(2 if state=="focus" else 1)
+		style.content_margin_left=10
+		style.content_margin_right=10
+		button.add_theme_stylebox_override(state,style)
 	button.pressed.connect(callback)
 	parent.add_child(button)
+	pause_actions.append(button)
+	return button
+
+func _wire_pause_focus() -> void:
+	for index in range(pause_actions.size()):
+		var control:=pause_actions[index]
+		control.focus_mode=Control.FOCUS_ALL
+		control.focus_next=control.get_path_to(pause_actions[(index+1)%pause_actions.size()])
+		control.focus_previous=control.get_path_to(pause_actions[posmod(index-1,pause_actions.size())])
+
+func _layout_pause_panel() -> void:
+	if not pause_panel: return
+	var screen:=get_viewport().get_visible_rect().size
+	var size_:=Vector2(minf(480,screen.x-32),minf(600,screen.y-32))
+	pause_panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	pause_panel.size=size_
+	pause_panel.position=(screen-pause_panel.size)/2
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.echo: return
 	if controls_overlay and controls_overlay.visible: return
 	if event.is_action_pressed("help_controls"):
 		_open_controls()
@@ -662,11 +739,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		set_paused(not paused)
 		get_viewport().set_input_as_handled()
 	elif not paused and event.is_action_pressed("world_night"): set_night(not night)
-	elif not paused and event.is_action_pressed("world_respawn"): visit_anchor("sun-spawn")
+	elif not paused and event.is_action_pressed("world_respawn"): _restart_army()
 	elif not paused and event.is_action_pressed("world_overview"): set_overview(not overview)
 
 func _process(delta: float) -> void:
 	if not world_ready: return
+	if paused: _layout_pause_panel()
 	if not paused and not is_equal_approx(phase,target_phase):
 		phase=move_toward(phase,target_phase,delta*.45)
 		phase_clock+=delta
@@ -677,7 +755,8 @@ func _process(delta: float) -> void:
 	if ui_clock>.12:
 		ui_clock=0
 		location_label.text=district_at(player.position)
-		status_label.text="OFFLINE PRACTICE · %s · %d / 12 arrows" % ["Moonlight" if phase>.5 else "Golden hour",player.ammo]
+		var drill: bool=army.report().get("siege_drill",false) if army else false
+		status_label.text="OFFLINE %s · %s · %d / 12 arrows" % ["SIEGE DRILL" if drill else "PRACTICE","Moonlight" if phase>.5 else "Golden hour",player.ammo]
 		_update_practice_hud()
 		map_control.hero_position=player.position
 		map_control.queue_redraw()
@@ -700,11 +779,24 @@ func _physics_process(_delta: float) -> void:
 
 func _update_practice_hud() -> void:
 	_refresh_control_labels()
+	var siege_drill:=false
+	var enemy_siege:=0
 	if army:
 		var battle: Dictionary=army.report()
 		var cores: Dictionary=battle.get("cores",{})
-		score_label.text="Wave %d · Gold %d · Sun core %d · Moon core %d" % [battle.get("waves",0),battle.get("gold",0),cores.get("sun",100),cores.get("moon",100)]
+		siege_drill=battle.get("siege_drill",false)
 		if army.has_method("minimap_units"): map_control.units=army.minimap_units()
+		for unit in map_control.units:
+			if unit.get("team","")=="moon" and unit.get("role","") in ["cannon_cart","royal_chariot"]: enemy_siege+=1
+		if siege_drill:
+			var roles: Dictionary=battle.get("roles_alive",{})
+			score_label.text="Enemy siege %d · Cannons %d · Chariots %d · Gold %d" % [enemy_siege,roles.get("cannon_cart",0),roles.get("royal_chariot",0),battle.get("gold",0)]
+		else:
+			score_label.text="Wave %d · Gold %d · Sun core %d · Moon core %d" % [battle.get("waves",0),battle.get("gold",0),cores.get("sun",100),cores.get("moon",100)]
+		if practice_mode_label: practice_mode_label.text="OFFLINE SIEGE DRILL" if siege_drill else "OFFLINE LANE PRACTICE"
+		if siege_practice_button: siege_practice_button.text="Siege practice · restart drill" if siege_drill else "Siege practice · enter drill"
+		if practice_hint_label:
+			practice_hint_label.text=practice_error if not practice_error.is_empty() else ("Break enemy engines before impact to protect Sun troops. Your hero takes no damage. Restart lane practice exits this drill." if siege_drill else "Try cannon carts and royal chariots in the central court. Blasts damage troops; your hero takes no damage.")
 		if not String(battle.get("winner","")).is_empty():
 			goal_label.text="%s wins · Restart lane practice in pause" % String(battle.winner).to_upper()
 			return
@@ -724,6 +816,8 @@ func _update_practice_hud() -> void:
 	elif mode=="flight" or mode=="flying":
 		traversal_seen=true
 		goal_label.text="%s rise · %s descend · %s land\nEnergy refills on the ground" % [Bindings.label("jump"),Bindings.label("descend"),Bindings.label("fly")]
+	elif siege_drill:
+		goal_label.text="Break enemy engines to cancel shots.\nBlast marks affect troops only." if enemy_siege>0 else "Enemy engines cleared.\nEsc: restart drill or lane practice."
 	elif not candidate.is_empty():
 		var distance: float=player.global_position.distance_to(candidate.position)
 		var availability:="Tether ready" if grapple_cd<=0 else "Tether cooling %.1fs" % grapple_cd
@@ -772,8 +866,12 @@ func set_paused(value: bool) -> void:
 	if pause_panel: pause_panel.visible=value
 	if player: player.active=not value and not overview
 	if audio: audio.set_suspended(value or overview)
+	if siege_effects: siege_effects.set_suspended(value or overview)
 	Input.mouse_mode=Input.MOUSE_MODE_VISIBLE if value or overview else Input.MOUSE_MODE_CAPTURED
+	if not value: get_viewport().gui_release_focus()
 	if value and pause_panel:
+		_layout_pause_panel()
+		_update_practice_hud()
 		var buttons:=pause_panel.find_children("*","Button",true,false)
 		if not buttons.is_empty(): buttons[0].grab_focus()
 
@@ -812,6 +910,7 @@ func set_overview(value: bool) -> void:
 	release_actions()
 	if army: army.process_mode=Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_PAUSABLE
 	if audio: audio.set_suspended(value or paused)
+	if siege_effects: siege_effects.set_suspended(value or paused)
 	player.active=not value and not paused
 	if value:
 		review_camera.position=Vector3(118,155,195)
@@ -875,13 +974,14 @@ func _pulse(origin: Vector3) -> void:
 	tween.tween_callback(ring.queue_free)
 
 func build_report() -> Dictionary:
-	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
+	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
 
 func get_build_report() -> Dictionary:
 	return build_report()
 
 func return_to_courtyard() -> void:
 	release_actions()
+	_clear_combat_presentation()
 	get_tree().paused=false
 	Input.mouse_mode=Input.MOUSE_MODE_VISIBLE
 	get_tree().change_scene_to_file("res://scenes/courtyard.tscn")

@@ -79,16 +79,15 @@ func run() -> void:
 			unit.progress += 20
 			unit.position = army.route_sample(unit.lane_id,unit.progress,unit.team,unit.lateral).position
 		army._spawn_wave()
-	var reached70: bool = army.report().alive==70 and army.rejected_waves>0
-	for unit in army.units.duplicate().slice(0,8):unit.receive_damage(1000,"army")
-	for unit in army.units:
-		if unit.alive:
-			unit.progress += 10
-			unit.position = army.route_sample(unit.lane_id,unit.progress,unit.team,unit.lateral).position
-	army._spawn_wave()
 	var pressure: Dictionary = army.report()
+	var composition := {}
+	for unit in army.units:
+		var key: String = str(unit.lane_id)+"/"+unit.role
+		if not composition.has(key):composition[key] = {"sun":0,"moon":0}
+		composition[key][unit.team] += 1
+	var paired: bool = composition.values().all(func(c):return c.sun==c.moon)
 	army._spawn_wave()
-	record("exact72_capacity_and_paired_overflow_policy",reached70 and pressure.alive==72 and army.report().alive==72 and army.report().unit_nodes<=96,army.report())
+	record("exact72_capacity_and_paired_overflow_policy",paired and pressure.alive==72 and army.report().alive==72 and army.report().unit_nodes<=96 and army.rejected_waves>0,{"report":army.report(),"composition":composition})
 	# Force full-route endpoints with no opponents to exercise every lane/core.
 	# Isolate one arrival per fixture; retaining overlapping endpoint units would
 	# let unselected lanes arrive during an earlier fixture and invalidate it.

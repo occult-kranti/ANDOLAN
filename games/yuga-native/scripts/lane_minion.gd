@@ -4,10 +4,14 @@ extends StaticBody3D
 signal defeated(unit: Node3D, by_player: bool)
 
 const Art = preload("res://scripts/lane_unit_art.gd")
+const VehicleArt = preload("res://scripts/lane_vehicle_art.gd")
+const VEHICLE_ROLES := ["cannon_cart", "royal_chariot"]
 const STATS := {
-	"spearman":{"health":75.0,"damage":10.0,"range":2.15,"cooldown":1.10,"speed":3.8,"gold":18},
-	"bow_guard":{"health":55.0,"damage":8.0,"range":11.0,"cooldown":1.50,"speed":3.6,"gold":24},
-	"commander":{"health":150.0,"damage":13.0,"range":2.55,"cooldown":1.40,"speed":3.45,"gold":45}
+	"spearman":{"health":75.0,"damage":10.0,"range":2.15,"cooldown":1.10,"speed":3.8,"gold":18,"radius":.39,"height":1.9,"core_damage":7.0},
+	"bow_guard":{"health":55.0,"damage":8.0,"range":11.0,"cooldown":1.50,"speed":3.6,"gold":24,"radius":.39,"height":1.9,"core_damage":7.0},
+	"commander":{"health":150.0,"damage":13.0,"range":2.55,"cooldown":1.40,"speed":3.45,"gold":45,"radius":.39,"height":2.13,"core_damage":12.0},
+	"cannon_cart":{"health":220.0,"damage":24.0,"range":18.0,"cooldown":4.0,"speed":2.8,"gold":70,"radius":.82,"height":1.8,"core_damage":20.0,"windup":.80,"attack_duration":1.20,"blast_radius":3.0},
+	"royal_chariot":{"health":340.0,"damage":22.0,"range":5.5,"cooldown":2.6,"speed":3.1,"gold":110,"radius":.88,"height":2.4,"core_damage":25.0,"windup":.55,"attack_duration":1.0,"blast_radius":2.4}
 }
 
 var army: Node3D
@@ -39,6 +43,8 @@ var health_fill: MeshInstance3D
 var arrow: MeshInstance3D
 var reward_emitted := false
 var render_art := true
+var radius := .39
+var vehicle_art: Dictionary = {}
 
 func setup(owner_army: Node3D, identity: int, team_value: String, role_value: String, lane_value: int) -> void:
 	army = owner_army
@@ -47,6 +53,7 @@ func setup(owner_army: Node3D, identity: int, team_value: String, role_value: St
 	role = role_value
 	lane_id = lane_value
 	max_health = float(STATS[role].health)
+	radius = float(STATS[role].radius)
 	health = max_health
 	name = "%s_%s_%d" % [team,role,unit_id]
 
@@ -57,18 +64,20 @@ func _ready() -> void:
 	add_to_group("lane_enemy" if team == "moon" else "lane_ally")
 	shape = CollisionShape3D.new()
 	var capsule := CapsuleShape3D.new()
-	capsule.radius = .39
-	capsule.height = 1.9 if role != "commander" else 2.13
+	capsule.radius = radius
+	capsule.height = float(STATS[role].height)
 	shape.shape = capsule
 	shape.position.y = capsule.height*.5
 	add_child(shape)
 	if render_art:
-		var result := Art.build(team,role)
+		var result: Dictionary = VehicleArt.build(team,role) if role in VEHICLE_ROLES else Art.build(team,role)
+		if role in VEHICLE_ROLES:
+			vehicle_art = result
 		visual = result.root
 		joints = result.joints
 		add_child(visual)
 		var bar := Node3D.new()
-		bar.position.y = 2.10 if role != "commander" else 3.02
+		bar.position.y = 3.05 if role in VEHICLE_ROLES or role == "commander" else 2.10
 		add_child(bar)
 		var dark := StandardMaterial3D.new()
 		dark.albedo_color = Color("1a2024")
@@ -110,6 +119,8 @@ func receive_damage(amount, source := "army") -> bool:
 		return false
 	if source not in ["army","player"] or not alive or (source == "player" and team == "sun"):
 		return false
+	if is_instance_valid(army) and not army.winner.is_empty():
+		return false
 	health = maxf(0.0,health-float(amount))
 	hit_time = .18
 	if health <= 0:
@@ -130,10 +141,14 @@ func arrive() -> void:
 	target = null
 
 func start_attack(point: Vector3) -> float:
+	if not point.is_finite() or not alive:
+		return 0.0
 	attack_cooldown = float(STATS[role].cooldown)
-	attack_time = .52
+	attack_time = float(STATS[role].get("attack_duration",.52))
 	attack_target = point
-	state = "aim" if role == "bow_guard" else "swing"
+	state = "siege_windup" if role in VEHICLE_ROLES else ("aim" if role == "bow_guard" else "swing")
+	if role in VEHICLE_ROLES:
+		return float(STATS[role].windup)
 	return .26 if role == "bow_guard" else .18
 
 func _process(_delta: float) -> void:
@@ -146,6 +161,10 @@ func update_pose(time: float, alpha := 1.0) -> void:
 	alpha = clampf(alpha,0,1)
 	visual.position = (previous_position-position)*(1-alpha)
 	visual.rotation = Vector3(0,lerp_angle(previous_yaw,heading,alpha),0)
+	if role in VEHICLE_ROLES:
+		VehicleArt.pose(vehicle_art,role,time,moved,attack_time,hit_time,alive,dead_age)
+		_update_health_bar()
+		return
 	var walk := sin(time*8.8+float(unit_id%5)*.12)*clampf(moved/.14,0,1)
 	for side in ["left","right"]:
 		var sign_value := 1.0 if side == "left" else -1.0
@@ -169,9 +188,7 @@ func update_pose(time: float, alpha := 1.0) -> void:
 	if not alive:
 		visual.position.y -= minf(dead_age,1.0)*.22
 		visual.rotation.z = minf(dead_age/.65,1.0)*1.48
-	if health_fill:
-		health_fill.scale.x = maxf(.001,health/max_health)
-		health_fill.position.x = -(1.0-health/max_health)*.39
+	_update_health_bar()
 	if arrow:
 		var flight := (.52-attack_time)/.26
 		arrow.visible = alive and attack_time > .26
@@ -181,10 +198,24 @@ func update_pose(time: float, alpha := 1.0) -> void:
 			if direction.length_squared() > .0001:
 				arrow.quaternion = Quaternion(Vector3.UP,direction.normalized())
 
+func _update_health_bar() -> void:
+	if health_fill:
+		health_fill.scale.x = maxf(.001,health/max_health)
+		health_fill.position.x = -(1.0-health/max_health)*.39
+
+func _joint_finite(value) -> bool:
+	if value is Node3D:
+		return value.transform.is_finite()
+	if value is Array:
+		for child in value:
+			if not _joint_finite(child):return false
+		return true
+	return false
+
 func articulation_finite() -> bool:
 	if not position.is_finite() or not is_finite(health) or not is_finite(heading):
 		return false
 	for joint in joints.values():
-		if not joint.transform.origin.is_finite() or not joint.rotation.is_finite():
+		if not _joint_finite(joint):
 			return false
 	return true
