@@ -1,0 +1,164 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "name": "structurally valid explicit native resource bundle",
+      "passed": false,
+      "expected": "accept",
+      "rejection": "ValueError: Required runtime resource missing: grapple-lock.wav-"
+    },
+    {
+      "name": "magic rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Missing Godot PCK magic/header"
+    },
+    {
+      "name": "truncated header rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Missing Godot PCK magic/header"
+    },
+    {
+      "name": "encrypted pack rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsupported/encrypted pack flags: 1"
+    },
+    {
+      "name": "unknown pack version rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected pack version/engine: 99, 4.6.3"
+    },
+    {
+      "name": "resource count above 10000 rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected packed resource count: 10001"
+    },
+    {
+      "name": "zero resource count rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected packed resource count: 0"
+    },
+    {
+      "name": "encrypted entry rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Encrypted/removal/delta entry is not allowed: res://project.binary"
+    },
+    {
+      "name": "duplicate entry rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://project.binary"
+    },
+    {
+      "name": "parent path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts/../escape.gd"
+    },
+    {
+      "name": "absolute path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res:///scripts/escape.gd"
+    },
+    {
+      "name": "backslash path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts\\escape.gd"
+    },
+    {
+      "name": "unapproved directory rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected runtime resource directory: res://tools/escape.py"
+    },
+    {
+      "name": "unapproved Godot cache directory rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected Godot cache resource: res://.godot/editor/config.cfg"
+    },
+    {
+      "name": "credential filename rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential filename in pack: res://scripts/access-token.txt"
+    },
+    {
+      "name": "dotenv filename rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential filename in pack: res://assets/.env"
+    },
+    {
+      "name": "overlong resource path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Invalid packed resource entry bounds"
+    },
+    {
+      "name": "synthetic credential marker rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential marker in payload: res://assets/marker.txt"
+    },
+    {
+      "name": "private-key header marker rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential marker in payload: res://assets/marker.txt"
+    },
+    {
+      "name": "missing essential army resource rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/lane_army.gd"
+    },
+    {
+      "name": "payload checksum corruption rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Packed payload MD5 mismatch: res://scripts/traversal_audio.gd"
+    },
+    {
+      "name": "payload offset beyond file rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Packed payload exceeds file bounds: res://project.binary"
+    },
+    {
+      "name": "oversize payload length rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Packed payload exceeds file bounds: res://project.binary"
+    },
+    {
+      "name": "truncated directory rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "error: unpack_from requires a buffer of at least 104 bytes for unpacking 4 bytes at offset 100 (actual buffer size is 103)"
+    },
+    {
+      "name": "canonical fixture remains accepted after mutations",
+      "passed": false,
+      "expected": "accept",
+      "rejection": "ValueError: Required runtime resource missing: grapple-lock.wav-"
+    },
+    {
+      "name": "tested packager unchanged",
+      "passed": true
+    }
+  ],
+  "sources": {
+    "tools/package-native.py": "77966276c1a4cefe1f075e83dba4cd290aa36e5ca5aa1e72bca877560e9069d4",
+    "tests/traversal_security_cases.py": "4391290810db2b5483f15716f535944c8a3fee4ce228db786ba5908dd45ee21a"
+  },
+  "scope": "Bounded structural PCK acceptance fixtures only. No pack execution, extraction, production secrets, runtime security certificate, online security or full parser fuzzing claim."
+}

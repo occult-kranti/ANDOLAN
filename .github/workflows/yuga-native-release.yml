@@ -1,9 +1,10 @@
-name: YUGA native cinematic prerelease
+name: YUGA native prerelease
 
 on:
   push:
     tags:
       - 'yuga-confluence-duel-*'
+      - 'yuga-traversal-armies-*'
 
 permissions: {}
 
@@ -13,7 +14,7 @@ concurrency:
 
 jobs:
   build:
-    if: startsWith(github.ref, 'refs/tags/yuga-confluence-duel-')
+    if: startsWith(github.ref, 'refs/tags/yuga-confluence-duel-') || startsWith(github.ref, 'refs/tags/yuga-traversal-armies-')
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
@@ -32,7 +33,7 @@ jobs:
           command -v ffmpeg
           command -v ffprobe
           python3 -m venv "$RUNNER_TEMP/media-venv"
-          "$RUNNER_TEMP/media-venv/bin/python" -m pip install --disable-pip-version-check numpy==2.2.6 scipy==1.15.3
+          "$RUNNER_TEMP/media-venv/bin/python" -m pip install --disable-pip-version-check numpy==2.3.5 scipy==1.15.3
           python3 games/yuga-native/tools/release-native.py install-engines --destination "$RUNNER_TEMP/engines"
       - name: Verify committed film archive and decode existing media
         run: |
@@ -63,6 +64,20 @@ jobs:
           "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_scene_cases.gd -- --report="$RUNNER_TEMP/checks/world-scene.json"
           "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_flow_cases.gd -- --report="$RUNNER_TEMP/checks/world-flow.json"
           "$engine" --headless --path games/yuga-native --script res://tests/world_lighting_cases.gd -- --report="$RUNNER_TEMP/checks/world-lighting.json"
+      - name: Verify traversal, army, controls and publication gates
+        if: startsWith(github.ref, 'refs/tags/yuga-traversal-armies-')
+        run: |
+          set -euo pipefail
+          engine="$RUNNER_TEMP/engines/Godot_v4.6.3-stable_linux.x86_64"
+          "$RUNNER_TEMP/media-venv/bin/python" games/yuga-native/tools/audio/build-traversal-audio.py --check
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_cases.gd -- --report="$RUNNER_TEMP/checks/traversal.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_pose_cases.gd -- --report="$RUNNER_TEMP/checks/traversal-pose.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/lane_army_cases.gd -- --report="$RUNNER_TEMP/checks/army.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/input_binding_cases.gd -- --report="$RUNNER_TEMP/checks/controls.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_audio_cases.gd -- --report="$RUNNER_TEMP/checks/traversal-audio.json"
+          "$engine" --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_army_stress.gd -- --report="$RUNNER_TEMP/checks/stress.json"
+          python3 games/yuga-native/tests/traversal_security_cases.py --report="$RUNNER_TEMP/checks/security.json"
+          python3 games/yuga-native/tests/release_traversal_cases.py --report="$RUNNER_TEMP/checks/release-gates.json"
       - name: Export, inspect and package both native platforms
         run: |
           set -euo pipefail

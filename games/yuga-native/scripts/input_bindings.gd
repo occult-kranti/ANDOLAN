@@ -56,6 +56,7 @@ static func set_binding(action: String, keycode: int) -> Dictionary:
 	var saved := merge_settings({"controls":{"bindings":candidate,"binding_version":1}},config_path)
 	if not saved.ok: return saved
 	bindings = candidate
+	load_notice = ""
 	_apply()
 	return {"ok":true,"message":String(TITLES[action]) + ": " + label(action)}
 
@@ -63,6 +64,7 @@ static func reset_defaults() -> Dictionary:
 	var result := merge_settings({"controls":{"bindings":DEFAULTS.duplicate(),"binding_version":1}},config_path)
 	if result.ok:
 		bindings = DEFAULTS.duplicate()
+		load_notice = ""
 		_apply()
 		result.message = "Default controls restored and saved."
 	return result

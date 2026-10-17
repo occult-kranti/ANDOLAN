@@ -1,10 +1,14 @@
 extends Node3D
-## Original manifest-driven city explorer. The eight static authority boxes are
-## shared with the current server; objective circles are visual-only in this scene.
+## Original expanded native lane practice and traversal. Eight center boxes retain
+## browser-source dimensions; all extended bounds, platforms and army state are local.
 
 const PlayerScript = preload("res://scripts/player.gd")
 const ProjectileScript = preload("res://scripts/projectile.gd")
 const WorldLighting = preload("res://scripts/world_lighting.gd")
+const Landmarks = preload("res://scripts/traversal_landmarks.gd")
+const Bindings = preload("res://scripts/input_bindings.gd")
+const ControlsOverlay = preload("res://scripts/controls_overlay.gd")
+const TraversalAudio = preload("res://scripts/traversal_audio.gd")
 const RUNTIME_MANIFEST := "res://assets/world/confluence-map.json"
 const SOURCE_MANIFEST := "res://art/world/confluence-map.json"
 const CREAM := Color("f0e5d0")
@@ -17,6 +21,20 @@ var world: Node3D
 var player: CharacterBody3D
 var floor_body: StaticBody3D
 var authority_bodies: Array[StaticBody3D] = []
+var native_platform_bodies: Array[StaticBody3D] = []
+var landmark_report: Dictionary = {}
+var army: Node3D
+var audio: Node
+var controls_overlay: Control
+var controls_return_to_pause := false
+var energy_bar: ProgressBar
+var ability_label: Label
+var score_label: Label
+var goal_label: Label
+var help_labels: Array[Label] = []
+var volume_label: Label
+var traversal_seen := false
+var last_gold := 0
 var props_root: Node3D
 var projectiles: Node3D
 var effects: Node3D
@@ -45,14 +63,16 @@ var missing_presets: Array[String] = []
 var kit_hashes: Dictionary = {}
 var kit_templates: Dictionary = {}
 var material_cache: Dictionary = {}
-var start_position := Vector3(0, 0.05, 69)
+var start_position := Vector3(0, 0.05, -112)
 var overview := false
 
 class Atlas extends Control:
 	var data: Dictionary = {}
 	var hero_position := Vector3.ZERO
+	var units: Array = []
 	func project(point: Vector3) -> Vector2:
-		return Vector2(12+(point.x+70)/140*(size.x-24),12+(point.z+85)/170*(size.y-24))
+		var bounds: Array=data.get("bounds",{}).get("nominal_xz",[-70,70,-130,130])
+		return Vector2(12+(point.x-bounds[0])/(bounds[1]-bounds[0])*(size.x-24),12+(point.z-bounds[2])/(bounds[3]-bounds[2])*(size.y-24))
 	func _draw() -> void:
 		draw_style_box(_background(),Rect2(Vector2.ZERO,size))
 		if data.is_empty(): return
@@ -69,6 +89,13 @@ class Atlas extends Control:
 			draw_circle(project(Vector3(camp.position[0],0,camp.position[2])),3,Color("7ac6bd"))
 		for objective in data.objectives:
 			draw_circle(project(Vector3(objective.position[0],0,objective.position[2])),3,Color("efba70") if objective.team=="sun" else Color("88bded"))
+		for anchor in data.get("traversal",{}).get("anchors",[]):
+			var p:=project(Vector3(anchor.position[0],0,anchor.position[2]))
+			draw_polyline(PackedVector2Array([p+Vector2(0,-3),p+Vector2(3,0),p+Vector2(0,3),p+Vector2(-3,0),p+Vector2(0,-3)]),Color("e9c877"),1,true)
+		for unit in units:
+			var p:=project(unit.position)
+			if unit.team=="sun": draw_colored_polygon(PackedVector2Array([p+Vector2(0,-2.5),p+Vector2(2,2),p+Vector2(-2,2)]),Color("efba70"))
+			else: draw_rect(Rect2(p-Vector2(1.7,1.7),Vector2(3.4,3.4)),Color("88bded"))
 		draw_circle(project(hero_position),5,Color.WHITE)
 		draw_circle(project(hero_position),8,Color(1,1,1,.4),false,1,true)
 	func _background() -> StyleBoxFlat:
@@ -82,7 +109,7 @@ class Atlas extends Control:
 func _ready() -> void:
 	process_mode=Node.PROCESS_MODE_ALWAYS
 	process_physics_priority=100
-	_install_actions()
+	Bindings.install()
 	manifest_path=RUNTIME_MANIFEST if FileAccess.file_exists(RUNTIME_MANIFEST) else SOURCE_MANIFEST
 	var parsed=JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
 	if not parsed is Dictionary or parsed.get("schema_version",0)!=1:
@@ -95,12 +122,16 @@ func _ready() -> void:
 	add_child(world)
 	_build_floor()
 	_build_collisions()
+	_build_traversal_landmarks()
 	_load_kits()
 	_build_props()
 	_build_objectives()
 	_build_water()
 	_build_lighting()
 	_build_player()
+	if not _build_army_audio() or not player.traversal_report().get("enabled",false):
+		push_error("Confluence requires a configured army and traversal controller.")
+		return
 	_build_ui()
 	for template in kit_templates.values(): template.free()
 	kit_templates.clear()
@@ -108,19 +139,6 @@ func _ready() -> void:
 	world_ready=true
 	Input.mouse_mode=Input.MOUSE_MODE_CAPTURED
 	print("YUGA_CONFLUENCE_READY ",JSON.stringify(build_report()))
-
-func _install_actions() -> void:
-	var keys:={"move_forward":[KEY_W,KEY_UP],"move_back":[KEY_S,KEY_DOWN],"move_left":[KEY_A,KEY_LEFT],"move_right":[KEY_D,KEY_RIGHT],"jump":[KEY_SPACE],"sprint":[KEY_SHIFT],"reload":[KEY_R],"pulse":[KEY_Q],"dash":[KEY_E],"pause_game":[KEY_ESCAPE],"world_respawn":[KEY_F5],"world_night":[KEY_N],"world_overview":[KEY_F1]}
-	for action in keys:
-		if not InputMap.has_action(action): InputMap.add_action(action)
-		for key in keys[action]:
-			var event:=InputEventKey.new()
-			event.physical_keycode=key
-			if not InputMap.action_has_event(action,event): InputMap.action_add_event(action,event)
-	if not InputMap.has_action("fire"): InputMap.add_action("fire")
-	var click:=InputEventMouseButton.new()
-	click.button_index=MOUSE_BUTTON_LEFT
-	if not InputMap.action_has_event("fire",click): InputMap.action_add_event("fire",click)
 
 func _v(data: Array) -> Vector3:
 	return Vector3(float(data[0]),float(data[1]),float(data[2]))
@@ -160,7 +178,7 @@ func _cylinder(parent: Node3D, position_: Vector3, radius: float, height: float,
 	mesh.radial_segments=16
 	return _mesh(parent,mesh,position_,material)
 
-func _collision(id: String, base: Vector3, size_: Vector3, floor_: bool=false) -> StaticBody3D:
+func _collision(id: String, base: Vector3, size_: Vector3, floor_: bool=false, native_: bool=false) -> StaticBody3D:
 	var body:=StaticBody3D.new()
 	body.name=id
 	body.collision_layer=1
@@ -169,7 +187,8 @@ func _collision(id: String, base: Vector3, size_: Vector3, floor_: bool=false) -
 	body.set_meta("authority_id",id)
 	body.set_meta("position_base",base)
 	body.set_meta("dimensions",size_)
-	body.add_to_group("confluence_floor" if floor_ else "confluence_authority_blocker")
+	body.add_to_group("confluence_floor" if floor_ else ("confluence_native_platform" if native_ else "confluence_authority_blocker"))
+	body.set_meta("native_only",native_)
 	var shape:=CollisionShape3D.new()
 	var box:=BoxShape3D.new()
 	box.size=size_
@@ -194,10 +213,11 @@ func _build_floor() -> void:
 	_mesh(world,floor_mesh,Vector3.ZERO,material,"FlatCityPaving")
 	# A quiet retaining edge marks the actor limit without introducing colliders.
 	var perimeter:=_material(Color("b5ae95"))
-	for x in [-69.0,69.0]: _box(world,Vector3(x,.08,0),Vector3(.4,.16,168),perimeter,"PerimeterInlay")
-	for z in [-84.0,84.0]: _box(world,Vector3(0,.08,z),Vector3(138,.16,.4),perimeter,"PerimeterInlay")
+	for x in [-float(bounds[0])*.5+1,float(bounds[0])*.5-1]: _box(world,Vector3(x,.08,0),Vector3(.4,.16,bounds[1]-2),perimeter,"PerimeterInlay")
+	for z in [-float(bounds[1])*.5+1,float(bounds[1])*.5-1]: _box(world,Vector3(0,.08,z),Vector3(bounds[0]-2,.16,.4),perimeter,"PerimeterInlay")
 
 func _configure_paving(material: ShaderMaterial) -> void:
+	material.set_shader_parameter("arrival_court_z",112.0)
 	var lanes:=_route_segments(manifest.lanes)
 	var rotations:=_route_segments(manifest.get("rotations",[]))
 	material.set_shader_parameter("lane_count",mini(lanes.size(),8))
@@ -223,6 +243,63 @@ func _route_segments(routes: Array) -> PackedVector4Array:
 func _build_collisions() -> void:
 	for entry in manifest.authority_collision_boxes:
 		authority_bodies.append(_collision(entry.id,_v(entry.position),_v(entry.size)))
+
+func _build_traversal_landmarks() -> void:
+	var specification: Dictionary=manifest.get("traversal",{})
+	for entry in specification.get("native_collision_boxes",[]):
+		native_platform_bodies.append(_collision(entry.id,_v(entry.position),_v(entry.size),false,true))
+	landmark_report=Landmarks.new().build(world,specification)
+	# Quiet signs on the ground explain lane identity without resembling pickups.
+	for lane in manifest.lanes:
+		for z in [-96.0,-48.0,48.0,96.0]:
+			var sign_:=Label3D.new()
+			sign_.text=lane.name.to_upper()
+			sign_.font_size=32
+			sign_.pixel_size=.016
+			sign_.modulate=Color("c5baa0")
+			sign_.outline_modulate=Color("394a45")
+			sign_.position=Vector3(lane.center_x,.025,z)
+			sign_.rotation_degrees=Vector3(-90,180 if z>0 else 0,0)
+			world.add_child(sign_)
+
+func _traversal_bounds() -> AABB:
+	var bounds: Array=manifest.bounds.get("actor_xz",manifest.bounds.authority_xz)
+	var radius: float=manifest.bounds.hero_radius
+	return AABB(Vector3(bounds[0]+radius,0,bounds[2]+radius),Vector3(bounds[1]-bounds[0]-2*radius,float(manifest.bounds.get("altitude_ceiling",24)),bounds[3]-bounds[2]-2*radius))
+
+func _build_army_audio() -> bool:
+	audio=Node.new()
+	audio.set_script(TraversalAudio)
+	audio.name="TraversalAudio"
+	world.add_child(audio)
+	# Audio owns loading the saved value; do not overwrite it with a second default.
+	audio.configure(audio.volume)
+	if player.has_signal("traversal_event"):
+		player.traversal_event.connect(func(kind: String,position_: Vector3): audio.play_event(kind,position_))
+	var army_script=load("res://scripts/lane_army.gd")
+	if army_script is Script and army_script.can_instantiate():
+		army=Node3D.new()
+		army.set_script(army_script)
+		army.name="LaneArmy"
+		world.add_child(army)
+		army.gold_changed.connect(_gold_changed)
+		army.outcome.connect(_army_outcome)
+		return army.configure(manifest,player)
+	return false
+
+func _gold_changed(value: int) -> void:
+	if audio and value>last_gold: audio.play_event("coin",player.global_position)
+	last_gold=value
+
+func _army_outcome(team: String) -> void:
+	if goal_label: goal_label.text="%s core victory · Restart lane practice from pause" % ("SUN" if team=="sun" else "MOON")
+	set_paused(true)
+
+func _restart_army() -> void:
+	last_gold=0
+	if army: army.reset()
+	visit_anchor("sun-spawn")
+	set_paused(false)
 
 func _load_kits() -> void:
 	var sources: Array=manifest.get("kit_sources",[{"id":"architecture","asset":"res://assets/world/architecture.glb"},{"id":"nature","asset":"res://assets/world/nature.glb"}])
@@ -372,17 +449,28 @@ func _build_player() -> void:
 	player.set_script(PlayerScript)
 	player.name="Rama"
 	world.add_child(player)
+	var settings: Dictionary=Bindings.read_config()
+	if settings.ok:
+		var saved: ConfigFile=settings.config
+		var sensitivity_value: Variant=saved.get_value("controls","sensitivity",1.0)
+		if typeof(sensitivity_value) in [TYPE_INT,TYPE_FLOAT] and is_finite(float(sensitivity_value)):
+			player.sensitivity=.0024*clampf(float(sensitivity_value),.35,2.5)
+		var invert_value: Variant=saved.get_value("controls","invert_y",false)
+		if invert_value is bool: player.invert_y=invert_value
 	for child in player.get_children():
 		if child is CollisionShape3D and child.shape is CapsuleShape3D: child.shape.radius=manifest.bounds.hero_radius
-	player.camera.far=320
+	player.camera.far=380
 	player.fired.connect(_fire)
 	player.pulse.connect(_pulse)
 	player.active=true
-	visit_anchor("moon-spawn")
+	visit_anchor("sun-spawn")
 	start_position=player.position
+	var anchors: Array=[]
+	for anchor in manifest.get("traversal",{}).get("anchors",[]): anchors.append({"id":anchor.id,"position":_v(anchor.position)})
+	if player.has_method("configure_traversal"): player.configure_traversal(anchors,_traversal_bounds())
 	review_camera=Camera3D.new()
 	review_camera.name="ReviewCamera"
-	review_camera.far=400
+	review_camera.far=500
 	world.add_child(review_camera)
 
 func _build_ui() -> void:
@@ -394,34 +482,62 @@ func _build_ui() -> void:
 	hud.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	hud.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	ui.add_child(hud)
-	var title:=_card(hud,Vector2(20,20),Vector2(495,112))
+	var title:=_card(hud,Vector2(20,20),Vector2(535,132))
 	title.name="TitleCard"
 	var copy:=VBoxContainer.new()
 	title.add_child(copy)
-	copy.add_child(_label("YUGA  /  CONFLUENCE",23,GOLD))
-	location_label=_label("Chandra arrival court",18,CREAM)
+	copy.add_child(_label("YUGA  /  CONFLUENCE",21,GOLD))
+	location_label=_label("Surya arrival court",17,CREAM)
 	copy.add_child(location_label)
-	status_label=_label("Explore three lanes and the reed courts",13,Color("aec2c3"))
+	status_label=_label("OFFLINE LANE PRACTICE · 140 × 260 m",12,Color("aec2c3"))
 	copy.add_child(status_label)
+	score_label=_label("Wave 1 · Gold 0 · Sun core 100 · Moon core 100",13,CREAM)
+	copy.add_child(score_label)
 	map_control=Atlas.new()
 	map_control.name="WorldAtlas"
 	map_control.data=manifest
 	map_control.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	hud.add_child(map_control)
 	map_control.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	map_control.offset_left=-218
+	map_control.offset_left=-196
 	map_control.offset_right=-20
 	map_control.offset_top=20
-	map_control.offset_bottom=254
-	var help:=_card(hud,Vector2(20,-114),Vector2(640,94))
+	map_control.offset_bottom=286
+	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You",11,CREAM)
+	legend.name="AtlasLegend"
+	hud.add_child(legend)
+	legend.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	legend.offset_left=-196
+	legend.offset_right=-20
+	legend.offset_top=292
+	legend.offset_bottom=326
+	var help:=_card(hud,Vector2(20,-126),Vector2(620,106))
 	help.name="ControlsCard"
 	help.set_anchors_preset(Control.PRESET_BOTTOM_LEFT,true)
 	var bottom:=VBoxContainer.new()
 	help.add_child(bottom)
-	bottom.add_child(_label("WASD move   ·   Shift sprint   ·   Space jump   ·   E dash",14,CREAM))
-	bottom.add_child(_label("Left click fire   ·   R reload   ·   Q sun pulse",13,Color("aec2c3")))
-	phase_label=_label("N day / night   ·   F1 atlas view   ·   F5 return   ·   Esc pause",13,Color("aec2c3"))
-	bottom.add_child(phase_label)
+	for index in range(3):
+		var row:=_label("",13,CREAM if index==0 else Color("aec2c3"))
+		bottom.add_child(row)
+		help_labels.append(row)
+	phase_label=help_labels[2]
+	_refresh_control_labels()
+	var ability:=_card(hud,Vector2(-280,-154),Vector2(260,134))
+	ability.name="TraversalStatus"
+	ability.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT,true)
+	var energy_column:=VBoxContainer.new()
+	ability.add_child(energy_column)
+	ability_label=_label("VAYU LIFT · GROUNDED",13,GOLD)
+	energy_column.add_child(ability_label)
+	energy_bar=ProgressBar.new()
+	energy_bar.custom_minimum_size=Vector2(220,15)
+	energy_bar.show_percentage=true
+	energy_bar.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	energy_column.add_child(energy_bar)
+	goal_label=_label("Aim at a gold ring · G to tether",12,CREAM)
+	goal_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	goal_label.custom_minimum_size=Vector2(220,48)
+	energy_column.add_child(goal_label)
 	var crosshair:=_label("·",30,CREAM)
 	crosshair.name="Crosshair"
 	hud.add_child(crosshair)
@@ -436,21 +552,63 @@ func _build_ui() -> void:
 	pause_panel.add_theme_stylebox_override("panel",_panel_style())
 	pause_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	pause_panel.offset_left=-220
-	pause_panel.offset_top=-230
+	pause_panel.offset_top=-270
 	pause_panel.offset_right=220
-	pause_panel.offset_bottom=230
+	pause_panel.offset_bottom=270
 	var menu:=VBoxContainer.new()
-	menu.add_theme_constant_override("separation",12)
+	menu.add_theme_constant_override("separation",6)
 	pause_panel.add_child(menu)
-	menu.add_child(_label("CONFLUENCE",25,GOLD))
-	menu.add_child(_label("WORLD EXPLORER",13,Color("aec2c3")))
+	menu.add_child(_label("CONFLUENCE",22,GOLD))
+	menu.add_child(_label("OFFLINE LANE PRACTICE",12,Color("aec2c3")))
 	_button(menu,"Continue exploring",func():set_paused(false))
 	_button(menu,"Day / night",func():set_night(not night))
 	_button(menu,"Visit Lanka coast",func():teleport_to(Vector3(-40,.05,14),180);set_paused(false))
 	_button(menu,"Visit Metro gardens",func():teleport_to(Vector3(40,.05,14),180);set_paused(false))
+	_button(menu,"Controls / remap keys",_open_controls)
+	_button(menu,"Restart lane practice",_restart_army)
+	volume_label=_label("Sound",12,CREAM)
+	menu.add_child(volume_label)
+	var volume:=HSlider.new()
+	volume.name="WorldVolume"
+	volume.min_value=0
+	volume.max_value=1
+	volume.step=.05
+	volume.custom_minimum_size.y=24
+	volume.value=audio.volume if audio else .35
+	menu.add_child(volume)
+	volume.value_changed.connect(_set_volume)
+	_set_volume(volume.value,false)
 	_button(menu,"Return to courtyard",return_to_courtyard)
 	_button(menu,"Quit game",func():get_tree().quit())
 	pause_panel.visible=false
+	controls_overlay=Control.new()
+	controls_overlay.set_script(ControlsOverlay)
+	ui.add_child(controls_overlay)
+	controls_overlay.closed.connect(_close_controls)
+	controls_overlay.bindings_changed.connect(_refresh_control_labels)
+
+func _refresh_control_labels() -> void:
+	if help_labels.size()!=3: return
+	help_labels[0].text="%s / %s / %s / %s move · %s sprint · %s jump / rise" % [Bindings.label("move_forward"),Bindings.label("move_left"),Bindings.label("move_back"),Bindings.label("move_right"),Bindings.label("sprint"),Bindings.label("jump")]
+	help_labels[1].text="%s flight · %s tether / release · %s descend · %s dash · %s pulse" % [Bindings.label("fly"),Bindings.label("grapple"),Bindings.label("descend"),Bindings.label("dash"),Bindings.label("pulse")]
+	help_labels[2].text="LMB fire · %s reload · F2 controls · F1 atlas · N light · Esc pause" % Bindings.label("reload")
+
+func _open_controls() -> void:
+	controls_return_to_pause=paused
+	set_paused(true)
+	pause_panel.hide()
+	controls_overlay.open()
+
+func _close_controls() -> void:
+	_refresh_control_labels()
+	set_paused(controls_return_to_pause)
+
+func _set_volume(value: float,save: bool=true) -> void:
+	if audio: audio.set_volume(value)
+	if volume_label: volume_label.text="Sound · muted" if value<=0 else "Sound · %d%%" % roundi(value*100)
+	if save:
+		var result: Dictionary=Bindings.merge_settings({"audio":{"volume":value}})
+		if not result.ok and volume_label: volume_label.text="Sound · active now; save unavailable"
 
 func _panel_style() -> StyleBoxFlat:
 	var style:=StyleBoxFlat.new()
@@ -484,22 +642,27 @@ func _label(text_: String, font_size: int, color: Color) -> Label:
 func _button(parent: Control, text_: String, callback: Callable) -> void:
 	var button:=Button.new()
 	button.text=text_
-	button.custom_minimum_size=Vector2(0,42)
-	button.add_theme_font_size_override("font_size",16)
+	button.custom_minimum_size=Vector2(0,40)
+	button.add_theme_font_size_override("font_size",14)
 	button.pressed.connect(callback)
 	parent.add_child(button)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if controls_overlay and controls_overlay.visible: return
+	if event.is_action_pressed("help_controls"):
+		_open_controls()
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("pause_game"):
 		set_paused(not paused)
 		get_viewport().set_input_as_handled()
 	elif not paused and event.is_action_pressed("world_night"): set_night(not night)
-	elif not paused and event.is_action_pressed("world_respawn"): visit_anchor("moon-spawn")
+	elif not paused and event.is_action_pressed("world_respawn"): visit_anchor("sun-spawn")
 	elif not paused and event.is_action_pressed("world_overview"): set_overview(not overview)
 
 func _process(delta: float) -> void:
 	if not world_ready: return
-	if not is_equal_approx(phase,target_phase):
+	if not paused and not is_equal_approx(phase,target_phase):
 		phase=move_toward(phase,target_phase,delta*.45)
 		phase_clock+=delta
 		if phase_clock>.08 or is_equal_approx(phase,target_phase):
@@ -509,21 +672,64 @@ func _process(delta: float) -> void:
 	if ui_clock>.12:
 		ui_clock=0
 		location_label.text=district_at(player.position)
-		status_label.text="WORLD EXPLORER   ·   %s   ·   %d / 12 arrows" % ["Moonlight" if phase>.5 else "Golden hour",player.ammo]
+		status_label.text="OFFLINE PRACTICE · %s · %d / 12 arrows" % ["Moonlight" if phase>.5 else "Golden hour",player.ammo]
+		_update_practice_hud()
 		map_control.hero_position=player.position
 		map_control.queue_redraw()
 
 func _physics_process(_delta: float) -> void:
 	if not world_ready or paused: return
-	var bounds: Array=manifest.bounds.authority_xz
+	if not player.position.is_finite():
+		visit_anchor("sun-spawn")
+		return
+	var bounds: Array=manifest.bounds.get("actor_xz",manifest.bounds.authority_xz)
 	var radius: float=manifest.bounds.hero_radius
 	var clamped:=player.position
 	clamped.x=clampf(clamped.x,bounds[0]+radius,bounds[1]-radius)
 	clamped.z=clampf(clamped.z,bounds[2]+radius,bounds[3]-radius)
+	clamped.y=minf(clamped.y,float(manifest.bounds.get("altitude_ceiling",24)))
 	if clamped.x!=player.position.x: player.velocity.x=0
 	if clamped.z!=player.position.z: player.velocity.z=0
 	player.position=clamped
-	if player.position.y<-.5: visit_anchor("moon-spawn")
+	if player.position.y<-.5: visit_anchor("sun-spawn")
+
+func _update_practice_hud() -> void:
+	if army:
+		var battle: Dictionary=army.report()
+		var cores: Dictionary=battle.get("cores",{})
+		score_label.text="Wave %d · Gold %d · Sun core %d · Moon core %d" % [battle.get("waves",0),battle.get("gold",0),cores.get("sun",100),cores.get("moon",100)]
+		if army.has_method("minimap_units"): map_control.units=army.minimap_units()
+		if not String(battle.get("winner","")).is_empty():
+			goal_label.text="%s wins · Restart lane practice in pause" % String(battle.winner).to_upper()
+			return
+	if not player.has_method("traversal_report"): return
+	var report: Dictionary=player.traversal_report()
+	var mode: String=String(report.get("mode","grounded"))
+	var energy: float=float(report.get("energy",100))
+	energy_bar.max_value=float(report.get("max_energy",100))
+	energy_bar.value=energy
+	ability_label.text="VAYU LIFT · %s · %dm" % [mode.to_upper(),roundi(player.position.y)]
+	var flight_cd: float=float(report.get("flight_cooldown",0))
+	var grapple_cd: float=float(report.get("grapple_cooldown",0))
+	var candidate: Dictionary=report.get("candidate",{})
+	if mode=="grapple" or mode=="grappling":
+		traversal_seen=true
+		goal_label.text="%s release tether · %s flight" % [Bindings.label("grapple"),Bindings.label("fly")]
+	elif mode=="flight" or mode=="flying":
+		traversal_seen=true
+		goal_label.text="%s rise · %s descend · %s land\nEnergy refills on the ground" % [Bindings.label("jump"),Bindings.label("descend"),Bindings.label("fly")]
+	elif not candidate.is_empty():
+		var distance: float=player.global_position.distance_to(candidate.position)
+		var availability:="Tether ready" if grapple_cd<=0 else "Tether cooling %.1fs" % grapple_cd
+		if energy<18: availability="Needs 18 energy · land to refill"
+		goal_label.text="%s · GOLD RING · %.0f m\n%s" % [Bindings.label("grapple"),distance,availability]
+	elif flight_cd>0 or grapple_cd>0:
+		goal_label.text="Flight %.1fs · Tether %.1fs\n%s" % [flight_cd,grapple_cd,String(report.get("status","Aim at a gold ring"))]
+	else:
+		var context:="Push a lane; finish foes for gold" if traversal_seen else "Optional: reach a raised landing court"
+		if energy<18: context="Land to refill traversal energy"
+		elif String(report.get("status","")).begins_with("Aim at"): context="No clear anchor in your aim"
+		goal_label.text="%s tether: aim at a gold ring ≤36m\n%s" % [Bindings.label("grapple"),context]
 
 func district_at(position_: Vector3) -> String:
 	var selected:="Confluence streets"
@@ -546,11 +752,10 @@ func set_night(value: bool) -> void:
 	target_phase=1.0 if value else 0.0
 
 func release_actions() -> void:
-	for action in ["move_forward","move_back","move_left","move_right","fire","sprint","jump","dash","pulse","reload"]:
-		Input.action_release(action)
+	Bindings.release_gameplay()
 	if player:
-		player.velocity.x=0
-		player.velocity.z=0
+		if player.has_method("cancel_traversal"): player.cancel_traversal("world transition")
+		player.velocity=Vector3.ZERO
 		player.dash_time=0
 		player.dash_direction=Vector3.ZERO
 
@@ -560,21 +765,30 @@ func set_paused(value: bool) -> void:
 	get_tree().paused=value
 	if pause_panel: pause_panel.visible=value
 	if player: player.active=not value and not overview
+	if audio: audio.set_suspended(value or overview)
 	Input.mouse_mode=Input.MOUSE_MODE_VISIBLE if value or overview else Input.MOUSE_MODE_CAPTURED
 	if value and pause_panel:
 		var buttons:=pause_panel.find_children("*","Button",true,false)
 		if not buttons.is_empty(): buttons[0].grab_focus()
 
 func _focus_lost() -> void:
-	if world_ready: set_paused(true)
+	if not world_ready: return
+	if controls_overlay and controls_overlay.visible:
+		controls_overlay.cancel_capture()
+		controls_return_to_pause=true
+	set_paused(true)
+	if controls_overlay and controls_overlay.visible: pause_panel.hide()
 
 func teleport_to(position_: Vector3, yaw_degrees: float=180.0) -> void:
+	if not position_.is_finite() or not is_finite(yaw_degrees): return
 	if overview: set_overview(false)
 	release_actions()
 	player.reset()
-	player.position=position_
-	player.yaw=deg_to_rad(yaw_degrees-180)
-	player.visual.rotation.y=deg_to_rad(yaw_degrees)
+	var bounds:=_traversal_bounds()
+	player.position=Vector3(clampf(position_.x,bounds.position.x,bounds.end.x),clampf(position_.y,.05,bounds.end.y),clampf(position_.z,bounds.position.z,bounds.end.z))
+	var facing:=wrapf(yaw_degrees,-180,180)
+	player.yaw=deg_to_rad(facing-180)
+	player.visual.rotation.y=deg_to_rad(facing)
 	player._update_camera()
 	player.reset_physics_interpolation()
 	for projectile in projectiles.get_children(): projectile.queue_free()
@@ -590,9 +804,11 @@ func visit_anchor(id: String) -> bool:
 func set_overview(value: bool) -> void:
 	overview=value
 	release_actions()
+	if army: army.process_mode=Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_PAUSABLE
+	if audio: audio.set_suspended(value or paused)
 	player.active=not value and not paused
 	if value:
-		review_camera.position=Vector3(92,115,125)
+		review_camera.position=Vector3(118,155,195)
 		review_camera.look_at(Vector3(0,0,0))
 		review_camera.current=true
 	else: player.camera.current=true
@@ -600,7 +816,9 @@ func set_overview(value: bool) -> void:
 
 func get_review_camera_views() -> Array:
 	return [
-		{"id":"city-overview","position":[109,118,137],"target":[0,0,0],"phase":0.0,"fov":60},
+		{"id":"city-overview","position":[126,166,198],"target":[0,0,0],"phase":0.0,"fov":60},
+		{"id":"sun-landing-courts","position":[0,4,-112],"target":[-20,10,-88],"phase":0.0,"fov":65},
+		{"id":"central-capture-court","position":[-9,9,12],"target":[0,4,-22],"phase":0.0,"fov":65},
 		{"id":"temple-avenue","position":[-3,3.6,57],"target":[-3,4,-8],"phase":0.0,"fov":65},
 		{"id":"lanka-coast","position":[-47,4.6,46],"target":[-58,5,-12],"phase":0.0,"fov":65},
 		{"id":"metro-gardens","position":[42,4.2,48],"target":[34,7,-22],"phase":0.0,"fov":65},
@@ -609,14 +827,18 @@ func get_review_camera_views() -> Array:
 		{"id":"night-swamp","position":[-48,2.8,8],"target":[-61,1,0],"phase":1.0,"fov":65}
 	]
 
-func _fire(origin: Vector3, direction: Vector3, _empowered: bool) -> void:
+func _fire(origin: Vector3, direction: Vector3, empowered: bool) -> void:
 	if projectiles.get_child_count()>=32: return
 	var projectile:=Node3D.new()
 	projectile.set_script(ProjectileScript)
 	projectile.position=origin
 	projectile.direction=direction
+	projectile.damage=35 if empowered else 25
 	projectile.ignore.append(player.get_rid())
-	projectile.impacted.connect(func(point: Vector3,_target: Node):_impact(point))
+	projectile.impacted.connect(func(point: Vector3,target: Node):
+		_impact(point)
+		if audio and is_instance_valid(target) and target.is_in_group("lane_enemy"): audio.play_event("minion_hit",point)
+	)
 	projectiles.add_child(projectile)
 
 func _impact(point: Vector3) -> void:
@@ -632,6 +854,9 @@ func _impact(point: Vector3) -> void:
 	tween.tween_callback(spark.queue_free)
 
 func _pulse(origin: Vector3) -> void:
+	if army:
+		var hits: int=army.pulse(origin,6.0,45)
+		if hits>0 and audio: audio.play_event("minion_hit",origin)
 	if effects.get_child_count()>=24: return
 	var torus:=TorusMesh.new()
 	torus.inner_radius=.45
@@ -644,7 +869,7 @@ func _pulse(origin: Vector3) -> void:
 	tween.tween_callback(ring.queue_free)
 
 func build_report() -> Dictionary:
-	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Local flat world exploration. Eight static authority boxes; objectives are visual-only. Baseline Rama animation; experimental retarget not loaded. No online-match claim."}
+	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
 
 func get_build_report() -> Dictionary:
 	return build_report()

@@ -448,7 +448,7 @@ func pulse(origin: Vector3, radius: float, damage) -> int:
 	if not winner.is_empty():return 0
 	var hits := 0
 	for unit in units.duplicate():
-		if unit.alive and unit.team == "moon" and (unit.position+Vector3.UP).distance_to(origin) <= radius and line_clear(origin,unit.position):
+		if is_instance_valid(unit) and unit.alive and unit.team == "moon" and (unit.position+Vector3.UP).distance_to(origin) <= radius and line_clear(origin,unit.position):
 			if unit.take_hit(damage):hits += 1
 	return hits
 

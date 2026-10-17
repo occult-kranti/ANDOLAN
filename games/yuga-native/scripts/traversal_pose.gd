@@ -6,6 +6,7 @@ const MAX_ANGLE := deg_to_rad(42.0)
 const BONES := ["spine01", "spine03", "spine05", "neck01", "upperleg01.L", "upperleg01.R", "lowerleg01.L", "lowerleg01.R", "foot.L", "foot.R"]
 var mapping: Array[Dictionary] = []
 var mode := "ground"
+var pose_mode := "flight"
 var weight := 0.0
 var phase := 0.0
 var movement_speed := 0.0
@@ -42,6 +43,8 @@ func set_state(value: String, speed: float, vertical: float, delta: float, actio
 		cancel()
 		return
 	mode = value if value in ["flight", "grapple", "ground"] else "ground"
+	if mode != "ground":
+		pose_mode = mode
 	movement_speed = clampf(speed, 0, 18)
 	vertical_speed = clampf(vertical, -18, 18)
 	suppressed = action_weight > 0.001
@@ -65,14 +68,14 @@ func _process_modification() -> void:
 		var degrees := 0.0
 		var bone_name: String = entry.name
 		if bone_name.begins_with("spine"):
-			degrees = -8.0 if mode == "flight" else -12.0
+			degrees = -8.0 if pose_mode == "flight" else -12.0
 		elif bone_name.begins_with("neck"):
 			degrees = 8.0
 		elif bone_name.begins_with("upperleg"):
-			degrees = 18.0 if mode == "flight" else 28.0
+			degrees = 18.0 if pose_mode == "flight" else 28.0
 			degrees += sin(phase + (PI if bone_name.ends_with(".R") else 0.0)) * 3.0
 		elif bone_name.begins_with("lowerleg"):
-			degrees = -30.0 if mode == "flight" else -38.0
+			degrees = -30.0 if pose_mode == "flight" else -38.0
 		elif bone_name.begins_with("foot"):
 			degrees = 10.0
 		var angle := clampf(deg_to_rad(degrees) * weight, -MAX_ANGLE, MAX_ANGLE)

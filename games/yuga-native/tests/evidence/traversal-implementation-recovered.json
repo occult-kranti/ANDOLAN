@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "scope": "New reconstruction after workspace rollback; previous lost-source acceptance is historical, not acceptance for this code. Numerical and physics checks do not establish visual quality.",
+  "runtime_files": {
+    "scripts/player.gd": {
+      "bytes": 10178,
+      "sha256": "8561ec5cf206619d9475f9643c26446f3fd029c6e8835936474e6f08748a844c"
+    },
+    "scripts/player_traversal.gd": {
+      "bytes": 10637,
+      "sha256": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f"
+    },
+    "scripts/traversal_pose.gd": {
+      "bytes": 3494,
+      "sha256": "92502267f318fef5ce822f698457a7fc07f8129cebd20c17a6b187ef333e2cdf"
+    }
+  },
+  "reports": {
+    "traversal-cases-recovered.json": {
+      "passed": true,
+      "checks": 36,
+      "sha256": "ba2ac25fae9c23d12b77ccec6a00ca42e57ac7c30c3ffdd05d39a7a0e995ab13"
+    },
+    "traversal-pose-recovered.json": {
+      "passed": true,
+      "checks": 24,
+      "sha256": "c4f27222401b14da0136caa09feeafaa400970b2b4038e076fac2af7fda48e8b"
+    },
+    "traversal-native-recovered.json": {
+      "passed": true,
+      "checks": 18,
+      "sha256": "77d3afcc8d308455c9cc01f36caa7a3b4c21c6f6b042a0648a34de2105b10e97"
+    },
+    "traversal-pose-recovery-attempt1.json": {
+      "passed": false,
+      "checks": 24,
+      "sha256": "ca7c63118bf0589740af298c9cf64acb7a5f6c9b0e67c6b322c863e6c1aff97a"
+    },
+    "traversal-native-recovery-missing-imports.json": {
+      "passed": false,
+      "checks": 13,
+      "sha256": "c5c7869045fbfe1a51f17e728b8c77c74d7134346f7ca942d5f108844bc8fda6"
+    }
+  },
+  "sources": "docs/research/traversal-source-register.json",
+  "repair_history": [
+    {
+      "attempt": "native recovery initial",
+      "failure": "Source GLBs existed but imported scene resources were absent; rerun after root import."
+    },
+    {
+      "attempt": "pose recovery initial",
+      "failure": "acos quaternion angle amplified floating-point rounding for unchanged rotations; replaced measurement with relative quaternion atan2, retained same angular tolerances."
+    }
+  ]
+}

@@ -33,5 +33,14 @@ godot --headless --path games/yuga-native --script res://tests/world_lighting_ca
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_flow_cases.gd -- --report="$validation_dir/world-flow-cases.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report="$validation_dir/native-acceptance.json"
 godot --headless --path games/yuga-native --script res://tests/projectile_cases.gd -- --report="$validation_dir/projectile-cases.json"
+python3 games/yuga-native/tools/audio/build-traversal-audio.py --check
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_cases.gd -- --report="$validation_dir/traversal.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_pose_cases.gd -- --report="$validation_dir/traversal-pose.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/lane_army_cases.gd -- --report="$validation_dir/army.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/input_binding_cases.gd -- --report="$validation_dir/controls.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_audio_cases.gd -- --report="$validation_dir/traversal-audio.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_army_stress.gd -- --report="$validation_dir/stress.json"
+python3 games/yuga-native/tests/traversal_security_cases.py --report="$validation_dir/security.json"
+python3 games/yuga-native/tests/release_traversal_cases.py --report="$validation_dir/release-gates.json"
 python3 games/yuga-native/tools/setup-render-runtime.py
 printf 'Native setup checks complete. Reports: %s\n' "$validation_dir"

@@ -23,7 +23,7 @@ func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
-	for path in ["res://art/world/confluence-map.json", "res://assets/world/confluence-map.json", "res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/projectile.gd", "res://scripts/world_lighting.gd", "res://scenes/confluence_world.tscn", "res://tests/world_scene_cases.gd"]:
+	for path in ["res://art/world/confluence-map.json", "res://assets/world/confluence-map.json", "res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/projectile.gd", "res://scripts/world_lighting.gd", "res://scripts/traversal_landmarks.gd", "res://scripts/player_traversal.gd", "res://scripts/lane_army.gd", "res://scenes/confluence_world.tscn", "res://tests/world_scene_cases.gd"]:
 		before[path] = FileAccess.get_sha256(path)
 	manifest = JSON.parse_string(FileAccess.get_file_as_string("res://art/world/confluence-map.json"))
 	var packed = load("res://scenes/confluence_world.tscn")
@@ -37,15 +37,19 @@ func _run() -> void:
 	driver.process_mode = Node.PROCESS_MODE_ALWAYS
 	root.add_child(driver)
 	await process_frame
-	if not scene.has_method("set_paused") or not scene.has_method("teleport_to") or not is_instance_valid(scene.get("player")):
+	if not scene.has_method("set_paused") or not scene.has_method("teleport_to") or not is_instance_valid(scene.get("player")) or not scene.world_ready:
 		_record("world traversal API is ready", false, {})
 		_finish()
 		return
+	var army_ready: bool=scene.army!=null and scene.army.has_method("report") and scene.army.report().get("configured",false)
+	var traversal_ready: bool=scene.player.traversal_report().get("enabled",false) and scene.player.traversal_report().get("anchor_count",0)==10
+	_record("offline army and traversal initialized",army_ready and traversal_ready,{"army":army_ready,"traversal":traversal_ready})
 	_record("loaded runtime manifest equals canonical source", scene.manifest == manifest, {"loaded_path":scene.manifest_path,"loaded_sha256":FileAccess.get_sha256(scene.manifest_path),"canonical_sha256":before["res://art/world/confluence-map.json"]})
 	var blockers := get_nodes_in_group("confluence_authority_blocker").size()
 	var floors := get_nodes_in_group("confluence_floor").size()
-	_record("world collision groups", blockers == 8 and floors == 1, {"blockers":blockers,"floors":floors})
-	if blockers != 8 or floors != 1:
+	var platforms := get_nodes_in_group("confluence_native_platform").size()
+	_record("world collision groups", blockers == 8 and floors == 1 and platforms==8, {"blockers":blockers,"floors":floors,"native_platforms":platforms})
+	if blockers != 8 or floors != 1 or platforms!=8:
 		_finish()
 		return
 	scene.set_paused(false)
@@ -64,6 +68,8 @@ func _run() -> void:
 		_record("capsule sweeps all lane and rotation segments", failures.is_empty(), {"hero_radius":capsule.radius,"hero_height":capsule.height,"errors":failures})
 		var anchors := _anchor_errors()
 		_record("spawns camps and review objectives stand on floor", anchors.is_empty(), {"anchors":manifest.spawns.size()+manifest.camps.size()+manifest.objectives.size(),"errors":anchors})
+		var landing_errors := _landing_errors()
+		_record("eight real landing decks match native specification",landing_errors.is_empty(),{"errors":landing_errors})
 		var radius := _player_radius()
 		_record("world player uses authority radius", abs(radius-float(manifest.bounds.hero_radius))<0.0001, {"native_radius":radius,"authority_radius":manifest.bounds.hero_radius})
 	)
@@ -106,7 +112,7 @@ func _run() -> void:
 		scene.teleport_to(point, 0.0)
 		await _ready_physics()
 		var position: Vector3 = scene.player.global_position
-		_record("player bounded after external displacement " + str(point), abs(position.x)<=67.3501 and abs(position.z)<=81.3501 and position.is_finite(), {"position":_xyz(position)})
+		_record("player bounded after external displacement " + str(point), abs(position.x)<=67.3501 and abs(position.z)<=127.3501 and position.is_finite(), {"position":_xyz(position)})
 	await _query(func():
 		_record("restored scene collision passes after mutations", _box_errors().is_empty() and _anchor_errors().is_empty() and _route_errors().is_empty(), {})
 	)
@@ -118,11 +124,21 @@ func _run() -> void:
 	_finish()
 
 func _finish() -> void:
+	paused=false
+	if is_instance_valid(scene):
+		scene.queue_free()
+		await process_frame
+		await process_frame
+	if is_instance_valid(driver): driver.queue_free()
+	# Fixed-fps headless frames can finish before AudioServer processes its stop
+	# queue. Allow one real mixer buffer to retire after all world nodes are freed.
+	OS.delay_msec(80)
+	await process_frame
 	var passed := true
 	for check in checks:
 		passed = passed and check.passed
 	var report := {"passed":passed,"engine":Engine.get_version_info().string,"sources":before,"checks":checks,
-		"scope":"Real headless Godot physics queries in _physics_process against instantiated native world. Floor, eight static boxes, capsule route sweeps and scene-local bounds. Objective markers remain nonblocking visual review anchors; live authority objective-circle behavior is verified separately. UI rectangles at two logical viewport sizes and injected actions/button signals are checked, not OS input. No renderer, AI, online match, continuous exhaustive proof or performance claim."}
+		"scope":"Real headless Godot physics queries in _physics_process against instantiated native world. Expanded140×260m floor, eight preserved browser-source boxes plus eight native landing decks, capsule route sweeps and native-only bounds. Army state is offline; tower markers remain nonblocking. This does not assert browser-authority parity. UI rectangles at two logical viewport sizes and injected actions/button signals are checked, not OS input. No renderer, AI, online match, continuous exhaustive proof or performance claim."}
 	print("YUGA_WORLD_PHYSICS ",JSON.stringify(report))
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--report="):
@@ -166,8 +182,19 @@ func _box_errors() -> Array:
 				errors.append({"id":item.id,"expected":_xyz(ray[2]),"actual":_xyz(hit.position) if not hit.is_empty() else []})
 	return errors
 
+func _landing_errors() -> Array:
+	var errors := []
+	for item in manifest.traversal.native_collision_boxes:
+		var base:=_v(item.position)
+		var dimensions:=_v(item.size)
+		for offset in [Vector3.ZERO,Vector3(1.5,0,1.5),Vector3(-1.5,0,-1.5)]:
+			var hit:=_ray(base+offset+Vector3.UP*(dimensions.y+2),base+offset+Vector3.UP*(dimensions.y-1))
+			if hit.is_empty() or abs(hit.position.y-(base.y+dimensions.y))>.002 or not hit.collider.is_in_group("confluence_native_platform"):
+				errors.append(item.id)
+	return errors
+
 func _static_blocked(x: float,z: float) -> bool:
-	for item in manifest.authority_collision_boxes:
+	for item in manifest.authority_collision_boxes+manifest.traversal.native_collision_boxes:
 		if abs(x-float(item.position[0])) <= float(item.size[0])*0.5+0.05 and abs(z-float(item.position[2])) <= float(item.size[2])*0.5+0.05:
 			return true
 	return false
@@ -175,7 +202,7 @@ func _static_blocked(x: float,z: float) -> bool:
 func _floor_sample_count() -> int:
 	var count := 0
 	for x in range(-66,67,2):
-		for z in range(-80,81,2):
+		for z in range(-126,127,2):
 			if not _static_blocked(x,z):
 				count+=1
 	return count
@@ -183,7 +210,7 @@ func _floor_sample_count() -> int:
 func _floor_errors() -> Array:
 	var errors := []
 	for x in range(-66,67,2):
-		for z in range(-80,81,2):
+		for z in range(-126,127,2):
 			if _static_blocked(x,z):
 				continue
 			var hit := _ray(Vector3(x,1,z),Vector3(x,-1,z))
@@ -285,7 +312,7 @@ func _check_layout_and_state() -> void:
 		await _frames(4)
 		var viewport_rect := root.get_visible_rect()
 		var visual_controls: Array[Control] = [scene.map_control,scene.pause_panel]
-		for card_name in ["TitleCard","ControlsCard"]:
+		for card_name in ["TitleCard","ControlsCard","TraversalStatus","AtlasLegend"]:
 			var card: Node = scene.hud.find_child(card_name,true,false)
 			if card is Control: visual_controls.append(card)
 		var crosshair := _crosshair()
@@ -309,7 +336,7 @@ func _check_layout_and_state() -> void:
 		var centered := is_instance_valid(crosshair) and crosshair.get_global_rect().get_center().distance_to(viewport_rect.get_center())<24
 		var continue_button := _button_named("Continue exploring")
 		var focus_ready := is_instance_valid(continue_button) and continue_button.has_focus()
-		_record("UI inside viewport and controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==6 and centered and focus_ready,
+		_record("UI inside viewport and controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==8 and centered and focus_ready,
 			{"logical_viewport":[viewport_rect.size.x,viewport_rect.size.y],"outside_or_small":failures,"overlaps":overlaps,"crosshair_near_center":centered,"resume_keyboard_focus":focus_ready,"rectangles":rectangles})
 	# Resume the actual character controller, then use input actions rather than
 	# assigning a fake position to prove held movement had an effect before pause.

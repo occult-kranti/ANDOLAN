@@ -49,6 +49,17 @@ func _run() -> void:
 		_setting(fixture.value)
 		var actual: float=reader._read_saved_audio_volume()
 		_record("saved volume "+fixture.name,is_finite(actual) and is_equal_approx(actual,fixture.expected),{"actual":actual,"expected":fixture.expected})
+	for fixture in [
+		{"name":"oversize","source":"#".repeat(65537)},
+		{"name":"constructor","source":"[audio]\nvolume=Object(\"RefCounted\")\n"},
+		{"name":"deep nesting","source":"[audio]\nvolume=" + "[".repeat(9) + "0" + "]".repeat(9)},
+		{"name":"malformed","source":"[audio\nvolume=0"}
+	]:
+		var file:=FileAccess.open(SETTINGS,FileAccess.WRITE)
+		file.store_string(fixture.source)
+		file.close()
+		var before:=FileAccess.get_file_as_bytes(SETTINGS)
+		_record("unsafe settings " + fixture.name + " default without rewriting",is_equal_approx(reader._read_saved_audio_volume(),.7) and FileAccess.get_file_as_bytes(SETTINGS)==before)
 	reader.free()
 	var focus_baseline:=root.focus_exited.get_connections().size()
 	_setting(0.0)
@@ -109,7 +120,13 @@ func _run() -> void:
 	var previous: WeakRef=weakref(audible)
 	audible.return_to_courtyard()
 	for unused in range(5): await process_frame
-	_record("Return frees film and leaves only courtyard focus callback",not is_instance_valid(previous.get_ref()) and current_scene.scene_file_path=="res://scenes/courtyard.tscn" and root.focus_exited.get_connections().size()==focus_baseline+1)
+	var owned_callbacks:=true
+	var courtyard_callback:=false
+	for connection in root.focus_exited.get_connections():
+		var owner: Object=connection.callable.get_object()
+		owned_callbacks=owned_callbacks and (owner==current_scene or (owner is Node and current_scene.is_ancestor_of(owner)))
+		courtyard_callback=courtyard_callback or owner==current_scene
+	_record("Return frees film and retains only active courtyard-owned focus callbacks",not is_instance_valid(previous.get_ref()) and current_scene.scene_file_path=="res://scenes/courtyard.tscn" and owned_callbacks and courtyard_callback)
 	root.focus_exited.emit()
 	current_scene.queue_free()
 	current_scene=null

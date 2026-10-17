@@ -35,13 +35,16 @@ def overlaps(a, b):
 
 
 def point_clear(x, z, radius, data):
-    x0, x1, z0, z1 = data['bounds']['authority_xz']
+    x0, x1, z0, z1 = data['bounds']['actor_xz']
     if not (x0+radius <= x <= x1-radius and z0+radius <= z <= z1-radius):
         return False
-    for box in data['authority_collision_boxes']:
+    for box in data['authority_collision_boxes'] + data['traversal']['native_collision_boxes']:
         bx0, bx1, bz0, bz1 = box_bounds(box)
-        # Matches the current authority's axis-expanded rectangle convention.
-        if bx0-radius < x < bx1+radius and bz0-radius < z < bz1+radius:
+        # Native corridor widths are swept discs, matching rounded capsule
+        # corner clearance. The source-authority axis-expanded convention is
+        # checked separately in world_map_cases.py; it is not native parity.
+        dx=max(bx0-x,0,x-bx1);dz=max(bz0-z,0,z-bz1)
+        if math.hypot(dx,dz) < radius:
             return False
     return True
 
@@ -51,7 +54,8 @@ def validate(data):
     def require(condition, message):
         if not condition: errors.append(message)
     require(data.get('schema_version') == 1, 'schema_version')
-    require(data['coordinate_contract']['ground_y'] == 0, 'flat ground contract')
+    require(data['coordinate_contract']['ground_y'] == 0, 'base ground contract')
+    require(data['bounds']['actor_xz'] == data['bounds']['authority_xz'], 'legacy native bounds alias mismatch')
     require(data['coordinate_contract']['controller_radius'] == data['bounds']['hero_radius'], 'controller radius contract')
     collections=['lanes','rotations','spawns','objectives','camps','authority_collision_boxes','districts','props','lights','waters']
     for key in collections:
@@ -59,8 +63,8 @@ def validate(data):
         require(len(ids)==len(set(ids)), key+' duplicate id')
     presets={preset for source in data['kit_sources'] for preset in source['presets']}
     presets.update(preset for values in data['builtin_presets'].values() for preset in values)
-    boxes={box['id']:box for box in data['authority_collision_boxes']}
-    arena=data['bounds']['authority_xz']
+    boxes={box['id']:box for box in data['authority_collision_boxes'] + data['traversal']['native_collision_boxes']}
+    arena=data['bounds']['actor_xz']
     for prop in data['props']:
         ident=prop['id']
         numbers=prop['position']+prop['scale']+[prop['yaw_degrees']]
@@ -97,23 +101,40 @@ def validate(data):
         outside=not overlaps(footprint,arena)
         require(on_existing or outside, ident+' hard decorative prop in free traversal area')
     # Coarse whole-floor sampling identifies unthemed, omitted corners.
-    for x in range(-68,69,4):
-        for z in range(-82,83,4):
+    for x in range(math.ceil(arena[0]),math.floor(arena[1])+1,4):
+        for z in range(math.ceil(arena[2]),math.floor(arena[3])+1,4):
             require(any(area['bounds_xz'][0] <= x <= area['bounds_xz'][1] and area['bounds_xz'][2] <= z <= area['bounds_xz'][3] for area in data['districts']),f'unthemed floor {x},{z}')
-    for route in data['rotations']:
+    for route in data['rotations'] + data['lanes']:
+        route_id=str(route['id'])
         points=route['points']
-        require(len(points)>=3 if route['closed'] else len(points)>=2, route['id']+' too few route points')
+        require(len(points)>=3 if route.get('closed',False) else len(points)>=2, route_id+' too few route points')
         pairs=list(zip(points,points[1:]))
-        if route['closed']:pairs.append((points[-1],points[0]))
+        if route.get('closed',False):pairs.append((points[-1],points[0]))
         clearance=route['clear_half_width']+data['bounds']['hero_radius']
         for start,end in pairs:
             distance=math.dist(start,end)
-            require(distance>0,route['id']+' duplicate consecutive route point')
+            require(distance>0,route_id+' duplicate consecutive route point')
             for step in range(max(1,math.ceil(distance/.25))+1):
                 fraction=step/max(1,math.ceil(distance/.25))
                 x=start[0]+(end[0]-start[0])*fraction;z=start[2]+(end[2]-start[2])*fraction
                 if not point_clear(x,z,clearance,data):
-                    errors.append(route['id']+' corridor intersects authority collision');break
+                    errors.append(route_id+' corridor intersects native ground collision');break
+    traversal=data['traversal']
+    require(traversal['status']=='native_only_offline','traversal scope')
+    native_boxes=traversal['native_collision_boxes']
+    require(len(native_boxes)==8,'native platform count')
+    landmarks={item['id']:item for item in traversal['landmarks']}
+    for box in native_boxes:
+        visual=landmarks.get(box['landmark_id'],{})
+        require(visual.get('position')==box['position'] and visual.get('size')==box['size'],'native deck visual collision mismatch')
+        require(inside(box_bounds(box),arena),'native deck outside arena')
+    for anchor in traversal['anchors']:
+        require(0 < anchor['position'][1] <= traversal['flight_ceiling'],'anchor above flight ceiling')
+        if anchor['kind']=='landing_ring':
+            visual=landmarks.get(anchor.get('platform_id'),{})
+            require(bool(visual),'anchor has no landing platform')
+            if visual:
+                require(anchor['position'][0::2]==visual['position'][0::2] and anchor['position'][1] > visual['position'][1]+visual['size'][1],'anchor landing correspondence')
     for water in data['waters']:
         require(water['collision']=='none',water['id']+' water changes collision')
         if water['style']=='swamp':
@@ -142,13 +163,16 @@ def main():
     case('reject_oversized_wall_fixture',lambda d:next(p for p in d['props'] if 'mount' in p).update(scale=[4,4,4]),'mount projects')
     case('reject_activated_future_geometry',lambda d:d['reserved_future_features'][0].update(status='active'),'future geometry')
     case('reject_omitted_base_corners',lambda d:next(x for x in d['districts'] if x['id']=='sun-base').update(bounds_xz=[-55,55,-82,-60]),'unthemed floor')
+    case('reject_native_deck_visual_mismatch',lambda d:d['traversal']['landmarks'][0]['size'].__setitem__(0,2),'native deck visual collision mismatch')
+    case('reject_unreachable_high_anchor',lambda d:d['traversal']['anchors'][0]['position'].__setitem__(1,25),'anchor above flight ceiling')
+    case('reject_lane_through_native_deck',lambda d:d['lanes'][0]['points'].__setitem__(1,[-20,0,-88]),'corridor intersects')
     for name,mutate,expected in cases:
         bad=copy.deepcopy(data);mutate(bad);detected=validate(bad)
         check(name,any(expected in item for item in detected),detected[:5])
     protected={}
     for path in ['games/yuga-native/docs/GAME_DESIGN_MASTER.md','games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md']:
         protected[path]=hashlib.sha256((ROOT/path).read_bytes()).hexdigest()
-    report=dict(passed=all(c['passed'] for c in checks),scope='Canonical planning: district coverage, route clearance and decorative placement. No rendered art, dynamic-authority physics, GPU or multiplayer acceptance.',map_sha256=hashlib.sha256(raw).hexdigest(),script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),protected_design_observed_hashes=protected,counts={key:len(data[key]) for key in ['props','lights','districts','rotations','authority_collision_boxes']},checks=checks)
+    report=dict(passed=all(c['passed'] for c in checks),scope='Native planning: district coverage, combined ground-blocker route clearance, anchor/deck contracts and decorative placement. Browser-authority parity is not claimed. No rendered art, dynamic-authority physics, GPU or multiplayer acceptance.',map_sha256=hashlib.sha256(raw).hexdigest(),script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),protected_design_observed_hashes=protected,counts={key:len(data[key]) for key in ['props','lights','districts','rotations','authority_collision_boxes']},checks=checks)
     if args.report:args.report.parent.mkdir(parents=True,exist_ok=True);args.report.write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))
     return 0 if report['passed'] else 1

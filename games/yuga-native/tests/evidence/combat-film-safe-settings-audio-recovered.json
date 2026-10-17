@@ -1,0 +1,205 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "missing settings preserve courtyard default",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual": 0.0,
+				"expected": 0.0
+			},
+			"name": "saved volume zero",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual": 0.35,
+				"expected": 0.35
+			},
+			"name": "saved volume fraction",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual": 1.0,
+				"expected": 1.0
+			},
+			"name": "saved volume one",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual": 0.0,
+				"expected": 0.0
+			},
+			"name": "saved volume negative clamped",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual": 1.0,
+				"expected": 1.0
+			},
+			"name": "saved volume above one clamped",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual": 0.7,
+				"expected": 0.7
+			},
+			"name": "saved volume NaN defaults",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual": 0.7,
+				"expected": 0.7
+			},
+			"name": "saved volume infinity defaults",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual": 0.7,
+				"expected": 0.7
+			},
+			"name": "saved volume numeric string rejected",
+			"passed": true
+		},
+		{
+			"details": {
+				"actual": 0.7,
+				"expected": 0.7
+			},
+			"name": "saved volume boolean rejected",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe settings oversize default without rewriting",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe settings constructor default without rewriting",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe settings deep nesting default without rewriting",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "unsafe settings malformed default without rewriting",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "zero-volume startup is stopped with visible timeline active",
+			"passed": true
+		},
+		{
+			"details": {
+				"audio_players": 1
+			},
+			"name": "zero remains silent across seek resume replay and focus",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "focus loss pauses muted visual timeline",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "freed muted viewer disconnects window callback",
+			"passed": true
+		},
+		{
+			"details": {
+				"volume_db": -11.1186389923096
+			},
+			"name": "nonzero setting applies expected gain and one player",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "nonzero play and pause synchronize timeline and stream",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "paused seek stops nonzero soundtrack",
+			"passed": true
+		},
+		{
+			"details": {
+				"audio_position": 8.55266666412354,
+				"timeline": 8.55
+			},
+			"name": "resume restarts one stream at timeline position",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "focus loss pauses nonzero soundtrack",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "capture remains silent at nonzero saved volume",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Return frees film and retains only active courtyard-owned focus callbacks",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "scene cleanup releases remaining focus callback",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": true,
+	"scope": "Headless actual AudioStreamPlayer state and director lifecycle. Zero volume never starts playback. Focus events are explicitly emitted notifications; OS input and audible quality require separate review. Settings are restored after fixtures.",
+	"sources": {
+		"courtyard_settings_source": "4f1fce80324a1fe2a475ef680f0b8f37a85c353c00b0d8f40fe2c13b1549da9a",
+		"director": "05d0b6f8a812085f905cba39df4e04a8ac5f89e776a5327cebffd39bc23fea8b",
+		"runner": "6dfaac6f8a746c25009e885e85df40437c6f07f08fb6af2192b8377bf04284f1",
+		"soundtrack": "5c35ac7fc148c2c89ef1c2f0da7dfa8059528f02787f0cc03ceea7704b98c582"
+	}
+}

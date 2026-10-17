@@ -1,0 +1,150 @@
+{
+  "passed": false,
+  "scope": "Native planning: district coverage, combined ground-blocker route clearance, anchor/deck contracts and decorative placement. Browser-authority parity is not claimed. No rendered art, dynamic-authority physics, GPU or multiplayer acceptance.",
+  "map_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+  "script_sha256": "6a077956e69deb04c7aa0e8a3e818e3d1505daa93ec552a8059f4922dd04f723",
+  "protected_design_observed_hashes": {
+    "games/yuga-native/docs/GAME_DESIGN_MASTER.md": "bc51f4befc524ba9fecc44e45ee3b0faa4ae4508a64976980a73106245fba310",
+    "games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md": "97d92fcd0344ee4cdcb341a01e58538a4b257762504d8f28306ad6c91d1a7769"
+  },
+  "counts": {
+    "props": 63,
+    "lights": 16,
+    "districts": 7,
+    "rotations": 2,
+    "authority_collision_boxes": 8
+  },
+  "checks": [
+    {
+      "name": "canonical_layout_placement_and_route_contract",
+      "passed": false,
+      "details": [
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision"
+      ]
+    },
+    {
+      "name": "reject_unknown_kit",
+      "passed": true,
+      "details": [
+        "block-0 unknown preset",
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision"
+      ]
+    },
+    {
+      "name": "reject_hard_prop_in_open_route",
+      "passed": true,
+      "details": [
+        "bad-hard hard decorative prop in free traversal area",
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision"
+      ]
+    },
+    {
+      "name": "reject_route_through_building",
+      "passed": true,
+      "details": [
+        "mid-confluence-loop corridor intersects native ground collision",
+        "mid-confluence-loop corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision"
+      ]
+    },
+    {
+      "name": "reject_unreadable_camp_foliage",
+      "passed": true,
+      "details": [
+        "swamp-reed--1-0 vegetation in camp clearance",
+        "swamp-reed--1-0 vegetation in mid crossing",
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision"
+      ]
+    },
+    {
+      "name": "reject_hidden_swamp_water",
+      "passed": true,
+      "details": [
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "west-reed-water ambiguous swamp traversal"
+      ]
+    },
+    {
+      "name": "reject_oversized_wall_fixture",
+      "passed": true,
+      "details": [
+        "block-0-lamp--1 mount projects beyond exclusion",
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision"
+      ]
+    },
+    {
+      "name": "reject_activated_future_geometry",
+      "passed": true,
+      "details": [
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "future geometry silently active"
+      ]
+    },
+    {
+      "name": "reject_omitted_base_corners",
+      "passed": true,
+      "details": [
+        "unthemed floor -68,-128",
+        "unthemed floor -68,-124",
+        "unthemed floor -68,-120",
+        "unthemed floor -68,-116",
+        "unthemed floor -68,-112"
+      ]
+    },
+    {
+      "name": "reject_native_deck_visual_mismatch",
+      "passed": true,
+      "details": [
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "native deck visual collision mismatch"
+      ]
+    },
+    {
+      "name": "reject_unreachable_high_anchor",
+      "passed": true,
+      "details": [
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "anchor above flight ceiling"
+      ]
+    },
+    {
+      "name": "reject_lane_through_native_deck",
+      "passed": true,
+      "details": [
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "0 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision",
+        "2 corridor intersects native ground collision"
+      ]
+    }
+  ]
+}

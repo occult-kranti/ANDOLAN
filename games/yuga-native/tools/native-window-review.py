@@ -116,7 +116,7 @@ def main():
                 record['events'].append({'action': action, 'file': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'time': time.time()})
             elif action == 'key':
                 name = command['key']
-                if name not in ['w', 'a', 's', 'd', 'q', 'e', 'r', 'n', 'Escape', 'Return', 'Tab', 'space', 'Left', 'Right', 'F1', 'F5']:
+                if name not in ['w', 'a', 's', 'd', 'q', 'e', 'r', 'n', 'Escape', 'Return', 'Tab', 'space', 'Left', 'Right', 'F1', 'F2', 'F5', 'f', 'g', 'j', 'Control_L', 'Shift_L']:
                     raise ValueError('Unsupported review key.')
                 duration = max(0.05, min(5.0, float(command.get('seconds', 0.15))))
                 code = x.XKeysymToKeycode(display, x.XStringToKeysym(name.encode()))

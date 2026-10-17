@@ -71,26 +71,43 @@ func run() -> void:
 	record("wave_not_early",army.waves==next_waves and army.elapsed<30,{"elapsed":army.elapsed,"waves":army.waves})
 	army.step_simulation(.05)
 	record("paired_wave_on30_seconds",army.waves==next_waves+1 and army.report().alive<=72,army.report())
-	# Force full-route endpoints with no opponents to exercise every lane/core.
+	# Capacity pressure uses valid damage and explicit route repositioning to keep
+	# spawn slots clear while exceeding the ordinary symmetric soak population.
 	army.reset()
-	for unit in army.units.duplicate():
-		if unit.team=="moon":
-			army.units.erase(unit)
-			unit.free()
+	for round_index in range(2):
+		for unit in army.units:
+			unit.progress += 20
+			unit.position = army.route_sample(unit.lane_id,unit.progress,unit.team,unit.lateral).position
+		army._spawn_wave()
+	var reached70: bool = army.report().alive==70 and army.rejected_waves>0
+	for unit in army.units.duplicate().slice(0,8):unit.receive_damage(1000,"army")
 	for unit in army.units:
-		unit.progress = army.lanes[unit.lane_id].length-.02
-		unit.lateral = 0
-		unit.position = army.route_sample(unit.lane_id,unit.progress,unit.team).position
-	# One arrival per lane at a time prevents synthetic all-at-one-point overlap.
+		if unit.alive:
+			unit.progress += 10
+			unit.position = army.route_sample(unit.lane_id,unit.progress,unit.team,unit.lateral).position
+	army._spawn_wave()
+	var pressure: Dictionary = army.report()
+	army._spawn_wave()
+	record("exact72_capacity_and_paired_overflow_policy",reached70 and pressure.alive==72 and army.report().alive==72 and army.report().unit_nodes<=96,army.report())
+	# Force full-route endpoints with no opponents to exercise every lane/core.
+	# Isolate one arrival per fixture; retaining overlapping endpoint units would
+	# let unselected lanes arrive during an earlier fixture and invalidate it.
 	var arrivals := 0
+	var arrival_reports: Array = []
 	for lane_id in range(3):
-		var selected = army.units.filter(func(u):return u.lane_id==lane_id)[0]
-		for other in army.units:
-			if other != selected:other.position = Vector3(60,0,-100+other.unit_id)
+		army.reset()
+		var selected = army.units.filter(func(u):return u.lane_id==lane_id and u.team=="sun")[0]
+		for other in army.units.duplicate():
+			if other != selected:
+				army.units.erase(other)
+				other.free()
+		selected.progress = army.lanes[lane_id].length-.02
+		selected.lateral = 0
 		selected.position = army.route_sample(lane_id,selected.progress,"sun").position
 		army.step_simulation(.05)
 		arrivals += army.core_arrivals[lane_id]
-	record("all_three_lane_ends_damage_enemy_core",arrivals>=3 and army.cores.moon<100 and army.cores.sun==100,army.report())
+		arrival_reports.append(army.report())
+	record("all_three_lane_ends_damage_enemy_core",arrivals==3 and army.cores.moon<100 and army.cores.sun==100,{"lanes":arrival_reports})
 	# Full deterministic soak; unassisted symmetric armies should remain bounded.
 	army.reset()
 	var bounded := true

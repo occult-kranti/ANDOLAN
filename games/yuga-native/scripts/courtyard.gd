@@ -558,6 +558,7 @@ func return_to_menu() -> void:
 	start_button.grab_focus()
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.echo: return
 	if controls_overlay.visible: return
 	if event.is_action_pressed("help_controls") and not settings_panel.visible:
 		if help_panel.visible: _close_help()

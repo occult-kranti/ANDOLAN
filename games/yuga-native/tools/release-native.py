@@ -19,10 +19,16 @@ import zipfile
 PROJECT = Path(__file__).resolve().parents[1]
 REPO = PROJECT.parents[1]
 FILM = PROJECT / "docs/evidence/combat-film-r4"
-TAG = re.compile(r"yuga-confluence-duel-[A-Za-z0-9][A-Za-z0-9._-]{0,100}\Z")
+TAG = re.compile(r"yuga-(?:confluence-duel|traversal-armies)-[A-Za-z0-9][A-Za-z0-9._-]{0,100}\Z")
 NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,160}\Z")
 CHECKS = ("archive", "media", "script", "film", "motion", "vfx", "audio", "native",
           "world-scene", "world-flow", "world-lighting")
+TRAVERSAL_CHECKS = ("traversal", "traversal-pose", "army", "controls", "traversal-audio", "stress",
+                    "security", "release-gates")
+
+
+def traversal_release(tag):
+    return tag.startswith("yuga-traversal-armies-")
 REQUIRED_ARCHIVE = {
     "yuga-confluence-duel.mp4", "combat-film-render.json", "combat-film-video.json",
     "confluence-duel.json", "capture-combat-film.gd", "cinematic_actor.gd",
@@ -181,7 +187,7 @@ def stage(args):
     for name in ("native-package-manifest.json", "native-export-manifest.json"):
         copy(args.build / name)
     copy(args.engines / "engine-downloads.json")
-    for name in CHECKS:
+    for name in CHECKS + (TRAVERSAL_CHECKS if traversal_release(args.tag) else ()):
         path = args.checks / (name + ".json")
         require(json.loads(path.read_text()).get("passed") is True, "Required release check failed/missing: " + name)
         copy(path, "ci-" + name + ".json")
@@ -191,7 +197,11 @@ def stage(args):
             copy(FILM / name)
     copy(FILM / "archive-manifest.json")
     copy(FILM / "REVIEW.md", "FILM-REVIEW.md")
-    notes = PROJECT / "docs/RELEASE_CONFLUENCE_DUEL.md"
+    if traversal_release(args.tag):
+        copy(PROJECT / "assets/audio/traversal/lane-procession-loop.wav")
+        copy(PROJECT / "NOTICE/TRAVERSAL-AUDIO-PROVENANCE.json")
+        copy(PROJECT / "docs/TRAVERSAL_ARMY_VERIFICATION.md", "TRAVERSAL-VERIFICATION.md")
+    notes = PROJECT / ("docs/RELEASE_TRAVERSAL_ARMIES.md" if traversal_release(args.tag) else "docs/RELEASE_CONFLUENCE_DUEL.md")
     text = notes.read_text() if notes.exists() else (
         "# YUGA — Confluence duel preview\n\nDownload yuga-confluence-duel.mp4 for the original 24-second film. "
         "Extract either native ZIP and run launch.sh (Linux) or launch.bat (Windows). Windows is packaged, not execution-verified here.\n\n"
@@ -221,6 +231,27 @@ def verify(directory, tag, commit):
     for name, row in inventory["files"].items():
         require(NAME.fullmatch(name), "Unsafe release filename")
         require(record(member(directory, name)) == row, "Release asset checksum mismatch: " + name)
+    if traversal_release(tag):
+        required = {"native-package-manifest.json", "native-export-manifest.json", "engine-downloads.json",
+                    "RELEASE-NOTES.md", "TRAVERSAL-VERIFICATION.md", "TRAVERSAL-AUDIO-PROVENANCE.json",
+                    "lane-procession-loop.wav"} | {"ci-" + name + ".json" for name in CHECKS + TRAVERSAL_CHECKS}
+        require(required <= set(inventory["files"]), "Feature release omits required assets/reports")
+        for name in CHECKS + TRAVERSAL_CHECKS:
+            require(json.loads(member(directory, "ci-" + name + ".json").read_text()).get("passed") is True,
+                    "Feature release report failed: " + name)
+        packages = json.loads(member(directory, "native-package-manifest.json").read_text())
+        exported = json.loads(member(directory, "native-export-manifest.json").read_text())
+        require(packages["git"]["head"] == commit and exported["git"]["head"] == commit,
+                "Feature package source mismatch")
+        for platform in ("linux", "windows"):
+            row = packages["packages"][platform]
+            require(row["filename"] == "yuga-native-" + platform + "-x86_64.zip" and row["filename"] in inventory["files"], "Missing or aliased platform package")
+            require(record(member(directory, row["filename"])) == {key: row[key] for key in ("bytes", "sha256")},
+                    "Platform package differs from package manifest")
+        notice = json.loads(member(directory, "TRAVERSAL-AUDIO-PROVENANCE.json").read_text())
+        loop = [row for row in notice["assets"] if row["asset"] == "assets/audio/traversal/lane-procession-loop.wav"]
+        require(len(loop) == 1 and record(member(directory, "lane-procession-loop.wav")) ==
+                {key: loop[0][key] for key in ("bytes", "sha256")}, "Audio provenance mismatch")
     rows = {**inventory["files"], "release-manifest.json": record(directory / "release-manifest.json")}
     expected_sums = "".join(f"{row['sha256']}  {name}\n" for name, row in sorted(rows.items()))
     require(member(directory, "SHA256SUMS").read_text() == expected_sums, "Checksum inventory differs")
@@ -258,7 +289,7 @@ def publish(args):
         require("HTTP 404" in existing.stderr, "Cannot determine release state; refusing publication")
         subprocess.run(["gh", "release", "create", args.tag, "--repo", args.repository,
                         "--draft", "--prerelease", "--verify-tag", "--target", args.commit,
-                        "--title", "YUGA Confluence duel — native preview",
+                        "--title", ("YUGA traversal and lane armies — native preview" if traversal_release(args.tag) else "YUGA Confluence duel — native preview"),
                         "--notes-file", str(args.directory / "RELEASE-NOTES.md")], check=True)
     assets = sorted(str(path) for path in args.directory.iterdir())
     subprocess.run(["gh", "release", "upload", args.tag, "--repo", args.repository, "--clobber", *assets], check=True)
