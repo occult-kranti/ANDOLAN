@@ -264,6 +264,7 @@ func screen_cases() -> void:
 		var focus := root.gui_get_focus_owner()
 		var viewport := Rect2(Vector2.ZERO, Vector2(dimensions))
 		check("pause first action remains visible "+str(dimensions), focus == scene.pause_actions[0] and focus.is_visible_in_tree() and viewport.encloses(focus.get_global_rect()) and scene.pause_scroll.get_global_rect().grow(1).encloses(focus.get_global_rect()), {"focus":str(focus)})
+		var opening_focus := focus
 		var open_event := InputEventAction.new()
 		open_event.action = "open_invocations"
 		open_event.pressed = true
@@ -277,7 +278,7 @@ func screen_cases() -> void:
 			panel.close()
 			await frames(5)
 			focus = root.gui_get_focus_owner()
-			check("Rama panel close restores visible pause owner "+str(dimensions), not panel.visible and scene.pause_panel.visible and paused and focus == scene.rama_button and focus.is_visible_in_tree() and viewport.encloses(focus.get_global_rect()) and scene.pause_scroll.get_global_rect().grow(1).encloses(focus.get_global_rect()))
+			check("Rama panel close restores its visible keyboard opener "+str(dimensions), not panel.visible and scene.pause_panel.visible and paused and focus == opening_focus and focus.is_visible_in_tree() and viewport.encloses(focus.get_global_rect()) and scene.pause_scroll.get_global_rect().grow(1).encloses(focus.get_global_rect()))
 		scene.set_paused(false)
 		Input.action_press("fire")
 		scene.set_paused(true)
