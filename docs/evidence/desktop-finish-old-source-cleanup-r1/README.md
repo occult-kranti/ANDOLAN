@@ -1,0 +1,3 @@
+This is a content-verified recovery map for duplicate source/assets in inactive historical capture snapshots. Every selected file matches a Git blob in the remote-verified source commit3db9158. All six workers confirmed that their current inputs are elsewhere. Unmatched source, every captured original, logs, caches and user state remain untouched.
+
+No deletion is authorized by this file alone: the lead must recheck hashes, inode/link metadata, current process ownership and remote availability immediately before deletion. An execution receipt records what was actually removed. Restore any listed path by reading its `git_path` at `recovery_commit` using `git show`, writing bytes to the recorded path and validating SHA256. Do not restore files over later user changes.
