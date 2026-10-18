@@ -36,7 +36,7 @@ def main():
                                      'desktop-motion-transition-guard','desktop-world-route-parity',
                                      'desktop-volley-feedback','desktop-landing-support-boundary',
                                      'desktop-landing-pause','desktop-world-render-resources',
-                                     'desktop-army-render-resources'}),
+                                     'desktop-army-render-resources','desktop-authored-descent'}),
                            ('screens', {'ui-boot-recovery','ui-title-portrait','ui-launch-composition',
                             'ui-world-atlas','ui-action-hud','ui-action-hud-fit',
                             'ui-host-replacement','ui-loading-presentation',
@@ -44,7 +44,7 @@ def main():
                             'ui-preferences-relaunch','ui-compact-navigation-routes','ui-world-compact-title',
                             'ui-title-identity','ui-outcome-shortcuts','ui-world-compact-first-entry',
                             'ui-focus-recovery','ui-modal-resize-focus','ui-idle-traversal-hud',
-                            'ui-traversal-availability'})]:
+                            'ui-traversal-availability','ui-hud-reload-availability'})]:
         result = subprocess.run([sys.executable,str(RUNNER),'--catalog',kind,'--list'],capture_output=True,text=True)
         listed = json.loads(result.stdout)
         check(kind+' CLI exposes new contracts with bounded acceptance scope',
@@ -55,6 +55,18 @@ def main():
     result = subprocess.run([sys.executable,str(RUNNER),'--catalog','screens','--suite','desktop-volley-feedback','--list'],capture_output=True,text=True)
     check('A combat presentation suite cannot silently run under screen acceptance',result.returncode == 2 and 'selected --catalog' in result.stderr)
     for name, expected in {
+        'desktop-authored-descent': {'tests/desktop_authored_descent_cases.gd',
+                                     'tests/desktop_authored_descent_cases.gd.uid',
+                                     'tests/graphics_g2_support_cases.gd',
+                                     'docs/evidence/desktop-finish/continuation-oct18b/W5-motion-r1/canonical-rama_motion.gd',
+                                     'scripts/rama_motion.gd','assets/heroes/rama-hero.glb.import',
+                                     'assets/animations/rama_hero_motion.tres'},
+        'ui-hud-reload-availability': {'tests/ui_hud_reload_availability_cases.gd',
+                                       'tests/ui_i1_action_hud_cases.gd',
+                                       'scripts/rama_hero_hud.gd','scripts/rama_hero_runtime.gd',
+                                       'scripts/player.gd','scripts/input_bindings.gd',
+                                       'scripts/confluence_world.gd','scripts/rama_ability_kit.gd',
+                                       'scripts/lane_army.gd'},
         'ui-traversal-availability': {'tests/ui_traversal_availability_cases.gd',
                                       'scripts/confluence_world.gd', 'scripts/player.gd',
                                       'scripts/rama_vitals.gd', 'scripts/rama_hero_runtime.gd',

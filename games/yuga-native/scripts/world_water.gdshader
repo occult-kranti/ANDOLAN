@@ -59,10 +59,11 @@ void fragment() {
 	ROUGHNESS = clamp(base_roughness + current * 0.05, 0.1, 0.8);
 	if (swamp_overlay) {
 		vec3 paving = world_paving(p);
-		// Desaturated moss water, with a damp stone transition instead of a
-		// hard green carpet. Every opaque border fragment matches the floor.
+		// A shallow wet film retains the paving bed instead of filling its
+		// centre with opaque moss paint. Keep at least 82% of the damp-stone
+		// colour signal; the original pool mask and dry border stay identical.
 		vec3 wet_stone = paving * vec3(0.68, 0.76, 0.68);
-		vec3 pool_color = mix(wet_stone, ALBEDO * 0.78, smoothstep(0.18, 0.85, pool));
+		vec3 pool_color = mix(wet_stone, ALBEDO * 0.78, smoothstep(0.18, 0.85, pool) * 0.18);
 		ALBEDO = mix(paving, pool_color, pool);
 		SPECULAR = mix(0.30, 0.25, pool);
 		ROUGHNESS = mix(world_paving_roughness(p), ROUGHNESS, pool);

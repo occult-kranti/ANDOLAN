@@ -45,6 +45,7 @@ SUITES = (
     ("desktop-motion-transition-guard", "godot", "tests/desktop_s3_transition_guard_cases.gd", ()),
     ("desktop-landing-support-boundary", "godot", "tests/desktop_landing_support_boundary_cases.gd", ()),
     ("desktop-landing-pause", "godot", "tests/desktop_landing_pause_cases.gd", ()),
+    ("desktop-authored-descent", "godot", "tests/desktop_authored_descent_cases.gd", ()),
     ("desktop-world-route-parity", "godot", "tests/desktop_world_route_parity_cases.gd", ()),
     ("desktop-world-render-resources", "godot", "tests/desktop_world_render_resources_cases.gd", ()),
     ("desktop-army-render-resources", "godot", "tests/desktop_army_render_resources_cases.gd", ()),
@@ -74,6 +75,7 @@ SCREEN_SUITES = (
     ("ui-idle-traversal-hud", "godot", "tests/ui_idle_traversal_hud_cases.gd", ()),
     ("ui-traversal-availability", "godot", "tests/ui_traversal_availability_cases.gd", ()),
     ("ui-hud-edges", "godot", "tests/ui_hud_edge_cases.gd", ()),
+    ("ui-hud-reload-availability", "godot", "tests/ui_hud_reload_availability_cases.gd", ()),
     ("ui-preference-edges", "godot", "tests/ui_preferences_edge_cases.gd", ()),
     ("ui-independent-theme", "godot", "tests/ui_independent_theme_cases.gd", ()),
     ("ui-independent-lifetime", "godot", "tests/ui_independent_lifecycle_cases.gd", ()),
@@ -102,6 +104,10 @@ SCREEN_LIMITS = "Headless native screen, glyph, input-state and scene-lifecycle 
 # Tests inherited by selected scripts and tests invoked by fixture runners are
 # sources too. Pin them explicitly instead of claiming every historical archive.
 SUITE_DEPENDENCIES = {
+    "desktop-authored-descent": ("tests/graphics_g2_support_cases.gd",
+                                  "tests/desktop_authored_descent_cases.gd.uid",
+                                  "docs/evidence/desktop-finish/continuation-oct18b/W5-motion-r1/canonical-rama_motion.gd"),
+    "ui-hud-reload-availability": ("tests/ui_i1_action_hud_cases.gd",),
     "desktop-army-render-resources": ("docs/evidence/desktop-finish/continuation-oct18/W4-army-resources-r1/baseline-lane_minion.gd.txt",),
     "desktop-world-render-resources": ("docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-traversal_landmarks.gd.txt",),
     "ui-transition-signals": ("tests/ui_transition_signal_cases.gd",),
