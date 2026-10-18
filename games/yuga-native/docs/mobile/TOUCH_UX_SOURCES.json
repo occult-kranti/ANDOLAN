@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "task": "M0 / worker04 / touch UX and screen roadmap",
+  "retrieved_utc": "2026-10-18T03:13:56.423172+00:00",
+  "source_head": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "source_branch": "game/yuga-native-production",
+  "local_source_note": "Working-tree source inspected; concurrent graphics changes exist. Hashes captured at ledger creation, not a frozen release. Re-read before implementation.",
+  "status": "Documentation and static source research only; no runtime implementation or Android/device validation.",
+  "remote_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/android/platform-samples/c3e4062b3ea37c42fda9c7433431ded3e7e9d098/samples/user-interface/window-insets/src/main/java/com/example/platform/ui/insets/ImmersiveMode.kt",
+      "status": 200,
+      "bytes": 7128,
+      "sha256": "f11d8ed93c04c65e5344128674253d8d1401ec645d49549710b3600a3703721f",
+      "id": "A1",
+      "license": "Apache-2.0",
+      "verified_support": "Gesture navigation persists with hidden bars; transient bars and insets controller",
+      "repository_revision": "c3e4062b3ea37c42fda9c7433431ded3e7e9d098",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/android/platform-samples/c3e4062b3ea37c42fda9c7433431ded3e7e9d098/samples/accessibility/src/main/java/com/example/platform/accessibility/ColorContrast.kt",
+      "status": 200,
+      "bytes": 2490,
+      "sha256": "968095bcf9759b23a45659f74537b26f6967d4aa4dfd18163a54774471d6061c",
+      "id": "A2",
+      "license": "Apache-2.0",
+      "verified_support": "Contrast in sunlight; scanner examples",
+      "repository_revision": "c3e4062b3ea37c42fda9c7433431ded3e7e9d098",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/android/platform-samples/c3e4062b3ea37c42fda9c7433431ded3e7e9d098/samples/accessibility/src/main/java/com/example/platform/accessibility/SpeakableText.kt",
+      "status": 200,
+      "bytes": 3874,
+      "sha256": "f260d53b2201b2553fc018a6ef3926598c04e0248d586807c72ac737e4eacc81",
+      "id": "A3",
+      "license": "Apache-2.0",
+      "verified_support": "Succinct action names; screen-reader label examples",
+      "repository_revision": "c3e4062b3ea37c42fda9c7433431ded3e7e9d098",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/android/ndk-samples/abb0d8ef36a5ee1be5cebc67025678f42970c393/native-activity/app/src/main/cpp/main.cpp",
+      "status": 200,
+      "bytes": 12631,
+      "sha256": "3dd6c4877b0922d4f3175a0569267efc564a1e8a98e8074cfc0cff1641d2f56b",
+      "id": "A4",
+      "license": "Apache-2.0",
+      "verified_support": "Focus/window lifecycle callbacks; sample warns of missing production lifecycle handling",
+      "repository_revision": "abb0d8ef36a5ee1be5cebc67025678f42970c393",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/android/platform-samples/c3e4062b3ea37c42fda9c7433431ded3e7e9d098/LICENSE",
+      "status": 200,
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "id": "AL1",
+      "license": "Apache-2.0",
+      "verified_support": "Android platform samples repository license verified directly",
+      "repository_revision": "c3e4062b3ea37c42fda9c7433431ded3e7e9d098",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/android/ndk-samples/abb0d8ef36a5ee1be5cebc67025678f42970c393/LICENSE",
+      "status": 200,
+      "bytes": 10272,
+      "sha256": "9ff562631a04b8cb1030c53fdf461bd749c9af0655d86e4f17eb270e935a7fe2",
+      "id": "AL2",
+      "license": "Apache-2.0",
+      "verified_support": "Android NDK samples repository license verified directly",
+      "repository_revision": "abb0d8ef36a5ee1be5cebc67025678f42970c393",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/InputEventScreenTouch.xml",
+      "status": 200,
+      "bytes": 1574,
+      "sha256": "1ee3f8a7d5a8a508965460b924701357ae9bae0e9b3201aa97b66d0e8330b8d0",
+      "id": "G1",
+      "license": "MIT",
+      "verified_support": "Multitouch index, viewport position, pressed and canceled fields",
+      "repository_revision": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/InputEventScreenDrag.xml",
+      "status": 200,
+      "bytes": 3631,
+      "sha256": "53d200607fe213782a2e1340b06ca0667b4cc446a462c27705fc79de521112ba",
+      "id": "G2",
+      "license": "MIT",
+      "verified_support": "screen_relative is unscaled; relative changes with content scale",
+      "repository_revision": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/DisplayServer.xml",
+      "status": 200,
+      "bytes": 181308,
+      "sha256": "829abaaa84390f1628923b035b40414378b786e3251f7823f2710b6dac893f3b",
+      "id": "G3",
+      "license": "MIT",
+      "verified_support": "Safe-area Android/iOS support and Android-only cutout support",
+      "repository_revision": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/TouchScreenButton.xml",
+      "status": 200,
+      "bytes": 3702,
+      "sha256": "fef5d320b2feda161bb7e4773e4aa6dd378684adcbe1bd85c57bd7ed87bc2519",
+      "id": "G4",
+      "license": "MIT",
+      "verified_support": "Multitouch gameplay button; Node2D lacks Control anchors; menu mouse emulation",
+      "repository_revision": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/rendering/multiple_resolutions.rst",
+      "status": 200,
+      "bytes": 27695,
+      "sha256": "477472d8bb27a6269e5ec32fe839228bff11b4dad91f9d5f0293dd7868575e87",
+      "id": "G5",
+      "license": "CC-BY-3.0",
+      "verified_support": "Canvas Items scales UI independently of 3D; aspect and scaling modes",
+      "repository_revision": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/i18n/internationalizing_games.rst",
+      "status": 200,
+      "bytes": 17653,
+      "sha256": "e14145d5c52f481b175ce510425df847780c39478196f7f85c80e3ea5cb6b564",
+      "id": "G6",
+      "license": "CC-BY-3.0",
+      "verified_support": "Pseudolocalization, BiDi, RTL and font-coverage caveats",
+      "repository_revision": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/inputs/inputevent.rst",
+      "status": 200,
+      "bytes": 16246,
+      "sha256": "f20d6160f3975f847a432634387f8bb25b7a303b459b5a26dfc4c9d21ac87306",
+      "id": "G7",
+      "license": "CC-BY-3.0",
+      "verified_support": "Event propagation, GUI and unhandled-input ordering",
+      "repository_revision": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/LICENSE.txt",
+      "status": 200,
+      "bytes": 19467,
+      "sha256": "e6bc9e9c474700b708f568bac9e5a8a9bcb2b1dad53442f5ba449fcb848b8e76",
+      "id": "GL1",
+      "license": "CC-BY-3.0",
+      "verified_support": "Documentation repository license verified directly",
+      "repository_revision": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/LICENSE.txt",
+      "status": 200,
+      "bytes": 1149,
+      "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "id": "GL2",
+      "license": "MIT",
+      "verified_support": "Engine repository license verified directly",
+      "repository_revision": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "retrieval_method": "HTTPS GET via inherited proxy; body read; SHA-256 of returned bytes"
+    }
+  ],
+  "local_source_snapshots": [
+    {
+      "id": "L1",
+      "path": "games/yuga-native/scripts/player.gd",
+      "sha256": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+      "bytes": 20337
+    },
+    {
+      "id": "L2",
+      "path": "games/yuga-native/scripts/input_bindings.gd",
+      "sha256": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+      "bytes": 11170
+    },
+    {
+      "id": "L3",
+      "path": "games/yuga-native/scripts/rama_hero_hud.gd",
+      "sha256": "4ea25f796ed3c3ac5a1ca6d25edd177d06490632e3c43039912929a744c3f064",
+      "bytes": 8189
+    },
+    {
+      "id": "L4",
+      "path": "games/yuga-native/scripts/rama_hero_panel.gd",
+      "sha256": "48a962e1c81afd20d19c76ddfae283feba83e0e5547c92e9d44098e306560f03",
+      "bytes": 17478
+    },
+    {
+      "id": "L5",
+      "path": "games/yuga-native/scripts/launch_shell.gd",
+      "sha256": "3a393f9c18d24dbe96f73fdcb5548fc5c15533c97f1de2c21b2a1e35da621c56",
+      "bytes": 11280
+    },
+    {
+      "id": "L6",
+      "path": "games/yuga-native/scripts/hero_ui_theme.gd",
+      "sha256": "beb4845d10dd40e01b5896c2677264ec4f046c99b2af933e1116d43bb07b45bd",
+      "bytes": 13617
+    },
+    {
+      "id": "L7",
+      "path": "games/yuga-native/assets/design/rama-ability-kit.json",
+      "sha256": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+      "bytes": 2963
+    },
+    {
+      "id": "L8",
+      "path": "games/yuga-native/scripts/rama_hero_runtime.gd",
+      "sha256": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+      "bytes": 15235
+    },
+    {
+      "id": "L9",
+      "path": "games/yuga-native/scripts/rama_ability_kit.gd",
+      "sha256": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+      "bytes": 25550
+    },
+    {
+      "id": "L10",
+      "path": "games/yuga-native/scripts/rama_action_buffer.gd",
+      "sha256": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+      "bytes": 9517
+    },
+    {
+      "id": "L11",
+      "path": "games/yuga-native/scripts/world_atlas.gd",
+      "sha256": "f6a0d8eaf8baebd2267439438d7536ddb88812890f915b1f23b24a69e3c416de",
+      "bytes": 4366
+    },
+    {
+      "id": "L12",
+      "path": "games/yuga-native/scripts/scene_transition.gd",
+      "sha256": "8ecaa8ae6359b2a5a89f1acbdd1d544058570a3effe656698b97a9adab7ec5e0",
+      "bytes": 15246
+    },
+    {
+      "id": "L13",
+      "path": "games/yuga-native/scripts/confluence_world.gd",
+      "sha256": "20f809f9ead1d98f3b018c1f38d699d072fa81f3439d44c3369a5b4d249e7450",
+      "bytes": 65157
+    },
+    {
+      "id": "L14",
+      "path": "games/yuga-native/scripts/courtyard.gd",
+      "sha256": "197a2349cebdf26d195bcec64c9380f74c76537970def2ea9bea3193086b5a30",
+      "bytes": 45618
+    },
+    {
+      "id": "L15",
+      "path": "games/yuga-native/scripts/boot.gd",
+      "sha256": "14446f76ddb4ee8d5b394af50213c3d1ff9ef9ea5715c78216df48890d03e821",
+      "bytes": 3416
+    },
+    {
+      "id": "L16",
+      "path": "games/yuga-native/project.godot",
+      "sha256": "976c5fe71bb7a735013b02287701b95fc3c42452e8876675c0250b49c8a96c95",
+      "bytes": 1125
+    },
+    {
+      "id": "L17",
+      "path": "games/yuga-native/.design/brief.md",
+      "sha256": "d19cd9eef54b9fe4e509d5bfbf0926b5626d380d277fa81bfecdeeaef28848b6",
+      "bytes": 1488
+    }
+  ],
+  "limitations": [
+    "No Mobile Legends binary, video or publisher page reviewed. No visual parity claim.",
+    "Android sources are primary AOSP samples mirrored on GitHub, not a claim of current complete platform guidance.",
+    "Godot docs revision is pinned from 4.6 branch and engine source from 4.6.3-stable; documentation prose has some legacy terminology.",
+    "No sample code or external art/font asset copied into runtime; licenses recorded for possible future reuse.",
+    "No real-phone multitouch, TalkBack, hardware timing, online5v5 or human usability verification in M0."
+  ]
+}

@@ -1,0 +1,1361 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-18",
+  "product": "YUGA mobile original 5v5 MOBA",
+  "status": "researched_roadmap_not_implemented",
+  "baseline_commit": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "proposed_profile": "mobile-moba-5v5-v1",
+  "existing_products_unchanged": [
+    "native-offline-triad",
+    "browser-p2-3v3",
+    "production-6v6"
+  ],
+  "round_count": 18,
+  "workers_per_round": 6,
+  "implementation_packet_count": 108,
+  "implementation_packets_completed": 0,
+  "research_packet_count": 6,
+  "research_status": "six_packets_completed_reviewed",
+  "roster_target": 14,
+  "all_playable_heroes_unlocked": true,
+  "authority_decision": "First candidate stripped headless Godot match process with Nakama services; compare before selecting.",
+  "physical_device_qualification": "unrun",
+  "mobile_binary_analysis": "not_performed_no_supplied_commercial_input",
+  "mobile_export_status": "not_built",
+  "references": {
+    "roadmap": "MOBILE_PRODUCTION_ROADMAP.md",
+    "architecture": "mobile/CODE_AND_STACK_DECISIONS.md",
+    "review": "mobile/REVIEW.md"
+  },
+  "roles": [
+    {
+      "worker": "W1",
+      "role": "rules_authority"
+    },
+    {
+      "worker": "W2",
+      "role": "touch_screens"
+    },
+    {
+      "worker": "W3",
+      "role": "hero_motion"
+    },
+    {
+      "worker": "W4",
+      "role": "world_units"
+    },
+    {
+      "worker": "W5",
+      "role": "render_build_tools"
+    },
+    {
+      "worker": "W6",
+      "role": "independent_qa_security"
+    }
+  ],
+  "rounds": [
+    {
+      "id": "M1",
+      "title": "Qualify architecture and device baseline",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M0-research"
+      ],
+      "integration_gate": "M1-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M1-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Compare stripped Godot authority with Nakama TypeScript on identical native action fixtures; draft mobile profile",
+          "acceptance": "Document state/event differences, room CPU/RAM and authenticated transport failure cases; select only after measured parity",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M1-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Prototype elevated-camera framing and two-thumb layout specifications",
+          "acceptance": "Record aim/cancel, safe-area, handedness, shop/active-item and no-pause online contracts",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M1-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Audit Rama rig/material/action costs and choose mobile authoring variants",
+          "acceptance": "Pin current assets and silhouette/action benchmark; no topology reduction accepted without deformation review",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M1-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Define original three-lane travel-time map and unit/objective workload",
+          "acceptance": "Collision/visibility/elevation and worst-case legal wave/hero/effect populations are explicit",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M1-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Prepare version-pinned Android renderer comparison on named Adreno/Mali devices",
+          "acceptance": "Same real assets on Mobile/Compatibility; sustained traces and image differences, not emulator FPS",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M1-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Approve device matrix, visual rubric and evidence schema",
+          "acceptance": "Reproduce source identity and one failure per spike; mark physical device or iOS tooling gaps open",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M2",
+      "title": "Hardware-independent input and live camera",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M1-integration"
+      ],
+      "integration_gate": "M2-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M2-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Extract semantic intent and aim interfaces behind desktop adapter",
+          "acceptance": "Equivalent desktop action receipts; bounded finite input, duplicate/reordered requests and stale epoch rejection",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M2-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Implement multi-pointer movement/aim/cancel, target preference and layout editing",
+          "acceptance": "Joystick plus cast plus camera interactions, interruption/reset and no unintended post-resume cast",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M2-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Drive existing real hero from intent/action presentation adapters",
+          "acceptance": "Start/stop/turn/aim transitions preserve original action commit/cancel and avoid duplicate bone writers",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M2-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Implement mobile camera bounds and original lane collision fixture",
+          "acceptance": "Roof obstruction, map-edge pan, ramp targeting and recenter work without suspending simulation",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M2-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Implement mobile startup/profile selection and minimal signed debug export path",
+          "acceptance": "Correct actual renderer/profile/build label; no desktop setting override or leaked signing material",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M2-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Exercise gesture fuzz and desktop regression with actual input",
+          "acceptance": "Pointer ID reuse, resize, orientation change, lost focus and touch cancellation have retained traces",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M3",
+      "title": "Rama mobile vertical slice",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M2-integration"
+      ],
+      "integration_gate": "M3-integration",
+      "review_panel_after": true,
+      "packets": [
+        {
+          "id": "M3-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Complete mobile Rama action/data profile and real health/death receiver",
+          "acceptance": "Five actions with authoritative-style event IDs; no double damage, cooldown or cancel exploit",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M3-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Complete training start/controls/settings/guide/death/retry flow",
+          "acceptance": "Touch-only start-to-end journey; all playable hero controls reachable and persistent",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M3-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Author complete Rama mobile mesh/material/rig/action/secondary package",
+          "acceptance": "Actual device front/profile/rear and gameplay footage passes deformation/contact/telegraph rubric",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M3-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Author finished lane courtyard, targets, marsh edge and lighting benchmark",
+          "acceptance": "Same art playable under live camera; collision/camera visibility and day/night cues remain readable",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M3-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Qualify texture/LOD/VFX/audio presets for one complete hero scene",
+          "acceptance": "Runtime source/package pins; no shader missing features; device frame-time/memory observations retained",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M3-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Independently accept or reject one-hero quality milestone",
+          "acceptance": "Real device input/visual/audio review and negative action cases; document remaining defects before scaling",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M4",
+      "title": "Lane, economy and counterplay contract",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M3-integration"
+      ],
+      "integration_gate": "M4-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M4-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Implement waves/towers/base, gold/XP/last-hit/assist/item rules as versioned simulation",
+          "acceptance": "Simultaneous defeats, capped spawns, sell/refund and contested rewards are deterministic/idempotent fixtures",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M4-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Prototype shop/inventory/active-item and objective HUD transactions",
+          "acceptance": "Authoritative pending/ack/reject states, full slots and insufficient gold communicated without accidental input",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M4-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Create representative melee/ranged/support action presentation contracts",
+          "acceptance": "Readable windup/hit/recovery and crowd-control states at match camera; no frame-rate-dependent commitment",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M4-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Build one complete original lane with siege soldier and one jungle encounter",
+          "acceptance": "Pathing/target priority/attack animation, corpse cleanup and reward feedback work end-to-end",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M4-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Separate server entity state from render nodes and pool unit presentation",
+          "acceptance": "State simulation runs without visual assets; visible/cull/respawn cannot change rules",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M4-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Stress lane and economy invariants",
+          "acceptance": "Maximum legal waves, duplicate reward/retry, target despawn, blocked routes and resource exhaustion tested",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M5",
+      "title": "Authoritative match foundation",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M4-integration"
+      ],
+      "integration_gate": "M5-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M5-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Implement selected match authority and versioned authenticated command/snapshot transport",
+          "acceptance": "Two clients share authoritative action/damage state; invalid ownership/range/sequence/version rejected",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M5-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Implement prediction/reconciliation feedback and connection states",
+          "acceptance": "Network correction stays legible; input lock and retry reason correct during admission/failure",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M5-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Implement remote hero action/motion event consumption",
+          "acceptance": "Late/duplicate/out-of-order events do not replay attacks or attach old effects to reused entities",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M5-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Export original server collision/navigation/visibility artifact",
+          "acceptance": "Client/server map hashes and paired collision/LOS fixtures agree",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M5-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Build stripped match image, local allocator and service health checks",
+          "acceptance": "Room starts without visual resources or GPU; declared process caps and crash lifecycle verified",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M5-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Exercise protocol abuse and room isolation",
+          "acceptance": "Malformed/oversize/nonfinite/replayed inputs, unauthorized actor control and cross-room traffic fail safely",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M6",
+      "title": "Ten-player networking",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M5-integration"
+      ],
+      "integration_gate": "M6-integration",
+      "review_panel_after": true,
+      "packets": [
+        {
+          "id": "M6-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Implement ten seats, per-client visibility and bounded snapshot interest",
+          "acceptance": "Exactly one owner per seat; hidden state excluded; reconnect preserves one identity",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M6-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Build lobby/ready/selection/reservation cancellation and rejoin UX",
+          "acceptance": "Late allocations ignored; background/resume cannot join obsolete match or duplicate queue entry",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M6-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Validate ten simultaneous hero replicas and shared action timelines",
+          "acceptance": "Correct local/remote ownership, generation-aware effects and animation blending under correction",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M6-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Integrate full legal waves/objective actors into ten-player fixture",
+          "acceptance": "Server navigation/target acquisition cost and collision remain bounded under visible/offscreen activity",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M6-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Run actual rendered-client and room-load harnesses",
+          "acceptance": "Ten independently connected rendered clients, including at least two physical mobile clients; remaining rendered clients may be automated. Headless bots/load are additional and cannot substitute for rendered-client evidence.",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M6-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Inject latency/jitter/loss/reorder/disconnect and independently verify outcomes",
+          "acceptance": "Ten clients agree on final result; no duplicate gold, stale damage or hidden-enemy leak",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M7",
+      "title": "Complete 5v5 match loop",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M6-integration"
+      ],
+      "integration_gate": "M7-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M7-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Implement start/draft/spawn/objective/win/surrender/remake/result state machine",
+          "acceptance": "Single finalization, bounded lifetime, disconnect and stalemate policies are versioned",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M7-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Complete draft/shop/scoreboard/respawn/result/rematch flows",
+          "acceptance": "Touch journey handles timeout, inventory transaction rejects and rematch/leave ownership",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M7-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Finish death/respawn/recall/CC/ultimate action state presentation",
+          "acceptance": "Counter windows and invulnerable/untargetable states match simulation events",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M7-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Connect all three lane skeletons, towers, base and jungle objectives",
+          "acceptance": "Both factions can navigate/win; no blocked spawn, camera trap or unsymmetrical path exploit",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M7-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Implement result persistence and signed required-content manifest loading",
+          "acceptance": "Retry safe result writes; corrupt/stale required assets block join with recoverable UI",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M7-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Run complete bot and human-assisted matches with adverse lifecycle cases",
+          "acceptance": "Rules/outcome/rewards survive simultaneous objectives, leave/rejoin and server shutdown edge cases",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M8",
+      "title": "Bots, resilience and player services",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M7-integration"
+      ],
+      "integration_gate": "M8-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M8-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Implement difficulty-scaled bots and server-owned reconnect takeover",
+          "acceptance": "Bots use valid intent and visibility; authority transfers once and never grants hidden knowledge",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M8-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Complete guest/account/party/invite/queue/region and lifecycle UX",
+          "acceptance": "Offline practice, account link failure, Wi-Fi/cellular switch and cancel/retry are recoverable",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M8-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Tune bot presentation and player handoff animation continuity",
+          "acceptance": "Controller replacement cannot reset cooldown, position, action or damage state",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M8-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Add path recovery and objective-aware practice scenarios",
+          "acceptance": "Bots escape invalid paths and contest objectives without infinite loops or one-sided spawn pressure",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M8-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Implement service backup/restore, health/metrics and bounded allocation",
+          "acceptance": "Nakama/PostgreSQL/allocator failures have explicit fail-closed admission and cleanup",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M8-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Test background/rejoin/account/result resilience",
+          "acceptance": "Process kill, expired session, duplicate login and persistence retry preserve identity/rewards/privacy",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M9",
+      "title": "Complete mobile screen package",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M8-integration"
+      ],
+      "integration_gate": "M9-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M9-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Finalize screen-facing state/read models and online no-pause contract",
+          "acceptance": "UI cannot mutate authoritative match or apply stale result/queue state",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M9-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Implement every screen including shop/inventory/active item/settings/accessibility",
+          "acceptance": "Touch-only first launch to rematch; safe area/localization/font scaling/left-handed layout verified",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M9-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Author hero selection and ability-guide showcase presentation",
+          "acceptance": "Uses actual runtime assets; scene loading/performance is bounded and hero states truthful",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M9-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Create map/overview legends, objective markers and loading art",
+          "acceptance": "Map/pings reflect allowed visibility; decorative controls do not obscure targeting",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M9-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Implement loading cancellation/cache corruption recovery and audio controls",
+          "acceptance": "Real progress stages, bounded assets and persistent independent sound/haptic/motion settings",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M9-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Audit all screens and routes with external input/accessibility checks",
+          "acceptance": "Screen inventory complete; edge sizes/languages/offline/error/focus states reviewed from actual captures",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "title": "Complete original map and armies",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M9-integration"
+      ],
+      "integration_gate": "M10-integration",
+      "review_panel_after": true,
+      "packets": [
+        {
+          "id": "M10-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Finalize map navigation/visibility/spawn/rotation and objective rules",
+          "acceptance": "Travel-time and counter-route fixtures symmetric; server bounds and fog match visual cues",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M10-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Integrate minimap, objective timers and battle readability controls",
+          "acceptance": "Players distinguish ally/enemy/danger without colour alone; minimap cannot reveal hidden states",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M10-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Complete siege/jungle and hero environment interaction animations",
+          "acceptance": "Cannon recoil, soldiers, creature attacks and landing/contact align with authoritative events",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M10-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Author full citadel/ghat/temple/marsh modular map and original unit variants",
+          "acceptance": "No blocked routes, severe seams, camera obstruction or unlicensed placeholder assets",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M10-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Bake lighting/material atlases and qualify map/units LOD/culling",
+          "acceptance": "Baked/dynamic transitions and low/high settings retain identical gameplay information",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M10-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Run traversal/pathing/camera/army stress on target devices",
+          "acceptance": "Worst legal population, long match, day/night and repeated loads retain visual and memory evidence",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M11",
+      "title": "Complete hero packages 2\u20135",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M10-integration"
+      ],
+      "integration_gate": "M11-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M11-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Implement four original kits, counters and data-driven progression",
+          "acceptance": "Per-kit authority/cancel/CC/economy fixtures; no placeholder invocation substitute",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M11-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Integrate four hero selection/guide/touch targeting configurations",
+          "acceptance": "Every ability explains target/cancel/counter and fits editable HUD",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M11-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Author/review four full model/rig/action/face/LOD packages",
+          "acceptance": "Actual device motion and silhouette/material review for each; failed assets return to authoring",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M11-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Create original ability effects/audio hooks and training encounters",
+          "acceptance": "Telegraphs/counters visible against every district; no replicated-rule logic inside effects",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M11-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Automate batch import/provenance/material/action audits",
+          "acceptance": "Each package reproducible with notices and source hashes; no desktop rig overwrite",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M11-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Verify all five available heroes across paired interactions",
+          "acceptance": "Stateful combination/pause/rejoin/death cases and match-camera review; incomplete heroes remain gated",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M12",
+      "title": "Heroes 6\u201310 and distinct teams",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M11-integration"
+      ],
+      "integration_gate": "M12-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M12-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Implement five further original kits and unique-selection team draft",
+          "acceptance": "Authority and counters verified; actual ten distinct heroes supported before unique draft is advertised",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M12-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Integrate new kits, draft conflict and composition guidance",
+          "acceptance": "Selection timeout/duplicate choice/role hints work without paywalled heroes or coercive progression",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M12-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Author/review five complete character packages",
+          "acceptance": "Animations, skin weights, weapon/contact, mobile LOD and original material quality pass per hero",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M12-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Author new original effects and jungle/laning interaction fixtures",
+          "acceptance": "Ability areas remain distinguishable under overlapping ultimates and movement states",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M12-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Profile simultaneous ten-distinct-hero skinning/material/effect load",
+          "acceptance": "Real shader/asset diversity measured; no ten identical Rama replicas substituted for roster stress",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M12-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Execute ten-hero composition and cross-ability stress",
+          "acceptance": "All ordered pairs exercised; high-risk multi-ability sequences and actual-device full matches reviewed",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M13",
+      "title": "Fourteen-hero roster completion",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M12-integration"
+      ],
+      "integration_gate": "M13-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M13-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Implement heroes 11\u201314 with explicit counter/status rules",
+          "acceptance": "Full action/status table versioned; exploit/stacking/self-target cases covered",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M13-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Complete roster guides, localization, unlock and practice access",
+          "acceptance": "All implemented heroes available in competitive/practice; every route and status has clear copy",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M13-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Author/review final four complete character packages",
+          "acceptance": "No concept-only or shared-avatar substitutes; quality consistent with accepted Rama mobile slice",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M13-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Finish original effects/sound and cultural/art review findings",
+          "acceptance": "Mythology interpretations documented; hostile/ally silhouettes and sensitive imagery reviewed",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M13-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Finalize asset streaming and content-version migration for roster",
+          "acceptance": "Correct required bundle, bounded downloads/cache and version-skew admission",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M13-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Audit roster completeness and ability interaction matrix",
+          "acceptance": "Fourteen package manifests; 196 ordered hero pair cells plus risk-based triples/combos and visual review",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M14",
+      "title": "Competitive design and fairness",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M13-integration"
+      ],
+      "integration_gate": "M14-integration",
+      "review_panel_after": true,
+      "packets": [
+        {
+          "id": "M14-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Tune progression/items/lanes/objectives through recorded playtests",
+          "acceptance": "Role/composition/win-time indicators include uncertainty; no balancing solely from bots",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M14-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Tune matchmaking/ranked/casual/report/mute and learning feedback",
+          "acceptance": "Transparent queues/rating states; no dark-pattern timers or ability purchases",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M14-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Refine attack timing/telegraphs with human feel observations",
+          "acceptance": "Readability and response improve without concealing server timing or introducing animation hit desync",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M14-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Adjust map travel times/counter routes and objective stakes",
+          "acceptance": "Human route/visibility studies support changes; terrain remains fair on low graphics settings",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M14-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Implement privacy-minimized telemetry/replay tooling and matchmaking experiment support",
+          "acceptance": "No secret/user-data leakage; retention/access and sampled performance overhead declared",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M14-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Independently review balance/aim assist/vision/accessibility fairness",
+          "acceptance": "Input/device tier differences, counterplay and skill-gap evidence recorded with player consent",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M15",
+      "title": "Final audiovisual cohesion",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M14-integration"
+      ],
+      "integration_gate": "M15-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M15-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Freeze candidate rule/content/event versions for full visual acceptance",
+          "acceptance": "No untracked rebalance during matched visual comparisons",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M15-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Polish all screens, UI animation, copy and responsive transitions",
+          "acceptance": "Actual device journey has coherent fonts/spacing/motion; no modal/input/audio state leaks",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M15-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Repair final hero motion/material/secondary/cinematic defects",
+          "acceptance": "Continuous action tapes and gameplay/showcase views accepted per hero, not just still renders",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M15-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Finish world/army/jungle/diya/water lighting art and ambient sound",
+          "acceptance": "Rich original districts stay readable at combat camera and all approved times/quality levels",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M15-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Finalize spatial/audio mix, shader variants and effect importance budget",
+          "acceptance": "Danger cues audible/visible, no audio clipping; compile/load stutter and effect overdraw measured",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M15-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Run independent art/animation/audio/device comparison panel",
+          "acceptance": "Record rejected shots, player readability findings and remaining defects; do not infer reference parity from tests",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M16",
+      "title": "Security, performance and operations",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M15-integration"
+      ],
+      "integration_gate": "M16-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M16-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Harden authority/economy/protocol limits and incident controls",
+          "acceptance": "Replay/forgery/flood/duplication attacks cannot grant damage, movement or rewards",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M16-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Harden service-error/offline/rejoin/migration and user data controls",
+          "acceptance": "Retry/cancel/rate-limit/privacy/report flows complete and localized",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M16-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Optimize measured animation/skin hotspots without information loss",
+          "acceptance": "Matched visual/counter/contact tests retain accepted quality after optimization",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M16-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Optimize measured map/unit/visibility bottlenecks",
+          "acceptance": "No missing authoritative units or danger cues; full legal scene remains correct",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M16-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Run sustained devices/room load/backup/rollback/cost tests",
+          "acceptance": "Thermal frame-time/memory/bandwidth/cost budgets measured on identified hardware and regions",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M16-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Independently reproduce security/performance/release blockers",
+          "acceptance": "Release build distinct from debug captures; unresolved high-severity defects block launch",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M17",
+      "title": "Closed alpha and corrections",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M16-integration"
+      ],
+      "integration_gate": "M17-integration",
+      "review_panel_after": false,
+      "packets": [
+        {
+          "id": "M17-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Repair live-alpha simulation/matchmaking/economy defects",
+          "acceptance": "Every critical issue reproducible, versioned and replay-tested before closure",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M17-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Repair observed onboarding/accessibility/controls/screens problems",
+          "acceptance": "External touch users complete key tasks; adverse cases retested",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M17-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Repair alpha character feel/art/animation regressions",
+          "acceptance": "Source-bound captures compare before/after under same action/camera",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M17-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Repair alpha map/objective/readability/pathing problems",
+          "acceptance": "Regression maps and human route review confirm fix",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M17-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Produce signed internal-test Android/iOS builds and monitored region",
+          "acceptance": "Install/update/rollback works; artifact bytes/versions/signing/privacy requirements verified",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M17-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Moderate independent alpha acceptance and defect triage",
+          "acceptance": "Crash-free/latency/frame-time/player feedback gates assessed; no critical blocker hidden by aggregate score",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    },
+    {
+      "id": "M18",
+      "title": "Regional beta and release readiness",
+      "status": "planned",
+      "prerequisite_gates": [
+        "M17-integration"
+      ],
+      "integration_gate": "M18-integration",
+      "review_panel_after": true,
+      "packets": [
+        {
+          "id": "M18-W1",
+          "worker": "W1",
+          "role": "rules_authority",
+          "status": "planned",
+          "deliverable": "Finalize competitive season/live rules and safe migration/rollback",
+          "acceptance": "Active match behavior and old-client denial/rejoin policy tested",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M18-W2",
+          "worker": "W2",
+          "role": "touch_screens",
+          "status": "planned",
+          "deliverable": "Finalize store/support/account/report/privacy/user-facing release flows",
+          "acceptance": "Legal/store/localization checks and all playable heroes/accessibility policies verified",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M18-W3",
+          "worker": "W3",
+          "role": "hero_motion",
+          "status": "planned",
+          "deliverable": "Seal complete hero/animation/FX/source provenance release",
+          "acceptance": "No unreviewed or license-unclear art; full roster actual-device acceptance attached",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M18-W4",
+          "worker": "W4",
+          "role": "world_units",
+          "status": "planned",
+          "deliverable": "Seal maps/units/objectives/audio and future content patch plan",
+          "acceptance": "Runtime content hashes and retained authoring sources independently audited",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M18-W5",
+          "worker": "W5",
+          "role": "render_build_tools",
+          "status": "planned",
+          "deliverable": "Deploy qualified regional authority/services and release artifacts",
+          "acceptance": "Capacity alerts/backups/security/rollbacks/on-call ownership present; published downloads match tested bytes",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        },
+        {
+          "id": "M18-W6",
+          "worker": "W6",
+          "role": "independent_qa_security",
+          "status": "planned",
+          "deliverable": "Run final independent release gate and post-launch monitoring rehearsal",
+          "acceptance": "Store approval, device/gameplay/security/operation gates closed or explicitly block; no inferred full launch from upload",
+          "evidence": [],
+          "exclusive_files": "Assigned by lead at round start against agreed interfaces; shared contracts serialized."
+        }
+      ]
+    }
+  ],
+  "rules": [
+    "Round count is an initial gate schedule, not a quality or calendar guarantee.",
+    "Asset batches repeat after failed per-character gates; completing a packet count cannot close visual quality.",
+    "Independent assignments may parallelize after their interface freeze; prerequisite gates cannot be waived by simultaneous execution.",
+    "Shared source/catalog/notice changes and cloud imports/heavy rendering are serialized.",
+    "M0 mobile research does not complete native G3-G6 graphics rounds."
+  ]
+}

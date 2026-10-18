@@ -1,5 +1,7 @@
 # ANDOLAN — City of Consequences
 
+**Mobile YUGA production plan:** [5v5 mobile roadmap](games/yuga-native/docs/MOBILE_PRODUCTION_ROADMAP.md) documents the Godot/Blender adaptation, touch controls, original map/hero art, authoritative services, open-source research and device gates. Six research packets feed [18 planned rounds of six workers](games/yuga-native/docs/MOBILE_PRODUCTION_BACKLOG.json). This is a researched implementation plan; no Android/iOS build or mobile quality parity is claimed.
+
 Publication status for the earlier visual checkpoint is recorded in [its source/CI receipt](docs/evidence/visual-campaign-publication.json).
 
 **Native UI campaign complete within its reviewed scope:** [five screen rounds and three integration rounds / 48 assignments](games/yuga-native/docs/SCREEN_CAMPAIGN.md) now include actual Linux package navigation, settings persistence after relaunch and explicitly staged rule-result views. The qualified package uses source `9e81a7c`. Start with the [screen handoff](games/yuga-native/docs/SCREEN_CAMPAIGN_HANDOFF.md) for evidence, verification commands and remaining limits.

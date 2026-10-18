@@ -1,0 +1,1069 @@
+{
+  "schema": 1,
+  "task": "M0 worker03 hero animation and asset pipeline",
+  "status": "M0 source research complete; implementation proposals only; no runtime or asset admission",
+  "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+  "sources": [
+    {
+      "id": "godot",
+      "kind": "source_repository",
+      "repository": "https://github.com/godotengine/godot",
+      "requested_ref": "4.6.3-stable",
+      "resolved_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/godotengine/godot/commits/4.6.3-stable",
+        "final_url": "https://api.github.com/repos/godotengine/godot/commits/4.6.3-stable",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 4654,
+        "sha256": "43978db65e4ea3905bee065fdfc94a025d2a6447da805515f1c05695c5f3a054"
+      },
+      "license_receipt": {
+        "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/LICENSE.txt",
+        "final_url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/LICENSE.txt",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 1149,
+        "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+        "license_excerpt": "Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md).\nCopyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+      },
+      "verified_scope": "MIT engine code",
+      "decision": "Source/API reference only; no engine upgrade or mobile execution."
+    },
+    {
+      "id": "gltf_blender_io",
+      "kind": "source_repository",
+      "repository": "https://github.com/KhronosGroup/glTF-Blender-IO",
+      "requested_ref": "main",
+      "resolved_commit": "653063ebbf73d27a01e883665b5c042c25a36ece",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/KhronosGroup/glTF-Blender-IO/commits/main",
+        "final_url": "https://api.github.com/repos/KhronosGroup/glTF-Blender-IO/commits/main",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 103576,
+        "sha256": "b36d03b79dfbba276129c3cfbb59ff121eb0c571a7ec80cb340a54c3db134087"
+      },
+      "license_receipt": {
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/LICENSE.txt",
+        "final_url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/LICENSE.txt",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "bytes_read": 11358,
+        "license_excerpt": "\n                                 Apache License\n                           Version 2.0, January 2004\n                        http://www.apache.org/licenses/\n\n   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n\n   1. Definitions.\n\n      \"License\" shall mean the terms and conditions for use, reproduction,\n      and distribution as defined by Sections 1 through 9 of this document.\n\n      \"Licensor\" shall mean the copyright owner or entity authorized by\n      the copyright owner that is granting the License.\n\n      \"Legal Entity\" shall mean the union of the acting entity and all\n      other entities that control, are controlled by, or are under common\n      control with that entity. For the purposes of this definition,\n      \"control\" means (i) the power, direct or indirect, to cause the\n      direction or management of such entity, whether by contract or\n      otherwise, or (ii) ownership of fifty percent (50%) or more of the\n      outstanding shares, or (iii) beneficial ownership of such entity.\n\n      \"You\" (or \"Your\") shall mean an individual or Legal Entity\n      exercising permissions granted by this License.\n\n      \"Source\" form shall mean the preferred form for making modifications,\n      including but not limited to software source code, documentation\n      source, and configuration files.\n\n      \"Object\" form shall mean any form resulting from mechanical\n      transformation or translation of a Source form, including but\n      not limited to compiled object code, generated documentation,\n      and conversions to other media types.\n\n      \"Work\" shall mean the work of authorship, whether in Source or\n      Object form, made available under the License, as indicated by a\n      copyright notice that is included in or attached to the work\n      (an example is provided in the Appendix below).\n\n      \"Derivative Works\" shall mean any work, whether in Source or Object\n      form, that is based on (or derived from) the Work and for which the\n      editorial revisions, annotations, elaborations, or other modifications\n      represent, as a whole, an original work of authorship. For the purposes\n      of this License, Derivative Works shall not include works that remain\n      separable from, or merely link (or bind by name) to the interfaces of,\n      the Work and Derivative Works thereof.\n\n      \"Contribution\" shall mean any work of authorship, including\n      the original version of the Work and any modifications or additions\n      to that Work or Derivative Works thereof, that is intentionally\n      submitted to Licensor for inclusion in the Work by the copyright owner\n      or by an individual or Legal Entity authorized to submit on behalf of\n      the copyright owner. For the purposes of this definition, \"submitted\"\n      means any form of electronic, verbal, or written communication sent\n      to the Licensor or its representatives, including but not limited to\n      communication on electronic mailing lists, source code control systems,\n      and issue tracking systems that are managed by, or on behalf of, the\n      Licensor for the purpose of discussing and improving the Work, but\n      excluding communication that is conspicuously marked or otherwise\n      designated in writing by the copyright owner as \"Not a Contribution.\"\n\n      \"Contributor\" shall mean Licensor and any individual or Legal Entity\n      on behalf of whom a Contribution has been received by Licensor and\n      subsequently incorporated within the Work.\n\n   2. Grant of Copyright License. Subject to the terms and conditions of\n      this License, each Contributor hereby grants to You a perpetual,\n      worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n      copyright license to reproduce, prepare Derivative Works of,\n      publicly display, publicly perform, sublicense, and distribute the\n      Work and such Derivative Works in Source or Object form.\n\n   3. Grant of Patent License. Subject to the terms and conditions of\n      this License, each Contributor hereby grants to You a perpetual,\n      worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n      (except as stated in this section) patent license to make, have made,\n      use, offer to sell, sell, import, and otherwise transfer the Work,\n      where such license applies only to those patent claims licensable\n      by such Contributor that are necessarily infringed by their\n      Contribution(s) alone or by combination of their Contribution(s)\n      with the Work to which such Contribution(s) was submitted. If You\n      institute patent litigation against any entity (including a\n      cross-claim or counterclaim in a lawsuit) alleging that the Work\n      or a Contribution incorporated within the Work constitutes direct\n      or contributory patent infringement, then any patent licenses\n      granted to You under this License for that Work shall terminate\n      as of the date such litigation is filed.\n\n   4. Redistribution. You may reproduce and distribute copies of the\n      Work or Derivative Works thereof in any medium, with or without\n      modifications, and in Source or Object form, provided that You\n      meet the following conditions:\n\n      (a) You must give any other recipients of the Work or\n          Derivative Works a copy of this License; and\n\n      (b) You must cause any modified files to carry prominent notices\n          stating that You changed the files; and\n\n      (c) You must retain, in the Source form of any Derivative Works\n          that You distribute, all copyright, patent, trademark, and\n          attribution notices from the Source form of the Work,\n          excluding those notices that do not pertain to any part of\n          the Derivative Works; and\n\n      (d) If the Work includes a \"NOTICE\" text file as part of its\n          distribution, then any Derivative Works that You distribute must\n          include a readable copy of the attribution notices contained\n          within such NOTICE file, excluding those notices that do not\n          pertain to any part of the Derivative Works, in at least one\n          of the following places: within a NOTICE text file distributed\n          as part of the Derivative Works; within the Source form or\n          documentation, if provided along with the Derivative Works; or,\n          within a display generated by the Derivative Works, if and\n          wherever such third-party notices normally appear. The contents\n          of the NOTICE file are for informational purposes only and\n          do not modify the License. You may add Your own attribution\n          notices within Derivative Works that You distribute, alongside\n          or as an addendum to the NOTICE text from the Work, provided\n          that such additional attribution notices cannot be construed\n          as modifying the License.\n\n      You may add Your own copyright statement to Your modifications and\n      may provide additional or different license terms and conditions\n      for use, reproduction, or distribution of Your modifications, or\n      for any such Derivative Works as a whole, provided Your use,\n      reproduction, and distribution of the Work otherwise complies with\n      the conditions stated in this License.\n\n   5. Submission of Contributions. Unless You explicitly state otherwise,\n      any Contribution intentionally submitted for inclusion in the Work\n      by You to the Licensor shall be under the terms and conditions of\n      this License, without any additional terms or conditions.\n      Notwithstanding the above, nothing herein shall supersede or modify\n      the terms of any separate license agreement you may have executed\n      with Licensor regarding such Contributions.\n\n   6. Trademarks. This License does not grant permission to use the trade\n      names, trademarks, service marks, or product names of the Licensor,\n      except as required for reasonable and customary use in describing the\n      origin of the Work and reproducing the content of the NOTICE file.\n\n   7. Disclaimer of Warranty. Unless required by applicable law or\n      agreed to in writing, Licensor provides the Work (and each\n      Contributor provides its Contributions) on an \"AS IS\" BASIS,\n      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or\n      implied, including, without limitation, any warranties or conditions\n      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A\n      PARTICULAR PURPOSE. You are solely responsible for determining the\n      appropriateness of using or redistributing the Work and assume any\n      risks associated with Your exercise of permissions under this License.\n\n   8. Limitation of Liability. In no event and under no legal theory,\n      whether in tort (including negligence), contract, or otherwise,\n      unless required by applicable law (such as deliberate and grossly\n      negligent acts) or agreed to in writing, shall any Contributor be\n      liable to You for damages, including any direct, indirect, special,\n      incidental, or consequential damages of any character arising as a\n      result of this License or out of the use or inability to use the\n      Work (including but not limited to damages for loss of goodwill,\n      work stoppage, computer failure or malfunction, or any and all\n      other commercial damages or losses), even if such Contributor\n      has been advised of the possibility of such damages.\n\n   9. Accepting Warranty or Additional Liability. While redistributing\n      the Work or Derivative Works thereof, You may choose to offer,\n      and charge a fee for, acceptance of support, warranty, indemnity,\n      or other liability obligations and/or rights consistent with this\n      License. However, in accepting such obligations, You may act only\n      on Your own behalf and on Your sole responsibility, not on behalf\n      of any other Contributor, and only if You agree to indemnify,\n      defend, and hold each Contributor harmless for any liability\n      incurred by, or claims asserted against, such Contributor by reason\n      of your accepting any such warranty or additional liability.\n\n   END OF TERMS AND CONDITIONS\n\n   APPENDIX: How to apply the Apache License to your work.\n\n      To apply the Apache License to your work, attach the following\n      boilerplate notice, with the fields enclosed by brackets \"[]\"\n      replaced with your own identifying information. (Don't include\n      the brackets!)  The text should be enclosed in the appropriate\n      comment syntax for the file format. We also recommend that a\n      file or class name and description of purpose be included on the\n      same \"printed page\" as the copyright notice for easier\n      identification within third-party archives.\n\n   Copyright [yyyy] [name of copyright owner]\n\n   Licensed under the Apache License, Version 2.0 (the \"License\");\n   you may not use this file except in compliance with the License.\n   You may obtain a copy of the License at\n\n       http://www.apache.org/licenses/LICENSE-2.0\n\n   Unless required by applicable law or agreed to in writing, software\n   distributed under the License is distributed on an \"AS IS\" BASIS,\n   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n   See the License for the specific language governing permissions and\n   limitations under the License.\n"
+      },
+      "failed_attempts": [
+        {
+          "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+          "error": "HTTP Error 404: Not Found",
+          "http_status": 404,
+          "license_excerpt": ""
+        }
+      ],
+      "verified_scope": "Apache-2.0 repository code",
+      "decision": "Default-branch source/license read. Exporter version must be pinned to tested Blender in implementation."
+    },
+    {
+      "id": "gltf_spec",
+      "kind": "source_repository",
+      "repository": "https://github.com/KhronosGroup/glTF",
+      "requested_ref": "main",
+      "resolved_commit": "521a91d491f02bb7db7d445b35f591d09d2a64ce",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/KhronosGroup/glTF/commits/main",
+        "final_url": "https://api.github.com/repos/KhronosGroup/glTF/commits/main",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 8352,
+        "sha256": "bd79c7b0cb92e00995d79818a81cb04aea551c6549cd38c53a3b3b7582c2e639"
+      },
+      "license_receipt": {
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/LICENSE.adoc",
+        "final_url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/LICENSE.adoc",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "efd59d5f9985278541bdf06a5128dbad614c3eafdf8bcf82311f3de5d272e47f",
+        "bytes_read": 1604,
+        "license_excerpt": "// Copyright 2020-2021 The Khronos Group Inc.\n// SPDX-License-Identifier: CC-BY-4.0\n\n= LICENSE file for the KhronosGroup/glTF project\n\nFiles in this repository fall under one of these licenses:\n\n  * SPDX license identifier: \"`Apache-2.0`\"\n  ** Apache License 2.0.\n  ** For scripts and build tooling.\n\n  * SPDX license identifier: \"`CC-BY-4.0`\"\n  ** Creative Commons Attribution 4.0 International\n  ** For specification source markup documents such as the glTF 2.0 AsciiDoc\n     sources. The glTF 2.0 specification HTML and PDF *outputs* built from\n     these sources are ratified and published in the\n     link:https://www.khronos.org/registry/glTF[Khronos glTF Registry].\n  ** Also for miscellaneous metadocumentation such as this LICENSE file.\n\n  * SPDX license identifier: \"`LicenseRef-KhronosSpecCopyright`\"\n  ** Khronos Specification Copyright.\n  ** For Markdown format specification files such as glTF 1.0 and Khronos\n     extensions, which are ratified by the Khronos Board of Promoters in\n     this form.\n\n  * SPDX license identifier: \"`LicenseRef-TBD\"\n  ** To Be Determined copyright - exact copyright holder and license terms\n     currently unknown.\n  ** Only for vendor extensions to glTF. We are working on determining full\n     details of these licenses in each case.\n\nFull license text of these licenses is available at:\n\n  * Apache-2.0: https://opensource.org/licenses/Apache-2.0\n  * CC-BY-4.0: https://creativecommons.org/licenses/by/4.0/legalcode\n  * LicenseRef-KhronosSpecCopyright: link:LICENSES/LicenseRef-KhronosSpecCopyright.txt\n  * LicenseRef-TBD: link:LICENSES/LicenseRef-TBD.txt\n"
+      },
+      "failed_attempts": [
+        {
+          "url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/LICENSE.md",
+          "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+          "error": "HTTP Error 404: Not Found",
+          "http_status": 404,
+          "license_excerpt": ""
+        }
+      ],
+      "verified_scope": "CC-BY-4.0 specification document",
+      "decision": "No grant of third-party asset rights; four-influence cap is project proposal, not general glTF limit."
+    },
+    {
+      "id": "gltf_transform",
+      "kind": "source_repository",
+      "repository": "https://github.com/donmccurdy/glTF-Transform",
+      "requested_ref": "main",
+      "resolved_commit": "8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/donmccurdy/glTF-Transform/commits/main",
+        "final_url": "https://api.github.com/repos/donmccurdy/glTF-Transform/commits/main",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 4378,
+        "sha256": "21844294fbdcd5c722111d04adbdb79898e35d55ef1fcb2aaed24e0ad6d7f8f7"
+      },
+      "license_receipt": {
+        "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f/LICENSE.md",
+        "final_url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f/LICENSE.md",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "2c4f111d00dbf22b10d31a14813c5f5de6a828640f7311f26b9dda89b3fce165",
+        "bytes_read": 1078,
+        "license_excerpt": "The MIT License (MIT)\n\nCopyright (c) 2024 Don McCurdy\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+      },
+      "failed_attempts": [
+        {
+          "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+          "error": "HTTP Error 404: Not Found",
+          "http_status": 404,
+          "license_excerpt": ""
+        }
+      ],
+      "verified_scope": "MIT repository code",
+      "decision": "Existing local adapter uses4.3.0; this new main revision was reviewed, not installed/adopted."
+    },
+    {
+      "id": "meshoptimizer",
+      "kind": "source_repository",
+      "repository": "https://github.com/zeux/meshoptimizer",
+      "requested_ref": "master",
+      "resolved_commit": "f0a684f11ead064e176775c9b796f82a55910e92",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/zeux/meshoptimizer/commits/master",
+        "final_url": "https://api.github.com/repos/zeux/meshoptimizer/commits/master",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 87455,
+        "sha256": "42d5c3aa78a2dd181cf4b18e0c60904b87c17d28953a170af11b1f4f4c4dada1"
+      },
+      "license_receipt": {
+        "url": "https://raw.githubusercontent.com/zeux/meshoptimizer/f0a684f11ead064e176775c9b796f82a55910e92/LICENSE.md",
+        "final_url": "https://raw.githubusercontent.com/zeux/meshoptimizer/f0a684f11ead064e176775c9b796f82a55910e92/LICENSE.md",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 1079,
+        "sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26",
+        "license_excerpt": "MIT License\n\nCopyright (c) 2016-2026 Arseny Kapoulkine\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+      },
+      "verified_scope": "MIT repository code",
+      "decision": "Existing local adapter uses0.24; this new master revision was reviewed, not installed/adopted."
+    },
+    {
+      "id": "mpfb",
+      "kind": "source_repository",
+      "repository": "https://github.com/makehumancommunity/mpfb2",
+      "requested_ref": "master",
+      "resolved_commit": "3af0cd5a2ffba072e93a34e5f6f494fdc4813ddf",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/makehumancommunity/mpfb2/commits/master",
+        "final_url": "https://api.github.com/repos/makehumancommunity/mpfb2/commits/master",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 1098701,
+        "sha256": "936f79376b0f844df964eb5f7c1137ca4ca4823539a64881e580c6e4076de769"
+      },
+      "license_receipt": {
+        "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/3af0cd5a2ffba072e93a34e5f6f494fdc4813ddf/LICENSE.md",
+        "final_url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/3af0cd5a2ffba072e93a34e5f6f494fdc4813ddf/LICENSE.md",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 3188,
+        "sha256": "5cefb60680cb9efd4550a2e65d719021cfbec9dad3658481d11d48ae863ce04d",
+        "license_excerpt": "LICENSE\n=======\n\nTable of contents\n-----------------\nA. The overall license setup for MPFB\nB. The license for the source code as such\nC. The license for the bundled assets\nD. Concerning the output from MPFB\n\n\nA. The overall license setup for MPFB\n------------------------------------------\n\nMPFB uses the same license setup as MakeHuman, but with GPLv3 as source code license\nrather than AGPL (in order to put it more in line with Blender's source code license).\n\nThe MPFB addon consists of two separate parts:\n\n* Source code: the program logic that powers the application. \n* Assets: The graphical data that the application operates on\n\nB. The license for the source code as such\n------------------------------------------\n\nThe MPFB source code is defined as files that contain program logic.\nThis includes python files, shell scripts and configuration files.\n\nThe MPFB source (as defined per the above) is released under GPLv3.\n\nCopyright (C) 2001-2021  MakeHuman Team (www.makehumancommunity.org)\n\n    This program is free software: you can redistribute it and/or modify\n    it under the terms of the GNU General Public License as published by\n    the Free Software Foundation, either version 3 of the License, or\n    (at your option) any later version.\n\n    This program is distributed in the hope that it will be useful,\n    but WITHOUT ANY WARRANTY; without even the implied warranty of\n    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n    GNU General Public License for more details.\n\n    You should have received a copy of the GNU General Public License\n    along with this program. If not, see <https://www.gnu.org/licenses/>.\n   \nFor the full text of the source code license, see \n[LICENSE.CODE.md](LICENSE.CODE.md)\n\nC. The license for the bundled assets\n-------------------------------------\n\nThe assets are defined as any data contributing to the output from MPFB.\nThis includes:\n\n* The base mesh and proxies\n* Targets and modifiers\n* Textures\n* Clothes (any MHCLO-based asset)\n* Rigs, poses and expressions\n* JSON data with mesh information\n\nThese assets have been released under CC0 1.0 Universal. In summary this means\nthat to the fullest extent possible, it is the intention of the MakeHuman \nteam that anyone can do whatever they want with it.\n\nFor the full text of the legal statement regarding the assets, see\n[LICENSE.ASSETS.md](LICENSE.ASSETS.md)\n\nD. Concerning the output from MPFB\n----------------------------------\n\nIt is the opinion of the MakeHuman team that no output from MPFB\ncontains any trace of program logic. That is, regardless of whether you use\nthe UI as such or if you call functions of MPFB via a script (such as \nan addon that extends MPFB), what you get is a combination of assets and your\nown creative input. As the assets have been released under CC0, there is no\nlimitation on what you can do with this combined output.\n\nTo make it clear, the MakeHuman team makes no claim whatsoever over output\nsuch as:\n\n* Exports to files (FBX, OBJ, DAE, MHX2...)\n* Graphical data generated via scripting or plugins\n* Renderings\n* Screenshots\n* Saved model files\n\nWe regard these things as your data, which is yours to handle as you see\nfit.\n"
+      },
+      "verified_scope": "GPL-3.0-or-later program code; CC0-1.0 bundled assets; output distinction explicit",
+      "decision": "Candidate anatomy authoring source; no new asset downloaded. Third-party packs require separate terms."
+    },
+    {
+      "id": "blender",
+      "kind": "source_repository",
+      "repository": "https://github.com/blender/blender",
+      "requested_ref": "v4.5.0",
+      "resolved_commit": "8cb6b388974a817afedf1317ce26f0c75aa5f181",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/blender/blender/commits/v4.5.0",
+        "final_url": "https://api.github.com/repos/blender/blender/commits/v4.5.0",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 2423,
+        "sha256": "abbf3750c656694c42ad91dd2b791488720205acbc017dd91e7ba40ccde57131"
+      },
+      "license_receipt": {
+        "url": "https://raw.githubusercontent.com/blender/blender/8cb6b388974a817afedf1317ce26f0c75aa5f181/COPYING",
+        "final_url": "https://raw.githubusercontent.com/blender/blender/8cb6b388974a817afedf1317ce26f0c75aa5f181/COPYING",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 302,
+        "sha256": "19e6f4b541772f9d7b98a52bdbca3ebd5ef9e404956a9a6de68bfc3c1a178387",
+        "license_excerpt": "Blender uses the GNU General Public License, which describes the rights\nto distribute or change the code. \n\nPlease read this file for the full license.\ndoc/license/GPL-license.txt\n\nApart from the GNU GPL, Blender is not available under other licenses.\n\n2010, Blender Foundation\nfoundation@blender.org\n\n"
+      },
+      "verified_scope": "Blender program GPL declaration",
+      "decision": "4.5.0 license source read only. Existing authoring tool is 4.3.2; no upgrade performed."
+    },
+    {
+      "id": "tps_asset",
+      "kind": "source_repository",
+      "repository": "https://github.com/godotengine/tps-demo",
+      "requested_ref": "a82f15448e9b015440d3bbdf5e10801b260c4e9f",
+      "resolved_commit": "a82f15448e9b015440d3bbdf5e10801b260c4e9f",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/godotengine/tps-demo/commits/a82f15448e9b015440d3bbdf5e10801b260c4e9f",
+        "final_url": "https://api.github.com/repos/godotengine/tps-demo/commits/a82f15448e9b015440d3bbdf5e10801b260c4e9f",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 303484,
+        "sha256": "d682f2e40e6cf2a29731dbdebe36bb0467828abb07a583a00c3e2439ec550b77"
+      },
+      "license_receipt": {
+        "url": "https://raw.githubusercontent.com/godotengine/tps-demo/a82f15448e9b015440d3bbdf5e10801b260c4e9f/LICENSE.md",
+        "final_url": "https://raw.githubusercontent.com/godotengine/tps-demo/a82f15448e9b015440d3bbdf5e10801b260c4e9f/LICENSE.md",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "bytes_read": 1972,
+        "sha256": "f7bf763d4c378425b99a5abfe42f49bb03fc530e9721cc5943072becf348caff",
+        "license_excerpt": "All assets Copyright (c) 2018 Juan Linietsky, Fernando Miguel Calabr\u00f3 \\\nDistributed under the terms of the Creative Commons Attribution License\nversion 3.0 (CC-BY 3.0) <https://creativecommons.org/licenses/by/3.0/legalcode>.\n\n************************************************************************\n\nMusic Copyright (c) 2018 Christian Fernando Perucchi \\\nDistributed under the terms of the Creative Commons Attribution License\nversion 3.0 (CC-BY 3.0) <https://creativecommons.org/licenses/by/3.0/legalcode>.\n\n************************************************************************\n\nExisting as derivatived work, many original Substance Painter materials\nused to create this scene were kindly provided by GameTextures.com\n\n************************************************************************\n\nAll code Copyright (c) 2018-2021 Juan Linietsky, Godot Engine contributors.\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n************************************************************************\n"
+      },
+      "verified_scope": "CC-BY-3.0 demo assets",
+      "decision": "Local retarget study remains unpromoted; do not infer MIT asset rights from engine license."
+    },
+    {
+      "id": "godot_retarget",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/retargeting_3d_skeletons.html",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "godot_import",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_3d_scenes/import_configuration.html",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "godot_mesh_lod",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://docs.godotengine.org/en/stable/tutorials/3d/mesh_lod.html",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "blender_gltf",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://docs.blender.org/manual/en/latest/addons/import_export/scene_gltf2.html",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "blender_rigify",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://docs.blender.org/manual/en/latest/addons/rigging/rigify/introduction.html",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "blender_license",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://www.blender.org/about/license/",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "mpfb_license",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://static.makehumancommunity.org/mpfb/faq/license.html",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "polyhaven_license",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://polyhaven.com/license",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "kenney_support",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://kenney.nl/support",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "quaternius_animation",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://quaternius.com/packs/universalanimationlibrary.html",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "verified_scope": "Unverified: primary website blocked by proxy",
+      "decision": "Not approved/admitted; exact pack license and provenance still required.",
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "godot_modifier",
+      "kind": "primary_document",
+      "retrieval": {
+        "url": "https://docs.godotengine.org/en/stable/classes/class_skeletonmodifier3d.html",
+        "retrieved_at_utc": "2026-10-18T03:10:11.127756+00:00",
+        "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+        "http_status": null,
+        "excerpts": [],
+        "title": ""
+      },
+      "access_disposition": "Website request failed; no claim based on inaccessible page contents. See successful repository alternative where present."
+    },
+    {
+      "id": "godot_docs",
+      "kind": "source_repository",
+      "repository": "https://github.com/godotengine/godot-docs",
+      "requested_ref": "4.6",
+      "resolved_commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/godotengine/godot-docs/commits/4.6",
+        "final_url": "https://api.github.com/repos/godotengine/godot-docs/commits/4.6",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "e89fd5bae7cb069b9490c052451cf433e23c1ce8ea4da61249eb8eae0a06405c",
+        "bytes_read": 98206
+      },
+      "verified_scope": "CC-BY-3.0 documentation",
+      "decision": "Primary import/retarget/LOD research, not tested mobile execution."
+    },
+    {
+      "id": "godot_retarget_source",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/retargeting_3d_skeletons.rst",
+        "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/retargeting_3d_skeletons.rst",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "d13a28f490205cb61291ec4db2b326f00379b9a245ff64f53d7477de192998e9",
+        "bytes_read": 7724,
+        "excerpts": [
+          "target section has a single\nproperty ``bone_map``.\n\n.. image:: img/retargeting1.webp\n\nWith the Skeleton node selected, first set up a new :ref:`class_bonemap` and :ref:`class_skeletonprofile`.\nGodot has a preset called :ref:`class_skeletonprofilehumanoid` for humanoid models.\nThis tutorial proceeds with the assumption that you are using :ref:`class_skeletonprofilehumanoid`.\n\n.. note:: If you need a profile that is different from :ref:`class_skeletonprofilehumanoid`, you can export\n          a :ref:`class_skeletonprofile` from the editor by selecting a Skeleton3D and using the **Skeleton3D** menu in the 3D viewport's toolbar.\n\nWhen you use :ref:`class_skeletonprofilehumanoid`, auto-mapping will be performed when the\n:ref:`class_skeletonprofile` is set. If the auto-mapping does not work well, you c",
+          "ebp\n\nWith the Skeleton node selected, first set up a new :ref:`class_bonemap` and :ref:`class_skeletonprofile`.\nGodot has a preset called :ref:`class_skeletonprofilehumanoid` for humanoid models.\nThis tutorial proceeds with the assumption that you are using :ref:`class_skeletonprofilehumanoid`.\n\n.. note:: If you need a profile that is different from :ref:`class_skeletonprofilehumanoid`, you can export\n          a :ref:`class_skeletonprofile` from the editor by selecting a Skeleton3D and using the **Skeleton3D** menu in the 3D viewport's toolbar.\n\nWhen you use :ref:`class_skeletonprofilehumanoid`, auto-mapping will be performed when the\n:ref:`class_skeletonprofile` is set. If the auto-mapping does not work well, you can map bones manually.\n\n.. image:: img/retargeting2.webp\n\nAny missing, duplicate or incorrect par",
+          "s a preset called :ref:`class_skeletonprofilehumanoid` for humanoid models.\nThis tutorial proceeds with the assumption that you are using :ref:`class_skeletonprofilehumanoid`.\n\n.. note:: If you need a profile that is different from :ref:`class_skeletonprofilehumanoid`, you can export\n          a :ref:`class_skeletonprofile` from the editor by selecting a Skeleton3D and using the **Skeleton3D** menu in the 3D viewport's toolbar.\n\nWhen you use :ref:`class_skeletonprofilehumanoid`, auto-mapping will be performed when the\n:ref:`class_skeletonprofile` is set. If the auto-mapping does not work well, you can map bones manually.\n\n.. image:: img/retargeting2.webp\n\nAny missing, duplicate or incorrect parent-child relationship mappings will be indicated\nby a magenta / red button (depending on the editor setting). It does n",
+          "eeds with the assumption that you are using :ref:`class_skeletonprofilehumanoid`.\n\n.. note:: If you need a profile that is different from :ref:`class_skeletonprofilehumanoid`, you can export\n          a :ref:`class_skeletonprofile` from the editor by selecting a Skeleton3D and using the **Skeleton3D** menu in the 3D viewport's toolbar.\n\nWhen you use :ref:`class_skeletonprofilehumanoid`, auto-mapping will be performed when the\n:ref:`class_skeletonprofile` is set. If the auto-mapping does not work well, you can map bones manually.\n\n.. image:: img/retargeting2.webp\n\nAny missing, duplicate or incorrect parent-child relationship mappings will be indicated\nby a magenta / red button (depending on the editor setting). It does not block the import process,\nbut it warns that animations may not be shared correctly.\n\n.. not",
+          "t bones that share a name can still\nhave different Transform values.\n\nThe Skeleton stores the Transform values necessary for the default pose as Bone Rest.\nIf Bone Pose is equal to Bone Rest, it means that the Skeleton is in the default pose.\n\n.. note:: Godot 3 and Godot 4 have different Bone Pose behaviors.\n          In Godot 3, Bone Pose is relative to Bone Rest, but in Godot 4,\n          it includes Bone Rest. See this\n          `article <https://godotengine.org/article/animation-data-redesign-40>`__\n          for more information.\n\nSkeletal models have different Bone Rests depending on the environment from\nwhich they were exported. For example, the bones of a glTF model output from Blender\nhave \"Edit Bone Orientation\" as the Bone Rest rotation. However, there are skeletal\nmodels without an",
+          "have different Transform values.\n\nThe Skeleton stores the Transform values necessary for the default pose as Bone Rest.\nIf Bone Pose is equal to Bone Rest, it means that the Skeleton is in the default pose.\n\n.. note:: Godot 3 and Godot 4 have different Bone Pose behaviors.\n          In Godot 3, Bone Pose is relative to Bone Rest, but in Godot 4,\n          it includes Bone Rest. See this\n          `article <https://godotengine.org/article/animation-data-redesign-40>`__\n          for more information.\n\nSkeletal models have different Bone Rests depending on the environment from\nwhich they were exported. For example, the bones of a glTF model output from Blender\nhave \"Edit Bone Orientation\" as the Bone Rest rotation. However, there are skeletal\nmodels without any Bone Rest rotations, such as the g",
+          "eleton is in the default pose.\n\n.. note:: Godot 3 and Godot 4 have different Bone Pose behaviors.\n          In Godot 3, Bone Pose is relative to Bone Rest, but in Godot 4,\n          it includes Bone Rest. See this\n          `article <https://godotengine.org/article/animation-data-redesign-40>`__\n          for more information.\n\nSkeletal models have different Bone Rests depending on the environment from\nwhich they were exported. For example, the bones of a glTF model output from Blender\nhave \"Edit Bone Orientation\" as the Bone Rest rotation. However, there are skeletal\nmodels without any Bone Rest rotations, such as the glTF model output from Maya.\n\nTo share animations in Godot, it is necessary to match Bone Rests as well as Bone Names\nto remove unwanted tracks in some cases. You can do that us",
+          "mage:: img/retargeting1.webp\n\nWith the Skeleton node selected, first set up a new :ref:`class_bonemap` and :ref:`class_skeletonprofile`.\nGodot has a preset called :ref:`class_skeletonprofilehumanoid` for humanoid models.\nThis tutorial proceeds with the assumption that you are using :ref:`class_skeletonprofilehumanoid`.\n\n.. note:: If you need a profile that is different from :ref:`class_skeletonprofilehumanoid`, you can export\n          a :ref:`class_skeletonprofile` from the editor by selecting a Skeleton3D and using the **Skeleton3D** menu in the 3D viewport's toolbar.\n\nWhen you use :ref:`class_skeletonprofilehumanoid`, auto-mapping will be performed when the\n:ref:`class_skeletonprofile` is set. If the auto-mapping does not work well, you can map bones manually.\n\n.. image:: img/retargeting2.we"
+        ]
+      },
+      "decision": "Read-only primary source evidence. Actual mobile import/behavior/device acceptance remains open."
+    },
+    {
+      "id": "godot_import_source",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_3d_scenes/import_configuration.rst",
+        "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_3d_scenes/import_configuration.rst",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "e712d249627ef0115a5ab2b8aeccd1a6e0fb3ed8055458a1d482da6b76f6b1a9",
+        "bytes_read": 20098,
+        "excerpts": [
+          "port options. **Embed as Basis\n  Universal** and **Embed as Uncompressed** keeps the textures embedded in the\n  imported scene, with and without VRAM compression respectively.\n\n**FBX**\n\n- **Importer** Which import method is used. ubfx handles fbx files as fbx files.\n  FBX2glTF converts FBX files to glTF on import and requires additional setup.\n  FBX2glTF is not recommended unless you have a specific reason to use it over\n  ufbx or working with a different file format.\n- **Allow Geometry Helper Nodes** enables or disables geometry helper nodes\n- **Embedded Texture Handling:** Controls how textures embedded within fbx\n  scenes should be handled. **Discard All Textures** will not import any\n  textures, which is useful if you wish to manually set up materials in Godot\n  instead. **Extract Textures** extr",
+          "port options. **Embed as Basis\n  Universal** and **Embed as Uncompressed** keeps the textures embedded in the\n  imported scene, with and without VRAM compression respectively.\n\n**Blender-specific options**\n\nOnly visible for ``.blend`` files.\n\n**Nodes**\n\n- **Visible:** **All** imports everything, even invisible objects. **Visible Only**\n  only imports visible objects. **Renderable** only imports objects that are marked\n  as renderable in Blender, regardless of whether they are actually visible.\n  In Blender, renderability is toggled by clicking the camera icon next to each object\n  in the Outliner, while visibility is toggled by the eye icon.\n- **Active Collection Only:** If checked, only imports nodes that are in the active collection\n  in Blender.\n- **Punctual Lights:** If checked, imports lights (d",
+          "pack Enabled:** If checked, unpacks the original images to the Godot filesystem\n  and uses them. This allows changing image import settings like VRAM compression.\n  If unchecked, allows Blender to convert the original images, such as repacking\n  roughness and metallic into one roughness + metallic texture. In most cases,\n  this option should be left checked, but if the ``.blend`` file's images\n  aren't in the correct format, this must be disabled for correct behavior.\n- **Export Materials:** If set to **Placeholder**, does not import materials,\n  but keeps surface slots so that separate materials can be assigned to different surfaces.\n  If set to **Export**, imports materials as-is (note that procedural Blender materials\n  may not work correctly). If set to **Named Placeholder**, imports materials,\n ",
+          "g_lightmap_gi>`.\n- **Lightmap Texel Size:** Only visible if **Light Baking** is set to **Static\n  Lightmaps**. Controls the size of each texel on the baked lightmap. A smaller\n  value results in more precise lightmaps, at the cost of larger lightmap sizes\n  and longer bake times.\n\n**Skins**\n\n- **Use Named Skins:** If checked, use named :ref:`Skins <class_Skin>` for animation.\n  The :ref:`class_MeshInstance3D` node contains 3 properties of relevance here: a skeleton\n  NodePath pointing to the Skeleton3D node (usually ``..``), a mesh, and a skin:\n\n  - The :ref:`class_Skeleton3D` node contains a list of bones with names, their pose and rest,\n    a name and a parent bone.\n  - The mesh is all of the raw vertex data needed to display a mesh. In terms of the mesh,\n    it knows how vertices are weight",
+          " the size of each texel on the baked lightmap. A smaller\n  value results in more precise lightmaps, at the cost of larger lightmap sizes\n  and longer bake times.\n\n**Skins**\n\n- **Use Named Skins:** If checked, use named :ref:`Skins <class_Skin>` for animation.\n  The :ref:`class_MeshInstance3D` node contains 3 properties of relevance here: a skeleton\n  NodePath pointing to the Skeleton3D node (usually ``..``), a mesh, and a skin:\n\n  - The :ref:`class_Skeleton3D` node contains a list of bones with names, their pose and rest,\n    a name and a parent bone.\n  - The mesh is all of the raw vertex data needed to display a mesh. In terms of the mesh,\n    it knows how vertices are weight-painted and uses some internal numbering\n    often imported from 3D modeling software.\n  - The skin contains the infor",
+          "dock or by clicking the **Advanced\u2026** button in\n  the Import dock. This allows you to customize per-object options in Godot, and\n  preview models and animations. please see the :ref:`doc_advanced_import_settings`\n  page for more information.\n- :ref:`Import hints <doc_importing_3d_scenes_node_type_customization>`, which are special\n  suffixes added to object names in the 3D modeling software. This allows you to\n  customize per-object options in the 3D modeling software.\n\nFor basic customization, using the Import dock suffices. However, for more\ncomplex operations such as defining material overrides on a per-material basis,\nyou'll need to use the Advanced Import Settings dialog, import hints, or possibly both.\n\n.. _doc_importing_3d_scenes_using_the_import_dock:\n\nUsing the Import dock\n~~~~~~~~~~~~~~~~",
+          "e root node is renamed to\n  match the filename in this case.\n- **Apply Root Scale:** If enabled, **Root Scale** will be *applied* on the\n  meshes and animations directly, while keeping the root node's scale to the\n  default `(1, 1, 1)`. This means that if you add a child node later on within\n  the imported scene, it won't be scaled. If disabled, **Root Scale** will\n  multiply the scale of the root node instead.\n\n**Meshes**\n\n- **Ensure Tangents:** If checked, generate vertex tangents using\n  `Mikktspace <http://www.mikktspace.com/>`__ if the input meshes don't have\n  tangent data. When possible, it's recommended to let the 3D modeling software\n  generate tangents on export instead on relying on this option. Tangents are\n  required for correct display of normal and height maps, along with any\n  mater",
+          " at the cost of larger lightmap sizes\n  and longer bake times.\n\n**Skins**\n\n- **Use Named Skins:** If checked, use named :ref:`Skins <class_Skin>` for animation.\n  The :ref:`class_MeshInstance3D` node contains 3 properties of relevance here: a skeleton\n  NodePath pointing to the Skeleton3D node (usually ``..``), a mesh, and a skin:\n\n  - The :ref:`class_Skeleton3D` node contains a list of bones with names, their pose and rest,\n    a name and a parent bone.\n  - The mesh is all of the raw vertex data needed to display a mesh. In terms of the mesh,\n    it knows how vertices are weight-painted and uses some internal numbering\n    often imported from 3D modeling software.\n  - The skin contains the information necessary to bind this mesh onto this Skeleton3D.\n    For every one of the internal bone IDs chos"
+        ]
+      },
+      "decision": "Read-only primary source evidence. Actual mobile import/behavior/device acceptance remains open."
+    },
+    {
+      "id": "godot_lod_source",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/mesh_lod.rst",
+        "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/mesh_lod.rst",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "2497956329bf1b223d6386379211a5521d24b107dbe00cb5d3f86789f23f7cfe",
+        "bytes_read": 8628,
+        "excerpts": [
+          "icking **Reimport**.\n\n.. note::\n\n   The mesh LOD generation process is not perfect, and may occasionally\n   introduce rendering issues (especially in skinned meshes). Mesh LOD\n   generation can also take a while on complex meshes.\n\n   If mesh LOD causes a specific mesh to look broken, you can disable LOD\n   generation for it in the Import dock. This will also speed up resource\n   importing. This can be done globally in the 3D scene's import options, or on\n   a per-mesh basis using the Advanced Import Settings dialog.\n\n   See :ref:`Importing 3D scenes <doc_importing_3d_scenes_using_the_import_dock>`\n   for more information.\n\nComparing mesh LOD visuals and performance\n------------------------------------------\n\nTo disable mesh LOD in the editor for comparison purposes, use the\n**Disable Mesh LOD** ",
+          "ded.\n\nHowever, in projects that have a large amount of detailed 3D assets, setting up\nLOD manually can be a very time-consuming process. As a result, automatic mesh\ndecimation and LOD configuration is becoming increasingly popular.\n\nGodot provides a way to automatically generate less detailed meshes for LOD\nusage on import, then use those LOD meshes when needed automatically. This is\ncompletely transparent to the user.\nThe `meshoptimizer <https://meshoptimizer.org/>`__ library is used for LOD mesh\ngeneration behind the scenes.\n\nMesh LOD works with any node that draws 3D meshes. This includes MeshInstance3D,\nMultiMeshInstance3D, GPUParticles3D and CPUParticles3D.\n\nVisual comparison\n-----------------\n\nHere is an example of LOD meshes generated on import. Lower detailed meshes\nwill be used when the ca",
+          " very time-consuming process. As a result, automatic mesh\ndecimation and LOD configuration is becoming increasingly popular.\n\nGodot provides a way to automatically generate less detailed meshes for LOD\nusage on import, then use those LOD meshes when needed automatically. This is\ncompletely transparent to the user.\nThe `meshoptimizer <https://meshoptimizer.org/>`__ library is used for LOD mesh\ngeneration behind the scenes.\n\nMesh LOD works with any node that draws 3D meshes. This includes MeshInstance3D,\nMultiMeshInstance3D, GPUParticles3D and CPUParticles3D.\n\nVisual comparison\n-----------------\n\nHere is an example of LOD meshes generated on import. Lower detailed meshes\nwill be used when the camera is far away from the object:\n\n.. figure:: img/mesh_lod_comparison_shaded.png\n   :align: center\n   :alt",
+          "easingly popular.\n\nGodot provides a way to automatically generate less detailed meshes for LOD\nusage on import, then use those LOD meshes when needed automatically. This is\ncompletely transparent to the user.\nThe `meshoptimizer <https://meshoptimizer.org/>`__ library is used for LOD mesh\ngeneration behind the scenes.\n\nMesh LOD works with any node that draws 3D meshes. This includes MeshInstance3D,\nMultiMeshInstance3D, GPUParticles3D and CPUParticles3D.\n\nVisual comparison\n-----------------\n\nHere is an example of LOD meshes generated on import. Lower detailed meshes\nwill be used when the camera is far away from the object:\n\n.. figure:: img/mesh_lod_comparison_shaded.png\n   :align: center\n   :alt: From most detailed (left) to least detailed (right), shaded view\n\n   From most detailed (left) to least d"
+        ]
+      },
+      "focused_receipt": {
+        "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/mesh_lod.rst",
+        "retrieved_at_utc": "2026-10-18T03:15:22.529220+00:00",
+        "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/mesh_lod.rst",
+        "http_status": 200,
+        "sha256": "2497956329bf1b223d6386379211a5521d24b107dbe00cb5d3f86789f23f7cfe",
+        "bytes_read": 8628,
+        "excerpts": [
+          "r after clicking **Reimport**.\n\n.. note::\n\n   The mesh LOD generation process is not perfect, and may occasionally\n   introduce rendering issues (especially in skinned meshes). Mesh LOD\n   generation can also take a while on complex meshes.\n\n   If mesh LOD causes a specific mesh to look broken, you can disable LOD\n   generation for it in the Import dock. This will also speed up resource\n   importing. This can be done globally in the 3D scene's import options, or on\n   a per-mesh basis using the Advanced Import Settings dialog.\n\n   See :ref:`Importing 3D scenes <doc_importing_3d_scenes_using_the_import_dock>`\n   for more information.\n\nComparing mesh LOD visuals and performance\n------------------------------------------\n\nTo disable mesh LOD in the editor for comparison purposes, use the\n**Disable Mesh"
+        ]
+      },
+      "decision": "Read-only primary source evidence. Actual mobile import/behavior/device acceptance remains open."
+    },
+    {
+      "id": "godot_docs_license",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/LICENSE.txt",
+        "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/LICENSE.txt",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "e6bc9e9c474700b708f568bac9e5a8a9bcb2b1dad53442f5ba449fcb848b8e76",
+        "bytes_read": 19467,
+        "excerpts": [
+          "Creative Commons Legal Code\n\nAttribution 3.0 Unported\n\n    CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE\n    LEGAL SERVICES. DISTRIBUTION OF THIS LICENSE DOES NOT CREATE AN\n    ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS\n    INFORMATION ON AN \"AS-IS\" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES\n    REGARDING THE INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR\n    DAMAGES RESULTING FROM ITS USE.\n\nLicense\n\nTHE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE\nCOMMONS PUBLIC LICENSE (\"CCPL\" OR \"LICENSE\"). THE WORK IS PROTECTED BY\nCOPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS\nA",
+          "Creative Commons Legal Code\n\nAttribution 3.0 Unported\n\n    CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE\n    LEGAL SERVICES. DISTRIBUTION OF THIS LICENSE DOES NOT CREATE AN\n    ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS\n    INFORMATION ON AN \"AS-IS\" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES\n    REGARDING THE INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR\n    DAMAGES RESULTING FROM ITS USE.\n\nLicense\n\nTHE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE\nCOMMONS PUBLIC LICENSE (\"CCPL\" OR \"LICENSE\"). THE WORK IS PROTECTED BY\nCOPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS\nAUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED",
+          "PORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE\n    LEGAL SERVICES. DISTRIBUTION OF THIS LICENSE DOES NOT CREATE AN\n    ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS\n    INFORMATION ON AN \"AS-IS\" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES\n    REGARDING THE INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR\n    DAMAGES RESULTING FROM ITS USE.\n\nLicense\n\nTHE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE\nCOMMONS PUBLIC LICENSE (\"CCPL\" OR \"LICENSE\"). THE WORK IS PROTECTED BY\nCOPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS\nAUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.\n\nBY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE\nTO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY\nBE CONSIDERED TO BE A",
+          "or legal entity who first fixes the sounds of a\n    performance or other sounds; and, (iii) in the case of broadcasts, the\n    organization that transmits the broadcast.\n f. \"Work\" means the literary and/or artistic work offered under the terms\n    of this License including without limitation any production in the\n    literary, scientific and artistic domain, whatever may be the mode or\n    form of its expression including digital form, such as a book,\n    pamphlet and other writing; a lecture, address, sermon or other work\n    of the same nature; a dramatic or dramatico-musical work; a\n    choreographic work or entertainment in dumb show; a musical\n    composition with or without words; a cinematographic work to which are\n    assimilated works expressed by a process analogous to cinematograp",
+          "tion that transmits the broadcast.\n f. \"Work\" means the literary and/or artistic work offered under the terms\n    of this License including without limitation any production in the\n    literary, scientific and artistic domain, whatever may be the mode or\n    form of its expression including digital form, such as a book,\n    pamphlet and other writing; a lecture, address, sermon or other work\n    of the same nature; a dramatic or dramatico-musical work; a\n    choreographic work or entertainment in dumb show; a musical\n    composition with or without words; a cinematographic work to which are\n    assimilated works expressed by a process analogous to cinematography;\n    a work of drawing, painting, architecture, sculpture, engraving or\n    lithography; a photographic work to which are assimilate",
+          "st the Work by any means including signs,\n    sounds or images.\n i. \"Reproduce\" means to make copies of the Work by any means including\n    without limitation by sound or visual recordings and the right of\n    fixation and reproducing fixations of the Work, including storage of a\n    protected performance or phonogram in digital form or other electronic\n    medium.\n\n2. Fair Dealing Rights. Nothing in this License is intended to reduce,\nlimit, or restrict any uses free from copyright or rights arising from\nlimitations or exceptions that are provided for in connection with the\ncopyright protection under copyright law or other applicable laws.\n\n3. License Grant. Subject to the terms and conditions of this License,\nLicensor hereby grants You a worldwide, royalty-free, non-exclusive,\nperpetual (fo"
+        ]
+      }
+    },
+    {
+      "id": "godot_modifier_source",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/SkeletonModifier3D.xml",
+        "final_url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/SkeletonModifier3D.xml",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "66fe7a680393b455741053175e30d140db131aa4a16b4f5e69b99bb0eba83565",
+        "bytes_read": 7254,
+        "excerpts": [
+          "nd, so the [SkeletonModifier3D] should always apply only 100% of the result without interpolation.\n\t\t</member>\n\t</members>\n\t<signals>\n\t\t<signal name=\"modification_processed\">\n\t\t\t<description>\n\t\t\t\tNotifies when the modification have been finished.\n\t\t\t\t[b]Note:[/b] If you want to get the modified bone pose by the modifier, you must use [method Skeleton3D.get_bone_pose] or [method Skeleton3D.get_bone_global_pose] at the moment this signal is fired.\n\t\t\t</description>\n\t\t</signal>\n\t</signals>\n\t<constants>\n\t\t<constant name=\"BONE_AXIS_PLUS_X\" value=\"0\" enum=\"BoneAxis\">\n\t\t\tEnumerated value for the +X axis.\n\t\t</constant>\n\t\t<constant name=\"BONE_AXIS_MINUS_X\" value=\"1\" enum=\"BoneAxis\">\n\t\t\tEnumerated value for the -X axis.\n\t\t</constant>\n\t\t<constant name=\"BONE_AXIS_PLUS_Y\" value=\"2\" enum=\"BoneAxis\">\n\t\t\tEnumerated value for t",
+          "ier. You should do things like get the [Skeleton3D]'s current pose and apply the pose here.\n\t\t\t\t[method _process_modification] must not apply [member influence] to bone poses because the [Skeleton3D] automatically applies influence to all bone poses set by the modifier.\n\t\t\t</description>\n\t\t</method>\n\t\t<method name=\"_process_modification_with_delta\" qualifiers=\"virtual\">\n\t\t\t<return type=\"void\" />\n\t\t\t<param index=\"0\" name=\"delta\" type=\"float\" />\n\t\t\t<description>\n\t\t\t\tOverride this virtual method to implement a custom skeleton modifier. You should do things like get the [Skeleton3D]'s current pose and apply the pose here.\n\t\t\t\t[method _process_modification_with_delta] must not apply [member influence] to bone poses because the [Skeleton3D] automatically applies influence to all bone poses set by the mod",
+          "pply the pose here.\n\t\t\t\t[method _process_modification] must not apply [member influence] to bone poses because the [Skeleton3D] automatically applies influence to all bone poses set by the modifier.\n\t\t\t</description>\n\t\t</method>\n\t\t<method name=\"_process_modification_with_delta\" qualifiers=\"virtual\">\n\t\t\t<return type=\"void\" />\n\t\t\t<param index=\"0\" name=\"delta\" type=\"float\" />\n\t\t\t<description>\n\t\t\t\tOverride this virtual method to implement a custom skeleton modifier. You should do things like get the [Skeleton3D]'s current pose and apply the pose here.\n\t\t\t\t[method _process_modification_with_delta] must not apply [member influence] to bone poses because the [Skeleton3D] automatically applies influence to all bone poses set by the modifier.\n\t\t\t\t[param delta] is passed from parent [Skeleton3D]. See also [m",
+          "ould do things like get the [Skeleton3D]'s current pose and apply the pose here.\n\t\t\t\t[method _process_modification_with_delta] must not apply [member influence] to bone poses because the [Skeleton3D] automatically applies influence to all bone poses set by the modifier.\n\t\t\t\t[param delta] is passed from parent [Skeleton3D]. See also [method Skeleton3D.advance].\n\t\t\t\t[b]Note:[/b] This method may be called outside [method Node._process] and [method Node._physics_process] with [param delta] is [code]0.0[/code], since the modification should be processed immediately after initialization of the [Skeleton3D].\n\t\t\t</description>\n\t\t</method>\n\t\t<method name=\"_skeleton_changed\" qualifiers=\"virtual\">\n\t\t\t<return type=\"void\" />\n\t\t\t<param index=\"0\" name=\"old_skeleton\" type=\"Skeleton3D\" />\n\t\t\t<param index=\"1\" name=\""
+        ]
+      },
+      "decision": "Read-only primary source evidence. Actual mobile import/behavior/device acceptance remains open."
+    },
+    {
+      "id": "gltf_skin_spec",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/specification/2.0/Specification.adoc",
+        "final_url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/specification/2.0/Specification.adoc",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "657167c1a083fa9eac28432a5ba5f6486149b5da7f932c8a7ee631e71c5e099e",
+        "bytes_read": 186093,
+        "excerpts": [
+          "mong all possible indexed attribute semantic names, client implementations **SHOULD** support at least `TEXCOORD_0` and `TEXCOORD_1`, `COLOR_0`, and `JOINTS_0` with `WEIGHTS_0`.\n\nAttribute data accessed with floating-point accessors **MUST NOT** contain infinite or NaN values.\n\nAccessors for the `POSITION` semantic **MUST** have their bounds, i.e., `min` and `max` properties, defined.\n\nThe W components provided by accessors for the `TANGENT` semantic **MUST** have the absolute value of stem:[1.0].\n\nAll components of each `COLOR_0` accessor element **MUST** be in the stem:[[0.0, 1.0\\]] range.\n\nAll attribute accessors for a given primitive **MUST** have the same number of elements, i.e., values of their `count` properties **MUST** be equal.\n\n[[meshes-topology]]\n==== Topology and Connectivity\n\nAccess",
+          "-joint inverse bind matrices (when present) **MUST** be applied before the base node transforms.\n\nIn the following example, a mesh primitive defines `JOINTS_0` and `WEIGHTS_0` vertex attributes:\n\n[source,json]\n----\n{\n    \"meshes\": [\n        {\n            \"name\": \"skinned-mesh_1\",\n            \"primitives\": [\n                {\n                    \"attributes\": {\n                        \"JOINTS_0\": 179,\n                        \"NORMAL\": 165,\n                        \"POSITION\": 163,\n                        \"TEXCOORD_0\": 167,\n                        \"WEIGHTS_0\": 176\n                    },\n                    \"indices\": 161,\n                    \"material\": 1,\n                    \"mode\": 4\n                }\n            ]\n        }\n    ]\n}\n----\n\nThe number of joints that influence one vertex is limited to",
+          "   {\n            \"name\": \"skinned-mesh_1\",\n            \"primitives\": [\n                {\n                    \"attributes\": {\n                        \"JOINTS_0\": 179,\n                        \"NORMAL\": 165,\n                        \"POSITION\": 163,\n                        \"TEXCOORD_0\": 167,\n                        \"WEIGHTS_0\": 176\n                    },\n                    \"indices\": 161,\n                    \"material\": 1,\n                    \"mode\": 4\n                }\n            ]\n        }\n    ]\n}\n----\n\nThe number of joints that influence one vertex is limited to 4 per set, so the referenced accessors **MUST** have `VEC4` type and following component types:\n\n* *`JOINTS_n`*: _uint8_ or _uint16_\n* *`WEIGHTS_n`*: _float32_, or _unorm8_, or _unorm16_\n\nThe joint weights for each vertex **MUST NOT** be",
+          "e indexed attribute semantic names, client implementations **SHOULD** support at least `TEXCOORD_0` and `TEXCOORD_1`, `COLOR_0`, and `JOINTS_0` with `WEIGHTS_0`.\n\nAttribute data accessed with floating-point accessors **MUST NOT** contain infinite or NaN values.\n\nAccessors for the `POSITION` semantic **MUST** have their bounds, i.e., `min` and `max` properties, defined.\n\nThe W components provided by accessors for the `TANGENT` semantic **MUST** have the absolute value of stem:[1.0].\n\nAll components of each `COLOR_0` accessor element **MUST** be in the stem:[[0.0, 1.0\\]] range.\n\nAll attribute accessors for a given primitive **MUST** have the same number of elements, i.e., values of their `count` properties **MUST** be equal.\n\n[[meshes-topology]]\n==== Topology and Connectivity\n\nAccessors referenced fr",
+          "bind matrices (when present) **MUST** be applied before the base node transforms.\n\nIn the following example, a mesh primitive defines `JOINTS_0` and `WEIGHTS_0` vertex attributes:\n\n[source,json]\n----\n{\n    \"meshes\": [\n        {\n            \"name\": \"skinned-mesh_1\",\n            \"primitives\": [\n                {\n                    \"attributes\": {\n                        \"JOINTS_0\": 179,\n                        \"NORMAL\": 165,\n                        \"POSITION\": 163,\n                        \"TEXCOORD_0\": 167,\n                        \"WEIGHTS_0\": 176\n                    },\n                    \"indices\": 161,\n                    \"material\": 1,\n                    \"mode\": 4\n                }\n            ]\n        }\n    ]\n}\n----\n\nThe number of joints that influence one vertex is limited to 4 per set, so t",
+          ",\n                        \"NORMAL\": 165,\n                        \"POSITION\": 163,\n                        \"TEXCOORD_0\": 167,\n                        \"WEIGHTS_0\": 176\n                    },\n                    \"indices\": 161,\n                    \"material\": 1,\n                    \"mode\": 4\n                }\n            ]\n        }\n    ]\n}\n----\n\nThe number of joints that influence one vertex is limited to 4 per set, so the referenced accessors **MUST** have `VEC4` type and following component types:\n\n* *`JOINTS_n`*: _uint8_ or _uint16_\n* *`WEIGHTS_n`*: _float32_, or _unorm8_, or _unorm16_\n\nThe joint weights for each vertex **MUST NOT** be negative.\n\nJoints **MUST NOT** contain more than one non-zero weight for a given vertex.\n\nWhen the weights are stored using _float_ component type, their linear sum",
+          "any of the vertices are influenced by more than four joints, the additional joint and weight information are stored in subsequent sets. For example, `JOINTS_1` and `WEIGHTS_1` if present will reference the accessor for up to 4 additional joints that influence the vertices. For a given primitive, the number of `JOINTS_n` attribute sets **MUST** be equal to the number of `WEIGHTS_n` attribute sets.\n\nClient implementations **MAY** support only a single set of up to four weights and joints, however not supporting all weight and joint sets present in the file may have an impact on the asset's animation.\n\nAll joint values **MUST** be within the range of joints in the skin. Unused joint values (i.e., joints with a weight of zero) **SHOULD** be set to zero.\n\n\n[[instantiation]]\n=== Instantiation\n\nA mesh is",
+          " asset. Each skin is defined by a **REQUIRED** `joints` property that lists the indices of nodes used as joints to pose the skin and an **OPTIONAL** `inverseBindMatrices` property that points to an accessor with inverse bind matrices data used to bring coordinates being skinned into the same space as each joint.\n\nThe order of joints is defined by the `skin.joints` array and it **MUST** match the order of `inverseBindMatrices` accessor elements (when the latter is present). The `skeleton` property (if present) points to the node that is the common root of a joints hierarchy or to a direct or indirect parent node of the common root.\n\n[NOTE]\n.Implementation Note\n====\nAlthough the `skeleton` property is not needed for computing skinning transforms, it may be used to provide a specific \"`pivot point`\" for the ski",
+          "nates being skinned into the same space as each joint.\n\nThe order of joints is defined by the `skin.joints` array and it **MUST** match the order of `inverseBindMatrices` accessor elements (when the latter is present). The `skeleton` property (if present) points to the node that is the common root of a joints hierarchy or to a direct or indirect parent node of the common root.\n\n[NOTE]\n.Implementation Note\n====\nAlthough the `skeleton` property is not needed for computing skinning transforms, it may be used to provide a specific \"`pivot point`\" for the skinned geometry.\n====\n\nAn accessor referenced by `inverseBindMatrices` **MUST** have floating-point components of `\"MAT4\"` type. The number of elements of the accessor referenced by `inverseBindMatrices` **MUST** be greater than or equal to the number of `joint",
+          "ed for computing skinning transforms, it may be used to provide a specific \"`pivot point`\" for the skinned geometry.\n====\n\nAn accessor referenced by `inverseBindMatrices` **MUST** have floating-point components of `\"MAT4\"` type. The number of elements of the accessor referenced by `inverseBindMatrices` **MUST** be greater than or equal to the number of `joints` elements. The fourth row of each matrix **MUST** be set to `[0.0, 0.0, 0.0, 1.0]`. The accessed matrices **MUST NOT** contain infinite or NaN values.\n\n[NOTE]\n.Implementation Note\n====\nThe matrix defining how to pose the skin's geometry for use with the joints (also known as \"`Bind Shape Matrix`\") should be premultiplied to mesh data or to Inverse Bind Matrices.\n====\n\n[[joint-hierarchy]]\n==== Joint Hierarchy\n\nThe joint hierarchy used for controlling sk"
+        ]
+      },
+      "focused_receipt": {
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/specification/2.0/Specification.adoc",
+        "retrieved_at_utc": "2026-10-18T03:15:22.769362+00:00",
+        "final_url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/specification/2.0/Specification.adoc",
+        "http_status": 200,
+        "sha256": "657167c1a083fa9eac28432a5ba5f6486149b5da7f932c8a7ee631e71c5e099e",
+        "bytes_read": 186093,
+        "excerpts": [
+          "en `n`.\n\nAmong all possible indexed attribute semantic names, client implementations **SHOULD** support at least `TEXCOORD_0` and `TEXCOORD_1`, `COLOR_0`, and `JOINTS_0` with `WEIGHTS_0`.\n\nAttribute data accessed with floating-point accessors **MUST NOT** contain infinite or NaN values.\n\nAccessors for the `POSITION` semantic **MUST** have their bounds, i.e., `min` and `max` properties, defined.\n\nThe W components provided by accessors for the `TANGENT` semantic **MUST** have the absolute value of stem:[1.0].\n\nAll components of each `COLOR_0` accessor element **MUST** be in the stem:[[0.0, 1.0\\]] range.\n\nAll attribute accessors for a given primitive **MUST** have the same number of elements, i.e., values of their `count` properties **MUST** be equal.\n\n[[meshes-topology]]\n==== Topology and Connectivity",
+          "e that per-joint inverse bind matrices (when present) **MUST** be applied before the base node transforms.\n\nIn the following example, a mesh primitive defines `JOINTS_0` and `WEIGHTS_0` vertex attributes:\n\n[source,json]\n----\n{\n    \"meshes\": [\n        {\n            \"name\": \"skinned-mesh_1\",\n            \"primitives\": [\n                {\n                    \"attributes\": {\n                        \"JOINTS_0\": 179,\n                        \"NORMAL\": 165,\n                        \"POSITION\": 163,\n                        \"TEXCOORD_0\": 167,\n                        \"WEIGHTS_0\": 176\n                    },\n                    \"indices\": 161,\n                    \"material\": 1,\n                    \"mode\": 4\n                }\n            ]\n        }\n    ]\n}\n----\n\nThe number of joints that influence one vertex is li",
+          "ach of those nodes could in turn have its own children, creating a hierarchy of nodes.\n\n[NOTE]\n.Example\n====\nIn the following example, the node named `Car` has four children each of which has one child node.\n\n[source,json]\n----\n{\n    \"nodes\": [\n        {\n            \"name\": \"Car\",\n            \"children\": [1, 2, 3, 4]\n        },\n        {\n            \"name\": \"wheel_1\",\n            \"children\": [5]\n        },\n        {\n            \"name\": \"wheel_2\",\n            \"children\": [6]\n        },\n        {\n            \"name\": \"wheel_3\",\n            \"children\": [7]\n        },\n        {\n            \"name\": \"wheel_4\",\n            \"children\": [8]\n        },\n        {\n            \"name\": \"tire_1\"\n        },\n        {\n            \"name\": \"tire_2\"\n        },\n        {\n            \"name\": \"tire_3\"\n        },\n        {\n",
+          "T NOT** define the byte stride.\n\nIf the `byteStride` property is defined, all of the following restrictions apply to it:\n\n- its value **MUST** be a multiple of four;\n- its value **MUST** be greater than or equal to 4 and less than or equal to 252;\n- its value **MUST** be less than or equal to the value of the `byteLength` property.\n\n\n[[accessors]]\n=== Accessors\n\n[[accessors-overview]]\n==== Overview\n\nBuffers and buffer views do not contain type information. They simply define the byte ranges for retrieval from the referenced resources. Structured binary data needed by objects within the glTF asset, such as meshes, skins, and animations, is accessed via _accessors_. Accessors are stored in the asset's `accessors` array.\n\nAn accessor provides a finite non-empty sequence of typed values. The number of e"
+        ]
+      }
+    },
+    {
+      "id": "gltf_blender_readme",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/README.md",
+        "final_url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/README.md",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "47445537d3654a43e460c2b0cdfee136de18c8c037d204c7166b07c56c8c9958",
+        "bytes_read": 5726,
+        "excerpts": [
+          "st extracted and converted into this scene description. This glTF scene description is exported to the final JSON glTF file. Any compression of mesh, animation, or texture data happens here.\nFor import, glTF data is parsed and written into the Python glTF scene description. Any decompression is executed in this step. Using the imported glTF scene tree, the Blender internal scene representation is generated from this information.\n\nInstallation\n------------\n\nThe Khronos glTF 2.0 importer and exporter is enabled by default in [Blender 2.8](https://www.blender.org/2-8/) and higher. To reinstall it \u2014 for example, when testing recent or upcoming changes \u2014 copy the `addons/io_scene_gltf2` folder into the `scripts/addons_core/` directory of the Blender installation, then enable it under the *Add-ons* tab. ",
+          "[![Blender](misc/Blender_logo.png)](http://www.blender.org/) [![glTF](misc/glTF_logo.png)](https://www.khronos.org/gltf/)\n\nBlender glTF 2.0 Importer and Exporter\n======================================\n\nDocumentation\n-------------\n\n| Blender Version | Documentation |\n|---------|---------------------|\n| 4.5 LTS | https://docs.blender.org/manual/en/4.5/addons/import_export/scene_gltf2.html |\n| 5.0     | https://docs.blender.org/manual/en/5.0/addons/import_export/scene_gltf2.html  |\n| 5.1     | https://docs.blender.org/manual/en/5.1/addons/import_export/scene_gltf2.html  |\n| dev     | https://docs.blender.org/manual/en/dev/addons/import_export/scene_gltf2.",
+          "[![Blender](misc/Blender_logo.png)](http://www.blender.org/) [![glTF](misc/glTF_logo.png)](https://www.khronos.org/gltf/)\n\nBlender glTF 2.0 Importer and Exporter\n======================================\n\nDocumentation\n-------------\n\n| Blender Version | Documentation |\n|---------|---------------------|\n| 4.5 LTS | https://docs.blender.org/manual/en/4.5/addons/import_export/scene_gltf2.html |\n| 5.0     | https://docs.blender.org/manual/en/5.0/addons/import_export/scene_gltf2.html  |\n| 5.1     | https://docs.blender.org/manual/en/5.1/addons/import_export/scene_gltf2.html  |\n| dev     | https://docs.blender.org/manual/en/dev/addons/import_export/scene_gltf2.html  |\n\nNotes",
+          "[![Blender](misc/Blender_logo.png)](http://www.blender.org/) [![glTF](misc/glTF_logo.png)](https://www.khronos.org/gltf/)\n\nBlender glTF 2.0 Importer and Exporter\n======================================\n\nDocumentation\n-------------\n\n| Blender Version | Documentation |\n|---------|---------------------|\n| 4.5 LTS | https://docs.blender.org/manual/en/4.5/addons/import_export/scene_gltf2.html |\n| 5.0     | https://docs.blender.org/manual/en/5.0/addons/import_export/scene_gltf2.html  |\n| 5.1     | https://docs.blender.org/manual/en/5.1/addons/import_export/scene_gltf2.html  |\n| dev     | https://docs.blender.org/manual/en/dev/addons/import_export/scene_gltf2.html  |\n\nNotes:\n* 5.0 is the current stable "
+        ]
+      }
+    },
+    {
+      "id": "gltf_transform_readme",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f/README.md",
+        "final_url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f/README.md",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "d89d0c933e18062a4e664e6389774bc84e0bebc5011e5e801406c6895bc948a3",
+        "bytes_read": 6647,
+        "excerpts": [
+          "ading, editing, and writing 3D models in glTF 2.0 format. Unlike 3D modeling tools \u2014\u00a0which are ideal for artistic changes to geometry, materials, and animation \u2014 glTF Transform provides fast, reproducible, and lossless control of the low-level details in a 3D model. The API automatically manages array indices and byte offsets, which would otherwise require careful management when editing files. These traits make it a good choice for bundling, splitting, or optimizing an existing model. It can also be used to apply quick fixes for common issues, to build a model procedurally, or to easily develop custom extensions on top of the glTF format. Because the core SDK is compatible with both Node.js and Web, glTF Transform may be used to develop offline workflows and web applications alike.\n\nPackages:\n\n- `",
+          "textureCompress } from '@gltf-transform/functions';\nimport sharp from 'sharp'; // Node.js only.\n\nawait document.transform(\n    // Losslessly resample animation frames.\n    resample(),\n    // Remove unused nodes, textures, or other data.\n    prune(),\n    // Remove duplicate vertex or texture data, if any.\n    dedup(),\n    // Compress mesh geometry with Draco.\n    draco(),\n    // Convert textures to WebP (Requires glTF Transform v3 and Node.js).\n    textureCompress({\n        encoder: sharp,\n        targetFormat: 'webp',\n        resize: [1024, 2024],\n    }),\n    // Custom transform.\n    backfaceCulling({cull: true}),\n);\n\n// Custom transform: enable/disable backface culling.\nfunction backfaceCulling(options) {\n    return (document) => {\n        for (const material of document.getRoot().listMaterials())",
+          "co (compresses geometry).\ngltf-transform draco input.glb output.glb --method edgebreaker\n\n# Meshopt (compresses geometry, morph targets, and keyframe animation).\ngltf-transform meshopt input.glb output.glb --level medium\n```\n\nResize and compress textures with [Sharp](https://sharp.pixelplumbing.com/), or improve VRAM usage and performance with KTX2 and [Basis Universal](https://github.com/BinomialLLC/basis_universal):\n\n```bash\n# Resize textures.\ngltf-transform resize input.glb output.glb --width 1024 --height 1024\n\n# Compress textures with WebP.\ngltf-transform webp input.glb output.glb --slots \"baseColor\"\n\n# Compress textures with KTX2 + Basis Universal codecs, UASTC and ETC1S.\ngltf-transform uastc input.glb output1.glb \\\n    --slots \"{normalTexture,occlusionTexture,metallicRoughnessTexture}\" \\\n   "
+        ]
+      }
+    },
+    {
+      "id": "mpfb_assets",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/3af0cd5a2ffba072e93a34e5f6f494fdc4813ddf/LICENSE.ASSETS.md",
+        "final_url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/3af0cd5a2ffba072e93a34e5f6f494fdc4813ddf/LICENSE.ASSETS.md",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c",
+        "bytes_read": 6962,
+        "excerpts": [
+          "# Creative Commons CC0 1.0 Universal\n\nCREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL SERVICES. DISTRIBUTION OF THIS DOCUMENT DOES NOT CREATE AN ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS INFORMATION ON AN \"AS-IS\" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES REGARDING THE USE OF THIS DOCUMENT OR THE INFORMATION OR WORKS PROVIDED HEREUNDER, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM THE USE OF THIS DOCUMENT OR THE INFORMATION OR WORKS PROVIDED HEREUNDER.\n\n### Statement of Purpose\n\nThe laws of most jurisdictions throughout the world automatically confer exclusive Copyright and Related Rights (defined below) upon the",
+          "rs.\n\nFor these and/or other purposes and motivations, and without any expectation of additional consideration or compensation, the person associating CC0 with a Work (the \"Affirmer\"), to the extent that he or she is an owner of Copyright and Related Rights in the Work, voluntarily elects to apply CC0 to the Work and publicly distribute the Work under its terms, with knowledge of his or her Copyright and Related Rights in the Work and the meaning and intended legal effect of CC0 on those rights.\n\n1. __Copyright and Related Rights.__ A Work made available under CC0 may be protected by copyright and related or neighboring rights (\"Copyright and Related Rights\"). Copyright and Related Rights include, but are not limited to, the following:\n\n    i. the right to reproduce, adapt, distribute, perform",
+          "g CC0 with a Work (the \"Affirmer\"), to the extent that he or she is an owner of Copyright and Related Rights in the Work, voluntarily elects to apply CC0 to the Work and publicly distribute the Work under its terms, with knowledge of his or her Copyright and Related Rights in the Work and the meaning and intended legal effect of CC0 on those rights.\n\n1. __Copyright and Related Rights.__ A Work made available under CC0 may be protected by copyright and related or neighboring rights (\"Copyright and Related Rights\"). Copyright and Related Rights include, but are not limited to, the following:\n\n    i. the right to reproduce, adapt, distribute, perform, display, communicate, and translate a Work;\n\n    ii. moral rights retained by the original author(s) and/or performer(s);\n\n    iii. publicity and ",
+          "# Creative Commons CC0 1.0 Universal\n\nCREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL SERVICES. DISTRIBUTION OF THIS DOCUMENT DOES NOT CREATE AN ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS INFORMATION ON AN \"AS-IS\" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES REGARDING THE USE OF THIS DOCUMENT OR THE INFORMATION OR WORKS PROVIDED HEREUNDER, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM THE USE OF THIS DOCUMENT OR THE INFORMATION OR WORKS PROVIDED HEREUNDER.\n\n### Statement of Purpose\n\nThe laws of most jurisdictions throughout the world automatically confer exclusive Copyright and Related Rights (defined below) upon the creator and s"
+        ]
+      }
+    },
+    {
+      "id": "mpfb_code",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/3af0cd5a2ffba072e93a34e5f6f494fdc4813ddf/LICENSE.CODE.md",
+        "final_url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/3af0cd5a2ffba072e93a34e5f6f494fdc4813ddf/LICENSE.CODE.md",
+        "http_status": 200,
+        "retrieved_at_utc": "2026-10-18T03:11:49.934594+00:00",
+        "sha256": "26c03bc049c15fc5b9e52d791a06f1a6bc32f89edc8f8c701ab0aadf66e85b82",
+        "bytes_read": 34940,
+        "excerpts": [
+          "# GNU GENERAL PUBLIC LICENSE\nVersion 3, 29 June 2007\n\nCopyright (C) 2007 [Free Software Foundation, Inc.](http://fsf.org/)\n\nEveryone is permitted to copy and distribute verbatim copies of this license\ndocument, but changing it is not allowed.\n\n## Preamble\n\nThe GNU General Public License is a free, copyleft license for software and\nother kinds of works.\n\nThe licenses for most software and other practical works are designed to take\naway your freedom to share and change the works. By contrast, the GNU General\nPublic License is intended to guarantee your freedom to share and change all\nversions of a program--to make sure it remains free software for all its users.\nWe, the F",
+          "//fsf.org/)\n\nEveryone is permitted to copy and distribute verbatim copies of this license\ndocument, but changing it is not allowed.\n\n## Preamble\n\nThe GNU General Public License is a free, copyleft license for software and\nother kinds of works.\n\nThe licenses for most software and other practical works are designed to take\naway your freedom to share and change the works. By contrast, the GNU General\nPublic License is intended to guarantee your freedom to share and change all\nversions of a program--to make sure it remains free software for all its users.\nWe, the Free Software Foundation, use the GNU General Public License for most\nof our software; it applies also to any other work released this way by its\nauthors. You can apply it to your programs, too.\n\nWhen we speak of free software, we are referring to freedom, not",
+          "dom to share and change all\nversions of a program--to make sure it remains free software for all its users.\nWe, the Free Software Foundation, use the GNU General Public License for most\nof our software; it applies also to any other work released this way by its\nauthors. You can apply it to your programs, too.\n\nWhen we speak of free software, we are referring to freedom, not price. Our\nGeneral Public Licenses are designed to make sure that you have the freedom to\ndistribute copies of free software (and charge for them if you wish), that you\nreceive source code or can get it if you want it, that you can change the\nsoftware or use pieces of it in new free programs, and that you know you can do\nthese things.\n\nTo protect your rights, we need to prevent others from denying you these rights\nor asking you to surrender the ",
+          "# GNU GENERAL PUBLIC LICENSE\nVersion 3, 29 June 2007\n\nCopyright (C) 2007 [Free Software Foundation, Inc.](http://fsf.org/)\n\nEveryone is permitted to copy and distribute verbatim copies of this license\ndocument, but changing it is not allowed.\n\n## Preamble\n\nThe GNU General Public License is a free, copyleft license for software and\nother kinds of works.\n\nThe licenses for most software and other practical works are designed to take\naway your freedom to share and change the works. By contrast, the GNU General\nPublic License is intended to guarantee your freedom to share and change all\nversions of a program--to make sure it remains free software for all its users.\nWe, the Free Softwa",
+          "ecise terms and conditions for copying, distribution and modification\nfollow.\n\n## TERMS AND CONDITIONS\n\n### 0. Definitions.\n\n*This License* refers to version 3 of the GNU General Public License.\n\n*Copyright* also means copyright-like laws that apply to other kinds of works,\nsuch as semiconductor masks.\n\n*The Program* refers to any copyrightable work licensed under this License.\nEach licensee is addressed as *you*. *Licensees* and *recipients* may be\nindividuals or organizations.\n\nTo *modify* a work means to copy from or adapt all or part of the work in a\nfashion requiring copyright permission, other than the making of an exact copy.\nThe resulting work is called a *modified version* of the earlier work or a work\n*based on* the earlier work.\n\nA *covered work* means either the unmodified Program or a ",
+          "lic License.\n\nNotwithstanding any other provision of this License, you have permission to\nlink or combine any covered work with a work licensed under version 3 of the\nGNU Affero General Public License into a single combined work, and to convey\nthe resulting work. The terms of this License will continue to apply to the\npart which is the covered work, but the special requirements of the GNU Affero\nGeneral Public License, section 13, concerning interaction through a network\nwill apply to the combination as such.\n\n### 14. Revised Versions of this License.\n\nThe Free Software Foundation may publish revised and/or new versions of the GNU\nGeneral Public License from time to time. Such new versions will be similar in\nspirit to the present version, but may differ in detail to address new problems\nor concerns"
+        ]
+      }
+    },
+    {
+      "id": "polyhaven",
+      "kind": "source_repository",
+      "repository": "https://github.com/Poly-Haven/polyhaven.com",
+      "requested_ref": "master",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/Poly-Haven/polyhaven.com/commits/master",
+        "retrieved_at_utc": "2026-10-18T03:15:02.767311+00:00",
+        "final_url": "https://api.github.com/repos/Poly-Haven/polyhaven.com/commits/master",
+        "http_status": 200,
+        "bytes_read": 6175,
+        "sha256": "67b8eab38cc3f485a6fb3c060132a587990dc6b9057331caf0221db998dd132c"
+      },
+      "resolved_commit": "b1a6aa13afc03ae00860f6ac5fe6d5daf8e95356"
+    },
+    {
+      "id": "kenney_starter",
+      "kind": "source_repository",
+      "repository": "https://github.com/KenneyNL/Starter-Kit-3D-Platformer",
+      "requested_ref": "main",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/KenneyNL/Starter-Kit-3D-Platformer/commits/main",
+        "retrieved_at_utc": "2026-10-18T03:15:03.267398+00:00",
+        "final_url": "https://api.github.com/repos/KenneyNL/Starter-Kit-3D-Platformer/commits/main",
+        "http_status": 200,
+        "bytes_read": 6001,
+        "sha256": "b07329e0e1172de7df26d6eb42e4a225925166a68e62fdf9d999ad9d95ab059f"
+      },
+      "resolved_commit": "3fa8a04b1c01ab23db43123d4ce814a34c3fc7f0"
+    },
+    {
+      "id": "rigify_source",
+      "kind": "source_repository",
+      "repository": "https://github.com/blender/blender-addons",
+      "requested_ref": "main",
+      "commit_receipt": {
+        "url": "https://api.github.com/repos/blender/blender-addons/commits/main",
+        "retrieved_at_utc": "2026-10-18T03:15:03.597258+00:00",
+        "final_url": "https://api.github.com/repos/blender/blender-addons/commits/main",
+        "http_status": 200,
+        "bytes_read": 3237,
+        "sha256": "9104c17772340a4fa78721683f2e787bf5a45f2d32e30ce0022d397ffb1cf664"
+      },
+      "resolved_commit": "b42d68627734cb18af0e6f41537063984313a284",
+      "verified_scope": "Archived blender-addons Rigify GPL-2.0-or-later",
+      "decision": "Supplemental historical source only; selected production-compatible reference is rigify_432."
+    },
+    {
+      "id": "polyhaven_asset_license",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/Poly-Haven/polyhaven.com/b1a6aa13afc03ae00860f6ac5fe6d5daf8e95356/public/locales/en/license.json",
+        "retrieved_at_utc": "2026-10-18T03:15:03.915147+00:00",
+        "final_url": "https://raw.githubusercontent.com/Poly-Haven/polyhaven.com/b1a6aa13afc03ae00860f6ac5fe6d5daf8e95356/public/locales/en/license.json",
+        "http_status": 200,
+        "bytes_read": 2216,
+        "sha256": "a9d88b758d1751dd41713381115ed309ea659e219c1654157b709dce7757e779",
+        "excerpts": [
+          "{\n  \"description\": \"CC0 means absolute freedom.\",\n  \"p1\": \"All assets (<lnk1>HDRIs</lnk1>, <lnk2>textures</lnk2> and <lnk3>3D models</lnk3>) on this site are the original work of Poly Haven staff, or artists who willingly and directly donate/sell their work to Poly Haven.\",\n  \"p10\": \"But what the 3D industry as a whole gains from our work being so freely available is immeasurable\",\n  \"p11\": \"3D art is also only the tip of the iceberg, we've heard from numerous data scientists, software developers, automotive engineers and AI researchers all using our assets in their work, which simply wouldn't be possible with more restrictive (even open source) licenses.\",\n  \"p12\": \"We don't have anything against Copyright in general, we simply believe we can do more good in the world by providing as much freedom as possible.\",\n  \"p13\": \"If you benefit from our work financially, e.g. by including our assets in a product you sell, or simply make frequent use of them in your own work, please consider <lnk>supporting us on Patreon</lnk> with a small monthly donation in order to help us continue to produce more assets and maintain this platform.\",\n  \"p2\": \"Our assets are all licensed as <lnk1>CC0</lnk1>, which is effectively <lnk2>Public Domain</lnk2> even in jurisdictions that do not support the Public Domain.\",\n  \"p3\": \"Here's an excerpt from the <lnk>CC0 FAQ page</lnk> to clarify:\",\n  \"p4\": \"In other words:\",\n  \"p5l1\": \"<b>You can use our assets for any purpose</b>, including commercial work.\",\n  \"p5l2\": \"<b>You do not need to give credit</b> or attribution when using them (although it is appreciated).\",\n  \"p5l3\": \"<b>You can redistribute them</b>, share them around, include them when sharing your own work, or even in a product you sell.\",\n  \"p6\": \"More info: <lnk1>CC0 summary</lnk1>, <lnk2>CC0 wiki</lnk2>, <lnk3>CC0 FAQ</lnk3>.\",\n  \"p7\": \"Why CC0?\",\n  \"p8\": \"We believe the benefits of using this license outweigh the obvious drawbacks for us as a business.\",\n  \"p9\": \"Yes it's possible that unethical users can (and do) resell our work for their own profit, at the cost of unwitting customers who didn't know they were purchasing content they could get here for free.\",\n  \"title\": \"Asset License\"\n}\n"
+        ]
+      },
+      "verified_scope": "Official site source says assets CC0",
+      "decision": "Candidate material/HDR source only; no individual asset admitted."
+    },
+    {
+      "id": "polyhaven_site_license",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/Poly-Haven/polyhaven.com/b1a6aa13afc03ae00860f6ac5fe6d5daf8e95356/LICENSE",
+        "retrieved_at_utc": "2026-10-18T03:15:03.915820+00:00",
+        "final_url": "https://raw.githubusercontent.com/Poly-Haven/polyhaven.com/b1a6aa13afc03ae00860f6ac5fe6d5daf8e95356/LICENSE",
+        "http_status": 200,
+        "bytes_read": 34523,
+        "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+        "excerpts": [
+          "                    GNU AFFERO GENERAL PUBLIC LICENSE\n                       Version 3, 19 November 2007\n\n Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>\n Everyone is permitted to copy and distribute verbatim copies\n of this license document, but changing it is not allowed.\n\n                            Preamble\n\n  The GNU Affero General Public License is a free, copyleft license for\nsoftware and other kinds of works, specifically designed to ensure\ncooperation with the community in the case of network server software.\n\n  The licenses for most software and other practical works are designed\nto take away your freedom to share and change the works.  By contrast,\nour General Public Licenses are intended to guarantee your freedom to\nshare and change all versions of a program--to make sure it remains free\nsoftware for all its users.\n\n  When we speak of free software, we are referring to freedom, not\nprice.  Our General Public Licenses are designed to make sure that you\nhave the freedom to distribute copies of free software (and charge for\nthem if you wish), that you receive source code or can get it if you\nwant it, that you can change the software or use pieces of it in new\nfree programs, and that you know you can do these things.\n\n  Developers that use our General Public Licenses protect your rights\nwith two steps: (1) assert copyright on the software, and (2) offer\nyou this License which gives you legal permission to copy, distribute\nand/or modify the software.\n\n  A secondary benefit of defending all users' freedom is that\nimprovements made in alternate versions of the program, if they\nreceive widespread use, become available for other developers to\nincorporate.  Many developers of free software are heartened and\nencouraged by the resulting cooperation.  However, in the case of\nsoftware used on network servers, this result may fail to come about.\nThe GNU General Public License permits making a modified version and\nletting the public access it on a server without ever releasing its\nsource code to the public.\n\n  The GNU Affero General Public License is designed specifically to\nensure that, in such cases, the modified source code becomes available\nto the community.  It requires the operator of a network server to\nprovide the source code of the modified version running there to the\nusers of that server.  Therefore, public use of a modified version, on\na publicly accessible server, gives the public access to the source\ncode of the modified version.\n\n  An older license, called the Affero General Public License and\npublished by Affero, was designed to accomplish similar goals.  This is\na different license, not a version of the Affero GPL, but Affero has\nreleased a new version of the Affero GPL which permits relicensing under\nthis license.\n\n  The precise terms and conditions for copying, distribution and\nmodification follow.\n\n                       TERMS AND CONDITIONS\n\n  0. Definitions.\n\n  \"This License\" refers to version 3 of the GNU Affero General Public License.\n\n  \"Copyright\" also means copyright-like laws that apply to other kinds of\nworks, such as semiconductor masks.\n\n  \"The Program\" refers to any copyrightable work licensed under this\nLicense.  Each licensee is addressed as \"you\".  \"Licensees\" and\n\"recipients\" may be individuals or organizations.\n\n  To \"modify\" a work means to copy from or adapt all or part of the work\nin a fashion requiring copyright permission, other than the making of an\nexact copy.  The resulting work is called a \"modified version\" of the\nearlier work or a work \"based on\" the earlier work.\n\n  A \"covered work\" means either the unmodified Program or a work based\non the Program.\n\n  To \"propagate\" a work means to do anything with it that, without\npermission, would make you directly or secondarily liable for\ninfringement under applicable copyright law, except executing it on a\ncomputer or modifying a private copy.  Propagation includes copying,\ndistribution (with or without modification), making available to the\npublic, and in some countries other activities as well.\n\n  To \"convey\" a work means any kind of propagation that enables other\nparties to make or receive copies.  Mere interaction with a user through\na computer network, with no transfer of a copy, is not conveying.\n\n  An interactive user interface displays \"Appropriate Legal Notices\"\nto the extent that it includes a convenient and prominently visible\nfeature that (1) displays an appropriate copyright notice, and (2)\ntells the user that there is no warranty for the work (except to the\nextent that warranties are provided), that licensees may convey the\nwork under this License, and how to view a copy of this License.  If\nthe interface presents a list of user commands or options, such as a\nmenu, a prominent item in the list meets this criterion.\n\n  1. Source Code.\n\n  The \"source code\" for a work means the preferred form of the work\nfor making modifications to it.  \"Object code\" means any non-source\nform of a work.\n\n  A \"Standard Interface\" means an interface that either is an official\nstandard defined by a recognized standards body, or, in the case of\ninterfaces specified for a particular programming language, one that\nis widely used among developers working in that language.\n\n  The \"System Libraries\" of an executable work include anything, other\nthan the work as a whole, that (a) is included in the normal form of\npackaging a Major Component, but which is not part of that Major\nComponent, and (b) serves only to enable use of the work with that\nMajor Component, or to implement a Standard Interface for which an\nimplementation is available to the public in source code form.  A\n\"Major Component\", in this context, means a major essential component\n(kernel, window system, and so on) of the specific operating system\n(if any) on which the executable work runs, or a compiler used to\nproduce the work, or an object code interpreter used to run it.\n\n  The \"Corresponding Source\" for a work in object code form means all\nthe source code needed to generate, install, and (for an executable\nwork) run the object code and to modify the work, including scripts to\ncontrol those activities.  However, it does not include the work's\nSystem Libraries, or general-purpose tools or generally available free\nprograms which are used unmodified in performing those activities but\nwhich are not part of the work.  For example, Corresponding Source\nincludes interface definition files associated with source files for\nthe work, and the source code for shared libraries and dynamically\nlinked subprograms that the work is specifically designed to require,\nsuch as by intimate data communication or control flow between those\nsubprograms and other parts of the work.\n\n  The Corresponding Source need not include anything that users\ncan regenerate automatically from other parts of the Corresponding\nSource.\n\n  The Corresponding Source for a work in source code form is that\nsame work.\n\n  2. Basic Permissions.\n\n  All rights granted under this License are granted for the term of\ncopyright on the Program, and are irrevocable provided the stated\nconditions are met.  This License explicitly affirms your unlimited\npermission to run the unmodified Program.  The output from running a\ncovered work is covered by this License only if the output, given its\ncontent, constitutes a covered work.  This License acknowledges your\nrights of fair use or other equivalent, as provided by copyright law.\n\n  You may make, run and propagate cov"
+        ]
+      },
+      "verified_scope": "AGPL-3.0 site code",
+      "decision": "Separate from the CC0 asset declaration; no site code reused."
+    },
+    {
+      "id": "kenney_starter_license",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/KenneyNL/Starter-Kit-3D-Platformer/3fa8a04b1c01ab23db43123d4ce814a34c3fc7f0/LICENSE.md",
+        "retrieved_at_utc": "2026-10-18T03:15:03.916293+00:00",
+        "final_url": "https://raw.githubusercontent.com/KenneyNL/Starter-Kit-3D-Platformer/3fa8a04b1c01ab23db43123d4ce814a34c3fc7f0/LICENSE.md",
+        "http_status": 200,
+        "bytes_read": 1062,
+        "sha256": "f755bf8f21002f8d5baedaf75564141d363971f3f7bc8c4062956b0b15a6f04f",
+        "excerpts": [
+          "MIT License\n\nCopyright (c) 2023 Kenney\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE."
+        ]
+      },
+      "verified_scope": "MIT kit software",
+      "decision": "Limited to the inspected starter kit; no blanket license claim about all products."
+    },
+    {
+      "id": "kenney_starter_readme",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/KenneyNL/Starter-Kit-3D-Platformer/3fa8a04b1c01ab23db43123d4ce814a34c3fc7f0/README.md",
+        "retrieved_at_utc": "2026-10-18T03:15:04.214388+00:00",
+        "final_url": "https://raw.githubusercontent.com/KenneyNL/Starter-Kit-3D-Platformer/3fa8a04b1c01ab23db43123d4ce814a34c3fc7f0/README.md",
+        "http_status": 200,
+        "bytes_read": 1688,
+        "sha256": "d8f51d172d58e62d289105a5a1561e02e54cccc4c6d1215472169bc50ff2f91f",
+        "excerpts": [
+          "<p align=\"center\"><img src=\"icon.png\"/></p>\n\n# Starter Kit 3D Platformer\n\nThis package includes a basic template for a 3D platformer game in Godot 4.6. Includes features like;\n\n- Character controller (with double jump)\n- Collectable coins and falling platforms\n- Camera controls (rotate, zoom)\n- Gamepad support\n- Sprites and 3D Models _(CC0 licensed)_\n- Sound effects _(CC0 licensed)_\n\n### Screenshot\n\n<p align=\"center\"><img src=\"screenshots/screenshot.png\"/></p>\n\n### License\n\nMIT License\n\nCopyright (c) 2026 Kenney\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\nAssets included in this package (2D sprites, 3D models and sound effects) are [CC0 licensed](https://creativecommons.org/publicdomain/zero/1.0/)\n"
+        ]
+      },
+      "verified_scope": "Included sprites/models/sounds CC0; kit software MIT",
+      "decision": "Candidate prototype fixtures only; no final hero asset or model admitted."
+    },
+    {
+      "id": "rigify_init",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/blender/blender-addons/b42d68627734cb18af0e6f41537063984313a284/rigify/__init__.py",
+        "retrieved_at_utc": "2026-10-18T03:15:04.251402+00:00",
+        "final_url": "https://raw.githubusercontent.com/blender/blender-addons/b42d68627734cb18af0e6f41537063984313a284/rigify/__init__.py",
+        "http_status": 200,
+        "bytes_read": 30750,
+        "sha256": "596a831894fd7808ca60034d959560c70bae80597896e8c05e5f7ee3c972a5fd",
+        "excerpts": [
+          "# SPDX-FileCopyrightText: 2010-2023 Blender Foundation\n#\n# SPDX-License-Identifier: GPL-2.0-or-later\n\nbl_info = {\n    \"name\": \"Rigify\",\n    \"version\": (0, 6, 10),\n    \"author\": \"Nathan Vegdahl, Lucio Rossi, Ivan Cappiello, Alexander Gavrilov\",  # noqa\n    \"blender\": (4, 0, 0),\n    \"description\": \"Automatic rigging from building-block components\",\n    \"location\": \"Armature properties, Bone properties, View3d tools panel, Armature Add menu\",\n    \"doc_url\": \"{BLENDER_MANUAL_URL}/addons/rigging/rigify/index.html\",\n    \"category\": \"Rigging\",\n}\n\nimport importlib\nimport sys\nimport bpy\nimport typing\n\nfrom bpy.app.translations import pgettext_iface as iface_\n\n\n# The order in which core modules of the addon are loaded and reloaded.\n# Modules not in this list are removed from memory upon reload.\n# With the sole exception of 'utils', modules must be listed in the\n# correct dependency order.\ninitial_load_order = [\n    'utils.errors',\n    'utils.misc',\n    'utils.rig',\n    'utils.naming',\n    'utils.bones',\n    'utils.collections',\n    'utils.layers',\n    'utils.widgets',\n    'utils.widgets_basic',\n    'utils.widgets_special',\n    'utils',\n    'utils.mechanism',\n    'utils.animation',\n    'utils.metaclass',\n    'utils.objects',\n    'feature_sets',\n    'rigs',\n    'rigs.utils',\n    'base_rig',\n    'base_generate',\n    'feature_set_list',\n    'rig_lists',\n    'metarig_menu',\n    'rig_ui_template',\n    'utils.action_layers',\n    'generate',\n    'rot_mode',\n    'operators',\n    'ui',\n]\n\n\ndef get_loaded_modules():\n    prefix = __name__ + '.'\n    return [name for name in sys.modules if name.startswith(prefix)]\n\n\ndef reload_modules():\n    fixed_modules = set(reload_list)\n\n    for name in get_loaded_modules():\n        if name not in fixed_modules:\n            del sys.modules[name]\n\n    for name in reload_list:\n        importlib.reload(sys.modules[name])\n\n\ndef compare_module_list(a: list[str], b: list[str]):\n    # HACK: ignore the \"utils\" module when comparing module load orders,\n    # because it is inconsistent for reasons unknown.\n    # See rBAa918332cc3f821f5a70b1de53b65dd9ca596b093.\n    utils_module_name = __name__ + '.utils'\n    a_copy = list(a)\n    a_copy.remove(utils_module_name)\n    b_copy = list(b)\n    b_copy.remove(utils_module_name)\n    return a_copy == b_copy\n\n\ndef load_initial_modules() -> list[str]:\n    names = [__name__ + '.' + name for name in initial_load_order]\n\n    for i, name in enumerate(names):\n        importlib.import_module(name)\n\n        module_list = get_loaded_modules()\n        expected_list = names[0: max(11, i+1)]\n\n        if not compare_module_list(module_list, expected_list):\n            print(f'!!! RIGIFY: initial load order mismatch after {name} - expected: \\n',\n                  expected_list, '\\nGot:\\n', module_list)\n\n    return names\n\n\ndef load_rigs():\n    rig_lists.get_internal_rigs()\n    metarig_menu.init_metarig_menu()\n\n\nif \"reload_list\" in locals():\n    reload_modules()\nelse:\n    load_list = load_initial_modules()\n\n    from . import (utils, base_rig, base_generate, rig_ui_template, feature_set_list, rig_lists,\n                   generate, ui, metarig_menu, operators)\n\n    reload_list = reload_list_init = get_loaded_modules()\n\n    if not compare_module_list(reload_list, load_list):\n        print('!!! RIGIFY: initial load order mismatch - expected: \\n',\n              load_list, '\\nGot:\\n', reload_list)\n\nload_rigs()\n\n\nfrom bpy.types import AddonPreferences  # noqa: E402\nfrom bpy.props import (                 # noqa: E402\n    BoolProperty,\n    IntProperty,\n    EnumProperty,\n    StringProperty,\n    FloatVectorProperty,\n    PointerProperty,\n    CollectionProperty,\n)\n\n\ndef get_generator():\n    \"\"\"Returns the currently active generator instance.\"\"\"\n    return base_generate.BaseGenerator.instance\n\n\nclass RigifyFeatureSets(bpy.types.PropertyGroup):\n    name: bpy.props.StringProperty()\n    module_name: bpy.props.StringProperty()\n    link: bpy.props.StringProperty()\n    has_errors: bpy.props.BoolProperty()\n    has_exceptions: bpy.props.BoolProperty()\n\n    def toggle_feature_set(self, context):\n        feature_set_list.call_register_function(self.module_name, self.enabled)\n        RigifyPreferences.get_instance(context).update_external_rigs()\n\n    enabled: bpy.props.BoolProperty(\n        name=\"Enabled\",\n        description=\"Whether this feature-set is registered or not\",\n        update=toggle_feature_set,\n        default=True\n    )\n\n\n# noinspection PyPep8Naming\nclass RIGIFY_UL_FeatureSets(bpy.types.UIList):\n    def draw_item(self, context, layout, data, item, icon, active_data, active_propname, _index=0, _flag=0):\n        # rigify_prefs: RigifyPreferences = data\n        # feature_sets = rigify_prefs.rigify_feature_sets\n        # active_set: RigifyFeatureSets = feature_sets[rigify_prefs.active_feature_set_index]\n        feature_set_entry: RigifyFeatureSets = item\n        if self.layout_type in {'DEFAULT', 'COMPACT'}:\n            row = layout.row()\n\n            name = feature_set_entry.name\n            icon = \"BLANK1\"\n\n            if not feature_set_entry.module_name:\n                name += iface_(\" (not installed)\")\n                icon = \"URL\"\n            elif feature_set_entry.has_errors or feature_set_entry.has_exceptions:\n                icon = \"ERROR\"\n                row.alert = True\n\n            row.label(text=name, icon=icon, translate=False)\n\n            if feature_set_entry.module_name:\n                icon = 'CHECKBOX_HLT' if feature_set_entry.enabled else 'CHECKBOX_DEHLT'\n                row.enabled = feature_set_entry.enabled\n                layout.prop(feature_set_entry, 'enabled', text=\"\", icon=icon, emboss=False)\n            else:\n                row.enabled = False\n        elif self.layout_type in {'GRID'}:\n            pass\n\n\nclass RigifyPreferences(AddonPreferences):\n    # this must match the addon name, use '__package__'\n    # when defining this in a submodule of a python package.\n    bl_idname = __name__\n\n    @staticmethod\n    def get_instance(context: bpy.types.Context = None) -> 'RigifyPreferences':\n        prefs = (context or bpy.context).preferences.addons[__package__].preferences\n        assert isinstance(prefs, RigifyPreferences)\n        return prefs\n\n    def register_feature_sets(self, do_register: bool):\n        \"\"\"Call register or unregister of external feature sets\"\"\"\n        self.refresh_installed_feature_sets()\n        for set_name in feature_set_list.get_enabled_modules_names():\n            feature_set_list.call_register_function(set_name, do_register)\n\n    def refresh_installed_feature_sets(self):\n        \"\"\"Synchronize preferences entries with what's actually in the file system.\"\"\"\n        feature_set_prefs = self.rigify_feature_sets\n\n        module_names = feature_set_list.get_installed_modules_names()\n\n        # If there is a feature set preferences entry with no corresponding\n        # installed module, user must've manually removed it from the filesystem,\n        # so let's remove such entries.\n        to_delete = [i for i, fs in enumerate(feature_set_prefs)\n                     if fs.module_name not in module_names]\n        for i in reversed(to_delete):\n            feature_set_prefs.remove(i)\n\n        # If there is an installed feature set in the file system but no corresponding\n        # entry, user must've installed it manually. Make sure it has an entry.\n        for module_name in module_names:\n            for fs in feature_set_prefs:\n                if module_name == fs.module_name:\n                    break\n  "
+        ]
+      }
+    },
+    {
+      "id": "godot_animation_import",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_3d_scenes/advanced_import_settings.rst",
+        "retrieved_at_utc": "2026-10-18T03:15:04.299791+00:00",
+        "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_3d_scenes/advanced_import_settings.rst",
+        "http_status": 200,
+        "bytes_read": 12370,
+        "sha256": "74cd09ee50dfd13dd2457469815f604e017dfb43cf4998d314b82ec4b6e0b51a",
+        "excerpts": [
+          ".. _doc_advanced_import_settings:\n\nAdvanced Import Settings\n========================\n\nWhile the regular import panel provides many essential options for imported 3D\nmodels, the advanced import settings provides per object options, model previews,\nand animation previews. To open it select the :button:`Advanced...` button at the\nbottom of the import dock.\n\n.. figure:: img/importing_3d_scenes_advanced_import_settings_button.webp\n   :align: center\n\nThis is available for 3D models imported as scenes, as well as animation libraries.\n\n.. note::\n\n    This page does not go over options also available in the import dock, or anything\n    outside of the advanced import settings. For information on those please read the\n    :ref:`doc_importing_3d_scenes_import_configuration` page.\n\nUsing the Advanced Import Settings dialog\n-----------------------------------------\n\nThe first tab you'll see is the **Scene** tab. The options available in the\npanel on the right are identical to the Import dock, but you have access to a 3D\npreview. The 3D preview can be rotated by holding down the left mouse button\nthen dragging the mouse. Zoom can be adjusted using the mouse wheel.\n\n.. figure:: img/importing_3d_scenes_advanced_import_settings_scene.webp\n   :align: center\n   :alt: Advanced Import Settings dialog (Scene tab)\n\n   Advanced Import Settings dialog (Scene tab).\n   Credit: `Modern Arm Chair 01 - Poly Haven <https://polyhaven.com/a/modern_arm_chair_01>`__\n\nConfiguring node import options\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nYou can select individual nodes that compose the scene while in the **Scene**\ntab using the tree view at the left:\n\n.. figure:: img/importing_3d_scenes_advanced_import_settings_node.webp\n   :align: center\n   :alt: Selecting a node in the Advanced Import Settings dialog (Scene tab)\n\n   Selecting a node in the Advanced Import Settings dialog (Materials tab)\n\nThis exposes several per-node import options:\n\n- **Skip Import:** If checked, the node will not be present in the final\n  imported scene. Enabling this disables all other options.\n- **Generate > Physics:** If checked, generates a PhysicsBody3D *parent* node\n  with collision shapes that are *siblings* to the MeshInstance3D node.\n- **Generate > NavMesh:** If checked, generates a NavigationRegion3D *child*\n  node for :ref:`navigation <doc_navigation_overview_3d>`. **Mesh + NavMesh**\n  will keep the original mesh visible, while **NavMesh Only** will only import\n  the navigation mesh (without a visual representation). **NavMesh Only** is\n  meant to be used when you've manually authored a simplified mesh for navigation.\n- **Generate > Occluder:** If checked, generates an OccluderInstance3D *sibling*\n  node for :ref:`occlusion culling <doc_occlusion_culling>` using the mesh's\n  geometry as a basis for the occluder's shape. **Mesh + Occluder** will keep\n  the original mesh visible, while **Occluder Only** will only import the\n  occluder (without a visual representation). **Occluder Only** is meant to be\n  used when you've manually authored a simplified mesh for occlusion culling.\n\nThese options are only visible if some of the above options are enabled:\n\n- **Physics > Body Type:** Only visible if **Generate > Physics** is enabled.\n  Controls the PhysicsBody3D that should be created. **Static** creates a\n  StaticBody3D, **Dynamic** creates a RigidBody3D, **Area** creates an Area3D.\n- **Physics > Shape Type:** Only visible if **Generate > Physics** is enabled.\n  **Trimesh** allows for precise per-triangle collision, but it can only be used\n  with a **Static** body type. Other types are less precise and may require\n  manual configuration, but can be used with any body type. For static level\n  geometry, use **Trimesh**. For dynamic geometry, use primitive shapes if\n  possible for better performance, or use one of the convex decomposition modes\n  if the shape is large and complex.\n- **Decomposition > Advanced:** Only visible if **Physics > Shape Type** is\n  **Decompose Convex**. If checked, allows adjusting advanced decomposition\n  options. If disabled, only a preset **Precision** can be adjusted (which is\n  usually sufficient).\n- **Decomposition > Precision:** Only visible if **Physics > Shape Type** is\n  **Decompose Convex**. Controls the precision to use for convex decomposition.\n  Higher values result in more detailed collision, at the cost of slower\n  generation and increased CPU usage during physics simulation. To improve\n  performance, it's recommended to keep this value as low as possible for your\n  use cases.\n- **Occluder > Simplification Distance:** Only visible if **Generate >\n  Occluder** is set to **Mesh + Occluder** or **Occluder Only**. Higher values\n  result in an occluder mesh with fewer vertices (resulting in decreased CPU\n  utilization), at the cost of more occlusion culling issues (such as false\n  positives or false negatives). If you run into objects disappearing when they\n  shouldn't when the camera is near a certain mesh, try decreasing this value.\n\nConfiguring mesh and material import options\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nIn the Advanced Import Settings dialog, there are 2 ways to select individual\nmeshes or materials:\n\n- Switch to the **Meshes** or **Materials** tab in the top-left corner of the dialog.\n- Stay in the **Scene** tab, but unfold the options on the tree view on the\n  left. After choosing a mesh or material, this presents the same information as\n  the **Meshes** and **Materials** tabs, but in a tree view instead of a list.\n\nIf you select a mesh, different options will appear in the panel on the right:\n\n.. figure:: img/importing_3d_scenes_advanced_import_settings_meshes.webp\n   :align: center\n   :alt: Advanced Import Settings dialog (Meshes tab)\n\n   Advanced Import Settings dialog (Meshes tab)\n\nThe options are as follows:\n\n- **Save to File:** Saves the :ref:`class_Mesh` *resource* to an external file\n  (this isn't a scene file). You generally don't need to use this for placing\n  the mesh in a 3D scene \u2013\u00a0instead, you should instance the 3D scene directly.\n  However, having direct access to the Mesh resource is useful for specific\n  nodes, such as :ref:`class_MeshInstance3D`, :ref:`class_MultiMeshInstance3D`,\n  :ref:`class_GPUParticles3D` or :ref:`class_CPUParticles3D`.\n  - You will also need to specify an output file path using the option that\n  appears after enabling **Save to File**. It's recommended to use the ``.res``\n  output file extension for smaller file sizes and faster loading speeds, as\n  ``.tres`` is inefficient for writing large amounts of data.\n- **Generate > Shadow Meshes:** Per-mesh override for the **Meshes > Create\n  Shadow Meshes** scene-wide import option described in\n  :ref:`doc_importing_3d_scenes_using_the_import_dock`. **Default** will use the\n  scene-wide import option, while **Enable** or **Disable** can forcibly enable\n  or disable this behavior on a specific mesh.\n- **Generate > Lightmap UV:** Per-mesh override for the **Meshes > Light\n  Baking** scene-wide import option described in\n  :ref:`doc_importing_3d_scenes_using_the_import_dock`. **Default** will use the\n  scene-wide import option, while **Enable** or **Disable** can forcibly enable\n  or disable this behavior on a specific mesh.\n  - Setting this to **Enable** on a scene with the **Static** light baking mode\n  is equivalent to configuring this mesh to use **Static Lightmaps**. Setting this\n  to **Disable** on a scene with the **Static Lightmaps** light baking mode is\n  equivalent to configurin"
+        ]
+      },
+      "focused_receipt": {
+        "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_3d_scenes/advanced_import_settings.rst",
+        "retrieved_at_utc": "2026-10-18T03:15:22.428130+00:00",
+        "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_3d_scenes/advanced_import_settings.rst",
+        "http_status": 200,
+        "sha256": "74cd09ee50dfd13dd2457469815f604e017dfb43cf4998d314b82ec4b6e0b51a",
+        "bytes_read": 12370,
+        "excerpts": [
+          "options are available for the generated :ref:`class_AnimationPlayer`\nnodes, as well as their individual animations when they're selected in the\n**Scene** tab.\n\nOptimizer\n~~~~~~~~~\n\nWhen animations are imported, an optimizer is run, which reduces the size of the\nanimation considerably. In general, this should always be turned on unless you\nsuspect that an animation might be broken due to it being enabled.\n\nSave to file\n~~~~~~~~~~~~\n\nBy default, animations are saved as built-in. It is possible to save them to a\nfile instead. This allows adding custom tracks to the animations and keeping\nthem after a reimport.\n\nSlices\n~~~~~~\n\nIt is possible to specify multiple animations from a single timeline as slices.\nFor this to work, the model must have only one animation that is named\n``default``. To create slice",
+          "imationPlayer`\nnodes, as well as their individual animations when they're selected in the\n**Scene** tab.\n\nOptimizer\n~~~~~~~~~\n\nWhen animations are imported, an optimizer is run, which reduces the size of the\nanimation considerably. In general, this should always be turned on unless you\nsuspect that an animation might be broken due to it being enabled.\n\nSave to file\n~~~~~~~~~~~~\n\nBy default, animations are saved as built-in. It is possible to save them to a\nfile instead. This allows adding custom tracks to the animations and keeping\nthem after a reimport.\n\nSlices\n~~~~~~\n\nIt is possible to specify multiple animations from a single timeline as slices.\nFor this to work, the model must have only one animation that is named\n``default``. To create slices, change the slice amount to something greater than\nz"
+        ]
+      },
+      "decision": "Read-only primary source evidence. Actual mobile import/behavior/device acceptance remains open."
+    },
+    {
+      "id": "rigify_432",
+      "kind": "primary_repository_document",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/blender/blender/32f5fdce0a0a571a39198edf8d7b5d719bf59f2c/scripts/addons_core/rigify/__init__.py",
+        "retrieved_at_utc": "2026-10-18T03:15:22.110446+00:00",
+        "final_url": "https://raw.githubusercontent.com/blender/blender/32f5fdce0a0a571a39198edf8d7b5d719bf59f2c/scripts/addons_core/rigify/__init__.py",
+        "http_status": 200,
+        "sha256": "5609d437532232ce38958712b862690b46f2fb68c561c68986583e238cdc30e8",
+        "bytes_read": 30795,
+        "excerpts": [
+          "# SPDX-FileCopyrightText: 2010-2023 Blender Foundation\n#\n# SPDX-License-Identifier: GPL-2.0-or-later\n\nbl_info = {\n    \"name\": \"Rigify\",\n    \"version\": (0, 6, 10),\n    \"author\": \"Nathan Vegdahl, Lucio Rossi, Ivan Cappiello, Alexander Gavrilov\",  # noqa\n    \"blender\": (4, 0, 0),\n    \"description\": \"Automatic rigging from building-block components\",\n    \"location\": \"Armature properties, Bone properties, View3d tools panel, Armature Add menu\",\n    \"doc_url\": \"{BLENDER_MANUAL_URL}/addons/rigging/rigify/index.html\",\n    \"support\": \"OFFICIAL\",\n    \"category\": \"Rigging\",\n}\n\nimport importlib\nimport sys\nimport bpy\nimport typing\n\nfrom bpy.app.translations",
+          "# SPDX-FileCopyrightText: 2010-2023 Blender Foundation\n#\n# SPDX-License-Identifier: GPL-2.0-or-later\n\nbl_info = {\n    \"name\": \"Rigify\",\n    \"version\": (0, 6, 10),\n    \"author\": \"Nathan Vegdahl, Lucio Rossi, Ivan Cappiello, Alexander Gavrilov\",  # noqa\n    \"blender\": (4, 0, 0),\n    \"description\": \"Automatic rigging from building-block components\",\n    \"location\": \"Armature properties, Bone properties, View3d tools panel, Armature Add menu\",\n    \"doc_url\": \"{BLENDER_MANUAL_URL}/addons/rigging/rigify/index.html\",\n    \"support\": \"OFFICIAL\",\n    \"category\": \"Rigging\",\n}\n\nimport importlib\nimport sys\nimport bpy\nimport typing\n\nfrom bpy.app.translations import pgettext_iface as iface_\n\n# The order in which co",
+          "# SPDX-FileCopyrightText: 2010-2023 Blender Foundation\n#\n# SPDX-License-Identifier: GPL-2.0-or-later\n\nbl_info = {\n    \"name\": \"Rigify\",\n    \"version\": (0, 6, 10),\n    \"author\": \"Nathan Vegdahl, Lucio Rossi, Ivan Cappiello, Alexander Gavrilov\",  # noqa\n    \"blender\": (4, 0, 0),\n    \"description\": \"Automatic rigging from building-block components\",\n    \"location\": \"Armature properties, Bone properties, View3d tools panel, Armature Add menu\",\n    \"doc_url\": \"{BLENDER_MANUAL_URL}/addons/rigging/rigify/index.html\",\n    \"support\": \"OFFICIAL\",\n    \"category\": \"Rigging\",\n}\n\nimport importlib\nimport sys\nimport bpy\nimport typing\n\nfrom bpy.app.translations import pgettext_iface as iface_\n\n# The order in which core modules of the addon are loaded and reloaded.\n# Modules not in this list are re",
+          "yFeatureSets, info: dict, layout: bpy.types.UILayout | None):\n    split_factor = 0.15\n    error = False\n\n    if 'blender' in info and info['blender'] > bpy.app.version:\n        error = True\n        if layout:\n            split = layout.row().split(factor=split_factor)\n            split.label(text=\"Error:\")\n            sub = split.row()\n            sub.alert = True\n            text = (\n                iface_(\"This feature set requires Blender {:s} or newer to work properly.\")\n                .format(\".\".join(str(x) for x in info['blender']))\n            )\n            sub.label(icon='ERROR', text=text, translate=False)\n\n    for dep_link in info.get(\"dependencies\", []):\n        if not feature_set_list.get_module_by_link_safe(dep_link):\n            error = True\n            if layout:\n                spl",
+          "# SPDX-FileCopyrightText: 2010-2023 Blender Foundation\n#\n# SPDX-License-Identifier: GPL-2.0-or-later\n\nbl_info = {\n    \"name\": \"Rigify\",\n    \"version\": (0, 6, 10),\n    \"author\": \"Nathan Vegdahl, Lucio Rossi, Ivan Cappiello, Alexander Gavrilov\",  # noqa\n    \"blender\": (4, 0, 0),\n    \"description\": \"Automatic rigging from building-block components\",\n    \"location\": \"Armature properties, Bone properties, View3d tools panel, Armature Add menu\",\n    \"doc_url\": \"{BLENDER_MANUAL_URL}/addons/rigging/rigify/index.html\",\n    \"support\": \"OFFICIAL\",\n    \"category\": \"Rigging\",\n}\n\nimport importlib\nimport sys\nimport bpy\nimport typing\n\nfrom bpy.app.translations import pgettext_iface as iface_\n\n",
+          "ter\n\nbl_info = {\n    \"name\": \"Rigify\",\n    \"version\": (0, 6, 10),\n    \"author\": \"Nathan Vegdahl, Lucio Rossi, Ivan Cappiello, Alexander Gavrilov\",  # noqa\n    \"blender\": (4, 0, 0),\n    \"description\": \"Automatic rigging from building-block components\",\n    \"location\": \"Armature properties, Bone properties, View3d tools panel, Armature Add menu\",\n    \"doc_url\": \"{BLENDER_MANUAL_URL}/addons/rigging/rigify/index.html\",\n    \"support\": \"OFFICIAL\",\n    \"category\": \"Rigging\",\n}\n\nimport importlib\nimport sys\nimport bpy\nimport typing\n\nfrom bpy.app.translations import pgettext_iface as iface_\n\n# The order in which core modules of the addon are loaded and reloaded.\n# Modules not in this list are removed from memory upon reload.\n# With the sole exception of 'utils', modules must be listed in the\n# correct depende"
+        ]
+      },
+      "verified_scope": "GPL-2.0-or-later source header; Rigify0.6.10 in Blender4.3.2",
+      "decision": "Optional offline authoring study; no rig generation or export performed."
+    }
+  ],
+  "local_inspection": {
+    "read_at_utc": "2026-10-18T03:15:40.584714+00:00",
+    "git_head": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+    "branch": "game/yuga-native-production",
+    "working_tree_scope": "Concurrent G1/G2 work exists. These hashes identify inspected files, not a clean commit or accepted mobile release.",
+    "method": "Python standard-library GLB JSON parsing and source reads only; no Blender/Godot execution. Geometry counts sum current node-referenced primitive accessors, not rendered draw calls or device measurements.",
+    "hero_glbs": [
+      {
+        "path": "games/yuga-native/assets/heroes/rama-hero.glb",
+        "sha256": "8b6cf0f4c5520696d1d843e5bdebb2454c1dbd4341e17171c5b6d20353384d5c",
+        "bytes": 36049948,
+        "node_referenced_meshes": [
+          0,
+          1,
+          2
+        ],
+        "primitive_count": 18,
+        "triangle_count": 367864,
+        "position_accessor_count_sum": 210294,
+        "materials": 13,
+        "images": 17,
+        "skin_joint_counts": [
+          164
+        ],
+        "skin_attribute_sets": [
+          "JOINTS_0",
+          "WEIGHTS_0"
+        ],
+        "embedded_animation_names": [
+          "cast",
+          "cast1",
+          "cast2",
+          "cast3",
+          "defeat",
+          "fire",
+          "idle",
+          "jump",
+          "run"
+        ]
+      },
+      {
+        "path": "games/yuga-native/assets/heroes/rama-hero-mid.glb",
+        "sha256": "d95a061e2243477afc0227bf52564252fbcb20cb039d303ad10292ea5d85beed",
+        "bytes": 25847144,
+        "node_referenced_meshes": [
+          0,
+          1,
+          2
+        ],
+        "primitive_count": 18,
+        "triangle_count": 202034,
+        "position_accessor_count_sum": 117048,
+        "materials": 13,
+        "images": 17,
+        "skin_joint_counts": [
+          164
+        ],
+        "skin_attribute_sets": [
+          "JOINTS_0",
+          "WEIGHTS_0"
+        ],
+        "embedded_animation_names": [
+          "cast",
+          "cast1",
+          "cast2",
+          "cast3",
+          "defeat",
+          "fire",
+          "idle",
+          "jump",
+          "run"
+        ]
+      },
+      {
+        "path": "games/yuga-native/assets/heroes/rama-hero-far.glb",
+        "sha256": "ee2e35278ce49efdda6751850fddbb8f1b4de99ad019e6992c10e7702dc6317c",
+        "bytes": 20901820,
+        "node_referenced_meshes": [
+          0,
+          1,
+          2
+        ],
+        "primitive_count": 18,
+        "triangle_count": 136228,
+        "position_accessor_count_sum": 79253,
+        "materials": 13,
+        "images": 17,
+        "skin_joint_counts": [
+          164
+        ],
+        "skin_attribute_sets": [
+          "JOINTS_0",
+          "WEIGHTS_0"
+        ],
+        "embedded_animation_names": [
+          "cast",
+          "cast1",
+          "cast2",
+          "cast3",
+          "defeat",
+          "fire",
+          "idle",
+          "jump",
+          "run"
+        ]
+      }
+    ],
+    "source_files": [
+      {
+        "path": "games/yuga-native/scripts/rama_motion.gd",
+        "sha256": "35a9e58e6c720c67cd6e77fb812900bc05dec9d2fbd255b7bd8aa40b39e20fb3",
+        "bytes": 28799
+      },
+      {
+        "path": "games/yuga-native/scripts/rama_secondary_motion.gd",
+        "sha256": "2b8e467df254dcda175694ab988071f24b41ddaa93275f5cbb9768abcb143f34",
+        "bytes": 12636
+      },
+      {
+        "path": "games/yuga-native/scripts/rama_facial_performance.gd",
+        "sha256": "c525d720eab133c66be18e9d49a14ddc2dd20fd0616ec4a5e4f96ee5d2947128",
+        "bytes": 6708
+      },
+      {
+        "path": "games/yuga-native/scripts/rama_lod_binding.gd",
+        "sha256": "266e29dfa72cac407d3750eefcb296ec0b9cf82dc7665afb30b2eaa658956bfc",
+        "bytes": 15703
+      },
+      {
+        "path": "games/yuga-native/scripts/rama_visual_lod.gd",
+        "sha256": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5",
+        "bytes": 2690
+      },
+      {
+        "path": "games/yuga-native/scripts/rama_ability_kit.gd",
+        "sha256": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+        "bytes": 25550
+      },
+      {
+        "path": "games/yuga-native/scripts/rama_hero_runtime.gd",
+        "sha256": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+        "bytes": 15235
+      },
+      {
+        "path": "games/yuga-native/scripts/player.gd",
+        "sha256": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+        "bytes": 20337
+      },
+      {
+        "path": "games/yuga-native/assets/animations/rama_hero_motion.tres",
+        "sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+        "bytes": 1619178
+      },
+      {
+        "path": "games/yuga-native/assets/animations/TPS-MOTION-NOTICE.txt",
+        "sha256": "23f9649ccc35be87c096387bae8408c4e3011883fba410f9f21bfa6bf17358a6",
+        "bytes": 1325
+      },
+      {
+        "path": "games/yuga-native/NOTICE/RAMA-HERO-PROVENANCE.json",
+        "sha256": "09e9ad0ee641682d7608fe56a07bd1b79f859d6ecfae9b96e5876ec3f21e98bb",
+        "bytes": 16411
+      },
+      {
+        "path": "games/yuga-native/art/hero-rama-motion/README.md",
+        "sha256": "96640b496cdb8b56af9ab9c9aa7b8c5826b2dbf2eb38e48864b75f50eb08fef6",
+        "bytes": 5705
+      },
+      {
+        "path": "games/yuga-native/art/production/reconstruction-notes.md",
+        "sha256": "866c2944ca80780f5425ca92c64de273f87092a4946ba361d3187522b530dd92",
+        "bytes": 8240
+      },
+      {
+        "path": "games/yuga-native/art/visual-rounds/groom/principal-groom-v1/reconstruction.blend",
+        "sha256": "940c8208d8f5ee8c2e8dd9e4bea2d9893450026189f1a4eb24cd0b1874378f25",
+        "bytes": 24845910
+      },
+      {
+        "path": "games/yuga-native/docs/MOTION_ROUND4_CONTRACT.md",
+        "sha256": "0d0e4f3fe36b7a428bcad8a9062c6a0530a5504cf53131d6aaa1d51e1dac000e",
+        "bytes": 2880
+      },
+      {
+        "path": "games/yuga-native/docs/research/MOTION_RETARGET_IMPLEMENTATION.md",
+        "sha256": "07ca8206b939e6c32505e454d28420684097c76e28ce589684043d2d320d03c9",
+        "bytes": 11443
+      },
+      {
+        "path": "games/yuga-native/tools/reuse-art/README.md",
+        "sha256": "0246eb091fa95e4b65e300792d62c4b024536a6603b5e96e2aed519fe302a112",
+        "bytes": 3805
+      },
+      {
+        "path": "games/yuga-native/tools/reuse-art/NOTICE.md",
+        "sha256": "ce6228a4bd61f462b21bca27ae093b84efd32e2b490a46a24deed0d2af4006f3",
+        "bytes": 4567
+      },
+      {
+        "path": "games/yuga-native/tools/reuse-animation/NOTICE.md",
+        "sha256": "bcc938719fb5a49b2ba0fc811d20393155a7af65962bbb10d8f9e576aa8dc7ce",
+        "bytes": 2038
+      },
+      {
+        "path": "games/yuga-native/docs/hero-design/README.md",
+        "sha256": "f3f7a937ad9abaa122674f0a250e2d054bfc230ffee18ffc3ca0fbde1d04aa1b",
+        "bytes": 7272
+      },
+      {
+        "path": "games/yuga-native/assets/design/hero-codex.json",
+        "sha256": "b83e0f06f25f3978a16479f97e7bf76c349f651040b2253bedf5d1c1879ff72c",
+        "bytes": 197337
+      },
+      {
+        "path": "games/yuga-native/docs/evidence/graphics-six/G2/motion.md",
+        "sha256": "272069338ecf5a7dc2e5cdeb5d02fd0a024fd1bba011f8409a71011a8e2b5344",
+        "bytes": 9376
+      }
+    ]
+  },
+  "limitations": [
+    "No commercial client binaries were available or inspected. No reverse engineering, asset extraction, engine import, render or device profiling was performed.",
+    "Official website access failures remain; GitHub official source alternatives support only the specified verified claims.",
+    "No source or asset from Quaternius, commercial mocap services, marketplaces or AI generation providers was licensed/admitted in M0.",
+    "Current G1 arm-entry and G2 support motion candidates remain provisional pending continuous rendered acceptance; rejected R4 candidates remain rejected.",
+    "The current editable reconstruction does not restore the absent original authoring file or its history.",
+    "Default-branch tool commits are source-review identities, not adopted dependencies.",
+    "No gameplay/client audio hardware, mobile thermal run, Android/iOS artifact, or online match was qualified."
+  ],
+  "completed_at_utc": "2026-10-18T03:18:32.035365+00:00",
+  "network": {
+    "method": "HTTPS urllib requests through inherited configured proxy and CA trust; no bypass, VPN, credentials or configuration changes.",
+    "policy_observation": "Restricted network policy; cloud environment connected/running with current observations, network state reported unknown.",
+    "primary_document_failures": "Official website requests returned proxy tunnel403. Initial guessed GitHub license filenames returning404 are retained as failed_attempts; successful corrected repository paths are separately pinned."
+  },
+  "validation": {
+    "document": "games/yuga-native/docs/mobile/HERO_ANIMATION_AND_ASSET_PIPELINE.md",
+    "checks": [
+      "GLB JSON parsed from all three exact local assets; current node-referenced primitives counted.",
+      "Local source file SHA-256 recorded; geometry/source inspection only.",
+      "Primary repository commits and document/license HTTP responses retained with byte hashes.",
+      "No mobile engine/import/export/render/hardware or commercial binary access performed."
+    ],
+    "budgets": "All mobile performance, topology, memory and update-rate figures are proposals for named-device qualification, not achieved performance or competitor reverse engineering.",
+    "document_sha256": "dcd21734e2640c6e101b11b41413e5fcd1bf652cfe1456675672d9e7c9642c9c",
+    "final_static_checks": {
+      "passed": true,
+      "count": 44,
+      "scope": "JSON/source ID uniqueness, referenced local paths, all22 local source pins plus3 GLBs unchanged, successful HTTP receipt SHA formatting, document placeholder absence. These are documentation checks, not motion/device/art acceptance.",
+      "checked_at_utc": "2026-10-18T03:22:47.720592+00:00"
+    },
+    "independent_bounded_review": {
+      "reviewer": "M0 worker06 (/root/ui_06_acceptance)",
+      "scope": "Source-only consistency review of desktop164 preservation, provisional G1/G2, action authority, online background semantics and cross-packet qualification gates.",
+      "finding": "No actor/action/lifecycle contradiction reported. Twenty-minute diagnostic wording conflicted with final device soak; corrected to distinguish initial diagnostic from ten-minute warmup plus thirty measured minutes or two full matches, whichever longer, for three runs.",
+      "limits": "No mobile artifact, runtime execution, render or device acceptance was performed."
+    }
+  }
+}

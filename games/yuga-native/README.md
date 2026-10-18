@@ -1,5 +1,7 @@
 # YUGA native production track
 
+**Mobile adaptation:** start with the [original 5v5 mobile roadmap](docs/MOBILE_PRODUCTION_ROADMAP.md), [code/stack decisions](docs/mobile/CODE_AND_STACK_DECISIONS.md) and [18-round / 108-packet queue](docs/MOBILE_PRODUCTION_BACKLOG.json). Six specialist research reports cover touch, rendering, characters, networking, open-source reuse and physical-device release gates. This proposed mobile profile is separate from the existing offline/native and browser rules; mobile exports and device qualification remain unimplemented.
+
 **Download the current Rama preview:** [Linux / Windows](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17). Extract the entire ZIP and run `launch.sh` or `launch.bat`. [Watch the actual five-action capture](https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-rama-hero-2026-10-17/rama-five-abilities.mp4). Linux input and all public download bytes were verified; Windows execution remains untested. This is offline practice, with production art quality still open.
 
 **Active production:** [fifteen specialist roles](docs/PRODUCTION_SQUADS.md) are working through the [hero-quality and full-game gates](docs/DEADLOCK_QUALITY_TARGET.md). Use the [current source handoff](docs/VISUAL_CAMPAIGN_HANDOFF.md) for ownership, files, component results and remaining acceptance work. Staged art and rejected candidates are distinct from the published preview.

@@ -1,0 +1,619 @@
+{
+  "schema": 1,
+  "task": "M0-06 mobile device validation and release research",
+  "retrieved_at_utc": "2026-10-18T03:14:12.921253+00:00",
+  "working_head": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "status": "requirements_and_primary_source_review_only",
+  "physical_android_or_ios_execution": false,
+  "physical_gpu_benchmark": false,
+  "store_submission": false,
+  "current_host_tools": {
+    "host": "Linux",
+    "adb": null,
+    "xcodebuild": null,
+    "scrcpy": null,
+    "perfetto": null
+  },
+  "policy_web_access": "Official Android/Apple/W3C URLs below failed standard proxy requests with403; no bypass attempted. Requirements/form/API deadlines must be freshly verified before submission.",
+  "repositories": [
+    {
+      "id": "perfetto",
+      "repo": "google/perfetto",
+      "commit": "26db72a4662467e74f557283d41779c89953274e",
+      "date": "2026-10-17T08:59:25Z",
+      "url": "https://api.github.com/repos/google/perfetto/commits/main",
+      "metadata_sha256": "4717b599273caf690d5a04a9d3fcc9c8ae328683c134c8af8ff48bf1cc7a0427",
+      "retrieved_at_utc": "2026-10-18T03:12:51.156433+00:00",
+      "archived": false,
+      "license_spdx_metadata": "Apache-2.0",
+      "verified_scope": [
+        "Apache-2.0 root license read; third-party terms remain separate.",
+        "System tracing and SQL trace analysis; FrameTimeline document requires Android12 or later.",
+        "App frame deadlines, actual presentation and BufferStuffing are different observations; a smooth stream can still have input latency."
+      ],
+      "files": [
+        {
+          "id": "perfetto-LICENSE",
+          "repository": "google/perfetto",
+          "commit": "26db72a4662467e74f557283d41779c89953274e",
+          "repository_path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/google/perfetto/26db72a4662467e74f557283d41779c89953274e/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:13:02.113159+00:00",
+          "status": 200,
+          "bytes": 14974,
+          "sha256": "9b569417be9f195f8ffa709a23836c4e0f880b2752b09653baa8a98d3b02db3a"
+        },
+        {
+          "id": "perfetto-README.md",
+          "repository": "google/perfetto",
+          "commit": "26db72a4662467e74f557283d41779c89953274e",
+          "repository_path": "README.md",
+          "url": "https://raw.githubusercontent.com/google/perfetto/26db72a4662467e74f557283d41779c89953274e/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.114061+00:00",
+          "status": 200,
+          "bytes": 4599,
+          "sha256": "936ab14c66d3bcc5101c898897dd96e98059cf39095d78c3ad3a676360b25f20"
+        },
+        {
+          "id": "perfetto-docs_quickstart_android-tracing.md",
+          "repository": "google/perfetto",
+          "commit": "26db72a4662467e74f557283d41779c89953274e",
+          "repository_path": "docs/quickstart/android-tracing.md",
+          "url": "https://raw.githubusercontent.com/google/perfetto/26db72a4662467e74f557283d41779c89953274e/docs/quickstart/android-tracing.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.114772+00:00",
+          "status": 404,
+          "bytes": 14,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+        },
+        {
+          "id": "perfetto-docs_data-sources_frametimeline.md",
+          "repository": "google/perfetto",
+          "commit": "26db72a4662467e74f557283d41779c89953274e",
+          "repository_path": "docs/data-sources/frametimeline.md",
+          "url": "https://raw.githubusercontent.com/google/perfetto/26db72a4662467e74f557283d41779c89953274e/docs/data-sources/frametimeline.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.115443+00:00",
+          "status": 200,
+          "bytes": 12885,
+          "sha256": "d7e5944067a59fdadffb744a0715574a582856527f7a84d5f0fa1d7a8b4cc3a0"
+        }
+      ]
+    },
+    {
+      "id": "scrcpy",
+      "repo": "Genymobile/scrcpy",
+      "commit": "a60891aea193d92e7e5c3942700eca63f9d19a5f",
+      "date": "2026-10-08T06:41:27Z",
+      "url": "https://api.github.com/repos/Genymobile/scrcpy/commits/master",
+      "metadata_sha256": "b0ce8350ca37b22ac693f589d25b5bd551fc8bf0b6ff4e9c6ebcac35118321d3",
+      "retrieved_at_utc": "2026-10-18T03:12:51.226813+00:00",
+      "archived": false,
+      "license_spdx_metadata": "Apache-2.0",
+      "verified_scope": [
+        "Apache-2.0 root license read.",
+        "Android screen/audio recording and optional remote control, not GPU frame-time instrumentation.",
+        "Recording timestamps originate on device; encoding occurs there and can add measurement overhead."
+      ],
+      "files": [
+        {
+          "id": "scrcpy-LICENSE",
+          "repository": "Genymobile/scrcpy",
+          "commit": "a60891aea193d92e7e5c3942700eca63f9d19a5f",
+          "repository_path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/Genymobile/scrcpy/a60891aea193d92e7e5c3942700eca63f9d19a5f/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:13:02.116180+00:00",
+          "status": 200,
+          "bytes": 11387,
+          "sha256": "01c12035bf35af37241298dc7ad538eb2a07e5c940437bc6876feeaa9d1951d0"
+        },
+        {
+          "id": "scrcpy-README.md",
+          "repository": "Genymobile/scrcpy",
+          "commit": "a60891aea193d92e7e5c3942700eca63f9d19a5f",
+          "repository_path": "README.md",
+          "url": "https://raw.githubusercontent.com/Genymobile/scrcpy/a60891aea193d92e7e5c3942700eca63f9d19a5f/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.397251+00:00",
+          "status": 200,
+          "bytes": 8141,
+          "sha256": "1a2f2677b4b86c0879b68a5b23c24fa7268ac3af1a92a17bddbe137abf374549"
+        },
+        {
+          "id": "scrcpy-doc_recording.md",
+          "repository": "Genymobile/scrcpy",
+          "commit": "a60891aea193d92e7e5c3942700eca63f9d19a5f",
+          "repository_path": "doc/recording.md",
+          "url": "https://raw.githubusercontent.com/Genymobile/scrcpy/a60891aea193d92e7e5c3942700eca63f9d19a5f/doc/recording.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.416728+00:00",
+          "status": 200,
+          "bytes": 2093,
+          "sha256": "6fe13d1b39f8388e6890baf9681bcda9808ed8b0d8823c93391e38c1b461c877"
+        }
+      ]
+    },
+    {
+      "id": "bundletool",
+      "repo": "google/bundletool",
+      "commit": "586a43a450712a1067f3d92cf7574dee68226302",
+      "date": "2025-12-15T19:33:24Z",
+      "url": "https://api.github.com/repos/google/bundletool/commits/master",
+      "metadata_sha256": "339c89a043e2c6bb55beb6bb802323259a28341acf0979e23cac9d5bed00aa0c",
+      "retrieved_at_utc": "2026-10-18T03:12:51.280197+00:00",
+      "archived": false,
+      "license_spdx_metadata": "Apache-2.0",
+      "verified_scope": [
+        "Apache-2.0 root license read.",
+        "Can generate APK sets, extract connected-device specs and compatible APKs, install APK sets, and verify code transparency.",
+        "Code-transparency verification is not a replacement for application signing or security review."
+      ],
+      "files": [
+        {
+          "id": "bundletool-LICENSE",
+          "repository": "google/bundletool",
+          "commit": "586a43a450712a1067f3d92cf7574dee68226302",
+          "repository_path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/google/bundletool/586a43a450712a1067f3d92cf7574dee68226302/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:13:02.428377+00:00",
+          "status": 200,
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "id": "bundletool-README.md",
+          "repository": "google/bundletool",
+          "commit": "586a43a450712a1067f3d92cf7574dee68226302",
+          "repository_path": "README.md",
+          "url": "https://raw.githubusercontent.com/google/bundletool/586a43a450712a1067f3d92cf7574dee68226302/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.448617+00:00",
+          "status": 200,
+          "bytes": 1895,
+          "sha256": "347eaa3fb420fbbcaab0e2d2694c99e29cf6174c07e8f073856717311e73cf5a"
+        }
+      ]
+    },
+    {
+      "id": "renderdoc",
+      "repo": "baldurk/renderdoc",
+      "commit": "45e91661ee457e64279ff86265abdbe214aa6be0",
+      "date": "2026-10-15T16:27:17Z",
+      "url": "https://api.github.com/repos/baldurk/renderdoc/commits/v1.x",
+      "metadata_sha256": "8cc8982caa022010a3c18a8fe388989a1a5e51b019001af048d7079aa2266433",
+      "retrieved_at_utc": "2026-10-18T03:12:51.151525+00:00",
+      "archived": false,
+      "license_spdx_metadata": "MIT",
+      "verified_scope": [
+        "MIT root license read; bundled third-party credits retain separate terms.",
+        "Android Vulkan/OpenGL ES frame debugging requires a debuggable installed package.",
+        "Diagnostic build capture does not qualify release-build performance; no iOS Metal support claimed."
+      ],
+      "files": [
+        {
+          "id": "renderdoc-LICENSE.md",
+          "repository": "baldurk/renderdoc",
+          "commit": "45e91661ee457e64279ff86265abdbe214aa6be0",
+          "repository_path": "LICENSE.md",
+          "url": "https://raw.githubusercontent.com/baldurk/renderdoc/45e91661ee457e64279ff86265abdbe214aa6be0/LICENSE.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.561968+00:00",
+          "status": 200,
+          "bytes": 1205,
+          "sha256": "ba3b05b7f5bfdb4b4917bf8ea3aa9c4ea4c20ff6522de9109a6cc982c5c35730"
+        },
+        {
+          "id": "renderdoc-README.md",
+          "repository": "baldurk/renderdoc",
+          "commit": "45e91661ee457e64279ff86265abdbe214aa6be0",
+          "repository_path": "README.md",
+          "url": "https://raw.githubusercontent.com/baldurk/renderdoc/45e91661ee457e64279ff86265abdbe214aa6be0/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.627316+00:00",
+          "status": 200,
+          "bytes": 6487,
+          "sha256": "fe6994460bd051405396db32c680d6bb3db3e4a7eb08a4b3ab7c0cff2b435f32"
+        },
+        {
+          "id": "renderdoc-docs_how_how_android_capture.rst",
+          "repository": "baldurk/renderdoc",
+          "commit": "45e91661ee457e64279ff86265abdbe214aa6be0",
+          "repository_path": "docs/how/how_android_capture.rst",
+          "url": "https://raw.githubusercontent.com/baldurk/renderdoc/45e91661ee457e64279ff86265abdbe214aa6be0/docs/how/how_android_capture.rst",
+          "retrieved_at_utc": "2026-10-18T03:13:02.630730+00:00",
+          "status": 200,
+          "bytes": 4481,
+          "sha256": "b8fab5e066b876984c542b5f38c780b7b4a85558ad8ed7381524a2241cc463eb"
+        }
+      ]
+    },
+    {
+      "id": "appium",
+      "repo": "appium/appium",
+      "commit": "241d2b29aab7402621de482b4a93f5298fc09c8d",
+      "date": "2026-10-17T11:02:28Z",
+      "url": "https://api.github.com/repos/appium/appium/commits/master",
+      "metadata_sha256": "6dbcb79fe7433a36d52c849cac1b7c76560e3c4fd80111551e9a84a9ef9e766c",
+      "retrieved_at_utc": "2026-10-18T03:12:51.555775+00:00",
+      "archived": false,
+      "license_spdx_metadata": "Apache-2.0",
+      "verified_scope": [
+        "Apache-2.0 root license read.",
+        "Appium core alone cannot automate; platform drivers must be installed and separately pinned/audited.",
+        "Native OS/dialog automation does not guarantee Godot canvas semantic accessibility or reliable physical multitouch evidence."
+      ],
+      "files": [
+        {
+          "id": "appium-LICENSE",
+          "repository": "appium/appium",
+          "commit": "241d2b29aab7402621de482b4a93f5298fc09c8d",
+          "repository_path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/appium/appium/241d2b29aab7402621de482b4a93f5298fc09c8d/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:13:02.665651+00:00",
+          "status": 200,
+          "bytes": 11387,
+          "sha256": "5cb791a45cafc4bdaef57f3ba49fb7691a98c756e8148467f9e241295728490f"
+        },
+        {
+          "id": "appium-README.md",
+          "repository": "appium/appium",
+          "commit": "241d2b29aab7402621de482b4a93f5298fc09c8d",
+          "repository_path": "README.md",
+          "url": "https://raw.githubusercontent.com/appium/appium/241d2b29aab7402621de482b4a93f5298fc09c8d/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.736850+00:00",
+          "status": 200,
+          "bytes": 10910,
+          "sha256": "a7758a8beaae07986f3246e3977df1127819ae84aa148f60fa483d1ab954f5d7"
+        }
+      ]
+    },
+    {
+      "id": "masvs",
+      "repo": "OWASP/masvs",
+      "commit": "bbe226fd17e6dab51927f392936deef31c816423",
+      "date": "2026-09-21T08:50:56Z",
+      "url": "https://api.github.com/repos/OWASP/masvs/commits/master",
+      "metadata_sha256": "f223e09d4c45cd64ce1a9ef981e70405a20533820253e26dba613c704f8f8365",
+      "retrieved_at_utc": "2026-10-18T03:12:51.525691+00:00",
+      "archived": false,
+      "license_spdx_metadata": "CC-BY-SA-4.0",
+      "verified_scope": [
+        "CC-BY-SA-4.0 document license read at License.md; not a permissively licensed game runtime.",
+        "Security/privacy requirements framework; source review is not certification."
+      ],
+      "files": [
+        {
+          "id": "masvs-LICENSE",
+          "repository": "OWASP/masvs",
+          "commit": "bbe226fd17e6dab51927f392936deef31c816423",
+          "repository_path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/OWASP/masvs/bbe226fd17e6dab51927f392936deef31c816423/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:13:02.779510+00:00",
+          "status": 404,
+          "bytes": 14,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+        },
+        {
+          "id": "masvs-README.md",
+          "repository": "OWASP/masvs",
+          "commit": "bbe226fd17e6dab51927f392936deef31c816423",
+          "repository_path": "README.md",
+          "url": "https://raw.githubusercontent.com/OWASP/masvs/bbe226fd17e6dab51927f392936deef31c816423/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:02.832884+00:00",
+          "status": 200,
+          "bytes": 3501,
+          "sha256": "6f1b34fdf78d9ca53056d4706712cdddfc7b65bca609dc7b279c5b2e133e5f9f"
+        },
+        {
+          "id": "masvs-license",
+          "repository": "OWASP/masvs",
+          "commit": "bbe226fd17e6dab51927f392936deef31c816423",
+          "repository_path": "License.md",
+          "url": "https://raw.githubusercontent.com/OWASP/masvs/bbe226fd17e6dab51927f392936deef31c816423/License.md",
+          "status": 200,
+          "bytes": 18637,
+          "sha256": "3b3f4b884ba3bad739b06cd9ea716af5cb737b6c3a86b3b7e823bb3cd5ff31f4",
+          "spdx": "CC-BY-SA-4.0"
+        }
+      ]
+    },
+    {
+      "id": "godot-docs",
+      "repo": "godotengine/godot-docs",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "date": "2026-05-03T08:10:38Z",
+      "url": "https://api.github.com/repos/godotengine/godot-docs/commits/4.6",
+      "metadata_sha256": "e89fd5bae7cb069b9490c052451cf433e23c1ce8ea4da61249eb8eae0a06405c",
+      "retrieved_at_utc": "2026-10-18T03:12:51.731272+00:00",
+      "archived": null,
+      "license_spdx_metadata": null,
+      "verified_scope": [
+        "Pinned4.6 Android export guide lists OpenJDK17 and SDK/build tools; these are documentation prerequisites, not proof current store requirements are met.",
+        "Pinned iOS guide requires macOS with Xcode and reports simulator export unsupported at that documented revision.",
+        "Mobile/Vulkan-or-Metal and Compatibility/OpenGL have different feature sets; renderer changes require lighting/environment review.",
+        "Published engine minimums apply to simple projects, not this10-player game."
+      ],
+      "files": [
+        {
+          "id": "godot-docs-tutorials_export_exporting_for_android.rst",
+          "repository": "godotengine/godot-docs",
+          "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+          "repository_path": "tutorials/export/exporting_for_android.rst",
+          "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/export/exporting_for_android.rst",
+          "retrieved_at_utc": "2026-10-18T03:13:02.947697+00:00",
+          "status": 200,
+          "bytes": 9236,
+          "sha256": "40b7ab210199d2831a1ed6a94f6578fc3d2d888484eb80b1745b977e084210d6"
+        },
+        {
+          "id": "godot-docs-tutorials_export_exporting_for_ios.rst",
+          "repository": "godotengine/godot-docs",
+          "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+          "repository_path": "tutorials/export/exporting_for_ios.rst",
+          "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/export/exporting_for_ios.rst",
+          "retrieved_at_utc": "2026-10-18T03:13:02.957808+00:00",
+          "status": 200,
+          "bytes": 7323,
+          "sha256": "1ea88606c00ebf138674b0bc90efd6962bb82bbe932c8f9b01319513790546b3"
+        },
+        {
+          "id": "godot-docs-tutorials_rendering_renderers.rst",
+          "repository": "godotengine/godot-docs",
+          "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+          "repository_path": "tutorials/rendering/renderers.rst",
+          "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/rendering/renderers.rst",
+          "retrieved_at_utc": "2026-10-18T03:13:03.017941+00:00",
+          "status": 200,
+          "bytes": 28572,
+          "sha256": "ff73af5c0d33c61a14bf945938a4544ed66a2c805fb807888a18541e5933d04a"
+        },
+        {
+          "id": "godot-docs-about_system_requirements.rst",
+          "repository": "godotengine/godot-docs",
+          "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+          "repository_path": "about/system_requirements.rst",
+          "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/about/system_requirements.rst",
+          "retrieved_at_utc": "2026-10-18T03:13:03.045338+00:00",
+          "status": 200,
+          "bytes": 35637,
+          "sha256": "a38eec0b77f543bffde5439d59eefd5be36620d41fb9b75a1a50bce49cfd54f2"
+        }
+      ]
+    }
+  ],
+  "unavailable_policy_sources": [
+    {
+      "id": "android-thermal",
+      "url": "https://developer.android.com/games/optimize/adpf/thermal",
+      "retrieved_at_utc": "2026-10-18T03:12:19.997806+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "android-frame-pacing",
+      "url": "https://developer.android.com/games/sdk/frame-pacing",
+      "retrieved_at_utc": "2026-10-18T03:12:19.999632+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "android-bundletool",
+      "url": "https://developer.android.com/tools/bundletool",
+      "retrieved_at_utc": "2026-10-18T03:12:20.000318+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "android-accessibility",
+      "url": "https://developer.android.com/guide/topics/ui/accessibility/apps",
+      "retrieved_at_utc": "2026-10-18T03:12:20.001072+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "android-target-api",
+      "url": "https://support.google.com/googleplay/android-developer/answer/11926878",
+      "retrieved_at_utc": "2026-10-18T03:12:20.001987+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "android-data-safety",
+      "url": "https://support.google.com/googleplay/android-developer/answer/10787469",
+      "retrieved_at_utc": "2026-10-18T03:12:20.027586+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "apple-metal",
+      "url": "https://developer.apple.com/documentation/xcode/analyzing-the-performance-of-your-metal-app",
+      "retrieved_at_utc": "2026-10-18T03:12:20.031090+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "apple-metrickit",
+      "url": "https://developer.apple.com/documentation/metrickit",
+      "retrieved_at_utc": "2026-10-18T03:12:20.035638+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "apple-review",
+      "url": "https://developer.apple.com/app-store/review/guidelines/",
+      "retrieved_at_utc": "2026-10-18T03:12:20.036434+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "apple-submitting",
+      "url": "https://developer.apple.com/app-store/submitting/",
+      "retrieved_at_utc": "2026-10-18T03:12:20.039893+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "apple-accessibility",
+      "url": "https://developer.apple.com/accessibility/",
+      "retrieved_at_utc": "2026-10-18T03:12:20.043261+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "wcag22",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "retrieved_at_utc": "2026-10-18T03:12:20.046689+00:00",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+  ],
+  "initial_branch_document_downloads": [
+    {
+      "id": "godot-android",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/4.6/tutorials/export/exporting_for_android.rst",
+      "retrieved_at_utc": "2026-10-18T03:12:20.050046+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/4.6/tutorials/export/exporting_for_android.rst",
+      "sha256": "40b7ab210199d2831a1ed6a94f6578fc3d2d888484eb80b1745b977e084210d6",
+      "bytes": 9236,
+      "raw_path": "/tmp/yuga-mobile-validation-m0/godot-android.raw"
+    },
+    {
+      "id": "godot-ios",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/4.6/tutorials/export/exporting_for_ios.rst",
+      "retrieved_at_utc": "2026-10-18T03:12:20.053162+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/4.6/tutorials/export/exporting_for_ios.rst",
+      "sha256": "1ea88606c00ebf138674b0bc90efd6962bb82bbe932c8f9b01319513790546b3",
+      "bytes": 7323,
+      "raw_path": "/tmp/yuga-mobile-validation-m0/godot-ios.raw"
+    },
+    {
+      "id": "godot-renderers",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/4.6/tutorials/rendering/renderers.rst",
+      "retrieved_at_utc": "2026-10-18T03:12:20.056320+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/4.6/tutorials/rendering/renderers.rst",
+      "sha256": "ff73af5c0d33c61a14bf945938a4544ed66a2c805fb807888a18541e5933d04a",
+      "bytes": 28572,
+      "raw_path": "/tmp/yuga-mobile-validation-m0/godot-renderers.raw"
+    },
+    {
+      "id": "godot-requirements",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/4.6/about/system_requirements.rst",
+      "retrieved_at_utc": "2026-10-18T03:12:20.059697+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/godotengine/godot-docs/4.6/about/system_requirements.rst",
+      "sha256": "a38eec0b77f543bffde5439d59eefd5be36620d41fb9b75a1a50bce49cfd54f2",
+      "bytes": 35637,
+      "raw_path": "/tmp/yuga-mobile-validation-m0/godot-requirements.raw"
+    }
+  ],
+  "local_source_review": [
+    {
+      "path": "games/yuga-native/project.godot",
+      "sha256": "976c5fe71bb7a735013b02287701b95fc3c42452e8876675c0250b49c8a96c95",
+      "bytes": 1125
+    },
+    {
+      "path": "games/yuga-native/export_presets.cfg",
+      "sha256": "de82ad14eb18c76390a32559ef277a32b25dfdff2b378ae5a2ba31c2097181ad",
+      "bytes": 1225
+    },
+    {
+      "path": ".github/workflows/yuga-native.yml",
+      "sha256": "4c4944ce9f33f260bb05463694bebba7f6011e00e95b0a57babab2d87507e5a1",
+      "bytes": 22491
+    },
+    {
+      "path": ".github/workflows/yuga-native-release.yml",
+      "sha256": "f88a49c730e95d960ce68630c8db4a7ee939a0763497e7e2e2dcb25666dba5de",
+      "bytes": 12519
+    },
+    {
+      "path": ".github/workflows/yuga-pages.yml",
+      "sha256": "8409f52a29f1f1655fc467dca1f5a1a253e9deecc098d58b9e8676ea10022b5c",
+      "bytes": 4365
+    },
+    {
+      "path": "tools/cloud/setup-native.sh",
+      "sha256": "073ea1b598c3189dcb1d3b424456733d89dfdb8e3959a1683938cb5e3615336c",
+      "bytes": 10222
+    },
+    {
+      "path": "package.json",
+      "sha256": "99e3adb33e79f1151d738d92b3332bbce6f620413e99a3e8b480e8065dd75ff6",
+      "bytes": 2889
+    },
+    {
+      "path": "games/yuga-native/tools/package-native.py",
+      "sha256": "e64efbd674e2699cb3467a47f6d7873a02e35883c5c1dd754399bfaf12494f58",
+      "bytes": 85558
+    },
+    {
+      "path": "games/yuga-native/tools/check-native-contracts.py",
+      "sha256": "f306715c31cc90ab4d7f8d2fb53e3992bed2c7555d91d0e3af65feac5860ef53",
+      "bytes": 9170
+    },
+    {
+      "path": "games/yuga-native/tests/traversal_security_cases.py",
+      "sha256": "adb48593b2bff428df6fef297ca063ad8281aaf3c6be4ea3980042a78ea842ce",
+      "bytes": 15010
+    },
+    {
+      "path": "games/yuga-native/scripts/arena_client.gd",
+      "sha256": "b0482d783a9e9bf9b64be8f07c8878259cd417f39bb90ae7b4752d1b7e34cbb0",
+      "bytes": 16299
+    },
+    {
+      "path": "games/yuga-native/assets/contracts/native-contracts-v1.json",
+      "sha256": "cfb956462042a867f6ac1a51d7be77fc98310acfae8d15d112456fc2a19eb191",
+      "bytes": 6380
+    },
+    {
+      "path": "games/yuga/server/server.ts",
+      "sha256": "b54a4cd7bdb1d5181b57de92b6c6ba01c7e7d9076cb1dcc17b3c6b865f78ac86",
+      "bytes": 13375
+    },
+    {
+      "path": "games/yuga/client/connection.ts",
+      "sha256": "28f9964c4835397f95d69bada63c5d9783faf1bcc9c7312e88683be59b33d969",
+      "bytes": 6908
+    },
+    {
+      "path": "games/yuga/shared/types.ts",
+      "sha256": "ba50968277b687b5e64dd92f56500cbf8edb613f4574630ba761995e6092af7a",
+      "bytes": 4907
+    }
+  ],
+  "raw_retrieval_workspace": "/tmp/yuga-mobile-validation-m0",
+  "raw_workspace_is_not_required_for_citation": "Exact upstream commits, paths, URLs andSHA256 are included; unpinned policy pages require future dated retrieval. No upstream code or binary adopted/installed.",
+  "failed_retrievals_retained": [
+    {
+      "id": "perfetto-docs_quickstart_android-tracing.md",
+      "repository": "google/perfetto",
+      "commit": "26db72a4662467e74f557283d41779c89953274e",
+      "repository_path": "docs/quickstart/android-tracing.md",
+      "url": "https://raw.githubusercontent.com/google/perfetto/26db72a4662467e74f557283d41779c89953274e/docs/quickstart/android-tracing.md",
+      "retrieved_at_utc": "2026-10-18T03:13:02.114772+00:00",
+      "status": 404,
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+    },
+    {
+      "id": "masvs-LICENSE",
+      "repository": "OWASP/masvs",
+      "commit": "bbe226fd17e6dab51927f392936deef31c816423",
+      "repository_path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/OWASP/masvs/bbe226fd17e6dab51927f392936deef31c816423/LICENSE",
+      "retrieved_at_utc": "2026-10-18T03:13:02.779510+00:00",
+      "status": 404,
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+    }
+  ],
+  "limits": [
+    "Source licenses do not license all dependencies or downloaded binaries.",
+    "Tool repository default-branch pins are research references, not approved production toolchain versions.",
+    "Blocked official store policy pages were not read; no current targetAPI or Xcode deadline certification.",
+    "Existing desktop/headless/software-render evidence does not qualify mobile devices."
+  ],
+  "document": {
+    "path": "games/yuga-native/docs/mobile/DEVICE_VALIDATION_AND_RELEASE.md",
+    "sha256": "57c6e0c381c86def5477985cee6c2883d1b6181e64ba6d6ea08be9e1f83cd57f",
+    "bytes": 25186
+  },
+  "documentation_validation": {
+    "checked_at_utc": "2026-10-18T03:20:33.134701+00:00",
+    "local_links": 9,
+    "missing_local_links": 0,
+    "pinned_upstream_files_rehashed": 19,
+    "local_source_hashes_still_matching": 15,
+    "license_texts_read": 6,
+    "peer_consistency": "Master W1\u2013W6/M1\u2013M18 mapping and ten-rendered-client gate aligned. UI48dp/contrast/no-auto-semantic-tree and actor164-rig preservation agree.20-minute author/rendering diagnostics are not the longer final device soak.",
+    "runtime_tests_executed": false,
+    "device_tests_executed": false,
+    "status": "documentation_and_source_receipts_validated_only"
+  }
+}

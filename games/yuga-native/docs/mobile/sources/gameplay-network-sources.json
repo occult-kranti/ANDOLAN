@@ -1,0 +1,403 @@
+{
+  "schema": 1,
+  "task": "M0 worker05 gameplay/online source review",
+  "retrieved_at_utc": "2026-10-18T03:09:56.451920+00:00",
+  "local_checkout_commit": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "local_files_are_working_tree_snapshots": true,
+  "local_source_sha256": {
+    "games/yuga/shared/types.ts": "ba50968277b687b5e64dd92f56500cbf8edb613f4574630ba761995e6092af7a",
+    "games/yuga/shared/map.ts": "8de16e1ebedfbe3ddfb42f683c6d0e1947cb2ca9d9ed70ca8218adcb4209ca7d",
+    "games/yuga/shared/simulation.ts": "e3fa766b06333eb00b5b9b8b03d938b22d5595bdef98b0ae07c0733d0e41a260",
+    "games/yuga/server/server.ts": "b54a4cd7bdb1d5181b57de92b6c6ba01c7e7d9076cb1dcc17b3c6b865f78ac86",
+    "games/yuga/server/clock.ts": "d85c0bab1f93082e82d0446853f1d2d6488e0032cbb8c6719de0e78ea874957a",
+    "games/yuga/client/connection.ts": "28f9964c4835397f95d69bada63c5d9783faf1bcc9c7312e88683be59b33d969",
+    "games/yuga-native/scripts/arena_client.gd": "b0482d783a9e9bf9b64be8f07c8878259cd417f39bb90ae7b4752d1b7e34cbb0",
+    "games/yuga-native/scripts/native_contracts.gd": "5f60a6949b4e683dba2b2ff1e949069ab4f4d1c60890ae891b9817fae8ca1d6e",
+    "games/yuga-native/assets/contracts/native-contracts-v1.json": "cfb956462042a867f6ac1a51d7be77fc98310acfae8d15d112456fc2a19eb191",
+    "games/yuga-native/docs/NATIVE_CONTRACTS.md": "f1b0b5ffe124e0cad12645432c4d20254dccec10a4a7d5d2d77d17d12207b448",
+    "games/yuga/README.md": "fb50d77111f6641deeabda5f7ceb7813c8ea2ef7e9d751296ef69238cc70404f"
+  },
+  "repositories": [
+    {
+      "repo": "heroiclabs/nakama",
+      "requested_at_utc": "2026-10-18T03:02:52.678783+00:00",
+      "default_branch": "master",
+      "archived": false,
+      "updated_at": "2026-10-17T17:42:37Z",
+      "pushed_at": "2026-10-16T20:28:05Z",
+      "license_spdx": "Apache-2.0",
+      "commit": "7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+      "commit_date": "2026-10-16T20:28:02Z",
+      "license_path": "LICENSE",
+      "license_url": "https://raw.githubusercontent.com/heroiclabs/nakama/7c94b8f3aa3a7550444a0c2cffee0969223f1ed9/LICENSE",
+      "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "license_status": 200,
+      "readme_url": "https://raw.githubusercontent.com/heroiclabs/nakama/7c94b8f3aa3a7550444a0c2cffee0969223f1ed9/README.md",
+      "readme_sha256": "6469e75be4292402ed2e7b22bf58bd0d5cccceadaaa514c5b53588a5aceb5129",
+      "source_id": "repo:heroiclabs/nakama",
+      "claims_verified": [
+        "Accounts, storage, parties and matchmaking are listed in primary README.",
+        "Custom runtime supports TypeScript/JavaScript, Lua and Go.",
+        "Source embeds Goja; it is not the Node.js runtime.",
+        "Verified JavaScript matchInit accepts 1\u201360 Hz. No game or capacity benchmark run."
+      ],
+      "review_scope": "Repository metadata, exact commit, raw license and README; no installation or benchmark."
+    },
+    {
+      "repo": "googleforgames/agones",
+      "requested_at_utc": "2026-10-18T03:02:52.679707+00:00",
+      "default_branch": "main",
+      "archived": false,
+      "updated_at": "2026-10-17T03:48:18Z",
+      "pushed_at": "2026-10-16T00:48:14Z",
+      "license_spdx": "Apache-2.0",
+      "commit": "2c9fadb5ea1d3ed09793cd8be87059cc19731eb1",
+      "commit_date": "2026-10-16T00:48:13Z",
+      "license_path": "LICENSE",
+      "license_url": "https://raw.githubusercontent.com/googleforgames/agones/2c9fadb5ea1d3ed09793cd8be87059cc19731eb1/LICENSE",
+      "license_sha256": "2849704bbb18d3cebb15ec40b45421475b17111451093df71c5fcef69bfb386d",
+      "license_status": 200,
+      "readme_url": "https://raw.githubusercontent.com/googleforgames/agones/2c9fadb5ea1d3ed09793cd8be87059cc19731eb1/README.md",
+      "readme_sha256": "e134fa02a91f2115217892d9af402a15c311ed9e8d4ab9277a20ac51bb61e1e4",
+      "source_id": "repo:googleforgames/agones",
+      "claims_verified": [
+        "Dedicated game-server lifecycle/fleets/autoscaling on Kubernetes; does not implement gameplay."
+      ],
+      "review_scope": "Repository metadata, exact commit, raw license and README; no installation or benchmark."
+    },
+    {
+      "repo": "googleforgames/open-match",
+      "requested_at_utc": "2026-10-18T03:02:52.680352+00:00",
+      "default_branch": "main",
+      "archived": false,
+      "updated_at": "2026-10-14T13:56:22Z",
+      "pushed_at": "2026-07-12T18:15:57Z",
+      "license_spdx": "Apache-2.0",
+      "commit": "d781be1a3ce1b6b7fce495345b23256089f55de9",
+      "commit_date": "2024-07-10T02:11:56Z",
+      "license_path": "LICENSE",
+      "license_url": "https://raw.githubusercontent.com/googleforgames/open-match/d781be1a3ce1b6b7fce495345b23256089f55de9/LICENSE",
+      "license_sha256": "ae990e18addadb0e0484cbb44fb362d00097b4a4fe61691ecab09eeb26f656e6",
+      "license_status": 200,
+      "readme_url": "https://raw.githubusercontent.com/googleforgames/open-match/d781be1a3ce1b6b7fce495345b23256089f55de9/README.md",
+      "readme_sha256": "30924123ca5209bb4d6d17d9643dc313db1100db2217a872ff07983544a99a9f",
+      "source_id": "repo:googleforgames/open-match",
+      "claims_verified": [
+        "Matchmaking framework, not simulation or server hosting.",
+        "Pinned chart 1.8.1 references Redis and Kubernetes; chart was read.",
+        "Default-branch commit is dated 2024-07-10 even though repo metadata reports later pushes; no maintenance guarantee inferred."
+      ],
+      "review_scope": "Repository metadata, exact commit, raw license and README; no installation or benchmark."
+    },
+    {
+      "repo": "colyseus/colyseus",
+      "requested_at_utc": "2026-10-18T03:02:52.680998+00:00",
+      "default_branch": "master",
+      "archived": false,
+      "updated_at": "2026-10-17T19:26:28Z",
+      "pushed_at": "2026-10-16T17:43:30Z",
+      "license_spdx": "MIT",
+      "commit": "0029df28e88527478ff8cad4417d893daa0cd63a",
+      "commit_date": "2026-10-16T12:52:17Z",
+      "license_path": "LICENSE",
+      "license_url": "https://raw.githubusercontent.com/colyseus/colyseus/0029df28e88527478ff8cad4417d893daa0cd63a/LICENSE",
+      "license_sha256": "58f5d8920f8d425a9eec9e8cb07f9d0ac5ac08d2aba15f98270c0caddb9de3e4",
+      "license_status": 200,
+      "readme_url": "https://raw.githubusercontent.com/colyseus/colyseus/0029df28e88527478ff8cad4417d893daa0cd63a/README.md",
+      "readme_sha256": "7a4ad15c24c1f57c9e9d7c8d01fc024283e22bde792037febfb2451326a48444",
+      "source_id": "repo:colyseus/colyseus",
+      "claims_verified": [
+        "Node.js authoritative room framework, state synchronization and reconnection.",
+        "README describes Redis/load balancer horizontal scaling.",
+        "Vendor scale and cheat-proof claims were not tested or adopted as evidence."
+      ],
+      "review_scope": "Repository metadata, exact commit, raw license and README; no installation or benchmark."
+    },
+    {
+      "repo": "godotengine/godot",
+      "requested_at_utc": "2026-10-18T03:02:52.681540+00:00",
+      "default_branch": "master",
+      "archived": false,
+      "updated_at": "2026-10-18T02:56:21Z",
+      "pushed_at": "2026-10-16T16:38:08Z",
+      "license_spdx": "MIT",
+      "commit": "81ab961f91066a63bcbf3ec340962bb1a1ada558",
+      "commit_date": "2026-10-16T16:29:07Z",
+      "license_path": "LICENSE.txt",
+      "license_url": "https://raw.githubusercontent.com/godotengine/godot/81ab961f91066a63bcbf3ec340962bb1a1ada558/LICENSE.txt",
+      "license_sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "license_status": 200,
+      "readme_url": "https://raw.githubusercontent.com/godotengine/godot/81ab961f91066a63bcbf3ec340962bb1a1ada558/README.md",
+      "readme_sha256": "999955511e1d54b0abe323ad899633a5a22c14c4899d46e31d06de2175bd19f0",
+      "source_id": "repo:godotengine/godot",
+      "claims_verified": [
+        "Engine source is MIT; source review does not imply current native project is network-authoritative."
+      ],
+      "review_scope": "Repository metadata, exact commit, raw license and README; no installation or benchmark."
+    },
+    {
+      "repo": "heroiclabs/nakama-godot",
+      "branch": "master",
+      "commit": "6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21",
+      "commit_date": "2026-09-21T22:40:24Z",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/heroiclabs/nakama-godot/6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21/LICENSE",
+          "status": 200,
+          "bytes": 11359,
+          "sha256": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac"
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/heroiclabs/nakama-godot/6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21/README.md",
+          "status": 200,
+          "bytes": 13543,
+          "sha256": "ec5717b9ca46dc3b44b792c047b8d1f4477a6371d4ed4f03c4f250360af14003"
+        }
+      ],
+      "source_id": "repo:heroiclabs/nakama-godot",
+      "license_observed": "Apache-2.0",
+      "review_scope": "Exact committed source/license retrieval; no deployed service or exported package."
+    },
+    {
+      "repo": "godotengine/godot-docs",
+      "branch": "4.6",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "commit_date": "2026-05-03T08:10:38Z",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/LICENSE",
+          "error": "HTTP Error 404: Not Found"
+        },
+        {
+          "path": "tutorials/export/exporting_for_dedicated_servers.rst",
+          "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/export/exporting_for_dedicated_servers.rst",
+          "status": 200,
+          "bytes": 11684,
+          "sha256": "192ef653939c295210e78d0537b96175741808088766df4dfb946c09f8094ba0"
+        },
+        {
+          "path": "tutorials/networking/high_level_multiplayer.rst",
+          "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/networking/high_level_multiplayer.rst",
+          "status": 200,
+          "bytes": 27406,
+          "sha256": "8a4dc3051a4929d5467917a4a180bf0c3fd61c5017f194ad46d1267428ee097b"
+        }
+      ],
+      "source_id": "repo:godotengine/godot-docs",
+      "license_observed": "CC-BY-3.0",
+      "corrected_license": {
+        "path": "LICENSE.txt",
+        "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/LICENSE.txt",
+        "status": 200,
+        "sha256": "e6bc9e9c474700b708f568bac9e5a8a9bcb2b1dad53442f5ba449fcb848b8e76",
+        "bytes": 19467
+      },
+      "review_scope": "Exact committed source/license retrieval; no deployed service or exported package."
+    },
+    {
+      "repo": "postgres/postgres",
+      "branch": "master",
+      "commit": "45fc51fcbf4534ea2f6f85e36f8155dbd5ba9851",
+      "commit_date": "2026-10-17T15:02:49Z",
+      "files": [
+        {
+          "path": "COPYRIGHT",
+          "url": "https://raw.githubusercontent.com/postgres/postgres/45fc51fcbf4534ea2f6f85e36f8155dbd5ba9851/COPYRIGHT",
+          "status": 200,
+          "bytes": 1198,
+          "sha256": "3d6af92ff8a4c2cdf69afb1cf44edea727922f5cd0cf8b5f72b11cdecac8fdfd"
+        }
+      ],
+      "source_id": "repo:postgres/postgres",
+      "license_observed": "PostgreSQL License",
+      "review_scope": "Exact committed source/license retrieval; no deployed service or exported package."
+    },
+    {
+      "repo": "yasgamesdev/OpenMOBA",
+      "commit": "c97360e4f734857727c39e2c0c205ac2c039b065",
+      "commit_date": "2018-02-22T12:00:51Z",
+      "archived": false,
+      "license_spdx": "MIT",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/yasgamesdev/OpenMOBA/c97360e4f734857727c39e2c0c205ac2c039b065/LICENSE",
+          "status": 200,
+          "sha256": "83e4dd21429a91fb7cea67a476032a9641425e5355df2e0f589a738b6ec9fd2c",
+          "bytes": 1057
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/yasgamesdev/OpenMOBA/c97360e4f734857727c39e2c0c205ac2c039b065/README.md",
+          "error": "HTTP Error 404: Not Found"
+        }
+      ],
+      "source_id": "repo:yasgamesdev/OpenMOBA",
+      "adoption": "Reference only; no code or assets imported.",
+      "limits": "Unreal-specific code/Blueprint architecture; asset rights and runtime quality not audited. No working full MOBA/backend inferred."
+    },
+    {
+      "repo": "HeyZoos/OpenRTSCamera",
+      "commit": "ff822f1fc0524750a015eedfcb3b2d5d23ac97c0",
+      "commit_date": "2025-01-10T14:46:24Z",
+      "archived": false,
+      "license_spdx": "MIT",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/HeyZoos/OpenRTSCamera/ff822f1fc0524750a015eedfcb3b2d5d23ac97c0/LICENSE",
+          "status": 200,
+          "sha256": "d34449ccd1470a54da5f2016e268d22ea78d256cc3ff23a41b731c65bbbcafc4",
+          "bytes": 1069
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/HeyZoos/OpenRTSCamera/ff822f1fc0524750a015eedfcb3b2d5d23ac97c0/README.md",
+          "status": 200,
+          "sha256": "a32b702f8f3241f152009e17d45350c367dbddebe3f736bd2a3fb098231708ca",
+          "bytes": 1793
+        }
+      ],
+      "source_id": "repo:HeyZoos/OpenRTSCamera",
+      "adoption": "Reference only; no code or assets imported.",
+      "limits": "Unreal5 camera reference; not Godot code or a network/gameplay backend."
+    }
+  ],
+  "additional_exact_source_reads": [
+    {
+      "repo": "heroiclabs/nakama",
+      "commit": "7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+      "path": "server/runtime_javascript.go",
+      "url": "https://raw.githubusercontent.com/heroiclabs/nakama/7c94b8f3aa3a7550444a0c2cffee0969223f1ed9/server/runtime_javascript.go",
+      "status": 200,
+      "bytes": 150942,
+      "sha256": "1c6d7e24ddb12a8342b246819bd5703aaca1703e1eb8b1c9f91e9270dc938069"
+    },
+    {
+      "repo": "heroiclabs/nakama",
+      "commit": "7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+      "path": "server/runtime_javascript_match_core.go",
+      "url": "https://raw.githubusercontent.com/heroiclabs/nakama/7c94b8f3aa3a7550444a0c2cffee0969223f1ed9/server/runtime_javascript_match_core.go",
+      "status": 200,
+      "bytes": 27019,
+      "sha256": "7429e89e16fbeb7c10610ec636e97704828852e7551958cd980178843a7eeba5"
+    },
+    {
+      "repo": "googleforgames/open-match",
+      "commit": "d781be1a3ce1b6b7fce495345b23256089f55de9",
+      "path": "install/helm/open-match/Chart.yaml",
+      "url": "https://raw.githubusercontent.com/googleforgames/open-match/d781be1a3ce1b6b7fce495345b23256089f55de9/install/helm/open-match/Chart.yaml",
+      "status": 200,
+      "bytes": 1710,
+      "sha256": "78f3c0cf698ebf63eceed418c5e6cc1c1b5482410dea3da60e518cb0d30e57bd"
+    }
+  ],
+  "failed_primary_access_attempts": [
+    {
+      "id": "nakama-authoritative",
+      "url": "https://heroiclabs.com/docs/nakama/concepts/multiplayer/authoritative/",
+      "retrieved_at_utc": "2026-10-18T03:03:35.012020+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "nakama-runtime-javascript",
+      "url": "https://heroiclabs.com/docs/nakama/server-framework/typescript-runtime/",
+      "retrieved_at_utc": "2026-10-18T03:03:35.013169+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "nakama-matchmaker",
+      "url": "https://heroiclabs.com/docs/nakama/concepts/multiplayer/matchmaker/",
+      "retrieved_at_utc": "2026-10-18T03:03:35.013807+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "nakama-clustering",
+      "url": "https://heroiclabs.com/docs/nakama/getting-started/cluster-setup/",
+      "retrieved_at_utc": "2026-10-18T03:03:35.014296+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "nakama-godot",
+      "url": "https://heroiclabs.com/docs/nakama/client-libraries/godot/",
+      "retrieved_at_utc": "2026-10-18T03:03:35.014722+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "colyseus-scaling",
+      "url": "https://docs.colyseus.io/deployment/scalability",
+      "retrieved_at_utc": "2026-10-18T03:03:35.015209+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "agones-overview",
+      "url": "https://agones.dev/site/docs/overview/",
+      "retrieved_at_utc": "2026-10-18T03:03:35.015965+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "openmatch-overview",
+      "url": "https://open-match.dev/site/docs/overview/",
+      "retrieved_at_utc": "2026-10-18T03:03:35.047539+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "godot-dedicated",
+      "url": "https://docs.godotengine.org/en/4.6/tutorials/export/exporting_for_dedicated_servers.html",
+      "retrieved_at_utc": "2026-10-18T03:03:35.052639+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "godot-highlevel",
+      "url": "https://docs.godotengine.org/en/4.6/tutorials/networking/high_level_multiplayer.html",
+      "retrieved_at_utc": "2026-10-18T03:03:35.055750+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "mlbb-googleplay",
+      "url": "https://play.google.com/store/apps/details?id=com.mobile.legends&hl=en_US",
+      "retrieved_at_utc": "2026-10-18T03:03:35.059721+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "mlbb-appstore",
+      "url": "https://itunes.apple.com/lookup?id=1160056295&country=us",
+      "retrieved_at_utc": "2026-10-18T03:03:35.062614+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "postgres-license",
+      "url": "https://www.postgresql.org/about/licence/",
+      "retrieved_at_utc": "2026-10-18T03:03:35.066036+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "mlbb-official",
+      "url": "https://www.mobilelegends.com/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "mlbb-apple-web",
+      "url": "https://apps.apple.com/us/app/mobile-legends-bang-bang/id1160056295",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "id": "openmatch-tutorial",
+      "url": "https://raw.githubusercontent.com/googleforgames/open-match/d781be1a3ce1b6b7fce495345b23256089f55de9/tutorials/matchmaker101/README.md",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "openmoba-readme-api",
+      "url": "https://api.github.com/repos/yasgamesdev/OpenMOBA/readme?ref=c97360e4f734857727c39e2c0c205ac2c039b065",
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "mobile_legends_observation_status": "UNVERIFIED: official website, GooglePlay and both Apple endpoints returned proxy403. No videos, timecoded gameplay or Reddit posts read.5v5/elevated-camera direction is user brief; proposed rules in report are original assumptions.",
+  "provenance_boundary": "Only metadata, source text and license files fetched; no proprietary game binaries/assets downloaded, no dependencies installed, no production rules changed.",
+  "retained_raw_retrieval_workspace": "/tmp/yuga-mobile-m0-network",
+  "raw_archive_required_for_reproduction": false,
+  "reproduction": "Commit-pinned raw URLs and SHA256 identify successful text reads; failures explicitly retained. Raw scratch is optional, not a dependency of the report."
+}

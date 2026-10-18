@@ -1,0 +1,747 @@
+{
+  "schema_version": 1,
+  "title": "YUGA mobile rendering/map primary-source receipts",
+  "report_date": "2026-10-18",
+  "retrieved_at_utc": "2026-10-18T03:13:32.775852+00:00",
+  "source_base_commit": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "branch": "game/yuga-native-production",
+  "scope": "Read-only research plus two documentation files. No mobile runtime edits, installs, exports, heavy renders or commits. Existing working tree has concurrent graphics changes.",
+  "evidence_limits": [
+    "No commercial game binaries supplied; no reverse engineering or extracted licensed assets.",
+    "Source snapshot hashes were taken after review during concurrent work; revalidate before implementation.",
+    "CPU llvmpipe cloud has no physical phone GPU; all numerical budgets are provisional and unmeasured.",
+    "Official docs publisher domain failed proxy CONNECT 403; official upstream raw GitHub version 4.6 documents retrieved HTTP 200.",
+    "Tool repositories pinned for research only; no license approval or runtime adoption inferred from repository availability.",
+    "No Unity/Unreal performance, import, pricing or license verification performed; comparison is based on current project coupling."
+  ],
+  "sources": [
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/rendering/renderers.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/rendering/renderers.rst",
+      "http_status": 200,
+      "bytes": 28572,
+      "sha256": "ff73af5c0d33c61a14bf945938a4544ed66a2c805fb807888a18541e5933d04a",
+      "id": "G-DOC-RENDERERS",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/rendering/renderers.html",
+      "supports": "Renderer/driver distinction; supported feature table; mobile renderer selection.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/performance/optimizing_3d_performance.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/performance/optimizing_3d_performance.rst",
+      "http_status": 200,
+      "bytes": 8285,
+      "sha256": "3d1446ff4bf7dd075adffc39e2d27acfdaadfdbd4b4f13752d97109241915726",
+      "id": "G-DOC-PERFORMANCE",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/performance/optimizing_3d_performance.html",
+      "supports": "Draw/material/geometry and fill-rate optimization principles.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/3d/mesh_lod.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/mesh_lod.rst",
+      "http_status": 200,
+      "bytes": 8628,
+      "sha256": "2497956329bf1b223d6386379211a5521d24b107dbe00cb5d3f86789f23f7cfe",
+      "id": "G-DOC-LOD",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/3d/mesh_lod.html",
+      "supports": "Screen-size mesh LOD, automatic import and visual limits.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/3d/visibility_ranges.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/visibility_ranges.rst",
+      "http_status": 200,
+      "bytes": 12131,
+      "sha256": "13c0fa950f3d8d03c9c50a0e079541b7b42e136cb427e4892dfcdc1185ff6a9c",
+      "id": "G-DOC-VISIBILITY",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/3d/visibility_ranges.html",
+      "supports": "Visibility ranges and HLOD organization.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/3d/global_illumination/using_lightmap_gi.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/global_illumination/using_lightmap_gi.rst",
+      "http_status": 200,
+      "bytes": 30561,
+      "sha256": "3e0fc200f0378de21412c535e6c854690d1c3dd7c6067f3de077a83f3715bd00",
+      "id": "G-DOC-LIGHTMAP",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/3d/global_illumination/using_lightmap_gi.html",
+      "supports": "Static UV2, GPU baking, dynamic probe samples and scene bake scope.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/assets_pipeline/importing_3d_scenes/available_formats.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_3d_scenes/available_formats.rst",
+      "http_status": 200,
+      "bytes": 9869,
+      "sha256": "7c2080d6bfc7f5708122d33f8038497c6f48183b50a99885be5b53d9c05517ce",
+      "id": "G-DOC-FORMATS",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/assets_pipeline/importing_3d_scenes/available_formats.html",
+      "supports": "Blender/glTF import/export workflow.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/assets_pipeline/importing_images.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_images.rst",
+      "http_status": 200,
+      "bytes": 31723,
+      "sha256": "4930e2347e77d46f862472283e567864d7f4c8006dd2017719bef7cd5818bca2",
+      "id": "G-DOC-IMAGES",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/assets_pipeline/importing_images.html",
+      "supports": "Native compression versus disk compression; ETC2/ASTC/Basis, mipmaps and KTX restrictions.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/export/exporting_for_android.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/export/exporting_for_android.rst",
+      "http_status": 200,
+      "bytes": 9236,
+      "sha256": "40b7ab210199d2831a1ed6a94f6578fc3d2d888484eb80b1745b977e084210d6",
+      "id": "G-DOC-ANDROID",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/export/exporting_for_android.html",
+      "supports": "Android JDK/SDK/template and export prerequisites; not store-policy validation.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/export/exporting_for_ios.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/export/exporting_for_ios.rst",
+      "http_status": 200,
+      "bytes": 7323,
+      "sha256": "1ea88606c00ebf138674b0bc90efd6962bb82bbe932c8f9b01319513790546b3",
+      "id": "G-DOC-IOS",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/export/exporting_for_ios.html",
+      "supports": "macOS/Xcode/export/signing prerequisites; not device execution evidence.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/performance/using_multimesh.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/performance/using_multimesh.rst",
+      "http_status": 200,
+      "bytes": 4296,
+      "sha256": "a2ff6797ea2e912785d81c418865a647e39584f370572f6974f7113310650036",
+      "id": "G-DOC-MULTIMESH",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/performance/using_multimesh.html",
+      "supports": "Aggregate MultiMesh culling; page explicitly marks itself outdated, so confirm class/runtime behavior before adoption.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/io/background_loading.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/io/background_loading.rst",
+      "http_status": 200,
+      "bytes": 3515,
+      "sha256": "cddd158492d056d9b5d4d020cbba1999568cc2cc7445579269f98a7bd2ed5d8f",
+      "id": "G-DOC-LOADING",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/io/background_loading.html",
+      "supports": "Threaded requests/status/get; early get can block; scene instantiation is separate.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/3d/occlusion_culling.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/occlusion_culling.rst",
+      "http_status": 200,
+      "bytes": 14032,
+      "sha256": "9b685cd6a0362a70991695cae6415aca241adbbfabce834f53d20555a0db3d78",
+      "id": "G-DOC-OCCLUSION",
+      "kind": "official_versioned_documentation",
+      "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "ref": "4.6",
+      "publisher_url": "https://docs.godotengine.org/en/4.6/tutorials/3d/occlusion_culling.html",
+      "supports": "Occluder tradeoffs and scene suitability.",
+      "license": "CC-BY-3.0",
+      "qualification": "Documentation read only; no hardware acceptance or dependency adoption."
+    },
+    {
+      "id": "A-GODOT",
+      "kind": "official_upstream_repository",
+      "repository": "https://github.com/godotengine/godot",
+      "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "ref": "4.6.3-stable",
+      "tree_url": "https://github.com/godotengine/godot/tree/35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "license": "MIT",
+      "license_receipt": {
+        "repo_id": "godot",
+        "path": "LICENSE.txt",
+        "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/LICENSE.txt",
+        "http_status": 200,
+        "bytes": 1149,
+        "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80"
+      },
+      "usage": "Continue pinned 4.6.3 engine; preserve MIT notices."
+    },
+    {
+      "id": "A-BLENDER",
+      "kind": "official_upstream_repository",
+      "repository": "https://github.com/blender/blender",
+      "commit": "3f4216e1bad1e76e9c2d4a00b4a9d09954593f47",
+      "ref": "HEAD observed; research pin, not validated adoption version",
+      "tree_url": "https://github.com/blender/blender/tree/3f4216e1bad1e76e9c2d4a00b4a9d09954593f47",
+      "license": "GPL-2.0-or-later (verified representative core file); repository-wide distribution requires per-file audit",
+      "license_receipt": {
+        "repo_id": "blender",
+        "path": "source/blender/blenkernel/BKE_main.hh",
+        "url": "https://raw.githubusercontent.com/blender/blender/3f4216e1bad1e76e9c2d4a00b4a9d09954593f47/source/blender/blenkernel/BKE_main.hh",
+        "http_status": 200,
+        "bytes": 34135,
+        "sha256": "4b2943848aedafa86af5fe6dfbb95505be017e8412cbc14a071a1115351d1347"
+      },
+      "usage": "Offline source authoring only; no embedded Blender runtime or redistribution in this report."
+    },
+    {
+      "id": "A-GLTF-IO",
+      "kind": "official_upstream_repository",
+      "repository": "https://github.com/KhronosGroup/glTF-Blender-IO",
+      "commit": "653063ebbf73d27a01e883665b5c042c25a36ece",
+      "ref": "HEAD observed; research pin, not validated adoption version",
+      "tree_url": "https://github.com/KhronosGroup/glTF-Blender-IO/tree/653063ebbf73d27a01e883665b5c042c25a36ece",
+      "license": "Apache-2.0 (verified add-on source header)",
+      "license_receipt": {
+        "repo_id": "gltf-blender-io",
+        "path": "addons/io_scene_gltf2/__init__.py",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/addons/io_scene_gltf2/__init__.py",
+        "http_status": 200,
+        "bytes": 90900,
+        "sha256": "4233e88e7dae473b3968ba8539c17a39bb2f127a73187ef44c60c0949171f615"
+      },
+      "usage": "Official Blender glTF exporter source reference; per-file header verified, no add-on installed."
+    },
+    {
+      "id": "A-GLTF-SPEC",
+      "kind": "official_upstream_repository",
+      "repository": "https://github.com/KhronosGroup/glTF",
+      "commit": "521a91d491f02bb7db7d445b35f591d09d2a64ce",
+      "ref": "HEAD observed; research pin, not validated adoption version",
+      "tree_url": "https://github.com/KhronosGroup/glTF/tree/521a91d491f02bb7db7d445b35f591d09d2a64ce",
+      "license": "CC-BY-4.0 (specification documentation)",
+      "license_receipt": {
+        "repo_id": "gltf-spec",
+        "path": "specification/2.0/README.md",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/specification/2.0/README.md",
+        "http_status": 200,
+        "bytes": 3548,
+        "sha256": "e3a783b6a6921868ab047a616c43d6878a548540b4fd1f8f71360a77b588b539"
+      },
+      "usage": "glTF conventions/specification reference; no asset rights implied."
+    },
+    {
+      "id": "A-KTX",
+      "kind": "official_upstream_repository",
+      "repository": "https://github.com/KhronosGroup/KTX-Software",
+      "commit": "562ebb20ada03ac80616a800ec014ea897ef56a6",
+      "ref": "HEAD observed; research pin, not validated adoption version",
+      "tree_url": "https://github.com/KhronosGroup/KTX-Software/tree/562ebb20ada03ac80616a800ec014ea897ef56a6",
+      "license": "Generally Apache-2.0; bundled third-party licenses and non-open Ericsson ETC-decoder special case",
+      "license_receipt": {
+        "repo_id": "ktx",
+        "path": "LICENSE.md",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/KTX-Software/562ebb20ada03ac80616a800ec014ea897ef56a6/LICENSE.md",
+        "http_status": 200,
+        "bytes": 1796,
+        "sha256": "126070fd09a82f76e557942d10f0601e52ea7e1d0043671ed6f20f3c82daece6"
+      },
+      "usage": "Candidate offline validation/encoding only; inspect SBOM/per-file licenses; ETC unpack exception explicitly recorded."
+    },
+    {
+      "id": "A-BASIS",
+      "kind": "official_upstream_repository",
+      "repository": "https://github.com/BinomialLLC/basis_universal",
+      "commit": "1706f948a2f0992d7a6dc2a909f35690b508571c",
+      "ref": "HEAD observed; research pin, not validated adoption version",
+      "tree_url": "https://github.com/BinomialLLC/basis_universal/tree/1706f948a2f0992d7a6dc2a909f35690b508571c",
+      "license": "Apache-2.0",
+      "license_receipt": {
+        "repo_id": "basis",
+        "path": "LICENSE",
+        "url": "https://raw.githubusercontent.com/BinomialLLC/basis_universal/1706f948a2f0992d7a6dc2a909f35690b508571c/LICENSE",
+        "http_status": 200,
+        "bytes": 11347,
+        "sha256": "065fcf48d6af21c0b75e23be5ed5753aee75c892e1c2cf178fa6736305614a5c"
+      },
+      "usage": "Candidate compression research; Godot built-in Basis path preferred before adding custom runtime."
+    },
+    {
+      "id": "A-MESHOPT",
+      "kind": "official_upstream_repository",
+      "repository": "https://github.com/zeux/meshoptimizer",
+      "commit": "f0a684f11ead064e176775c9b796f82a55910e92",
+      "ref": "HEAD observed; research pin, not validated adoption version",
+      "tree_url": "https://github.com/zeux/meshoptimizer/tree/f0a684f11ead064e176775c9b796f82a55910e92",
+      "license": "MIT",
+      "license_receipt": {
+        "repo_id": "meshoptimizer",
+        "path": "LICENSE.md",
+        "url": "https://raw.githubusercontent.com/zeux/meshoptimizer/f0a684f11ead064e176775c9b796f82a55910e92/LICENSE.md",
+        "http_status": 200,
+        "bytes": 1079,
+        "sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26"
+      },
+      "usage": "Candidate offline simplification/locality; no binary installed or code vendored."
+    },
+    {
+      "id": "A-GLTF-TRANSFORM",
+      "kind": "official_upstream_repository",
+      "repository": "https://github.com/donmccurdy/glTF-Transform",
+      "commit": "8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f",
+      "ref": "HEAD observed; research pin, not validated adoption version",
+      "tree_url": "https://github.com/donmccurdy/glTF-Transform/tree/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f",
+      "license": "MIT",
+      "license_receipt": {
+        "repo_id": "gltf-transform",
+        "path": "LICENSE.md",
+        "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f/LICENSE.md",
+        "http_status": 200,
+        "bytes": 1078,
+        "sha256": "2c4f111d00dbf22b10d31a14813c5f5de6a828640f7311f26b9dda89b3fce165"
+      },
+      "usage": "Candidate offline reproducible transformations; required compressed extensions need Godot round-trip gate."
+    }
+  ],
+  "local_source_snapshot": [
+    {
+      "path": "games/yuga-native/project.godot",
+      "sha256": "976c5fe71bb7a735013b02287701b95fc3c42452e8876675c0250b49c8a96c95",
+      "bytes": 1125
+    },
+    {
+      "path": "games/yuga-native/scripts/confluence_world.gd",
+      "sha256": "20f809f9ead1d98f3b018c1f38d699d072fa81f3439d44c3369a5b4d249e7450",
+      "bytes": 65157
+    },
+    {
+      "path": "games/yuga-native/assets/world/confluence-map.json",
+      "sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+      "bytes": 53971
+    },
+    {
+      "path": "games/yuga-native/scripts/world_lighting.gd",
+      "sha256": "d81f11df8766df89ef662bc3757ac087bd940963678db4a2622a0279f5b7022f",
+      "bytes": 9613
+    },
+    {
+      "path": "games/yuga-native/scripts/lane_unit_art.gd",
+      "sha256": "5861731faf1fc4dc77be7d99861a8c8eb885dba95c82cd074fe2b260e805482d",
+      "bytes": 9344
+    },
+    {
+      "path": "games/yuga-native/scripts/lane_infantry_art.gd",
+      "sha256": "a64b4cc283dc7b5c4eb28391ec362928a9fb3126e2a1d41ae5cc27e0a67ae6f2",
+      "bytes": 22066
+    },
+    {
+      "path": "games/yuga-native/scripts/lane_minion.gd",
+      "sha256": "90fe2d84f5c408b4b99779b00c11e59e850c1bb4f88dafb42a8a5aba74cc119c",
+      "bytes": 10236
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_hero_runtime.gd",
+      "sha256": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+      "bytes": 15235
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_visual_lod.gd",
+      "sha256": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5",
+      "bytes": 2690
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_lod_binding.gd",
+      "sha256": "266e29dfa72cac407d3750eefcb296ec0b9cf82dc7665afb30b2eaa658956bfc",
+      "bytes": 15703
+    },
+    {
+      "path": "games/yuga-native/scripts/player.gd",
+      "sha256": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+      "bytes": 20337
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_surface_materials.gd",
+      "sha256": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a",
+      "bytes": 3779
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_surface_finish.gd",
+      "sha256": "67c1168ccc9dd2cd957197f361b28e6920dff7b9567b5801fc069ae60c92cb9a",
+      "bytes": 11450
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_motion.gd",
+      "sha256": "35a9e58e6c720c67cd6e77fb812900bc05dec9d2fbd255b7bd8aa40b39e20fb3",
+      "bytes": 28799
+    },
+    {
+      "path": "games/yuga-native/scripts/hero_district_detail.gd",
+      "sha256": "09c6447f36a9eba2d0898f3db846fedb45693b9c9d56f3212bc2ec537de56431",
+      "bytes": 21811
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_ability_effects.gd",
+      "sha256": "b77f68aeeb57ab5e7be8b84385505d1f7078cb90ef1cedc33c7e4d894ec9d8be",
+      "bytes": 31814
+    },
+    {
+      "path": "games/yuga-native/scripts/world_ground.gdshader",
+      "sha256": "7f687dbde3fe62bbcc38317d87229b4857c7340e1c7bfbb895c4c6911d765213",
+      "bytes": 391
+    },
+    {
+      "path": "games/yuga-native/scripts/world_ground_common.gdshaderinc",
+      "sha256": "b4657976ebc3f41379b05d00048bedb68269579de3956f1e25d88e841b795611",
+      "bytes": 3543
+    },
+    {
+      "path": "games/yuga-native/scripts/world_water.gdshader",
+      "sha256": "add24973aab0d30ebeae2f2db7d096f74fd304bf22868afc4470e22506f86283",
+      "bytes": 3433
+    }
+  ],
+  "additional_successful_file_receipts": [
+    {
+      "repo_id": "godot-docs",
+      "path": "LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/LICENSE.txt",
+      "http_status": 200,
+      "bytes": 19467,
+      "sha256": "e6bc9e9c474700b708f568bac9e5a8a9bcb2b1dad53442f5ba449fcb848b8e76"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/rendering/renderers.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/rendering/renderers.rst",
+      "http_status": 200,
+      "bytes": 28572,
+      "sha256": "ff73af5c0d33c61a14bf945938a4544ed66a2c805fb807888a18541e5933d04a"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/performance/optimizing_3d_performance.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/performance/optimizing_3d_performance.rst",
+      "http_status": 200,
+      "bytes": 8285,
+      "sha256": "3d1446ff4bf7dd075adffc39e2d27acfdaadfdbd4b4f13752d97109241915726"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/3d/mesh_lod.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/mesh_lod.rst",
+      "http_status": 200,
+      "bytes": 8628,
+      "sha256": "2497956329bf1b223d6386379211a5521d24b107dbe00cb5d3f86789f23f7cfe"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/3d/visibility_ranges.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/visibility_ranges.rst",
+      "http_status": 200,
+      "bytes": 12131,
+      "sha256": "13c0fa950f3d8d03c9c50a0e079541b7b42e136cb427e4892dfcdc1185ff6a9c"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/assets_pipeline/importing_3d_scenes/available_formats.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_3d_scenes/available_formats.rst",
+      "http_status": 200,
+      "bytes": 9869,
+      "sha256": "7c2080d6bfc7f5708122d33f8038497c6f48183b50a99885be5b53d9c05517ce"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/assets_pipeline/importing_images.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/assets_pipeline/importing_images.rst",
+      "http_status": 200,
+      "bytes": 31723,
+      "sha256": "4930e2347e77d46f862472283e567864d7f4c8006dd2017719bef7cd5818bca2"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/export/exporting_for_android.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/export/exporting_for_android.rst",
+      "http_status": 200,
+      "bytes": 9236,
+      "sha256": "40b7ab210199d2831a1ed6a94f6578fc3d2d888484eb80b1745b977e084210d6"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/export/exporting_for_ios.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/export/exporting_for_ios.rst",
+      "http_status": 200,
+      "bytes": 7323,
+      "sha256": "1ea88606c00ebf138674b0bc90efd6962bb82bbe932c8f9b01319513790546b3"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/performance/using_multimesh.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/performance/using_multimesh.rst",
+      "http_status": 200,
+      "bytes": 4296,
+      "sha256": "a2ff6797ea2e912785d81c418865a647e39584f370572f6974f7113310650036"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/io/background_loading.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/io/background_loading.rst",
+      "http_status": 200,
+      "bytes": 3515,
+      "sha256": "cddd158492d056d9b5d4d020cbba1999568cc2cc7445579269f98a7bd2ed5d8f"
+    },
+    {
+      "repo_id": "blender",
+      "path": "COPYING",
+      "url": "https://raw.githubusercontent.com/blender/blender/3f4216e1bad1e76e9c2d4a00b4a9d09954593f47/COPYING",
+      "http_status": 200,
+      "bytes": 302,
+      "sha256": "19e6f4b541772f9d7b98a52bdbca3ebd5ef9e404956a9a6de68bfc3c1a178387"
+    },
+    {
+      "repo_id": "gltf-blender-io",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/README.md",
+      "http_status": 200,
+      "bytes": 5726,
+      "sha256": "47445537d3654a43e460c2b0cdfee136de18c8c037d204c7166b07c56c8c9958"
+    },
+    {
+      "repo_id": "gltf-spec",
+      "path": "specification/2.0/README.md",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/specification/2.0/README.md",
+      "http_status": 200,
+      "bytes": 3548,
+      "sha256": "e3a783b6a6921868ab047a616c43d6878a548540b4fd1f8f71360a77b588b539"
+    },
+    {
+      "repo_id": "ktx",
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/KTX-Software/562ebb20ada03ac80616a800ec014ea897ef56a6/LICENSE.md",
+      "http_status": 200,
+      "bytes": 1796,
+      "sha256": "126070fd09a82f76e557942d10f0601e52ea7e1d0043671ed6f20f3c82daece6"
+    },
+    {
+      "repo_id": "ktx",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/KTX-Software/562ebb20ada03ac80616a800ec014ea897ef56a6/README.md",
+      "http_status": 200,
+      "bytes": 8947,
+      "sha256": "82ac063e29e4989bccb15cb798408745da101c348f9b81f558f272056baa50e0"
+    },
+    {
+      "repo_id": "basis",
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/BinomialLLC/basis_universal/1706f948a2f0992d7a6dc2a909f35690b508571c/LICENSE",
+      "http_status": 200,
+      "bytes": 11347,
+      "sha256": "065fcf48d6af21c0b75e23be5ed5753aee75c892e1c2cf178fa6736305614a5c"
+    },
+    {
+      "repo_id": "basis",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/BinomialLLC/basis_universal/1706f948a2f0992d7a6dc2a909f35690b508571c/README.md",
+      "http_status": 200,
+      "bytes": 48151,
+      "sha256": "555e83e95bfd35dfadece288bcffbcfb1895d4c76bcb92c8b1badbca11a7789f"
+    },
+    {
+      "repo_id": "meshoptimizer",
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/zeux/meshoptimizer/f0a684f11ead064e176775c9b796f82a55910e92/LICENSE.md",
+      "http_status": 200,
+      "bytes": 1079,
+      "sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26"
+    },
+    {
+      "repo_id": "meshoptimizer",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/zeux/meshoptimizer/f0a684f11ead064e176775c9b796f82a55910e92/README.md",
+      "http_status": 200,
+      "bytes": 107230,
+      "sha256": "69dee313d6982ef86199c0e8cb0f5ad9aca683bf2250418a872fcbbcc00d514b"
+    },
+    {
+      "repo_id": "gltf-transform",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f/README.md",
+      "http_status": 200,
+      "bytes": 6647,
+      "sha256": "d89d0c933e18062a4e664e6389774bc84e0bebc5011e5e801406c6895bc948a3"
+    },
+    {
+      "repo_id": "blender",
+      "path": "doc/license/GPL-license.txt",
+      "url": "https://raw.githubusercontent.com/blender/blender/3f4216e1bad1e76e9c2d4a00b4a9d09954593f47/doc/license/GPL-license.txt",
+      "http_status": 200,
+      "bytes": 17992,
+      "sha256": "f2703dec1b0118070caabd3302e21738c00211b0cc3260dbeb1168d6eda726b7"
+    },
+    {
+      "repo_id": "gltf-blender-io",
+      "path": "addons/io_scene_gltf2/__init__.py",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/addons/io_scene_gltf2/__init__.py",
+      "http_status": 200,
+      "bytes": 90900,
+      "sha256": "4233e88e7dae473b3968ba8539c17a39bb2f127a73187ef44c60c0949171f615"
+    },
+    {
+      "repo_id": "gltf-transform",
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f/LICENSE.md",
+      "http_status": 200,
+      "bytes": 1078,
+      "sha256": "2c4f111d00dbf22b10d31a14813c5f5de6a828640f7311f26b9dda89b3fce165"
+    },
+    {
+      "repo_id": "gltf-spec",
+      "path": "specification/2.0/Specification.adoc",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/specification/2.0/Specification.adoc",
+      "http_status": 200,
+      "bytes": 186093,
+      "sha256": "657167c1a083fa9eac28432a5ba5f6486149b5da7f932c8a7ee631e71c5e099e"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/3d/global_illumination/using_lightmap_gi.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/global_illumination/using_lightmap_gi.rst",
+      "http_status": 200,
+      "bytes": 30561,
+      "sha256": "3e0fc200f0378de21412c535e6c854690d1c3dd7c6067f3de077a83f3715bd00"
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/3d/occlusion_culling.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/occlusion_culling.rst",
+      "http_status": 200,
+      "bytes": 14032,
+      "sha256": "9b685cd6a0362a70991695cae6415aca241adbbfabce834f53d20555a0db3d78"
+    },
+    {
+      "repo_id": "blender",
+      "path": "source/blender/blenkernel/BKE_main.hh",
+      "url": "https://raw.githubusercontent.com/blender/blender/3f4216e1bad1e76e9c2d4a00b4a9d09954593f47/source/blender/blenkernel/BKE_main.hh",
+      "http_status": 200,
+      "bytes": 34135,
+      "sha256": "4b2943848aedafa86af5fe6dfbb95505be017e8412cbc14a071a1115351d1347"
+    },
+    {
+      "repo_id": "godot",
+      "path": "LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/LICENSE.txt",
+      "http_status": 200,
+      "bytes": 1149,
+      "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80"
+    },
+    {
+      "repo_id": "godot",
+      "path": "modules/gltf/gltf_document.cpp",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/modules/gltf/gltf_document.cpp",
+      "http_status": 200,
+      "bytes": 298566,
+      "sha256": "a33185acc304524e99302244a652c295e9f201fcf9e8269223ea2e8df6fe803e"
+    }
+  ],
+  "failed_access_attempts": [
+    {
+      "url": "https://docs.godotengine.org/en/4.6/tutorials/rendering/renderers.html",
+      "result": "Proxy tunnel CONNECT 403 Forbidden; used official upstream raw GitHub versioned source instead."
+    },
+    {
+      "repo_id": "godot-docs",
+      "path": "tutorials/3d/using_lightmap_gi.rst",
+      "url": "https://raw.githubusercontent.com/godotengine/godot-docs/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/3d/using_lightmap_gi.rst",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repo_id": "blender",
+      "path": "doc/license/GPL3.txt",
+      "url": "https://raw.githubusercontent.com/blender/blender/3f4216e1bad1e76e9c2d4a00b4a9d09954593f47/doc/license/GPL3.txt",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repo_id": "gltf-blender-io",
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/LICENSE",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repo_id": "gltf-spec",
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/glTF/521a91d491f02bb7db7d445b35f591d09d2a64ce/LICENSE.md",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repo_id": "gltf-transform",
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f/LICENSE",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repo_id": "gltf-blender-io",
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/653063ebbf73d27a01e883665b5c042c25a36ece/LICENSE.md",
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "validation": {
+    "http_200_document_count": 12,
+    "tool_repository_license_receipts": 8,
+    "json_parse": "passed at generation",
+    "mobile_device_tests": "not run",
+    "runtime_tests": "not run (documentation-only scope)"
+  },
+  "related_reports": [
+    "RENDERING_AND_MAP_PIPELINE.md",
+    "GAMEPLAY_NETWORK_AND_SERVICES.md"
+  ]
+}

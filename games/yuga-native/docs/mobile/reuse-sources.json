@@ -1,0 +1,1703 @@
+{
+  "schema": 1,
+  "task": "M0 / source reuse and owned-original Android reverse engineering feasibility",
+  "recorded_at_utc": "2026-10-18T03:16:31.807643+00:00",
+  "source_head": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "scope": "Documentation/retrieval only. No repository clone, commercial client, game asset import, Android APK build/device run, engine/render, Ghidra analysis, server or package installation in this task. External repository material was treated as evidence, not instructions.",
+  "local_tooling": {
+    "date_utc": "2026-10-18T03:13:12.919797+00:00",
+    "source_head": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+    "files": [
+      {
+        "path": "tools/native-analysis/inspect-component.py",
+        "exists": true,
+        "bytes": 7705,
+        "sha256": "ccf54faf854870b7ea07378f2b4f84746708fdc3c6523923640b902771603535"
+      },
+      {
+        "path": "tools/native-analysis/rea-runtime/package.json",
+        "exists": true,
+        "bytes": 54,
+        "sha256": "04df3d8e8a559cd75824d810268a49519164930cf09386e76b56bc8e086836ed"
+      },
+      {
+        "path": "tools/native-analysis/rea-runtime/package-lock.json",
+        "exists": true,
+        "bytes": 78047,
+        "sha256": "73fa03d670870e8234e7823bca98e8cd846773fb661819ffe48a5bbb6728c7dd"
+      },
+      {
+        "path": "docs/evidence/reuse-study/rea/restoration/summary.json",
+        "exists": true,
+        "bytes": 4941,
+        "sha256": "e0a5b7cc11a121d93f2896bcce30f1d748b0b0ac469fe6019e4a7a94549774f5"
+      },
+      {
+        "path": "docs/evidence/reuse-study/rea/native-component/summary.json",
+        "exists": true,
+        "bytes": 3731,
+        "sha256": "22bc54c0964671c5c6e34522b828af7f6cfd291ee4b81dd8db0742918d8fab4e"
+      },
+      {
+        "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/package.json",
+        "exists": true,
+        "bytes": 23946,
+        "sha256": "a500302319c1214a8bb6c9a8b4a4a090806e95eef884204a9d9fbb4003050a6c",
+        "package_name": "rea-agents",
+        "package_version": "6.5.0"
+      },
+      {
+        "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/scripts/rea.mjs",
+        "exists": true,
+        "bytes": 4385,
+        "sha256": "526105418604cc6e5a202a6275b700814e27450bfaffd45e7510530ba669de8d"
+      },
+      {
+        "path": "/workspace/tooling/yuga-native-analysis/ghidra-install.json",
+        "exists": true,
+        "bytes": 562,
+        "sha256": "c8de5e844a4512c363298da375f7a041cfd2fc136f43e5e26239c8dcb37d8907"
+      },
+      {
+        "path": "/workspace/tooling/yuga-native-analysis/ghidra_12.1.4_PUBLIC/Ghidra/application.properties",
+        "exists": true,
+        "bytes": 659,
+        "sha256": "e84c26b08545eee63d24a1a8a4dd7905e4209538e2e7192093877c435c64eb67",
+        "version_lines": [
+          "application.version=12.1.4"
+        ]
+      },
+      {
+        "path": "/workspace/tooling/yuga-native-analysis/ghidra_12.1.4_PUBLIC/support/analyzeHeadless",
+        "exists": true,
+        "bytes": 2388,
+        "sha256": "302880328a0024ee24cfe0326d4d9a61c2237116d95f2e0e0df090f747f95e30"
+      },
+      {
+        "path": "/workspace/tooling/yuga-native-analysis/jdk-21.0.12.1+1/release",
+        "exists": true,
+        "bytes": 1628,
+        "sha256": "ebbd70bf00bab6d39addf51969c5ff244030b86b29de400b9fb10612ebd3ceec"
+      },
+      {
+        "path": "/workspace/tooling/rea-runtime/node_modules/rea-agents/dist/ghidra/GhidraProvider.js",
+        "exists": true,
+        "bytes": 12545,
+        "sha256": "62cec17ca1586c649a4218c293f802202c6328e7d7861b62411900ca13050948",
+        "read_line_ranges_1_based": [
+          [
+            19,
+            28
+          ]
+        ],
+        "finding": "Declared architecture set includes arm64; not an executed Android/ARM64 qualification."
+      }
+    ],
+    "android_tool_PATH_presence": {
+      "adb": null,
+      "sdkmanager": null,
+      "apkanalyzer": null,
+      "aapt2": null,
+      "gradle": null,
+      "readelf": "/usr/bin/readelf",
+      "unzip": "/usr/bin/unzip"
+    },
+    "scope": "Read-only selected installed-file and retained-receipt inspection. No analysis, installation, engine/import, APK, or whole-install integrity scan."
+  },
+  "search_method": {
+    "queries": 7,
+    "pages_per_query": 1,
+    "maximum_results_per_query": 10,
+    "limit": "Finite GitHub repository search. Metadata ranking and licensing labels are discovery only; no universal absence or complete-source claim. Large irrelevant descriptions are intentionally excerpted."
+  },
+  "searches": [
+    {
+      "query": "\"mobile legends\" \"source code\"",
+      "endpoint": "https://api.github.com/search/repositories",
+      "sort": "GitHub relevance default",
+      "per_page": 10,
+      "page": 1,
+      "total_count": 2,
+      "incomplete_results": false,
+      "response_bytes": 11322,
+      "response_sha256": "7f442e3f2db9749eb9f9fce9a8cf0cd241b379bf9944ee664ba2e9e92bc062e6",
+      "results": [
+        {
+          "repository": "XFLOW13/Source-Mod-Menu-MLBB",
+          "url": "https://github.com/XFLOW13/Source-Mod-Menu-MLBB",
+          "description_excerpt": "This is Source Code Mod Menu of Mobile legend 2023",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 0
+        },
+        {
+          "repository": "JcfeJohn/Mobile-Legends-Data-API",
+          "url": "https://github.com/JcfeJohn/Mobile-Legends-Data-API",
+          "description_excerpt": "Documentation for Mobile Legends: Bang Bang API. Oh, you thought this is the API source code?",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 0
+        }
+      ]
+    },
+    {
+      "query": "MLBB source",
+      "endpoint": "https://api.github.com/search/repositories",
+      "sort": "GitHub relevance default",
+      "per_page": 10,
+      "page": 1,
+      "total_count": 14,
+      "incomplete_results": false,
+      "response_bytes": 59603,
+      "response_sha256": "7f939f64bc7c54398192588f508f8b1117bce6a1b45c59051e3757b112d25234",
+      "results": [
+        {
+          "repository": "dreamxd96/MLBB-MOD-MENU-SOURCE",
+          "url": "https://github.com/dreamxd96/MLBB-MOD-MENU-SOURCE",
+          "description_excerpt": "MLBB MOD MENU SOURCE   NOTE - Its Old source you have to update it yourself through dump provided ~https://t.me/c/1593658131/178  Credit - @zenesisorg  Creator/Author - @axom_dream   Have a great Day !",
+          "description_truncated": false,
+          "github_detected_license": "GPL-3.0",
+          "repository_size_kib_metadata": 1016
+        },
+        {
+          "repository": "dreamxd96/MLBB-MOD-MENU-SRC",
+          "url": "https://github.com/dreamxd96/MLBB-MOD-MENU-SRC",
+          "description_excerpt": "MLBB MOD MENU SOURCE   NOTE - Its Old source you have to update it yourself through dump provided ~https://t.me/c/1593658131/178  Credit - @zenesisorg  Creator/Author - @axom_dream   Have a great Day !",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 1
+        },
+        {
+          "repository": "dreamxd96/MLBB-MOD-MENU",
+          "url": "https://github.com/dreamxd96/MLBB-MOD-MENU",
+          "description_excerpt": "MLBB MOD MENU SOURCE ",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 0
+        },
+        {
+          "repository": "starcoolgtg-hash/MLBB-EXTERNAL",
+          "url": "https://github.com/starcoolgtg-hash/MLBB-EXTERNAL",
+          "description_excerpt": "Source code mlbb external",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 0
+        },
+        {
+          "repository": "XFLOW13/Source-Mod-Menu-MLBB",
+          "url": "https://github.com/XFLOW13/Source-Mod-Menu-MLBB",
+          "description_excerpt": "This is Source Code Mod Menu of Mobile legend 2023",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 0
+        },
+        {
+          "repository": "Jomar123456/My-source-mod-menu-mlbb",
+          "url": "https://github.com/Jomar123456/My-source-mod-menu-mlbb",
+          "description_excerpt": "https://drive.google.com/file/d/1py0EphBUwTFKiEgAATUaFe-oq5QcBATg/view?usp=drivesdk",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 11485
+        },
+        {
+          "repository": "FitrahXSenpai/MLBB",
+          "url": "https://github.com/FitrahXSenpai/MLBB",
+          "description_excerpt": "Source Code Cek Region MLBB BY F.X.S",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 51
+        },
+        {
+          "repository": "vin-03/web-scraper-mlbb-heroInfo",
+          "url": "https://github.com/vin-03/web-scraper-mlbb-heroInfo",
+          "description_excerpt": "A Puppeteer-based web scraper that extracts basic hero information from Mobile Legends: Bang Bang sources.  Collects essential hero metadata including ID, name, role, lane assignments, and icon URLs.",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 24
+        },
+        {
+          "repository": "JDVimes/file-C-Users-User-Documents-HTML-20-20CSS-Main-20Page-20Source-20code.html",
+          "url": "https://github.com/JDVimes/file-C-Users-User-Documents-HTML-20-20CSS-Main-20Page-20Source-20code.html",
+          "description_excerpt": "Gaming Web, MLBB, LOL, PS4,V ALORANT",
+          "description_truncated": false,
+          "github_detected_license": "CC0-1.0",
+          "repository_size_kib_metadata": 3
+        },
+        {
+          "repository": "bagusdwisuryabaskoro13072008-png/website_mlbb",
+          "url": "https://github.com/bagusdwisuryabaskoro13072008-png/website_mlbb",
+          "description_excerpt": "source code playlist full CRUD",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 0
+        }
+      ]
+    },
+    {
+      "query": "moba android",
+      "endpoint": "https://api.github.com/search/repositories",
+      "sort": "GitHub relevance default",
+      "per_page": 10,
+      "page": 1,
+      "total_count": 116,
+      "incomplete_results": false,
+      "response_bytes": 54886,
+      "response_sha256": "809d76a3974047a34298c129192315fc1801b26079ba865386aab3c18006c2ef",
+      "results": [
+        {
+          "repository": "thecybersandeep/MobApp-DataExtractor",
+          "url": "https://github.com/thecybersandeep/MobApp-DataExtractor",
+          "description_excerpt": "A tool for listing and extracting installed Android APKs and decrypted iOS IPAs (plus app storage) from rooted or jailbroken devices.",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 30
+        },
+        {
+          "repository": "mash-up-kr/mobalmobal_android",
+          "url": "https://github.com/mash-up-kr/mobalmobal_android",
+          "description_excerpt": "",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 8905
+        },
+        {
+          "repository": "pcalabrese/Mobike-MOBAPP",
+          "url": "https://github.com/pcalabrese/Mobike-MOBAPP",
+          "description_excerpt": "Mobike Repository for Mobile App (ANDROID)",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 6076
+        },
+        {
+          "repository": "suwasto/MobARK",
+          "url": "https://github.com/suwasto/MobARK",
+          "description_excerpt": "MobARK is a security research platform for Android and iOS apps. Use it for security review, pentesting support, or general AppSec work. The static analyzer handles APK and IPA files with androguard, Semgrep, and Gitleak",
+          "description_truncated": true,
+          "github_detected_license": "NOASSERTION",
+          "repository_size_kib_metadata": 73690
+        },
+        {
+          "repository": "naumnek/MOBA-ActionMagic",
+          "url": "https://github.com/naumnek/MOBA-ActionMagic",
+          "description_excerpt": "(Last Project) 3D-Second-Person-MOBA-Action-RPG for Android",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 44886
+        },
+        {
+          "repository": "asanfilov/MobApps-An-Dz",
+          "url": "https://github.com/asanfilov/MobApps-An-Dz",
+          "description_excerpt": "AMBAR: Android Marker-Based Augmented Reality mobile app. Team: Aleksandr, Lloyd",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 175625
+        },
+        {
+          "repository": "Dsc-Dce/Marvel_mobApp",
+          "url": "https://github.com/Dsc-Dce/Marvel_mobApp",
+          "description_excerpt": "MARVEL-ANDROID-APP",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 6463
+        },
+        {
+          "repository": "lenovo-sm8250-devs/android_device_moba",
+          "url": "https://github.com/lenovo-sm8250-devs/android_device_moba",
+          "description_excerpt": "Device Tree for Lenovo Legion Pro L79031",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 55648
+        },
+        {
+          "repository": "MobAI-App/mobai-e2e",
+          "url": "https://github.com/MobAI-App/mobai-e2e",
+          "description_excerpt": "MobAI for tester-army e2e: a device engine for iOS and Android, and a reporter for the MobAI testing dashboard",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 111
+        },
+        {
+          "repository": "Fufanu/mobApps-OSM",
+          "url": "https://github.com/Fufanu/mobApps-OSM",
+          "description_excerpt": "mobApps HA13 Android OSM",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 6025
+        }
+      ]
+    },
+    {
+      "query": "moba godot",
+      "endpoint": "https://api.github.com/search/repositories",
+      "sort": "GitHub relevance default",
+      "per_page": 10,
+      "page": 1,
+      "total_count": 34,
+      "incomplete_results": false,
+      "response_bytes": 55868,
+      "response_sha256": "20557ab1914fe756f2af9ca7f0f8ae0a92ad221a0b90d8b2afa332d649f7cecd",
+      "results": [
+        {
+          "repository": "spicylobstergames/shotcaller-godot",
+          "url": "https://github.com/spicylobstergames/shotcaller-godot",
+          "description_excerpt": "2D top-down 1v1 MOBA with autonomous units. Design doc below 👇 ",
+          "description_truncated": false,
+          "github_detected_license": "NOASSERTION",
+          "repository_size_kib_metadata": 19069
+        },
+        {
+          "repository": "metanoia83/Godot_3D_MOBA_Prototype",
+          "url": "https://github.com/metanoia83/Godot_3D_MOBA_Prototype",
+          "description_excerpt": "A rough implementation of a 3D MOBA game made with Godot 3.4.2 using GLES2",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 100851
+        },
+        {
+          "repository": "ColinGilbert/godot-moba",
+          "url": "https://github.com/ColinGilbert/godot-moba",
+          "description_excerpt": "Repo for the \"Create Your 3D MOBA Game for Mobile Using Godot\" course on Udemy",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 87507
+        },
+        {
+          "repository": "Alexnortung/flufwars",
+          "url": "https://github.com/Alexnortung/flufwars",
+          "description_excerpt": "A CTF-style, moba, top-down shooter made in Godot.",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 7036
+        },
+        {
+          "repository": "DaughterOfZaun/League-of-Jinx",
+          "url": "https://github.com/DaughterOfZaun/League-of-Jinx",
+          "description_excerpt": "(WIP) Planned: League of Legends MOBA clone in Godot Engine providing API similar to the old original scripts",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 282908
+        },
+        {
+          "repository": "ColinGilbert/godot-moba-server",
+          "url": "https://github.com/ColinGilbert/godot-moba-server",
+          "description_excerpt": "Server-side code for \"Create Your 3D MOBA Game for Mobile Using Godot\" on UDemy",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 8335
+        },
+        {
+          "repository": "ohmree/le-gam",
+          "url": "https://github.com/ohmree/le-gam",
+          "description_excerpt": "A MOBA-ARPG-RTS-ish game in Godot maybe?",
+          "description_truncated": false,
+          "github_detected_license": "AGPL-3.0",
+          "repository_size_kib_metadata": 910
+        },
+        {
+          "repository": "CosineGaming/nv-moba",
+          "url": "https://github.com/CosineGaming/nv-moba",
+          "description_excerpt": "A team game with an emphasis on movement (with no shooting), inspired by Overwatch and Zineth",
+          "description_truncated": false,
+          "github_detected_license": "AGPL-3.0",
+          "repository_size_kib_metadata": 14544
+        },
+        {
+          "repository": "ilioscio/mftr",
+          "url": "https://github.com/ilioscio/mftr",
+          "description_excerpt": "MFTR — Moba For The Rest (of us): an open-source, self-hostable 5v5 MOBA with honest, dodgeable skillshots. Rust + Godot.",
+          "description_truncated": false,
+          "github_detected_license": "AGPL-3.0",
+          "repository_size_kib_metadata": 31284
+        },
+        {
+          "repository": "01rasmus/moba-health-bars-godot",
+          "url": "https://github.com/01rasmus/moba-health-bars-godot",
+          "description_excerpt": "A sample project of how one could implement healthbars for minion and player units in a moba game.",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 15
+        }
+      ]
+    },
+    {
+      "query": "moba license:mit",
+      "endpoint": "https://api.github.com/search/repositories",
+      "sort": "GitHub relevance default",
+      "per_page": 10,
+      "page": 1,
+      "total_count": 814,
+      "incomplete_results": false,
+      "response_bytes": 54947,
+      "response_sha256": "3c805b53ef1bbad917740356e6fb8b08dbb7ff17dc789a8335f043eaf9f43ab4",
+      "results": [
+        {
+          "repository": "MoonshotAI/MoBA",
+          "url": "https://github.com/MoonshotAI/MoBA",
+          "description_excerpt": "MoBA: Mixture of Block Attention for Long-Context LLMs",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 2518
+        },
+        {
+          "repository": "nibsbin/LockstepFramework",
+          "url": "https://github.com/nibsbin/LockstepFramework",
+          "description_excerpt": "Framework for lockstep RTS, TD, and MOBA games.",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 13896
+        },
+        {
+          "repository": "yasgamesdev/MOBA_CSharp_Unity",
+          "url": "https://github.com/yasgamesdev/MOBA_CSharp_Unity",
+          "description_excerpt": "Framework for MOBA games. The server does not depend on Unity. Run on Linux.",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 60535
+        },
+        {
+          "repository": "topfullstack/node-vue-moba",
+          "url": "https://github.com/topfullstack/node-vue-moba",
+          "description_excerpt": "Node.js (Express.js) + Vue.js (Element UI) 全栈开发王者荣耀手机端官网和管理后台",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 8529
+        },
+        {
+          "repository": "nidaynere/easymoba",
+          "url": "https://github.com/nidaynere/easymoba",
+          "description_excerpt": "moba game template for unity.",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 122682
+        },
+        {
+          "repository": "wqaetly/NKGMobaBasedOnET",
+          "url": "https://github.com/wqaetly/NKGMobaBasedOnET",
+          "description_excerpt": "基于ET框架致敬LOL的Moba游戏，提供完整的状态帧同步框架，包含预测回滚逻辑，基于双端行为树的技能系统，更多精彩等你发现！Based on the ET framework, we pay tribute to LOL's Moba game, providing a complete state frame synchronization framework, including predictive rollback logic",
+          "description_truncated": true,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 318634
+        },
+        {
+          "repository": "MOBATSim/MOBATSim",
+          "url": "https://github.com/MOBATSim/MOBATSim",
+          "description_excerpt": "MOBATSim (Model-based Autonomous Traffic Simulation Framework)",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 41940
+        },
+        {
+          "repository": "Eilte/Mobaxterm-Chinese",
+          "url": "https://github.com/Eilte/Mobaxterm-Chinese",
+          "description_excerpt": "Mobaxterm simplified Chinese version. Mobaxterm 的简体中文版.",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 547
+        },
+        {
+          "repository": "yasgamesdev/OpenMOBA",
+          "url": "https://github.com/yasgamesdev/OpenMOBA",
+          "description_excerpt": "OpenSource MOBA(Multiplayer online battle arena) made by Unreal Engine 4. No C++. Blueprint only.",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 15641
+        },
+        {
+          "repository": "moonad/TaelinArena",
+          "url": "https://github.com/moonad/TaelinArena",
+          "description_excerpt": "[outdated] A moddable MOBA in Formality",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 223287
+        }
+      ]
+    },
+    {
+      "query": "moba license:apache-2.0",
+      "endpoint": "https://api.github.com/search/repositories",
+      "sort": "GitHub relevance default",
+      "per_page": 10,
+      "page": 1,
+      "total_count": 126,
+      "incomplete_results": false,
+      "response_bytes": 54850,
+      "response_sha256": "f50dbdb22b072fe1d59a32028123f840dfb5516439e8131f9b78bec6dc8d719a",
+      "results": [
+        {
+          "repository": "gameguild-gg/mobagen",
+          "url": "https://github.com/gameguild-gg/mobagen",
+          "description_excerpt": "MoBaGEn - Module Based Game Engine - Educational tool to teach game programming concepts",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 18522
+        },
+        {
+          "repository": "OthmaneBlial/MobaRust",
+          "url": "https://github.com/OthmaneBlial/MobaRust",
+          "description_excerpt": "Free, open-source MobaXterm alternative built with Rust: SSH, SFTP, SCP, terminals, tunnels, serial, Telnet, diagnostics, and remote administration.",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 17621
+        },
+        {
+          "repository": "MobAI-App/mobai-mcp",
+          "url": "https://github.com/MobAI-App/mobai-mcp",
+          "description_excerpt": "",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 181
+        },
+        {
+          "repository": "tammukul/UNION-OpenSource-MOBA",
+          "url": "https://github.com/tammukul/UNION-OpenSource-MOBA",
+          "description_excerpt": "Open Source MOBA made with Unity using PlayFab and Photon",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 189821
+        },
+        {
+          "repository": "beykery/jkcp",
+          "url": "https://github.com/beykery/jkcp",
+          "description_excerpt": "kcp for java . 适用于moba，视频加速等需要极速传输场景的应用，c#版本(客户端)请参考：https://github.com/beykery/kcp4sharp",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 110
+        },
+        {
+          "repository": "l42111996/java-Kcp",
+          "url": "https://github.com/l42111996/java-Kcp",
+          "description_excerpt": "基于java的netty实现的可靠udp网络库(kcp算法)，包含fec实现，可用于游戏，视频，加速等业务",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 516
+        },
+        {
+          "repository": "ketoo/NoahGameFrame",
+          "url": "https://github.com/ketoo/NoahGameFrame",
+          "description_excerpt": "A fast, scalable, distributed game server engine/framework for C++, include the actor library, network library, can be used as a  real time multiplayer game engine ( MMO RPG/MOBA ), which support C#/Lua script/ Unity3d, ",
+          "description_truncated": true,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 30166
+        },
+        {
+          "repository": "gfandada/gserver",
+          "url": "https://github.com/gfandada/gserver",
+          "description_excerpt": "通用的实时流golang框架，可以方便的创建游戏服务/聊天服务等",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 2990
+        },
+        {
+          "repository": "beykery/kcp4sharp",
+          "url": "https://github.com/beykery/kcp4sharp",
+          "description_excerpt": "kcp for c#. 适用于moba，视频加速等需要极速传输场景的应用，此项目适用于客户端应用，服务器端可以参考jkcp：https://github.com/beykery/jkcp",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 22
+        },
+        {
+          "repository": "FelipeFTN/Warfrost",
+          "url": "https://github.com/FelipeFTN/Warfrost",
+          "description_excerpt": "Warfrost is a RTS & Moba multiplayer Game",
+          "description_truncated": false,
+          "github_detected_license": "Apache-2.0",
+          "repository_size_kib_metadata": 6247
+        }
+      ]
+    },
+    {
+      "query": "\"Mobile Legends\" source fork:false",
+      "endpoint": "https://api.github.com/search/repositories",
+      "sort": "GitHub relevance default",
+      "per_page": 10,
+      "page": 1,
+      "total_count": 12,
+      "incomplete_results": false,
+      "response_bytes": 132872,
+      "response_sha256": "1b1cc6e2af89bb734010c44efe09756ba091e87ef6fede34bc2ffab493cbd73e",
+      "results": [
+        {
+          "repository": "andrd3v/mobile_legend",
+          "url": "https://github.com/andrd3v/mobile_legend",
+          "description_excerpt": "Mobile legend source hack",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 8307
+        },
+        {
+          "repository": "XFLOW13/Source-Mod-Menu-MLBB",
+          "url": "https://github.com/XFLOW13/Source-Mod-Menu-MLBB",
+          "description_excerpt": "This is Source Code Mod Menu of Mobile legend 2023",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 0
+        },
+        {
+          "repository": "JcfeJohn/Mobile-Legends-Data-API",
+          "url": "https://github.com/JcfeJohn/Mobile-Legends-Data-API",
+          "description_excerpt": "Documentation for Mobile Legends: Bang Bang API. Oh, you thought this is the API source code?",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 0
+        },
+        {
+          "repository": "The-JDdev/Heroes-Arena",
+          "url": "https://github.com/The-JDdev/Heroes-Arena",
+          "description_excerpt": "⚔ Heroes Arena - 5v5 MOBA Game | Full-featured open-source Mobile Legends-style game built with Kotlin",
+          "description_truncated": false,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 99
+        },
+        {
+          "repository": "vin-03/web-scraper-mlbb-heroInfo",
+          "url": "https://github.com/vin-03/web-scraper-mlbb-heroInfo",
+          "description_excerpt": "A Puppeteer-based web scraper that extracts basic hero information from Mobile Legends: Bang Bang sources.  Collects essential hero metadata including ID, name, role, lane assignments, and icon URLs.",
+          "description_truncated": false,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 24
+        },
+        {
+          "repository": "vin-03/web-scraper-mlbb-herocounter",
+          "url": "https://github.com/vin-03/web-scraper-mlbb-herocounter",
+          "description_excerpt": "A Puppeteer-based web scraper that extracts hero counter relationships from Mobile Legends: Bang Bang sources. Collects hero counter data including counters, synergies, and matchup information for strategic gameplay anal",
+          "description_truncated": true,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 29
+        },
+        {
+          "repository": "uday-khan/Termux",
+          "url": "https://github.com/uday-khan/Termux",
+          "description_excerpt": "KUMPULAN CODE TERMUX LENGKAP   | SPAM CHAT WHATSAPP || nggk usah nyepam gw -_*   atau hp lu gw ledakin!!#@vms $ pkg update && pkg upgrade Setelah mengupdate dan mengupgrade termux ketikan perintah berikut : $ pkg install",
+          "description_truncated": true,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 6
+        },
+        {
+          "repository": "zall-4RT/kumpulan-code-termuxs-lenkap",
+          "url": "https://github.com/zall-4RT/kumpulan-code-termuxs-lenkap",
+          "description_excerpt": "termux KUMPULAN CODE TERMUX LENGKAP   | SPAM CHAT WHATSAPP || nggk usah nyepam gw -_*   atau hp lu gw ledakin!!#@vms $ pkg update && pkg upgrade Setelah mengupdate dan mengupgrade termux ketikan perintah berikut : $ pkg ",
+          "description_truncated": true,
+          "github_detected_license": "MIT",
+          "repository_size_kib_metadata": 1
+        },
+        {
+          "repository": "Rizalcahdemak/akun-termux",
+          "url": "https://github.com/Rizalcahdemak/akun-termux",
+          "description_excerpt": "Skip to content arysandi/kumpulan kode di termux Created 3 years ago • Report abuse Code Revisions 1 Stars 105 Forks 8 kumpulan kode di termux KUMPULAN CODE TERMUX LENGKAP   | SPAM CHAT WHATSAPP || nggk usah nyepam gw -_",
+          "description_truncated": true,
+          "github_detected_license": null,
+          "repository_size_kib_metadata": 9
+        },
+        {
+          "repository": "wahid987654321/hecker",
+          "url": "https://github.com/wahid987654321/hecker",
+          "description_excerpt": "KUMPULAN CODE TERMUX LENGKAP   | SPAM CHAT WHATSAPP || nggk usah nyepam gw -_*   atau hp lu gw ledakin!!#@vms $ pkg update && pkg upgrade Setelah mengupdate dan mengupgrade termux ketikan perintah berikut : $ pkg install",
+          "description_truncated": true,
+          "github_detected_license": "GPL-3.0",
+          "repository_size_kib_metadata": 21
+        }
+      ]
+    }
+  ],
+  "mlbb_finding": {
+    "status": "no_credible_complete_reusable_source_found_in_sample",
+    "basis": "Selected MLBB-source searches returned mod-menu/external/region/API/web projects or unrelated results. No sampled result established authorized complete client+server+assets+build provenance. No mod-menu code/archive or commercial client downloaded.",
+    "not_claimed": [
+      "No MLBB source exists anywhere",
+      "A repository license legitimizes third-party game material",
+      "A client binary supplies absent server source",
+      "REA reconstructs an entire commercial game"
+    ]
+  },
+  "sources": [
+    {
+      "id": "godotengine--godot-demo-projects",
+      "repository": "https://github.com/godotengine/godot-demo-projects",
+      "resolved_commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+      "disposition": "code_candidate",
+      "license_scope": "MIT for reviewed scripts; demo assets need per-file review",
+      "proposed_use_and_limits": "Use touch-index/deadzone/action-routing ideas or selected attributed code in an isolated original mobile fixture. Master is development branch; 4.6 branch lookup failed422. Actual4.6.3 import/device tests required.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "path": "LICENSE.md",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "api_url": "https://api.github.com/repos/godotengine/godot-demo-projects/contents/LICENSE.md?ref=b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/LICENSE.md",
+          "retrieved_at_utc": "2026-10-18T03:13:58.109184+00:00",
+          "exit_code": 0,
+          "sha256": "0339177149b474f7ff676d32218ecb3a8f2538955610023c3769763720d09e4c",
+          "bytes": 1134,
+          "git_blob_sha": "05519693673e35cc80bba699e69af3de1d9886d7",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              21
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 21,
+          "license_excerpt": "Copyright (c) 2014-present Godot Engine contributors. \\\nCopyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+        },
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "path": "README.md",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "api_url": "https://api.github.com/repos/godotengine/godot-demo-projects/contents/README.md?ref=b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:58.021830+00:00",
+          "exit_code": 0,
+          "sha256": "4c121fc88a1412b8e381263146ac67937c485386e79641569117a6516dd64ba3",
+          "bytes": 2263,
+          "git_blob_sha": "088017a0aa264ae79a20704c2fdefa13fb479612",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              52
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 52
+        },
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "path": "3d/platformer/touch_screen_ui.gd",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "api_url": "https://api.github.com/repos/godotengine/godot-demo-projects/contents/3d/platformer/touch_screen_ui.gd?ref=b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/platformer/touch_screen_ui.gd",
+          "retrieved_at_utc": "2026-10-18T03:13:57.914287+00:00",
+          "exit_code": 0,
+          "sha256": "58af88d0ef1b3aa55d0328bf3eadec5259d1756487c2b786853603e87e9e856c",
+          "bytes": 108,
+          "git_blob_sha": "6a1468a11154c822d62184e46817110a58c704b4",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              7
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 7
+        },
+        {
+          "repo": "godotengine/godot-demo-projects",
+          "path": "3d/platformer/touch_screen_ui/virtual_joystick/virtual_joystick.gd",
+          "commit": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "api_url": "https://api.github.com/repos/godotengine/godot-demo-projects/contents/3d/platformer/touch_screen_ui/virtual_joystick/virtual_joystick.gd?ref=b761b4cd5718a7118f2c95eb55f181d0a5f004f1",
+          "url": "https://github.com/godotengine/godot-demo-projects/blob/b761b4cd5718a7118f2c95eb55f181d0a5f004f1/3d/platformer/touch_screen_ui/virtual_joystick/virtual_joystick.gd",
+          "retrieved_at_utc": "2026-10-18T03:13:57.979218+00:00",
+          "exit_code": 0,
+          "sha256": "2ba3c815ca868a1041365ddf672a913a8e2c8cfb974802a727a734788a2ad95b",
+          "bytes": 6062,
+          "git_blob_sha": "c3f2aebc8a5680192fdd14734786464ff11a9e55",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              175
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 175
+        }
+      ]
+    },
+    {
+      "id": "MarcoFazioRandom--Virtual-Joystick-Godot",
+      "repository": "https://github.com/MarcoFazioRandom/Virtual-Joystick-Godot",
+      "resolved_commit": "b90891ee990881757105883677adbb619f4c319c",
+      "disposition": "attribution_support",
+      "license_scope": "MIT",
+      "proposed_use_and_limits": "Credited origin of the Godot demo joystick; current license read. No claim that current upstream code is byte-identical to the demo copy.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "MarcoFazioRandom/Virtual-Joystick-Godot",
+          "path": "LICENSE",
+          "commit": "b90891ee990881757105883677adbb619f4c319c",
+          "requested_ref": "head",
+          "api_url": "https://api.github.com/repos/MarcoFazioRandom/Virtual-Joystick-Godot/contents/LICENSE?ref=b90891ee990881757105883677adbb619f4c319c",
+          "url": "https://github.com/MarcoFazioRandom/Virtual-Joystick-Godot/blob/b90891ee990881757105883677adbb619f4c319c/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:15:04.752585+00:00",
+          "exit_code": 0,
+          "sha256": "a87d4f6c9452b06953528059f3240d70808c5ed9b937913704f04532d58faa69",
+          "bytes": 1068,
+          "git_blob_sha": "66f9808d0e3cbcb02b31c24087254b1db012b84d",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              21
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 21,
+          "license_excerpt": "MIT License\n\nCopyright (c) 2019 Marco Fazio\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE."
+        }
+      ]
+    },
+    {
+      "id": "heroiclabs--nakama",
+      "repository": "https://github.com/heroiclabs/nakama",
+      "resolved_commit": "7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+      "disposition": "optional_server_spike",
+      "license_scope": "Apache-2.0; vendored dependencies separate",
+      "proposed_use_and_limits": "Self-hosted services and authoritative match extension candidate. No server installed/executed; no evidence for YUGA12-player authority/performance.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "heroiclabs/nakama",
+          "path": "LICENSE",
+          "commit": "7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+          "api_url": "https://api.github.com/repos/heroiclabs/nakama/contents/LICENSE?ref=7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+          "url": "https://github.com/heroiclabs/nakama/blob/7c94b8f3aa3a7550444a0c2cffee0969223f1ed9/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:13:58.322508+00:00",
+          "exit_code": 0,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358,
+          "git_blob_sha": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              15
+            ],
+            [
+              90,
+              129
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 202,
+          "license_excerpt": "\n                                 Apache License\n                           Version 2.0, January 2004\n                        http://www.apache.org/licenses/\n"
+        },
+        {
+          "repo": "heroiclabs/nakama",
+          "path": "README.md",
+          "commit": "7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+          "api_url": "https://api.github.com/repos/heroiclabs/nakama/contents/README.md?ref=7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+          "url": "https://github.com/heroiclabs/nakama/blob/7c94b8f3aa3a7550444a0c2cffee0969223f1ed9/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:58.353750+00:00",
+          "exit_code": 0,
+          "sha256": "6469e75be4292402ed2e7b22bf58bd0d5cccceadaaa514c5b53588a5aceb5129",
+          "bytes": 13291,
+          "git_blob_sha": "67e333af7aac48a2a589a9880cb549d1fc72e9c2",
+          "read_line_ranges_1_based": [
+            [
+              15,
+              34
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 188
+        },
+        {
+          "repo": "heroiclabs/nakama",
+          "path": "server/runtime_match_core.go",
+          "commit": "7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+          "api_url": "https://api.github.com/repos/heroiclabs/nakama/contents/server/runtime_match_core.go?ref=7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+          "url": "https://github.com/heroiclabs/nakama/blob/7c94b8f3aa3a7550444a0c2cffee0969223f1ed9/server/runtime_match_core.go",
+          "retrieved_at_utc": "2026-10-18T03:13:58.522287+00:00",
+          "exit_code": 1,
+          "error": "gh: Not Found (HTTP 404)",
+          "read_line_ranges_1_based": []
+        },
+        {
+          "repo": "heroiclabs/nakama",
+          "path": "server/runtime_go_match_core.go",
+          "commit": "7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+          "requested_ref": "head",
+          "api_url": "https://api.github.com/repos/heroiclabs/nakama/contents/server/runtime_go_match_core.go?ref=7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+          "url": "https://github.com/heroiclabs/nakama/blob/7c94b8f3aa3a7550444a0c2cffee0969223f1ed9/server/runtime_go_match_core.go",
+          "retrieved_at_utc": "2026-10-18T03:15:05.131819+00:00",
+          "exit_code": 0,
+          "sha256": "92905660d99f9efb438c331497128a6b3ca62a561aeb38187cf9886558ede328",
+          "bytes": 11963,
+          "git_blob_sha": "989df565dcdcaf1cc4b2f7a505bf8eaceb047c49",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              125
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 397
+        }
+      ]
+    },
+    {
+      "id": "heroiclabs--nakama-godot",
+      "repository": "https://github.com/heroiclabs/nakama-godot",
+      "resolved_commit": "6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21",
+      "disposition": "optional_client_spike",
+      "license_scope": "Apache-2.0",
+      "proposed_use_and_limits": "Godot4 SDK using WebSocketPeer. Server prototype must validate reconnect/lifecycle and authority; README bridge examples do not make the client authoritative game secure.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "heroiclabs/nakama-godot",
+          "path": "LICENSE",
+          "commit": "6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21",
+          "api_url": "https://api.github.com/repos/heroiclabs/nakama-godot/contents/LICENSE?ref=6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21",
+          "url": "https://github.com/heroiclabs/nakama-godot/blob/6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:13:58.715775+00:00",
+          "exit_code": 0,
+          "sha256": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+          "bytes": 11359,
+          "git_blob_sha": "6b0b1270ff0ca8f03867efcd09ba6ddb6392b1e1",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              15
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 203,
+          "license_excerpt": "\n                                 Apache License\n                           Version 2.0, January 2004\n                        http://www.apache.org/licenses/\n"
+        },
+        {
+          "repo": "heroiclabs/nakama-godot",
+          "path": "README.md",
+          "commit": "6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21",
+          "api_url": "https://api.github.com/repos/heroiclabs/nakama-godot/contents/README.md?ref=6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21",
+          "url": "https://github.com/heroiclabs/nakama-godot/blob/6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:58.625787+00:00",
+          "exit_code": 0,
+          "sha256": "ec5717b9ca46dc3b44b792c047b8d1f4477a6371d4ed4f03c4f250360af14003",
+          "bytes": 13543,
+          "git_blob_sha": "1fe2ca1f922b46a5751399c35c417866e98ab6cf",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              140
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 370
+        },
+        {
+          "repo": "heroiclabs/nakama-godot",
+          "path": "addons/com.heroiclabs.nakama/socket/NakamaSocketAdapter.gd",
+          "commit": "6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21",
+          "api_url": "https://api.github.com/repos/heroiclabs/nakama-godot/contents/addons/com.heroiclabs.nakama/socket/NakamaSocketAdapter.gd?ref=6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21",
+          "url": "https://github.com/heroiclabs/nakama-godot/blob/6dc7b3951d98cc3807cafb3f1dbc9b44d9b98d21/addons/com.heroiclabs.nakama/socket/NakamaSocketAdapter.gd",
+          "retrieved_at_utc": "2026-10-18T03:13:58.867111+00:00",
+          "exit_code": 0,
+          "sha256": "b47359584059a35417edaa1d949641d492f2508d62c615343d6767278163ccba",
+          "bytes": 2475,
+          "git_blob_sha": "218b580b744296c33e1c2353a51b57026791e218",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              75
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 75
+        }
+      ]
+    },
+    {
+      "id": "heroiclabs--nakama-godot-demo",
+      "repository": "https://github.com/heroiclabs/nakama-godot-demo",
+      "resolved_commit": "3957c8cbb7ead4df177ecd513d6821770c93c6ec",
+      "disposition": "reference_only",
+      "license_scope": "Apache-2.0 code; CC-BY-SA-4.0 images/audio per LICENSE",
+      "proposed_use_and_limits": "Study session/storage/disconnection concepts. No sample assets adopted; compatibility and data handling untested.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "heroiclabs/nakama-godot-demo",
+          "path": "LICENSE",
+          "commit": "3957c8cbb7ead4df177ecd513d6821770c93c6ec",
+          "api_url": "https://api.github.com/repos/heroiclabs/nakama-godot-demo/contents/LICENSE?ref=3957c8cbb7ead4df177ecd513d6821770c93c6ec",
+          "url": "https://github.com/heroiclabs/nakama-godot-demo/blob/3957c8cbb7ead4df177ecd513d6821770c93c6ec/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:13:58.947214+00:00",
+          "exit_code": 0,
+          "sha256": "c65d93bcbbcd2bfab58fcd89b3927f422e19e15e7a468f8d6a2b785193ea5d44",
+          "bytes": 11624,
+          "git_blob_sha": "e187945f978fa873b2ddce7c0773c955cb932603",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              7
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 207,
+          "license_excerpt": "This project is dual-licensed:\n\n- The source code is available under the Apache 2.0 license.\n- Art assets (images, audio files) are [CC-By-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). You should attribute them to Heroic Labs (https://heroiclabs.com/).\n\n\n                                 Apache License"
+        },
+        {
+          "repo": "heroiclabs/nakama-godot-demo",
+          "path": "README.md",
+          "commit": "3957c8cbb7ead4df177ecd513d6821770c93c6ec",
+          "api_url": "https://api.github.com/repos/heroiclabs/nakama-godot-demo/contents/README.md?ref=3957c8cbb7ead4df177ecd513d6821770c93c6ec",
+          "url": "https://github.com/heroiclabs/nakama-godot-demo/blob/3957c8cbb7ead4df177ecd513d6821770c93c6ec/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:59.102227+00:00",
+          "exit_code": 0,
+          "sha256": "93d60f3bcd94cb95af778760f030f30bb8746934815830a5068acea2742dc335",
+          "bytes": 4424,
+          "git_blob_sha": "1446a7597b6963c2e80bf7687e1ca59d1916ddf8",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              40
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 93
+        }
+      ]
+    },
+    {
+      "id": "heroiclabs--fishgame-godot",
+      "repository": "https://github.com/heroiclabs/fishgame-godot",
+      "resolved_commit": "252413491a2298127ac350059a5cfb84173b41be",
+      "disposition": "code_reference_assets_rejected",
+      "license_scope": "Apache-2.0 root code; MIT exceptions per README; CC-BY-NC-4.0 main assets; Kenney subfolder CC0",
+      "proposed_use_and_limits": "Legacy Godot3-style setget/master syntax;2-4-player demo. Reference lifecycle only; no proof of server authority or mobile suitability. Exclude noncommercial assets from intended production bundle.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": true,
+      "file_receipts": [
+        {
+          "repo": "heroiclabs/fishgame-godot",
+          "path": "LICENSE.txt",
+          "commit": "252413491a2298127ac350059a5cfb84173b41be",
+          "api_url": "https://api.github.com/repos/heroiclabs/fishgame-godot/contents/LICENSE.txt?ref=252413491a2298127ac350059a5cfb84173b41be",
+          "url": "https://github.com/heroiclabs/fishgame-godot/blob/252413491a2298127ac350059a5cfb84173b41be/LICENSE.txt",
+          "retrieved_at_utc": "2026-10-18T03:13:59.166510+00:00",
+          "exit_code": 0,
+          "sha256": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+          "bytes": 11359,
+          "git_blob_sha": "6b0b1270ff0ca8f03867efcd09ba6ddb6392b1e1",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              15
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 203,
+          "license_excerpt": "\n                                 Apache License\n                           Version 2.0, January 2004\n                        http://www.apache.org/licenses/\n"
+        },
+        {
+          "repo": "heroiclabs/fishgame-godot",
+          "path": "README.md",
+          "commit": "252413491a2298127ac350059a5cfb84173b41be",
+          "api_url": "https://api.github.com/repos/heroiclabs/fishgame-godot/contents/README.md?ref=252413491a2298127ac350059a5cfb84173b41be",
+          "url": "https://github.com/heroiclabs/fishgame-godot/blob/252413491a2298127ac350059a5cfb84173b41be/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:59.373469+00:00",
+          "exit_code": 0,
+          "sha256": "b263ba54e23e01238b2695aae6499b2601cfc60203d2252072b136afee36c191",
+          "bytes": 4703,
+          "git_blob_sha": "cc271ea66ec778c6ff889c1acdc39b46403513cd",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              20
+            ],
+            [
+              87,
+              103
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 103
+        },
+        {
+          "repo": "heroiclabs/fishgame-godot",
+          "path": "assets/LICENSE.txt",
+          "commit": "252413491a2298127ac350059a5cfb84173b41be",
+          "api_url": "https://api.github.com/repos/heroiclabs/fishgame-godot/contents/assets/LICENSE.txt?ref=252413491a2298127ac350059a5cfb84173b41be",
+          "url": "https://github.com/heroiclabs/fishgame-godot/blob/252413491a2298127ac350059a5cfb84173b41be/assets/LICENSE.txt",
+          "retrieved_at_utc": "2026-10-18T03:13:59.297096+00:00",
+          "exit_code": 0,
+          "sha256": "3110aa7d6f483a3343e309f6bc28d7f70e8b6b0ed302bed784bdb978b29b1f51",
+          "bytes": 277,
+          "git_blob_sha": "363d8c00ac94487f4f54e8984f2c59169b71bf06",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              1
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 1,
+          "license_excerpt": "[Fish Game media assets](https://github.com/heroiclabs/fishgame-godot/tree/main/assets) © 2021 by [Heroic Labs](https://heroiclabs.com/), unless specified otherwise in their respective folder, are licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)"
+        },
+        {
+          "repo": "heroiclabs/fishgame-godot",
+          "path": "assets/kenney-platform-deluxe/license.txt",
+          "commit": "252413491a2298127ac350059a5cfb84173b41be",
+          "api_url": "https://api.github.com/repos/heroiclabs/fishgame-godot/contents/assets/kenney-platform-deluxe/license.txt?ref=252413491a2298127ac350059a5cfb84173b41be",
+          "url": "https://github.com/heroiclabs/fishgame-godot/blob/252413491a2298127ac350059a5cfb84173b41be/assets/kenney-platform-deluxe/license.txt",
+          "retrieved_at_utc": "2026-10-18T03:13:59.509146+00:00",
+          "exit_code": 0,
+          "sha256": "7b92e3d9cadb7ff65203935da94584488847097321a3b41e869ea067d3cb8198",
+          "bytes": 479,
+          "git_blob_sha": "102d9224134ddc366a362044d62d240f5702b650",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              14
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 14,
+          "license_excerpt": "\n###############################################################################\n\n\tPlatformer Art Complete Pack by Kenney Vleugels (www.kenney.nl)\n\n\t------------------------------\n\t\t\n\t\tLicense (CC0)\n\thttp://creativecommons.org/publicdomain/zero/1.0/\n\n\tYou may use these graphics in personal and commercial projects.\n\tCredit (Kenney or www.kenney.nl) would be nice but is not mandatory.\n\n###############################################################################"
+        },
+        {
+          "repo": "heroiclabs/fishgame-godot",
+          "path": "autoload/OnlineMatch.gd",
+          "commit": "252413491a2298127ac350059a5cfb84173b41be",
+          "api_url": "https://api.github.com/repos/heroiclabs/fishgame-godot/contents/autoload/OnlineMatch.gd?ref=252413491a2298127ac350059a5cfb84173b41be",
+          "url": "https://github.com/heroiclabs/fishgame-godot/blob/252413491a2298127ac350059a5cfb84173b41be/autoload/OnlineMatch.gd",
+          "retrieved_at_utc": "2026-10-18T03:13:59.569444+00:00",
+          "exit_code": 0,
+          "sha256": "71eefc4bbb1148b4f4a551c21f86691af0734a1067d90cc24b948e59ba71f947",
+          "bytes": 7636,
+          "git_blob_sha": "4e3107ad7d58850cb1eeed2b0f056bb750ce4b8a",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              80
+            ],
+            [
+              224,
+              227
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 255
+        },
+        {
+          "repo": "heroiclabs/fishgame-godot",
+          "path": "project.godot",
+          "commit": "252413491a2298127ac350059a5cfb84173b41be",
+          "api_url": "https://api.github.com/repos/heroiclabs/fishgame-godot/contents/project.godot?ref=252413491a2298127ac350059a5cfb84173b41be",
+          "url": "https://github.com/heroiclabs/fishgame-godot/blob/252413491a2298127ac350059a5cfb84173b41be/project.godot",
+          "retrieved_at_utc": "2026-10-18T03:13:59.590060+00:00",
+          "exit_code": 0,
+          "sha256": "52d467ed00065f43541d34c266ea901184ab01d570fc6e28ce7c7c0db363ffcb",
+          "bytes": 15548,
+          "git_blob_sha": "f7d02cb067515460fb40f0bac6fd5f535e01a108",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              40
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 360
+        }
+      ]
+    },
+    {
+      "id": "spicylobstergames--shotcaller-godot",
+      "repository": "https://github.com/spicylobstergames/shotcaller-godot",
+      "resolved_commit": "37dcfa91f15ca34b8eeb5cbab74b450a7326d457",
+      "disposition": "reject_code_and_asset_adoption",
+      "license_scope": "PolyForm-Noncommercial-1.0.0 code; CC-BY-NC-4.0 media",
+      "proposed_use_and_limits": "README future MIT-engine intent is not current permission. Source available prototype, not a permissive complete MOBA foundation. No code/art imported.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "spicylobstergames/shotcaller-godot",
+          "path": "LICENSE.md",
+          "commit": "37dcfa91f15ca34b8eeb5cbab74b450a7326d457",
+          "api_url": "https://api.github.com/repos/spicylobstergames/shotcaller-godot/contents/LICENSE.md?ref=37dcfa91f15ca34b8eeb5cbab74b450a7326d457",
+          "url": "https://github.com/spicylobstergames/shotcaller-godot/blob/37dcfa91f15ca34b8eeb5cbab74b450a7326d457/LICENSE.md",
+          "retrieved_at_utc": "2026-10-18T03:13:59.773348+00:00",
+          "exit_code": 0,
+          "sha256": "cfa26f1d440bcb7197803f1a85e694facea34d07c982b68ecf05872f703dfeb6",
+          "bytes": 336,
+          "git_blob_sha": "933617315bdff29793c026e6b3b54aa9870817d1",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              5
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 5,
+          "license_excerpt": "Shotcaller source code is Copyright (c) 2020-2022 The Spicy Lobster team \\\nand licensed as [PolyForm NonCommercial v1.0](https://polyformproject.org/licenses/noncommercial/1.0.0/).\n\nShotcaller media assets are Copyright (c) 2020-2022 The Spicy Lobster team \\\nand licensed as [CC BY-NC](https://creativecommons.org/licenses/by-nc/4.0/)."
+        },
+        {
+          "repo": "spicylobstergames/shotcaller-godot",
+          "path": "README.md",
+          "commit": "37dcfa91f15ca34b8eeb5cbab74b450a7326d457",
+          "api_url": "https://api.github.com/repos/spicylobstergames/shotcaller-godot/contents/README.md?ref=37dcfa91f15ca34b8eeb5cbab74b450a7326d457",
+          "url": "https://github.com/spicylobstergames/shotcaller-godot/blob/37dcfa91f15ca34b8eeb5cbab74b450a7326d457/README.md",
+          "retrieved_at_utc": "2026-10-18T03:13:59.810628+00:00",
+          "exit_code": 0,
+          "sha256": "6694d63020e16e3ca03abdf14152774adacbff3d32d0debef4f58f7b179ddb4c",
+          "bytes": 1901,
+          "git_blob_sha": "cb2f5fe76a134087f664ba0f4cb2e9ff1d22d376",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              23
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 23
+        },
+        {
+          "repo": "spicylobstergames/shotcaller-godot",
+          "path": "prototype/goap/game_logic/goals/walk_lane.gd",
+          "commit": "37dcfa91f15ca34b8eeb5cbab74b450a7326d457",
+          "api_url": "https://api.github.com/repos/spicylobstergames/shotcaller-godot/contents/prototype/goap/game_logic/goals/walk_lane.gd?ref=37dcfa91f15ca34b8eeb5cbab74b450a7326d457",
+          "url": "https://github.com/spicylobstergames/shotcaller-godot/blob/37dcfa91f15ca34b8eeb5cbab74b450a7326d457/prototype/goap/game_logic/goals/walk_lane.gd",
+          "retrieved_at_utc": "2026-10-18T03:13:59.920343+00:00",
+          "exit_code": 0,
+          "sha256": "685540a23416132c7bad71066f5f4fcdd6b2f52b253ef1b7939171aa2a2dd119",
+          "bytes": 1762,
+          "git_blob_sha": "b1f3f6488006b0b65d723f9f55187f022b721daa",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              39
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 62
+        },
+        {
+          "repo": "spicylobstergames/shotcaller-godot",
+          "path": "prototype/project.godot",
+          "commit": "37dcfa91f15ca34b8eeb5cbab74b450a7326d457",
+          "api_url": "https://api.github.com/repos/spicylobstergames/shotcaller-godot/contents/prototype/project.godot?ref=37dcfa91f15ca34b8eeb5cbab74b450a7326d457",
+          "url": "https://github.com/spicylobstergames/shotcaller-godot/blob/37dcfa91f15ca34b8eeb5cbab74b450a7326d457/prototype/project.godot",
+          "retrieved_at_utc": "2026-10-18T03:14:00.022300+00:00",
+          "exit_code": 0,
+          "sha256": "cb63cad051f09af7c70008316f36ece34d62858d3336944f6bc0e43588df7454",
+          "bytes": 5200,
+          "git_blob_sha": "c885daa1449ac0466721d1af2613dca6f6888cee",
+          "read_line_ranges_1_based": [],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 146
+        }
+      ]
+    },
+    {
+      "id": "01rasmus--moba-health-bars-godot",
+      "repository": "https://github.com/01rasmus/moba-health-bars-godot",
+      "resolved_commit": "9320ff30e496d41a494d49de45f3d6614b06a3ff",
+      "disposition": "small_code_reference",
+      "license_scope": "MIT",
+      "proposed_use_and_limits": "26-line reviewed healthbar has unbounded health/max ratio; not a finished HUD or full MOBA. No reason to replace current YUGA UI wholesale.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "01rasmus/moba-health-bars-godot",
+          "path": "LICENSE",
+          "commit": "9320ff30e496d41a494d49de45f3d6614b06a3ff",
+          "api_url": "https://api.github.com/repos/01rasmus/moba-health-bars-godot/contents/LICENSE?ref=9320ff30e496d41a494d49de45f3d6614b06a3ff",
+          "url": "https://github.com/01rasmus/moba-health-bars-godot/blob/9320ff30e496d41a494d49de45f3d6614b06a3ff/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:14:00.155753+00:00",
+          "exit_code": 0,
+          "sha256": "ab413d93565eae6b862ca543ae39e236a7c3837785aacc154ba6d03ea8decdf8",
+          "bytes": 1073,
+          "git_blob_sha": "7084a1addd7a630807773da463b439b8ab3a5416",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              21
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 21,
+          "license_excerpt": "MIT License\n\nCopyright (c) 2024 Rasmus Hallbäck\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE."
+        },
+        {
+          "repo": "01rasmus/moba-health-bars-godot",
+          "path": "README.md",
+          "commit": "9320ff30e496d41a494d49de45f3d6614b06a3ff",
+          "api_url": "https://api.github.com/repos/01rasmus/moba-health-bars-godot/contents/README.md?ref=9320ff30e496d41a494d49de45f3d6614b06a3ff",
+          "url": "https://github.com/01rasmus/moba-health-bars-godot/blob/9320ff30e496d41a494d49de45f3d6614b06a3ff/README.md",
+          "retrieved_at_utc": "2026-10-18T03:14:00.137606+00:00",
+          "exit_code": 0,
+          "sha256": "cd3a17e5b0cc2766111e83bc920722c2b60110fda8912d7641258040243916c0",
+          "bytes": 225,
+          "git_blob_sha": "a599b53b62385602d63351e0cc596e7bb26c54eb",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              4
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 4
+        },
+        {
+          "repo": "01rasmus/moba-health-bars-godot",
+          "path": "Healthbar.gd",
+          "commit": "9320ff30e496d41a494d49de45f3d6614b06a3ff",
+          "api_url": "https://api.github.com/repos/01rasmus/moba-health-bars-godot/contents/Healthbar.gd?ref=9320ff30e496d41a494d49de45f3d6614b06a3ff",
+          "url": "https://github.com/01rasmus/moba-health-bars-godot/blob/9320ff30e496d41a494d49de45f3d6614b06a3ff/Healthbar.gd",
+          "retrieved_at_utc": "2026-10-18T03:14:00.345693+00:00",
+          "exit_code": 0,
+          "sha256": "e057bdc9e51e4105362a93d8456a4eec84afc87a8c48efd2a29edd720954b54f",
+          "bytes": 698,
+          "git_blob_sha": "e005590e537333f8241efdb67cf8f23530475147",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              26
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 26
+        }
+      ]
+    },
+    {
+      "id": "naumnek--MOBA-ActionMagic",
+      "repository": "https://github.com/naumnek/MOBA-ActionMagic",
+      "resolved_commit": "88fd5b8996ae97c610cfe9b754267a219557d6cc",
+      "disposition": "reject_unresolved_game_license",
+      "license_scope": "Assets/license.txt states Unity Companion License; no root game license in inspected complete tree",
+      "proposed_use_and_limits": "Android-targeted Unity2021.3 sample, not proven reusable Godot game. Embedded component licenses do not grant entire project/asset rights.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "naumnek/MOBA-ActionMagic",
+          "path": "README.md",
+          "commit": "88fd5b8996ae97c610cfe9b754267a219557d6cc",
+          "api_url": "https://api.github.com/repos/naumnek/MOBA-ActionMagic/contents/README.md?ref=88fd5b8996ae97c610cfe9b754267a219557d6cc",
+          "url": "https://github.com/naumnek/MOBA-ActionMagic/blob/88fd5b8996ae97c610cfe9b754267a219557d6cc/README.md",
+          "retrieved_at_utc": "2026-10-18T03:14:00.482601+00:00",
+          "exit_code": 0,
+          "sha256": "9e96ba204b9febccaec48f8fe8a3745395a4de39c135f74e4508abefd48bf5dc",
+          "bytes": 409,
+          "git_blob_sha": "448b0447ee2df27cc96b2ed799c2c0bbd0f41f97",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              8
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 8
+        },
+        {
+          "repo": "naumnek/MOBA-ActionMagic",
+          "path": "Assets/license.txt",
+          "commit": "88fd5b8996ae97c610cfe9b754267a219557d6cc",
+          "api_url": "https://api.github.com/repos/naumnek/MOBA-ActionMagic/contents/Assets/license.txt?ref=88fd5b8996ae97c610cfe9b754267a219557d6cc",
+          "url": "https://github.com/naumnek/MOBA-ActionMagic/blob/88fd5b8996ae97c610cfe9b754267a219557d6cc/Assets/license.txt",
+          "retrieved_at_utc": "2026-10-18T03:14:00.437955+00:00",
+          "exit_code": 0,
+          "sha256": "63b73338cdaae12b1cc8043f43d8b32f7a058f8d4d5ca8edc5b2709399f5439f",
+          "bytes": 155,
+          "git_blob_sha": "6008e966543e3da4cf8fac4e275b21b6a6862bff",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              2
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 2,
+          "license_excerpt": "This package is licensed under the Unity Companion License. \nFor full license terms, please see: https://unity3d.com/legal/licenses/Unity_Companion_License"
+        }
+      ]
+    },
+    {
+      "id": "ColinGilbert--godot-moba",
+      "repository": "https://github.com/ColinGilbert/godot-moba",
+      "resolved_commit": "a4fbe608ff94c302e043878bbec5a74b4436545e",
+      "disposition": "reject_unresolved_game_license",
+      "license_scope": "No root game license in inspected complete tree; addon license is scoped to addon",
+      "proposed_use_and_limits": "Course repository description and visible files do not grant code/asset reuse; README says lightmaps omitted. No build/full-completeness proof.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "ColinGilbert/godot-moba",
+          "path": "README.md",
+          "commit": "a4fbe608ff94c302e043878bbec5a74b4436545e",
+          "api_url": "https://api.github.com/repos/ColinGilbert/godot-moba/contents/README.md?ref=a4fbe608ff94c302e043878bbec5a74b4436545e",
+          "url": "https://github.com/ColinGilbert/godot-moba/blob/a4fbe608ff94c302e043878bbec5a74b4436545e/README.md",
+          "retrieved_at_utc": "2026-10-18T03:14:00.676983+00:00",
+          "exit_code": 0,
+          "sha256": "8c78d782bb16bde3b46137752fe0b12443913e92c88694c073110b0bdb246a1a",
+          "bytes": 98,
+          "git_blob_sha": "d1e2c5e2c5217f6ed96a7ad077aca457643562bf",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              1
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 1
+        }
+      ]
+    },
+    {
+      "id": "yasgamesdev--MOBA_CSharp_Unity",
+      "repository": "https://github.com/yasgamesdev/MOBA_CSharp_Unity",
+      "resolved_commit": "f29f2f3da1f1f843292fa167785dbd446fbf8d52",
+      "disposition": "architecture_reference_only",
+      "license_scope": "MIT root; copyright author line blank; dependencies/assets need scoped provenance",
+      "proposed_use_and_limits": "Real client/server framework files and PlayerObj fields inspected. Unity2018.3/Mono/third-party dependencies per README; no clone/build/mobile proof, no blanket asset acceptance.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "yasgamesdev/MOBA_CSharp_Unity",
+          "path": "LICENSE",
+          "commit": "f29f2f3da1f1f843292fa167785dbd446fbf8d52",
+          "requested_ref": "head",
+          "api_url": "https://api.github.com/repos/yasgamesdev/MOBA_CSharp_Unity/contents/LICENSE?ref=f29f2f3da1f1f843292fa167785dbd446fbf8d52",
+          "url": "https://github.com/yasgamesdev/MOBA_CSharp_Unity/blob/f29f2f3da1f1f843292fa167785dbd446fbf8d52/LICENSE",
+          "retrieved_at_utc": "2026-10-18T03:15:04.733477+00:00",
+          "exit_code": 0,
+          "sha256": "83e4dd21429a91fb7cea67a476032a9641425e5355df2e0f589a738b6ec9fd2c",
+          "bytes": 1057,
+          "git_blob_sha": "ab602974d200aa6849e6ad8220951ef9a78d9f08",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              21
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 21,
+          "license_excerpt": "MIT License\n\nCopyright (c) 2018 \n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE."
+        },
+        {
+          "repo": "yasgamesdev/MOBA_CSharp_Unity",
+          "path": "README.md",
+          "commit": "f29f2f3da1f1f843292fa167785dbd446fbf8d52",
+          "requested_ref": "head",
+          "api_url": "https://api.github.com/repos/yasgamesdev/MOBA_CSharp_Unity/contents/README.md?ref=f29f2f3da1f1f843292fa167785dbd446fbf8d52",
+          "url": "https://github.com/yasgamesdev/MOBA_CSharp_Unity/blob/f29f2f3da1f1f843292fa167785dbd446fbf8d52/README.md",
+          "retrieved_at_utc": "2026-10-18T03:15:04.700013+00:00",
+          "exit_code": 0,
+          "sha256": "7ef4eb3d5518248cb176f1d551acda6767dcfecf567627309bf9f69f22a830fc",
+          "bytes": 1947,
+          "git_blob_sha": "b37b5020be7043c565afa765b299568077b1900f",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              41
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 41
+        },
+        {
+          "repo": "yasgamesdev/MOBA_CSharp_Unity",
+          "path": "MOBA_CSharp_Server/MOBA_CSharp_Server/Game/MsgPack/PlayerObj.cs",
+          "commit": "f29f2f3da1f1f843292fa167785dbd446fbf8d52",
+          "requested_ref": "head",
+          "api_url": "https://api.github.com/repos/yasgamesdev/MOBA_CSharp_Unity/contents/MOBA_CSharp_Server/MOBA_CSharp_Server/Game/MsgPack/PlayerObj.cs?ref=f29f2f3da1f1f843292fa167785dbd446fbf8d52",
+          "url": "https://github.com/yasgamesdev/MOBA_CSharp_Unity/blob/f29f2f3da1f1f843292fa167785dbd446fbf8d52/MOBA_CSharp_Server/MOBA_CSharp_Server/Game/MsgPack/PlayerObj.cs",
+          "retrieved_at_utc": "2026-10-18T03:15:04.917277+00:00",
+          "exit_code": 0,
+          "sha256": "5cac5a84c97aa7de8143bec67166110964d96eab63bb815749bff100ac01a150",
+          "bytes": 438,
+          "git_blob_sha": "fd149c61f3b7787c7b1f10f57acabbefca61074f",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              20
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 20
+        }
+      ]
+    },
+    {
+      "id": "godotengine--godot-docs",
+      "repository": "https://github.com/godotengine/godot-docs",
+      "resolved_commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+      "disposition": "official_build_reference",
+      "license_scope": "CC-BY-3.0 documentation",
+      "proposed_use_and_limits": "Pinned official4.6 Android export requirements, not current Android environment readiness.",
+      "runtime_adopted": false,
+      "assets_adopted": false,
+      "repository_archived": false,
+      "file_receipts": [
+        {
+          "repo": "godotengine/godot-docs",
+          "path": "tutorials/export/exporting_for_android.rst",
+          "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+          "api_url": "https://api.github.com/repos/godotengine/godot-docs/contents/tutorials/export/exporting_for_android.rst?ref=b10b7ed373c2d15555186914b82e167169b5b87b",
+          "url": "https://github.com/godotengine/godot-docs/blob/b10b7ed373c2d15555186914b82e167169b5b87b/tutorials/export/exporting_for_android.rst",
+          "retrieved_at_utc": "2026-10-18T03:14:00.983550+00:00",
+          "exit_code": 0,
+          "sha256": "40b7ab210199d2831a1ed6a94f6578fc3d2d888484eb80b1745b977e084210d6",
+          "bytes": 9236,
+          "git_blob_sha": "80f9413dedaefaa0f1f8c919bac6b7e70107c9d6",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              84
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 198
+        },
+        {
+          "repo": "godotengine/godot-docs",
+          "path": "LICENSE.txt",
+          "commit": "b10b7ed373c2d15555186914b82e167169b5b87b",
+          "api_url": "https://api.github.com/repos/godotengine/godot-docs/contents/LICENSE.txt?ref=b10b7ed373c2d15555186914b82e167169b5b87b",
+          "url": "https://github.com/godotengine/godot-docs/blob/b10b7ed373c2d15555186914b82e167169b5b87b/LICENSE.txt",
+          "retrieved_at_utc": "2026-10-18T03:14:00.964277+00:00",
+          "exit_code": 0,
+          "sha256": "e6bc9e9c474700b708f568bac9e5a8a9bcb2b1dad53442f5ba449fcb848b8e76",
+          "bytes": 19467,
+          "git_blob_sha": "1a16e05564d2aaa880bbe9e506a0a0226d8742cc",
+          "read_line_ranges_1_based": [
+            [
+              1,
+              18
+            ]
+          ],
+          "retrieval_integrity": "decoded bytes agree with SHA256 and Git blob SHA1",
+          "line_count": 319,
+          "license_excerpt": "Creative Commons Legal Code\n\nAttribution 3.0 Unported\n\n    CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE"
+        }
+      ]
+    }
+  ],
+  "failed_attempts": [
+    {
+      "api_url": "https://api.github.com/repos/godotengine/godot-demo-projects/commits/4.6",
+      "status": 422,
+      "message": "No commit found for SHA: 4.6",
+      "response_sha256": "ecae37545aa3ddb890ffa9f732e9546a79d39d515f8bc48b9028e52b3591811f",
+      "disposition": "Keep inspected master pinned as untested candidate; do not label matching4.6."
+    },
+    {
+      "repo": "heroiclabs/nakama",
+      "path": "server/runtime_match_core.go",
+      "commit": "7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+      "api_url": "https://api.github.com/repos/heroiclabs/nakama/contents/server/runtime_match_core.go?ref=7c94b8f3aa3a7550444a0c2cffee0969223f1ed9",
+      "url": "https://github.com/heroiclabs/nakama/blob/7c94b8f3aa3a7550444a0c2cffee0969223f1ed9/server/runtime_match_core.go",
+      "retrieved_at_utc": "2026-10-18T03:13:58.522287+00:00",
+      "exit_code": 1,
+      "error": "gh: Not Found (HTTP 404)",
+      "read_line_ranges_1_based": []
+    }
+  ],
+  "validation": {
+    "successful_file_retrievals": 34,
+    "failed_file_retrievals": 1,
+    "all_successful_files_sha256_and_git_blob_sha1_checked": true,
+    "source_code_executed": false,
+    "mobile_runtime_qualified": false,
+    "packet_checks": [
+      {
+        "name": "exact12_unique_source_repositories",
+        "passed": true
+      },
+      {
+        "name": "finite7_searches",
+        "passed": true
+      },
+      {
+        "name": "exact34_successful_file_receipts",
+        "passed": true
+      },
+      {
+        "name": "one_failed_file_preserved",
+        "passed": true
+      },
+      {
+        "name": "all_file_pins_immutable",
+        "passed": true
+      },
+      {
+        "name": "no_runtime_or_asset_adoptions",
+        "passed": true
+      },
+      {
+        "name": "selected_read_ranges_valid",
+        "passed": true
+      },
+      {
+        "name": "all34_retrieved_files_reverified",
+        "passed": true
+      },
+      {
+        "name": "all_selected_local_tool_pins_current",
+        "passed": true
+      },
+      {
+        "name": "all_relative_document_links_resolve",
+        "passed": true
+      },
+      {
+        "name": "all_external_document_links_have_exact_source_receipt",
+        "passed": true
+      },
+      {
+        "name": "shotcaller_noncommercial_rejected",
+        "passed": true
+      },
+      {
+        "name": "fish_assets_excluded",
+        "passed": true
+      },
+      {
+        "name": "sdk_and_device_execution_unclaimed",
+        "passed": true
+      },
+      {
+        "name": "MLBB_absence_claim_bounded",
+        "passed": true
+      },
+      {
+        "name": "six_future_worker_rows",
+        "passed": true
+      }
+    ],
+    "packet_checks_passed": true,
+    "document_sha256": "6a5be92c27875e59e96bbfe9d94580cec4a4db91417f9f732c45ed373345afcf",
+    "validator_scratch_path": "/tmp/yuga-mobile-reuse-r1/validate_packet.py",
+    "validator_sha256": "779af460455a6b81a580bebe5144ced85a450e0d89765862eede3965f4b2e8d2"
+  },
+  "raw_retrieval_scratch": "/tmp/yuga-mobile-reuse-r1",
+  "durability": "Exact URLs/commits/hashes, selected license excerpts, local receipts and finite search metadata are durable here. Scratch response bodies are not required for runtime; preserve before any cleanup if a contested discovery needs exact response text.",
+  "independent_review": {
+    "reviewer_task": "/root/ui_06_acceptance",
+    "method": "Read-only primary-file review; no execution",
+    "confirmed": [
+      "Shotcaller current PolyForm NonCommercial code and CC BY-NC media are not relicensed by future-MIT README intent.",
+      "Fish Game Apache2 root code has CC BY-NC main media and scoped CC0/MIT exceptions; no blanket commercially reusable game claim.",
+      "Decompiling libgodot_android.so alone does not recover separate GDScript/PCK gameplay or project assets."
+    ],
+    "input_file_sha256": [
+      "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+      "b263ba54e23e01238b2695aae6499b2601cfc60203d2252072b136afee36c191",
+      "3110aa7d6f483a3343e309f6bc28d7f70e8b6b0ed302bed784bdb978b29b1f51",
+      "7b92e3d9cadb7ff65203935da94584488847097321a3b41e869ea067d3cb8198",
+      "cfa26f1d440bcb7197803f1a85e694facea34d07c982b68ecf05872f703dfeb6",
+      "6694d63020e16e3ca03abdf14152774adacbff3d32d0debef4f58f7b179ddb4c"
+    ],
+    "scope": "Selected license/analysis-boundary conclusions only; not all source/discovery/tooling claims independently reviewed."
+  }
+}

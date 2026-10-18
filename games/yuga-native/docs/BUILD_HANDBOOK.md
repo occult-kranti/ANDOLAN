@@ -1,5 +1,7 @@
 # YUGA native build handbook
 
+For the proposed mobile version, use [MOBILE_PRODUCTION_ROADMAP.md](MOBILE_PRODUCTION_ROADMAP.md) and its [code migration map](mobile/CODE_AND_STACK_DECISIONS.md). The existing commands below prepare the desktop/native workflow. Android/iOS exports, physical-device performance and operated 5v5 services require the separate mobile gates; an existing mobile renderer override is not a qualified mobile build.
+
 Read this in 5–10 minutes before changing the native game. Start with the repository [START_HERE](../../../docs/START_HERE.md), use this handbook for execution, and read the [research brief](research/RESEARCH_BRIEF.md) only when the task needs design/source context. Do not load every historical report to begin a small change.
 
 All commands below run from the repository root, normally `/workspace/ANDOLAN`. Paths in the file table are relative to `games/yuga-native/` unless stated otherwise. This handbook was checked against source and tool `--help` on 17 October 2026; it does not replace a fresh test result.
