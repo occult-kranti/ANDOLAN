@@ -1,0 +1,14 @@
+# Braid Strands source and private adaptation
+
+Original source: **Braid Strands for MakeHuman**, published by **Dennis Ploeger / deep-entertainment**. GitHub's source commit names Dennis Ploeger (`dploeger`); the repository README explicitly identifies the Blender file as the source for MakeHuman's [Braid Strands asset](http://www.makehumancommunity.org/clothes/braidstrands.html). The stored mesh identifies `braid-strands`, described as “Strands of braids with a bun of locs.” These declarations agree on asset identity; the upstream web page's author record was not independently retrieved.
+
+Source repository/revision: <https://github.com/deep-entertainment/mh-hair-braid-strans/tree/44e0640d8bcaf6fb82d49ab093691e7ecb7d6bb4>.
+Source file: `cornrows_braid.blend`, 6,958,176 bytes, SHA256 `92b8d760a03bf90878f0fe304031cd65928857bb24c5bd90c8a2d41682c4d95e`, Git blob `56c6ede31858facf5e095c75d4c32b1945f6f3ae`.
+
+The repository's explicit `LICENSE` grants **Creative Commons Attribution 4.0 International**, <https://creativecommons.org/licenses/by/4.0/>. Its exact license Git blob is `4aee8d7c646e5cde028ef6266e69be404e78568d`. The work contains this Blender file and its backup, with no stated source-file exclusion; the README specifically presents the Blender file as the work's source. Preserve this source credit, license link and modification notice with any derivative distribution. This is CC-BY4, not CC0; no exclusive or original authorship is claimed for the reused hair geometry.
+
+Only the `clothes` hair mesh is selected for adaptation. The separate MakeHuman helper body, reference-image plane, missing external photograph, all original material/image data, cameras and source scene settings are excluded. Read-only inspection used factory startup with embedded script execution disabled. The hair's `Hair` material has no image-node dependency. No third-party image was downloaded or copied into the candidate.
+
+Private derivative changes by the YUGA authoring agent: select closed hair components; omit open/nonmanifold source parts; mirror a finite subset of existing closed scalp clumps; register to the protected Rama head; lower and tilt the existing curled bun forms; deform six existing closed clumps into unequal nape-following falls; assign the existing neutral-clay study material and unapplied subdivision1. Keep the fixed head, crown/tie, all other meshes, materials, lights and four cameras unchanged. These are authoring changes for review, not a claim that the source asset or its adaptation is approved in the game.
+
+The source has no armature or native weights. Its `helper-hair` group and hm08 body reference do not bind it to Rama's164-joint rig. Any later runtime adoption requires a separate derivative notice in the actual shipped asset manifest, approved source views, weighting/deformation and runtime checks. No GLB or canonical asset is changed in this private study.

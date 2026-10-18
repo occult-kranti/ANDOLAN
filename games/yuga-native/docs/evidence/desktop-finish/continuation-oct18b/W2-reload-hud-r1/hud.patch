@@ -1,0 +1,38 @@
+--- baseline68e3/rama_hero_hud.gd
++++ candidate/rama_hero_hud.gd
+@@ -201,7 +201,9 @@
+ 		signature.append(runtime.player.ammo)
+ 		signature.append(runtime.player.reload_remaining > 0)
+ 	for id in IDS: signature.append(float(state.get("cooldowns", {}).get(id, 0)) > .05)
+-	return {"state":state,"locked":locked,"active_id":active_id,"phase":phase,"queued_id":queued_id,"signature":signature}
++	# Reload is a real mounted-input block; retain independent cooldown clocks.
++	var reloading: bool = availability == &"active" and runtime.player.reload_remaining > 0 and not runtime._input_eligibility().get("eligible", false)
++	return {"reloading":reloading,"state":state,"locked":locked,"active_id":active_id,"phase":phase,"queued_id":queued_id,"signature":signature}
+ 
+ func _ability_title(id: String) -> String:
+ 	var index := IDS.find(id)
+@@ -230,6 +232,7 @@
+ 			if not String(feedback.phase).is_empty():
+ 				note.text = _ability_title(feedback.active_id) + " · " + String(feedback.phase)
+ 				if not String(feedback.queued_id).is_empty(): note.text += " · " + _ability_title(feedback.queued_id) + " QUEUED"
++			elif feedback.reloading: note.text = "Reloading bow"
+ 			else: note.text = runtime.notice
+ func _refresh_slots(availability: StringName = &"", feedback: Dictionary = {}) -> void:
+ 	if not life: return
+@@ -241,6 +244,7 @@
+ 		var status := "%.1fs" % cooldown if cooldown > .05 else "READY"
+ 		if availability != &"active": status = "—"
+ 		elif IDS[i] == "kodanda": status = "%d / %d" % [runtime.player.ammo, runtime.player.MAGAZINE] if runtime.player.reload_remaining <= 0 else "RELOADING"
++		elif feedback.reloading and cooldown <= .05: status = "BUSY"
+ 		if availability == &"active" and feedback.locked:
+ 			if IDS[i] == feedback.queued_id: status = "QUEUED"
+ 			elif IDS[i] != feedback.active_id and cooldown <= .05:
+@@ -248,7 +252,7 @@
+ 		var title := "Kodanda" if i == 0 else String(Bindings.TITLES[ACTIONS[i]])
+ 		slots[i].text = "%s%s\n%s" % [_glyph_indent(slots[i]), Bindings.label(ACTIONS[i]), status] if _compact_slots else "%s  ·  %s\n%s%s" % [Bindings.label(ACTIONS[i]), status, _glyph_indent(slots[i]), title]
+ 		slot_cards[i].tooltip_text = "%s · %s · %s" % [Bindings.label(ACTIONS[i]), title, status]
+-		var waiting: bool = cooldown > .05 or feedback.locked or (i == 0 and availability == &"active" and runtime.player.reload_remaining > 0)
++		var waiting: bool = cooldown > .05 or feedback.locked or feedback.reloading
+ 		slots[i].add_theme_color_override("font_color", UI.MUTED if availability != &"active" else (UI.MIST if waiting else UI.CREAM))
+ 		var visual_state: StringName = &"unavailable" if availability != &"active" else (&"cooling" if waiting else &"ready")
+ 		slot_glyphs[i].present(IDS[i], visual_state)

@@ -1,0 +1,62 @@
+{
+  "changed_functions_independently_reconstructed": [
+    "_action_feedback",
+    "_refresh_vitals",
+    "_refresh_slots"
+  ],
+  "created_utc": "2026-10-18T17:47:56.994745+00:00",
+  "executed_checks": "Read-only SHA verification, exact15 contract source census and function-boundary reconstruction; no canonical source edits.",
+  "fixture_sha256": "8d9ec0d218ac379c5dd55cee25446f46452b0b35b31ec6820172d6f6f1c9c7c1",
+  "hud_sha256": "572b0b8469c6b9d0b80d39cde5e8389450c9e0d7e8af989c18644f956dd657bc",
+  "input_semantics": [
+    "request_input_ability delegates to the real action buffer eligibility callback. Runtime rejects reload_remaining>0 before any targeting work.",
+    "HUD checks eligibility only when availability=active and reload_remaining>0; that pure callback returns immediately at reload condition. No authority clock/state is changed.",
+    "Bow RELOADING and other noncooldown BUSY statuses retain real cooldown values for abilities already cooling; note says Reloading bow after existing action-phase precedence.",
+    "Reload boolean was already part of slot refresh signature, so completion re-enables current ready affordances immediately. Existing ended/returning/paused/inactive precedence remains unchanged.",
+    "Fixture uses real released arrow/ammo spend/start_reload, verifies input rejection while reloading, advances real army/player physics to completion, then repeats identical input successfully.",
+    "Saved Space/Shift/Ctrl labels and100/200/100 layout observations retain cooldowns, authority state and reload timer during HUD-only refresh. These are native headless observations, not OS input/render evidence."
+  ],
+  "limitations": [
+    "No Godot execution by W6; owner reports/logs/command+source bindings reviewed.",
+    "W1 owns actual100/200 reload and completion images.",
+    "Catalog change currently owned by W5; one selftest follows agreed source freeze."
+  ],
+  "native_content_pin_membership": {
+    "all_current_source_hashes_match_contract": true,
+    "count": 15,
+    "hud_is_pinned": false,
+    "requires_content_revision_change": false
+  },
+  "owner_receipt_sha256": "9a036d7f032cca1daf7da66811965d4325f4f6e80c9bb818e2809e9543ba6aef",
+  "owner_runs_verified": {
+    "baseline-r2": {
+      "count": 17,
+      "exit_code": 1,
+      "failed_checks": [
+        "reload describes bow and non-ready abilities at1.0",
+        "reload describes bow and non-ready abilities at2.0",
+        "reload describes bow and non-ready abilities at1.0"
+      ],
+      "fixture_sha_before": "8d9ec0d218ac379c5dd55cee25446f46452b0b35b31ec6820172d6f6f1c9c7c1",
+      "passed_count": 14
+    },
+    "candidate-r1": {
+      "count": 17,
+      "exit_code": 0,
+      "failed_checks": [],
+      "fixture_sha_before": "8d9ec0d218ac379c5dd55cee25446f46452b0b35b31ec6820172d6f6f1c9c7c1",
+      "passed_count": 17
+    },
+    "existing-compact-r1": {
+      "count": 31,
+      "exit_code": 0,
+      "failed_checks": [],
+      "fixture_sha_before": null,
+      "passed_count": 31
+    }
+  },
+  "reconstructed_baseline_sha256": "68e3cc06b4176cd8720a6a132ae06582a0c605ff8113a421b048d60550238ea9",
+  "rehashed_owner_artifact_count": 26,
+  "rehashed_owner_source_count": 12,
+  "result": "SOURCE_AND_OWNER_EVIDENCE_PASS; catalog registration and actual visual acceptance separate"
+}

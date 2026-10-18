@@ -1,0 +1,75 @@
+extends "res://tests/ui_i1_action_hud_cases.gd"
+## Real shot/reload and actual input eligibility; saved labels and canvas scaling.
+const Bindings = preload("res://scripts/input_bindings.gd")
+var hud_script := ""
+
+func record_view(stage: String) -> Dictionary:
+	var hud: Control=scene.rama_hud
+	return {"stage":stage,"eligibility":scene.rama_runtime._input_eligibility(),"reload_remaining":scene.player.reload_remaining,"ammo":scene.player.ammo,"kit":scene.rama_runtime.kit.report(),"note":hud.note.text,"slots":hud.slots.map(func(slot):return slot.text),"styles":hud._slot_states.duplicate(),"hud_rect":str(hud.get_global_rect()),"logical_size":str(root.get_visible_rect().size)}
+
+func text_fits() -> bool:
+	var hud: Control=scene.rama_hud
+	if not root.get_visible_rect().encloses(hud.get_global_rect()):return false
+	for label in hud.slots:
+		for line in label.text.split("\n"):
+			if label.get_theme_font("font").get_string_size(line,HORIZONTAL_ALIGNMENT_LEFT,-1,label.get_theme_font_size("font_size")).x>label.size.x+.5:return false
+	return hud.note.get_theme_font("font").get_string_size(hud.note.text,HORIZONTAL_ALIGNMENT_LEFT,-1,hud.note.get_theme_font_size("font_size")).x<=hud.note.size.x+.5
+
+func run() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--hud-script="):hud_script=arg.trim_prefix("--hud-script=")
+	if not hud_script.is_empty():
+		var external: Script=load(hud_script)
+		external.take_over_path("res://scripts/rama_hero_hud.gd")
+	for path in ["res://scripts/rama_hero_hud.gd","res://scripts/rama_hero_runtime.gd","res://scripts/player.gd","res://scripts/input_bindings.gd","res://scripts/confluence_world.gd","res://scripts/rama_ability_kit.gd","res://scripts/lane_army.gd","res://tests/ui_i1_action_hud_cases.gd",get_script().resource_path]:source_start[path]=FileAccess.get_sha256(path)
+	if not hud_script.is_empty():source_start[hud_script]=FileAccess.get_sha256(hud_script)
+	root.size=Vector2i(960,540);root.content_scale_size=Vector2i(1280,720);root.content_scale_factor=1.0
+	scene=load("res://scenes/confluence_world.tscn").instantiate()
+	root.add_child(scene);current_scene=scene
+	await frames()
+	scene.rama_runtime.set_volume(0)
+	await ground_fixture()
+	Bindings.install("user://hud-reload-availability.cfg")
+	var saved:=true
+	for pair in [["jump",KEY_J],["sprint",KEY_K],["descend",KEY_L],["pulse",KEY_SPACE],["dash",KEY_SHIFT],["guardian_circle",KEY_CTRL]]:saved=Bindings.set_binding(pair[0],pair[1]).ok and saved
+	check("real supported long labels save",saved and Bindings.label("pulse")=="Space" and Bindings.label("dash")=="Shift" and Bindings.label("guardian_circle")=="Ctrl")
+	scene.rama_hud._process(.08)
+	check("independently usable ground abilities stay READY",scene.rama_runtime._input_eligibility().eligible and scene.rama_hud.slots.slice(1).all(func(slot):return slot.text.contains("READY")),record_view("ready"))
+	var pulse: Dictionary=scene.cast_rama_ability("piercing_dawn")
+	for unused in 21:advance()
+	var arrow: Dictionary=scene.cast_rama_ability("kodanda")
+	for unused in 9:advance()
+	var reloaded: bool=scene.player.start_reload()
+	check("real released arrow permits real reload",pulse.get("accepted",false) and arrow.get("accepted",false) and reloaded and scene.player.ammo==scene.player.MAGAZINE-1 and scene.player.reload_remaining>0,record_view("reload-start"))
+	var input: Dictionary=scene.rama_runtime.request_input_ability("guardian_circle",73101)
+	check("mounted input rejects ability during reload",not input.get("accepted",false) and not input.get("queued",false) and input.get("reason","")=="Finish the current action" and not scene.rama_runtime._input_eligibility().eligible,{"input":input})
+	for scale in [1.0,2.0,1.0]:
+		root.content_scale_factor=scale
+		var kit_before: Dictionary=scene.rama_runtime.kit.report().duplicate(true)
+		var army_before: Dictionary=scene.army.report().duplicate(true)
+		var reload_before: float=scene.player.reload_remaining
+		scene.rama_hud._process(.001)
+		await frames(5)
+		var hud: Control=scene.rama_hud
+		check("reload describes bow and non-ready abilities at"+str(scale),hud.slots[0].text.contains("RELOADING") and hud.slots.slice(2).all(func(slot):return slot.text.contains("BUSY")) and hud._slot_states.slice(2).all(func(state):return state==&"cooling") and hud.note.text=="Reloading bow",record_view("reload"))
+		var remaining: float=scene.rama_runtime.kit.report().cooldowns.piercing_dawn
+		check("reload retains real cooldown and long labels at"+str(scale),hud.slots[1].text.contains("%.1fs"%remaining) and hud.slots[1].text.contains("Space") and hud.slots[2].text.contains("Shift") and hud.slots[3].text.contains("Ctrl") and text_fits(),record_view("reload-fit"))
+		check("HUD and scaling cannot advance reload/combat at"+str(scale),kit_before==scene.rama_runtime.kit.report() and army_before==scene.army.report() and reload_before==scene.player.reload_remaining)
+	var ticks:=0
+	while scene.player.reload_remaining>0 and ticks<40:
+		advance();ticks+=1
+	scene.rama_hud._process(.001)
+	check("real physics finishes reload and re-enables mounted input",scene.player.reload_remaining==0 and scene.player.ammo==scene.player.MAGAZINE and scene.rama_runtime._input_eligibility().eligible,{"ticks":ticks})
+	check("completed reload restores ready affordances immediately",scene.rama_hud.slots.slice(2).all(func(slot):return slot.text.contains("READY")) and scene.rama_hud._slot_states.slice(2).all(func(state):return state==&"ready") and scene.rama_hud.note.text!="Reloading bow",record_view("reload-finished"))
+	var accepted: Dictionary=scene.rama_runtime.request_input_ability("guardian_circle",73102)
+	check("same actual input succeeds after reload",accepted.get("accepted",false) and not accepted.get("queued",false),{"input":accepted})
+	var stable:=true
+	for path in source_start:stable=stable and source_start[path]==FileAccess.get_sha256(path)
+	check("sources remain stable",stable)
+	var passed:=checks.all(func(row):return row.passed)
+	FileAccess.open(output,FileAccess.WRITE).store_string(JSON.stringify({"passed":passed,"count":checks.size(),"checks":checks,"sources":source_start,"hud_script":hud_script,"actual_instance_source_sha256":scene.rama_hud.get_script().source_code.sha256_text(),"scope":"Real mounted kit releases, spent ammo, start_reload, input rejection and physics-driven completion; real saved remaps and logical100/200/100. Authority held during layout inspection. No rendered/native OS input or human feel acceptance."},"  ")+"\n")
+	paused=false;current_scene=null;scene.queue_free()
+	await frames(8)
+	OS.delay_msec(100)
+	await process_frame
+	quit(0 if passed else 1)

@@ -1,0 +1,67 @@
+{
+  "catalog": "visual",
+  "checked_sources_unchanged": true,
+  "checks": 59,
+  "engine_probe": {
+    "command": [
+      "/usr/local/bin/godot",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.041
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "schema": 1,
+  "scope": "Headless visual component, real resource and native identity contracts only; no rendered-art, continuous-motion, physical-GPU, online or release acceptance.",
+  "selected_suites": [
+    "desktop-motion-transition-guard"
+  ],
+  "sources_after_sha256": "9d18058a47dce6b3e30b664601bc95689750dc061df822b1ff52bb4ea05e6d98",
+  "sources_before_sha256": "9d18058a47dce6b3e30b664601bc95689750dc061df822b1ff52bb4ea05e6d98",
+  "suites": [
+    {
+      "checks": 59,
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_s3_transition_guard_cases.gd",
+        "--",
+        "--report=/workspace/scratch/yuga-next-W5-r1/ci-transition-r1/repaired/reports/desktop-motion-transition-guard.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "desktop-motion-transition-guard",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/desktop-motion-transition-guard.json",
+      "report_sha256": "9c1c572292eb653b68448f7896de9a7e9fc1e65c632c7f2dff34fa87d10de275",
+      "stderr": "logs/desktop-motion-transition-guard.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/desktop-motion-transition-guard.stdout",
+      "stdout_sha256": "8bd86344d3083788675ef9492fec39a369064f2d3c9a0b2e03acd0f46488826b",
+      "timed_out": false,
+      "wall_seconds": 6.51
+    }
+  ]
+}

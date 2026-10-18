@@ -1,0 +1,20 @@
+{
+  "scope": "Helper-only exported-PCK remap transport successor; product HUD572b/world503 unchanged. No W2 engine/preflight execution.",
+  "parent_actual_source_receipt_sha256": "53b086a4a3cd42cb9c91923f290bf340583357ab02c5fb206969f4400471bc95",
+  "failed_first_preflight": "W1 retains reload-candidate-preflight-r1.log; no image/runtime acceptance. ResourceLoader .gd takeover did not satisfy unchanged world preload through exported GDC remap.",
+  "artifacts": {
+    "capture_reload_candidate-r2.gd": "e463298079762a4ba2ba6a9166101e011a353e550bc422055655ee110251c645",
+    "hud-export-remap.txt": "7736d83e3797ddb75bf1f7dc4dbf90937a686b4915250cfb73dab2a4b83e0995",
+    "hud-export-remap-receipt.json": "5283936ebbad5ddbe3226701cca5b8233208eb138f6847704a67b78accfdf05d",
+    "capture-transport-r2.patch": "880837cc480c6066fed1d1ec8127efc705d6d4c5503ce5c39fccc97e921bac26"
+  },
+  "changes": [
+    "Take over exact existing PCK res://scripts/rama_hero_hud.gdc instead of source.gd",
+    "Guard exact .gd.remap bytes7736d83e; can_instantiate checks and compiled-world HUD constant pointer before loading scene"
+  ],
+  "product_source_sha256": {
+    "hud": "572b0b8469c6b9d0b80d39cde5e8389450c9e0d7e8af989c18644f956dd657bc",
+    "world": "503093acba1f8b5679e8dfb3bf81beee5a273c9d766ba60d352e3d07035a375d"
+  },
+  "no_shot_camera_action_state_or_cleanup_change": true
+}

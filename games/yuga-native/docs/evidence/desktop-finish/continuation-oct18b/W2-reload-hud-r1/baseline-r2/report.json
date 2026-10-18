@@ -1,0 +1,957 @@
+{
+  "actual_instance_source_sha256": "68e3cc06b4176cd8720a6a132ae06582a0c605ff8113a421b048d60550238ea9",
+  "checks": [
+    {
+      "details": {
+
+      },
+      "name": "real supported long labels save",
+      "passed": true
+    },
+    {
+      "details": {
+        "ammo": 12,
+        "eligibility": {
+          "eligible": true
+        },
+        "hud_rect": "[P: (230.0, 590.0), S: (820.0, 112.0)]",
+        "kit": {
+          "accepted_casts": 0,
+          "action_locked": false,
+          "active_ability": "",
+          "active_cast_id": 0,
+          "casts": [],
+          "configured": true,
+          "cooldowns": {
+            "dawn_volley": 0.0,
+            "guardian_circle": 0.0,
+            "kodanda": 0.0,
+            "measured_step": 0.0,
+            "piercing_dawn": 0.0
+          },
+          "elapsed": 0.0,
+          "generation": 5,
+          "history_capacity": 96,
+          "history_size": 1,
+          "last_reason": "player reset",
+          "max_casts": 12,
+          "network_enabled": false,
+          "receipts_count": 0,
+          "receiver_scope": "lane_troops_and_explicit_movement_receiver",
+          "rejected_casts": 0,
+          "release_count": 0,
+          "suspended": false
+        },
+        "logical_size": "(1280.0, 720.0)",
+        "note": "Rama is ready",
+        "reload_remaining": 0.0,
+        "slots": [
+          "LMB  ·  12 / 12\n     Kodanda",
+          "Space  ·  READY\n     Piercing Dawn",
+          "Shift  ·  READY\n     Measured Step",
+          "Ctrl  ·  READY\n     Guardian Circle",
+          "X  ·  READY\n     Dawn Volley"
+        ],
+        "stage": "ready",
+        "styles": [
+          "ready",
+          "ready",
+          "ready",
+          "ready",
+          "ready"
+        ]
+      },
+      "name": "independently usable ground abilities stay READY",
+      "passed": true
+    },
+    {
+      "details": {
+        "ammo": 11,
+        "eligibility": {
+          "eligible": false,
+          "reason": "Finish the current action"
+        },
+        "hud_rect": "[P: (230.0, 590.0), S: (820.0, 112.0)]",
+        "kit": {
+          "accepted_casts": 2,
+          "action_locked": false,
+          "active_ability": "",
+          "active_cast_id": 0,
+          "casts": [
+            {
+              "ability_id": "piercing_dawn",
+              "age_s": 1.5,
+              "cast_id": 1,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.18938, 1.328872, -9.283154)"
+                  }
+                ],
+                "radius_m": 0.36,
+                "range_m": 38.0,
+                "speed_mps": 52.0
+              },
+              "phase": "active",
+              "released": true
+            },
+            {
+              "ability_id": "kodanda",
+              "age_s": 0.45,
+              "cast_id": 2,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.07591, 1.332404, -9.272531)"
+                  }
+                ],
+                "radius_m": 0.22,
+                "range_m": 40.0,
+                "speed_mps": 60.0
+              },
+              "phase": "active",
+              "released": true
+            }
+          ],
+          "configured": true,
+          "cooldowns": {
+            "dawn_volley": 0.0,
+            "guardian_circle": 0.0,
+            "kodanda": 0.0,
+            "measured_step": 0.0,
+            "piercing_dawn": 4.5
+          },
+          "elapsed": 1.5,
+          "generation": 5,
+          "history_capacity": 96,
+          "history_size": 47,
+          "last_reason": "Kodanda · drawing",
+          "max_casts": 12,
+          "network_enabled": false,
+          "receipts_count": 0,
+          "receiver_scope": "lane_troops_and_explicit_movement_receiver",
+          "rejected_casts": 0,
+          "release_count": 2,
+          "suspended": false
+        },
+        "logical_size": "(1280.0, 720.0)",
+        "note": "Rama is ready",
+        "reload_remaining": 1.6,
+        "slots": [
+          "LMB  ·  11 / 12\n     Kodanda",
+          "Space  ·  4.5s\n     Piercing Dawn",
+          "Shift  ·  READY\n     Measured Step",
+          "Ctrl  ·  READY\n     Guardian Circle",
+          "X  ·  READY\n     Dawn Volley"
+        ],
+        "stage": "reload-start",
+        "styles": [
+          "ready",
+          "cooling",
+          "ready",
+          "ready",
+          "ready"
+        ]
+      },
+      "name": "real released arrow permits real reload",
+      "passed": true
+    },
+    {
+      "details": {
+        "input": {
+          "accepted": false,
+          "queued": false,
+          "reason": "Finish the current action"
+        }
+      },
+      "name": "mounted input rejects ability during reload",
+      "passed": true
+    },
+    {
+      "details": {
+        "ammo": 11,
+        "eligibility": {
+          "eligible": false,
+          "reason": "Finish the current action"
+        },
+        "hud_rect": "[P: (230.0, 590.0), S: (820.0, 112.0)]",
+        "kit": {
+          "accepted_casts": 2,
+          "action_locked": false,
+          "active_ability": "",
+          "active_cast_id": 0,
+          "casts": [
+            {
+              "ability_id": "piercing_dawn",
+              "age_s": 1.5,
+              "cast_id": 1,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.18938, 1.328872, -9.283154)"
+                  }
+                ],
+                "radius_m": 0.36,
+                "range_m": 38.0,
+                "speed_mps": 52.0
+              },
+              "phase": "active",
+              "released": true
+            },
+            {
+              "ability_id": "kodanda",
+              "age_s": 0.45,
+              "cast_id": 2,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.07591, 1.332404, -9.272531)"
+                  }
+                ],
+                "radius_m": 0.22,
+                "range_m": 40.0,
+                "speed_mps": 60.0
+              },
+              "phase": "active",
+              "released": true
+            }
+          ],
+          "configured": true,
+          "cooldowns": {
+            "dawn_volley": 0.0,
+            "guardian_circle": 0.0,
+            "kodanda": 0.0,
+            "measured_step": 0.0,
+            "piercing_dawn": 4.5
+          },
+          "elapsed": 1.5,
+          "generation": 5,
+          "history_capacity": 96,
+          "history_size": 47,
+          "last_reason": "Kodanda · drawing",
+          "max_casts": 12,
+          "network_enabled": false,
+          "receipts_count": 0,
+          "receiver_scope": "lane_troops_and_explicit_movement_receiver",
+          "rejected_casts": 0,
+          "release_count": 2,
+          "suspended": false
+        },
+        "logical_size": "(1280.0, 720.0)",
+        "note": "Finish the current action",
+        "reload_remaining": 1.6,
+        "slots": [
+          "LMB  ·  RELOADING\n     Kodanda",
+          "Space  ·  4.5s\n     Piercing Dawn",
+          "Shift  ·  READY\n     Measured Step",
+          "Ctrl  ·  READY\n     Guardian Circle",
+          "X  ·  READY\n     Dawn Volley"
+        ],
+        "stage": "reload",
+        "styles": [
+          "cooling",
+          "cooling",
+          "ready",
+          "ready",
+          "ready"
+        ]
+      },
+      "name": "reload describes bow and non-ready abilities at1.0",
+      "passed": false
+    },
+    {
+      "details": {
+        "ammo": 11,
+        "eligibility": {
+          "eligible": false,
+          "reason": "Finish the current action"
+        },
+        "hud_rect": "[P: (230.0, 590.0), S: (820.0, 112.0)]",
+        "kit": {
+          "accepted_casts": 2,
+          "action_locked": false,
+          "active_ability": "",
+          "active_cast_id": 0,
+          "casts": [
+            {
+              "ability_id": "piercing_dawn",
+              "age_s": 1.5,
+              "cast_id": 1,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.18938, 1.328872, -9.283154)"
+                  }
+                ],
+                "radius_m": 0.36,
+                "range_m": 38.0,
+                "speed_mps": 52.0
+              },
+              "phase": "active",
+              "released": true
+            },
+            {
+              "ability_id": "kodanda",
+              "age_s": 0.45,
+              "cast_id": 2,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.07591, 1.332404, -9.272531)"
+                  }
+                ],
+                "radius_m": 0.22,
+                "range_m": 40.0,
+                "speed_mps": 60.0
+              },
+              "phase": "active",
+              "released": true
+            }
+          ],
+          "configured": true,
+          "cooldowns": {
+            "dawn_volley": 0.0,
+            "guardian_circle": 0.0,
+            "kodanda": 0.0,
+            "measured_step": 0.0,
+            "piercing_dawn": 4.5
+          },
+          "elapsed": 1.5,
+          "generation": 5,
+          "history_capacity": 96,
+          "history_size": 47,
+          "last_reason": "Kodanda · drawing",
+          "max_casts": 12,
+          "network_enabled": false,
+          "receipts_count": 0,
+          "receiver_scope": "lane_troops_and_explicit_movement_receiver",
+          "rejected_casts": 0,
+          "release_count": 2,
+          "suspended": false
+        },
+        "logical_size": "(1280.0, 720.0)",
+        "note": "Finish the current action",
+        "reload_remaining": 1.6,
+        "slots": [
+          "LMB  ·  RELOADING\n     Kodanda",
+          "Space  ·  4.5s\n     Piercing Dawn",
+          "Shift  ·  READY\n     Measured Step",
+          "Ctrl  ·  READY\n     Guardian Circle",
+          "X  ·  READY\n     Dawn Volley"
+        ],
+        "stage": "reload-fit",
+        "styles": [
+          "cooling",
+          "cooling",
+          "ready",
+          "ready",
+          "ready"
+        ]
+      },
+      "name": "reload retains real cooldown and long labels at1.0",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "HUD and scaling cannot advance reload/combat at1.0",
+      "passed": true
+    },
+    {
+      "details": {
+        "ammo": 11,
+        "eligibility": {
+          "eligible": false,
+          "reason": "Finish the current action"
+        },
+        "hud_rect": "[P: (12.0, 242.0), S: (616.0, 100.0)]",
+        "kit": {
+          "accepted_casts": 2,
+          "action_locked": false,
+          "active_ability": "",
+          "active_cast_id": 0,
+          "casts": [
+            {
+              "ability_id": "piercing_dawn",
+              "age_s": 1.5,
+              "cast_id": 1,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.18938, 1.328872, -9.283154)"
+                  }
+                ],
+                "radius_m": 0.36,
+                "range_m": 38.0,
+                "speed_mps": 52.0
+              },
+              "phase": "active",
+              "released": true
+            },
+            {
+              "ability_id": "kodanda",
+              "age_s": 0.45,
+              "cast_id": 2,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.07591, 1.332404, -9.272531)"
+                  }
+                ],
+                "radius_m": 0.22,
+                "range_m": 40.0,
+                "speed_mps": 60.0
+              },
+              "phase": "active",
+              "released": true
+            }
+          ],
+          "configured": true,
+          "cooldowns": {
+            "dawn_volley": 0.0,
+            "guardian_circle": 0.0,
+            "kodanda": 0.0,
+            "measured_step": 0.0,
+            "piercing_dawn": 4.5
+          },
+          "elapsed": 1.5,
+          "generation": 5,
+          "history_capacity": 96,
+          "history_size": 47,
+          "last_reason": "Kodanda · drawing",
+          "max_casts": 12,
+          "network_enabled": false,
+          "receipts_count": 0,
+          "receiver_scope": "lane_troops_and_explicit_movement_receiver",
+          "rejected_casts": 0,
+          "release_count": 2,
+          "suspended": false
+        },
+        "logical_size": "(640.0, 360.0)",
+        "note": "Finish the current action",
+        "reload_remaining": 1.6,
+        "slots": [
+          "     LMB\nRELOADING",
+          "     Space\n4.5s",
+          "     Shift\nREADY",
+          "     Ctrl\nREADY",
+          "     X\nREADY"
+        ],
+        "stage": "reload",
+        "styles": [
+          "cooling",
+          "cooling",
+          "ready",
+          "ready",
+          "ready"
+        ]
+      },
+      "name": "reload describes bow and non-ready abilities at2.0",
+      "passed": false
+    },
+    {
+      "details": {
+        "ammo": 11,
+        "eligibility": {
+          "eligible": false,
+          "reason": "Finish the current action"
+        },
+        "hud_rect": "[P: (12.0, 242.0), S: (616.0, 100.0)]",
+        "kit": {
+          "accepted_casts": 2,
+          "action_locked": false,
+          "active_ability": "",
+          "active_cast_id": 0,
+          "casts": [
+            {
+              "ability_id": "piercing_dawn",
+              "age_s": 1.5,
+              "cast_id": 1,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.18938, 1.328872, -9.283154)"
+                  }
+                ],
+                "radius_m": 0.36,
+                "range_m": 38.0,
+                "speed_mps": 52.0
+              },
+              "phase": "active",
+              "released": true
+            },
+            {
+              "ability_id": "kodanda",
+              "age_s": 0.45,
+              "cast_id": 2,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.07591, 1.332404, -9.272531)"
+                  }
+                ],
+                "radius_m": 0.22,
+                "range_m": 40.0,
+                "speed_mps": 60.0
+              },
+              "phase": "active",
+              "released": true
+            }
+          ],
+          "configured": true,
+          "cooldowns": {
+            "dawn_volley": 0.0,
+            "guardian_circle": 0.0,
+            "kodanda": 0.0,
+            "measured_step": 0.0,
+            "piercing_dawn": 4.5
+          },
+          "elapsed": 1.5,
+          "generation": 5,
+          "history_capacity": 96,
+          "history_size": 47,
+          "last_reason": "Kodanda · drawing",
+          "max_casts": 12,
+          "network_enabled": false,
+          "receipts_count": 0,
+          "receiver_scope": "lane_troops_and_explicit_movement_receiver",
+          "rejected_casts": 0,
+          "release_count": 2,
+          "suspended": false
+        },
+        "logical_size": "(640.0, 360.0)",
+        "note": "Finish the current action",
+        "reload_remaining": 1.6,
+        "slots": [
+          "     LMB\nRELOADING",
+          "     Space\n4.5s",
+          "     Shift\nREADY",
+          "     Ctrl\nREADY",
+          "     X\nREADY"
+        ],
+        "stage": "reload-fit",
+        "styles": [
+          "cooling",
+          "cooling",
+          "ready",
+          "ready",
+          "ready"
+        ]
+      },
+      "name": "reload retains real cooldown and long labels at2.0",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "HUD and scaling cannot advance reload/combat at2.0",
+      "passed": true
+    },
+    {
+      "details": {
+        "ammo": 11,
+        "eligibility": {
+          "eligible": false,
+          "reason": "Finish the current action"
+        },
+        "hud_rect": "[P: (230.0, 590.0), S: (820.0, 112.0)]",
+        "kit": {
+          "accepted_casts": 2,
+          "action_locked": false,
+          "active_ability": "",
+          "active_cast_id": 0,
+          "casts": [
+            {
+              "ability_id": "piercing_dawn",
+              "age_s": 1.5,
+              "cast_id": 1,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.18938, 1.328872, -9.283154)"
+                  }
+                ],
+                "radius_m": 0.36,
+                "range_m": 38.0,
+                "speed_mps": 52.0
+              },
+              "phase": "active",
+              "released": true
+            },
+            {
+              "ability_id": "kodanda",
+              "age_s": 0.45,
+              "cast_id": 2,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.07591, 1.332404, -9.272531)"
+                  }
+                ],
+                "radius_m": 0.22,
+                "range_m": 40.0,
+                "speed_mps": 60.0
+              },
+              "phase": "active",
+              "released": true
+            }
+          ],
+          "configured": true,
+          "cooldowns": {
+            "dawn_volley": 0.0,
+            "guardian_circle": 0.0,
+            "kodanda": 0.0,
+            "measured_step": 0.0,
+            "piercing_dawn": 4.5
+          },
+          "elapsed": 1.5,
+          "generation": 5,
+          "history_capacity": 96,
+          "history_size": 47,
+          "last_reason": "Kodanda · drawing",
+          "max_casts": 12,
+          "network_enabled": false,
+          "receipts_count": 0,
+          "receiver_scope": "lane_troops_and_explicit_movement_receiver",
+          "rejected_casts": 0,
+          "release_count": 2,
+          "suspended": false
+        },
+        "logical_size": "(1280.0, 720.0)",
+        "note": "Finish the current action",
+        "reload_remaining": 1.6,
+        "slots": [
+          "LMB  ·  RELOADING\n     Kodanda",
+          "Space  ·  4.5s\n     Piercing Dawn",
+          "Shift  ·  READY\n     Measured Step",
+          "Ctrl  ·  READY\n     Guardian Circle",
+          "X  ·  READY\n     Dawn Volley"
+        ],
+        "stage": "reload",
+        "styles": [
+          "cooling",
+          "cooling",
+          "ready",
+          "ready",
+          "ready"
+        ]
+      },
+      "name": "reload describes bow and non-ready abilities at1.0",
+      "passed": false
+    },
+    {
+      "details": {
+        "ammo": 11,
+        "eligibility": {
+          "eligible": false,
+          "reason": "Finish the current action"
+        },
+        "hud_rect": "[P: (230.0, 590.0), S: (820.0, 112.0)]",
+        "kit": {
+          "accepted_casts": 2,
+          "action_locked": false,
+          "active_ability": "",
+          "active_cast_id": 0,
+          "casts": [
+            {
+              "ability_id": "piercing_dawn",
+              "age_s": 1.5,
+              "cast_id": 1,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.18938, 1.328872, -9.283154)"
+                  }
+                ],
+                "radius_m": 0.36,
+                "range_m": 38.0,
+                "speed_mps": 52.0
+              },
+              "phase": "active",
+              "released": true
+            },
+            {
+              "ability_id": "kodanda",
+              "age_s": 0.45,
+              "cast_id": 2,
+              "geometry": {
+                "center": "(-40.0, 0.0, -10.0)",
+                "forward": "(-0.142126, 0.0, 0.989849)",
+                "height_m": 2.7,
+                "kind": "projectiles",
+                "origin": "(-40.0, 0.0, -10.0)",
+                "projectiles": [
+                  {
+                    "delay_s": 0.0,
+                    "forward": "(-0.142126, 0.0, 0.989849)",
+                    "index": 0,
+                    "origin": "(-40.07591, 1.332404, -9.272531)"
+                  }
+                ],
+                "radius_m": 0.22,
+                "range_m": 40.0,
+                "speed_mps": 60.0
+              },
+              "phase": "active",
+              "released": true
+            }
+          ],
+          "configured": true,
+          "cooldowns": {
+            "dawn_volley": 0.0,
+            "guardian_circle": 0.0,
+            "kodanda": 0.0,
+            "measured_step": 0.0,
+            "piercing_dawn": 4.5
+          },
+          "elapsed": 1.5,
+          "generation": 5,
+          "history_capacity": 96,
+          "history_size": 47,
+          "last_reason": "Kodanda · drawing",
+          "max_casts": 12,
+          "network_enabled": false,
+          "receipts_count": 0,
+          "receiver_scope": "lane_troops_and_explicit_movement_receiver",
+          "rejected_casts": 0,
+          "release_count": 2,
+          "suspended": false
+        },
+        "logical_size": "(1280.0, 720.0)",
+        "note": "Finish the current action",
+        "reload_remaining": 1.6,
+        "slots": [
+          "LMB  ·  RELOADING\n     Kodanda",
+          "Space  ·  4.5s\n     Piercing Dawn",
+          "Shift  ·  READY\n     Measured Step",
+          "Ctrl  ·  READY\n     Guardian Circle",
+          "X  ·  READY\n     Dawn Volley"
+        ],
+        "stage": "reload-fit",
+        "styles": [
+          "cooling",
+          "cooling",
+          "ready",
+          "ready",
+          "ready"
+        ]
+      },
+      "name": "reload retains real cooldown and long labels at1.0",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "HUD and scaling cannot advance reload/combat at1.0",
+      "passed": true
+    },
+    {
+      "details": {
+        "ticks": 33
+      },
+      "name": "real physics finishes reload and re-enables mounted input",
+      "passed": true
+    },
+    {
+      "details": {
+        "ammo": 12,
+        "eligibility": {
+          "eligible": true
+        },
+        "hud_rect": "[P: (230.0, 590.0), S: (820.0, 112.0)]",
+        "kit": {
+          "accepted_casts": 2,
+          "action_locked": false,
+          "active_ability": "",
+          "active_cast_id": 0,
+          "casts": [],
+          "configured": true,
+          "cooldowns": {
+            "dawn_volley": 0.0,
+            "guardian_circle": 0.0,
+            "kodanda": 0.0,
+            "measured_step": 0.0,
+            "piercing_dawn": 2.85
+          },
+          "elapsed": 3.15,
+          "generation": 5,
+          "history_capacity": 96,
+          "history_size": 68,
+          "last_reason": "Kodanda · drawing",
+          "max_casts": 12,
+          "network_enabled": false,
+          "receipts_count": 0,
+          "receiver_scope": "lane_troops_and_explicit_movement_receiver",
+          "rejected_casts": 0,
+          "release_count": 2,
+          "suspended": false
+        },
+        "logical_size": "(1280.0, 720.0)",
+        "note": "Rama is ready",
+        "reload_remaining": 0.0,
+        "slots": [
+          "LMB  ·  12 / 12\n     Kodanda",
+          "Space  ·  2.9s\n     Piercing Dawn",
+          "Shift  ·  READY\n     Measured Step",
+          "Ctrl  ·  READY\n     Guardian Circle",
+          "X  ·  READY\n     Dawn Volley"
+        ],
+        "stage": "reload-finished",
+        "styles": [
+          "ready",
+          "cooling",
+          "ready",
+          "ready",
+          "ready"
+        ]
+      },
+      "name": "completed reload restores ready affordances immediately",
+      "passed": true
+    },
+    {
+      "details": {
+        "input": {
+          "accepted": true,
+          "cast_id": 3,
+          "from_buffer": false,
+          "generation": 5,
+          "queued": false,
+          "reason": "Dawn Volley · drawing",
+          "recovery_s": 0.55,
+          "windup_s": 0.95
+        }
+      },
+      "name": "same actual input succeeds after reload",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "sources remain stable",
+      "passed": true
+    }
+  ],
+  "count": 17,
+  "hud_script": "",
+  "passed": false,
+  "scope": "Real mounted kit releases, spent ammo, start_reload, input rejection and physics-driven completion; real saved remaps and logical100/200/100. Authority held during layout inspection. No rendered/native OS input or human feel acceptance.",
+  "sources": {
+    "res://scripts/confluence_world.gd": "503093acba1f8b5679e8dfb3bf81beee5a273c9d766ba60d352e3d07035a375d",
+    "res://scripts/input_bindings.gd": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+    "res://scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+    "res://scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+    "res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "res://scripts/rama_hero_hud.gd": "68e3cc06b4176cd8720a6a132ae06582a0c605ff8113a421b048d60550238ea9",
+    "res://scripts/rama_hero_runtime.gd": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+    "res://tests/ui_hud_reload_availability_cases.gd": "8d9ec0d218ac379c5dd55cee25446f46452b0b35b31ec6820172d6f6f1c9c7c1",
+    "res://tests/ui_i1_action_hud_cases.gd": "e80a48ca2feb8c333a49f98e25703692e4f27e6a81b3de3c3669c58283b9ec66"
+  }
+}

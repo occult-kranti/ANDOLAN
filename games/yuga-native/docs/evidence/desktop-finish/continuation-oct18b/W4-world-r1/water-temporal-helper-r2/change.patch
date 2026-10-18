@@ -1,0 +1,50 @@
+--- /workspace/scratch/yuga-next-W4-r1/water-temporal-helper-r1/capture_water_temporal.gd
++++ /workspace/scratch/yuga-next-W4-r1/water-temporal-helper-r2/capture_water_temporal.gd
+@@ -10,6 +10,7 @@
+ const TIME_PROOF_SHA := "db8f560fe9b66e8f9c75d2e13736485bcd9a07a81bd5c4cce462230c4d1eba5e"
+ # Two float32 ULPs at1/30; cross-branch recorded values must still compare exactly.
+ const STEP_TOLERANCE := 0.000000007450580596923828
++var declared_fixed_fps: String = ""
+ var compact_frames: Array = []
+ var image_refs: Array = []
+ var full_refs: Array = []
+@@ -81,10 +82,13 @@
+ 	return animation_reset.size()==3
+ 
+ func run() -> void:
++	# Pin source inputs before any argument/readiness failure; no simulated step.
++	source_start=hashes()
+ 	time_origin_clock=clock_state()
+ 	for arg in OS.get_cmdline_user_args():
+ 		if arg.begins_with("--output="):output=arg.trim_prefix("--output=")
+ 		elif arg=="--preflight":preflight=true
++		elif arg.begins_with("--capture-fixed-fps="):declared_fixed_fps=arg.trim_prefix("--capture-fixed-fps=")
+ 		elif arg.begins_with("--water-role="):water_role=arg.trim_prefix("--water-role=")
+ 		else:finish("Unknown argument:"+arg);return
+ 	if water_role not in ["baseline","candidate"]:finish("Explicit water role required");return
+@@ -92,11 +96,12 @@
+ 	DirAccess.make_dir_recursive_absolute(output)
+ 	if FileAccess.get_sha256(TIME_PROOF)!=TIME_PROOF_SHA:finish("TIME proof changed");return
+ 	if not preflight and (DisplayServer.get_name()!="X11" or RenderingServer.get_current_rendering_method()!="forward_plus"):finish("X11 Forward+ required");return
+-	var args: PackedStringArray = OS.get_cmdline_args()
+-	var fixed_index: int = args.find("--fixed-fps")
+-	check("explicit fixed30Hz engine invocation",fixed_index>=0 and fixed_index+1<args.size() and args[fixed_index+1]=="30")
++	# Godot removes parsed engine flags from OS.get_cmdline_args(). W1 must
++	# independently pin its actual --fixed-fps30 launch command. This explicit
++	# fixture declaration supplements the unchanged measured step/draw gates.
++	check("fixture declares fixed30Hz; wrapper pins engine invocation",declared_fixed_fps=="30")
+ 	if checks.any(func(row):return not row.passed):finish("Fixed-step gate failed");return
+-	source_start=hashes();branch="baseline-exact79e5"
++	branch="baseline-exact79e5"
+ 	root.size=Vector2i(960,540);root.content_scale_size=Vector2i(1280,720);root.content_scale_factor=1.0
+ 	if not preflight:root.show()
+ 	if change_scene_to_file("res://scenes/confluence_world.tscn")!=OK:finish("World load failed");return
+@@ -153,7 +158,7 @@
+ 		write_json(output.path_join("compact-trace.json"),{"frames":compact_frames,"time_origin_clock":time_origin_clock,"before_first_clock":initial_clock,"draw_history":draw_history,"animation_reset":animation_reset,"time_proof_sha256":TIME_PROOF_SHA,"camera_travel":vector(CAMERA_TRAVEL)})
+ 		trace_ref={"file":"compact-trace.json","sha256":FileAccess.get_sha256(output.path_join("compact-trace.json")),"frames":compact_frames.size()}
+ 	var passed: bool = failure.is_empty() and checks.all(func(row):return row.passed)
+-	var report: Dictionary = {"complete":passed,"failure":failure,"preflight":preflight,"water_role":water_role,"shots":image_refs,"full_snapshot_refs":full_refs,"trace_ref":trace_ref,"checks":checks,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"time_proof_path":TIME_PROOF,"time_proof_sha256":TIME_PROOF_SHA,"candidate_path":CANDIDATE_PATH,"candidate_sha256":CANDIDATE_SHA256,"override_proof":water_override_proof,"engine_args":Array(OS.get_cmdline_args()),"camera_travel":vector(CAMERA_TRAVEL),"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"32actual consecutive fixed30Hz night-swamp samples with real TIME and restored original water animation. Full world/hero/UI retained. Full controls only first+last, compact correlated trace for all32. No hardwareFPS,long-cycle,whole-world or finished-art acceptance."}
++	var report: Dictionary = {"complete":passed,"failure":failure,"preflight":preflight,"water_role":water_role,"shots":image_refs,"full_snapshot_refs":full_refs,"trace_ref":trace_ref,"checks":checks,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"time_proof_path":TIME_PROOF,"time_proof_sha256":TIME_PROOF_SHA,"candidate_path":CANDIDATE_PATH,"candidate_sha256":CANDIDATE_SHA256,"override_proof":water_override_proof,"engine_args":Array(OS.get_cmdline_args()),"capture_fixed_fps_declaration":declared_fixed_fps,"camera_travel":vector(CAMERA_TRAVEL),"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"32actual consecutive fixed30Hz night-swamp samples with real TIME and restored original water animation. Full world/hero/UI retained. Full controls only first+last, compact correlated trace for all32. No hardwareFPS,long-cycle,whole-world or finished-art acceptance."}
+ 	paused=false
+ 	if is_instance_valid(current_scene):current_scene.queue_free()
+ 	for unused in 8:await process_frame

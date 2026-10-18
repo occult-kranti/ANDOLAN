@@ -1,0 +1,133 @@
+{
+  "sealed_utc": "2026-10-18T17:53:11.575986+00:00",
+  "task": "Maintained canonical authored descent regression and bounded catalog registration",
+  "passed": true,
+  "canonical_motion_sha256": "d5550b25044ea97c9ce482a130ac73f012c313e96f2029a555abb590e1375b0e",
+  "expected_motion_sha256": "d5550b25044ea97c9ce482a130ac73f012c313e96f2029a555abb590e1375b0e",
+  "checks": {
+    "new_descent": 11,
+    "existing_support_boundary": 30,
+    "existing_pause": 4,
+    "total_engine": 45,
+    "independent_catalog_selftest": 42
+  },
+  "source_files": {
+    "tests/desktop_authored_descent_cases.gd": {
+      "sha256": "1b4999f53f3fcc3a1c6f25107cc4465cd9839d99d0c95191225c84cf6507ce2b",
+      "bytes": 7903,
+      "archive": "sources/desktop_authored_descent_cases.gd"
+    },
+    "tests/desktop_authored_descent_cases.gd.uid": {
+      "sha256": "072d486de823ba6d06e2a443834f5c1b5c004268ba0c7842ebeee1be09db89dd",
+      "bytes": 19,
+      "archive": "sources/desktop_authored_descent_cases.gd.uid"
+    },
+    "tools/run-visual-checks.py": {
+      "sha256": "7aaafc3d1b51595da7da76b36f37711da9ddf9500a18db0ff7c19d8b06732163",
+      "bytes": 18719,
+      "archive": "sources/run-visual-checks.py"
+    },
+    "tests/visual_catalog_cases.py": {
+      "sha256": "ed526aef6cfa6c90ddf9d5e02e2b3acf15261236e2642f791c3ee118802cba2a",
+      "bytes": 17537,
+      "archive": "sources/visual_catalog_cases.py"
+    }
+  },
+  "w6_receipt": {
+    "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18b/W6-integration-r1/reload-hud-review-r1/receipt.json",
+    "sha256": "efae43155a6ce424cb9b00edf0fa64c8ae04e5ab4bf4df854f637a8c7fed86fd"
+  },
+  "source_before_after_exact": true,
+  "runtime_edits_by_W5": false,
+  "catalog_command": "taskset -c 4 env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python games/yuga-native/tools/run-visual-checks.py --engine /usr/local/bin/godot --suite desktop-authored-descent --suite desktop-landing-support-boundary --suite desktop-landing-pause --max-cpus 1 --timeout 180 --output /workspace/scratch/yuga-next-W5-r1/canonical-regression-r1/catalog-r1",
+  "artifacts": {
+    "REVIEW.md": {
+      "sha256": "adda9ab272a74e0b7d3b8cb156057509131e97ed95339b043bb5a6700cbb6673",
+      "bytes": 2412
+    },
+    "archive-manifest.json": {
+      "sha256": "9112f3c6eaf13c135926d3632bfa79a6c40c191880561381ae49103d67cc9b15",
+      "bytes": 7411
+    },
+    "catalog/logs/desktop-authored-descent.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "catalog/logs/desktop-authored-descent.stdout": {
+      "sha256": "40f56abc371cc987206bfd6ceada39faf1a1dad945c4cff8e6a95bca35960b32",
+      "bytes": 762
+    },
+    "catalog/logs/desktop-landing-pause.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "catalog/logs/desktop-landing-pause.stdout": {
+      "sha256": "a71038d5613ab0bd091f17306824791aa7a9082ad552cbe55d4463d097a5519a",
+      "bytes": 514
+    },
+    "catalog/logs/desktop-landing-support-boundary.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "catalog/logs/desktop-landing-support-boundary.stdout": {
+      "sha256": "e3a5db0ce50fc4717bdb3f4481abfaefc80e04d0af2d202c74d09106b8667b9d",
+      "bytes": 2162
+    },
+    "catalog/logs/engine-version.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "catalog/logs/engine-version.stdout": {
+      "sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+      "bytes": 32
+    },
+    "catalog/reports/desktop-authored-descent.json": {
+      "sha256": "b5e73ea80c56be844b790675829415d5313ac81ea0f7e638f23000af702428b1",
+      "bytes": 10375
+    },
+    "catalog/reports/desktop-landing-pause.json": {
+      "sha256": "97f29f24fd1c400fbb710b5fd45425c91d0c5d2a64cb31fd2e5ca5615e6a458b",
+      "bytes": 92608
+    },
+    "catalog/reports/desktop-landing-support-boundary.json.gz": {
+      "sha256": "247b07ec02bf7ab4a3e8621766843295229e146167e5f6382af38c08aaeeabc9",
+      "bytes": 2099350
+    },
+    "catalog/source-after.json": {
+      "sha256": "03f648ad8065489060627091601b168baf6053dfb475c17a55b3f674f7b2ae2c",
+      "bytes": 91915
+    },
+    "catalog/source-before.json": {
+      "sha256": "03f648ad8065489060627091601b168baf6053dfb475c17a55b3f674f7b2ae2c",
+      "bytes": 91915
+    },
+    "catalog/summary.json": {
+      "sha256": "1ec97e74369fe8a6c22f4c1c67a0c2398a974c5d0bc23d19a3fe72ab54948650",
+      "bytes": 4935
+    },
+    "sources/desktop_authored_descent_cases.gd": {
+      "sha256": "1b4999f53f3fcc3a1c6f25107cc4465cd9839d99d0c95191225c84cf6507ce2b",
+      "bytes": 7903
+    },
+    "sources/desktop_authored_descent_cases.gd.uid": {
+      "sha256": "072d486de823ba6d06e2a443834f5c1b5c004268ba0c7842ebeee1be09db89dd",
+      "bytes": 19
+    },
+    "sources/run-visual-checks.py": {
+      "sha256": "7aaafc3d1b51595da7da76b36f37711da9ddf9500a18db0ff7c19d8b06732163",
+      "bytes": 18719
+    },
+    "sources/visual_catalog_cases.py": {
+      "sha256": "ed526aef6cfa6c90ddf9d5e02e2b3acf15261236e2642f791c3ee118802cba2a",
+      "bytes": 17537
+    },
+    "uid-generation.json": {
+      "sha256": "78a1fec163ca1b03127d55f1e6e5b7f8a1796677b2d7376276e1524789cc8bf9",
+      "bytes": 209
+    },
+    "uid-generator.gd.txt": {
+      "sha256": "e8e04f1e0b4231e68792fe4261525f9b7a18282dad2dd9e266aee8d50b8bc66d",
+      "bytes": 127
+    }
+  }
+}

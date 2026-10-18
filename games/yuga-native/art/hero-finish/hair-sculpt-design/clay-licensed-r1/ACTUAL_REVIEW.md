@@ -1,0 +1,18 @@
+# C7 actual four-view author disposition
+
+**REJECT — major shape.** W3 directly opened all four original1024² clay images from the exact frozen source `0acb259a6a5b1c538fa050cc5b42125e31399ed0a8ea41eaae33b24b7ac84b07` using unchanged helper `0d05dacf96490ae3a130e513c9e807bddad2931073fa2fe18942fe131f899dc7`. This is a completed authoring-view review, not runtime or animated-cast evidence. Root independently opened all four originals and concurs REJECT. W1/W3/root reject; C7 source and originals are sealed.
+
+| Actual original | Direct visible finding |
+| --- | --- |
+| Front | Thin separated cords run over the top, leaving a broad exposed scalp wedge above the crown and between strands. Temple pieces hang as isolated sticks. Small open loops protrude above the tie. Face, crown and ears stay recognizable, but a gathered hair mass is absent. |
+| Anatomical-left profile | Most side and rear scalp remains bare. The upper sweep consists of parallel narrow cords ending at different points instead of overlapping broad directional clumps. Gather is a hollow loop cluster straddling the tie rather than a low filled folded bun. Posterior pieces lift away from the nape, leaving a visible gap. |
+| Rear | Crossing thin cords form an open lattice over the upper scalp. Large lower-occiput areas are exposed; repeated tapering sticks end around the head. The six authored long falls do not read as falling grouped locks: most are buried, visually absent or only faint lines against the neck. There is no asymmetric layered flowing rear mass. |
+| Cast-angle-authoring | Same bare scalp, thin strut-like sweeps and airy loop gather. The fixed crown remains visible but the hairstyle lacks the intended major volume and grouped flow. This camera is a rest-space authoring angle, not a native animated cast. |
+
+The actuals disprove the assumption that selecting closed source components and radially registering them would provide credible coverage and grouped volume. The narrow original cornrow sections, mirrored subset and nape deformation did not supply a suitable assembled major shape. The long falls being present in bounds/topology did not establish that their visible surfaces survived seating. Adding UV, dark material or fine detail would not repair these major-form failures.
+
+Visible scalp exposure is the decisive fit issue; a topological zero-boundary result cannot accept it. The tie itself remains visibly recognizable but encircles air and thin loops rather than a filled gather. The preflight33.38mm bun radius versus32.08mm tie aperture was not a visible-fit pass; no claim of full hardware clearance is made from these noisy clay images. Lower hair/gold contacts identified in source metrics are not a proven native collision outcome. Hardware is not moved to compensate for this candidate.
+
+The source route is materially different from C1–C6 and the upstream licensing remains valid. This failed adaptation does not establish that CC-BY source is unusable in general or that the protected head/tie forces a bad hairstyle. It establishes that **this exact subset/registration/deformation is unsuitable**. Do not scale it into another cap or proceed through skin/material/LOD integration on the strength of structural checks. No source correction, raster, UV, GLB, canonical promotion or additional catalog work is authorized by this disposition. `INTEGRATION_PATH.md` remains a conditional mechanism note, not an approved next export.
+
+Keep the exact candidate, source cage, original upstream payload/license, derivative instructions, initial source checks and all four originals. W1 owns actual-original preservation and execution receipt. No full asset copies are needed.

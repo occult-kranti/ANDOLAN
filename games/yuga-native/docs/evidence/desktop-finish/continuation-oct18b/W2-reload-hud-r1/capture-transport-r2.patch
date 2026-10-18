@@ -1,0 +1,28 @@
+--- capture_reload_candidate-r1.gd
++++ capture_reload_candidate-r2.gd
+@@ -7,6 +7,8 @@
+ const HUD_SOURCE := "/workspace/scratch/yuga-next-W2-r1/reload-r1/candidate-rama_hero_hud.gd"
+ const HUD_SHA := "572b0b8469c6b9d0b80d39cde5e8389450c9e0d7e8af989c18644f956dd657bc"
+ const Bindings = preload("res://scripts/input_bindings.gd")
++const HUD_REMAP := "res://scripts/rama_hero_hud.gdc"
++const HUD_REMAP_SHA := "7736d83e3797ddb75bf1f7dc4dbf90937a686b4915250cfb73dab2a4b83e0995"
+ var hud_source: Script
+ var ui_source: Script
+ var stage_receipt: Dictionary={}
+@@ -45,10 +47,13 @@
+ 	if FileAccess.get_sha256(UI_SOURCE)!=UI_SHA:finish("Candidate UI source pin mismatch");return
+ 	if FileAccess.get_sha256(HUD_SOURCE)!=HUD_SHA:finish("HUD source pin mismatch");return
+ 	hud_source=load(HUD_SOURCE) as Script
+-	if hud_source==null or hud_source.source_code.sha256_text()!=HUD_SHA:finish("HUD load mismatch");return
+-	hud_source.take_over_path("res://scripts/rama_hero_hud.gd")
++	if hud_source==null or not hud_source.can_instantiate() or hud_source.source_code.sha256_text()!=HUD_SHA:finish("HUD load mismatch");return
++	if FileAccess.get_sha256("res://scripts/rama_hero_hud.gd.remap")!=HUD_REMAP_SHA:finish("Unexpected exported HUD remap");return
++	hud_source.take_over_path(HUD_REMAP)
+ 	ui_source=load(UI_SOURCE) as Script
+-	if ui_source==null or ui_source.source_code.sha256_text()!=UI_SHA:finish("Candidate UI source load mismatch");return
++	if ui_source==null or not ui_source.can_instantiate() or ui_source.source_code.sha256_text()!=UI_SHA:finish("Candidate UI source load mismatch");return
++	check("world compiled preload is exact572b HUD",ui_source.get_script_constant_map().get("RamaHUD")==hud_source)
++	if checks.any(func(row):return not row.passed):finish("HUD preload provenance failed");return
+ 	ui_source.take_over_path("res://scripts/confluence_world.gd")
+ 	if change_scene_to_file("res://scenes/confluence_world.tscn")!=OK:finish("World load failed");return
+ 	if not await wait_scene("res://scenes/confluence_world.tscn"):finish("World readiness failed");return

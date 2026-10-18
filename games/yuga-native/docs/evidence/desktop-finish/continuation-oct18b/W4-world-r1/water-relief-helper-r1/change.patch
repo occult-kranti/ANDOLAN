@@ -1,0 +1,101 @@
+--- /workspace/scratch/yuga-next-W4-r1/water-temporal-helper-r2/capture_water_temporal.gd
++++ /workspace/scratch/yuga-next-W4-r1/water-relief-helper-r1/capture_water_relief.gd
+@@ -5,11 +5,27 @@
+ const FRAME_COUNT := 32
+ const CAMERA_START := Vector3(-48,2.8,8)
+ const CAMERA_TARGET := Vector3(-61,1,0)
+-const CAMERA_TRAVEL := Vector3.ZERO
++const CAMERA_TRAVEL := Vector3(0.6,0,0)
+ const TIME_PROOF := "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/continuation-oct18b/W6-integration-r1/godot-time-r1/receipt.json"
+ const TIME_PROOF_SHA := "db8f560fe9b66e8f9c75d2e13736485bcd9a07a81bd5c4cce462230c4d1eba5e"
+ # Two float32 ULPs at1/30; cross-branch recorded values must still compare exactly.
+ const STEP_TOLERANCE := 0.000000007450580596923828
++const COMBINED_PINS := {
++  "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/world_ground.gdshader": "91bbf49f6ad55b487cf7aa58fc1d8592bf0a6f894253efe3ec276abe1e275490",
++  "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/world_ground_common.gdshaderinc": "70f931bd465b4879aa55cfb3e09955d90bb1d2c975b1be4d53caa3c7793efe66",
++  "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/world_water.gdshader": "a09520a82cc1a5e956b4b0524ef6e4c50a900f7ab4be0019ba43949a54717b4f",
++  "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/render-ground.gdshader": "45f98473453bb8f98330f93b1f879516c11e6e493329b1a94ff705ab436a272d",
++  "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/render-water.gdshader": "0e61b90721f2f3f7d32edec88976cb68463801830af2e8ae01b7a1fd2d4fa786",
++  "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/manifest.json": "0e58e6318a35ef268cf348873ac6fade40eef02b488cf7e610965a34539de6f3",
++  "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/render-derivation.json": "1cd4ea90a56d6e6ed86646786712a5218240dc52b13d03ef5227627666b73150",
++  "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/water-derivation.json": "5231d9f9b4883f48ae029c006d1eb1a0f4bba552084cfcc83909dde8f2f6e46a"
++}
++const COMBINED_WATER_PATH := "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/render-water.gdshader"
++const COMBINED_WATER_SHA := "0e61b90721f2f3f7d32edec88976cb68463801830af2e8ae01b7a1fd2d4fa786"
++const COMBINED_GROUND_PATH := "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/render-ground.gdshader"
++const COMBINED_GROUND_SHA := "45f98473453bb8f98330f93b1f879516c11e6e493329b1a94ff705ab436a272d"
++const ORIGINAL_GROUND_SHA := "7f687dbde3fe62bbcc38317d87229b4857c7340e1c7bfbb895c4c6911d765213"
++var ground_override_proof: Dictionary = {}
+ var declared_fixed_fps: String = ""
+ var compact_frames: Array = []
+ var image_refs: Array = []
+@@ -52,6 +68,12 @@
+ func snapshot(id: String) -> Dictionary:
+ 	var state: Dictionary = super.snapshot(id)
+ 	state.review_fixture.animation="original material animation restored before frame24; real TIME, no explicit shader clock override"
++	state.water_shader_override.candidate_path=COMBINED_WATER_PATH
++	state.water_shader_override.candidate_sha256=COMBINED_WATER_SHA
++	state.water_shader_override.baseline_shader_path=CANDIDATE_PATH
++	state.water_shader_override.baseline_shader_sha256=CANDIDATE_SHA256
++	state.ground_shader_override=ground_override_proof.duplicate(true)
++	state.combined_source_pins=COMBINED_PINS
+ 	state.water_animation_reset=animation_reset.duplicate(true)
+ 	state.temporal_scope={"frames":FRAME_COUNT,"camera_travel":vector(CAMERA_TRAVEL),"time_proof_sha256":TIME_PROOF_SHA,"full_snapshot":"first/last only"}
+ 	return state
+@@ -158,7 +180,7 @@
+ 		write_json(output.path_join("compact-trace.json"),{"frames":compact_frames,"time_origin_clock":time_origin_clock,"before_first_clock":initial_clock,"draw_history":draw_history,"animation_reset":animation_reset,"time_proof_sha256":TIME_PROOF_SHA,"camera_travel":vector(CAMERA_TRAVEL)})
+ 		trace_ref={"file":"compact-trace.json","sha256":FileAccess.get_sha256(output.path_join("compact-trace.json")),"frames":compact_frames.size()}
+ 	var passed: bool = failure.is_empty() and checks.all(func(row):return row.passed)
+-	var report: Dictionary = {"complete":passed,"failure":failure,"preflight":preflight,"water_role":water_role,"shots":image_refs,"full_snapshot_refs":full_refs,"trace_ref":trace_ref,"checks":checks,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"time_proof_path":TIME_PROOF,"time_proof_sha256":TIME_PROOF_SHA,"candidate_path":CANDIDATE_PATH,"candidate_sha256":CANDIDATE_SHA256,"override_proof":water_override_proof,"engine_args":Array(OS.get_cmdline_args()),"capture_fixed_fps_declaration":declared_fixed_fps,"camera_travel":vector(CAMERA_TRAVEL),"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"32actual consecutive fixed30Hz night-swamp samples with real TIME and restored original water animation. Full world/hero/UI retained. Full controls only first+last, compact correlated trace for all32. No hardwareFPS,long-cycle,whole-world or finished-art acceptance."}
++	var report: Dictionary = {"complete":passed,"failure":failure,"preflight":preflight,"water_role":water_role,"shots":image_refs,"full_snapshot_refs":full_refs,"trace_ref":trace_ref,"checks":checks,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"time_proof_path":TIME_PROOF,"time_proof_sha256":TIME_PROOF_SHA,"candidate_path":COMBINED_WATER_PATH,"candidate_sha256":COMBINED_WATER_SHA,"baseline_water_path":CANDIDATE_PATH,"baseline_water_sha256":CANDIDATE_SHA256,"combined_source_pins":COMBINED_PINS,"ground_override_proof":ground_override_proof,"override_proof":water_override_proof,"engine_args":Array(OS.get_cmdline_args()),"capture_fixed_fps_declaration":declared_fixed_fps,"camera_travel":vector(CAMERA_TRAVEL),"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"32actual consecutive fixed30Hz night-swamp samples with real TIME, restored original water animation and matched0.6m lateral translation; baseline thin-film versus combined root ground/water relief. Full world/hero/UI retained. Full controls only first+last, compact correlated trace for all32. No hardwareFPS,long-cycle,whole-world or finished-art acceptance."}
+ 	paused=false
+ 	if is_instance_valid(current_scene):current_scene.queue_free()
+ 	for unused in 8:await process_frame
+@@ -173,3 +195,47 @@
+ 	if not output.is_empty() and DirAccess.dir_exists_absolute(output):write_json(output.path_join("preflight.json" if preflight else "capture.json"),report)
+ 	print("WATER_TEMPORAL_COMPLETE ",passed," ",failure)
+ 	quit(0 if passed else 1)
++
++func install_water_shader(scene: Node3D) -> bool:
++	# The only combined installation differences. Timeline/collection stays inherited.
++	for path in COMBINED_PINS:
++		if FileAccess.get_sha256(path)!=COMBINED_PINS[path]:return false
++	if FileAccess.get_sha256(CANDIDATE_PATH)!=CANDIDATE_SHA256:return false
++	var selected_path: String = CANDIDATE_PATH if water_role=="baseline" else COMBINED_WATER_PATH
++	var expected_sha: String = CANDIDATE_SHA256 if water_role=="baseline" else COMBINED_WATER_SHA
++	var selected_shader: Shader = load(selected_path) as Shader
++	if selected_shader==null or selected_shader.code.sha256_text()!=expected_sha:return false
++	water_override_proof.clear()
++	for description in scene.manifest.waters:
++		var node: MeshInstance3D = scene.world.get_node_or_null(String(description.id))
++		if node==null:return false
++		var original: ShaderMaterial = node.get_active_material(0) as ShaderMaterial
++		if original==null or original.shader==null or node.material_override!=original:return false
++		if original.shader.code.sha256_text()!=ORIGINAL_SHADER_SHA256:return false
++		var before: Dictionary = uniform_values(original)
++		var active: ShaderMaterial = original.duplicate(false) as ShaderMaterial
++		active.shader=selected_shader
++		for name in before:active.set_shader_parameter(name,before[name])
++		node.material_override=active
++		var after: Dictionary = uniform_values(active)
++		if before!=after:return false
++		water_override_proof.append({"id":String(description.id),"applied":true,"role":water_role,"original_shader_path":original.shader.resource_path,"original_code_sha256":original.shader.code.sha256_text(),"active_shader_path":active.shader.resource_path,"active_code_sha256":active.shader.code.sha256_text(),"expected_active_code_sha256":expected_sha,"uniforms_before":encode_value(before),"uniforms_after_install":encode_value(after),"all_uniforms_copied_exact":before==after})
++	var floor_node: MeshInstance3D = scene.world.get_node_or_null("FlatCityPaving")
++	if floor_node==null:return false
++	var floor_original: ShaderMaterial = floor_node.get_active_material(0) as ShaderMaterial
++	if floor_original==null or floor_original.shader==null or floor_node.material_override!=floor_original:return false
++	if floor_original.shader.code.sha256_text()!=ORIGINAL_GROUND_SHA:return false
++	var floor_before: Dictionary = uniform_values(floor_original)
++	var floor_active: ShaderMaterial = floor_original
++	if water_role=="candidate":
++		var floor_shader: Shader = load(COMBINED_GROUND_PATH) as Shader
++		if floor_shader==null or floor_shader.code.sha256_text()!=COMBINED_GROUND_SHA:return false
++		floor_active=floor_original.duplicate(false) as ShaderMaterial
++		floor_active.shader=floor_shader
++		for name in floor_before:floor_active.set_shader_parameter(name,floor_before[name])
++		floor_node.material_override=floor_active
++	var floor_after: Dictionary = uniform_values(floor_active)
++	if floor_before!=floor_after:return false
++	ground_override_proof={"id":"FlatCityPaving","applied":water_role=="candidate","original_shader_path":floor_original.shader.resource_path,"original_code_sha256":floor_original.shader.code.sha256_text(),"active_shader_path":floor_active.shader.resource_path,"active_code_sha256":floor_active.shader.code.sha256_text(),"uniforms_before":encode_value(floor_before),"uniforms_after_install":encode_value(floor_after),"all_uniforms_copied_exact":floor_before==floor_after,"apron_untouched":true}
++	check("combined exact4target materials retain every original uniform",water_override_proof.size()==3 and water_override_proof.all(func(row):return row.all_uniforms_copied_exact) and ground_override_proof.all_uniforms_copied_exact)
++	return water_override_proof.size()==3

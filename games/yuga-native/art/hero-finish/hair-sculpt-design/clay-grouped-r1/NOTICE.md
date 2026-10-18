@@ -1,0 +1,3 @@
+# C8 source boundary
+
+C8 broad elliptical-clump cage geometry is new YUGA authoring work over the protected Rama reference. It reuses no mesh vertices/faces from Dennis Ploeger/deep-entertainment BraidStrands or rejected C7. The separate C7 source, CC-BY4 license, attribution and derivative instructions remain preserved unchanged; this study does not relicense that upstream work. The fixed reference anatomy/costume/hardware and neutral clay remain governed by their existing project provenance. No source photo, external image, upstream helper body, external rig or original upstream material enters C8. No game asset or public distribution is changed by this study.
