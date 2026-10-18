@@ -19,6 +19,8 @@ var manifest: Dictionary
 var before: Dictionary = {}
 var capsule: CapsuleShape3D
 var rama_fire_events: Array[Dictionary] = []
+const FRONTAGE_DATA := "res://assets/world/block2-frontage.json"
+const FRONTAGE_DATA_SHA256 := "67950a68d7b6384b8b114987a27efff1f113d44f8fb1b7df8632f3e9217406a2"
 
 func _initialize() -> void:
 	call_deferred("_run")
@@ -27,6 +29,8 @@ func _run() -> void:
 	for path in ["res://art/world/confluence-map.json", "res://assets/world/confluence-map.json", "res://scripts/confluence_world.gd", "res://scripts/player.gd", "res://scripts/projectile.gd", "res://scripts/world_lighting.gd", "res://scripts/traversal_landmarks.gd", "res://scripts/traversal_stone.gdshader", "res://scripts/world_ground_common.gdshaderinc", "res://scripts/player_traversal.gd", "res://scripts/lane_army.gd", "res://scenes/confluence_world.tscn", "res://tests/world_scene_cases.gd", "res://scripts/relay_control.gd", "res://scripts/relay_art.gd", "res://scripts/relay_session.gd"]:
 		before[path] = FileAccess.get_sha256(path)
 	for path in ["res://scripts/rama_ability_kit.gd","res://scripts/rama_ability_effects.gd","res://scripts/rama_hero_runtime.gd","res://scripts/rama_hero_hud.gd","res://scripts/rama_hero_panel.gd","res://scripts/rama_vitals.gd","res://assets/design/rama-ability-kit.json"]:
+		before[path] = FileAccess.get_sha256(path)
+	for path in ["res://scripts/world_lane_frontage.gd","res://scripts/world_lane_frontage.gd.uid",FRONTAGE_DATA]:
 		before[path] = FileAccess.get_sha256(path)
 	manifest = JSON.parse_string(FileAccess.get_file_as_string("res://art/world/confluence-map.json"))
 	var packed = load("res://scenes/confluence_world.tscn")
@@ -65,6 +69,8 @@ func _run() -> void:
 	await _query(func():
 		var errors := _box_errors()
 		_record("actual authority box surfaces", errors.is_empty(), {"rays":40, "errors":errors})
+		var frontage_errors := _frontage_errors()
+		_record("reviewed frontage installed shape owner and data",frontage_errors.is_empty(),{"errors":frontage_errors,"data_sha256":FileAccess.get_sha256(FRONTAGE_DATA)})
 		var floor_errors := _floor_errors()
 		_record("actual floor covers open arena", floor_errors.is_empty(), {"grid_spacing_metres":2.0, "sample_count":_floor_sample_count(), "errors":floor_errors})
 		var failures := _route_errors()
@@ -76,6 +82,27 @@ func _run() -> void:
 		var radius := _player_radius()
 		_record("world player uses authority radius", abs(radius-float(manifest.bounds.hero_radius))<0.0001, {"native_radius":radius,"authority_radius":manifest.bounds.hero_radius})
 	)
+	# The former flat box must fail both the explicit reviewed surface positions
+	# and the installed-shape ownership contract; restore the exact resource.
+	var frontage: Node3D=scene.world.get_node_or_null("ReviewBlock2Frontage")
+	var frontage_body: StaticBody3D=scene.world.get_node_or_null("authority-solid-2")
+	var frontage_holder: CollisionShape3D
+	if frontage_body:
+		for child in frontage_body.get_children():
+			if child is CollisionShape3D: frontage_holder=child
+	if frontage and frontage_holder:
+		var reviewed_shape: Shape3D=frontage_holder.shape
+		frontage_holder.shape=frontage.get_meta("old_shape")
+		await _ready_physics()
+		await _query(func():
+			var errors := _box_errors()
+			var target_errors := errors.filter(func(item):return item.id=="authority-solid-2")
+			_record("negative former frontage box detected before restoration",target_errors.size()==4 and not _frontage_errors().is_empty(),{"surface_errors":target_errors,"contract_errors":_frontage_errors()})
+		)
+		frontage_holder.shape=reviewed_shape
+		await _ready_physics()
+	else:
+		_record("negative former frontage box detected before restoration",false,{"reason":"reviewed frontage missing"})
 	# Deliberately break physics state in this isolated instance; each checker must
 	# detect it before restoration. These changes never touch project assets.
 	var victim: StaticBody3D = get_nodes_in_group("confluence_authority_blocker")[0]
@@ -117,7 +144,7 @@ func _run() -> void:
 		var position: Vector3 = scene.player.global_position
 		_record("player bounded after external displacement " + str(point), abs(position.x)<=67.3501 and abs(position.z)<=127.3501 and position.is_finite(), {"position":_xyz(position)})
 	await _query(func():
-		_record("restored scene collision passes after mutations", _box_errors().is_empty() and _anchor_errors().is_empty() and _route_errors().is_empty(), {})
+		_record("restored scene collision passes after mutations", _box_errors().is_empty() and _frontage_errors().is_empty() and _anchor_errors().is_empty() and _route_errors().is_empty(), {})
 	)
 	await _check_layout_and_state()
 	var unchanged := true
@@ -141,7 +168,7 @@ func _finish() -> void:
 	for check in checks:
 		passed = passed and check.passed
 	var report := {"passed":passed,"engine":Engine.get_version_info().string,"sources":before,"checks":checks,
-		"scope":"Real headless Godot physics queries in _physics_process against instantiated native world. Expanded140×260m floor, eight preserved browser-source boxes plus eight native landing decks, capsule route sweeps and native-only bounds. Army state is offline; tower markers remain nonblocking. This does not assert browser-authority parity. UI rectangles at two logical viewport sizes and injected actions/button signals are checked, not OS input. No renderer, AI, online match, continuous exhaustive proof or performance claim."}
+		"scope":"Real headless Godot physics queries in _physics_process against instantiated native world. Expanded140×260m floor, seven unchanged box surfaces plus one reviewed closed frontage within its preserved browser-source broadbounds, eight native landing decks, capsule route sweeps and native-only bounds. Army state is offline; tower markers remain nonblocking. Detailed frontage3D collision is not old-box or browser-authority parity. UI rectangles at two logical viewport sizes and injected actions/button signals are checked, not OS input. No renderer, AI, online match, continuous exhaustive proof or performance claim."}
 	print("YUGA_WORLD_PHYSICS ",JSON.stringify(report))
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--report="):
@@ -178,11 +205,39 @@ func _box_errors() -> Array:
 		var rays := [[base+Vector3(0,size.y+2,0),base+Vector3(0,-1,0),base+Vector3(0,size.y,0)]]
 		for direction in [Vector3.RIGHT,Vector3.LEFT,Vector3.FORWARD,Vector3.BACK]:
 			var half := size.x*0.5 if direction.x != 0 else size.z*0.5
-			rays.append([base+Vector3.UP+direction*(half+2),base+Vector3.UP,base+Vector3.UP+direction*half])
+			var expected_surface: Vector3=base+Vector3.UP+direction*half
+			if str(item.id)=="authority-solid-2":
+				# Reviewed closed r2 surface atY1: localX +/-8.76,
+				# localZ -8.35/+8.76. Broadbounds/ray origins stay +/-9.
+				var inset: float=.65 if direction==Vector3.FORWARD else .24
+				expected_surface-=direction*inset
+			rays.append([base+Vector3.UP+direction*(half+2),base+Vector3.UP,expected_surface])
 		for ray in rays:
 			var hit := _ray(ray[0],ray[1])
 			if hit.is_empty() or hit.position.distance_to(ray[2]) > 0.02 or str(hit.collider.get_meta("authority_id", "")) != str(item.id):
 				errors.append({"id":item.id,"expected":_xyz(ray[2]),"actual":_xyz(hit.position) if not hit.is_empty() else []})
+	return errors
+
+func _frontage_errors() -> Array:
+	var errors := []
+	if FileAccess.get_sha256(FRONTAGE_DATA)!=FRONTAGE_DATA_SHA256: errors.append("reviewed frontage data bytes")
+	var body:=scene.world.get_node_or_null("authority-solid-2") as StaticBody3D
+	var frontage:=scene.world.get_node_or_null("ReviewBlock2Frontage") as Node3D
+	var original:=scene.world.get_node_or_null("CityArt/block-2") as Node3D
+	if body==null or frontage==null or original==null:
+		errors.append("installed frontage nodes");return errors
+	if body.position!=Vector3(20,7.5,-28) or body.collision_layer!=1 or body.collision_mask!=0 or body.get_meta("authority_id","")!="authority-solid-2" or body.get_meta("position_base",null)!=Vector3(20,0,-28) or body.get_meta("dimensions",null)!=Vector3(18,15,18): errors.append("preserved body identity metadata and broadbounds")
+	var owners:=body.get_shape_owners()
+	if owners.size()!=1 or body.shape_owner_get_shape_count(owners[0])!=1:
+		errors.append("sole native shape owner");return errors
+	var holder:=body.shape_owner_get_owner(owners[0]) as CollisionShape3D
+	if holder==null or holder.disabled or holder.transform!=Transform3D.IDENTITY or not holder.shape is ConcavePolygonShape3D:
+		errors.append("enabled reviewed ConcavePolygonShape3D");return errors
+	var shape:=holder.shape as ConcavePolygonShape3D
+	if shape!=frontage.get_meta("published_shape",null) or not frontage.get_meta("old_holder") is WeakRef or frontage.get_meta("old_holder").get_ref()!=holder: errors.append("published shape and holder ownership")
+	if shape.get_faces().size()!=4824*3 or not shape.backface_collision or not shape.get_debug_mesh().get_aabb().is_equal_approx(AABB(Vector3(-9,-7.5,-9),Vector3(18,15,18))): errors.append("reviewed closed triangle count and broadbounds")
+	var mesh:=frontage.get_node_or_null("ClosedCivicFrontage") as MeshInstance3D
+	if original.visible or mesh==null or not mesh.is_visible_in_tree() or mesh.mesh==null or mesh.mesh.get_surface_count()!=3: errors.append("reviewed visible mesh replaces original")
 	return errors
 
 func _landing_errors() -> Array:

@@ -1,0 +1,92 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "4",
+    "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "--headless",
+    "--path",
+    "/workspace/ANDOLAN/games/yuga-native",
+    "--fixed-fps",
+    "60",
+    "--script",
+    "res://tests/world_scene_cases.gd",
+    "--",
+    "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/world-lane-frontage/W4-world-scene-regression-r1/baseline/report.json"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 2.6338052969986165,
+  "timeout_seconds": 120,
+  "source_unchanged": true,
+  "passed": false,
+  "count": 27,
+  "passed_count": 25,
+  "failures": [
+    {
+      "details": {
+        "errors": [
+          {
+            "actual": [
+              28.7600002288818,
+              1.0,
+              -28.0
+            ],
+            "expected": [
+              29.0,
+              1.0,
+              -28.0
+            ],
+            "id": "authority-solid-2"
+          },
+          {
+            "actual": [
+              11.2399997711182,
+              1.0,
+              -28.0
+            ],
+            "expected": [
+              11.0,
+              1.0,
+              -28.0
+            ],
+            "id": "authority-solid-2"
+          },
+          {
+            "actual": [
+              20.0,
+              1.0,
+              -36.3499984741211
+            ],
+            "expected": [
+              20.0,
+              1.0,
+              -37.0
+            ],
+            "id": "authority-solid-2"
+          },
+          {
+            "actual": [
+              20.0,
+              1.0,
+              -19.2399997711182
+            ],
+            "expected": [
+              20.0,
+              1.0,
+              -19.0
+            ],
+            "id": "authority-solid-2"
+          }
+        ],
+        "rays": 40
+      },
+      "name": "actual authority box surfaces",
+      "passed": false
+    },
+    {
+      "details": {},
+      "name": "restored scene collision passes after mutations",
+      "passed": false
+    }
+  ]
+}
