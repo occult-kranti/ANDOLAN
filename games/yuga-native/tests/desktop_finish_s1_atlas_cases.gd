@@ -54,8 +54,8 @@ func _run() -> void:
 			var rect: Rect2=actual.rect
 			# Independent ground-to-card relation against the original manifest,
 			# including all four corners and the physical X/Z footprint scale.
-			var expected_center:=Vector2(12+(float(source.position[0])-float(bounds[0]))/(float(bounds[1])-float(bounds[0]))*(atlas.size.x-24),26+(float(source.position[2])-float(bounds[2]))/(float(bounds[3])-float(bounds[2]))*(atlas.size.y-52-atlas.footer_height))
-			var expected_size:=Vector2(float(source.size[0])/(float(bounds[1])-float(bounds[0]))*(atlas.size.x-24),float(source.size[2])/(float(bounds[3])-float(bounds[2]))*(atlas.size.y-52-atlas.footer_height))
+			var expected_center:=Vector2(12+(float(source.position[0])-float(bounds[0]))/(float(bounds[1])-float(bounds[0]))*(atlas.size.x-24),16+(float(source.position[2])-float(bounds[2]))/(float(bounds[3])-float(bounds[2]))*(atlas.size.y-32-atlas.footer_height))
+			var expected_size:=Vector2(float(source.size[0])/(float(bounds[1])-float(bounds[0]))*(atlas.size.x-24),float(source.size[2])/(float(bounds[3])-float(bounds[2]))*(atlas.size.y-32-atlas.footer_height))
 			geometry_ok=geometry_ok and rect.get_center().is_equal_approx(expected_center) and rect.size.is_equal_approx(expected_size) and plot.encloses(rect)
 		check("all native deck IDs and footprints match real manifest at "+scenario.window,geometry_ok and ids==expected_ids,{"ids":ids,"plot":str(plot)})
 		var heading_ok:=true

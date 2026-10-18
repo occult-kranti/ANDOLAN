@@ -14,10 +14,10 @@ const PROFILES := {
 	"Confluence_warm_window": {"tint":Vector3(1.0,0.84,0.62), "mineral":Vector3.ONE, "weather":0.0},
 }
 const COURTYARD_PROFILES := {
-	"Courtyard_stone_0": {"tint":Vector3(0.68,0.73,0.73), "mineral":Vector3(0.76,0.83,0.80), "weather":0.18},
-	"Courtyard_stone_1": {"tint":Vector3(0.75,0.75,0.67), "mineral":Vector3(0.87,0.83,0.71), "weather":0.18},
-	"Courtyard_stone_2": {"tint":Vector3(0.64,0.72,0.72), "mineral":Vector3(0.73,0.83,0.82), "weather":0.18},
-	"Courtyard_stone_3": {"tint":Vector3(0.78,0.74,0.63), "mineral":Vector3(0.90,0.82,0.69), "weather":0.18},
+	"Courtyard_stone_0": {"tint":Vector3(0.64,0.665,0.64), "mineral":Vector3(0.76,0.83,0.80), "weather":0.18},
+	"Courtyard_stone_1": {"tint":Vector3(0.65,0.66,0.625), "mineral":Vector3(0.87,0.83,0.71), "weather":0.18},
+	"Courtyard_stone_2": {"tint":Vector3(0.63,0.655,0.64), "mineral":Vector3(0.73,0.83,0.82), "weather":0.18},
+	"Courtyard_stone_3": {"tint":Vector3(0.65,0.65,0.615), "mineral":Vector3(0.90,0.82,0.69), "weather":0.18},
 	"Limestone_mortar": {"tint":Vector3(0.62,0.67,0.65), "mineral":Vector3(0.78,0.80,0.72), "weather":0.12},
 	"Quiet_stone_inlay": {"tint":Vector3(0.76,0.75,0.66), "mineral":Vector3(0.85,0.84,0.72), "weather":0.10},
 	"Warm_carved_sandstone": {"tint":Vector3(0.86,0.75,0.60), "mineral":Vector3(0.78,0.83,0.72), "weather":0.18, "carving":0.55},

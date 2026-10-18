@@ -1,0 +1,276 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "capsule_radius": 0.649999976158142
+      },
+      "name": "queries use the actual configured native hero capsule",
+      "passed": true
+    },
+    {
+      "detail": {
+        "atlas_primary_segments": 7,
+        "paving_count": 7
+      },
+      "name": "actual paving primary segments agree with atlas lane data",
+      "passed": true
+    },
+    {
+      "detail": {
+        "capsule": {
+          "blocked": false
+        },
+        "floor": {
+          "collider": "AuthorityFloor",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(0.0, 0.0, -60.0)"
+        },
+        "from": "(0.0, 0.05, -64.0)",
+        "lane": 1,
+        "to": "(0.0, 0.05, -56.0)"
+      },
+      "name": "sampled primary route has real floor and capsule clearance: temple-mid",
+      "passed": true
+    },
+    {
+      "detail": {
+        "capsule": {
+          "blocked": false
+        },
+        "floor": {
+          "collider": "AuthorityFloor",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(-40.0, 0.0, -88.0)"
+        },
+        "from": "(-34.0, 0.05, -91.6)",
+        "lane": 0,
+        "to": "(-40.0, 0.05, -88.0)"
+      },
+      "name": "sampled primary route has real floor and capsule clearance: ghat-spawn-bend",
+      "passed": true
+    },
+    {
+      "detail": {
+        "capsule": {
+          "blocked": false
+        },
+        "floor": {
+          "collider": "AuthorityFloor",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(40.0, 0.0, -88.0)"
+        },
+        "from": "(34.0, 0.05, -91.6)",
+        "lane": 2,
+        "to": "(40.0, 0.05, -88.0)"
+      },
+      "name": "sampled primary route has real floor and capsule clearance: metro-spawn-bend",
+      "passed": true
+    },
+    {
+      "detail": {
+        "map_west_edge": 53.5857124328613,
+        "passed": true,
+        "projected_hit": "(53.58571, 105.8385)",
+        "ray": {
+          "collider": "authority-solid-0",
+          "hit": true,
+          "normal": "(-1.0, 0.0, 0.0)",
+          "position": "(-29.0, 1.0, -28.0)"
+        }
+      },
+      "name": "observed blocker west wall agrees with atlas footprint",
+      "passed": true
+    },
+    {
+      "detail": {
+        "blocked": true,
+        "collider": "authority-solid-0",
+        "normal": "(-1.0, 0.0, 0.0)",
+        "position": "(-29.0, 1.2, -28.0)",
+        "travel": "(5.214844, 0.0, 0.0)"
+      },
+      "name": "same wall actually blocks the hero capsule",
+      "passed": true
+    },
+    {
+      "detail": {
+        "passed": false,
+        "ray": {
+          "hit": false
+        }
+      },
+      "name": "counterexample rejects a map wall whose actual collider is disabled",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "restored real collider restores wall parity",
+      "passed": true
+    },
+    {
+      "detail": {
+        "map_west_edge": 56.6285705566406,
+        "passed": false,
+        "projected_hit": "(53.58571, 105.8385)",
+        "ray": {
+          "collider": "authority-solid-0",
+          "hit": true,
+          "normal": "(-1.0, 0.0, 0.0)",
+          "position": "(-29.0, 1.0, -28.0)"
+        }
+      },
+      "name": "counterexample rejects a three-metre atlas-only wall shift",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "restored atlas data restores wall parity",
+      "passed": true
+    },
+    {
+      "detail": {
+        "XZ_projection_discards_height": true,
+        "above_top_capsule": {
+          "blocked": false
+        },
+        "footprint": "[P: (58.65714, 49.46923), S: (8.114281, 7.046154)]",
+        "landing_capsule": {
+          "blocked": true,
+          "collider": "sun-lift-west-deck",
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(-20.0, 8.0, -88.0)",
+          "travel": "(0.0, -11.97656, 0.0)"
+        },
+        "ray": {
+          "collider": "sun-lift-west-deck",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(-20.0, 8.0, -88.0)"
+        },
+        "street_capsule": {
+          "blocked": true,
+          "collider": "sun-lift-west-deck",
+          "normal": "(-1.0, 0.0, 0.0)",
+          "position": "(-24.0, 1.2, -88.0)",
+          "travel": "(1.3125, 0.0, 0.0)"
+        },
+        "top_y": 8.0
+      },
+      "name": "deck footprint is XZ truth while street/top collisions differ: sun-lift-west-deck",
+      "passed": true
+    },
+    {
+      "detail": {
+        "XZ_projection_discards_height": true,
+        "above_top_capsule": {
+          "blocked": false
+        },
+        "footprint": "[P: (134.2214, 204.925), S: (7.099991, 6.165375)]",
+        "landing_capsule": {
+          "blocked": true,
+          "collider": "moon-shrine-east-deck",
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(54.0, 10.0, 88.0)",
+          "travel": "(0.0, -9.925781, 0.0)"
+        },
+        "ray": {
+          "collider": "moon-shrine-east-deck",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(54.0, 10.0, 88.0)"
+        },
+        "street_capsule": {
+          "blocked": true,
+          "collider": "moon-shrine-east-deck",
+          "normal": "(-1.0, 0.0, 0.0)",
+          "position": "(50.5, 1.2, 88.0)",
+          "travel": "(1.332031, 0.0, 0.0)"
+        },
+        "top_y": 10.0
+      },
+      "name": "deck footprint is XZ truth while street/top collisions differ: moon-shrine-east-deck",
+      "passed": true
+    },
+    {
+      "detail": {
+        "actual_surface": {
+          "collider": "AuthorityFloor",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(0.0, 0.0, -44.0)"
+        },
+        "ring_y": 15.0
+      },
+      "name": "sky-ring marker does not invent a landing platform at ring height",
+      "passed": true
+    },
+    {
+      "detail": {
+        "actual_surface": {
+          "hit": false
+        },
+        "sample": "(90.0, 0.0, 0.0)"
+      },
+      "name": "visible terrain apron outside native floor is not counted as walkable",
+      "passed": true
+    },
+    {
+      "detail": {
+        "blocked_street_to_sky_ring": true,
+        "clear_spawn_to_landing_ring": true
+      },
+      "name": "anchor marker does not bypass the real tether obstruction test",
+      "passed": true
+    },
+    {
+      "detail": {
+        "heading": "(0.0, -1.0)",
+        "map_point": "(83.0, 31.85385)",
+        "world_position": "(0.0, 0.05, -112.0)"
+      },
+      "name": "actual live/overview camera switch preserves marker position and heading: (0.0, 0.05, -112.0)",
+      "passed": true
+    },
+    {
+      "detail": {
+        "heading": "(0.0, -1.0)",
+        "map_point": "(137.7714, 208.0077)",
+        "world_position": "(54.0, 10.05, 88.0)"
+      },
+      "name": "actual live/overview camera switch preserves marker position and heading: (54.0, 10.05, 88.0)",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "fixture restores collision/map mutations and preserves source manifest army and files",
+      "passed": true
+    }
+  ],
+  "count": 19,
+  "observations": {
+    "secondary_routes": {
+      "painted_rotation_segments": 18,
+      "scope": "Current atlas draws primary lanes only; this gate does not claim all painted rotation/circuit links appear on the atlas."
+    }
+  },
+  "passed": true,
+  "physics_frames": 91,
+  "scope": "Actual current native world/PhysicsSpace, configured hero predictive capsule sweeps, real ray hits, paving uniforms, atlas projection and live overview camera switch. Three short primary-route samples, one blocker, two decks, one sky ring and one visual apron point only. Two isolated scene-instance counterexamples are restored. XZ map footprints do not encode elevation, ramps, navmesh connectivity, all-terrain clearance, army elevation, browser/online authority or rendered art acceptance.",
+  "source_sha256": {
+    "res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "res://scripts/confluence_world.gd": "8d597dea33a60dbbbfecbbb98cc31d78345667053d79f69d55c8d4316973d0e9",
+    "res://scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+    "res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+    "res://scripts/world_atlas.gd": "1cf4b7f22b4e34fdeb4300d8e9c591cd3ecad2990a13a7ed8941bf3f4d32cce5",
+    "res://tests/desktop_world_route_parity_cases.gd": "cbc0b426fc7338c811e2e5affe1792a6189ed310d99def2b672ee6f0663298b0"
+  }
+}

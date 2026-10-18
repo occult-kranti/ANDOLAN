@@ -1,0 +1,29 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "4",
+    "godot",
+    "--headless",
+    "--fixed-fps",
+    "60",
+    "--path",
+    "/workspace/ANDOLAN/games/yuga-native",
+    "--audio-driver",
+    "Dummy",
+    "--script",
+    "res://tests/desktop_world_route_parity_cases.gd",
+    "--",
+    "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/world-route-parity/W4/r1/report.json"
+  ],
+  "exit_code": 1,
+  "verdict": "Harness-only type-inference parse error; no world query executed.",
+  "engine_log_sha256": "cad5be26d1bfed6d3bf49fe408c2bcc0e254e86b77a9e6e78f904d1cf11a8d75",
+  "diagnostics": [
+    "SCRIPT ERROR: Parse Error: Cannot infer the type of \"transform\" variable because the value doesn't have a set type.",
+    "SCRIPT ERROR: Parse Error: Cannot infer the type of \"clear_anchor\" variable because the value doesn't have a set type.",
+    "SCRIPT ERROR: Parse Error: Cannot infer the type of \"occluded_anchor\" variable because the value doesn't have a set type.",
+    "SCRIPT ERROR: Parse Error: Cannot infer the type of \"stable\" variable because the value doesn't have a set type.",
+    "ERROR: Failed to load script \"res://tests/desktop_world_route_parity_cases.gd\" with error \"Parse error\"."
+  ]
+}

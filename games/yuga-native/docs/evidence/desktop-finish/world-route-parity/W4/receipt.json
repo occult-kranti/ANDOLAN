@@ -1,0 +1,47 @@
+{
+  "task": "W4 bounded native primary-route/collision/atlas parity",
+  "head_observed": "bf50ff8ef839ed5f4c9263bbedadb53bd99eab51",
+  "runtime_files_edited": false,
+  "fixture": "tests/desktop_world_route_parity_cases.gd",
+  "fixture_sha256": "cbc0b426fc7338c811e2e5affe1792a6189ed310d99def2b672ee6f0663298b0",
+  "final_run": "r5",
+  "final_assertions": 19,
+  "final_passed": true,
+  "final_exit_code": 0,
+  "final_engine_diagnostics": [],
+  "sources": {
+    "res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "res://scripts/confluence_world.gd": "8d597dea33a60dbbbfecbbb98cc31d78345667053d79f69d55c8d4316973d0e9",
+    "res://scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+    "res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+    "res://scripts/world_atlas.gd": "1cf4b7f22b4e34fdeb4300d8e9c591cd3ecad2990a13a7ed8941bf3f4d32cce5",
+    "res://tests/desktop_world_route_parity_cases.gd": "cbc0b426fc7338c811e2e5affe1792a6189ed310d99def2b672ee6f0663298b0"
+  },
+  "artifacts": {
+    "r1/command.json": "22fcb9cfeb916d7630607053e6b8bc1469b95542c272a8fd29e8f313a3860ab6",
+    "r1/engine.log": "cad5be26d1bfed6d3bf49fe408c2bcc0e254e86b77a9e6e78f904d1cf11a8d75",
+    "r2/command.json": "c268f0c84076e7b476c6ce6400083478048bf511ad827394035b23e0f7ce677b",
+    "r2/engine.log": "e0e15832c92d736dceeb2a2fbb6308069b31b58dc3790a4a03878fb41ec397c9",
+    "r2/report.json": "373e1d2d7488eb32210273c5bd6e322a619720983f3c691f6b1d67f2b1490586",
+    "r2/source.gd": "8506909f5cb9fb114e61f0088d67d873c9ddf78d697189f7be29be047933a9a6",
+    "r3/command.json": "04379f9edc8c3da65e156246cf2e11dec77bc3123f16412c9095cd6c8e8e187a",
+    "r3/engine.log": "8e8a1ae095b2566dbd9e8f5b07bbe15689ce650a5cc1dea36c2c28a1c3707231",
+    "r3/report.json": "373e1d2d7488eb32210273c5bd6e322a619720983f3c691f6b1d67f2b1490586",
+    "r3/source.gd": "8506909f5cb9fb114e61f0088d67d873c9ddf78d697189f7be29be047933a9a6",
+    "r4/command.json": "4f7b8fd96503e8cb83c6f5284b20b77e32e1815fbcd942051f2402a8eb540778",
+    "r4/engine.log": "d3fe6c49dce42068628803244c7f375df33cdd9cf950d44ff4a4bae018978282",
+    "r4/report.json": "eb2aeeffe22ed43fd2b5c6a2c4af910376f87e5912d2918287706f55f50b3086",
+    "r4/source.gd": "dcfc3600b7d5570c14fa137897f48120a6da727077ff238b6205c08d40ceb6f5",
+    "r5/command.json": "9bba29e727f9383a8fbb135c0486019c9dbb25acaebf1d5bab7b41b5ccb0e61f",
+    "r5/engine.log": "d3fe6c49dce42068628803244c7f375df33cdd9cf950d44ff4a4bae018978282",
+    "r5/report.json": "cca8fa018fc485854b7e7e2a28f1db1daec6ae6104361f209485853958ff7ed6",
+    "r5/source.gd": "cbc0b426fc7338c811e2e5affe1792a6189ed310d99def2b672ee6f0663298b0"
+  },
+  "limits": [
+    "Predictive native capsule sweeps and ray intersections, not a complete player movement/terrain test or actual route pixels.",
+    "Three short primary-lane samples, one blocker, two deck cases, one sky ring, one apron point and two overview positions only.",
+    "Atlas is an XZ projection. Native deck side/top collisions are different at the same XZ; no elevation/online/army navmesh parity inferred.",
+    "Current paving has18secondaryrotationsegments; atlas primary lane draw path does not show those secondary routes. Treat as explicit review scope, not a passing all-roads parity claim.",
+    "No screenshot, OS input, performance, cold-render or hardware acceptance."
+  ]
+}

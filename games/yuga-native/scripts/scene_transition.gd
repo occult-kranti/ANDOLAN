@@ -127,16 +127,20 @@ func retry() -> bool:
 func cancel() -> bool:
 	if (not is_busy() and phase != &"error") or _committing: return false
 	var cancelled_id := destination
+	var return_focus := _return_focus
+	var source_scene := _source_scene
 	var restore_focus_loss := _focus_lost_during_transition and not _host_was_replaced()
 	_focus_lost_during_transition = false
 	_abandon_pending()
 	_ticket += 1
+	var cancelled_ticket := _ticket
 	_packed = null
 	hide()
 	_restore_caller()
 	_release_owner()
 	_set_phase(&"cancelled", "Returned to the previous screen.", -1.0)
 	cancelled.emit(cancelled_id)
+	_restore_cancel_focus(return_focus, source_scene, cancelled_ticket)
 	if restore_focus_loss: get_window().focus_exited.emit()
 	return true
 
@@ -312,19 +316,33 @@ func _restore_caller() -> void:
 	var caller: Node = _caller.get_ref() if _caller != null else null
 	if is_instance_valid(caller): caller.process_mode = _caller_process_mode
 	var focus: Control = _return_focus.get_ref() if _return_focus != null else null
+	if not replaced: _restore_focus(focus)
+	_caller = null
+	_source_scene = null
+	_return_focus = null
+
+func _restore_focus(focus: Control) -> void:
 	# A paused caller can legitimately retain focus. Reject explicitly disabled
 	# processing owners without treating the restored SceneTree pause as disposal.
 	var process_owner: Node = focus
 	while is_instance_valid(process_owner) and process_owner.process_mode == Node.PROCESS_MODE_INHERIT:
 		process_owner = process_owner.get_parent()
 	var disabled_owner := is_instance_valid(process_owner) and process_owner.process_mode == Node.PROCESS_MODE_DISABLED
-	if (not replaced and is_instance_valid(focus) and focus.is_inside_tree() and focus.is_visible_in_tree()
+	if (is_instance_valid(focus) and not focus.is_queued_for_deletion() and focus.is_inside_tree() and focus.is_visible_in_tree()
 			and not disabled_owner and focus.focus_mode != Control.FOCUS_NONE
 			and (not focus is BaseButton or not focus.disabled)):
 		focus.grab_focus()
-	_caller = null
-	_source_scene = null
-	_return_focus = null
+
+func _restore_cancel_focus(reference: WeakRef, source: WeakRef, ticket: int) -> void:
+	# Hosts restore explicitly processing children in their cancelled callbacks.
+	# Retry focus only after those callbacks, without overriding a new attempt,
+	# scene owner or deliberately selected callback focus. No deferred frame can
+	# later steal focus from input that arrived after cancellation.
+	var tree := get_tree()
+	if tree == null or _ticket != ticket or phase != &"cancelled" or reference == null: return
+	if tree.root.has_meta(OWNER_META) or tree.root.gui_get_focus_owner() != null: return
+	if source != null and is_instance_valid(tree.current_scene) and tree.current_scene != source.get_ref(): return
+	_restore_focus(reference.get_ref())
 
 func _release_owner() -> void:
 	if get_tree().root.has_meta(OWNER_META) and get_tree().root.get_meta(OWNER_META) == self:
@@ -333,6 +351,8 @@ func _release_owner() -> void:
 func _exit_tree() -> void:
 	var notify_cancel := not _committing and (is_busy() or phase == &"error")
 	var cancelled_id := destination
+	var return_focus := _return_focus
+	var source_scene := _source_scene
 	_abandon_pending()
 	if not _abandoned.is_empty():
 		var janitor := AbandonedLoads.new()
@@ -341,6 +361,7 @@ func _exit_tree() -> void:
 		get_tree().root.call_deferred("add_child", janitor)
 		_abandoned.clear()
 	_ticket += 1
+	var cancelled_ticket := _ticket
 	if not _committing: _restore_caller()
 	_release_owner()
 	# Hosts may have explicitly processing children outside inherited caller mode.
@@ -348,6 +369,7 @@ func _exit_tree() -> void:
 	if notify_cancel:
 		phase = &"cancelled"
 		cancelled.emit(cancelled_id)
+		_restore_cancel_focus(return_focus, source_scene, cancelled_ticket)
 
 func _input(event: InputEvent) -> void:
 	if not visible: return

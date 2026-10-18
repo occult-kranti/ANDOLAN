@@ -1,38 +1,39 @@
-# Desktop finish campaign: five screen rounds and ten integration rounds
+# Desktop finish campaign: ten screen rounds and three integration rounds
 
-The user deferred mobile and requested fifteen **new** rounds with six workers. This queue begins from the desktop G1/G2 candidates after the mobile documentation checkpoint `0fb96d1`. Prior completed assignments are not recounted. See [active handoff](ACTIVE_DESKTOP_HANDOFF.md) for exact state and [machine ledger](DESKTOP_FINISH_CAMPAIGN.json) for90 packets.
+Updated18 October2026 for the latest user request. **Desktop first; mobile deferred.** The [78-packet ledger](DESKTOP_FINISH_CAMPAIGN.json) assigns six workers to each of13 rounds. [Active handoff](ACTIVE_DESKTOP_HANDOFF.md) owns current source, commands, evidence and blockers.
 
-The goal is an original, visually coherent Rama/Confluence game with a complete screen journey and polished hero/map/action presentation. [DEADLOCK_QUALITY_TARGET.md](DEADLOCK_QUALITY_TARGET.md) remains the art/motion/performance acceptance standard. Completing fifteen rounds does not automatically satisfy it. Native online authority, the full roster and physical-GPU qualification remain separately tracked production requirements.
+This revises the pending five-screen/ten-integration sequence. Its [exact old ledger](campaign-history/desktop-finish-v1/DESKTOP_FINISH_CAMPAIGN.json) and [plan](campaign-history/desktop-finish-v1/DESKTOP_FINISH_CAMPAIGN.md) remain historical. Existing S1–S5/X reports and implemented fixes keep their original identities. They provide inputs to the new rounds; they do not count as newly completed assignments. The separate previously published48-assignment UI campaign remains unchanged.
 
-## Sequence
+## Round gates
 
-| Round | Integrated goal | Actual acceptance evidence |
+| Round | Focus | Required evidence |
 | --- | --- | --- |
-| G0 prerequisite | Preserve existing work, recover rendering, validate provenance, free verified duplicates | Remote source checkpoint, cleanup receipt, package adversaries, original render or explicit unresolved renderer defect |
-| S1 | Initial screen composition, readable hero presentation and truthful controls | Original day/night title, focus/navigation, visible hero and private style ownership |
-| S2 | Boot/loading/scene entry with honest progress and clean cancellation | Cold/warm launch, failed load/retry, rapid route changes and no orphaned state |
-| S3 | Combat HUD hierarchy and action feedback | Ready/locked/queued/recovery/reload/defeat states, compact resolution and actual cast sequence |
-| S4 | Guide/options/help/atlas coherence and navigation | Real keyboard routes, settings persistence, readable map decks/markers and modal lifecycle |
-| S5 | Whole screen package polish and integration | Title→load→practice→all panels→outcome→title; actual input and image review, unresolved defects assigned |
-| X1 | Shared resource/lifecycle integration | Repeated routes/reset/pause/respawn with stable resource ownership |
-| X2 | World district/route/architecture coherence | Day/night route-scale views, recognizable original sectors, collision/camera parity |
-| X3 | Hero silhouette/material/equipment improvements | Matched front/profile/rear plus current-action contact/clearance; rejected candidates preserved |
-| X4 | Infantry/siege/jungle presentation and feedback | Real unit attacks/deaths/waves, cannon motion and bounded shared resources |
-| X5 | Abilities/counters/impact clarity | Five actual action chains, hostile boundary visibility, duplicate-event/cancel/effect stress |
-| X6 | Travel/camera/motion/audio feedback | Continuous locomotion/aim/flight/grapple/cast transitions, settings/focus and listening gates |
-| X7 | Lighting/water/atmosphere performance and visual detail | Matched day/night and water/marsh views, allocation/overdraw hypotheses with measured scope |
-| X8 | Stress and edge repair round | Adverse inputs, repeated full routes, loaded scene, invalid/reordered state and specific repairs |
-| X9 | Package/cold-start/persistence qualification | Exact source/payload identity, cold/warm inputs, fresh process saves and export checks |
-| X10 | Independent final review, publication and next roadmap | Original final views/motion/input, qualified artifact, public-byte check and candid remaining defects |
+| D01 | Initial screen and hero presentation | Real initial title at supported scales; primary actions/focus/readable hero |
+| D02 | Loading and safe entry | Honest load/mount/error/retry; cancel restores the current usable owner |
+| D03 | Practice and duel entry | Both practice modes and duel playback/return with preserved selection |
+| D04 | Combat interface and ability feedback | Actual combat states; compact glyph/key/state fit and visible hero |
+| D05 | Pause, help, settings and remapping | Help/remap conflict/cancel/reset; pause; fresh-process settings persistence |
+| D06 | Hero guide and ability explanations | Readable guide; every caller and safe focus return; truthful abilities |
+| D07 | Map, overview and navigation | Live minimap plus complete keyboard overview; real route/collision parity |
+| D08 | Defeat, respawn and outcomes | Actual defeat/respawn; explicitly identified terminal outcomes and restart |
+| D09 | Responsive screens and lifecycle stress | Live scale changes, repeated routes, shared resource ownership and failure cases |
+| D10 | Complete screen journey and package rehearsal | Full boot-to-return journey and exact package rehearsal |
+| I01 | Hero, world and animation integration | Matched hero/environment/animation improvements with unchanged authority |
+| I02 | Battle, resource and edge qualification | Actual waves, casts, counters, travel and bounded stress/counterexamples |
+| I03 | Cold launch, release and next roadmap | Fresh-user cold/warm launch, executable review, public-byte verification |
 
-Pending earlier G3–G6 goals (world/equipment, continuous motion, stress and final acceptance) are incorporated into X1–X10. They remain pending until their corresponding evidence exists; they are not extra completed rounds. S1–S5 and X1–X10 each have six new assignments. G0 recovery and preparatory audit briefs do not count toward the90 completed implementation packets.
+## Six-worker ownership
 
-## Working rules
+W1 owns rendering and independent acceptance; W2 screens/shared design; W3 original hero art; W4 world/map/units; W5 motion/action feedback; W6 loading/catalog/package. Lead owns common notices, roadmap, source checkpoints and cleanup. Freeze shared interfaces before edits. Hero, map, motion and art work advances alongside each screen round, with final cross-system review in I01–I03.
 
-W1 owns renderer/capture/independent review; W2 screens/design system; W3 hero assets; W4 world/atlas/units; W5 motion/HUD; W6 loading/package. The lead integrates common callers/contracts/notices. Each round freezes these boundaries and interfaces before edits. One import/export/heavy-render lane serves the current four-CPU cloud; six concurrent analysis/code workers do not create six render machines.
+One four-CPU cloud is not six render machines. Serialize imports and heavy raster work; separate immutable render snapshots from evolving sources. Actual 3D captures and native input establish visual/interaction evidence. Headless assertions, concept art, elapsed software-render time and task counts do not establish commercial graphics or physical-GPU FPS.
 
-Start from screenshots and source, identify a specific visible/behavioral defect, implement a bounded correction, then verify its counterexamples. Reuse shared geometry/materials/styles where ownership permits; never share mutable theme state between unrelated controls. No artificial waiting bars, fake online modes, decorative active controls or staging presented as naturally played results.
+Reuse immutable meshes/materials and shared screen tokens where ownership permits. Private mutable styles stay private. Prefer a reproduced defect, bounded source repair, counterexample test and actual review over speculative rewrites. No fake loading percentages, online modes or new mechanics represented by decorative controls.
 
-Per packet retain changed source hashes, commands/results, raw original pixels/input receipts where needed, source/license provenance, rejected candidates and unresolved findings. Numerical tests prove their asserted invariants, not commercial visual quality. Run targeted checks once; broaden only for changed contracts or observed regressions. Update the ledger at each subgoal and after each moderated review.
+Each completed packet requires exact changed sources, executed commands/results, applicable original images/input and independent review. Optional art stays inactive until its review passes. A round closes only after its six scoped packets are reviewed together; the overall [quality target](DEADLOCK_QUALITY_TARGET.md) remains open until its separate production gates pass. No assigned or merely tested packet is counted as a completed art milestone.
 
-Physical GPU performance, Windows execution and human listening/feel/art review are not supplied by llvmpipe/Dummy audio captures. Package only qualified features; leave optional art experiments inactive until their actual render gate passes. Preserve current working source and evidence in Git before removing any recoverable duplicate outputs.
+## Carryover and next commands
+
+The preserved baseline includes reviewed daylight gold/paving, compact HUD/atlas and guide focus, cancellation repair, and a provisional grounded-contact change whose strict comparison is25/27. Full source/evidence links are in the active handoff. The first native draw can deadlock on cold shader compilation; seeded captures remain explicitly warm. The reconnect preserved the repository but removed temporary source-build and render trees, so reconstruct verified inputs before restarting any build. Do not assume old `/tmp` paths still exist.
+
+Prior X1–X10 goals remain covered: lifecycle in D09/I02; architecture in D07/I01; hero/equipment in D01/D04/D06/I01; armies and counters in D08/I02; traversal/audio in D05/D07/I01/I02; lighting/water in D10/I01; stress in D09/I02; package/persistence/publication in D10/I03. Native multiplayer/full roster, hardware profiling, Windows execution and human feel/listening remain explicit production work; this schedule does not silently replace them with the offline slice.

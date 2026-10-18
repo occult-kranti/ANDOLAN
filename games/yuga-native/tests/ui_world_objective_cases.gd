@@ -1,6 +1,7 @@
 extends SceneTree
 ## Read-only presentation against actual world, army and relay rules.
 const Rules = preload("res://scripts/relay_control.gd")
+const Bindings = preload("res://scripts/input_bindings.gd")
 var checks: Array[Dictionary] = []
 var output := ""
 var scene: Node3D
@@ -41,7 +42,8 @@ func _run() -> void:
 	record("Core values are explicitly labeled and taken from the real army",scene.score_label.text.contains("Cores · Sun %d / Moon %d" % [authority.cores.sun,authority.cores.moon]))
 	var atlas: Control = scene.map_control
 	var legend: Label = atlas.get_node("AtlasLegend")
-	record("Overview shortcut is discoverable beside the fixed-orientation map",legend.text.contains("F1 overview") and atlas.project(Vector3(0,0,-120)).y < atlas.project(Vector3(0,0,120)).y)
+	var overview_key := Bindings.label("world_overview")
+	record("Overview shortcut is discoverable beside the fixed-orientation map",not overview_key.is_empty() and legend.is_visible_in_tree() and legend.text.contains(overview_key+" Map & key") and atlas.project(Vector3(0,0,-120)).y < atlas.project(Vector3(0,0,120)).y,{"active_key":overview_key,"legend":legend.text})
 	# Stage actors through the real fixed-step relay rules, not UI-only states.
 	scene.player.position = Vector3(0,.05,0)
 	scene.relays.control.reset()

@@ -1,0 +1,100 @@
+{
+  "passed": true,
+  "count": 2,
+  "checks": [
+    {
+      "name": "full matched authority, camera, counters and nonleg poses",
+      "passed": true,
+      "authority_fields": {
+        "player_transform": true,
+        "velocity": true,
+        "on_floor": true,
+        "kit_report": true,
+        "army_elapsed": true,
+        "transition_age": true,
+        "transition_duration": true,
+        "foot_targets_rig": true
+      },
+      "camera_equal": true,
+      "nonleg_equal": true,
+      "physics_counters_equal": true
+    },
+    {
+      "name": "landing120 matched authority, camera, counters and nonleg poses",
+      "passed": true,
+      "authority_fields": {
+        "player_transform": true,
+        "velocity": true,
+        "on_floor": true,
+        "kit_report": true,
+        "army_elapsed": true,
+        "transition_age": true,
+        "transition_duration": true,
+        "foot_targets_rig": true
+      },
+      "camera_equal": true,
+      "nonleg_equal": true,
+      "physics_counters_equal": true
+    }
+  ],
+  "trials": [
+    {
+      "case": "full",
+      "metrics": {
+        "baseline": {
+          "peak_ankle_step_m": 0.32219144851536935,
+          "peak_side": "R",
+          "physics_from": 93,
+          "physics_to": 95,
+          "projected_step_px": 10.824863570536879,
+          "grounded_minimum_m": -0.03724709153175354
+        },
+        "candidate": {
+          "peak_ankle_step_m": 0.32219144851536935,
+          "peak_side": "R",
+          "physics_from": 93,
+          "physics_to": 95,
+          "projected_step_px": 10.824863570536879,
+          "grounded_minimum_m": 0.0005052644410170615
+        }
+      },
+      "frames": 120,
+      "source_motion": {
+        "baseline": "119db2e65a40c148725813137340bc109f057d98ea82ef777ab7735c999c661c",
+        "candidate": "8c3771a343a0538d749147393d0c407b1fb377d774a91b4cf99734e4852520f8"
+      }
+    },
+    {
+      "case": "landing120",
+      "metrics": {
+        "baseline": {
+          "peak_ankle_step_m": 0.0048891456511287006,
+          "peak_side": "L",
+          "physics_from": 49,
+          "physics_to": 50,
+          "projected_step_px": 4.905562510963591,
+          "grounded_minimum_m": -0.011350409127771854
+        },
+        "candidate": {
+          "peak_ankle_step_m": 0.00732395189829048,
+          "peak_side": "R",
+          "physics_from": 49,
+          "physics_to": 50,
+          "projected_step_px": 6.484343562064312,
+          "grounded_minimum_m": 1.6163910913746804e-05
+        }
+      },
+      "frames": 40,
+      "source_motion": {
+        "baseline": "119db2e65a40c148725813137340bc109f057d98ea82ef777ab7735c999c661c",
+        "candidate": "8c3771a343a0538d749147393d0c407b1fb377d774a91b4cf99734e4852520f8"
+      },
+      "right_ankle_frame9_baseline_candidate_distance_px": 10.645891918044814,
+      "reference_2_435mm_px_frame9": {
+        "L": 2.531022787094116,
+        "R": 2.2583541870117188
+      }
+    }
+  ],
+  "scope": "Two paired preflight identity comparisons, no actual PNGs/render. Motion-step regression is retained; projected values do not establish visibility."
+}

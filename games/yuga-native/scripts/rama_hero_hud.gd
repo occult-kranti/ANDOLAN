@@ -1,5 +1,5 @@
 extends Control
-## Five fixed ability slots. Cooldowns and health read the actual simulation.
+## Five ability slots; compact widths retain glyphs, keys and real state. Cooldowns and health read the actual simulation.
 const UI = preload("res://scripts/hero_ui_theme.gd")
 const Bindings = preload("res://scripts/input_bindings.gd")
 const Glyph = preload("res://scripts/rama_ability_glyph.gd")
@@ -9,6 +9,9 @@ const HUD_TEXT_SIZE := UI.TYPE_HUD
 const HUD_WIDTH := 820.0
 const HUD_HEIGHT := 112.0
 const SLOT_REFRESH_SECONDS := .08
+const SLOT_WIDTH := 156.0
+const SLOT_HEIGHT := 56.0
+const COMPACT_HEIGHT := 100.0
 var runtime: Node3D
 var life: ProgressBar
 var life_text: Label
@@ -21,6 +24,11 @@ var _slot_states: Array[StringName] = []
 var clock := 0.0
 var _last_availability: StringName = &""
 var _last_action_signature: Array = []
+var _slot_grid: GridContainer
+var _compact_slots := false
+var _status_heading: HBoxContainer
+var _health_row: HBoxContainer
+var _names_hint: Label
 func _ready() -> void:
 	name = "RamaHeroHUD"
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -50,9 +58,15 @@ func _ready() -> void:
 	note.clip_text = true
 	note.max_lines_visible = 1
 	note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	status_column.add_child(note)
-	var health_row := HBoxContainer.new()
-	status_column.add_child(health_row)
+	_status_heading = HBoxContainer.new()
+	status_column.add_child(_status_heading)
+	note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_status_heading.add_child(note)
+	_names_hint = UI.label("F3 names", UI.TYPE_HUD_DETAIL, UI.MIST)
+	_names_hint.visible = false
+	_status_heading.add_child(_names_hint)
+	_health_row = HBoxContainer.new()
+	status_column.add_child(_health_row)
 	life = ProgressBar.new(); life.show_percentage = false
 	life.max_value = 1; life.value = 0
 	life.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -60,17 +74,21 @@ func _ready() -> void:
 	var fill := StyleBoxFlat.new(); fill.bg_color = UI.MARSH
 	fill.set_corner_radius_all(UI.CORNER)
 	life.add_theme_stylebox_override("fill", fill)
-	health_row.add_child(life)
+	_health_row.add_child(life)
 	life_text = UI.label("—", HUD_TEXT_SIZE)
-	health_row.add_child(life_text)
-	var row := HBoxContainer.new(); row.add_theme_constant_override("separation", UI.SPACE_XS)
-	column.add_child(row)
+	_health_row.add_child(life_text)
+	_slot_grid = GridContainer.new()
+	_slot_grid.name = "AbilitySlots"
+	_slot_grid.columns = IDS.size()
+	_slot_grid.add_theme_constant_override("h_separation", UI.SPACE_XS)
+	_slot_grid.add_theme_constant_override("v_separation", UI.SPACE_XS)
+	column.add_child(_slot_grid)
 	for i in IDS.size():
 		var card := PanelContainer.new()
 		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		card.custom_minimum_size = Vector2(156, 56)
+		card.custom_minimum_size = Vector2(SLOT_WIDTH, SLOT_HEIGHT)
 		card.add_theme_stylebox_override("panel", _slot_surface(&"unavailable"))
-		row.add_child(card)
+		_slot_grid.add_child(card)
 		var label := UI.label("", HUD_TEXT_SIZE)
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -81,7 +99,30 @@ func _ready() -> void:
 		slot_glyphs.append(glyph)
 		label.resized.connect(_place_slot_glyph.bind(i))
 		_slot_states.append(&"unavailable")
+	get_viewport().size_changed.connect(_layout_slots)
+	_layout_slots()
 	_refresh()
+
+func _layout_slots() -> void:
+	if not is_instance_valid(_slot_grid): return
+	# UI scaling changes logical canvas size even when the OS window stays large.
+	# Compact slots retain real keys/states and glyphs; full names stay in F3 and action status.
+	var width := minf(HUD_WIDTH, maxf(SLOT_WIDTH, get_viewport_rect().size.x - UI.SPACE_MD * 2))
+	var compact := width < HUD_WIDTH
+	var changed := compact != _compact_slots
+	_compact_slots = compact
+	_slot_grid.columns = IDS.size()
+	for card in slot_cards:
+		card.custom_minimum_size.x = (width - UI.SPACE_XS * (IDS.size()-1)) / IDS.size() if compact else SLOT_WIDTH
+	if changed:
+		life_text.reparent(_status_heading if compact else _health_row)
+		_names_hint.visible = compact
+	var height := COMPACT_HEIGHT if compact else HUD_HEIGHT
+	offset_left = -width * .5
+	offset_right = width * .5
+	offset_top = -height - 18
+	offset_bottom = -18
+	if changed: _refresh()
 
 func _slot_surface(state: StringName) -> StyleBoxFlat:
 	var surface := UI.hud_panel_style(state)
@@ -101,10 +142,11 @@ func _place_slot_glyph(index: int) -> void:
 	if lines.size() != 2: return
 	var font := label.get_theme_font("font")
 	var line_height := font.get_height(HUD_TEXT_SIZE)
-	var width := font.get_string_size(lines[1], HORIZONTAL_ALIGNMENT_LEFT, -1, HUD_TEXT_SIZE).x
+	var line_index := 0 if _compact_slots else 1
+	var width := font.get_string_size(lines[line_index], HORIZONTAL_ALIGNMENT_LEFT, -1, HUD_TEXT_SIZE).x
 	var indent := font.get_string_size(_glyph_indent(label), HORIZONTAL_ALIGNMENT_LEFT, -1, HUD_TEXT_SIZE).x
 	slot_glyphs[index].size = Vector2(Glyph.SIZE, Glyph.SIZE)
-	slot_glyphs[index].position = Vector2((label.size.x-width+indent-Glyph.SIZE)*.5, (label.size.y-Glyph.SIZE+line_height)*.5)
+	slot_glyphs[index].position = Vector2((label.size.x-width+indent-Glyph.SIZE)*.5, (label.size.y-Glyph.SIZE+line_height*(-1 if _compact_slots else 1))*.5)
 func configure(value: Node3D) -> void:
 	runtime = value
 	_refresh()
@@ -204,7 +246,8 @@ func _refresh_slots(availability: StringName = &"", feedback: Dictionary = {}) -
 			elif IDS[i] != feedback.active_id and cooldown <= .05:
 				status = "BUSY %d/%d" % [runtime.player.ammo, runtime.player.MAGAZINE] if i == 0 and runtime.player.reload_remaining <= 0 else "BUSY"
 		var title := "Kodanda" if i == 0 else String(Bindings.TITLES[ACTIONS[i]])
-		slots[i].text = "%s  ·  %s\n%s%s" % [Bindings.label(ACTIONS[i]), status, _glyph_indent(slots[i]), title]
+		slots[i].text = "%s%s\n%s" % [_glyph_indent(slots[i]), Bindings.label(ACTIONS[i]), status] if _compact_slots else "%s  ·  %s\n%s%s" % [Bindings.label(ACTIONS[i]), status, _glyph_indent(slots[i]), title]
+		slot_cards[i].tooltip_text = "%s · %s · %s" % [Bindings.label(ACTIONS[i]), title, status]
 		var waiting: bool = cooldown > .05 or feedback.locked or (i == 0 and availability == &"active" and runtime.player.reload_remaining > 0)
 		slots[i].add_theme_color_override("font_color", UI.MUTED if availability != &"active" else (UI.MIST if waiting else UI.CREAM))
 		var visual_state: StringName = &"unavailable" if availability != &"active" else (&"cooling" if waiting else &"ready")

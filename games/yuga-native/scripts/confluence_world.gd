@@ -95,6 +95,13 @@ var location_label: Label
 var status_label: Label
 var phase_label: Label
 var map_control: Control
+var atlas_guide: PanelContainer
+var atlas_guide_scroll: ScrollContainer
+var atlas_guide_return: Label
+var atlas_live_details: Label
+var compact_world_card: Panel
+var compact_world_labels: Array[Label] = []
+var _constrained_world := false
 var review_camera: Camera3D
 var world_ready := false
 var paused := false
@@ -679,7 +686,7 @@ func _build_ui() -> void:
 	map_control.offset_right=-20
 	map_control.offset_top=20
 	map_control.offset_bottom=356
-	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You\n◎ Siege  ·  □ Relay\n%s overview" % Bindings.label("world_overview"),HeroUI.TYPE_HUD_DETAIL,HeroUI.CREAM)
+	var legend:=_label("",HeroUI.TYPE_HUD_DETAIL,HeroUI.CREAM)
 	legend.name="AtlasLegend"
 	map_control.add_child(legend)
 	legend.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
@@ -687,6 +694,8 @@ func _build_ui() -> void:
 	legend.offset_right=-12
 	legend.offset_top=-78
 	legend.offset_bottom=-8
+	_build_atlas_guide()
+	_build_compact_world()
 	var relay_card:=_card(hud,Vector2(20,186),Vector2(370,82))
 	relay_card.name="RelayStatus"
 	var relay_column:=VBoxContainer.new()
@@ -834,6 +843,7 @@ func _build_ui() -> void:
 	hud.add_child(rama_hud)
 	rama_hud.configure(rama_runtime)
 	hud.resized.connect(_layout_world_hud)
+	rama_hud.resized.connect(_layout_world_hud)
 	_layout_world_hud()
 	call_deferred("_settle_world_hud")
 	_update_invocation_hud()
@@ -841,6 +851,8 @@ func _build_ui() -> void:
 	_layout_pause_panel()
 
 func _refresh_control_labels() -> void:
+	if is_instance_valid(map_control) and map_control.get_node("AtlasLegend").text!=_atlas_key_text():
+		_layout_atlas()
 	if help_labels.size()!=2: return
 	var mode: String=String(player.traversal_report().get("mode","grounded")) if player and player.has_method("traversal_report") else "grounded"
 	if mode=="flight": help_labels[0].text="%s rise · %s descend" % [Bindings.label("jump"),Bindings.label("descend")]
@@ -908,6 +920,7 @@ func _layout_world_hud() -> void:
 	if not is_inside_tree() or not is_instance_valid(hud) or not is_instance_valid(rama_hud): return
 	var screen := get_viewport().get_visible_rect().size
 	var compact := screen.x < 1100
+	_constrained_world=screen.x<900 or screen.y<500
 	var margin := float(HeroUI.SPACE_LG)
 	var column_width := 320 if compact else 370
 	# At the smallest logical canvas, prioritize location, cores and the live
@@ -918,6 +931,7 @@ func _layout_world_hud() -> void:
 	var relay: Control = hud.get_node("RelayStatus")
 	var controls: Control = hud.get_node("ControlsCard")
 	var traversal: Control = hud.get_node("TraversalStatus")
+	for control in [title,relay,controls,traversal]: control.visible=not _constrained_world
 	for control in [title, relay, controls, traversal, map_control]:
 		control.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	title.custom_minimum_size = Vector2(column_width,144 if compact else 154)
@@ -933,13 +947,179 @@ func _layout_world_hud() -> void:
 	traversal.custom_minimum_size = Vector2(232,116)
 	traversal.size = traversal.custom_minimum_size
 	traversal.position = Vector2(screen.x-margin-traversal.size.x,combat_top-HeroUI.SPACE_MD-traversal.size.y)
-	var map_height := minf(300 if compact else 316,traversal.position.y-margin-HeroUI.SPACE_MD)
-	map_control.size = Vector2(152 if compact else 166,map_height)
-	map_control.position = Vector2(screen.x-margin-map_control.size.x,margin)
-	var legend: Label = map_control.get_node("AtlasLegend")
-	map_control.footer_height = legend.get_combined_minimum_size().y+HeroUI.SPACE_LG
-	legend.offset_top = -map_control.footer_height+HeroUI.SPACE_SM
+	_layout_atlas()
+
+func _atlas_key_text() -> String:
+	var key:=Bindings.label("world_overview")
+	return "%s Map & key" % key if _constrained_world else "● You · □ Relay\n%s Map & key" % key
+
+func _build_atlas_guide() -> void:
+	# Overview is a suspended, keyboard-discoverable view. Keep the complete
+	# key here instead of spending the live plot on a repeated four-line key.
+	atlas_guide=PanelContainer.new()
+	atlas_guide.name="AtlasGuide"
+	atlas_guide.z_index=1
+	atlas_guide.add_theme_stylebox_override("panel",HeroUI.hud_panel_style(&"quiet",HeroUI.SPACE_MD))
+	hud.add_child(atlas_guide)
+	atlas_guide_scroll=ScrollContainer.new()
+	atlas_guide_scroll.name="KeyScroll"
+	atlas_guide_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+	atlas_guide_scroll.focus_mode=Control.FOCUS_ALL
+	atlas_guide_scroll.gui_input.connect(_atlas_guide_input)
+	atlas_guide.add_child(atlas_guide_scroll)
+	var copy:=VBoxContainer.new()
+	copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	copy.add_theme_constant_override("separation",HeroUI.SPACE_SM)
+	atlas_guide_scroll.add_child(copy)
+	copy.add_child(_label("TACTICAL KEY",HeroUI.TYPE_SECTION,HeroUI.GOLD))
+	atlas_guide_return=_label("",HeroUI.TYPE_HUD_DETAIL,HeroUI.MIST)
+	atlas_guide_return.name="ReturnHint"
+	atlas_guide_return.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	copy.add_child(atlas_guide_return)
+	var symbols:=_label("▲ Sun troops · ■ Moon troops\n◎ Siege: cannon cart or chariot\n□ Relay · crossed: contested\n◇ Tether anchor\nOutlined tile: raised landing deck\nSolid block: street cover\nLarge ring: faction core\n● You · arrow: your heading",HeroUI.TYPE_HUD_DETAIL,HeroUI.CREAM)
+	symbols.name="Symbols"
+	symbols.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	copy.add_child(symbols)
+	atlas_live_details=_label("",HeroUI.TYPE_HUD_DETAIL,HeroUI.CREAM)
+	atlas_live_details.name="WorldDetails"
+	atlas_live_details.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	copy.add_child(atlas_live_details)
+	atlas_guide.hide()
+
+func _layout_atlas() -> void:
+	if not is_inside_tree() or not is_instance_valid(map_control) or not is_instance_valid(rama_hud): return
+	var screen:=get_viewport().get_visible_rect().size
+	var compact:=screen.x<1100
+	var margin:=float(HeroUI.SPACE_MD if _constrained_world else HeroUI.SPACE_LG)
+	var traversal: Control=hud.get_node("TraversalStatus")
+	var legend: Label=map_control.get_node("AtlasLegend")
+	legend.text=_atlas_key_text()
+	# Grow the card horizontally for a long active key label or larger text;
+	# never shorten/remap the displayed action merely to fit a fixed width.
+	var key_width:=0.0
+	for line in legend.text.split("\n"):
+		key_width=maxf(key_width,legend.get_theme_font("font").get_string_size(line,HORIZONTAL_ALIGNMENT_LEFT,-1,legend.get_theme_font_size("font_size")).x)
+	var width:=152.0 if _constrained_world else maxf(152 if compact else 166,key_width+24)
+	width=minf(width,maxf(1,screen.x-margin*2))
+	var available:=screen.y+rama_hud.offset_top-margin*2 if _constrained_world else traversal.position.y-margin-HeroUI.SPACE_MD
+	var map_height:=maxf(1,minf(300 if compact else 316,available))
+	map_control.size=Vector2(width,map_height)
+	map_control.position=Vector2(screen.x-margin-width,margin)
+	legend.visible=true
+	map_control.footer_height=legend.get_combined_minimum_size().y+HeroUI.SPACE_MD
+	legend.offset_top=-map_control.footer_height
+	legend.offset_bottom=-HeroUI.SPACE_SM
 	map_control.queue_redraw()
+	if not is_instance_valid(atlas_guide): return
+	atlas_guide_return.text="%s Return · %s pause · %s keys\nArrow keys / PgUp / PgDn scroll · Home / End\n%s restarts lane practice" % [Bindings.label("world_overview"),Bindings.label("pause_game"),Bindings.label("help_controls"),Bindings.label("world_respawn")]
+	var title: Control=hud.get_node("TitleCard")
+	var left:=title.position.x+title.size.x+margin
+	var gap:=map_control.position.x-margin-left
+	var guide_width:=minf(360,gap) if gap>=260 else minf(360,screen.x-margin*2)
+	atlas_guide.size=Vector2(guide_width,minf(344,maxf(1,screen.y-margin*2)))
+	atlas_guide.position=Vector2(left if gap>=260 else (screen.x-guide_width)*.5,margin)
+	if _constrained_world:
+		var summary_width:=maxf(1,map_control.position.x-margin*2)
+		compact_world_card.position=Vector2(margin,margin)
+		# A plain Panel keeps wrapped child minima from inflating the background
+		# during a live resize. Measure text at the target width, not its stale
+		# container minimum from the previous viewport.
+		var summary_height:=float(HeroUI.SPACE_SM*2+2*(compact_world_labels.size()-1))
+		for row in compact_world_labels:
+			summary_height+=row.get_theme_font("font").get_multiline_string_size(row.text,HORIZONTAL_ALIGNMENT_LEFT,summary_width-HeroUI.SPACE_SM*2,row.get_theme_font_size("font_size")).y
+		compact_world_card.size=Vector2(summary_width,summary_height)
+		atlas_guide.position=compact_world_card.position
+		atlas_guide.size=Vector2(summary_width,map_height)
+	compact_world_card.visible=_constrained_world and not overview and not paused
+	atlas_guide.visible=overview and not paused
+	_refresh_compact_world()
+
+func _atlas_guide_input(event: InputEvent) -> void:
+	# ScrollContainer has mouse-wheel support but does not read focused arrow
+	# keys here. Handle navigation only in this visible suspended overview.
+	if not overview or paused or not atlas_guide.visible or not event is InputEventKey or not event.pressed: return
+	if event.is_action_pressed("world_overview") or event.is_action_pressed("pause_game") or event.is_action_pressed("help_controls") or event.is_action_pressed("open_invocations"): return
+	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed: return
+	var bar:=atlas_guide_scroll.get_v_scroll_bar()
+	var maximum:=maxf(0,bar.max_value-bar.page)
+	var line:=HeroUI.text_font().get_height(HeroUI.TYPE_HUD_DETAIL)+HeroUI.SPACE_SM
+	var offset:=float(atlas_guide_scroll.scroll_vertical)
+	match event.keycode:
+		KEY_UP: offset-=line
+		KEY_DOWN: offset+=line
+		KEY_PAGEUP: offset-=maxf(line,bar.page*.8)
+		KEY_PAGEDOWN: offset+=maxf(line,bar.page*.8)
+		KEY_HOME: offset=0
+		KEY_END: offset=maximum
+		_: return
+	atlas_guide_scroll.scroll_vertical=roundi(clampf(offset,0,maximum))
+	atlas_guide_scroll.accept_event()
+
+func _build_compact_world() -> void:
+	compact_world_card=Panel.new()
+	compact_world_card.name="CompactWorldState"
+	compact_world_card.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	compact_world_card.clip_contents=true
+	compact_world_card.add_theme_stylebox_override("panel",HeroUI.hud_panel_style(&"quiet",HeroUI.SPACE_SM))
+	hud.add_child(compact_world_card)
+	var rows:=VBoxContainer.new()
+	rows.add_theme_constant_override("separation",2)
+	compact_world_card.add_child(rows)
+	rows.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	rows.offset_left=HeroUI.SPACE_SM
+	rows.offset_right=-HeroUI.SPACE_SM
+	rows.offset_top=HeroUI.SPACE_SM
+	rows.offset_bottom=-HeroUI.SPACE_SM
+	for index in 4:
+		var row:=_label("",HeroUI.TYPE_HUD_DETAIL,HeroUI.GOLD if index==2 else HeroUI.CREAM)
+		row.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+		rows.add_child(row)
+		compact_world_labels.append(row)
+	compact_world_card.hide()
+
+func _refresh_compact_world(battle: Dictionary={}) -> void:
+	if compact_world_labels.size()!=4 or not is_instance_valid(goal_label) or not player or not army: return
+	if not _constrained_world and not overview: return
+	if battle.is_empty(): battle=army.report()
+	var report: Dictionary=player.traversal_report()
+	var energy:=float(report.get("energy",0))
+	var flight_cd:=float(report.get("flight_cooldown",0))
+	var tether_cd:=float(report.get("grapple_cooldown",0))
+	var mode:=String(report.get("mode","ground"))
+	compact_world_labels[0].text="%s · %s" % [district_at(player.position),score_label.text.trim_prefix("Cores · ")]
+	var objective:="Escort Sun troops to the Moon core."
+	if not String(battle.get("winner","")).is_empty(): objective=WorldOutcome.headline(battle.winner)+" · Esc to restart"
+	elif battle.get("siege_drill",false): objective="Siege drill: step outside enemy blast rings."
+	elif relays:
+		var rules=RelaySession.ControlRules
+		for site in relays.sites():
+			var distance:=Vector2(player.position.x-site.position.x,player.position.z-site.position.z).length()
+			if distance>rules.SUPPLY_RADIUS: continue
+			if site.contested: objective="Relay contested: clear enemies for supplies."
+			elif site.owner!="neutral" and site.pressure_team not in ["neutral",site.owner]: objective="Relay under pressure: clear enemy soldiers."
+			elif absf(player.position.y-site.position.y)>rules.HEIGHT_TOLERANCE: objective="Land in the relay zone to capture."
+			elif distance>rules.CAPTURE_RADIUS: objective="Enter relay zone · %.0fm to centre" % distance
+			elif site.owner=="sun": objective="Sun relay held · supply in %.1fs" % maxf(0,rules.SUPPLY_PERIOD-float(site.supply_clock))
+			elif site.owner=="moon": objective="Enemy relay: neutralize, then secure."
+			else: objective="Capture relay: stay in the marked zone."
+			break
+	compact_world_labels[1].text=objective
+	compact_world_labels[2].text="%s %dm · Energy %d/%d · Flight %.1fs · Tether %.1fs" % [mode.capitalize(),roundi(player.position.y),energy,report.get("max_energy",100),flight_cd,tether_cd]
+	var prompt:="%s tether ≤36m · %s flight" % [Bindings.label("grapple"),Bindings.label("fly")]
+	if not report.get("enabled",false): prompt="Traversal unavailable in this scene."
+	elif mode in ["flight","flying"]: prompt="%s rise · %s descend · %s land to refill" % [Bindings.label("jump"),Bindings.label("descend"),Bindings.label("fly")]
+	elif mode in ["grapple","grappling"]: prompt="%s release tether · %s flight" % [Bindings.label("grapple"),Bindings.label("fly")]
+	elif energy<18: prompt="Land to refill traversal energy · tether needs 18."
+	elif not report.get("candidate",{}).is_empty():
+		prompt="%s tether %.0fm · %s" % [Bindings.label("grapple"),player.global_position.distance_to(report.candidate.position),"ready" if tether_cd<=0 else "cooling"]
+	elif flight_cd>0 or tether_cd>0: prompt=String(report.get("status","Traversal cooling"))
+	elif String(report.get("status","")).begins_with("Aim at") or String(report.get("status","")).begins_with("No clear"): prompt+=" · no clear ring"
+	compact_world_labels[3].text=prompt
+	if is_instance_valid(atlas_live_details):
+		var detail_rows:PackedStringArray=["WORLD DETAILS",location_label.text,score_label.text,lane_label.text,objective_label.text,relay_hint.text,ability_label.text,"Energy %d / %d" % [energy,report.get("max_energy",100)],goal_label.text]
+		for relay in relay_labels: detail_rows.append(relay.text.replace("\n",": "))
+		for help in help_labels: detail_rows.append(help.text)
+		atlas_live_details.text="\n".join(detail_rows)
 
 func _layout_pause_panel() -> void:
 	if not pause_panel: return
@@ -1054,8 +1234,9 @@ func _update_practice_hud() -> void:
 	_update_relay_hud()
 	var siege_drill:=false
 	var enemy_siege:=0
+	var battle: Dictionary={}
 	if army:
-		var battle: Dictionary=army.report()
+		battle=army.report()
 		outcome_summary.present(battle)
 		var cores: Dictionary=battle.get("cores",{})
 		siege_drill=battle.get("siege_drill",false)
@@ -1092,6 +1273,7 @@ func _update_practice_hud() -> void:
 		if not String(battle.get("winner","")).is_empty():
 			objective_label.text=WorldOutcome.headline(battle.winner)+"\nRestart lane practice from the pause menu."
 			goal_label.text="Round ended · Open pause to restart."
+			_refresh_compact_world(battle)
 			return
 	if not player.has_method("traversal_report"): return
 	var report: Dictionary=player.traversal_report()
@@ -1123,6 +1305,8 @@ func _update_practice_hud() -> void:
 		if energy<18: context="Land to refill traversal energy"
 		elif String(report.get("status","")).begins_with("Aim at"): context="No clear anchor in your aim"
 		goal_label.text="%s tether: aim at a gold ring ≤36m\n%s" % [Bindings.label("grapple"),context]
+
+	_refresh_compact_world(battle)
 
 func district_at(position_: Vector3) -> String:
 	var selected:="Confluence streets"
@@ -1156,6 +1340,8 @@ func release_actions(cancel_movement := true) -> void:
 
 func set_paused(value: bool) -> void:
 	paused=value
+	if is_instance_valid(atlas_guide): atlas_guide.visible=overview and not value
+	if is_instance_valid(compact_world_card): compact_world_card.visible=_constrained_world and not overview and not value
 	release_actions(false)
 	get_tree().paused=value
 	if pause_panel: pause_panel.visible=value and not (rama_panel and rama_panel.visible)
@@ -1167,7 +1353,9 @@ func set_paused(value: bool) -> void:
 	if ultimate_fx: ultimate_fx.set_suspended(value or overview)
 	if invocation_audio: invocation_audio.set_suspended(value or overview)
 	Input.mouse_mode=Input.MOUSE_MODE_VISIBLE if value or overview else Input.MOUSE_MODE_CAPTURED
-	if not value: get_viewport().gui_release_focus()
+	if not value:
+		if overview and is_instance_valid(atlas_guide_scroll): atlas_guide_scroll.grab_focus()
+		else: get_viewport().gui_release_focus()
 	if value and pause_panel:
 		_layout_pause_panel()
 		_update_practice_hud()
@@ -1265,6 +1453,8 @@ func visit_anchor(id: String) -> bool:
 
 func set_overview(value: bool) -> void:
 	overview=value
+	_layout_atlas()
+	if value and not paused and is_instance_valid(atlas_guide_scroll): atlas_guide_scroll.grab_focus()
 	player.presentation_suspended=value
 	release_actions()
 	if army: army.process_mode=Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_PAUSABLE

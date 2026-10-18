@@ -2,6 +2,8 @@
 """Catalog dispatch/source-closure regressions; synthetic children never qualify Godot."""
 from __future__ import annotations
 import argparse
+import gzip
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -30,10 +32,12 @@ def main():
     suites = (*catalog.SUITES, *catalog.SCREEN_SUITES)
     check('Catalog identifiers are unique and every entry exists',
           len({s[0] for s in suites}) == len(suites) and all((PROJECT/s[2]).is_file() for s in suites))
-    for kind, expected in [('visual', {'desktop-release-continuity'}),
+    for kind, expected in [('visual', {'desktop-release-continuity','desktop-motion-scene-entry',
+                                     'desktop-motion-transition-guard'}),
                            ('screens', {'ui-boot-recovery','ui-title-portrait','ui-launch-composition',
                             'ui-world-atlas','ui-action-hud','ui-action-hud-fit',
-                            'ui-host-replacement','ui-loading-presentation'})]:
+                            'ui-host-replacement','ui-loading-presentation',
+                            'ui-loading-readiness','ui-hud-readability','ui-atlas-layout','ui-cancel-focus'})]:
         result = subprocess.run([sys.executable,str(RUNNER),'--catalog',kind,'--list'],capture_output=True,text=True)
         listed = json.loads(result.stdout)
         check(kind+' CLI exposes new contracts with bounded acceptance scope',
@@ -44,9 +48,16 @@ def main():
     for name, expected in {
         'ui-boot-recovery': {'tests/ui_s1_loading_cases.gd'},
         'ui-host-replacement': {'tests/ui_s2_transition_cases.gd'},
+        'ui-cancel-focus': {'tests/ui_s3_cancel_focus_cases.gd'},
         'ui-action-hud-fit': {'tests/desktop_s1_hud_cases.gd','tests/ui_i1_action_hud_cases.gd'},
+        'ui-hud-readability': {'tests/ui_i1_action_hud_cases.gd'},
         'desktop-release-continuity': {'tests/graphics_g1_motion_cases.gd',
                                      'docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd'},
+        'desktop-motion-scene-entry': {'tests/graphics_g2_support_cases.gd',
+                                      'docs/evidence/desktop-finish/S3/W5/baseline/rama_motion.gd'},
+        'desktop-motion-transition-guard': {'tests/graphics_g2_support_cases.gd',
+                                           'docs/evidence/desktop-finish/S3/W5/baseline/rama_motion.gd',
+                                           'docs/evidence/desktop-finish/S3/W5/guard-witness.json'},
     }.items():
         pins = catalog.sources([next(s for s in suites if s[0] == name)])
         check(name+' pins its invoked or inherited tests and loading view',
@@ -55,6 +66,30 @@ def main():
     check('Release CLI pins its tracked baseline and retains full compact evidence',
           '--baseline-script=res://docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd' in release[3]
           and '--compact-report' in release[3])
+    scene_entry = next(s for s in suites if s[0] == 'desktop-motion-scene-entry')
+    check('Native scene-entry CLI requests a bounded summary and explicit rate',
+          '--summary-report' in scene_entry[3] and '--hz=60' in scene_entry[3])
+
+    with tempfile.TemporaryDirectory(prefix='yuga-motion-trace-cases-') as temporary:
+        report = Path(temporary)/'result.json'
+        trace = report.with_name(report.name+'.trace.json.gz')
+        full = {'passed':True,'count':1,'checks':[{'name':'synthetic trace binding','passed':True}],
+                'rows':[{'poses':[[0,0,0,0,0,0,1]]}],'bone_names':['fixture-bone']}
+        raw = json.dumps(full).encode()
+        encoded = gzip.compress(raw)
+        trace.write_bytes(encoded)
+        data = {key:value for key,value in full.items() if key not in ('rows','bone_names')}
+        data['trace'] = {'path':trace.name,'encoding':'gzip','sha256':hashlib.sha256(encoded).hexdigest(),
+                         'bytes':len(encoded),'uncompressed_sha256':hashlib.sha256(raw).hexdigest(),
+                         'uncompressed_bytes':len(raw),'rows':1,'bones':1}
+        check('Bounded motion summary retains a portable lossless trace',not catalog.motion_trace_problems(report,data))
+        trace.unlink()
+        check('Passing summary without its declared trace is rejected',catalog.motion_trace_problems(report,data)==['motion_trace_missing_or_symlink'])
+        trace.write_bytes(encoded+b'tampered')
+        check('Changed compressed trace is rejected before decompression',catalog.motion_trace_problems(report,data)==['motion_trace_compressed_identity_mismatch'])
+        trace.write_bytes(encoded)
+        data['checks']=[{'name':'different summary assertion','passed':True}]
+        check('Matching byte hashes cannot substitute different summary assertions',catalog.motion_trace_problems(report,data)==['motion_trace_summary_mismatch'])
 
     # Execute the real catalog CLI in a tiny copied repository. The fake engine
     # tests forwarding/version dispatch only; this is not a gameplay fixture.

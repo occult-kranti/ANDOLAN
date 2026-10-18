@@ -1,0 +1,67 @@
+{
+  "catalog": "screens",
+  "checked_sources_unchanged": true,
+  "checks": 22,
+  "engine_probe": {
+    "command": [
+      "/usr/local/bin/godot",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.021
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "schema": 1,
+  "scope": "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance.",
+  "selected_suites": [
+    "ui-world-objectives"
+  ],
+  "sources_after_sha256": "69934633386972cfeb77bdd6a5b89953fe31f3d56a8800e03c73930f1ff08037",
+  "sources_before_sha256": "69934633386972cfeb77bdd6a5b89953fe31f3d56a8800e03c73930f1ff08037",
+  "suites": [
+    {
+      "checks": 22,
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/ui_world_objective_cases.gd",
+        "--",
+        "--report=/workspace/scratch/desktop-finish/S3/W6/world-objectives-final-r1/reports/ui-world-objectives.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "ui-world-objectives",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/ui-world-objectives.json",
+      "report_sha256": "83237c9e95634cd90e6f4d4629c93947e4dbf531676304a24f072be902d58094",
+      "stderr": "logs/ui-world-objectives.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/ui-world-objectives.stdout",
+      "stdout_sha256": "16068fdfb9917a9a259a0990871dccecce7c2e9fe1c6305d8205da08b32c1d31",
+      "timed_out": false,
+      "wall_seconds": 1.926
+    }
+  ]
+}

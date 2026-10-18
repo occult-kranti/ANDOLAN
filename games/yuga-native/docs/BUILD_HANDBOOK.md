@@ -1,6 +1,6 @@
 # YUGA native build handbook
 
-**Resume current desktop work:** [ACTIVE_DESKTOP_HANDOFF.md](ACTIVE_DESKTOP_HANDOFF.md) gives the live source, owners, renderer gate and next command. [DESKTOP_FINISH_CAMPAIGN.md](DESKTOP_FINISH_CAMPAIGN.md) is the active five-screen/ten-integration queue. Mobile is deferred by the user; older campaigns below retain historical evidence and commands.
+**Resume current desktop work:** [ACTIVE_DESKTOP_HANDOFF.md](ACTIVE_DESKTOP_HANDOFF.md) gives the live source, owners, renderer gate and next command. [DESKTOP_FINISH_CAMPAIGN.md](DESKTOP_FINISH_CAMPAIGN.md) is the active ten-screen/three-integration queue. Mobile is deferred by the user; older campaigns below retain historical evidence and commands.
 
 For the proposed mobile version, use [MOBILE_PRODUCTION_ROADMAP.md](MOBILE_PRODUCTION_ROADMAP.md) and its [code migration map](mobile/CODE_AND_STACK_DECISIONS.md). The existing commands below prepare the desktop/native workflow. Android/iOS exports, physical-device performance and operated 5v5 services require the separate mobile gates; an existing mobile renderer override is not a qualified mobile build.
 

@@ -15,7 +15,7 @@ var units: Array = []
 var relays: Array = []
 var footer_height := 70.0
 func _plot_rect() -> Rect2:
-	return Rect2(Vector2(12,26),Vector2(maxf(1,size.x-24),maxf(1,size.y-52-footer_height)))
+	return Rect2(Vector2(12,16),Vector2(maxf(1,size.x-24),maxf(1,size.y-32-footer_height)))
 
 func project(point: Vector3) -> Vector2:
 	var bounds: Array=data.get("bounds",{}).get("nominal_xz",[-70,70,-130,130])

@@ -1,0 +1,1291 @@
+{
+  "schema_version": 1,
+  "start_source": "0fb96d108b1d886a4ebf84d3b5140abca3905465",
+  "product": "YUGA original native desktop",
+  "mobile_status": "deferred_by_user_until_desktop_complete",
+  "screen_rounds": 5,
+  "integration_rounds": 10,
+  "workers_per_round": 6,
+  "planned_packets": 90,
+  "completed_packets": 0,
+  "target_status": "open",
+  "prior_g1_g2": "G1 bounded render review; G2 candidate/render closure pending. New packets are not prior campaign counts.",
+  "prior_pending_g3_g6": "Incorporated as pending goals into X1-X10; not claimed completed.",
+  "active_gate": "S1-full-render-and-cold-start-open_S2-tested_S3-components-started",
+  "rounds": [
+    {
+      "id": "S1",
+      "title": "Initial screen",
+      "status": "in_progress",
+      "depends_on": [
+        "G0-checkpoint-and-render-gate"
+      ],
+      "packets": [
+        {
+          "id": "S1-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "in_progress",
+          "goal": "Recover first draw and review title originals",
+          "report": "evidence/desktop-finish/S1/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ]
+        },
+        {
+          "id": "S1-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "implemented_pending_visual_integration",
+          "goal": "Recompose launcher hierarchy and shared button roles",
+          "report": "evidence/desktop-finish/S1/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "ae39ea6e3832e81e104b650c98a2439820f96e1795ec6add6796750c9c8eb0c2"
+        },
+        {
+          "id": "S1-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "implemented_pending_visual_integration",
+          "goal": "Soften gold glare with original material candidate",
+          "report": "evidence/desktop-finish/S1/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [
+            "Matched gold front/profile accepted as bounded material refinement; diagnostic environment and warm-cache state explicit; full production context pending"
+          ],
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "94a3b1d5889464e36b354d2788b9dbbd83ab14ded8fc9c3f41debca816abaef1"
+        },
+        {
+          "id": "S1-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "implemented_pending_visual_integration",
+          "goal": "Clarify title/world values and atlas deck/marker hierarchy",
+          "report": "evidence/desktop-finish/S1/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "6a3ffdf531a8a3525013f9be9baaa023402909962f243fea561c95c9de0a42fc"
+        },
+        {
+          "id": "S1-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "implemented_pending_visual_integration",
+          "goal": "Correct full-body release handoff and lock-state HUD feedback",
+          "report": "evidence/desktop-finish/S1/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "7cf466b63e4e0a7f3e2655eb30b24e00c1517ae677149967b15e927d7e3db302"
+        },
+        {
+          "id": "S1-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "implemented_pending_visual_integration",
+          "goal": "Harden real boot entry and package/provenance integration",
+          "report": "evidence/desktop-finish/S1/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "e87c9f48dfe5b019b0629e2e92d539828d503dd758e57b687f5861513deba47f"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "Loading and scene entry",
+      "status": "implemented_components_render_acceptance_pending",
+      "depends_on": [
+        "S1"
+      ],
+      "packets": [
+        {
+          "id": "S2-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "blocked_by_S1_renderer",
+          "goal": "Capture cold/warm loading and cancelled entry",
+          "report": "evidence/desktop-finish/S2/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S2-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "implemented_pending_visual_integration",
+          "goal": "Unify loading/error/retry and destination screen copy",
+          "report": "evidence/desktop-finish/S2/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": [
+            "Actual frozen-source native visual/input integration remains open"
+          ],
+          "report_sha256": "4ac3cb8c6ff8ece49231e00e28c6bf77e30f632980397ebcb4161c263d553975"
+        },
+        {
+          "id": "S2-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "implemented_pending_visual_integration",
+          "goal": "Stabilize hero first-visible material/pose presentation",
+          "report": "evidence/desktop-finish/S2/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": [
+            "Actual frozen-source native visual/input integration remains open"
+          ],
+          "report_sha256": "2c9c0c175ed147fdfc83470c1280df4128550051fbc8d45c83233ce246e2455d"
+        },
+        {
+          "id": "S2-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "blocked_by_S1_renderer",
+          "goal": "Bound environment setup and expose real load stages",
+          "report": "evidence/desktop-finish/S2/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S2-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "implemented_pending_visual_integration",
+          "goal": "Preserve pose/action lifecycle across scene entry",
+          "report": "evidence/desktop-finish/S2/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": [
+            "Actual frozen-source native visual/input integration remains open"
+          ],
+          "report_sha256": "28cc482d6697668f8490b5bebfbd9f56e27f45a3e5a09389821eff76bc2a21a2"
+        },
+        {
+          "id": "S2-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "implemented_pending_visual_integration",
+          "goal": "Implement cancellation-safe real loading progress",
+          "report": "evidence/desktop-finish/S2/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": [
+            "Actual frozen-source native visual/input integration remains open"
+          ],
+          "report_sha256": "2ad7642c6002d01c8f2b01de80024d74994942690fb1a4b300045dae67eec259"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Combat HUD",
+      "status": "independent_components_in_progress_prior_visual_gates_open",
+      "depends_on": [
+        "S2"
+      ],
+      "packets": [
+        {
+          "id": "S3-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Review actual ready/locked/reload/defeat sequences",
+          "report": "evidence/desktop-finish/S3/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S3-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "in_progress",
+          "goal": "Apply shared screen tokens to gameplay readability",
+          "report": "evidence/desktop-finish/S3/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S3-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "in_progress",
+          "goal": "Improve weapon/hand presentation at gameplay camera",
+          "report": "evidence/desktop-finish/S3/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S3-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "in_progress",
+          "goal": "Clarify minimap/relay/army information hierarchy",
+          "report": "evidence/desktop-finish/S3/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S3-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "in_progress",
+          "goal": "Repair evidenced moving-foot penetration while preserving player authority and continuous action timing",
+          "report": "evidence/desktop-finish/S3/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S3-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "in_progress",
+          "goal": "Verify live scene readiness and HUD/payload inclusion",
+          "report": "evidence/desktop-finish/S3/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "title": "Guide settings atlas",
+      "status": "planned",
+      "depends_on": [
+        "S3"
+      ],
+      "packets": [
+        {
+          "id": "S4-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Review keyboard modal and persistence edge routes",
+          "report": "evidence/desktop-finish/S4/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S4-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Unify guide/help/options focus and layout states",
+          "report": "evidence/desktop-finish/S4/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S4-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Refine hero guide presentation without counterfeit runtime art",
+          "report": "evidence/desktop-finish/S4/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S4-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Implement complete readable atlas deck/route/objective layers",
+          "report": "evidence/desktop-finish/S4/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S4-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Handle pause/focus/remap action transitions cleanly",
+          "report": "evidence/desktop-finish/S4/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S4-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Harden settings/save/load errors and fresh-process routes",
+          "report": "evidence/desktop-finish/S4/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "title": "Whole screen package",
+      "status": "planned",
+      "depends_on": [
+        "S4"
+      ],
+      "packets": [
+        {
+          "id": "S5-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Independent all-screen journey and visual review",
+          "report": "evidence/desktop-finish/S5/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S5-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Repair cross-screen navigation/spacing/control inconsistencies",
+          "report": "evidence/desktop-finish/S5/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S5-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Integrate accepted hero-screen art and reject weak candidates",
+          "report": "evidence/desktop-finish/S5/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S5-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Unify world/atlas/title visual language",
+          "report": "evidence/desktop-finish/S5/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S5-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Stress HUD/action/respawn/pause synchronization",
+          "report": "evidence/desktop-finish/S5/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "S5-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Integrate whole package and source-bound export preview",
+          "report": "evidence/desktop-finish/S5/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X1",
+      "title": "Resource lifecycle",
+      "status": "planned",
+      "depends_on": [
+        "S5"
+      ],
+      "packets": [
+        {
+          "id": "X1-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Inspect repeated-route resource counters and images",
+          "report": "evidence/desktop-finish/X1/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X1-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Deduplicate private style construction safely",
+          "report": "evidence/desktop-finish/X1/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X1-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Cache immutable hero presentation resources",
+          "report": "evidence/desktop-finish/X1/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X1-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Share world/unit resources with bounded ownership",
+          "report": "evidence/desktop-finish/X1/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X1-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Repair signal/action/pose lifecycle edge leaks",
+          "report": "evidence/desktop-finish/X1/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X1-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Validate repeat loading/freeing/export resources",
+          "report": "evidence/desktop-finish/X1/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X2",
+      "title": "World coherence",
+      "status": "planned",
+      "depends_on": [
+        "X1"
+      ],
+      "packets": [
+        {
+          "id": "X2-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Review route-scale day/night scenes",
+          "report": "evidence/desktop-finish/X2/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X2-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Clarify sector/objective navigation UI",
+          "report": "evidence/desktop-finish/X2/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X2-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Tune hero contrast against district palettes",
+          "report": "evidence/desktop-finish/X2/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X2-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Implement original district and architectural hierarchy",
+          "report": "evidence/desktop-finish/X2/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X2-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Tune actor motion/camera across routes",
+          "report": "evidence/desktop-finish/X2/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X2-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Verify streamed/setup data and package map resources",
+          "report": "evidence/desktop-finish/X2/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X3",
+      "title": "Hero richness",
+      "status": "planned",
+      "depends_on": [
+        "X2"
+      ],
+      "packets": [
+        {
+          "id": "X3-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Matched hero/pose/clearance acceptance",
+          "report": "evidence/desktop-finish/X3/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X3-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Polish hero guide and selection focus",
+          "report": "evidence/desktop-finish/X3/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X3-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Implement accepted silhouette/material/equipment candidate",
+          "report": "evidence/desktop-finish/X3/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X3-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Tune courtyard/foreground to support character reading",
+          "report": "evidence/desktop-finish/X3/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X3-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Correct measured contact/transition defects",
+          "report": "evidence/desktop-finish/X3/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X3-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Extend exact asset provenance and payload checks",
+          "report": "evidence/desktop-finish/X3/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X4",
+      "title": "Army and siege",
+      "status": "planned",
+      "depends_on": [
+        "X3"
+      ],
+      "packets": [
+        {
+          "id": "X4-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Capture actual wave attack/death/siege sequences",
+          "report": "evidence/desktop-finish/X4/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X4-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Clarify army/objective feedback presentation",
+          "report": "evidence/desktop-finish/X4/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X4-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Refine original unit/equipment shared art where assigned",
+          "report": "evidence/desktop-finish/X4/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X4-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Improve infantry/cannon/chariot animation and reuse",
+          "report": "evidence/desktop-finish/X4/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X4-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Synchronize attack/tracer/impact/action cues",
+          "report": "evidence/desktop-finish/X4/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X4-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Validate unit bounds and packaged resources",
+          "report": "evidence/desktop-finish/X4/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X5",
+      "title": "Ability clarity",
+      "status": "planned",
+      "depends_on": [
+        "X4"
+      ],
+      "packets": [
+        {
+          "id": "X5-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Review five actions and counterexample tapes",
+          "report": "evidence/desktop-finish/X5/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X5-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Clarify ability glyph/cooldown/target/error states",
+          "report": "evidence/desktop-finish/X5/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X5-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Refine original hero ability visual language",
+          "report": "evidence/desktop-finish/X5/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X5-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Keep hostile fields readable across ground/water",
+          "report": "evidence/desktop-finish/X5/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X5-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Fix event/cancel/retrigger motion/effect synchronization",
+          "report": "evidence/desktop-finish/X5/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X5-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Stress bounded effect resources and package identity",
+          "report": "evidence/desktop-finish/X5/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X6",
+      "title": "Travel and feedback",
+      "status": "planned",
+      "depends_on": [
+        "X5"
+      ],
+      "packets": [
+        {
+          "id": "X6-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Review continuous travel/action and actual audio evidence",
+          "report": "evidence/desktop-finish/X6/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X6-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Polish traversal/settings/control feedback",
+          "report": "evidence/desktop-finish/X6/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X6-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Improve secondary motion within measured contact bounds",
+          "report": "evidence/desktop-finish/X6/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X6-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Clarify landings/tether/map landmarks",
+          "report": "evidence/desktop-finish/X6/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X6-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Repair travel/camera/cast and focus handoffs",
+          "report": "evidence/desktop-finish/X6/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X6-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Verify sound/controls persistence and package coverage",
+          "report": "evidence/desktop-finish/X6/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X7",
+      "title": "Atmosphere and budgets",
+      "status": "planned",
+      "depends_on": [
+        "X6"
+      ],
+      "packets": [
+        {
+          "id": "X7-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Review day/night/water visual and resource evidence",
+          "report": "evidence/desktop-finish/X7/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X7-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Preserve HUD/menu contrast under all lighting",
+          "report": "evidence/desktop-finish/X7/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X7-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Tune hero material response in matched light",
+          "report": "evidence/desktop-finish/X7/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X7-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Optimize district lighting/water/shader variants",
+          "report": "evidence/desktop-finish/X7/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X7-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Keep animation/FX stable under quality changes",
+          "report": "evidence/desktop-finish/X7/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X7-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Validate quality settings/loading/export variants",
+          "report": "evidence/desktop-finish/X7/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X8",
+      "title": "Adverse cases and repairs",
+      "status": "planned",
+      "depends_on": [
+        "X7"
+      ],
+      "packets": [
+        {
+          "id": "X8-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Independent targeted stress/counterexample suite",
+          "report": "evidence/desktop-finish/X8/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X8-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Repair discovered UI/layout/navigation edge defects",
+          "report": "evidence/desktop-finish/X8/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X8-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Repair observed hero asset/pose artifacts",
+          "report": "evidence/desktop-finish/X8/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X8-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Repair loaded-world/unit/camera edge defects",
+          "report": "evidence/desktop-finish/X8/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X8-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Repair repeated action/respawn/pause defects",
+          "report": "evidence/desktop-finish/X8/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X8-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Repair lifecycle/provenance/security/package failures",
+          "report": "evidence/desktop-finish/X8/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X9",
+      "title": "Package qualification",
+      "status": "planned",
+      "depends_on": [
+        "X8"
+      ],
+      "packets": [
+        {
+          "id": "X9-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Actual qualified package input/images review",
+          "report": "evidence/desktop-finish/X9/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X9-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Verify all screen routes on exported build",
+          "report": "evidence/desktop-finish/X9/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X9-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Seal accepted hero source/assets and optional exclusions",
+          "report": "evidence/desktop-finish/X9/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X9-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Seal accepted world/unit sources and resources",
+          "report": "evidence/desktop-finish/X9/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X9-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Verify continuous final motion/HUD/action state",
+          "report": "evidence/desktop-finish/X9/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X9-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Build exact source-bound package and fresh-process save checks",
+          "report": "evidence/desktop-finish/X9/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    },
+    {
+      "id": "X10",
+      "title": "Final review publication",
+      "status": "planned",
+      "depends_on": [
+        "X9"
+      ],
+      "packets": [
+        {
+          "id": "X10-W1",
+          "role": "renderer_acceptance",
+          "agent": "ui_06_acceptance",
+          "status": "planned",
+          "goal": "Independent final acceptance and remaining issue ledger",
+          "report": "evidence/desktop-finish/X10/W1.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X10-W2",
+          "role": "screen_design",
+          "agent": "mobile_touch",
+          "status": "planned",
+          "goal": "Final screen usability/art review and corrections",
+          "report": "evidence/desktop-finish/X10/W2.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X10-W3",
+          "role": "hero_art",
+          "agent": "r3_08_groom",
+          "status": "planned",
+          "goal": "Final hero visual/motion target assessment",
+          "report": "evidence/desktop-finish/X10/W3.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X10-W4",
+          "role": "world_atlas_units",
+          "agent": "mobile_render",
+          "status": "planned",
+          "goal": "Final world/map/unit target assessment",
+          "report": "evidence/desktop-finish/X10/W4.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X10-W5",
+          "role": "motion_hud",
+          "agent": "r4_05_motion",
+          "status": "planned",
+          "goal": "Final gameplay motion/feedback assessment",
+          "report": "evidence/desktop-finish/X10/W5.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        },
+        {
+          "id": "X10-W6",
+          "role": "loading_package",
+          "agent": "ui_03_loading",
+          "status": "planned",
+          "goal": "Release artifact/public-byte verification and handoff",
+          "report": "evidence/desktop-finish/X10/W6.md",
+          "source_sha256": {},
+          "checks": [],
+          "actual_review": [],
+          "remaining": []
+        }
+      ]
+    }
+  ],
+  "checkpoint_source": "613ff5ca84313edfbcc2a70987919fa03bed5226",
+  "g0": {
+    "status": "source_and_package_preserved_render_cause_isolating",
+    "source_remote_verified": "613ff5ca84313edfbcc2a70987919fa03bed5226",
+    "cleanup_receipt": "../../../docs/evidence/desktop-finish-storage-cleanup.json",
+    "package_checks_passed": 504,
+    "renderer": "No-derivative wash succeeded once for G2, but S1 gold-only derivative and feature-preserving textured environment candidate both stall. Native debugger-backed diagnosis pending; no universal shader cause proven."
+  },
+  "implemented_packets_pending_review": 5,
+  "source_checkpoints": [
+    "98e10cc5184ba1b51b42113496a529d8cc8f62b0"
+  ],
+  "implemented_pending_review_packets": 9
+}

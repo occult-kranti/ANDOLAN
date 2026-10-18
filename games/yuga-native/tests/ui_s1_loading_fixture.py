@@ -15,7 +15,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--engine', default='godot')
     parser.add_argument('--report', type=Path, required=True)
-    parser.add_argument('--case', choices=('s1','legacy','stress','host-replacement'), default='s1')
+    parser.add_argument('--case', choices=('s1','legacy','stress','host-replacement','cancel-focus'), default='s1')
     parser.add_argument('--source-boot', type=Path, help='Explicit historical source override for a negative-control run')
     parser.add_argument('--source-transition', type=Path, help='Historical transition source for the same negative control')
     args = parser.parse_args()
@@ -30,7 +30,8 @@ def main():
     report.parent.mkdir(parents=True,exist_ok=True)
     test = {'s1':'tests/ui_s1_loading_cases.gd', 'legacy':'tests/ui_boot_cases.gd',
             'stress':'tests/ui_transition_stress_cases.gd',
-            'host-replacement':'tests/ui_s2_transition_cases.gd'}[args.case]
+            'host-replacement':'tests/ui_s2_transition_cases.gd',
+            'cancel-focus':'tests/ui_s3_cancel_focus_cases.gd'}[args.case]
     names = ['scripts/boot.gd','scripts/scene_transition.gd','scripts/loading_presentation.gd','scripts/hero_ui_theme.gd','scenes/boot.tscn',test]
     names += [str(p.relative_to(project)) for p in (project/'assets/fonts').glob('*') if p.is_file()]
     names += [str(p.relative_to(project)) for p in (project/'.godot/imported').glob('*.ttf-*') if p.is_file()]
@@ -51,7 +52,7 @@ def main():
                 target.parent.mkdir(parents=True,exist_ok=True)
                 shutil.copy2(path,target)
                 if sha(target)!=pins[name]:raise RuntimeError('Fixture copy mismatch: '+name)
-            (fixture/'project.godot').write_text('config_version=5\n[application]\nconfig/name="YUGA S1 loading fixture"\n[test]\nui_s1_loading_fixture=true\nui_s2_transition_fixture=true\nui_transition_stress_fixture=true\nscene_transition_fixture=true\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
+            (fixture/'project.godot').write_text('config_version=5\n[application]\nconfig/name="YUGA S1 loading fixture"\n[test]\nui_s1_loading_fixture=true\nui_s2_transition_fixture=true\nui_s3_cancel_focus_fixture=true\nui_transition_stress_fixture=true\nscene_transition_fixture=true\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
             command=[engine,'--headless','--path',str(fixture),'--script','res://'+test,'--','--report='+str(fixture/'result.json')]
             environment=os.environ.copy()
             environment.update(LP_NUM_THREADS='1',OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1')

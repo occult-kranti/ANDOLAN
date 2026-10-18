@@ -1,0 +1,27 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "4",
+    "godot",
+    "--headless",
+    "--fixed-fps",
+    "60",
+    "--path",
+    "/workspace/ANDOLAN/games/yuga-native",
+    "--audio-driver",
+    "Dummy",
+    "--script",
+    "res://tests/desktop_world_route_parity_cases.gd",
+    "--",
+    "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/world-route-parity/W4/r2/report.json"
+  ],
+  "exit_code": 0,
+  "verdict": "19 assertions pass; exit AudioStreamWAV/Playback leak warning, not clean acceptance.",
+  "engine_log_sha256": "e0e15832c92d736dceeb2a2fbb6308069b31b58dc3790a4a03878fb41ec397c9",
+  "diagnostics": [
+    "WARNING: ObjectDB instances leaked at exit (run with --verbose for details)."
+  ],
+  "source_sha256": "8506909f5cb9fb114e61f0088d67d873c9ddf78d697189f7be29be047933a9a6",
+  "report_sha256": "373e1d2d7488eb32210273c5bd6e322a619720983f3c691f6b1d67f2b1490586"
+}

@@ -325,7 +325,18 @@ func close() -> void:
 	Bindings.release_gameplay()
 	closed.emit()
 	var previous = _return_focus.get_ref() if _return_focus else null
-	if is_instance_valid(previous) and previous.is_visible_in_tree(): previous.grab_focus()
+	if _can_restore_focus(previous): previous.grab_focus()
+
+func _can_restore_focus(previous: Control) -> bool:
+	if not is_instance_valid(previous) or not previous.is_inside_tree() or previous.is_queued_for_deletion() or not previous.is_visible_in_tree(): return false
+	if previous.focus_mode == Control.FOCUS_NONE: return false
+	if previous is BaseButton and previous.disabled: return false
+	# Paused callers are valid. An explicitly isolated/retiring owner is not.
+	var ancestor: Node = previous
+	while ancestor:
+		if ancestor.process_mode == Node.PROCESS_MODE_DISABLED or ancestor.is_queued_for_deletion(): return false
+		ancestor = ancestor.get_parent()
+	return true
 
 func _input(event: InputEvent) -> void:
 	if not _accepts_input(): return

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "2",
+    "timeout",
+    "60s",
+    "godot",
+    "--headless",
+    "--max-threads",
+    "1",
+    "--path",
+    "games/yuga-native",
+    "--script",
+    "res://tests/desktop_s3_transition_guard_cases.gd",
+    "--",
+    "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/S3/W5/guard-r2.json"
+  ],
+  "exit_code": 0,
+  "classification": "INVALID: typed Array assignment runtime errors; only2 checks ran; not a pass",
+  "log_sha256": "e211f7b876ad4fb339e3f42c04138b8535afaf0eb60cb8b48a663bb847f0898f",
+  "report_sha256": "9ce249f29474adf532875f47f4a31bd1f8ca61552ff0c316842ec0c1b6648c3e"
+}

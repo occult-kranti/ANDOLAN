@@ -74,8 +74,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--project', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair', 'scene-anchors'], required=True)
+    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair', 'scene-anchors', 'compact-screens'], required=True)
     parser.add_argument('--display', type=int, default=192)
+    parser.add_argument('--engine', type=Path,
+                        help='Explicit isolated diagnostic engine; default uses installed godot')
     parser.add_argument('--shader-cache-seed', type=Path)
     parser.add_argument('--godot-shader-cache-seed', type=Path,
                         help='Explicit Godot shader_cache copy, separate from Mesa; never copies preferences')
@@ -98,15 +100,21 @@ def main():
     snapshot = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(snapshot)
     seal = snapshot.verify(project)
-    helper_name = {'gold-pair': 'capture_gold.gd', 'scene-anchors': 'capture_scene_anchors.gd'}.get(args.case, 'capture_focus.gd')
+    helper_name = {'gold-pair': 'capture_gold.gd', 'scene-anchors': 'capture_scene_anchors.gd',
+                   'compact-screens': 'capture_compact_screens.gd'}.get(args.case, 'capture_focus.gd')
     helper = project / 'tools/graphics-six' / helper_name
     if not helper.is_file():
         parser.error('Refresh the snapshot with the new capture helper first')
     runtime = Path('/workspace/tooling/native-render/runtime')
-    command = [shutil.which('godot'), '--path', str(project), '--audio-driver', 'Dummy',
+    engine = args.engine.resolve() if args.engine else Path(shutil.which('godot') or '')
+    if not engine.is_file() or not os.access(engine, os.X_OK):
+        parser.error('Engine must be an existing executable')
+    command = [str(engine), '--path', str(project), '--audio-driver', 'Dummy',
                '--disable-vsync', '--fixed-fps', '30',
                '--script', 'res://tools/graphics-six/' + helper_name, '--',
-               '--output=' + str(output), '--case=' + args.case]
+               '--output=' + str(output)]
+    if args.case != 'compact-screens':
+        command.append('--case=' + args.case)
     if args.verbose:
         command.insert(1, '--verbose')
     if args.render_thread:
@@ -187,7 +195,8 @@ def main():
         report_path = output / ('preflight.json' if args.preflight else 'capture.json')
         report = json.loads(report_path.read_text())
         shots = report['shots']
-        if report['complete'] is not True or len(shots) != (60 if args.case == 'entry-cancel' else 2):
+        expected_shots = {'entry-cancel': 60, 'compact-screens': 8}.get(args.case, 2)
+        if report['complete'] is not True or len(shots) != expected_shots:
             raise RuntimeError('Capture did not satisfy declared checks/count')
         if args.case == 'entry-cancel':
             if not all(b['physics_frame'] - a['physics_frame'] == 2 for a, b in zip(shots, shots[1:])):

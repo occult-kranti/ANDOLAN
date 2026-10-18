@@ -1,0 +1,67 @@
+{
+  "catalog": "screens",
+  "checked_sources_unchanged": true,
+  "checks": 18,
+  "engine_probe": {
+    "command": [
+      "/usr/local/bin/godot",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.083
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "schema": 1,
+  "scope": "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance.",
+  "selected_suites": [
+    "ui-loading-readiness"
+  ],
+  "sources_after_sha256": "b684279ff7a1cec8965610bdcfdaea57fbf54c5e5e7b57f459e5736307addbc5",
+  "sources_before_sha256": "b684279ff7a1cec8965610bdcfdaea57fbf54c5e5e7b57f459e5736307addbc5",
+  "suites": [
+    {
+      "checks": 18,
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/ui_s3_loading_readiness_cases.gd",
+        "--",
+        "--report=/tmp/yuga-s3-loading-readiness-r1/reports/ui-loading-readiness.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "ui-loading-readiness",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/ui-loading-readiness.json",
+      "report_sha256": "10a8a7857a3414e7234fde02c6590709541b7339774dace9e46e202a2f0dcc88",
+      "stderr": "logs/ui-loading-readiness.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/ui-loading-readiness.stdout",
+      "stdout_sha256": "1a9a1dd1e8b79a1bbd322c4e67c4fe5b1703afd196f05d25af911eee9cc2395b",
+      "timed_out": false,
+      "wall_seconds": 7.305
+    }
+  ]
+}

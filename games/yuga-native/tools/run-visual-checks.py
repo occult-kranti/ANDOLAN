@@ -8,12 +8,15 @@ pixels or qualify art, hardware performance, online play or a release.
 from __future__ import annotations
 
 import argparse
+import gzip
+import hashlib
 import importlib.util
 import json
 import math
 import os
 from pathlib import Path
 import sys
+import zlib
 
 PROJECT = Path(__file__).resolve().parents[1]
 REPOSITORY = PROJECT.parents[1]
@@ -37,6 +40,9 @@ SUITES = (
     ("native-contract-admission", "godot", "tests/native_contract_cases.gd", ()),
     ("desktop-release-continuity", "godot", "tests/desktop_s1_release_cases.gd",
      ("--baseline-script=res://docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd", "--compact-report")),
+    ("desktop-motion-scene-entry", "godot", "tests/desktop_s3_transition_scene_cases.gd",
+     ("--hz=60", "--summary-report")),
+    ("desktop-motion-transition-guard", "godot", "tests/desktop_s3_transition_guard_cases.gd", ()),
 )
 SCREEN_SUITES = (
     ("ui-launch", "godot", "tests/launch_shell_cases.gd", ()),
@@ -70,6 +76,10 @@ SCREEN_SUITES = (
     ("ui-action-hud-fit", "godot", "tests/desktop_s1_hud_layout_cases.gd", ()),
     ("ui-host-replacement", "fixture", "tests/ui_s1_loading_fixture.py", ("--case", "host-replacement")),
     ("ui-loading-presentation", "godot", "tests/desktop_finish_s2_loading_view_cases.gd", ()),
+    ("ui-loading-readiness", "godot", "tests/ui_s3_loading_readiness_cases.gd", ()),
+    ("ui-hud-readability", "godot", "tests/desktop_s3_hud_readability_cases.gd", ()),
+    ("ui-atlas-layout", "godot", "tests/desktop_s3_atlas_layout_cases.gd", ()),
+    ("ui-cancel-focus", "fixture", "tests/ui_s1_loading_fixture.py", ("--case", "cancel-focus")),
 )
 SCREEN_LIMITS = "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance."
 # Tests inherited by selected scripts and tests invoked by fixture runners are
@@ -78,10 +88,17 @@ SUITE_DEPENDENCIES = {
     "ui-transition-signals": ("tests/ui_transition_signal_cases.gd",),
     "ui-boot-recovery": ("tests/ui_s1_loading_cases.gd",),
     "ui-host-replacement": ("tests/ui_s2_transition_cases.gd",),
+    "ui-cancel-focus": ("tests/ui_s3_cancel_focus_cases.gd",),
     "ui-action-hud": ("tests/ui_i1_action_hud_cases.gd",),
     "ui-action-hud-fit": ("tests/desktop_s1_hud_cases.gd", "tests/ui_i1_action_hud_cases.gd"),
+    "ui-hud-readability": ("tests/ui_i1_action_hud_cases.gd",),
     "desktop-release-continuity": ("tests/graphics_g1_motion_cases.gd",
                                    "docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd"),
+    "desktop-motion-scene-entry": ("tests/graphics_g2_support_cases.gd",
+                                    "docs/evidence/desktop-finish/S3/W5/baseline/rama_motion.gd"),
+    "desktop-motion-transition-guard": ("tests/graphics_g2_support_cases.gd",
+                                        "docs/evidence/desktop-finish/S3/W5/baseline/rama_motion.gd",
+                                        "docs/evidence/desktop-finish/S3/W5/guard-witness.json"),
 }
 
 
@@ -97,6 +114,39 @@ def sources(selected: list[tuple]) -> dict:
     records = {str(path.relative_to(PROJECT)): {"bytes": path.stat().st_size,
                "sha256": helper.sha(path)} for path in sorted(paths)}
     return records
+
+
+def motion_trace_problems(report: Path, data: dict) -> list[str]:
+    """Bind a bounded CI summary to its adjacent, lossless native pose trace."""
+    record = data.get("trace")
+    trace = report.with_name(report.name + ".trace.json.gz")
+    if not isinstance(record, dict) or record.get("path") != trace.name or record.get("encoding") != "gzip":
+        return ["motion_trace_must_be_adjacent_relative_gzip"]
+    if trace.is_symlink() or not trace.is_file():
+        return ["motion_trace_missing_or_symlink"]
+    try:
+        size = trace.stat().st_size
+        if not 0 < size <= 8 * 1024 * 1024 or record.get("bytes") != size or record.get("sha256") != helper.sha(trace):
+            return ["motion_trace_compressed_identity_mismatch"]
+        # Bound decompression even when a corrupted child receipt claims a
+        # smaller size. This is evidence validation, not another pose replay.
+        with gzip.open(trace, "rb") as stream:
+            raw = stream.read(32 * 1024 * 1024 + 1)
+        if len(raw) > 32 * 1024 * 1024 or record.get("uncompressed_bytes") != len(raw) or record.get("uncompressed_sha256") != hashlib.sha256(raw).hexdigest():
+            return ["motion_trace_uncompressed_identity_mismatch"]
+        full = json.loads(raw)
+        if not isinstance(full, dict):
+            return ["motion_trace_not_object"]
+        rows, bones = full.get("rows"), full.get("bone_names")
+        if not isinstance(rows, list) or not rows or not isinstance(bones, list) or not bones or record.get("rows") != len(rows) or record.get("bones") != len(bones):
+            return ["motion_trace_census_mismatch"]
+        expected = {key: value for key, value in data.items() if key != "trace"}
+        actual = {key: value for key, value in full.items() if key not in ("rows", "bone_names")}
+        if actual != expected:
+            return ["motion_trace_summary_mismatch"]
+    except (OSError, EOFError, ValueError, zlib.error):
+        return ["motion_trace_unreadable"]
+    return []
 
 
 def main() -> int:
@@ -174,6 +224,13 @@ def main() -> int:
             if data.get(key) is not True:
                 result["passed"] = False
                 result["problems"].append("actual_resource_mode_not_exercised")
+        if result["passed"] and suite_id == "desktop-motion-scene-entry":
+            data, _ = helper.inspect_report(report)
+            problems = motion_trace_problems(report, data)
+            result["problems"].extend(problems)
+            result["passed"] = not problems
+            if not problems:
+                result["trace"] = {**data["trace"], "path": "reports/" + data["trace"]["path"]}
         summary["suites"].append(result)
         helper.write_json(output / "summary.json", summary)
         print(json.dumps({"suite": suite_id, "passed": result["passed"], "checks": result.get("checks", 0), "exit_code": result["exit_code"]}), flush=True)

@@ -18,3 +18,9 @@ transport are refused. No geometry, collider, gameplay marker or light is added.
 
 Actual day/night material and combat-visibility review is required before visual
 acceptance. Software-renderer resource checks do not establish GPU performance.
+
+The desktop S3 courtyard refinement adjusts four original stone tint vectors to
+reduce distracting floor contrast. Source maps, geometry, UVs and the shader
+are unchanged. Matched daylight title/training originals and the bounded review
+are retained in `docs/evidence/desktop-finish/S3/lead/paving-palette-r1/`;
+this does not establish night or complete environment acceptance.

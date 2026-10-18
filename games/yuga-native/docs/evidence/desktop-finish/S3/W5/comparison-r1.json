@@ -1,0 +1,995 @@
+{
+  "passed": false,
+  "count": 27,
+  "checks": [
+    {
+      "name": "30Hz native callback rows align",
+      "passed": true,
+      "detail": {
+        "rows": 167
+      }
+    },
+    {
+      "name": "30Hz roots velocities and authority reports exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "30Hz action phase transition clocks and locks exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "30Hz weapon sockets and plant anchors exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "30Hz all nonleg global poses exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "30Hz public cancel and protected Step full poses exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "30Hz every targeted grounded sole improves to minus5mm gate",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "30Hz no phase has deeper minimum sole penetration",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "30Hz targeted entry ankle step does not worsen",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "60Hz native callback rows align",
+      "passed": true,
+      "detail": {
+        "rows": 331
+      }
+    },
+    {
+      "name": "60Hz roots velocities and authority reports exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "60Hz action phase transition clocks and locks exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "60Hz weapon sockets and plant anchors exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "60Hz all nonleg global poses exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "60Hz public cancel and protected Step full poses exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "60Hz every targeted grounded sole improves to minus5mm gate",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "60Hz no phase has deeper minimum sole penetration",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "60Hz targeted entry ankle step does not worsen",
+      "passed": false,
+      "detail": {}
+    },
+    {
+      "name": "120Hz native callback rows align",
+      "passed": true,
+      "detail": {
+        "rows": 661
+      }
+    },
+    {
+      "name": "120Hz roots velocities and authority reports exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "120Hz action phase transition clocks and locks exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "120Hz weapon sockets and plant anchors exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "120Hz all nonleg global poses exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "120Hz public cancel and protected Step full poses exact",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "120Hz every targeted grounded sole improves to minus5mm gate",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "120Hz no phase has deeper minimum sole penetration",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "120Hz targeted entry ankle step does not worsen",
+      "passed": true,
+      "detail": {}
+    }
+  ],
+  "trials": [
+    {
+      "hz": 30,
+      "measurements": {
+        "title_preroll": {
+          "baseline": {
+            "callbacks": 11,
+            "grounded_side_samples": 22,
+            "locked_side_samples": 18,
+            "actual_floor_contact_side_samples": 12,
+            "grounded_minimum_m": 0.000571727752685547,
+            "all_minimum_m": 0.000571727752685547,
+            "max_adjacent_world_ankle_step_m": 0.019718825817108196
+          },
+          "candidate": {
+            "callbacks": 11,
+            "grounded_side_samples": 22,
+            "locked_side_samples": 18,
+            "actual_floor_contact_side_samples": 12,
+            "grounded_minimum_m": 0.000571727752685547,
+            "all_minimum_m": 0.000571727752685547,
+            "max_adjacent_world_ankle_step_m": 0.019718825817108196
+          }
+        },
+        "training_entry": {
+          "baseline": {
+            "callbacks": 23,
+            "grounded_side_samples": 44,
+            "locked_side_samples": 24,
+            "actual_floor_contact_side_samples": 24,
+            "grounded_minimum_m": -0.0343183130025864,
+            "all_minimum_m": -0.0343183130025864,
+            "max_adjacent_world_ankle_step_m": 0.04984375275671486
+          },
+          "candidate": {
+            "callbacks": 23,
+            "grounded_side_samples": 44,
+            "locked_side_samples": 24,
+            "actual_floor_contact_side_samples": 28,
+            "grounded_minimum_m": 0.000571727752685547,
+            "all_minimum_m": -0.00962328724563122,
+            "max_adjacent_world_ankle_step_m": 0.04984375275671486
+          }
+        },
+        "reset_move_forward": {
+          "baseline": {
+            "callbacks": 7,
+            "grounded_side_samples": 14,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 4,
+            "grounded_minimum_m": -0.0478332303464413,
+            "all_minimum_m": -0.0478332303464413,
+            "max_adjacent_world_ankle_step_m": 0.35279671613249747
+          },
+          "candidate": {
+            "callbacks": 7,
+            "grounded_side_samples": 14,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 9,
+            "grounded_minimum_m": 0.000571846961975098,
+            "all_minimum_m": 0.000571846961975098,
+            "max_adjacent_world_ankle_step_m": 0.35254465644495286
+          }
+        },
+        "stop_move_forward": {
+          "baseline": {
+            "callbacks": 26,
+            "grounded_side_samples": 52,
+            "locked_side_samples": 27,
+            "actual_floor_contact_side_samples": 25,
+            "grounded_minimum_m": -0.0100835468620062,
+            "all_minimum_m": -0.0100835468620062,
+            "max_adjacent_world_ankle_step_m": 1.4008852340871667
+          },
+          "candidate": {
+            "callbacks": 26,
+            "grounded_side_samples": 52,
+            "locked_side_samples": 27,
+            "actual_floor_contact_side_samples": 28,
+            "grounded_minimum_m": 0.000571007723920047,
+            "all_minimum_m": 0.000571007723920047,
+            "max_adjacent_world_ankle_step_m": 1.4008852340871667
+          }
+        },
+        "reset_move_back": {
+          "baseline": {
+            "callbacks": 7,
+            "grounded_side_samples": 14,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 4,
+            "grounded_minimum_m": -0.0383222848176956,
+            "all_minimum_m": -0.0383222848176956,
+            "max_adjacent_world_ankle_step_m": 0.3738691134310826
+          },
+          "candidate": {
+            "callbacks": 7,
+            "grounded_side_samples": 14,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 9,
+            "grounded_minimum_m": 0.000571846961975098,
+            "all_minimum_m": 0.000571846961975098,
+            "max_adjacent_world_ankle_step_m": 0.3738698853987067
+          }
+        },
+        "stop_move_back": {
+          "baseline": {
+            "callbacks": 26,
+            "grounded_side_samples": 52,
+            "locked_side_samples": 27,
+            "actual_floor_contact_side_samples": 25,
+            "grounded_minimum_m": -0.010167334228754,
+            "all_minimum_m": -0.010167334228754,
+            "max_adjacent_world_ankle_step_m": 1.4861960028391208
+          },
+          "candidate": {
+            "callbacks": 26,
+            "grounded_side_samples": 52,
+            "locked_side_samples": 27,
+            "actual_floor_contact_side_samples": 28,
+            "grounded_minimum_m": 0.000570947595406324,
+            "all_minimum_m": 0.000570947595406324,
+            "max_adjacent_world_ankle_step_m": 1.4861960028391208
+          }
+        },
+        "reset_move_left": {
+          "baseline": {
+            "callbacks": 7,
+            "grounded_side_samples": 14,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 3,
+            "grounded_minimum_m": -0.0433231219649315,
+            "all_minimum_m": -0.0433231219649315,
+            "max_adjacent_world_ankle_step_m": 0.3623046499676683
+          },
+          "candidate": {
+            "callbacks": 7,
+            "grounded_side_samples": 14,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 9,
+            "grounded_minimum_m": 0.000571846961975098,
+            "all_minimum_m": 0.000571846961975098,
+            "max_adjacent_world_ankle_step_m": 0.36221427052191363
+          }
+        },
+        "stop_move_left": {
+          "baseline": {
+            "callbacks": 15,
+            "grounded_side_samples": 30,
+            "locked_side_samples": 15,
+            "actual_floor_contact_side_samples": 19,
+            "grounded_minimum_m": -0.0100511154159904,
+            "all_minimum_m": -0.0100511154159904,
+            "max_adjacent_world_ankle_step_m": 0.25025316746932935
+          },
+          "candidate": {
+            "callbacks": 15,
+            "grounded_side_samples": 30,
+            "locked_side_samples": 15,
+            "actual_floor_contact_side_samples": 22,
+            "grounded_minimum_m": 0.000570903066545725,
+            "all_minimum_m": 0.000570903066545725,
+            "max_adjacent_world_ankle_step_m": 0.25025316746932935
+          }
+        },
+        "reset_before_cancel": {
+          "baseline": {
+            "callbacks": 13,
+            "grounded_side_samples": 26,
+            "locked_side_samples": 16,
+            "actual_floor_contact_side_samples": 24,
+            "grounded_minimum_m": 0.000571007374674082,
+            "all_minimum_m": 0.000571007374674082,
+            "max_adjacent_world_ankle_step_m": 0.048564583065672594
+          },
+          "candidate": {
+            "callbacks": 13,
+            "grounded_side_samples": 26,
+            "locked_side_samples": 16,
+            "actual_floor_contact_side_samples": 24,
+            "grounded_minimum_m": 0.000571007374674082,
+            "all_minimum_m": 0.000571007374674082,
+            "max_adjacent_world_ankle_step_m": 0.048564583065672594
+          }
+        },
+        "bow_cancel_entry": {
+          "baseline": {
+            "callbacks": 1,
+            "grounded_side_samples": 2,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 2,
+            "grounded_minimum_m": 0.000571029610000551,
+            "all_minimum_m": 0.000571029610000551,
+            "max_adjacent_world_ankle_step_m": 0
+          },
+          "candidate": {
+            "callbacks": 1,
+            "grounded_side_samples": 2,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 2,
+            "grounded_minimum_m": 0.000571029610000551,
+            "all_minimum_m": 0.000571029610000551,
+            "max_adjacent_world_ankle_step_m": 0
+          }
+        },
+        "bow_cancel_fade": {
+          "baseline": {
+            "callbacks": 8,
+            "grounded_side_samples": 16,
+            "locked_side_samples": 16,
+            "actual_floor_contact_side_samples": 16,
+            "grounded_minimum_m": 0.000571037118788809,
+            "all_minimum_m": 0.000571037118788809,
+            "max_adjacent_world_ankle_step_m": 1.3207716973742964e-07
+          },
+          "candidate": {
+            "callbacks": 8,
+            "grounded_side_samples": 16,
+            "locked_side_samples": 16,
+            "actual_floor_contact_side_samples": 16,
+            "grounded_minimum_m": 0.000571037118788809,
+            "all_minimum_m": 0.000571037118788809,
+            "max_adjacent_world_ankle_step_m": 1.3207716973742964e-07
+          }
+        },
+        "reset_before_step": {
+          "baseline": {
+            "callbacks": 13,
+            "grounded_side_samples": 26,
+            "locked_side_samples": 16,
+            "actual_floor_contact_side_samples": 24,
+            "grounded_minimum_m": 0.000571007374674082,
+            "all_minimum_m": 0.000571007374674082,
+            "max_adjacent_world_ankle_step_m": 0.04859238425472591
+          },
+          "candidate": {
+            "callbacks": 13,
+            "grounded_side_samples": 26,
+            "locked_side_samples": 16,
+            "actual_floor_contact_side_samples": 24,
+            "grounded_minimum_m": 0.000571007374674082,
+            "all_minimum_m": 0.000571007374674082,
+            "max_adjacent_world_ankle_step_m": 0.04859238425472591
+          }
+        },
+        "protected_measured_step": {
+          "baseline": {
+            "callbacks": 10,
+            "grounded_side_samples": 20,
+            "locked_side_samples": 0,
+            "actual_floor_contact_side_samples": 10,
+            "grounded_minimum_m": -0.0199949257075787,
+            "all_minimum_m": -0.0199949257075787,
+            "max_adjacent_world_ankle_step_m": 0.7555447127442848
+          },
+          "candidate": {
+            "callbacks": 10,
+            "grounded_side_samples": 20,
+            "locked_side_samples": 0,
+            "actual_floor_contact_side_samples": 10,
+            "grounded_minimum_m": -0.0199949257075787,
+            "all_minimum_m": -0.0199949257075787,
+            "max_adjacent_world_ankle_step_m": 0.7555447127442848
+          }
+        }
+      },
+      "candidate_motion": "8c3771a343a0538d749147393d0c407b1fb377d774a91b4cf99734e4852520f8",
+      "baseline_motion": "119db2e65a40c148725813137340bc109f057d98ea82ef777ab7735c999c661c",
+      "visible_lod_cohorts": [
+        [
+          0,
+          13580
+        ],
+        [
+          1,
+          11131
+        ]
+      ]
+    },
+    {
+      "hz": 60,
+      "measurements": {
+        "title_preroll": {
+          "baseline": {
+            "callbacks": 21,
+            "grounded_side_samples": 42,
+            "locked_side_samples": 38,
+            "actual_floor_contact_side_samples": 26,
+            "grounded_minimum_m": 0.000571727752685547,
+            "all_minimum_m": 0.000571727752685547,
+            "max_adjacent_world_ankle_step_m": 0.010341718792958915
+          },
+          "candidate": {
+            "callbacks": 21,
+            "grounded_side_samples": 42,
+            "locked_side_samples": 38,
+            "actual_floor_contact_side_samples": 26,
+            "grounded_minimum_m": 0.000571727752685547,
+            "all_minimum_m": 0.000571727752685547,
+            "max_adjacent_world_ankle_step_m": 0.010341718792958915
+          }
+        },
+        "training_entry": {
+          "baseline": {
+            "callbacks": 46,
+            "grounded_side_samples": 86,
+            "locked_side_samples": 42,
+            "actual_floor_contact_side_samples": 46,
+            "grounded_minimum_m": -0.0259516295045614,
+            "all_minimum_m": -0.0259516295045614,
+            "max_adjacent_world_ankle_step_m": 0.0498925801366568
+          },
+          "candidate": {
+            "callbacks": 46,
+            "grounded_side_samples": 86,
+            "locked_side_samples": 42,
+            "actual_floor_contact_side_samples": 54,
+            "grounded_minimum_m": 0.000571727752685547,
+            "all_minimum_m": -0.00777193531394005,
+            "max_adjacent_world_ankle_step_m": 0.0498925801366568
+          }
+        },
+        "reset_move_forward": {
+          "baseline": {
+            "callbacks": 14,
+            "grounded_side_samples": 28,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 3,
+            "grounded_minimum_m": -0.0524410158395767,
+            "all_minimum_m": -0.0524410158395767,
+            "max_adjacent_world_ankle_step_m": 0.1780829282448656
+          },
+          "candidate": {
+            "callbacks": 14,
+            "grounded_side_samples": 28,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 16,
+            "grounded_minimum_m": 0.000571846961975098,
+            "all_minimum_m": 0.000571846961975098,
+            "max_adjacent_world_ankle_step_m": 0.17831119048815908
+          }
+        },
+        "stop_move_forward": {
+          "baseline": {
+            "callbacks": 52,
+            "grounded_side_samples": 104,
+            "locked_side_samples": 52,
+            "actual_floor_contact_side_samples": 49,
+            "grounded_minimum_m": -0.0103436717763543,
+            "all_minimum_m": -0.0103436717763543,
+            "max_adjacent_world_ankle_step_m": 1.4008871681519905
+          },
+          "candidate": {
+            "callbacks": 52,
+            "grounded_side_samples": 104,
+            "locked_side_samples": 52,
+            "actual_floor_contact_side_samples": 55,
+            "grounded_minimum_m": -0.000368354900274426,
+            "all_minimum_m": -0.000368354900274426,
+            "max_adjacent_world_ankle_step_m": 1.4008871681519905
+          }
+        },
+        "reset_move_back": {
+          "baseline": {
+            "callbacks": 14,
+            "grounded_side_samples": 28,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 4,
+            "grounded_minimum_m": -0.046501886099577,
+            "all_minimum_m": -0.046501886099577,
+            "max_adjacent_world_ankle_step_m": 0.1861611099143073
+          },
+          "candidate": {
+            "callbacks": 14,
+            "grounded_side_samples": 28,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 14,
+            "grounded_minimum_m": 0.000571846961975098,
+            "all_minimum_m": 0.000571846961975098,
+            "max_adjacent_world_ankle_step_m": 0.1861611099143073
+          }
+        },
+        "stop_move_back": {
+          "baseline": {
+            "callbacks": 52,
+            "grounded_side_samples": 104,
+            "locked_side_samples": 52,
+            "actual_floor_contact_side_samples": 48,
+            "grounded_minimum_m": -0.0111498506739736,
+            "all_minimum_m": -0.0111498506739736,
+            "max_adjacent_world_ankle_step_m": 1.4867750567670206
+          },
+          "candidate": {
+            "callbacks": 52,
+            "grounded_side_samples": 104,
+            "locked_side_samples": 52,
+            "actual_floor_contact_side_samples": 55,
+            "grounded_minimum_m": -0.000407089770305902,
+            "all_minimum_m": -0.000407089770305902,
+            "max_adjacent_world_ankle_step_m": 1.4867750567670206
+          }
+        },
+        "reset_move_left": {
+          "baseline": {
+            "callbacks": 14,
+            "grounded_side_samples": 28,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 4,
+            "grounded_minimum_m": -0.0456209741532803,
+            "all_minimum_m": -0.0456209741532803,
+            "max_adjacent_world_ankle_step_m": 0.18310592566824524
+          },
+          "candidate": {
+            "callbacks": 14,
+            "grounded_side_samples": 28,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 16,
+            "grounded_minimum_m": 0.000521461712196469,
+            "all_minimum_m": 0.000521461712196469,
+            "max_adjacent_world_ankle_step_m": 0.1833249649028977
+          }
+        },
+        "stop_move_left": {
+          "baseline": {
+            "callbacks": 30,
+            "grounded_side_samples": 60,
+            "locked_side_samples": 28,
+            "actual_floor_contact_side_samples": 37,
+            "grounded_minimum_m": -0.0104338461533189,
+            "all_minimum_m": -0.0104338461533189,
+            "max_adjacent_world_ankle_step_m": 0.13930305348771443
+          },
+          "candidate": {
+            "callbacks": 30,
+            "grounded_side_samples": 60,
+            "locked_side_samples": 28,
+            "actual_floor_contact_side_samples": 43,
+            "grounded_minimum_m": -0.000366782885976136,
+            "all_minimum_m": -0.000366782885976136,
+            "max_adjacent_world_ankle_step_m": 0.13930305348771443
+          }
+        },
+        "reset_before_cancel": {
+          "baseline": {
+            "callbacks": 25,
+            "grounded_side_samples": 50,
+            "locked_side_samples": 30,
+            "actual_floor_contact_side_samples": 48,
+            "grounded_minimum_m": 0.000570999982301146,
+            "all_minimum_m": 0.000570999982301146,
+            "max_adjacent_world_ankle_step_m": 0.048614814877896685
+          },
+          "candidate": {
+            "callbacks": 25,
+            "grounded_side_samples": 50,
+            "locked_side_samples": 30,
+            "actual_floor_contact_side_samples": 48,
+            "grounded_minimum_m": 0.000570999982301146,
+            "all_minimum_m": 0.000570999982301146,
+            "max_adjacent_world_ankle_step_m": 0.048614814877896685
+          }
+        },
+        "bow_cancel_entry": {
+          "baseline": {
+            "callbacks": 2,
+            "grounded_side_samples": 4,
+            "locked_side_samples": 4,
+            "actual_floor_contact_side_samples": 4,
+            "grounded_minimum_m": 0.000571022159419954,
+            "all_minimum_m": 0.000571022159419954,
+            "max_adjacent_world_ankle_step_m": 1.0506076744707337e-06
+          },
+          "candidate": {
+            "callbacks": 2,
+            "grounded_side_samples": 4,
+            "locked_side_samples": 4,
+            "actual_floor_contact_side_samples": 4,
+            "grounded_minimum_m": 0.000571022159419954,
+            "all_minimum_m": 0.000571022159419954,
+            "max_adjacent_world_ankle_step_m": 1.0506076744707337e-06
+          }
+        },
+        "bow_cancel_fade": {
+          "baseline": {
+            "callbacks": 16,
+            "grounded_side_samples": 32,
+            "locked_side_samples": 32,
+            "actual_floor_contact_side_samples": 32,
+            "grounded_minimum_m": 0.000570985022932291,
+            "all_minimum_m": 0.000570985022932291,
+            "max_adjacent_world_ankle_step_m": 1.849560645218294e-07
+          },
+          "candidate": {
+            "callbacks": 16,
+            "grounded_side_samples": 32,
+            "locked_side_samples": 32,
+            "actual_floor_contact_side_samples": 32,
+            "grounded_minimum_m": 0.000570985022932291,
+            "all_minimum_m": 0.000570985022932291,
+            "max_adjacent_world_ankle_step_m": 1.849560645218294e-07
+          }
+        },
+        "reset_before_step": {
+          "baseline": {
+            "callbacks": 25,
+            "grounded_side_samples": 50,
+            "locked_side_samples": 30,
+            "actual_floor_contact_side_samples": 48,
+            "grounded_minimum_m": 0.000570999982301146,
+            "all_minimum_m": 0.000570999982301146,
+            "max_adjacent_world_ankle_step_m": 0.04862319896921253
+          },
+          "candidate": {
+            "callbacks": 25,
+            "grounded_side_samples": 50,
+            "locked_side_samples": 30,
+            "actual_floor_contact_side_samples": 48,
+            "grounded_minimum_m": 0.000570999982301146,
+            "all_minimum_m": 0.000570999982301146,
+            "max_adjacent_world_ankle_step_m": 0.04862319896921253
+          }
+        },
+        "protected_measured_step": {
+          "baseline": {
+            "callbacks": 20,
+            "grounded_side_samples": 40,
+            "locked_side_samples": 0,
+            "actual_floor_contact_side_samples": 21,
+            "grounded_minimum_m": -0.0241292286664248,
+            "all_minimum_m": -0.0241292286664248,
+            "max_adjacent_world_ankle_step_m": 0.3535526442433582
+          },
+          "candidate": {
+            "callbacks": 20,
+            "grounded_side_samples": 40,
+            "locked_side_samples": 0,
+            "actual_floor_contact_side_samples": 21,
+            "grounded_minimum_m": -0.0241292286664248,
+            "all_minimum_m": -0.0241292286664248,
+            "max_adjacent_world_ankle_step_m": 0.3535526442433582
+          }
+        }
+      },
+      "candidate_motion": "8c3771a343a0538d749147393d0c407b1fb377d774a91b4cf99734e4852520f8",
+      "baseline_motion": "119db2e65a40c148725813137340bc109f057d98ea82ef777ab7735c999c661c",
+      "visible_lod_cohorts": [
+        [
+          0,
+          13580
+        ],
+        [
+          1,
+          11131
+        ]
+      ]
+    },
+    {
+      "hz": 120,
+      "measurements": {
+        "title_preroll": {
+          "baseline": {
+            "callbacks": 41,
+            "grounded_side_samples": 82,
+            "locked_side_samples": 78,
+            "actual_floor_contact_side_samples": 54,
+            "grounded_minimum_m": 0.000571846961975098,
+            "all_minimum_m": 0.000571846961975098,
+            "max_adjacent_world_ankle_step_m": 0.005190908908844328
+          },
+          "candidate": {
+            "callbacks": 41,
+            "grounded_side_samples": 82,
+            "locked_side_samples": 78,
+            "actual_floor_contact_side_samples": 54,
+            "grounded_minimum_m": 0.000571846961975098,
+            "all_minimum_m": 0.000571846961975098,
+            "max_adjacent_world_ankle_step_m": 0.005190908908844328
+          }
+        },
+        "training_entry": {
+          "baseline": {
+            "callbacks": 92,
+            "grounded_side_samples": 168,
+            "locked_side_samples": 80,
+            "actual_floor_contact_side_samples": 92,
+            "grounded_minimum_m": -0.0113503988832235,
+            "all_minimum_m": -0.0113503988832235,
+            "max_adjacent_world_ankle_step_m": 0.04992192052306284
+          },
+          "candidate": {
+            "callbacks": 92,
+            "grounded_side_samples": 168,
+            "locked_side_samples": 80,
+            "actual_floor_contact_side_samples": 104,
+            "grounded_minimum_m": 1.61669740919024e-05,
+            "all_minimum_m": -0.00663631781935692,
+            "max_adjacent_world_ankle_step_m": 0.04992192052306284
+          }
+        },
+        "reset_move_forward": {
+          "baseline": {
+            "callbacks": 28,
+            "grounded_side_samples": 56,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 6,
+            "grounded_minimum_m": -0.0491436459124088,
+            "all_minimum_m": -0.0491436459124088,
+            "max_adjacent_world_ankle_step_m": 0.0906700506973579
+          },
+          "candidate": {
+            "callbacks": 28,
+            "grounded_side_samples": 56,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 34,
+            "grounded_minimum_m": 7.67949386499822e-05,
+            "all_minimum_m": 7.67949386499822e-05,
+            "max_adjacent_world_ankle_step_m": 0.09046015311776395
+          }
+        },
+        "stop_move_forward": {
+          "baseline": {
+            "callbacks": 104,
+            "grounded_side_samples": 208,
+            "locked_side_samples": 102,
+            "actual_floor_contact_side_samples": 99,
+            "grounded_minimum_m": -0.0104400590062141,
+            "all_minimum_m": -0.0104400590062141,
+            "max_adjacent_world_ankle_step_m": 1.4008880933013803
+          },
+          "candidate": {
+            "callbacks": 104,
+            "grounded_side_samples": 208,
+            "locked_side_samples": 102,
+            "actual_floor_contact_side_samples": 111,
+            "grounded_minimum_m": -0.000379821052774787,
+            "all_minimum_m": -0.000379821052774787,
+            "max_adjacent_world_ankle_step_m": 1.4008880933013803
+          }
+        },
+        "reset_move_back": {
+          "baseline": {
+            "callbacks": 28,
+            "grounded_side_samples": 56,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 7,
+            "grounded_minimum_m": -0.0479231439530849,
+            "all_minimum_m": -0.0479231439530849,
+            "max_adjacent_world_ankle_step_m": 0.09377770976592859
+          },
+          "candidate": {
+            "callbacks": 28,
+            "grounded_side_samples": 56,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 29,
+            "grounded_minimum_m": -0.000133658264530823,
+            "all_minimum_m": -0.000133658264530823,
+            "max_adjacent_world_ankle_step_m": 0.09377770976592859
+          }
+        },
+        "stop_move_back": {
+          "baseline": {
+            "callbacks": 104,
+            "grounded_side_samples": 208,
+            "locked_side_samples": 102,
+            "actual_floor_contact_side_samples": 98,
+            "grounded_minimum_m": -0.0113321039825678,
+            "all_minimum_m": -0.0113321039825678,
+            "max_adjacent_world_ankle_step_m": 1.4872984216385465
+          },
+          "candidate": {
+            "callbacks": 104,
+            "grounded_side_samples": 208,
+            "locked_side_samples": 102,
+            "actual_floor_contact_side_samples": 111,
+            "grounded_minimum_m": -0.000262163172010332,
+            "all_minimum_m": -0.000262163172010332,
+            "max_adjacent_world_ankle_step_m": 1.4872984216385465
+          }
+        },
+        "reset_move_left": {
+          "baseline": {
+            "callbacks": 28,
+            "grounded_side_samples": 56,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 10,
+            "grounded_minimum_m": -0.0473742559552193,
+            "all_minimum_m": -0.0473742559552193,
+            "max_adjacent_world_ankle_step_m": 0.09622391718252028
+          },
+          "candidate": {
+            "callbacks": 28,
+            "grounded_side_samples": 56,
+            "locked_side_samples": 2,
+            "actual_floor_contact_side_samples": 33,
+            "grounded_minimum_m": 0.000227317010285333,
+            "all_minimum_m": 0.000227317010285333,
+            "max_adjacent_world_ankle_step_m": 0.09614573238947502
+          }
+        },
+        "stop_move_left": {
+          "baseline": {
+            "callbacks": 60,
+            "grounded_side_samples": 120,
+            "locked_side_samples": 54,
+            "actual_floor_contact_side_samples": 75,
+            "grounded_minimum_m": -0.0105322059243917,
+            "all_minimum_m": -0.0105322059243917,
+            "max_adjacent_world_ankle_step_m": 0.07321751063532897
+          },
+          "candidate": {
+            "callbacks": 60,
+            "grounded_side_samples": 120,
+            "locked_side_samples": 54,
+            "actual_floor_contact_side_samples": 87,
+            "grounded_minimum_m": -0.000379806151613593,
+            "all_minimum_m": -0.000379806151613593,
+            "max_adjacent_world_ankle_step_m": 0.0732066140439367
+          }
+        },
+        "reset_before_cancel": {
+          "baseline": {
+            "callbacks": 50,
+            "grounded_side_samples": 100,
+            "locked_side_samples": 60,
+            "actual_floor_contact_side_samples": 98,
+            "grounded_minimum_m": 0.000570903066545725,
+            "all_minimum_m": 0.000570903066545725,
+            "max_adjacent_world_ankle_step_m": 0.048627972602979304
+          },
+          "candidate": {
+            "callbacks": 50,
+            "grounded_side_samples": 100,
+            "locked_side_samples": 60,
+            "actual_floor_contact_side_samples": 98,
+            "grounded_minimum_m": 0.000570903066545725,
+            "all_minimum_m": 0.000570903066545725,
+            "max_adjacent_world_ankle_step_m": 0.048627972602979304
+          }
+        },
+        "bow_cancel_entry": {
+          "baseline": {
+            "callbacks": 4,
+            "grounded_side_samples": 8,
+            "locked_side_samples": 8,
+            "actual_floor_contact_side_samples": 8,
+            "grounded_minimum_m": 0.000570970238186419,
+            "all_minimum_m": 0.000570970238186419,
+            "max_adjacent_world_ankle_step_m": 1.3223988126020615e-06
+          },
+          "candidate": {
+            "callbacks": 4,
+            "grounded_side_samples": 8,
+            "locked_side_samples": 8,
+            "actual_floor_contact_side_samples": 8,
+            "grounded_minimum_m": 0.000570970238186419,
+            "all_minimum_m": 0.000570970238186419,
+            "max_adjacent_world_ankle_step_m": 1.3223988126020615e-06
+          }
+        },
+        "bow_cancel_fade": {
+          "baseline": {
+            "callbacks": 32,
+            "grounded_side_samples": 64,
+            "locked_side_samples": 64,
+            "actual_floor_contact_side_samples": 64,
+            "grounded_minimum_m": 0.000570910633541644,
+            "all_minimum_m": 0.000570910633541644,
+            "max_adjacent_world_ankle_step_m": 2.3900720500393594e-07
+          },
+          "candidate": {
+            "callbacks": 32,
+            "grounded_side_samples": 64,
+            "locked_side_samples": 64,
+            "actual_floor_contact_side_samples": 64,
+            "grounded_minimum_m": 0.000570910633541644,
+            "all_minimum_m": 0.000570910633541644,
+            "max_adjacent_world_ankle_step_m": 2.3900720500393594e-07
+          }
+        },
+        "reset_before_step": {
+          "baseline": {
+            "callbacks": 50,
+            "grounded_side_samples": 100,
+            "locked_side_samples": 60,
+            "actual_floor_contact_side_samples": 98,
+            "grounded_minimum_m": 0.000570903066545725,
+            "all_minimum_m": 0.000570903066545725,
+            "max_adjacent_world_ankle_step_m": 0.04863043717264317
+          },
+          "candidate": {
+            "callbacks": 50,
+            "grounded_side_samples": 100,
+            "locked_side_samples": 60,
+            "actual_floor_contact_side_samples": 98,
+            "grounded_minimum_m": 0.000570903066545725,
+            "all_minimum_m": 0.000570903066545725,
+            "max_adjacent_world_ankle_step_m": 0.04863043717264317
+          }
+        },
+        "protected_measured_step": {
+          "baseline": {
+            "callbacks": 40,
+            "grounded_side_samples": 80,
+            "locked_side_samples": 0,
+            "actual_floor_contact_side_samples": 49,
+            "grounded_minimum_m": -0.0241502597928047,
+            "all_minimum_m": -0.0241502597928047,
+            "max_adjacent_world_ankle_step_m": 0.1745043182097628
+          },
+          "candidate": {
+            "callbacks": 40,
+            "grounded_side_samples": 80,
+            "locked_side_samples": 0,
+            "actual_floor_contact_side_samples": 49,
+            "grounded_minimum_m": -0.0241502597928047,
+            "all_minimum_m": -0.0241502597928047,
+            "max_adjacent_world_ankle_step_m": 0.1745043182097628
+          }
+        }
+      },
+      "candidate_motion": "8c3771a343a0538d749147393d0c407b1fb377d774a91b4cf99734e4852520f8",
+      "baseline_motion": "119db2e65a40c148725813137340bc109f057d98ea82ef777ab7735c999c661c",
+      "visible_lod_cohorts": [
+        [
+          0,
+          13580
+        ],
+        [
+          1,
+          11131
+        ]
+      ]
+    }
+  ],
+  "inputs_sha256": {
+    "30": {
+      "games/yuga-native/docs/evidence/desktop-finish/S3/W5/baseline-30-r2.json": "1f7266852c53cb864dea6064f1307a874f09bd4d9b15c57042087119f4a23d5c",
+      "games/yuga-native/docs/evidence/desktop-finish/S3/W5/candidate-30-r2.json": "6a7aaec97b04c12bbaa3b2d92e00262eec3a2689457e5dced2c0649aa9307290"
+    },
+    "60": {
+      "games/yuga-native/docs/evidence/desktop-finish/S3/W5/baseline-60.json.gz": "1a678ce0e56510703e39ee9d2a151d1c72caf0f4d6b36ccf9c7316ecd32f0e29",
+      "games/yuga-native/docs/evidence/desktop-finish/S3/W5/candidate-60-r1.json.gz": "c9d27d68b120af7d9ec05fec84387178f141318a5591c370c04c8bdb16c9c60b"
+    },
+    "120": {
+      "games/yuga-native/docs/evidence/desktop-finish/S3/W5/baseline-120-r2.json": "5c1a597c1b8fd716000e4ac33bccdd978437dc0ae3f1a7385fe03cb0ee59ac4c",
+      "games/yuga-native/docs/evidence/desktop-finish/S3/W5/candidate-120-r2.json": "55cdaf372e48c436bac9178023319925c2232371b1ed5cb49f13f8deea7b8eb0"
+    }
+  },
+  "scope": "Native headless callback geometry and exact authority/write comparisons. Phase minima and adjacent ankle steps are diagnostics, not continuous rendered or C1 acceptance; same-time exclusions are separately tested."
+}

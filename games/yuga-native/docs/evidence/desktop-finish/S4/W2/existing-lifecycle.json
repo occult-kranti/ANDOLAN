@@ -1,0 +1,52 @@
+{
+  "checks": [
+    {
+      "name": "Delayed launch reveal preserves a newer action focus",
+      "passed": true
+    },
+    {
+      "name": "Detached launch cannot steal recovery focus",
+      "passed": true
+    },
+    {
+      "name": "Detached guide cannot steal recovery focus",
+      "passed": true
+    },
+    {
+      "name": "Settings settle preserves newer Done focus at 2x scale",
+      "passed": true
+    },
+    {
+      "name": "Detached courtyard leaves recovery focus and tree running",
+      "passed": true
+    },
+    {
+      "name": "Queued pause reveal leaves the newer guide in control through 2x resize",
+      "passed": true
+    },
+    {
+      "name": "Guide close restores exact lower pause opener after 2x resize",
+      "passed": true
+    },
+    {
+      "name": "Detached world leaves recovery focus without stale modal restoration",
+      "passed": true
+    },
+    {
+      "name": "Queued-free launch cancels queued and suspended focus work",
+      "passed": true
+    }
+  ],
+  "count": 9,
+  "passed": true,
+  "scope": "Real native UI and imported scenes, explicit queued/start-then-detach lifecycle counterexamples. The execution wrapper must reject any ERROR or SCRIPT ERROR even if focus assertions pass. No renderer or OS input claim.",
+  "source_start": {
+    "scripts/confluence_world.gd": "357d97a958daacb19836f0f0817d81a4999df12bcd78c66e9ab87382a064e013",
+    "scripts/courtyard.gd": "1cd6661b3d38ac77944b308293adfb02902e1f6f05adbb6efa8d786f09c9747f",
+    "scripts/launch_shell.gd": "e65533431243584c479753fe0ca8fa9ecd6abaab34f6702674885faa407b6a9a",
+    "scripts/rama_hero_hud.gd": "3ed7b7f05184a4d1c7592d7d920994c33c364968bcd7040cb4ca4820a3cdf6c2",
+    "scripts/rama_hero_panel.gd": "a76b3d2316305efbdb001426282275795f0273db006a29bffb8d05209fc6c58b",
+    "tests/ui_independent_lifecycle_cases.gd": "620a716002355af3ebc0875fcd824cdad9f8f6e5825686c7fe0e32979c47593f"
+  },
+  "source_unchanged": true
+}

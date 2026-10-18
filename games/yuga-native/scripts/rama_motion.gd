@@ -401,7 +401,26 @@ func _apply_aim() -> void:
 	var delta:=Quaternion(Vector3.UP,aim_yaw*weight)*Quaternion(Vector3.RIGHT,-aim_pitch*weight)
 	_global_rotate(index,(delta*current).normalized())
 
+func _protect_transition_floor() -> void:
+	# A grounded actor can settle below the root height of the previous
+	# contact-corrected snapshot. Ordinary planting waits for the crossfade;
+	# keep that wait from carrying its soles through the floor meanwhile.
+	if support_exclude.is_empty() or transition_age<=0 or transition_age>=transition_duration:return
+	if not grounded or traversal!="ground" or locomotion not in ["idle","walk","run","sprint","land"]:return
+	if action=="death" or (action=="measured_step" and action_stage!="none"):return
+	for side in ["L","R"]:
+		var foot:=rig.find_bone("foot."+side)
+		var point:Vector3=rig.global_transform*rig.get_bone_global_pose(foot).origin
+		var support_y:float=idle_support_y[side] if locomotion=="idle" else floor_y
+		var minimum_y:=support_y+rest_globals[foot].origin.y
+		var lift:=minimum_y-point.y
+		if lift>.001 and lift<=IDLE_SUPPORT_PROBE_M:
+			point.y=minimum_y
+			# Clearance only: keep horizontal motion and plant anchors intact.
+			_solve_leg(side,rig.global_transform.affine_inverse()*point)
+
 func _apply_contact() -> void:
+	_protect_transition_floor()
 	var contact_allowed:=transition_age>=transition_duration and grounded and traversal=="ground" and locomotion in ["idle","walk","run","sprint","land"] and action!="death" and not (action=="measured_step" and action_stage!="none")
 	var targets:={}
 	var compression:=0.0

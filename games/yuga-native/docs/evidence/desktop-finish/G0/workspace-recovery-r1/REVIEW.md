@@ -1,0 +1,11 @@
+# Renderer workspace recovery
+
+The current frozen graphics project was reconstructed and passed two headless preflights: **5/5 scene-anchor checks and 12/12 compact-screen checks**, with zero images. The shared base contains 1,009 pinned source/cache files and 176 validated raw/import pairs. The eight-screen child differs only by its declared observer. Runtime files match the coordinator freeze; no product source or imported asset was changed by recovery.
+
+The retained 101-file Godot cache archive plus the two-file paving delta reconstruct all **103 files / 11,938,824 bytes** exactly. The recovery tool verifies archive identity, membership and every resulting byte hash. No preferences were copied. The Mesa cache was lost; subsequent renders must record that changed cache condition. This is warm Godot cache recovery and does not qualify cold startup.
+
+The old temporary build tree and its original PID are absent. The last build observation—1,830 compilation actions at 1,271 seconds without reported compiler errors—is retained conversation evidence only; its late raw logs and objects were lost. The earlier committed preparation archive remains valid. No completed baseline executable or cold-cache test was verified. The fresh container reports a 32 GiB memory limit and zero memory-event counters; those fresh counters cannot explain the previous outage. Earlier RSS samples were sampled sums of process RSS, not unique physical memory or an exact peak.
+
+`current-source.json` and `compact-source.json` retain exact inventories. `frozen-overrides/` preserves the current base inputs that differ from the recorded Git HEAD, including auxiliary resource identity caches; unchanged inputs come from that HEAD and pinned imports. `tools/` preserves the actual recovery/capture harness sources. Preflight JSON and logs are copied unchanged. The installed engine remains SHA256 `f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3`.
+
+Next gates are actual source-bound screen/hero/motion originals and an independently built unmodified public engine baseline. The approved smaller template-debug target must preserve all runtime features and path overrides; only a reproduced baseline failure can justify a matched scheduling-patch comparison. No custom engine is shipped by this packet.
