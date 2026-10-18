@@ -1,0 +1,36 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS detached: transition begins
+PASS detached: requested phase observed
+PASS detached: retiring load cannot commit over replacement
+FAIL detached: replacement pause and mouse policy survive
+PASS detached: replacement focus remains owned
+PASS detached: cancellation releases navigation exactly once
+PASS detached: old caller processing is restored
+PASS freed: transition begins
+PASS freed: requested phase observed
+PASS freed: retiring load cannot commit over replacement
+FAIL freed: replacement pause and mouse policy survive
+PASS freed: replacement focus remains owned
+PASS freed: cancellation releases navigation exactly once
+PASS disposed: transition begins
+PASS disposed: requested phase observed
+PASS disposed: retiring load cannot commit over replacement
+FAIL disposed: replacement pause and mouse policy survive
+PASS disposed: replacement focus remains owned
+PASS disposed: cancellation releases navigation exactly once
+PASS disposed: old caller processing is restored
+PASS attached: transition begins
+PASS attached: requested phase observed
+FAIL attached: retiring load cannot commit over replacement
+FAIL attached: replacement pause and mouse policy survive
+PASS Same-host cancellation begins while paused
+PASS Same-host cancellation still restores original pause mouse and focus
+PASS Reused persistent loader can finish a normal transition
+FAIL Normal completion still occurs once
+PASS Final owner and pending census is clean
+SCRIPT ERROR: Cannot call method 'get_node' on a previously freed instance.
+          at: replacement_case (res://tests/ui_s2_transition_cases.gd:67)
+          GDScript backtrace (most recent call first):
+              [0] replacement_case (res://tests/ui_s2_transition_cases.gd:67)
+              [1] frames (res://tests/ui_s2_transition_cases.gd:20)

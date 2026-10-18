@@ -11,7 +11,7 @@
   "target_status": "open",
   "prior_g1_g2": "G1 bounded render review; G2 candidate/render closure pending. New packets are not prior campaign counts.",
   "prior_pending_g3_g6": "Incorporated as pending goals into X1-X10; not claimed completed.",
-  "active_gate": "S1-implementation-with-render-acceptance-pending",
+  "active_gate": "S1-full-render-and-cold-start-open_S2-tested_S3-components-started",
   "rounds": [
     {
       "id": "S1",
@@ -48,7 +48,7 @@
           "remaining": [
             "Actual frozen-source visual/integration acceptance pending"
           ],
-          "report_sha256": "904cffd4a8c02b02ceada6e46ae0295066eddfb46f33469b3cbfc57e57ee9d5d"
+          "report_sha256": "ae39ea6e3832e81e104b650c98a2439820f96e1795ec6add6796750c9c8eb0c2"
         },
         {
           "id": "S1-W3",
@@ -59,11 +59,13 @@
           "report": "evidence/desktop-finish/S1/W3.md",
           "source_sha256": {},
           "checks": [],
-          "actual_review": [],
+          "actual_review": [
+            "Matched gold front/profile accepted as bounded material refinement; diagnostic environment and warm-cache state explicit; full production context pending"
+          ],
           "remaining": [
             "Actual frozen-source visual/integration acceptance pending"
           ],
-          "report_sha256": "4e4f847d36ee318cc80dbc2d0ec5ba08f513e8a139888260150ba11c42cf66a1"
+          "report_sha256": "94a3b1d5889464e36b354d2788b9dbbd83ab14ded8fc9c3f41debca816abaef1"
         },
         {
           "id": "S1-W4",
@@ -115,7 +117,7 @@
     {
       "id": "S2",
       "title": "Loading and scene entry",
-      "status": "planned",
+      "status": "implemented_components_render_acceptance_pending",
       "depends_on": [
         "S1"
       ],
@@ -124,7 +126,7 @@
           "id": "S2-W1",
           "role": "renderer_acceptance",
           "agent": "ui_06_acceptance",
-          "status": "planned",
+          "status": "blocked_by_S1_renderer",
           "goal": "Capture cold/warm loading and cancelled entry",
           "report": "evidence/desktop-finish/S2/W1.md",
           "source_sha256": {},
@@ -136,31 +138,37 @@
           "id": "S2-W2",
           "role": "screen_design",
           "agent": "mobile_touch",
-          "status": "planned",
+          "status": "implemented_pending_visual_integration",
           "goal": "Unify loading/error/retry and destination screen copy",
           "report": "evidence/desktop-finish/S2/W2.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source native visual/input integration remains open"
+          ],
+          "report_sha256": "4ac3cb8c6ff8ece49231e00e28c6bf77e30f632980397ebcb4161c263d553975"
         },
         {
           "id": "S2-W3",
           "role": "hero_art",
           "agent": "r3_08_groom",
-          "status": "planned",
+          "status": "implemented_pending_visual_integration",
           "goal": "Stabilize hero first-visible material/pose presentation",
           "report": "evidence/desktop-finish/S2/W3.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source native visual/input integration remains open"
+          ],
+          "report_sha256": "2c9c0c175ed147fdfc83470c1280df4128550051fbc8d45c83233ce246e2455d"
         },
         {
           "id": "S2-W4",
           "role": "world_atlas_units",
           "agent": "mobile_render",
-          "status": "planned",
+          "status": "blocked_by_S1_renderer",
           "goal": "Bound environment setup and expose real load stages",
           "report": "evidence/desktop-finish/S2/W4.md",
           "source_sha256": {},
@@ -172,32 +180,38 @@
           "id": "S2-W5",
           "role": "motion_hud",
           "agent": "r4_05_motion",
-          "status": "planned",
+          "status": "implemented_pending_visual_integration",
           "goal": "Preserve pose/action lifecycle across scene entry",
           "report": "evidence/desktop-finish/S2/W5.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source native visual/input integration remains open"
+          ],
+          "report_sha256": "28cc482d6697668f8490b5bebfbd9f56e27f45a3e5a09389821eff76bc2a21a2"
         },
         {
           "id": "S2-W6",
           "role": "loading_package",
           "agent": "ui_03_loading",
-          "status": "planned",
+          "status": "implemented_pending_visual_integration",
           "goal": "Implement cancellation-safe real loading progress",
           "report": "evidence/desktop-finish/S2/W6.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source native visual/input integration remains open"
+          ],
+          "report_sha256": "2ad7642c6002d01c8f2b01de80024d74994942690fb1a4b300045dae67eec259"
         }
       ]
     },
     {
       "id": "S3",
       "title": "Combat HUD",
-      "status": "planned",
+      "status": "independent_components_in_progress_prior_visual_gates_open",
       "depends_on": [
         "S2"
       ],
@@ -218,7 +232,7 @@
           "id": "S3-W2",
           "role": "screen_design",
           "agent": "mobile_touch",
-          "status": "planned",
+          "status": "in_progress",
           "goal": "Apply shared screen tokens to gameplay readability",
           "report": "evidence/desktop-finish/S3/W2.md",
           "source_sha256": {},
@@ -230,7 +244,7 @@
           "id": "S3-W3",
           "role": "hero_art",
           "agent": "r3_08_groom",
-          "status": "planned",
+          "status": "in_progress",
           "goal": "Improve weapon/hand presentation at gameplay camera",
           "report": "evidence/desktop-finish/S3/W3.md",
           "source_sha256": {},
@@ -242,7 +256,7 @@
           "id": "S3-W4",
           "role": "world_atlas_units",
           "agent": "mobile_render",
-          "status": "planned",
+          "status": "in_progress",
           "goal": "Clarify minimap/relay/army information hierarchy",
           "report": "evidence/desktop-finish/S3/W4.md",
           "source_sha256": {},
@@ -254,8 +268,8 @@
           "id": "S3-W5",
           "role": "motion_hud",
           "agent": "r4_05_motion",
-          "status": "planned",
-          "goal": "Implement authority-derived action availability and feedback",
+          "status": "in_progress",
+          "goal": "Repair evidenced moving-foot penetration while preserving player authority and continuous action timing",
           "report": "evidence/desktop-finish/S3/W5.md",
           "source_sha256": {},
           "checks": [],
@@ -266,7 +280,7 @@
           "id": "S3-W6",
           "role": "loading_package",
           "agent": "ui_03_loading",
-          "status": "planned",
+          "status": "in_progress",
           "goal": "Verify live scene readiness and HUD/payload inclusion",
           "report": "evidence/desktop-finish/S3/W6.md",
           "source_sha256": {},
@@ -1267,7 +1281,11 @@
     "source_remote_verified": "613ff5ca84313edfbcc2a70987919fa03bed5226",
     "cleanup_receipt": "../../../docs/evidence/desktop-finish-storage-cleanup.json",
     "package_checks_passed": 504,
-    "renderer": "Derivative-free wash with full bindings rendered two originals, 6 checks including actual camera identity; exact explicit derivative trigger narrowed. Feature-preserving production shader candidate pending."
+    "renderer": "No-derivative wash succeeded once for G2, but S1 gold-only derivative and feature-preserving textured environment candidate both stall. Native debugger-backed diagnosis pending; no universal shader cause proven."
   },
-  "implemented_packets_pending_review": 5
+  "implemented_packets_pending_review": 5,
+  "source_checkpoints": [
+    "98e10cc5184ba1b51b42113496a529d8cc8f62b0"
+  ],
+  "implemented_pending_review_packets": 9
 }

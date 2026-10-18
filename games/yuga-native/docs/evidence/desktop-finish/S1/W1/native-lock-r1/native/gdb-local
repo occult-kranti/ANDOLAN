@@ -1,0 +1,6 @@
+#!/bin/sh
+native_debug_root=/workspace/tooling/native-debug/root
+# Apply local dependency search to GDB only, preserving the inferior environment.
+exec /lib64/ld-linux-x86-64.so.2 --library-path "$native_debug_root/usr/lib/x86_64-linux-gnu" \
+  "$native_debug_root/usr/bin/gdb" --nx --nh --data-directory="$native_debug_root/usr/share/gdb" \
+  -iex 'set auto-load off' -iex 'set debuginfod enabled off' -iex 'set style enabled off' "$@"

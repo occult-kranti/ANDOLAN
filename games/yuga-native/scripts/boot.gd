@@ -20,7 +20,7 @@ func _ready() -> void:
 	call_deferred("open_game")
 
 func open_game() -> bool:
-	if not is_inside_tree(): return false
+	if not _is_active_host(): return false
 	scene_transition = SceneTransition.ensure_for_tree(get_tree())
 	if not scene_transition.cancelled.is_connected(_on_cancelled):
 		scene_transition.cancelled.connect(_on_cancelled)
@@ -35,17 +35,20 @@ func open_game() -> bool:
 	return true
 
 func _on_failed(_destination: StringName, message: String) -> void:
-	if not is_inside_tree(): return
+	if not _is_active_host(): return
 	_last_error = message
 
 func _on_cancelled(_destination: StringName) -> void:
 	# The persistent loader can cancel after its live caller leaves the tree.
 	# A hidden/disabled boot screen must not take focus from the replacement host.
-	if not is_inside_tree(): return
+	if not _is_active_host(): return
 	status.text = "Loading stopped. Open YUGA when you are ready." if _last_error.is_empty() else "YUGA could not open. Retry, or quit and open the game again."
 	open_button.text = "Retry opening YUGA" if not _last_error.is_empty() else "Open YUGA"
 	if is_visible_in_tree() and can_process() and not open_button.disabled:
 		open_button.grab_focus()
+
+func _is_active_host() -> bool:
+	return is_inside_tree() and (get_tree().current_scene == null or get_tree().current_scene == self)
 
 func quit_game() -> void:
 	if is_instance_valid(scene_transition) and scene_transition.is_busy():
@@ -70,7 +73,7 @@ func _build() -> void:
 	var wordmark := UI.label("YUGA", UI.TYPE_DISPLAY, UI.GOLD)
 	wordmark.theme_type_variation = &"YugaDisplay"
 	stack.add_child(wordmark)
-	stack.add_child(UI.label("Confluence", UI.TYPE_SECTION))
+	stack.add_child(UI.label("Offline practice", UI.TYPE_SECTION))
 	status = UI.label("Opening YUGA…")
 	status.custom_minimum_size = Vector2(280, 60)
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

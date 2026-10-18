@@ -8,6 +8,7 @@ signal failed(destination: StringName, message: String)
 signal cancelled(destination: StringName)
 
 const UI = preload("res://scripts/hero_ui_theme.gd")
+const LoadingPresentation = preload("res://scripts/loading_presentation.gd")
 const SCENES := {
 	&"courtyard": "res://scenes/courtyard.tscn",
 	&"confluence": "res://scenes/confluence_world.tscn",
@@ -44,6 +45,7 @@ var _ticket := 0
 var _terminal_ticket := -1
 var _path := ""
 var _caller: WeakRef
+var _source_scene: WeakRef
 var _return_focus: WeakRef
 var _caller_process_mode := Node.PROCESS_MODE_INHERIT
 var _previous_pause := false
@@ -98,6 +100,7 @@ func begin(id: StringName, caller: Node = null, return_focus: Control = null) ->
 	destination = id
 	_path = SCENES[id]
 	_caller = weakref(caller) if is_instance_valid(caller) else null
+	_source_scene = weakref(get_tree().current_scene) if is_instance_valid(get_tree().current_scene) else null
 	var focus := return_focus if is_instance_valid(return_focus) else get_viewport().gui_get_focus_owner()
 	_return_focus = weakref(focus) if is_instance_valid(focus) else null
 	_previous_pause = get_tree().paused
@@ -124,7 +127,7 @@ func retry() -> bool:
 func cancel() -> bool:
 	if (not is_busy() and phase != &"error") or _committing: return false
 	var cancelled_id := destination
-	var restore_focus_loss := _focus_lost_during_transition
+	var restore_focus_loss := _focus_lost_during_transition and not _host_was_replaced()
 	_focus_lost_during_transition = false
 	_abandon_pending()
 	_ticket += 1
@@ -173,6 +176,9 @@ func _start_loading() -> void:
 
 func _process(_delta: float) -> void:
 	_drain_abandoned()
+	if _owns_input and not _committing and _host_was_replaced():
+		cancel()
+		return
 	if _owns_input and not _committing and _caller != null:
 		var caller: Node = _caller.get_ref()
 		if not is_instance_valid(caller) or not caller.is_inside_tree() or caller.get_tree() != get_tree():
@@ -229,6 +235,7 @@ func _scene_changed(ticket: int) -> void:
 	_committing = false
 	_owns_input = false # The new scene owns its input and focus state.
 	_caller = null
+	_source_scene = null
 	_return_focus = null
 	_packed = null
 	hide()
@@ -289,11 +296,19 @@ func _drain_abandoned() -> void:
 			if status == ResourceLoader.THREAD_LOAD_FAILED: ResourceLoader.load_threaded_get(path)
 			_abandoned.erase(path)
 
+func _host_was_replaced() -> bool:
+	# A detached or freed source may leave a different scene in charge before
+	# the next poll. Its pause, mouse and focus policy must remain authoritative.
+	return (_source_scene != null and is_instance_valid(get_tree().current_scene)
+		and get_tree().current_scene != _source_scene.get_ref())
+
 func _restore_caller() -> void:
 	if not _owns_input: return
+	var replaced := _host_was_replaced()
 	_owns_input = false
-	get_tree().paused = _previous_pause
-	Input.mouse_mode = _previous_mouse_mode
+	if not replaced:
+		get_tree().paused = _previous_pause
+		Input.mouse_mode = _previous_mouse_mode
 	var caller: Node = _caller.get_ref() if _caller != null else null
 	if is_instance_valid(caller): caller.process_mode = _caller_process_mode
 	var focus: Control = _return_focus.get_ref() if _return_focus != null else null
@@ -303,11 +318,12 @@ func _restore_caller() -> void:
 	while is_instance_valid(process_owner) and process_owner.process_mode == Node.PROCESS_MODE_INHERIT:
 		process_owner = process_owner.get_parent()
 	var disabled_owner := is_instance_valid(process_owner) and process_owner.process_mode == Node.PROCESS_MODE_DISABLED
-	if (is_instance_valid(focus) and focus.is_inside_tree() and focus.is_visible_in_tree()
+	if (not replaced and is_instance_valid(focus) and focus.is_inside_tree() and focus.is_visible_in_tree()
 			and not disabled_owner and focus.focus_mode != Control.FOCUS_NONE
 			and (not focus is BaseButton or not focus.disabled)):
 		focus.grab_focus()
 	_caller = null
+	_source_scene = null
 	_return_focus = null
 
 func _release_owner() -> void:
@@ -340,48 +356,17 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func _build() -> void:
-	var veil := ColorRect.new()
-	veil.color = Color(0.02, 0.035, 0.07, 0.96)
-	veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	add_child(veil)
-	var margin := MarginContainer.new()
-	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	for side in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 24)
-	add_child(margin)
-	var center := CenterContainer.new()
-	margin.add_child(center)
-	card = PanelContainer.new()
-	card.custom_minimum_size.x = 280
-	center.add_child(card)
-	var stack := VBoxContainer.new()
-	stack.add_theme_constant_override("separation", UI.SPACE_LG)
-	card.add_child(stack)
-	var wordmark := UI.label("YUGA", UI.TYPE_DISPLAY, UI.GOLD)
-	wordmark.theme_type_variation = &"YugaDisplay"
-	stack.add_child(wordmark)
-	heading = UI.label("Opening scene", UI.TYPE_SECTION)
-	stack.add_child(heading)
-	detail = UI.label("")
-	detail.custom_minimum_size = Vector2(280, 64)
-	detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	stack.add_child(detail)
-	progress_bar = ProgressBar.new()
-	progress_bar.custom_minimum_size.y = 12
-	progress_bar.show_percentage = true
-	stack.add_child(progress_bar)
-	var actions := HBoxContainer.new()
-	stack.add_child(actions)
-	retry_button = Button.new()
-	retry_button.text = "Retry"
-	UI.button(retry_button, true)
+	var view := LoadingPresentation.new()
+	add_child(view)
+	card = view.card
+	heading = view.heading
+	detail = view.detail
+	progress_bar = view.progress_bar
+	retry_button = view.retry_button
+	back_button = view.back_button
+	view.bind_transition(self)
 	retry_button.pressed.connect(retry)
-	actions.add_child(retry_button)
-	back_button = Button.new()
-	back_button.text = "Back"
-	UI.button(back_button)
 	back_button.pressed.connect(cancel)
-	actions.add_child(back_button)
 	retry_button.focus_neighbor_left = retry_button.get_path_to(back_button)
 	retry_button.focus_neighbor_right = retry_button.get_path_to(back_button)
 	retry_button.focus_next = retry_button.get_path_to(back_button)

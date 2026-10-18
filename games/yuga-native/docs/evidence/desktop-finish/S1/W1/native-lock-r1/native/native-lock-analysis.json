@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "main_tid": 220843,
+  "worker_tids": [
+    220846,
+    220847,
+    220848,
+    220849,
+    220850
+  ],
+  "shared_worker_mutex": "0x382703f0",
+  "owner_tid_observed": 220843,
+  "owner_observation_scope": "Read only the40-byte native mutex already observed in worker syscall; x86_64glibc owner offset8 layout, no symbolic ownership claim.",
+  "gdb_elapsed_s": 0.471996545791626,
+  "no_cpu_progress_interval_s": 30.159141540527344,
+  "cpu_ticks_delta": {
+    "220843": 0,
+    "220846": 0,
+    "220847": 0,
+    "220848": 0,
+    "220849": 0,
+    "220850": 0
+  },
+  "main_stack": [
+    "pthread_cond_wait",
+    "0x480a6a5: wait_for_group_task_completion (exactbinaryliteralxref)",
+    "0x3d3d597: ShaderRD::_compile_version_end (disassembly matches taskwait/slotclear/variantcheck)",
+    "0x3dc0b98: version_get_shader (exactbinaryliteralxref)"
+  ],
+  "worker_stack": [
+    "pthread_mutex_lock",
+    "0x3dc09d2: version_get_shader (exactbinaryliteralxref)",
+    "0x3e15096",
+    "0x3db99ac"
+  ],
+  "native_proof": "The main thread holds the version mutex while waiting for group completion; all five WorkerThreads wait at the same mutex in version_get_shader. Main and workers show zero CPU ticks across 30.159 seconds.",
+  "source_qualification": "Public 4.6.3-tag sources explain matching function bodies, but the release binary banner commit differs from the fetched tag source. Exact native identities above use literals and disassembly from the hashed binary, rather than unverified source symbols.",
+  "configuration_review": "ProjectSettings documents shader/pipeline disk caches and worker-pool options; no async-disable setting was found. Disabling the disk cache does not remove the group wait. An explicitly recorded existing shader cache may bypass the compile group for matching keys, but would not establish cold first-launch correctness.",
+  "production_gate_passed": false
+}

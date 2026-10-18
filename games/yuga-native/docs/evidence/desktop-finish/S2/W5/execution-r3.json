@@ -1,0 +1,102 @@
+[
+  {
+    "name": "s1-release-scope-after",
+    "command": [
+      "taskset",
+      "-c",
+      "2",
+      "timeout",
+      "120s",
+      "godot",
+      "--headless",
+      "--max-threads",
+      "1",
+      "--fixed-fps",
+      "60",
+      "--path",
+      "/workspace/ANDOLAN/games/yuga-native",
+      "--script",
+      "res://tests/desktop_s1_release_cases.gd",
+      "--",
+      "--compact-report",
+      "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/S2/W5/s1-release-scope-after.json"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 19.913
+  },
+  {
+    "name": "candidate-30-r3",
+    "command": [
+      "taskset",
+      "-c",
+      "2",
+      "timeout",
+      "120s",
+      "godot",
+      "--headless",
+      "--max-threads",
+      "1",
+      "--fixed-fps",
+      "30",
+      "--path",
+      "/workspace/ANDOLAN/games/yuga-native",
+      "--script",
+      "res://tests/desktop_s2_motion_lifecycle_cases.gd",
+      "--",
+      "--hz=30",
+      "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/S2/W5/candidate-30-r3.json"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 7.02
+  },
+  {
+    "name": "candidate-60-r3",
+    "command": [
+      "taskset",
+      "-c",
+      "2",
+      "timeout",
+      "120s",
+      "godot",
+      "--headless",
+      "--max-threads",
+      "1",
+      "--fixed-fps",
+      "60",
+      "--path",
+      "/workspace/ANDOLAN/games/yuga-native",
+      "--script",
+      "res://tests/desktop_s2_motion_lifecycle_cases.gd",
+      "--",
+      "--hz=60",
+      "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/S2/W5/candidate-60-r3.json"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 8.663
+  },
+  {
+    "name": "candidate-120-r3",
+    "command": [
+      "taskset",
+      "-c",
+      "2",
+      "timeout",
+      "120s",
+      "godot",
+      "--headless",
+      "--max-threads",
+      "1",
+      "--fixed-fps",
+      "120",
+      "--path",
+      "/workspace/ANDOLAN/games/yuga-native",
+      "--script",
+      "res://tests/desktop_s2_motion_lifecycle_cases.gd",
+      "--",
+      "--hz=120",
+      "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/S2/W5/candidate-120-r3.json"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 14.166
+  }
+]

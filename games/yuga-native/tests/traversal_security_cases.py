@@ -38,7 +38,7 @@ RAMA_NAMES = [
         "rama_practice_army", "rama_practice_target")],
 ]
 FIRST_LOAD_NAMES = ['scenes/boot.tscn', 'scripts/boot.gd',
-                    'scripts/scene_transition.gd', 'scripts/launch_shell.gd',
+                    'scripts/scene_transition.gd', 'scripts/loading_presentation.gd', 'scripts/launch_shell.gd',
                     'scripts/hero_ui_theme.gd']
 GRAPHICS_NAMES = [
     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "issue": "start_training makes gameplay camera current; original helper continued labeling captures with review-camera metadata",
+  "affected_runs": [
+    "/tmp/yuga-g0-noenvironment-support-r1",
+    "/tmp/yuga-g0-minimalbody-support-r1"
+  ],
+  "affected_frame": "01-training-support.png",
+  "unaffected_scope": "Originals are actual rendered frames; first-draw completion before training is still valid. Title review camera is not affected. Old training framing does not establish declared-camera or matched-camera acceptance.",
+  "old_helper": {
+    "path": "/tmp/yuga-graphics-six-project/tools/graphics-six/capture_focus.gd",
+    "sha256": "d0b3a2a28a161dbb977792ba5de5393be27537f0e5a15ba0c85b6e114451e0c8",
+    "bytes": 10597
+  },
+  "corrected_helper": {
+    "path": "/workspace/ANDOLAN/games/yuga-native/tools/graphics-six/capture_focus.gd",
+    "sha256": "307edf74d143d0d8de2a2c7b2bb9f3b31ffb052bb370cf84bcb83dade02e1e74",
+    "bytes": 11325
+  },
+  "correction": "Explicit review-camera reselection after start_training in support and entry-cancel, capture-time current-camera assertion and per-shot identity. New sixth support check.",
+  "validation": {
+    "path": "/tmp/yuga-g0-source-research-r1/camera-helper-parse.log",
+    "sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da",
+    "bytes": 73
+  },
+  "runtime_changes": false,
+  "prior_artifacts_changed": false
+}

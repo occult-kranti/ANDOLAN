@@ -35,6 +35,8 @@ SUITES = (
     ("optional-character-accents", "godot", "tests/rama_character_accents_cases.gd", ("--resources",)),
     ("native-content-pins", "python", "tools/check-native-contracts.py", ()),
     ("native-contract-admission", "godot", "tests/native_contract_cases.gd", ()),
+    ("desktop-release-continuity", "godot", "tests/desktop_s1_release_cases.gd",
+     ("--baseline-script=res://docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd", "--compact-report")),
 )
 SCREEN_SUITES = (
     ("ui-launch", "godot", "tests/launch_shell_cases.gd", ()),
@@ -60,8 +62,27 @@ SCREEN_SUITES = (
     ("ui-independent-lifetime", "godot", "tests/ui_independent_lifecycle_cases.gd", ()),
     ("ui-transition-signals", "fixture", "tools/ui-campaign/check-transition.py", ()),
     ("ui-effects-feedback", "godot", "tests/ui_u5_effect_feedback_cases.gd", ()),
+    ("ui-boot-recovery", "fixture", "tests/ui_s1_loading_fixture.py", ()),
+    ("ui-title-portrait", "godot", "tests/ui_s1_portrait_cases.gd", ()),
+    ("ui-launch-composition", "godot", "tests/desktop_finish_s1_launcher_cases.gd", ()),
+    ("ui-world-atlas", "godot", "tests/desktop_finish_s1_atlas_cases.gd", ()),
+    ("ui-action-hud", "godot", "tests/desktop_s1_hud_cases.gd", ()),
+    ("ui-action-hud-fit", "godot", "tests/desktop_s1_hud_layout_cases.gd", ()),
+    ("ui-host-replacement", "fixture", "tests/ui_s1_loading_fixture.py", ("--case", "host-replacement")),
+    ("ui-loading-presentation", "godot", "tests/desktop_finish_s2_loading_view_cases.gd", ()),
 )
 SCREEN_LIMITS = "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance."
+# Tests inherited by selected scripts and tests invoked by fixture runners are
+# sources too. Pin them explicitly instead of claiming every historical archive.
+SUITE_DEPENDENCIES = {
+    "ui-transition-signals": ("tests/ui_transition_signal_cases.gd",),
+    "ui-boot-recovery": ("tests/ui_s1_loading_cases.gd",),
+    "ui-host-replacement": ("tests/ui_s2_transition_cases.gd",),
+    "ui-action-hud": ("tests/ui_i1_action_hud_cases.gd",),
+    "ui-action-hud-fit": ("tests/desktop_s1_hud_cases.gd", "tests/ui_i1_action_hud_cases.gd"),
+    "desktop-release-continuity": ("tests/graphics_g1_motion_cases.gd",
+                                   "docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd"),
+}
 
 
 def sources(selected: list[tuple]) -> dict:
@@ -69,8 +90,8 @@ def sources(selected: list[tuple]) -> dict:
     # runner dependencies are frozen. Imported cache contents are not sources.
     paths = {Path(__file__).resolve(), HELPER_PATH, PROJECT / "project.godot",
              PROJECT / "export_presets.cfg", *(PROJECT / item[2] for item in selected)}
-    if any(item[0] == "ui-transition-signals" for item in selected):
-        paths.add(PROJECT / "tests/ui_transition_signal_cases.gd")
+    for item in selected:
+        paths.update(PROJECT / name for name in SUITE_DEPENDENCIES.get(item[0], ()))
     for folder in ("scripts", "shaders", "scenes", "assets", "tests/fixtures/contracts"):
         paths.update(path for path in (PROJECT / folder).rglob("*") if path.is_file())
     records = {str(path.relative_to(PROJECT)): {"bytes": path.stat().st_size,

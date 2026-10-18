@@ -18,7 +18,7 @@ if not engine:parser.error('Godot engine not found: '+args.engine)
 report_path=args.report.resolve();report_path.parent.mkdir(parents=True,exist_ok=True)
 log_path=report_path.with_suffix('.output.txt')
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
-files=[source/'scripts/scene_transition.gd',source/'scripts/hero_ui_theme.gd',source/'tests/ui_transition_signal_cases.gd']
+files=[source/'scripts/scene_transition.gd',source/'scripts/loading_presentation.gd',source/'scripts/hero_ui_theme.gd',source/'tests/ui_transition_signal_cases.gd']
 files+=list((source/'assets/fonts').glob('*'))+list((source/'.godot/imported').glob('*.ttf-*'))
 pins={};log='';command=[];exit_code=None
 result={'passed':False,'passed_count':0,'count':0,'checks':[]}

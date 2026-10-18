@@ -1,6 +1,10 @@
 extends "res://tests/graphics_g1_motion_cases.gd"
 ## New S1 full-body release boundary; inherited helpers only, no G1 run.
 
+func _initialize() -> void:
+	baseline_path="res://docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd"
+	super._initialize()
+
 func snapshot(motion: Node) -> Dictionary:
 	var bones := []
 	for index in motion.last_globals.size():
@@ -70,17 +74,21 @@ func run() -> void:
 		for condition in ["idle","moving","held","reset","cancel","bow_control"]:
 			var a := release_trial(baseline,hz,condition)
 			var b := release_trial(candidate,hz,condition)
+			var control_difference := {"distance_m":0.0}
 			if condition in ["idle","moving","held"]:
 				continuity=continuity and float(b.boundary.distance_m)<.00001
 				late_steps=late_steps and float(b.maximum_recovery_step.distance_m)<=float(a.maximum_recovery_step.distance_m)+.00001
 			for frame in a.rows.size():
 				clocks=clocks and a.rows[frame].clock == b.rows[frame].clock
 				if condition in ["bow_control","reset","cancel"]:
-					for bone in a.rows[frame].points.size(): controls=controls and Vector3(a.rows[frame].points[bone]).distance_to(b.rows[frame].points[bone])<.00001
+					for bone in a.rows[frame].points.size():
+						var distance:=Vector3(a.rows[frame].points[bone]).distance_to(b.rows[frame].points[bone])
+						controls=controls and distance<.00001
+						if distance>control_difference.distance_m:control_difference={"distance_m":distance,"frame":frame,"bone_index":bone,"bone_name":a.entry.bones[bone].name}
 			clocks=clocks and a.current.clock==b.current.clock and a.release.clock==b.release.clock
 			lifecycle=lifecycle and b.duplicate_rejected and b.duplicate_stable and b.frozen and b.released==(condition not in ["reset","cancel"])
 			a.erase("rows");b.erase("rows")
-			trials.append({"baseline":a,"candidate":b})
+			trials.append({"baseline":a,"candidate":b,"control_trajectory_difference":control_difference})
 	check("full-body release begins at the outgoing pose at30/60/120",continuity)
 	check("following recovery joint-step maximum does not increase",late_steps)
 	check("release cancel gait and recovery clocks match baseline exactly",clocks)
@@ -91,5 +99,6 @@ func run() -> void:
 	check("raw imported library controller and fixture bytes stay stable",stable)
 	var passed := checks.all(func(row):return row.passed)
 	DirAccess.make_dir_recursive_absolute(report_path.get_base_dir())
-	FileAccess.open(report_path,FileAccess.WRITE).store_string(JSON.stringify({"passed":passed,"count":checks.size(),"checks":checks,"trials":trials,"sources":pins,"godot":Engine.get_version_info(),"scope":"Fresh actual imported164-bone rig, release boundary and first recovery full-pose snapshots. Manual presentation scheduling at30/60/120; no authoritative movement, SceneTree freeze or rendering acceptance."},"  ")+"\n")
+	var indentation:="" if "--compact-report" in OS.get_cmdline_user_args() else "  "
+	FileAccess.open(report_path,FileAccess.WRITE).store_string(JSON.stringify({"passed":passed,"count":checks.size(),"checks":checks,"trials":trials,"sources":pins,"godot":Engine.get_version_info(),"scope":"Fresh actual imported164-bone rig, release boundary and first recovery full-pose snapshots. Manual presentation scheduling at30/60/120; no authoritative movement, SceneTree freeze or rendering acceptance."},indentation)+"\n")
 	quit(0 if passed else 1)

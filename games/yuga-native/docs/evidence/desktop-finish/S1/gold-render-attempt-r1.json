@@ -1,0 +1,122 @@
+{
+  "baseline_capture": {
+    "bytes": 319281,
+    "path": "/tmp/yuga-s1-gold-baseline-r1/capture.json",
+    "sha256": "0db66951d202d6c54e15c6332420e573939b56f6ebb38d03fce0528a51e9acf8"
+  },
+  "baseline_observation": "Front has a strong continuous orange bow highlight and bright shoulder lobes. Profile has concentrated shoulder and bow highlights; modeled trim remains visible. These are baseline observations only.",
+  "baseline_originals_viewed": [
+    {
+      "bytes": 829735,
+      "path": "/tmp/yuga-s1-gold-baseline-r1/light-front.png",
+      "sha256": "0953840944706778aa2aab03aa69f1706b69f2502efedd436b95627f47afe10d"
+    },
+    {
+      "bytes": 630754,
+      "path": "/tmp/yuga-s1-gold-baseline-r1/dark-profile.png",
+      "sha256": "4a6d65c2305da450b63a1b9aa55c5e9536c270ca22e21520be951ada536123ad"
+    }
+  ],
+  "disposition": "Visual gate unresolved: baseline two originals; candidate terminated before its first original. No gold-component acceptance.",
+  "engine_logs": {
+    "baseline": {
+      "bytes": 79825,
+      "path": "/tmp/yuga-s1-gold-baseline-r1-logs/godot.log",
+      "sha256": "8abe60e74489a91792314fdb0d4af32849ae7c90263c4e378288b2ddc3e6b562"
+    },
+    "candidate": {
+      "bytes": 78449,
+      "path": "/tmp/yuga-s1-gold-candidate-r1-logs/godot.log",
+      "sha256": "927e9356bd30545eaad4dcf8ec204772a28382f5920718483c097d8cef7347a2"
+    }
+  },
+  "failure_observation": "Candidate log reaches YUGA_NATIVE_READY and GOLD_COMPARE_STAGE before_initial_draw6. No captured frame follows. Watchdog reports120s with no new log bytes or PNG count. This does not establish texture content as the cause.",
+  "helper_runner_engine_equal": true,
+  "only_expected_runtime_source_differences": true,
+  "run_manifests": {
+    "baseline": {
+      "bytes": 194393,
+      "path": "/tmp/yuga-s1-gold-baseline-r1-logs/run.json",
+      "sha256": "ea2217b26b1d0f15661e56880980170b514d2697733c2fe672385e19a18fedc2"
+    },
+    "candidate": {
+      "bytes": 195237,
+      "path": "/tmp/yuga-s1-gold-candidate-r1-logs/run.json",
+      "sha256": "d63fc1cc2b920b1a8a5c06c848c08847a5192a65b70b5c5ffff08d75ff540f51"
+    }
+  },
+  "run_results": {
+    "baseline": {
+      "complete": true,
+      "engine_elapsed_s": 100.09057496199966,
+      "engine_exit": 0,
+      "failure": null,
+      "native_ready_elapsed_s": 8.803995555004803,
+      "observed_png_count": 2,
+      "watchdog_failure": null
+    },
+    "candidate": {
+      "complete": false,
+      "engine_elapsed_s": 131.5658199699974,
+      "engine_exit": -15,
+      "failure": "TimeoutError('No new engine log bytes or PNG count after native-ready (120.0s)')",
+      "native_ready_elapsed_s": 10.858262932990328,
+      "observed_png_count": 0,
+      "watchdog_failure": "No new engine log bytes or PNG count after native-ready (120.0s)"
+    }
+  },
+  "runtime_source_unchanged_since_freeze": true,
+  "schema": 1,
+  "scope": "Same diagnostic environment and capture helper intended for two matched component pairs. Candidate produced no capture metadata or pixels, so actual pose/light equality and visual improvement cannot be verified. No production environment, title integration, continuous shimmer or hardware-performance acceptance.",
+  "source_differences": [
+    {
+      "baseline": null,
+      "candidate": {
+        "bytes": 81580,
+        "sha256": "8c79a9b579e52c3498505f4fa552279693c16e6755062317e4c37463a24887a0"
+      },
+      "path": ".godot/imported/s1-hammered-gold-roughness.png-c93c92f35fe086748d0140298caef508.ctex"
+    },
+    {
+      "baseline": null,
+      "candidate": {
+        "bytes": 91,
+        "sha256": "4b8de4aa4e16628f12824f6bc6de73c302d428b8df1795ae1abad35787f04ce0"
+      },
+      "path": ".godot/imported/s1-hammered-gold-roughness.png-c93c92f35fe086748d0140298caef508.md5"
+    },
+    {
+      "baseline": null,
+      "candidate": {
+        "bytes": 58666,
+        "sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+      },
+      "path": "assets/hero-finish/s1-hammered-gold-roughness.png"
+    },
+    {
+      "baseline": null,
+      "candidate": {
+        "bytes": 1001,
+        "sha256": "cdfb8349abbf66ef4672b1a32f7edf8220e4cac2044050941a92a850c2abf197"
+      },
+      "path": "assets/hero-finish/s1-hammered-gold-roughness.png.import"
+    },
+    {
+      "baseline": {
+        "bytes": 11450,
+        "sha256": "67c1168ccc9dd2cd957197f361b28e6920dff7b9567b5801fc069ae60c92cb9a"
+      },
+      "candidate": {
+        "bytes": 11455,
+        "sha256": "473a33c30d6cc2df093c28be28b52c8ef4554c7b903817e08d1aa29342941c24"
+      },
+      "path": "scripts/rama_surface_finish.gd"
+    }
+  ],
+  "source_freeze": {
+    "bytes": 4404,
+    "path": "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/S1/gold-source-freeze.json",
+    "sha256": "26117c234d21bfcf7d522d2825f67690b2b66fbd93c269af1d2696cce5b0b9d2"
+  },
+  "task": "desktop-finish/S1/W3"
+}

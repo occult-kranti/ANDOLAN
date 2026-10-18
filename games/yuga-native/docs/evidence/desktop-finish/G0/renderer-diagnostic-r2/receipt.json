@@ -1,0 +1,239 @@
+{
+  "schema": 1,
+  "task": "Desktop G0 shader-body isolation",
+  "checkpoint_complete": true,
+  "production_renderer_gate_passed": false,
+  "canonical_runtime_edited": false,
+  "hardware_fps_measured": false,
+  "parent_checkpoint_receipt_sha256": "1a0872dbd72f93b878bdfd73d50900031a3e33d999bc2f7b160ac57cd819a259",
+  "base_snapshot_sha256": "5d94a7b64b2387f9f8899e82b6a499fb28a93a3ac0a4ace921496af5b589a8ca",
+  "attempts": [
+    {
+      "name": "minimalbody",
+      "complete": true,
+      "engine_exit": 0,
+      "elapsed_s": 105.93338315800065,
+      "originals": [
+        "minimalbody/00-title-support.png",
+        "minimalbody/01-training-support.png"
+      ],
+      "checks": [
+        {
+          "name": "all requested original observations",
+          "passed": true
+        },
+        {
+          "name": "imported fullbody bounds all sampled",
+          "passed": true
+        },
+        {
+          "name": "final pose body and soles share physics frame",
+          "passed": true
+        },
+        {
+          "name": "actual support rays hit",
+          "passed": true
+        },
+        {
+          "name": "inactive title then grounded active training",
+          "passed": true
+        }
+      ],
+      "failure": null,
+      "snapshot_unchanged_after": true
+    },
+    {
+      "name": "washpacked",
+      "complete": false,
+      "engine_exit": -15,
+      "elapsed_s": 129.97809328300355,
+      "originals": [],
+      "checks": [],
+      "failure": "TimeoutError('No new engine log bytes or PNG count after native-ready (120.0s)')",
+      "snapshot_unchanged_after": true
+    },
+    {
+      "name": "washnoderivatives",
+      "complete": true,
+      "engine_exit": 0,
+      "elapsed_s": 108.84086776399636,
+      "originals": [
+        "washnoderivatives/00-title-support.png",
+        "washnoderivatives/01-training-support.png"
+      ],
+      "checks": [
+        {
+          "name": "all requested original observations",
+          "passed": true
+        },
+        {
+          "name": "actual viewport camera matches declared review camera",
+          "passed": true
+        },
+        {
+          "name": "imported fullbody bounds all sampled",
+          "passed": true
+        },
+        {
+          "name": "final pose body and soles share physics frame",
+          "passed": true
+        },
+        {
+          "name": "actual support rays hit",
+          "passed": true
+        },
+        {
+          "name": "inactive title then grounded active training",
+          "passed": true
+        }
+      ],
+      "failure": null,
+      "snapshot_unchanged_after": true
+    }
+  ],
+  "directly_viewed_originals": [
+    "minimalbody/00-title-support.png",
+    "minimalbody/01-training-support.png",
+    "washnoderivatives/00-title-support.png",
+    "washnoderivatives/01-training-support.png"
+  ],
+  "camera_correction_scope": "Prior training-camera metadata rejected separately; first-draw evidence retained; corrected camera check passes for washnoderivatives.",
+  "artifacts": {
+    "camera-helper-parse.log": {
+      "sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da",
+      "bytes": 73
+    },
+    "REVIEW.md": {
+      "sha256": "19308165c5b2653d893659dfb4c7c87641bf4fa91390a87588fb8dae393bc464",
+      "bytes": 3962
+    },
+    "camera-identity-correction.json": {
+      "sha256": "7a26484575063d00ff981940f1ab081f6d592e7dbbbc5bbe75ac06125eb22169",
+      "bytes": 1420
+    },
+    "source/run_focus.py": {
+      "sha256": "6cf7a88d6dfce2d448e8876faf296d7d02ce73efc0faf63a7b146db1ad1dc4fb",
+      "bytes": 10937
+    },
+    "washpacked/snapshot.json": {
+      "sha256": "aa9f6f0dc9f722d44eb5454fa1d3ee1752e92076087de43748746425cddafd28",
+      "bytes": 408935
+    },
+    "washpacked/masonry.gdshader": {
+      "sha256": "17a7044c17f6365bf0c9e50dbf2755dcd9f14793a91c75ec128d1dc0f7d42dd7",
+      "bytes": 3093
+    },
+    "washpacked/run.json": {
+      "sha256": "c7d77781ace9086c7a05ddef09ce688429d3ff8fb484c8eff9a156e8f7ecc5d4",
+      "bytes": 194323
+    },
+    "washpacked/derivative.json": {
+      "sha256": "c4ff074d20e2b7ce3f175bd8b2b86a07d60df01a6352ed723e754a771eaf98e6",
+      "bytes": 1361
+    },
+    "washpacked/runner.log": {
+      "sha256": "3981767ff22a56968cc3b539425b379c617121957390265b6eb141d76884acc2",
+      "bytes": 606
+    },
+    "washpacked/xvfb.log": {
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+      "bytes": 64
+    },
+    "washpacked/godot.log": {
+      "sha256": "a34e43eb59cdcea41c0da7beeaa393d0d12192080c0cd20b7333b0df63ef698f",
+      "bytes": 78648
+    },
+    "washpacked/capture_focus.gd": {
+      "sha256": "307edf74d143d0d8de2a2c7b2bb9f3b31ffb052bb370cf84bcb83dade02e1e74",
+      "bytes": 11325
+    },
+    "washnoderivatives/01-training-support.png": {
+      "sha256": "5f977f295bfa9207c4bdfbd441e7233db0aff1f3c49cc1244fa045668984d464",
+      "bytes": 783066
+    },
+    "washnoderivatives/snapshot.json": {
+      "sha256": "a947f71f9c474f8a82dccac0549dba2d5fd602e61aeb21e79e01cf7f9b7982aa",
+      "bytes": 408512
+    },
+    "washnoderivatives/masonry.gdshader": {
+      "sha256": "cb7af1e0fe21d87ae6169f8c13c0af8b0722de69bb42f8aa4c2eee05b002a34e",
+      "bytes": 3113
+    },
+    "washnoderivatives/run.json": {
+      "sha256": "799c36f095940e556c09ac4f1d5c0a379d39f108289bc8f55ed173406ec33b82",
+      "bytes": 194249
+    },
+    "washnoderivatives/derivative.json": {
+      "sha256": "b85b2d3e96ea4516aa62be6eff55d3a0ea8a26d3dd6da1365d0eb94642385419",
+      "bytes": 1006
+    },
+    "washnoderivatives/00-title-support.png": {
+      "sha256": "e8aed9a97b3863f7789ca07d65d52f6422edc73a49afe94c29646f67c49a8cc7",
+      "bytes": 770873
+    },
+    "washnoderivatives/capture.json": {
+      "sha256": "67d9fa0982d383487bc7695c9595d65a7bcff8c902e00f3de7f68c206fbe0182",
+      "bytes": 2891976
+    },
+    "washnoderivatives/runner.log": {
+      "sha256": "0c1ad8830842649f5352a8da0bc28c73893643803b0041afff6eaddcb2d9fb7c",
+      "bytes": 121
+    },
+    "washnoderivatives/xvfb.log": {
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+      "bytes": 64
+    },
+    "washnoderivatives/godot.log": {
+      "sha256": "53008aed9e48e943959e3a89487e5d44cabda0b1e405c3727f5533c0a104e4c9",
+      "bytes": 82073
+    },
+    "washnoderivatives/capture_focus.gd": {
+      "sha256": "307edf74d143d0d8de2a2c7b2bb9f3b31ffb052bb370cf84bcb83dade02e1e74",
+      "bytes": 11325
+    },
+    "minimalbody/01-training-support.png": {
+      "sha256": "7a6ac5a4781ee1ba6a3a2a63f84980d256d5d69757704d5938abd69bfb3a5658",
+      "bytes": 818753
+    },
+    "minimalbody/snapshot.json": {
+      "sha256": "e0f80f6d91ef70ff8339d4e92609b300f190d8ac23121a50bea608046e9f8af2",
+      "bytes": 408401
+    },
+    "minimalbody/masonry.gdshader": {
+      "sha256": "80d4591eb5b940ec2a11b87978dc89fe4bf89c9deab77aa607a472b99b687b4a",
+      "bytes": 2397
+    },
+    "minimalbody/run.json": {
+      "sha256": "cba4bf43ff544638905a664b686a3a96f3d401e167eaf8fb43c4c91d17ab92f9",
+      "bytes": 194239
+    },
+    "minimalbody/derivative.json": {
+      "sha256": "1c25d8252cb8701f3262ef87dbe7b7b804e0b0c7e147f6f97fcccbcf5f028d1e",
+      "bytes": 837
+    },
+    "minimalbody/00-title-support.png": {
+      "sha256": "7cc7bdf3e2ca5be019de1088b8b8bfbf3b4d5dc014e757e2298115de7b61272d",
+      "bytes": 769609
+    },
+    "minimalbody/capture.json": {
+      "sha256": "b5a1720cb59f72445fd619ab988e055d04f0a401e6b8c6e2b882e1c517d6788b",
+      "bytes": 2891387
+    },
+    "minimalbody/runner.log": {
+      "sha256": "c8b5c56d41818969f633563bb89f8a3d055aacfda1a2edaa73e99d90386806bd",
+      "bytes": 115
+    },
+    "minimalbody/xvfb.log": {
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+      "bytes": 64
+    },
+    "minimalbody/godot.log": {
+      "sha256": "1fec4813484b685519cf408fcadd4901e6127235dd4ae174184dbfbe9e1238d0",
+      "bytes": 82073
+    },
+    "minimalbody/capture_focus.gd": {
+      "sha256": "d0b3a2a28a161dbb977792ba5de5393be27537f0e5a15ba0c85b6e114451e0c8",
+      "bytes": 10597
+    }
+  }
+}

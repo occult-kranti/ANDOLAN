@@ -208,7 +208,7 @@ func report() -> Dictionary:
 	var profiles := {}
 	var slots := 0
 	for binding in _standard + _secondary:
-		profiles[binding.label] = binding.slots.size()
+		profiles[binding.label] = int(profiles.get(binding.label,0)) + binding.slots.size()
 		slots += binding.slots.size()
 	return {"configured":configured,"version":VERSION,"standard_materials":_standard.size(),"secondary_materials":_secondary.size(),"surface_slots":slots,"profiles":profiles,"last_reason":_last_reason,"last_release":_last_release.duplicate(true),"frame_callbacks":0,"scope":"Reversible PBR finish. Original albedo/UV/normal, geometry, rig and secondary offset retained; actual appearance and GPU timing require rendered review."}
 

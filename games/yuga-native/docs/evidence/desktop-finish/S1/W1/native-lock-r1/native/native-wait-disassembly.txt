@@ -1,0 +1,115 @@
+
+/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000003d3d530 <.text+0x3934070>:
+ 3d3d530:	push   %r15
+ 3d3d532:	push   %r14
+ 3d3d534:	movslq %edx,%r14
+ 3d3d537:	push   %r13
+ 3d3d539:	push   %r12
+ 3d3d53b:	push   %rbp
+ 3d3d53c:	mov    %r14,%rbp
+ 3d3d53f:	push   %rbx
+ 3d3d540:	sub    $0x48,%rsp
+ 3d3d544:	mov    0x68(%rsi),%rax
+ 3d3d548:	mov    %edx,0xc(%rsp)
+ 3d3d54c:	test   %rax,%rax
+ 3d3d54f:	je     3d3d660 <open64@plt+0x39341c8>
+ 3d3d555:	mov    -0x10(%rax),%r8
+ 3d3d559:	cmp    %r14,%r8
+ 3d3d55c:	jle    3d3d573 <open64@plt+0x39340db>
+ 3d3d55e:	test   %r14,%r14
+ 3d3d561:	js     3d3d66c <open64@plt+0x39341d4>
+ 3d3d567:	mov    %rsi,%rbx
+ 3d3d56a:	mov    (%rax,%r14,8),%rsi
+ 3d3d56e:	test   %rsi,%rsi
+ 3d3d571:	jne    3d3d588 <open64@plt+0x39340f0>
+ 3d3d573:	add    $0x48,%rsp
+ 3d3d577:	pop    %rbx
+ 3d3d578:	pop    %rbp
+ 3d3d579:	pop    %r12
+ 3d3d57b:	pop    %r13
+ 3d3d57d:	pop    %r14
+ 3d3d57f:	pop    %r15
+ 3d3d581:	ret
+ 3d3d582:	nopw   0x0(%rax,%rax,1)
+ 3d3d588:	mov    %rdi,%r13
+ 3d3d58b:	mov    0x4b4dd7e(%rip),%rdi        # 888b310 <stderr@GLIBC_2.2.5+0x9d0>
+ 3d3d592:	call   480a4e0 <open64@plt+0x4401048>
+ 3d3d597:	mov    0x68(%rbx),%rax
+ 3d3d59b:	test   %rax,%rax
+ 3d3d59e:	je     3d3d6d0 <open64@plt+0x3934238>
+ 3d3d5a4:	mov    -0x10(%rax),%r8
+ 3d3d5a8:	cmp    %r14,%r8
+ 3d3d5ab:	jle    3d3d6d3 <open64@plt+0x393423b>
+ 3d3d5b1:	lea    0x68(%rbx),%rdi
+ 3d3d5b5:	call   4e7540 <open64@plt+0xde0a8>
+ 3d3d5ba:	mov    %eax,%r12d
+ 3d3d5bd:	test   %eax,%eax
+ 3d3d5bf:	jne    3d3d748 <open64@plt+0x39342b0>
+ 3d3d5c5:	mov    0x68(%rbx),%rax
+ 3d3d5c9:	movq   $0x0,(%rax,%r14,8)
+ 3d3d5d1:	lea    0x40(%r13),%r14
+ 3d3d5d5:	lea    0xc(%rsp),%rsi
+ 3d3d5da:	mov    %r14,%rdi
+ 3d3d5dd:	call   3d36d50 <open64@plt+0x392d8b8>
+ 3d3d5e2:	cmp    (%rax),%r12d
+ 3d3d5e5:	jae    3d3d770 <open64@plt+0x39342d8>
+ 3d3d5eb:	lea    0xc(%rsp),%rsi
+ 3d3d5f0:	mov    %r14,%rdi
+ 3d3d5f3:	call   3d36d50 <open64@plt+0x392d8b8>
+ 3d3d5f8:	mov    (%rax),%r8d
+ 3d3d5fb:	cmp    %r8d,%r12d
+ 3d3d5fe:	jae    3d3d720 <open64@plt+0x3934288>
+ 3d3d604:	mov    0x8(%rax),%rcx
+ 3d3d608:	mov    %r12d,%edx
+ 3d3d60b:	mov    0x28(%r13),%rax
+ 3d3d60f:	movslq (%rcx,%rdx,4),%rcx
+ 3d3d613:	test   %rcx,%rcx
+ 3d3d616:	js     3d3d6a2 <open64@plt+0x393420a>
+ 3d3d61c:	test   %rax,%rax
+ 3d3d61f:	je     3d3d6b0 <open64@plt+0x3934218>
+ 3d3d625:	cmp    -0x10(%rax),%rcx
+ 3d3d629:	jge    3d3d710 <open64@plt+0x3934278>
+ 3d3d62f:	cmpb   $0x0,(%rax,%rcx,1)
+ 3d3d633:	je     3d3d657 <open64@plt+0x39341bf>
+ 3d3d635:	mov    0x88(%rbx),%rax
+ 3d3d63c:	test   %rax,%rax
+ 3d3d63f:	je     3d3d6b0 <open64@plt+0x3934218>
+ 3d3d641:	mov    -0x10(%rax),%r8
+ 3d3d645:	cmp    %r8,%rcx
+ 3d3d648:	jge    3d3d6b3 <open64@plt+0x393421b>
+ 3d3d64a:	mov    (%rax,%rcx,8),%r15
+ 3d3d64e:	test   %r15,%r15
+ 3d3d651:	je     3d3d78a <open64@plt+0x39342f2>
+ 3d3d657:	add    $0x1,%r12d
+ 3d3d65b:	jmp    3d3d5d5 <open64@plt+0x393413d>
+ 3d3d660:	xor    %r8d,%r8d
+ 3d3d663:	test   %r14d,%r14d
+ 3d3d666:	jns    3d3d573 <open64@plt+0x39340db>
+ 3d3d66c:	push   $0x1
+ 3d3d66e:	mov    $0x6356627,%r9d
+ 3d3d674:	mov    %r14,%rcx
+ 3d3d677:	push   $0x0
+ 3d3d679:	push   $0x5917339
+ 3d3d67e:	push   $0x599e059
+ 3d3d683:	mov    $0xc1,%edx
+ 3d3d688:	mov    $0x51ec6cb,%esi
+ 3d3d68d:	mov    $0x51ec748,%edi
+ 3d3d692:	call   4812660 <open64@plt+0x44091c8>
+ 3d3d697:	add    $0x20,%rsp
+ 3d3d69b:	call   47c4c60 <open64@plt+0x43bb7c8>
+ 3d3d6a0:	ud2
+ 3d3d6a2:	test   %rax,%rax
+ 3d3d6a5:	jne    3d3d710 <open64@plt+0x3934278>
+ 3d3d6a7:	nopw   0x0(%rax,%rax,1)
+ 3d3d6b0:	xor    %r8d,%r8d
+ 3d3d6b3:	push   $0x1
+ 3d3d6b5:	mov    $0x6356627,%r9d
+ 3d3d6bb:	push   $0x0
+ 3d3d6bd:	.byte 0x68
+ 3d3d6be:	.byte 0x39
+ 3d3d6bf:	.byte 0x73

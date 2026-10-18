@@ -1,0 +1,92 @@
+{
+  "task": "S1-W4 independent native renderer cross-review",
+  "scope": "Read-only binary/source analysis; no additional engine run, shader reduction, cache mutation or runtime source edit.",
+  "engine": {
+    "path": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "reported_version": "4.6.3.stable.official.7d41c59c4",
+    "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+    "elf_type": "ELF64 x86_64 EXEC, stripped",
+    "source_identity_limit": "Public 4.6.3-stable tag observed at35e80b3a8822a9df9be390814b62f44c0a9c69e8 differs from embedded7d41c59c4. Exact binary addresses/strings/unwind boundaries are observed; public-source function bodies are source-qualified correspondences, not exact-build debug symbols."
+  },
+  "binary_evidence": [
+    {
+      "fde": "0x480a4e0..0x480abef",
+      "return_address": "0x480a6a5",
+      "identity": "WorkerThreadPool::wait_for_group_task_completion",
+      "confidence": "Binary function/error/path literal cross-reference plus semaphore wait-loop disassembly.",
+      "literal_xrefs": {
+        "0x7eb4250": "wait_for_group_task_completion",
+        "0x585f4a8": "core/object/worker_thread_pool.cpp",
+        "0x7eaecfb": "Invalid Group ID."
+      },
+      "instructions": [
+        "0x480a698 prepares semaphore condition wait",
+        "0x480a6a0 calls0x5153080, then observedreturn0x480a6a5",
+        "0x480a6a5 reads semaphore counter and loops if zero"
+      ]
+    },
+    {
+      "fde": "0x3d3d530..0x3d3d9ed",
+      "return_address": "0x3d3d597",
+      "identity": "Strong correspondence: ShaderRD::_compile_version_end",
+      "confidence": "Call to proven worker-group wait; subsequent exact field/loop behavior matches public source.",
+      "instructions": [
+        "0x3d3d56a reads selected nonzero group task slot atVersion+0x68",
+        "0x3d3d592 calls0x480a4e0",
+        "0x3d3d5c9 clears task slot",
+        "checks group_to_variant_map and Version variants at+0x88; clears invalid variants/data or caches valid result"
+      ]
+    },
+    {
+      "fde": "0x3dc08f0..0x3dc0c65",
+      "worker_return_address": "0x3dc09d2",
+      "main_return_address": "0x3dc0b98",
+      "identity": "ShaderRD::version_get_shader (inlined inside renderer variant getter)",
+      "confidence": "Independent read agrees with W1 binary function/header literal mapping and native mutex call.",
+      "literal_xrefs": {
+        "0x7b8eea6": "version_get_shader",
+        "0x7b919b8": "./servers/rendering/renderer_rd/shader_rd.h"
+      },
+      "instructions": [
+        "0x3dc09b2 loads mutex pointer fromVersion offset0",
+        "0x3dc09cd calls pthread_mutex_lock; worker return0x3dc09d2",
+        "0x3dc0b93 calls0x3d3d530 while inside same lock scope; main return0x3dc0b98"
+      ]
+    }
+  ],
+  "live_evidence_reference": {
+    "gdb_log": "/tmp/yuga-g0-source-research-r1/textured-native-gdb-r1.log",
+    "gdb_sha256": "3c3e53ffa3ea415c0a2db6d19525419ec129a52c4e3ba9c03597fd2d39f3e4dd",
+    "mutex_receipt": "/tmp/yuga-g0-source-research-r1/textured-mutex-owner-r1.json",
+    "mutex_receipt_sha256": "61c59db380a674803c6d00979dc4a8c90ea28a7103a5a4c5b825d360a29e8396",
+    "observed_main_tid": 220843,
+    "observed_worker_count": 5,
+    "mutex_address": "0x382703f0",
+    "owner_word_tid": 220843,
+    "interpretation": "Main is waiting for a worker-pool group while retaining the same version mutex on which all five pool workers wait. This supports the native lock/worker-starvation cycle; the snapshot does not attribute the failure to an unsupported shader derivative or prove driver/compiler arithmetic is invalid."
+  },
+  "settings_review": {
+    "actual_binary_and_public_docs_keys": [
+      "rendering/shader_compiler/shader_cache/enabled",
+      "rendering/rendering_device/pipeline_cache/enable",
+      "threading/worker_pool/max_threads",
+      "threading/worker_pool/low_priority_thread_ratio",
+      "rendering/driver/threads/thread_model"
+    ],
+    "verified_async_disable_switch": null,
+    "limits": [
+      "Shader cache and pipeline cache toggles concern disk caches, not an established synchronous pipeline execution mode.",
+      "Public ShaderRD::_compile_version_start returns before queuing group tasks only after a successful_load_from_cache hit; disabling cache still queues compilation.",
+      "A verified same-source cache seed may avoid that branch for covered shader groups, but is a warm-cache workaround, not cold-launch acceptance.",
+      "Worker count/ratio or render thread_model changes are not demonstrated fixes for this observed cycle. Do not introduce an invented async-disable setting."
+    ]
+  },
+  "public_source_hashes": {
+    "core/object/worker_thread_pool.cpp": "9bd57c773fd8d13b084594721bb8216a337891819efe31cf68ffd5e0f14db993",
+    "servers/rendering/renderer_rd/shader_rd.cpp": "a8968ac041a7fe5d84fc5fa681479dfbae1f44425df76dc4cec90a9c6aebf4ab",
+    "servers/rendering/renderer_rd/shader_rd.h": "012864496d13c39796025ad87b2f531536aacd2154e27a0d5c4a7a580d5ebb56",
+    "pipeline_hash_map_rd.h": "095dc91ce6ebb23f84912981c90d84caac83be3cd7765f00e7d696cb7c03e6c5",
+    "doc/classes/ProjectSettings.xml": "bab5f959ff9e3f351e2a7dfc9ebe5298af0dd009e88fe616a09aeca51150458b"
+  },
+  "next_owner": "W1/root: archive native evidence and choose an explicitly scoped workaround or upstream resolution; W4 starts no additional engine/source change."
+}

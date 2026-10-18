@@ -6,6 +6,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import time
@@ -73,9 +74,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--project', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair'], required=True)
+    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair', 'scene-anchors'], required=True)
     parser.add_argument('--display', type=int, default=192)
     parser.add_argument('--shader-cache-seed', type=Path)
+    parser.add_argument('--godot-shader-cache-seed', type=Path,
+                        help='Explicit Godot shader_cache copy, separate from Mesa; never copies preferences')
     parser.add_argument('--preflight', action='store_true')
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--verbose', action='store_true')
@@ -95,7 +98,7 @@ def main():
     snapshot = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(snapshot)
     seal = snapshot.verify(project)
-    helper_name = 'capture_gold.gd' if args.case == 'gold-pair' else 'capture_focus.gd'
+    helper_name = {'gold-pair': 'capture_gold.gd', 'scene-anchors': 'capture_scene_anchors.gd'}.get(args.case, 'capture_focus.gd')
     helper = project / 'tools/graphics-six' / helper_name
     if not helper.is_file():
         parser.error('Refresh the snapshot with the new capture helper first')
@@ -117,6 +120,7 @@ def main():
         print(json.dumps({'command': command, 'snapshot_round': seal['round'], 'starts_engine': False,
                           'timeout_s': args.timeout, 'no_progress_timeout_s': args.no_progress_timeout,
                           'render_thread_override': args.render_thread,
+                          'godot_shader_cache_seed': str(args.godot_shader_cache_seed) if args.godot_shader_cache_seed else None,
                           'godot_worker_pool_limit': None}, indent=2))
         return
     logs = output.with_name(output.name + '-logs')
@@ -135,6 +139,19 @@ def main():
         if not seed:
             parser.error('Seed cache is empty')
         shutil.copytree(args.shader_cache_seed, env['MESA_SHADER_CACHE_DIR'])
+    godot_seed = {}
+    godot_cache_target = None
+    if args.godot_shader_cache_seed:
+        godot_seed = {str(p.relative_to(args.godot_shader_cache_seed)): sha(p)
+                      for p in args.godot_shader_cache_seed.rglob('*') if p.is_file()}
+        if not godot_seed or any(not name.endswith('.cache') for name in godot_seed):
+            parser.error('Godot seed must contain only shader-cache files')
+        project_config = (project / 'project.godot').read_text()
+        names = re.findall(r'^config/name="([^"\n]+)"$', project_config, re.M)
+        if len(names) != 1 or '/' in names[0] or re.search(r'^config/use_custom_user_dir=true$', project_config, re.M):
+            parser.error('Explicit Godot cache seed requires the standard named user directory')
+        godot_cache_target = Path(env['XDG_DATA_HOME']) / 'godot/app_userdata' / names[0] / 'shader_cache'
+        shutil.copytree(args.godot_shader_cache_seed, godot_cache_target)
     record = {'complete': False, 'command': command, 'case': args.case,
               'snapshot_sha256': sha(project / snapshot.MARKER), 'source_files': seal['files'],
               'helper_sha256': sha(helper), 'runner_sha256': sha(__file__),
@@ -146,6 +163,9 @@ def main():
               'watchdog': {'overall_s': args.timeout, 'after_native_ready_no_progress_s': args.no_progress_timeout,
                            'progress': 'Additional engine log bytes or changed PNG count; not evidence of successful rendering.'},
               'shader_cache_seed': seed, 'preflight': args.preflight,
+              'godot_shader_cache_seed': godot_seed,
+              'godot_shader_cache_seed_path': str(args.godot_shader_cache_seed) if args.godot_shader_cache_seed else None,
+              'godot_shader_cache_target': str(godot_cache_target) if godot_cache_target else None,
               'scope': 'Source-bound staged camera/control fixture; no native XTest or hardware FPS claim.'}
     server = None
     try:
@@ -181,6 +201,8 @@ def main():
             raise RuntimeError('Snapshot receipt changed')
         if args.shader_cache_seed and seed != {str(p.relative_to(args.shader_cache_seed)): sha(p) for p in args.shader_cache_seed.rglob('*') if p.is_file()}:
             raise RuntimeError('Source shader cache changed')
+        if args.godot_shader_cache_seed and godot_seed != {str(p.relative_to(args.godot_shader_cache_seed)): sha(p) for p in args.godot_shader_cache_seed.rglob('*') if p.is_file()}:
+            raise RuntimeError('Source Godot shader cache changed')
         record.update(complete=True, report_sha256=sha(report_path), raw_pngs=0 if args.preflight else len(shots))
     except Exception as error:
         record['failure'] = repr(error)

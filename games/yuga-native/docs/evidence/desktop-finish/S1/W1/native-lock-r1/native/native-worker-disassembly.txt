@@ -1,0 +1,292 @@
+
+/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+000000000480a400 <.text+0x4400f40>:
+ 480a400:	rex adc %cl,-0x7d(%rax)
+ 480a404:	mov    $0xa8,%ebp
+ 480a409:	add    %cl,-0x73(%rax)
+ 480a40c:	sbbl   $0x2,(%rax)
+ 480a40f:	add    %al,(%rax)
+ 480a411:	lea    0xa8(%rbp),%rdx
+ 480a418:	jne    480a4b8 <open64@plt+0x4401020>
+ 480a41e:	mov    %rax,0xa8(%rbp)
+ 480a425:	mov    0x220(%rbx),%rax
+ 480a42c:	movq   $0x0,0xb8(%rbp)
+ 480a437:	mov    %rax,0xc0(%rbp)
+ 480a43e:	test   %rax,%rax
+ 480a441:	je     480a498 <open64@plt+0x4401000>
+ 480a443:	mov    %rdx,0x10(%rax)
+ 480a447:	mov    %rdx,0x220(%rbx)
+ 480a44e:	addl   $0x1,0x3e4(%rbx)
+ 480a455:	add    $0x8,%rsp
+ 480a459:	mov    $0x1,%eax
+ 480a45e:	pop    %rbx
+ 480a45f:	pop    %rbp
+ 480a460:	ret
+ 480a461:	nopl   0x0(%rax)
+ 480a468:	xor    %eax,%eax
+ 480a46a:	ret
+ 480a46b:	nopl   0x0(%rax,%rax,1)
+ 480a470:	xor    %r9d,%r9d
+ 480a473:	xor    %r8d,%r8d
+ 480a476:	mov    $0x585b9d0,%ecx
+ 480a47b:	mov    $0x50,%edx
+ 480a480:	mov    $0x585532c,%esi
+ 480a485:	mov    $0x5ccab2c,%edi
+ 480a48a:	call   48085d0 <open64@plt+0x43ff138>
+ 480a48f:	jmp    480a402 <open64@plt+0x4400f6a>
+ 480a494:	nopl   0x0(%rax)
+ 480a498:	mov    %rdx,0x218(%rbx)
+ 480a49f:	jmp    480a447 <open64@plt+0x4400faf>
+ 480a4a1:	nopl   0x0(%rax)
+ 480a4a8:	mov    %rcx,0x210(%rbx)
+ 480a4af:	jmp    480a3f3 <open64@plt+0x4400f5b>
+ 480a4b4:	nopl   0x0(%rax)
+ 480a4b8:	xor    %r9d,%r9d
+ 480a4bb:	xor    %r8d,%r8d
+ 480a4be:	mov    $0x585bb08,%ecx
+ 480a4c3:	mov    $0x3f,%edx
+ 480a4c8:	mov    $0x585532c,%esi
+ 480a4cd:	mov    $0x7eaecf2,%edi
+ 480a4d2:	call   48085d0 <open64@plt+0x43ff138>
+ 480a4d7:	jmp    480a44e <open64@plt+0x4400fb6>
+ 480a4dc:	nopl   0x0(%rax)
+ 480a4e0:	push   %r15
+ 480a4e2:	mov    $0x408c20,%eax
+ 480a4e7:	lea    0x228(%rdi),%r15
+ 480a4ee:	push   %r14
+ 480a4f0:	push   %r13
+ 480a4f2:	push   %r12
+ 480a4f4:	push   %rbp
+ 480a4f5:	mov    %rsi,%rbp
+ 480a4f8:	push   %rbx
+ 480a4f9:	mov    %rdi,%rbx
+ 480a4fc:	sub    $0x38,%rsp
+ 480a500:	test   %rax,%rax
+ 480a503:	je     480a515 <open64@plt+0x440107d>
+ 480a505:	mov    %r15,%rdi
+ 480a508:	call   408de0 <pthread_mutex_lock@plt>
+ 480a50d:	test   %eax,%eax
+ 480a50f:	jne    480abd4 <open64@plt+0x440173c>
+ 480a515:	mov    0x3b8(%rbx),%r13
+ 480a51c:	test   %r13,%r13
+ 480a51f:	je     480a918 <open64@plt+0x4401480>
+ 480a525:	mov    0x3dc(%rbx),%edi
+ 480a52b:	test   %edi,%edi
+ 480a52d:	je     480a918 <open64@plt+0x4401480>
+ 480a533:	mov    %rbp,%rax
+ 480a536:	mov    0x3c0(%rbx),%r14
+ 480a53d:	shl    $0x12,%rax
+ 480a541:	sub    %rbp,%rax
+ 480a544:	sub    $0x1,%rax
+ 480a548:	mov    %rax,%rdx
+ 480a54b:	shr    $0x1f,%rdx
+ 480a54f:	xor    %rdx,%rax
+ 480a552:	lea    (%rax,%rax,4),%rdx
+ 480a556:	lea    (%rax,%rdx,4),%rax
+ 480a55a:	mov    %rax,%rdx
+ 480a55d:	shr    $0xb,%rdx
+ 480a561:	xor    %rdx,%rax
+ 480a564:	mov    %rax,%rdx
+ 480a567:	shl    $0x6,%rdx
+ 480a56b:	add    %rdx,%rax
+ 480a56e:	mov    %rax,%r12
+ 480a571:	shr    $0x16,%r12
+ 480a575:	xor    %rax,%r12
+ 480a578:	mov    $0x1,%eax
+ 480a57d:	test   %r12d,%r12d
+ 480a580:	cmove  %eax,%r12d
+ 480a584:	mov    0x3d8(%rbx),%eax
+ 480a58a:	mov    0x523dc20(,%rax,4),%r11d
+ 480a592:	mov    0x523cd00(,%rax,8),%r10
+ 480a59a:	mov    %r12d,%eax
+ 480a59d:	mov    %rax,%rdx
+ 480a5a0:	mov    %rax,0x8(%rsp)
+ 480a5a5:	imul   %r10,%rdx
+ 480a5a9:	mov    %r11,%rsi
+ 480a5ac:	mov    %rdx,%rax
+ 480a5af:	mul    %r11
+ 480a5b2:	mov    (%r14,%rdx,4),%edi
+ 480a5b6:	mov    %edx,%ecx
+ 480a5b8:	mov    %rdx,%r9
+ 480a5bb:	test   %edi,%edi
+ 480a5bd:	je     480a918 <open64@plt+0x4401480>
+ 480a5c3:	xor    %r8d,%r8d
+ 480a5c6:	jmp    480a5f0 <open64@plt+0x4401158>
+ 480a5c8:	nopl   0x0(%rax,%rax,1)
+ 480a5d0:	add    $0x1,%ecx
+ 480a5d3:	cmp    %ecx,%esi
+ 480a5d5:	je     480a968 <open64@plt+0x44014d0>
+ 480a5db:	mov    %ecx,%r9d
+ 480a5de:	lea    (%r14,%r9,4),%rax
+ 480a5e2:	mov    (%rax),%edi
+ 480a5e4:	add    $0x1,%r8d
+ 480a5e8:	test   %edi,%edi
+ 480a5ea:	je     480a918 <open64@plt+0x4401480>
+ 480a5f0:	mov    %edi,%edx
+ 480a5f2:	imul   %r10,%rdx
+ 480a5f6:	mov    %rdx,%rax
+ 480a5f9:	mul    %r11
+ 480a5fc:	mov    %ecx,%eax
+ 480a5fe:	sub    %edx,%eax
+ 480a600:	mov    %esi,%edx
+ 480a602:	add    %eax,%edx
+ 480a604:	cmovb  %edx,%eax
+ 480a607:	cmp    %r8d,%eax
+ 480a60a:	jb     480a918 <open64@plt+0x4401480>
+ 480a610:	cmp    %r12d,%edi
+ 480a613:	jne    480a5d0 <open64@plt+0x4401138>
+ 480a615:	mov    0x0(%r13,%r9,8),%rax
+ 480a61a:	cmp    %rbp,0x10(%rax)
+ 480a61e:	jne    480a5d0 <open64@plt+0x4401138>
+ 480a620:	mov    $0x408c20,%eax
+ 480a625:	mov    0x0(%r13,%rcx,8),%r13
+ 480a62a:	test   %rax,%rax
+ 480a62d:	je     480a637 <open64@plt+0x440119f>
+ 480a62f:	mov    %r15,%rdi
+ 480a632:	call   408dd0 <pthread_mutex_unlock@plt>
+ 480a637:	cmp    %rbx,0x4080cd2(%rip)        # 888b310 <stderr@GLIBC_2.2.5+0x9d0>
+ 480a63e:	mov    0x18(%r13),%r14
+ 480a642:	je     480ab30 <open64@plt+0x4401698>
+ 480a648:	lea    0x18(%r14),%rax
+ 480a64c:	movb   $0x0,0x28(%rsp)
+ 480a651:	mov    %rax,(%rsp)
+ 480a655:	mov    (%rsp),%rdi
+ 480a659:	mov    $0x408c20,%eax
+ 480a65e:	mov    %rdi,0x20(%rsp)
+ 480a663:	test   %rax,%rax
+ 480a666:	je     480a675 <open64@plt+0x44011dd>
+ 480a668:	call   408de0 <pthread_mutex_lock@plt>
+ 480a66d:	test   %eax,%eax
+ 480a66f:	jne    480abd4 <open64@plt+0x440173c>
+ 480a675:	mov    0x74(%r14),%edx
+ 480a679:	movb   $0x1,0x28(%rsp)
+ 480a67e:	lea    0x40(%r14),%r13
+ 480a682:	lea    0x1(%rdx),%eax
+ 480a685:	mov    %eax,0x74(%r14)
+ 480a689:	mov    0x70(%r14),%eax
+ 480a68d:	test   %eax,%eax
+ 480a68f:	jne    480a988 <open64@plt+0x44014f0>
+ 480a695:	nopl   (%rax)
+ 480a698:	lea    0x20(%rsp),%rsi
+ 480a69d:	mov    %r13,%rdi
+ 480a6a0:	call   5153080 <open64@plt+0x4d49be8>
+ 480a6a5:	mov    0x70(%r14),%eax
+ 480a6a9:	test   %eax,%eax
+ 480a6ab:	je     480a698 <open64@plt+0x4401200>
+ 480a6ad:	sub    $0x1,%eax
+ 480a6b0:	subl   $0x1,0x74(%r14)
+ 480a6b5:	cmpb   $0x0,0x28(%rsp)
+ 480a6ba:	mov    %eax,0x70(%r14)
+ 480a6be:	jne    480a993 <open64@plt+0x44014fb>
+ 480a6c4:	cmp    %rbx,0x4080c45(%rip)        # 888b310 <stderr@GLIBC_2.2.5+0x9d0>
+ 480a6cb:	je     480a9c8 <open64@plt+0x4401530>
+ 480a6d1:	mov    0x80(%r14),%eax
+ 480a6d8:	lea    0x1(%rax),%edx
+ 480a6db:	mov    $0x1,%eax
+ 480a6e0:	lock xadd %eax,0x7c(%r14)
+ 480a6e6:	add    $0x1,%eax
+ 480a6e9:	cmp    %eax,%edx
+ 480a6eb:	je     480aa50 <open64@plt+0x44015b8>
+ 480a6f1:	mov    $0x408c20,%eax
+ 480a6f6:	test   %rax,%rax
+ 480a6f9:	je     480a70b <open64@plt+0x4401273>
+ 480a6fb:	mov    %r15,%rdi
+ 480a6fe:	call   408de0 <pthread_mutex_lock@plt>
+ 480a703:	test   %eax,%eax
+ 480a705:	jne    480abd4 <open64@plt+0x440173c>
+ 480a70b:	mov    0x3b8(%rbx),%r10
+ 480a712:	test   %r10,%r10
+ 480a715:	je     480a8f4 <open64@plt+0x440145c>
+ 480a71b:	mov    0x3dc(%rbx),%eax
+ 480a721:	test   %eax,%eax
+ 480a723:	je     480a8f4 <open64@plt+0x440145c>
+ 480a729:	mov    0x3d8(%rbx),%eax
+ 480a72f:	mov    0x8(%rsp),%rdx
+ 480a734:	mov    0x3c0(%rbx),%r9
+ 480a73b:	mov    0x523cd00(,%rax,8),%r13
+ 480a743:	mov    0x523dc20(,%rax,4),%r11d
+ 480a74b:	imul   %r13,%rdx
+ 480a74f:	mov    %r11,%rsi
+ 480a752:	mov    %rdx,%rax
+ 480a755:	mul    %r11
+ 480a758:	mov    (%r9,%rdx,4),%edi
+ 480a75c:	mov    %edx,%ecx
+ 480a75e:	mov    %rdx,%r14
+ 480a761:	test   %edi,%edi
+ 480a763:	je     480a8f4 <open64@plt+0x440145c>
+ 480a769:	xor    %r8d,%r8d
+ 480a76c:	jmp    480a790 <open64@plt+0x44012f8>
+ 480a76e:	xchg   %ax,%ax
+ 480a770:	add    $0x1,%ecx
+ 480a773:	cmp    %ecx,%esi
+ 480a775:	je     480a978 <open64@plt+0x44014e0>
+ 480a77b:	mov    %ecx,%r14d
+ 480a77e:	lea    (%r9,%r14,4),%rax
+ 480a782:	mov    (%rax),%edi
+ 480a784:	add    $0x1,%r8d
+ 480a788:	test   %edi,%edi
+ 480a78a:	je     480a8f4 <open64@plt+0x440145c>
+ 480a790:	mov    %edi,%edx
+ 480a792:	imul   %r13,%rdx
+ 480a796:	mov    %rdx,%rax
+ 480a799:	mul    %r11
+ 480a79c:	mov    %ecx,%eax
+ 480a79e:	sub    %edx,%eax
+ 480a7a0:	mov    %esi,%edx
+ 480a7a2:	add    %eax,%edx
+ 480a7a4:	cmovb  %edx,%eax
+ 480a7a7:	cmp    %r8d,%eax
+ 480a7aa:	jb     480a8f4 <open64@plt+0x440145c>
+ 480a7b0:	cmp    %r12d,%edi
+ 480a7b3:	jne    480a770 <open64@plt+0x44012d8>
+ 480a7b5:	mov    (%r10,%r14,8),%rax
+ 480a7b9:	cmp    %rbp,0x10(%rax)
+ 480a7bd:	jne    480a770 <open64@plt+0x44012d8>
+ 480a7bf:	lea    0x1(%rcx),%edx
+ 480a7c2:	imul   %r13,%rdx
+ 480a7c6:	mov    %rdx,%rax
+ 480a7c9:	mul    %r11
+ 480a7cc:	lea    (%r9,%rdx,4),%r12
+ 480a7d0:	mov    %edx,%r8d
+ 480a7d3:	mov    %rdx,%rbp
+ 480a7d6:	mov    (%r12),%edi
+ 480a7da:	test   %edi,%edi
+ 480a7dc:	je     480a86f <open64@plt+0x44013d7>
+ 480a7e2:	mov    %r15,(%rsp)
+ 480a7e6:	jmp    480a804 <open64@plt+0x440136c>
+ 480a7e8:	nopl   0x0(%rax,%rax,1)
+ 480a7f0:	mov    %eax,%ebp
+ 480a7f2:	mov    %r8d,%ecx
+ 480a7f5:	lea    (%r9,%rbp,4),%r12
+ 480a7f9:	mov    (%r12),%edi
+ 480a7fd:	test   %edi,%edi
+ 480a7ff:	je     480a868 <open64@plt+0x44013d0>
+ 480a801:	mov    %eax,%r8d
+ 480a804:	mov    %edi,%edx
+ 480a806:	mov    %r8d,%r14d
+ 480a809:	imul   %r13,%rdx
+ 480a80d:	mov    %rdx,%rax
+ 480a810:	mul    %r11
+ 480a813:	sub    %edx,%r14d
+ 480a816:	lea    (%r10,%rcx,8),%rdx
+ 480a81a:	mov    %r14d,%eax
+ 480a81d:	mov    (%rdx),%r15
+ 480a820:	add    %esi,%eax
+ 480a822:	cmovae %r14d,%eax
+ 480a826:	lea    (%r9,%rcx,4),%r14
+ 480a82a:	test   %eax,%eax
+ 480a82c:	je     480aa40 <open64@plt+0x44015a8>
+ 480a832:	mov    (%r14),%eax
+ 480a835:	mov    %eax,(%r12)
+ 480a839:	lea    (%r10,%rbp,8),%rax
+ 480a83d:	mov    (%rax),%rcx
+ 480a840:	mov    %edi,(%r14)
+ 480a843:	mov    %r15,(%rax)
+ 480a846:	lea    0x1(%r8),%eax
+ 480a84a:	mov    %rcx,(%rdx)
+ 480a84d:	cmp    %esi,%eax
+ 480a84f:	.byte 0x75

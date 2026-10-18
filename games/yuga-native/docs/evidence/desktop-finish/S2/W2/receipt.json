@@ -1,0 +1,66 @@
+{
+  "task": "S2-W2 loading presentation",
+  "base_checkpoint": "98e10cc5184ba1b51b42113496a529d8cc8f62b0",
+  "status": "View12/12 passed; W6 integrated controller and reported host47/47; actual pixels pending",
+  "sources": {
+    "scripts/loading_presentation.gd": "a37992fd733d96f4ec866aa95e04c60ad835d8a33ba762849c3cf632b2bdb3e0",
+    "tests/desktop_finish_s2_loading_view_cases.gd": "150b035a8014c47fb156a47c52d2398f18dbe05760fe208b61a5910b2e97fb13"
+  },
+  "artifacts": {
+    "view-r3-command.json": {
+      "sha256": "aa76db3243302eda633ea45bd6441519ca4249804a6a56734ea9a2ded87b577d",
+      "bytes": 448
+    },
+    "view-r1-command.json": {
+      "sha256": "2d08054e035c21c615edb90c95c6259bc4e706eaa6b895d756f7f542b78b75b9",
+      "bytes": 448
+    },
+    "view-r2-diagnostic.json": {
+      "sha256": "677c5c639ebfcb0caab980e8882cdb5573dd649a9cb9f405a91a55a2285046c1",
+      "bytes": 3861
+    },
+    "view-r2-diagnostic-command.json": {
+      "sha256": "f22823d1bfda7b30701d72de9ab3d5f2aa90e0451243ee29222684033b6b483c",
+      "bytes": 341
+    },
+    "view-r2-diagnostic-output.txt": {
+      "sha256": "3e0147e9c24e45f04ce29f4aa076bcdc4ac84afec732e8b092b44cf0dd175a79",
+      "bytes": 935
+    },
+    "view-r1.json": {
+      "sha256": "4fbafdf669b8187cbf897b9fe549fc56bdff5d009f96e3e00ce08d4f205ae72f",
+      "bytes": 2829
+    },
+    "view-r3-output.txt": {
+      "sha256": "a24ee0f09f8a756303e4e6d61926099f01c2dd80f6a9bae7f7f603746a4d5fe6",
+      "bytes": 935
+    },
+    "view-r3.json": {
+      "sha256": "6fb4d36c5c8743197e35e618f90fbfacc31d6e1ec04a5262571b02672a74247c",
+      "bytes": 3857
+    },
+    "view-r1-output.txt": {
+      "sha256": "3e0147e9c24e45f04ce29f4aa076bcdc4ac84afec732e8b092b44cf0dd175a79",
+      "bytes": 935
+    }
+  },
+  "retained_failures": [
+    "view-r1:9/12, action row shifted2px",
+    "view-r2-diagnostic:9/12, same failure with geometry detail"
+  ],
+  "final_result": "view-r3:12/12, exit0, no engine diagnostics",
+  "limits": [
+    "No W2 import/render/commit",
+    "CPU affinity only; no engine pool cap",
+    "No new game readiness state or progress source"
+  ],
+  "integration": {
+    "owner": "W6",
+    "source_sha256": {
+      "scripts/scene_transition.gd": "bcb0ff8286eadec7d830537ecf9a08c8f10eaf3b9e283343428167b33263c0cd",
+      "scripts/boot.gd": "c54ecd527578cf09e56c0a0f6d3799ba27b2da24e725873cec83df1c019ab5f5"
+    },
+    "reported_result": "W6 integrated host-ownership fixture47/47 clean; W2 did not independently rerun",
+    "dependency_updates": "W6 updated isolated source-copy tools and package first-load requirements"
+  }
+}

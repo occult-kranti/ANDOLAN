@@ -56,6 +56,7 @@ python3 games/yuga-native/tests/rama_package_cases.py --report="$validation_dir/
 # accept rendered art, OS input, human feel/listening, native online play or GPU FPS.
 "$native_python_root/bin/python" games/yuga-native/tools/run-quality-checks.py --engine godot --python "$native_python_root/bin/python" --output "$validation_dir/rama-quality"
 "$native_python_root/bin/python" games/yuga-native/tests/authoring_runner_cases.py --report="$validation_dir/authoring-runner-cases.json"
+"$native_python_root/bin/python" games/yuga-native/tests/visual_catalog_cases.py --report="$validation_dir/visual-catalog-cases.json"
 "$native_python_root/bin/python" games/yuga-native/tools/run-authoring-checks.py --engine godot --python "$native_python_root/bin/python" --cloth-resource --output "$validation_dir/authoring-checks"
 "$native_python_root/bin/python" games/yuga-native/tools/run-visual-checks.py --engine godot --python "$native_python_root/bin/python" --output "$validation_dir/visual-checks"
 "$native_python_root/bin/python" games/yuga-native/tools/run-visual-checks.py --catalog screens --engine godot --python "$native_python_root/bin/python" --output "$validation_dir/screen-checks"

@@ -1,0 +1,344 @@
+
+/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000003dc0800 <.text+0x39b7340>:
+ 3dc0800:	or     %ecx,-0x75(%rax)
+ 3dc0803:	push   %rbx
+ 3dc0804:	push   $0xfffffffffffe8ae9
+ 3dc0809:	decl   -0x77(%rax)
+ 3dc080c:	imul   $0xfffffff1,-0x17(%rax),%ebp
+ 3dc0810:	(bad)
+ 3dc0811:	(bad)
+ 3dc0812:	decl   -0x7d(%rax)
+ 3dc0815:	in     (%dx),%al
+ 3dc0816:	or     %bh,0x101(%rdx)
+ 3dc081c:	xor    %r9d,%r9d
+ 3dc081f:	mov    $0x51f2ee0,%r8d
+ 3dc0825:	push   $0x0
+ 3dc0827:	mov    $0x51f2998,%ecx
+ 3dc082c:	mov    $0x51ebeaf,%esi
+ 3dc0831:	mov    $0x51ebecc,%edi
+ 3dc0836:	call   4807310 <open64@plt+0x43fde78>
+ 3dc083b:	pop    %rax
+ 3dc083c:	pop    %rdx
+ 3dc083d:	jmp    3dc0748 <open64@plt+0x39b72b0>
+ 3dc0842:	mov    $0x408c20,%eax
+ 3dc0847:	test   %rax,%rax
+ 3dc084a:	je     3dc0854 <open64@plt+0x39b73bc>
+ 3dc084c:	mov    %r15,%rdi
+ 3dc084f:	call   408dd0 <pthread_mutex_unlock@plt>
+ 3dc0854:	xor    %r9d,%r9d
+ 3dc0857:	xor    %r8d,%r8d
+ 3dc085a:	mov    $0x5a82580,%ecx
+ 3dc085f:	mov    $0xf1,%edx
+ 3dc0864:	jmp    3dc0758 <open64@plt+0x39b72c0>
+ 3dc0869:	nop
+ 3dc086a:	nopw   0x0(%rax,%rax,1)
+ 3dc0870:	mov    $0x408c20,%eax
+ 3dc0875:	test   %rax,%rax
+ 3dc0878:	je     3dc0898 <open64@plt+0x39b7400>
+ 3dc087a:	sub    $0x8,%rsp
+ 3dc087e:	add    $0x240,%rdi
+ 3dc0885:	call   408de0 <pthread_mutex_lock@plt>
+ 3dc088a:	test   %eax,%eax
+ 3dc088c:	jne    3dc0899 <open64@plt+0x39b7401>
+ 3dc088e:	add    $0x8,%rsp
+ 3dc0892:	ret
+ 3dc0893:	nopl   0x0(%rax,%rax,1)
+ 3dc0898:	ret
+ 3dc0899:	mov    %eax,%edi
+ 3dc089b:	call   430690 <open64@plt+0x271f8>
+ 3dc08a0:	push   %r12
+ 3dc08a2:	mov    $0x408c20,%r12d
+ 3dc08a8:	push   %rbp
+ 3dc08a9:	mov    %rdi,%rbp
+ 3dc08ac:	push   %rbx
+ 3dc08ad:	mov    %esi,%ebx
+ 3dc08af:	test   %r12,%r12
+ 3dc08b2:	je     3dc08c2 <open64@plt+0x39b742a>
+ 3dc08b4:	mov    $0x8881300,%edi
+ 3dc08b9:	call   408de0 <pthread_mutex_lock@plt>
+ 3dc08be:	test   %eax,%eax
+ 3dc08c0:	jne    3dc08e2 <open64@plt+0x39b744a>
+ 3dc08c2:	movslq %ebx,%rsi
+ 3dc08c5:	mov    0x2f8c(%rbp,%rsi,4),%ebx
+ 3dc08cc:	test   %r12,%r12
+ 3dc08cf:	je     3dc08db <open64@plt+0x39b7443>
+ 3dc08d1:	mov    $0x8881300,%edi
+ 3dc08d6:	call   408dd0 <pthread_mutex_unlock@plt>
+ 3dc08db:	mov    %ebx,%eax
+ 3dc08dd:	pop    %rbx
+ 3dc08de:	pop    %rbp
+ 3dc08df:	pop    %r12
+ 3dc08e1:	ret
+ 3dc08e2:	mov    %eax,%edi
+ 3dc08e4:	call   430690 <open64@plt+0x271f8>
+ 3dc08e9:	nop
+ 3dc08ea:	nopw   0x0(%rax,%rax,1)
+ 3dc08f0:	push   %r15
+ 3dc08f2:	push   %r14
+ 3dc08f4:	push   %r13
+ 3dc08f6:	push   %r12
+ 3dc08f8:	push   %rbp
+ 3dc08f9:	push   %rbx
+ 3dc08fa:	sub    $0x18,%rsp
+ 3dc08fe:	mov    0x140(%rdi),%rcx
+ 3dc0905:	test   %rcx,%rcx
+ 3dc0908:	jne    3dc0920 <open64@plt+0x39b7488>
+ 3dc090a:	xor    %ebx,%ebx
+ 3dc090c:	add    $0x18,%rsp
+ 3dc0910:	mov    %rbx,%rax
+ 3dc0913:	pop    %rbx
+ 3dc0914:	pop    %rbp
+ 3dc0915:	pop    %r12
+ 3dc0917:	pop    %r13
+ 3dc0919:	pop    %r14
+ 3dc091b:	pop    %r15
+ 3dc091d:	ret
+ 3dc091e:	xchg   %ax,%ax
+ 3dc0920:	mov    0x4bf54c1(%rip),%rbp        # 89b5de8 <stderr@GLIBC_2.2.5+0x12b4a8>
+ 3dc0927:	test   %rbp,%rbp
+ 3dc092a:	je     3dc0b18 <open64@plt+0x39b7680>
+ 3dc0930:	mov    0x28(%rbp),%rax
+ 3dc0934:	movzwl %si,%ebx
+ 3dc0937:	test   %rax,%rax
+ 3dc093a:	je     3dc0b40 <open64@plt+0x39b76a8>
+ 3dc0940:	mov    -0x10(%rax),%r8
+ 3dc0944:	cmp    %r8,%rbx
+ 3dc0947:	jge    3dc0b43 <open64@plt+0x39b76ab>
+ 3dc094d:	mov    0x38(%rbp),%rax
+ 3dc0951:	test   %rax,%rax
+ 3dc0954:	je     3dc0a70 <open64@plt+0x39b75d8>
+ 3dc095a:	mov    -0x10(%rax),%r8
+ 3dc095e:	cmp    %r8,%rbx
+ 3dc0961:	jge    3dc0a73 <open64@plt+0x39b75db>
+ 3dc0967:	cmpb   $0x0,(%rax,%rbx,1)
+ 3dc096b:	je     3dc0bd0 <open64@plt+0x39b7738>
+ 3dc0971:	mov    %ecx,%eax
+ 3dc0973:	mov    0xc4(%rbp),%edx
+ 3dc0979:	cmp    %edx,%ecx
+ 3dc097b:	jae    3dc0c30 <open64@plt+0x39b7798>
+ 3dc0981:	xor    %edx,%edx
+ 3dc0983:	mov    0xb0(%rbp),%rsi
+ 3dc098a:	shr    $0x20,%rcx
+ 3dc098e:	divl   0xc0(%rbp)
+ 3dc0994:	mov    %edx,%edx
+ 3dc0996:	lea    (%rdx,%rdx,4),%r12
+ 3dc099a:	shl    $0x5,%r12
+ 3dc099e:	add    (%rsi,%rax,8),%r12
+ 3dc09a2:	mov    0x98(%r12),%eax
+ 3dc09aa:	cmp    %ecx,%eax
+ 3dc09ac:	jne    3dc0bf8 <open64@plt+0x39b7760>
+ 3dc09b2:	mov    (%r12),%r13
+ 3dc09b6:	test   %r13,%r13
+ 3dc09b9:	je     3dc0c54 <open64@plt+0x39b77bc>
+ 3dc09bf:	mov    $0x408c20,%r14d
+ 3dc09c5:	test   %r14,%r14
+ 3dc09c8:	je     3dc09da <open64@plt+0x39b7542>
+ 3dc09ca:	mov    %r13,%rdi
+ 3dc09cd:	call   408de0 <pthread_mutex_lock@plt>
+ 3dc09d2:	test   %eax,%eax
+ 3dc09d4:	jne    3dc0c5e <open64@plt+0x39b77c6>
+ 3dc09da:	cmpb   $0x0,0x91(%r12)
+ 3dc09e3:	lea    0x10(%rbp),%rdi
+ 3dc09e7:	jne    3dc0ab0 <open64@plt+0x39b7618>
+ 3dc09ed:	mov    0x48(%rbp),%rax
+ 3dc09f1:	test   %rax,%rax
+ 3dc09f4:	je     3dc0a70 <open64@plt+0x39b75d8>
+ 3dc09f6:	mov    -0x10(%rax),%r8
+ 3dc09fa:	cmp    %r8,%rbx
+ 3dc09fd:	jge    3dc0a73 <open64@plt+0x39b75db>
+ 3dc09ff:	mov    (%rax,%rbx,4),%ecx
+ 3dc0a02:	mov    0x68(%r12),%rax
+ 3dc0a07:	xor    %r8d,%r8d
+ 3dc0a0a:	mov    %rcx,%rdx
+ 3dc0a0d:	test   %rax,%rax
+ 3dc0a10:	je     3dc0bb0 <open64@plt+0x39b7718>
+ 3dc0a16:	mov    -0x10(%rax),%r8
+ 3dc0a1a:	cmp    %r8,%rcx
+ 3dc0a1d:	jge    3dc0bb0 <open64@plt+0x39b7718>
+ 3dc0a23:	cmpq   $0x0,(%rax,%rcx,8)
+ 3dc0a28:	jne    3dc0b90 <open64@plt+0x39b76f8>
+ 3dc0a2e:	cmpb   $0x0,0x90(%r12)
+ 3dc0a37:	je     3dc0b80 <open64@plt+0x39b76e8>
+ 3dc0a3d:	mov    0x88(%r12),%rax
+ 3dc0a45:	test   %rax,%rax
+ 3dc0a48:	je     3dc0a70 <open64@plt+0x39b75d8>
+ 3dc0a4a:	mov    -0x10(%rax),%r8
+ 3dc0a4e:	cmp    %r8,%rbx
+ 3dc0a51:	jge    3dc0a73 <open64@plt+0x39b75db>
+ 3dc0a53:	mov    (%rax,%rbx,8),%rbx
+ 3dc0a57:	test   %r14,%r14
+ 3dc0a5a:	je     3dc090c <open64@plt+0x39b7474>
+ 3dc0a60:	mov    %r13,%rdi
+ 3dc0a63:	call   408dd0 <pthread_mutex_unlock@plt>
+ 3dc0a68:	jmp    3dc090c <open64@plt+0x39b7474>
+ 3dc0a6d:	nopl   (%rax)
+ 3dc0a70:	xor    %r8d,%r8d
+ 3dc0a73:	push   $0x1
+ 3dc0a75:	mov    $0x6356627,%r9d
+ 3dc0a7b:	mov    %rbx,%rcx
+ 3dc0a7e:	push   $0x0
+ 3dc0a80:	push   $0x5917339
+ 3dc0a85:	push   $0x599e059
+ 3dc0a8a:	mov    $0xc1,%edx
+ 3dc0a8f:	mov    $0x51ec6cb,%esi
+ 3dc0a94:	mov    $0x51ec748,%edi
+ 3dc0a99:	call   4812660 <open64@plt+0x44091c8>
+ 3dc0a9e:	add    $0x20,%rsp
+ 3dc0aa2:	call   47c4c60 <open64@plt+0x43bb7c8>
+ 3dc0aa7:	ud2
+ 3dc0aa9:	nopl   0x0(%rax)
+ 3dc0ab0:	mov    %r12,%rsi
+ 3dc0ab3:	mov    %rdi,0x8(%rsp)
+ 3dc0ab8:	xor    %r15d,%r15d
+ 3dc0abb:	call   3d767b0 <open64@plt+0x396d318>
+ 3dc0ac0:	mov    0x80(%rbp),%rax
+ 3dc0ac7:	mov    0x8(%rsp),%rdi
+ 3dc0acc:	test   %rax,%rax
+ 3dc0acf:	je     3dc09ed <open64@plt+0x39b7555>
+ 3dc0ad5:	mov    %r15d,%edx
+ 3dc0ad8:	cmp    %r15,-0x10(%rax)
+ 3dc0adc:	jle    3dc09ed <open64@plt+0x39b7555>
+ 3dc0ae2:	cmpb   $0x0,(%rax,%r15,1)
+ 3dc0ae7:	mov    %rdi,0x8(%rsp)
+ 3dc0aec:	mov    %r12,%rsi
+ 3dc0aef:	je     3dc0ba0 <open64@plt+0x39b7708>
+ 3dc0af5:	call   3d4c0b0 <open64@plt+0x3942c18>
+ 3dc0afa:	mov    0x8(%rsp),%rdi
+ 3dc0aff:	mov    0x80(%rbp),%rax
+ 3dc0b06:	add    $0x1,%r15
+ 3dc0b0a:	test   %rax,%rax
+ 3dc0b0d:	jne    3dc0ad5 <open64@plt+0x39b763d>
+ 3dc0b0f:	jmp    3dc09ed <open64@plt+0x39b7555>
+ 3dc0b14:	nopl   0x0(%rax)
+ 3dc0b18:	xor    %r9d,%r9d
+ 3dc0b1b:	xor    %r8d,%r8d
+ 3dc0b1e:	mov    $0x7c1daf8,%ecx
+ 3dc0b23:	mov    $0x207,%edx
+ 3dc0b28:	mov    $0x7c1db38,%esi
+ 3dc0b2d:	mov    $0x7c1c0cc,%edi
+ 3dc0b32:	call   48085d0 <open64@plt+0x43ff138>
+ 3dc0b37:	jmp    3dc090a <open64@plt+0x39b7472>
+ 3dc0b3c:	nopl   0x0(%rax)
+ 3dc0b40:	xor    %r8d,%r8d
+ 3dc0b43:	push   $0x0
+ 3dc0b45:	mov    $0x5a60293,%r9d
+ 3dc0b4b:	mov    %rbx,%rcx
+ 3dc0b4e:	mov    $0xb4,%edx
+ 3dc0b53:	push   $0x0
+ 3dc0b55:	mov    $0x7b919b8,%esi
+ 3dc0b5a:	mov    $0x7b8eea6,%edi
+ 3dc0b5f:	push   $0x5917339
+ 3dc0b64:	push   $0x7b8eeb9
+ 3dc0b69:	call   4812660 <open64@plt+0x44091c8>
+ 3dc0b6e:	add    $0x20,%rsp
+ 3dc0b72:	jmp    3dc090a <open64@plt+0x39b7472>
+ 3dc0b77:	nopw   0x0(%rax,%rax,1)
+ 3dc0b80:	xor    %ebx,%ebx
+ 3dc0b82:	jmp    3dc0a57 <open64@plt+0x39b75bf>
+ 3dc0b87:	nopw   0x0(%rax,%rax,1)
+ 3dc0b90:	mov    %r12,%rsi
+ 3dc0b93:	call   3d3d530 <open64@plt+0x3934098>
+ 3dc0b98:	jmp    3dc0a2e <open64@plt+0x39b7596>
+ 3dc0b9d:	nopl   (%rax)
+ 3dc0ba0:	call   3d37040 <open64@plt+0x392dba8>
+ 3dc0ba5:	mov    0x8(%rsp),%rdi
+ 3dc0baa:	jmp    3dc0aff <open64@plt+0x39b7667>
+ 3dc0baf:	nop
+ 3dc0bb0:	push   $0x1
+ 3dc0bb2:	mov    $0x6356627,%r9d
+ 3dc0bb8:	push   $0x0
+ 3dc0bba:	push   $0x5917339
+ 3dc0bbf:	push   $0x599e059
+ 3dc0bc4:	jmp    3dc0a8a <open64@plt+0x39b75f2>
+ 3dc0bc9:	nopl   0x0(%rax)
+ 3dc0bd0:	xor    %r9d,%r9d
+ 3dc0bd3:	xor    %r8d,%r8d
+ 3dc0bd6:	mov    $0x7b919e8,%ecx
+ 3dc0bdb:	mov    $0xb5,%edx
+ 3dc0be0:	mov    $0x7b919b8,%esi
+ 3dc0be5:	mov    $0x7b8eea6,%edi
+ 3dc0bea:	call   48085d0 <open64@plt+0x43ff138>
+ 3dc0bef:	jmp    3dc090a <open64@plt+0x39b7472>
+ 3dc0bf4:	nopl   0x0(%rax)
+ 3dc0bf8:	add    $0x80000000,%eax
+ 3dc0bfd:	cmp    $0x7ffffffe,%eax
+ 3dc0c02:	ja     3dc0c30 <open64@plt+0x39b7798>
+ 3dc0c04:	sub    $0x8,%rsp
+ 3dc0c08:	mov    $0x101,%edx
+ 3dc0c0d:	xor    %r9d,%r9d
+ 3dc0c10:	mov    $0x51f2ee0,%r8d
+ 3dc0c16:	push   $0x0
+ 3dc0c18:	mov    $0x51f2998,%ecx
+ 3dc0c1d:	mov    $0x51ebeaf,%esi
+ 3dc0c22:	mov    $0x51ebecc,%edi
+ 3dc0c27:	call   4807310 <open64@plt+0x43fde78>
+ 3dc0c2c:	pop    %rax
+ 3dc0c2d:	pop    %rdx
+ 3dc0c2e:	xchg   %ax,%ax
+ 3dc0c30:	xor    %r9d,%r9d
+ 3dc0c33:	xor    %r8d,%r8d
+ 3dc0c36:	mov    $0x5a602c0,%ecx
+ 3dc0c3b:	mov    $0xb8,%edx
+ 3dc0c40:	mov    $0x7b919b8,%esi
+ 3dc0c45:	mov    $0x7b8eea6,%edi
+ 3dc0c4a:	call   48085d0 <open64@plt+0x43ff138>
+ 3dc0c4f:	jmp    3dc090a <open64@plt+0x39b7472>
+ 3dc0c54:	mov    $0x1,%edi
+ 3dc0c59:	call   430690 <open64@plt+0x271f8>
+ 3dc0c5e:	mov    %eax,%edi
+ 3dc0c60:	call   430690 <open64@plt+0x271f8>
+ 3dc0c65:	nop
+ 3dc0c66:	cs nopw 0x0(%rax,%rax,1)
+ 3dc0c70:	push   %r12
+ 3dc0c72:	mov    $0x408c20,%r12d
+ 3dc0c78:	push   %rbp
+ 3dc0c79:	mov    %rdi,%rbp
+ 3dc0c7c:	push   %rbx
+ 3dc0c7d:	mov    %esi,%ebx
+ 3dc0c7f:	test   %r12,%r12
+ 3dc0c82:	je     3dc0c92 <open64@plt+0x39b77fa>
+ 3dc0c84:	mov    $0x88812c0,%edi
+ 3dc0c89:	call   408de0 <pthread_mutex_lock@plt>
+ 3dc0c8e:	test   %eax,%eax
+ 3dc0c90:	jne    3dc0cb2 <open64@plt+0x39b781a>
+ 3dc0c92:	movslq %ebx,%rsi
+ 3dc0c95:	mov    0x2f84(%rbp,%rsi,4),%ebx
+ 3dc0c9c:	test   %r12,%r12
+ 3dc0c9f:	je     3dc0cab <open64@plt+0x39b7813>
+ 3dc0ca1:	mov    $0x88812c0,%edi
+ 3dc0ca6:	call   408dd0 <pthread_mutex_unlock@plt>
+ 3dc0cab:	mov    %ebx,%eax
+ 3dc0cad:	pop    %rbx
+ 3dc0cae:	pop    %rbp
+ 3dc0caf:	pop    %r12
+ 3dc0cb1:	ret
+ 3dc0cb2:	mov    %eax,%edi
+ 3dc0cb4:	call   430690 <open64@plt+0x271f8>
+ 3dc0cb9:	nop
+ 3dc0cba:	nopw   0x0(%rax,%rax,1)
+ 3dc0cc0:	push   %r12
+ 3dc0cc2:	push   %rbp
+ 3dc0cc3:	xor    %ebp,%ebp
+ 3dc0cc5:	push   %rbx
+ 3dc0cc6:	sub    $0x10,%rsp
+ 3dc0cca:	mov    0x140(%rdi),%rdx
+ 3dc0cd1:	test   %rdx,%rdx
+ 3dc0cd4:	jne    3dc0ce8 <open64@plt+0x39b7850>
+ 3dc0cd6:	add    $0x10,%rsp
+ 3dc0cda:	mov    %rbp,%rax
+ 3dc0cdd:	pop    %rbx
+ 3dc0cde:	pop    %rbp
+ 3dc0cdf:	pop    %r12
+ 3dc0ce1:	ret
+ 3dc0ce2:	nopw   0x0(%rax,%rax,1)
+ 3dc0ce8:	mov    $0x408c20,%r12d
+ 3dc0cee:	test   %r12,%r12
+ 3dc0cf1:	je     3dc0d0b <open64@plt+0x39b7873>
+ 3dc0cf3:	mov    %rdi,%rbx
+ 3dc0cf6:	mov    $0x88812c0,%edi
+ 3dc0cfb:	call   408de0 <pthread_mutex_lock@plt>

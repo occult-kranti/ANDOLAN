@@ -21,6 +21,7 @@ const MAX_PELVIS_COMPRESSION_M := .14
 # An inactive title actor can sit slightly above its real collision floor.
 # Resolve only a nearby flat support plane; never move the actor or its capsule.
 const IDLE_SUPPORT_PROBE_M := .08
+const IDLE_SUPPORT_SETTLE_S := .12
 const ACTIONS := {
 	"kodanda":["draw","release",false],
 	"piercing_dawn":["piercing_draw","piercing_release",false],
@@ -85,6 +86,9 @@ var floor_y := 0.0
 var idle_support_y := {"L":0.0,"R":0.0}
 var support_exclude: Array[RID] = []
 var idle_support_ready := true
+var idle_support_pending := {"L":false,"R":false}
+var idle_support_age := {"L":IDLE_SUPPORT_SETTLE_S,"R":IDLE_SUPPORT_SETTLE_S}
+var idle_support_from_y := {"L":0.0,"R":0.0}
 var foot_locks := {"L":false,"R":false}
 var foot_targets := {"L":Vector3.ZERO,"R":Vector3.ZERO}
 var max_contact_error := 0.0
@@ -152,6 +156,7 @@ func configure(visual: Node, animator: AnimationPlayer = null) -> bool:
 	# An actor's first modifier can precede its first physics update. Wait for
 	# that one safe plane attempt rather than locking a known fallback forever.
 	idle_support_ready=support_exclude.is_empty()
+	idle_support_pending={"L":not idle_support_ready,"R":not idle_support_ready}
 	name="RamaMotion"
 	configured=true
 	_make_arrow()
@@ -246,6 +251,13 @@ func update_motion(delta: float, state: Dictionary) -> bool:
 		if action_fade>=.16:
 			action=""; action_stage="none"; action_blend=0
 	pending_delta=delta
+	for side in ["L","R"]:
+		idle_support_age[side]=minf(IDLE_SUPPORT_SETTLE_S,idle_support_age[side]+delta)
+		# Only scene entry/reset idle acquires gradually. Ordinary movement,
+		# landing and authored actions keep their existing support behavior.
+		if locomotion!="idle" or action_stage!="none":
+			idle_support_pending[side]=false
+			idle_support_age[side]=IDLE_SUPPORT_SETTLE_S
 	_update_idle_support()
 	return true
 
@@ -319,6 +331,9 @@ func cancel(reason := "reset") -> void:
 	aim_weight=0; aim_target=0; aim_pitch=0; aim_yaw=0
 	action_aim_entry_weight=0; action_aim_cancel_weight=0
 	foot_locks={"L":false,"R":false}
+	# Bare imported previews use their supplied plane immediately, as before.
+	idle_support_pending={"L":not support_exclude.is_empty(),"R":not support_exclude.is_empty()}
+	idle_support_age={"L":IDLE_SUPPORT_SETTLE_S,"R":IDLE_SUPPORT_SETTLE_S}
 	if configured: _transition(.16)
 
 func _sample(clip: String, normalized: float) -> Dictionary:
@@ -406,12 +421,24 @@ func _apply_contact() -> void:
 				# Keep the original fallback pose before the first physics update,
 				# but do not call that provisional target a fixed ground anchor.
 				foot_locks[side]=locomotion!="idle" or idle_support_ready
+				if locomotion=="idle" and action_stage=="none" and idle_support_ready and idle_support_pending[side]:
+					idle_support_pending[side]=false
+					var previous_y:float=(rig.global_transform*last_globals[foot].origin).y
+					var descent:float=previous_y-foot_targets[side].y
+					# Ease only a nearby downward correction; never delay lifting
+					# an embedded sole, and never interpolate a world plant anchor.
+					if descent>.001 and descent<=IDLE_SUPPORT_PROBE_M:
+						idle_support_from_y[side]=previous_y
+						idle_support_age[side]=0.0
 			var target: Vector3=foot_targets[side]
 			# A teleport or very sharp turn replants; presentation cannot drag the
 			# controller root or stretch a leg beyond its physical segment lengths.
 			if Vector2(target.x-current.x,target.z-current.z).length()>.36:
 				target=Vector3(current.x,target.y,current.z); foot_targets[side]=target
-			var local_target:=rig.global_transform.affine_inverse()*target
+			var solved_target:=target
+			if locomotion=="idle" and idle_support_age[side]<IDLE_SUPPORT_SETTLE_S:
+				solved_target.y=lerpf(idle_support_from_y[side],target.y,_smooth(idle_support_age[side]/IDLE_SUPPORT_SETTLE_S))
+			var local_target:=rig.global_transform.affine_inverse()*solved_target
 			targets[side]=local_target
 			var hip:=rig.get_bone_global_pose(rig.find_bone("upperleg01."+side)).origin
 			var length:=0.0

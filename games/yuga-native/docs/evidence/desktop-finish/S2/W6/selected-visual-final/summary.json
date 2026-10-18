@@ -1,0 +1,69 @@
+{
+  "catalog": "visual",
+  "checked_sources_unchanged": true,
+  "checks": 6,
+  "engine_probe": {
+    "command": [
+      "/usr/local/bin/godot",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.041
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "schema": 1,
+  "scope": "Headless visual component, real resource and native identity contracts only; no rendered-art, continuous-motion, physical-GPU, online or release acceptance.",
+  "selected_suites": [
+    "desktop-release-continuity"
+  ],
+  "sources_after_sha256": "1a2bad862f3faab08d99cabfd33ae78c67c8c5c0eeea1f309b6fe41944e907d3",
+  "sources_before_sha256": "1a2bad862f3faab08d99cabfd33ae78c67c8c5c0eeea1f309b6fe41944e907d3",
+  "suites": [
+    {
+      "checks": 6,
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_s1_release_cases.gd",
+        "--",
+        "--report=/tmp/yuga-s2-selected-visual-r2/reports/desktop-release-continuity.json",
+        "--baseline-script=res://docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd",
+        "--compact-report"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "desktop-release-continuity",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/desktop-release-continuity.json",
+      "report_sha256": "6607e4defc8cb9ec73fd2ffffdb439d6530c50cd9c5b81e2fa44cc12d8fc1461",
+      "stderr": "logs/desktop-release-continuity.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/desktop-release-continuity.stdout",
+      "stdout_sha256": "1ea43d0bb38b3640e00d6fae113a364e0db1752d1f526b03b2b5f617c5cafed0",
+      "timed_out": false,
+      "wall_seconds": 20.477
+    }
+  ]
+}

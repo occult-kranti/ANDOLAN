@@ -296,7 +296,7 @@ RAMA_SURFACE_PARENT_SHA = '5026675c7af8b83412eb375b9883ffe52efd883e20c7fd9594bdf
 RAMA_SURFACE_OLD_BINDING = 'art/hero-finish/history/schema4-surface-finish.gd'
 RAMA_SURFACE_DEPENDENCIES = {
     'scripts/rama_surface_finish.gd':
-        '473a33c30d6cc2df093c28be28b52c8ef4554c7b903817e08d1aa29342941c24',
+        '6eb51ce8f34a3d5a33deb142ca92aaa20505516b0ee8fff3ca445bcab603078a',
     'art/hero-finish/build_g1_maps.py':
         '7082d83da791f1af16e61c082c40a0809321a57cfd024ec39ba34116ecfe0fbe',
     'assets/hero-finish/g1-manifest.json':
@@ -849,7 +849,7 @@ def git_context() -> dict:
 
 
 FIRST_LOAD_RESOURCES = ('scenes/boot.tscn', 'scripts/boot.gd',
-                        'scripts/scene_transition.gd', 'scripts/launch_shell.gd',
+                        'scripts/scene_transition.gd', 'scripts/loading_presentation.gd', 'scripts/launch_shell.gd',
                         'scripts/hero_ui_theme.gd')
 GRAPHICS_SCRIPT_RESOURCES = (
     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
