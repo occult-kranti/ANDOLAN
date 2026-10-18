@@ -291,7 +291,7 @@ func run() -> void:
 	await ticks(100)
 	await query(func(): scene.relays.advance(.2))
 	scene._update_practice_hud()
-	record("simultaneous_core_draw_stops_relays_and_has_draw_copy",scene.army.winner=="draw" and freeze==scene.relays.report() and scene.goal_label.text.begins_with("Draw") and not "wins" in scene.goal_label.text,{"text":scene.goal_label.text})
+	record("simultaneous_core_draw_stops_relays_and_has_draw_copy",scene.army.winner=="draw" and freeze==scene.relays.report() and scene.objective_label.text.begins_with("Draw") and not "wins" in scene.objective_label.text and scene.goal_label.text.contains("restart"),{"objective":scene.objective_label.text,"next_action":scene.goal_label.text})
 	scene._restart_army()
 	scene.army.set_physics_process(false)
 	scene.player.set_physics_process(false)
@@ -433,7 +433,7 @@ func check_physics() -> void:
 	)
 
 func check_layout() -> void:
-	var expected_actions := ["Continue practice","Rama · abilities and controls","Legacy invocation studies","Siege practice · enter drill","Day / night","Visit Lotus relay","Visit Lanka coast","Visit Metro gardens","Controls / remap keys","Restart lane practice","WorldVolume","Return to courtyard","Quit game"]
+	var expected_actions := ["Continue practice","Restart lane practice","Rama · abilities and controls","Legacy invocation studies","Siege practice · enter drill","Day / night","Visit Lotus relay","Visit Lanka coast","Visit Metro gardens","Controls / remap keys","WorldVolume","Return to courtyard","Quit game"]
 	for size_ in [Vector2i(960,600),Vector2i(1280,720)]:
 		root.size = size_
 		root.content_scale_size = size_
