@@ -1,0 +1,92 @@
+{
+  "catalog": "visual",
+  "checked_sources_unchanged": true,
+  "checks": 310,
+  "engine_probe": {
+    "command": [
+      "/usr/local/bin/godot",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.041
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "schema": 1,
+  "scope": "Headless visual component, real resource and native identity contracts only; no rendered-art, continuous-motion, physical-GPU, online or release acceptance.",
+  "selected_suites": [
+    "native-content-pins",
+    "native-contract-admission"
+  ],
+  "sources_after_sha256": "95f48b4b46d658d47d15ebe1e6bedb32475daa3ae9be277f4df03db2b692e81d",
+  "sources_before_sha256": "95f48b4b46d658d47d15ebe1e6bedb32475daa3ae9be277f4df03db2b692e81d",
+  "suites": [
+    {
+      "checks": 51,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/ANDOLAN/games/yuga-native/tools/check-native-contracts.py",
+        "--report=/tmp/yuga-content6-catalog/reports/native-content-pins.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "native-content-pins",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/native-content-pins.json",
+      "report_sha256": "05937609579db2064d5e6c94469b4ecb412eb9c8a3c0e902331173e17e4fbedb",
+      "stderr": "logs/native-content-pins.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/native-content-pins.stdout",
+      "stdout_sha256": "61c97a57065683f5a785d239e3ae2639f30036659870b87c03fc478a728325d1",
+      "timed_out": false,
+      "wall_seconds": 0.061
+    },
+    {
+      "checks": 259,
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/native_contract_cases.gd",
+        "--",
+        "--report=/tmp/yuga-content6-catalog/reports/native-contract-admission.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "native-contract-admission",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/native-contract-admission.json",
+      "report_sha256": "07659dd5c6de6bbec779e2ffd8620753168a53e4338217e9a1ddd39d4154644c",
+      "stderr": "logs/native-contract-admission.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/native-contract-admission.stdout",
+      "stdout_sha256": "2132eb17f1b6ed90affd7a3b9a4f78a623ef1960b2c358bf8a00b45325f501de",
+      "timed_out": false,
+      "wall_seconds": 0.934
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "task": "R4-02",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "fixtures": [
+    {
+      "id": "courtyard-start-stop-turn",
+      "scene": "res://scenes/courtyard.tscn",
+      "start": [
+        0,
+        0.0001,
+        12
+      ],
+      "support_y": 0.0,
+      "support": "CourtyardFloor axis-aligned box top",
+      "route_xz": [
+        [
+          0,
+          12
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "controls": "Actual move_forward until z6, release until speed<.12, move_right until x3, release, move_back until z9, release. Use measured threshold crossings, not frame-snapped placement. Log expected targets versus actual capsule route.",
+      "check_bounds": [
+        -22,
+        22,
+        -25,
+        25
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "route_samples": 51,
+      "minimum_edge_clearance_after_capsule_radius_m": 12.71,
+      "source_COL_overlap_candidates": [],
+      "camera_foreground_ray_hits": [],
+      "support_triangle_ray": [],
+      "projection_envelope": {
+        "min": [
+          471.7934808703814,
+          178.73086409447075
+        ],
+        "max": [
+          808.2065191296185,
+          763.8882242186719
+        ],
+        "all_24px": true
+      },
+      "passed": true
+    },
+    {
+      "id": "courtyard-gallery-jump",
+      "scene": "res://scenes/courtyard.tscn",
+      "start": [
+        19,
+        0.4400999976158142,
+        -1
+      ],
+      "support_y": 0.4399999976158142,
+      "support": "existing COL_BEVEL_Indigo_glazed_stone top",
+      "route_xz": [
+        [
+          19,
+          -1
+        ]
+      ],
+      "controls": "Settle on existing deck, press/release jump once through InputMap, allow normal gravity and landing, then hold idle. Do not write root height or floor state during take.",
+      "check_bounds": [
+        15.40500259399414,
+        20.994998931884766,
+        -17.44499969482422,
+        17.44499969482422
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "route_samples": 1,
+      "minimum_edge_clearance_after_capsule_radius_m": 1.7049989318847656,
+      "source_COL_overlap_candidates": [],
+      "camera_foreground_ray_hits": [],
+      "support_triangle_ray": [
+        {
+          "distance_m": 2.5600000023841853,
+          "material": "Indigo_glazed_stone",
+          "object": "COL_BEVEL_Indigo_glazed_stone",
+          "point": [
+            19.0,
+            0.43999999761581465,
+            -1.0
+          ]
+        }
+      ],
+      "projection_envelope": {
+        "min": [
+          471.7934808703814,
+          178.73086409447075
+        ],
+        "max": [
+          808.2065191296185,
+          763.8882242186719
+        ],
+        "all_24px": true
+      },
+      "passed": true
+    },
+    {
+      "id": "confluence-deck-land",
+      "scene": "res://scenes/confluence_world.tscn",
+      "start": [
+        -20,
+        9.5001,
+        -88
+      ],
+      "support_y": 8.0,
+      "support": "sun-lift-west-deck top: manifest base0 + height8",
+      "route_xz": [
+        [
+          -20,
+          -88
+        ]
+      ],
+      "controls": "One explicit documented initial airborne placement at1.5m above deck; zero input and zero initial velocity, normal unpaused gravity/collision to landing; no traversal flight/grapple active. Report actual first contact normal, collider and time. Then one ordinary jump and settle.",
+      "check_bounds": [
+        -24,
+        -16,
+        -92,
+        -84
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "route_samples": 1,
+      "minimum_edge_clearance_after_capsule_radius_m": 3.71,
+      "source_COL_overlap_candidates": [],
+      "camera_foreground_ray_hits": [],
+      "support_triangle_ray": [],
+      "projection_envelope": {
+        "min": [
+          471.7934808703814,
+          178.73086409447075
+        ],
+        "max": [
+          808.2065191296185,
+          763.8882242186719
+        ],
+        "all_24px": true
+      },
+      "passed": true
+    }
+  ],
+  "camera": {
+    "offset_from_horizontal_player_and_support_m": [
+      0,
+      2.4,
+      7
+    ],
+    "target_offset_m": [
+      0,
+      1.7,
+      0
+    ],
+    "fov_degrees": 52,
+    "near_m": 0.05,
+    "far_m": 180,
+    "viewport": [
+      1280,
+      960
+    ],
+    "follow": "Track actual horizontal player coordinates only. Hold camera Y relative to source support plane, so jumps and floor contact stay visible. No camera fit to changing candidate bounds."
+  },
+  "source_jump": {
+    "upward_speed_mps": 7.2,
+    "gravity_mps2": 18.0,
+    "continuous_ballistic_apex_above_support_m": 1.44,
+    "ideal_return_seconds": 0.8,
+    "limit": "Analytic reference, not measured discrete capsule trajectory; runtime collision/physics must report its actual apex/time."
+  },
+  "required_runtime_samples": [
+    "physics tick/time and actual input",
+    "capsule global transform/velocity/is_on_floor/get_floor_normal",
+    "slide collider identity/contact position/normal",
+    "final modifier-processed bone transforms and skin vertices",
+    "sole minimum support-plane signed distance",
+    "planted anchor original world position, drift and release state",
+    "spring arm hit length, camera transform and head/feet/bow projected bounds",
+    "authority/action clocks if an action is active"
+  ],
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role02/check_ground_fixtures.py": "ae6abbacfae302b80d2f7260d70dcd4ccccdb4de0d2c4ac2df27b82bee409bed",
+    "/workspace/ANDOLAN/games/yuga-native/assets/environment/lanka_courtyard.glb": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+    "/workspace/ANDOLAN/games/yuga-native/assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/player.gd": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/courtyard.gd": "3216d9947ec7423ea53dd62ce058a996bf4529a3b9cdf8e9b559d3e3619fbba4",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/confluence_world.gd": "42a6ec8df335e3fd11674ef723eff8b027f636cbbc6d3a51f80eb256d63b802f",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1"
+  },
+  "passed": true,
+  "limits": [
+    "Source surfaces are existing axis-aligned flat planes with UP normals; no sloped-ground acceptance.",
+    "Source route samples/broadphase are not executed collision sweeps or input.",
+    "View envelope is conservative geometry design; current imported fullbody and actual world occlusion remain native gates.",
+    "Accepted motion baseline remains unchanged; all role05 release candidates remain rejected."
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "engine": "Godot4.6.3.stable.official.7d41c59c4",
+  "cpu_affinity": "0,1",
+  "successful_reports": {
+    "motion-cases-r4.json": {
+      "passed": true,
+      "count": 39,
+      "exit_code": 0
+    },
+    "comparison-r2.json": {
+      "passed": true,
+      "count": 12,
+      "exit_code": 0
+    },
+    "comparison-r3.json": {
+      "passed": true,
+      "count": 12,
+      "exit_code": 0
+    },
+    "comparison-r1.json": {
+      "passed": true,
+      "count": 12,
+      "exit_code": 0
+    },
+    "events-r3a.json": {
+      "passed": true,
+      "count": 12,
+      "exit_code": 0
+    },
+    "continuity-r3a.json": {
+      "passed": true,
+      "count": 66,
+      "exit_code": 0
+    },
+    "motion-cases-r3a.json": {
+      "passed": true,
+      "count": 39,
+      "exit_code": 0
+    },
+    "comparison-r4.json": {
+      "passed": true,
+      "count": 12,
+      "exit_code": 0
+    },
+    "comparison-r3a.json": {
+      "passed": true,
+      "count": 12,
+      "exit_code": 0
+    },
+    "events-r4.json": {
+      "passed": true,
+      "count": 12,
+      "exit_code": 0
+    },
+    "continuity-r4.json": {
+      "passed": true,
+      "count": 66,
+      "exit_code": 0
+    }
+  },
+  "failed_runs": [
+    {
+      "name": "r2 initial parse",
+      "exit_code": 124,
+      "reason": "Variant prospective lacked explicit Vector3 annotation; engine remained in erroredSceneTree until timeout; retained source/log."
+    },
+    {
+      "name": "r3 initial parse",
+      "exit_code": 124,
+      "reason": "Variant support lacked explicit bool annotation; retained source/log."
+    },
+    {
+      "name": "dense expanded probe",
+      "exit_code": 143,
+      "reason": "Explicitly terminated owned run after estimating timeout; retained source/log. Replaced with declared1/96vertex sample and separate existing fullsole suite."
+    }
+  ],
+  "command_template": "taskset -c 0,1 timeout 180s godot --headless --path games/yuga-native --script <probe> -- --candidate-script=<absoluteCandidate> --baseline-script=<absoluteBaseline> --report=<absoluteReport>",
+  "scope": "No renderer/import; numerical execution only. Successful runner flags do not mean motion accepted."
+}

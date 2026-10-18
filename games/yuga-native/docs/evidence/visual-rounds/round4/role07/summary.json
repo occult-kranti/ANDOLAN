@@ -1,0 +1,3075 @@
+{
+  "task": "R4-07",
+  "probe_integrity_passed": true,
+  "integrity_check_count": 15,
+  "candidate_accepted": false,
+  "production_changes": [],
+  "checks": [
+    {
+      "name": "before and after raw/import/controller/library/fixture pins exact",
+      "passed": true
+    },
+    {
+      "name": "exact approved R2 raw near source",
+      "passed": true
+    },
+    {
+      "name": "exact source-verified R2 imported scene",
+      "passed": true
+    },
+    {
+      "name": "279 pre-solve queries and 558 solver outputs",
+      "passed": true
+    },
+    {
+      "name": "all requested 30 60 120 rates represented",
+      "passed": true
+    },
+    {
+      "name": "both native algorithms represented",
+      "passed": true
+    },
+    {
+      "name": "five joints four existing segments on every output",
+      "passed": true
+    },
+    {
+      "name": "one active native callback per query",
+      "passed": true
+    },
+    {
+      "name": "finite chain transforms",
+      "passed": true
+    },
+    {
+      "name": "native segment lengths preserved within one micrometre",
+      "passed": true
+    },
+    {
+      "name": "non-leg origins preserved within one micrometre",
+      "passed": true
+    },
+    {
+      "name": "native internal settings reset per query",
+      "passed": true
+    },
+    {
+      "name": "clean final native log",
+      "passed": true
+    },
+    {
+      "name": "exact serialized pose tape digest",
+      "passed": true
+    },
+    {
+      "name": "resetting native cache reproduces every prior metric",
+      "passed": true
+    }
+  ],
+  "summary": [
+    {
+      "solver": "FABRIK3D",
+      "hz": 30,
+      "scenario": "accelerated_reversal",
+      "selected_queries": 13,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 1.73049594741315,
+      "native_endpoint_max_mm": 3.781613195315,
+      "baseline_sampled_foot_min_mm": 1.40615052077919,
+      "native_sampled_foot_min_mm": -64.320981502533,
+      "maximum_foot_orientation_difference_deg": 144.08973903248088,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.0396520979702473,
+            0.0194277856498957,
+            0.11257192492485
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0194277856498957
+        },
+        "baseline_foot_subset_min_y_m": 0.0194277856498957,
+        "baseline_target_error_m": 2.58478507930704e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.622639775276184,
+        "frame": 42,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.0468512661755085,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.999984726309776,
+          "mesh": "RamaHero",
+          "point": [
+            -0.0223588719964027,
+            -0.064320981502533,
+            0.132271185517311
+          ],
+          "surface": 11,
+          "vertex": 41424,
+          "y": -0.064320981502533
+        },
+        "native_foot_subset_min_y_m": -0.064320981502533,
+        "native_target_error_m": 0.000928340654354542,
+        "outside_leg_origin_error_m": 3.48827228435766e-07,
+        "planted": false,
+        "scenario": "accelerated_reversal",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "L",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.942929643070264,
+          0.166666666666667,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 30,
+      "scenario": "reversal",
+      "selected_queries": 14,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000633310321518366,
+      "native_endpoint_max_mm": 0.954866642132401,
+      "baseline_sampled_foot_min_mm": 1.44713034387678,
+      "native_sampled_foot_min_mm": -122.488558292389,
+      "maximum_foot_orientation_difference_deg": 165.1429365452098,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142371445894241,
+            0.00144713034387678,
+            0.119251728057861
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00144713034387678
+        },
+        "baseline_foot_subset_min_y_m": 0.00144713034387678,
+        "baseline_target_error_m": 2.31328229460814e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.911723554134369,
+        "frame": 30,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.0742428228259087,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.999984712107107,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142690971493721,
+            -0.122488558292389,
+            0.0661944076418877
+          ],
+          "surface": 11,
+          "vertex": 28320,
+          "y": -0.122488558292389
+        },
+        "native_foot_subset_min_y_m": -0.122488558292389,
+        "native_target_error_m": 0.000628026726190001,
+        "outside_leg_origin_error_m": 2.10865906069557e-07,
+        "planted": true,
+        "scenario": "reversal",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.783783783783783,
+          1.03333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 30,
+      "scenario": "strafe",
+      "selected_queries": 18,
+      "selected_planted_queries": 8,
+      "baseline_endpoint_max_mm": 0.000568836071579426,
+      "native_endpoint_max_mm": 0.968846317846328,
+      "baseline_sampled_foot_min_mm": -0.33361319219693497,
+      "native_sampled_foot_min_mm": -1.89474830403924,
+      "maximum_foot_orientation_difference_deg": 63.696752765462264,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.235254883766174,
+            -0.000333613192196935,
+            0.134404942393303
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": -0.000333613192196935
+        },
+        "baseline_foot_subset_min_y_m": -0.000333613192196935,
+        "baseline_target_error_m": 2.82827812725372e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0675140619277954,
+        "frame": 0,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.0208238046616316,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.998992893844843,
+          "mesh": "RamaHero",
+          "point": [
+            0.196658119559288,
+            -0.00189474830403924,
+            0.195055022835732
+          ],
+          "surface": 11,
+          "vertex": 42864,
+          "y": -0.00189474830403924
+        },
+        "native_foot_subset_min_y_m": -0.00189474830403924,
+        "native_target_error_m": 0.000915714132133871,
+        "outside_leg_origin_error_m": 4.50990967237885e-07,
+        "planted": false,
+        "scenario": "strafe",
+        "segment_length_error_m": 8.94069671630859e-08,
+        "side": "L",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.0833333333333333,
+          0.0333333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 30,
+      "scenario": "backpedal",
+      "selected_queries": 18,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.00031715327963866,
+      "native_endpoint_max_mm": 1.3085469836369201,
+      "baseline_sampled_foot_min_mm": -8.71698837727308,
+      "native_sampled_foot_min_mm": -102.972164750099,
+      "maximum_foot_orientation_difference_deg": 165.1429365452098,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.213134989142418,
+            0.0331291742622852,
+            -0.131993979215622
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0331291742622852
+        },
+        "baseline_foot_subset_min_y_m": 0.0331291742622852,
+        "baseline_target_error_m": 1.08482090865891e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 1.08191227912903,
+        "frame": 42,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.0467339307069778,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.189164757728577,
+            -0.102972164750099,
+            -0.203368693590164
+          ],
+          "surface": 11,
+          "vertex": 42592,
+          "y": -0.102972164750099
+        },
+        "native_foot_subset_min_y_m": -0.102972164750099,
+        "native_target_error_m": 0.000936420226935297,
+        "outside_leg_origin_error_m": 2.77802769232949e-07,
+        "planted": false,
+        "scenario": "backpedal",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "L",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.905405405405405,
+          1.43333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 30,
+      "scenario": "stationary_aim",
+      "selected_queries": 18,
+      "selected_planted_queries": 18,
+      "baseline_endpoint_max_mm": 0.000435305395285468,
+      "native_endpoint_max_mm": 0.49181288341060303,
+      "baseline_sampled_foot_min_mm": 1.58233905676752,
+      "native_sampled_foot_min_mm": 2.07291264086962,
+      "maximum_foot_orientation_difference_deg": 0.039564681185252124,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152281180024147,
+            0.00158233905676752,
+            0.153982803225517
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00158233905676752
+        },
+        "baseline_foot_subset_min_y_m": 0.00158233905676752,
+        "baseline_target_error_m": 2.88277050231045e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0,
+        "frame": 42,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.00239418307319283,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152280688285828,
+            0.00207291264086962,
+            0.153982236981392
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00207291264086962
+        },
+        "native_foot_subset_min_y_m": 0.00207291264086962,
+        "native_target_error_m": 0.000491812883410603,
+        "outside_leg_origin_error_m": 1.42793339819036e-07,
+        "planted": true,
+        "scenario": "stationary_aim",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.645,
+          1.43333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 30,
+      "scenario": "hitch",
+      "selected_queries": 5,
+      "selected_planted_queries": 5,
+      "baseline_endpoint_max_mm": 0.000360102831109543,
+      "native_endpoint_max_mm": 0.768317782785743,
+      "baseline_sampled_foot_min_mm": 1.40652630943805,
+      "native_sampled_foot_min_mm": 1.52077118400484,
+      "maximum_foot_orientation_difference_deg": 0.1938266546993725,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142341524362564,
+            0.00140652630943805,
+            -0.281573235988617
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00140652630943805
+        },
+        "baseline_foot_subset_min_y_m": 0.00140652630943805,
+        "baseline_target_error_m": 2.6023758437077e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00284714554436505,
+        "frame": 24,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.0024564799387008,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142301306128502,
+            0.00152077118400484,
+            -0.281265586614609
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00152077118400484
+        },
+        "native_foot_subset_min_y_m": 0.00152077118400484,
+        "native_target_error_m": 0.000701780314557254,
+        "outside_leg_origin_error_m": 2.56369276030455e-07,
+        "planted": true,
+        "scenario": "hitch",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.783783783783784,
+          0.88,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 30,
+      "scenario": "reset",
+      "selected_queries": 3,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000315749957735534,
+      "native_endpoint_max_mm": 0.768317782785743,
+      "baseline_sampled_foot_min_mm": 1.4886930584907498,
+      "native_sampled_foot_min_mm": 1.71031535137445,
+      "maximum_foot_orientation_difference_deg": 0.1046783252911718,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142333999276161,
+            0.00148869305849075,
+            0.198570296168327
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00148869305849075
+        },
+        "baseline_foot_subset_min_y_m": 0.00148869305849075,
+        "baseline_target_error_m": 2.91335794599945e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0018269814318046,
+        "frame": 23,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.00413969345390797,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142328873276711,
+            0.00171031535137445,
+            0.198697417974472
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00171031535137445
+        },
+        "native_foot_subset_min_y_m": 0.00171031535137445,
+        "native_target_error_m": 1.61770094564417e-05,
+        "outside_leg_origin_error_m": 3.05382940268828e-07,
+        "planted": true,
+        "scenario": "reset",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.621621621621621,
+          0.8,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 30,
+      "scenario": "action_cancel",
+      "selected_queries": 4,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000347871122130528,
+      "native_endpoint_max_mm": 0.768317782785743,
+      "baseline_sampled_foot_min_mm": 1.42858142498881,
+      "native_sampled_foot_min_mm": 1.7033104086294801,
+      "maximum_foot_orientation_difference_deg": 0.189745630010503,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142338588833809,
+            0.00142858142498881,
+            -0.00152112741488963
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00142858142498881
+        },
+        "baseline_foot_subset_min_y_m": 0.00142858142498881,
+        "baseline_target_error_m": 2.24013575689241e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00331168598495424,
+        "frame": 24,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.00351236015558243,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142322793602943,
+            0.00170331040862948,
+            -0.00139998504891992
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00170331040862948
+        },
+        "native_foot_subset_min_y_m": 0.00170331040862948,
+        "native_target_error_m": 0.00019644940039143,
+        "outside_leg_origin_error_m": 3.21326524499455e-07,
+        "planted": true,
+        "scenario": "action_cancel",
+        "segment_length_error_m": 1.49011611938477e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.689189189189189,
+          0.833333333333333,
+          0.333333333333333,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 60,
+      "scenario": "accelerated_reversal",
+      "selected_queries": 13,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000664742515255057,
+      "native_endpoint_max_mm": 1.9868980161845702,
+      "baseline_sampled_foot_min_mm": -11.042321100831,
+      "native_sampled_foot_min_mm": -97.1491932868958,
+      "maximum_foot_orientation_difference_deg": 115.11311227118695,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.208878576755524,
+            0.0134268905967474,
+            -0.00708291633054614
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0134268905967474
+        },
+        "baseline_foot_subset_min_y_m": 0.0134268905967474,
+        "baseline_target_error_m": 2.23020165890375e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.728013753890991,
+        "frame": 36,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.0455215014517307,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.175082162022591,
+            -0.0971491932868958,
+            -0.016178710386157
+          ],
+          "surface": 11,
+          "vertex": 42800,
+          "y": -0.0971491932868958
+        },
+        "native_foot_subset_min_y_m": -0.0971491932868958,
+        "native_target_error_m": 0.000694111571647227,
+        "outside_leg_origin_error_m": 6.08135792390385e-07,
+        "planted": false,
+        "scenario": "accelerated_reversal",
+        "segment_length_error_m": 7.45058059692383e-08,
+        "side": "L",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.936269033803226,
+          0.133333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 60,
+      "scenario": "reversal",
+      "selected_queries": 14,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000610856716320995,
+      "native_endpoint_max_mm": 0.947020074818283,
+      "baseline_sampled_foot_min_mm": 1.4267591759562501,
+      "native_sampled_foot_min_mm": -103.80402207374601,
+      "maximum_foot_orientation_difference_deg": 156.09764872546992,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142373293638229,
+            0.00142675917595625,
+            0.0192141160368919
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00142675917595625
+        },
+        "baseline_foot_subset_min_y_m": 0.00142675917595625,
+        "baseline_target_error_m": 1.82501210588271e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.710811138153076,
+        "frame": 60,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.0570207946002483,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.999984712107107,
+          "mesh": "RamaHero",
+          "point": [
+            -0.149054333567619,
+            -0.103804022073746,
+            0.00402377918362617
+          ],
+          "surface": 11,
+          "vertex": 28320,
+          "y": -0.103804022073746
+        },
+        "native_foot_subset_min_y_m": -0.103804022073746,
+        "native_target_error_m": 0.00058322714176029,
+        "outside_leg_origin_error_m": 2.03224743700048e-07,
+        "planted": true,
+        "scenario": "reversal",
+        "segment_length_error_m": 5.96046447753906e-08,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.75,
+          1.01666666666667,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 60,
+      "scenario": "strafe",
+      "selected_queries": 18,
+      "selected_planted_queries": 7,
+      "baseline_endpoint_max_mm": 10.6353862211108,
+      "native_endpoint_max_mm": 8.88123270124197,
+      "baseline_sampled_foot_min_mm": 0.874134071636945,
+      "native_sampled_foot_min_mm": -48.9293411374092,
+      "maximum_foot_orientation_difference_deg": 80.58066620503186,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.490969270467758,
+            0.01172567717731,
+            0.11237245798111
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.01172567717731
+        },
+        "baseline_foot_subset_min_y_m": 0.01172567717731,
+        "baseline_target_error_m": 0.0106353862211108,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.580203652381897,
+        "frame": 47,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.0290766358375549,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.515725493431091,
+            -0.0489293411374092,
+            0.158673897385597
+          ],
+          "surface": 11,
+          "vertex": 42800,
+          "y": -0.0489293411374092
+        },
+        "native_foot_subset_min_y_m": -0.0489293411374092,
+        "native_target_error_m": 0.00888123270124197,
+        "outside_leg_origin_error_m": 3.05473804473877e-07,
+        "planted": false,
+        "scenario": "strafe",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "L",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.999999999999999,
+          0.800000000000001,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 60,
+      "scenario": "backpedal",
+      "selected_queries": 18,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000336185507876507,
+      "native_endpoint_max_mm": 2.11319979280233,
+      "baseline_sampled_foot_min_mm": -4.96041495352983,
+      "native_sampled_foot_min_mm": -61.8311613798141,
+      "maximum_foot_orientation_difference_deg": 161.24446947264155,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.213135048747063,
+            0.0721263885498047,
+            -0.107466153800488
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0721263885498047
+        },
+        "baseline_foot_subset_min_y_m": 0.0721263885498047,
+        "baseline_target_error_m": 1.29905316725853e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 1.02988481521606,
+        "frame": 84,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.0428244881331921,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.187248751521111,
+            -0.0618311613798141,
+            -0.168503373861313
+          ],
+          "surface": 11,
+          "vertex": 42592,
+          "y": -0.0618311613798141
+        },
+        "native_foot_subset_min_y_m": -0.0618311613798141,
+        "native_target_error_m": 0.000523938797414303,
+        "outside_leg_origin_error_m": 2.78874750847535e-07,
+        "planted": false,
+        "scenario": "backpedal",
+        "segment_length_error_m": 1.34110450744629e-07,
+        "side": "L",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.871621621621621,
+          1.41666666666667,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 60,
+      "scenario": "stationary_aim",
+      "selected_queries": 18,
+      "selected_planted_queries": 18,
+      "baseline_endpoint_max_mm": 0.000338043150804879,
+      "native_endpoint_max_mm": 0.491693615913391,
+      "baseline_sampled_foot_min_mm": 1.58244557678699,
+      "native_sampled_foot_min_mm": 2.0727750379592202,
+      "maximum_foot_orientation_difference_deg": 0.055952909680744456,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152281165122986,
+            0.00158244557678699,
+            0.153983131051064
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00158244557678699
+        },
+        "baseline_foot_subset_min_y_m": 0.00158244557678699,
+        "baseline_target_error_m": 1.07453800524127e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0,
+        "frame": 84,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.00239207618869841,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152280569076538,
+            0.00207277503795922,
+            0.153982490301132
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00207277503795922
+        },
+        "native_foot_subset_min_y_m": 0.00207277503795922,
+        "native_target_error_m": 0.00049145525554195,
+        "outside_leg_origin_error_m": 1.689574133934e-07,
+        "planted": true,
+        "scenario": "stationary_aim",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.6375,
+          1.41666666666667,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 60,
+      "scenario": "hitch",
+      "selected_queries": 5,
+      "selected_planted_queries": 5,
+      "baseline_endpoint_max_mm": 0.000283513941212732,
+      "native_endpoint_max_mm": 0.9843488223850729,
+      "baseline_sampled_foot_min_mm": 1.4063585549593,
+      "native_sampled_foot_min_mm": 1.52794562745839,
+      "maximum_foot_orientation_difference_deg": 0.4168407087541925,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142341285943985,
+            0.00152691162656993,
+            0.278874456882477
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00152691162656993
+        },
+        "baseline_foot_subset_min_y_m": 0.00152691162656993,
+        "baseline_target_error_m": 2.83513941212732e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00207160227000713,
+        "frame": 72,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.00436953036114573,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142342254519463,
+            0.00152794562745839,
+            0.278792917728424
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00152794562745839
+        },
+        "native_foot_subset_min_y_m": 0.00152794562745839,
+        "native_target_error_m": 0.000354415620677173,
+        "outside_leg_origin_error_m": 2.49016892439613e-07,
+        "planted": true,
+        "scenario": "hitch",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.594594594594594,
+          1.28,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 60,
+      "scenario": "reset",
+      "selected_queries": 3,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.00026404924824419097,
+      "native_endpoint_max_mm": 0.399890268454328,
+      "baseline_sampled_foot_min_mm": 1.4887013239786,
+      "native_sampled_foot_min_mm": 1.75676227081567,
+      "maximum_foot_orientation_difference_deg": 0.4168407087541925,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142294570803642,
+            0.0014887013239786,
+            0.19883619248867
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.0014887013239786
+        },
+        "baseline_foot_subset_min_y_m": 0.0014887013239786,
+        "baseline_target_error_m": 1.24894484088145e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00300996890291572,
+        "frame": 47,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.00416436279192567,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142285510897636,
+            0.00175676227081567,
+            0.199002474546432
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00175676227081567
+        },
+        "native_foot_subset_min_y_m": 0.00175676227081567,
+        "native_target_error_m": 0.000120762771985028,
+        "outside_leg_origin_error_m": 3.05382940268828e-07,
+        "planted": true,
+        "scenario": "reset",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.621621621621621,
+          0.800000000000001,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 60,
+      "scenario": "action_cancel",
+      "selected_queries": 4,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000285075998363027,
+      "native_endpoint_max_mm": 0.399890268454328,
+      "baseline_sampled_foot_min_mm": 1.45288195926696,
+      "native_sampled_foot_min_mm": 1.71179510653019,
+      "maximum_foot_orientation_difference_deg": 0.4168407087541925,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142297104001045,
+            0.00145288195926696,
+            0.0987881124019623
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00145288195926696
+        },
+        "baseline_foot_subset_min_y_m": 0.00145288195926696,
+        "baseline_target_error_m": 1.15664114730407e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00284714554436505,
+        "frame": 48,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.00384628726169467,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142284363508224,
+            0.00171179510653019,
+            0.0989283844828606
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00171179510653019
+        },
+        "native_foot_subset_min_y_m": 0.00171179510653019,
+        "native_target_error_m": 0.0001337090798188,
+        "outside_leg_origin_error_m": 3.21326524499455e-07,
+        "planted": true,
+        "scenario": "action_cancel",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.655405405405405,
+          0.816666666666668,
+          0.316666666666667,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 120,
+      "scenario": "accelerated_reversal",
+      "selected_queries": 13,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000646882483579247,
+      "native_endpoint_max_mm": 2.00846139341593,
+      "baseline_sampled_foot_min_mm": -10.005534626543499,
+      "native_sampled_foot_min_mm": -21.8508169054985,
+      "maximum_foot_orientation_difference_deg": 69.18463217864941,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.154123842716217,
+            -0.0100055346265435,
+            0.00969663728028536
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": -0.0100055346265435
+        },
+        "baseline_foot_subset_min_y_m": -0.0100055346265435,
+        "baseline_target_error_m": 2.3335903165389e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.550144612789154,
+        "frame": 72,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.0943271517753601,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            -0.174332529306412,
+            -0.0218508169054985,
+            -0.128831893205643
+          ],
+          "surface": 11,
+          "vertex": 28576,
+          "y": -0.0218508169054985
+        },
+        "native_foot_subset_min_y_m": -0.0218508169054985,
+        "native_target_error_m": 0.000638596131466329,
+        "outside_leg_origin_error_m": 3.63783698276166e-07,
+        "planted": false,
+        "scenario": "accelerated_reversal",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.928163970248897,
+          0.05,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 120,
+      "scenario": "reversal",
+      "selected_queries": 14,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.00052830870345133,
+      "native_endpoint_max_mm": 0.930850161239505,
+      "baseline_sampled_foot_min_mm": 1.4202599413693,
+      "native_sampled_foot_min_mm": -93.2935476303101,
+      "maximum_foot_orientation_difference_deg": 154.13357318811958,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142373949289322,
+            0.0014202599413693,
+            -0.0307995770126581
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.0014202599413693
+        },
+        "baseline_foot_subset_min_y_m": 0.0014202599413693,
+        "baseline_target_error_m": 1.34110450744629e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.625166356563568,
+        "frame": 120,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.0513289906084538,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.999984712107107,
+          "mesh": "RamaHero",
+          "point": [
+            -0.151119813323021,
+            -0.0932935476303101,
+            -0.0307768192142248
+          ],
+          "surface": 11,
+          "vertex": 28320,
+          "y": -0.0932935476303101
+        },
+        "native_foot_subset_min_y_m": -0.0932935476303101,
+        "native_target_error_m": 0.000906607427168638,
+        "outside_leg_origin_error_m": 3.77345429569687e-07,
+        "planted": true,
+        "scenario": "reversal",
+        "segment_length_error_m": 8.94069671630859e-08,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.733108108108108,
+          1.00833333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 120,
+      "scenario": "strafe",
+      "selected_queries": 18,
+      "selected_planted_queries": 8,
+      "baseline_endpoint_max_mm": 0.000568836071579426,
+      "native_endpoint_max_mm": 1.00002472754568,
+      "baseline_sampled_foot_min_mm": 1.51001708582044,
+      "native_sampled_foot_min_mm": 0.60820096405223,
+      "maximum_foot_orientation_difference_deg": 88.24354422732863,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.457637369632721,
+            0.00193849136121571,
+            0.112372502684593
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.00193849136121571
+        },
+        "baseline_foot_subset_min_y_m": 0.00193849136121571,
+        "baseline_target_error_m": 3.60718928504866e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0144684193655849,
+        "frame": 48,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00517302565276623,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.457090586423874,
+            0.00060820096405223,
+            0.112229257822037
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.00060820096405223
+        },
+        "native_foot_subset_min_y_m": 0.00060820096405223,
+        "native_target_error_m": 0.000999772571958601,
+        "outside_leg_origin_error_m": 3.62331178394015e-07,
+        "planted": true,
+        "scenario": "strafe",
+        "segment_length_error_m": 1.49011611938477e-07,
+        "side": "L",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.020833333333334,
+          0.408333333333334,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 120,
+      "scenario": "backpedal",
+      "selected_queries": 18,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000259870716945443,
+      "native_endpoint_max_mm": 1.0860487818718,
+      "baseline_sampled_foot_min_mm": -24.2997854948044,
+      "native_sampled_foot_min_mm": -40.405213832855196,
+      "maximum_foot_orientation_difference_deg": 157.36026383506024,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.213134974241257,
+            0.0912500470876694,
+            -0.0920472368597984
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0912500470876694
+        },
+        "baseline_foot_subset_min_y_m": 0.0912500470876694,
+        "baseline_target_error_m": 8.81564616861397e-08,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.985730409622192,
+        "frame": 168,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.0395547114312649,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.185766533017159,
+            -0.0404052138328552,
+            -0.144401535391808
+          ],
+          "surface": 11,
+          "vertex": 42592,
+          "y": -0.0404052138328552
+        },
+        "native_foot_subset_min_y_m": -0.0404052138328552,
+        "native_target_error_m": 0.000173426320543513,
+        "outside_leg_origin_error_m": 2.77802769232949e-07,
+        "planted": false,
+        "scenario": "backpedal",
+        "segment_length_error_m": 1.34110450744629e-07,
+        "side": "L",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.854729729729729,
+          1.40833333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 120,
+      "scenario": "stationary_aim",
+      "selected_queries": 18,
+      "selected_planted_queries": 18,
+      "baseline_endpoint_max_mm": 0.000326149120155605,
+      "native_endpoint_max_mm": 0.49175322055816706,
+      "baseline_sampled_foot_min_mm": 1.58266292419285,
+      "native_sampled_foot_min_mm": 2.07275128923357,
+      "maximum_foot_orientation_difference_deg": 0.039564681185252124,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152281105518341,
+            0.00158266292419285,
+            0.153982982039452
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00158266292419285
+        },
+        "baseline_foot_subset_min_y_m": 0.00158266292419285,
+        "baseline_target_error_m": 2.45537336240886e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0,
+        "frame": 168,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00239112367853522,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152280285954475,
+            0.00207275128923357,
+            0.153982400894165
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00207275128923357
+        },
+        "native_foot_subset_min_y_m": 0.00207275128923357,
+        "native_target_error_m": 0.000491335988044739,
+        "outside_leg_origin_error_m": 2.16740190239761e-07,
+        "planted": true,
+        "scenario": "stationary_aim",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.63375,
+          1.40833333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 120,
+      "scenario": "hitch",
+      "selected_queries": 5,
+      "selected_planted_queries": 5,
+      "baseline_endpoint_max_mm": 0.000302827373843684,
+      "native_endpoint_max_mm": 0.820356362964958,
+      "baseline_sampled_foot_min_mm": 1.40643084887415,
+      "native_sampled_foot_min_mm": 1.81923876516521,
+      "maximum_foot_orientation_difference_deg": 0.3189810666991289,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142333835363388,
+            0.00148889049887657,
+            0.199195727705956
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00148889049887657
+        },
+        "baseline_foot_subset_min_y_m": 0.00148889049887657,
+        "baseline_target_error_m": 2.49900068638453e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0044215782545507,
+        "frame": 95,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00415534153580666,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142326191067696,
+            0.00181923876516521,
+            0.199415415525436
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00181923876516521
+        },
+        "native_foot_subset_min_y_m": 0.00181923876516521,
+        "native_target_error_m": 0.000259846943663433,
+        "outside_leg_origin_error_m": 3.05382940268828e-07,
+        "planted": true,
+        "scenario": "hitch",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.621621621621621,
+          0.8,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 120,
+      "scenario": "reset",
+      "selected_queries": 3,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000302827373843684,
+      "native_endpoint_max_mm": 0.416347378632054,
+      "baseline_sampled_foot_min_mm": 1.4888904988765699,
+      "native_sampled_foot_min_mm": 1.81923876516521,
+      "maximum_foot_orientation_difference_deg": 0.31153301221349466,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142333835363388,
+            0.00148889049887657,
+            0.199195727705956
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00148889049887657
+        },
+        "baseline_foot_subset_min_y_m": 0.00148889049887657,
+        "baseline_target_error_m": 2.49900068638453e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0044215782545507,
+        "frame": 95,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00415534153580666,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142326191067696,
+            0.00181923876516521,
+            0.199415415525436
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00181923876516521
+        },
+        "native_foot_subset_min_y_m": 0.00181923876516521,
+        "native_target_error_m": 0.000259846943663433,
+        "outside_leg_origin_error_m": 3.05382940268828e-07,
+        "planted": true,
+        "scenario": "reset",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.621621621621621,
+          0.8,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "FABRIK3D",
+      "hz": 120,
+      "scenario": "action_cancel",
+      "selected_queries": 4,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000302827373843684,
+      "native_endpoint_max_mm": 0.416347378632054,
+      "baseline_sampled_foot_min_mm": 1.46942411083728,
+      "native_sampled_foot_min_mm": 1.81923876516521,
+      "maximum_foot_orientation_difference_deg": 0.31153301221349466,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142333835363388,
+            0.00148889049887657,
+            0.199195727705956
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00148889049887657
+        },
+        "baseline_foot_subset_min_y_m": 0.00148889049887657,
+        "baseline_target_error_m": 2.49900068638453e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0044215782545507,
+        "frame": 95,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00415534153580666,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142326191067696,
+            0.00181923876516521,
+            0.199415415525436
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00181923876516521
+        },
+        "native_foot_subset_min_y_m": 0.00181923876516521,
+        "native_target_error_m": 0.000259846943663433,
+        "outside_leg_origin_error_m": 3.21326524499455e-07,
+        "planted": true,
+        "scenario": "action_cancel",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "FABRIK3D",
+        "unchanged_upstream_clock": [
+          0.621621621621621,
+          0.8,
+          0.3,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 30,
+      "scenario": "accelerated_reversal",
+      "selected_queries": 13,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 1.73049594741315,
+      "native_endpoint_max_mm": 7.30846263468266,
+      "baseline_sampled_foot_min_mm": 1.40615052077919,
+      "native_sampled_foot_min_mm": -72.1429437398911,
+      "maximum_foot_orientation_difference_deg": 152.34881743723844,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.0396520979702473,
+            0.0194277856498957,
+            0.11257192492485
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0194277856498957
+        },
+        "baseline_foot_subset_min_y_m": 0.0194277856498957,
+        "baseline_target_error_m": 2.58478507930704e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.742364764213562,
+        "frame": 42,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.0874267742037773,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.999984726309776,
+          "mesh": "RamaHero",
+          "point": [
+            -0.0438469536602497,
+            -0.0721429437398911,
+            0.113277919590473
+          ],
+          "surface": 11,
+          "vertex": 41424,
+          "y": -0.0721429437398911
+        },
+        "native_foot_subset_min_y_m": -0.0721429437398911,
+        "native_target_error_m": 0.000734289642423391,
+        "outside_leg_origin_error_m": 3.48827228435766e-07,
+        "planted": false,
+        "scenario": "accelerated_reversal",
+        "segment_length_error_m": 7.45058059692383e-08,
+        "side": "L",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.942929643070264,
+          0.166666666666667,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 30,
+      "scenario": "reversal",
+      "selected_queries": 14,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000633310321518366,
+      "native_endpoint_max_mm": 11.2429708242416,
+      "baseline_sampled_foot_min_mm": 1.44713034387678,
+      "native_sampled_foot_min_mm": -129.552155733109,
+      "maximum_foot_orientation_difference_deg": 169.27306997404628,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142371445894241,
+            0.00144713034387678,
+            0.119251728057861
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00144713034387678
+        },
+        "baseline_foot_subset_min_y_m": 0.00144713034387678,
+        "baseline_target_error_m": 2.31328229460814e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 1.01391100883484,
+        "frame": 30,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.0967091098427773,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.999984756344929,
+          "mesh": "RamaHero",
+          "point": [
+            -0.135369017720222,
+            -0.129552155733109,
+            0.0478203520178795
+          ],
+          "surface": 11,
+          "vertex": 27936,
+          "y": -0.129552155733109
+        },
+        "native_foot_subset_min_y_m": -0.129552155733109,
+        "native_target_error_m": 0.000367539090802893,
+        "outside_leg_origin_error_m": 2.10865906069557e-07,
+        "planted": true,
+        "scenario": "reversal",
+        "segment_length_error_m": 8.94069671630859e-08,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.783783783783783,
+          1.03333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 30,
+      "scenario": "strafe",
+      "selected_queries": 18,
+      "selected_planted_queries": 8,
+      "baseline_endpoint_max_mm": 0.000568836071579426,
+      "native_endpoint_max_mm": 4.74373018369079,
+      "baseline_sampled_foot_min_mm": -0.33361319219693497,
+      "native_sampled_foot_min_mm": -1.16127834189683,
+      "maximum_foot_orientation_difference_deg": 56.020620761081396,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.235254883766174,
+            -0.000333613192196935,
+            0.134404942393303
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": -0.000333613192196935
+        },
+        "baseline_foot_subset_min_y_m": -0.000333613192196935,
+        "baseline_target_error_m": 2.82827812725372e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0694082975387573,
+        "frame": 0,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.0228574443608522,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.998992893844843,
+          "mesh": "RamaHero",
+          "point": [
+            0.196754053235054,
+            -0.00116127834189683,
+            0.195093423128128
+          ],
+          "surface": 11,
+          "vertex": 42864,
+          "y": -0.00116127834189683
+        },
+        "native_foot_subset_min_y_m": -0.00116127834189683,
+        "native_target_error_m": 0.00174087821505964,
+        "outside_leg_origin_error_m": 4.50990967237885e-07,
+        "planted": false,
+        "scenario": "strafe",
+        "segment_length_error_m": 8.94069671630859e-08,
+        "side": "L",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.0833333333333333,
+          0.0333333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 30,
+      "scenario": "backpedal",
+      "selected_queries": 18,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.00031715327963866,
+      "native_endpoint_max_mm": 30.4876752197742,
+      "baseline_sampled_foot_min_mm": -8.71698837727308,
+      "native_sampled_foot_min_mm": -105.55312037467999,
+      "maximum_foot_orientation_difference_deg": 169.27306997404628,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.213134989142418,
+            0.0331291742622852,
+            -0.131993979215622
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0331291742622852
+        },
+        "baseline_foot_subset_min_y_m": 0.0331291742622852,
+        "baseline_target_error_m": 1.08482090865891e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 1.33092415332794,
+        "frame": 42,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.121457561850548,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.214917540550232,
+            -0.10555312037468,
+            -0.254132837057114
+          ],
+          "surface": 11,
+          "vertex": 42592,
+          "y": -0.10555312037468
+        },
+        "native_foot_subset_min_y_m": -0.10555312037468,
+        "native_target_error_m": 0.000258719752309844,
+        "outside_leg_origin_error_m": 2.77802769232949e-07,
+        "planted": false,
+        "scenario": "backpedal",
+        "segment_length_error_m": 1.34110450744629e-07,
+        "side": "L",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.905405405405405,
+          1.43333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 30,
+      "scenario": "stationary_aim",
+      "selected_queries": 18,
+      "selected_planted_queries": 18,
+      "baseline_endpoint_max_mm": 0.000435305395285468,
+      "native_endpoint_max_mm": 0.49181288341060303,
+      "baseline_sampled_foot_min_mm": 1.58233905676752,
+      "native_sampled_foot_min_mm": 2.07291264086962,
+      "maximum_foot_orientation_difference_deg": 0.039564681185252124,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152281180024147,
+            0.00158233905676752,
+            0.153982803225517
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00158233905676752
+        },
+        "baseline_foot_subset_min_y_m": 0.00158233905676752,
+        "baseline_target_error_m": 2.88277050231045e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0,
+        "frame": 42,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.00239418307319283,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152280688285828,
+            0.00207291264086962,
+            0.153982236981392
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00207291264086962
+        },
+        "native_foot_subset_min_y_m": 0.00207291264086962,
+        "native_target_error_m": 0.000491812883410603,
+        "outside_leg_origin_error_m": 1.42793339819036e-07,
+        "planted": true,
+        "scenario": "stationary_aim",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.645,
+          1.43333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 30,
+      "scenario": "hitch",
+      "selected_queries": 5,
+      "selected_planted_queries": 5,
+      "baseline_endpoint_max_mm": 0.000360102831109543,
+      "native_endpoint_max_mm": 1.49043067358434,
+      "baseline_sampled_foot_min_mm": 1.40652630943805,
+      "native_sampled_foot_min_mm": 1.48666778113693,
+      "maximum_foot_orientation_difference_deg": 0.1855748923877111,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142341285943985,
+            0.00152691162656993,
+            0.278874456882477
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00152691162656993
+        },
+        "baseline_foot_subset_min_y_m": 0.00152691162656993,
+        "baseline_target_error_m": 2.83513941212732e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00207160227000713,
+        "frame": 36,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.00436953036114573,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142347410321236,
+            0.00148666778113693,
+            0.278939306735992
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00148666778113693
+        },
+        "native_foot_subset_min_y_m": 0.00148666778113693,
+        "native_target_error_m": 0.000320564431603998,
+        "outside_leg_origin_error_m": 2.49016892439613e-07,
+        "planted": true,
+        "scenario": "hitch",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.594594594594594,
+          1.28,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 30,
+      "scenario": "reset",
+      "selected_queries": 3,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000315749957735534,
+      "native_endpoint_max_mm": 1.22577592264861,
+      "baseline_sampled_foot_min_mm": 1.4886930584907498,
+      "native_sampled_foot_min_mm": 1.71030766796321,
+      "maximum_foot_orientation_difference_deg": 0.09691329399915286,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142333999276161,
+            0.00148869305849075,
+            0.198570296168327
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00148869305849075
+        },
+        "baseline_foot_subset_min_y_m": 0.00148869305849075,
+        "baseline_target_error_m": 2.91335794599945e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00169145606923848,
+        "frame": 23,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.00413969345390797,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142328858375549,
+            0.00171030766796321,
+            0.198697417974472
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00171030766796321
+        },
+        "native_foot_subset_min_y_m": 0.00171030766796321,
+        "native_target_error_m": 1.61900079547195e-05,
+        "outside_leg_origin_error_m": 3.05382940268828e-07,
+        "planted": true,
+        "scenario": "reset",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.621621621621621,
+          0.8,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 30,
+      "scenario": "action_cancel",
+      "selected_queries": 4,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000347871122130528,
+      "native_endpoint_max_mm": 1.22577592264861,
+      "baseline_sampled_foot_min_mm": 1.42858142498881,
+      "native_sampled_foot_min_mm": 1.70331064146012,
+      "maximum_foot_orientation_difference_deg": 0.1938266546993725,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142338588833809,
+            0.00142858142498881,
+            -0.00152112741488963
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00142858142498881
+        },
+        "baseline_foot_subset_min_y_m": 0.00142858142498881,
+        "baseline_target_error_m": 2.24013575689241e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00338291330263019,
+        "frame": 24,
+        "hz": 30.0,
+        "max_joint_difference_m": 0.00351236015558243,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142322793602943,
+            0.00170331064146012,
+            -0.00140019319951534
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00170331064146012
+        },
+        "native_foot_subset_min_y_m": 0.00170331064146012,
+        "native_target_error_m": 0.000196458175196312,
+        "outside_leg_origin_error_m": 3.21326524499455e-07,
+        "planted": true,
+        "scenario": "action_cancel",
+        "segment_length_error_m": 1.49011611938477e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.689189189189189,
+          0.833333333333333,
+          0.333333333333333,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 60,
+      "scenario": "accelerated_reversal",
+      "selected_queries": 13,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000664742515255057,
+      "native_endpoint_max_mm": 9.71950124949217,
+      "baseline_sampled_foot_min_mm": -11.042321100831,
+      "native_sampled_foot_min_mm": -109.17312651872601,
+      "maximum_foot_orientation_difference_deg": 101.3732920009249,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.208878576755524,
+            0.0134268905967474,
+            -0.00708291633054614
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0134268905967474
+        },
+        "baseline_foot_subset_min_y_m": 0.0134268905967474,
+        "baseline_target_error_m": 2.23020165890375e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.86101907491684,
+        "frame": 36,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.0744171887636185,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.187404721975327,
+            -0.109173126518726,
+            -0.040107861161232
+          ],
+          "surface": 11,
+          "vertex": 42800,
+          "y": -0.109173126518726
+        },
+        "native_foot_subset_min_y_m": -0.109173126518726,
+        "native_target_error_m": 0.000413011119235307,
+        "outside_leg_origin_error_m": 6.08135792390385e-07,
+        "planted": false,
+        "scenario": "accelerated_reversal",
+        "segment_length_error_m": 5.96046447753906e-08,
+        "side": "L",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.936269033803226,
+          0.133333333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 60,
+      "scenario": "reversal",
+      "selected_queries": 14,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000610856716320995,
+      "native_endpoint_max_mm": 1.5373257920146,
+      "baseline_sampled_foot_min_mm": 1.4267591759562501,
+      "native_sampled_foot_min_mm": -118.983864784241,
+      "maximum_foot_orientation_difference_deg": 178.83231586845085,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142373293638229,
+            0.00142675917595625,
+            0.0192141160368919
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00142675917595625
+        },
+        "baseline_foot_subset_min_y_m": 0.00142675917595625,
+        "baseline_target_error_m": 1.82501210588271e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.862431108951569,
+        "frame": 60,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.0903345793485641,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.999984712107107,
+          "mesh": "RamaHero",
+          "point": [
+            -0.143481463193893,
+            -0.118983864784241,
+            -0.0239779409021139
+          ],
+          "surface": 11,
+          "vertex": 28320,
+          "y": -0.118983864784241
+        },
+        "native_foot_subset_min_y_m": -0.118983864784241,
+        "native_target_error_m": 0.000372798793250695,
+        "outside_leg_origin_error_m": 2.03224743700048e-07,
+        "planted": true,
+        "scenario": "reversal",
+        "segment_length_error_m": 5.96046447753906e-08,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.75,
+          1.01666666666667,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 60,
+      "scenario": "strafe",
+      "selected_queries": 18,
+      "selected_planted_queries": 7,
+      "baseline_endpoint_max_mm": 10.6353862211108,
+      "native_endpoint_max_mm": 10.6499614194036,
+      "baseline_sampled_foot_min_mm": 0.874134071636945,
+      "native_sampled_foot_min_mm": -44.3711504340172,
+      "maximum_foot_orientation_difference_deg": 67.40906303220159,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.490969270467758,
+            0.01172567717731,
+            0.11237245798111
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.01172567717731
+        },
+        "baseline_foot_subset_min_y_m": 0.01172567717731,
+        "baseline_target_error_m": 0.0106353862211108,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.521985173225403,
+        "frame": 47,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.0300320275127888,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.511472165584564,
+            -0.0443711504340172,
+            0.161999017000198
+          ],
+          "surface": 11,
+          "vertex": 42800,
+          "y": -0.0443711504340172
+        },
+        "native_foot_subset_min_y_m": -0.0443711504340172,
+        "native_target_error_m": 0.0106499614194036,
+        "outside_leg_origin_error_m": 3.05473804473877e-07,
+        "planted": false,
+        "scenario": "strafe",
+        "segment_length_error_m": 2.68220901489258e-07,
+        "side": "L",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.999999999999999,
+          0.800000000000001,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 60,
+      "scenario": "backpedal",
+      "selected_queries": 18,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000336185507876507,
+      "native_endpoint_max_mm": 8.43762140721083,
+      "baseline_sampled_foot_min_mm": -4.96041495352983,
+      "native_sampled_foot_min_mm": -66.0804510116577,
+      "maximum_foot_orientation_difference_deg": 178.83231586845085,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.213135048747063,
+            0.0721263885498047,
+            -0.107466153800488
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0721263885498047
+        },
+        "baseline_foot_subset_min_y_m": 0.0721263885498047,
+        "baseline_target_error_m": 1.29905316725853e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 1.35163140296936,
+        "frame": 84,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.112749770283699,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.219426453113556,
+            -0.0660804510116577,
+            -0.233385801315308
+          ],
+          "surface": 11,
+          "vertex": 42592,
+          "y": -0.0660804510116577
+        },
+        "native_foot_subset_min_y_m": -0.0660804510116577,
+        "native_target_error_m": 0.000300029321806505,
+        "outside_leg_origin_error_m": 2.78874750847535e-07,
+        "planted": false,
+        "scenario": "backpedal",
+        "segment_length_error_m": 8.94069671630859e-08,
+        "side": "L",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.871621621621621,
+          1.41666666666667,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 60,
+      "scenario": "stationary_aim",
+      "selected_queries": 18,
+      "selected_planted_queries": 18,
+      "baseline_endpoint_max_mm": 0.000338043150804879,
+      "native_endpoint_max_mm": 0.491693615913391,
+      "baseline_sampled_foot_min_mm": 1.58244557678699,
+      "native_sampled_foot_min_mm": 2.0727750379592202,
+      "maximum_foot_orientation_difference_deg": 0.055952909680744456,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152281165122986,
+            0.00158244557678699,
+            0.153983131051064
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00158244557678699
+        },
+        "baseline_foot_subset_min_y_m": 0.00158244557678699,
+        "baseline_target_error_m": 1.07453800524127e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0,
+        "frame": 84,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.00239207618869841,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152280569076538,
+            0.00207277503795922,
+            0.153982490301132
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00207277503795922
+        },
+        "native_foot_subset_min_y_m": 0.00207277503795922,
+        "native_target_error_m": 0.00049145525554195,
+        "outside_leg_origin_error_m": 1.689574133934e-07,
+        "planted": true,
+        "scenario": "stationary_aim",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.6375,
+          1.41666666666667,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 60,
+      "scenario": "hitch",
+      "selected_queries": 5,
+      "selected_planted_queries": 5,
+      "baseline_endpoint_max_mm": 0.000283513941212732,
+      "native_endpoint_max_mm": 1.2986435322091001,
+      "baseline_sampled_foot_min_mm": 1.4063585549593,
+      "native_sampled_foot_min_mm": 1.48666778113693,
+      "maximum_foot_orientation_difference_deg": 0.4149587781944424,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142341285943985,
+            0.00152691162656993,
+            0.278874456882477
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00152691162656993
+        },
+        "baseline_foot_subset_min_y_m": 0.00152691162656993,
+        "baseline_target_error_m": 2.83513941212732e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00207160227000713,
+        "frame": 72,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.00436953036114573,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142347410321236,
+            0.00148666778113693,
+            0.278939306735992
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00148666778113693
+        },
+        "native_foot_subset_min_y_m": 0.00148666778113693,
+        "native_target_error_m": 0.000320564431603998,
+        "outside_leg_origin_error_m": 2.49016892439613e-07,
+        "planted": true,
+        "scenario": "hitch",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.594594594594594,
+          1.28,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 60,
+      "scenario": "reset",
+      "selected_queries": 3,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.00026404924824419097,
+      "native_endpoint_max_mm": 0.938949233386666,
+      "baseline_sampled_foot_min_mm": 1.4887013239786,
+      "native_sampled_foot_min_mm": 1.7567400354892,
+      "maximum_foot_orientation_difference_deg": 0.4149587781944424,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142294570803642,
+            0.0014887013239786,
+            0.19883619248867
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.0014887013239786
+        },
+        "baseline_foot_subset_min_y_m": 0.0014887013239786,
+        "baseline_target_error_m": 1.24894484088145e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00292968866415322,
+        "frame": 47,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.00416436279192567,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142285495996475,
+            0.0017567400354892,
+            0.199002340435982
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.0017567400354892
+        },
+        "native_foot_subset_min_y_m": 0.0017567400354892,
+        "native_target_error_m": 0.000120767042972147,
+        "outside_leg_origin_error_m": 3.05382940268828e-07,
+        "planted": true,
+        "scenario": "reset",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.621621621621621,
+          0.800000000000001,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 60,
+      "scenario": "action_cancel",
+      "selected_queries": 4,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000285075998363027,
+      "native_endpoint_max_mm": 0.938949233386666,
+      "baseline_sampled_foot_min_mm": 1.45288195926696,
+      "native_sampled_foot_min_mm": 1.38089992105961,
+      "maximum_foot_orientation_difference_deg": 0.4149587781944424,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142297104001045,
+            0.00145288195926696,
+            0.0987881124019623
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00145288195926696
+        },
+        "baseline_foot_subset_min_y_m": 0.00145288195926696,
+        "baseline_target_error_m": 1.15664114730407e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00292968866415322,
+        "frame": 48,
+        "hz": 60.0,
+        "max_joint_difference_m": 0.00388710293918848,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.14229179918766,
+            0.00138089992105961,
+            0.0987303629517555
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00138089992105961
+        },
+        "native_foot_subset_min_y_m": 0.00138089992105961,
+        "native_target_error_m": 0.000519470369908959,
+        "outside_leg_origin_error_m": 3.21326524499455e-07,
+        "planted": true,
+        "scenario": "action_cancel",
+        "segment_length_error_m": 2.08616256713867e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.655405405405405,
+          0.816666666666668,
+          0.316666666666667,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 120,
+      "scenario": "accelerated_reversal",
+      "selected_queries": 13,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000646882483579247,
+      "native_endpoint_max_mm": 3.17779183387756,
+      "baseline_sampled_foot_min_mm": -10.005534626543499,
+      "native_sampled_foot_min_mm": -23.9870697259903,
+      "maximum_foot_orientation_difference_deg": 103.54215026997102,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.154123842716217,
+            -0.0100055346265435,
+            0.00969663728028536
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": -0.0100055346265435
+        },
+        "baseline_foot_subset_min_y_m": -0.0100055346265435,
+        "baseline_target_error_m": 2.3335903165389e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.809311330318451,
+        "frame": 72,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.149845913052559,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            -0.150227293372154,
+            -0.0239870697259903,
+            -0.118988081812859
+          ],
+          "surface": 2,
+          "vertex": 64304,
+          "y": -0.0239870697259903
+        },
+        "native_foot_subset_min_y_m": -0.0239870697259903,
+        "native_target_error_m": 0.000498264271300286,
+        "outside_leg_origin_error_m": 3.63783698276166e-07,
+        "planted": false,
+        "scenario": "accelerated_reversal",
+        "segment_length_error_m": 7.45058059692383e-08,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.928163970248897,
+          0.05,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 120,
+      "scenario": "reversal",
+      "selected_queries": 14,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.00052830870345133,
+      "native_endpoint_max_mm": 1.5373257920146,
+      "baseline_sampled_foot_min_mm": 1.4202599413693,
+      "native_sampled_foot_min_mm": -111.59674078226101,
+      "maximum_foot_orientation_difference_deg": 174.51095080323248,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142373949289322,
+            0.0014202599413693,
+            -0.0307995770126581
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.0014202599413693
+        },
+        "baseline_foot_subset_min_y_m": 0.0014202599413693,
+        "baseline_target_error_m": 1.34110450744629e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.782621800899506,
+        "frame": 120,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.0861923918128014,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.999984712107107,
+          "mesh": "RamaHero",
+          "point": [
+            -0.144723549485207,
+            -0.111596740782261,
+            -0.058195486664772
+          ],
+          "surface": 11,
+          "vertex": 28320,
+          "y": -0.111596740782261
+        },
+        "native_foot_subset_min_y_m": -0.111596740782261,
+        "native_target_error_m": 0.000834802107419819,
+        "outside_leg_origin_error_m": 3.77345429569687e-07,
+        "planted": true,
+        "scenario": "reversal",
+        "segment_length_error_m": 5.96046447753906e-08,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.733108108108108,
+          1.00833333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 120,
+      "scenario": "strafe",
+      "selected_queries": 18,
+      "selected_planted_queries": 8,
+      "baseline_endpoint_max_mm": 0.000568836071579426,
+      "native_endpoint_max_mm": 1.99842918664217,
+      "baseline_sampled_foot_min_mm": 1.51001708582044,
+      "native_sampled_foot_min_mm": -0.294818979455158,
+      "maximum_foot_orientation_difference_deg": 75.80608393743684,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.457637012004852,
+            0.00193843175657094,
+            0.112372435629368
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.00193843175657094
+        },
+        "baseline_foot_subset_min_y_m": 0.00193843175657094,
+        "baseline_target_error_m": 4.29496253673278e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0131383994594216,
+        "frame": 144,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00954590737819672,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.4574975669384,
+            -0.000294818979455158,
+            0.112117357552052
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": -0.000294818979455158
+        },
+        "native_foot_subset_min_y_m": -0.000294818979455158,
+        "native_target_error_m": 0.00195073464419693,
+        "outside_leg_origin_error_m": 1.68092753938254e-07,
+        "planted": true,
+        "scenario": "strafe",
+        "segment_length_error_m": 2.38418579101562e-07,
+        "side": "L",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.0208333333333353,
+          1.20833333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 120,
+      "scenario": "backpedal",
+      "selected_queries": 18,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000259870716945443,
+      "native_endpoint_max_mm": 8.43762140721083,
+      "baseline_sampled_foot_min_mm": -24.2997854948044,
+      "native_sampled_foot_min_mm": -44.7345077991486,
+      "maximum_foot_orientation_difference_deg": 175.4167841513377,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.99996947334148,
+          "mesh": "RamaHero",
+          "point": [
+            0.213134974241257,
+            0.0912500470876694,
+            -0.0920472368597984
+          ],
+          "surface": 11,
+          "vertex": 40960,
+          "y": 0.0912500470876694
+        },
+        "baseline_foot_subset_min_y_m": 0.0912500470876694,
+        "baseline_target_error_m": 8.81564616861397e-08,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 1.35503149032593,
+        "frame": 168,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.12056989967823,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 1.0,
+          "mesh": "RamaHero",
+          "point": [
+            0.228654474020004,
+            -0.0447345077991486,
+            -0.214922532439232
+          ],
+          "surface": 11,
+          "vertex": 42592,
+          "y": -0.0447345077991486
+        },
+        "native_foot_subset_min_y_m": -0.0447345077991486,
+        "native_target_error_m": 0.000858699146192521,
+        "outside_leg_origin_error_m": 2.77802769232949e-07,
+        "planted": false,
+        "scenario": "backpedal",
+        "segment_length_error_m": 1.04308128356934e-07,
+        "side": "L",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.854729729729729,
+          1.40833333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 120,
+      "scenario": "stationary_aim",
+      "selected_queries": 18,
+      "selected_planted_queries": 18,
+      "baseline_endpoint_max_mm": 0.000326149120155605,
+      "native_endpoint_max_mm": 0.49175322055816706,
+      "baseline_sampled_foot_min_mm": 1.58266292419285,
+      "native_sampled_foot_min_mm": 2.07275128923357,
+      "maximum_foot_orientation_difference_deg": 0.039564681185252124,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152281105518341,
+            0.00158266292419285,
+            0.153982982039452
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00158266292419285
+        },
+        "baseline_foot_subset_min_y_m": 0.00158266292419285,
+        "baseline_target_error_m": 2.45537336240886e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0,
+        "frame": 168,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00239112367853522,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.152280285954475,
+            0.00207275128923357,
+            0.153982400894165
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00207275128923357
+        },
+        "native_foot_subset_min_y_m": 0.00207275128923357,
+        "native_target_error_m": 0.000491335988044739,
+        "outside_leg_origin_error_m": 2.16740190239761e-07,
+        "planted": true,
+        "scenario": "stationary_aim",
+        "segment_length_error_m": 1.19209289550781e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.63375,
+          1.40833333333333,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 120,
+      "scenario": "hitch",
+      "selected_queries": 5,
+      "selected_planted_queries": 5,
+      "baseline_endpoint_max_mm": 0.000302827373843684,
+      "native_endpoint_max_mm": 1.3084468664601399,
+      "baseline_sampled_foot_min_mm": 1.40643084887415,
+      "native_sampled_foot_min_mm": 1.6526379622518999,
+      "maximum_foot_orientation_difference_deg": 0.3214254206483475,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142373740673065,
+            0.00152715377043933,
+            0.279432654380798
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00152715377043933
+        },
+        "baseline_foot_subset_min_y_m": 0.00152715377043933,
+        "baseline_target_error_m": 2.54194759463644e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00447517540305853,
+        "frame": 144,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00437733437865973,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142380833625793,
+            0.0016526379622519,
+            0.279632121324539
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.0016526379622519
+        },
+        "native_foot_subset_min_y_m": 0.0016526379622519,
+        "native_target_error_m": 0.000470087106805295,
+        "outside_leg_origin_error_m": 2.49016892439613e-07,
+        "planted": true,
+        "scenario": "hitch",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.594594594594594,
+          1.28,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 120,
+      "scenario": "reset",
+      "selected_queries": 3,
+      "selected_planted_queries": 3,
+      "baseline_endpoint_max_mm": 0.000302827373843684,
+      "native_endpoint_max_mm": 0.781144131906331,
+      "baseline_sampled_foot_min_mm": 1.4888904988765699,
+      "native_sampled_foot_min_mm": 1.81917194277048,
+      "maximum_foot_orientation_difference_deg": 0.3140353160489524,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142333835363388,
+            0.00148889049887657,
+            0.199195727705956
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00148889049887657
+        },
+        "baseline_foot_subset_min_y_m": 0.00148889049887657,
+        "baseline_target_error_m": 2.49900068638453e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.0044215782545507,
+        "frame": 95,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00415534153580666,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142326176166534,
+            0.00181917194277048,
+            0.199414998292923
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00181917194277048
+        },
+        "native_foot_subset_min_y_m": 0.00181917194277048,
+        "native_target_error_m": 0.000259844673564658,
+        "outside_leg_origin_error_m": 3.05382940268828e-07,
+        "planted": true,
+        "scenario": "reset",
+        "segment_length_error_m": 1.78813934326172e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.621621621621621,
+          0.8,
+          0.0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "solver": "CCDIK3D",
+      "hz": 120,
+      "scenario": "action_cancel",
+      "selected_queries": 4,
+      "selected_planted_queries": 4,
+      "baseline_endpoint_max_mm": 0.000302827373843684,
+      "native_endpoint_max_mm": 0.781144131906331,
+      "baseline_sampled_foot_min_mm": 1.46942411083728,
+      "native_sampled_foot_min_mm": 1.5164912911132,
+      "maximum_foot_orientation_difference_deg": 0.3140353160489524,
+      "worst_floor_witness": {
+        "baseline_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.142335161566734,
+            0.00146942411083728,
+            0.14917129278183
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.00146942411083728
+        },
+        "baseline_foot_subset_min_y_m": 0.00146942411083728,
+        "baseline_target_error_m": 1.82653224101159e-07,
+        "callback_count": 1,
+        "chain_joints": 5,
+        "finite": true,
+        "foot_orientation_difference_rad": 0.00425674067810178,
+        "frame": 96,
+        "hz": 120.0,
+        "max_joint_difference_m": 0.00403823517262936,
+        "native_floor_witness": {
+          "combined_foot_toe_weight": 0.996963426470757,
+          "mesh": "RamaHero",
+          "point": [
+            -0.1423309892416,
+            0.0015164912911132,
+            0.149223804473877
+          ],
+          "surface": 11,
+          "vertex": 28432,
+          "y": 0.0015164912911132
+        },
+        "native_foot_subset_min_y_m": 0.0015164912911132,
+        "native_target_error_m": 0.000567137671168894,
+        "outside_leg_origin_error_m": 3.21326524499455e-07,
+        "planted": true,
+        "scenario": "action_cancel",
+        "segment_length_error_m": 1.49011611938477e-07,
+        "side": "R",
+        "solver": "CCDIK3D",
+        "unchanged_upstream_clock": [
+          0.638513513513513,
+          0.808333333333333,
+          0.308333333333333,
+          0,
+          1
+        ]
+      }
+    }
+  ],
+  "input_before": {
+    "/workspace/ANDOLAN/scratch/visual-round4/role-05/probe-continuity.gd": "c92196b51b581dab56d2deb146a39b3f6f9c66655cf513b870292020be45c91d",
+    "/workspace/scratch/visual-round4/role-07/native_comparator.gd": "db160d53fba799647631ff78fe35bdf7bdd0149e81f759bb171edcc60d47207f",
+    "/workspace/scratch/visual-round4/role-07/query_recorder.gd": "c7d23af30e94302afa6f3877ae2aab6761d4058596bb9b95c82d42b37adb44c0",
+    "res://.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.scn": "75f6ed7971c540b464ce1bc4533ed50871ba695d8f4769efc7520798a6d69a28",
+    "res://assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+    "res://assets/heroes/rama-hero.glb": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+    "res://assets/heroes/rama-hero.glb.import": "c9480cdb1c83f72a5b3479d91402aa81a50ff7d8e62c2775405108784639151a",
+    "res://scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1"
+  },
+  "input_after": {
+    "/workspace/ANDOLAN/scratch/visual-round4/role-05/probe-continuity.gd": "c92196b51b581dab56d2deb146a39b3f6f9c66655cf513b870292020be45c91d",
+    "/workspace/scratch/visual-round4/role-07/native_comparator.gd": "db160d53fba799647631ff78fe35bdf7bdd0149e81f759bb171edcc60d47207f",
+    "/workspace/scratch/visual-round4/role-07/query_recorder.gd": "c7d23af30e94302afa6f3877ae2aab6761d4058596bb9b95c82d42b37adb44c0",
+    "res://.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.scn": "75f6ed7971c540b464ce1bc4533ed50871ba695d8f4769efc7520798a6d69a28",
+    "res://assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+    "res://assets/heroes/rama-hero.glb": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+    "res://assets/heroes/rama-hero.glb.import": "c9480cdb1c83f72a5b3479d91402aa81a50ff7d8e62c2775405108784639151a",
+    "res://scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1"
+  },
+  "foot_sample_count": 849,
+  "foot_sample_rule": "sum of same-side foot/toe influences >.5, every16th source vertex, all bound meshes; not all sole vertices",
+  "query_tape": {
+    "sha256": "01c3b54e87055130673ab9c2f9d3ddbf28c934ec7d95c7e2ffe1bbcf013a17d7",
+    "bytes": 10017864,
+    "format": "Godot FileAccess.store_var; load via get_var(false). Contains all164 named/rest bones, every recorded local prepose and incumbent global postpose/target/state clock, every native global output, and sampled skin source IDs/influences."
+  },
+  "scope": "Source and imported-resource-bound local solver comparison. No full-controller continuity, floor/contact coverage, C0/C1 release, authoritative-gameplay timing, normal-speed render, or R7 acceptance."
+}

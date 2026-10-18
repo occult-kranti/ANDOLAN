@@ -1,10 +1,12 @@
 # Start here: project and agent handoff
 
-Updated 17 October 2026. This is the short entry point for a new chat, contributor or subagent. Start here and open only the subsystem assigned to your task; the repository contains several games and historical experiments.
+Updated 18 October 2026. This is the short entry point for a new chat, contributor or subagent. Start here and open only the subsystem assigned to your task; the repository contains several games and historical experiments.
 
 ## The current build in one minute
 
 The active request is tracked in [visual rounds 2–4](../games/yuga-native/docs/VISUAL_ROUNDS_2_4_EXECUTION.json) and the separate [native screen/integration campaign](../games/yuga-native/docs/SCREEN_CAMPAIGN.md). Read those ledgers for pending versus executed work before assigning agents. The screen campaign has five 6-role rounds followed by three 6-role integration rounds; it does not replace the ongoing three 15-role visual rounds.
+
+For the current screen/package work, read the [short handoff](../games/yuga-native/docs/SCREEN_CAMPAIGN_HANDOFF.md). All five screen rounds have actual-image reviews; the final integrated screen catalog passes459 checks. Scene, loader, resource and action/preferences stress have separate source-bound results. The package round owns actual downloadable-build acceptance. Visual rounds2–4 have returned bounded outcomes; foot support, garment contact and commercial-quality art remain open.
 
 For current source reuse and task selection, read the [reuse consultation](../games/yuga-native/docs/research/community-reuse/README.md): six reviewed research streams, two isolated offline tools, six mythology art briefs and the next five dependency-ordered goals. The [fifteen Round 2 face tasks](../games/yuga-native/docs/VISUAL_ROUND2_TASKS.json) now pin the published runtime baseline. This research does not complete another visual round or change the downloadable build.
 

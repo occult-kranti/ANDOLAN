@@ -1,0 +1,273 @@
+extends SceneTree
+## R4-09 independent actual-import material/skin audit. No renderer or imports.
+const PLAYER := preload("res://scripts/player.gd")
+const BINDINGS := preload("res://scripts/input_bindings.gd")
+const FINISH := preload("res://scripts/rama_surface_finish.gd")
+const PATHS := ["res://assets/heroes/rama-hero.glb","res://assets/heroes/rama-hero-mid.glb","res://assets/heroes/rama-hero-far.glb"]
+const SOURCES := ["res://scripts/player.gd","res://scripts/rama_motion.gd","res://scripts/rama_surface_materials.gd","res://scripts/rama_surface_finish.gd","res://scripts/rama_secondary_motion.gd","res://scripts/rama_lod_binding.gd","res://scripts/rama_visual_lod.gd","res://scripts/rama_facial_performance.gd","res://shaders/rama_secondary_cloth.gdshader","res://assets/animations/rama_hero_motion.tres"]
+var checks: Array[Dictionary] = []
+var stages: Array[Dictionary] = []
+var output := ""
+var source_pins := {}
+var retained_sources: Array[Node] = []
+var retained_scenes: Array[PackedScene] = []
+var watched_materials := {}
+var motion_observations := 0
+var material_mismatches: Array[Dictionary] = []
+
+func _initialize() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--report="): output = arg.trim_prefix("--report=")
+	call_deferred("run")
+
+func check(label: String, passed: bool, detail: Dictionary = {}) -> void:
+	checks.append({"name":label,"passed":passed,"details":detail})
+	print("PASS " if passed else "FAIL ", label)
+
+func digest(value: Variant) -> String:
+	var context := HashingContext.new()
+	context.start(HashingContext.HASH_SHA256)
+	context.update(var_to_bytes(value))
+	return context.finish().hex_encode()
+
+func pin(path: String) -> void:
+	if path.is_empty() or source_pins.has(path) or not FileAccess.file_exists(path): return
+	source_pins[path] = FileAccess.get_sha256(path)
+	if FileAccess.file_exists(path+".import"):
+		var config := ConfigFile.new()
+		config.load(path+".import")
+		pin(path+".import")
+		var imported: String = config.get_value("remap","path","")
+		pin(imported)
+		if not imported.is_empty(): pin(imported.get_basename()+".md5")
+
+func collect(node: Node) -> Array[MeshInstance3D]:
+	var rows: Array[MeshInstance3D] = []
+	if node is MeshInstance3D and node.mesh: rows.append(node)
+	for child in node.get_children(): rows.append_array(collect(child))
+	return rows
+
+func stored(material: Material, offset := false, identity := true) -> Dictionary:
+	var values := {}
+	for property in material.get_property_list():
+		if not int(property.usage) & PROPERTY_USAGE_STORAGE: continue
+		var key := String(property.name)
+		if not offset and key == "shader_parameter/secondary_offset": continue
+		if not identity and key.begins_with("metadata/"): continue
+		var value: Variant = material.get(key)
+		if value is Resource:
+			pin(value.resource_path)
+			value = {"id":value.get_instance_id(),"path":value.resource_path}
+		values[key] = value
+	return values
+
+func materials(node: Node, offset := false) -> Dictionary:
+	var result := {}
+	for mesh in collect(node):
+		for surface in mesh.mesh.get_surface_count():
+			var material := mesh.get_active_material(surface)
+			if material:
+				result[String(node.get_path_to(mesh))+":"+str(surface)] = {"id":material.get_instance_id(),"values":stored(material,offset)}
+	return result
+
+func geometry(node: Node) -> Dictionary:
+	var result := {}
+	for mesh in collect(node):
+		var surfaces := []
+		for surface in mesh.mesh.get_surface_count():
+			surfaces.append({"arrays_sha256":digest(mesh.mesh.surface_get_arrays(surface)),"blend_arrays_sha256":digest(mesh.mesh.surface_get_blend_shape_arrays(surface))})
+		var binds := []
+		if mesh.skin:
+			for index in mesh.skin.get_bind_count(): binds.append([mesh.skin.get_bind_name(index),mesh.skin.get_bind_bone(index),mesh.skin.get_bind_pose(index)])
+		var shapes := []
+		if mesh.mesh is ArrayMesh:
+			for index in mesh.mesh.get_blend_shape_count(): shapes.append(mesh.mesh.get_blend_shape_name(index))
+		result[String(node.get_path_to(mesh))] = {"mesh_id":mesh.mesh.get_instance_id(),"skin_id":mesh.skin.get_instance_id() if mesh.skin else 0,"surfaces":surfaces,"binds_sha256":digest(binds),"morph_names":shapes,"skeleton":String(mesh.skeleton)}
+	return result
+
+func create_player(label: String) -> Node3D:
+	var player := PLAYER.new()
+	player.name = label
+	root.add_child(player)
+	player.set_physics_process(false)
+	player.set_process_unhandled_input(false)
+	player.rama_motion.active = false
+	return player
+
+func step(player: Node3D, dt: float, speed: Vector3, yaw: float) -> void:
+	player.velocity = speed
+	player.position += speed * dt
+	player.visual.rotation.y = yaw
+	player._update_rama_motion(dt)
+	player.rama_motion.evaluate_pose()
+	if not watched_materials.is_empty():
+		motion_observations += 1
+		if materials(player.visual)!=watched_materials:
+			material_mismatches.append({"sample":motion_observations,"action":player.rama_motion.action,"stage":player.rama_motion.action_stage})
+
+func skin_contract(player: Node3D) -> Dictionary:
+	var rows := []
+	var passed := true
+	for mesh in collect(player.visual):
+		if mesh.skin == null: continue
+		var rig := mesh.get_node_or_null(mesh.skeleton) as Skeleton3D
+		var bind_names := []
+		var missing := 0
+		for index in mesh.skin.get_bind_count():
+			var bone_name := String(mesh.skin.get_bind_name(index))
+			if bone_name.is_empty() and rig and mesh.skin.get_bind_bone(index)>=0: bone_name=String(rig.get_bone_name(mesh.skin.get_bind_bone(index)))
+			bind_names.append(bone_name)
+			if rig == null or rig.find_bone(bone_name)<0: missing += 1
+		var bad_indices := 0
+		var max_sum_error := 0.0
+		var vertices := 0
+		for surface in mesh.mesh.get_surface_count():
+			var arrays := mesh.mesh.surface_get_arrays(surface)
+			var positions: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+			var weights: PackedFloat32Array = arrays[Mesh.ARRAY_WEIGHTS]
+			var joints: PackedInt32Array = arrays[Mesh.ARRAY_BONES]
+			vertices += positions.size()
+			if positions.is_empty() or weights.size()!=joints.size() or weights.size()%positions.size()!=0:
+				bad_indices += 1
+				continue
+			var stride := weights.size()/positions.size()
+			for v in positions.size():
+				var total := 0.0
+				for lane in stride:
+					var index: int = v*stride+lane
+					total += weights[index]
+					if weights[index]<0 or not is_finite(weights[index]) or (weights[index]>0 and (joints[index]<0 or joints[index]>=mesh.skin.get_bind_count())): bad_indices += 1
+				max_sum_error = maxf(max_sum_error,absf(total-1.0))
+		var ok: bool = rig == player.rama_motion.rig and missing==0 and bad_indices==0 and max_sum_error<.001
+		passed = passed and ok
+		rows.append({"mesh":String(mesh.name),"vertices":vertices,"binds":mesh.skin.get_bind_count(),"bind_names_sha256":digest(bind_names),"missing_named_binds":missing,"bad_weighted_indices":bad_indices,"maximum_weight_sum_error":max_sum_error,"same_live_rig":rig==player.rama_motion.rig})
+	return {"passed":passed,"meshes":rows}
+
+func lod_profiles(player: Node3D) -> Dictionary:
+	var by_label := {}
+	var bad := []
+	for level in player.rama_lod._levels.size():
+		for mesh in player.rama_lod._levels[level]:
+			for surface in mesh.mesh.get_surface_count():
+				var material: Material = mesh.get_active_material(surface)
+				var key := String(mesh.name).split("LOD")[0]+":"+str(surface)
+				var values := stored(material,false,false)
+				if by_label.has(key) and by_label[key]!=values: bad.append({"level":level,"surface":key})
+				else: by_label[key]=values
+	return {"passed":bad.is_empty(),"semantic_slots":by_label.size(),"mismatches":bad}
+
+func stage(label: String, a: Node3D, before: Dictionary) -> void:
+	var current := materials(a.visual)
+	stages.append({"name":label,"exact_stable_material_state":current==before,"material_slots":current.size(),"pose_samples":a.rama_motion.modified_samples,"action_stage":a.rama_motion.action_stage,"lod":a.rama_lod.level,"cloth_offset":str(a.rama_secondary.cloth_offset),"hair_offset":str(a.rama_secondary.hair_offset)})
+	check(label+" retains all material identities and stored properties except motion offset",current==before)
+
+func run() -> void:
+	BINDINGS.install()
+	for path in SOURCES+PATHS: pin(path)
+	pin(get_script().resource_path)
+	for path in PATHS:
+		var scene := load(path) as PackedScene
+		retained_scenes.append(scene)
+		retained_sources.append(scene.instantiate())
+	var originals := []
+	for source in retained_sources: originals.append(materials(source,true))
+	var a := create_player("AuditHeroA")
+	var b := create_player("AuditHeroB")
+	check("both actual players bind finish secondary face and all three levels",a.rama_finish.configured and b.rama_finish.configured and a.rama_secondary.configured and b.rama_secondary.configured and a.rama_face.configured and b.rama_face.configured and a.rama_lod._levels.size()==3 and b.rama_lod._levels.size()==3,{"a_finish":a.rama_finish.report(),"b_finish":b.rama_finish.report()})
+	var initial := materials(a.visual)
+	var other_initial := materials(b.visual,true)
+	var initial_geo := geometry(a.visual)
+	var other_geo := geometry(b.visual)
+	check("geometry snapshots cover every real mesh including procedural nocked arrow",initial_geo.size()==collect(a.visual).size() and initial_geo.size()==9,{"mesh_count":initial_geo.size()})
+	watched_materials=initial
+	var contract := skin_contract(a)
+	check("every imported weighted vertex resolves to one existing rig across all levels",contract.passed,contract)
+	var profile := lod_profiles(a)
+	check("all body bow material properties and texture identities agree across three levels",profile.passed,profile)
+	var a_owned := []
+	var b_owned := []
+	for binding in a.rama_finish._standard+a.rama_finish._secondary: a_owned.append(binding.material.get_instance_id())
+	for binding in b.rama_finish._standard+b.rama_finish._secondary: b_owned.append(binding.material.get_instance_id())
+	check("two live players share no mutable finish-owned material",a_owned.all(func(id):return id not in b_owned),{"a_owned":a_owned.size(),"b_owned":b_owned.size()})
+	var contender := FINISH.new()
+	a.visual.add_child(contender)
+	check("a second finish owner rejects live actual surfaces without writes",not contender.configure(a.visual) and materials(a.visual)==initial)
+	contender.free()
+	for frame in 30: step(a,1.0/60.0,Vector3(3,0,5),float(frame)*.025)
+	stage("locomotion and turn",a,initial)
+	for action in ["kodanda","piercing_dawn","measured_step","guardian_circle","dawn_volley"]:
+		var requested: bool = a.rama_motion.request_action(action,.18,.22)
+		for frame in 16: step(a,1.0/60.0,Vector3(2,0,-4),.7)
+		check(action+" request reaches hold",requested and a.rama_motion.action_stage=="hold")
+		stage(action+" hold",a,initial)
+		var released: bool = a.rama_motion.release_action(action)
+		for frame in 26: step(a,1.0/60.0,Vector3(-2,0,4),-.4)
+		check(action+" explicit release completes",released and a.rama_motion.action_stage=="none")
+		stage(action+" recovery",a,initial)
+	a.rama_motion.request_action("piercing_dawn",.18,.22)
+	for frame in 16: step(a,1.0/60.0,Vector3(2,0,4),.3)
+	a.rama_motion.cancel_action("R4-09 surface continuity witness")
+	for frame in 12: step(a,1.0/60.0,Vector3(-2,0,4),-.3)
+	check("cancel completes without changing material state",a.rama_motion.action_stage=="none")
+	stage("cancel fade complete",a,initial)
+	for level in [2,1,0,2,0]:
+		a.rama_lod._apply_level(level)
+		stage("forced LOD "+str(level),a,initial)
+	check("real action and LOD changes leave all imported mesh arrays morph arrays and skin binds exact",geometry(a.visual)==initial_geo)
+	check("moving A leaves stationary B materials offsets geometry and skin bindings exact",materials(b.visual,true)==other_initial and geometry(b.visual)==other_geo)
+	# Stop stepping while the actual SceneTree is paused. Normal player callback
+	# is enabled so this tests engine process inheritance, not a pause boolean.
+	a.set_physics_process(true)
+	paused=true
+	var paused_materials := materials(a.visual,true)
+	var paused_weights := []
+	for index in a.rama_face._mesh.mesh.get_blend_shape_count(): paused_weights.append(a.rama_face._mesh.get_blend_shape_value(index))
+	for unused in 4: await process_frame
+	var after_weights := []
+	for index in a.rama_face._mesh.mesh.get_blend_shape_count(): after_weights.append(a.rama_face._mesh.get_blend_shape_value(index))
+	check("real tree pause preserves all uniforms including offsets and actual morph weights",materials(a.visual,true)==paused_materials and paused_weights==after_weights)
+	a.set_physics_process(false)
+	paused=false
+	step(a,1.0/60.0,Vector3(1,0,3),.2)
+	stage("resume",a,initial)
+	check("each declared motion callback retains complete material state",material_mismatches.is_empty(),{"observed_callbacks":motion_observations,"mismatches":material_mismatches})
+	a.reset()
+	stage("actual player reset",a,initial)
+	check("reset clears offset uniforms on every visible and hidden secondary material",a.rama_secondary._bindings.all(func(binding):return binding.material.get_shader_parameter("secondary_offset")==Vector3.ZERO))
+	check("reset retains imported arrays inverse binds and semantic material parity",geometry(a.visual)==initial_geo and lod_profiles(a).passed)
+	# Test actual live finish release. One unrelated skin edit and one owned
+	# hair uniform edit must survive, while other owned fields are rolled back.
+	var skin_binding := {}
+	var hair_binding := {}
+	for binding in a.rama_finish._standard:
+		if binding.label=="Rama warm skin": skin_binding=binding; break
+	for binding in a.rama_finish._secondary:
+		if binding.label=="Swept black hair": hair_binding=binding; break
+	var edited: StandardMaterial3D = skin_binding.material
+	edited.albedo_color=Color(.12,.34,.56,1)
+	var edited_hair: ShaderMaterial = hair_binding.material
+	edited_hair.set_shader_parameter("roughness_value",.876)
+	check("live owned-uniform drift is detected before another configure writes",not a.rama_finish.configure(a.visual) and edited_hair.get_shader_parameter("roughness_value")==.876)
+	var released: Dictionary = a.rama_finish.release()
+	check("actual finish release preserves newer skin property and hair uniform",skin_binding.slots.all(func(slot):return slot.mesh.get_ref().get_active_material(slot.surface)==edited) and edited.albedo_color==Color(.12,.34,.56,1) and edited_hair.get_shader_parameter("roughness_value")==.876 and released.conflicts.size()>0,{"release":released})
+	check("finish release on A cannot alter B",materials(b.visual,true)==other_initial)
+	check("surface release cannot rewrite imported mesh arrays or binds",geometry(a.visual)==initial_geo)
+	var source_same := true
+	for index in retained_sources.size(): source_same=source_same and materials(retained_sources[index],true)==originals[index]
+	check("all three original imported source material resources remain exact",source_same)
+	var weak_a: WeakRef = weakref(a)
+	a.queue_free()
+	await process_frame
+	await process_frame
+	check("disposing A releases it and retains B exact active materials",weak_a.get_ref()==null and materials(b.visual,true)==other_initial)
+	b.queue_free()
+	await process_frame
+	await process_frame
+	for source in retained_sources: source.free()
+	retained_sources.clear()
+	var stable_pins := true
+	for path in source_pins: stable_pins=stable_pins and FileAccess.get_sha256(path)==source_pins[path]
+	check("all recorded source import descriptors and cache bytes remained unchanged",stable_pins)
+	var result := {"passed":checks.all(func(row):return row.passed),"count":checks.size(),"engine":Engine.get_version_info().string,"checks":checks,"stages":stages,"geometry_snapshot":initial_geo,"source_sha256":source_pins,"scope":"Native CPU on actual existing promoted imports; normal player presentation callback and same rig evaluate_pose invoked once explicitly. Forced LOD visibility and real SceneTree pause. Immutable source attributes and actual active materials, not GPU shader/skinned-pixel/TBN correctness, continuous visual acceptance, OS input or hardware FPS."}
+	FileAccess.open(output,FileAccess.WRITE).store_string(JSON.stringify(result,"  ")+"\n")
+	quit(0 if result.passed else 1)

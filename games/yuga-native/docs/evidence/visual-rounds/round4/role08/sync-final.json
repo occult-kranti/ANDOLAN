@@ -1,0 +1,245 @@
+{
+  "checks": [
+    {
+      "details": {
+        "lod": {
+          "configured": true,
+          "errors": [],
+          "ignored_candidate_faces": 2,
+          "last_reason": "ready",
+          "level": 0,
+          "levels": 3,
+          "live_bones": 164,
+          "live_rigs": 1,
+          "mode": "lod_ready",
+          "owned_mesh_instances": 4,
+          "owned_skins": 2,
+          "paths": [
+            "res://assets/heroes/rama-hero-mid.glb",
+            "res://assets/heroes/rama-hero-far.glb"
+          ],
+          "scope": "One existing rig; body/bow visibility only; source face/morph writer remains unique; actual posed LOD acceptance and GPU profiling are separate.",
+          "switches": 0,
+          "visible_levels": [
+            0
+          ]
+        },
+        "secondary": {
+          "anchored_vertices": {
+            "cloth": 163363,
+            "hair": 13974
+          },
+          "bindings": 15,
+          "cloth_limit_m": 0.075,
+          "cloth_offset": "(0.0, 0.0, 0.0)",
+          "cloth_velocity": "(0.0, 0.0, 0.0)",
+          "configured": true,
+          "elapsed": 0.0,
+          "finite": true,
+          "hair_limit_m": 0.018,
+          "hair_offset": "(0.0, 0.0, 0.0)",
+          "hair_velocity": "(0.0, 0.0, 0.0)",
+          "last_reason": "",
+          "masked_vertices": {
+            "cloth": 10575,
+            "hair": 51365
+          },
+          "rejected_states": 0,
+          "reset_count": 0,
+          "scope": "Bounded analytic spring response through authored rest-space masks. No cloth collision, strands, gameplay or skeleton writes."
+        }
+      },
+      "name": "actual player binds one 164-bone rig and three LODs",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "player has one skeleton writer and its imported animator is paused",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "second secondary owner refuses already bound surfaces",
+      "passed": true
+    },
+    {
+      "details": {
+        "maximum_uniform_error_m": 0.0
+      },
+      "name": "secondary updates real materials without changing any bone",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "action request does not reset unrelated follow-through",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "moving draw holds for authoritative release with bounded secondary",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "cancel removes nock without release or a secondary reset",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "cancel fade ends while locomotion secondary continues",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "release remains explicit and consumed once",
+      "passed": true
+    },
+    {
+      "details": {
+        "transitions": [
+          {
+            "level": 0,
+            "uniform_error_m": 0.0,
+            "visible_levels": [
+              0
+            ]
+          },
+          {
+            "level": 1,
+            "uniform_error_m": 0.0,
+            "visible_levels": [
+              1
+            ]
+          },
+          {
+            "level": 2,
+            "uniform_error_m": 0.0,
+            "visible_levels": [
+              2
+            ]
+          },
+          {
+            "level": 1,
+            "uniform_error_m": 0.0,
+            "visible_levels": [
+              1
+            ]
+          },
+          {
+            "level": 0,
+            "uniform_error_m": 0.0,
+            "visible_levels": [
+              0
+            ]
+          },
+          {
+            "level": 2,
+            "uniform_error_m": 0.0,
+            "visible_levels": [
+              2
+            ]
+          },
+          {
+            "level": 0,
+            "uniform_error_m": 0.0,
+            "visible_levels": [
+              0
+            ]
+          }
+        ]
+      },
+      "name": "LOD switches preserve pose and follow-through; hidden levels receive offsets",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "motion/cancel/LOD reuse original nodes meshes skins and materials",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "real tree pause holds action clocks follow-through pose and LOD",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "resume advances one declared delta without catch-up reset",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "actual player reset clears action nock secondary and restores near",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "actual player teleport clears inherited secondary inertia",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "accepted teardown preserves real foreign material and margin",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "queued actual player teardown releases rig without orphan helper",
+      "passed": true
+    }
+  ],
+  "count": 17,
+  "passed": true,
+  "scope": "Current imported real player rig, manual native CPU motion/pose callbacks plus real SceneTree pause and teardown. LOD levels forced for ownership checks. No imports, 3D rendering, shader execution, skin contact/intersection acceptance or hardware FPS.",
+  "source_sha256": {
+    "res://.godot/imported/rama-hero-far.glb-59b3f84256e6c2881bf1ee43e3adfa6e.scn": "e20db76fe99be3f630bbd005ccf77e07a43a230a7b3d7429a634adfc9c44ef3e",
+    "res://.godot/imported/rama-hero-mid.glb-59b4ceab3d9667e3df57d44bb7b0dadb.scn": "9197108342da349c21648bf4800464e00fc4345e142e2677f31340a645d277aa",
+    "res://.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.scn": "05ff946d1bde188b558eff6833277f77b6d29ff8c0c1a5c5dd55ece1984d829f",
+    "res://assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+    "res://assets/heroes/rama-hero-far.glb": "ea9818e1464c9b6bc077ae83f8354a6357fb19d2a18fc84b2deb65c58aff901a",
+    "res://assets/heroes/rama-hero-far.glb.import": "60c2d7585242b7e0130da031a9e98316d9f4ded36eb6c2ed437ab01c687a0c66",
+    "res://assets/heroes/rama-hero-mid.glb": "27d998d924d2732b13bc8e18c3e3ec1ce9d58f0408bf3fda1ff0613cf32cba9f",
+    "res://assets/heroes/rama-hero-mid.glb.import": "893f150856eba4a372d0f24a7bbdd1e591f9f28c999f85a53c24de61562b6598",
+    "res://assets/heroes/rama-hero.glb": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+    "res://assets/heroes/rama-hero.glb.import": "c9480cdb1c83f72a5b3479d91402aa81a50ff7d8e62c2775405108784639151a",
+    "res://scripts/input_bindings.gd": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+    "res://scripts/player.gd": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+    "res://scripts/rama_facial_performance.gd": "c525d720eab133c66be18e9d49a14ddc2dd20fd0616ec4a5e4f96ee5d2947128",
+    "res://scripts/rama_lod_binding.gd": "266e29dfa72cac407d3750eefcb296ec0b9cf82dc7665afb30b2eaa658956bfc",
+    "res://scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+    "res://scripts/rama_secondary_motion.gd": "2b8e467df254dcda175694ab988071f24b41ddaa93275f5cbb9768abcb143f34",
+    "res://scripts/rama_surface_finish.gd": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+    "res://scripts/rama_surface_materials.gd": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a",
+    "res://scripts/rama_visual_lod.gd": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5",
+    "res://shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+    "res://tests/r4_secondary_fixture.gd": "9f954e8b040fc1af73622d03cdfaaedb3ce520e1933bc53d7ac57ee84edbd90e",
+    "res://tests/r4_secondary_sync_cases.gd": "ddcc0e69dae372eefa41b2c5adaaa258f6a924197d4c9539615a7ba15fa0933e"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "task": "R4-06",
+  "source_commit": "7087eb50be6cd1beac0db704177d17f3eaa0068a",
+  "frames": 210,
+  "recording_hz": 30,
+  "physics_hz": 60,
+  "camera": {
+    "offset_m": [
+      -4,
+      3.2,
+      -6
+    ],
+    "target_m": [
+      0,
+      1.4,
+      0
+    ],
+    "fov_degrees": 50,
+    "horizontal_follow_only": true,
+    "required_margin_px": 24,
+    "measured_jump_root_apex_m": 1.500839
+  },
+  "inputs": [
+    "move_left",
+    "move_right",
+    "move_forward",
+    "move_back",
+    "jump",
+    "sprint",
+    "fire"
+  ],
+  "edges": [
+    {
+      "frame": 15,
+      "kind": "press",
+      "action": "move_left"
+    },
+    {
+      "frame": 30,
+      "kind": "release_input",
+      "action": "move_left"
+    },
+    {
+      "frame": 45,
+      "kind": "press",
+      "action": "move_right"
+    },
+    {
+      "frame": 60,
+      "kind": "release_input",
+      "action": "move_right"
+    },
+    {
+      "frame": 60,
+      "kind": "press",
+      "action": "move_left"
+    },
+    {
+      "frame": 75,
+      "kind": "release_input",
+      "action": "move_left"
+    },
+    {
+      "frame": 90,
+      "kind": "press",
+      "action": "jump"
+    },
+    {
+      "frame": 91,
+      "kind": "release_input",
+      "action": "jump"
+    }
+  ],
+  "cast_frame": 150,
+  "cancel_frame": 159,
+  "cancel_reason": "R4 moving cancel",
+  "preflight_bounds_frames": [
+    0,
+    15,
+    29,
+    30,
+    44,
+    45,
+    59,
+    60,
+    74,
+    75,
+    90,
+    91,
+    98,
+    105,
+    112,
+    119,
+    135,
+    150,
+    158,
+    159,
+    160,
+    165,
+    180,
+    209
+  ],
+  "evidence_pins": {
+    "scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+    "scripts/player.gd": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+    "assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+    "docs/evidence/visual-rounds/round3/integration/promotion.json": "0e556ced5044bd8797a23a946839d95e2775d27ba2e989790332b1e5d7ace74f",
+    "docs/evidence/visual-rounds/round4/role12/actual-imported-sole-selector.json": "cd6330eacc6e606647e94e1ef931a40b2895c3eb4d997273357de30d8c281217",
+    "docs/evidence/visual-rounds/round4/role12/probe_imported_contact.gd": "9f7e898061c7c3f8b26c6bed6f45fb8ecdc43f230da66f46528e8ff90e361b40",
+    "docs/evidence/visual-rounds/round4/role12/imported-contact-analysis.json": "264cf4960a98462eb30722203299a16699f0ffd950b09993406a755d3f261f82",
+    "docs/evidence/visual-rounds/round4/role11/warning-lifecycle-r2.json": "a0b1cb33fd72590b47c007f9464d83cb607f9ca7e6378bdad9a43d7e295c7003"
+  },
+  "scope": "One uninterrupted normal-runtime input tape after one initial reset. No in-take teleport/reset, pose write, spring update or gameplay-source correction. Coherent callback pose/rig/body/contact separate from later draw observation."
+}

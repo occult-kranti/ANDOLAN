@@ -1,0 +1,203 @@
+{
+  "task": "R4-03",
+  "disposition": "NO_LIGHT_MATERIAL_OR_SHADOW_POLICY_CHANGE",
+  "checks": {
+    "all150_recorded_light_dicts_exact": true,
+    "all150_recorded_render_settings_exact": true,
+    "all150_day_exposure1_no_portraitfill": true,
+    "complete_projected_body_weapon_all150": true,
+    "foot_geometry_attributes_materials_exact": true,
+    "foot_secondary_displacement_zero": true,
+    "actual_body_fixture_collision_checks_pass": true
+  },
+  "all_checks_passed": true,
+  "recorded_baseline_frames": 150,
+  "recorded_light": {
+    "angular_distance": 0.0,
+    "color": "(1.0, 0.898, 0.7843, 1.0)",
+    "energy": 1.2999999523162842,
+    "portrait_fill": false,
+    "shadow_bias": 0.20000000298023224,
+    "shadow_enabled": true,
+    "shadow_normal_bias": 0.3499999940395355,
+    "ssao_enabled": true,
+    "sun_transform": [
+      [
+        0.6156615018844604,
+        0.0,
+        0.7880107164382935
+      ],
+      [
+        0.39400535821914673,
+        0.8660253882408142,
+        -0.3078307509422302
+      ],
+      [
+        -0.6824373006820679,
+        0.5,
+        0.5331785082817078
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "tonemap_exposure": 1.0
+  },
+  "recorded_render_settings": {
+    "msaa_3d": 1,
+    "screen_space_aa": 0,
+    "taa": false
+  },
+  "source_atmosphere_controls_not_recorded_each_frame": {
+    "day_ambient_energy": 0.3,
+    "ssao_radius_m": 0.28,
+    "ssao_intensity": 0.68,
+    "ssao_power": 1.08,
+    "ssao_detail": 0.4,
+    "ssao_light_affect": 0.1,
+    "glow_intensity": 0.1,
+    "glow_threshold": 2.1
+  },
+  "foot_selection": "rest POSITION.y<.30m and total foot/toe joint weight>.5; every supplied attribute plus source material JSON compared",
+  "selected_foot_vertices": 13580,
+  "source_foot_comparison": [
+    {
+      "mesh": 2,
+      "primitive": 2,
+      "material": "Worked warm gold",
+      "selected_foot_vertices": 1798,
+      "attributes_exact": {
+        "POSITION": true,
+        "NORMAL": true,
+        "TEXCOORD_0": true,
+        "TANGENT": true,
+        "COLOR_0": true,
+        "COLOR_1": true,
+        "JOINTS_0": true,
+        "WEIGHTS_0": true
+      },
+      "material_json_exact": true,
+      "max_normalized_vertex_alpha": 0.0,
+      "bound_to_secondary_shader": true,
+      "source_y_range_m": [
+        0.008999999612569809,
+        0.11150000244379044
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 10,
+      "material": "Dark bow leather",
+      "selected_foot_vertices": 2668,
+      "attributes_exact": {
+        "POSITION": true,
+        "NORMAL": true,
+        "TEXCOORD_0": true,
+        "TANGENT": true,
+        "COLOR_0": true,
+        "COLOR_1": true,
+        "JOINTS_0": true,
+        "WEIGHTS_0": true
+      },
+      "material_json_exact": true,
+      "max_normalized_vertex_alpha": 0.0,
+      "bound_to_secondary_shader": false,
+      "source_y_range_m": [
+        0.009999999776482582,
+        0.07699999958276749
+      ]
+    },
+    {
+      "mesh": 2,
+      "primitive": 11,
+      "material": "Rama warm skin",
+      "selected_foot_vertices": 9114,
+      "attributes_exact": {
+        "POSITION": true,
+        "NORMAL": true,
+        "TEXCOORD_0": true,
+        "TANGENT": true,
+        "COLOR_0": true,
+        "COLOR_1": true,
+        "JOINTS_0": true,
+        "WEIGHTS_0": true
+      },
+      "material_json_exact": true,
+      "max_normalized_vertex_alpha": 1.0,
+      "bound_to_secondary_shader": false,
+      "source_y_range_m": [
+        0.0005710601690225303,
+        0.09976132214069366
+      ]
+    }
+  ],
+  "ideal_directional_shadow_geometry": {
+    "ray_direction": [
+      0.6824373006820679,
+      -0.5,
+      -0.5331785082817078
+    ],
+    "horizontal_offset_per_meter_height": [
+      1.3648746013641357,
+      -1.0663570165634155
+    ],
+    "examples": [
+      {
+        "height_m": 0.001,
+        "ideal_shadow_offset_xz_m": [
+          0.0013648746013641359,
+          -0.0010663570165634156
+        ],
+        "horizontal_length_m": 0.0017320507972409288
+      },
+      {
+        "height_m": 0.01,
+        "ideal_shadow_offset_xz_m": [
+          0.013648746013641357,
+          -0.010663570165634155
+        ],
+        "horizontal_length_m": 0.017320507972409287
+      },
+      {
+        "height_m": 0.03,
+        "ideal_shadow_offset_xz_m": [
+          0.04094623804092407,
+          -0.03199071049690246
+        ],
+        "horizontal_length_m": 0.051961523917227866
+      },
+      {
+        "height_m": 0.05,
+        "ideal_shadow_offset_xz_m": [
+          0.06824373006820679,
+          -0.05331785082817078
+        ],
+        "horizontal_length_m": 0.08660253986204644
+      }
+    ],
+    "scope": "Directional point projection onto horizontal ground only. This is not measured GPU shadow bias, filtering, contact-shadow or SSAO behavior; shadow_bias units are not treated as meters."
+  },
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/audit_light_contact.py": "f8e2ec92abcd274217d0d960cf47397e62254f598f57ed51238305868fb66e5b",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role06/baseline/continuity/capture.json": "7d7a27136824b190c4bdc5268db80920129eaadb5284ee92b8b24e8f26183445",
+    "/workspace/scratch/visual-round2/role-08/face-form-candidate-r6/candidate.glb": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+    "/workspace/scratch/visual-round3/role-08/groom-r7/rama-hero.glb": "8b6cf0f4c5520696d1d843e5bdebb2454c1dbd4341e17171c5b6d20353384d5c",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/hero_atmosphere.gd": "174c02b7fd0733eae17be9cff45713b79feaf2e6f7814e43c27f0206680708fe",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/production_lighting.gd": "09eb9203a41b4047742c95155512d41e8df8fadfb08cfae8f3bea82b7c24cb58",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/world_lighting.gd": "2020458f8e8174f1906a0b5b23a78f56a2408f5a8dd604cf5db4c7382e7a0d51",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_surface_finish.gd": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_secondary_motion.gd": "2b8e467df254dcda175694ab988071f24b41ddaa93275f5cbb9768abcb143f34",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_surface_materials.gd": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a",
+    "/workspace/ANDOLAN/games/yuga-native/shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role02/actual-physics.json": "d2e1d35af7801660522e645acdc1531955e8ef579db172aaa1307d61452dcee2"
+  },
+  "limits": [
+    "R7 feet source-exact does not guarantee its hair/cloth cast shadows are unchanged elsewhere.",
+    "Body collider floor normals do not certify sole skin contact.",
+    "All recorded fields held constant does not prove pixel shading is temporally identical; camera and geometry move.",
+    "Unrecorded SSAO/fill parameters are source-policy evidence only. Candidate/R4 matched frame-by-frame states and actual shadows remain pending."
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "task": "R4-04",
+  "base": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "/workspace/ANDOLAN/games/yuga-native/tests/rama_motion_cases.gd": "ca4e9e270677317eecece9699a26a44bfce0ec84c4209b464e3f2ec379ec328d",
+    "/workspace/ANDOLAN/games/yuga-native/tests/rama_hero_integration_cases.gd": "96b0dd6632db9b4a43d2d2304153050e8761d7bb0c762307ac2bc9c26ce4c66d",
+    "/workspace/ANDOLAN/games/yuga-native/assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+    "/workspace/ANDOLAN/games/yuga-native/assets/heroes/rama-hero.glb": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+    "/workspace/ANDOLAN/games/yuga-native/assets/heroes/rama-hero.glb.import": "c9480cdb1c83f72a5b3479d91402aa81a50ff7d8e62c2775405108784639151a",
+    "/workspace/ANDOLAN/games/yuga-native/.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.scn": "90d5e4c33a2955ffaf47aee772e225c106f7e4bc2976cbbcca0be250bfaf68a9",
+    "/workspace/ANDOLAN/games/yuga-native/.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.md5": "3b58de2e380e0e86068d23cad1ec205f7647c54f6b218aa35fee69be989febf5",
+    "/workspace/scratch/visual-round3/role-08/groom-r6/rama-hero.glb": "bdd917daa88254bdf203fd0bb92c7fb1167fda05a3c223dea4c9f3a3bc0453d1",
+    "/workspace/scratch/visual-round2/role-05/baseline-runtime-r3.json": "8edd6d7dc9217d877a8a013f287b43a98d3a3869f5bb3cec387689df07e7a00d"
+  },
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 taskset -c 0,1 python /workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role04/study_wrist_arc.py",
+      "exit_code": 0
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python /workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role04/verify_arc_witnesses.py",
+      "exit_code": 0
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 taskset -c 0,1 timeout 30s godot --headless --path /workspace/ANDOLAN/games/yuga-native --script res://tests/rama_motion_cases.gd -- --report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role04/baseline-motion-tests.json > /workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role04/baseline-motion-tests.log 2>&1",
+      "exit_code": 0
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 taskset -c 0,1 timeout 30s godot --headless --path /workspace/ANDOLAN/games/yuga-native --script res://tests/rama_hero_integration_cases.gd -- --report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role04/baseline-integration-tests.json > /workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role04/baseline-integration-tests.log 2>&1",
+      "exit_code": 1
+    }
+  ],
+  "native_results": {
+    "motion": {
+      "passed": 39,
+      "total": 39
+    },
+    "integration": {
+      "passed": 137,
+      "total": 138,
+      "wall_seconds": 16.671941,
+      "failures": [
+        {
+          "details": {
+            "source": "res://assets/heroes/rama-hero.glb"
+          },
+          "name": "actual hero import matches current source asset bytes",
+          "passed": false
+        }
+      ]
+    }
+  },
+  "import_freshness": {
+    "passed": false,
+    "cache_source_md5": "d7be631ac88df44e8c1ce4b74e7380e2",
+    "current_source_md5": "034ab4faeaaba0a058555ccb933e23f4",
+    "disposition": "Retain failure; no authorized importer run. Native behavior belongs to pinned existing cache plus unchanged current controller, not current source GLB contact proof."
+  },
+  "candidate": {
+    "angle_degrees": 15,
+    "axis": "Current wrist local Y through GRIP_CENTER. This line contains the muzzle offset; it is not the bow cylinder longitudinal axis (local X).",
+    "max_grip_drift_m": 2.2887833992611187e-16,
+    "max_muzzle_drift_m": 2.2887833992611187e-16,
+    "remaining_strict_crossings": 6,
+    "disposition": "Rejected before controller patch; do not render or integrate. No gain envelope or transition implementation staged."
+  },
+  "scope": "No import, no render, no canonical source mutation. The strict source replay and native cached-mesh receipts are separate. Neither certifies continuous rendered contact, R4 dynamic foot acceptance, or corrected current-source imports."
+}

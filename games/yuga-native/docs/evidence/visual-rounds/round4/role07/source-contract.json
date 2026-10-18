@@ -1,0 +1,2230 @@
+{
+  "engine": {
+    "build": "official",
+    "hash": "7d41c59c457bd5a245092b4e7eb2d833e3b3f8c3",
+    "hex": 263683,
+    "major": 4,
+    "minor": 6,
+    "patch": 3,
+    "status": "stable",
+    "string": "4.6.3-stable (official)",
+    "timestamp": 0
+  },
+  "official_sources": {
+    "skeleton_3d.cpp": {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.6.3-stable/scene/3d/skeleton_3d.cpp",
+      "sha256": "a3f1c913ee48a9df1dc417ad3b8e2178a33214c9edb3f76947ab2f6a2cdf75dc"
+    },
+    "iterate_ik_3d.cpp": {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.6.3-stable/scene/3d/iterate_ik_3d.cpp",
+      "sha256": "99aa3fed56cc106591e138da8640947bcc1d600ccb1a7951e32443c07fd1cd9b"
+    },
+    "chain_ik_3d.cpp": {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.6.3-stable/scene/3d/chain_ik_3d.cpp",
+      "sha256": "b928824a7ec71873ce861daf5d46f12428bee99e071c6e38348afc337ebb61e4"
+    }
+  },
+  "classes": {
+    "classes": {
+      "CCDIK3D": {
+        "exists": true,
+        "instantiate": true,
+        "methods": [],
+        "parent": "IterateIK3D",
+        "properties": []
+      },
+      "ChainIK3D": {
+        "exists": true,
+        "instantiate": false,
+        "methods": [
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone_name",
+                "type": 4,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8649,
+            "name": "set_root_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8650,
+            "name": "get_root_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8651,
+            "name": "set_root_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8652,
+            "name": "get_root_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone_name",
+                "type": 4,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8653,
+            "name": "set_end_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8654,
+            "name": "get_end_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8655,
+            "name": "set_end_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8656,
+            "name": "get_end_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "enabled",
+                "type": 1,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8657,
+            "name": "set_extend_end_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8658,
+            "name": "is_end_bone_extended",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 1,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "SkeletonModifier3D.BoneDirection",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone_direction",
+                "type": 2,
+                "usage": 65542
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8659,
+            "name": "set_end_bone_direction",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8660,
+            "name": "get_end_bone_direction",
+            "return": {
+              "class_name": "SkeletonModifier3D.BoneDirection",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 65542
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "length",
+                "type": 3,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8661,
+            "name": "set_end_bone_length",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8662,
+            "name": "get_end_bone_length",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 3,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "joint",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8663,
+            "name": "get_joint_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "joint",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8664,
+            "name": "get_joint_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8665,
+            "name": "get_joint_count",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 6
+            }
+          }
+        ],
+        "parent": "IKModifier3D",
+        "properties": []
+      },
+      "FABRIK3D": {
+        "exists": true,
+        "instantiate": true,
+        "methods": [],
+        "parent": "IterateIK3D",
+        "properties": []
+      },
+      "IKModifier3D": {
+        "exists": true,
+        "instantiate": false,
+        "methods": [
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "count",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8615,
+            "name": "set_setting_count",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 8616,
+            "name": "get_setting_count",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 1,
+            "id": 8617,
+            "name": "clear_settings",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "enabled",
+                "type": 1,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8618,
+            "name": "set_mutable_bone_axes",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 8619,
+            "name": "are_bone_axes_mutable",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 1,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 1,
+            "id": 8620,
+            "name": "reset",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          }
+        ],
+        "parent": "SkeletonModifier3D",
+        "properties": [
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "",
+            "name": "mutable_bone_axes",
+            "type": 1,
+            "usage": 6
+          }
+        ]
+      },
+      "SkeletonIK3D": {
+        "exists": true,
+        "instantiate": true,
+        "methods": [
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "root_bone",
+                "type": 21,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9122,
+            "name": "set_root_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9123,
+            "name": "get_root_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 21,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "tip_bone",
+                "type": 21,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9124,
+            "name": "set_tip_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9125,
+            "name": "get_tip_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 21,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "target",
+                "type": 18,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9126,
+            "name": "set_target_transform",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9127,
+            "name": "get_target_transform",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 18,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "node",
+                "type": 22,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9128,
+            "name": "set_target_node",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 1,
+            "id": 9129,
+            "name": "get_target_node",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 22,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "override",
+                "type": 1,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9130,
+            "name": "set_override_tip_basis",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9131,
+            "name": "is_override_tip_basis",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 1,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "use",
+                "type": 1,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9132,
+            "name": "set_use_magnet",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9133,
+            "name": "is_using_magnet",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 1,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "local_position",
+                "type": 9,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9134,
+            "name": "set_magnet_position",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9135,
+            "name": "get_magnet_position",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9136,
+            "name": "get_parent_skeleton",
+            "return": {
+              "class_name": "Skeleton3D",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 24,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 1,
+            "id": 9137,
+            "name": "is_running",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 1,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "min_distance",
+                "type": 3,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9138,
+            "name": "set_min_distance",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9139,
+            "name": "get_min_distance",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 3,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "iterations",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9140,
+            "name": "set_max_iterations",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9141,
+            "name": "get_max_iterations",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "one_time",
+                "type": 1,
+                "usage": 6
+              }
+            ],
+            "default_args": [
+              false
+            ],
+            "flags": 1,
+            "id": 9142,
+            "name": "start",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 1,
+            "id": 9143,
+            "name": "stop",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "interpolation",
+                "type": 3,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 9144,
+            "name": "set_interpolation",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 9145,
+            "name": "get_interpolation",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 3,
+              "usage": 6
+            }
+          }
+        ],
+        "parent": "SkeletonModifier3D",
+        "properties": [
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "",
+            "name": "root_bone",
+            "type": 21,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "",
+            "name": "tip_bone",
+            "type": 21,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "suffix:m",
+            "name": "target",
+            "type": 18,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "",
+            "name": "override_tip_basis",
+            "type": 1,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "",
+            "name": "use_magnet",
+            "type": 1,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "suffix:m",
+            "name": "magnet",
+            "type": 9,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "",
+            "name": "target_node",
+            "type": 22,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "suffix:m",
+            "name": "min_distance",
+            "type": 3,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "",
+            "name": "max_iterations",
+            "type": 2,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 1,
+            "hint_string": "0,1,0.001",
+            "name": "interpolation",
+            "type": 3,
+            "usage": 0
+          }
+        ]
+      },
+      "SkeletonModifier3D": {
+        "exists": true,
+        "instantiate": true,
+        "methods": [
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "delta",
+                "type": 3,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 8,
+            "id": 0,
+            "name": "_process_modification_with_delta",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 8,
+            "id": 0,
+            "name": "_process_modification",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "Skeleton3D",
+                "hint": 0,
+                "hint_string": "",
+                "name": "old_skeleton",
+                "type": 24,
+                "usage": 6
+              },
+              {
+                "class_name": "Skeleton3D",
+                "hint": 0,
+                "hint_string": "",
+                "name": "new_skeleton",
+                "type": 24,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 8,
+            "id": 0,
+            "name": "_skeleton_changed",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 8,
+            "id": 0,
+            "name": "_validate_bone_names",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 8407,
+            "name": "get_skeleton",
+            "return": {
+              "class_name": "Skeleton3D",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 24,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "active",
+                "type": 1,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8408,
+            "name": "set_active",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 8409,
+            "name": "is_active",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 1,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "influence",
+                "type": 3,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8410,
+            "name": "set_influence",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [],
+            "default_args": [],
+            "flags": 5,
+            "id": 8411,
+            "name": "get_influence",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 3,
+              "usage": 6
+            }
+          }
+        ],
+        "parent": "Node3D",
+        "properties": [
+          {
+            "class_name": "",
+            "hint": 0,
+            "hint_string": "",
+            "name": "active",
+            "type": 1,
+            "usage": 6
+          },
+          {
+            "class_name": "",
+            "hint": 1,
+            "hint_string": "0,1,0.001",
+            "name": "influence",
+            "type": 3,
+            "usage": 6
+          }
+        ]
+      },
+      "TwoBoneIK3D": {
+        "exists": true,
+        "instantiate": true,
+        "methods": [
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "target_node",
+                "type": 22,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8621,
+            "name": "set_target_node",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8622,
+            "name": "get_target_node",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 22,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "pole_node",
+                "type": 22,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8623,
+            "name": "set_pole_node",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8624,
+            "name": "get_pole_node",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 22,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone_name",
+                "type": 4,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8625,
+            "name": "set_root_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8626,
+            "name": "get_root_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8627,
+            "name": "set_root_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8628,
+            "name": "get_root_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone_name",
+                "type": 4,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8629,
+            "name": "set_middle_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8630,
+            "name": "get_middle_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8631,
+            "name": "set_middle_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8632,
+            "name": "get_middle_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "SkeletonModifier3D.SecondaryDirection",
+                "hint": 0,
+                "hint_string": "",
+                "name": "direction",
+                "type": 2,
+                "usage": 65542
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8633,
+            "name": "set_pole_direction",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8634,
+            "name": "get_pole_direction",
+            "return": {
+              "class_name": "SkeletonModifier3D.SecondaryDirection",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 65542
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "vector",
+                "type": 9,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8635,
+            "name": "set_pole_direction_vector",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8636,
+            "name": "get_pole_direction_vector",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone_name",
+                "type": 4,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8637,
+            "name": "set_end_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8638,
+            "name": "get_end_bone_name",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8639,
+            "name": "set_end_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8640,
+            "name": "get_end_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "enabled",
+                "type": 1,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8641,
+            "name": "set_use_virtual_end",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8642,
+            "name": "is_using_virtual_end",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 1,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "enabled",
+                "type": 1,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8643,
+            "name": "set_extend_end_bone",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8644,
+            "name": "is_end_bone_extended",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 1,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "SkeletonModifier3D.BoneDirection",
+                "hint": 0,
+                "hint_string": "",
+                "name": "bone_direction",
+                "type": 2,
+                "usage": 65542
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8645,
+            "name": "set_end_bone_direction",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8646,
+            "name": "get_end_bone_direction",
+            "return": {
+              "class_name": "SkeletonModifier3D.BoneDirection",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 65542
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              },
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "length",
+                "type": 3,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 1,
+            "id": 8647,
+            "name": "set_end_bone_length",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 6
+            }
+          },
+          {
+            "args": [
+              {
+                "class_name": "",
+                "hint": 0,
+                "hint_string": "",
+                "name": "index",
+                "type": 2,
+                "usage": 6
+              }
+            ],
+            "default_args": [],
+            "flags": 5,
+            "id": 8648,
+            "name": "get_end_bone_length",
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 3,
+              "usage": 6
+            }
+          }
+        ],
+        "parent": "IKModifier3D",
+        "properties": [
+          {
+            "class_name": "Settings,settings/",
+            "hint": 0,
+            "hint_string": "",
+            "name": "setting_count",
+            "type": 2,
+            "usage": 262150
+          }
+        ]
+      }
+    },
+    "engine": {
+      "build": "official",
+      "hash": "7d41c59c457bd5a245092b4e7eb2d833e3b3f8c3",
+      "hex": 263683,
+      "major": 4,
+      "minor": 6,
+      "patch": 3,
+      "status": "stable",
+      "string": "4.6.3-stable (official)",
+      "timestamp": 0
+    }
+  },
+  "native_phase": "Skeleton3D.advance queues deferred modifier phase. Capture native result in modification_processed; outside the phase the skeleton restores unmodified poses. No callable synchronous native _process_modification_with_delta method.",
+  "failure_probes": [
+    "invoke-probe.log",
+    "comparator-r1.log",
+    "comparator-r2.log"
+  ]
+}

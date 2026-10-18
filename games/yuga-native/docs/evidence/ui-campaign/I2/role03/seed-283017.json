@@ -1,0 +1,2813 @@
+{
+  "checks": [
+    {
+      "details": {
+        "after": {
+          "cancelled": 0,
+          "completed": 0,
+          "failed": 0,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "idle",
+          "same_loader": true,
+          "scene": ""
+        },
+        "before": {
+          "cancelled": 0,
+          "completed": 0,
+          "failed": 0,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "idle",
+          "same_loader": true,
+          "scene": ""
+        },
+        "case": "invalid",
+        "cycle": 0,
+        "destination": "courtyard"
+      },
+      "name": "01 invalid",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 1,
+          "completed": 0,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": ""
+        },
+        "before": {
+          "cancelled": 0,
+          "completed": 0,
+          "failed": 0,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "idle",
+          "same_loader": true,
+          "scene": ""
+        },
+        "case": "missing",
+        "cycle": 0,
+        "destination": "confluence"
+      },
+      "name": "02 missing",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 2,
+          "completed": 0,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": ""
+        },
+        "before": {
+          "cancelled": 1,
+          "completed": 0,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": ""
+        },
+        "case": "detach",
+        "cycle": 0,
+        "destination": "courtyard"
+      },
+      "name": "03 detach",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 2,
+          "completed": 1,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "before": {
+          "cancelled": 2,
+          "completed": 0,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": ""
+        },
+        "case": "valid",
+        "cycle": 0,
+        "destination": "confluence"
+      },
+      "name": "04 valid",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 3,
+          "completed": 1,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "before": {
+          "cancelled": 2,
+          "completed": 1,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "case": "constructing",
+        "cycle": 0,
+        "destination": "courtyard"
+      },
+      "name": "05 constructing",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 5,
+          "completed": 2,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "before": {
+          "cancelled": 3,
+          "completed": 1,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "case": "reentrant",
+        "cycle": 0,
+        "destination": "confluence"
+      },
+      "name": "06 reentrant",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 6,
+          "completed": 3,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 5,
+          "completed": 2,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "case": "loading",
+        "cycle": 0,
+        "destination": "courtyard"
+      },
+      "name": "07 loading",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 7,
+          "completed": 3,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 6,
+          "completed": 3,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "queued",
+        "cycle": 0,
+        "destination": "confluence"
+      },
+      "name": "08 queued",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 8,
+          "completed": 3,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 7,
+          "completed": 3,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "detach",
+        "cycle": 1,
+        "destination": "confluence"
+      },
+      "name": "09 detach",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 8,
+          "completed": 4,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 8,
+          "completed": 3,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "valid",
+        "cycle": 1,
+        "destination": "courtyard"
+      },
+      "name": "10 valid",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 8,
+          "completed": 4,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 8,
+          "completed": 4,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "invalid",
+        "cycle": 1,
+        "destination": "confluence"
+      },
+      "name": "11 invalid",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 10,
+          "completed": 5,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 8,
+          "completed": 4,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "reentrant",
+        "cycle": 1,
+        "destination": "courtyard"
+      },
+      "name": "12 reentrant",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 11,
+          "completed": 5,
+          "failed": 4,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 10,
+          "completed": 5,
+          "failed": 2,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "missing",
+        "cycle": 1,
+        "destination": "confluence"
+      },
+      "name": "13 missing",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 12,
+          "completed": 5,
+          "failed": 4,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 11,
+          "completed": 5,
+          "failed": 4,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "queued",
+        "cycle": 1,
+        "destination": "courtyard"
+      },
+      "name": "14 queued",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 13,
+          "completed": 5,
+          "failed": 4,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 12,
+          "completed": 5,
+          "failed": 4,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "constructing",
+        "cycle": 1,
+        "destination": "confluence"
+      },
+      "name": "15 constructing",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 14,
+          "completed": 6,
+          "failed": 4,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 13,
+          "completed": 5,
+          "failed": 4,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "loading",
+        "cycle": 1,
+        "destination": "courtyard"
+      },
+      "name": "16 loading",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 15,
+          "completed": 6,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 14,
+          "completed": 6,
+          "failed": 4,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "missing",
+        "cycle": 2,
+        "destination": "courtyard"
+      },
+      "name": "17 missing",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 16,
+          "completed": 6,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 15,
+          "completed": 6,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "queued",
+        "cycle": 2,
+        "destination": "confluence"
+      },
+      "name": "18 queued",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 17,
+          "completed": 7,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 16,
+          "completed": 6,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "loading",
+        "cycle": 2,
+        "destination": "courtyard"
+      },
+      "name": "19 loading",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 17,
+          "completed": 7,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 17,
+          "completed": 7,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "invalid",
+        "cycle": 2,
+        "destination": "confluence"
+      },
+      "name": "20 invalid",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 19,
+          "completed": 8,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 17,
+          "completed": 7,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "reentrant",
+        "cycle": 2,
+        "destination": "courtyard"
+      },
+      "name": "21 reentrant",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 20,
+          "completed": 8,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 19,
+          "completed": 8,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "constructing",
+        "cycle": 2,
+        "destination": "confluence"
+      },
+      "name": "22 constructing",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 21,
+          "completed": 8,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 20,
+          "completed": 8,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "detach",
+        "cycle": 2,
+        "destination": "courtyard"
+      },
+      "name": "23 detach",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 21,
+          "completed": 9,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "before": {
+          "cancelled": 21,
+          "completed": 8,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "valid",
+        "cycle": 2,
+        "destination": "confluence"
+      },
+      "name": "24 valid",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 21,
+          "completed": 10,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "before": {
+          "cancelled": 21,
+          "completed": 9,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "case": "valid",
+        "cycle": 3,
+        "destination": "confluence"
+      },
+      "name": "25 valid",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 22,
+          "completed": 10,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "before": {
+          "cancelled": 21,
+          "completed": 10,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "case": "queued",
+        "cycle": 3,
+        "destination": "courtyard"
+      },
+      "name": "26 queued",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 23,
+          "completed": 10,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "before": {
+          "cancelled": 22,
+          "completed": 10,
+          "failed": 6,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "case": "missing",
+        "cycle": 3,
+        "destination": "confluence"
+      },
+      "name": "27 missing",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 25,
+          "completed": 11,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 23,
+          "completed": 10,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "case": "reentrant",
+        "cycle": 3,
+        "destination": "courtyard"
+      },
+      "name": "28 reentrant",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 26,
+          "completed": 11,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 25,
+          "completed": 11,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "constructing",
+        "cycle": 3,
+        "destination": "confluence"
+      },
+      "name": "29 constructing",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 27,
+          "completed": 11,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "before": {
+          "cancelled": 26,
+          "completed": 11,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "detach",
+        "cycle": 3,
+        "destination": "courtyard"
+      },
+      "name": "30 detach",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 28,
+          "completed": 12,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "before": {
+          "cancelled": 27,
+          "completed": 11,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "cancelled",
+          "same_loader": true,
+          "scene": "res://scenes/courtyard.tscn"
+        },
+        "case": "loading",
+        "cycle": 3,
+        "destination": "confluence"
+      },
+      "name": "31 loading",
+      "passed": true
+    },
+    {
+      "details": {
+        "after": {
+          "cancelled": 28,
+          "completed": 12,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "before": {
+          "cancelled": 28,
+          "completed": 12,
+          "failed": 8,
+          "layers": 1,
+          "owner": false,
+          "pending": 0,
+          "phase": "done",
+          "same_loader": true,
+          "scene": "res://scenes/confluence_world.tscn"
+        },
+        "case": "invalid",
+        "cycle": 3,
+        "destination": "courtyard"
+      },
+      "name": "32 invalid",
+      "passed": true
+    },
+    {
+      "details": {
+        "duplicates": 0,
+        "events": 144
+      },
+      "name": "Exact state notifications remain deduplicated",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "All abandoned threaded requests drain",
+      "passed": true
+    },
+    {
+      "details": {
+        "cancelled": 28,
+        "completed": 12,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "name": "Final persistent owner census",
+      "passed": true
+    }
+  ],
+  "count": 35,
+  "events": [
+    {
+      "attempt": 1,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 1,
+      "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+      "phase": "error",
+      "progress": -1.0
+    },
+    {
+      "attempt": 2,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 2,
+      "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+      "phase": "error",
+      "progress": -1.0
+    },
+    {
+      "attempt": 3,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 4,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 4,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 5,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 6,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 6,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 6,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 6,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 6,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 7,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 7,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 7,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 7,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 8,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 9,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 10,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 11,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 12,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 13,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 13,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 13,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 13,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 13,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 14,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 14,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 15,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 16,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 16,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 16,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 16,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 17,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 18,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 19,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 19,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 20,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 21,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 21,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 21,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 21,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 21,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 22,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 23,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 24,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 25,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 26,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 26,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 26,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 26,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 26,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 27,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 27,
+      "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+      "phase": "error",
+      "progress": -1.0
+    },
+    {
+      "attempt": 28,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 28,
+      "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+      "phase": "error",
+      "progress": -1.0
+    },
+    {
+      "attempt": 29,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 30,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 31,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 32,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 32,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 32,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 32,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 33,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 34,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 34,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 35,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 36,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 36,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 36,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 36,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 37,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 37,
+      "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+      "phase": "error",
+      "progress": -1.0
+    },
+    {
+      "attempt": 38,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 38,
+      "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+      "phase": "error",
+      "progress": -1.0
+    },
+    {
+      "attempt": 39,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 40,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 41,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 42,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 42,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 43,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 44,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 44,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 44,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 44,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 45,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 46,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 47,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 48,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 49,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 49,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 49,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 49,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 49,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 50,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 50,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 50,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 50,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 51,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 52,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 52,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 53,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 54,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 54,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 54,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 54,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 54,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 55,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 55,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 55,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 55,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 55,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 56,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 57,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 58,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 58,
+      "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+      "phase": "error",
+      "progress": -1.0
+    },
+    {
+      "attempt": 59,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 59,
+      "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+      "phase": "error",
+      "progress": -1.0
+    },
+    {
+      "attempt": 60,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 61,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 62,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 63,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 64,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 65,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 65,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 65,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 65,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 65,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    },
+    {
+      "attempt": 66,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 66,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 66,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": 0.0
+    },
+    {
+      "attempt": 66,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 67,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 68,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 68,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 69,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 70,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 70,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 71,
+      "message": "Returned to the previous screen.",
+      "phase": "cancelled",
+      "progress": -1.0
+    },
+    {
+      "attempt": 72,
+      "message": "Preparing to load\u2026",
+      "phase": "queued",
+      "progress": -1.0
+    },
+    {
+      "attempt": 72,
+      "message": "Loading scene resources\u2026",
+      "phase": "loading",
+      "progress": -1.0
+    },
+    {
+      "attempt": 72,
+      "message": "Preparing the scene\u2026 This step may take a moment.",
+      "phase": "constructing",
+      "progress": -1.0
+    },
+    {
+      "attempt": 72,
+      "message": "Ready.",
+      "phase": "done",
+      "progress": -1.0
+    }
+  ],
+  "final_census": {
+    "cancelled": 28,
+    "completed": 12,
+    "failed": 8,
+    "layers": 1,
+    "owner": false,
+    "pending": 0,
+    "phase": "done",
+    "same_loader": true,
+    "scene": "res://scenes/confluence_world.tscn"
+  },
+  "passed": true,
+  "passed_count": 35,
+  "scope": "32 seeded real tiny-scene attempts and 3 final lifecycle gates. No product-scene mutation, mocked ResourceLoader, or rendered/performance claim.",
+  "seed": 283017,
+  "sequence": [
+    {
+      "after": {
+        "cancelled": 0,
+        "completed": 0,
+        "failed": 0,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "idle",
+        "same_loader": true,
+        "scene": ""
+      },
+      "before": {
+        "cancelled": 0,
+        "completed": 0,
+        "failed": 0,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "idle",
+        "same_loader": true,
+        "scene": ""
+      },
+      "case": "invalid",
+      "cycle": 0,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 1,
+        "completed": 0,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": ""
+      },
+      "before": {
+        "cancelled": 0,
+        "completed": 0,
+        "failed": 0,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "idle",
+        "same_loader": true,
+        "scene": ""
+      },
+      "case": "missing",
+      "cycle": 0,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 2,
+        "completed": 0,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": ""
+      },
+      "before": {
+        "cancelled": 1,
+        "completed": 0,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": ""
+      },
+      "case": "detach",
+      "cycle": 0,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 2,
+        "completed": 1,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "before": {
+        "cancelled": 2,
+        "completed": 0,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": ""
+      },
+      "case": "valid",
+      "cycle": 0,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 3,
+        "completed": 1,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "before": {
+        "cancelled": 2,
+        "completed": 1,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "case": "constructing",
+      "cycle": 0,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 5,
+        "completed": 2,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "before": {
+        "cancelled": 3,
+        "completed": 1,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "case": "reentrant",
+      "cycle": 0,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 6,
+        "completed": 3,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 5,
+        "completed": 2,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "case": "loading",
+      "cycle": 0,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 7,
+        "completed": 3,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 6,
+        "completed": 3,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "queued",
+      "cycle": 0,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 8,
+        "completed": 3,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 7,
+        "completed": 3,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "detach",
+      "cycle": 1,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 8,
+        "completed": 4,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 8,
+        "completed": 3,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "valid",
+      "cycle": 1,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 8,
+        "completed": 4,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 8,
+        "completed": 4,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "invalid",
+      "cycle": 1,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 10,
+        "completed": 5,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 8,
+        "completed": 4,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "reentrant",
+      "cycle": 1,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 11,
+        "completed": 5,
+        "failed": 4,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 10,
+        "completed": 5,
+        "failed": 2,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "missing",
+      "cycle": 1,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 12,
+        "completed": 5,
+        "failed": 4,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 11,
+        "completed": 5,
+        "failed": 4,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "queued",
+      "cycle": 1,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 13,
+        "completed": 5,
+        "failed": 4,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 12,
+        "completed": 5,
+        "failed": 4,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "constructing",
+      "cycle": 1,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 14,
+        "completed": 6,
+        "failed": 4,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 13,
+        "completed": 5,
+        "failed": 4,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "loading",
+      "cycle": 1,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 15,
+        "completed": 6,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 14,
+        "completed": 6,
+        "failed": 4,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "missing",
+      "cycle": 2,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 16,
+        "completed": 6,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 15,
+        "completed": 6,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "queued",
+      "cycle": 2,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 17,
+        "completed": 7,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 16,
+        "completed": 6,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "loading",
+      "cycle": 2,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 17,
+        "completed": 7,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 17,
+        "completed": 7,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "invalid",
+      "cycle": 2,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 19,
+        "completed": 8,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 17,
+        "completed": 7,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "reentrant",
+      "cycle": 2,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 20,
+        "completed": 8,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 19,
+        "completed": 8,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "constructing",
+      "cycle": 2,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 21,
+        "completed": 8,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 20,
+        "completed": 8,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "detach",
+      "cycle": 2,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 21,
+        "completed": 9,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "before": {
+        "cancelled": 21,
+        "completed": 8,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "valid",
+      "cycle": 2,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 21,
+        "completed": 10,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "before": {
+        "cancelled": 21,
+        "completed": 9,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "case": "valid",
+      "cycle": 3,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 22,
+        "completed": 10,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "before": {
+        "cancelled": 21,
+        "completed": 10,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "case": "queued",
+      "cycle": 3,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 23,
+        "completed": 10,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "before": {
+        "cancelled": 22,
+        "completed": 10,
+        "failed": 6,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "case": "missing",
+      "cycle": 3,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 25,
+        "completed": 11,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 23,
+        "completed": 10,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "case": "reentrant",
+      "cycle": 3,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 26,
+        "completed": 11,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 25,
+        "completed": 11,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "constructing",
+      "cycle": 3,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 27,
+        "completed": 11,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "before": {
+        "cancelled": 26,
+        "completed": 11,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "detach",
+      "cycle": 3,
+      "destination": "courtyard"
+    },
+    {
+      "after": {
+        "cancelled": 28,
+        "completed": 12,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "before": {
+        "cancelled": 27,
+        "completed": 11,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "cancelled",
+        "same_loader": true,
+        "scene": "res://scenes/courtyard.tscn"
+      },
+      "case": "loading",
+      "cycle": 3,
+      "destination": "confluence"
+    },
+    {
+      "after": {
+        "cancelled": 28,
+        "completed": 12,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "before": {
+        "cancelled": 28,
+        "completed": 12,
+        "failed": 8,
+        "layers": 1,
+        "owner": false,
+        "pending": 0,
+        "phase": "done",
+        "same_loader": true,
+        "scene": "res://scenes/confluence_world.tscn"
+      },
+      "case": "invalid",
+      "cycle": 3,
+      "destination": "courtyard"
+    }
+  ],
+  "source_unchanged": true,
+  "harness": {
+    "runtime_source": "/tmp/yuga-i1-final-r1/ANDOLAN/games/yuga-native",
+    "test_source": "/workspace/ANDOLAN/games/yuga-native",
+    "command": [
+      "/usr/local/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/yuga-transition-check-gehab6we",
+      "--script",
+      "res://tests/ui_transition_stress_cases.gd",
+      "--",
+      "--report=/tmp/yuga-transition-check-gehab6we/report.json",
+      "--seed=283017"
+    ],
+    "exit_code": 0,
+    "source_sha256": {
+      "scripts/scene_transition.gd": "8ecaa8ae6359b2a5a89f1acbdd1d544058570a3effe656698b97a9adab7ec5e0",
+      "scripts/hero_ui_theme.gd": "b1d630e9087f939ba6a68a5bbfac6f126064d417393786380c324317ac5d39a6",
+      "tests/ui_transition_stress_cases.gd": "ec2722c8cb96e1fe27e517f0a11098c1ae0cae8bbdbfa203afb712089583f630",
+      "assets/fonts/NotoSerif-Regular.ttf.import": "d2b38a67ee6a5962bd073b551085f1f4c29d1af64474e90450f56f33b5e96a5b",
+      "assets/fonts/NotoSerif-Regular.ttf": "9d7583b7dc9e812afd32a14280c5cac3160012efe50c8d08938f4fea266ff67f",
+      "assets/fonts/NotoSans-Regular.ttf.import": "7ddb7fe1898a55896f6790224f4f00070a4b99d83c0ba9b0bb02d6ba74e342cd",
+      "assets/fonts/NotoSans-Regular.ttf": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+      "assets/fonts/DejaVuSans.ttf.import": "3d1c9315fe118a11830f3b2cb13c7fa88f47028f229100a8053705799bd777a6",
+      "assets/fonts/DejaVuSans.ttf": "57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e",
+      ".godot/imported/NotoSansSymbols-Regular.ttf-7ee3050129f981bdb85e2c00dcf059bf.fontdata": "3bf4f09edfa3fa2db10a8f63ad2833a3c3dbb16b345545252f7f643b662eaa10",
+      ".godot/imported/NotoSerif-Regular.ttf-6e3f67e84ff840e5e437d5cce0416d65.fontdata": "a2b62772d5dfe5765b9d5d99768652c915494966b950563a8bdeb224a4ad0e55",
+      ".godot/imported/NotoSans-Regular.ttf-674bcff8e78e1ac2b0101362155b4faa.fontdata": "1e6192539e600859edca6a02304d085f9fa2c432a1bf272e67c2d1dc8ca9fda6",
+      ".godot/imported/NotoSansSymbols2-Regular.ttf-7788f1b789d60481fa956b02b4581693.md5": "937d5ef785cc11ecbad7fa3c4aa6c9fa6fe56883397b12c76310da6a2fc58981",
+      ".godot/imported/NotoSansSymbols-Regular.ttf-7ee3050129f981bdb85e2c00dcf059bf.md5": "494c1f8f3bc161d86eef2e0c2bed9a7e6057838565f14250d1b047eda9bea445",
+      ".godot/imported/NotoSans-Regular.ttf-674bcff8e78e1ac2b0101362155b4faa.md5": "6471f2b105ce3461fcc42c475867cbffb768c24f6f2cd8774de703f81b1c1a3c",
+      ".godot/imported/NotoSerif-Regular.ttf-6e3f67e84ff840e5e437d5cce0416d65.md5": "dc7a1c0584ee966f5a440f4a68a58285575ff450609f22b3a02ed2706f08fbc8",
+      ".godot/imported/DejaVuSans.ttf-0dcd47e426510e02f045e926ff1bfdf0.fontdata": "68d0b938e9b8dd12b9d527059a91598fc8cadaa9b8ed6d45b27991d15ee03381",
+      ".godot/imported/NotoSansSymbols2-Regular.ttf-7788f1b789d60481fa956b02b4581693.fontdata": "2ec5ae7ec0020f3d1d3181d321174c5f82d9e83b93455ad785973cc615caeb9b",
+      ".godot/imported/DejaVuSans.ttf-0dcd47e426510e02f045e926ff1bfdf0.md5": "8827886add3c5260014a2d9a26fac932a3d62146d8182b7bf15b1bf40781a38e"
+    },
+    "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+    "output_sha256": "eb580eba70eee88f7ef5e6a5933c7c20c53507fe9131bad93e173aa1ca8eb871",
+    "scope": "Temporary tiny PackedScene project; copies existing fonts/imports and performs no editor import or 3D rendering."
+  }
+}

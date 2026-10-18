@@ -1,0 +1,505 @@
+{
+  "task": "R4-04",
+  "scope": "One +15degree wrist/grip-axis geometric feasibility experiment on6archived actual source poses. Does not execute controller envelopes, mixed poses or native contacts.",
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role04/study_wrist_arc.py": "30a805554fa4104e6cdef786db30ff013f7be128050188583def97a2fb324d74",
+    "/workspace/scratch/visual-round3/role-08/groom-r6/rama-hero.glb": "bdd917daa88254bdf203fd0bb92c7fb1167fda05a3c223dea4c9f3a3bc0453d1",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1"
+  },
+  "samples": [
+    {
+      "id": "measured_step_windup",
+      "angle_degrees": 15,
+      "wrist_subtree": [
+        "wrist.R",
+        "finger1-1.R",
+        "finger1-2.R",
+        "finger1-3.R",
+        "metacarpal1.R",
+        "finger2-1.R",
+        "finger2-2.R",
+        "finger2-3.R",
+        "metacarpal2.R",
+        "finger3-1.R",
+        "finger3-2.R",
+        "finger3-3.R",
+        "metacarpal3.R",
+        "finger4-1.R",
+        "finger4-2.R",
+        "finger4-3.R",
+        "metacarpal4.R",
+        "finger5-1.R",
+        "finger5-2.R",
+        "finger5-3.R",
+        "bowstring"
+      ],
+      "grip_drift_m": 7.850462293418876e-17,
+      "muzzle_drift_m": 7.850462293418876e-17,
+      "gaps": {
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 48112,
+          "minimum_bound_pair": {
+            "first_triangle": 792,
+            "bow_triangle": 456,
+            "first_xyz": [
+              [
+                -0.15379485288463285,
+                0.6177578782771103,
+                0.12833057642370646
+              ],
+              [
+                -0.16727176239921454,
+                0.6371135863294604,
+                0.12625391274224965
+              ],
+              [
+                -0.17142284582061618,
+                0.6188646514582437,
+                0.12634831044884678
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.17108292445550738,
+                0.6211422171247439,
+                0.12505680031161814
+              ],
+              [
+                -0.1690122719359594,
+                0.6298685309193207,
+                0.1334430270863297
+              ],
+              [
+                -0.16742135136242187,
+                0.6200777010278409,
+                0.12834709213102177
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        },
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        }
+      }
+    },
+    {
+      "id": "measured_step_release",
+      "angle_degrees": 15,
+      "wrist_subtree": [
+        "wrist.R",
+        "finger1-1.R",
+        "finger1-2.R",
+        "finger1-3.R",
+        "metacarpal1.R",
+        "finger2-1.R",
+        "finger2-2.R",
+        "finger2-3.R",
+        "metacarpal2.R",
+        "finger3-1.R",
+        "finger3-2.R",
+        "finger3-3.R",
+        "metacarpal3.R",
+        "finger4-1.R",
+        "finger4-2.R",
+        "finger4-3.R",
+        "metacarpal4.R",
+        "finger5-1.R",
+        "finger5-2.R",
+        "finger5-3.R",
+        "bowstring"
+      ],
+      "grip_drift_m": 2.2887833992611187e-16,
+      "muzzle_drift_m": 1.1102230246251565e-16,
+      "gaps": {
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 52688,
+          "minimum_bound_pair": {
+            "first_triangle": 792,
+            "bow_triangle": 455,
+            "first_xyz": [
+              [
+                -0.15363663174936534,
+                0.6214113481089214,
+                0.12407571758275386
+              ],
+              [
+                -0.16713231698471528,
+                0.6407608947234361,
+                0.12227188100445827
+              ],
+              [
+                -0.1712637257541654,
+                0.6225227762777235,
+                0.12208760184551694
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.16669055834174973,
+                0.6177894964581915,
+                0.11537587910450381
+              ],
+              [
+                -0.16609574282870354,
+                0.6253952829072924,
+                0.12491218773814697
+              ],
+              [
+                -0.16458651281190162,
+                0.615852659827398,
+                0.1195216327473694
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        },
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        }
+      }
+    },
+    {
+      "id": "measured_step_recoil",
+      "angle_degrees": 15,
+      "wrist_subtree": [
+        "wrist.R",
+        "finger1-1.R",
+        "finger1-2.R",
+        "finger1-3.R",
+        "metacarpal1.R",
+        "finger2-1.R",
+        "finger2-2.R",
+        "finger2-3.R",
+        "metacarpal2.R",
+        "finger3-1.R",
+        "finger3-2.R",
+        "finger3-3.R",
+        "metacarpal3.R",
+        "finger4-1.R",
+        "finger4-2.R",
+        "finger4-3.R",
+        "metacarpal4.R",
+        "finger5-1.R",
+        "finger5-2.R",
+        "finger5-3.R",
+        "bowstring"
+      ],
+      "grip_drift_m": 1.1102230246251565e-16,
+      "muzzle_drift_m": 1.1102230246251565e-16,
+      "gaps": {
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 42324,
+          "minimum_bound_pair": {
+            "first_triangle": 2010,
+            "bow_triangle": 2741,
+            "first_xyz": [
+              [
+                -0.18832636190568058,
+                0.6728249585012974,
+                0.10787676934881435
+              ],
+              [
+                -0.1738517115560895,
+                0.6534011689923191,
+                0.1140967912250402
+              ],
+              [
+                -0.1709798605558486,
+                0.668682024788674,
+                0.11358843785035225
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.1803165136882079,
+                0.6745182173629879,
+                0.11077704047272473
+              ],
+              [
+                -0.17754342524674793,
+                0.6698397472608987,
+                0.10883071011724772
+              ],
+              [
+                -0.18010394558177067,
+                0.669881279324361,
+                0.11088562355770179
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        },
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        }
+      }
+    },
+    {
+      "id": "guardian_circle_windup",
+      "angle_degrees": 15,
+      "wrist_subtree": [
+        "wrist.R",
+        "finger1-1.R",
+        "finger1-2.R",
+        "finger1-3.R",
+        "metacarpal1.R",
+        "finger2-1.R",
+        "finger2-2.R",
+        "finger2-3.R",
+        "metacarpal2.R",
+        "finger3-1.R",
+        "finger3-2.R",
+        "finger3-3.R",
+        "metacarpal3.R",
+        "finger4-1.R",
+        "finger4-2.R",
+        "finger4-3.R",
+        "metacarpal4.R",
+        "finger5-1.R",
+        "finger5-2.R",
+        "finger5-3.R",
+        "bowstring"
+      ],
+      "grip_drift_m": 1.1102230246251565e-16,
+      "muzzle_drift_m": 1.1102230246251565e-16,
+      "gaps": {
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 137258,
+          "minimum_bound_pair": {
+            "first_triangle": 10261,
+            "bow_triangle": 2913,
+            "first_xyz": [
+              [
+                -0.05034699885538045,
+                0.9202381905625046,
+                0.20172992249947827
+              ],
+              [
+                -0.05642189365664208,
+                0.9066721920389327,
+                0.20708236636398195
+              ],
+              [
+                -0.05645156676087549,
+                0.920060398218897,
+                0.200005740603317
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.0545154607909189,
+                0.9154735829885471,
+                0.20416751237406833
+              ],
+              [
+                -0.053853196984927965,
+                0.9096217373267559,
+                0.20263100949326798
+              ],
+              [
+                -0.05474555578135942,
+                0.9129562348404604,
+                0.20626294669953515
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        },
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        }
+      }
+    },
+    {
+      "id": "guardian_circle_release",
+      "angle_degrees": 15,
+      "wrist_subtree": [
+        "wrist.R",
+        "finger1-1.R",
+        "finger1-2.R",
+        "finger1-3.R",
+        "metacarpal1.R",
+        "finger2-1.R",
+        "finger2-2.R",
+        "finger2-3.R",
+        "metacarpal2.R",
+        "finger3-1.R",
+        "finger3-2.R",
+        "finger3-3.R",
+        "metacarpal3.R",
+        "finger4-1.R",
+        "finger4-2.R",
+        "finger4-3.R",
+        "metacarpal4.R",
+        "finger5-1.R",
+        "finger5-2.R",
+        "finger5-3.R",
+        "bowstring"
+      ],
+      "grip_drift_m": 2.2887833992611187e-16,
+      "muzzle_drift_m": 2.2887833992611187e-16,
+      "gaps": {
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 41331,
+          "minimum_bound_pair": {
+            "first_triangle": 10354,
+            "bow_triangle": 2734,
+            "first_xyz": [
+              [
+                -0.06871808610725473,
+                0.9173365731114983,
+                0.2095833262450825
+              ],
+              [
+                -0.07487649513983775,
+                0.9035837408879723,
+                0.2120830388947468
+              ],
+              [
+                -0.07503309394172111,
+                0.9168882581059586,
+                0.20548936517703686
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.07138211553859802,
+                0.9128801080764707,
+                0.21257599561354643
+              ],
+              [
+                -0.07354130990093538,
+                0.9081001010184134,
+                0.2100595109974822
+              ],
+              [
+                -0.07387028750724262,
+                0.9129626903874314,
+                0.2104352112857245
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        },
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        }
+      }
+    },
+    {
+      "id": "guardian_circle_recoil",
+      "angle_degrees": 15,
+      "wrist_subtree": [
+        "wrist.R",
+        "finger1-1.R",
+        "finger1-2.R",
+        "finger1-3.R",
+        "metacarpal1.R",
+        "finger2-1.R",
+        "finger2-2.R",
+        "finger2-3.R",
+        "metacarpal2.R",
+        "finger3-1.R",
+        "finger3-2.R",
+        "finger3-3.R",
+        "metacarpal3.R",
+        "finger4-1.R",
+        "finger4-2.R",
+        "finger4-3.R",
+        "metacarpal4.R",
+        "finger5-1.R",
+        "finger5-2.R",
+        "finger5-3.R",
+        "bowstring"
+      ],
+      "grip_drift_m": 5.551115123125783e-17,
+      "muzzle_drift_m": 5.551115123125783e-17,
+      "gaps": {
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 26645,
+          "minimum_bound_pair": {
+            "first_triangle": 766,
+            "bow_triangle": 335,
+            "first_xyz": [
+              [
+                -0.12581103632236623,
+                0.6999979368932557,
+                0.1395860828920096
+              ],
+              [
+                -0.11205585018973555,
+                0.6798272576178447,
+                0.13617721025559226
+              ],
+              [
+                -0.10736978096369326,
+                0.6970419092032231,
+                0.1333362405360114
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.11226486250545048,
+                0.6857461137869157,
+                0.1318128005941952
+              ],
+              [
+                -0.11215839217309242,
+                0.693953558428408,
+                0.13940575903886804
+              ],
+              [
+                -0.11395608965032283,
+                0.6952524285457301,
+                0.13572337424008457
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        },
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation."
+        }
+      }
+    }
+  ],
+  "all_neutral_source_crossings_removed": false,
+  "grip_and_muzzle_invariant": true
+}

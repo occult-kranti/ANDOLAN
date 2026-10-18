@@ -1,0 +1,168 @@
+{
+  "task": "R4-02",
+  "source_base": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 taskset -c 1 timeout 30s godot --headless --path /workspace/ANDOLAN/games/yuga-native --fixed-fps 60 --script res://docs/evidence/visual-rounds/round4/role02/probe_physics.gd -- --report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role02/actual-physics.json > /workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role02/actual-physics.log 2>&1",
+  "exit_code": 0,
+  "passed": true,
+  "checks": 11,
+  "samples": 476,
+  "fixtures": [
+    {
+      "fixture": "confluence-west-deck-fall-jump",
+      "samples": 161,
+      "root_y_range_m": [
+        8.00009918212891,
+        9.50083827972412
+      ],
+      "grounded_samples": 88,
+      "slide_contact_count": 88,
+      "slide_collider_names": [
+        "sun-lift-west-deck"
+      ],
+      "first_landings": [
+        {
+          "tick": 340,
+          "position": [
+            -20.0,
+            8.00009918212891,
+            -88.0
+          ],
+          "floor_normal": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "slide_contacts": [
+            {
+              "collider": "sun-lift-west-deck",
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "position": [
+                -20.0,
+                8.0,
+                -88.0
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 435,
+          "position": [
+            -20.0,
+            8.0008373260498,
+            -88.0
+          ],
+          "floor_normal": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "slide_contacts": [
+            {
+              "collider": "sun-lift-west-deck",
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "position": [
+                -20.0,
+                8.0,
+                -88.0
+              ]
+            }
+          ]
+        }
+      ],
+      "native_spring_length_range_m": [
+        3.5,
+        3.5
+      ]
+    },
+    {
+      "fixture": "courtyard-gallery-jump",
+      "samples": 103,
+      "root_y_range_m": [
+        0.440099984407425,
+        1.94083905220032
+      ],
+      "grounded_samples": 54,
+      "slide_contact_count": 54,
+      "slide_collider_names": [
+        "COL_BEVEL_Indigo_glazed_stone_col"
+      ],
+      "first_landings": [
+        {
+          "tick": 274,
+          "position": [
+            19.0,
+            0.440838277339935,
+            -1.0
+          ],
+          "floor_normal": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "slide_contacts": [
+            {
+              "collider": "COL_BEVEL_Indigo_glazed_stone_col",
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "position": [
+                19.0,
+                0.439999997615814,
+                -1.0
+              ]
+            }
+          ]
+        }
+      ],
+      "native_spring_length_range_m": [
+        3.5,
+        3.5
+      ]
+    },
+    {
+      "fixture": "courtyard-ground-route",
+      "samples": 212,
+      "root_y_range_m": [
+        9.99999974737875e-05,
+        9.99999974737875e-05
+      ],
+      "grounded_samples": 212,
+      "slide_contact_count": 212,
+      "slide_collider_names": [
+        "CourtyardFloor"
+      ],
+      "first_landings": [],
+      "native_spring_length_range_m": [
+        3.5,
+        3.5
+      ]
+    }
+  ],
+  "observed_apex_above_support_m": 1.50083905220032,
+  "updated_source_camera_envelope_y_m": [
+    0,
+    3.75
+  ],
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role02/probe_physics.gd": "a85c07cdcd7400752918fe05d8c842c6dd1c692c1fc62c3eefca20d91332280c",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role02/actual-physics.json": "d2e1d35af7801660522e645acdc1531955e8ef579db172aaa1307d61452dcee2",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role02/ground-fixtures.json": "4d4dd013cce0c9ef38a0ea3d8cf9ba94f55fe4085a3553ed9d397ff3c85d400c",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role02/check_ground_fixtures.py": "2039ca32eb07f33101c22e4c8914d2e72e5c8dd275f903864178878c36539f23"
+  },
+  "retained_attempts": [
+    "rejected-physics-parse.log: else1 typo prevented scene load; corrected to else 1.",
+    "actual-physics-r1.json/log: initial successful476-sample run; repeated once to add actual slide collider/normal/contact points and native spring-hit lengths.",
+    "ground-fixtures.source-only-r1.json and REVIEW.source-only-r1.md: historical source-only camera envelope3.6m; updated to3.75m after measured discrete apex1.500839m."
+  ],
+  "scope": "Actual body collision/input acceptance for these flat surfaces. No imported sole/skin or framebuffer acceptance; no GPU timing."
+}

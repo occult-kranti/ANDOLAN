@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "actual current checker and full exact source closure accept",
+      "passed": true,
+      "checker_assertions": 51,
+      "source_count": 32
+    },
+    {
+      "name": "changed actual player bytes reject while catalog stays fixed",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /tmp/native-contract-package-5894e3f6/run-2/report.log"
+    },
+    {
+      "name": "actual checker identifies the player content pin",
+      "passed": true
+    },
+    {
+      "name": "export rejects stale player before any engine parameters are accessed",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /tmp/native-contract-package-5894e3f6/run-3/native-contracts-export.log"
+    },
+    {
+      "name": "package rejects stale player before any engine parameters are accessed",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /tmp/native-contract-package-5894e3f6/run-4/native-contracts-package.log"
+    },
+    {
+      "name": "old export without a source-bound native contract proof rejects before engine",
+      "passed": true,
+      "rejection": "Native contract sources or proof changed since export; export again before packaging"
+    },
+    {
+      "name": "changed retained input rejects even when checker still passes",
+      "passed": true,
+      "rejection": "Native contract sources or proof changed since export; export again before packaging"
+    },
+    {
+      "name": "existing successful report cannot stand in for fresh execution",
+      "passed": true,
+      "rejection": "Native contract proof needs fresh report/log paths"
+    },
+    {
+      "name": "exit-zero empty proof rejects",
+      "passed": true,
+      "rejection": "Native contract proof lacks nonempty successful checks"
+    },
+    {
+      "name": "replayed success does not bind a substituted checker",
+      "passed": true,
+      "rejection": "Native contract report/source bindings changed or differ"
+    },
+    {
+      "name": "exact rejected83f catalog checker and runtime refuse its actual player",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /tmp/native-contract-package-5894e3f6/run-9/report.log"
+    },
+    {
+      "name": "reconstructed83f rejects only the real player source pin",
+      "passed": true
+    },
+    {
+      "name": "restored complete current source proof matches first proof",
+      "passed": true
+    }
+  ],
+  "sources": {
+    "tools/package-native.py": {
+      "bytes": 82317,
+      "sha256": "3152a52cc491a4b5037defa47106f5b4f7b153d40383d963b99049964b4bfb26"
+    },
+    "tools/check-native-contracts.py": {
+      "bytes": 8143,
+      "sha256": "6ef29ef0f1ecfda53debf6b5ed3fcddaa2a2173409e4099cbd0ec54e1ee6b574"
+    },
+    "tests/native_contract_package_cases.py": {
+      "bytes": 8282,
+      "sha256": "f3c67b75d36451df24dda6d5a27ca094b45b91f37bc3b419cfc0c7222caede4b"
+    }
+  },
+  "scope": "Actual source checker, isolated tiny source closure, entry-point early rejection and retained exact83f counterexample. No engine, import, export or runtime scene executed."
+}

@@ -1,0 +1,265 @@
+extends SceneTree
+## R4-11 real accepted runtime events and node visibility; no pixels/render.
+const PLAYER := preload("res://scripts/player.gd")
+const TARGET := preload("res://scripts/target.gd")
+const ARMY := preload("res://scripts/rama_practice_army.gd")
+const RUNTIME := preload("res://scripts/rama_hero_runtime.gd")
+const BINDINGS := preload("res://scripts/input_bindings.gd")
+const IDS := ["kodanda","piercing_dawn","measured_step","guardian_circle","dawn_volley"]
+const BOW_IDS := ["kodanda","piercing_dawn","dawn_volley"]
+const SOURCES := ["scripts/player.gd","scripts/player_traversal.gd","scripts/rama_motion.gd","scripts/rama_practice_army.gd","scripts/rama_practice_target.gd","scripts/rama_hero_runtime.gd","scripts/rama_ability_kit.gd","scripts/rama_ability_effects.gd","scripts/rama_vitals.gd","scripts/rama_action_buffer.gd","scripts/rama_action_audio.gd","scripts/input_bindings.gd","scripts/target.gd","shaders/rama_ability_calligraphy.gdshader","shaders/rama_ability_boundary.gdshader","shaders/rama_ribbon.gdshader","assets/design/rama-ability-kit.json","assets/animations/rama_hero_motion.tres","assets/heroes/rama-hero.glb","assets/heroes/rama-hero-mid.glb","assets/heroes/rama-hero-far.glb","assets/materials/rama-finish/woven-roughness.png"]
+var world: Node3D
+var player: CharacterBody3D
+var army: Node3D
+var runtime: Node3D
+var fx: Node3D
+var events: Array[Dictionary] = []
+var checks: Array[Dictionary] = []
+var trials: Array[Dictionary] = []
+var output := ""
+var pins := {}
+
+func _initialize() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--report="): output=arg.trim_prefix("--report=")
+	call_deferred("run")
+
+func check(label: String, passed: bool, detail: Dictionary = {}) -> void:
+	checks.append({"name":label,"passed":passed,"details":detail})
+	print("PASS " if passed else "FAIL ",label)
+
+func pin(path: String) -> void:
+	if pins.has(path) or not FileAccess.file_exists(path): return
+	pins[path]=FileAccess.get_sha256(path)
+	if FileAccess.file_exists(path+".import"):
+		var config := ConfigFile.new()
+		config.load(path+".import")
+		pin(path+".import")
+		var imported: String=config.get_value("remap","path","")
+		if not imported.is_empty():
+			pin(imported)
+			pin(imported.get_basename()+".md5")
+
+func hash_value(value: Variant) -> String:
+	var hash_ := HashingContext.new()
+	hash_.start(HashingContext.HASH_SHA256)
+	hash_.update(var_to_bytes(value))
+	return hash_.finish().hex_encode()
+
+func count(kind: String) -> int:
+	return events.filter(func(event):return event.kind==kind).size()
+
+func latest(kind: String) -> Dictionary:
+	for index in range(events.size()-1,-1,-1):
+		if events[index].kind==kind:return events[index]
+	return {}
+
+func normalized(value: Variant) -> Variant:
+	if value is Vector3:return [value.x,value.y,value.z]
+	if value is Transform3D:return [normalized(value.basis.x),normalized(value.basis.y),normalized(value.basis.z),normalized(value.origin)]
+	if value is Array:
+		var result := []
+		for child in value:result.append(normalized(child))
+		return result
+	if value is Dictionary:
+		var result := {}
+		for key in value:result[key]=normalized(value[key])
+		return result
+	return value
+
+func sample(cast: Dictionary) -> Dictionary:
+	var arrows := []
+	for arrow in cast.arrows:arrows.append({"visible":arrow.root.visible,"transform":arrow.root.global_transform,"shaft_surfaces":arrow.shaft.mesh.get_surface_count(),"wake_surfaces":arrow.feather.mesh.get_surface_count()})
+	return {"age":cast.age,"authority_age":cast.authority_age,"released":cast.released,"warning_visible":cast.warning.visible,"warning_transform":cast.warning.global_transform,"warning_mesh_id":cast.warning.mesh.get_instance_id(),"warning_arrays_sha256":hash_value(cast.warning.mesh.surface_get_arrays(0)) if cast.warning.mesh.get_surface_count() else "empty","warning_material_id":cast.warning.material_override.get_instance_id(),"warning_opacity":cast.warning.material_override.get_shader_parameter("opacity"),"arrows":arrows,"nocked":player.rama_motion.nocked,"nocked_node_visible":player.rama_motion.nocked_arrow.visible,"player_position":player.global_position,"motion_stage":player.rama_motion.action_stage,"impacts":fx.report().impacts}
+
+func advance(seconds: float) -> void:
+	var remaining := seconds
+	while remaining>.000001:
+		var dt := minf(.05,remaining)
+		var left := dt
+		while left>.000001:
+			var physical := minf(1.0/60.0,left)
+			player._physics_process(physical)
+			player.rama_motion.evaluate_pose()
+			left-=physical
+		army.step_simulation(dt)
+		var visual_left := dt
+		while visual_left>.000001:
+			var visual := minf(1.0/60.0,visual_left)
+			fx.step(visual)
+			visual_left-=visual
+		remaining-=dt
+
+func fresh(reduced: bool) -> void:
+	Input.action_release("move_forward")
+	paused=false
+	army.set_suspended(false)
+	runtime.set_suspended(false)
+	player.reset()
+	army.reset("R4-11 trial")
+	player.position=Vector3(-.65,.0001,0)
+	player.velocity=Vector3.ZERO
+	player.yaw=0.0
+	player.pitch=0.0
+	player.active=true
+	player._update_camera()
+	player.set_physics_process(true)
+	for unused in 6:await physics_frame
+	player.set_physics_process(false)
+	player.rama_motion.evaluate_pose()
+	fx.set_options({"reduced_effects":reduced,"reduced_motion":reduced})
+	events.clear()
+
+func create_fixture() -> void:
+	BINDINGS.install()
+	world=Node3D.new()
+	root.add_child(world)
+	var floor_ := StaticBody3D.new()
+	floor_.name="AuditFloor"
+	floor_.collision_layer=1
+	var shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size=Vector3(44,.2,50)
+	shape.shape=box
+	shape.position.y=-.1
+	floor_.add_child(shape)
+	world.add_child(floor_)
+	var targets := []
+	for index in 3:
+		var target := TARGET.new()
+		target.name="AuditTarget"+str(index)
+		target.position=Vector3(float(index-1),0,-8)
+		world.add_child(target)
+		targets.append(target)
+	player=PLAYER.new()
+	player.position=Vector3(-.65,.05,0)
+	world.add_child(player)
+	player.set_physics_process(false)
+	player.set_process_unhandled_input(false)
+	player.rama_motion.active=false
+	army=ARMY.new()
+	world.add_child(army)
+	check("actual courtyard practice receivers configure",army.configure(targets))
+	army.set_physics_process(false)
+	runtime=RUNTIME.new()
+	world.add_child(runtime)
+	check("public hero runtime configures against real player and receivers",runtime.configure(player,army))
+	runtime.set_volume(0.0)
+	fx=runtime.effects
+	fx.set_process(false)
+	runtime.combat_event.connect(func(event):events.append(event.duplicate(true)))
+
+func release_trial(id: String, reduced: bool) -> void:
+	await fresh(reduced)
+	var tag := id+(" reduced" if reduced else " normal")
+	Input.action_press("move_forward")
+	var accepted: Dictionary=runtime.cast_ability(id)
+	check(tag+" public moving cast accepted on actual floor",accepted.get("accepted",false) and player.is_on_floor(),{"response":accepted})
+	if not accepted.get("accepted",false):return
+	player.rama_motion.evaluate_pose()
+	var cast: Dictionary=fx._casts[accepted.cast_id]
+	var begin := latest("begin")
+	var first := sample(cast)
+	check(tag+" windup has essential warning and expected real nocked node",cast.warning.visible==(id!="kodanda") and player.rama_motion.nocked_arrow.visible==(id in BOW_IDS) and cast.arrows.all(func(arrow):return not arrow.root.visible))
+	advance(.05)
+	var before_pause := sample(cast)
+	var paused_kit: Dictionary=runtime.kit.report()
+	army.set_suspended(true)
+	runtime.set_suspended(true)
+	player.set_physics_process(true)
+	paused=true
+	for unused in 3:await process_frame
+	fx.step(.25)
+	check(tag+" actual tree pause preserves warning arrows nock and clocks",sample(cast)==before_pause and runtime.kit.report()==paused_kit.merged({"suspended":true},true))
+	player.set_physics_process(false)
+	paused=false
+	army.set_suspended(false)
+	runtime.set_suspended(false)
+	# A live option toggle must not mutate the exact essential warning geometry.
+	var warning_before := sample(cast)
+	fx.set_options({"reduced_motion":not reduced,"reduced_effects":not reduced})
+	var warning_after := sample(cast)
+	var warning_ok := true
+	for key in ["warning_visible","warning_transform","warning_mesh_id","warning_arrays_sha256","warning_material_id","warning_opacity"]:warning_ok=warning_ok and warning_before[key]==warning_after[key]
+	check(tag+" live option toggle preserves exact essential warning",warning_ok)
+	fx.set_options({"reduced_motion":reduced,"reduced_effects":reduced})
+	var limit := 0
+	while count("release")==0 and count("cancel")==0 and limit<30:
+		advance(.05)
+		limit+=1
+	Input.action_release("move_forward")
+	var release := latest("release")
+	check(tag+" authority releases exactly once and clears actual nock",count("release")==1 and not player.rama_motion.nocked and not player.rama_motion.nocked_arrow.visible,{"release_age_s":release.get("age_s",-1),"nock_visible":player.rama_motion.nocked_arrow.visible})
+	if release.is_empty():return
+	var at_release := sample(cast)
+	var warning_expected := id=="guardian_circle"
+	check(tag+" release retires warning except active guardian boundary",cast.warning.visible==warning_expected)
+	var travel: float=(player.global_position-begin.origin).length()
+	if id in ["piercing_dawn","guardian_circle","dawn_volley"]:
+		check(tag+" committed movement input cannot drag fixed warning origin",Vector2(player.position.x-begin.origin.x,player.position.z-begin.origin.z).length()<.001 and release.origin==begin.origin,{"travel_m":travel})
+	elif id=="kodanda":
+		check(tag+" moving release samples real changed player origin",release.origin.distance_to(begin.origin)>.05 and release.geometry.origin==release.origin,{"begin_origin":normalized(begin.origin),"release_origin":normalized(release.origin)})
+	if id in BOW_IDS:
+		check(tag+" released projectile shaft appears at accepted launch",cast.arrows[0].root.visible and cast.arrows[0].shaft.mesh.get_surface_count()>0 and (not reduced or cast.arrows[0].feather.mesh.get_surface_count()==0),{"arrows":normalized(at_release.arrows)})
+	limit=0
+	while count("impact")==0 and limit<40:
+		advance(.05)
+		limit+=1
+	var impacts := events.filter(func(event):return event.kind=="impact")
+	if id in BOW_IDS:
+		var contact_visible: bool=fx._impacts.any(func(impact):return impact.root.visible and impact.root.get_child_count()>0)
+		var authoritative: Dictionary=impacts[0] if not impacts.is_empty() else {}
+		check(tag+" accepted impact creates a live contact at its exact position",not authoritative.is_empty() and contact_visible and fx._impacts.any(func(impact):return impact.root.global_position==authoritative.get("contact_position",Vector3.INF)),{"impact":normalized(authoritative),"impact_count":fx._impacts.size()})
+	elif id=="measured_step":
+		advance(.3)
+		check(tag+" accepted step impact accompanies actual capsule movement",impacts.size()==1 and player.position.distance_to(begin.origin)>2.0,{"position":normalized(player.position),"impact":normalized(latest("impact"))})
+	else:
+		check(tag+" guardian authority keeps boundary and creates no damage contact glyph",impacts.size()==1 and cast.warning.visible and fx.report().impacts==0)
+	var event_copy := events.duplicate(true)
+	var release_copy := release.duplicate(true)
+	if id=="guardian_circle":
+		while cast.authority_age+.000001<float(cast.timing.windup_s)+float(cast.timing.active_s):advance(.05)
+		check(tag+" guardian boundary disappears at authoritative expiry",not cast.warning.visible and cast.authority_age>=5.049999,{"authority_age":cast.authority_age,"presentation_age":cast.age})
+	runtime.kit.cancel_active("R4-11 released cancellation")
+	check(tag+" released cancellation removes every cast warning and flying arrow",fx._casts.is_empty() and not player.rama_motion.nocked_arrow.visible)
+	check(tag+" exact replay of retired release cannot resurrect a cast",not fx.consume_event(release_copy) and fx._casts.is_empty())
+	player.reset()
+	check(tag+" actual player reset clears live and pooled impact nodes",fx.get_child_count()==0 and fx.report().allocated_impacts==0 and not player.rama_motion.nocked_arrow.visible)
+	trials.append({"ability":id,"reduced_effects_and_motion":reduced,"kind":"release_impact","first":normalized(first),"pre_pause":normalized(before_pause),"release":normalized(at_release),"events":normalized(event_copy)})
+
+func cancel_trial(id: String, reduced: bool) -> void:
+	await fresh(reduced)
+	var tag := id+(" reduced cancel" if reduced else " normal cancel")
+	Input.action_press("move_forward")
+	var accepted: Dictionary=runtime.cast_ability(id)
+	check(tag+" public cast accepted",accepted.get("accepted",false))
+	if not accepted.get("accepted",false):return
+	advance(.05)
+	var old_begin := latest("begin").duplicate(true)
+	var before: Dictionary=sample(fx._casts[accepted.cast_id])
+	var cancelled: bool=runtime.kit.cancel_windup("R4-11 moving cancel")
+	check(tag+" windup cancellation immediately removes warning and actual nock",cancelled and count("release")==0 and count("cancel")==1 and fx._casts.is_empty() and not player.rama_motion.nocked_arrow.visible)
+	Input.action_release("move_forward")
+	advance(float(old_begin.timing.windup_s)+.2)
+	check(tag+" advancing past release cannot create delayed arrows or impacts",count("release")==0 and count("impact")==0 and fx.get_child_count()==0 and not player.rama_motion.nocked_arrow.visible)
+	check(tag+" replayed accepted begin cannot resurrect retired warning",not fx.consume_event(old_begin) and fx._casts.is_empty())
+	trials.append({"ability":id,"reduced_effects_and_motion":reduced,"kind":"windup_cancel","pre_cancel":normalized(before),"events":normalized(events)})
+
+func run() -> void:
+	for path in SOURCES:pin("res://"+path)
+	pin(get_script().resource_path)
+	create_fixture()
+	for reduced in [false,true]:
+		for id in IDS:
+			await release_trial(id,reduced)
+			await cancel_trial(id,reduced)
+	Input.action_release("move_forward")
+	var unchanged := true
+	for path in pins:unchanged=unchanged and FileAccess.get_sha256(path)==pins[path]
+	check("all executed runtime source authored assets and existing import caches stayed unchanged",unchanged)
+	var result := {"task":"R4-11","passed":checks.all(func(row):return row.passed),"count":checks.size(),"checks":checks,"trials":trials,"source_sha256":pins,"engine":Engine.get_version_info().string,"scope":"Actual existing imported player, courtyard PracticeArmy and runtime accepted events on an audit collision floor with real targets. Public InputMap movement/cast/cancel/reset/suspend; native callbacks manually advanced at declared player60/army20/effects60Hz. Actual floor grounding and SceneTree pause. Node visibility and actual allocated geometry only, no pixel/camera/continuous visual/GPU/online acceptance."}
+	FileAccess.open(output,FileAccess.WRITE).store_string(JSON.stringify(result,"  ")+"\n")
+	world.queue_free()
+	await process_frame
+	await process_frame
+	quit(0 if result.passed else 1)

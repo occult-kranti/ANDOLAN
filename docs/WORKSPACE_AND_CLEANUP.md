@@ -1,5 +1,7 @@
 # Cloud workspace and cleanup
 
+Current UI/visual cleanup: [cache receipt](evidence/ui-campaign-cache-cleanup.json) removes six inactive U2 import caches (402,627,331 logical bytes). [Proposal duplicate receipt](evidence/visual-proposal-duplicate-cleanup.json) removes399 inactive proposal files (3,019,440,269 logical bytes), each identical to a Git blob at remote-verified `00a204bfbf5e1de47a0a12a233841d7f3a2475ab`. All71 unique rejected/manifests/support files remain; accepted R7 proposal and active captures remain whole. Partially retained proposal trees must restore the listed exact files before re-execution.
+
 Current round cleanup: [R2 cache receipt](evidence/visual-round2-cache-cleanup.json) records 13 obsolete Godot import caches removed after checkpoint6046171 was pushed and remote-verified. About895MB of regenerable cache bytes were removed; all source, original frames, failure evidence, installed tools and active caches remain.
 
 Latest visual-campaign cleanup: [verified receipt](evidence/visual-campaign-cleanup/README.md).
@@ -45,3 +47,5 @@ The completed cleanup removed **1,408,483,328 allocated bytes (about 1.41 GB)** 
 The machine-readable receipt is stored at [cloud-cleanup-2026-10-17.json](evidence/cloud-cleanup-2026-10-17.json). It distinguishes deleted duplicates/caches from retained local-only captures and records actual storage measurements. The receipt is an audit of this operation, not a blanket deletion policy for future sessions.
 
 Reusable cloud settings should point new agents to `AGENTS.md` and `docs/START_HERE.md`, keep the tested installation script, and record the current checkout. Saving the draft does not publish a new environment snapshot. Review/save and Publish in environment settings activates the prepared snapshot; future processes still need to be started as documented.
+
+On 18 October 2026, two rejected package expanded folders were removed only after all 58 files matched retained ZIP payloads byte for byte, freeing 451,857,282 bytes. Both rejected ZIPs, raw PCKs, manifests and logs remain. See [receipt](evidence/rejected-package-expanded-cleanup.json).

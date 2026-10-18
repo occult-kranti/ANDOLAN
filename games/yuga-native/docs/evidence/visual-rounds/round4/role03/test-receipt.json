@@ -1,0 +1,35 @@
+{
+  "task": "R4-03",
+  "source_base": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "disposition": "completed_bounded_no_light_or_material_change",
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 taskset -c 1 python /workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/audit_light_contact.py",
+      "exit_code": 0,
+      "checks_passed": 7,
+      "checks_total": 7
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 taskset -c 1 python /workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/replay_final_soles.py",
+      "exit_code": 0,
+      "captured_final_pose_samples": 150
+    }
+  ],
+  "rejected_attempt": {
+    "report": "rejected-all-material-alpha-assumption.json",
+    "script": "audit_light_contact.rejected.py",
+    "exit_code": 1,
+    "reason": "Unsupported universal alpha-zero assumption and missing UNORM decoding; skin is outside actual secondary material whitelist."
+  },
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/audit_light_contact.py": "f8e2ec92abcd274217d0d960cf47397e62254f598f57ed51238305868fb66e5b",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/light-contact-audit.json": "526023f6415624ae70c263b5f9a68aa6afe6db4fd04742010e97285d09357d8c",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/replay_final_soles.py": "1fdd6e31dc750e1eb8a966e446335b84cbe75dbefb37a3ca265babb77b609d76",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/final-sole-source-replay.json": "02f990c672d064b8c40e9c3ac1e55ab86a6e011e4dcceb47bee97394b849e515",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/bone-order.json": "f8aec9b856e61cd672b791d4a58cefdc069b077664a0fff36f3486f08e69cd21",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/next-r4-12-contact-contract.json": "29ea84920f7a2049799dc0465ce598a1272b53b93bc1748ae6cf8918e114c945",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round4/role03/REVIEW.md": "52dc5ced567cbac6f14f239892faf46aa7c479c2ad37312615bff03994740726"
+  },
+  "no_import_render_or_canonical_mutation": true,
+  "next_role": "R4-12 measurement contract only; not executed by this assignment"
+}

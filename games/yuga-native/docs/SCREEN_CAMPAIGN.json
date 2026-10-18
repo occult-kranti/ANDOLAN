@@ -1082,7 +1082,7 @@
     {
       "id": "I1",
       "title": "Integrate accepted hero art with complete UI",
-      "status": "native_integration_sealed_targeted_overview_pixels_pending_package",
+      "status": "native_integration_complete_content_identity_correction_in_progress",
       "depends_on": [
         "U5"
       ],
@@ -1166,7 +1166,7 @@
     {
       "id": "I2",
       "title": "Stress, edge and resource qualification",
-      "status": "in_progress_final_frozen_source_stress",
+      "status": "completed_bounded_frozen_runtime_stress",
       "depends_on": [
         "I1"
       ],
@@ -1176,8 +1176,13 @@
           "role": "Launch and navigation",
           "task": "Run repeated launch/play/pause/title loops and repair concrete duplicate/listener leaks.",
           "agent": "root",
-          "status": "in_progress",
-          "artifacts": [],
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I2/role01/REVIEW.md",
+              "sha256": "ce2a8fab1098a75f3d298e7452e777d8599049cc14cff08f6f21ab61e47972b1"
+            }
+          ],
           "review_disposition": null
         },
         {
@@ -1185,8 +1190,13 @@
           "role": "Shared visual system",
           "task": "Check shared theme/material ownership and repeated view creation costs under stress.",
           "agent": "r3_08_groom",
-          "status": "in_progress",
-          "artifacts": [],
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I2/role02/REVIEW.md",
+              "sha256": "128670cdf8f80b889f334a3e82931604ab6c433327ea5d3f0eb3be5e47880cc2"
+            }
+          ],
           "review_disposition": null
         },
         {
@@ -1194,8 +1204,13 @@
           "role": "Loading and recovery",
           "task": "Challenge allowed scene paths, malformed progress/failure state and reentrant transitions.",
           "agent": "ui_03_loading",
-          "status": "in_progress",
-          "artifacts": [],
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I2/role03/REVIEW.md",
+              "sha256": "cb937e601d3d4a70adf7a7dd00ffd00928d8b55b63ce28e106872fddad1d2109"
+            }
+          ],
           "review_disposition": null
         },
         {
@@ -1203,8 +1218,13 @@
           "role": "Combat HUD and map information",
           "task": "Challenge action/hitch/defeat/results transitions and information-state synchronization.",
           "agent": "ui_02_system",
-          "status": "in_progress",
-          "artifacts": [],
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I2/role04/REVIEW.md",
+              "sha256": "6c0f7bb103548b6fcd7456034906e92eac2a72a2846e107df58bb5a87de1a3a8"
+            }
+          ],
           "review_disposition": null
         },
         {
@@ -1212,8 +1232,13 @@
           "role": "Settings, guide and controls",
           "task": "Challenge invalid saved preferences/remaps, focus loss and modal interruption.",
           "agent": "ui_02_system",
-          "status": "in_progress",
-          "artifacts": [],
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I2/role05/REVIEW.md",
+              "sha256": "29ee8023a2cda7c1d0972eeca5a036fed86d23de0ff2d6ed373c92abebb5c2f3"
+            }
+          ],
           "review_disposition": null
         },
         {
@@ -1221,16 +1246,22 @@
           "role": "Independent UI verification and packaging",
           "task": "Run affected numerical catalogs and resource census, reporting hardware limits without simulatedFPSclaims.",
           "agent": "ui_06_acceptance",
-          "status": "in_progress",
-          "artifacts": [],
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I2/role06/REVIEW.md",
+              "sha256": "7acf2ffaf1cd2c25406460eeff29423d061a566f9378b9d9c0b7d22522a905f6"
+            }
+          ],
           "review_disposition": null
         }
-      ]
+      ],
+      "acceptance_scope": "Final I1 freeze9919dccb:23screen suites459checks,10scene cycles43checks,seededloader70,shared-resource184,action/preferences82. Later contract revision and package qualification are explicit I3 overlays."
     },
     {
       "id": "I3",
       "title": "Package and release review",
-      "status": "preparing_source_matched_packages",
+      "status": "rejected_first_export_identity_and_second_stale_contract_successor_preparing",
       "depends_on": [
         "I2"
       ],
@@ -1289,14 +1320,15 @@
           "artifacts": [],
           "review_disposition": null
         }
-      ]
+      ],
+      "qualification_note": "r1 stopped on7newUIDs; r2 archives structurally valid but held/rejected for stale nativecontent5playerpin. Preserve originals. Revision6 and fail-closed package preflight are required before successor actualLinuxcapture."
     }
   ],
   "repeated_request_note": "The repeated five-plus-three request refers to this same 48-assignment track and does not create duplicate rounds.",
   "completed_screen_rounds": 5,
-  "completed_integration_rounds": 0,
+  "completed_integration_rounds": 1,
   "remaining_screen_rounds": 0,
-  "remaining_integration_rounds": 3,
+  "remaining_integration_rounds": 2,
   "implemented_screen_rounds_with_open_render_gates": [],
   "source_checkpoints": [
     {

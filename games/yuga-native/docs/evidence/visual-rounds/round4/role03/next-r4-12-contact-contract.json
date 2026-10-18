@@ -1,0 +1,87 @@
+{
+  "task": "R4-12-next-handoff",
+  "status": "proposed_measurement_contract_not_executed_R4_12",
+  "reuse": "One uninterrupted role06 runtime tape; no extra pose writer or extra rendering take. Use R4-02 existing support/input fixtures and corrected3.75m view envelope.",
+  "required_fields": [
+    "source/cache hashes and fresh imports",
+    "actual physics-frame and render-frame numbers",
+    "actual rig.global_transform and all final modifier-processed bone globals keyed by actual bone name",
+    "actual imported vertex arrays, skin inverse binds and bind-bone names, live morph and shader offsets",
+    "actual body transform, collision capsule radius/height/offset, is_on_floor, floor normal and actual slide collider/point/normal",
+    "per-side original planted anchor world position, support state, release age and local+world skin positions",
+    "native spring hit length and actual review-camera transform",
+    "full recorded light/render controls plus actual ambient and SSAO numeric parameters"
+  ],
+  "sole_selector": {
+    "space": "Actual imported rest vertex and named bind influences",
+    "rule": "POSITION.y<.30m and sum(WEIGHT for bind name starts foot/toe and ends .L/.R)>.5",
+    "source_expected_vertices_per_side": 6790,
+    "source_expected_total": 13580,
+    "source_sha256": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+    "requirement": "Log actual selected counts and exact selected index/material/bind-name manifest; a count mismatch is evidence to investigate, not silently discarded."
+  },
+  "metrics": [
+    "Minimum signed sole distance to actual contact plane dot(vertex-contact_point,normal), per side; report penetration and clearance separately.",
+    "Projected source/native skin extrema against original framebuffer feet; preserve camera, rig and pose snapshot pins from the same rendered update.",
+    "World displacement of identical selected sole vertices while support remains planted, versus capsule displacement and fixed original anchor; do not replant to manufacture zero drift.",
+    "C0/C1 transition windows around input release/reversal, dash begin/end, jump takeoff/first contact and action release/cancel.",
+    "Compare capsule-floor contact independently from skin-floor and shadow appearance."
+  ],
+  "preserve_failures": [
+    "R4-05 broader baseline/rejected-candidate motion failures remain open.",
+    "Existing R3 baseline source replay includes\u221223.789081mm unlocked-left sole minimum atframe070; actual native vertex measurement must preserve or resolve it.",
+    "Source replay locked minima\u2264.766588mm do not establish pixel sole contacts or validate restored post-render bone getters."
+  ],
+  "lighting_hold": {
+    "required_exact_recorded_light": {
+      "angular_distance": 0.0,
+      "color": "(1.0, 0.898, 0.7843, 1.0)",
+      "energy": 1.2999999523162842,
+      "portrait_fill": false,
+      "shadow_bias": 0.20000000298023224,
+      "shadow_enabled": true,
+      "shadow_normal_bias": 0.3499999940395355,
+      "ssao_enabled": true,
+      "sun_transform": [
+        [
+          0.6156615018844604,
+          0.0,
+          0.7880107164382935
+        ],
+        [
+          0.39400535821914673,
+          0.8660253882408142,
+          -0.3078307509422302
+        ],
+        [
+          -0.6824373006820679,
+          0.5,
+          0.5331785082817078
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "tonemap_exposure": 1.0
+    },
+    "required_exact_render_settings": {
+      "msaa_3d": 1,
+      "screen_space_aa": 0,
+      "taa": false
+    },
+    "source_policy_only_unrecorded": {
+      "day_ambient_energy": 0.3,
+      "ssao_radius_m": 0.28,
+      "ssao_intensity": 0.68,
+      "ssao_power": 1.08,
+      "ssao_detail": 0.4,
+      "ssao_light_affect": 0.1,
+      "glow_intensity": 0.1,
+      "glow_threshold": 2.1
+    },
+    "do_not_vary": "No shadow bias, angular softness, exposure, AO, extra fill, or material-opacity change to hide a geometric contact defect."
+  },
+  "scope": "Contract handoff only; no R4-12 execution, imported sole acceptance, new framebuffer, full lifecycle or hardware FPS claim."
+}

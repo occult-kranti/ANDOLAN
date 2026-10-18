@@ -6,6 +6,8 @@ All commands below run from the repository root, normally `/workspace/ANDOLAN`. 
 
 ## 1. What exists, and what we are building
 
+For the current launch, loading, shared-screen and package changes, begin with [SCREEN_CAMPAIGN_HANDOFF.md](SCREEN_CAMPAIGN_HANDOFF.md). It maps ownership, focused commands, current evidence and open defects without requiring a read of the historical archive. Its execution ledger distinguishes completed screen work from the final portable-package review.
+
 Current source work is the [Rama hero milestone](RAMA_HERO_MILESTONE.md): a new smooth-skinned `rama-hero.glb`, editable Blender source, one full-body motion controller, five fixed combat actions, real health/respawn, and shared training/world screens. Start with that document and its [acceptance record](RAMA_HERO_ACCEPTANCE.md). `rama_hero_runtime.gd` is the integration entry; `rama_ability_kit.gd` owns the 20 Hz combat timing. This is still an offline native milestone; production art, hardware performance and online matches remain separate gates.
 
 The active follow-up is the [fifteen-role quality pass](RAMA_QUALITY_MILESTONE.md).

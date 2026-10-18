@@ -950,7 +950,76 @@ def run_export(godot: Path, platform: str, pack: Path, log: Path) -> None:
         raise RuntimeError(f'{platform} export logged an error; inspect {log}')
 
 
+def _native_contract_inputs(project: Path) -> dict:
+    """Finite source closure used by the current contract checker, without Godot."""
+    repository = project.parents[1]
+    paths = {
+        'games/yuga-native/tools/check-native-contracts.py',
+        'games/yuga-native/tools/package-native.py',
+        'games/yuga-native/assets/contracts/native-contracts-v1.json',
+        'games/yuga-native/assets/contracts/native-envelope-v1.schema.json',
+        'games/yuga-native/scripts/native_contracts.gd',
+        'games/yuga/shared/map.ts', 'games/yuga/shared/types.ts',
+        'games/yuga-native/assets/world/confluence-map.json',
+        'games/yuga-native/docs/GAME_DESIGN_MASTER.md',
+        'games/yuga-native/scripts/relay_control.gd',
+        *[f'games/yuga-native/tests/fixtures/contracts/native-content{revision}-{kind}.json'
+          for revision in (3, 4, 5) for kind in ('catalog', 'descriptor')],
+    }
+    catalog = json.loads((project / 'assets/contracts/native-contracts-v1.json').read_text())
+    for profile in catalog['profiles']:
+        paths.update(profile['content_sources'])
+    result = {}
+    for relative in sorted(paths):
+        name = PurePosixPath(relative)
+        path = repository / relative
+        if (name.is_absolute() or '..' in name.parts or '\\' in relative
+                or name.as_posix() != relative or path.is_symlink()
+                or not path.resolve().is_relative_to(repository) or not path.is_file()):
+            raise ValueError('Missing or unsafe native contract input: ' + relative)
+        result[relative] = record(path)
+    return result
+
+
+def prove_native_contract_sources(output: Path, project: Path | None = None) -> dict:
+    project = (project or PROJECT).resolve()
+    before = _native_contract_inputs(project)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    log = output.with_suffix('.log')
+    if output.exists() or log.exists():
+        raise ValueError('Native contract proof needs fresh report/log paths')
+    with log.open('w') as stream:
+        process = subprocess.run([sys.executable, str(project / 'tools/check-native-contracts.py'),
+                                  '--report', str(output)], cwd=project.parents[1],
+                                 stdout=stream, stderr=subprocess.STDOUT, timeout=60)
+    if process.returncode or not output.is_file():
+        raise ValueError('Native contract source check failed; inspect ' + str(log))
+    report = json.loads(output.read_text())
+    checks = report.get('checks')
+    if (report.get('passed') is not True or not isinstance(checks, list) or not checks
+            or any(not isinstance(item, dict) or item.get('passed') is not True
+                   or not isinstance(item.get('name'), str) for item in checks)):
+        raise ValueError('Native contract proof lacks nonempty successful checks')
+    names = [item['name'] for item in checks]
+    catalog = json.loads((project / 'assets/contracts/native-contracts-v1.json').read_text())
+    required = {'three_exact_profiles', 'per_profile_content_revisions', 'wire_versions_unchanged'}
+    for profile in catalog['profiles']:
+        required.add(profile['id'] + '_content_aggregate')
+        required.update(profile['id'] + '_content_' + path for path in profile['content_sources'])
+    if len(set(names)) != len(names) or not required.issubset(names):
+        raise ValueError('Native contract proof omits required source checks')
+    report_sources = ('assets/contracts/native-contracts-v1.json', 'assets/contracts/native-envelope-v1.schema.json',
+                      'tools/check-native-contracts.py', 'scripts/native_contracts.gd')
+    expected = {'games/yuga-native/' + path: before['games/yuga-native/' + path]['sha256']
+                for path in report_sources}
+    if report.get('source_sha256') != expected or _native_contract_inputs(project) != before:
+        raise ValueError('Native contract report/source bindings changed or differ')
+    return {'schema': 1, 'sources': before, 'report': record(output), 'checks': len(checks),
+            'scope': 'Actual source-pin checker, nonempty successful checks and exact stable catalog/tool/source/fixture bytes; no network or gameplay acceptance.'}
+
+
 def export_all(args: argparse.Namespace, build: Path) -> dict:
+    native_contracts = prove_native_contract_sources(build / 'native-contracts-export.json')
     subprocess.run([sys.executable, str(PROJECT / 'tools/stage-world.py'), '--check'], check=True)
     version = subprocess.check_output([str(args.linux_engine), '--version'], text=True).strip()
     if not version.startswith(EXPECTED_VERSION + '.'):
@@ -994,10 +1063,13 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
         raise ValueError('Runtime source changed during export; rerun on a frozen/imported tree')
     if rama_hero_notice != validate_rama_hero_notice():
         raise ValueError('Rama hero provenance changed during export; rerun on a frozen tree')
+    if native_contracts['sources'] != _native_contract_inputs(PROJECT):
+        raise ValueError('Native contract inputs changed during export')
     manifest = {'schema': 1, 'kind': 'native-pck-export', 'godot_version': version,
                 'git': git_context(), 'source': after, 'packs': packs,
                 'rama_matches_existing_yuga_source': True,
                 'rama_hero_provenance': rama_hero_notice,
+                'native_contracts': native_contracts,
                 'font_bindings': font_bindings,
                 'limits': ['No Windows execution performed by this tool.',
                            'PCK and archive checks do not establish visual quality or gameplay acceptance.']}
@@ -1063,6 +1135,9 @@ def zip_directory(staging: Path, output: Path) -> dict:
 
 
 def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
+    native_contracts = prove_native_contract_sources(build / 'native-contracts-package.json')
+    if native_contracts != exported.get('native_contracts'):
+        raise ValueError('Native contract sources or proof changed since export; export again before packaging')
     if source_state()['sha256'] != exported['source']['sha256']:
         raise ValueError('Runtime sources changed since PCK export; export again before packaging')
     if exported.get('rama_hero_provenance') != validate_rama_hero_notice():
@@ -1105,15 +1180,19 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
                     'runtime_source': exported['source'], 'payloads': payloads,
                     'pck': actual_pack, 'execution_status': 'not_executed_by_packager',
                     'font_bindings': font_bindings,
+                    'native_contracts': native_contracts,
                     'windows_engine_provenance': verified_windows if platform == 'windows' else None}
         json_write(staging / 'PACKAGE-MANIFEST.json', manifest)
         archive = build / f'yuga-native-{platform}-x86_64.zip'
         results[platform] = {'filename': archive.name, **zip_directory(staging, archive),
                              'engine': record(engine), 'pck': {k: actual_pack[k] for k in ['bytes', 'sha256', 'entry_count']},
                              'execution_status': 'not_executed_by_packager'}
+    if native_contracts['sources'] != _native_contract_inputs(PROJECT):
+        raise ValueError('Native contract inputs changed during packaging')
     aggregate = {'schema': 1, 'kind': 'native-portable-packages', 'git': exported['git'],
                  'runtime_source_sha256': exported['source']['sha256'], 'packages': results,
                  'packaging_script': record(Path(__file__)),
+                 'native_contracts': native_contracts,
                  'limits': ['Archive/PCK validation is not runtime acceptance.', 'Windows has not been executed here.']}
     json_write(build / 'native-package-manifest.json', aggregate)
     return aggregate
