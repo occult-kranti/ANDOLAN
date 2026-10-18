@@ -13,6 +13,9 @@ var context: Label
 var progress_scope: Label
 var body_scroll: ScrollContainer
 var actions: HBoxContainer
+var _wordmark: Label
+var _rule: HSeparator
+var _progress_slot: VBoxContainer
 var _source: WeakRef
 
 func _ready() -> void:
@@ -78,21 +81,21 @@ func _build() -> void:
 	var identity := HBoxContainer.new()
 	identity.add_theme_constant_override("separation", UI.SPACE_LG)
 	body.add_child(identity)
-	var wordmark := UI.label("YUGA", UI.TYPE_TITLE, UI.GOLD)
-	wordmark.add_theme_font_override("font", UI.display_font())
-	identity.add_child(wordmark)
+	_wordmark = UI.label("YUGA", UI.TYPE_TITLE, UI.GOLD)
+	_wordmark.add_theme_font_override("font", UI.display_font())
+	identity.add_child(_wordmark)
 	context = UI.label("LOCAL SCENE", UI.TYPE_CAPTION, UI.MIST)
 	context.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	context.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	context.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	context.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	identity.add_child(context)
-	var rule := HSeparator.new()
+	_rule = HSeparator.new()
 	var rule_style := StyleBoxLine.new()
 	rule_style.color = UI.GOLD
 	rule_style.thickness = 1
-	rule.add_theme_stylebox_override("separator", rule_style)
-	body.add_child(rule)
+	_rule.add_theme_stylebox_override("separator", rule_style)
+	body.add_child(_rule)
 	heading = UI.label("Opening scene", UI.TYPE_TITLE)
 	heading.add_theme_font_override("font", UI.display_font())
 	heading.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -101,23 +104,23 @@ func _build() -> void:
 	detail.custom_minimum_size.y = 64
 	detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.add_child(detail)
-	var progress_slot := VBoxContainer.new()
-	progress_slot.name = "ResourceProgressSlot"
-	progress_slot.custom_minimum_size.y = 88
-	progress_slot.add_theme_constant_override("separation", UI.SPACE_XS)
-	body.add_child(progress_slot)
+	_progress_slot = VBoxContainer.new()
+	_progress_slot.name = "ResourceProgressSlot"
+	_progress_slot.custom_minimum_size.y = 88
+	_progress_slot.add_theme_constant_override("separation", UI.SPACE_XS)
+	body.add_child(_progress_slot)
 	# The controller's detail is the visible operation, including specific errors.
 	# This region adds only resource progress and its scope, without a second status.
 	var bar_slot := Control.new()
 	bar_slot.custom_minimum_size.y = 14
-	progress_slot.add_child(bar_slot)
+	_progress_slot.add_child(bar_slot)
 	progress_bar = ProgressBar.new()
 	progress_bar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	progress_bar.show_percentage = false
 	bar_slot.add_child(progress_bar)
 	progress_scope = UI.label("Resource progress appears when loading starts.", UI.TYPE_CAPTION, UI.MIST)
 	progress_scope.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	progress_slot.add_child(progress_scope)
+	_progress_slot.add_child(progress_scope)
 	actions = HBoxContainer.new()
 	actions.name = "LoadingActions"
 	# Primary Retry has taller font metrics than Back. Reserve the same band
@@ -140,6 +143,13 @@ func _build() -> void:
 
 func _layout() -> void:
 	if not is_instance_valid(card): return
+	# Short logical windows retain the operation, resource scope and actions at
+	# the chosen text scale. The heading/context already carry scene identity.
+	var compact := size.y <= 360
+	_wordmark.visible = not compact
+	_rule.visible = not compact
+	detail.custom_minimum_size.y = 0 if compact else 64
+	_progress_slot.custom_minimum_size.y = 0 if compact else 88
 	var available := (size - Vector2(48,48)).max(Vector2(160,160))
 	card.size = Vector2(minf(520, available.x), minf(440, available.y))
 	card.position = (size - card.size) * .5

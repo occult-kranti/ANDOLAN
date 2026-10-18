@@ -17,9 +17,20 @@ func _check(label: String, passed: bool, detail: Dictionary = {}) -> void:
 	checks.append({"name":label,"passed":passed,"detail":detail})
 	print("PASS " if passed else "FAIL ", label)
 
+func _inside_visible_clip(control: Control) -> bool:
+	if not control.is_visible_in_tree(): return false
+	var rect := control.get_global_rect()
+	if not root.get_visible_rect().encloses(rect): return false
+	var ancestor := control.get_parent()
+	while ancestor != null:
+		if ancestor is Control and (ancestor is ScrollContainer or ancestor.clip_contents) and not ancestor.get_global_rect().encloses(rect): return false
+		ancestor = ancestor.get_parent()
+	return true
+
 func _run() -> void:
 	root.size = Vector2i(1280,720)
 	root.content_scale_size = Vector2i(1280,720)
+	root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	var view := VIEW.new()
 	view.theme = UI.create()
 	root.add_child(view)
@@ -45,17 +56,38 @@ func _run() -> void:
 	_check("Construction preserves the controller operation without inventing readiness", not view.progress_scope.text.contains("%") and view.detail.text == "Preparing the scene… This step may take a moment." and view.context.text == "PRACTICE MENU")
 	var operation_labels := view.find_children("*", "Label", true, false).filter(func(label: Label): return label.text.to_lower().contains("prepar"))
 	_check("Construction explains its operation once", operation_labels.size() == 1 and operation_labels[0] == view.detail, {"operation_labels":operation_labels.size()})
+	var messages := {&"queued":"Preparing to load…", &"loading":"Loading scene resources…", &"constructing":"Preparing the scene… This step may take a moment."}
+	for scale in [1.0,2.0]:
+		root.size = Vector2i(960,540)
+		root.content_scale_factor = scale
+		for phase in [&"queued", &"loading", &"constructing"]:
+			view.heading.text = "Opening YUGA"
+			view.detail.text = messages[phase]
+			view.retry_button.hide()
+			view.back_button.disabled = false
+			view.progress_bar.visible = phase == &"loading"
+			view.present_phase(phase, &"courtyard", .475 if phase == &"loading" else -1)
+			await _frames()
+			var required: Array[Control] = [view.heading,view.detail,view.context,view.progress_scope,view.back_button]
+			if phase == &"loading": required.append(view.progress_bar)
+			_check("Operation, scope and action initially fit all ancestor clips " + str(phase) + " at " + str(scale), required.all(_inside_visible_clip) and view.body_scroll.scroll_vertical == 0, {"viewport":str(root.get_visible_rect()),"body":str(view.body_scroll.get_global_rect()),"scope":str(view.progress_scope.get_global_rect()),"scroll_y":view.body_scroll.scroll_vertical})
+	root.content_scale_factor = 1.0
+	await _frames()
+	var wordmarks := view.find_children("*", "Label", true, false).filter(func(label: Label): return label.text == "YUGA" and label.is_visible_in_tree())
+	_check("Normal-size identity and chosen typography restore after compact mode", wordmarks.size() == 1 and view.find_children("*", "HSeparator", true, false)[0].is_visible_in_tree() and view.heading.get_theme_font_size("font_size") == UI.TYPE_TITLE and view.detail.get_theme_font_size("font_size") == UI.TYPE_BODY)
 	view.present_phase(&"loading", &"combat_film", -1)
 	_check("Unknown progress remains unavailable and film is explicitly scripted", view.progress_scope.text.contains("unavailable") and not view.progress_scope.text.contains("%") and view.context.text == "SCRIPTED DUEL")
 	view.back_button.disabled = false
 	view.present_phase(&"error", &"combat_film", -1)
+	view.retry_button.show()
+	view.heading.text = "Could not open Confluence"
 	view.detail.text = "The scene could not be prepared. " .repeat(24) + "Retry, or go back."
 	for spec in [[Vector2i(960,540),1.0],[Vector2i(960,540),2.0],[Vector2i(1280,720),1.25]]:
 		root.size = spec[0]
 		root.content_scale_factor = spec[1]
 		await _frames()
 		var visible := root.get_visible_rect()
-		_check("Long recovery keeps actions outside the scroll and viewport-visible " + str(spec), visible.encloses(view.card.get_global_rect()) and view.card.get_global_rect().encloses(view.actions.get_global_rect()) and view.card.get_global_rect().encloses(view.retry_button.get_global_rect()) and view.card.get_global_rect().encloses(view.back_button.get_global_rect()) and not view.body_scroll.is_ancestor_of(view.back_button), {"viewport":str(visible),"card":str(view.card.get_global_rect()),"actions":str(view.actions.get_global_rect())})
+		_check("Long recovery keeps both visible actions outside the scroll and viewport-visible " + str(spec), visible.encloses(view.card.get_global_rect()) and view.card.get_global_rect().encloses(view.actions.get_global_rect()) and _inside_visible_clip(view.retry_button) and _inside_visible_clip(view.back_button) and not view.body_scroll.is_ancestor_of(view.back_button), {"viewport":str(visible),"card":str(view.card.get_global_rect()),"actions":str(view.actions.get_global_rect())})
 	var peer := VIEW.new()
 	peer.theme = UI.create()
 	root.add_child(peer)
