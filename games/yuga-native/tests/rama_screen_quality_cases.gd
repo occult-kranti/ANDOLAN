@@ -78,9 +78,14 @@ func _run() -> void:
 		var card: Control = scene.main_panel.get_node("Card")
 		var actions: Array[Control] = []
 		scene._focusable_children(scene.main_panel, actions)
-		var fit := actions.size() == 7
+		var required_actions := ["ConfluenceMode", "TrainingMode", "ExploreConfluence", "RamaAbilities", "WatchConfluenceDuel", "Help", "Settings", "Quit"]
+		var actual_actions: Array[String] = []
+		for action in actions: actual_actions.append(str(action.name))
+		required_actions.sort()
+		actual_actions.sort()
+		var fit := actual_actions == required_actions
 		for action in actions: fit = fit and card.get_global_rect().encloses(action.get_global_rect()) and action.size.y >= 44
-		_record("Seven title actions fit without scrolling at " + str(dimensions), fit and view.encloses(card.get_global_rect()), {"card":str(card.get_global_rect()),"actions":actions.size()})
+		_record("Required mode, launch and utility actions fit without scrolling at " + str(dimensions), fit and view.encloses(card.get_global_rect()), {"card":str(card.get_global_rect()),"actions":actions.size()})
 		_record("All title actions reached once in each Tab direction at " + str(dimensions), _complete_cycle(scene,scene.main_panel))
 		var face: Vector2 = scene.title_camera.unproject_position(scene.player.global_position + Vector3(0,1.78,0))
 		var veil: TextureRect = scene.main_panel.get_child(0)

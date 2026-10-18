@@ -1,0 +1,88 @@
+{
+  "source_base": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "historical_originals_reviewed": [
+    {
+      "path": "docs/evidence/rama-hero/window/1280x720-r1/01-title-loaded.png",
+      "sha256": "e8441c4818ee43ede1a70593d57d6b67d9044cc0417f473cf76c677114810f83",
+      "scope": "Historical screenshot inspected with view_image; not current UI acceptance."
+    },
+    {
+      "path": "docs/evidence/rama-hero/window/1280x720-r1/02-settings.png",
+      "sha256": "523e1dea7149de26f0796f0a1e16d4f7578959e91c9994efdd8553d7e067a1e1",
+      "scope": "Historical screenshot inspected with view_image; not current UI acceptance."
+    },
+    {
+      "path": "docs/evidence/rama-hero/window/1280x720-r1/03-training-hud.png",
+      "sha256": "3d9cae6a46c2bd722f77b6fa5f8e8c4c37f037d7f4ee69ff45588f5f606641a1",
+      "scope": "Historical screenshot inspected with view_image; not current UI acceptance."
+    }
+  ],
+  "flows": [
+    {
+      "screen": "launch",
+      "actual_entry": "Startup",
+      "ready_condition": "MainMenu visible, focused primary, real player ready for integrated capture",
+      "status": "Component captured; integrated pending"
+    },
+    {
+      "screen": "settings",
+      "actual_entry": "Settings click",
+      "ready_condition": "Settings visible; initial focus; scroll top",
+      "status": "Historical reviewed; current queued"
+    },
+    {
+      "screen": "help",
+      "actual_entry": "F2 or Help click",
+      "ready_condition": "ControlsHelp visible; close restores opener",
+      "status": "Queued"
+    },
+    {
+      "screen": "guide",
+      "actual_entry": "F3 or Rama abilities",
+      "ready_condition": "Hero panel visible; nested Escape restore",
+      "status": "Queued"
+    },
+    {
+      "screen": "training",
+      "actual_entry": "Bow training select then launch",
+      "ready_condition": "started true, mouse captured, player active",
+      "status": "Historical reviewed; current queued"
+    },
+    {
+      "screen": "pause",
+      "actual_entry": "Escape in practice",
+      "ready_condition": "tree paused and pause panel visible",
+      "status": "Queued"
+    },
+    {
+      "screen": "world",
+      "actual_entry": "Confluence select then launch",
+      "ready_condition": "world_ready true and player model_ready",
+      "status": "Queued"
+    },
+    {
+      "screen": "overview",
+      "actual_entry": "F1 in world",
+      "ready_condition": "overview true, mouse visible",
+      "status": "Queued"
+    },
+    {
+      "screen": "results",
+      "actual_entry": "Real core outcome through authoritative simulation",
+      "ready_condition": "battle winner set, exact live outcome text",
+      "status": "Not covered by component fixture; must use real outcome"
+    },
+    {
+      "screen": "loading",
+      "actual_entry": "Native launch action",
+      "ready_condition": "Actual loader queued/loading/constructing; engine progress only",
+      "status": "Queued phase sampled automatically; threaded resource progress not forced"
+    },
+    {
+      "screen": "error",
+      "actual_entry": "Missing allowlisted scene fixture",
+      "ready_condition": "Actual loader error; Retry/Back visible and focused",
+      "status": "Component captured; product failure route queued"
+    }
+  ]
+}

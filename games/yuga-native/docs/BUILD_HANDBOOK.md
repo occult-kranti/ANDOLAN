@@ -127,13 +127,22 @@ godot --path games/yuga-native
 
 For a local machine without working Vulkan, explicitly choose `--rendering-method gl_compatibility`; it has reduced effects. Do not silently accept its output as the Forward+ art target.
 
-`project.godot` opens `scenes/courtyard.tscn`. Its title menu opens training, `confluence_world.tscn` or `combat_film.tscn`. Courtyard/world scenes own player activation, UI pause and scene returns. Shared controls/config are installed per scene. Confluence reads the staged map, assembles geometry/collisions, creates the player, army and audio, then connects combat/traversal events to those systems. The film samples its authored timeline independently of gameplay authority.
+`project.godot` opens the lightweight `scenes/boot.tscn`. A root-owned `scene_transition.gd` loads the courtyard, Confluence and film through an allowlisted resource loader. Resource progress describes loading; scene construction remains synchronous and is labeled separately. Retry and Back recover supported failure/cancellation states. The courtyard's `launch_shell.gd` chooses Confluence or bow training. Courtyard/world scenes own player activation and pause; their returns use the same persistent loader. Shared controls/config are installed per scene. Confluence reads the staged map, assembles geometry/collisions, creates the player, army and audio, then connects combat/traversal events to those systems. The film samples its authored timeline independently of gameplay authority.
+
+The screen catalog runs alongside the visual catalog in setup and native CI:
+
+```sh
+/workspace/tooling/yuga-native-python/bin/python games/yuga-native/tools/run-visual-checks.py \
+  --catalog screens --engine godot --output /absolute/fresh/screen-checks
+```
+
+Shared screen fonts are bundled under `assets/fonts/`, with notices under `NOTICE/Noto-fonts/` and `NOTICE/DejaVu-font/`. They do not depend on fonts installed on the player's machine. The screen campaign records actual window/input reviews separately from this headless catalog. Native guide options save Rama's reduced effects and reduced motion settings through the real effect receiver; these are ability-only settings.
 
 | Change | First files to open |
 | --- | --- |
 | Entry scene, engine settings, exports | `project.godot`, `export_presets.cfg`, `scenes/` |
-| Title/courtyard/settings/help flow | `scripts/courtyard.gd`, `scripts/input_bindings.gd`, `scripts/controls_overlay.gd` |
-| World assembly, HUD, pause, scene returns | `scripts/confluence_world.gd` |
+| Boot/loading/title/settings/help flow | `scripts/boot.gd`, `scripts/scene_transition.gd`, `scripts/launch_shell.gd`, `scripts/courtyard.gd`, `scripts/input_bindings.gd`, `scripts/controls_overlay.gd` |
+| World assembly, HUD, pause, scene returns | `scripts/confluence_world.gd`, `scripts/world_atlas.gd`, `scripts/world_outcome_summary.gd` |
 | Walking, aim, weapon, ability integration | `scripts/player.gd`, `scripts/rama_hero_runtime.gd`; current kit does not use the old `projectile.gd` fire path |
 | Rama actions, damage, effects and health | `scripts/rama_ability_kit.gd`, `rama_ability_effects.gd`, `rama_vitals.gd`, `assets/design/rama-ability-kit.json`; [kit contract](RAMA_ABILITY_KIT.md) |
 | Rama motion and contact | `scripts/rama_motion.gd`, `assets/animations/rama_hero_motion.tres`, `art/hero-rama-motion/` |

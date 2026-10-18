@@ -58,6 +58,7 @@ python3 games/yuga-native/tests/rama_package_cases.py --report="$validation_dir/
 "$native_python_root/bin/python" games/yuga-native/tests/authoring_runner_cases.py --report="$validation_dir/authoring-runner-cases.json"
 "$native_python_root/bin/python" games/yuga-native/tools/run-authoring-checks.py --engine godot --python "$native_python_root/bin/python" --cloth-resource --output "$validation_dir/authoring-checks"
 "$native_python_root/bin/python" games/yuga-native/tools/run-visual-checks.py --engine godot --python "$native_python_root/bin/python" --output "$validation_dir/visual-checks"
+"$native_python_root/bin/python" games/yuga-native/tools/run-visual-checks.py --catalog screens --engine godot --python "$native_python_root/bin/python" --output "$validation_dir/screen-checks"
 godot --headless --path games/yuga-native --script res://tests/projectile_cases.gd -- --report="$validation_dir/projectile-cases.json"
 "$native_python_root/bin/python" games/yuga-native/tools/audio/build-traversal-audio.py --check
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/traversal_cases.gd -- --report="$validation_dir/traversal.json"

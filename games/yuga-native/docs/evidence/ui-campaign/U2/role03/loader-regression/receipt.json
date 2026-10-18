@@ -1,0 +1,23 @@
+{
+  "command": [
+    "godot",
+    "--headless",
+    "--path",
+    "/tmp/yuga-u2-loader-regression-r1",
+    "--script",
+    "res://tests/scene_transition_cases.gd",
+    "--",
+    "--report=/tmp/yuga-u2-loader-regression-r1/report.json"
+  ],
+  "exit_code": 0,
+  "source_sha256": {
+    "scripts/scene_transition.gd": "74832b9d8828db5c505cdd0729443f72761309fdd0c8a6f6857000fe33b2112e",
+    "scripts/hero_ui_theme.gd": "4a8d1c96b15092f3f35770ef6b2df706608dcea5779db7707ea88567c3f4d756",
+    "tests/scene_transition_cases.gd": "e95d14f118b8026d4317a99b8f44322cb3f3014cccd4e7db89c17ea8250a3fd9"
+  },
+  "expected_errors": [
+    "res://scenes/combat_film.tscn:2 - Parse Error: Unexpected end of file.",
+    "Failed loading resource: res://scenes/combat_film.tscn."
+  ],
+  "scope": "Small actual threaded PackedScene fixture project, headless; no heavy product imports/render or world performance claim."
+}

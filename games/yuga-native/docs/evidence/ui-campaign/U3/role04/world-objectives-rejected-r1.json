@@ -1,0 +1,167 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "Lane goal names the actual nearby route and current population",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Moving lanes updates the goal without choosing a fake objective",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Formatting never advances army or relay authority",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Core values are explicitly labeled and taken from the real army",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Overview shortcut is discoverable beside the fixed-orientation map",
+			"passed": true
+		},
+		{
+			"details": {
+				"clock": 1.25,
+				"hint": "Held · next supply in 3.8s\n+3 arrows / +6 troop health · Enemy pressure stops supply"
+			},
+			"name": "Held relay displays the actual remaining supply clock",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Contested relay replaces supply countdown with actionable state",
+			"passed": true
+		},
+		{
+			"details": {
+				"failures": [
+					"TraversalStatus / RamaHeroHUD"
+				]
+			},
+			"name": "HUD goals, map and controls fit without sibling overlap (960, 540)",
+			"passed": false
+		},
+		{
+			"details": {
+
+			},
+			"name": "Goal and overview legend remain contained (960, 540)",
+			"passed": false
+		},
+		{
+			"details": {
+				"failures": [
+					"TraversalStatus / RamaHeroHUD"
+				]
+			},
+			"name": "HUD goals, map and controls fit without sibling overlap (960, 600)",
+			"passed": false
+		},
+		{
+			"details": {
+
+			},
+			"name": "Goal and overview legend remain contained (960, 600)",
+			"passed": false
+		},
+		{
+			"details": {
+				"failures": []
+			},
+			"name": "HUD goals, map and controls fit without sibling overlap (1280, 720)",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Goal and overview legend remain contained (1280, 720)",
+			"passed": false
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual terminal tick produces visible sun summary",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Terminal presentation preserves authority for sun",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual terminal tick produces visible moon summary",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Terminal presentation preserves authority for moon",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual terminal tick produces visible draw summary",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Terminal presentation preserves authority for draw",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Restart retires terminal summary and restores lane goal",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Siege goal reflects actual drill with inactive relays",
+			"passed": true
+		}
+	],
+	"passed": false,
+	"scope": "Headless existing world and read-only presentation. Relay actors and terminal cores are staged through actual rule ticks. Logical layout at 960x540/960x600/1280x720; no OS input, rendered, 2x scale or hardware claim.",
+	"sources": {
+		"res://scripts/confluence_world.gd": "58b7614f8e57a957f850e1d4d23bf7c87d75bdd7ff391346623f403efc05dabb",
+		"res://scripts/hero_ui_theme.gd": "39e43f426e65475fd134fd9bd9515d1505edc90b6969394017995b641693abc4",
+		"res://scripts/lane_army.gd": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+		"res://scripts/relay_control.gd": "42d68a7d034c31033c5e105fd227e9e179d35d88209428544f396fa39f2fe000",
+		"res://scripts/world_atlas.gd": "7d48ca4f66b8025131c3e0ef02a25263084453f1d1b0f0464595ecc9ab8f9fd9",
+		"res://scripts/world_outcome_summary.gd": "0aba7d727ea09fcdef4c43566ad3a8850f3a7ac42bbe7be1a6f8223bfdbf5a69",
+		"res://tests/ui_world_objective_cases.gd": "1d3d8e5de997f3a5695a00d3914bcc0b26aba27b04327022299fea11ee28e219"
+	}
+}

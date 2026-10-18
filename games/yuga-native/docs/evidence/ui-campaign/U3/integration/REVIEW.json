@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "suites": 16,
+  "checks": 378,
+  "runtime_sources_identical": true,
+  "initial_run": {
+    "all_individual_checks_passed": true,
+    "aggregator_passed": false,
+    "reason": "Five legacy test reports used integer passed counts, rejected by the strict boolean schema."
+  },
+  "correction": "Report dictionaries only: boolean passed plus explicit passed_count/count. Assertions, process exit rules and runtime unchanged. Five affected suites rerun successfully.",
+  "scope": "Frozen U3 combined source, existing verified imports, headless input/lifecycle/layout. Later U4 edits, integrated U3 pixels, physical GPU, online and package acceptance excluded.",
+  "accepted_suites": {
+    "ui-theme": {
+      "checks": 88,
+      "report_sha256": "d3936a895dbf187a4328bea2a52e34c29e616578b2c438081008d8276fdce0f3"
+    },
+    "ui-fonts": {
+      "checks": 7,
+      "report_sha256": "304789d9d4bddd57a136dcd21f19ac4c25ad6bd1203e8244316f93aeee8e0e36"
+    },
+    "ui-hud-information": {
+      "checks": 8,
+      "report_sha256": "c58272bb69892f3c78825a168a82e74303c7501c304d2e35cdb1829ff2af9364"
+    },
+    "ui-hud-context": {
+      "checks": 14,
+      "report_sha256": "55fab907802467b81a110e4ea5a8518de3853362570993368dbd33302ecc36f8"
+    },
+    "ui-controls-state": {
+      "checks": 19,
+      "report_sha256": "a3e24159d23f34fe63594b78c24cab63633ed2f0fe4e2151d6d51f3af409876d"
+    },
+    "ui-controls-lifecycle": {
+      "checks": 14,
+      "report_sha256": "ceac6a5f6470e1bb222902f0840a563bf9d1e089a6b3a8a975e2eb6829ee361a"
+    },
+    "ui-guide-capabilities": {
+      "checks": 18,
+      "report_sha256": "08ea54c80e5dd75a33133e3004b589f19e4ccf482a2db4ed6a1342e3d3fca175"
+    },
+    "ui-world-objectives": {
+      "checks": 21,
+      "report_sha256": "feab8ba14f2d3497988adfd34d6b868aed2bd2f4f29a5c9750adabe83fa4de8a"
+    },
+    "ui-pause-navigation": {
+      "checks": 17,
+      "report_sha256": "ebfb479ffd0f18d405458482d44b8c0eac7414898f8794b20c1ae865d10eeeae"
+    },
+    "ui-map-consistency": {
+      "checks": 17,
+      "report_sha256": "f115baaadaabfb0d0159495eb1cce6b3a98db3103b64b6f7c659511aae78e0dc"
+    },
+    "ui-independent-modal": {
+      "checks": 36,
+      "report_sha256": "220fb8b1304643f1d0d982f04a21ea3962ac673326e566b75b7955e5b45c8ac4"
+    },
+    "ui-launch": {
+      "checks": 35,
+      "report_sha256": "68661d7d1797d5286c9b4f36b04398b79cb5d8e8e27d3b46e13635e893c5bf38"
+    },
+    "ui-launch-integration": {
+      "checks": 26,
+      "report_sha256": "d12dbc2bf7d5403112528960ff6adb038a057f9d55c2756884c09acea7ddbd9c"
+    },
+    "ui-end-to-end": {
+      "checks": 25,
+      "report_sha256": "24e3a39c96d3c4e02df9684daab5ab3f0b79af43ddfeaab7d9f4d15a57bd3dee"
+    },
+    "ui-transition-lifecycle": {
+      "checks": 20,
+      "report_sha256": "5ce3a7ee1f7d9b0a92af368b386e4a6872fae9afde3e138c5a24d0c1cf637dd1"
+    },
+    "ui-boot-native": {
+      "checks": 13,
+      "report_sha256": "698dbf61fb6034434c06cf2f4d51a4186e3c86442e00e2b8658a51c4da0ab978"
+    }
+  }
+}

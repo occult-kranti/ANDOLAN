@@ -1,0 +1,40 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS Unknown IDs and arbitrary paths cannot navigate
+PASS Rejected paths do not alter caller input
+PASS Loader cannot be owned by the scene it will replace
+PASS Allowed destination begins immediately
+PASS Visible queued state precedes resource work
+PASS Caller processing is disabled while loading
+PASS Duplicate and competing transitions are rejected
+PASS Queued transition can be cancelled once
+PASS Cancel restores pause, mouse, processing and opener focus
+PASS Cancelled queued callbacks cannot complete
+PASS Missing allowlisted scene is accepted for recoverable validation
+PASS Missing file shows one failure and Retry/Back
+PASS Error focus reaches retry
+PASS Recovery controls remain inside the viewport
+PASS Recovery Tab order stays within Retry and Back
+PASS Recovery dialog rejects duplicate begin
+PASS Retry starts a new attempt and rejects repeated retry
+PASS Real threaded PackedScene load replaces current scene
+PASS Completion fires exactly once and loader releases ownership
+PASS Completed overlay is reusable
+PASS Cancelled threaded completion does not navigate
+PASS Cancelled path may be requested again
+PASS Reuse after cancellation completes exactly once
+PASS Another loaded scene can begin
+PASS Cancel before construction invalidates deferred commit
+PASS Malformed local scene starts recoverable load
+PASS Failed resource load preserves the previous scene
+PASS Back after failure restores caller and hides recovery
+PASS Fresh loader can acquire released ownership
+PASS Disposal restores input and cannot leave owner metadata
+PASS Disposal test starts a real load request
+PASS Disposed threaded request cannot navigate or hold caller input
+PASS Construction has its own message without an overall percentage
+{"failed":0,"passed":33}
+ERROR: res://scenes/combat_film.tscn:2 - Parse Error: Unexpected end of file.
+   at: _printerr (scene/resources/resource_format_text.cpp:40)
+ERROR: Failed loading resource: res://scenes/combat_film.tscn.
+   at: _load (core/io/resource_loader.cpp:343)

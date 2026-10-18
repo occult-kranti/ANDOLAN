@@ -1,0 +1,1418 @@
+{
+  "complete": true,
+  "scope": "Actual XTest input and raw framebuffer; component fixture is not integrated gameplay.",
+  "mode": "boot_recovery",
+  "command": [
+    "/usr/local/bin/godot",
+    "--path",
+    "/tmp/yuga-u2-boot-recovery-window-r1/fixture",
+    "--display-driver",
+    "x11",
+    "--rendering-method",
+    "gl_compatibility",
+    "--audio-driver",
+    "Dummy",
+    "--resolution",
+    "960x600",
+    "--position",
+    "0,0",
+    "--max-fps",
+    "20",
+    "--max-threads",
+    "1",
+    "--script",
+    "res://tools/ui-campaign/observer.gd",
+    "--",
+    "--mode=boot_recovery",
+    "--output=/tmp/yuga-u2-boot-recovery-window-r1"
+  ],
+  "source_sha256": {
+    "scripts/launch_shell.gd": "fe91529269661435ef3b4490bb974a3d0fbfea99af971061f7f68962342e9e21",
+    "scripts/hero_ui_theme.gd": "39e43f426e65475fd134fd9bd9515d1505edc90b6969394017995b641693abc4",
+    "scripts/scene_transition.gd": "bdf539c988188cb35af443c2af0522013cdca832a480f925cbb2c48b7e5fc873",
+    "tools/ui-campaign/board.gd": "543abdd42226226fdf4f9a5e01a471b4b42282e6e161c86c0c38f77742996750",
+    "tools/ui-campaign/observer.gd": "b09bcf24b75e5f86bf705d1442f07e85d5e46f468c70b96cf6a395c3c5c63ce6",
+    "tools/ui-campaign/run.py": "c6d4d261517054ffb47b3a878df19d9241f1166066366134a7247a1aed734b08",
+    "tests/ui_campaign_flow_cases.gd": "4cc08e1019718131e70bd6c78922c7117faf98b1f6d62da12f0f2f351c577f81",
+    "scripts/boot.gd": "14446f76ddb4ee8d5b394af50213c3d1ff9ef9ea5715c78216df48890d03e821",
+    "scenes/boot.tscn": "36307974fa48fc6a47855c6eb43e4524534d4c97560c548cc6ba51d537838026",
+    "assets/fonts/NotoSans-Regular.ttf": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+    "assets/fonts/NotoSans-Regular.ttf.import": "7ddb7fe1898a55896f6790224f4f00070a4b99d83c0ba9b0bb02d6ba74e342cd",
+    "assets/fonts/NotoSansSymbols2-Regular.ttf": "876598db5f1e3bef2bc77c4d94c5b0d5d2c1620be4878a06f18fb5434e331688",
+    "assets/fonts/NotoSansSymbols2-Regular.ttf.import": "2c5bdf7ec0a5f03cea0681eb34c0768f7af055f4042be5e3fd0e8cab52b82be1",
+    "assets/fonts/NotoSansSymbols-Regular.ttf.import": "e102fdfea7c82e211ed1c7820b1c6f995ec4069fc4decbb8659e27aa98283f7b",
+    "assets/fonts/NotoSerif-Regular.ttf": "9d7583b7dc9e812afd32a14280c5cac3160012efe50c8d08938f4fea266ff67f",
+    "assets/fonts/NotoSansSymbols-Regular.ttf": "24b615ceb7d50a2c09060664ca9e24a160c9beb6bfca0563e8359369a4bc0993",
+    "assets/fonts/NotoSerif-Regular.ttf.import": "d2b38a67ee6a5962bd073b551085f1f4c29d1af64474e90450f56f33b5e96a5b",
+    ".godot/imported/NotoSansSymbols2-Regular.ttf-7788f1b789d60481fa956b02b4581693.fontdata": "2ec5ae7ec0020f3d1d3181d321174c5f82d9e83b93455ad785973cc615caeb9b",
+    ".godot/imported/NotoSerif-Regular.ttf-6e3f67e84ff840e5e437d5cce0416d65.md5": "dc7a1c0584ee966f5a440f4a68a58285575ff450609f22b3a02ed2706f08fbc8",
+    ".godot/imported/NotoSans-Regular.ttf-674bcff8e78e1ac2b0101362155b4faa.md5": "6471f2b105ce3461fcc42c475867cbffb768c24f6f2cd8774de703f81b1c1a3c",
+    ".godot/imported/NotoSansSymbols-Regular.ttf-7ee3050129f981bdb85e2c00dcf059bf.md5": "494c1f8f3bc161d86eef2e0c2bed9a7e6057838565f14250d1b047eda9bea445",
+    ".godot/imported/NotoSansSymbols2-Regular.ttf-7788f1b789d60481fa956b02b4581693.md5": "937d5ef785cc11ecbad7fa3c4aa6c9fa6fe56883397b12c76310da6a2fc58981",
+    ".godot/imported/NotoSans-Regular.ttf-674bcff8e78e1ac2b0101362155b4faa.fontdata": "1e6192539e600859edca6a02304d085f9fa2c432a1bf272e67c2d1dc8ca9fda6",
+    ".godot/imported/NotoSerif-Regular.ttf-6e3f67e84ff840e5e437d5cce0416d65.fontdata": "a2b62772d5dfe5765b9d5d99768652c915494966b950563a8bdeb224a4ad0e55",
+    ".godot/imported/NotoSansSymbols-Regular.ttf-7ee3050129f981bdb85e2c00dcf059bf.fontdata": "3bf4f09edfa3fa2db10a8f63ad2833a3c3dbb16b345545252f7f643b662eaa10"
+  },
+  "plan": [
+    {
+      "expect": {
+        "scene_path": "res://scenes/boot.tscn",
+        "transition.phase": "error"
+      },
+      "capture": "01-initial-missing-scene"
+    },
+    {
+      "key": "Return",
+      "expect": {
+        "transition.phase": "error",
+        "transition.attempt": 2
+      },
+      "capture": "02-keyboard-retry"
+    },
+    {
+      "key": "Escape",
+      "expect": {
+        "transition.phase": "cancelled",
+        "transition.visible": false
+      },
+      "capture": "03-usable-boot-recovery"
+    },
+    {
+      "click_text": "Retry opening YUGA",
+      "expect": {
+        "transition.phase": "error"
+      },
+      "capture": "04-reopen-error"
+    },
+    {
+      "key": "Escape",
+      "expect": {
+        "transition.phase": "cancelled",
+        "transition.visible": false
+      },
+      "capture": "05-back-to-quit"
+    },
+    {
+      "click_text": "Quit",
+      "expect_exit": 0
+    }
+  ],
+  "plan_sha256": "cac596c4baab7f09e7da16773ed8836feab3cff2caf25a599aa9b145ed3b7436",
+  "events": [
+    {
+      "key": "Return",
+      "expect": {
+        "transition.phase": "error",
+        "transition.attempt": 2
+      },
+      "capture": "02-keyboard-retry",
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              340.0,
+              379.0,
+              280.0,
+              60.0
+            ],
+            "interactive": false,
+            "name": "@Button@9",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+            "rect": [
+              340.0,
+              379.0,
+              280.0,
+              60.0
+            ],
+            "text": "Open YUGA"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              340.0,
+              459.0,
+              280.0,
+              60.0
+            ],
+            "interactive": false,
+            "name": "@Button@10",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+            "rect": [
+              340.0,
+              459.0,
+              280.0,
+              60.0
+            ],
+            "text": "Quit"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              331.0,
+              426.0,
+              82.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@21",
+            "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+            "rect": [
+              331.0,
+              426.0,
+              82.0,
+              60.0
+            ],
+            "text": "Retry"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              425.0,
+              426.0,
+              78.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@22",
+            "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+            "rect": [
+              425.0,
+              426.0,
+              78.0,
+              60.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+        "focus_text": "Retry",
+        "frame": 9,
+        "mode": "boot_recovery",
+        "mouse_mode": 0,
+        "panels": {
+          "SceneTransition": true
+        },
+        "paused": false,
+        "scene": "YugaBoot",
+        "scene_path": "res://scenes/boot.tscn",
+        "size": [
+          960,
+          600
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 1,
+          "busy": false,
+          "committing": false,
+          "destination": "courtyard",
+          "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+          "phase": "error",
+          "resource_progress": -1.0,
+          "visible": true
+        },
+        "window_focused": true
+      },
+      "time_unix": 1792280184.2193637
+    },
+    {
+      "key": "Escape",
+      "expect": {
+        "transition.phase": "cancelled",
+        "transition.visible": false
+      },
+      "capture": "03-usable-boot-recovery",
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              340.0,
+              379.0,
+              280.0,
+              60.0
+            ],
+            "interactive": false,
+            "name": "@Button@9",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+            "rect": [
+              340.0,
+              379.0,
+              280.0,
+              60.0
+            ],
+            "text": "Open YUGA"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              340.0,
+              459.0,
+              280.0,
+              60.0
+            ],
+            "interactive": false,
+            "name": "@Button@10",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+            "rect": [
+              340.0,
+              459.0,
+              280.0,
+              60.0
+            ],
+            "text": "Quit"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              331.0,
+              426.0,
+              82.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@21",
+            "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+            "rect": [
+              331.0,
+              426.0,
+              82.0,
+              60.0
+            ],
+            "text": "Retry"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              425.0,
+              426.0,
+              78.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@22",
+            "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+            "rect": [
+              425.0,
+              426.0,
+              78.0,
+              60.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+        "focus_text": "Retry",
+        "frame": 19,
+        "mode": "boot_recovery",
+        "mouse_mode": 0,
+        "panels": {
+          "SceneTransition": true
+        },
+        "paused": false,
+        "scene": "YugaBoot",
+        "scene_path": "res://scenes/boot.tscn",
+        "size": [
+          960,
+          600
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 2,
+          "busy": false,
+          "committing": false,
+          "destination": "courtyard",
+          "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+          "phase": "error",
+          "resource_progress": -1.0,
+          "visible": true
+        },
+        "window_focused": true
+      },
+      "time_unix": 1792280184.7239065
+    },
+    {
+      "click_text": "Retry opening YUGA",
+      "expect": {
+        "transition.phase": "error"
+      },
+      "capture": "04-reopen-error",
+      "point": [
+        480.0,
+        416.0
+      ],
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              340.0,
+              386.0,
+              280.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@9",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+            "rect": [
+              340.0,
+              386.0,
+              280.0,
+              60.0
+            ],
+            "text": "Retry opening YUGA"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              340.0,
+              466.0,
+              280.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@10",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+            "rect": [
+              340.0,
+              466.0,
+              280.0,
+              60.0
+            ],
+            "text": "Quit"
+          }
+        ],
+        "focus": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+        "focus_text": "Retry opening YUGA",
+        "frame": 29,
+        "mode": "boot_recovery",
+        "mouse_mode": 0,
+        "panels": {
+          "SceneTransition": false
+        },
+        "paused": false,
+        "scene": "YugaBoot",
+        "scene_path": "res://scenes/boot.tscn",
+        "size": [
+          960,
+          600
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 3,
+          "busy": false,
+          "committing": false,
+          "destination": "courtyard",
+          "message": "Returned to the previous screen.",
+          "phase": "cancelled",
+          "resource_progress": -1.0,
+          "visible": false
+        },
+        "window_focused": true
+      },
+      "time_unix": 1792280185.2282174
+    },
+    {
+      "key": "Escape",
+      "expect": {
+        "transition.phase": "cancelled",
+        "transition.visible": false
+      },
+      "capture": "05-back-to-quit",
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              340.0,
+              379.0,
+              280.0,
+              60.0
+            ],
+            "interactive": false,
+            "name": "@Button@9",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+            "rect": [
+              340.0,
+              379.0,
+              280.0,
+              60.0
+            ],
+            "text": "Retry opening YUGA"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              340.0,
+              459.0,
+              280.0,
+              60.0
+            ],
+            "interactive": false,
+            "name": "@Button@10",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+            "rect": [
+              340.0,
+              459.0,
+              280.0,
+              60.0
+            ],
+            "text": "Quit"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              331.0,
+              426.0,
+              82.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@21",
+            "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+            "rect": [
+              331.0,
+              426.0,
+              82.0,
+              60.0
+            ],
+            "text": "Retry"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              425.0,
+              426.0,
+              78.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@22",
+            "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+            "rect": [
+              425.0,
+              426.0,
+              78.0,
+              60.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+        "focus_text": "Retry",
+        "frame": 39,
+        "mode": "boot_recovery",
+        "mouse_mode": 0,
+        "panels": {
+          "SceneTransition": true
+        },
+        "paused": false,
+        "scene": "YugaBoot",
+        "scene_path": "res://scenes/boot.tscn",
+        "size": [
+          960,
+          600
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 4,
+          "busy": false,
+          "committing": false,
+          "destination": "courtyard",
+          "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+          "phase": "error",
+          "resource_progress": -1.0,
+          "visible": true
+        },
+        "window_focused": true
+      },
+      "time_unix": 1792280185.730655
+    },
+    {
+      "click_text": "Quit",
+      "expect_exit": 0,
+      "point": [
+        480.0,
+        496.0
+      ],
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              340.0,
+              386.0,
+              280.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@9",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+            "rect": [
+              340.0,
+              386.0,
+              280.0,
+              60.0
+            ],
+            "text": "Retry opening YUGA"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              340.0,
+              466.0,
+              280.0,
+              60.0
+            ],
+            "interactive": true,
+            "name": "@Button@10",
+            "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+            "rect": [
+              340.0,
+              466.0,
+              280.0,
+              60.0
+            ],
+            "text": "Quit"
+          }
+        ],
+        "focus": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+        "focus_text": "Retry opening YUGA",
+        "frame": 49,
+        "mode": "boot_recovery",
+        "mouse_mode": 0,
+        "panels": {
+          "SceneTransition": false
+        },
+        "paused": false,
+        "scene": "YugaBoot",
+        "scene_path": "res://scenes/boot.tscn",
+        "size": [
+          960,
+          600
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 5,
+          "busy": false,
+          "committing": false,
+          "destination": "courtyard",
+          "message": "Returned to the previous screen.",
+          "phase": "cancelled",
+          "resource_progress": -1.0,
+          "visible": false
+        },
+        "window_focused": true
+      },
+      "time_unix": 1792280186.233408
+    }
+  ],
+  "shots": [
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@9",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+          "rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "text": "Open YUGA"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@10",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+          "rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            331.0,
+            426.0,
+            82.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@21",
+          "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+          "rect": [
+            331.0,
+            426.0,
+            82.0,
+            60.0
+          ],
+          "text": "Retry"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            425.0,
+            426.0,
+            78.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@22",
+          "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+          "rect": [
+            425.0,
+            426.0,
+            78.0,
+            60.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "01-initial-missing-scene.png",
+      "focus": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+      "focus_text": "Retry",
+      "frame": 7,
+      "mode": "boot_recovery",
+      "mouse_mode": 0,
+      "panels": {
+        "SceneTransition": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "YugaBoot",
+      "scene_path": "res://scenes/boot.tscn",
+      "sha256": "bb34e7c1df746150782ec92d3fd74dee6bd8265044de98c9fb7f176f9c38ca89",
+      "size": [
+        960,
+        600
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 1,
+        "busy": false,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+        "phase": "error",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@9",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+          "rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "text": "Open YUGA"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@10",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+          "rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            331.0,
+            426.0,
+            82.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@21",
+          "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+          "rect": [
+            331.0,
+            426.0,
+            82.0,
+            60.0
+          ],
+          "text": "Retry"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            425.0,
+            426.0,
+            78.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@22",
+          "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+          "rect": [
+            425.0,
+            426.0,
+            78.0,
+            60.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "02-keyboard-retry.png",
+      "focus": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+      "focus_text": "Retry",
+      "frame": 17,
+      "mode": "boot_recovery",
+      "mouse_mode": 0,
+      "panels": {
+        "SceneTransition": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "YugaBoot",
+      "scene_path": "res://scenes/boot.tscn",
+      "sha256": "bb34e7c1df746150782ec92d3fd74dee6bd8265044de98c9fb7f176f9c38ca89",
+      "size": [
+        960,
+        600
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 2,
+        "busy": false,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+        "phase": "error",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            340.0,
+            386.0,
+            280.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@9",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+          "rect": [
+            340.0,
+            386.0,
+            280.0,
+            60.0
+          ],
+          "text": "Retry opening YUGA"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            466.0,
+            280.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@10",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+          "rect": [
+            340.0,
+            466.0,
+            280.0,
+            60.0
+          ],
+          "text": "Quit"
+        }
+      ],
+      "file": "03-usable-boot-recovery.png",
+      "focus": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+      "focus_text": "Retry opening YUGA",
+      "frame": 27,
+      "mode": "boot_recovery",
+      "mouse_mode": 0,
+      "panels": {
+        "SceneTransition": false
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "YugaBoot",
+      "scene_path": "res://scenes/boot.tscn",
+      "sha256": "18761c361216559b2f7ffe1695fb7df4ab8e3d485ab4bc145d4648b985e1ef49",
+      "size": [
+        960,
+        600
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 3,
+        "busy": false,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "Returned to the previous screen.",
+        "phase": "cancelled",
+        "resource_progress": -1.0,
+        "visible": false
+      },
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@9",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+          "rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "text": "Retry opening YUGA"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@10",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+          "rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            331.0,
+            426.0,
+            82.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@21",
+          "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+          "rect": [
+            331.0,
+            426.0,
+            82.0,
+            60.0
+          ],
+          "text": "Retry"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            425.0,
+            426.0,
+            78.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@22",
+          "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+          "rect": [
+            425.0,
+            426.0,
+            78.0,
+            60.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "04-reopen-error.png",
+      "focus": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@21",
+      "focus_text": "Retry",
+      "frame": 37,
+      "mode": "boot_recovery",
+      "mouse_mode": 0,
+      "panels": {
+        "SceneTransition": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "YugaBoot",
+      "scene_path": "res://scenes/boot.tscn",
+      "sha256": "bb34e7c1df746150782ec92d3fd74dee6bd8265044de98c9fb7f176f9c38ca89",
+      "size": [
+        960,
+        600
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 4,
+        "busy": false,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+        "phase": "error",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            340.0,
+            386.0,
+            280.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@9",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+          "rect": [
+            340.0,
+            386.0,
+            280.0,
+            60.0
+          ],
+          "text": "Retry opening YUGA"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            466.0,
+            280.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@10",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+          "rect": [
+            340.0,
+            466.0,
+            280.0,
+            60.0
+          ],
+          "text": "Quit"
+        }
+      ],
+      "file": "05-back-to-quit.png",
+      "focus": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+      "focus_text": "Retry opening YUGA",
+      "frame": 47,
+      "mode": "boot_recovery",
+      "mouse_mode": 0,
+      "panels": {
+        "SceneTransition": false
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "YugaBoot",
+      "scene_path": "res://scenes/boot.tscn",
+      "sha256": "10de98477478a79c8bd0c3e4ef50bc49c3e082d1d34b022d1d1f7d90158f8e0d",
+      "size": [
+        960,
+        600
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 5,
+        "busy": false,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "Returned to the previous screen.",
+        "phase": "cancelled",
+        "resource_progress": -1.0,
+        "visible": false
+      },
+      "window_focused": true
+    }
+  ],
+  "started_unix": 1792280181.7994063,
+  "renderer_requested": "gl_compatibility",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "verified_exit_code": 0,
+  "automatic_shots": [
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@9",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+          "rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "text": "Open YUGA"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@10",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+          "rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            340.0,
+            421.0,
+            78.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@22",
+          "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+          "rect": [
+            340.0,
+            421.0,
+            78.0,
+            60.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "auto-queued-1.png",
+      "focus": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+      "focus_text": "Back",
+      "frame": 1,
+      "mode": "boot_recovery",
+      "mouse_mode": 0,
+      "panels": {
+        "SceneTransition": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "YugaBoot",
+      "scene_path": "res://scenes/boot.tscn",
+      "sha256": "aa015d0d44cada3a5523a77de063e42640cf86c194422206444aa798ee121431",
+      "size": [
+        960,
+        600
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 1,
+        "busy": true,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "Preparing to load\u2026",
+        "phase": "queued",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@9",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+          "rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "text": "Open YUGA"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@10",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+          "rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            340.0,
+            421.0,
+            78.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@22",
+          "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+          "rect": [
+            340.0,
+            421.0,
+            78.0,
+            60.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "auto-queued-2.png",
+      "focus": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+      "focus_text": "Back",
+      "frame": 13,
+      "mode": "boot_recovery",
+      "mouse_mode": 0,
+      "panels": {
+        "SceneTransition": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "YugaBoot",
+      "scene_path": "res://scenes/boot.tscn",
+      "sha256": "aa015d0d44cada3a5523a77de063e42640cf86c194422206444aa798ee121431",
+      "size": [
+        960,
+        600
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 2,
+        "busy": true,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "Preparing to load\u2026",
+        "phase": "queued",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@9",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@9",
+          "rect": [
+            340.0,
+            379.0,
+            280.0,
+            60.0
+          ],
+          "text": "Retry opening YUGA"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "interactive": false,
+          "name": "@Button@10",
+          "path": "/root/YugaBoot/@CenterContainer@3/@PanelContainer@4/@VBoxContainer@5/@Button@10",
+          "rect": [
+            340.0,
+            459.0,
+            280.0,
+            60.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            340.0,
+            421.0,
+            78.0,
+            60.0
+          ],
+          "interactive": true,
+          "name": "@Button@22",
+          "path": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+          "rect": [
+            340.0,
+            421.0,
+            78.0,
+            60.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "auto-queued-4.png",
+      "focus": "/root/YugaSceneTransitionLayer/SceneTransition/@MarginContainer@12/@CenterContainer@13/@PanelContainer@14/@VBoxContainer@15/@HBoxContainer@20/@Button@22",
+      "focus_text": "Back",
+      "frame": 33,
+      "mode": "boot_recovery",
+      "mouse_mode": 0,
+      "panels": {
+        "SceneTransition": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "YugaBoot",
+      "scene_path": "res://scenes/boot.tscn",
+      "sha256": "aa015d0d44cada3a5523a77de063e42640cf86c194422206444aa798ee121431",
+      "size": [
+        960,
+        600
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 4,
+        "busy": true,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "Preparing to load\u2026",
+        "phase": "queued",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "window_focused": true
+    }
+  ],
+  "source_unchanged": true,
+  "finished_unix": 1792280186.3472886,
+  "cleanup_exit": 0,
+  "logs": {
+    "godot.log": "bdfa903d98f110a11c6f7d360a2a849d050430b277f217ff4cd523c87dbafe5b",
+    "xvfb.log": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+  }
+}

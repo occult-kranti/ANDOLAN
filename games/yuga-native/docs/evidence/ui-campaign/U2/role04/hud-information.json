@@ -1,0 +1,89 @@
+{
+	"checks": [
+		{
+			"details": {
+				"failures": [],
+				"health_contrast": 16.0547817251242,
+				"hud_rect": "[P: (180.0, 479.0), S: (600.0, 103.0)]",
+				"notice_cases": 5,
+				"status_contrast": 16.0547817251242
+			},
+			"name": "Critical information retains readable backing and stable bounds (960, 600)",
+			"passed": true
+		},
+		{
+			"details": {
+				"failures": [],
+				"health_contrast": 16.0547817251242,
+				"hud_rect": "[P: (340.0, 599.0), S: (600.0, 103.0)]",
+				"notice_cases": 5,
+				"status_contrast": 16.0547817251242
+			},
+			"name": "Critical information retains readable backing and stable bounds (1280, 720)",
+			"passed": true
+		},
+		{
+			"details": {
+				"failures": [],
+				"health_contrast": 16.0547817251242,
+				"hud_rect": "[P: (660.0, 959.0), S: (600.0, 103.0)]",
+				"notice_cases": 5,
+				"status_contrast": 16.0547817251242
+			},
+			"name": "Critical information retains readable backing and stable bounds (1920, 1080)",
+			"passed": true
+		},
+		{
+			"details": {
+				"army_time": 0.15,
+				"kit_time": 0.15,
+				"nodes_after": 19,
+				"nodes_before": 19,
+				"updates": 180,
+				"vitals_time": 0.15
+			},
+			"name": "Repeated presentation updates neither grow nodes nor advance authority",
+			"passed": true
+		},
+		{
+			"details": {
+				"health": "1 / 300",
+				"notice": "Hit · 1 health"
+			},
+			"name": "Actual low health is visible on the first presentation update",
+			"passed": true
+		},
+		{
+			"details": {
+				"health": "0 / 300",
+				"notice": "RETURNING IN 3.0s"
+			},
+			"name": "Actual defeat replaces an ordinary notice immediately",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Reset restores maximum health and clears defeat copy",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Tested source files remain unchanged during the fixture",
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Headless real-world layout and runtime vitals, synthetic long/empty status text, computed shared-surface text contrast. No rendered pixels, OS input, localization or arbitrary narrow-window claim.",
+	"sources": {
+		"res://scripts/confluence_world.gd": "42a6ec8df335e3fd11674ef723eff8b027f636cbbc6d3a51f80eb256d63b802f",
+		"res://scripts/hero_ui_theme.gd": "4a8d1c96b15092f3f35770ef6b2df706608dcea5779db7707ea88567c3f4d756",
+		"res://scripts/rama_hero_hud.gd": "3f34c07e2098e637653463b36a84996bd7ea34e2ac1490ebb220f364bb9ccc7c",
+		"res://scripts/rama_hero_runtime.gd": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+		"res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+		"res://tests/ui_hud_information_cases.gd": "14c569794c59f36b42b5a62e1347c39cc63c23fbf4ede17bab541ab108570c2f"
+	}
+}

@@ -1,0 +1,83 @@
+{
+	"checks": [
+		{
+			"name": "Boot reaches native courtyard",
+			"passed": true
+		},
+		{
+			"name": "Training defeat fixture uses actual receiver",
+			"passed": true
+		},
+		{
+			"name": "Training reset restores hero without stale loader",
+			"passed": false
+		},
+		{
+			"name": "Repeated cancel restores title 1",
+			"passed": true
+		},
+		{
+			"name": "Repeated cancel restores title 2",
+			"passed": true
+		},
+		{
+			"name": "Repeated cancel restores title 3",
+			"passed": true
+		},
+		{
+			"name": "World loads after cancelled attempts",
+			"passed": true
+		},
+		{
+			"name": "World defeat deactivates gameplay",
+			"passed": true
+		},
+		{
+			"name": "Cancelled return preserves paused defeat and simulation time",
+			"passed": true
+		},
+		{
+			"name": "World resumes and respawns on its actual timer",
+			"passed": true
+		},
+		{
+			"name": "Respawn restores player without overlay ownership",
+			"passed": true
+		},
+		{
+			"name": "World restart clears defeat without stale transition",
+			"passed": true
+		},
+		{
+			"name": "Disposing active loader restores explicit world and UI modes",
+			"passed": true
+		},
+		{
+			"name": "Disposed loader releases its root ownership",
+			"passed": true
+		},
+		{
+			"name": "Host recreates disposed loader without duplicate layer",
+			"passed": true
+		},
+		{
+			"name": "Recreated loader completes real return",
+			"passed": true
+		},
+		{
+			"name": "Final title owns usable input",
+			"passed": true
+		}
+	],
+	"failed": 1,
+	"passed": 16,
+	"scope": "Actual imported offline training/world, seeded legitimate damage receiver, normal respawn timer, native keyboard reset/pause, and active loader disposal; no rendered acceptance.",
+	"sources": {
+		"scripts/combat_film.gd": "2ec53730d0f86290e6ef230972b9f4635853f26f467b96c6de985ea9da1b2ac6",
+		"scripts/confluence_world.gd": "42a6ec8df335e3fd11674ef723eff8b027f636cbbc6d3a51f80eb256d63b802f",
+		"scripts/courtyard.gd": "a5429408e43b949758da68fa5c969012adb810059a4f55fe35d2f526ec794a02",
+		"scripts/scene_transition.gd": "bdf539c988188cb35af443c2af0522013cdca832a480f925cbb2c48b7e5fc873",
+		"tests/ui_transition_lifecycle_cases.gd": "d486b999d1df374ba00c34dd8f524d2120aeaaf6d447dbfa4b9a5801247c65d2"
+	},
+	"suite": "ui-transition-lifecycle"
+}

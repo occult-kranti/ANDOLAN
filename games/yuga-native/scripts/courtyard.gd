@@ -12,6 +12,8 @@ const MythicEnvironment = preload("res://scripts/mythic_environment.gd")
 const HeroDistrict = preload("res://scripts/hero_district_detail.gd")
 const HeroAtmosphere = preload("res://scripts/hero_atmosphere.gd")
 const HeroUITheme = preload("res://scripts/hero_ui_theme.gd")
+const LaunchShell = preload("res://scripts/launch_shell.gd")
+const SceneTransition = preload("res://scripts/scene_transition.gd")
 const RamaHeroPanel = preload("res://scripts/rama_hero_panel.gd")
 const RamaHeroHUD = preload("res://scripts/rama_hero_hud.gd")
 const RamaHeroRuntime = preload("res://scripts/rama_hero_runtime.gd")
@@ -91,6 +93,11 @@ var rama_runtime: Node
 var rama_hud: Control
 var practice_army: Node3D
 var hero_atmosphere := HeroAtmosphere.new()
+var scene_transition: Control
+var _transition_return_focus: WeakRef
+var _transition_world_process := Node.PROCESS_MODE_PAUSABLE
+var _transition_ui_process := Node.PROCESS_MODE_ALWAYS
+var _transition_isolating := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -354,48 +361,22 @@ func _create_ui() -> void:
 	feedback_label.add_theme_constant_override("outline_size", 4)
 	feedback_label.add_theme_color_override("font_outline_color", INK)
 	hud.add_child(feedback_label)
-	main_panel = _modal(root, "MainMenu", false)
-	var intro := _modal_content(main_panel)
-	intro.add_theme_constant_override("separation", 10)
-	title_wordmark = _label("YUGA", 76, CREAM)
-	title_wordmark.add_theme_font_override("font", HeroUITheme.display_font())
-	intro.add_child(title_wordmark)
-	intro.add_child(_label("RAMA", 28, GOLD))
-	intro.add_child(_wrapped("The solar archer", 18, MIST))
-	intro.add_child(_divider())
-	var explore_button := _button("Explore Confluence  →", enter_confluence)
-	explore_button.name = "ExploreConfluence"
-	HeroUITheme.button(explore_button, true)
-	explore_button.custom_minimum_size.y = 54
-	intro.add_child(explore_button)
-	var modes := HBoxContainer.new()
-	modes.name = "PracticeModes"
-	modes.add_theme_constant_override("separation", 10)
-	intro.add_child(modes)
-	start_button = _button("Bow training", start_training)
-	start_button.name = "BowTraining"
-	start_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	modes.add_child(start_button)
-	var film_button := _button("Watch duel", enter_combat_film)
-	film_button.name = "WatchConfluenceDuel"
-	film_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	modes.add_child(film_button)
-	hero_button = _button("Rama’s abilities", _open_hero)
-	hero_button.name = "RamaAbilities"
-	HeroUITheme.button(hero_button, false, true)
-	intro.add_child(hero_button)
-	var utilities := HBoxContainer.new()
-	utilities.name = "TitleUtilities"
-	utilities.add_theme_constant_override("separation", 8)
-	intro.add_child(utilities)
-	for entry in [{"text":"Help", "action":_open_help}, {"text":"Settings", "action":func(): _open_settings(true)}, {"text":"Quit", "action":_quit}]:
-		var action := _button(entry.text, entry.action)
-		action.name = entry.text
-		action.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		HeroUITheme.button(action, false, true)
-		utilities.add_child(action)
-	menu_hint = _wrapped("Local practice  ·  F2 help\nEsc releases the cursor",13,MIST)
-	intro.add_child(menu_hint)
+	main_panel = LaunchShell.new()
+	root.add_child(main_panel)
+	main_panel.world_requested.connect(enter_confluence)
+	main_panel.train_requested.connect(start_training)
+	main_panel.guide_requested.connect(_open_hero)
+	main_panel.film_requested.connect(enter_combat_film)
+	main_panel.help_requested.connect(_open_help)
+	main_panel.settings_requested.connect(func(): _open_settings(true))
+	main_panel.quit_requested.connect(_quit)
+	for action in main_panel._actions:
+		action.pressed.connect(func(): _sound("menu"))
+	# Retain public Control aliases used by native automation and scene callers.
+	start_button = main_panel.primary_button
+	hero_button = main_panel.guide_button
+	title_wordmark = main_panel.title_wordmark
+	menu_hint = main_panel.menu_hint
 	pause_panel = _modal(root, "PauseMenu", true)
 	var pause_content := _modal_content(pause_panel)
 	pause_content.add_child(_label("LANKA COURTYARD", 13, GOLD))
@@ -459,6 +440,7 @@ func _create_ui() -> void:
 	hero_panel = RamaHeroPanel.new()
 	rama_panel = hero_panel
 	root.add_child(hero_panel)
+	hero_panel.configure_effects(rama_effects)
 	hero_panel.closed.connect(_close_hero)
 	controls_overlay = ControlsOverlay.new()
 	root.add_child(controls_overlay)
@@ -467,7 +449,7 @@ func _create_ui() -> void:
 	hud.visible = false
 	pause_panel.visible = false
 	settings_panel.visible = false
-	explore_button.grab_focus()
+	main_panel.focus_primary()
 	_layout_interface()
 
 func _theme() -> Theme:
@@ -565,22 +547,68 @@ func _divider() -> HSeparator:
 	return HSeparator.new()
 
 func enter_confluence() -> void:
-	_release_gameplay_actions()
-	get_tree().paused = false
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	var error := get_tree().change_scene_to_file("res://scenes/confluence_world.tscn")
-	if error != OK:
-		push_error("Could not open Confluence: " + error_string(error))
+	_begin_scene_transition(&"confluence", main_panel.primary_button)
 
 func enter_combat_film() -> void:
+	_begin_scene_transition(&"combat_film", main_panel.film_button)
+
+func _ensure_scene_transition() -> Control:
+	if is_instance_valid(scene_transition): return scene_transition
+	var layer := get_tree().root.get_node_or_null("YugaSceneTransitionLayer") as CanvasLayer
+	if not layer:
+		layer = CanvasLayer.new()
+		layer.name = "YugaSceneTransitionLayer"
+		layer.layer = 100
+		layer.process_mode = Node.PROCESS_MODE_ALWAYS
+		get_tree().root.add_child(layer)
+	scene_transition = layer.get_node_or_null("SceneTransition") as Control
+	if not scene_transition:
+		scene_transition = SceneTransition.new()
+		scene_transition.name = "SceneTransition"
+		layer.add_child(scene_transition)
+	scene_transition.phase_changed.connect(_on_transition_phase)
+	scene_transition.cancelled.connect(_on_transition_cancelled)
+	return scene_transition
+
+func _transition_owns_navigation() -> bool:
+	return is_instance_valid(scene_transition) and scene_transition.visible
+
+func _begin_scene_transition(destination: StringName, opener: Control) -> bool:
+	var loader := _ensure_scene_transition()
+	if loader.is_busy() or loader.phase == &"error": return false
 	_release_gameplay_actions()
-	get_tree().paused = false
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	var error := get_tree().change_scene_to_file("res://scenes/combat_film.tscn")
-	if error != OK:
-		push_error("Could not open the Confluence duel: " + error_string(error))
+	_transition_return_focus = weakref(opener) if is_instance_valid(opener) else null
+	_transition_world_process = world.process_mode
+	_transition_ui_process = ui.process_mode
+	main_panel.set_launch_state("loading")
+	if not loader.begin(destination, self, opener):
+		main_panel.set_launch_state("error", "Another scene is opening. Return here and try again.")
+		main_panel.focus_primary()
+		return false
+	# These children intentionally have explicit process modes, so the caller's
+	# disabled mode alone does not isolate them during loading or recovery.
+	world.process_mode = Node.PROCESS_MODE_DISABLED
+	ui.process_mode = Node.PROCESS_MODE_DISABLED
+	_transition_isolating = true
+	return true
+
+func _on_transition_phase(phase: StringName, message: String, _progress: float) -> void:
+	if phase in [&"queued", &"loading", &"constructing", &"error"]:
+		# Recovery stays in the loader with its Retry/Back actions. Keep the title
+		# disabled behind it, including when the resource request has failed.
+		main_panel.set_launch_state("loading", message)
+
+func _on_transition_cancelled(_destination: StringName) -> void:
+	if _transition_isolating:
+		world.process_mode = _transition_world_process
+		ui.process_mode = _transition_ui_process
+		_transition_isolating = false
+	main_panel.set_launch_state("ready")
+	_restore_modal_opener(_transition_return_focus, main_panel, main_panel.primary_button)
+	_transition_return_focus = null
 
 func start_training() -> void:
+	if _transition_owns_navigation(): return
 	_release_gameplay_actions()
 	title_light.hide()
 	player.camera.make_current()
@@ -616,7 +644,7 @@ func set_paused(value: bool) -> void:
 		player.active = not rama_runtime or not rama_runtime.configured or rama_runtime.vitals.alive
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if value else Input.MOUSE_MODE_CAPTURED
 	if value:
-		resume_button.grab_focus()
+		_restore_modal_opener(null, pause_panel, resume_button)
 	else:
 		get_viewport().gui_release_focus()
 	print("YUGA_NATIVE_PAUSE ", value)
@@ -628,6 +656,9 @@ func reset_training() -> void:
 		practice_army.reset("courtyard reset")
 	else:
 		for target in targets: target.reset_target()
+	# Defeat disables the player; resetting vitals alone does not reactivate input.
+	# A paused reset and title reset must stay inactive until their owner resumes.
+	player.active = started and not get_tree().paused and (not is_instance_valid(rama_runtime) or not rama_runtime.configured or rama_runtime.vitals.alive)
 	for node in projectiles.get_children():
 		node.queue_free()
 	for node in effects.get_children():
@@ -641,6 +672,7 @@ func reset_training() -> void:
 	print("YUGA_NATIVE_RESET")
 
 func return_to_menu() -> void:
+	if _transition_owns_navigation(): return
 	get_tree().paused = false
 	player.active = false
 	started = false
@@ -655,9 +687,11 @@ func return_to_menu() -> void:
 	title_light.show()
 	title_camera.make_current()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	_modal_content(main_panel).get_node("ExploreConfluence").grab_focus()
+	main_panel.set_launch_state("ready")
+	main_panel.focus_primary()
 
 func _input(event: InputEvent) -> void:
+	if _transition_owns_navigation(): return
 	if event is InputEventKey and event.echo: return
 	if controls_overlay.visible: return
 	if hero_panel.visible: return
@@ -697,10 +731,16 @@ func _release_gameplay_actions() -> void:
 		player.cancel_traversal("interface")
 
 func _on_focus_lost() -> void:
+	if _transition_owns_navigation(): return
 	_release_gameplay_actions()
 	if controls_overlay and controls_overlay.visible:
 		controls_overlay.cancel_capture()
 		return
+	# Losing application focus must not turn a temporary guide into an
+	# implicit resume when it closes. Keep the current modal visible.
+	if started:
+		if hero_panel.visible and hero_panel_return == "training": hero_panel_return = "pause"
+		if help_panel.visible and help_return == "training": help_return = "pause"
 	if settings_panel.visible or help_panel.visible or hero_panel.visible: return
 	if started and not smoke_mode: set_paused(true)
 
@@ -733,12 +773,12 @@ func _open_hero() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	# The caller restores its owner first and validates the opener afterward.
 	# The shared panel must not then restore a disabled or reparented old control.
-	hero_panel.open("courtyard" if started else "confluence")
+	hero_panel.open("courtyard" if started or main_panel.selected_mode == "train" else "confluence")
 
 func _close_hero() -> void:
 	if hero_panel_return == "menu":
 		main_panel.show()
-		_restore_modal_opener(hero_return_focus, main_panel, _modal_content(main_panel).get_node("ExploreConfluence"))
+		_restore_modal_opener(hero_return_focus, main_panel, main_panel.primary_button)
 	else:
 		set_paused(hero_panel_return == "pause")
 		if hero_panel_return == "pause": _restore_modal_opener(hero_return_focus, pause_panel, resume_button)
@@ -765,7 +805,7 @@ func _close_help() -> void:
 	help_panel.hide()
 	if help_return == "menu":
 		main_panel.show()
-		_restore_modal_opener(help_return_focus, main_panel, _modal_content(main_panel).get_node("ExploreConfluence"))
+		_restore_modal_opener(help_return_focus, main_panel, main_panel.primary_button)
 	else:
 		set_paused(help_return == "pause")
 		if help_return == "pause": _restore_modal_opener(help_return_focus, pause_panel, resume_button)
@@ -779,10 +819,15 @@ func _remember_modal_opener(owner: Control) -> WeakRef:
 func _restore_modal_opener(previous_ref: WeakRef, owner: Control, fallback: Control) -> void:
 	var previous: Control = previous_ref.get_ref() if previous_ref else null
 	if is_instance_valid(previous) and owner.is_ancestor_of(previous) and previous.is_visible_in_tree() and previous.focus_mode == Control.FOCUS_ALL:
-		if not previous is BaseButton or not previous.disabled:
+		if (not previous is BaseButton or not previous.disabled) and (not previous is Slider or previous.editable):
 			previous.grab_focus()
 			return
-	fallback.grab_focus()
+	if is_instance_valid(fallback) and fallback.is_visible_in_tree() and fallback.focus_mode == Control.FOCUS_ALL and (not fallback is BaseButton or not fallback.disabled) and (not fallback is Slider or fallback.editable):
+		fallback.grab_focus()
+		return
+	var order: Array[Control] = []
+	_focusable_children(owner, order)
+	if not order.is_empty(): order[0].grab_focus()
 
 func _process(_delta: float) -> void:
 	var viewport := get_viewport().get_visible_rect().size
@@ -791,17 +836,13 @@ func _process(_delta: float) -> void:
 func _layout_interface() -> void:
 	var viewport := get_viewport().get_visible_rect().size
 	last_ui_size = viewport
-	for modal in [main_panel,pause_panel,settings_panel,help_panel]:
+	# The launch shell owns its responsive column and wordmark sizing.
+	for modal in [pause_panel,settings_panel,help_panel]:
 		if not modal: continue
 		var panel: Control = modal.get_node("Card")
 		panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
-		if modal == main_panel:
-			panel.size = Vector2(minf(420, viewport.x * .44), minf(540, viewport.y - 48))
-			panel.position = Vector2(maxf(32, viewport.x * .055), (viewport.y - panel.size.y) * .5)
-			title_wordmark.add_theme_font_size_override("font_size", 76 if viewport.y >= 650 else 66)
-		else:
-			panel.size = Vector2(minf(560, viewport.x - 48), minf(620, viewport.y - 48))
-			panel.position = (viewport - panel.size) * .5
+		panel.size = Vector2(minf(560, viewport.x - 48), minf(620, viewport.y - 48))
+		panel.position = (viewport - panel.size) * .5
 
 func _trap_modal_focus(event: InputEvent) -> bool:
 	if not event is InputEventKey or not event.pressed or event.keycode != KEY_TAB: return false
@@ -820,6 +861,8 @@ func _trap_modal_focus(event: InputEvent) -> bool:
 func _focusable_children(node: Node, result: Array[Control]) -> void:
 	for child in node.get_children():
 		if (child is BaseButton or child is Slider) and child.is_visible_in_tree() and child.focus_mode == Control.FOCUS_ALL:
+			if child is BaseButton and child.disabled: continue
+			if child is Slider and not child.editable: continue
 			result.append(child)
 		_focusable_children(child, result)
 
@@ -852,7 +895,7 @@ func _close_settings() -> void:
 	settings_panel.visible = false
 	if settings_from_menu:
 		main_panel.visible = true
-		_restore_modal_opener(settings_return_focus, main_panel, _modal_content(main_panel).get_node("ExploreConfluence"))
+		_restore_modal_opener(settings_return_focus, main_panel, main_panel.primary_button)
 	else:
 		pause_panel.visible = true
 		_restore_modal_opener(settings_return_focus, pause_panel, resume_button)

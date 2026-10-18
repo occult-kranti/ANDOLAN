@@ -654,7 +654,7 @@
     {
       "id": "U2",
       "title": "Wire the complete launch and navigation path",
-      "status": "in_progress",
+      "status": "completed_rendered_review_followups_in_U3",
       "depends_on": [
         "U1"
       ],
@@ -706,8 +706,13 @@
           "role": "Combat HUD and map information",
           "task": "Connect match/training status to launch and pause information without fabricated online availability.",
           "agent": "ui_02_system",
-          "status": "in_progress",
-          "artifacts": [],
+          "status": "completed_headless_pending_integrated_pixels",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U2/role04/REVIEW.md",
+              "sha256": "38ea0a90cda250e9e28fe83c0086452a17a05373ab47f269a5f1de16e7551fc9"
+            }
+          ],
           "review_disposition": null
         },
         {
@@ -715,8 +720,13 @@
           "role": "Settings, guide and controls",
           "task": "Integrate settings/help/guide navigation, nested Escape behavior and saved binding labels.",
           "agent": "ui_02_system",
-          "status": "in_progress",
-          "artifacts": [],
+          "status": "completed_headless_pending_integrated_pixels",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U2/role05/REVIEW.md",
+              "sha256": "4d3cc7e2150af43debf434295fb32d8a705dedacb10b308232860f810fedec69"
+            }
+          ],
           "review_disposition": null
         },
         {
@@ -724,16 +734,22 @@
           "role": "Independent UI verification and packaging",
           "task": "Exercise start/world/return/settings paths through actual input at representative native sizes.",
           "agent": "ui_03_loading",
-          "status": "in_progress",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U2/role06/REVIEW.md",
+              "sha256": "cc376deb39c23b3f85a40da97c9cc4ceea1bb3180811ad6d4345c725f5d045ee"
+            }
+          ],
+          "review_disposition": "Actual integrated input/render review complete with explicit follow-up defect; no art or hardware performance acceptance."
         }
-      ]
+      ],
+      "review": "All13 native input frames plus9 actual loading frames and5 recovery originals reviewed; pause heading clipping assigned and repaired in U3, with final rendered correction pending U5. Source-bound U2 evidence remains historical."
     },
     {
       "id": "U3",
       "title": "Combat, map and outcomes",
-      "status": "pending",
+      "status": "completed_implementation_integrated_render_gate_open",
       "depends_on": [
         "U2"
       ],
@@ -742,62 +758,96 @@
           "id": "U3-01",
           "role": "Launch and navigation",
           "task": "Implement coherent pause and return-to-title action hierarchy for both playable modes.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "r4_05_motion",
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-rounds/round3/worker01/REVIEW.md",
+              "sha256": "44e4dd2084f0e160c7f48367fc5f6e79166d2b2bf3c609c8acb060451b0e207a"
+            }
+          ],
+          "review_disposition": "Implemented and reviewed bounded native checks; actual guide pixels reviewed by06; combined map/outcome rendered gate remains U5."
         },
         {
           "id": "U3-02",
           "role": "Shared visual system",
           "task": "Unify HUD, map legend and outcome surfaces while retaining warning priority and readable scale.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "r4_05_motion",
+          "status": "completed_headless_pending_integrated_pixels",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-rounds/round3/worker02/REVIEW.md",
+              "sha256": "951fe620d2ac6f3414b22db61e936b5a785f77a3607ce6bc72600114a00391b5"
+            }
+          ],
+          "review_disposition": "Bounded source/native checks complete; integrated current-source rendered review remains open."
         },
         {
           "id": "U3-03",
           "role": "Loading and recovery",
           "task": "Handle restart/defeat/scene disposal without stale loading overlays or stuck input.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "ui_03_loading",
+          "status": "completed_headless_pending_integrated_pixels",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U3/role03/REVIEW.md",
+              "sha256": "9b49987749628765ef5c6ec7706c884ef83aacbeebffacce660e26ee246c949d"
+            }
+          ],
+          "review_disposition": "Bounded source/native checks complete; integrated current-source rendered review remains open."
         },
         {
           "id": "U3-04",
           "role": "Combat HUD and map information",
           "task": "Improve real map/army/goal/status and outcome presentation; preserve authoritative timers and outcomes.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "ui_02_system",
+          "status": "completed_headless_pending_integrated_pixels",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U3/role04/REVIEW.md",
+              "sha256": "9056603d0ebb3a66061ac9146ae114aab558caa23150cbbdafe4479d49fca864"
+            }
+          ],
+          "review_disposition": "Bounded source/native checks complete; integrated current-source rendered review remains open."
         },
         {
           "id": "U3-05",
           "role": "Settings, guide and controls",
           "task": "Organize hero guide, key bindings and sound/display controls around current real capabilities.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "ui_02_system",
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U3/role05/REVIEW.md",
+              "sha256": "ad06909e8bd439bdb1bc7a53c4386369f14f6cb03e1a47a6b131554efcebb1c2"
+            }
+          ],
+          "review_disposition": "Implemented and reviewed bounded native checks; actual guide pixels reviewed by06; combined map/outcome rendered gate remains U5."
         },
         {
           "id": "U3-06",
           "role": "Independent UI verification and packaging",
           "task": "Verify keyboard paths, long labels, live values, pause and result states in actual engine.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "ui_06_acceptance",
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U3/role06/REVIEW.md",
+              "sha256": "8743fbad5988e17ee774405d113940246079ae0bb54b28ad34dbeec3dee523e6"
+            }
+          ],
+          "review_disposition": "Implemented and reviewed bounded native checks; actual guide pixels reviewed by06; combined map/outcome rendered gate remains U5."
         }
-      ]
+      ],
+      "integration_review": {
+        "path": "docs/evidence/ui-campaign/U3/integration/REVIEW.json",
+        "sha256": "d9672a35069a93644341d47afc1501b2160efebc830fc2ebe8c1e229584798e3"
+      }
     },
     {
       "id": "U4",
       "title": "Edge cases and adaptation",
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "U3"
       ],
@@ -806,8 +856,8 @@
           "id": "U4-01",
           "role": "Launch and navigation",
           "task": "Repair observed layout/focus errors across narrow and large native windows and UI scaling.",
-          "agent": null,
-          "status": "pending",
+          "agent": "r4_05_motion",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         },
@@ -815,8 +865,8 @@
           "id": "U4-02",
           "role": "Shared visual system",
           "task": "Validate contrast and focus across backgrounds; repair disabled/hover/pressed/selected inconsistencies.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_06_acceptance",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         },
@@ -824,8 +874,8 @@
           "id": "U4-03",
           "role": "Loading and recovery",
           "task": "Stress rapid transitions, invalid paths and recoverable load failures with preserved user state.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_03_loading",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         },
@@ -833,8 +883,8 @@
           "id": "U4-04",
           "role": "Combat HUD and map information",
           "task": "Stress dense warnings, long goal text, zero/max values, defeat/respawn and resized HUD.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_02_system",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         },
@@ -842,8 +892,8 @@
           "id": "U4-05",
           "role": "Settings, guide and controls",
           "task": "Test remap conflicts, cancelled capture, settings reset/save failures and reduced effects options.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_02_system",
+          "status": "assigned",
           "artifacts": [],
           "review_disposition": null
         },
@@ -851,8 +901,8 @@
           "id": "U4-06",
           "role": "Independent UI verification and packaging",
           "task": "Independently test resize/input/focus/error counterexamples and report exact uncovered limits.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_06_acceptance",
+          "status": "assigned",
           "artifacts": [],
           "review_disposition": null
         }
@@ -1116,8 +1166,11 @@
     }
   ],
   "repeated_request_note": "The repeated five-plus-three request refers to this same 48-assignment track and does not create duplicate rounds.",
-  "completed_screen_rounds": 1,
+  "completed_screen_rounds": 2,
   "completed_integration_rounds": 0,
-  "remaining_screen_rounds": 4,
-  "remaining_integration_rounds": 3
+  "remaining_screen_rounds": 3,
+  "remaining_integration_rounds": 3,
+  "implemented_screen_rounds_with_open_render_gates": [
+    "U3"
+  ]
 }

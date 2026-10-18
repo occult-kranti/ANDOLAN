@@ -1,0 +1,296 @@
+{
+  "adversaries": [
+    {
+      "actual": 0.0,
+      "classification": "inherited owner teardown counterexample; no runtime fix in this review",
+      "expected": 0.5,
+      "name": "external culling-margin edit survives secondary teardown",
+      "passed": false
+    }
+  ],
+  "candidate_sha256": "bdd917daa88254bdf203fd0bb92c7fb1167fda05a3c223dea4c9f3a3bc0453d1",
+  "checks": [
+    {
+      "detail": {
+        "configured": true,
+        "errors": [],
+        "ignored_candidate_faces": 2,
+        "last_reason": "ready",
+        "level": 0,
+        "levels": 3,
+        "live_bones": 164,
+        "live_rigs": 1,
+        "mode": "lod_ready",
+        "owned_mesh_instances": 4,
+        "owned_skins": 2,
+        "paths": [
+          "res://assets/heroes/rama-hero-mid.glb",
+          "res://assets/heroes/rama-hero-far.glb"
+        ],
+        "scope": "One existing rig; body/bow visibility only; source face/morph writer remains unique; actual posed LOD acceptance and GPU profiling are separate.",
+        "switches": 0,
+        "visible_levels": [
+          0
+        ]
+      },
+      "name": "actual groom candidate has three levels and one existing rig",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "surface calibration binds",
+      "passed": true
+    },
+    {
+      "detail": {
+        "anchored_vertices": {
+          "cloth": 163363,
+          "hair": 16182
+        },
+        "bindings": 15,
+        "cloth_limit_m": 0.075,
+        "cloth_offset": "(0.0, 0.0, 0.0)",
+        "cloth_velocity": "(0.0, 0.0, 0.0)",
+        "configured": true,
+        "elapsed": 0.0,
+        "finite": true,
+        "hair_limit_m": 0.018,
+        "hair_offset": "(0.0, 0.0, 0.0)",
+        "hair_velocity": "(0.0, 0.0, 0.0)",
+        "last_reason": "",
+        "masked_vertices": {
+          "cloth": 10575,
+          "hair": 11472
+        },
+        "rejected_states": 0,
+        "reset_count": 0,
+        "scope": "Bounded analytic spring response through authored rest-space masks. No cloth collision, strands, gameplay or skeleton writes."
+      },
+      "name": "secondary binds actual masks",
+      "passed": true
+    },
+    {
+      "detail": {
+        "configured": true,
+        "frame_callbacks": 0,
+        "last_reason": "configured roughness and PBR finish",
+        "last_release": {
+
+        },
+        "profiles": {
+          "Cobalt handwoven silk": 1,
+          "Cobalt lotus brocade": 1,
+          "Deep brown iris": 1,
+          "Ivory silk": 6,
+          "Natural lips": 1,
+          "Polished sapphire": 1,
+          "Pupil": 3,
+          "Rama warm skin": 1,
+          "Recessed antique gold": 1,
+          "Swept black hair": 1,
+          "Warm sclera": 1,
+          "Worked warm gold": 1
+        },
+        "scope": "Reversible PBR finish. Original albedo/UV/normal, geometry, rig and secondary offset retained; actual appearance and GPU timing require rendered review.",
+        "secondary_materials": 15,
+        "standard_materials": 24,
+        "surface_slots": 46,
+        "version": 1
+      },
+      "name": "finish binds actual candidate",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "cloth RED linear map RamaHero:3",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "cloth RED linear map RamaHero:4",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "cloth RED linear map RamaHeroLOD1:3",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "cloth RED linear map RamaHeroLOD1:4",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "cloth RED linear map RamaHeroLOD2:3",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "cloth RED linear map RamaHeroLOD2:4",
+      "passed": true
+    },
+    {
+      "detail": {
+        "surfaces": 6,
+        "unique_textures": 1
+      },
+      "name": "all six cloth LOD surfaces share one imported rough texture",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "three actual hair LOD surfaces retain opaque shader",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "second configure is idempotent",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "material identity survives configure 0",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "material identity survives configure 1",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "material identity survives configure 2",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "material identity survives configure 3",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "material identity survives configure 4",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "material identity survives configure 5",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "competing channel edit is refused without overwrite",
+      "passed": true
+    },
+    {
+      "detail": {
+        "conflicts": [],
+        "invalidated": 1,
+        "restored_slots": 31,
+        "restored_uniforms": 76
+      },
+      "name": "foreign material survives finish release",
+      "passed": true
+    }
+  ],
+  "count": 21,
+  "imported_textures": [
+    {
+      "format": 0,
+      "height": 1024,
+      "mesh": "RamaHero",
+      "mipmaps": 10,
+      "payload_bytes": 1398101,
+      "surface": 3,
+      "texture_path": "res://assets/materials/rama-finish/woven-roughness.png",
+      "width": 1024
+    },
+    {
+      "format": 0,
+      "height": 1024,
+      "mesh": "RamaHero",
+      "mipmaps": 10,
+      "payload_bytes": 1398101,
+      "surface": 4,
+      "texture_path": "res://assets/materials/rama-finish/woven-roughness.png",
+      "width": 1024
+    },
+    {
+      "format": 0,
+      "height": 1024,
+      "mesh": "RamaHeroLOD1",
+      "mipmaps": 10,
+      "payload_bytes": 1398101,
+      "surface": 3,
+      "texture_path": "res://assets/materials/rama-finish/woven-roughness.png",
+      "width": 1024
+    },
+    {
+      "format": 0,
+      "height": 1024,
+      "mesh": "RamaHeroLOD1",
+      "mipmaps": 10,
+      "payload_bytes": 1398101,
+      "surface": 4,
+      "texture_path": "res://assets/materials/rama-finish/woven-roughness.png",
+      "width": 1024
+    },
+    {
+      "format": 0,
+      "height": 1024,
+      "mesh": "RamaHeroLOD2",
+      "mipmaps": 10,
+      "payload_bytes": 1398101,
+      "surface": 3,
+      "texture_path": "res://assets/materials/rama-finish/woven-roughness.png",
+      "width": 1024
+    },
+    {
+      "format": 0,
+      "height": 1024,
+      "mesh": "RamaHeroLOD2",
+      "mipmaps": 10,
+      "payload_bytes": 1398101,
+      "surface": 4,
+      "texture_path": "res://assets/materials/rama-finish/woven-roughness.png",
+      "width": 1024
+    }
+  ],
+  "passed": true,
+  "probe_sha256": "c36567bf71e558b958b8b9fe2b5608458a473098ef43cdbbc789a403647c9a0b",
+  "scope": "Headless actual imported groom lifecycle/channel/resource audit. No import or renderer run. Independent foreign-owner counterexamples separate from candidate regression checks.",
+  "woven_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+}

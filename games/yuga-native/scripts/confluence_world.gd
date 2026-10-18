@@ -20,6 +20,8 @@ const RamaRuntime = preload("res://scripts/rama_hero_runtime.gd")
 const RamaPanel = preload("res://scripts/rama_hero_panel.gd")
 const RamaHUD = preload("res://scripts/rama_hero_hud.gd")
 const HeroUI = preload("res://scripts/hero_ui_theme.gd")
+const Atlas = preload("res://scripts/world_atlas.gd")
+const WorldOutcome = preload("res://scripts/world_outcome_summary.gd")
 const RUNTIME_MANIFEST := "res://assets/world/confluence-map.json"
 const SOURCE_MANIFEST := "res://art/world/confluence-map.json"
 const CREAM := Color("f0e5d0")
@@ -32,6 +34,7 @@ var rama_effects: Node3D
 var rama_panel: Control
 var rama_hud: Control
 var rama_return_to_pause := false
+var rama_return_focus: WeakRef
 var rama_button: Button
 var manifest: Dictionary = {}
 var manifest_path := ""
@@ -53,6 +56,7 @@ var invocation_button: Button
 var invocation_label: Label
 var invocation_detail: Label
 var invocation_return_to_pause := false
+var invocation_return_focus: WeakRef
 var invocation_notice := ""
 var relay_labels: Array[Label] = []
 var relay_hint: Label
@@ -64,9 +68,14 @@ var pause_actions: Array[Control] = []
 var pause_scroll: ScrollContainer
 var controls_overlay: Control
 var controls_return_to_pause := false
+var controls_return_focus: WeakRef
+var continue_practice_button: Button
+var restart_practice_button: Button
 var energy_bar: ProgressBar
 var ability_label: Label
 var score_label: Label
+var objective_label: Label
+var outcome_summary: VBoxContainer
 var goal_label: Label
 var help_labels: Array[Label] = []
 var volume_label: Label
@@ -103,59 +112,6 @@ var material_cache: Dictionary = {}
 var start_position := Vector3(0, 0.05, -112)
 var overview := false
 
-class Atlas extends Control:
-	var data: Dictionary = {}
-	var hero_position := Vector3.ZERO
-	var units: Array = []
-	var relays: Array = []
-	var footer_height := 70.0
-	func project(point: Vector3) -> Vector2:
-		var bounds: Array=data.get("bounds",{}).get("nominal_xz",[-70,70,-130,130])
-		return Vector2(12+(point.x-bounds[0])/(bounds[1]-bounds[0])*(size.x-24),12+(point.z-bounds[2])/(bounds[3]-bounds[2])*(size.y-24-footer_height))
-	func _draw() -> void:
-		draw_style_box(_background(),Rect2(Vector2.ZERO,size))
-		if data.is_empty(): return
-		for solid in data.authority_collision_boxes:
-			var p:=Vector3(solid.position[0],0,solid.position[2])
-			var half:=Vector3(solid.size[0]/2,0,solid.size[2]/2)
-			draw_rect(Rect2(project(p-half),project(p+half)-project(p-half)),Color("52676d"))
-		for lane in data.lanes:
-			for i in range(lane.points.size()-1):
-				var a: Array=lane.points[i]
-				var b: Array=lane.points[i+1]
-				draw_line(project(Vector3(a[0],0,a[2])),project(Vector3(b[0],0,b[2])),Color("cfa964"),2,true)
-		for camp in data.camps:
-			draw_circle(project(Vector3(camp.position[0],0,camp.position[2])),3,Color("7ac6bd"))
-		for objective in data.objectives:
-			draw_circle(project(Vector3(objective.position[0],0,objective.position[2])),3,Color("efba70") if objective.team=="sun" else Color("88bded"))
-		for anchor in data.get("traversal",{}).get("anchors",[]):
-			var p:=project(Vector3(anchor.position[0],0,anchor.position[2]))
-			draw_polyline(PackedVector2Array([p+Vector2(0,-3),p+Vector2(3,0),p+Vector2(0,3),p+Vector2(-3,0),p+Vector2(0,-3)]),Color("e9c877"),1,true)
-		for unit in units:
-			var p:=project(unit.position)
-			if unit.get("role","") in ["cannon_cart","royal_chariot"]:
-				draw_circle(p,5.5,Color("efba70") if unit.team=="sun" else Color("88bded"),false,1.5,true)
-			if unit.team=="sun": draw_colored_polygon(PackedVector2Array([p+Vector2(0,-2.5),p+Vector2(2,2),p+Vector2(-2,2)]),Color("efba70"))
-			else: draw_rect(Rect2(p-Vector2(1.7,1.7),Vector2(3.4,3.4)),Color("88bded"))
-		for relay in relays:
-			var p:=project(relay.position)
-			var color:=Color("efba70") if relay.owner=="sun" else (Color("88bded") if relay.owner=="moon" else Color("c3bfae"))
-			draw_rect(Rect2(p-Vector2(5,5),Vector2(10,10)),Color("14242d"))
-			draw_rect(Rect2(p-Vector2(5,5),Vector2(10,10)),color,false,2)
-			if relay.owner=="sun": draw_colored_polygon(PackedVector2Array([p+Vector2(0,-3),p+Vector2(3,2),p+Vector2(-3,2)]),color)
-			elif relay.owner=="moon": draw_rect(Rect2(p-Vector2(2,2),Vector2(4,4)),color)
-			if relay.contested:
-				draw_line(p-Vector2(7,7),p+Vector2(7,7),Color.WHITE,2,true)
-				draw_line(p+Vector2(-7,7),p+Vector2(7,-7),Color.WHITE,2,true)
-		draw_circle(project(hero_position),5,Color.WHITE)
-		draw_circle(project(hero_position),8,Color(1,1,1,.4),false,1,true)
-	func _background() -> StyleBoxFlat:
-		var style:=StyleBoxFlat.new()
-		style.bg_color=Color(0.025,0.065,0.085,.90)
-		style.border_color=Color(0.61,0.76,0.75,.35)
-		style.set_border_width_all(1)
-		style.set_corner_radius_all(12)
-		return style
 
 func _ready() -> void:
 	process_mode=Node.PROCESS_MODE_ALWAYS
@@ -276,14 +232,16 @@ func cast_invocation() -> Dictionary:
 func _open_invocations() -> void:
 	if not world_ready or not invocation_panel or invocation_panel.visible: return
 	invocation_return_to_pause = paused
+	invocation_return_focus = _remember_pause_focus()
 	set_paused(true)
 	pause_panel.hide()
 	invocation_panel.update_session(invocations.report())
-	invocation_panel.open(invocation_button if invocation_return_to_pause else null)
+	invocation_panel.open()
 
 func _close_invocations() -> void:
 	set_paused(invocation_return_to_pause)
-	if invocation_return_to_pause and invocation_button: invocation_button.grab_focus()
+	if invocation_return_to_pause: _restore_pause_focus(invocation_return_focus)
+	invocation_return_focus = null
 
 func _select_invocation(hero: String) -> void:
 	if not invocations.select_invocation(hero):
@@ -684,18 +642,23 @@ func _build_ui() -> void:
 	hud.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	hud.theme = HeroUI.create()
 	ui.add_child(hud)
-	var title:=_card(hud,Vector2(20,20),Vector2(370,110))
+	var title:=_card(hud,Vector2(20,20),Vector2(370,154))
 	title.name="TitleCard"
+	title.resized.connect(_layout_world_hud)
 	var copy:=VBoxContainer.new()
-	copy.add_theme_constant_override("separation",3)
+	copy.add_theme_constant_override("separation",HeroUI.SPACE_XS)
 	title.add_child(copy)
 	copy.add_child(_label("YUGA  /  CONFLUENCE",17,GOLD))
 	location_label=_label("Surya arrival court",15,CREAM)
 	copy.add_child(location_label)
 	status_label=_label("OFFLINE LANE PRACTICE",11,HeroUI.MIST)
 	copy.add_child(status_label)
-	score_label=_label("Wave 1 · Gold 0 · Sun 100 / Moon 100",12,CREAM)
+	score_label=_label("Lane status unavailable",12,HeroUI.CREAM)
 	copy.add_child(score_label)
+	objective_label=_label("",12,HeroUI.CREAM)
+	objective_label.name="LaneObjective"
+	objective_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	copy.add_child(objective_label)
 	map_control=Atlas.new()
 	map_control.name="WorldAtlas"
 	map_control.data=manifest
@@ -706,15 +669,15 @@ func _build_ui() -> void:
 	map_control.offset_right=-20
 	map_control.offset_top=20
 	map_control.offset_bottom=356
-	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You\n◎ Siege  ·  □ Relay",11,CREAM)
+	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You\n◎ Siege  ·  □ Relay\n%s overview" % Bindings.label("world_overview"),11,HeroUI.CREAM)
 	legend.name="AtlasLegend"
 	map_control.add_child(legend)
 	legend.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	legend.offset_left=12
 	legend.offset_right=-12
-	legend.offset_top=-60
+	legend.offset_top=-78
 	legend.offset_bottom=-8
-	var relay_card:=_card(hud,Vector2(20,140),Vector2(370,82))
+	var relay_card:=_card(hud,Vector2(20,186),Vector2(370,82))
 	relay_card.name="RelayStatus"
 	var relay_column:=VBoxContainer.new()
 	relay_column.add_theme_constant_override("separation",6)
@@ -732,6 +695,7 @@ func _build_ui() -> void:
 	relay_column.add_child(relay_hint)
 	var help:=_card(hud,Vector2(20,-214),Vector2(238,72))
 	help.name="ControlsCard"
+	help.resized.connect(_layout_world_hud)
 	help.set_anchors_preset(Control.PRESET_BOTTOM_LEFT,true)
 	var bottom:=VBoxContainer.new()
 	bottom.add_theme_constant_override("separation",6)
@@ -746,6 +710,7 @@ func _build_ui() -> void:
 	_refresh_control_labels()
 	var ability:=_card(hud,Vector2(-252,-254),Vector2(232,116))
 	ability.name="TraversalStatus"
+	ability.resized.connect(_layout_world_hud)
 	ability.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT,true)
 	var energy_column:=VBoxContainer.new()
 	energy_column.add_theme_constant_override("separation",5)
@@ -800,7 +765,10 @@ func _build_ui() -> void:
 	menu.add_child(_label("CONFLUENCE",22,GOLD))
 	practice_mode_label=_label("OFFLINE LANE PRACTICE",12,Color("aec2c3"))
 	menu.add_child(practice_mode_label)
-	_button(menu,"Continue practice",func():set_paused(false))
+	outcome_summary=WorldOutcome.new()
+	menu.add_child(outcome_summary)
+	continue_practice_button = _button(menu,"Continue practice",func():set_paused(false))
+	restart_practice_button = _button(menu,"Restart lane practice",_restart_army)
 	rama_button = _button(menu,"Rama · abilities and controls",_open_rama_panel)
 	invocation_button = _button(menu,"Legacy invocation studies",_open_invocations)
 	invocation_button.name = "ChooseInvocation"
@@ -814,7 +782,6 @@ func _build_ui() -> void:
 	_button(menu,"Visit Lanka coast",func():teleport_to(Vector3(-40,.05,14),180);set_paused(false))
 	_button(menu,"Visit Metro gardens",func():teleport_to(Vector3(40,.05,14),180);set_paused(false))
 	_button(menu,"Controls / remap keys",_open_controls)
-	_button(menu,"Restart lane practice",_restart_army)
 	volume_label=_label("Sound",12,CREAM)
 	menu.add_child(volume_label)
 	var volume:=HSlider.new()
@@ -846,6 +813,7 @@ func _build_ui() -> void:
 	ultimate_fx.set_options(invocation_panel.options())
 	rama_panel = RamaPanel.new()
 	ui.add_child(rama_panel)
+	rama_panel.configure_effects(rama_effects)
 	rama_panel.closed.connect(_close_rama_panel)
 	rama_hud = RamaHUD.new()
 	hud.add_child(rama_hud)
@@ -867,6 +835,7 @@ func _refresh_control_labels() -> void:
 
 func _open_controls() -> void:
 	controls_return_to_pause=paused
+	controls_return_focus = _remember_pause_focus()
 	set_paused(true)
 	pause_panel.hide()
 	controls_overlay.open()
@@ -874,6 +843,8 @@ func _open_controls() -> void:
 func _close_controls() -> void:
 	_refresh_control_labels()
 	set_paused(controls_return_to_pause)
+	if controls_return_to_pause: _restore_pause_focus(controls_return_focus)
+	controls_return_focus = null
 
 func _set_volume(value: float,save: bool=true) -> void:
 	if audio: audio.set_volume(value)
@@ -886,16 +857,7 @@ func _set_volume(value: float,save: bool=true) -> void:
 		if not result.ok and volume_label: volume_label.text="Sound · active now; save unavailable"
 
 func _panel_style() -> StyleBoxFlat:
-	var style:=StyleBoxFlat.new()
-	style.bg_color=Color(0.025,.065,.085,.94)
-	style.border_color=Color(.6,.75,.72,.35)
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(12)
-	style.content_margin_left=18
-	style.content_margin_right=18
-	style.content_margin_top=14
-	style.content_margin_bottom=14
-	return style
+	return HeroUI.panel_style(true, 18)
 
 func _card(parent: Control, position_: Vector2, size_: Vector2) -> PanelContainer:
 	var panel:=PanelContainer.new()
@@ -907,27 +869,14 @@ func _card(parent: Control, position_: Vector2, size_: Vector2) -> PanelContaine
 	return panel
 
 func _label(text_: String, font_size: int, color: Color) -> Label:
-	var label:=Label.new()
-	label.text=text_
-	label.add_theme_font_size_override("font_size",font_size)
-	label.add_theme_color_override("font_color",color)
-	label.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	return label
+	return HeroUI.label(text_, font_size, color)
 
 func _button(parent: Control, text_: String, callback: Callable) -> Button:
 	var button:=Button.new()
 	button.text=text_
 	button.custom_minimum_size=Vector2(0,40)
 	button.add_theme_font_size_override("font_size",14)
-	button.add_theme_color_override("font_color",CREAM)
-	for state in ["normal","hover","pressed","focus"]:
-		var style:=StyleBoxFlat.new()
-		style.bg_color=Color("20444a") if state!="normal" else Color("17343a")
-		style.border_color=GOLD if state=="focus" else Color("537873")
-		style.set_border_width_all(2 if state=="focus" else 1)
-		style.content_margin_left=10
-		style.content_margin_right=10
-		button.add_theme_stylebox_override(state,style)
+	HeroUI.button(button)
 	button.pressed.connect(callback)
 	parent.add_child(button)
 	pause_actions.append(button)
@@ -944,28 +893,33 @@ func _layout_world_hud() -> void:
 	if not hud or not rama_hud: return
 	var screen := get_viewport().get_visible_rect().size
 	var compact := screen.x < 1100
-	var margin := 20.0
+	var margin := float(HeroUI.SPACE_LG)
+	var column_width := 320 if compact else 370
 	var title: Control = hud.get_node("TitleCard")
 	var relay: Control = hud.get_node("RelayStatus")
 	var controls: Control = hud.get_node("ControlsCard")
 	var traversal: Control = hud.get_node("TraversalStatus")
 	for control in [title, relay, controls, traversal, map_control]:
 		control.set_anchors_preset(Control.PRESET_TOP_LEFT)
-	title.custom_minimum_size = Vector2(370,110)
+	title.custom_minimum_size = Vector2(column_width,154)
 	title.size = title.custom_minimum_size
 	title.position = Vector2(margin,margin)
-	relay.custom_minimum_size = Vector2(370,82)
+	relay.custom_minimum_size = Vector2(column_width,82)
 	relay.size = relay.custom_minimum_size
-	relay.position = Vector2(margin,140)
+	relay.position = Vector2(margin,title.position.y+title.size.y+HeroUI.SPACE_MD)
 	controls.custom_minimum_size = Vector2(238,72)
 	controls.size = controls.custom_minimum_size
-	controls.position = Vector2(margin,screen.y-214)
+	var combat_top := screen.y+ rama_hud.offset_top
+	controls.position = Vector2(margin,combat_top-HeroUI.SPACE_MD-controls.size.y)
 	traversal.custom_minimum_size = Vector2(232,116)
 	traversal.size = traversal.custom_minimum_size
-	traversal.position = Vector2(screen.x-margin-traversal.size.x,screen.y-254)
-	map_control.size = Vector2(152,300) if compact else Vector2(166,316)
+	traversal.position = Vector2(screen.x-margin-traversal.size.x,combat_top-HeroUI.SPACE_MD-traversal.size.y)
+	var map_height := minf(300 if compact else 316,traversal.position.y-margin-HeroUI.SPACE_MD)
+	map_control.size = Vector2(152 if compact else 166,map_height)
 	map_control.position = Vector2(screen.x-margin-map_control.size.x,margin)
-	map_control.footer_height = 66
+	var legend: Label = map_control.get_node("AtlasLegend")
+	map_control.footer_height = legend.get_combined_minimum_size().y+HeroUI.SPACE_LG
+	legend.offset_top = -map_control.footer_height+HeroUI.SPACE_SM
 	map_control.queue_redraw()
 
 func _layout_pause_panel() -> void:
@@ -1015,6 +969,7 @@ func _process(delta: float) -> void:
 		_update_practice_hud()
 		_update_invocation_hud()
 		map_control.hero_position=player.position
+		map_control.hero_forward=-player.global_basis.z
 		map_control.queue_redraw()
 
 func _physics_process(_delta: float) -> void:
@@ -1044,29 +999,32 @@ func _update_relay_hud() -> void:
 	map_control.relays=[] if army.siege_drill else relays.sites()
 	var nearest:=99.0
 	var close_site: Dictionary={}
+	var rules = RelaySession.ControlRules
 	for site in relays.sites():
 		var label:=relay_labels[site.id]
 		var short_name: String=String(site.label).trim_suffix(" Relay")
-		var state:="Contested" if site.contested else (String(site.owner).capitalize() if absf(site.progress)>=7.999 else "%d%%" % roundi(absf(site.progress)/8*100))
-		if not site.contested and absf(site.progress)>.001 and absf(site.progress)<7.999:
-			state="%s %d%%" % ["▲" if site.capture_team=="sun" else "■",roundi(absf(site.progress)/8*100)]
+		var secured: bool = absf(site.progress) >= rules.CAPTURE_REQUIRED-rules.EPSILON
+		var state:="Contested" if site.contested else (String(site.owner).capitalize() if secured else "%d%%" % roundi(absf(site.progress)/rules.CAPTURE_REQUIRED*100))
+		if not site.contested and absf(site.progress)>.001 and not secured:
+			state="%s %d%%" % ["▲" if site.capture_team=="sun" else "■",roundi(absf(site.progress)/rules.CAPTURE_REQUIRED*100)]
 		if site.owner=="neutral" and absf(site.progress)<.001: state="Open"
 		label.text="%s · %s" % [short_name,state]
-		label.modulate=GOLD if site.owner=="sun" else (TEAL if site.owner=="moon" else CREAM)
+		label.modulate=Color.WHITE
+		label.add_theme_color_override("font_color",HeroUI.GOLD if site.owner=="sun" else (HeroUI.MIST if site.owner=="moon" else HeroUI.CREAM))
 		var distance: float=Vector2(player.position.x-site.position.x,player.position.z-site.position.z).length()
 		if distance<nearest: nearest=distance;close_site=site
 	if army.siege_drill:
-		relay_hint.text="Relays inactive during siege drill · F5 restarts lane practice"
+		relay_hint.text="Relays inactive during siege drill · %s restarts lane practice" % Bindings.label("reset_training")
 		for label in relay_labels: label.text="—"
 	elif not army.winner.is_empty(): relay_hint.text="Round ended · Relay capture and supplies stopped"
-	elif nearest<=8 and not close_site.is_empty():
+	elif nearest<=rules.SUPPLY_RADIUS and not close_site.is_empty():
 		if close_site.contested: relay_hint.text="Contested · Clear enemies to capture and receive supplies"
 		elif close_site.owner!="neutral" and close_site.pressure_team not in ["neutral",close_site.owner]: relay_hint.text="Under pressure · Clear enemy soldiers to keep this relay and restore supply"
-		elif absf(player.position.y-close_site.position.y)>2.5: relay_hint.text="Land within the marked zone to contribute to capture"
-		elif nearest>5: relay_hint.text="Enter the marked zone · %.0fm to relay centre" % nearest
-		elif close_site.owner=="sun": relay_hint.text="Held · +3 arrows / +6 troop health every 5s · Enemy pressure stops supply"
+		elif absf(player.position.y-close_site.position.y)>rules.HEIGHT_TOLERANCE: relay_hint.text="Land within the marked zone to contribute to capture"
+		elif nearest>rules.CAPTURE_RADIUS: relay_hint.text="Enter the marked zone · %.0fm to relay centre" % nearest
+		elif close_site.owner=="sun": relay_hint.text="Held · next supply in %.1fs\n+3 arrows / +6 troop health · Enemy pressure stops supply" % maxf(0,rules.SUPPLY_PERIOD-float(close_site.supply_clock))
 		elif close_site.owner=="moon": relay_hint.text="Neutralize enemy control, then secure this relay · Soldiers help"
-		else: relay_hint.text="Capture: stay in the zone · 8 seconds solo, 4 with support"
+		else: relay_hint.text="Capture: stay in the zone · %ds solo, %ds with support" % [rules.CAPTURE_REQUIRED,rules.CAPTURE_REQUIRED/rules.MAX_CONTRIBUTORS]
 	else: relay_hint.text="Hold lane relays for supplies · ▲ Sun · ■ Moon · X Contested"
 
 func _update_practice_hud() -> void:
@@ -1076,6 +1034,7 @@ func _update_practice_hud() -> void:
 	var enemy_siege:=0
 	if army:
 		var battle: Dictionary=army.report()
+		outcome_summary.present(battle)
 		var cores: Dictionary=battle.get("cores",{})
 		siege_drill=battle.get("siege_drill",false)
 		if army.has_method("minimap_units"): map_control.units=army.minimap_units()
@@ -1084,14 +1043,32 @@ func _update_practice_hud() -> void:
 		if siege_drill:
 			var roles: Dictionary=battle.get("roles_alive",{})
 			score_label.text="Siege %d · Cannons %d · Chariots %d · Gold %d" % [enemy_siege,roles.get("cannon_cart",0),roles.get("royal_chariot",0),battle.get("gold",0)]
+			objective_label.text="Break enemy engines before their shots land.\nStep outside the blast warning rings."
 		else:
-			score_label.text="Wave %d · Gold %d · Sun %d / Moon %d" % [battle.get("waves",0),battle.get("gold",0),cores.get("sun",100),cores.get("moon",100)]
+			score_label.text="Cores · Sun %d / Moon %d · Gold %d" % [cores.get("sun",0),cores.get("moon",0),battle.get("gold",0)]
+			var nearest_lane: Dictionary = {}
+			var lane_distance := INF
+			var here := Vector2(player.position.x,player.position.z)
+			for lane in manifest.lanes:
+				for index in range(lane.points.size()-1):
+					var a: Array = lane.points[index]
+					var b: Array = lane.points[index+1]
+					var closest := Geometry2D.get_closest_point_to_segment(here,Vector2(a[0],a[2]),Vector2(b[0],b[2]))
+					var distance := here.distance_squared_to(closest)
+					if distance < lane_distance:
+						lane_distance = distance
+						nearest_lane = lane
+			var troops: Array = battle.get("alive_by_lane",[])
+			var lane_id: int = nearest_lane.get("id",-1)
+			var lane_status := "%s · %d troops" % [nearest_lane.name,troops[lane_id]] if lane_id>=0 and lane_id<troops.size() else "Three lanes"
+			objective_label.text="%s · Wave %d\nEscort Sun troops to the Moon core." % [lane_status,battle.get("waves",0)]
 		if practice_mode_label: practice_mode_label.text="OFFLINE SIEGE DRILL" if siege_drill else "OFFLINE LANE PRACTICE"
 		if siege_practice_button: siege_practice_button.text="Siege practice · restart drill" if siege_drill else "Siege practice · enter drill"
 		if practice_hint_label:
 			practice_hint_label.text=practice_error if not practice_error.is_empty() else ("Break enemy engines before impact to protect Sun troops. Enemy siege blasts damage Rama; step out of the warning ring. Restart lane practice exits this drill." if siege_drill else "Try cannon carts and royal chariots in the central court. Blasts damage troops; enemy siege blasts damage Rama.")
 		if not String(battle.get("winner","")).is_empty():
-			goal_label.text=("Draw · both cores destroyed" if battle.winner=="draw" else "%s wins" % String(battle.winner).to_upper())+" · Restart in pause"
+			objective_label.text=WorldOutcome.headline(battle.winner)+"\nRestart lane practice from the pause menu."
+			goal_label.text="Round ended · Open pause to restart."
 			return
 	if not player.has_method("traversal_report"): return
 	var report: Dictionary=player.traversal_report()
@@ -1172,9 +1149,39 @@ func set_paused(value: bool) -> void:
 		_layout_pause_panel()
 		_update_practice_hud()
 		if not (controls_overlay and controls_overlay.visible) and not (invocation_panel and invocation_panel.visible) and not (rama_panel and rama_panel.visible):
-			var buttons:=pause_panel.find_children("*","Button",true,false)
-			if not buttons.is_empty(): buttons[0].grab_focus()
+			_refresh_pause_actions()
+			_restore_pause_focus(null)
 			call_deferred("_reveal_pause_focus")
+
+func _refresh_pause_actions() -> void:
+	# The army remains the sole outcome authority. Returning to the world after
+	# a finished round is exploration; only the existing restart starts a round.
+	var ended: bool = army != null and not army.winner.is_empty()
+	continue_practice_button.text = "Return to world" if ended else "Continue practice"
+	HeroUI.button(continue_practice_button, not ended)
+	HeroUI.button(restart_practice_button, ended)
+
+func _remember_pause_focus() -> WeakRef:
+	var opener := get_viewport().gui_get_focus_owner()
+	return weakref(opener) if paused and is_instance_valid(opener) and pause_panel.is_ancestor_of(opener) else null
+
+func _restore_pause_focus(previous_ref: WeakRef) -> void:
+	var previous: Control = previous_ref.get_ref() if previous_ref else null
+	if is_instance_valid(previous) and pause_panel.is_ancestor_of(previous) and previous.is_visible_in_tree() and previous.focus_mode == Control.FOCUS_ALL:
+		if (not previous is BaseButton or not previous.disabled) and (not previous is Slider or previous.editable):
+			previous.grab_focus()
+			call_deferred("_reveal_pause_focus")
+			return
+	var preferred: Button = restart_practice_button if army != null and not army.winner.is_empty() else continue_practice_button
+	if is_instance_valid(preferred) and preferred.is_visible_in_tree() and not preferred.disabled:
+		preferred.grab_focus()
+		return
+	for action in pause_actions:
+		if not is_instance_valid(action) or not action.is_visible_in_tree() or action.focus_mode != Control.FOCUS_ALL: continue
+		if action is BaseButton and action.disabled: continue
+		if action is Slider and not action.editable: continue
+		action.grab_focus()
+		return
 
 func _reveal_pause_focus() -> void:
 	# Focus can predate the visible container's final sort, or already belong to
@@ -1185,9 +1192,16 @@ func _reveal_pause_focus() -> void:
 	if invocation_panel and invocation_panel.visible: return
 	if rama_panel and rama_panel.visible: return
 	var focus:=get_viewport().gui_get_focus_owner()
-	if focus in pause_actions: pause_scroll.ensure_control_visible(focus)
+	if focus in pause_actions:
+		# Fresh entry must keep the title/outcome above the primary action.
+		# A late focus scroll can otherwise clip the heading even at scroll 0.
+		if focus in [continue_practice_button,restart_practice_button] and focus.position.y + focus.size.y <= pause_scroll.size.y:
+			pause_scroll.scroll_vertical = 0
+		else:
+			pause_scroll.ensure_control_visible(focus)
 
 func _focus_lost() -> void:
+	if is_instance_valid(_return_transition) and _return_transition.visible: return
 	if not world_ready: return
 	if controls_overlay and controls_overlay.visible:
 		controls_overlay.cancel_capture()
@@ -1305,11 +1319,33 @@ func get_build_report() -> Dictionary:
 	return build_report()
 
 func return_to_courtyard() -> void:
+	var loader: Control = load("res://scripts/scene_transition.gd").ensure_for_tree(get_tree())
+	if loader.is_busy() or loader.phase == &"error": return
+	var opener := get_viewport().gui_get_focus_owner()
+	if not loader.cancelled.is_connected(_on_return_cancelled):
+		loader.cancelled.connect(_on_return_cancelled)
+	if not loader.begin(&"courtyard", self, opener): return
+	_return_transition = loader
+	_return_process_modes.clear()
+	_isolate_return_children(self)
 	release_actions()
-	_clear_combat_presentation()
-	get_tree().paused=false
-	Input.mouse_mode=Input.MOUSE_MODE_VISIBLE
-	get_tree().change_scene_to_file("res://scenes/courtyard.tscn")
+
+var _return_transition: Control
+var _return_process_modes: Array[Dictionary] = []
+
+func _isolate_return_children(parent: Node) -> void:
+	for child in parent.get_children():
+		if child.process_mode not in [Node.PROCESS_MODE_INHERIT, Node.PROCESS_MODE_DISABLED]:
+			_return_process_modes.append({"node":weakref(child), "mode":child.process_mode})
+			child.process_mode = Node.PROCESS_MODE_DISABLED
+		_isolate_return_children(child)
+
+func _on_return_cancelled(_destination: StringName) -> void:
+	for state in _return_process_modes:
+		var node: Node = state.node.get_ref()
+		if is_instance_valid(node): node.process_mode = state.mode
+	_return_process_modes.clear()
+	_return_transition = null
 
 func _exit_tree() -> void:
 	if get_tree(): get_tree().paused=false
@@ -1321,13 +1357,15 @@ func cast_rama_ability(id: String) -> Dictionary:
 func _open_rama_panel() -> void:
 	if not world_ready or not rama_panel or rama_panel.visible: return
 	rama_return_to_pause = paused
+	rama_return_focus = _remember_pause_focus()
 	set_paused(true)
 	pause_panel.hide()
-	rama_panel.open("confluence", rama_button if rama_return_to_pause else null)
+	rama_panel.open("confluence")
 
 func _close_rama_panel() -> void:
 	set_paused(rama_return_to_pause)
-	if rama_return_to_pause and rama_button: rama_button.grab_focus()
+	if rama_return_to_pause: _restore_pause_focus(rama_return_focus)
+	rama_return_focus = null
 
 func _settle_world_hud() -> void:
 	# Word wrapping is shaped after the first container sort. Reapply preferred

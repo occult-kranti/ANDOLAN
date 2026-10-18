@@ -540,11 +540,19 @@ func get_actor_diagnostics(actor_id: String, detailed: bool=true) -> Dictionary:
 	return actors[actor_id].snapshot(detailed) if actors.has(actor_id) else {}
 
 func return_to_courtyard() -> void:
-	playing=false
-	if audio_player: audio_player.stop()
-	get_tree().paused=false
-	Input.mouse_mode=Input.MOUSE_MODE_VISIBLE
-	get_tree().change_scene_to_file("res://scenes/courtyard.tscn")
+	var loader: Control = load("res://scripts/scene_transition.gd").ensure_for_tree(get_tree())
+	if loader.is_busy() or loader.phase == &"error": return
+	var opener := get_viewport().gui_get_focus_owner()
+	if not loader.cancelled.is_connected(_on_return_cancelled):
+		loader.cancelled.connect(_on_return_cancelled)
+	if not loader.begin(&"courtyard", self, opener): return
+	_return_was_playing = playing
+	set_playing(false)
+
+var _return_was_playing := false
+
+func _on_return_cancelled(_destination: StringName) -> void:
+	set_playing(_return_was_playing)
 
 func _exit_tree() -> void:
 	if audio_player:

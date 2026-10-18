@@ -1,0 +1,46 @@
+{
+  "source_sha256": {
+    "scripts/boot.gd": "14446f76ddb4ee8d5b394af50213c3d1ff9ef9ea5715c78216df48890d03e821",
+    "scenes/boot.tscn": "36307974fa48fc6a47855c6eb43e4524534d4c97560c548cc6ba51d537838026",
+    "scripts/scene_transition.gd": "74832b9d8828db5c505cdd0729443f72761309fdd0c8a6f6857000fe33b2112e",
+    "scripts/hero_ui_theme.gd": "4a8d1c96b15092f3f35770ef6b2df706608dcea5779db7707ea88567c3f4d756",
+    "tests/ui_boot_cases.gd": "7467b674a19f32f72094f8601362b6a48aa8f0ed69817a297577e5b6ad11b9fd",
+    "project.godot": "976c5fe71bb7a735013b02287701b95fc3c42452e8876675c0250b49c8a96c95"
+  },
+  "runs": [
+    {
+      "mode": "lifecycle",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/tmp/yuga-u2-boot-r2/lifecycle",
+        "--script",
+        "res://tests/ui_boot_cases.gd",
+        "--",
+        "--autostart",
+        "--smoke",
+        "--report=/tmp/yuga-u2-boot-r2/lifecycle/report.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "mode": "quit",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/tmp/yuga-u2-boot-r2/quit",
+        "--script",
+        "res://tests/ui_boot_cases.gd",
+        "--",
+        "--autostart",
+        "--smoke",
+        "--report=/tmp/yuga-u2-boot-r2/quit/report.json",
+        "--quit-path"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "scope": "Small native Control/PackedScene fixtures; no product-world import, render or performance acceptance."
+}

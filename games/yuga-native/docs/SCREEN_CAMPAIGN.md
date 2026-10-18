@@ -11,3 +11,9 @@ Each round needs executed code or an independent finding, source hashes, relevan
 The implementation keeps Godot 4.6.3, Blender 4.3.2 and the existing 164-bone hero. It uses a shared indigo/gold/ivory hierarchy, readable labels, consistent 44 px primary controls, visible keyboard focus, bounded decorative motion and existing scene ownership. Source-backed book/open-code techniques enter only when they address an observed problem.
 
 The final three rounds combine the accepted hero work with screens, stress state transitions and resource ownership, then qualify actual packages. Existing downloadable releases remain separate until a new source-matched package is verified and published. Deadlock is the quality target, not an achieved comparison.
+
+## Current checkpoint
+
+U1 supplies the shared components. U2 has an actual 13-step native input review, nine recorded loading states and five recovery views, including a successful Quit. Its clipped pause heading is retained as a finding addressed in U3. U3 implements map goals and outcomes, guide paging and saved ability effects preferences, pause/focus repairs and safe reset/teardown. Its frozen combined runtime passes [378 checks across sixteen suites](evidence/ui-campaign/U3/integration/REVIEW.md); independent guide review includes eighteen actual window images. Final combined map/outcome pixels remain an explicit rendered gate.
+
+U4 is implementing compact/scaled layouts, reachable exit actions, control-state consistency, cancellation/reentry, dense HUD information and settings counterexamples. U5 will review the final rendered screens and consolidate the implementation. I1–I3 remain integration, stress and package work; they are not completed by these component checks. See the ledger for each actual assignment and evidence identity.

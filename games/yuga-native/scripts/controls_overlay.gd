@@ -1,6 +1,12 @@
 extends Control
 ## Shared modal. Callers own pause state; this panel owns keyboard capture and focus.
 const Bindings = preload("res://scripts/input_bindings.gd")
+const UI = preload("res://scripts/hero_ui_theme.gd")
+const BINDING_GROUPS := [
+	{"title":"Movement","actions":["move_forward","move_back","move_left","move_right","jump","sprint"]},
+	{"title":"Flight and tether","actions":["fly","grapple","descend"]},
+	{"title":"Bow and four abilities","actions":["reload","pulse","dash","guardian_circle","ultimate"]}
+]
 signal closed
 signal bindings_changed
 var capture_action := ""
@@ -13,83 +19,68 @@ var reset_button: Button
 var focus_order: Array[Control] = []
 
 func _ready() -> void:
+	name = "KeyboardControls"
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var shade := ColorRect.new()
-	shade.color = Color(0.015,0.04,0.055,0.94)
+	shade.color = Color(UI.DEEP,0.94)
 	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(shade)
 	card = PanelContainer.new()
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("10282e")
-	style.border_color = Color("e7c078")
-	style.set_border_width_all(1)
-	style.set_content_margin_all(20)
-	card.add_theme_stylebox_override("panel",style)
+	card.name = "ControlsCard"
+	card.theme = UI.create()
 	add_child(card)
-	var theme_ := Theme.new()
-	theme_.default_font_size = 18
-	theme_.set_color("font_color","Label",Color("f1e6ce"))
-	theme_.set_color("font_color","Button",Color("f1e6ce"))
-	for state in ["normal","hover","pressed","focus"]:
-		var button_style := StyleBoxFlat.new()
-		button_style.bg_color = Color("20444a") if state != "normal" else Color("17343a")
-		button_style.border_color = Color("e7c078") if state == "focus" else Color("537873")
-		button_style.set_border_width_all(2 if state == "focus" else 1)
-		button_style.content_margin_left = 14
-		button_style.content_margin_right = 14
-		theme_.set_stylebox(state,"Button",button_style)
-	card.theme = theme_
 	var content := VBoxContainer.new()
-	content.add_theme_constant_override("separation",10)
 	card.add_child(content)
 	var title := Label.new()
 	title.text = "Keyboard controls"
-	title.add_theme_font_size_override("font_size",28)
+	title.theme_type_variation = &"YugaTitle"
 	content.add_child(title)
 	var intro := Label.new()
-	intro.text = "Choose a control, then press a key. Esc cancels capture. Tab moves focus."
+	intro.text = "Choose a control, then press a key. Esc cancels capture. Tab moves focus; PgUp / PgDn scroll."
 	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(intro)
 	var scroll := ScrollContainer.new()
+	scroll.name = "MappingsScroll"
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.follow_focus = true
 	content.add_child(scroll)
 	var rows := VBoxContainer.new()
 	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	rows.add_theme_constant_override("separation",7)
+	rows.add_theme_constant_override("separation",UI.SPACE_SM)
 	scroll.add_child(rows)
-	for action in Bindings.DEFAULTS:
-		var row := HBoxContainer.new()
-		rows.add_child(row)
-		var label_ := Label.new()
-		label_.text = Bindings.TITLES[action]
-		label_.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		row.add_child(label_)
-		var button := Button.new()
-		button.custom_minimum_size = Vector2(120,42)
-		button.pressed.connect(begin_capture.bind(action))
-		row.add_child(button)
-		binding_buttons[action] = button
-		focus_order.append(button)
+	for group in BINDING_GROUPS:
+		var heading := UI.label(group.title,UI.TYPE_CAPTION,UI.GOLD)
+		heading.name = String(group.title).to_pascal_case()+"Heading"
+		rows.add_child(heading)
+		for action in group.actions: _binding_row(rows,action)
+	rows.add_child(UI.label("Fixed controls",UI.TYPE_CAPTION,UI.GOLD))
 	var fixed := Label.new()
-	fixed.text = "Fixed: LMB fire · arrows move · Esc pause/back · F2 help\nWorld: F1 overview · F5 restart round · N day/night"
+	fixed.text = "%s fire · arrow keys move · %s pause / back\n%s help · %s abilities · %s restart\nWorld: %s overview · %s day / night" % [Bindings.label("fire"), Bindings.label("pause_game"), Bindings.label("help_controls"), Bindings.label("open_invocations"), Bindings.label("reset_training"), Bindings.label("world_overview"), Bindings.label("world_night")]
 	fixed.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	fixed.add_theme_font_size_override("font_size",14)
-	content.add_child(fixed)
+	fixed.theme_type_variation = &"YugaCaption"
+	rows.add_child(fixed)
+	rows.add_child(UI.label("Sound and display",UI.TYPE_CAPTION,UI.GOLD))
+	var preferences := UI.label("Settings on the title and training pause screens control sound, sensitivity, fullscreen and courtyard lighting. Confluence’s pause menu has sound volume. Rama’s guide has ability-effect preferences.",UI.TYPE_CAPTION,UI.MIST)
+	preferences.name = "PreferencesLocation"
+	preferences.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	rows.add_child(preferences)
 	status = Label.new()
-	status.custom_minimum_size.y = 42
+	status.custom_minimum_size.y = UI.TARGET_MIN
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	status.add_theme_font_size_override("font_size",16)
-	status.add_theme_color_override("font_color",Color("e7c078"))
+	status.add_theme_color_override("font_color",UI.GOLD)
 	content.add_child(status)
 	var footer := HBoxContainer.new()
-	footer.add_theme_constant_override("separation",10)
 	content.add_child(footer)
 	cancel_button = _button("Cancel capture",cancel_capture)
 	reset_button = _button("Reset defaults",reset_bindings)
 	done_button = _button("Done",close)
+	cancel_button.name = "CancelKeyCapture"
+	reset_button.name = "ResetBindings"
+	done_button.name = "DoneControls"
+	UI.button_variant(cancel_button,&"utility")
+	UI.button_variant(done_button,&"primary")
 	for button in [cancel_button,reset_button,done_button]:
 		footer.add_child(button)
 		focus_order.append(button)
@@ -97,21 +88,54 @@ func _ready() -> void:
 	_layout()
 	hide()
 
+func _binding_row(parent: Control, action: String) -> void:
+	var row := HBoxContainer.new()
+	parent.add_child(row)
+	var label_ := UI.label(Bindings.TITLES[action])
+	label_.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	label_.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	row.add_child(label_)
+	var button := Button.new()
+	button.name = "Binding_"+action
+	button.custom_minimum_size = Vector2(140,UI.TARGET_MIN)
+	UI.button_variant(button)
+	button.pressed.connect(begin_capture.bind(action))
+	row.add_child(button)
+	binding_buttons[action] = button
+	focus_order.append(button)
+
 func _button(text: String,callback: Callable) -> Button:
 	var button := Button.new()
 	button.text = text
-	button.custom_minimum_size.y = 44
+	UI.button_variant(button)
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.pressed.connect(callback)
 	return button
 
 func _process(_delta: float) -> void:
-	if visible: _layout()
+	if not _accepts_input():
+		if not capture_action.is_empty(): cancel_capture(false)
+		return
+	_layout()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_VISIBILITY_CHANGED and is_node_ready() and not is_visible_in_tree() and not capture_action.is_empty():
+		cancel_capture(false)
+
+func _accepts_input() -> bool:
+	if not is_visible_in_tree(): return false
+	# The modal runs while paused, but an explicitly disabled owner (for example
+	# scene loading/recovery) must still be able to isolate its entire interface.
+	var owner_node := get_parent()
+	while owner_node:
+		if owner_node.process_mode == Node.PROCESS_MODE_DISABLED: return false
+		owner_node = owner_node.get_parent()
+	return true
 
 func _layout() -> void:
 	if not card: return
 	var viewport := get_viewport_rect().size
-	var target := Vector2(minf(680,viewport.x-32),minf(700,viewport.y-32))
+	var target := Vector2(minf(680,viewport.x-UI.SPACE_XL),minf(700,viewport.y-UI.SPACE_XL))
 	card.size = target
 	card.position = (viewport-card.size)/2
 
@@ -122,10 +146,11 @@ func open() -> void:
 	status.text = Bindings.load_notice if not Bindings.load_notice.is_empty() else "Choose a control to change it. Changes save immediately."
 	show()
 	_layout()
-	binding_buttons.move_forward.grab_focus()
+	if _accepts_input(): binding_buttons.move_forward.grab_focus()
 
 func close() -> void:
-	cancel_capture()
+	if not visible: return
+	cancel_capture(false)
 	Bindings.release_gameplay()
 	hide()
 	closed.emit()
@@ -136,32 +161,46 @@ func _refresh() -> void:
 	if cancel_button: cancel_button.disabled = capture_action.is_empty()
 
 func begin_capture(action: String) -> void:
-	if not binding_buttons.has(action): return
+	if not _accepts_input() or not binding_buttons.has(action): return
 	Bindings.release_gameplay()
 	capture_action = action
 	status.text = "Press a new key for " + Bindings.TITLES[action] + ". Esc cancels."
 	_refresh()
 	binding_buttons[action].grab_focus()
 
-func cancel_capture() -> void:
+func cancel_capture(restore_focus: bool = true) -> void:
 	var previous := capture_action
 	capture_action = ""
 	_refresh()
 	if not previous.is_empty():
 		status.text = "Capture cancelled; your existing key is unchanged."
-		binding_buttons[previous].grab_focus()
+		if restore_focus and _accepts_input(): binding_buttons[previous].grab_focus()
 
 func reset_bindings() -> void:
-	cancel_capture()
+	cancel_capture(false)
 	var result := Bindings.reset_defaults()
 	status.text = result.message
 	_refresh()
 	if result.ok: bindings_changed.emit()
 
 func _input(event: InputEvent) -> void:
-	if not visible or not event is InputEventKey or not event.pressed or event.echo: return
+	if not _accepts_input() or not event is InputEventKey or not event.pressed or event.echo: return
 	var key: int = event.physical_keycode if event.physical_keycode else event.keycode
-	if not capture_action.is_empty():
+	if key == KEY_TAB:
+		_move_focus(event.shift_pressed)
+		get_viewport().set_input_as_handled()
+	elif key in [KEY_PAGEUP,KEY_PAGEDOWN,KEY_HOME,KEY_END]:
+		var scroll: ScrollContainer = card.find_child("MappingsScroll",true,false)
+		var step := maxi(1,int(scroll.size.y)-UI.SPACE_LG)
+		if key == KEY_HOME: scroll.scroll_vertical = 0
+		elif key == KEY_END: scroll.scroll_vertical = int(scroll.get_v_scroll_bar().max_value)
+		else: scroll.scroll_vertical += step * (-1 if key == KEY_PAGEUP else 1)
+		get_viewport().set_input_as_handled()
+	elif not capture_action.is_empty():
+		# Enter activates another focused mapping or footer action. Space remains
+		# a valid captured key, and Esc always cancels the active capture first.
+		var focused := get_viewport().gui_get_focus_owner()
+		if key in [KEY_ENTER,KEY_KP_ENTER] and focused in focus_order and focused != binding_buttons[capture_action]: return
 		if key == KEY_ESCAPE: cancel_capture()
 		else:
 			var action := capture_action
@@ -175,13 +214,17 @@ func _input(event: InputEvent) -> void:
 	elif key == KEY_ESCAPE:
 		close()
 		get_viewport().set_input_as_handled()
-	elif key == KEY_TAB:
-		var available: Array[Control] = []
-		for control in focus_order:
-			if not control.disabled: available.append(control)
-		var index := available.find(get_viewport().gui_get_focus_owner())
-		available[posmod(index + (-1 if event.shift_pressed else 1),available.size())].grab_focus()
-		get_viewport().set_input_as_handled()
+
+func _move_focus(backward: bool) -> void:
+	var available: Array[Control] = []
+	for control in focus_order:
+		if control.is_visible_in_tree() and not control.disabled: available.append(control)
+	if available.is_empty(): return
+	var index := available.find(get_viewport().gui_get_focus_owner())
+	if index < 0:
+		available.back().grab_focus() if backward else available.front().grab_focus()
+	else:
+		available[posmod(index + (-1 if backward else 1),available.size())].grab_focus()
 
 func diagnostics() -> Dictionary:
 	return {"visible":visible,"capture_action":capture_action,"status":status.text,"bindings":Bindings.current(),"card_rect":card.get_global_rect(),"viewport":get_viewport_rect(),"button_count":binding_buttons.size()}

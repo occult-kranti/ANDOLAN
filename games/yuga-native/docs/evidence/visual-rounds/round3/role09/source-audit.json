@@ -1,0 +1,145 @@
+{
+  "task": "R3-09",
+  "passed": true,
+  "count": 24,
+  "checks": [
+    {
+      "name": "near exact material/sampler/texture/image JSON",
+      "passed": true
+    },
+    {
+      "name": "near embedded image bytes exact",
+      "passed": true
+    },
+    {
+      "name": "near opaque double-sided hair with exact material name",
+      "passed": true
+    },
+    {
+      "name": "near normalized alpha semantic new mask",
+      "passed": true,
+      "actual_max": 0.779995422293431
+    },
+    {
+      "name": "near authored new TBN orthonormal handed",
+      "passed": true
+    },
+    {
+      "name": "near rig and embedded clips JSON exact",
+      "passed": true
+    },
+    {
+      "name": "mid exact material/sampler/texture/image JSON",
+      "passed": true
+    },
+    {
+      "name": "mid embedded image bytes exact",
+      "passed": true
+    },
+    {
+      "name": "mid opaque double-sided hair with exact material name",
+      "passed": true
+    },
+    {
+      "name": "mid normalized alpha semantic new mask",
+      "passed": true,
+      "actual_max": 0.779995422293431
+    },
+    {
+      "name": "mid authored new TBN orthonormal handed",
+      "passed": true
+    },
+    {
+      "name": "mid rig and embedded clips JSON exact",
+      "passed": true
+    },
+    {
+      "name": "far exact material/sampler/texture/image JSON",
+      "passed": true
+    },
+    {
+      "name": "far embedded image bytes exact",
+      "passed": true
+    },
+    {
+      "name": "far opaque double-sided hair with exact material name",
+      "passed": true
+    },
+    {
+      "name": "far normalized alpha semantic new mask",
+      "passed": true,
+      "actual_max": 0.779995422293431
+    },
+    {
+      "name": "far authored new TBN orthonormal handed",
+      "passed": true
+    },
+    {
+      "name": "far rig and embedded clips JSON exact",
+      "passed": true
+    },
+    {
+      "name": "woven texture is scalar linear-data PNG",
+      "passed": true
+    },
+    {
+      "name": "shader red roughness channel is independent of base sRGB",
+      "passed": true
+    },
+    {
+      "name": "opacity does not consume alpha motion mask",
+      "passed": true
+    },
+    {
+      "name": "wrong channel adversary is distinguishable",
+      "passed": true
+    },
+    {
+      "name": "actual texture remains moderate roughness",
+      "passed": true,
+      "minimum": 0.7725490196078432,
+      "mean": 0.7899816176470591,
+      "maximum": 0.8117647058823529
+    },
+    {
+      "name": "source profile scopes material replacement and resource sharing",
+      "passed": true
+    }
+  ],
+  "levels": [
+    {
+      "level": "near",
+      "source_sha256": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+      "candidate_sha256": "bdd917daa88254bdf203fd0bb92c7fb1167fda05a3c223dea4c9f3a3bc0453d1",
+      "material_count": 13,
+      "image_count": 17,
+      "new_alpha_displacement_max_m": 0.010951071458376739
+    },
+    {
+      "level": "mid",
+      "source_sha256": "27d998d924d2732b13bc8e18c3e3ec1ce9d58f0408bf3fda1ff0613cf32cba9f",
+      "candidate_sha256": "2622da50c4c826868b815369461178c5d090878f5a1a7c77c39641eefe14a216",
+      "material_count": 13,
+      "image_count": 17,
+      "new_alpha_displacement_max_m": 0.010951071458376739
+    },
+    {
+      "level": "far",
+      "source_sha256": "ea9818e1464c9b6bc077ae83f8354a6357fb19d2a18fc84b2deb65c58aff901a",
+      "candidate_sha256": "01605c3e6bcbdd92f5ddfab8673ded728d26c10f7d17e095da8a93b14a468267",
+      "material_count": 13,
+      "image_count": 17,
+      "new_alpha_displacement_max_m": 0.010951071458376739
+    }
+  ],
+  "texture_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500",
+  "source_hashes": {
+    "games/yuga-native/scripts/rama_surface_finish.gd": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+    "games/yuga-native/scripts/rama_secondary_motion.gd": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+    "games/yuga-native/shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+    "games/yuga-native/art/visual-rounds/cloth/material-profile.json": "f4ffe5e11364e1aa5905a93731063f24b4ca96036bceb963c84d26503caa299a",
+    "games/yuga-native/docs/evidence/visual-rounds/round3/role09/audit_source.py": "73ce71b77955465df0b2218d3e0655c7252b156cb72b7493693a846be1c0ab65",
+    "games/yuga-native/docs/evidence/visual-rounds/round3/role09/glb_read.py": "f58e828082dfc801a3d51ff6d887381ecdaf2033d8087e242f6a111c19b40dc2"
+  },
+  "scope": "Independent source/material/channel audit. Imported lifecycle and actual resource format require separate staged engine evidence. Baseline secondary shader still retains old TBN after displacement; optional frame experiment excluded."
+}

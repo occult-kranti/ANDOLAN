@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the native visual campaign's source-bound contracts after Godot import.
+"""Run source-bound native visual or screen contracts after Godot import.
 
 Both cloud setup and CI call this catalog. Strict process lifetime and report
 validation come from the existing authoring runner. These tests do not render
@@ -36,6 +36,25 @@ SUITES = (
     ("native-content-pins", "python", "tools/check-native-contracts.py", ()),
     ("native-contract-admission", "godot", "tests/native_contract_cases.gd", ()),
 )
+SCREEN_SUITES = (
+    ("ui-launch", "godot", "tests/launch_shell_cases.gd", ()),
+    ("ui-theme", "godot", "tests/ui_theme_cases.gd", ()),
+    ("ui-fonts", "godot", "tests/ui_font_cases.gd", ()),
+    ("ui-hud-information", "godot", "tests/ui_hud_information_cases.gd", ()),
+    ("ui-hud-context", "godot", "tests/ui_hud_context_cases.gd", ()),
+    ("ui-controls-state", "godot", "tests/ui_controls_state_cases.gd", ()),
+    ("ui-controls-lifecycle", "godot", "tests/ui_controls_lifecycle_cases.gd", ()),
+    ("ui-guide-capabilities", "godot", "tests/ui_guide_capability_cases.gd", ()),
+    ("ui-launch-integration", "godot", "tests/ui_launch_integration_cases.gd", ()),
+    ("ui-end-to-end", "godot", "tests/ui_end_to_end_cases.gd", ()),
+    ("ui-transition-lifecycle", "godot", "tests/ui_transition_lifecycle_cases.gd", ()),
+    ("ui-boot-native", "godot", "tests/ui_boot_cases.gd", ("--native",)),
+    ("ui-world-objectives", "godot", "tests/ui_world_objective_cases.gd", ()),
+    ("ui-pause-navigation", "godot", "tests/ui_pause_navigation_cases.gd", ()),
+    ("ui-map-consistency", "godot", "tests/ui_theme_map_consistency_cases.gd", ()),
+    ("ui-independent-modal", "godot", "tests/ui_independent_modal_cases.gd", ()),
+)
+SCREEN_LIMITS = "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance."
 
 
 def sources(selected: list[tuple]) -> dict:
@@ -55,15 +74,20 @@ def main() -> int:
     parser.add_argument("--engine", default="godot")
     parser.add_argument("--python", dest="python_engine", default=sys.executable)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--suite", action="append", choices=[item[0] for item in SUITES])
+    parser.add_argument("--catalog", choices=["visual", "screens"], default="visual")
+    parser.add_argument("--suite", action="append", choices=[item[0] for item in (*SUITES, *SCREEN_SUITES)])
     parser.add_argument("--list", action="store_true")
     parser.add_argument("--timeout", type=float, default=120.0)
     parser.add_argument("--max-cpus", type=int, default=2)
     args = parser.parse_args()
-    selected = [item for item in SUITES if not args.suite or item[0] in args.suite]
+    catalog = SUITES if args.catalog == "visual" else SCREEN_SUITES
+    limits = LIMITS if args.catalog == "visual" else SCREEN_LIMITS
+    if args.suite and not set(args.suite).issubset({item[0] for item in catalog}):
+        parser.error("Every --suite must belong to the selected --catalog")
+    selected = [item for item in catalog if not args.suite or item[0] in args.suite]
     if args.list:
         print(json.dumps({"suites": [{"id": i, "kind": k, "source": s, "arguments": a}
-                         for i, k, s, a in selected], "scope": LIMITS}, indent=2))
+                         for i, k, s, a in selected], "scope": limits}, indent=2))
         return 0
     if args.output is None or not math.isfinite(args.timeout) or not 0 < args.timeout <= 1800 or not 1 <= args.max_cpus <= 64:
         parser.error("A fresh --output, timeout in (0,1800] and max-cpus in [1,64] are required")
@@ -84,7 +108,7 @@ def main() -> int:
         os.sched_setaffinity(0, sorted(os.sched_getaffinity(0))[:args.max_cpus])
     before = sources(selected)
     helper.write_json(output / "source-before.json", before)
-    summary = {"schema": 1, "passed": False, "scope": LIMITS, "selected_suites": [item[0] for item in selected],
+    summary = {"schema": 1, "passed": False, "catalog":args.catalog, "scope": limits, "selected_suites": [item[0] for item in selected],
                "suites": [], "sources_before_sha256": helper.sha(output / "source-before.json")}
     helper.write_json(output / "summary.json", summary)
     env = os.environ.copy()
@@ -127,7 +151,7 @@ def main() -> int:
     summary["checks"] = sum(item.get("checks", 0) for item in summary["suites"])
     summary["passed"] = bool(summary["suites"]) and summary["checked_sources_unchanged"] and all(item["passed"] for item in summary["suites"])
     helper.write_json(output / "summary.json", summary)
-    print(json.dumps({"passed": summary["passed"], "suites": len(selected), "checks": summary["checks"], "output": str(output), "scope": LIMITS}))
+    print(json.dumps({"passed": summary["passed"], "suites": len(selected), "checks": summary["checks"], "output": str(output), "scope": limits}))
     return 0 if summary["passed"] else 1
 
 

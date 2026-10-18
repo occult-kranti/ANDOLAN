@@ -1,0 +1,119 @@
+{
+	"checks": [
+		{
+			"name": "Configured main scene is the light boot",
+			"passed": true
+		},
+		{
+			"name": "Configured boot reaches usable title",
+			"passed": true
+		},
+		{
+			"name": "Keyboard primary enters real Confluence",
+			"passed": true
+		},
+		{
+			"name": "World Escape opens pause",
+			"passed": true
+		},
+		{
+			"name": "World return failure is recoverable",
+			"passed": true
+		},
+		{
+			"name": "World and explicit processing are isolated during error",
+			"passed": true
+		},
+		{
+			"name": "Duplicate world return cannot start another attempt",
+			"passed": true
+		},
+		{
+			"name": "Back restores paused world and exact Return focus",
+			"passed": true
+		},
+		{
+			"name": "World return uses threaded loader to restore title",
+			"passed": true
+		},
+		{
+			"name": "Round trip disposes world and reuses loader",
+			"passed": true
+		},
+		{
+			"name": "Keyboard training starts player and HUD",
+			"passed": true
+		},
+		{
+			"name": "Training Escape opens pause",
+			"passed": true
+		},
+		{
+			"name": "Pause settings remains paused",
+			"passed": true
+		},
+		{
+			"name": "Settings opens real controls dialog",
+			"passed": true
+		},
+		{
+			"name": "Keyboard activates binding capture",
+			"passed": true
+		},
+		{
+			"name": "First Escape cancels capture without closing controls",
+			"passed": true
+		},
+		{
+			"name": "Second Escape returns to settings",
+			"passed": true
+		},
+		{
+			"name": "Third Escape returns to training pause",
+			"passed": true
+		},
+		{
+			"name": "Return to title ends training and restores selection",
+			"passed": true
+		},
+		{
+			"name": "Keyboard utility opens real film",
+			"passed": true
+		},
+		{
+			"name": "Film return pauses playback before scene load",
+			"passed": true
+		},
+		{
+			"name": "Cancelled film return restores playback",
+			"passed": true
+		},
+		{
+			"name": "Focus loss during cancelled return keeps film paused",
+			"passed": true
+		},
+		{
+			"name": "Film Escape returns through same loader",
+			"passed": true
+		},
+		{
+			"name": "Entire path retains one transition layer",
+			"passed": true
+		}
+	],
+	"failed": 0,
+	"passed": 25,
+	"scope": "Existing-import native scenes; navigation primarily real Input.parse_input_event keyboard dispatch; explicit fault injection and film lifecycle calls are identified in source. Actual XTest/framebuffer gate is separate.",
+	"sources": {
+		"project.godot": "976c5fe71bb7a735013b02287701b95fc3c42452e8876675c0250b49c8a96c95",
+		"scripts/boot.gd": "14446f76ddb4ee8d5b394af50213c3d1ff9ef9ea5715c78216df48890d03e821",
+		"scripts/combat_film.gd": "2ec53730d0f86290e6ef230972b9f4635853f26f467b96c6de985ea9da1b2ac6",
+		"scripts/confluence_world.gd": "42a6ec8df335e3fd11674ef723eff8b027f636cbbc6d3a51f80eb256d63b802f",
+		"scripts/controls_overlay.gd": "38f94e4d4c5cb2226b006c4d9db9b869da3ac98716c6adff96b33078ee593194",
+		"scripts/courtyard.gd": "3216d9947ec7423ea53dd62ce058a996bf4529a3b9cdf8e9b559d3e3619fbba4",
+		"scripts/rama_hero_hud.gd": "3f34c07e2098e637653463b36a84996bd7ea34e2ac1490ebb220f364bb9ccc7c",
+		"scripts/scene_transition.gd": "3e026a5f2138d175cc80f4d2c57787b37a63947701ebd3a170f7761ab80f1262",
+		"tests/ui_end_to_end_cases.gd": "341345278852d6f9fe81eefc1cb0485b27f8a6192e5b114a875a9ff4d059fade"
+	},
+	"suite": "ui-independent-integrated-flow"
+}

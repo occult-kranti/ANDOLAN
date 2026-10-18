@@ -17,6 +17,11 @@ var detail_range: Label
 var detail_context: Label
 var key_label: Label
 var status_label: Label
+var effects_notice: Label
+var reduced_effects_button: CheckButton
+var reduced_motion_button: CheckButton
+var details_scroll: ScrollContainer
+var abilities_scroll: ScrollContainer
 var focus_order: Array[Control] = []
 var selected_id := "kodanda"
 var context := "confluence"
@@ -26,6 +31,8 @@ var _return_focus: WeakRef
 var _split: HBoxContainer
 var _list: VBoxContainer
 var _last_size := Vector2.ZERO
+var _effects_receiver: WeakRef
+var _effects_options := {"reduced_effects":false,"reduced_motion":false}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -45,16 +52,16 @@ func set_action_map(actions: Dictionary) -> void:
 
 func _build() -> void:
 	var shade := ColorRect.new()
-	shade.color = Color(.01, .02, .035, .8)
+	shade.color = Color(UI.DEEP, .94)
 	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(shade)
 	card = PanelContainer.new()
 	card.name = "Card"
-	card.add_theme_stylebox_override("panel", UI.panel_style(true, 24))
+	card.add_theme_stylebox_override("panel", UI.panel_style(true, UI.SPACE_LG))
 	add_child(card)
 	var stack := VBoxContainer.new()
-	stack.add_theme_constant_override("separation", 16)
+	stack.add_theme_constant_override("separation", UI.SPACE_MD)
 	card.add_child(stack)
 	var header := HBoxContainer.new()
 	stack.add_child(header)
@@ -62,8 +69,8 @@ func _build() -> void:
 	heading.add_theme_constant_override("separation", 2)
 	heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(heading)
-	heading.add_child(UI.label("RAMA’S ABILITIES", 13, UI.GOLD))
-	var title := UI.label("The solar archer", 32)
+	heading.add_child(UI.label("RAMA · BOW + FOUR ABILITIES", UI.TYPE_CAPTION, UI.GOLD))
+	var title := UI.label("The solar archer", UI.TYPE_TITLE)
 	title.add_theme_font_override("font", UI.display_font())
 	heading.add_child(title)
 	status_label = UI.label("Offline practice", 14, UI.MIST)
@@ -71,23 +78,28 @@ func _build() -> void:
 	header.add_child(status_label)
 	stack.add_child(HSeparator.new())
 	_split = HBoxContainer.new()
-	_split.add_theme_constant_override("separation", 28)
+	_split.add_theme_constant_override("separation", UI.SPACE_LG)
 	_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	stack.add_child(_split)
+	abilities_scroll = ScrollContainer.new()
+	abilities_scroll.name = "AbilitiesScroll"
+	abilities_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	abilities_scroll.follow_focus = true
+	_split.add_child(abilities_scroll)
 	_list = VBoxContainer.new()
-	_list.add_theme_constant_override("separation", 10)
-	_list.custom_minimum_size.x = 236
-	_split.add_child(_list)
-	var scroll := ScrollContainer.new()
-	scroll.name = "DetailsScroll"
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.follow_focus = true
-	_split.add_child(scroll)
+	_list.add_theme_constant_override("separation", UI.SPACE_SM)
+	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	abilities_scroll.add_child(_list)
+	details_scroll = ScrollContainer.new()
+	details_scroll.name = "DetailsScroll"
+	details_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	details_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	details_scroll.follow_focus = true
+	_split.add_child(details_scroll)
 	var detail := VBoxContainer.new()
-	detail.add_theme_constant_override("separation", 16)
+	detail.add_theme_constant_override("separation", UI.SPACE_MD)
 	detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(detail)
+	details_scroll.add_child(detail)
 	key_label = UI.label("LMB  /  PRIMARY", 13, UI.GOLD)
 	detail.add_child(key_label)
 	detail_title = UI.label("Kodanda", 29)
@@ -102,10 +114,24 @@ func _build() -> void:
 	detail.add_child(detail_range)
 	detail_context = _wrapped("", 14, UI.MIST)
 	detail.add_child(detail_context)
+	detail.add_child(HSeparator.new())
+	detail.add_child(UI.label("Ability effects", UI.TYPE_BODY, UI.GOLD))
+	for item in [{"key":"reduced_effects","text":"Fewer decorative layers"},{"key":"reduced_motion","text":"Still ornamental motion"}]:
+		var toggle := CheckButton.new()
+		toggle.name = item.key
+		toggle.text = item.text
+		toggle.custom_minimum_size.y = UI.TARGET_MIN
+		toggle.disabled = true
+		toggle.toggled.connect(_change_effect_option.bind(item.key))
+		detail.add_child(toggle)
+		if item.key == "reduced_effects": reduced_effects_button = toggle
+		else: reduced_motion_button = toggle
+	effects_notice = _wrapped("Ability effects settings are unavailable in this view.", UI.TYPE_CAPTION, UI.MIST)
+	detail.add_child(effects_notice)
 	var footer := HBoxContainer.new()
-	footer.add_theme_constant_override("separation", 20)
+	footer.add_theme_constant_override("separation", UI.SPACE_LG)
 	stack.add_child(footer)
-	var note := _wrapped("Choose an ability to see its use and timing.\nEsc or F3 returns to your previous screen.", 13, UI.MIST)
+	var note := _wrapped("Select an ability · PgUp / PgDn scroll details.\n%s or %s returns to your previous screen." % [Bindings.label("pause_game"),Bindings.label("open_invocations")], 13, UI.MIST)
 	note.custom_minimum_size.x = 280
 	note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	footer.add_child(note)
@@ -124,18 +150,22 @@ func _load_kit() -> void:
 		return
 	for ability in data.abilities:
 		if not ability is Dictionary or not _actions.has(ability.get("id")): continue
+		if ability.id in ["kodanda","piercing_dawn"]:
+			var group := UI.label("Bow" if ability.id == "kodanda" else "Four abilities", UI.TYPE_CAPTION, UI.MIST)
+			group.name = "BowHeading" if ability.id == "kodanda" else "AbilitiesHeading"
+			_list.add_child(group)
 		_rules[ability.id] = ability
 		var button := Button.new()
 		button.name = ability.id
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		button.custom_minimum_size.y = 48
+		button.custom_minimum_size.y = UI.TARGET_MIN
 		UI.button(button)
 		button.add_theme_font_size_override("font_size", 16)
 		button.pressed.connect(func(): select_ability(ability.id))
 		_list.add_child(button)
 		ability_buttons[ability.id] = button
 		focus_order.append(button)
-	focus_order.append(close_button)
+	focus_order.append_array([reduced_effects_button,reduced_motion_button,close_button])
 	refresh_bindings()
 	select_ability(selected_id)
 
@@ -152,7 +182,7 @@ func refresh_bindings() -> void:
 
 func _binding(id: String) -> String:
 	var action: String = _actions.get(id, "")
-	if action == "fire": return "LMB"
+	if action == "fire": return Bindings.label(action)
 	return Bindings.label(action) if InputMap.has_action(action) else str(_rules.get(id, {}).get("key", "—"))
 
 func select_ability(id: String) -> void:
@@ -162,19 +192,61 @@ func select_ability(id: String) -> void:
 	key_label.text = "%s  /  %s" % [_binding(id), "PRIMARY" if id == "kodanda" else ("ULTIMATE" if id == "dawn_volley" else "ABILITY")]
 	detail_title.text = rule.label
 	detail_description.text = rule.description
-	detail_timing.text = "Cooldown  %s s\nDraw / preparation  %s s" % [_number(rule.get("cooldown_s", 0)), _number(rule.get("windup_s", 0))]
+	detail_timing.text = "Cooldown  %s s\nDraw / preparation  %s s\nRecovery  %s s" % [_number(rule.get("cooldown_s", 0)), _number(rule.get("windup_s", 0)), _number(rule.get("recovery_s", 0))]
+	if rule.has("active_s"): detail_timing.text += "\nDuration  %s s" % _number(rule.active_s)
 	detail_range.text = "Range  %s m" % _number(rule.get("range_m", 0))
 	if id == "guardian_circle": detail_range.text += "  ·  Radius  %s m" % _number(rule.get("radius_m", 0))
 	detail_context.text = "Use the bow, movement and abilities against the courtyard targets." if context == "courtyard" else "Aim into Confluence’s lanes. Abilities resolve against troops and solid cover."
 	for ability_id in ability_buttons:
 		var button: Button = ability_buttons[ability_id]
-		var style := UI.panel_style(false, 12)
-		style.bg_color = Color("2c4654") if ability_id == id else Color("13232d")
-		style.border_color = UI.GOLD if ability_id == id else UI.LINE
-		style.border_width_left = 3 if ability_id == id else 1
-		style.content_margin_top = 11
-		style.content_margin_bottom = 11
-		button.add_theme_stylebox_override("normal", style)
+		UI.button_variant(button,&"selected" if ability_id == id else &"secondary")
+	details_scroll.scroll_vertical = 0
+
+func configure_effects(receiver: Node) -> void:
+	_effects_receiver = weakref(receiver) if is_instance_valid(receiver) and receiver.has_method("set_options") else null
+	_load_effect_options()
+
+func _effect_receiver() -> Node:
+	return _effects_receiver.get_ref() if _effects_receiver else null
+
+func _load_effect_options() -> void:
+	var receiver := _effect_receiver()
+	for toggle in [reduced_effects_button,reduced_motion_button]: toggle.disabled = not is_instance_valid(receiver)
+	if not is_instance_valid(receiver):
+		effects_notice.text = "Ability effects settings are unavailable in this view."
+		return
+	var result := Bindings.read_config(Bindings.config_path)
+	if not result.ok:
+		effects_notice.text = "Could not read effect preferences. Current ability effects are unchanged."
+	else:
+		for key in _effects_options:
+			var value: Variant = result.config.get_value("rama_effects",key,false)
+			if value is bool: _effects_options[key] = value
+		effects_notice.text = "Rama’s ability effects only. Warnings and timing stay visible."
+	receiver.set_options(_effects_options)
+	_sync_effect_controls()
+
+func _sync_effect_controls() -> void:
+	reduced_effects_button.set_pressed_no_signal(_effects_options.reduced_effects)
+	reduced_motion_button.set_pressed_no_signal(_effects_options.reduced_motion)
+
+func _change_effect_option(value: bool, key: String) -> void:
+	var receiver := _effect_receiver()
+	if not _accepts_input() or not is_instance_valid(receiver) or not _effects_options.has(key):
+		_sync_effect_controls()
+		return
+	var candidate := _effects_options.duplicate()
+	candidate[key] = value
+	var result := Bindings.merge_settings({"rama_effects":candidate},Bindings.config_path)
+	if not result.ok:
+		_sync_effect_controls()
+		effects_notice.text = "Could not save effect preferences. Current ability effects are unchanged."
+		effects_notice.add_theme_color_override("font_color",UI.GOLD)
+		return
+	_effects_options = candidate
+	receiver.set_options(_effects_options)
+	effects_notice.text = "Ability effect preferences saved. Warnings and timing stay visible."
+	effects_notice.add_theme_color_override("font_color",UI.MIST)
 
 func _number(value: Variant) -> String:
 	return ("%.2f" % float(value)).trim_suffix("0").trim_suffix(".0")
@@ -185,10 +257,12 @@ func open(screen_context: String = "confluence", return_focus: Control = null) -
 	status_label.text = "Bow training" if context == "courtyard" else "Confluence practice"
 	Bindings.release_gameplay()
 	refresh_bindings()
+	_load_effect_options()
 	show()
 	_layout()
-	if ability_buttons.has(selected_id): ability_buttons[selected_id].grab_focus()
-	else: close_button.grab_focus()
+	if _accepts_input():
+		if ability_buttons.has(selected_id): ability_buttons[selected_id].grab_focus()
+		else: close_button.grab_focus()
 
 func close() -> void:
 	if not visible: return
@@ -199,16 +273,35 @@ func close() -> void:
 	if is_instance_valid(previous) and previous.is_visible_in_tree(): previous.grab_focus()
 
 func _input(event: InputEvent) -> void:
-	if not visible: return
+	if not _accepts_input(): return
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode in [KEY_ESCAPE, KEY_F3]:
+		var key: int = event.physical_keycode if event.physical_keycode else event.keycode
+		if key in [KEY_ESCAPE, KEY_F3]:
 			close()
 			get_viewport().set_input_as_handled()
-		elif event.keycode in [KEY_TAB, KEY_UP, KEY_DOWN]:
-			var direction := -1 if (event.keycode == KEY_UP or (event.keycode == KEY_TAB and event.shift_pressed)) else 1
-			var current := focus_order.find(get_viewport().gui_get_focus_owner())
-			focus_order[posmod(current + direction, focus_order.size())].grab_focus()
+		elif key in [KEY_PAGEUP,KEY_PAGEDOWN,KEY_HOME,KEY_END]:
+			var step := maxi(1,int(details_scroll.size.y)-UI.SPACE_LG)
+			if key == KEY_HOME: details_scroll.scroll_vertical = 0
+			elif key == KEY_END: details_scroll.scroll_vertical = int(details_scroll.get_v_scroll_bar().max_value)
+			else: details_scroll.scroll_vertical += step * (-1 if key == KEY_PAGEUP else 1)
 			get_viewport().set_input_as_handled()
+		elif key in [KEY_TAB, KEY_UP, KEY_DOWN]:
+			var available: Array[Control] = []
+			for control in focus_order:
+				if control.is_visible_in_tree() and (not control is BaseButton or not control.disabled): available.append(control)
+			if available.is_empty(): return
+			var direction := -1 if (key == KEY_UP or (key == KEY_TAB and event.shift_pressed)) else 1
+			var current := available.find(get_viewport().gui_get_focus_owner())
+			available[posmod(current + direction, available.size())].grab_focus()
+			get_viewport().set_input_as_handled()
+
+func _accepts_input() -> bool:
+	if not is_visible_in_tree(): return false
+	var ancestor := get_parent()
+	while ancestor:
+		if ancestor.process_mode == Node.PROCESS_MODE_DISABLED: return false
+		ancestor = ancestor.get_parent()
+	return true
 
 func _process(_delta: float) -> void:
 	if not visible: return
@@ -222,5 +315,5 @@ func _layout() -> void:
 	_last_size = get_viewport_rect().size
 	card.size = Vector2(minf(920, _last_size.x - 48), minf(520, _last_size.y - 48))
 	card.position = (_last_size - card.size) * .5
-	_list.custom_minimum_size.x = 236 if _last_size.x >= 1100 else 214
-	_split.add_theme_constant_override("separation", 28 if _last_size.x >= 1100 else 20)
+	abilities_scroll.custom_minimum_size.x = 252 if _last_size.x >= 1100 else 236
+	_split.add_theme_constant_override("separation", UI.SPACE_LG)

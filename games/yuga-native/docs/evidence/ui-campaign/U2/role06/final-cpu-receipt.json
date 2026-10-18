@@ -1,0 +1,55 @@
+{
+  "runs": [
+    {
+      "suite": "ui_end_to_end_cases",
+      "command": [
+        "taskset",
+        "-c",
+        "0,1",
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/ui_end_to_end_cases.gd",
+        "--",
+        "--report=/tmp/yuga-ui-final-cpu-r1/ui_end_to_end_cases.json"
+      ],
+      "exit_code": 0,
+      "passed": 25
+    },
+    {
+      "suite": "ui_transition_lifecycle_cases",
+      "command": [
+        "taskset",
+        "-c",
+        "0,1",
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/ui_transition_lifecycle_cases.gd",
+        "--",
+        "--report=/tmp/yuga-ui-final-cpu-r1/ui_transition_lifecycle_cases.json"
+      ],
+      "exit_code": 0,
+      "passed": 20
+    }
+  ],
+  "source_sha256": {
+    "project.godot": "976c5fe71bb7a735013b02287701b95fc3c42452e8876675c0250b49c8a96c95",
+    "scripts/boot.gd": "14446f76ddb4ee8d5b394af50213c3d1ff9ef9ea5715c78216df48890d03e821",
+    "scripts/courtyard.gd": "3216d9947ec7423ea53dd62ce058a996bf4529a3b9cdf8e9b559d3e3619fbba4",
+    "scripts/confluence_world.gd": "42a6ec8df335e3fd11674ef723eff8b027f636cbbc6d3a51f80eb256d63b802f",
+    "scripts/combat_film.gd": "2ec53730d0f86290e6ef230972b9f4635853f26f467b96c6de985ea9da1b2ac6",
+    "scripts/scene_transition.gd": "3e026a5f2138d175cc80f4d2c57787b37a63947701ebd3a170f7761ab80f1262",
+    "scripts/hero_ui_theme.gd": "39e43f426e65475fd134fd9bd9515d1505edc90b6969394017995b641693abc4",
+    "scripts/controls_overlay.gd": "38f94e4d4c5cb2226b006c4d9db9b869da3ac98716c6adff96b33078ee593194",
+    "scripts/rama_hero_hud.gd": "3f34c07e2098e637653463b36a84996bd7ea34e2ac1490ebb220f364bb9ccc7c",
+    "tests/ui_end_to_end_cases.gd": "341345278852d6f9fe81eefc1cb0485b27f8a6192e5b114a875a9ff4d059fade",
+    "tests/ui_transition_lifecycle_cases.gd": "a7996f6ab35267f608b27085df47ab96dd9a65b33699f9bfc5531bf8427f58cf"
+  },
+  "source_unchanged": true,
+  "scope": "Existing imported resources; three current raw hero GLBs still require refreshed serialized imports before visual qualification."
+}

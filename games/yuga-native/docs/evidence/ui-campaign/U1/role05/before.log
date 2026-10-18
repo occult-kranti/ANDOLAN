@@ -1,0 +1,22 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS opening focuses first mapping
+PASS Shift Tab wraps first mapping to Done and skips disabled Cancel
+PASS Tab wraps Done to first mapping without reaching host
+PASS complete idle focus loop includes all enabled controls only
+PASS conflicting input leaves capture and bindings intact
+FAIL Tab during capture reaches next mapping without consuming capture
+PASS Shift Tab during capture returns to mapping
+FAIL Enter activates focused Cancel during capture
+PASS first Escape cancels capture and retains modal
+PASS second Escape closes and host restores original opener
+PASS hidden modal ignores key events
+PASS engine-dispatched remap saves and refreshes label
+FAIL Enter on Reset cancels capture and persists defaults
+FAIL Enter on Done closes capture without remapping
+FAIL save failure stays visible and preserves active binding
+FAIL reset save failure cancels capture without false change event
+FAIL long labels and failure status fit (960, 540)
+FAIL long labels and failure status fit (1280, 720)
+FAIL controls use shared semantic panel and minimum targets
+YUGA_UI_CONTROLS_STATE {"checks":[{"details":{},"name":"opening focuses first mapping","passed":true},{"details":{},"name":"Shift Tab wraps first mapping to Done and skips disabled Cancel","passed":true},{"details":{},"name":"Tab wraps Done to first mapping without reaching host","passed":true},{"details":{},"name":"complete idle focus loop includes all enabled controls only","passed":true},{"details":{},"name":"conflicting input leaves capture and bindings intact","passed":true},{"details":{},"name":"Tab during capture reaches next mapping without consuming capture","passed":false},{"details":{},"name":"Shift Tab during capture returns to mapping","passed":true},{"details":{},"name":"Enter activates focused Cancel during capture","passed":false},{"details":{},"name":"first Escape cancels capture and retains modal","passed":true},{"details":{},"name":"second Escape closes and host restores original opener","passed":true},{"details":{},"name":"hidden modal ignores key events","passed":true},{"details":{},"name":"engine-dispatched remap saves and refreshes label","passed":true},{"details":{},"name":"Enter on Reset cancels capture and persists defaults","passed":false},{"details":{},"name":"Enter on Done closes capture without remapping","passed":false},{"details":{"status":"Settings could not be saved: File not found"},"name":"save failure stays visible and preserves active binding","passed":false},{"details":{},"name":"reset save failure cancels capture without false change event","passed":false},{"details":{"card":"[P: (80.5, 16.0), S: (799.0, 508.0)]","label":"[P: (100.5, 325.0), S: (627.0, 26.0)]","status":"[P: (100.5, 401.0), S: (759.0, 49.0)]"},"name":"long labels and failure status fit (960, 540)","passed":false},{"details":{"card":"[P: (240.5, 16.0), S: (799.0, 688.0)]","label":"[P: (260.5, 325.0), S: (627.0, 26.0)]","status":"[P: (260.5, 581.0), S: (759.0, 49.0)]"},"name":"long labels and failure status fit (1280, 720)","passed":false},{"details":{},"name":"controls use shared semantic panel and minimum targets","passed":false}],"passed":false,"scope":"Native engine-dispatched key press/release, focus, layout and persistence. No OS-window or rendered acceptance.","sources":{"res://scripts/controls_overlay.gd":"6d14246339aecda7cfafec1be386e976037f3b0bf47b982b9ed07a40ce4a6c07","res://scripts/hero_ui_theme.gd":"cc95ffdc4d2563c5a09b39fd70aab2cd84d6c8dc0810ce5eb905c971de3672e4","res://scripts/input_bindings.gd":"592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243","res://tests/ui_controls_state_cases.gd":"7d6eb9eb1c8957742e73e607142447f106798857b0703e377025c096b52ad978"}}

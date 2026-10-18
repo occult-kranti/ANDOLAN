@@ -20,6 +20,7 @@ var rejected_states := 0
 var reset_count := 0
 var last_reason := ""
 var _bindings: Array[Dictionary] = []
+var _cull_margins: Array[Dictionary] = []
 var _visual: Node3D
 var _last_position := Vector3.ZERO
 var _last_yaw := 0.0
@@ -83,26 +84,43 @@ func configure(visual: Node3D) -> bool:
 				if not is_finite(color.r) or not is_finite(color.g) or not is_finite(color.b) or not is_finite(color.a) or absf(color.r-1)>.001 or absf(color.g-1)>.001 or absf(color.b-1)>.001 or color.a<0 or color.a>1: return false
 				if color.a>.001: masked[kind] += 1
 				else: anchored[kind] += 1
-			staged.append({"mesh":mesh,"surface":surface,"original":mesh.get_surface_override_material(surface),"original_cull_margin":mesh.extra_cull_margin,"material":_material(source),"kind":kind})
+			staged.append({"mesh":mesh,"mesh_id":mesh.mesh.get_instance_id(),"surface":surface,"original":mesh.get_surface_override_material(surface),"original_cull_margin":mesh.extra_cull_margin,"material":_material(source),"kind":kind})
 	if staged.is_empty() or masked.cloth == 0 or masked.hair == 0 or anchored.cloth == 0 or anchored.hair == 0: return false
 	# No mesh arrays, LODs, skeleton state or shared imported materials are changed.
 	_bindings = staged
 	_visual = visual
 	_masked_vertices = masked
 	_anchored_vertices = anchored
+	var bounded_meshes := {}
 	for binding in _bindings:
 		binding.mesh.set_surface_override_material(binding.surface,binding.material)
-		binding.mesh.extra_cull_margin = maxf(binding.original_cull_margin,CLOTH_LIMIT+.005)
+		var id: int = binding.mesh.get_instance_id()
+		if not bounded_meshes.has(id):
+			binding.mesh.extra_cull_margin = maxf(binding.original_cull_margin,CLOTH_LIMIT+.005)
+			# Read back the property's stored precision for exact ownership checks.
+			_cull_margins.append({"mesh":binding.mesh,"original":binding.original_cull_margin,"applied":binding.mesh.extra_cull_margin})
+			bounded_meshes[id] = true
 	configured = true
 	name = "RamaSecondaryMotion"
 	return true
 
 func restore_materials() -> void:
+	var owned_meshes := {}
 	for binding in _bindings:
-		if is_instance_valid(binding.mesh) and binding.mesh.get_surface_override_material(binding.surface) == binding.material:
+		if not is_instance_valid(binding.mesh): continue
+		var id: int = binding.mesh.get_instance_id()
+		var owns_slot: bool = binding.mesh.mesh != null and binding.mesh.mesh.get_instance_id() == binding.mesh_id and binding.surface < binding.mesh.mesh.get_surface_count() and binding.mesh.get_surface_override_material(binding.surface) == binding.material
+		owned_meshes[id] = bool(owned_meshes.get(id,true)) and owns_slot
+		if owns_slot:
 			binding.mesh.set_surface_override_material(binding.surface,binding.original)
-			binding.mesh.extra_cull_margin = binding.original_cull_margin
+	for margin in _cull_margins:
+		if not is_instance_valid(margin.mesh): continue
+		# A margin belongs to the mesh, not each surface. Preserve later edits
+		# and replacements, including another owner's material on one surface.
+		if bool(owned_meshes.get(margin.mesh.get_instance_id(),false)) and margin.mesh.extra_cull_margin == margin.applied:
+			margin.mesh.extra_cull_margin = margin.original
 	_bindings.clear()
+	_cull_margins.clear()
 	_visual = null
 	configured = false
 

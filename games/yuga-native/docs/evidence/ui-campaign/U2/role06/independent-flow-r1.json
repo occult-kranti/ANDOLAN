@@ -1,0 +1,39 @@
+{
+	"checks": [
+		{
+			"name": "Configured main scene is the light boot",
+			"passed": true
+		},
+		{
+			"name": "Configured boot reaches usable title",
+			"passed": true
+		},
+		{
+			"name": "Keyboard primary enters real Confluence",
+			"passed": true
+		},
+		{
+			"name": "World Escape opens pause",
+			"passed": true
+		},
+		{
+			"name": "Return exposes queued phase before loading",
+			"passed": false
+		}
+	],
+	"failed": 1,
+	"passed": 4,
+	"scope": "Existing-import native scenes; navigation primarily real Input.parse_input_event keyboard dispatch; explicit fault injection and film lifecycle calls are identified in source. Actual XTest/framebuffer gate is separate.",
+	"sources": {
+		"project.godot": "976c5fe71bb7a735013b02287701b95fc3c42452e8876675c0250b49c8a96c95",
+		"scripts/boot.gd": "14446f76ddb4ee8d5b394af50213c3d1ff9ef9ea5715c78216df48890d03e821",
+		"scripts/combat_film.gd": "2ec53730d0f86290e6ef230972b9f4635853f26f467b96c6de985ea9da1b2ac6",
+		"scripts/confluence_world.gd": "38d68aacc11e354560245f681c5a6fc34897682db24b5ce734c455626c8e6ae8",
+		"scripts/controls_overlay.gd": "f84a1ff8f0599ee915128eb4339782e545d9f1cdcc4e3241372fc2fdcf451475",
+		"scripts/courtyard.gd": "a5429408e43b949758da68fa5c969012adb810059a4f55fe35d2f526ec794a02",
+		"scripts/rama_hero_hud.gd": "7fddf4dcaa84920761c77522c65ba3de4a08d8b1ef9aa748779e37906c7e6f0a",
+		"scripts/scene_transition.gd": "a65409cc1ade9c1baf0fe5b6fca8d9ccaab8c7b56061be5452556ee994b89e73",
+		"tests/ui_end_to_end_cases.gd": "8ecdc65d78a61afac40472fb44bf72a48b1f69d586fd5f500b77ad5c19df2b22"
+	},
+	"suite": "ui-independent-integrated-flow"
+}
