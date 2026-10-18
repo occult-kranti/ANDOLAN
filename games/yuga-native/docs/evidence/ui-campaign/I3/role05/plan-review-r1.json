@@ -1,0 +1,29 @@
+{
+  "status": "Two capture-fixture corrections requested; no runtime defect or edit.",
+  "inspected_sha256": {
+    "tools/ui-campaign/i3-package-first-plan.json": "b5cb501eb4cdad743fae1aaaa2666521486eb115f50543b5251901b07fe64c8a",
+    "tools/ui-campaign/i3-package-relaunch-plan.json": "e728f66073bbda37bce09afefb3e264d9ce8ffd764198066b42ecd73bbfd02b2",
+    "tools/ui-campaign/observer.gd": "1141044601db46b54f4eefd483f2f395be37504371d50cd37553e10132370837"
+  },
+  "findings": [
+    {
+      "issue": "audio_muted observation uses Master bus mute",
+      "evidence": "Product sound settings propagate volume to local receivers; AudioServer.is_bus_mute(0) is not changed by these callbacks.",
+      "required_fix": "Observe actual local volume receivers and preserve Master bus state as informational only."
+    },
+    {
+      "issue": "film-return focused text drops trailing arrow",
+      "evidence": "launch_shell.gd primary text is Begin bow training +two spaces+arrow.",
+      "required_fix": "Expect the exact displayed label, including arrow."
+    }
+  ],
+  "verified_contracts": [
+    "Sensitivity initial focus and End2.5",
+    "Tab to Volume and Home0",
+    "Actual checkbox text and Return toggle",
+    "Q uniquely reaches Binding_pulse before native J",
+    "guide.key_text J / ABILITY uses exact double-space separators",
+    "Guide effect state retains receiver and saved pair",
+    "Return to courtyard follows WorldVolume in native focus chain"
+  ]
+}

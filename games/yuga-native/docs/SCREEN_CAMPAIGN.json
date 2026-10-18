@@ -8,7 +8,7 @@
   "roles_per_round": 6,
   "assignments_requested": 48,
   "maximum_concurrent_workers": 6,
-  "status": "in_progress",
+  "status": "completed_bounded_campaign_published",
   "completion_policy": "Count each executed role outcome with source/evidence and a reviewed round checkpoint. A plan, reused old screenshot or numerical pass alone does not complete a rendered screen gate. Preserve original three15-role visual rounds.",
   "rounds": [
     {
@@ -37,7 +37,8 @@
               "sha256": "5c1a28af41f74996e559f1b622fb912cab298ce5b7ee633579dc26d2889d6f22"
             }
           ],
-          "review_disposition": "Implemented component with focused native checks; actual integrated screen rendering remains pending"
+          "review_disposition": "Implemented component with focused native checks; actual integrated screen rendering remains pending",
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U1-02",
@@ -59,7 +60,8 @@
               "sha256": "4f25aae8e0a22665faf1b320624a52a533294ca83d87f7a5a0e2029c9436e8e1"
             }
           ],
-          "review_disposition": "Implemented component with focused native checks; actual integrated screen rendering remains pending"
+          "review_disposition": "Implemented component with focused native checks; actual integrated screen rendering remains pending",
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U1-03",
@@ -82,14 +84,19 @@
             },
             {
               "path": "docs/evidence/ui-campaign/U1/role03/run-fixture.py",
-              "sha256": "1f7a19c5c8e77edba8736894d844c7042082666d73e6bb2501044d518941ba30"
+              "sha256": "aec88145b83346b87ddfc33766dbac3902de3b2d039b12ed83760d05df17d1c9",
+              "previous_recorded_sha256": [
+                "1f7a19c5c8e77edba8736894d844c7042082666d73e6bb2501044d518941ba30"
+              ],
+              "revision_note": "Current reproduction helper differs from initial registration. Original registered helper bytes were not recovered; U1 execution is bound by its archived actual command, test and runtime hashes, not this later helper."
             },
             {
               "path": "docs/evidence/ui-campaign/U1/role03/run.log",
               "sha256": "8909984554efd357b0ebc7e173955d1c954422ec2a0373d69f1f08c4d9871e9c"
             }
           ],
-          "review_disposition": "Actual component implementation and native tests returned; integrated rendered acceptance pending"
+          "review_disposition": "Actual component implementation and native tests returned; integrated rendered acceptance pending",
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U1-04",
@@ -143,7 +150,8 @@
               "sha256": "2309ff00ebce069835248a08ecb70e3bf0b99045250dab683de3002ec08b19d5"
             }
           ],
-          "review_disposition": "Actual component implementation and native tests returned; integrated rendered acceptance pending"
+          "review_disposition": "Actual component implementation and native tests returned; integrated rendered acceptance pending",
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U1-05",
@@ -185,7 +193,8 @@
               "sha256": "eb5c6fabcf60ed4b48c9136a3b47b3e38f45c29743fae18f58fbf8f024ec3e15"
             }
           ],
-          "review_disposition": "Actual component implementation and native tests returned; integrated rendered acceptance pending"
+          "review_disposition": "Actual component implementation and native tests returned; integrated rendered acceptance pending",
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U1-06",
@@ -635,7 +644,8 @@
               "sha256": "668756784ab3b2c09f69950e0ee9227b0a721299289ac4d6fbcf33e05c89203c"
             }
           ],
-          "review_disposition": "Actual isolated component board and XTest review completed; integrated 3D screens remain separate"
+          "review_disposition": "Actual isolated component board and XTest review completed; integrated 3D screens remain separate",
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         }
       ],
       "review": {
@@ -649,7 +659,18 @@
           "New launch is not yet visually accepted inside3Dworld",
           "Integratedsettings/guide/HUD/world/results review isqueued forU2/U3"
         ]
-      }
+      },
+      "final_render_reviews": [
+        {
+          "path": "docs/evidence/ui-campaign/U5/role02/REVIEW.md",
+          "sha256": "5f20222e0595c0b8394e12d11246a06e106062515bf74b1b16ae17d7aac001bd"
+        },
+        {
+          "path": "docs/evidence/ui-campaign/U5/role06/REVIEW.md",
+          "sha256": "a4f62b545d81bc559a06466e49763f0597867fc96a2d1cb0d060a9fc9b6ed291"
+        }
+      ],
+      "final_completion_note": "The historical component/round findings above retain their original scope. U3/U4 corrections and U5 actual-original reviews close the later integrated screen gate; compact readability and the graphics target remain limited."
     },
     {
       "id": "U2",
@@ -664,70 +685,90 @@
           "role": "Launch and navigation",
           "task": "Integrate launch shell into courtyard with old public control contracts and focus-return behavior.",
           "agent": "ui_01_launch",
-          "status": "completed_component_tests_pending_integrated_pixels",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/U2/role01/REVIEW.md",
               "sha256": "06e916c926e99935ad38dc376b60266b050c3c9760e9a50dd7c991d7ee5e562f"
             }
           ],
-          "review_disposition": null
+          "review_disposition": null,
+          "previous_recorded_status": [
+            "completed_component_tests_pending_integrated_pixels"
+          ],
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U2-02",
           "role": "Shared visual system",
           "task": "Apply tokens to mode/utility panels and remove duplicate style definitions identified by U1.",
           "agent": "ui_02_system",
-          "status": "completed_component_tests_pending_integrated_pixels",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/U2/role02/REVIEW.md",
               "sha256": "26bab76f0564dbc5e4b415a129b05ca34f32c0f4b980cc663d45e04a60e08d47"
             }
           ],
-          "review_disposition": null
+          "review_disposition": null,
+          "previous_recorded_status": [
+            "completed_component_tests_pending_integrated_pixels"
+          ],
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U2-03",
           "role": "Loading and recovery",
           "task": "Wire courtyard/world transitions to loader; test success/failure/cancellation and one scene owner.",
           "agent": "ui_03_loading",
-          "status": "completed_component_tests_pending_integrated_pixels",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/U2/role03/HANDOFF.md",
               "sha256": "16e8471748cbe30a02020a4f4903c9f7671285071eba9042db69462a90fda49d"
             }
           ],
-          "review_disposition": null
+          "review_disposition": null,
+          "previous_recorded_status": [
+            "completed_component_tests_pending_integrated_pixels"
+          ],
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U2-04",
           "role": "Combat HUD and map information",
           "task": "Connect match/training status to launch and pause information without fabricated online availability.",
           "agent": "ui_02_system",
-          "status": "completed_headless_pending_integrated_pixels",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/U2/role04/REVIEW.md",
               "sha256": "38ea0a90cda250e9e28fe83c0086452a17a05373ab47f269a5f1de16e7551fc9"
             }
           ],
-          "review_disposition": null
+          "review_disposition": null,
+          "previous_recorded_status": [
+            "completed_headless_pending_integrated_pixels"
+          ],
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U2-05",
           "role": "Settings, guide and controls",
           "task": "Integrate settings/help/guide navigation, nested Escape behavior and saved binding labels.",
           "agent": "ui_02_system",
-          "status": "completed_headless_pending_integrated_pixels",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/U2/role05/REVIEW.md",
               "sha256": "4d3cc7e2150af43debf434295fb32d8a705dedacb10b308232860f810fedec69"
             }
           ],
-          "review_disposition": null
+          "review_disposition": null,
+          "previous_recorded_status": [
+            "completed_headless_pending_integrated_pixels"
+          ],
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         },
         {
           "id": "U2-06",
@@ -741,10 +782,22 @@
               "sha256": "cc376deb39c23b3f85a40da97c9cc4ceea1bb3180811ad6d4345c725f5d045ee"
             }
           ],
-          "review_disposition": "Actual integrated input/render review complete with explicit follow-up defect; no art or hardware performance acceptance."
+          "review_disposition": "Actual integrated input/render review complete with explicit follow-up defect; no art or hardware performance acceptance.",
+          "final_review_disposition": "Bounded role complete; original evidence scope preserved, with the combined rendered gate closed by the separately pinned U5 reviews."
         }
       ],
-      "review": "All13 native input frames plus9 actual loading frames and5 recovery originals reviewed; pause heading clipping assigned and repaired in U3, with final rendered correction pending U5. Source-bound U2 evidence remains historical."
+      "review": "All13 native input frames plus9 actual loading frames and5 recovery originals reviewed; pause heading clipping assigned and repaired in U3, with final rendered correction pending U5. Source-bound U2 evidence remains historical.",
+      "final_render_reviews": [
+        {
+          "path": "docs/evidence/ui-campaign/U5/role02/REVIEW.md",
+          "sha256": "5f20222e0595c0b8394e12d11246a06e106062515bf74b1b16ae17d7aac001bd"
+        },
+        {
+          "path": "docs/evidence/ui-campaign/U5/role06/REVIEW.md",
+          "sha256": "a4f62b545d81bc559a06466e49763f0597867fc96a2d1cb0d060a9fc9b6ed291"
+        }
+      ],
+      "final_completion_note": "The historical component/round findings above retain their original scope. U3/U4 corrections and U5 actual-original reviews close the later integrated screen gate; compact readability and the graphics target remain limited."
     },
     {
       "id": "U3",
@@ -872,7 +925,11 @@
           "artifacts": [
             {
               "path": "docs/evidence/ui-rounds/round4/worker01/REVIEW.md",
-              "sha256": "8a2a3432e091a2493988e8e73160259e63f1b2970800f62478294facc0c89d73"
+              "sha256": "6f0b21be1c194577e54fa08fc737f9af931845e37f25bb119a66591478113828",
+              "previous_recorded_sha256": [
+                "8a2a3432e091a2493988e8e73160259e63f1b2970800f62478294facc0c89d73"
+              ],
+              "revision_note": "Current review includes later executed follow-up; previous registration hash retained."
             }
           ],
           "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim.",
@@ -921,7 +978,11 @@
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/U4/role04/REVIEW.md",
-              "sha256": "2e016cfc64e2b348dc4f0ba54fba2097f29ae53c0ad37977cf80166b6522070f"
+              "sha256": "04d56b8ffbe574ac2945b5bb19b50a2c41c184aa9bdf51ea2bff4b6520b7e739",
+              "previous_recorded_sha256": [
+                "2e016cfc64e2b348dc4f0ba54fba2097f29ae53c0ad37977cf80166b6522070f"
+              ],
+              "revision_note": "Current review includes later executed follow-up; previous registration hash retained."
             }
           ],
           "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim.",
@@ -939,7 +1000,11 @@
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/U4/role05/REVIEW.md",
-              "sha256": "f64e3a06bc970565644298ac5000721b7228c6dc88f2e2083e27b76deb87c7eb"
+              "sha256": "8bbec1d20649311c3c642c3c0e9b07e19961ca4b41769d915e2eaa26df3b35ee",
+              "previous_recorded_sha256": [
+                "f64e3a06bc970565644298ac5000721b7228c6dc88f2e2083e27b76deb87c7eb"
+              ],
+              "revision_note": "Current review includes later executed follow-up; previous registration hash retained."
             }
           ],
           "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim.",
@@ -1082,7 +1147,7 @@
     {
       "id": "I1",
       "title": "Integrate accepted hero art with complete UI",
-      "status": "native_integration_complete_content_identity_correction_in_progress",
+      "status": "completed_bounded_native_integration",
       "depends_on": [
         "U5"
       ],
@@ -1092,7 +1157,7 @@
           "role": "Launch and navigation",
           "task": "Check launch hero framing and navigation against accepted visual rounds2\u20134.",
           "agent": "r4_05_motion",
-          "status": "executed_review_sealing",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/I1/role01/REVIEW.md",
@@ -1106,7 +1171,7 @@
           "role": "Shared visual system",
           "task": "Check day/night world and character presentation behind UI and repair observed contrast defects.",
           "agent": "ui_06_acceptance",
-          "status": "executed_review_sealing",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/I1/role02/REVIEW.md",
@@ -1120,20 +1185,25 @@
           "role": "Loading and recovery",
           "task": "Check first-load/imported-resource availability and lifecycle with accepted asset provenance.",
           "agent": "r3_08_groom",
-          "status": "executed_review_sealing",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I1/role03/HANDOFF.md",
+              "sha256": "f340a63488553a71d6b7ca279819e927278f78d63f61ca41f27e759265e8ec44"
+            }
+          ],
+          "review_disposition": "Resource/import ancestry and fail-closed first-load package preparation reviewed; actual portable execution is separately qualified in I3."
         },
         {
           "id": "I1-04",
           "role": "Combat HUD and map information",
           "task": "Check movement/action/timer/HUD sync using actual combined runtime sources.",
           "agent": "ui_02_system",
-          "status": "executed_review_sealing",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/I1/role04/REVIEW.md",
-              "sha256": "4a091872429925d255f9536c0dff39f6ac91003b3457a1cbfa0fb7f5ed0f6f77"
+              "sha256": "f78d07a0edede0b39a9f2359e4bfffeb3b344098b75495ee209847450ab74078"
             }
           ],
           "review_disposition": null
@@ -1143,7 +1213,7 @@
           "role": "Settings, guide and controls",
           "task": "Check persisted controls/sound/display settings across both modes and scene returns.",
           "agent": "ui_02_system",
-          "status": "executed_review_sealing",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/I1/role05/REVIEW.md",
@@ -1157,11 +1227,21 @@
           "role": "Independent UI verification and packaging",
           "task": "Freeze integrated runtime; independently compare source pins, notices and actual views.",
           "agent": "root",
-          "status": "executed_review_sealing",
-          "artifacts": [],
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I1/role06/REVIEW.md",
+              "sha256": "4e13df4fb520429efe534678e67a45f4306035cf0854083a8e9c83814f4df2d9",
+              "previous_recorded_sha256": [
+                "b24346ed4987ebaf0eb9ac81a71d91ae0dfd874626fd994582c9b3c0f9f23af2"
+              ],
+              "revision_note": "Current review adds the executed content6 migration and final visual-catalog follow-up; previous registered review hash retained."
+            }
+          ],
           "review_disposition": null
         }
-      ]
+      ],
+      "qualification_note": "Finalscreen/UIruntime plus strictnativecontent6 identity correction accepted; I3 owns actualpackageoverviewwitness andfinaldelivery."
     },
     {
       "id": "I2",
@@ -1261,7 +1341,7 @@
     {
       "id": "I3",
       "title": "Package and release review",
-      "status": "rejected_first_export_identity_and_second_stale_contract_successor_preparing",
+      "status": "completed_bounded_package_review_published",
       "depends_on": [
         "I2"
       ],
@@ -1271,64 +1351,295 @@
           "role": "Launch and navigation",
           "task": "Inspect packaged launch/play/return path and repair package-only navigation defects.",
           "agent": "r4_05_motion",
-          "status": "assigned_pending_export",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I3/role01/REVIEW.md",
+              "sha256": "9e5c7a63e4359badb1a8062b31af4c32dc2a1aaf7d4e73c61f2ac5cade0249a6"
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role01/receipt.json",
+              "sha256": "89f8ae3dd44932a889cde816f8d447defa24f6b55a11ab979a77bd6feb827578"
+            }
+          ],
+          "review_disposition": "Bounded exact Linux launch, film-selection return, animated title idle, overview hold/resume and relaunch endpoints accepted; both late native recoveries retained, without an uninterrupted first-plan claim.",
+          "previous_recorded_status": [
+            "in_progress_actual_portable_review"
+          ]
         },
         {
           "id": "I3-02",
           "role": "Shared visual system",
           "task": "Inspect packaged fonts/images/themes and confirm all actual display dependencies included.",
           "agent": "ui_06_acceptance",
-          "status": "assigned_pending_export",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I3/role02/REVIEW.md",
+              "sha256": "95be14c05a815cdf62bafcbe428afb77232cdfa4d267682f153843ff4bb07d44"
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role02/capture-validation-receipt.json",
+              "sha256": "45bb688d0c38ba11ae3af0e19d9ea0321e6e3ff1807c7fbd8ac1b4a05eb972d7"
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role02/final-archive-audit.json",
+              "sha256": "c3f901bcf2e34e1e457f87b204e7a47a78072379c9ea2c6cce3ea6231e0853e9"
+            }
+          ],
+          "review_disposition": "Exact packaged fonts/theme/image dependencies accepted within scope: 14 structural predicates, 114 independent capture predicates over all 57 PNGs, and 33 directly opened originals. Compact text and both main-run recoveries remain explicit.",
+          "previous_recorded_status": [
+            "in_progress_actual_portable_review"
+          ]
         },
         {
           "id": "I3-03",
           "role": "Loading and recovery",
           "task": "Verify packaged scene loading and meaningful recoverable errors without source-only assumptions.",
           "agent": "ui_03_loading",
-          "status": "assigned_pending_export",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I3/role03/REVIEW.md",
+              "sha256": "ef098d7bef8b930fefcf48903a5e77172ea6ca2e3672ea704574f76a90cb8e68"
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role03/verification.json",
+              "sha256": "bc6651ac66101ddfc6ff4ac8c043452eb894ef2b4c67532e139c2fd4719298c6"
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role03/archive-replay-verification.json",
+              "sha256": "a194dfe73fdda4d8fde6a06cc01fd9ad9ea9dd23c3f8dc59911b2b20193f82d0"
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role03/archive-portability.json",
+              "sha256": "61b9d76ceeb8197c5d7a28549d114021eccd636c6117f9c147b6884668ae2ff5"
+            }
+          ],
+          "review_disposition": "Three actual Linux processes, 30 manual plus 27 automatic raw originals and three Quit 0 exits archived. Main has two native recoveries; nine staged manual views remain distinct. Archive replay 43/43 passes after exact original log copies.",
+          "previous_recorded_status": [
+            "in_progress_actual_portable_review"
+          ]
         },
         {
           "id": "I3-04",
           "role": "Combat HUD and map information",
           "task": "Inspect packaged HUD/map/outcomes and source-matched action/continuous-motion receipts.",
           "agent": "r2_06_capture",
-          "status": "assigned_pending_export",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I3/role04/REVIEW.md",
+              "sha256": "06d259f1ff6ffe76abee378e7adfb89bbf68d506f865bab73b16297dd98c1533",
+              "previous_recorded_sha256": [
+                "3b03c67d0b20d7117a1bd615a7a9828c94db86712b57f8af62150d8fe0720328",
+                "62cb4bac73432a1e7bddfc7ca6e39b274cb678a081241bec023ffc01d6b735fb"
+              ]
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role04/RESULT.json",
+              "sha256": "49f91533ce3127e00c43bdd8e33a8785670ac54d2d7e1eb2d26bf6ba78df11e4"
+            }
+          ],
+          "review_disposition": "Bounded actual HUD/map/overview and staged outcome acceptance: 14 directly inspected originals (5 native and 9 staged), with both main-run native recoveries, staged authority and small-text limits explicit.",
+          "previous_recorded_status": [
+            "in_progress_actual_portable_review"
+          ],
+          "previous_reviews": [
+            {
+              "path": "docs/evidence/ui-campaign/I3/role04/REVIEW-pre-package-final.md",
+              "sha256": "3b03c67d0b20d7117a1bd615a7a9828c94db86712b57f8af62150d8fe0720328"
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role04/REVIEW-before-second-recovery-note.md",
+              "sha256": "62cb4bac73432a1e7bddfc7ca6e39b274cb678a081241bec023ffc01d6b735fb"
+            }
+          ]
         },
         {
           "id": "I3-05",
           "role": "Settings, guide and controls",
           "task": "Inspect packaged settings persistence and keyboard controls using isolated user data.",
           "agent": "ui_02_system",
-          "status": "assigned_pending_export",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I3/role05/REVIEW.md",
+              "sha256": "cc7014184169fecb32e6759dc24ad8d3c4f0cc66fd7ed2fc3561f48638bd3a9a"
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role05/receipt-validation-r1.json",
+              "sha256": "df2700db1c9a210432c0dd37f7c70c6722d08b68a153b845fd18bd613d600d98"
+            }
+          ],
+          "review_disposition": "Native preference persistence accepted: 31 focused receipt checks and 11 directly inspected originals; same-XDG saved bytes survive genuine Quit/relaunch. Both first-run recoveries retained; Dummy audio does not establish listening.",
+          "previous_recorded_status": [
+            "in_progress_actual_portable_review"
+          ]
         },
         {
           "id": "I3-06",
           "role": "Independent UI verification and packaging",
           "task": "Build and qualify release artifacts, verify hashes/notices and archive independent publication disposition.",
           "agent": "r3_08_groom",
-          "status": "assigned_pending_export",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I3/role06/REVIEW.md",
+              "sha256": "cf0edea02ee613789b234a21cb81d9006fc40c15101fd347ec9dde41261d1a84"
+            },
+            {
+              "path": "docs/evidence/ui-campaign/I3/role06/BUILD-RECEIPT.json",
+              "sha256": "8f1bb8c0066a4429db9cdf7fe5e591bc2d71ddeb4d0eea098617184e2b4c8171"
+            }
+          ],
+          "review_disposition": "Exact Linux/Windows archives, contracts, notices, resources and source identity verified. Actual Linux execution belongs to the separate I3 reviewers; Windows remains unexecuted. Subsequent publication and independent public-download verification are qualified by the separately pinned publication follow-up, not retroactively claimed by the build review.",
+          "previous_recorded_status": [
+            "in_progress_actual_portable_review"
+          ],
+          "previous_recorded_review_disposition": [
+            "Exact Linux/Windows archives, contracts, notices, resources and source identity verified. Actual Linux execution belongs to the separate I3 reviewers; Windows remains unexecuted and publication pending."
+          ]
         }
       ],
-      "qualification_note": "r1 stopped on7newUIDs; r2 archives structurally valid but held/rejected for stale nativecontent5playerpin. Preserve originals. Revision6 and fail-closed package preflight are required before successor actualLinuxcapture."
+      "qualification_note": "Successor content6 package-r3 is source-bound and accepted within the six role scopes. All 57 raw PNGs, three actual Quit 0 processes and 114 independent capture predicates are qualified. The first run required two explicit native recoveries; the nine manual authority-stage views are separately labeled. Rejected r1/r2 evidence remains historical. Published prerelease at 2026-10-18T02:10:32Z; independent verification of all five public downloads passed with exact package bytes. This is not a new downloaded-build gameplay run.",
+      "source_commit": "9e81a7c849837dea477ddb5a8c93f43665774573",
+      "previous_recorded_status": [
+        "in_progress_exact_content6_package_native_qualification",
+        "completed_bounded_package_review_publication_pending"
+      ],
+      "qualification_history": [
+        "r1 stopped on7newUIDs; r2 archives structurally valid but held/rejected for stale nativecontent5playerpin. Preserve originals. Revision6 and fail-closed package preflight are required before successor actualLinuxcapture.",
+        "Successor content6 package-r3 is source-bound and accepted within the six role scopes. All 57 raw PNGs, three actual Quit 0 processes and 114 independent capture predicates are qualified. The first run required two explicit native recoveries; the nine manual authority-stage views are separately labeled. Rejected r1/r2 evidence remains historical. Publication is pending.",
+        "Successor content6 package-r3 is source-bound and accepted within the six role scopes. All 57 raw PNGs, three actual Quit 0 processes and 114 independent capture predicates are qualified. The first run required two explicit native recoveries; the nine manual authority-stage views are separately labeled. Rejected r1/r2 evidence remains historical. Published prerelease at2026-10-18T02:10:32Z; independent public-download verification remains pending."
+      ],
+      "package_identity": {
+        "source_commit": "9e81a7c849837dea477ddb5a8c93f43665774573",
+        "runtime_source_files": 525,
+        "runtime_signature": "61700ca7e3a77e20ae81175ad5babd337d7094ab82907801ac2b20ee85bce5e4",
+        "linux_zip_sha256": "56a435f909b05a9674a693dc3c5b50c45aefc5d0aaca8455b73571af9ea340b5",
+        "windows_zip_sha256": "16f6e210fef90f26c1c725e503805fb5e9c4ee76d64e86cb2ff7b0788ea186c5",
+        "pck_sha256": "d387d34ad37fc959f974b9ced0107d5ad2a0e2505e55a090dd20fc583d62aa27",
+        "native_content_revision": 6
+      },
+      "capture_scope": {
+        "raw_pngs": 57,
+        "manual_pngs": 30,
+        "automatic_loader_pngs": 27,
+        "native_processes": 3,
+        "quit_exit_codes": [
+          0,
+          0,
+          0
+        ],
+        "main_native_recoveries": 2,
+        "manual_staged_authority_views": 9,
+        "independent_capture_checks": 114,
+        "independent_capture_check_owner": "I3-02; this count is its image/receipt validator scope, not a sum of specialist counts",
+        "full_art_acceptance": false,
+        "windows_executed": false
+      },
+      "publication_followup": {
+        "status": "published",
+        "release_tag": "yuga-native-ui-2026-10-18",
+        "release_id": 416177473,
+        "url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-ui-2026-10-18",
+        "published_at": "2026-10-18T02:10:32Z",
+        "target_commit": "9e81a7c849837dea477ddb5a8c93f43665774573",
+        "draft": false,
+        "prerelease": true,
+        "publicly_published": true,
+        "asset_upload_verified": true,
+        "uploaded_assets": 5,
+        "upload_verification_scope": "GitHub API reports all five expected names, sizes and SHA256 digests matching the reviewed source artifacts; independent public-download verification remains separate.",
+        "api_receipt": {
+          "path": "docs/evidence/ui-campaign/I3/published/transport/asset-api-receipt.json",
+          "sha256": "61c6301190a2a3a95561ae1fe09a85d1a3c80d8a04cb07e30fc9f13d86a06cfc"
+        },
+        "upload_workflow": {
+          "run": 39089069718,
+          "status": "success",
+          "url": "https://github.com/occult-kranti/ANDOLAN/actions/runs/39089069718",
+          "receipt": {
+            "path": "docs/evidence/ui-campaign/I3/published/transport/action-run.json",
+            "sha256": "876e0cd64160580ee2772ce97fa4b3108bedbd3c5151db94125cf6377a5435ae"
+          }
+        },
+        "independent_public_download_verification": {
+          "status": "passed",
+          "owner": "ui_06_acceptance",
+          "verified_at_utc": "2026-10-18T02:15:49.523518+00:00",
+          "downloaded_assets": 5,
+          "grouped_checks": 8,
+          "archive_predicates_per_platform": 9,
+          "pck_entries_per_platform": 519,
+          "downloaded_bytes": 284036426,
+          "receipt": {
+            "path": "docs/evidence/ui-campaign/I3/published/download-verification.json",
+            "sha256": "652031e44bc0adf538e0d61e66c4a7a55641f1fae52e1238c33e40307079280e"
+          },
+          "review": {
+            "path": "docs/evidence/ui-campaign/I3/published/download-review.md",
+            "sha256": "316e3e0d2c664b81f32120247e630555a75466df2dff2196a201fb586441e10d"
+          },
+          "execution_scope": "No engine started during download verification. Exact public bytes connect Linux to the prior qualified local execution; this is not a new downloaded-build gameplay run. Windows remains unexecuted."
+        },
+        "scope": "Published prerelease; all five independent public downloads match qualified r3 and API identities, with both ZIP payload inventories and PCKs verified. Graphics, contact, Windows execution, physical-GPU and listening limits remain open.",
+        "review": {
+          "path": "docs/evidence/ui-campaign/I3/published/REVIEW.md",
+          "sha256": "388245e2e9f683096dee6bbdc52196d50a38d071e3c77edbfee2376af6b09c88"
+        },
+        "publication_api": {
+          "path": "docs/evidence/ui-campaign/I3/published/publication-api.json",
+          "sha256": "fd81b3352a757a6b56bece7f15b01a363b3f459a5e64bc595ea5484be0a49961"
+        },
+        "transport_branch_cleanup": {
+          "path": "docs/evidence/ui-campaign/I3/published/transport-branch-cleanup.json",
+          "sha256": "8bd13f7e1764983894f6f73d44e0708a1be62449211f5951b25b43a1ac749789"
+        }
+      },
+      "publication_history": [
+        {
+          "status": "published",
+          "release_tag": "yuga-native-ui-2026-10-18",
+          "release_id": 416177473,
+          "url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-ui-2026-10-18",
+          "published_at": "2026-10-18T02:10:32Z",
+          "target_commit": "9e81a7c849837dea477ddb5a8c93f43665774573",
+          "draft": false,
+          "prerelease": true,
+          "publicly_published": true,
+          "asset_upload_verified": true,
+          "uploaded_assets": 5,
+          "upload_verification_scope": "GitHub API reports all five expected names, sizes and SHA256 digests matching the reviewed source artifacts; independent public-download verification remains separate.",
+          "api_receipt": {
+            "path": "docs/evidence/ui-campaign/I3/published/transport/asset-api-receipt.json",
+            "sha256": "61c6301190a2a3a95561ae1fe09a85d1a3c80d8a04cb07e30fc9f13d86a06cfc"
+          },
+          "upload_workflow": {
+            "run": 39089069718,
+            "status": "success",
+            "url": "https://github.com/occult-kranti/ANDOLAN/actions/runs/39089069718",
+            "receipt": {
+              "path": "docs/evidence/ui-campaign/I3/published/transport/action-run.json",
+              "sha256": "876e0cd64160580ee2772ce97fa4b3108bedbd3c5151db94125cf6377a5435ae"
+            }
+          },
+          "independent_public_download_verification": {
+            "status": "pending",
+            "owner": "ui_06_acceptance",
+            "pending_review_path": "docs/evidence/ui-campaign/I3/published/REVIEW.md"
+          },
+          "scope": "Published prerelease with exact API asset identities. Independent downloaded-byte review is pending; Windows execution, graphics and performance gates remain open."
+        }
+      ]
     }
   ],
   "repeated_request_note": "The repeated five-plus-three request refers to this same 48-assignment track and does not create duplicate rounds.",
   "completed_screen_rounds": 5,
-  "completed_integration_rounds": 1,
+  "completed_integration_rounds": 3,
   "remaining_screen_rounds": 0,
-  "remaining_integration_rounds": 2,
+  "remaining_integration_rounds": 0,
   "implemented_screen_rounds_with_open_render_gates": [],
   "source_checkpoints": [
     {
@@ -1347,6 +1658,125 @@
     {
       "commit": "495fae3aad59bfcce22506cc27f9d042741cd4ab",
       "scope": "Threaded film/world return regression contracts; frozenU3passes28film+13worldchecks. R7/U4newerworkingtree pendingintegratedcheckpoint."
+    },
+    {
+      "commit": "9e81a7c849837dea477ddb5a8c93f43665774573",
+      "scope": "Final content6 runtime and exact package-r3 accepted within I3 source, native input and explicit staged-view limits. Later documentation does not change the 525 runtime-source files.",
+      "ci_run": 39087210717,
+      "ci_url": "https://github.com/occult-kranti/ANDOLAN/actions/runs/39087210717",
+      "ci_status_at_recording": "success",
+      "ci_status_provenance": "Root verified and supplied final CI status for this reconciliation."
+    }
+  ],
+  "previous_recorded_status": [
+    "in_progress",
+    "completed_bounded_campaign_publication_pending"
+  ],
+  "completed_rounds": 8,
+  "completed_assignments": 48,
+  "remaining_assignments": 0,
+  "publication": {
+    "status": "published",
+    "release_tag": "yuga-native-ui-2026-10-18",
+    "release_id": 416177473,
+    "url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-ui-2026-10-18",
+    "published_at": "2026-10-18T02:10:32Z",
+    "target_commit": "9e81a7c849837dea477ddb5a8c93f43665774573",
+    "draft": false,
+    "prerelease": true,
+    "publicly_published": true,
+    "asset_upload_verified": true,
+    "uploaded_assets": 5,
+    "upload_verification_scope": "GitHub API reports all five expected names, sizes and SHA256 digests matching the reviewed source artifacts; independent public-download verification remains separate.",
+    "api_receipt": {
+      "path": "docs/evidence/ui-campaign/I3/published/transport/asset-api-receipt.json",
+      "sha256": "61c6301190a2a3a95561ae1fe09a85d1a3c80d8a04cb07e30fc9f13d86a06cfc"
+    },
+    "upload_workflow": {
+      "run": 39089069718,
+      "status": "success",
+      "url": "https://github.com/occult-kranti/ANDOLAN/actions/runs/39089069718",
+      "receipt": {
+        "path": "docs/evidence/ui-campaign/I3/published/transport/action-run.json",
+        "sha256": "876e0cd64160580ee2772ce97fa4b3108bedbd3c5151db94125cf6377a5435ae"
+      }
+    },
+    "independent_public_download_verification": {
+      "status": "passed",
+      "owner": "ui_06_acceptance",
+      "verified_at_utc": "2026-10-18T02:15:49.523518+00:00",
+      "downloaded_assets": 5,
+      "grouped_checks": 8,
+      "archive_predicates_per_platform": 9,
+      "pck_entries_per_platform": 519,
+      "downloaded_bytes": 284036426,
+      "receipt": {
+        "path": "docs/evidence/ui-campaign/I3/published/download-verification.json",
+        "sha256": "652031e44bc0adf538e0d61e66c4a7a55641f1fae52e1238c33e40307079280e"
+      },
+      "review": {
+        "path": "docs/evidence/ui-campaign/I3/published/download-review.md",
+        "sha256": "316e3e0d2c664b81f32120247e630555a75466df2dff2196a201fb586441e10d"
+      },
+      "execution_scope": "No engine started during download verification. Exact public bytes connect Linux to the prior qualified local execution; this is not a new downloaded-build gameplay run. Windows remains unexecuted."
+    },
+    "scope": "Published prerelease; all five independent public downloads match qualified r3 and API identities, with both ZIP payload inventories and PCKs verified. Graphics, contact, Windows execution, physical-GPU and listening limits remain open.",
+    "review": {
+      "path": "docs/evidence/ui-campaign/I3/published/REVIEW.md",
+      "sha256": "388245e2e9f683096dee6bbdc52196d50a38d071e3c77edbfee2376af6b09c88"
+    },
+    "publication_api": {
+      "path": "docs/evidence/ui-campaign/I3/published/publication-api.json",
+      "sha256": "fd81b3352a757a6b56bece7f15b01a363b3f459a5e64bc595ea5484be0a49961"
+    },
+    "transport_branch_cleanup": {
+      "path": "docs/evidence/ui-campaign/I3/published/transport-branch-cleanup.json",
+      "sha256": "8bd13f7e1764983894f6f73d44e0708a1be62449211f5951b25b43a1ac749789"
+    }
+  },
+  "graphics_target_status": "open",
+  "completion_scope": "All 48 bounded roles across U1-U5 and I1-I3 returned and reviewed. The prerelease is published and all five public downloads are independently byte-verified. Graphics quality, foot/garment contact, Windows execution, physical-hardware and listening qualification, online and full-roster gates remain open.",
+  "publication_history": [
+    {
+      "status": "pending_draft_upload",
+      "release_tag": "yuga-native-ui-2026-10-18",
+      "draft": true,
+      "publicly_published": false,
+      "asset_upload_verified": false,
+      "scope": "Draft prepared; upload transport and final publication remain pending. No public-download acceptance is claimed."
+    },
+    {
+      "status": "published",
+      "release_tag": "yuga-native-ui-2026-10-18",
+      "release_id": 416177473,
+      "url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-ui-2026-10-18",
+      "published_at": "2026-10-18T02:10:32Z",
+      "target_commit": "9e81a7c849837dea477ddb5a8c93f43665774573",
+      "draft": false,
+      "prerelease": true,
+      "publicly_published": true,
+      "asset_upload_verified": true,
+      "uploaded_assets": 5,
+      "upload_verification_scope": "GitHub API reports all five expected names, sizes and SHA256 digests matching the reviewed source artifacts; independent public-download verification remains separate.",
+      "api_receipt": {
+        "path": "docs/evidence/ui-campaign/I3/published/transport/asset-api-receipt.json",
+        "sha256": "61c6301190a2a3a95561ae1fe09a85d1a3c80d8a04cb07e30fc9f13d86a06cfc"
+      },
+      "upload_workflow": {
+        "run": 39089069718,
+        "status": "success",
+        "url": "https://github.com/occult-kranti/ANDOLAN/actions/runs/39089069718",
+        "receipt": {
+          "path": "docs/evidence/ui-campaign/I3/published/transport/action-run.json",
+          "sha256": "876e0cd64160580ee2772ce97fa4b3108bedbd3c5151db94125cf6377a5435ae"
+        }
+      },
+      "independent_public_download_verification": {
+        "status": "pending",
+        "owner": "ui_06_acceptance",
+        "pending_review_path": "docs/evidence/ui-campaign/I3/published/REVIEW.md"
+      },
+      "scope": "Published prerelease with exact API asset identities. Independent downloaded-byte review is pending; Windows execution, graphics and performance gates remain open."
     }
   ]
 }

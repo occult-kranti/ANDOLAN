@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "working_directory": "/workspace/ANDOLAN",
+  "runs": [
+    {
+      "command": [
+        "taskset",
+        "-c",
+        "2",
+        "python3",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/audit-export-source.py",
+        "--export",
+        "/workspace/scratch/ui-campaign/I3/package-r3/native-export-manifest.json",
+        "--report",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/export-source-r3.json"
+      ],
+      "exit_code": 0,
+      "count": 4,
+      "report": "export-source-r3.json"
+    },
+    {
+      "command": [
+        "taskset",
+        "-c",
+        "3",
+        "python3",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/audit-linux-ui-package.py",
+        "--build",
+        "/workspace/scratch/ui-campaign/I3/package-r3",
+        "--zip-sha256",
+        "56a435f909b05a9674a693dc3c5b50c45aefc5d0aaca8455b73571af9ea340b5",
+        "--commit",
+        "9e81a7c849837dea477ddb5a8c93f43665774573",
+        "--runtime-signature",
+        "61700ca7e3a77e20ae81175ad5babd337d7094ab82907801ac2b20ee85bce5e4",
+        "--report",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/linux-ui-package-r3.json"
+      ],
+      "exit_code": 0,
+      "count": 10,
+      "report": "linux-ui-package-r3.json"
+    }
+  ],
+  "first_fixture_failure": {
+    "report": "linux-ui-package-r3.rejected-probe-schema.json",
+    "passed_count": 9,
+    "count": 10,
+    "cause": "Reviewer fixture treated probe_sha256 (probe script hash) as report hash and probe_result (bytes/SHA record) as parsed report. Corrected fixture compares exact bytes/SHA record. No package bytes changed."
+  },
+  "theme_source_sha256": "b1d630e9087f939ba6a68a5bbfac6f126064d417393786380c324317ac5d39a6",
+  "font_probe_scope": "Owner same-export actual FontFile.data proof is independently bound by exact result bytes/SHA and all3 fixed raw TTF pins; this reviewer does not independently decode fontdata.",
+  "completion": "Exact-package original review and independent captured-frame validation completed; see REVIEW.md for main-run recovery and visual limits."
+}

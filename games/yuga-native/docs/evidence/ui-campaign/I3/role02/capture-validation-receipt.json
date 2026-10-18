@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "working_directory": "/workspace/ANDOLAN",
+  "runs": [
+    {
+      "name": "main",
+      "command": [
+        "taskset",
+        "-c",
+        "2",
+        "python3",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/check-package-originals.py",
+        "--capture",
+        "/tmp/yuga-i3-native-r1",
+        "--export",
+        "/workspace/scratch/ui-campaign/I3/package-r3/native-export-manifest.json",
+        "--report",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/native-main-originals.json"
+      ],
+      "exit_code": 0,
+      "report_sha256": "36ef10ec1bd61628d3b4e0068dd31418233e45898d47657274bb7565af704e8b",
+      "passed": true,
+      "passed_count": 58,
+      "count": 58
+    },
+    {
+      "name": "relaunch",
+      "command": [
+        "taskset",
+        "-c",
+        "2",
+        "python3",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/check-package-originals.py",
+        "--capture",
+        "/tmp/yuga-i3-relaunch-r1",
+        "--export",
+        "/workspace/scratch/ui-campaign/I3/package-r3/native-export-manifest.json",
+        "--report",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/native-relaunch-originals.json"
+      ],
+      "exit_code": 0,
+      "report_sha256": "b64ed6d90aad341b39868983a6226610c704c9842bb21f68e157f946b1551e2e",
+      "passed": true,
+      "passed_count": 20,
+      "count": 20
+    },
+    {
+      "name": "staged",
+      "command": [
+        "taskset",
+        "-c",
+        "2",
+        "python3",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/check-package-originals.py",
+        "--capture",
+        "/tmp/yuga-i3-staged-r1",
+        "--export",
+        "/workspace/scratch/ui-campaign/I3/package-r3/native-export-manifest.json",
+        "--report",
+        "games/yuga-native/docs/evidence/ui-campaign/I3/role02/native-staged-originals.json"
+      ],
+      "exit_code": 0,
+      "report_sha256": "e5e3c0a338075e420540efd1c7349a6bebace0630b9a5652d997cee77a28702a",
+      "passed": true,
+      "passed_count": 36,
+      "count": 36
+    }
+  ],
+  "validator_sha256": "c3fb74ea6351ae5df303422688d00793fb191d7b82828b7986c230e1fc63d672",
+  "central_archive_check_command": [
+    "python3",
+    "games/yuga-native/docs/evidence/ui-campaign/I3/role02/verify-central-archive.py"
+  ],
+  "central_archive_check_exit": 0,
+  "limits": "Main includes2 explicit native recoveries.30 manual originals include9 staged authority views. Directly opened33 images; all57 validated for identity/receipt. No own renderer/import."
+}

@@ -2,6 +2,8 @@
 
 The native-offline profile now advances from **content revision5 to6** for the explicit overview presentation hold in `player.gd`. It pins the actual player SHA `54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86` and aggregate `18c5f4913bfdb3241191e653de3cb58f5ecfa1720cd434c5070d04d08b30e4ed`. The runtime validator expects6; it does not silently refresh revision5. Browser and proposed profiles remain byte-equivalent as parsed data, all wire/envelope versions remain1, and native map, rules, features and remaining source pins are unchanged.
 
+The native descriptor's `rules_sha256` also changes because its existing derivation hashes the complete profile, including content revision and content identity. This changes the descriptor fingerprint without changing gameplay rule values or the wire rules version.
+
 The original CI failure is archived in `ci-original-failure.log`. The reproduced [baseline source check](baseline-pin-check.json) fails exactly one of47 checks: the stale native player pin. It does not indicate a new gameplay or rendering failure.
 
 Before any migration edit, the exact revision5 catalog was copied to `tests/fixtures/contracts/native-content5-catalog.json` and verified byte-for-byte against commit `83f88f840c59934155aec19d95b41d920d15c6c1`. Its SHA is `509ef9860dfc32ed0c9dd064bdd011feef01d9b6c90db755aa9c5e37bf29aae2`. The unchanged Godot4.6.3 validator generated the historical descriptor, SHA `f220b47c699754590d6415f500c6b5ff9793343a2e506d1a55af080497dd33a0`, before the expected revision changed. [Derivation receipt](revision5-derivation.json), exact helper and clean log are retained. Older revision3/4 fixtures remain unchanged.

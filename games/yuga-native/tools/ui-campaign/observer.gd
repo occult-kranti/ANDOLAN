@@ -82,13 +82,14 @@ func _capture(id: String) -> void:
 	capturing = false
 
 func snapshot() -> Dictionary:
-	var result := {"mode":mode,"frame":Engine.get_process_frames(),"paused":paused,"mouse_mode":Input.mouse_mode,"window_focused":DisplayServer.window_is_focused(),"size":[root.size.x,root.size.y],"scene":str(current_scene.name) if current_scene else "", "scene_path":current_scene.scene_file_path if current_scene else "", "scene_process_mode":current_scene.process_mode if current_scene else -1,"scene_can_process":current_scene.can_process() if current_scene else false,"loader_count":0,"transition_layer_count":root.find_children("YugaSceneTransitionLayer","CanvasLayer",false,false).size(),"transition_event_count":transition_events.size(),"transition_owner_present":root.has_meta("yuga_scene_transition_owner"),"controls":[],"panels":{},"state":{}}
+	var result := {"mode":mode,"frame":Engine.get_process_frames(),"physics_frame":Engine.get_physics_frames(),"paused":paused,"mouse_mode":Input.mouse_mode,"window_focused":DisplayServer.window_is_focused(),"size":[root.size.x,root.size.y],"scene":str(current_scene.name) if current_scene else "", "scene_path":current_scene.scene_file_path if current_scene else "", "scene_process_mode":current_scene.process_mode if current_scene else -1,"scene_can_process":current_scene.can_process() if current_scene else false,"loader_count":0,"transition_layer_count":root.find_children("YugaSceneTransitionLayer","CanvasLayer",false,false).size(),"transition_event_count":transition_events.size(),"transition_owner_present":root.has_meta("yuga_scene_transition_owner"),"controls":[],"panels":{},"state":{}}
 	var focus := root.gui_get_focus_owner()
+	result.focus_name = str(focus.name) if focus else ""
 	result.focus = str(focus.get_path()) if focus else ""
 	result.focus_text = str(focus.get("text")) if focus and "text" in focus else ""
 	_walk(root, result)
 	if current_scene:
-		for key in ["started","world_ready","paused","overview","ready_to_play","playing","page_title","night","phase","target_phase"]:
+		for key in ["started","world_ready","paused","overview","ready_to_play","playing","page_title","night","phase","target_phase","sensitivity","volume","invert_y","shadows"]:
 			if key in current_scene: result.state[key] = current_scene.get(key)
 		result.modal_scroll = {}
 		for key in ["main_panel","pause_panel","settings_panel","controls_overlay","hero_panel","help_panel"]:
@@ -102,6 +103,7 @@ func snapshot() -> Dictionary:
 			var guide: Control = current_scene.rama_panel
 			result.panels.rama_panel = guide.is_visible_in_tree()
 			result.guide = {"selected_id":guide.selected_id,"detail_title":guide.detail_title.text,"details_scroll":guide.details_scroll.scroll_vertical,"abilities_scroll":guide.abilities_scroll.scroll_vertical,"notice":guide.effects_notice.text,"reduced_effects":guide.reduced_effects_button.button_pressed,"reduced_motion":guide.reduced_motion_button.button_pressed,"effects_enabled":not guide.reduced_effects_button.disabled,"receiver_present":is_instance_valid(guide._effect_receiver())}
+			result.guide.key_text = guide.key_label.text if "key_label" in guide else ""
 			result.guide.notice_fully_visible = guide.details_scroll.get_global_rect().encloses(guide.effects_notice.get_global_rect())
 		if "rama_effects" in current_scene and is_instance_valid(current_scene.rama_effects):
 			result.effect_options = current_scene.rama_effects.report()
@@ -122,6 +124,36 @@ func snapshot() -> Dictionary:
 		if "player" in current_scene and is_instance_valid(current_scene.player):
 			result.state.player_active = current_scene.player.active
 			result.state.hero_ready = current_scene.player.model_ready
+			result.state.player_grounded = current_scene.player.is_on_floor()
+			var actor: Node3D = current_scene.player
+			result.presentation = {"suspended":actor.presentation_suspended,"player_sensitivity":actor.sensitivity,"player_invert_y":actor.invert_y,"player_position":[actor.global_position.x,actor.global_position.y,actor.global_position.z]}
+			if is_instance_valid(actor.rama_motion):
+				result.presentation.motion = actor.rama_motion.diagnostics()
+				result.presentation.motion.locomotion_age = actor.rama_motion.locomotion_age
+			if is_instance_valid(actor.rama_secondary): result.presentation.secondary = actor.rama_secondary.report()
+			if is_instance_valid(actor.rama_face): result.presentation.face = actor.rama_face.report()
+			if "map_control" in current_scene and is_instance_valid(current_scene.map_control):
+				var location: Vector3=current_scene.map_control.hero_position
+				result.presentation.atlas_position=[location.x,location.y,location.z]
+				result.presentation.position_spaces="Player global; atlas world-local (identity world transform)."
+		if "rama_runtime" in current_scene and is_instance_valid(current_scene.rama_runtime) and is_instance_valid(current_scene.rama_runtime.kit):
+			result.kit=current_scene.rama_runtime.kit.report()
+		var config:=ConfigFile.new()
+		if config.load("user://courtyard-settings.cfg")==OK:
+			result.preferences={}
+			for section in config.get_sections():
+				result.preferences[section]={}
+				for key in config.get_section_keys(section): result.preferences[section][key]=config.get_value(section,key)
+		result.audio_state={"master_bus_muted":AudioServer.is_bus_mute(0)}
+		if "volume" in current_scene: result.audio_state.volume=current_scene.volume
+		for key in ["audio","siege_effects","invocation_audio"]:
+			if key in current_scene:
+				var receiver: Node=current_scene.get(key)
+				if is_instance_valid(receiver):
+					if "volume" in receiver: result.audio_state[key+"_volume"]=receiver.volume
+					if receiver.has_method("report"): result.audio_state[key]=receiver.report()
+		if "rama_runtime" in current_scene and is_instance_valid(current_scene.rama_runtime) and is_instance_valid(current_scene.rama_runtime.action_audio):
+			result.audio_state.action_audio=current_scene.rama_runtime.action_audio.report()
 	return result
 
 func _walk(node: Node, result: Dictionary) -> void:

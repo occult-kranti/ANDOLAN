@@ -1,0 +1,132 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "click_name": "ConfluenceMode",
+    "expect": {
+      "launch.selected_mode": "world"
+    }
+  },
+  {
+    "click_name": "ExploreConfluence",
+    "expect": {
+      "scene_path": "res://scenes/confluence_world.tscn",
+      "state.world_ready": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "stage": "lane",
+    "capture": "S01-STAGED-lane"
+  },
+  {
+    "stage": "relay-held",
+    "capture": "S02-STAGED-held-relay"
+  },
+  {
+    "stage": "relay-contested",
+    "capture": "S03-STAGED-contested-relay"
+  },
+  {
+    "stage": "defeat",
+    "expect": {
+      "state.player_active": false
+    },
+    "capture": "S04-STAGED-defeat"
+  },
+  {
+    "stage": "respawn",
+    "expect": {
+      "state.player_active": true,
+      "hero_hud.health": 300
+    },
+    "capture": "S05-STAGED-respawn-atlas"
+  },
+  {
+    "stage": "outcome-sun",
+    "expect": {
+      "army.winner": "sun",
+      "paused": true,
+      "world.outcome_visible": true
+    },
+    "capture": "S06-STAGED-sun-outcome"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "army.winner": "",
+      "paused": false,
+      "world.outcome_visible": false
+    }
+  },
+  {
+    "stage": "outcome-moon",
+    "expect": {
+      "army.winner": "moon",
+      "paused": true,
+      "world.outcome_visible": true
+    },
+    "capture": "S07-STAGED-moon-outcome"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "army.winner": "",
+      "paused": false,
+      "world.outcome_visible": false
+    }
+  },
+  {
+    "stage": "outcome-draw",
+    "expect": {
+      "army.winner": "draw",
+      "paused": true,
+      "world.outcome_visible": true
+    },
+    "capture": "S08-STAGED-draw-outcome"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "army.winner": "",
+      "paused": false,
+      "world.outcome_visible": false
+    }
+  },
+  {
+    "stage": "release",
+    "expect": {
+      "state.player_active": true,
+      "paused": false
+    },
+    "capture": "S09-native-restart-after-STAGED-outcomes"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    }
+  },
+  {
+    "tab_to_text": "Return to courtyard"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "click_name": "Quit",
+    "expect_exit": 0
+  }
+]

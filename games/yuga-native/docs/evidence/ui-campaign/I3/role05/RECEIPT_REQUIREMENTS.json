@@ -1,0 +1,49 @@
+{
+  "scope": "Read-only observer predicates to pair with the pure existing-runner native plans. Map these semantic fields to the new observer schema; no callback mutation is authorized.",
+  "preconditions": {
+    "initial_settings_file": "absent in new isolated XDG",
+    "same_exported_binary_and_pck_across_processes": true,
+    "same_XDG_data_home_across_processes": true,
+    "first_process_exits_before_relaunch": true
+  },
+  "expected_saved_values": {
+    "controls.sensitivity": 2.5,
+    "controls.invert_y": true,
+    "controls.bindings.pulse": "physical KEY_J (74)",
+    "audio.volume": 0.0,
+    "video.shadows": false,
+    "rama_effects.reduced_effects": true,
+    "rama_effects.reduced_motion": true
+  },
+  "live_world": {
+    "player.sensitivity": 0.006,
+    "player.invert_y": true,
+    "traversal_audio.volume": 0.0,
+    "siege_audio.volume": 0.0,
+    "rama_action_audio.volume": 0.0,
+    "invocation_audio.volume": 0.0,
+    "guide.piercing_dawn_key": "J",
+    "effects.reduced_effects": true,
+    "effects.reduced_motion": true
+  },
+  "post_relaunch": "All saved preferences above load into actual new process receivers and controls; compare unchanged config bytes before relaunch and after read-only final views.",
+  "focus_names_and_order": {
+    "settings_initial": "Sensitivity slider; native End reaches2.5",
+    "settings_Tab_from_initial": "Volume slider; native Home reaches0",
+    "Invert vertical aim": "CheckButton text; Return toggles",
+    "Dynamic sun shadows": "CheckButton text; Return toggles",
+    "controls": "initial move_forward; tab_to_text Q uniquely reaches Binding_pulse before remap; J uniquely after",
+    "guide": "click_name piercing_dawn is visible and selects; button text J +three spaces+Piercing Dawn",
+    "world_volume_view": "Return to courtyard button follows WorldVolume slider so focus scrolling reveals Sound · muted"
+  },
+  "source_pin_scope": "Control names/order inspected in courtyard.gd, controls_overlay.gd, rama_hero_panel.gd, confluence_world.gd, launch_shell.gd and existing run.py. Package successor must preserve these or plan must be revised before execution.",
+  "inspected_sources": {
+    "scripts/courtyard.gd": "197a2349cebdf26d195bcec64c9380f74c76537970def2ea9bea3193086b5a30",
+    "scripts/controls_overlay.gd": "3ee995c889c6dbd658d4d3dceba649970a61f5cacf848676c7f1b23847a8ceb9",
+    "scripts/rama_hero_panel.gd": "ff710c7aad3a4214ccd0398bc1d8cac9064ca8ec9f864a1faf94744346f256c5",
+    "scripts/confluence_world.gd": "1fc6869f6a6b96f5142de4cf41402f78cead76008dcfbba836e539f3ed3ecf99",
+    "scripts/launch_shell.gd": "6ee0c9a6d5abae28745d9e064ee127959fdf3b2bcc459138b5aacb9b14e09de2",
+    "tools/ui-campaign/run.py": "e5b63c8b6f8fb8b708f9e14c7b053ee99001ec89a16a6f14797331fd3db58922"
+  },
+  "numeric_comparison": "Use tolerance 1e-6 for native float receiver values; persisted integer keycode and booleans compare exactly."
+}

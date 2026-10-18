@@ -1,0 +1,371 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done"
+    },
+    "capture": "01-package-title-idle-a"
+  },
+  {
+    "wait_physics": 15,
+    "expect": {
+      "state.started": false,
+      "state.player_active": false,
+      "presentation.suspended": false
+    },
+    "capture": "02-package-title-idle-b"
+  },
+  {
+    "click_name": "Settings",
+    "expect": {
+      "panels.settings_panel": true,
+      "modal_scroll.settings_panel": 0
+    }
+  },
+  {
+    "key": "End"
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key": "Home"
+  },
+  {
+    "tab_to_text": "Invert vertical aim"
+  },
+  {
+    "key": "Return"
+  },
+  {
+    "tab_to_text": "Dynamic sun shadows"
+  },
+  {
+    "key": "Return",
+    "capture": "P01-native-settings-edited",
+    "expect": {
+      "state.sensitivity": 2.5,
+      "state.volume": 0.0,
+      "state.invert_y": true,
+      "state.shadows": false,
+      "audio_state.action_audio.volume": 0.0
+    }
+  },
+  {
+    "tab_to_text": "CUSTOMIZE KEYBOARD CONTROLS"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "panels.controls_overlay": true
+    }
+  },
+  {
+    "tab_to_text": "Q"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "state.capture_action": "pulse"
+    }
+  },
+  {
+    "key": "j",
+    "expect": {
+      "state.capture_action": "",
+      "focus_text": "J",
+      "preferences.controls.bindings.pulse": 74
+    },
+    "capture": "P02-native-piercing-dawn-remap"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.controls_overlay": false,
+      "panels.settings_panel": true
+    }
+  },
+  {
+    "click_name": "Done",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.settings_panel": false
+    }
+  },
+  {
+    "click_name": "RamaAbilities",
+    "expect": {
+      "panels.rama_panel": true,
+      "guide.selected_id": "kodanda"
+    }
+  },
+  {
+    "click_name": "piercing_dawn",
+    "expect": {
+      "guide.selected_id": "piercing_dawn",
+      "focus_text": "J   Piercing Dawn"
+    }
+  },
+  {
+    "tab_to_text": "Fewer decorative layers"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "guide.reduced_effects": true,
+      "effect_options.reduced_effects": true
+    }
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "guide.reduced_motion": true,
+      "effect_options.reduced_motion": true,
+      "guide.notice_fully_visible": true,
+      "guide.key_text": "J  /  ABILITY"
+    },
+    "capture": "P03-native-guide-preferences-saved"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.rama_panel": false
+    }
+  },
+  {
+    "click_name": "Help",
+    "expect": {
+      "panels.help_panel": true,
+      "modal_scroll.help_panel": 0
+    },
+    "capture": "03-package-help"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.help_panel": false
+    }
+  },
+  {
+    "click_name": "TrainingMode",
+    "expect": {
+      "launch.selected_mode": "train"
+    }
+  },
+  {
+    "click_name": "ExploreConfluence",
+    "expect": {
+      "state.started": true,
+      "state.player_active": true
+    },
+    "capture": "04-package-training"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    }
+  },
+  {
+    "click_name": "Settings",
+    "expect": {
+      "panels.settings_panel": true,
+      "paused": true
+    },
+    "capture": "05-package-training-settings"
+  },
+  {
+    "click_name": "Done",
+    "expect": {
+      "panels.pause_panel": true,
+      "paused": true
+    }
+  },
+  {
+    "tab_to_text": "RETURN TO TITLE"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "panels.main_panel": true,
+      "paused": false,
+      "state.started": false
+    }
+  },
+  {
+    "click_name": "WatchConfluenceDuel",
+    "expect": {
+      "scene_path": "res://scenes/combat_film.tscn",
+      "state.ready_to_play": true,
+      "transition.phase": "done"
+    },
+    "capture": "06-package-film"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "transition.phase": "done",
+      "launch.selected_mode": "train",
+      "focus_text": "Begin bow training  \u2192"
+    },
+    "capture": "07-package-film-return-selection"
+  },
+  {
+    "click_name": "ConfluenceMode",
+    "expect": {
+      "launch.selected_mode": "world"
+    }
+  },
+  {
+    "click_name": "ExploreConfluence",
+    "expect": {
+      "scene_path": "res://scenes/confluence_world.tscn",
+      "state.world_ready": true,
+      "transition.phase": "done",
+      "state.player_grounded": true
+    },
+    "capture": "08-package-world-live"
+  },
+  {
+    "key_down": "j",
+    "immediate": true,
+    "expect": {
+      "kit.accepted_casts": 1,
+      "kit.release_count": 0,
+      "presentation.motion.action": "piercing_dawn",
+      "presentation.motion.stage": "windup"
+    }
+  },
+  {
+    "burst": [
+      {
+        "key_up": "j"
+      },
+      {
+        "key": "F1"
+      }
+    ],
+    "expect": {
+      "state.overview": true,
+      "state.player_active": false,
+      "presentation.suspended": true,
+      "presentation.motion.action": "piercing_dawn",
+      "presentation.motion.stage": "windup",
+      "kit.suspended": true
+    },
+    "capture": "09-package-overview-unreleased-a"
+  },
+  {
+    "wait_physics": 45,
+    "expect": {
+      "state.overview": true,
+      "presentation.suspended": true,
+      "presentation.motion.stage": "windup"
+    },
+    "capture": "10-package-overview-unreleased-b"
+  },
+  {
+    "key": "F1",
+    "expect": {
+      "state.overview": false,
+      "state.player_active": true,
+      "presentation.suspended": false,
+      "kit.release_count": 1,
+      "presentation.motion.release_count": 1
+    },
+    "capture": "11-package-overview-resumed-release"
+  },
+  {
+    "key": "n",
+    "expect": {
+      "state.night": true,
+      "state.phase": 1.0
+    }
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    }
+  },
+  {
+    "click_text": "Rama \u00b7 abilities and controls",
+    "expect": {
+      "panels.rama_panel": true,
+      "guide.effects_enabled": true,
+      "guide.reduced_effects": true,
+      "guide.reduced_motion": true
+    }
+  },
+  {
+    "click_name": "piercing_dawn",
+    "expect": {
+      "guide.selected_id": "piercing_dawn",
+      "focus_text": "J   Piercing Dawn"
+    }
+  },
+  {
+    "tab_to_text": "Still ornamental motion",
+    "expect": {
+      "effect_options.reduced_effects": true,
+      "effect_options.reduced_motion": true
+    },
+    "capture": "P04-world-guide-loaded-preferences"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.rama_panel": false,
+      "panels.pause_panel": true,
+      "paused": true
+    }
+  },
+  {
+    "tab_to_text": "Return to courtyard",
+    "capture": "P05-world-muted-sound-and-return",
+    "expect": {
+      "paused": true,
+      "state.night": true,
+      "state.phase": 1.0,
+      "audio_state.action_audio.volume": 0.0
+    }
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "click_name": "Settings",
+    "expect": {
+      "panels.settings_panel": true,
+      "modal_scroll.settings_panel": 0
+    },
+    "capture": "P06-returned-title-settings"
+  },
+  {
+    "click_name": "Done",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.settings_panel": false
+    }
+  },
+  {
+    "click_name": "Quit",
+    "expect_exit": 0
+  }
+]

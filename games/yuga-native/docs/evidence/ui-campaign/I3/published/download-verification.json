@@ -1,0 +1,739 @@
+{
+  "passed": true,
+  "checks": {
+    "public_release_is_published": true,
+    "exact_five_public_assets": true,
+    "all_five_downloaded_bytes_match_API_digest_and_size": true,
+    "all_four_qualified_r3_files_match_actual_local_bytes": true,
+    "downloaded_checksums_cover_exact_four_assets": true,
+    "tag_and_release_target_exact_qualified_commit": true,
+    "both_archives_and_all_payloads_pass": true,
+    "same_qualified_PCK_on_both_platforms": true
+  },
+  "passed_count": 8,
+  "count": 8,
+  "verified_at_utc": "2026-10-18T02:15:49.523518+00:00",
+  "release": {
+    "assets": [
+      {
+        "browser_download_url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/native-export-manifest.json",
+        "digest": "sha256:9b181f1c67e32de6481cd9256c61b38eb54de6ce2afe54e05f2a68ae2931d75b",
+        "id": 652201991,
+        "name": "native-export-manifest.json",
+        "size": 397267
+      },
+      {
+        "browser_download_url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/native-package-manifest.json",
+        "digest": "sha256:12010a4eae0b6645d946e5aaa8b52daba5f8f233425356aa942891ab0b87c1b2",
+        "id": 652202011,
+        "name": "native-package-manifest.json",
+        "size": 12765
+      },
+      {
+        "browser_download_url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/SHA256SUMS.txt",
+        "digest": "sha256:971400864643f5e02c90248b3b3429f3535bf424db94c1f023c53a9551eed2a1",
+        "id": 652202064,
+        "name": "SHA256SUMS.txt",
+        "size": 381
+      },
+      {
+        "browser_download_url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/yuga-native-linux-x86_64.zip",
+        "digest": "sha256:56a435f909b05a9674a693dc3c5b50c45aefc5d0aaca8455b73571af9ea340b5",
+        "id": 652201601,
+        "name": "yuga-native-linux-x86_64.zip",
+        "size": 137812335
+      },
+      {
+        "browser_download_url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/yuga-native-windows-x86_64.zip",
+        "digest": "sha256:16f6e210fef90f26c1c725e503805fb5e9c4ee76d64e86cb2ff7b0788ea186c5",
+        "id": 652201809,
+        "name": "yuga-native-windows-x86_64.zip",
+        "size": 145813678
+      }
+    ],
+    "draft": false,
+    "html_url": "https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-ui-2026-10-18",
+    "id": 416177473,
+    "prerelease": true,
+    "published_at": "2026-10-18T02:10:32Z",
+    "tag_name": "yuga-native-ui-2026-10-18",
+    "target_commitish": "9e81a7c849837dea477ddb5a8c93f43665774573"
+  },
+  "tag_command": [
+    "git",
+    "ls-remote",
+    "origin",
+    "refs/tags/yuga-native-ui-2026-10-18",
+    "refs/tags/yuga-native-ui-2026-10-18^{}"
+  ],
+  "tag_output": "9e81a7c849837dea477ddb5a8c93f43665774573\trefs/tags/yuga-native-ui-2026-10-18\n",
+  "release_metadata_command": [
+    "gh",
+    "api",
+    "repos/occult-kranti/ANDOLAN/releases/tags/yuga-native-ui-2026-10-18",
+    "--jq",
+    "{id,tag_name,target_commitish,draft,prerelease,published_at,html_url,assets:[.assets[]|{id,name,size,digest,browser_download_url}]}"
+  ],
+  "download_commands": [
+    {
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "240",
+        "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/native-export-manifest.json",
+        "--output",
+        "/tmp/yuga-ui-public-downloads/native-export-manifest.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "240",
+        "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/native-package-manifest.json",
+        "--output",
+        "/tmp/yuga-ui-public-downloads/native-package-manifest.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "45",
+        "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/SHA256SUMS.txt",
+        "--output",
+        "/tmp/yuga-ui-public-downloads/SHA256SUMS.txt"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "240",
+        "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/yuga-native-linux-x86_64.zip",
+        "--output",
+        "/tmp/yuga-ui-public-downloads/yuga-native-linux-x86_64.zip"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "240",
+        "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/yuga-native-windows-x86_64.zip",
+        "--output",
+        "/tmp/yuga-ui-public-downloads/yuga-native-windows-x86_64.zip"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "download_directory": "/tmp/yuga-ui-public-downloads",
+  "downloaded_bytes": 284036426,
+  "assets": [
+    {
+      "name": "native-export-manifest.json",
+      "asset_id": 652201991,
+      "url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/native-export-manifest.json",
+      "bytes": 397267,
+      "sha256": "9b181f1c67e32de6481cd9256c61b38eb54de6ce2afe54e05f2a68ae2931d75b",
+      "matches_public_api": true,
+      "matches_qualified_r3": true,
+      "matches_downloaded_SHA256SUMS": true,
+      "local_path": "/tmp/yuga-ui-public-downloads/native-export-manifest.json"
+    },
+    {
+      "name": "native-package-manifest.json",
+      "asset_id": 652202011,
+      "url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/native-package-manifest.json",
+      "bytes": 12765,
+      "sha256": "12010a4eae0b6645d946e5aaa8b52daba5f8f233425356aa942891ab0b87c1b2",
+      "matches_public_api": true,
+      "matches_qualified_r3": true,
+      "matches_downloaded_SHA256SUMS": true,
+      "local_path": "/tmp/yuga-ui-public-downloads/native-package-manifest.json"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "asset_id": 652202064,
+      "url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/SHA256SUMS.txt",
+      "bytes": 381,
+      "sha256": "971400864643f5e02c90248b3b3429f3535bf424db94c1f023c53a9551eed2a1",
+      "matches_public_api": true,
+      "matches_qualified_r3": null,
+      "matches_downloaded_SHA256SUMS": null,
+      "local_path": "/tmp/yuga-ui-public-downloads/SHA256SUMS.txt"
+    },
+    {
+      "name": "yuga-native-linux-x86_64.zip",
+      "asset_id": 652201601,
+      "url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/yuga-native-linux-x86_64.zip",
+      "bytes": 137812335,
+      "sha256": "56a435f909b05a9674a693dc3c5b50c45aefc5d0aaca8455b73571af9ea340b5",
+      "matches_public_api": true,
+      "matches_qualified_r3": true,
+      "matches_downloaded_SHA256SUMS": true,
+      "local_path": "/tmp/yuga-ui-public-downloads/yuga-native-linux-x86_64.zip"
+    },
+    {
+      "name": "yuga-native-windows-x86_64.zip",
+      "asset_id": 652201809,
+      "url": "https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-native-ui-2026-10-18/yuga-native-windows-x86_64.zip",
+      "bytes": 145813678,
+      "sha256": "16f6e210fef90f26c1c725e503805fb5e9c4ee76d64e86cb2ff7b0788ea186c5",
+      "matches_public_api": true,
+      "matches_qualified_r3": true,
+      "matches_downloaded_SHA256SUMS": true,
+      "local_path": "/tmp/yuga-ui-public-downloads/yuga-native-windows-x86_64.zip"
+    }
+  ],
+  "downloaded_checksum_entries": {
+    "yuga-native-linux-x86_64.zip": "56a435f909b05a9674a693dc3c5b50c45aefc5d0aaca8455b73571af9ea340b5",
+    "yuga-native-windows-x86_64.zip": "16f6e210fef90f26c1c725e503805fb5e9c4ee76d64e86cb2ff7b0788ea186c5",
+    "native-export-manifest.json": "9b181f1c67e32de6481cd9256c61b38eb54de6ce2afe54e05f2a68ae2931d75b",
+    "native-package-manifest.json": "12010a4eae0b6645d946e5aaa8b52daba5f8f233425356aa942891ab0b87c1b2"
+  },
+  "zip_verification": [
+    {
+      "platform": "linux",
+      "filename": "yuga-native-linux-x86_64.zip",
+      "passed": true,
+      "checks": {
+        "29_unique_canonical_members": true,
+        "exact_declared_member_set": true,
+        "all_zip_CRCs_match": true,
+        "all_28_payload_sizes_and_SHA256_match": true,
+        "embedded_source_matches_public_export": true,
+        "engine_matches_qualified_manifest": true,
+        "PCK_matches_export_and_both_manifests": true,
+        "all_519_PCK_payloads_match_MD5_SHA256_and_size": true,
+        "PCK_format_expected": true
+      },
+      "members": [
+        {
+          "name": "NOTICE/ASSET-NOTICE.md",
+          "bytes": 4424,
+          "sha256": "d31347070d02dbba726042861f54c2e9a9f30022d8bb9c91c8206e2678be071a",
+          "crc32": "a0e66e88",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/CONFLUENCE-DUEL-PROVENANCE.json",
+          "bytes": 6478,
+          "sha256": "ebf94677dfeb17e04b10c9f1f4fa80b0e5d54e3207ae721ec2dc641807e73fb4",
+          "crc32": "c6f217ea",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/CONFLUENCE-WORLD-PROVENANCE.json",
+          "bytes": 1202,
+          "sha256": "161503a1dbe1750a0e7ca36c6f77c40ff17e518cdeb63db5c38416082c8368b1",
+          "crc32": "7633b219",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/DejaVu-font/COPYRIGHT.txt",
+          "bytes": 3859,
+          "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+          "crc32": "436bd13d",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/DejaVu-font/manifest.json",
+          "bytes": 387,
+          "sha256": "b546663108a0d4f4eb052a13ea35d945572b1e551a426e9db0e7f8dbdce99508",
+          "crc32": "83cdea2a",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/GODOT-COPYRIGHT.txt",
+          "bytes": 99790,
+          "sha256": "b3330849267d56ddd3d62a513817506606c2195034411fe05859f0140bff9d8a",
+          "crc32": "89e6b11a",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/GODOT-LICENSE.txt",
+          "bytes": 1149,
+          "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+          "crc32": "b0cf0380",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/GODOT-TPS-UPSTREAM-LICENSE.md",
+          "bytes": 1972,
+          "sha256": "f7bf763d4c378425b99a5abfe42f49bb03fc530e9721cc5943072becf348caff",
+          "crc32": "c8e9f74f",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/HERO-PROVENANCE.json",
+          "bytes": 1281,
+          "sha256": "e3862458da8ddaaa7f09c6828ac531092318d1f61ced67168bfd99386bcb32ad",
+          "crc32": "7ad6230b",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/MAKEHUMAN-ASSET-LICENSE.md",
+          "bytes": 6962,
+          "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c",
+          "crc32": "4f9735df",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/MIKKTSPACE-AUTHORING.md",
+          "bytes": 1334,
+          "sha256": "23156d863f986a1235498b4a820e4f834b934fb849d95494cddf39fa62e2bf39",
+          "crc32": "877417ef",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/MYTHIC-INVOCATIONS.txt",
+          "bytes": 1326,
+          "sha256": "858183e279770ac872a1aaa7ea6c6303ce8ac077247fcf1c4ac8e3c13c8544e2",
+          "crc32": "db2c06b2",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/Noto-fonts/COPYRIGHT.txt",
+          "bytes": 5208,
+          "sha256": "075f91382875da1c4b491f1facf2586f55448705133264d98ce15cab6211b125",
+          "crc32": "d61ce494",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/Noto-fonts/README.md",
+          "bytes": 622,
+          "sha256": "bdc131e443fd2f312a28aab79a910f2bfcd910954b4fff40fda3ba19d42bee30",
+          "crc32": "8cc88269",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/Noto-fonts/manifest.json",
+          "bytes": 632,
+          "sha256": "ee39170795d70e44cb7af8fe36fe71996b9b54b511eb62603d71e85dfb38ac42",
+          "crc32": "1f138446",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/OPEN-ART-WAVE-CODE-LICENSE.txt",
+          "bytes": 1435,
+          "sha256": "26083432704f5dafed273b2eabf3752b6ea2f0ea00c08bc88e3f30562f464172",
+          "crc32": "b5bb0332",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/OPEN-ART-WAVE.md",
+          "bytes": 2228,
+          "sha256": "4778a64cfbcd1a49e7b0c1cf7d35b47a42e43f8ce1f79f4c75c9bdb3ef8a0e8f",
+          "crc32": "251c95f5",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/RAMA-HERO-PROVENANCE.json",
+          "bytes": 14676,
+          "sha256": "5026675c7af8b83412eb375b9883ffe52efd883e20c7fd9594bdf3fdd9c8f5d8",
+          "crc32": "eb09b225",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/RAMA-PRODUCTION-PROVENANCE.json",
+          "bytes": 24265,
+          "sha256": "cf4e0ef74b04b1f04267f38d48cc5859fedec4eb42c6d04c8f3b896fb5a2119b",
+          "crc32": "cdc11bb1",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/SIEGE-VEHICLES.txt",
+          "bytes": 1063,
+          "sha256": "7e143b27bce693a0bd7ac0eca61d54b1f629af5e94b80e16cbfe2ac6a773fdfa",
+          "crc32": "71659727",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/TPS-MOTION-NOTICE.txt",
+          "bytes": 1325,
+          "sha256": "23f9649ccc35be87c096387bae8408c4e3011883fba410f9f21bfa6bf17358a6",
+          "crc32": "e760c2d3",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/TRAVERSAL-ARMIES.txt",
+          "bytes": 826,
+          "sha256": "bd1a5a089dd9e8228a428492b358d68525ef35bfa13828761151b9d69b0034ee",
+          "crc32": "b8592ffb",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/TRAVERSAL-AUDIO-PROVENANCE.json",
+          "bytes": 5171,
+          "sha256": "196837214027281fdc09538fcfd4b3d2063b8b4c45e6fc8ec9c44f86393c2815",
+          "crc32": "8c6350ea",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/TRIAD-RELAYS.txt",
+          "bytes": 1254,
+          "sha256": "389a7adb66859dfdfae1597c33a1b4d88d41e9f7b22b58b98c8f8bd4dfbb8299",
+          "crc32": "8bd9aeb0",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "PACKAGE-MANIFEST.json",
+          "bytes": 241630,
+          "sha256": "5165180de4e792a43eb5308e7b24e7aa377738148d88f74e062ed542fbaf2a5b",
+          "crc32": "8413f86f",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "START-HERE.txt",
+          "bytes": 2915,
+          "sha256": "86237b273b9f14f5b8118d78d969de1049facd84a3fc9fd33e24d88cabf25c90",
+          "crc32": "d5c59640",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "godot",
+          "bytes": 138981968,
+          "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+          "crc32": "923e3bc3",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "launch.sh",
+          "bytes": 149,
+          "sha256": "cd5287bd9322baf2a792599b7012adebdd5534c56e5b2a66eb32d5c345497ac6",
+          "crc32": "38c5c85c",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "yuga-native.pck",
+          "bytes": 69804988,
+          "sha256": "d387d34ad37fc959f974b9ced0107d5ad2a0e2505e55a090dd20fc583d62aa27",
+          "crc32": "7e2a57f4",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        }
+      ],
+      "member_count": 29,
+      "declared_payload_count": 28,
+      "embedded_package_manifest_sha256": "5165180de4e792a43eb5308e7b24e7aa377738148d88f74e062ed542fbaf2a5b",
+      "pck_sha256": "d387d34ad37fc959f974b9ced0107d5ad2a0e2505e55a090dd20fc583d62aa27",
+      "pck_member_count": 519,
+      "pck_mismatches": []
+    },
+    {
+      "platform": "windows",
+      "filename": "yuga-native-windows-x86_64.zip",
+      "passed": true,
+      "checks": {
+        "29_unique_canonical_members": true,
+        "exact_declared_member_set": true,
+        "all_zip_CRCs_match": true,
+        "all_28_payload_sizes_and_SHA256_match": true,
+        "embedded_source_matches_public_export": true,
+        "engine_matches_qualified_manifest": true,
+        "PCK_matches_export_and_both_manifests": true,
+        "all_519_PCK_payloads_match_MD5_SHA256_and_size": true,
+        "PCK_format_expected": true
+      },
+      "members": [
+        {
+          "name": "NOTICE/ASSET-NOTICE.md",
+          "bytes": 4424,
+          "sha256": "d31347070d02dbba726042861f54c2e9a9f30022d8bb9c91c8206e2678be071a",
+          "crc32": "a0e66e88",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/CONFLUENCE-DUEL-PROVENANCE.json",
+          "bytes": 6478,
+          "sha256": "ebf94677dfeb17e04b10c9f1f4fa80b0e5d54e3207ae721ec2dc641807e73fb4",
+          "crc32": "c6f217ea",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/CONFLUENCE-WORLD-PROVENANCE.json",
+          "bytes": 1202,
+          "sha256": "161503a1dbe1750a0e7ca36c6f77c40ff17e518cdeb63db5c38416082c8368b1",
+          "crc32": "7633b219",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/DejaVu-font/COPYRIGHT.txt",
+          "bytes": 3859,
+          "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+          "crc32": "436bd13d",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/DejaVu-font/manifest.json",
+          "bytes": 387,
+          "sha256": "b546663108a0d4f4eb052a13ea35d945572b1e551a426e9db0e7f8dbdce99508",
+          "crc32": "83cdea2a",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/GODOT-COPYRIGHT.txt",
+          "bytes": 99790,
+          "sha256": "b3330849267d56ddd3d62a513817506606c2195034411fe05859f0140bff9d8a",
+          "crc32": "89e6b11a",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/GODOT-LICENSE.txt",
+          "bytes": 1149,
+          "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+          "crc32": "b0cf0380",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/GODOT-TPS-UPSTREAM-LICENSE.md",
+          "bytes": 1972,
+          "sha256": "f7bf763d4c378425b99a5abfe42f49bb03fc530e9721cc5943072becf348caff",
+          "crc32": "c8e9f74f",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/HERO-PROVENANCE.json",
+          "bytes": 1281,
+          "sha256": "e3862458da8ddaaa7f09c6828ac531092318d1f61ced67168bfd99386bcb32ad",
+          "crc32": "7ad6230b",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/MAKEHUMAN-ASSET-LICENSE.md",
+          "bytes": 6962,
+          "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c",
+          "crc32": "4f9735df",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/MIKKTSPACE-AUTHORING.md",
+          "bytes": 1334,
+          "sha256": "23156d863f986a1235498b4a820e4f834b934fb849d95494cddf39fa62e2bf39",
+          "crc32": "877417ef",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/MYTHIC-INVOCATIONS.txt",
+          "bytes": 1326,
+          "sha256": "858183e279770ac872a1aaa7ea6c6303ce8ac077247fcf1c4ac8e3c13c8544e2",
+          "crc32": "db2c06b2",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/Noto-fonts/COPYRIGHT.txt",
+          "bytes": 5208,
+          "sha256": "075f91382875da1c4b491f1facf2586f55448705133264d98ce15cab6211b125",
+          "crc32": "d61ce494",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/Noto-fonts/README.md",
+          "bytes": 622,
+          "sha256": "bdc131e443fd2f312a28aab79a910f2bfcd910954b4fff40fda3ba19d42bee30",
+          "crc32": "8cc88269",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/Noto-fonts/manifest.json",
+          "bytes": 632,
+          "sha256": "ee39170795d70e44cb7af8fe36fe71996b9b54b511eb62603d71e85dfb38ac42",
+          "crc32": "1f138446",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/OPEN-ART-WAVE-CODE-LICENSE.txt",
+          "bytes": 1435,
+          "sha256": "26083432704f5dafed273b2eabf3752b6ea2f0ea00c08bc88e3f30562f464172",
+          "crc32": "b5bb0332",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/OPEN-ART-WAVE.md",
+          "bytes": 2228,
+          "sha256": "4778a64cfbcd1a49e7b0c1cf7d35b47a42e43f8ce1f79f4c75c9bdb3ef8a0e8f",
+          "crc32": "251c95f5",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/RAMA-HERO-PROVENANCE.json",
+          "bytes": 14676,
+          "sha256": "5026675c7af8b83412eb375b9883ffe52efd883e20c7fd9594bdf3fdd9c8f5d8",
+          "crc32": "eb09b225",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/RAMA-PRODUCTION-PROVENANCE.json",
+          "bytes": 24265,
+          "sha256": "cf4e0ef74b04b1f04267f38d48cc5859fedec4eb42c6d04c8f3b896fb5a2119b",
+          "crc32": "cdc11bb1",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/SIEGE-VEHICLES.txt",
+          "bytes": 1063,
+          "sha256": "7e143b27bce693a0bd7ac0eca61d54b1f629af5e94b80e16cbfe2ac6a773fdfa",
+          "crc32": "71659727",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/TPS-MOTION-NOTICE.txt",
+          "bytes": 1325,
+          "sha256": "23f9649ccc35be87c096387bae8408c4e3011883fba410f9f21bfa6bf17358a6",
+          "crc32": "e760c2d3",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/TRAVERSAL-ARMIES.txt",
+          "bytes": 826,
+          "sha256": "bd1a5a089dd9e8228a428492b358d68525ef35bfa13828761151b9d69b0034ee",
+          "crc32": "b8592ffb",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/TRAVERSAL-AUDIO-PROVENANCE.json",
+          "bytes": 5171,
+          "sha256": "196837214027281fdc09538fcfd4b3d2063b8b4c45e6fc8ec9c44f86393c2815",
+          "crc32": "8c6350ea",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "NOTICE/TRIAD-RELAYS.txt",
+          "bytes": 1254,
+          "sha256": "389a7adb66859dfdfae1597c33a1b4d88d41e9f7b22b58b98c8f8bd4dfbb8299",
+          "crc32": "8bd9aeb0",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "PACKAGE-MANIFEST.json",
+          "bytes": 242492,
+          "sha256": "e7bf66d490e5893eb565e721e209fc9a7096c84c60f579532bd9beb871c369d5",
+          "crc32": "1b675fd9",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "START-HERE.txt",
+          "bytes": 2915,
+          "sha256": "c99a9df0feef7f1cc72e6dc8d14e53c705678563eccf851b4de6a3bf300cc031",
+          "crc32": "68d98f43",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "godot.exe",
+          "bytes": 172409864,
+          "sha256": "ef90e929ba1a6a4322860285d97f40f4aa349c90329a91b0e8b55b8df0f4cb00",
+          "crc32": "7b66b93c",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "launch.bat",
+          "bytes": 67,
+          "sha256": "e22329e4d3819d8d7e90502e921f6a78518866bd154e13ba61e8a901394b2357",
+          "crc32": "02bf8c49",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        },
+        {
+          "name": "yuga-native.pck",
+          "bytes": 69804988,
+          "sha256": "d387d34ad37fc959f974b9ced0107d5ad2a0e2505e55a090dd20fc583d62aa27",
+          "crc32": "7e2a57f4",
+          "crc_matches": true,
+          "declared_payload_exact": true
+        }
+      ],
+      "member_count": 29,
+      "declared_payload_count": 28,
+      "embedded_package_manifest_sha256": "e7bf66d490e5893eb565e721e209fc9a7096c84c60f579532bd9beb871c369d5",
+      "pck_sha256": "d387d34ad37fc959f974b9ced0107d5ad2a0e2505e55a090dd20fc583d62aa27",
+      "pck_member_count": 519,
+      "pck_mismatches": []
+    }
+  ],
+  "execution": {
+    "engines_started": 0,
+    "Linux_download_executed": false,
+    "Windows_download_executed": false
+  },
+  "scope": "Independent fresh downloads from public release URLs. Streaming whole-file SHA-256/size comparison against actual qualified r3 files, public API digests and downloaded checksums; both ZIP CRC/member/payload checks and all519 PCK internal size/SHA-256/MD5 checks per archive. No engine, import, render or repeat runtime-source audit. Byte identity links prior exact Linux execution; this download audit itself does not execute either platform. Windows remains unexecuted."
+}

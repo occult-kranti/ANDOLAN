@@ -1,0 +1,9 @@
+# Independent content revision 6 review
+
+**Passed with bounded scope.** This reviewer independently executed the source checker (**51/51**) and actual Godot admission suite (**259/259**) on CPU3, with one-thread limits and isolated user storage. Both exited0 with no errors, warnings or leaked-instance diagnostics. The command, timing, report hashes and seven exact source hashes are in [receipt.json](receipt.json); [run-independent.py](run-independent.py) records the environment and350-cache before/after comparison. No imported resource changed.
+
+[Source review](source-review.json) independently reads committed Git objects: successor `9e81a7c849837dea477ddb5a8c93f43665774573` differs from rejected candidate `83f88f840c59934155aec19d95b41d920d15c6c1` in exactly two runtime files. The native catalog advances5→6, replaces only the player source pin and its aggregate; the runtime validator changes its native expected revision5→6. Other profiles, wire contracts and native non-content rules are unchanged. The preserved revision5 catalog is byte-identical to the rejected commit. All seven sources used during our actual runs equal the successor commit.
+
+The Godot suite rejects legacy5 catalogs/admissions for open, resume, migration and replay, preserves current identity after failed load, rejects a forged revision and stale digest, then accepts current6. The owner retained the original CI failure and descriptor derivation under `I1/role06/content-revision6`; this independent run does not replace that failure history. These are repeated executions of310 existing cases, not310 new cases.
+
+This establishes source pin and offline contract admission behavior. It does not qualify the rejected package-r2, establish a network protocol migration, or supply packaged glyph/layout pixels. The fresh successor archive and native originals remain separate required evidence.

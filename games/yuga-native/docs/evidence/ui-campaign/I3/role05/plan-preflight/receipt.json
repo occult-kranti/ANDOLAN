@@ -1,0 +1,30 @@
+{
+  "scope": "Plan-only CPU preflight; no package/render/OS-input acceptance.",
+  "command": [
+    "env",
+    "LP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "XDG_DATA_HOME=/tmp/yuga-i3-slider-plan-preflight",
+    "taskset",
+    "-c",
+    "3",
+    "godot",
+    "--headless",
+    "--max-threads",
+    "1",
+    "--path",
+    "/tmp/yuga-i1-final-r1/ANDOLAN/games/yuga-native",
+    "--script",
+    "/tmp/yuga-i3-slider-input-preflight.gd"
+  ],
+  "exit_code": 0,
+  "clean_log": true,
+  "expected": {
+    "sensitivity": 2.5,
+    "volume": 0.0,
+    "focus": "Volume"
+  },
+  "test_sha256": "1b363961128d4d407a1a5bca5b9bc038c9b91a4ec1e1dbd310d3e1b904d20c2c",
+  "runtime_manifest_sha256": "9919dccbd3fd18446abf2ff435be55696e913ad8d5cb7874e7e641f9fd13f088"
+}

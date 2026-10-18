@@ -1,0 +1,206 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "click_name": "Settings",
+    "expect": {
+      "panels.settings_panel": true,
+      "modal_scroll.settings_panel": 0
+    }
+  },
+  {
+    "key": "End"
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key": "Home"
+  },
+  {
+    "tab_to_text": "Invert vertical aim"
+  },
+  {
+    "key": "Return"
+  },
+  {
+    "tab_to_text": "Dynamic sun shadows"
+  },
+  {
+    "key": "Return",
+    "capture": "P01-native-settings-edited"
+  },
+  {
+    "tab_to_text": "CUSTOMIZE KEYBOARD CONTROLS"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "panels.controls_overlay": true
+    }
+  },
+  {
+    "tab_to_text": "Q"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "state.capture_action": "pulse"
+    }
+  },
+  {
+    "key": "j",
+    "expect": {
+      "state.capture_action": "",
+      "focus_text": "J"
+    },
+    "capture": "P02-native-piercing-dawn-remap"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.controls_overlay": false,
+      "panels.settings_panel": true
+    }
+  },
+  {
+    "click_name": "Done",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.settings_panel": false
+    }
+  },
+  {
+    "click_name": "RamaAbilities",
+    "expect": {
+      "panels.rama_panel": true,
+      "guide.selected_id": "kodanda"
+    }
+  },
+  {
+    "click_name": "piercing_dawn",
+    "expect": {
+      "guide.selected_id": "piercing_dawn",
+      "focus_text": "J   Piercing Dawn"
+    }
+  },
+  {
+    "tab_to_text": "Fewer decorative layers"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "guide.reduced_effects": true,
+      "effect_options.reduced_effects": true
+    }
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "guide.reduced_motion": true,
+      "effect_options.reduced_motion": true,
+      "guide.notice_fully_visible": true
+    },
+    "capture": "P03-native-guide-preferences-saved"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.rama_panel": false
+    }
+  },
+  {
+    "click_name": "ConfluenceMode",
+    "expect": {
+      "launch.selected_mode": "world"
+    }
+  },
+  {
+    "click_name": "ExploreConfluence",
+    "expect": {
+      "scene_path": "res://scenes/confluence_world.tscn",
+      "state.world_ready": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    }
+  },
+  {
+    "click_text": "Rama · abilities and controls",
+    "expect": {
+      "panels.rama_panel": true,
+      "guide.effects_enabled": true,
+      "guide.reduced_effects": true,
+      "guide.reduced_motion": true
+    }
+  },
+  {
+    "click_name": "piercing_dawn",
+    "expect": {
+      "guide.selected_id": "piercing_dawn",
+      "focus_text": "J   Piercing Dawn"
+    }
+  },
+  {
+    "tab_to_text": "Still ornamental motion",
+    "expect": {
+      "effect_options.reduced_effects": true,
+      "effect_options.reduced_motion": true
+    },
+    "capture": "P04-world-guide-loaded-preferences"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.rama_panel": false,
+      "panels.pause_panel": true,
+      "paused": true
+    }
+  },
+  {
+    "tab_to_text": "Return to courtyard",
+    "capture": "P05-world-muted-sound-and-return"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "click_name": "Settings",
+    "expect": {
+      "panels.settings_panel": true,
+      "modal_scroll.settings_panel": 0
+    },
+    "capture": "P06-returned-title-settings"
+  },
+  {
+    "click_name": "Done",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.settings_panel": false
+    }
+  },
+  {
+    "click_name": "Quit",
+    "expect_exit": 0
+  }
+]

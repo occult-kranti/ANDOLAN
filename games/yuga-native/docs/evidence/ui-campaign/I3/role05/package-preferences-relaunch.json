@@ -1,0 +1,83 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "click_name": "Settings",
+    "expect": {
+      "panels.settings_panel": true,
+      "modal_scroll.settings_panel": 0
+    },
+    "capture": "R01-relaunched-settings"
+  },
+  {
+    "tab_to_text": "CUSTOMIZE KEYBOARD CONTROLS"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "panels.controls_overlay": true
+    }
+  },
+  {
+    "tab_to_text": "J",
+    "expect": {
+      "state.capture_action": "",
+      "focus_text": "J"
+    },
+    "capture": "R02-relaunched-remapped-control"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.controls_overlay": false,
+      "panels.settings_panel": true
+    }
+  },
+  {
+    "click_name": "Done",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.settings_panel": false
+    }
+  },
+  {
+    "click_name": "RamaAbilities",
+    "expect": {
+      "panels.rama_panel": true,
+      "guide.reduced_effects": true,
+      "guide.reduced_motion": true
+    }
+  },
+  {
+    "click_name": "piercing_dawn",
+    "expect": {
+      "guide.selected_id": "piercing_dawn",
+      "focus_text": "J   Piercing Dawn"
+    }
+  },
+  {
+    "tab_to_text": "Still ornamental motion",
+    "expect": {
+      "effect_options.reduced_effects": true,
+      "effect_options.reduced_motion": true
+    },
+    "capture": "R03-relaunched-guide-preferences"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.rama_panel": false
+    }
+  },
+  {
+    "click_name": "Quit",
+    "expect_exit": 0
+  }
+]

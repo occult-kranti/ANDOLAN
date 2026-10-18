@@ -1,6 +1,12 @@
 # Native screen campaign handoff
 
-This is the short continuation guide for the five screen rounds and three integration rounds. The [ledger](SCREEN_CAMPAIGN.json) owns completion; the [visual ledger](VISUAL_ROUNDS_2_4_EXECUTION.json) separately records the three fifteen-role art/motion rounds. Read these before assigning another batch.
+The five screen rounds and three integration rounds are complete within their recorded scope: 48 bounded assignments, including actual Linux package review. The [ledger](SCREEN_CAMPAIGN.json) owns disposition; the [visual ledger](VISUAL_ROUNDS_2_4_EXECUTION.json) separately records the three fifteen-role art/motion rounds. Use the remaining gates below when assigning follow-up work.
+
+## Qualified package and publication
+
+The final qualified runtime/source is `9e81a7c849837dea477ddb5a8c93f43665774573`, content contract 6. [Build provenance](evidence/ui-campaign/I3/role06/REVIEW.md) pins the Linux ZIP `56a435f9…`, Windows ZIP `16f6e210…` and common PCK `d387d34a…`. Linux was executed from the actual extracted ELF/PCK; Windows has archive validation only.
+
+**Published preview:** [yuga-native-ui-2026-10-18](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-ui-2026-10-18), at 02:10:32 UTC on 18 October 2026. [Upload run 39089069718](https://github.com/occult-kranti/ANDOLAN/actions/runs/39089069718) succeeded. All five assets were independently downloaded and hash-verified; both archives match the qualified packages and pass payload checks. The [publication receipt](evidence/ui-campaign/I3/published/REVIEW.md) links the audit. Byte identity connects the download to prior Linux execution; the download audit did not run either platform. The [previous Rama preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17) remains historical.
 
 ## What changed
 
@@ -28,14 +34,20 @@ python3 games/yuga-native/tools/check-native-contracts.py
 python3 games/yuga-native/tools/check-evidence.py --git-ref HEAD
 ```
 
-The screen catalog contains23 suites. Separate I2 checks cover ten complete real scene cycles,64 seeded loader scenarios, theme/material ownership and action/preferences sequences. Their exact commands, source pins and rejected fixture assumptions are under `docs/evidence/ui-campaign/I2/`. Do not run the isolated transition fixture directly inside the product: use its `tools/ui-campaign/check-transition*.py` wrapper.
+The screen catalog contains 23 suites. Separate I2 checks cover ten complete real scene cycles, 64 seeded loader scenarios, theme/material ownership and action/preferences sequences. Their exact commands, source pins and rejected fixture assumptions are under `docs/evidence/ui-campaign/I2/`. Do not run the isolated transition fixture directly inside the product: use its `tools/ui-campaign/check-transition*.py` wrapper.
 
-## Evidence and remaining work
+## Evidence to reuse
 
-U5 retains39 planned+15 automatic first-pass originals and15+15 correction originals. Independent final I2 screen checks pass459 assertions; scene loops43, loader stress70, shared-resource probe184 and action/preferences82 are separate scopes. These totals do not substitute for image or package acceptance.
+U5 retains 39 planned + 15 automatic first-pass originals and 15 + 15 correction originals. The final I2 screen catalog passes 459 assertions; scene loops 43, loader stress 70, shared-resource probe 184 and action/preferences 82 are separate scopes. The subsequent content-6 correction passes its own 51 source and 259 admission checks; that is not another full screen-catalog run.
 
-The final I1 runtime snapshot is `9919dccbd3fd18446abf2ff435be55696e913ad8d5cb7874e7e641f9fd13f088`; subsequent export metadata and contract migration have explicit overlays. I3 owns the new portable package, actual Linux inputs/images, persistence across process restart, source hashes and publication. Read its final receipts before using a download as an accepted baseline.
+The [I3 central execution report](evidence/ui-campaign/I3/role03/REVIEW.md) links all 57 unmodified originals: main run 17 planned + 15 automatic, fresh-process relaunch 4 + 3, and explicitly staged supplement 9 + 9. All three processes exited through native Quit with code 0. [Preference review](evidence/ui-campaign/I3/role05/REVIEW.md) verifies 31 checks, including identical saved bytes across relaunch. The staged lane/relay/defeat/respawn/Sun/Moon/draw views use actual rule methods and recorded holds; they are not naturally won playthroughs.
 
-Small HUD text, foot support/penetration, garment contact, abrupt cast-entry motion and broader visual richness remain open. The continuous R4 record is a seven-second baseline at source7087eb5, not evidence of the later overview patch. Native online matches, a full hero roster, ordinary human playtesting, physical-GPU profiling and Windows execution remain production gates.
+The first process needed two recorded native capture-tool recoveries. A click made before pause layout settled hit Restart instead of the guide; a later title Settings click also missed. Exact hit analysis, original driver bytes and corrective native input remain archived. Relaunch and supplement used a stable-geometry pointer check and needed no recovery. Product runtime bytes did not change for that harness correction.
+
+The earlier I1 runtime snapshot `9919dccb…` and its I2 stress results retain their identity. Export UID additions and the content-6 contract migration are explicit overlays in the final build receipt. Package evidence binds source `9e81a7c`; do not silently relabel prior results as a fresh full-suite run.
+
+## Remaining gates
+
+Small HUD text, foot support/penetration, garment contact, abrupt cast-entry motion and broader visual richness remain open. The continuous R4 record is a seven-second baseline at source `7087eb5`; the later overview hold/resume has its own actual I3 package witness. Captures used warm-cache software Vulkan/llvmpipe and Dummy audio, establishing neither hardware FPS, cold-start timing nor listening quality. Native online matches, a full hero roster, ordinary human playtesting, physical-GPU profiling, Windows execution and Deadlock-level quality remain production gates.
 
 Keep six worker slots plus one integrator. Give each worker exclusive files and bounded evidence. Serialize imports, exports and heavy captures; this cloud uses software Vulkan and a four-core CPU quota. Preserve original failed runs. A content-pinned source change needs a revisioned contract update before exporting; do not update an old identity in place or assume the package gate has run because CI has run.

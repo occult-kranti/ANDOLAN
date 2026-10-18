@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/workspace/ANDOLAN/games/yuga-native/tests/ui_packaged_capture_cases.py", line 18, in <module>
+    check(folder.name+' clean engine diagnostics',not any(t in (folder/'godot.log').read_text() for t in ['ERROR:','WARNING:','ObjectDB instances leaked']))
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/ANDOLAN/games/yuga-native/tests/ui_packaged_capture_cases.py", line 18, in <genexpr>
+    check(folder.name+' clean engine diagnostics',not any(t in (folder/'godot.log').read_text() for t in ['ERROR:','WARNING:','ObjectDB instances leaked']))
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'docs/evidence/ui-campaign/I3/role03/native-r1/godot.log'

@@ -1,57 +1,31 @@
 # Start here: project and agent handoff
 
-Updated 18 October 2026. This is the short entry point for a new chat, contributor or subagent. Start here and open only the subsystem assigned to your task; the repository contains several games and historical experiments.
+Updated 18 October 2026. Start here, then open only the subsystem assigned to your task. This repository contains separate native, browser and protest games.
 
 ## The current build in one minute
 
-The active request is tracked in [visual rounds 2–4](../games/yuga-native/docs/VISUAL_ROUNDS_2_4_EXECUTION.json) and the separate [native screen/integration campaign](../games/yuga-native/docs/SCREEN_CAMPAIGN.md). Read those ledgers for pending versus executed work before assigning agents. The screen campaign has five 6-role rounds followed by three 6-role integration rounds; it does not replace the ongoing three 15-role visual rounds.
+The active product is **YUGA native**, an original mythology-inspired third-person game under `games/yuga-native/`, on `game/yuga-native-production`. It has one Rama hero with a bow and four abilities shared by courtyard training and offline Confluence practice.
 
-For the current screen/package work, read the [short handoff](../games/yuga-native/docs/SCREEN_CAMPAIGN_HANDOFF.md). All five screen rounds have actual-image reviews; the final integrated screen catalog passes459 checks. Scene, loader, resource and action/preferences stress have separate source-bound results. The package round owns actual downloadable-build acceptance. Visual rounds2–4 have returned bounded outcomes; foot support, garment contact and commercial-quality art remain open.
+**The five screen rounds and three integration rounds are complete within their recorded scope.** The [short screen handoff](../games/yuga-native/docs/SCREEN_CAMPAIGN_HANDOFF.md) is the next read: it maps ownership, commands, package evidence and remaining defects. The [campaign ledger](../games/yuga-native/docs/SCREEN_CAMPAIGN.json) records all 48 assignments; do not restart completed batches. The separate [three fifteen-role visual rounds](../games/yuga-native/docs/VISUAL_ROUNDS_2_4_EXECUTION.json) preserve their own accepted and rejected outcomes.
 
-For current source reuse and task selection, read the [reuse consultation](../games/yuga-native/docs/research/community-reuse/README.md): six reviewed research streams, two isolated offline tools, six mythology art briefs and the next five dependency-ordered goals. The [fifteen Round 2 face tasks](../games/yuga-native/docs/VISUAL_ROUND2_TASKS.json) now pin the published runtime baseline. This research does not complete another visual round or change the downloadable build.
+The qualified local package is source `9e81a7c849837dea477ddb5a8c93f43665774573`, content contract 6. Actual Linux reviews cover the main navigation flow, settings/remaps across a genuine process relaunch, overview hold/resume, and a separate explicitly staged rule-result supplement. Two first-run native capture-tool recoveries remain part of the evidence; relaunch and supplement needed none. The [central package review](../games/yuga-native/docs/evidence/ui-campaign/I3/role03/REVIEW.md) and [build receipt](../games/yuga-native/docs/evidence/ui-campaign/I3/role06/REVIEW.md) own exact source and artifact identity. Software-rendered captures establish neither hardware FPS nor listening quality; Windows has archive validation only.
 
-The active track is **YUGA native**, an original mythology-inspired third-person game under `games/yuga-native/`, on `game/yuga-native-production`. The [single Rama milestone](../games/yuga-native/docs/RAMA_HERO_MILESTONE.md) replaces the active avatar with `rama-hero.glb`: an editable skinned character, 23 authored clips, one primary attack and four abilities shared by training and lane practice. [Independent acceptance](../games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md) distinguishes passed functional checks from the still-limited art target.
+**Published preview:** [yuga-native-ui-2026-10-18](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-ui-2026-10-18) became public at 02:10:32 UTC on 18 October 2026, targeting source `9e81a7c`. All five public assets were independently downloaded and hash-verified; both archives match the qualified packages. The [publication receipt](../games/yuga-native/docs/evidence/ui-campaign/I3/published/REVIEW.md) links the byte audit, which did not repeat gameplay execution. The [17 October Rama preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17) retains its [historical receipt](../games/yuga-native/docs/evidence/rama-hero/published/REVIEW.md).
 
-The next production pass uses [fifteen rotating specialist roles](../games/yuga-native/docs/PRODUCTION_SQUADS.md) and [P0–P6 quality gates](../games/yuga-native/docs/DEADLOCK_QUALITY_TARGET.md). Start with the [quality-pass handoff](../games/yuga-native/docs/RAMA_QUALITY_MILESTONE.md) for current integration, asset dependencies and exact source evidence. Component tests and staged art do not qualify the published preview or close native online/full-game gates.
+**Play:** choose **Confluence** or **Bow training**, then the primary action. LMB draws/shoots; Q pierces, E steps, C places a protective field and X fires three paced arrows. R reloads; F/G fly and grapple. F3 opens Rama’s guide, F2 opens Help/remapping, Escape pauses, and F5 resets practice. Enemy siege blasts damage Rama; defeat respawns him after three simulation seconds. Saved bindings replace these defaults.
 
-The [reuse guide](../games/yuga-native/docs/REUSE_ADOPTION_GUIDE.md) connects
-selected books, five open game repositories, REA/forks and an actually adopted
-MikkTSpace authoring tool to the [next fifteen implementation assignments](../games/yuga-native/docs/OPEN_ART_WAVE.md).
-The strict tangent-only replacement was refused on the current hero; safe
-geometry/UV authoring work and open-material candidates have separate evidence.
+Confluence is an offline 140 × 260 m world with three lanes, local armies, capture/supply relays, core outcomes and day/night lighting. The older fourteen-invocation catalogue is a separate study through the existing avatar; the 24-second duel film has its own authored actors. Neither establishes fourteen finished native heroes.
 
-The [completed open-art handoff](../games/yuga-native/docs/OPEN_ART_WAVE_HANDOFF.md)
-records 259 authoring assertions, conservative mesh/seam preparation and an
-independently reviewed optional cloth treatment with matched day/night frames.
-Default playable assets and the published preview retain their earlier identity.
+The intended production game remains **6v6, fourteen heroes, three lanes and an 18-minute match**. Native online matches, shared elevation authority, the full roster, human playtesting, physical-GPU profiling and Deadlock-level art/motion quality remain open. Small HUD text, foot support, garment contact and abrupt cast-entry motion retain explicit limits. Use the [visual handoff](../games/yuga-native/docs/VISUAL_CAMPAIGN_HANDOFF.md) for current art evidence and the [reuse consultation](../games/yuga-native/docs/research/community-reuse/README.md) for source research and next production goals.
 
-Start current graphics work with the [visual handoff](../games/yuga-native/docs/VISUAL_CAMPAIGN_HANDOFF.md).
-Its [ten-round campaign](../games/yuga-native/docs/VISUAL_CAMPAIGN.md) integrates
-material, courtyard, atmosphere, ability and motion changes into the playable
-native source. Follow its [actual-work ledger](../games/yuga-native/docs/VISUAL_CAMPAIGN.json)
-for the current fifteen specialists, rendered defects/corrections and the ten
-requested rounds. Round 2 integrates a bounded face refinement across all three
-hero LODs and a reviewed lighting correction; its [integration receipt](../games/yuga-native/docs/evidence/visual-rounds/round2/ROUND_REVIEW.md) retains unresolved art gates. Current rendering
-and motion behavior have their own source identity. The published preview below
-has not acquired these source changes automatically.
-
-**Download:** [Rama hero preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17) for Linux or Windows. Public file hashes, ZIP contents and both videos are verified in the [publication receipt](../games/yuga-native/docs/evidence/rama-hero/published/REVIEW.md). Linux execution was reviewed; Windows remains unexecuted.
-
-**Play:** choose **Bow training** or **Explore Confluence**. LMB draws/shoots; Q pierces, E steps, C places a protective field and X fires three paced arrows. R reloads; F/G fly and grapple. F3 opens Rama’s guide, F2 opens Help/remapping, Escape pauses, and F5 resets practice. Enemy siege blasts damage Rama; defeat respawns him after three simulation seconds. Ordinary troops target other troops. Ground casts still use planar receivers.
-
-Confluence is an offline 140 × 260 m world with three lanes, five army roles including siege vehicles, three capture/contest/supply relays, gold/core outcomes, day/night lighting and saved controls. The older fourteen-invocation catalogue is a separate study accessible from its pause menu. It is not the active Rama kit or fourteen finished native heroes. The 24-second duel film retains its separately authored older characters.
-
-The portable package manifests record their exact source commit and runtime hashes. Current actual Linux input evidence, final gameplay capture and public-release status belong in the [Rama evidence archive](../games/yuga-native/docs/evidence/rama-hero/). Packaged reviews caught and corrected a Settings entry-scroll defect. Later rendered review caught a Guardian boundary/HUD timing defect; the normal-update regression and focused rendered expiry probe now pass. The archive preserves rejected candidates separately from the current package and accepted captures. Do not reuse historical Mythic results as acceptance of this character.
-
-The intended production game remains **6v6, fourteen heroes, three lanes and an 18-minute match**. The newer development source stages a native facial mesh, three rig-sharing LOD levels, bounded cloth/hair response and original action cues. Its sixteen-suite integration run passes 777 assertions plus fifteen deterministic PCM files; independent art acceptance remains LIMITED. Native online matches, elevation authority, the full roster, final sculpt/materials/motion, actual package qualification and physical-GPU profiling remain open for this source. The downloadable preview retains its own earlier evidence. This is animated 3D, and fixed-rate captured video is not achieved real-time performance. No Deadlock/Overwatch/Dota 2 client binaries or commercial models were recovered here.
-
-Historical immutable releases: [Mythic](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-mythic) at `e2dc0ecd3f6903e0c8af68b2c5717ba5947108ed`, and [Triad/siege](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-traversal-armies-2026-10-17-triad-siege) at `ae33db4520bd14fe7b38aed173b764de7a7424d5`. Their [Mythic](../games/yuga-native/docs/evidence/mythic-published/REVIEW.md) and [Triad](../games/yuga-native/docs/evidence/triad-published/REVIEW.md) evidence keeps its original scope. The [TF2 source study](../games/yuga-native/docs/research/TF2_REUSE_STUDY.md) informed behavior; no TF2 code or assets were imported.
+Earlier [Mythic](../games/yuga-native/docs/evidence/mythic-published/REVIEW.md), [Triad/siege](../games/yuga-native/docs/evidence/triad-published/REVIEW.md) and [Rama milestone](../games/yuga-native/docs/RAMA_HERO_MILESTONE.md) reports retain their original sources and acceptance scope. Do not substitute historical reports for a new source or package check.
 
 ## Read by purpose
 
 | Need | Start with | Then open only if relevant |
 | --- | --- | --- |
 | Build, change or test native YUGA | [Build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) | Its task-to-file and test matrices |
+| Verify current screens or package | [Screen handoff](../games/yuga-native/docs/SCREEN_CAMPAIGN_HANDOFF.md) | I3 build, native-input, image and persistence receipts; publication status |
 | Choose the next milestone | [Production roadmap](../games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md) | [Dependency/status ledger](../games/yuga-native/docs/ROADMAP_BACKLOG.json), [design master](../games/yuga-native/docs/GAME_DESIGN_MASTER.md) |
 | Use criticism, mythology, books or open-source references | [Research brief](../games/yuga-native/docs/research/RESEARCH_BRIEF.md) | The exact source/report linked in the relevant row |
 | Verify the current hero milestone | [Rama milestone](../games/yuga-native/docs/RAMA_HERO_MILESTONE.md) | [Independent acceptance](../games/yuga-native/docs/RAMA_HERO_ACCEPTANCE.md), [evidence archive](../games/yuga-native/docs/evidence/rama-hero/); earlier release evidence remains historical |

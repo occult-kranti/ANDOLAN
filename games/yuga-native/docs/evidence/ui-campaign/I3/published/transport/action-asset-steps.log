@@ -1,0 +1,85 @@
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:39.8002324Z [36;1mset -euo pipefail[0m
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:39.8003014Z [36;1mecho "75bcdadb004fa41dcff38356578ddcc6ab18042f7a0fbd415ad5e0b3595f792b  transport/reconstruct_upload.py" | sha256sum --check --strict[0m
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:39.8004049Z [36;1mpython3 transport/reconstruct_upload.py verify --manifest transport/manifest.json --output "$RUNNER_TEMP/exact-assets"[0m
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:39.8284467Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:39.8285025Z ##[endgroup]
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:39.8420298Z transport/reconstruct_upload.py: OK
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5336594Z {
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5337233Z   "verified": [
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5337647Z     {
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5338088Z       "name": "yuga-native-linux-x86_64.zip",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5338853Z       "sha256": "56a435f909b05a9674a693dc3c5b50c45aefc5d0aaca8455b73571af9ea340b5",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5339930Z       "size": 137812335
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5340307Z     },
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5340709Z     {
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5341080Z       "name": "yuga-native-windows-x86_64.zip",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5341858Z       "sha256": "16f6e210fef90f26c1c725e503805fb5e9c4ee76d64e86cb2ff7b0788ea186c5",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5342596Z       "size": 145813678
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5342936Z     },
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5343314Z     {
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5343731Z       "name": "native-export-manifest.json",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5344587Z       "sha256": "9b181f1c67e32de6481cd9256c61b38eb54de6ce2afe54e05f2a68ae2931d75b",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5345515Z       "size": 397267
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5346083Z     },
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5350813Z     {
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5351422Z       "name": "native-package-manifest.json",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5352330Z       "sha256": "12010a4eae0b6645d946e5aaa8b52daba5f8f233425356aa942891ab0b87c1b2",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5353300Z       "size": 12765
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5353798Z     },
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5354180Z     {
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5354566Z       "name": "SHA256SUMS.txt",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5355263Z       "sha256": "971400864643f5e02c90248b3b3429f3535bf424db94c1f023c53a9551eed2a1",
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5356128Z       "size": 381
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5356546Z     }
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5356927Z   ]
+upload	Verify transport and reconstruct exact reviewed files	2026-10-18T02:09:40.5357270Z }
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:40.5453577Z [36;1mset -euo pipefail[0m
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:40.5454307Z [36;1mpython3 transport/reconstruct_upload.py upload --manifest transport/manifest.json --output "$RUNNER_TEMP/exact-assets" | tee "$RUNNER_TEMP/exact-upload-receipt.json"[0m
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:40.5519329Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:40.5522942Z ##[endgroup]
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8430195Z {
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8430798Z   "assets": [
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8431140Z     {
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8431759Z       "digest": "sha256:56a435f909b05a9674a693dc3c5b50c45aefc5d0aaca8455b73571af9ea340b5",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8432520Z       "id": 652201601,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8432949Z       "name": "yuga-native-linux-x86_64.zip",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8433446Z       "size": 137812335,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8433817Z       "state": "uploaded"
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8434183Z     },
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8434560Z     {
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8435153Z       "digest": "sha256:16f6e210fef90f26c1c725e503805fb5e9c4ee76d64e86cb2ff7b0788ea186c5",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8435870Z       "id": 652201809,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8436284Z       "name": "yuga-native-windows-x86_64.zip",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8436774Z       "size": 145813678,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8437594Z       "state": "uploaded"
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8437934Z     },
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8438234Z     {
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8438643Z       "digest": "sha256:9b181f1c67e32de6481cd9256c61b38eb54de6ce2afe54e05f2a68ae2931d75b",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8439077Z       "id": 652201991,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8439340Z       "name": "native-export-manifest.json",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8439993Z       "size": 397267,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8440219Z       "state": "uploaded"
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8440435Z     },
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8440634Z     {
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8440973Z       "digest": "sha256:12010a4eae0b6645d946e5aaa8b52daba5f8f233425356aa942891ab0b87c1b2",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8441388Z       "id": 652202011,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8441652Z       "name": "native-package-manifest.json",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8441951Z       "size": 12765,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8442172Z       "state": "uploaded"
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8442396Z     },
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8442566Z     {
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8442888Z       "digest": "sha256:971400864643f5e02c90248b3b3429f3535bf424db94c1f023c53a9551eed2a1",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8443308Z       "id": 652202064,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8443532Z       "name": "SHA256SUMS.txt",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8443770Z       "size": 381,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8443973Z       "state": "uploaded"
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8444185Z     }
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8444354Z   ],
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8444530Z   "draft": true,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8444901Z   "manifest_sha256": "a97acb51d76c9c404d0cf6f72c4aba320ef5a8bebb69e8947a02b05306b0aa3f",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8445333Z   "release_id": 416177473,
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8445576Z   "repository": "occult-kranti/ANDOLAN",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8445856Z   "tag": "yuga-native-ui-2026-10-18",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8446161Z   "target": "9e81a7c849837dea477ddb5a8c93f43665774573",
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8446525Z   "transport_commit": "b2ea3a72627394c00ce829700d6361475dc08cdb"
+upload	Upload only to the fixed existing draft; never publish or clobber	2026-10-18T02:09:57.8446845Z }

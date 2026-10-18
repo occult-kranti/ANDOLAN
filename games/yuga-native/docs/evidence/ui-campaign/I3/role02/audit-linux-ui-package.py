@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+"""Independent read-only archive/PCK UI bindings audit; no Godot invocation."""
+import argparse,configparser,hashlib,json,pathlib,struct,subprocess,zipfile
+p=argparse.ArgumentParser();p.add_argument('--build',required=True,type=pathlib.Path);p.add_argument('--zip-sha256',required=True);p.add_argument('--commit',required=True);p.add_argument('--runtime-signature',required=True);p.add_argument('--report',required=True,type=pathlib.Path);a=p.parse_args()
+def sha(b):return hashlib.sha256(b).hexdigest()
+def file_sha(p):
+ with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+def conf_value(payload,section,key):
+ c=configparser.ConfigParser(interpolation=None,strict=True);c.optionxform=str;c.read_string(payload.rstrip(b'\0').decode());return json.loads(c[section][key])
+archive=a.build/'yuga-native-linux-x86_64.zip';export_path=a.build/'native-export-manifest.json';export=json.loads(export_path.read_text());probe_path=a.build/'font-bindings-export.json';probe=json.loads(probe_path.read_text());prefix='yuga-native-linux-x86_64/'
+assert file_sha(archive)==a.zip_sha256,'Archive identity differs'
+with zipfile.ZipFile(archive) as z:
+ assert len(z.namelist())==len(set(z.namelist())),'Duplicate archive path'
+ internal_bytes=z.read(prefix+'PACKAGE-MANIFEST.json');internal=json.loads(internal_bytes);packed=z.read(prefix+'yuga-native.pck');notice_data={name:z.read(prefix+name) for name in export['font_bindings']['sources'] if name.startswith('NOTICE/')}
+assert packed[:4]==b'GDPC','PCK magic'
+version,major,minor,patch,flags=struct.unpack_from('<5I',packed,4);base=struct.unpack_from('<Q',packed,24)[0]
+assert version in [2,3] and (major,minor,patch)==(4,6,3) and flags in [0,2],'PCK version/flags'
+pos=struct.unpack_from('<Q',packed,32)[0] if version==3 else 96
+count=struct.unpack_from('<I',packed,pos)[0];pos+=4;assert 10<=count<=10000
+entries={}
+for unused in range(count):
+ n=struct.unpack_from('<I',packed,pos)[0];pos+=4;assert 0<n<=4096
+ name=packed[pos:pos+n].rstrip(b'\0').decode().removeprefix('res://');pos+=n
+ offset,size=struct.unpack_from('<QQ',packed,pos);md5=packed[pos+16:pos+32];entry_flags=struct.unpack_from('<I',packed,pos+32)[0];pos+=36
+ assert name not in entries and entry_flags==0,'Duplicate/encrypted entry'
+ start=base+offset;assert start>=0 and start+size<=len(packed),'Entry bounds'
+ entries[name]=(start,size,md5)
+def payload(name):
+ start,size,md5=entries[name];b=packed[start:start+size];assert hashlib.md5(b).digest()==md5,'PCK stored integrity: '+name;return b
+expected_raw={'assets/fonts/NotoSans-Regular.ttf':{'bytes':512672,'sha256':'89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d'},'assets/fonts/NotoSerif-Regular.ttf':{'bytes':588876,'sha256':'9d7583b7dc9e812afd32a14280c5cac3160012efe50c8d08938f4fea266ff67f'},'assets/fonts/DejaVuSans.ttf':{'bytes':759720,'sha256':'57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e'}}
+fonts=[]
+for name,raw in expected_raw.items():
+ binding=export['font_bindings']['imports'][name];target=conf_value(payload(name+'.import'),'remap','path');font=payload(target.removeprefix('res://'))
+ fonts.append({'source':name,'target':target,'packed_bytes':len(font),'packed_sha256':sha(font),'stored_md5_verified':True,'matches_binding':target==binding['resource']['path'] and len(font)==binding['resource']['bytes'] and sha(font)==binding['resource']['sha256'],'raw_binding_matches_fixed_source':binding['decoded_raw_ttf']==raw and probe['fonts']['res://'+name]==raw})
+first=[]
+for source,expected in export['packs']['linux']['first_load_resources'].items():
+ target=source if source in entries else conf_value(payload(source+'.remap'),'remap','path').removeprefix('res://');data=payload(target)
+ first.append({'source':source,'target':target,'bytes':len(data),'sha256':sha(data),'stored_md5_verified':True,'matches_export':target==expected['path'].removeprefix('res://') and len(data)==expected['bytes'] and sha(data)==expected['sha256']})
+notices=[]
+for name,data in notice_data.items():
+ committed=subprocess.check_output(['git','-C','/workspace/ANDOLAN','show',a.commit+':games/yuga-native/'+name])
+ notices.append({'path':name,'bytes':len(data),'sha256':sha(data),'committed_sha256':sha(committed),'matches_source':data==committed and {'bytes':len(data),'sha256':sha(data)}==export['font_bindings']['sources'][name]})
+checks={'archive_exact':file_sha(archive)==a.zip_sha256,'pack_exact':sha(packed)==export['packs']['linux']['sha256']==internal['pck']['sha256'] and len(packed)==export['packs']['linux']['bytes'],'pck_entry_count':count==export['packs']['linux']['entry_count'],'source_commit_consistent':export['git']['head']==internal['git']['head']==a.commit,'runtime_signature_consistent':export['source']['sha256']==internal['runtime_source']['sha256']==a.runtime_signature,'font_probe_exact':{'bytes':probe_path.stat().st_size,'sha256':file_sha(probe_path)}==export['font_bindings']['probe_result'],'three_font_payloads_and_raw_bindings':len(fonts)==3 and all(x['matches_binding'] and x['raw_binding_matches_fixed_source'] for x in fonts),'five_notices_exact':len(notices)==5 and all(x['matches_source'] for x in notices),'five_first_load_bindings':len(first)==5 and all(x['matches_export'] for x in first),'theme_is_bound':any(x['source']=='scripts/hero_ui_theme.gd' and x['matches_export'] for x in first)}
+result={'passed':all(checks.values()),'checks':checks,'archive':str(archive),'archive_bytes':archive.stat().st_size,'archive_sha256':a.zip_sha256,'export_manifest_sha256':file_sha(export_path),'package_manifest_sha256':sha(internal_bytes),'commit':a.commit,'font_probe_result':{'bytes':probe_path.stat().st_size,'sha256':file_sha(probe_path)},'runtime_signature':a.runtime_signature,'pck_sha256':sha(packed),'pck_members':count,'fonts':fonts,'first_load':first,'notices':notices,'scope':'Independent archive bytes/PCK-directory/font-remap and payload audit. Reuses owner same-export actual FontFile.data proof after checking its exact JSON hash; this reviewer did not run Godot, decode fontdata, import or render. Native glyph/layout pixels remain a separate required review.'}
+a.report.parent.mkdir(parents=True,exist_ok=True);a.report.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':len(checks),'fonts':len(fonts),'notices':len(notices),'pck_members':count}));raise SystemExit(0 if result['passed'] else 1)

@@ -1,0 +1,4 @@
+Root first replay finding, preserved from the assignment:
+"Root replay of tests/ui_packaged_capture_cases.py against committed-intended I3/role03/{native-r1,relaunch-r1,staged-r1} failed FileNotFound godot.log at line18."
+
+The archive helper had retained exact log bytes under *-output.txt aliases, while the unchanged validator requires godot.log. A bounded local reproduction also exited1; its complete traceback is archive-portability-r1-output.txt. No report JSON was produced by that failed invocation.

@@ -1,6 +1,6 @@
 # Native screens and integration campaign
 
-The current request adds **five rounds of six screen assignments**, followed by **three rounds of six integration assignments**. These 48assignments are separate from the ongoing three 15-role visual rounds. Six workers rotate through exclusive files; source imports and heavy captures have one owner.
+This campaign covers **five rounds of six screen assignments**, followed by **three rounds of six integration assignments**. These 48 assignments are separate from the three 15-role visual rounds. Six workers rotate through exclusive files; source imports and heavy captures have one owner.
 
 The [execution ledger](SCREEN_CAMPAIGN.json) owns exact tasks and actual completion. Work starts with a clear launch choice, a real loading state and shared native controls. It continues through combat information, map/goal context, pause, guide, settings, results and recoverable errors. Available modes stay tied to implemented offline gameplay.
 
@@ -14,8 +14,6 @@ The final three rounds combine the accepted hero work with screens, stress state
 
 ## Current checkpoint
 
-All five screen rounds have bounded implementation and actual-screen acceptance. U5 records39 planned+15 automatic first-pass images, followed by15 planned+15 automatic correction images. Independent review confirms Help entry, saved guide feedback, respawn/atlas information, enemy siege counts and film-return selection. Original failures remain in the evidence archive; compact world text still needs a later accessibility pass.
+All five screen rounds and three integration rounds are complete within their recorded scope. The qualified package uses source `9e81a7c`: actual Linux main navigation, fresh-process preference persistence and a separate explicitly staged rule-result supplement have been reviewed. Two first-run native capture-tool recoveries remain explicit; relaunch and supplement needed none. The [short handoff](SCREEN_CAMPAIGN_HANDOFF.md) links the final source, tests, original images and retained failures without duplicating the [per-role ledger](SCREEN_CAMPAIGN.json).
 
-I1 integrates accepted R7 groom/cloth assets and fixes overview animation advancing while combat is frozen. I2 runs repeated scene changes, loading/state interruptions, malformed settings and resource ownership against a frozen integrated runtime. I3 builds and independently reviews the actual portable package before publication. The [execution ledger](SCREEN_CAMPAIGN.json) records per-role evidence; source tests and renders do not automatically qualify a downloadable package.
-
-The five screen rounds are complete for this scoped pass, not a claim that every production-game screen or the Deadlock graphics target is finished. Native online play, full roster, production art and physical-GPU profiling remain separate roadmap gates.
+The [yuga-native-ui-2026-10-18 preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-ui-2026-10-18) is published. All five public assets were independently downloaded and hash-verified; both archives match the qualified packages. The [publication receipt](evidence/ui-campaign/I3/published/REVIEW.md) preserves the exact checks. Windows has archive validation only. Software-rendered captures establish no hardware FPS or listening quality; staged outcomes are not naturally won playthroughs. Compact HUD text, native online play, the full roster and Deadlock-level art/performance quality remain open gates.

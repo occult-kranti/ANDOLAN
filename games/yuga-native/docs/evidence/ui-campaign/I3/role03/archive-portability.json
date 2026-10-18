@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "scope": "Archive-only receipt replay; no engine execution and no product/raw JSON/PNG changes.",
+  "first_root_failure_note": "archive-portability-root-failure.txt",
+  "first_root_failure_note_sha256": "c8de4c3944f1b711ee7ede5e50932938403d9a65e806692e9120a5934608bdc8",
+  "local_failure_reproduction": {
+    "exit_code": 1,
+    "output": "archive-portability-r1-output.txt",
+    "sha256": "f42b610831e6a26df68c58126160e391c76bc762e81f637619ee4881077f1c72"
+  },
+  "copy_receipt_sha256": "f7ca5e4a780556da15c759d248fdf063f9e6439d68df0e1f258939af2d6057a7",
+  "original_archive_files_unchanged": true,
+  "original_archive_files_count": 156,
+  "added_original_logs": {
+    "native-r1/godot.log": {
+      "sha256": "e97fae55470050846e711d2dc55f2b7491a385bc290fd006e6a69c76c81a10ef",
+      "bytes": 16409,
+      "original_source": "/tmp/yuga-i3-native-r1/godot.log",
+      "same_bytes_as_prior_alias": "native-r1/godot-output.txt"
+    },
+    "native-r1/xvfb.log": {
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+      "bytes": 64,
+      "original_source": "/tmp/yuga-i3-native-r1/xvfb.log",
+      "same_bytes_as_prior_alias": "native-r1/xvfb-output.txt"
+    },
+    "relaunch-r1/godot.log": {
+      "sha256": "a4333751a47f2c86fca4457ad6589cf342f93664648ea93fd2a5c091757692de",
+      "bytes": 294,
+      "original_source": "/tmp/yuga-i3-relaunch-r1/godot.log",
+      "same_bytes_as_prior_alias": "relaunch-r1/godot-output.txt"
+    },
+    "relaunch-r1/xvfb.log": {
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+      "bytes": 64,
+      "original_source": "/tmp/yuga-i3-relaunch-r1/xvfb.log",
+      "same_bytes_as_prior_alias": "relaunch-r1/xvfb-output.txt"
+    },
+    "staged-r1/godot.log": {
+      "sha256": "ece957690d65dde5e2d1747eaa197c3ee778277cd84747c13b7d006d09bab94a",
+      "bytes": 14772,
+      "original_source": "/tmp/yuga-i3-staged-r1/godot.log",
+      "same_bytes_as_prior_alias": "staged-r1/godot-output.txt"
+    },
+    "staged-r1/xvfb.log": {
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+      "bytes": 64,
+      "original_source": "/tmp/yuga-i3-staged-r1/xvfb.log",
+      "same_bytes_as_prior_alias": "staged-r1/xvfb-output.txt"
+    }
+  },
+  "command": [
+    "python3",
+    "tests/ui_packaged_capture_cases.py",
+    "--first",
+    "docs/evidence/ui-campaign/I3/role03/native-r1",
+    "--relaunch",
+    "docs/evidence/ui-campaign/I3/role03/relaunch-r1",
+    "--staged",
+    "docs/evidence/ui-campaign/I3/role03/staged-r1",
+    "--report",
+    "/tmp/yuga-i3-root-package-validation.json"
+  ],
+  "replay_exit_code": 0,
+  "passed_count": 43,
+  "count": 43,
+  "archive_replay_report_sha256": "a194dfe73fdda4d8fde6a06cc01fd9ad9ea9dd23c3f8dc59911b2b20193f82d0",
+  "validator_sha256": "96d7f721cbfdce6d0faea80a144d7f034a7b68ed6c0fcf5a99d5b9e47a385d05",
+  "future_archive_helper_sha256": "bb87e87f8b39a013d47247e7e95982459dadf83eb8ba1a0e6d49aa2c8fdf97d5",
+  "git_handling": "Six *.log paths are ignored; root will force-add these exact scoped originals. Prior *-output.txt aliases remain unchanged."
+}

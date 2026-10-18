@@ -1,0 +1,15 @@
+import pathlib,json,hashlib,os,subprocess,time
+root=pathlib.Path('/workspace/ANDOLAN');project=root/'games/yuga-native';out=pathlib.Path('/tmp/yuga-i3-content6-independent-r1');out.mkdir(exist_ok=False)
+files=['scripts/native_contracts.gd','assets/contracts/native-contracts-v1.json','tools/check-native-contracts.py','tests/native_contract_cases.gd','tests/fixtures/contracts/native-content5-catalog.json','tests/fixtures/contracts/native-content5-descriptor.json','scripts/player.gd']
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def pins():return {f:sha(project/f) for f in files}
+manifest=json.loads(pathlib.Path('/tmp/yuga-i1-final-r1/ANDOLAN/games/yuga-native/ui-source-freeze.json').read_text())
+def cache_mismatches():return [f for f,h in manifest['existing_import_sha256'].items() if sha(project/f)!=h]
+before=pins();cache_before=cache_mismatches();results=[]
+env=os.environ.copy();env.update(LP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',XDG_DATA_HOME=str(out/'user/data'),XDG_CONFIG_HOME=str(out/'user/config'),XDG_CACHE_HOME=str(out/'user/cache'))
+for name,cmd in [('source-pins',['taskset','-c','3','python3',str(project/'tools/check-native-contracts.py'),'--report',str(out/'source-pins.json')]),('godot-admission',['taskset','-c','3','godot','--headless','--max-threads','1','--path',str(project),'--script','res://tests/native_contract_cases.gd','--','--report='+str(out/'godot-admission.json')])]:
+ start=time.monotonic()
+ with (out/(name+'.log')).open('w') as f:run=subprocess.run(cmd,cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT,timeout=60,check=False)
+ d=json.loads((out/(name+'.json')).read_text());lines=(out/(name+'.log')).read_text().splitlines();diagnostics=[x for x in lines if any(s in x for s in ['ERROR:','SCRIPT ERROR','WARNING:','ObjectDB instances leaked'])]
+ results.append({'name':name,'command':cmd,'exit_code':run.returncode,'wall_seconds':time.monotonic()-start,'passed':run.returncode==0 and d.get('passed') is True and not diagnostics,'checks':len(d.get('checks',[])),'diagnostics':diagnostics,'report_sha256':sha(out/(name+'.json')),'log_sha256':sha(out/(name+'.log'))})
+after=pins();cache_after=cache_mismatches();result={'passed':all(x['passed'] for x in results) and before==after and not cache_before and not cache_after,'results':results,'source_before':before,'source_after':after,'source_unchanged':before==after,'cache_count':len(manifest['existing_import_sha256']),'cache_mismatches_before':cache_before,'cache_mismatches_after':cache_after,'scope':'Independent source-pin and pure Godot native admission checks on exact content6 candidate; CPU3 one-thread limits, isolated user storage. No scene import, render, transport, network, package or pixel acceptance.'};(out/'receipt.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'results':[{k:x[k] for k in ['name','passed','checks','diagnostics']} for x in results],'source_unchanged':result['source_unchanged'],'cache_mismatches':cache_after}));raise SystemExit(0 if result['passed'] else 1)
