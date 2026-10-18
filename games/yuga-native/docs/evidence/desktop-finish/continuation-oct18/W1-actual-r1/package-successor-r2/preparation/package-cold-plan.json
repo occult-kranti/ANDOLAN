@@ -1,0 +1,63 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done",
+      "content_scale_factor": 1.0
+    },
+    "capture": "01-latest-title-100"
+  },
+  {
+    "tab_to_name": "ConfluenceMode"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "launch.selected_mode": "world"
+    }
+  },
+  {
+    "tab_to_name": "ExploreConfluence"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/confluence_world.tscn",
+      "state.world_ready": true,
+      "state.player_grounded": true,
+      "state.player_active": true,
+      "transition.phase": "done"
+    },
+    "capture": "02-latest-world-idle-100"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    }
+  },
+  {
+    "tab_to_text": "Return to courtyard"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "transition.phase": "done",
+      "paused": false,
+      "content_scale_factor": 1.0
+    },
+    "capture": "07-latest-return-title-100"
+  },
+  {
+    "tab_to_name": "Quit"
+  },
+  {
+    "key": "Return",
+    "expect_exit": 0
+  }
+]

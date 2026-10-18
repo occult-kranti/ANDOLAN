@@ -1,0 +1,152 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done",
+      "content_scale_factor": 1.0
+    },
+    "capture": "01-latest-title-100"
+  },
+  {
+    "tab_to_name": "ConfluenceMode"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "launch.selected_mode": "world"
+    }
+  },
+  {
+    "tab_to_name": "ExploreConfluence"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/confluence_world.tscn",
+      "state.world_ready": true,
+      "state.player_grounded": true,
+      "state.player_active": true,
+      "transition.phase": "done"
+    },
+    "capture": "02-latest-world-idle-100"
+  },
+  {
+    "key": "F2",
+    "expect": {
+      "panels.controls_overlay": true
+    }
+  },
+  {
+    "tab_to_name": "Binding_guardian_circle"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "state.capture_action": "guardian_circle",
+      "package_review.focused_control_in_scroll": true
+    },
+    "capture": "03-latest-controls-capture-100"
+  },
+  {
+    "key": "F8",
+    "expect": {
+      "content_scale_factor": 2.0,
+      "state.capture_action": "guardian_circle",
+      "package_review.focus_name": "Binding_guardian_circle",
+      "package_review.focused_control_in_scroll": true
+    },
+    "capture": "04-latest-controls-capture-200"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "state.capture_action": ""
+    }
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.controls_overlay": false,
+      "paused": false,
+      "state.player_active": true
+    }
+  },
+  {
+    "key": "F8",
+    "expect": {
+      "content_scale_factor": 1.0
+    }
+  },
+  {
+    "key": "F3",
+    "expect": {
+      "panels.rama_panel": true,
+      "paused": true
+    }
+  },
+  {
+    "tab_to_name": "dawn_volley"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "guide.selected_id": "dawn_volley",
+      "package_review.focused_control_in_scroll": true
+    }
+  },
+  {
+    "key": "F8",
+    "expect": {
+      "content_scale_factor": 2.0,
+      "guide.selected_id": "dawn_volley",
+      "package_review.focus_name": "dawn_volley",
+      "package_review.focused_control_in_scroll": true
+    },
+    "capture": "05-latest-guide-selection-200"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.rama_panel": false,
+      "paused": false,
+      "state.player_active": true
+    }
+  },
+  {
+    "key": "F8",
+    "expect": {
+      "content_scale_factor": 1.0
+    },
+    "capture": "06-latest-world-return-100"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    }
+  },
+  {
+    "tab_to_text": "Return to courtyard"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "transition.phase": "done",
+      "paused": false,
+      "content_scale_factor": 1.0
+    },
+    "capture": "07-latest-return-title-100"
+  },
+  {
+    "tab_to_name": "Quit"
+  },
+  {
+    "key": "Return",
+    "expect_exit": 0
+  }
+]

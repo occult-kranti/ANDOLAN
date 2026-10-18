@@ -1,0 +1,98 @@
+--- original16110615
++++ uid-aware011fa2fc
+@@ -5,6 +5,7 @@
+ import importlib.util
+ import json
+ from pathlib import Path, PurePosixPath
++import re
+ import stat
+ import sys
+ import time
+@@ -14,6 +15,61 @@
+ WINDOWS_ENGINE = {'bytes': 172409864, 'sha256': 'ef90e929ba1a6a4322860285d97f40f4aa349c90329a91b0e8b55b8df0f4cb00'}
+ WINDOWS_PROOF = Path('/workspace/tooling/native-engine/godot-windows-provenance.json')
+ WINDOWS_PROOF_SHA = 'c83f2555fdd573e3ef090d4575185596d1a9c908a321c8c61632e727d9c2703e'
++UID_ALLOWLIST = HERE / 'uid-regeneration-allowlist.json'
++UID_ALLOWLIST_SHA = '4d8cda1a7bb658459fdacf4eae0493f20edd9d6cff10a13507af028d6d7bc705'
++
++
++def admit_uid_regeneration(diagnostics, expected, repo, canonical, prep, preparation_sha, phases, runtime_uids):
++    """Admit only the exact reviewed75 cached nonruntime UID recreations."""
++    if (expected.get('schema') != 1 or expected.get('source_commit') != prep['source_commit'] or
++            expected.get('preparation_sha256') != preparation_sha or
++            expected.get('approved_exclusion_sha256') != prep['exclude_sha256'] or
++            expected.get('log') != 'build/export-linux.log' or expected.get('expected_warning_count') != 75):
++        raise ValueError('UID observation does not bind this exact source/preparation/exclusion/log')
++    observed = [(name, line) for name, lines in diagnostics.items() for line in lines]
++    rows = expected.get('warnings', [])
++    if len(rows) != 75 or len(observed) != 75 or observed != [(expected['log'], row['line']) for row in rows]:
++        raise ValueError('Unknown, missing, duplicate, relocated or changed diagnostics')
++    tracked = {row['path']: row for row in prep['entries']}
++    approved = {line[1:] for line in prep['exclude_text'].splitlines() if line.startswith('/')}
++    seen_paths, seen_ids, admitted = set(), set(), []
++    for row in rows:
++        match = re.fullmatch(r'WARNING: Missing \.uid file for path "(res://(?:tests|tools)/[^"\r\n]+\.gd)"\. The file was re-created from cache\.', row['line'])
++        if not match:
++            raise ValueError('Unknown warning grammar or runtime warning')
++        source = 'games/yuga-native/' + match[1][6:]
++        name = PurePosixPath(source)
++        uid_path = source + '.uid'
++        if (name.is_absolute() or '..' in name.parts or '\\' in source or name.as_posix() != source or
++                name.parts[:3] not in [('games', 'yuga-native', 'tests'), ('games', 'yuga-native', 'tools')] or
++                source != row['source_path'] or uid_path != row['uid_path'] or source not in tracked or
++                uid_path in tracked or uid_path not in approved or uid_path in seen_paths):
++            raise ValueError('Warning source/sidecar is outside exact approved untracked nonruntime metadata')
++        seen_paths.add(uid_path)
++        source_record = {'bytes': row['source_bytes'], 'sha256': row['source_sha256']}
++        if ({key: tracked[source][key] for key in ['bytes', 'sha256']} != source_record or
++                tracked[source]['blob'] != row['source_blob'] or rec(repo / source) != source_record):
++            raise ValueError('Warning source script differs from reviewed tracked blob')
++        sidecars = [repo / uid_path, canonical / uid_path]
++        if not all(path.is_file() and not path.is_symlink() and path.resolve() == path.absolute() for path in sidecars):
++            raise ValueError('Generated UID sidecar must be a regular private path')
++        if (sidecars[0].stat().st_dev, sidecars[0].stat().st_ino) == (sidecars[1].stat().st_dev, sidecars[1].stat().st_ino):
++            raise ValueError('Generated UID metadata must not share canonical mutable inodes')
++        payload = sidecars[0].read_bytes()
++        if (not re.fullmatch(rb'uid://(?:a|[b-y0-8][a-y0-8]{0,12})\n', payload) or
++                payload.decode().strip() != row['uid'] or row['uid'] in seen_ids or row['uid'] in runtime_uids):
++            raise ValueError('Generated UID is malformed, substituted, duplicated or collides with runtime metadata')
++        numeric = 0
++        for character in row['uid'].removeprefix('uid://'):
++            numeric = numeric * 34 + 'abcdefghijklmnopqrstuvwxy012345678'.index(character)
++        if numeric > 0x7FFFFFFFFFFFFFFF:
++            raise ValueError('Generated UID exceeds canonical signed63 range')
++        seen_ids.add(row['uid'])
++        if (any(rec(path) != row['metadata'] for path in sidecars) or
++                any(phases[phase]['generated_ignored_uid_files'].get(uid_path) != row['metadata'] for phase in ['export', 'package'])):
++            raise ValueError('Generated metadata differs from exact reviewed ID/canonical sidecar/phase bindings')
++        admitted.append({'log': expected['log'], **row})
++    return admitted
+ 
+ 
+ def expected_phase_command(repo, out, native, phase):
+@@ -185,7 +241,14 @@
+         log_records = {str(f.relative_to(out)): rec(f) for f in required_logs}
+         logs = [*sorted((out / 'logs').glob('*')), *sorted(build.glob('*.log'))]
+         diagnostics = {str(f.relative_to(out)): [line for line in f.read_text(errors='replace').splitlines() if any(marker in line for marker in ['ERROR:', 'WARNING:', 'SCRIPT ERROR:'])] for f in logs}
+-        check('all phase exporter and package logs have no errors or warnings', not any(diagnostics.values()))
++        result['diagnostics'] = diagnostics
++        check('exact independently reviewed UID observation bytes', rec(UID_ALLOWLIST)['sha256'] == UID_ALLOWLIST_SHA)
++        uid_observation = json.loads(UID_ALLOWLIST.read_text())
++        phase_data = {phase: json.loads((out / (phase + '-execution.json')).read_text()) for phase in ['export', 'package']}
++        runtime_uid_values = {row['uid'] for row in exported['runtime_uids']['sidecars'].values()}
++        uid_regeneration = admit_uid_regeneration(diagnostics, uid_observation, repo, s.SOURCE, prep, a.preparation_sha256, phase_data, runtime_uid_values)
++        check('only75 exact approved cached nonruntime UID warnings and no unknown warnings or errors', len(uid_regeneration) == 75)
++        result['admitted_nonruntime_uid_regeneration'] = uid_regeneration
+         files = [build / name for name in ['yuga-native-linux-x86_64.zip', 'yuga-native-windows-x86_64.zip', 'native-export-manifest.json', 'native-package-manifest.json']]
+         checksums = ''.join(rec(f)['sha256'] + '  ' + f.name + '\n' for f in files)
+         checksum_file = build / 'SHA256SUMS.txt'
+@@ -203,6 +266,9 @@
+               all(rec(build / ('native-contracts-' + phase + '.json')) == value for phase, value in contract_records.items()) and
+               rec(WINDOWS_PROOF)['sha256'] == WINDOWS_PROOF_SHA and
+               all(rec(out / name) == value for name, value in log_records.items()))
++        check('reviewed UID observation and every generated sidecar unchanged through audit',
++              rec(UID_ALLOWLIST)['sha256'] == UID_ALLOWLIST_SHA and
++              admit_uid_regeneration(diagnostics, uid_observation, repo, s.SOURCE, prep, a.preparation_sha256, phase_data, runtime_uid_values) == uid_regeneration)
+         check('approved export free-space reserve remains', s.free_bytes(s.AREA) >= prep['reserve_bytes'])
+         result.update({'passed': True, 'tracked_files': len(prep['entries']), 'runtime_files': len(exported['source']['files']), 'archives': archives, 'engine_selection': engines, 'diagnostics': diagnostics, 'phase_receipts': phase_records, 'raw_contract_proofs': contract_records, 'required_logs': log_records, 'windows_proof_sha256': WINDOWS_PROOF_SHA, 'five_assets': {f.name: rec(f) for f in [*files, checksum_file]}, 'free_bytes_after': s.free_bytes(s.AREA)})
+     except Exception as error:

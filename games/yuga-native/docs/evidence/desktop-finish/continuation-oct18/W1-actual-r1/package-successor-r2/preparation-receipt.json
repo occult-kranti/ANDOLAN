@@ -1,0 +1,127 @@
+{
+  "kind": "validator-only correction; no actual rerun",
+  "original_validator_sha256": "57193dbfc4f3664b32784385df06a2271138f02e47d2c18aad84558654db7a6b",
+  "corrected_validator_sha256": "78d568e96cd6b2f714e49c74f82f69e4c6b0da2394071d94e002a1b32d427225",
+  "failed_validation_sha256": "c6850c9da83780721d176276dcaeb6d55c993a3b300c8dfe4d772a06e5fe4a1e",
+  "corrected_validation_sha256": "e9c0bcf096ca76416623319b0023a4041bc04c38a085151e8fa6fbfafd420d22",
+  "cause": "Reviewed observer emits Window.size rather than framebuffer_size. Original checker wrongly required the nonexistent field.",
+  "change": "Check recorded Window.size=[960,540] and independently decode actual PNG dimensions=(960,540).",
+  "unchanged": [
+    "package",
+    "archive",
+    "extraction",
+    "runtime",
+    "observer",
+    "runner",
+    "identity",
+    "guard",
+    "plan",
+    "raw originals"
+  ],
+  "files": [
+    {
+      "path": "preparation/README.md",
+      "sha256": "d021d2dc709a66d6ad6f28ad69c3d57837d4efc38c842d508869ed8cd64c8bb4"
+    },
+    {
+      "path": "preparation/archive-bound-inputs.json",
+      "sha256": "8ff9c9d26e29663187f10d3015eac6710a5c5f9c2355a5fa75c51c228bfd3f09"
+    },
+    {
+      "path": "preparation/expected-engine-selection.json",
+      "sha256": "3c7ad7d93b40dc436ce80588a43fce7f920bb0d3416948a7b4f742df03bac38a"
+    },
+    {
+      "path": "preparation/extraction-bound-inputs.json",
+      "sha256": "c2d0a6b4b8fbcf16394481c5ac2e5d453d0b123dd359c46a42cd76ab626ffa90"
+    },
+    {
+      "path": "preparation/negative-omitted-extraction-member.json",
+      "sha256": "6855a909ac87e288748d46c0f21b13daf14216ae4f716f4f7d9a7bccabfed596"
+    },
+    {
+      "path": "preparation/negative-omitted-extraction-member.stderr",
+      "sha256": "6cef78aed6b2a1dab217f666a417a15b82248288c0145311fc9d45728efd1bfc"
+    },
+    {
+      "path": "preparation/negative-receipt-pin-check.json",
+      "sha256": "696d487d08b95ed71322657633ae9100ea321c295cd16ff336459451d866eee3"
+    },
+    {
+      "path": "preparation/package-cold-plan.json",
+      "sha256": "f4888e4a247f837a5ec0489f6af7445649fe66e1094b6bdc4f3eb5dcfb238c02"
+    },
+    {
+      "path": "preparation/package-warm-plan.json",
+      "sha256": "b675be75bb1baee9f41c80ad92f4061780de2f621eec5a0d1a4a6601bacadcbc"
+    },
+    {
+      "path": "preparation/package_identity.archive-bound.py.txt",
+      "sha256": "06b835894e89c2445f17467197265ad120f844121177aae1598aaad7d3c13ebf"
+    },
+    {
+      "path": "preparation/package_identity.py",
+      "sha256": "735d8171d64005094f1a43eb5f2f0c075b0c82b06f5ad2e61e03639680d56363"
+    },
+    {
+      "path": "preparation/package_identity.source-only.py.txt",
+      "sha256": "e470da09ed49ba879ecc5207efe47034cabdba12e7469047990b8edc07709196"
+    },
+    {
+      "path": "preparation/run_package_review.py",
+      "sha256": "6745fe3c60fc60b11a7930806e1674dd2e4c53a0e035b94c61aef83fdb8c8900"
+    },
+    {
+      "path": "preparation/source-preparation-receipt.json",
+      "sha256": "e17a6b15a6c211b3622364c7c55fa8d40265e6c6fd69ba8038fea2ab6f2f800d"
+    },
+    {
+      "path": "preparation/tools/ui-campaign/authority_stage.gd",
+      "sha256": "0ad1f073701fd2815253e68eebfa1478f06432660717dc8659baf5479cc891e7"
+    },
+    {
+      "path": "preparation/tools/ui-campaign/integrated_capture.gd",
+      "sha256": "70a72792f202b9e9f1ccece7a2d79b18c3094c451c7681f219ba8a7db8e2306b"
+    },
+    {
+      "path": "preparation/tools/ui-campaign/observer.gd",
+      "sha256": "243483952cc5bc83b103f8648ad6cea76c72681c36facf32887d94f780ada9e1"
+    },
+    {
+      "path": "preparation/tools/ui-campaign/run.py",
+      "sha256": "322e919185825c5b6bd49911fbe2b64b70a2149ffbb0199958e98c45ce22763d"
+    },
+    {
+      "path": "preparation/verify_extract.py",
+      "sha256": "1c168086ed32578725ac99dd24fe64d553171bc25ad3b6b50ca1b9df24bfe809"
+    },
+    {
+      "path": "preparation/verify_package_review.initial-framebuffer-field.py.txt",
+      "sha256": "57193dbfc4f3664b32784385df06a2271138f02e47d2c18aad84558654db7a6b"
+    },
+    {
+      "path": "preparation/verify_package_review.py",
+      "sha256": "78d568e96cd6b2f714e49c74f82f69e4c6b0da2394071d94e002a1b32d427225"
+    },
+    {
+      "path": "inputs/extraction-report.json",
+      "sha256": "40c42d5bc098992b2587938aa1a2aabb89db874814647ef94491afb86aedf77a"
+    },
+    {
+      "path": "inputs/qualification-receipt.json",
+      "sha256": "e924d90af27dad48c96fcb99ad9bbbe2cfd84ac01899b2221491199baf00f400"
+    },
+    {
+      "path": "inputs/native-export-manifest.json",
+      "sha256": "104fbfd1c1f83616d5f1d55bcfe33903457b2241a4753117dbd366978f8c0e48"
+    },
+    {
+      "path": "inputs/native-package-manifest.json",
+      "sha256": "8a74ef1abd3b29ddc86a72a162b07fbb41f4528a426f4f652c2a024b3d399527"
+    },
+    {
+      "path": "inputs/failed-warm-validation.json",
+      "sha256": "c6850c9da83780721d176276dcaeb6d55c993a3b300c8dfe4d772a06e5fe4a1e"
+    }
+  ]
+}

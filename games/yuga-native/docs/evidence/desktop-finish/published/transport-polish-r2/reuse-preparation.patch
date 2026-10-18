@@ -1,0 +1,144 @@
+--- preserved-transport-polish-r1/generate.py
++++ pending-transport-polish-r2/generate.py
+@@ -15,8 +15,8 @@
+ RELEASE_ID = None  # Root must create a NEW draft; prior public release is immutable.
+ QUALIFICATION_RECEIPTS = None  # Exact reviewed export, actual warm/cold and independent receipt pins.
+ PART_COUNTS = None  # Exact five-asset chunk census, derived from final sizes.
+-BRANCH = 'transport/yuga-desktop-polish-2026-10-18-r1'
+-TARGET = '85d5831dd8586a264caa93a7ba4625d1ec0b7f21'
++BRANCH = 'transport/yuga-desktop-polish-2026-10-18-r2'
++TARGET = '79e5c15d8a3657e16fda67acb277b2406120dcd1'
+ # Pending successor qualification. No old asset pins are admitted.
+ EXPECTED = []
+ EXPECTED_SUMS_SHA256 = None
+@@ -163,7 +163,7 @@
+ on:
+   push:
+     branches:
+-      - transport/yuga-desktop-polish-2026-10-18-r1
++      - transport/yuga-desktop-polish-2026-10-18-r2
+ 
+ permissions: {}
+ 
+@@ -173,7 +173,7 @@
+ 
+ jobs:
+   upload:
+-    if: github.repository == 'occult-kranti/ANDOLAN' && github.ref == 'refs/heads/transport/yuga-desktop-polish-2026-10-18-r1' && github.event.created == true && github.event.deleted == false
++    if: github.repository == 'occult-kranti/ANDOLAN' && github.ref == 'refs/heads/transport/yuga-desktop-polish-2026-10-18-r2' && github.event.created == true && github.event.deleted == false
+     runs-on: ubuntu-24.04
+     timeout-minutes: 15
+     permissions:
+--- preserved-transport-polish-r1/upload_template.py
++++ pending-transport-polish-r2/upload_template.py
+@@ -13,7 +13,7 @@
+ RELEASE_ID = None  # Await the separately created successor draft.
+ PART_COUNTS = None  # Await exact qualified five-asset census.
+ TAG = "yuga-desktop-polish-2026-10-18"
+-TARGET = "85d5831dd8586a264caa93a7ba4625d1ec0b7f21"
++TARGET = "79e5c15d8a3657e16fda67acb277b2406120dcd1"
+ MANIFEST_SHA256 = "@@MANIFEST_SHA256@@"
+ NAMES = (
+     "yuga-native-linux-x86_64.zip", "yuga-native-windows-x86_64.zip",
+@@ -44,7 +44,7 @@
+     require(manifest["schema"] == 1 and manifest["repository"] == REPO, "manifest identity")
+     require(manifest["release_id"] == RELEASE_ID and manifest["tag"] == TAG
+             and manifest["target"] == TARGET, "manifest release identity")
+-    require(manifest["transport_branch"] == "transport/yuga-desktop-polish-2026-10-18-r1"
++    require(manifest["transport_branch"] == "transport/yuga-desktop-polish-2026-10-18-r2"
+             and manifest["chunk_limit"] == CHUNK_LIMIT, "transport identity")
+     require(tuple(a["name"] for a in manifest["assets"]) == NAMES, "exact asset allowlist")
+     paths = [p["path"] for a in manifest["assets"] for p in a["parts"]]
+@@ -181,7 +181,7 @@
+         print(json.dumps({"verified": receipt}, indent=2, sort_keys=True))
+     else:
+         require(os.environ.get("GITHUB_REPOSITORY") == REPO, "runner repository")
+-        require(os.environ.get("GITHUB_REF") == "refs/heads/transport/yuga-desktop-polish-2026-10-18-r1",
++        require(os.environ.get("GITHUB_REF") == "refs/heads/transport/yuga-desktop-polish-2026-10-18-r2",
+                 "runner branch")
+         require(os.environ.get("GITHUB_EVENT_NAME") == "push", "runner event")
+         upload(manifest, args.output)
+--- preserved-transport-polish-r1/push.py
++++ pending-transport-polish-r2/push.py
+@@ -44,7 +44,7 @@
+     g.require_bound()
+     u.require_bound()
+     require(receipt.get('source_commit') == g.TARGET == u.TARGET, 'fixed source')
+-    require(receipt.get('transport_branch') == g.BRANCH == 'transport/yuga-desktop-polish-2026-10-18-r1', 'fixed transport branch')
++    require(receipt.get('transport_branch') == g.BRANCH == 'transport/yuga-desktop-polish-2026-10-18-r2', 'fixed transport branch')
+     require(receipt.get('orphan') is True, 'orphan declaration')
+     files = {'manifest_sha256':'manifest.json', 'uploader_sha256':'reconstruct_upload.py',
+              'workflow_sha256':'upload-ui-release-assets.yml', 'generator_sha256':'generate.py'}
+--- preserved-transport-polish-r1/test_guards.py
++++ pending-transport-polish-r2/test_guards.py
+@@ -30,7 +30,7 @@
+ 
+ real = u.read_manifest(ROOT / 'manifest.json')
+ record('qualified ZIP part counts and payload census', lambda: u.require([len(a['parts']) for a in real['assets']] == list(u.PART_COUNTS) and len({p['path'] for a in real['assets'] for p in a['parts']}) == sum(u.PART_COUNTS), 'part layout'))
+-record('fixed current draft/source/branch', lambda: u.require(real['release_id'] == u.RELEASE_ID and real['target'] == '85d5831dd8586a264caa93a7ba4625d1ec0b7f21' and real['transport_branch'] == 'transport/yuga-desktop-polish-2026-10-18-r1', 'identity'))
++record('fixed current draft/source/branch', lambda: u.require(real['release_id'] == u.RELEASE_ID and real['target'] == '79e5c15d8a3657e16fda67acb277b2406120dcd1' and real['transport_branch'] == 'transport/yuga-desktop-polish-2026-10-18-r2', 'identity'))
+ record('exact pinned manifest', lambda: u.read_manifest(ROOT / 'manifest.json'))
+ with tempfile.TemporaryDirectory(prefix='transport-guards-') as tmp:
+     folder = Path(tmp)
+--- preserved-transport-polish-r1/test_pending.py
++++ pending-transport-polish-r2/test_pending.py
+@@ -42,7 +42,7 @@
+  for f in sources:ast.parse((HERE/f).read_text(),filename=f)
+ after=local_state()
+ assert before==after and not calls
+-assert before['source_commit']=='85d5831dd8586a264caa93a7ba4625d1ec0b7f21'
++assert before['source_commit']=='79e5c15d8a3657e16fda67acb277b2406120dcd1'
+ r={'schema':1,'passed':True,'count':len(checks),'checks':checks,'syntax_parsed_sources':len(sources),'checkout_before':before,'checkout_after':after,'external_subprocess_socket_calls':calls,'source_pins':{f:sha(HERE/f) for f in sources},'scope':'Only unbound template rejection; existing22+10 final transport guards NOT executed, no qualification or asset validation.'}
+ (HERE/'pending-guard.json').write_text(json.dumps(r,indent=2)+'\n')
+ print(json.dumps({'passed':True,'count':len(checks),'external_operations':len(calls),'source_commit':before['source_commit']}))
+--- preserved-transport-polish-r1/upload-ui-release-assets.template.yml
++++ pending-transport-polish-r2/upload-ui-release-assets.template.yml
+@@ -3,7 +3,7 @@
+ on:
+   push:
+     branches:
+-      - transport/yuga-desktop-polish-2026-10-18-r1
++      - transport/yuga-desktop-polish-2026-10-18-r2
+ 
+ permissions: {}
+ 
+@@ -13,7 +13,7 @@
+ 
+ jobs:
+   upload:
+-    if: github.repository == 'occult-kranti/ANDOLAN' && github.ref == 'refs/heads/transport/yuga-desktop-polish-2026-10-18-r1' && github.event.created == true && github.event.deleted == false
++    if: github.repository == 'occult-kranti/ANDOLAN' && github.ref == 'refs/heads/transport/yuga-desktop-polish-2026-10-18-r2' && github.event.created == true && github.event.deleted == false
+     runs-on: ubuntu-24.04
+     timeout-minutes: 15
+     permissions:
+--- preserved-transport-polish-r1/pending.json
++++ pending-transport-polish-r2/pending.json
+@@ -1,8 +1,8 @@
+ {
+   "schema": 1,
+-  "source_commit": "85d5831dd8586a264caa93a7ba4625d1ec0b7f21",
++  "source_commit": "79e5c15d8a3657e16fda67acb277b2406120dcd1",
+   "tag": "yuga-desktop-polish-2026-10-18",
+-  "transport_branch": "transport/yuga-desktop-polish-2026-10-18-r1",
++  "transport_branch": "transport/yuga-desktop-polish-2026-10-18-r2",
+   "release_id": null,
+   "asset_root": null,
+   "asset_pins": null,
+--- preserved-transport-polish-r1/README.md
++++ pending-transport-polish-r2/README.md
+@@ -1,6 +1,6 @@
+ # Desktop polish transport template — UNBOUND / HOLD
+ 
+-Fixed source: `85d5831dd8586a264caa93a7ba4625d1ec0b7f21`. New proposed tag: `yuga-desktop-polish-2026-10-18`. Proposed temporary branch: `transport/yuga-desktop-polish-2026-10-18-r1`.
++Fixed source: `79e5c15d8a3657e16fda67acb277b2406120dcd1`. New proposed tag: `yuga-desktop-polish-2026-10-18`. Proposed temporary branch: `transport/yuga-desktop-polish-2026-10-18-r2`.
+ 
+ Draft ID, qualified asset directory, all five asset hashes/sizes, exact chunk census and export/package, actual warm/cold and independent qualification receipt pins are **unset**. The prior public release416367666/tag`yuga-desktop-finish-2026-10-18` is explicitly rejected as the destination. No draft, manifest, generated uploader/workflow, materialization receipt, Git object/ref/index, upload or publication was created by this packet.
+ 
+@@ -21,3 +21,7 @@
+ Let A be the final five-asset total. The prior conservative local fallback allowance is2A+64MiB additional free space plus the protected500MiB reserve, excluding the already-existing export files. It must be recomputed from final asset sizes and a **fresh post-export/extraction filesystem observation**. Current draft/asset/space feasibility is unknown. Do not assume previous free-space observations survive the new package build; do not reduce guards or delete caches. Retain no separate chunk files and do not duplicate ZIPs. If the bound fails, report the exact shortfall and seek only explicitly recoverable inactive duplicates.
+ 
+ Source-only plan: `../../continuation-oct18/W5-release-plan-r1/PLAN.md`. This is an untracked template packet only. Root's frozen canonical runtime, index and caches are untouched. No API/network/engine/export process or old evidence file was altered.
++
++## Source successor
++
++This r2 template follows the pushed79e5 source repair. The exact85d r1 packet and its failure history remain unchanged. No prior export or actual qualification transfers to r2. Qualification receipt constants are still unset; they will bind only the eventual new W6 export/package, W1 warm/cold and independent receipts. The repaired qualifier source review is supporting tooling evidence, not a substitute for those executions.

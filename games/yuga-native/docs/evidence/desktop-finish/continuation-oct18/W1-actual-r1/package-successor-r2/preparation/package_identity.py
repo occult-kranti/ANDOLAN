@@ -1,0 +1,31 @@
+"""Exact separately approved latest archive identity; extracted patched runtime only."""
+import hashlib
+import json
+from pathlib import Path
+SOURCE = '79e5c15d8a3657e16fda67acb277b2406120dcd1'  # Root pushed and remotely verified this source checkpoint.
+EXPORTER = 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3'
+RUNTIME = 'e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e'
+ARCHIVE = '781d904d2f6986f423274cf23ecdc16a35df65df755db5171a97a152a3c88aa8'
+PCK = 'f2be4e20a0f3ea3915c5ab94e3896278ab4778991e80c6c8abaadc5209511a59'
+EXPORT_MANIFEST = '104fbfd1c1f83616d5f1d55bcfe33903457b2241a4753117dbd366978f8c0e48'
+PACKAGE_MANIFEST = '8a74ef1abd3b29ddc86a72a162b07fbb41f4528a426f4f652c2a024b3d399527'
+EXTRACTION_REPORT = '40c42d5bc098992b2587938aa1a2aabb89db874814647ef94491afb86aedf77a'
+SELECTION = Path(__file__).with_name('expected-engine-selection.json')
+
+def approved_archive_inputs_bound():
+    return (isinstance(SOURCE,str) and len(SOURCE)==40 and all(c in '0123456789abcdef' for c in SOURCE) and
+            all(isinstance(v,str) and len(v)==64 and all(c in '0123456789abcdef' for c in v) for v in [EXPORTER,RUNTIME,ARCHIVE,PCK,EXPORT_MANIFEST,PACKAGE_MANIFEST]))
+
+def approved_inputs_bound():
+    return (approved_archive_inputs_bound() and isinstance(EXTRACTION_REPORT,str) and len(EXTRACTION_REPORT)==64 and all(c in '0123456789abcdef' for c in EXTRACTION_REPORT))
+
+def exact_selection(selection):
+    if hashlib.sha256(SELECTION.read_bytes()).hexdigest() != '3c7ad7d93b40dc436ce80588a43fce7f920bb0d3416948a7b4f742df03bac38a': return False
+    expected = json.loads(SELECTION.read_text())
+    return (selection == expected and selection['exporter']['sha256'] == EXPORTER and
+        selection['linux_runtime']['sha256'] == RUNTIME and
+        selection['linux_runtime']['kind'] == 'patched-public-source-template-debug' and
+        selection['linux_runtime']['provenance']['variant'] == 'pipeline-low-priority-v1' and
+        selection['linux_runtime']['provenance']['source_patches'] == 1 and
+        selection['linux_runtime']['provenance']['target'] == 'template_debug' and
+        len(selection['linux_runtime']['provenance']['evidence']) == 11)

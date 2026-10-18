@@ -4,7 +4,9 @@ Updated 18 October 2026. Start with the [active desktop handoff](../games/yuga-n
 
 ## Current state
 
-The active desktop campaign has reclaimed **12,156,579,840 allocated file bytes** through separately recorded operations. This is historical reclamation, not current free space or a sum of every cleanup in the repository. Later source restoration consumes storage again. Only inactive, exactly recoverable duplicates were removed. Current runtime, accepted and rejected art, original captures, meaningful failure evidence, tools, caches and user state remain.
+The active desktop campaign has reclaimed **12,627,566,592 allocated file bytes** through separately recorded operations. This is historical reclamation, not current free space or a sum of every cleanup in the repository. Later source restoration consumes storage again. Only inactive, exactly recoverable duplicates were removed. Current runtime, accepted and rejected art, original captures, meaningful failure evidence, tools, caches and user state remain.
+
+The newest [polish package cleanup](../games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-package-r2-duplicates/execution.json) removed exactly 82 ZIP-backed staging files and the duplicate Windows raw PCK, reclaiming 470,986,752 allocated bytes after map/helper/owner/qualification backup `cef6d8c53b7278e9dc824299661de1b0775a4ad2` was pushed and verified. Both qualified ZIPs, Linux raw PCK, actual extraction, source/cache, original captures and user state remain. The new release and all five public files were independently verified afterward.
 
 The earlier r2/r3 expanded-package cleanup removed 216 exact duplicate files after the recovery maps were pushed in `96d5b9cd`: 662,401,024 and 695,898,112 allocated bytes. ZIPs, Linux raw PCKs, unique metadata and actual captures remain. [r2 execution](evidence/desktop-finish-r2-expanded-cleanup-r1/execution-receipt.json) and [r3 execution](evidence/desktop-finish-r3-expanded-cleanup-r1/execution-receipt.json) record each identity and archive recovery route.
 
@@ -40,7 +42,7 @@ The `/workspace` and `/tmp` filesystems differ. Cross-device hardlinks do not wo
 5. Delete only the reviewed allowlist after a final identity/ownership check. No broad `git clean -fdx`, `/tmp` erasure, cache wipe or Git pruning.
 6. Record actual deleted bytes and retained paths. Push the execution receipt and update the handoff/cloud draft. Run a relevant development check only when cleanup could affect it.
 
-Use the [build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) to regenerate dependencies and packages. A rebuilt artifact is not byte-identical unless checked. Use each release's own checksum manifest and source identity for downloads; the [current desktop finish preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-desktop-finish-2026-10-18) is exact source `96d5b9cd`. The older UI `9e81a7c` preview is historical; source backup commits do not relabel either executable.
+Use the [build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) to regenerate dependencies and packages. A rebuilt artifact is not byte-identical unless checked. Use each release's own checksum manifest and source identity for downloads; the [current desktop polish preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-desktop-polish-2026-10-18) is exact source `79e5c15d`. The older UI `9e81a7c` preview is historical; source backup commits do not relabel either executable.
 
 ## Recovery records
 
@@ -48,6 +50,7 @@ These records describe separate operations. Some contain cumulative figures; do 
 
 | Operation | Exact evidence |
 | --- | --- |
+| 82 new polish staging/Windows-PCK duplicates: 470,986,752 allocated bytes | [Map](../games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-package-r2-duplicates/recovery-map.json), [execution](../games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-package-r2-duplicates/execution.json); exact recovery backup cef6d8c before deletion |
 | 182 inactive capture-project asset copies: 1,034,743,808 allocated bytes | [Map](../games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/recovery-map.json), [execution](../games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/storage-execution.json); map pushed in d199f607 before deletion |
 | Eleven inactive historical aliases: 171,728,896 allocated bytes | [Map](evidence/desktop-finish-inactive-alias-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-inactive-alias-cleanup-r1/execution-receipt.json) |
 | r4 expanded packages and duplicate Windows PCK:469,565,440 allocated bytes | [Map](evidence/desktop-finish-r4-expanded-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-r4-expanded-cleanup-r1/execution-receipt.json) |
@@ -68,7 +71,7 @@ These records describe separate operations. Some contain cumulative figures; do 
 
 ## Reusable setup
 
-The [latest cloud configuration draft](evidence/desktop-finish-current-cloud-r4/README.md) points to the current user repository and start instructions; four third-party reference checkouts are excluded from project membership. Installation/network/credential configuration is preserved. Saving the draft does not publish a snapshot or establish fresh-task restoration. Environment Settings → Save → Publish activates it; future processes still need to be started as documented.
+The [current cloud setup handoff](evidence/desktop-continuation-cloud-r1/CURRENT_SETUP.md) points to the current user repository and start instructions; four third-party reference checkouts are excluded from project membership. Installation/network/credential configuration is preserved. Saving the draft does not publish a snapshot or establish fresh-task restoration. Environment Settings → Save → Publish activates it; future processes still need to be started as documented.
 
 New agents should read `AGENTS.md` → [START_HERE](START_HERE.md) → the active subsystem handoff, rather than scanning the entire evidence archive. Context compaction is platform-managed.
 

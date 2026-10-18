@@ -1,0 +1,87 @@
+--- unbound/generate.py
++++ bound/generate.py
+@@ -11,15 +11,44 @@
+ 
+ HERE = Path(__file__).resolve().parent
+ REPO = Path('/workspace/ANDOLAN')
+-SOURCE = None  # Await exact W6 qualified build directory.
+-RELEASE_ID = None  # Root must create a NEW draft; prior public release is immutable.
+-QUALIFICATION_RECEIPTS = None  # Exact reviewed export, actual warm/cold and independent receipt pins.
+-PART_COUNTS = None  # Exact five-asset chunk census, derived from final sizes.
++SOURCE = Path('/workspace/scratch/yuga-continuation-W6-r1/package-successor-r2/build')
++RELEASE_ID = 416542426
++QUALIFICATION_RECEIPTS = {'export_package': {'path': '/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-package-r2/qualification-receipt-uid-reviewed.json',
++                    'bytes': 94575,
++                    'sha256': 'e924d90af27dad48c96fcb99ad9bbbe2cfd84ac01899b2221491199baf00f400'},
++ 'actual_warm_cold': {'path': '/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W1-actual-r1/package-successor-r2/receipt.json',
++                      'bytes': 4229,
++                      'sha256': 'b7a3f90433247072d68b34ee7f3b03a73edca69ded4cb561d144591f687533d3'},
++ 'warm': {'path': '/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W1-actual-r1/package-successor-r2/warm/receipt.json',
++          'bytes': 11372,
++          'sha256': 'b71b25fbc53baa6b94a5750391d42770c43c079bb769358bbe7fb0ae54ad2226'},
++ 'cold': {'path': '/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W1-actual-r1/package-successor-r2/cold/receipt.json',
++          'bytes': 9054,
++          'sha256': 'e424cf6051b88ef611f3a3df56bb2a40a6df2fd4435eb05232b8ddff58f19868'},
++ 'independent': {'path': '/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/package-native-independent-r2.json',
++                 'bytes': 12491,
++                 'sha256': 'bab4255a670a864d8ad76e1ded101139d5b9c1a2379c2d82e3f760c1cf48afb6'},
++ 'independent_visual': {'path': '/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W2-package-successor-r2/receipt.json',
++                        'bytes': 27571,
++                        'sha256': '7f07078258afcf4eb4fbde40b383db3f01b7473b79fef428c2377e20a148b3bd'},
++ 'direct_upload': {'path': '/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/published/release-polish-r1/direct-upload-receipt.json',
++                   'bytes': 975,
++                   'sha256': '6ede8306471b405a77f3bef3fbc3f7bb6c39a49790d235b17db1300cbe8a204c'},
++ 'empty_draft': {'path': '/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/published/release-polish-r1/draft-after-direct-upload.json',
++                 'bytes': 3308,
++                 'sha256': '9ef632de938bcdee8d19753f97618efa2e8049085fcdfd058d2a81cc232c4959'},
++ 'initial_draft': {'path': '/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/published/release-polish-r1/create-draft-response.json',
++                   'bytes': 3308,
++                   'sha256': '9ef632de938bcdee8d19753f97618efa2e8049085fcdfd058d2a81cc232c4959'}}
++PART_COUNTS = (2, 3, 1, 1, 1)
+ BRANCH = 'transport/yuga-desktop-polish-2026-10-18-r2'
+ TARGET = '79e5c15d8a3657e16fda67acb277b2406120dcd1'
+-# Pending successor qualification. No old asset pins are admitted.
+-EXPECTED = []
+-EXPECTED_SUMS_SHA256 = None
++# Exact qualified successor bytes; prior public release remains unchanged.
++EXPECTED = [('yuga-native-linux-x86_64.zip', 97903966, '781d904d2f6986f423274cf23ecdc16a35df65df755db5171a97a152a3c88aa8'),
++ ('yuga-native-windows-x86_64.zip', 146200829, '8051586f45275c0e1956749f428a8ad2643ada69582410056597ed6f5efe01c8'),
++ ('native-export-manifest.json', 465170, '104fbfd1c1f83616d5f1d55bcfe33903457b2241a4753117dbd366978f8c0e48'),
++ ('native-package-manifest.json', 15546, '8a74ef1abd3b29ddc86a72a162b07fbb41f4528a426f4f652c2a024b3d399527')]
++EXPECTED_SUMS_SHA256 = '026555b126ee4d6035f4ad7a920107a4e864f118399d699e6e705059891f75a5'
+ 
+ MATERIALIZE = False
+ 
+@@ -99,7 +128,7 @@
+             or len(EXPECTED_SUMS_SHA256) != 64 or not isinstance(PART_COUNTS, tuple)
+             or len(PART_COUNTS) != 5 or not all(isinstance(n, int) and n > 0 for n in PART_COUNTS)
+             or not isinstance(QUALIFICATION_RECEIPTS, dict)
+-            or set(QUALIFICATION_RECEIPTS) != {"export_package", "actual_warm_cold", "independent"}):
++            or set(QUALIFICATION_RECEIPTS) != {'direct_upload', 'actual_warm_cold', 'independent_visual', 'independent', 'export_package', 'cold', 'initial_draft', 'empty_draft', 'warm'}):
+         raise ValueError("UNBOUND: await new draft, qualified asset pins/census and exact export/actual/independent receipts")
+     for label, record in QUALIFICATION_RECEIPTS.items():
+         path = Path(record["path"])
+--- unbound/upload_template.py
++++ bound/upload_template.py
+@@ -10,8 +10,8 @@
+ import urllib.parse
+ 
+ REPO = "occult-kranti/ANDOLAN"
+-RELEASE_ID = None  # Await the separately created successor draft.
+-PART_COUNTS = None  # Await exact qualified five-asset census.
++RELEASE_ID = 416542426
++PART_COUNTS = (2, 3, 1, 1, 1)
+ TAG = "yuga-desktop-polish-2026-10-18"
+ TARGET = "79e5c15d8a3657e16fda67acb277b2406120dcd1"
+ MANIFEST_SHA256 = "@@MANIFEST_SHA256@@"
+--- unbound/upload-ui-release-assets.template.yml
++++ bound/upload-ui-release-assets.template.yml
+@@ -8,7 +8,7 @@
+ permissions: {}
+ 
+ concurrency:
+-  group: yuga-exact-draft-assets-@@RELEASE_ID@@
++  group: yuga-exact-draft-assets-416542426
+   cancel-in-progress: false
+ 
+ jobs:

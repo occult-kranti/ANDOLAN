@@ -1,0 +1,15 @@
+# Independent exact-package review — scoped PASS
+
+I directly opened all **28 full originals**: 16 warm and 12 fresh-user cold. These comprise **seven warm + three cold planned manual checkpoints and 18 natural-loading captures**. Every PNG and sidecar matches its immutable owner inventory. This qualifies the smaller package delta route, not the historical 59-image journey.
+
+Source is `79e5c15d8a3657e16fda67acb277b2406120dcd1`. Independently hashed Linux ZIP `781d904d2f6986f423274cf23ecdc16a35df65df755db5171a97a152a3c88aa8`, PCK `f2be4e20a0f3ea3915c5ab94e3896278ab4778991e80c6c8abaadc5209511a59` and extracted runtime `e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e` match executed identities. Five critical UI/resource commit blobs match the run inventory; owner extraction proof binds the complete 559-input closure. The actual command executes that extracted runtime/PCK with a pinned external observer and native XTest navigation.
+
+Warm title/return, offline copy and actions fit. World frames preserve the small idle energy/bar/key/range card without overlapping map/combat panels. Guardian Circle capture remains focused/visible through 100→200%, including status and actions. Dawn Volley selection, Back and scroll guidance fit at 200%; long right-hand detail intentionally scrolls below the fold. The warm scale hook is external instrumentation; input/capture/selection are native.
+
+Cold title/world/return are readable at 100%, with no preferences or Mesa/Godot shader seeds supplied and the scale hook disabled. Both native runs exit 0 with zero recorded script errors/errors/warnings. Loading scope/qualifier and focused Cancel are readable in all natural originals. In both runs, `auto-loading-3.png` actually captures **constructing**, confirmed by its sidecar. Its filename does not establish a separate resource-loading view on return. Loading1/2 visibly show Resources 0%; stills do not prove every intervening phase or total-ready timing.
+
+The first warm validator falsely expected absent `framebuffer_size`. Its failure and original checker remain owner evidence. The corrected checker uses PNG dimensions and `Window.size` on the original run; no actual rerun was needed. W2's receipt-writer initially treated the per-path package hash map as a scalar; correcting that metadata lookup produced no product/source/runtime changes.
+
+**Accept the exact offline Linux package's stated delta, with no UI correction.** Title/hero/world art and continuous foot contact remain production work. No full prior journey, cold 200% modal, Windows, listening/human feel, physical-GPU FPS, native online/full roster or commercial-graphics acceptance is inferred. Root owns CI/publication/public-byte approval. No source/index/cache edits, engine runs or image duplication occurred in this review.
+
+Central [owner receipt](../W1-actual-r1/package-successor-r2/receipt.json) is b7a3f904…533d3. `warm-review.json` and `cold-review.json` preserve per-original findings; `receipt.json` binds all image/sidecar identities and the warm/cold/combined owner receipts.
