@@ -1,0 +1,87 @@
+{
+  "passed": true,
+  "scope": "Python-only existing runtime UID census and real JSON bytes in synthetic structural PCK. No Godot export/import/execution, no shipped package qualification.",
+  "runtime_scripts": 73,
+  "new_uid": {
+    "uid": "uid://dujcxub60rkud",
+    "bytes": 20,
+    "sha256": "7506c2840a369ff018ccd966ad054f9eb01ec9b365236548e1a655949bceb8de"
+  },
+  "binding": {
+    "path": "assets/world/block2-frontage.json",
+    "bytes": 456399,
+    "sha256": "67950a68d7b6384b8b114987a27efff1f113d44f8fb1b7df8632f3e9217406a2",
+    "exact_source_payload": true
+  },
+  "same_size_replacement_rejection": "Frontage PCK data differs from runtime source snapshot: assets/world/block2-frontage.json",
+  "sources_before": {
+    "scripts/world_lane_frontage.gd": {
+      "bytes": 5929,
+      "sha256": "dcd0c73d8a12fc32e2fc32fa69ccc3466c3835ab0f4c15b8f18b72e8990dda72"
+    },
+    "scripts/world_lane_frontage.gd.uid": {
+      "bytes": 20,
+      "sha256": "7506c2840a369ff018ccd966ad054f9eb01ec9b365236548e1a655949bceb8de"
+    },
+    "assets/world/block2-frontage.json": {
+      "bytes": 456399,
+      "sha256": "67950a68d7b6384b8b114987a27efff1f113d44f8fb1b7df8632f3e9217406a2"
+    },
+    "scripts/confluence_world.gd": {
+      "bytes": 84754,
+      "sha256": "1301701f7f8b6a711de7a36a6d283d88f1240708a7186053fa51bfc572ca8c76"
+    }
+  },
+  "sources_after": {
+    "scripts/world_lane_frontage.gd": {
+      "bytes": 5929,
+      "sha256": "dcd0c73d8a12fc32e2fc32fa69ccc3466c3835ab0f4c15b8f18b72e8990dda72"
+    },
+    "scripts/world_lane_frontage.gd.uid": {
+      "bytes": 20,
+      "sha256": "7506c2840a369ff018ccd966ad054f9eb01ec9b365236548e1a655949bceb8de"
+    },
+    "assets/world/block2-frontage.json": {
+      "bytes": 456399,
+      "sha256": "67950a68d7b6384b8b114987a27efff1f113d44f8fb1b7df8632f3e9217406a2"
+    },
+    "scripts/confluence_world.gd": {
+      "bytes": 84754,
+      "sha256": "1301701f7f8b6a711de7a36a6d283d88f1240708a7186053fa51bfc572ca8c76"
+    }
+  },
+  "packager": {
+    "bytes": 130142,
+    "sha256": "edb1d26c412893a42fb5d7421f97c684dc66c52175e70cafd57bb6fda14de0e9"
+  },
+  "test_fixture": {
+    "bytes": 20247,
+    "sha256": "c872686b7284ab6015ea1f8bf277d749f4989570b3a3af667f55259628c96b7c"
+  },
+  "checks": [
+    {
+      "name": "all runtime UID sidecars remain canonical and numerically unique",
+      "passed": true
+    },
+    {
+      "name": "engine-generated frontage UID admitted by unchanged automatic guard",
+      "passed": true
+    },
+    {
+      "name": "production frontage JSON syntax and declared owner SHA match",
+      "passed": true
+    },
+    {
+      "name": "actual JSON bytes qualify against runtime source record",
+      "passed": true
+    },
+    {
+      "name": "same-sized actual JSON substitution rejects",
+      "passed": true
+    },
+    {
+      "name": "four owner source pins unchanged",
+      "passed": true
+    }
+  ]
+}

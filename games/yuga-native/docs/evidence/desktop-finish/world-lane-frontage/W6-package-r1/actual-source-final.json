@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "all runtime UID sidecars remain canonical and numerically unique",
+      "passed": true
+    },
+    {
+      "name": "engine-generated frontage UID admitted by unchanged automatic guard",
+      "passed": true
+    },
+    {
+      "name": "production frontage JSON syntax and declared owner SHA match",
+      "passed": true
+    },
+    {
+      "name": "actual JSON bytes qualify against runtime source record",
+      "passed": true
+    },
+    {
+      "name": "same-sized actual JSON substitution rejects",
+      "passed": true
+    },
+    {
+      "name": "four owner source pins unchanged",
+      "passed": true
+    }
+  ],
+  "scope": "Python-only runtime UID census and actual JSON in a synthetic structural PCK; no import/export/engine or shipped package qualification.",
+  "runtime_scripts": 73,
+  "new_uid": {
+    "uid": "uid://dujcxub60rkud",
+    "bytes": 20,
+    "sha256": "7506c2840a369ff018ccd966ad054f9eb01ec9b365236548e1a655949bceb8de"
+  },
+  "binding": {
+    "path": "assets/world/block2-frontage.json",
+    "bytes": 456399,
+    "sha256": "67950a68d7b6384b8b114987a27efff1f113d44f8fb1b7df8632f3e9217406a2",
+    "exact_source_payload": true
+  },
+  "same_size_replacement_rejection": "Frontage PCK data differs from runtime source snapshot: assets/world/block2-frontage.json",
+  "sources_before": {
+    "scripts/world_lane_frontage.gd": {
+      "bytes": 5929,
+      "sha256": "dcd0c73d8a12fc32e2fc32fa69ccc3466c3835ab0f4c15b8f18b72e8990dda72"
+    },
+    "scripts/world_lane_frontage.gd.uid": {
+      "bytes": 20,
+      "sha256": "7506c2840a369ff018ccd966ad054f9eb01ec9b365236548e1a655949bceb8de"
+    },
+    "assets/world/block2-frontage.json": {
+      "bytes": 456399,
+      "sha256": "67950a68d7b6384b8b114987a27efff1f113d44f8fb1b7df8632f3e9217406a2"
+    },
+    "scripts/confluence_world.gd": {
+      "bytes": 84754,
+      "sha256": "1301701f7f8b6a711de7a36a6d283d88f1240708a7186053fa51bfc572ca8c76"
+    }
+  },
+  "sources_after": {
+    "scripts/world_lane_frontage.gd": {
+      "bytes": 5929,
+      "sha256": "dcd0c73d8a12fc32e2fc32fa69ccc3466c3835ab0f4c15b8f18b72e8990dda72"
+    },
+    "scripts/world_lane_frontage.gd.uid": {
+      "bytes": 20,
+      "sha256": "7506c2840a369ff018ccd966ad054f9eb01ec9b365236548e1a655949bceb8de"
+    },
+    "assets/world/block2-frontage.json": {
+      "bytes": 456399,
+      "sha256": "67950a68d7b6384b8b114987a27efff1f113d44f8fb1b7df8632f3e9217406a2"
+    },
+    "scripts/confluence_world.gd": {
+      "bytes": 84754,
+      "sha256": "1301701f7f8b6a711de7a36a6d283d88f1240708a7186053fa51bfc572ca8c76"
+    }
+  },
+  "packager": {
+    "bytes": 130122,
+    "sha256": "79c899ad88f3ef862752fc5b54d2cbfcf35435cad773b55518b9b7639dfe65cf"
+  },
+  "test_fixture": {
+    "bytes": 21408,
+    "sha256": "59405b82d1a8c53d5be0df84bd03889b15b166911c3cd4688c0bc22fedb928ce"
+  },
+  "verifier": {
+    "bytes": 4505,
+    "sha256": "b6bd2e90d86bf0f69ab40d9d58a4ba6183b107eabdc85311ec0b2d2fbfdae79f"
+  }
+}

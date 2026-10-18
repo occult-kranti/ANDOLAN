@@ -1,0 +1,809 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "structurally valid explicit native resource bundle",
+      "passed": true,
+      "expected": "accept",
+      "entry_count": 107
+    },
+    {
+      "name": "magic rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Missing Godot PCK magic/header"
+    },
+    {
+      "name": "truncated header rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Missing Godot PCK magic/header"
+    },
+    {
+      "name": "encrypted pack rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsupported/encrypted pack flags: 1"
+    },
+    {
+      "name": "unknown pack version rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected pack version/engine: 99, 4.6.3"
+    },
+    {
+      "name": "resource count above 10000 rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected packed resource count: 10001"
+    },
+    {
+      "name": "zero resource count rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected packed resource count: 0"
+    },
+    {
+      "name": "encrypted entry rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Encrypted/removal/delta entry is not allowed: res://scripts/lane_infantry_art.gd"
+    },
+    {
+      "name": "duplicate entry rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts/lane_infantry_art.gd"
+    },
+    {
+      "name": "canonical bare paths remain accepted",
+      "passed": true,
+      "expected": "accept",
+      "entry_count": 107
+    },
+    {
+      "name": "noncanonical first-load alias rejected: scripts/./boot.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts/./boot.gd",
+      "required_rejection": "Unsafe or duplicate pack path: "
+    },
+    {
+      "name": "noncanonical first-load alias rejected: scripts//boot.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts//boot.gd",
+      "required_rejection": "Unsafe or duplicate pack path: "
+    },
+    {
+      "name": "noncanonical first-load alias rejected: scripts/boot.gd/",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts/boot.gd/",
+      "required_rejection": "Unsafe or duplicate pack path: "
+    },
+    {
+      "name": "noncanonical first-load alias rejected: ./scripts/boot.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://./scripts/boot.gd",
+      "required_rejection": "Unsafe or duplicate pack path: "
+    },
+    {
+      "name": "noncanonical first-load alias rejected: scripts/./boot.gd.remap",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts/./boot.gd.remap",
+      "required_rejection": "Unsafe or duplicate pack path: "
+    },
+    {
+      "name": "bare/res duplicate identity rejected: scripts/boot.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: scripts/boot.gd",
+      "required_rejection": "Unsafe or duplicate pack path: "
+    },
+    {
+      "name": "bare/res duplicate identity rejected: scripts/relay_control.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: scripts/relay_control.gd",
+      "required_rejection": "Unsafe or duplicate pack path: "
+    },
+    {
+      "name": "parent path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts/../escape.gd"
+    },
+    {
+      "name": "absolute path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res:///scripts/escape.gd"
+    },
+    {
+      "name": "backslash path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts\\escape.gd"
+    },
+    {
+      "name": "unapproved directory rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected runtime resource directory: res://tools/escape.py"
+    },
+    {
+      "name": "unapproved Godot cache directory rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unexpected Godot cache resource: res://.godot/editor/config.cfg"
+    },
+    {
+      "name": "credential filename rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential filename in pack: res://scripts/access-token.txt"
+    },
+    {
+      "name": "dotenv filename rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential filename in pack: res://assets/.env"
+    },
+    {
+      "name": "overlong resource path rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Invalid packed resource entry bounds"
+    },
+    {
+      "name": "synthetic credential marker rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential marker in payload: res://assets/marker.txt"
+    },
+    {
+      "name": "private-key header marker rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Potential credential marker in payload: res://assets/marker.txt"
+    },
+    {
+      "name": "missing essential army resource rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/lane_army.gd"
+    },
+    {
+      "name": "missing native platform stone shader rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/traversal_stone.gdshader"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/relay_control.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/relay_control.gd"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/relay_session.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/relay_session.gd"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/relay_art.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/relay_art.gd"
+    },
+    {
+      "name": "missing siege resource rejected: assets/audio/siege/provenance.json",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: assets/audio/siege/provenance.json"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/lane_vehicle_art.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/lane_vehicle_art.gd"
+    },
+    {
+      "name": "missing siege resource rejected: scripts/siege_effects.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/siege_effects.gd"
+    },
+    {
+      "name": "missing siege resource rejected: .godot/imported/cannon_windup.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: cannon_windup.wav-"
+    },
+    {
+      "name": "missing siege resource rejected: .godot/imported/cannon_impact.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: cannon_impact.wav-"
+    },
+    {
+      "name": "missing siege resource rejected: .godot/imported/chariot_windup.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: chariot_windup.wav-"
+    },
+    {
+      "name": "missing siege resource rejected: .godot/imported/chariot_impact.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: chariot_impact.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: assets/design/hero-codex.json",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: assets/design/hero-codex.json"
+    },
+    {
+      "name": "missing invocation resource rejected: assets/design/native-ultimate-rules.json",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: assets/design/native-ultimate-rules.json"
+    },
+    {
+      "name": "missing invocation resource rejected: assets/audio/invocations/manifest.json",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: assets/audio/invocations/manifest.json"
+    },
+    {
+      "name": "missing invocation resource rejected: scripts/ultimate_rules.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/ultimate_rules.gd"
+    },
+    {
+      "name": "missing invocation resource rejected: scripts/ultimate_session.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/ultimate_session.gd"
+    },
+    {
+      "name": "missing invocation resource rejected: scripts/ultimate_effects.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/ultimate_effects.gd"
+    },
+    {
+      "name": "missing invocation resource rejected: scripts/invocation_panel.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/invocation_panel.gd"
+    },
+    {
+      "name": "missing invocation resource rejected: scripts/invocation_audio.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/invocation_audio.gd"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/windup.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/windup.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/cancel.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/cancel.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/rama-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/rama-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/ravana-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/ravana-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/arjuna-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/arjuna-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/duryodhana-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/duryodhana-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/hanuman-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/hanuman-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/karna-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/karna-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/bhima-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/bhima-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/meghnad-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/meghnad-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/sita-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/sita-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/draupadi-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/draupadi-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/subhadra-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/subhadra-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/hidimbi-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/hidimbi-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/chitrangada-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/chitrangada-release.wav-"
+    },
+    {
+      "name": "missing invocation resource rejected: .godot/imported/ulupi-release.wav-fixture.sample",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: .godot/imported/ulupi-release.wav-"
+    },
+    {
+      "name": "missing Rama resource rejected: .godot/imported/rama-hero.glb-fixture.scn",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: rama-hero.glb-",
+      "required_rejection": "Required runtime resource missing: rama-hero.glb-"
+    },
+    {
+      "name": "missing Rama resource rejected: assets/animations/rama_hero_motion.tres",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: assets/animations/rama_hero_motion.tres",
+      "required_rejection": "Required runtime resource missing: assets/animations/rama_hero_motion.tres"
+    },
+    {
+      "name": "missing Rama resource rejected: assets/design/rama-ability-kit.json",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: assets/design/rama-ability-kit.json",
+      "required_rejection": "Required runtime resource missing: assets/design/rama-ability-kit.json"
+    },
+    {
+      "name": "missing Rama resource rejected: shaders/rama_ribbon.gdshader",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: shaders/rama_ribbon.gdshader",
+      "required_rejection": "Required runtime resource missing: shaders/rama_ribbon.gdshader"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/rama_ability_kit.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/rama_ability_kit.gd",
+      "required_rejection": "Required runtime resource missing: scripts/rama_ability_kit.gd"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/rama_ability_effects.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/rama_ability_effects.gd",
+      "required_rejection": "Required runtime resource missing: scripts/rama_ability_effects.gd"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/rama_hero_runtime.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/rama_hero_runtime.gd",
+      "required_rejection": "Required runtime resource missing: scripts/rama_hero_runtime.gd"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/rama_vitals.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/rama_vitals.gd",
+      "required_rejection": "Required runtime resource missing: scripts/rama_vitals.gd"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/rama_motion.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/rama_motion.gd",
+      "required_rejection": "Required runtime resource missing: scripts/rama_motion.gd"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/rama_hero_hud.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/rama_hero_hud.gd",
+      "required_rejection": "Required runtime resource missing: scripts/rama_hero_hud.gd"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/rama_hero_panel.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/rama_hero_panel.gd",
+      "required_rejection": "Required runtime resource missing: scripts/rama_hero_panel.gd"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/hero_ui_theme.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/hero_ui_theme.gd",
+      "required_rejection": "Required runtime resource missing: scripts/hero_ui_theme.gd"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/rama_practice_army.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/rama_practice_army.gd",
+      "required_rejection": "Required runtime resource missing: scripts/rama_practice_army.gd"
+    },
+    {
+      "name": "missing Rama resource rejected: scripts/rama_practice_target.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/rama_practice_target.gd",
+      "required_rejection": "Required runtime resource missing: scripts/rama_practice_target.gd"
+    },
+    {
+      "name": "missing first-load dependency rejected: scenes/boot.tscn",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scenes/boot.tscn",
+      "required_rejection": "Required first-load resource missing or ambiguous: scenes/boot.tscn"
+    },
+    {
+      "name": "first-load substring substitution rejected: scenes/boot.tscn",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scenes/boot.tscn",
+      "required_rejection": "Required first-load resource missing or ambiguous: scenes/boot.tscn"
+    },
+    {
+      "name": "missing first-load dependency rejected: scripts/boot.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/boot.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/boot.gd"
+    },
+    {
+      "name": "first-load substring substitution rejected: scripts/boot.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/boot.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/boot.gd"
+    },
+    {
+      "name": "missing first-load dependency rejected: scripts/scene_transition.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/scene_transition.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/scene_transition.gd"
+    },
+    {
+      "name": "first-load substring substitution rejected: scripts/scene_transition.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/scene_transition.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/scene_transition.gd"
+    },
+    {
+      "name": "missing first-load dependency rejected: scripts/loading_presentation.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/loading_presentation.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/loading_presentation.gd"
+    },
+    {
+      "name": "first-load substring substitution rejected: scripts/loading_presentation.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/loading_presentation.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/loading_presentation.gd"
+    },
+    {
+      "name": "missing first-load dependency rejected: scripts/launch_shell.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/launch_shell.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/launch_shell.gd"
+    },
+    {
+      "name": "first-load substring substitution rejected: scripts/launch_shell.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/launch_shell.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/launch_shell.gd"
+    },
+    {
+      "name": "missing first-load dependency rejected: scripts/hero_ui_theme.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required runtime resource missing: scripts/hero_ui_theme.gd",
+      "required_rejection": "Required runtime resource missing: scripts/hero_ui_theme.gd"
+    },
+    {
+      "name": "first-load substring substitution rejected: scripts/hero_ui_theme.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/hero_ui_theme.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/hero_ui_theme.gd"
+    },
+    {
+      "name": "current Godot compiled-script and scene remap layout accepts",
+      "passed": true,
+      "expected": "accept",
+      "entry_count": 113
+    },
+    {
+      "name": "compiled target noncanonical alias rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Unsafe or duplicate pack path: res://scripts/./boot.gdc",
+      "required_rejection": "Unsafe or duplicate pack path: "
+    },
+    {
+      "name": "missing first-load remap destination rejected: scenes/boot.tscn",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load remap destination missing or ambiguous: scenes/boot.tscn",
+      "required_rejection": "First-load remap destination missing or ambiguous: scenes/boot.tscn"
+    },
+    {
+      "name": "missing first-load remap destination rejected: scripts/boot.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load remap destination missing or ambiguous: scripts/boot.gd",
+      "required_rejection": "First-load remap destination missing or ambiguous: scripts/boot.gd"
+    },
+    {
+      "name": "missing first-load remap destination rejected: scripts/scene_transition.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load remap destination missing or ambiguous: scripts/scene_transition.gd",
+      "required_rejection": "First-load remap destination missing or ambiguous: scripts/scene_transition.gd"
+    },
+    {
+      "name": "missing first-load remap destination rejected: scripts/loading_presentation.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load remap destination missing or ambiguous: scripts/loading_presentation.gd",
+      "required_rejection": "First-load remap destination missing or ambiguous: scripts/loading_presentation.gd"
+    },
+    {
+      "name": "missing first-load remap destination rejected: scripts/launch_shell.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load remap destination missing or ambiguous: scripts/launch_shell.gd",
+      "required_rejection": "First-load remap destination missing or ambiguous: scripts/launch_shell.gd"
+    },
+    {
+      "name": "missing first-load remap destination rejected: scripts/hero_ui_theme.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load remap destination missing or ambiguous: scripts/hero_ui_theme.gd",
+      "required_rejection": "First-load remap destination missing or ambiguous: scripts/hero_ui_theme.gd"
+    },
+    {
+      "name": "first-load remap wrong section rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load resource requires one explicit remap path: scripts/boot.gd"
+    },
+    {
+      "name": "first-load remap default section injection rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load resource requires one explicit remap path: scripts/boot.gd"
+    },
+    {
+      "name": "first-load remap duplicate key rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load resource remap is malformed: scripts/boot.gd"
+    },
+    {
+      "name": "first-load remap other script substitution rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load resource remaps to an unexpected target: scripts/boot.gd"
+    },
+    {
+      "name": "first-load remap parent traversal rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load resource remaps to an unexpected target: scripts/boot.gd"
+    },
+    {
+      "name": "first-load remap self-remap cycle rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load resource remaps to an unexpected target: scripts/boot.gd"
+    },
+    {
+      "name": "first-load scene remapped to other scene rejects",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load resource remaps to an unexpected target: scenes/boot.tscn"
+    },
+    {
+      "name": "ambiguous direct and remapped first-load source rejects",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/boot.gd"
+    },
+    {
+      "name": "missing active world roof dependency rejects",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/world_roof_loggia.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/world_roof_loggia.gd"
+    },
+    {
+      "name": "world roof filename substitution rejects",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/world_roof_loggia.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/world_roof_loggia.gd"
+    },
+    {
+      "name": "compiled world roof remap accepts",
+      "passed": true,
+      "expected": "accept",
+      "entry_count": 108
+    },
+    {
+      "name": "orphan world roof remap rejects",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load remap destination missing or ambiguous: scripts/world_roof_loggia.gd",
+      "required_rejection": "First-load remap destination missing or ambiguous: scripts/world_roof_loggia.gd"
+    },
+    {
+      "name": "missing frontage dependency rejects: scripts/world_lane_frontage.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/world_lane_frontage.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/world_lane_frontage.gd"
+    },
+    {
+      "name": "frontage filename substitution rejects: scripts/world_lane_frontage.gd",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required first-load resource missing or ambiguous: scripts/world_lane_frontage.gd",
+      "required_rejection": "Required first-load resource missing or ambiguous: scripts/world_lane_frontage.gd"
+    },
+    {
+      "name": "missing frontage dependency rejects: assets/world/block2-frontage.json",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required graphics resource missing: assets/world/block2-frontage.json",
+      "required_rejection": "Required graphics resource missing: assets/world/block2-frontage.json"
+    },
+    {
+      "name": "frontage filename substitution rejects: assets/world/block2-frontage.json",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Required graphics resource missing: assets/world/block2-frontage.json",
+      "required_rejection": "Required graphics resource missing: assets/world/block2-frontage.json"
+    },
+    {
+      "name": "compiled frontage remap accepts",
+      "passed": true,
+      "expected": "accept",
+      "entry_count": 108
+    },
+    {
+      "name": "orphan frontage remap rejects",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load remap destination missing or ambiguous: scripts/world_lane_frontage.gd",
+      "required_rejection": "First-load remap destination missing or ambiguous: scripts/world_lane_frontage.gd"
+    },
+    {
+      "name": "frontage remap to another script rejects",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: First-load resource remaps to an unexpected target: scripts/world_lane_frontage.gd",
+      "required_rejection": "First-load resource remaps to an unexpected target: scripts/world_lane_frontage.gd"
+    },
+    {
+      "name": "exact frontage JSON source binding accepts",
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "name": "same-name substituted frontage JSON rejects",
+      "passed": true,
+      "rejection": "Frontage PCK data differs from runtime source snapshot: assets/world/block2-frontage.json"
+    },
+    {
+      "name": "missing frontage source record rejects",
+      "passed": true,
+      "rejection": "Frontage PCK data differs from runtime source snapshot: assets/world/block2-frontage.json"
+    },
+    {
+      "name": "package rejects forged source files despite unchanged signature",
+      "passed": true,
+      "rejection": "Runtime sources changed since PCK export; export again before packaging"
+    },
+    {
+      "name": "payload checksum corruption rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Packed payload MD5 mismatch: res://.godot/imported/s1-hammered-gold-roughness.png-c93c92f35fe086748d0140298caef508.ctex"
+    },
+    {
+      "name": "payload offset beyond file rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Packed payload exceeds file bounds: res://scripts/lane_infantry_art.gd"
+    },
+    {
+      "name": "oversize payload length rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "ValueError: Packed payload exceeds file bounds: res://scripts/lane_infantry_art.gd"
+    },
+    {
+      "name": "truncated directory rejected",
+      "passed": true,
+      "expected": "reject",
+      "rejection": "error: unpack_from requires a buffer of at least 104 bytes for unpacking 4 bytes at offset 100 (actual buffer size is 103)"
+    },
+    {
+      "name": "canonical fixture remains accepted after mutations",
+      "passed": true,
+      "expected": "accept",
+      "entry_count": 107
+    },
+    {
+      "name": "tested packager unchanged",
+      "passed": true
+    }
+  ],
+  "sources": {
+    "tools/package-native.py": "79c899ad88f3ef862752fc5b54d2cbfcf35435cad773b55518b9b7639dfe65cf",
+    "tests/traversal_security_cases.py": "59405b82d1a8c53d5be0df84bd03889b15b166911c3cd4688c0bc22fedb928ce"
+  },
+  "scope": "Bounded structural PCK acceptance and exact frontage JSON source-binding fixtures only. No pack execution, extraction, production secrets, runtime security certificate, online security or full parser fuzzing claim."
+}

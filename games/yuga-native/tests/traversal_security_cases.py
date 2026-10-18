@@ -14,6 +14,7 @@ import json
 from pathlib import Path
 import struct
 import tempfile
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGER = ROOT / "tools/package-native.py"
@@ -43,9 +44,9 @@ FIRST_LOAD_NAMES = ['scenes/boot.tscn', 'scripts/boot.gd',
 GRAPHICS_NAMES = [
     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
-    'scripts/world_roof_loggia.gd',
+    'scripts/world_roof_loggia.gd', 'scripts/world_lane_frontage.gd',
     'assets/environment-finish/masonry.gdshader', 'assets/hero-finish/g1-manifest.json',
-    'assets/hero-finish/s1-manifest.json',
+    'assets/hero-finish/s1-manifest.json', 'assets/world/block2-frontage.json',
 ]
 GRAPHICS_TEXTURE_FIXTURES = {
     'assets/hero-finish/hair-bundle-roughness.png':
@@ -239,6 +240,63 @@ def main() -> int:
         evaluate('orphan world roof remap rejects',
                  pack([entry for entry in compiled_roof if entry[0] != roof + 'c'])[0],
                  rejection_contains='First-load remap destination missing or ambiguous: ' + roof)
+        frontage = 'scripts/world_lane_frontage.gd'
+        frontage_data = 'assets/world/block2-frontage.json'
+        for resource, reason in (
+                (frontage, 'Required first-load resource missing or ambiguous: '),
+                (frontage_data, 'Required graphics resource missing: ')):
+            evaluate('missing frontage dependency rejects: ' + resource,
+                     pack([entry for entry in entries if entry[0] != resource])[0],
+                     rejection_contains=reason + resource)
+            evaluate('frontage filename substitution rejects: ' + resource,
+                     pack([(name + '-extra' if name == resource else name, value)
+                           for name, value in entries])[0], rejection_contains=reason + resource)
+        compiled_frontage = [entry for entry in entries if entry[0] != frontage] + [
+            (frontage + '.remap', b'[remap]\npath="res://scripts/world_lane_frontage.gdc"\n'),
+            (frontage + 'c', b'benign compiled frontage fixture')]
+        evaluate('compiled frontage remap accepts', pack(compiled_frontage)[0], True)
+        evaluate('orphan frontage remap rejects',
+                 pack([entry for entry in compiled_frontage if entry[0] != frontage + 'c'])[0],
+                 rejection_contains='First-load remap destination missing or ambiguous: ' + frontage)
+        evaluate('frontage remap to another script rejects',
+                 pack([(name, value.replace(b'world_lane_frontage.gdc', b'world_roof_loggia.gdc')
+                        if name == frontage + '.remap' else value)
+                       for name, value in compiled_frontage])[0],
+                 rejection_contains='First-load resource remaps to an unexpected target: ' + frontage)
+        source_payload = dict(entries)[frontage_data]
+        source_files = {frontage_data: {'bytes': len(source_payload),
+                                      'sha256': hashlib.sha256(source_payload).hexdigest()}}
+        for label, fixture, sources, accept in (
+                ('exact frontage JSON source binding accepts', entries, source_files, True),
+                ('same-name substituted frontage JSON rejects',
+                 [(name, source_payload[:-1] + b'?' if name == frontage_data else value)
+                  for name, value in entries], source_files, False),
+                ('missing frontage source record rejects', entries, {}, False)):
+            target.write_bytes(pack(fixture)[0])
+            failure = None
+            try:
+                module.qualify_world_frontage_package(module.inspect_pack(target), sources)
+            except ValueError as error:
+                failure = str(error)
+            checks.append({'name': label, 'passed': (failure is None) == accept
+                           and (accept or 'Frontage PCK data differs from runtime source snapshot' in failure),
+                           'rejection': failure})
+        live_source = {'sha256': 'unchanged-source-signature', 'files': source_files}
+        forged_source = {'sha256': live_source['sha256'], 'files': {
+            frontage_data: {**source_files[frontage_data], 'sha256': '0' * 64}}}
+        exported = {'engine_selection': {}, 'godot_version': 'fixture',
+                    'native_contracts': {}, 'source': forged_source}
+        with patch.object(module, 'linux_engine_selection', return_value={'exporter': {'version': 'fixture'}}), \
+                patch.object(module, 'prove_native_contract_sources', return_value={}), \
+                patch.object(module, 'source_state', return_value=live_source):
+            failure = None
+            try:
+                module.package_all(argparse.Namespace(), Path(temporary), exported)
+            except ValueError as error:
+                failure = str(error)
+        checks.append({'name': 'package rejects forged source files despite unchanged signature',
+                       'passed': failure == 'Runtime sources changed since PCK export; export again before packaging',
+                       'rejection': failure})
         corrupt = bytearray(baseline)
         corrupt[-1] ^= 1
         evaluate("payload checksum corruption rejected", bytes(corrupt))
@@ -257,7 +315,7 @@ def main() -> int:
     report = {"passed": all(c["passed"] for c in checks), "checks": checks,
               "sources": {"tools/package-native.py": before,
                           "tests/traversal_security_cases.py": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()},
-              "scope": "Bounded structural PCK acceptance fixtures only. No pack execution, extraction, production secrets, runtime security certificate, online security or full parser fuzzing claim."}
+              "scope": "Bounded structural PCK acceptance and exact frontage JSON source-binding fixtures only. No pack execution, extraction, production secrets, runtime security certificate, online security or full parser fuzzing claim."}
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + "\n")

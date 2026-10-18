@@ -196,6 +196,7 @@ def main():
         font_probe = stack.enter_context(patch.object(PACKAGE, 'prove_imported_font_bindings', return_value=fonts))
         stack.enter_context(patch.object(PACKAGE, 'inspect_pack', side_effect=lambda path: {**PACKAGE.record(path), 'entry_count': 1}))
         stack.enter_context(patch.object(PACKAGE, 'qualify_bundled_font_package', return_value={'passed': True}))
+        stack.enter_context(patch.object(PACKAGE, 'qualify_world_frontage_package', return_value={'passed': True}))
         def notices(destination):
             (destination / 'NOTICE').mkdir()
             for name in ['GODOT-LICENSE.txt', 'GODOT-COPYRIGHT.txt']:

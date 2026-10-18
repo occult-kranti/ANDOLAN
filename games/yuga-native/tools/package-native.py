@@ -1336,11 +1336,12 @@ FIRST_LOAD_RESOURCES = ('scenes/boot.tscn', 'scripts/boot.gd',
 GRAPHICS_SCRIPT_RESOURCES = (
     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
-    'scripts/world_roof_loggia.gd',
+    'scripts/world_roof_loggia.gd', 'scripts/world_lane_frontage.gd',
 )
 GRAPHICS_DIRECT_RESOURCES = ('assets/environment-finish/masonry.gdshader',
                              'assets/hero-finish/g1-manifest.json',
-                             'assets/hero-finish/s1-manifest.json')
+                             'assets/hero-finish/s1-manifest.json',
+                             'assets/world/block2-frontage.json')
 GRAPHICS_TEXTURE_RESOURCES = {
     'assets/hero-finish/hair-bundle-roughness.png':
         '.godot/imported/hair-bundle-roughness.png-72ae2ebe2b8005e106f441ea2c4cfa15.ctex',
@@ -1426,6 +1427,20 @@ def _qualify_graphics_resources(entries: list) -> dict:
             raise ValueError('Required graphics texture import/payload missing: ' + source)
         result[source] = by_path[target]
     return result
+
+
+def qualify_world_frontage_package(pack: dict, source_files: dict) -> dict:
+    """Bind the direct frontage JSON to the same source snapshot as this PCK."""
+    source = 'assets/world/block2-frontage.json'
+    expected = source_files.get(source, {})
+    matches = [entry for entry in pack.get('entries', [])
+               if entry['path'].removeprefix('res://') == source]
+    if (not all(key in expected for key in ('bytes', 'sha256')) or len(matches) != 1
+            or not matches[0].get('stored_md5_verified')
+            or any(matches[0][key] != expected[key] for key in ('bytes', 'sha256'))):
+        raise ValueError('Frontage PCK data differs from runtime source snapshot: ' + source)
+    return {'path': source, 'bytes': expected['bytes'], 'sha256': expected['sha256'],
+            'exact_source_payload': True}
 
 
 def inspect_pack(path: Path) -> dict:
@@ -1705,6 +1720,7 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
         run_export(args.linux_engine, platform, pack, build / f'export-{platform}.log')
         packs[platform] = inspect_pack(pack)
         packs[platform]['font_qualification'] = qualify_bundled_font_package(packs[platform], font_bindings)
+        packs[platform]['frontage_qualification'] = qualify_world_frontage_package(packs[platform], before['files'])
     after = source_state()
     if before['sha256'] != after['sha256']:
         raise ValueError('Runtime source changed during export; rerun on a frozen/imported tree')
@@ -1830,7 +1846,7 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
     native_contracts = prove_native_contract_sources(build / 'native-contracts-package.json')
     if native_contracts != exported.get('native_contracts'):
         raise ValueError('Native contract sources or proof changed since export; export again before packaging')
-    if source_state()['sha256'] != exported['source']['sha256']:
+    if source_state() != exported['source']:
         raise ValueError('Runtime sources changed since PCK export; export again before packaging')
     if exported.get('rama_hero_provenance') != validate_rama_hero_notice():
         raise ValueError('Rama hero provenance changed since PCK export; export again before packaging')
@@ -1855,6 +1871,7 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
         pack = build / f'yuga-native-{platform}.pck'
         actual_pack = inspect_pack(pack)
         actual_pack['font_qualification'] = qualify_bundled_font_package(actual_pack, font_bindings)
+        actual_pack['frontage_qualification'] = qualify_world_frontage_package(actual_pack, exported['source'].get('files', {}))
         if actual_pack['sha256'] != exported['packs'][platform]['sha256']:
             raise ValueError('PCK changed after export manifest validation')
         shutil.copyfile(pack, staging / 'yuga-native.pck')

@@ -145,6 +145,7 @@ jobs:
       - name: Confluence native traversal and rendering resource checks
         run: |
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_scene_cases.gd -- --report=${{ runner.temp }}/world-scene-cases.json
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/desktop_world_frontage_cases.gd -- --report=${{ runner.temp }}/world-frontage-cases.json
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/world_lighting_cases.gd -- --report=${{ runner.temp }}/world-lighting-cases.json
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_flow_cases.gd -- --report=${{ runner.temp }}/world-flow-cases.json
       - name: Validate original traversal audio and new play systems
@@ -272,6 +273,7 @@ jobs:
             ${{ runner.temp }}/world-map-cases.json
             ${{ runner.temp }}/world-plan-cases.json
             ${{ runner.temp }}/world-scene-cases.json
+            ${{ runner.temp }}/world-frontage-cases.json
             ${{ runner.temp }}/world-lighting-cases.json
             ${{ runner.temp }}/world-flow-cases.json
             ${{ runner.temp }}/native-arena/integration-report.json

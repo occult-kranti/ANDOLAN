@@ -1,0 +1,20 @@
+--- /workspace/scratch/yuga-frontage-review-r1/harness/headless-phase-fix-r1/capture_frontage.gd
++++ capture_frontage.gd
+@@ -1,7 +1,7 @@
+ extends "res://tools/graphics-six/capture_compact_screens.gd"
+ ## Private three-view frontage review; identical helper in both sibling branches.
+ ## No canonical runtime/authority/pose/time/lighting edits.
+-const Frontage = preload("res://art/world-finish/lane-frontage-r1/candidate.gd")
++const Frontage = preload("res://art/world-finish/lane-frontage-r2/candidate.gd")
+ const SELECTION := "res://tools/visual-rounds/frontage-review.json"
+ var branch := ""
+ var review_camera: Camera3D
+@@ -295,7 +295,7 @@
+ 		check(id+" declared original visible/sole18x15x18box",common and f.target_visible and not f.replacement_present and f.shape_class=="BoxShape3D" and f.box_size==[18.0,15.0,18.0])
+ 	else:
+ 		check(id+" declared original hidden/sole detailed closed shape",common and not f.target_visible and f.replacement_present and f.shape_class=="ConcavePolygonShape3D")
+-		check(id+" exact local geometry and reviewed world float transform",f.geometry.local_vertices_exact_raw and f.geometry.body_local_vertices_exact and f.geometry.world_vertices_equal_approx and f.geometry.vertex_count_matches and f.geometry.triangles==2816 and f.geometry.surfaces==3 and f.geometry.backface_collision)
++		check(id+" exact local geometry and reviewed world float transform",f.geometry.local_vertices_exact_raw and f.geometry.body_local_vertices_exact and f.geometry.world_vertices_equal_approx and f.geometry.vertex_count_matches and f.geometry.triangles==4824 and f.geometry.surfaces==3 and f.geometry.backface_collision)
+ 		check(id+" existing effective material identities only",f.material_identity_reused and f.surface_material_ids==f.material_ids and f.new_materials==0 and f.new_textures==0 and f.new_lights==0)
+ 	if checks.any(func(row): return not row.passed): finish("Frontage shot contract failed");return false
+ 	return true

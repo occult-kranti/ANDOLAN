@@ -1,0 +1,12 @@
+--- before-alias
++++ compare_frontage_r2.py
+@@ -204,7 +204,8 @@
+     require(set(sb)==set(sa)|set(r2_inputs) and not (set(sa)&set(r2_inputs)),'only two exact declared candidate source additions',errors)
+     require(all(sb.get(k)==v for k,v in r2_inputs.items()),'exact r2 code/data pins',errors)
+     require(sa.get(helper)=='6282cb7e794509c412a38cc66ef2abd0b06c98a1c4ddba72abb301c2adbdc9a9' and sb.get(helper)=='a052a33ed086ec713546021b2a9a3b77ee75ee7fa1e560685b465ec1b92cd43d','exact two-line preload/assertion-only helper successor',errors)
+-    allowed=MARKERS|{SELECTION,'res://'+SELECTION,helper}
++    require(sa.get('res://'+helper)==sa.get(helper) and sb.get('res://'+helper)==sb.get(helper),'duplicate res helper identity agrees',errors)
++    allowed=MARKERS|{SELECTION,'res://'+SELECTION,helper,'res://'+helper}
+     source_differences=[key for key in sa.keys()&sb.keys() if sa[key]!=sb[key]]
+     require(set(source_differences)<=allowed,'only declared selection/manifest/assertion-only helper source bytes differ',errors)
+     selection_keys=[key for key in sa if key.removeprefix('res://')==SELECTION]

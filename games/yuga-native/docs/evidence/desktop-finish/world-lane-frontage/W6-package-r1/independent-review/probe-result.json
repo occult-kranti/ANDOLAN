@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "checks": [
+    {
+      "version": "original",
+      "case": "valid_control",
+      "outcome": "past_frontage",
+      "expected": "past_frontage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "version": "original",
+      "case": "changed_pack_retained_source_record",
+      "outcome": "frontage_rejection",
+      "expected": "frontage_rejection",
+      "passed": true,
+      "detail": "Frontage PCK data differs from runtime source snapshot: assets/world/block2-frontage.json"
+    },
+    {
+      "version": "original",
+      "case": "changed_pack_forged_files_retained_signature",
+      "outcome": "past_frontage",
+      "expected": "past_frontage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "version": "corrected",
+      "case": "valid_control",
+      "outcome": "past_frontage",
+      "expected": "past_frontage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "version": "corrected",
+      "case": "changed_pack_retained_source_record",
+      "outcome": "frontage_rejection",
+      "expected": "frontage_rejection",
+      "passed": true,
+      "detail": "Frontage PCK data differs from runtime source snapshot: assets/world/block2-frontage.json"
+    },
+    {
+      "version": "corrected",
+      "case": "changed_pack_forged_files_retained_signature",
+      "outcome": "source_rejection",
+      "expected": "source_rejection",
+      "passed": true,
+      "detail": "Runtime sources changed since PCK export; export again before packaging"
+    }
+  ],
+  "passed": 6,
+  "original_defect_reproduced": true,
+  "corrected_defect_rejected": true,
+  "scope": "Actual package_all and real inspect_pack/frontage qualifier on tiny inert structural PCKs. Unrelated engine/native/hero/font proofs mocked; stopped after frontage qualification before notices/ZIP. No engine, import, export, runtime gameplay or full package acceptance.",
+  "source_pins": {
+    "old_package_sha256": "edb1d26c412893a42fb5d7421f97c684dc66c52175e70cafd57bb6fda14de0e9",
+    "acquisition": "Earlier source independently read and hashed edb1; concurrent owner correction preceded snapshot copy. Reconstructed the single changed source equality line from current bytes, then exact earlier full SHA256 matched before use. No canonical changes.",
+    "current_package_sha256": "79c899ad88f3ef862752fc5b54d2cbfcf35435cad773b55518b9b7639dfe65cf",
+    "test_builder_sha256": "59405b82d1a8c53d5be0df84bd03889b15b166911c3cd4688c0bc22fedb928ce"
+  },
+  "corrected_source_sha256": "79c899ad88f3ef862752fc5b54d2cbfcf35435cad773b55518b9b7639dfe65cf",
+  "canonical_source_unchanged": true,
+  "live_source": {
+    "sha256": "532259a36ed23a61ebe27b07ffdd616a44cabb3c1108f09d70fb6c19ce3862e8",
+    "files": {
+      "assets/world/block2-frontage.json": {
+        "bytes": 33,
+        "sha256": "0cc8ad7791265ce6244f67d369576ea12fb30f04f822b0fbff6c49ec5f6d79f5"
+      }
+    }
+  },
+  "forged_exported_source": {
+    "sha256": "532259a36ed23a61ebe27b07ffdd616a44cabb3c1108f09d70fb6c19ce3862e8",
+    "files": {
+      "assets/world/block2-frontage.json": {
+        "bytes": 36,
+        "sha256": "f0ade2e4d494ab4b4dc431b72ffa5228ddc0502f041660db038bf6a0c6ef8c87"
+      }
+    }
+  }
+}

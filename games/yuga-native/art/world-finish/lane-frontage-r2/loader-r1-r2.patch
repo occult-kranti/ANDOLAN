@@ -1,0 +1,19 @@
+--- lane-frontage-r1/candidate.gd
++++ lane-frontage-r2/candidate.gd
+@@ -1,13 +1,13 @@
+ extends RefCounted
+-## REVIEW ONLY: original block-2 frontage, never loaded by canonical runtime.
++## REVIEW ONLY: original four-face block-2 frontage successor, never loaded by canonical runtime.
+ ## Explicit local 3D collision-detail replacement; planar authority bounds unchanged.
+ const TARGET := "CityArt/block-2"
+ const BODY := "authority-solid-2"
+ const ROOT := "ReviewBlock2Frontage"
+-const DATA := "res://art/world-finish/lane-frontage-r1/candidate-mesh.json"
++const DATA := "res://art/world-finish/lane-frontage-r2/candidate-mesh.json"
+ const DIMENSIONS := Vector3(18,15,18)
+ const MATERIAL_NAMES := ["Confluence_warm_ivory","Confluence_opaque_blue_glass","Confluence_transit_indigo"]
+-const TRIANGLE_LIMIT := 6000
++const TRIANGLE_LIMIT := 4944
+ 
+ static func configure(world: Node3D, lod: String = "near") -> Dictionary:
+ 	if not is_instance_valid(world) or world.get_node_or_null(ROOT): return {"ok":false,"reason":"invalid_or_already_present"}

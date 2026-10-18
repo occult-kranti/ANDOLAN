@@ -1,0 +1,174 @@
+diff --git a/games/yuga-native/tests/package_linux_runtime_cases.py b/games/yuga-native/tests/package_linux_runtime_cases.py
+index 6878a2b..f08bb1c 100644
+--- a/games/yuga-native/tests/package_linux_runtime_cases.py
++++ b/games/yuga-native/tests/package_linux_runtime_cases.py
+@@ -196,6 +196,7 @@ def main():
+         font_probe = stack.enter_context(patch.object(PACKAGE, 'prove_imported_font_bindings', return_value=fonts))
+         stack.enter_context(patch.object(PACKAGE, 'inspect_pack', side_effect=lambda path: {**PACKAGE.record(path), 'entry_count': 1}))
+         stack.enter_context(patch.object(PACKAGE, 'qualify_bundled_font_package', return_value={'passed': True}))
++        stack.enter_context(patch.object(PACKAGE, 'qualify_world_frontage_package', return_value={'passed': True}))
+         def notices(destination):
+             (destination / 'NOTICE').mkdir()
+             for name in ['GODOT-LICENSE.txt', 'GODOT-COPYRIGHT.txt']:
+diff --git a/games/yuga-native/tests/traversal_security_cases.py b/games/yuga-native/tests/traversal_security_cases.py
+index 7ece66b..91fee6a 100644
+--- a/games/yuga-native/tests/traversal_security_cases.py
++++ b/games/yuga-native/tests/traversal_security_cases.py
+@@ -14,6 +14,7 @@ import json
+ from pathlib import Path
+ import struct
+ import tempfile
++from unittest.mock import patch
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ PACKAGER = ROOT / "tools/package-native.py"
+@@ -43,9 +44,9 @@ FIRST_LOAD_NAMES = ['scenes/boot.tscn', 'scripts/boot.gd',
+ GRAPHICS_NAMES = [
+     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
+     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
+-    'scripts/world_roof_loggia.gd',
++    'scripts/world_roof_loggia.gd', 'scripts/world_lane_frontage.gd',
+     'assets/environment-finish/masonry.gdshader', 'assets/hero-finish/g1-manifest.json',
+-    'assets/hero-finish/s1-manifest.json',
++    'assets/hero-finish/s1-manifest.json', 'assets/world/block2-frontage.json',
+ ]
+ GRAPHICS_TEXTURE_FIXTURES = {
+     'assets/hero-finish/hair-bundle-roughness.png':
+@@ -239,6 +240,63 @@ def main() -> int:
+         evaluate('orphan world roof remap rejects',
+                  pack([entry for entry in compiled_roof if entry[0] != roof + 'c'])[0],
+                  rejection_contains='First-load remap destination missing or ambiguous: ' + roof)
++        frontage = 'scripts/world_lane_frontage.gd'
++        frontage_data = 'assets/world/block2-frontage.json'
++        for resource, reason in (
++                (frontage, 'Required first-load resource missing or ambiguous: '),
++                (frontage_data, 'Required graphics resource missing: ')):
++            evaluate('missing frontage dependency rejects: ' + resource,
++                     pack([entry for entry in entries if entry[0] != resource])[0],
++                     rejection_contains=reason + resource)
++            evaluate('frontage filename substitution rejects: ' + resource,
++                     pack([(name + '-extra' if name == resource else name, value)
++                           for name, value in entries])[0], rejection_contains=reason + resource)
++        compiled_frontage = [entry for entry in entries if entry[0] != frontage] + [
++            (frontage + '.remap', b'[remap]\npath="res://scripts/world_lane_frontage.gdc"\n'),
++            (frontage + 'c', b'benign compiled frontage fixture')]
++        evaluate('compiled frontage remap accepts', pack(compiled_frontage)[0], True)
++        evaluate('orphan frontage remap rejects',
++                 pack([entry for entry in compiled_frontage if entry[0] != frontage + 'c'])[0],
++                 rejection_contains='First-load remap destination missing or ambiguous: ' + frontage)
++        evaluate('frontage remap to another script rejects',
++                 pack([(name, value.replace(b'world_lane_frontage.gdc', b'world_roof_loggia.gdc')
++                        if name == frontage + '.remap' else value)
++                       for name, value in compiled_frontage])[0],
++                 rejection_contains='First-load resource remaps to an unexpected target: ' + frontage)
++        source_payload = dict(entries)[frontage_data]
++        source_files = {frontage_data: {'bytes': len(source_payload),
++                                      'sha256': hashlib.sha256(source_payload).hexdigest()}}
++        for label, fixture, sources, accept in (
++                ('exact frontage JSON source binding accepts', entries, source_files, True),
++                ('same-name substituted frontage JSON rejects',
++                 [(name, source_payload[:-1] + b'?' if name == frontage_data else value)
++                  for name, value in entries], source_files, False),
++                ('missing frontage source record rejects', entries, {}, False)):
++            target.write_bytes(pack(fixture)[0])
++            failure = None
++            try:
++                module.qualify_world_frontage_package(module.inspect_pack(target), sources)
++            except ValueError as error:
++                failure = str(error)
++            checks.append({'name': label, 'passed': (failure is None) == accept
++                           and (accept or 'Frontage PCK data differs from runtime source snapshot' in failure),
++                           'rejection': failure})
++        live_source = {'sha256': 'unchanged-source-signature', 'files': source_files}
++        forged_source = {'sha256': live_source['sha256'], 'files': {
++            frontage_data: {**source_files[frontage_data], 'sha256': '0' * 64}}}
++        exported = {'engine_selection': {}, 'godot_version': 'fixture',
++                    'native_contracts': {}, 'source': forged_source}
++        with patch.object(module, 'linux_engine_selection', return_value={'exporter': {'version': 'fixture'}}), \
++                patch.object(module, 'prove_native_contract_sources', return_value={}), \
++                patch.object(module, 'source_state', return_value=live_source):
++            failure = None
++            try:
++                module.package_all(argparse.Namespace(), Path(temporary), exported)
++            except ValueError as error:
++                failure = str(error)
++        checks.append({'name': 'package rejects forged source files despite unchanged signature',
++                       'passed': failure == 'Runtime sources changed since PCK export; export again before packaging',
++                       'rejection': failure})
+         corrupt = bytearray(baseline)
+         corrupt[-1] ^= 1
+         evaluate("payload checksum corruption rejected", bytes(corrupt))
+@@ -257,7 +315,7 @@ def main() -> int:
+     report = {"passed": all(c["passed"] for c in checks), "checks": checks,
+               "sources": {"tools/package-native.py": before,
+                           "tests/traversal_security_cases.py": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()},
+-              "scope": "Bounded structural PCK acceptance fixtures only. No pack execution, extraction, production secrets, runtime security certificate, online security or full parser fuzzing claim."}
++              "scope": "Bounded structural PCK acceptance and exact frontage JSON source-binding fixtures only. No pack execution, extraction, production secrets, runtime security certificate, online security or full parser fuzzing claim."}
+     if args.report:
+         args.report.parent.mkdir(parents=True, exist_ok=True)
+         args.report.write_text(json.dumps(report, indent=2) + "\n")
+diff --git a/games/yuga-native/tools/package-native.py b/games/yuga-native/tools/package-native.py
+index 28fdc73..2906cb9 100755
+--- a/games/yuga-native/tools/package-native.py
++++ b/games/yuga-native/tools/package-native.py
+@@ -1336,11 +1336,12 @@ FIRST_LOAD_RESOURCES = ('scenes/boot.tscn', 'scripts/boot.gd',
+ GRAPHICS_SCRIPT_RESOURCES = (
+     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
+     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
+-    'scripts/world_roof_loggia.gd',
++    'scripts/world_roof_loggia.gd', 'scripts/world_lane_frontage.gd',
+ )
+ GRAPHICS_DIRECT_RESOURCES = ('assets/environment-finish/masonry.gdshader',
+                              'assets/hero-finish/g1-manifest.json',
+-                             'assets/hero-finish/s1-manifest.json')
++                             'assets/hero-finish/s1-manifest.json',
++                             'assets/world/block2-frontage.json')
+ GRAPHICS_TEXTURE_RESOURCES = {
+     'assets/hero-finish/hair-bundle-roughness.png':
+         '.godot/imported/hair-bundle-roughness.png-72ae2ebe2b8005e106f441ea2c4cfa15.ctex',
+@@ -1428,6 +1429,20 @@ def _qualify_graphics_resources(entries: list) -> dict:
+     return result
+ 
+ 
++def qualify_world_frontage_package(pack: dict, source_files: dict) -> dict:
++    """Bind the direct frontage JSON to the same source snapshot as this PCK."""
++    source = 'assets/world/block2-frontage.json'
++    expected = source_files.get(source, {})
++    matches = [entry for entry in pack.get('entries', [])
++               if entry['path'].removeprefix('res://') == source]
++    if (not all(key in expected for key in ('bytes', 'sha256')) or len(matches) != 1
++            or not matches[0].get('stored_md5_verified')
++            or any(matches[0][key] != expected[key] for key in ('bytes', 'sha256'))):
++        raise ValueError('Frontage PCK data differs from runtime source snapshot: ' + source)
++    return {'path': source, 'bytes': expected['bytes'], 'sha256': expected['sha256'],
++            'exact_source_payload': True}
++
++
+ def inspect_pack(path: Path) -> dict:
+     """Read Godot v2/v3 PCK directory and verify every member's stored MD5.
+ 
+@@ -1705,6 +1720,7 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
+         run_export(args.linux_engine, platform, pack, build / f'export-{platform}.log')
+         packs[platform] = inspect_pack(pack)
+         packs[platform]['font_qualification'] = qualify_bundled_font_package(packs[platform], font_bindings)
++        packs[platform]['frontage_qualification'] = qualify_world_frontage_package(packs[platform], before['files'])
+     after = source_state()
+     if before['sha256'] != after['sha256']:
+         raise ValueError('Runtime source changed during export; rerun on a frozen/imported tree')
+@@ -1830,7 +1846,7 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
+     native_contracts = prove_native_contract_sources(build / 'native-contracts-package.json')
+     if native_contracts != exported.get('native_contracts'):
+         raise ValueError('Native contract sources or proof changed since export; export again before packaging')
+-    if source_state()['sha256'] != exported['source']['sha256']:
++    if source_state() != exported['source']:
+         raise ValueError('Runtime sources changed since PCK export; export again before packaging')
+     if exported.get('rama_hero_provenance') != validate_rama_hero_notice():
+         raise ValueError('Rama hero provenance changed since PCK export; export again before packaging')
+@@ -1855,6 +1871,7 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
+         pack = build / f'yuga-native-{platform}.pck'
+         actual_pack = inspect_pack(pack)
+         actual_pack['font_qualification'] = qualify_bundled_font_package(actual_pack, font_bindings)
++        actual_pack['frontage_qualification'] = qualify_world_frontage_package(actual_pack, exported['source'].get('files', {}))
+         if actual_pack['sha256'] != exported['packs'][platform]['sha256']:
+             raise ValueError('PCK changed after export manifest validation')
+         shutil.copyfile(pack, staging / 'yuga-native.pck')

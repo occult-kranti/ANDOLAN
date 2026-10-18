@@ -21,6 +21,10 @@ and structural validator are in `art/production/` in the source repository.
 The runtime generates its own brief interface and combat sounds. No sampled
 commercial game audio is included.
 
+The single Confluence lane-building replacement uses original YUGA geometry
+and the existing architecture materials. Its editable source, exact data hash
+and bounded review are recorded in [WORLD-LANE-FRONTAGE.md](WORLD-LANE-FRONTAGE.md).
+
 The selected playable hero is `assets/heroes/rama-hero.glb`, whose exact runtime
 identity and editable authoring chain are recorded in
 `RAMA-HERO-PROVENANCE.json`. Source work under `art/hero-rama-quality/` adds

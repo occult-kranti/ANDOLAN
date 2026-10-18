@@ -1,0 +1,65 @@
+{
+  "scope": "Final focused executions only; preceding before/review reports remain separately preserved. No Godot or exporter process.",
+  "commands": [
+    {
+      "argv": [
+        "taskset",
+        "-c",
+        "3",
+        "python3",
+        "games/yuga-native/tests/traversal_security_cases.py",
+        "--report",
+        "games/yuga-native/docs/evidence/desktop-finish/world-lane-frontage/W6-package-r1/structural-review-final.json"
+      ],
+      "cwd": "/workspace/ANDOLAN",
+      "exit_code": 0,
+      "report": "structural-review-final.json",
+      "passed": 126,
+      "total": 126
+    },
+    {
+      "argv": [
+        "taskset",
+        "-c",
+        "3",
+        "python3",
+        "games/yuga-native/tests/package_linux_runtime_cases.py",
+        "--report",
+        "games/yuga-native/docs/evidence/desktop-finish/world-lane-frontage/W6-package-r1/runtime-review-final.json"
+      ],
+      "cwd": "/workspace/ANDOLAN",
+      "exit_code": 0,
+      "report": "runtime-review-final.json",
+      "passed": 50,
+      "total": 50
+    },
+    {
+      "argv": [
+        "taskset",
+        "-c",
+        "3",
+        "python3",
+        "games/yuga-native/docs/evidence/desktop-finish/world-lane-frontage/W6-package-r1/verify-source.py",
+        "--report",
+        "games/yuga-native/docs/evidence/desktop-finish/world-lane-frontage/W6-package-r1/actual-source-final.json"
+      ],
+      "cwd": "/workspace/ANDOLAN",
+      "exit_code": 0,
+      "report": "actual-source-final.json",
+      "passed": 6,
+      "total": 6
+    }
+  ],
+  "diff_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "games/yuga-native/tools/package-native.py",
+      "games/yuga-native/tests/traversal_security_cases.py",
+      "games/yuga-native/tests/package_linux_runtime_cases.py"
+    ],
+    "exit_code": 0
+  }
+}

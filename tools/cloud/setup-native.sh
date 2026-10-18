@@ -43,6 +43,7 @@ godot --headless --path games/yuga-native --script res://tests/combat_film_audio
 godot --headless --path games/yuga-native --script res://tests/combat_motion_continuity.gd -- --report="$validation_dir/combat-motion-continuity.json"
 godot --headless --path games/yuga-native --script res://tests/duel_effects_cases.gd -- --report="$validation_dir/duel-effects-cases.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_scene_cases.gd -- --report="$validation_dir/world-scene-cases.json"
+godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/desktop_world_frontage_cases.gd -- --report="$validation_dir/world-frontage-cases.json"
 godot --headless --path games/yuga-native --script res://tests/world_lighting_cases.gd -- --report="$validation_dir/world-lighting-cases.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_flow_cases.gd -- --report="$validation_dir/world-flow-cases.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/native_acceptance.gd -- --report="$validation_dir/native-acceptance.json"

@@ -150,6 +150,10 @@ func _ready() -> void:
 	MythicEnvironment.configure(world, "confluence")
 	_build_lighting()
 	load("res://scripts/world_roof_loggia.gd").configure(world)
+	var frontage_install: Dictionary = load("res://scripts/world_lane_frontage.gd").configure(world)
+	if not frontage_install.get("ok",false):
+		push_error("Confluence frontage could not configure: "+String(frontage_install.get("reason","unknown")))
+		return
 	_build_player()
 	if not _build_army_audio() or not player.traversal_report().get("enabled",false):
 		push_error("Confluence requires a configured army and traversal controller.")

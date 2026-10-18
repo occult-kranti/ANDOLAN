@@ -1,0 +1,13 @@
+# Minimal production integration — NOT ACTIVATED
+
+Admission order: exact r2 source/native gates → W1 candidate three-view take vs retained96d5 baseline → strict full-control comparison → parent art acceptance. The current55source/39native passes do not authorize activation. Mid/temporal/hardware and whole-map quality remain open.
+
+If pixels are accepted, the smallest source changes are:
+
+- Add `scripts/world_lane_frontage.gd`: copy accepted candidate.gd, change only truthful runtime comments and DATA to packaged asset path. Preserve the node/meta names, weak one-shot ownership restoration, sole-holder admission, transforms, material lookup and closed collision bytes; record each essential path/comment delta. Legacy internal ReviewBlock2Frontage name can remain to preserve evidence identity.
+- Add exact accepted `candidate-mesh.json` bytes as `assets/world/block2-frontage.json`. No GLB re-export/import or texture allocation. It must be packaged and hash-pinned; both near/mid still available, runtime explicitly selects near until an actualLOD policy is separately accepted.
+- In `scripts/confluence_world.gd`, one configure call after `_build_lighting()` and accepted `world_roof_loggia.configure(world)`, before `_build_player()`. Imported original materials are already finished/configured there. Do not change manifest props, planar collision boxes, controls, lighting, hero, army or current roof. Preserve and expose admission rejection rather than silently half-publishing a mesh/shape.
+- Add original-work NOTICE under `NOTICE/` with exact generator/source/native/pixel provenance; update existing world provenance if required. Obtain one engine-generated valid unique runtime scriptUID in a private owned child, then copy its sidecar; do not invent a UID or run a canonical editor.
+- W6 adds the runtime module + JSON to required PCK/source-provenance checks and the minimal missing/substituted/orphan-data negatives. No workflow timeout or unrelated package change.
+
+Focused integration must prove startup really publishes this one body/visible mesh with the accepted three effective resource objects, broadbounds/nav/roof/all other bodies intact, exact render/collider local points, closure/native capsule/rays, reset/disposal ownership and finite cleanup. Adapt the accepted39fixture for a production-default root with an explicitly observed initial admission, rather than assuming oldBox still starts active. Run only affected world route/atlas input regressions, retaining rotated actual hero-facing marker/overview return. Then one product-source-bound actual gameplay/close/overview review establishes source composition before a package gate. No broad suite rerun or duplicate isolated render is implied by this plan.
