@@ -363,6 +363,7 @@ func pause_focus_cases() -> void:
 	root.size=Vector2i(960,600)
 	root.content_scale_size=Vector2i(960,600)
 	scene.set_paused(true)
+	var invocation_opener := root.gui_get_focus_owner()
 	scene._open_invocations()
 	await frames(8)
 	var selected: String=session.report().selected_hero
@@ -374,7 +375,7 @@ func pause_focus_cases() -> void:
 	record("focus loss preserves current invocation modal keyboard target",scene.invocation_panel.visible and not scene.pause_panel.visible and hero_focus.has_focus() and hero_focus.is_visible_in_tree() and paused)
 	scene.invocation_panel.close()
 	await frames(8)
-	record("selector close returns visible focus to its pause-menu action",not scene.invocation_panel.visible and scene.pause_panel.visible and scene.invocation_button.has_focus() and pause_action_visible(scene.invocation_button))
+	record("selector close restores its actual visible pause opener",not scene.invocation_panel.visible and scene.pause_panel.visible and is_instance_valid(invocation_opener) and invocation_opener.has_focus() and pause_action_visible(invocation_opener))
 	scene.set_paused(true)
 	scene._open_controls()
 	await frames(8)
@@ -388,6 +389,7 @@ func pause_focus_cases() -> void:
 	await frames(8)
 	record("controls close restores a fully visible Continue action",not scene.controls_overlay.visible and scene.pause_panel.visible and first.has_focus() and pause_action_visible(first))
 	scene.set_paused(true)
+	var rama_opener := root.gui_get_focus_owner()
 	scene._open_rama_panel()
 	await frames(8)
 	var rama_focus: Control=scene.rama_panel.ability_buttons.guardian_circle
@@ -397,7 +399,7 @@ func pause_focus_cases() -> void:
 	record("new Rama modal retains focus across OS focus loss",scene.rama_panel.visible and not scene.pause_panel.visible and rama_focus.has_focus() and rama_focus.is_visible_in_tree() and paused)
 	scene.rama_panel.close()
 	await frames(8)
-	record("new Rama modal returns a visible pause action",not scene.rama_panel.visible and scene.pause_panel.visible and scene.rama_button.has_focus() and pause_action_visible(scene.rama_button))
+	record("new Rama modal restores its actual visible pause opener",not scene.rama_panel.visible and scene.pause_panel.visible and is_instance_valid(rama_opener) and rama_opener.has_focus() and pause_action_visible(rama_opener))
 	scene.set_paused(false)
 	root.size=old_size
 	root.content_scale_size=old_scale
