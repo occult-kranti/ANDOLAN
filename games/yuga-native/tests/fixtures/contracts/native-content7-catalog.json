@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "contract_id": "yuga-native-contracts-v1",
+  "status": "validator_and_specification_only_not_live_transport",
+  "coordinate_contract": {
+    "units": "metres",
+    "up": "+Y",
+    "forward": "+Z",
+    "yaw": "radians_positive_toward_+X",
+    "pitch": "radians_positive_up",
+    "position": "feet_origin",
+    "wire_vectors": "arrays_xyz",
+    "clock": "integer_authority_tick",
+    "collision_layers": {
+      "world": 1,
+      "actor": 2,
+      "target": 4
+    },
+    "support_surfaces": "multiple_surfaces_per_xz_required",
+    "collision_selection": "FG05-T02_pending_TS_vs_headless_Godot_experiment"
+  },
+  "envelope_versions": {
+    "contract": 1,
+    "rules": 1,
+    "map": 1,
+    "content": 1,
+    "replay": 1,
+    "input": 1,
+    "event": 1,
+    "entity": 1
+  },
+  "limits": {
+    "safe_integer": 9007199254740991,
+    "packet_bytes": 524288,
+    "input_bytes": 2048,
+    "entities": 640,
+    "entity_history": 4096,
+    "events_per_tick": 128,
+    "replay_records": 100000,
+    "position_abs": 10000,
+    "pitch_abs": 1.35,
+    "input_gap": 4096,
+    "snapshot_tick_gap": 200,
+    "input_stale_seconds": 0.35
+  },
+  "profiles": [
+    {
+      "id": "browser-p2-3v3",
+      "state": "observed",
+      "protocol": 2,
+      "live_handshake": false,
+      "team_size": 3,
+      "duration_seconds": 480,
+      "authority": "node_typescript_20hz",
+      "simulation_hz": 20,
+      "map_id": "browser-sangam-140x170",
+      "map_size_xz": [
+        140,
+        170
+      ],
+      "map_sha256": "8de16e1ebedfbe3ddfb42f683c6d0e1947cb2ca9d9ed70ca8218adcb4209ca7d",
+      "content_sha256": "4810668b63f6b4f5f9470cc4292278e6d52eee6d765c12bb24d117910bae90aa",
+      "content_sources": {
+        "games/yuga/shared/heroes.ts": "2d22552cc2b700e4728317a66a29ca6357b35408f00fe8ede6093bc17d7db6d0",
+        "games/yuga/shared/simulation.ts": "e3fa766b06333eb00b5b9b8b03d938b22d5595bdef98b0ae07c0733d0e41a260",
+        "games/yuga/shared/types.ts": "ba50968277b687b5e64dd92f56500cbf8edb613f4574630ba761995e6092af7a"
+      },
+      "buttons_mask": 3,
+      "remote_pitch": "absent_in_protocol2_actor_snapshot",
+      "entity_discontinuity": "heuristic_only_existing_adapter",
+      "features": {
+        "relays": false,
+        "flight": false,
+        "grapple": false,
+        "hero_health": true
+      },
+      "wire_adoption": "descriptive_only",
+      "map_digest_scope": "shared_map_source_bytes",
+      "content_revision": 1
+    },
+    {
+      "id": "native-offline-triad",
+      "state": "implemented_offline",
+      "protocol": 0,
+      "live_handshake": false,
+      "team_size": 0,
+      "duration_seconds": 0,
+      "authority": "godot_local_60hz_army20_relay10",
+      "simulation_hz": 60,
+      "map_id": "native-confluence-140x260",
+      "map_size_xz": [
+        140,
+        260
+      ],
+      "map_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+      "content_sha256": "f189a381ff896dad9e6bd09963ced1c523a3c6b1912f8e7d1f780ec991ab2ef2",
+      "content_sources": {
+        "games/yuga-native/assets/design/native-ultimate-rules.json": "734a2e9d8ff13fa21ea5fc555ec8c3dcd4e8bcc1aaf5ef2d6637b687494505e3",
+        "games/yuga-native/assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+        "games/yuga-native/scripts/lane_army.gd": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+        "games/yuga-native/scripts/lane_minion.gd": "90fe2d84f5c408b4b99779b00c11e59e850c1bb4f88dafb42a8a5aba74cc119c",
+        "games/yuga-native/scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+        "games/yuga-native/scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+        "games/yuga-native/scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+        "games/yuga-native/scripts/rama_action_buffer.gd": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+        "games/yuga-native/scripts/rama_hero_runtime.gd": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+        "games/yuga-native/scripts/rama_practice_army.gd": "0a075ee1096c04fdbda416e5cbb932f261c7ec7aae3e14301083c90d5861f906",
+        "games/yuga-native/scripts/rama_practice_target.gd": "e8cd1ad14191bd47d51ed0375889ff6938bf7c17023485638c0f57b64506721d",
+        "games/yuga-native/scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+        "games/yuga-native/scripts/relay_control.gd": "42d68a7d034c31033c5e105fd227e9e179d35d88209428544f396fa39f2fe000",
+        "games/yuga-native/scripts/ultimate_rules.gd": "32348cbccb798111087ca95e421a0fe983938c45daf91f23aecfbf5f0386c068",
+        "games/yuga-native/scripts/ultimate_session.gd": "89958d9afea47aca96ce2fd98421569f554f15fe4d18a58efe9bacce92090ee9"
+      },
+      "buttons_mask": 511,
+      "remote_pitch": "required_in_contract_v1",
+      "entity_discontinuity": "explicit_monotonic_counter",
+      "features": {
+        "relays": true,
+        "flight": true,
+        "grapple": true,
+        "hero_health": true
+      },
+      "wire_adoption": "offline_only",
+      "map_digest_scope": "staged_native_manifest_bytes",
+      "content_revision": 7
+    },
+    {
+      "id": "production-6v6",
+      "state": "proposed",
+      "protocol": 0,
+      "live_handshake": false,
+      "team_size": 6,
+      "duration_seconds": 1080,
+      "authority": "unselected_FG05-T02",
+      "simulation_hz": 0,
+      "map_id": "production-map-unselected",
+      "map_size_xz": [],
+      "map_sha256": "5a9958fb61c23a751a5f4f0497187092b44a32bbc6ecce115c28089fb3ebe759",
+      "content_sha256": "4edfd961db074d0c0400dac68557a1536dbd4f93892977fe0f3c591af932d87a",
+      "content_sources": {
+        "games/yuga-native/docs/GAME_DESIGN_MASTER.md": "5a9958fb61c23a751a5f4f0497187092b44a32bbc6ecce115c28089fb3ebe759"
+      },
+      "buttons_mask": 3,
+      "remote_pitch": "required_in_contract_v1",
+      "entity_discontinuity": "explicit_monotonic_counter",
+      "features": {
+        "relays": false,
+        "flight": false,
+        "grapple": false,
+        "hero_health": true
+      },
+      "wire_adoption": "proposal_not_implemented",
+      "map_digest_scope": "design_document_not_collision_geometry",
+      "content_revision": 1
+    }
+  ]
+}

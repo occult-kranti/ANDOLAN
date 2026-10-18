@@ -1,0 +1,123 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "name": "actual current checker and full exact source closure accept",
+      "passed": true,
+      "checker_assertions": 58,
+      "source_count": 36
+    },
+    {
+      "name": "changed actual player bytes reject while catalog stays fixed",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /workspace/scratch/yuga-content8-r1/native-contract-package-andii1_b/run-2/report.log"
+    },
+    {
+      "name": "actual checker identifies the player content pin",
+      "passed": true
+    },
+    {
+      "name": "export rejects stale player before any engine parameters are accessed",
+      "passed": false,
+      "rejection": "Missing regular runtime UID sidecar: scripts/lane_army.gd.uid"
+    },
+    {
+      "name": "package rejects stale player before any engine parameters are accessed",
+      "passed": false,
+      "rejection": "Export manifest lacks exporter/runtime identity; export with this tool before packaging"
+    },
+    {
+      "name": "old export without a source-bound native contract proof rejects before engine",
+      "passed": false,
+      "rejection": "Export manifest lacks exporter/runtime identity; export with this tool before packaging"
+    },
+    {
+      "name": "changed retained input rejects even when checker still passes",
+      "passed": false,
+      "rejection": "Export manifest lacks exporter/runtime identity; export with this tool before packaging"
+    },
+    {
+      "name": "existing successful report cannot stand in for fresh execution",
+      "passed": true,
+      "rejection": "Native contract proof needs fresh report/log paths"
+    },
+    {
+      "name": "exit-zero empty proof rejects",
+      "passed": true,
+      "rejection": "Native contract proof lacks nonempty successful checks"
+    },
+    {
+      "name": "replayed success does not bind a substituted checker",
+      "passed": true,
+      "rejection": "Native contract report/source bindings changed or differ"
+    },
+    {
+      "name": "changed retained content6 catalog rejects source proof",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /workspace/scratch/yuga-content8-r1/native-contract-package-andii1_b/run-9/report.log"
+    },
+    {
+      "name": "missing retained content6 catalog rejects input closure",
+      "passed": true,
+      "rejection": "Missing or unsafe native contract input: games/yuga-native/tests/fixtures/contracts/native-content6-catalog.json"
+    },
+    {
+      "name": "changed retained content6 descriptor rejects source proof",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /workspace/scratch/yuga-content8-r1/native-contract-package-andii1_b/run-10/report.log"
+    },
+    {
+      "name": "missing retained content6 descriptor rejects input closure",
+      "passed": true,
+      "rejection": "Missing or unsafe native contract input: games/yuga-native/tests/fixtures/contracts/native-content6-descriptor.json"
+    },
+    {
+      "name": "changed retained content7 catalog rejects source proof",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /workspace/scratch/yuga-content8-r1/native-contract-package-andii1_b/run-11/report.log"
+    },
+    {
+      "name": "missing retained content7 catalog rejects input closure",
+      "passed": true,
+      "rejection": "Missing or unsafe native contract input: games/yuga-native/tests/fixtures/contracts/native-content7-catalog.json"
+    },
+    {
+      "name": "changed retained content7 descriptor rejects source proof",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /workspace/scratch/yuga-content8-r1/native-contract-package-andii1_b/run-12/report.log"
+    },
+    {
+      "name": "missing retained content7 descriptor rejects input closure",
+      "passed": true,
+      "rejection": "Missing or unsafe native contract input: games/yuga-native/tests/fixtures/contracts/native-content7-descriptor.json"
+    },
+    {
+      "name": "exact rejected83f catalog checker and runtime refuse its actual player",
+      "passed": true,
+      "rejection": "Native contract source check failed; inspect /workspace/scratch/yuga-content8-r1/native-contract-package-andii1_b/run-13/report.log"
+    },
+    {
+      "name": "reconstructed83f rejects only the real player source pin",
+      "passed": true
+    },
+    {
+      "name": "restored complete current source proof matches first proof",
+      "passed": true
+    }
+  ],
+  "sources": {
+    "tools/package-native.py": {
+      "bytes": 130195,
+      "sha256": "023d5f6eae41f9a709dc1c982a2c3c45ebcf6c2392162a46c30012964eff80b2"
+    },
+    "tools/check-native-contracts.py": {
+      "bytes": 10402,
+      "sha256": "e96576541d37392f2619e446d78ae0911e02df69dd12d0e139b092af859d29ae"
+    },
+    "tests/native_contract_package_cases.py": {
+      "bytes": 10311,
+      "sha256": "3e3ce088bd705b86c0a1dfd1d9e2a07b90fd668ca856ebc74894749fffe8cd5c"
+    }
+  },
+  "scope": "Actual source checker, isolated tiny source closure, entry-point early rejection and retained exact83f counterexample. No engine, import, export or runtime scene executed."
+}

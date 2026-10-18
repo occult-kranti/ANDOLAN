@@ -1,0 +1,9 @@
+# Final bounded acceptance
+
+PASS for the ordinary 100% default-camera idle HUD. I directly opened both full original frames: [original](../W1-actual-r1/idle-hud-r1/baseline/00-idle-traversal-hud.png) and [candidate](../W1-actual-r1/idle-hud-r1/candidate/00-idle-traversal-hud.png). The smaller panel frees useful lower-right world space while keeping explicit Energy 100/100, the energy bar, F flight, G tether and the 36m range readable. It remains separate from the combat HUD and map. The actual panel contracts from 232×171 to 232×88 logical pixels; its width and readable type remain unchanged. No visual correction is needed. Root independently accepts the same pair.
+
+W1’s central [receipt](../W1-actual-r1/idle-hud-r1/receipt.json), SHA256 `7cd0046f33bb2a6baf8afa3392e346238cb32a7678f0557851c6c73409113af8`, reports strict source/control PASS with 13 intended HUD-field differences and zero unexpected changes. Camera, pose, live world and other controls are qualified by that owner record. The pixel diagnostic preserves two distant world pixels with a maximum one-channel difference outside the existing theme shadow; this is not a claim of whole-frame pixel identity.
+
+The actual pair is ordinary 100% only. Separate native headless 100→200→100 tests cover constrained mode, text containment, real saved/reloaded Shift and Space bindings and staged active/cooldown/drill/outcome transitions. They pass 18/18 against the original 13/18. Those tests do not replace a 200% screenshot, continuous played traversal or package lifecycle validation.
+
+The earlier 03 acceptance file remains an immutable source-freeze record from before the screenshots. This companion closes its pending visual gate. Source 5fde1f00 and fixture cbba4fe1 remain frozen. No runtime/cache writes, new styles, imports or further render requests were made after source freeze.

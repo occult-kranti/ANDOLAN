@@ -1,0 +1,427 @@
+diff --git a/games/yuga-native/assets/contracts/native-contracts-v1.json b/games/yuga-native/assets/contracts/native-contracts-v1.json
+index e6ed91f6..010b3c00 100644
+--- a/games/yuga-native/assets/contracts/native-contracts-v1.json
++++ b/games/yuga-native/assets/contracts/native-contracts-v1.json
+@@ -93,12 +93,12 @@
+         260
+       ],
+       "map_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+-      "content_sha256": "f189a381ff896dad9e6bd09963ced1c523a3c6b1912f8e7d1f780ec991ab2ef2",
++      "content_sha256": "570353754be882faa6243f7cc2d504b9d841d6f5015088d51708db53c25c0589",
+       "content_sources": {
+         "games/yuga-native/assets/design/native-ultimate-rules.json": "734a2e9d8ff13fa21ea5fc555ec8c3dcd4e8bcc1aaf5ef2d6637b687494505e3",
+         "games/yuga-native/assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+-        "games/yuga-native/scripts/lane_army.gd": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+-        "games/yuga-native/scripts/lane_minion.gd": "90fe2d84f5c408b4b99779b00c11e59e850c1bb4f88dafb42a8a5aba74cc119c",
++        "games/yuga-native/scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
++        "games/yuga-native/scripts/lane_minion.gd": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387",
+         "games/yuga-native/scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+         "games/yuga-native/scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+         "games/yuga-native/scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+@@ -122,7 +122,7 @@
+       },
+       "wire_adoption": "offline_only",
+       "map_digest_scope": "staged_native_manifest_bytes",
+-      "content_revision": 7
++      "content_revision": 8
+     },
+     {
+       "id": "production-6v6",
+diff --git a/games/yuga-native/docs/NATIVE_CONTRACTS.md b/games/yuga-native/docs/NATIVE_CONTRACTS.md
+index bce4d6d0..a7144b98 100644
+--- a/games/yuga-native/docs/NATIVE_CONTRACTS.md
++++ b/games/yuga-native/docs/NATIVE_CONTRACTS.md
+@@ -1,6 +1,10 @@
+ # Native rules, identity and replay contracts
+ 
+-FG00-T04 / MYTH06, envelope revision 1 and native-practice content revision 2. This implements a pure Godot admission/stream validator and machine-readable specification. It does not change the browser server, connect a native match, simulate a replay or select production collision authority. The existing native `arena_client.gd` continues to speak browser protocol 2.
++FG00-T04 / MYTH06, envelope revision 1 and native-practice content revision 8. This implements a pure Godot admission/stream validator and machine-readable specification. It does not change the browser server, connect a native match, simulate a replay or select production collision authority. The existing native `arena_client.gd` continues to speak browser protocol 2.
++
++The current content-8 update admits only the reviewed `lane_army.gd` and `lane_minion.gd` resource-sharing source changes. Their two exact SHA-256 pins, the canonical content-source aggregate and native content revision change; wire versions, browser/production profiles, map and gameplay rules do not. `scripts/native_contracts.gd` is the validator and is not in its own content-source list, avoiding a self-hash cycle. This finite authority-source list does not claim to pin every visual dependency.
++
++The exact content-7 catalog from source `85d5831dd8586a264caa93a7ba4625d1ec0b7f21` and its descriptor, derived with the prior Godot validator, are preserved in `tests/fixtures/contracts/native-content7-{catalog,descriptor}.json`. The checker retains the revision6→7 minion-only history and separately requires revision7→8 to change exactly the army/minion source pins. Revision7 load/open/resume/migration/replay rejects transactionally; changing only its version number or replaying its old digest cannot forge current identity. Valid content8 admission remains possible after rejection. Packaging binds the retained revision6/7 fixture files and rejects missing or changed bytes before export.
+ 
+ ## Distinct profiles
+ 
+@@ -12,7 +16,7 @@ FG00-T04 / MYTH06, envelope revision 1 and native-practice content revision 2. T
+ 
+ Protocol `0` in this catalogue means **no network wire protocol assigned**. It must never be sent to the current browser join endpoint. Browser simulation test overrides permit other durations/bot counts; they do not change the named default profile.
+ 
+-The native profile permits flight, grappling and relay supply. The browser and production profiles do not inherit those training mechanics. The current native hero has no health receiver. Production hero-health capability is a proposal, not an implemented native system.
++The native profile permits flight, grappling and relay supply. The browser and production profiles do not inherit those training mechanics. The native Rama slice implements health, damage and respawn through `rama_vitals.gd` and its runtime integration. This offline capability does not establish an implemented production or online match.
+ 
+ Runtime definitions:
+ 
+@@ -24,7 +28,7 @@ Runtime definitions:
+ 
+ Descriptors contain `contract_id`, `profile_id`, `protocol`, `versions`, `rules_sha256`, `map_id`, `map_sha256` and `content_sha256`. `versions` has independent positive integer `contract`, `rules`, `map`, `content`, `replay`, `input`, `event` and `entity` fields. Version 1 requires an exact match for each field. There is no permissive protocol range, silent downgrade or fallback-to-offline admission. Mismatch returns a reason such as `MISMATCH_MAP_SHA256` before any world is admitted.
+ 
+-`content_revision` is required on each profile. Native practice is revision **2**, while browser and production-proposal content remain **1**. `descriptor()` copies the envelope versions and overrides only `versions.content` from that profile. Input/event/entity/replay wire versions remain 1. Missing, malformed or wrong known revisions reject before catalogue loading. The global `envelope_versions.content=1` is the base value, not the native profile's effective revision.
++`content_revision` is required on each profile. Native practice is revision **8**, while browser and production-proposal content remain **1**. `descriptor()` copies the envelope versions and overrides only `versions.content` from that profile. Input/event/entity/replay wire versions remain 1. Missing, malformed or wrong known revisions reject before catalogue loading. The global `envelope_versions.content=1` is the base value, not the native profile's effective revision.
+ 
+ `rules_sha256` hashes compact, sorted-key JSON for `{profile, coordinates, limits}` using Godot `JSON.stringify(..., "", true)` and UTF-8 SHA-256. Version 1 profile numbers have finite fixed values. Changing masks, authority, dimensions, timing, coordinate conventions or caps therefore cannot retain an identical descriptor merely by leaving version numbers unchanged. The loader also rejects changes to the three known profiles' essential semantics. An intentional migration updates the catalogue, relevant version, fixtures and source pins together.
+ 
+@@ -34,7 +38,7 @@ The map digests have explicit scope:
+ - Native: exact staged `assets/world/confluence-map.json`. Relay centres remain defined in the separately pinned `relay_control.gd`; they are not invented fields in this map.
+ - Production: exact design-document bytes, labelled `design_document_not_collision_geometry`. No collision map exists for this proposal.
+ 
+-`content_sha256` hashes compact, sorted-key JSON of the catalogue's `path → SHA-256` source ledger. Native revision 2 pins the frozen army, minion, traversal and relay sources plus `ultimate_rules.gd`, `ultimate_session.gd` and `native-ultimate-rules.json`. This is the explicitly enumerated rules-content set, not a claim to inventory every render asset or complete production hero. The source-pin checker verifies those bytes against the checkout. Adding the required profile field also changes the descriptive rules digest for browser/proposal, although their content version and actual browser wire remain unchanged. Old catalogue descriptors must therefore be rederived; this is not a live server migration. A rules or map edit must refresh the affected pins deliberately; a mismatch fails the check. Packaged catalogue reads do not require development source files.
++`content_sha256` hashes compact, sorted-key JSON of the catalogue's `path → SHA-256` source ledger. Current native revision8 pins15 files: the scripts `lane_army.gd`, `lane_minion.gd`, `player.gd`, `player_traversal.gd`, `relay_control.gd`, `ultimate_rules.gd`, `ultimate_session.gd`, `rama_ability_kit.gd`, `rama_action_buffer.gd`, `rama_hero_runtime.gd`, `rama_vitals.gd`, `rama_practice_army.gd` and `rama_practice_target.gd`, plus `assets/design/native-ultimate-rules.json` and `assets/design/rama-ability-kit.json`. This is the explicitly enumerated content-source set, not every render asset or a complete production hero. The checker verifies these bytes against the checkout. Revision8 preserves browser/proposal profiles, wire versions, map and non-content native rules relative to revision7. A source or map edit must deliberately refresh the affected identity; mismatches fail preflight. Packaged catalogue reads do not require development source files.
+ 
+ Admission API:
+ 
+@@ -114,8 +118,10 @@ XDG_DATA_HOME=/tmp/yuga-contract-tests godot --headless --path games/yuga-native
+   --script res://tests/native_contract_cases.gd -- --report=/tmp/native-contract-cases.json
+ ```
+ 
+-The Batch 2 owner suite passes 228 cases, including 2,000 interleaved input/event/snapshot cycles, exact entity-history and population caps, malformed types/finite values, epoch rollback, replay corruption and unchanged source hashes. The source-pin checker passes 33 cases. New revision fixtures reject the preserved Batch 1 descriptor during open, resume, migration and replay without state mutation; changing only its version number still fails source identity. A fresh [independent Batch 2 run](evidence/mythic-batch2/contracts/independent/summary.json) passes 287 probes: the original 170 malformed/replay cases plus 117 revision and transaction checks. Runtime and catalogue hashes remain frozen. Batch 1 reports retain their original source scope.
++The historical Batch 2 owner suite passed 228 cases, including 2,000 interleaved input/event/snapshot cycles, exact entity-history and population caps, malformed types/finite values, epoch rollback, replay corruption and unchanged source hashes. Its source-pin checker passed 33 cases; current revision8 results are recorded separately in the continuation evidence. New revision fixtures reject the preserved Batch 1 descriptor during open, resume, migration and replay without state mutation; changing only its version number still fails source identity. The historical [independent Batch 2 run](evidence/mythic-batch2/contracts/independent/summary.json) passed 287 probes: the original 170 malformed/replay cases plus 117 revision and transaction checks. Those historical runtime and catalogue hashes remain frozen in their reports. Batch 1 reports retain their original source scope.
+ 
+ Preserved failures led to three corrections: numeric JSON arrays now compare dimensions by value; malformed Variant scalar types reject before String comparisons; rules identity now covers semantic profile data and rejects changed masks/frequencies/authority. An early checker incorrectly assumed relay sites were in map JSON; it now checks their actual pinned rules source. Reports retain those failures. Evidence is headless specification/validator evidence only; no live server migration, rendered online match, production collision or deterministic gameplay replay is claimed.
+ 
+-Current evidence: [Batch 2 contract owner report](evidence/mythic-batch2/contracts/native-contracts.json), [source pins](evidence/mythic-batch2/contracts/source-pins.json), and the [preserved content-1 descriptor](evidence/mythic-batch2/contracts/native-practice-content1-descriptor.json). Batch 1 reports remain untouched. Root owns integrated acceptance and publication.
++Current revision8 verification: **58 source checks,279 native admission/transaction/stream/replay cases and21 package source-proof cases** pass. [Continuation receipt](evidence/desktop-finish/continuation-oct18/W4-content8-r1/receipt.json) preserves the original stale-pin export failure, exact content7 fixture derivation and the bounded repair.
++
++Historical Batch2 evidence: [Batch 2 contract owner report](evidence/mythic-batch2/contracts/native-contracts.json), [source pins](evidence/mythic-batch2/contracts/source-pins.json), and the [preserved content-1 descriptor](evidence/mythic-batch2/contracts/native-practice-content1-descriptor.json). Batch 1 reports remain untouched. Root owns integrated acceptance and publication.
+diff --git a/games/yuga-native/scripts/native_contracts.gd b/games/yuga-native/scripts/native_contracts.gd
+index 4e7a575e..cc8c71c0 100644
+--- a/games/yuga-native/scripts/native_contracts.gd
++++ b/games/yuga-native/scripts/native_contracts.gd
+@@ -3,7 +3,7 @@ extends RefCounted
+ const CATALOG_PATH := "res://assets/contracts/native-contracts-v1.json"
+ const MAX_SAFE := 9007199254740991
+ const PROFILE_IDS := ["browser-p2-3v3", "native-offline-triad", "production-6v6"]
+-const CONTENT_REVISIONS := {"browser-p2-3v3":1,"native-offline-triad":7,"production-6v6":1}
++const CONTENT_REVISIONS := {"browser-p2-3v3":1,"native-offline-triad":8,"production-6v6":1}
+ const ENTITY_CAPS := {"actor":12,"minion":96,"neutral":32,"structure":32,"projectile":192,"zone":128,"pickup":32,"gold_shard":96}
+ const EVENT_KINDS := ["spawn","despawn","shot","hit","defeat","objective","reward","match_end"]
+ const DESCRIPTOR_KEYS := ["contract_id","profile_id","versions","protocol","rules_sha256","map_id","map_sha256","content_sha256"]
+diff --git a/games/yuga-native/tests/native_contract_cases.gd b/games/yuga-native/tests/native_contract_cases.gd
+index 7ad599d7..b5108038 100644
+--- a/games/yuga-native/tests/native_contract_cases.gd
++++ b/games/yuga-native/tests/native_contract_cases.gd
+@@ -19,6 +19,9 @@ const CONTENT5_DESCRIPTOR_PATH := "res://tests/fixtures/contracts/native-content
+ # Exact published UI preview identity before the G1 infantry presentation migration.
+ const CONTENT6_CATALOG_PATH := "res://tests/fixtures/contracts/native-content6-catalog.json"
+ const CONTENT6_DESCRIPTOR_PATH := "res://tests/fixtures/contracts/native-content6-descriptor.json"
++# Exact accepted revision7 catalog/descriptor before per-army resource pooling.
++const CONTENT7_CATALOG_PATH := "res://tests/fixtures/contracts/native-content7-catalog.json"
++const CONTENT7_DESCRIPTOR_PATH := "res://tests/fixtures/contracts/native-content7-descriptor.json"
+ const SCOPE := {"room":"FIXTURE","epoch":1,"identity":"hero"}
+ 
+ func _initialize() -> void:
+@@ -52,7 +55,7 @@ func rejected(g: RefCounted, channel: String, v: Variant, name_: String) -> void
+ 	check(name_,not result.ok and before==g.report(),{"code":result.code,"transactional":before==g.report()})
+ 
+ func run() -> void:
+-	for path in ["res://scripts/native_contracts.gd","res://assets/contracts/native-contracts-v1.json","res://tests/native_contract_cases.gd","res://assets/contracts/native-envelope-v1.schema.json", CONTENT3_CATALOG_PATH, CONTENT3_DESCRIPTOR_PATH, CONTENT4_CATALOG_PATH, CONTENT4_DESCRIPTOR_PATH, CONTENT5_CATALOG_PATH, CONTENT5_DESCRIPTOR_PATH, CONTENT6_CATALOG_PATH, CONTENT6_DESCRIPTOR_PATH]:
++	for path in ["res://scripts/native_contracts.gd","res://assets/contracts/native-contracts-v1.json","res://tests/native_contract_cases.gd","res://assets/contracts/native-envelope-v1.schema.json", CONTENT3_CATALOG_PATH, CONTENT3_DESCRIPTOR_PATH, CONTENT4_CATALOG_PATH, CONTENT4_DESCRIPTOR_PATH, CONTENT5_CATALOG_PATH, CONTENT5_DESCRIPTOR_PATH, CONTENT6_CATALOG_PATH, CONTENT6_DESCRIPTOR_PATH, CONTENT7_CATALOG_PATH, CONTENT7_DESCRIPTOR_PATH]:
+ 		sources[path]=FileAccess.get_sha256(path)
+ 	var catalog: Variant=JSON.parse_string(FileAccess.get_file_as_string(Contracts.CATALOG_PATH))
+ 	check("catalog_loads_three_separate_rulesets",Contracts.validate_catalog(catalog).ok)
+@@ -86,7 +89,7 @@ func run() -> void:
+ 		check("reject_changed_catalog_%d"%alteration,not Contracts.validate_catalog(bad).ok)
+ 	var local: Dictionary=g.descriptor(PROFILE)
+ 	check("exact_descriptor_match",Contracts.compatibility(local,local.duplicate(true)).ok)
+-	check("native_content_revision7_separate_from_unchanged_wire",local.versions.content==7 and local.versions.input==1 and local.versions.entity==1 and local.versions.event==1 and local.versions.replay==1)
++	check("native_content_revision8_separate_from_unchanged_wire",local.versions.content==8 and local.versions.input==1 and local.versions.entity==1 and local.versions.event==1 and local.versions.replay==1)
+ 	check("browser_and_proposal_content_stay_revision1",g.descriptor("browser-p2-3v3").versions.content==1 and g.descriptor("production-6v6").versions.content==1)
+ 	for profile_index in 3:
+ 		for invalid in [null,0,-1,1.5,true,"2",[],{},NAN,INF,65536]:
+@@ -100,7 +103,7 @@ func run() -> void:
+ 	var old_open := Contracts.new();assert(old_open.load_catalog().ok)
+ 	var empty_before: Dictionary=old_open.report()
+ 	var mismatch: Dictionary=old_open.open_session(PROFILE,CONTENT1_DESCRIPTOR,SCOPE)
+-	check("old_content1_cannot_open_revision7",not mismatch.ok and mismatch.code=="MISMATCH_VERSIONS" and mismatch.details.field=="content" and old_open.report()==empty_before)
++	check("old_content1_cannot_open_revision8",not mismatch.ok and mismatch.code=="MISMATCH_VERSIONS" and mismatch.details.field=="content" and old_open.report()==empty_before)
+ 	var before_revision_reject: Dictionary=g.report()
+ 	check("old_content1_resume_transactional",not g.resume_session(CONTENT1_DESCRIPTOR,SCOPE).ok and before_revision_reject==g.report())
+ 	var next_epoch: Dictionary=SCOPE.duplicate(true);next_epoch.epoch=2
+@@ -112,14 +115,14 @@ func run() -> void:
+ 	var old2_open := Contracts.new();assert(old2_open.load_catalog().ok)
+ 	var old2_before: Dictionary=old2_open.report()
+ 	var old2_mismatch: Dictionary=old2_open.open_session(PROFILE,CONTENT2_DESCRIPTOR,SCOPE)
+-	check("old_content2_cannot_open_revision7",not old2_mismatch.ok and old2_mismatch.code=="MISMATCH_VERSIONS" and old2_mismatch.details.field=="content" and old2_open.report()==old2_before)
++	check("old_content2_cannot_open_revision8",not old2_mismatch.ok and old2_mismatch.code=="MISMATCH_VERSIONS" and old2_mismatch.details.field=="content" and old2_open.report()==old2_before)
+ 	check("old_content2_resume_transactional",not g.resume_session(CONTENT2_DESCRIPTOR,SCOPE).ok and before_revision_reject==g.report())
+ 	check("old_content2_migration_cannot_downgrade",not g.migrate_session(PROFILE,CONTENT2_DESCRIPTOR,next_epoch).ok and before_revision_reject==g.report())
+ 	var old2_replay: Dictionary={"format":1,"descriptor":CONTENT2_DESCRIPTOR.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
+ 	check("old_content2_replay_rejected_before_reconstruction",not g.validate_replay(old2_replay,[]).ok and before_revision_reject==g.report())
+-	var forged_content2: Dictionary=CONTENT2_DESCRIPTOR.duplicate(true);forged_content2.versions.content=7
++	var forged_content2: Dictionary=CONTENT2_DESCRIPTOR.duplicate(true);forged_content2.versions.content=8
+ 	check("old_content2_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content2).ok)
+-	var forged_current: Dictionary=CONTENT1_DESCRIPTOR.duplicate(true);forged_current.versions.content=7
++	var forged_current: Dictionary=CONTENT1_DESCRIPTOR.duplicate(true);forged_current.versions.content=8
+ 	check("revision_number_alone_does_not_bypass_source_identity",not Contracts.compatibility(local,forged_current).ok)
+ 	var old3_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT3_CATALOG_PATH))
+ 	var old3_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT3_DESCRIPTOR_PATH))
+@@ -131,12 +134,12 @@ func run() -> void:
+ 	var old3_open := Contracts.new();assert(old3_open.load_catalog().ok)
+ 	var old3_before: Dictionary=old3_open.report()
+ 	var old3_mismatch: Dictionary=old3_open.open_session(PROFILE,old3_descriptor,SCOPE)
+-	check("old_content3_cannot_open_revision7",not old3_mismatch.ok and old3_mismatch.code=="MISMATCH_VERSIONS" and old3_mismatch.details.field=="content" and old3_open.report()==old3_before)
++	check("old_content3_cannot_open_revision8",not old3_mismatch.ok and old3_mismatch.code=="MISMATCH_VERSIONS" and old3_mismatch.details.field=="content" and old3_open.report()==old3_before)
+ 	check("old_content3_resume_transactional",not g.resume_session(old3_descriptor,SCOPE).ok and before_revision_reject==g.report())
+ 	check("old_content3_migration_cannot_downgrade",not g.migrate_session(PROFILE,old3_descriptor,next_epoch).ok and before_revision_reject==g.report())
+ 	var old3_replay: Dictionary={"format":1,"descriptor":old3_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
+ 	check("old_content3_replay_rejected_before_reconstruction",not g.validate_replay(old3_replay,[]).ok and before_revision_reject==g.report())
+-	var forged_content3: Dictionary=old3_descriptor.duplicate(true);forged_content3.versions.content=7
++	var forged_content3: Dictionary=old3_descriptor.duplicate(true);forged_content3.versions.content=8
+ 	check("old_content3_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content3).ok)
+ 	var old4_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT4_CATALOG_PATH))
+ 	var old4_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT4_DESCRIPTOR_PATH))
+@@ -148,12 +151,12 @@ func run() -> void:
+ 	var old4_open := Contracts.new();assert(old4_open.load_catalog().ok)
+ 	var old4_before: Dictionary=old4_open.report()
+ 	var old4_mismatch: Dictionary=old4_open.open_session(PROFILE,old4_descriptor,SCOPE)
+-	check("old_content4_cannot_open_revision7",not old4_mismatch.ok and old4_mismatch.code=="MISMATCH_VERSIONS" and old4_mismatch.details.field=="content" and old4_open.report()==old4_before)
++	check("old_content4_cannot_open_revision8",not old4_mismatch.ok and old4_mismatch.code=="MISMATCH_VERSIONS" and old4_mismatch.details.field=="content" and old4_open.report()==old4_before)
+ 	check("old_content4_resume_transactional",not g.resume_session(old4_descriptor,SCOPE).ok and before_revision_reject==g.report())
+ 	check("old_content4_migration_cannot_downgrade",not g.migrate_session(PROFILE,old4_descriptor,next_epoch).ok and before_revision_reject==g.report())
+ 	var old4_replay: Dictionary={"format":1,"descriptor":old4_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
+ 	check("old_content4_replay_rejected_before_reconstruction",not g.validate_replay(old4_replay,[]).ok and before_revision_reject==g.report())
+-	var forged_content4: Dictionary=old4_descriptor.duplicate(true);forged_content4.versions.content=7
++	var forged_content4: Dictionary=old4_descriptor.duplicate(true);forged_content4.versions.content=8
+ 	check("old_content4_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content4).ok)
+ 	var old5_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT5_CATALOG_PATH))
+ 	var old5_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT5_DESCRIPTOR_PATH))
+@@ -166,14 +169,14 @@ func run() -> void:
+ 	var old5_open := Contracts.new();assert(old5_open.load_catalog().ok)
+ 	var old5_before: Dictionary=old5_open.report()
+ 	var old5_load: Dictionary=old5_open.load_catalog(CONTENT5_CATALOG_PATH)
+-	check("revision5_catalog_load_cannot_replace_revision7_identity",not old5_load.ok and old5_open.descriptor(PROFILE)==local and old5_open.report()==old5_before)
++	check("revision5_catalog_load_cannot_replace_revision8_identity",not old5_load.ok and old5_open.descriptor(PROFILE)==local and old5_open.report()==old5_before)
+ 	var old5_mismatch: Dictionary=old5_open.open_session(PROFILE,old5_descriptor,SCOPE)
+-	check("old_content5_cannot_open_revision7",not old5_mismatch.ok and old5_mismatch.code=="MISMATCH_VERSIONS" and old5_mismatch.details.field=="content" and old5_open.report()==old5_before)
++	check("old_content5_cannot_open_revision8",not old5_mismatch.ok and old5_mismatch.code=="MISMATCH_VERSIONS" and old5_mismatch.details.field=="content" and old5_open.report()==old5_before)
+ 	check("old_content5_resume_transactional",not g.resume_session(old5_descriptor,SCOPE).ok and before_revision_reject==g.report())
+ 	check("old_content5_migration_cannot_downgrade",not g.migrate_session(PROFILE,old5_descriptor,next_epoch).ok and before_revision_reject==g.report())
+ 	var old5_replay: Dictionary={"format":1,"descriptor":old5_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
+ 	check("old_content5_replay_rejected_before_reconstruction",not g.validate_replay(old5_replay,[]).ok and before_revision_reject==g.report())
+-	var forged_content5: Dictionary=old5_descriptor.duplicate(true);forged_content5.versions.content=7
++	var forged_content5: Dictionary=old5_descriptor.duplicate(true);forged_content5.versions.content=8
+ 	check("old_content5_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content5).ok)
+ 	var old6_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT6_CATALOG_PATH))
+ 	var old6_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT6_DESCRIPTOR_PATH))
+@@ -186,23 +189,48 @@ func run() -> void:
+ 	var old6_open := Contracts.new();assert(old6_open.load_catalog().ok)
+ 	var old6_before: Dictionary=old6_open.report()
+ 	var old6_load: Dictionary=old6_open.load_catalog(CONTENT6_CATALOG_PATH)
+-	check("revision6_catalog_load_cannot_replace_revision7_identity",not old6_load.ok and old6_open.descriptor(PROFILE)==local and old6_open.report()==old6_before)
++	check("revision6_catalog_load_cannot_replace_revision8_identity",not old6_load.ok and old6_open.descriptor(PROFILE)==local and old6_open.report()==old6_before)
+ 	var old6_mismatch: Dictionary=old6_open.open_session(PROFILE,old6_descriptor,SCOPE)
+-	check("old_content6_cannot_open_revision7",not old6_mismatch.ok and old6_mismatch.code=="MISMATCH_VERSIONS" and old6_mismatch.details.field=="content" and old6_open.report()==old6_before)
++	check("old_content6_cannot_open_revision8",not old6_mismatch.ok and old6_mismatch.code=="MISMATCH_VERSIONS" and old6_mismatch.details.field=="content" and old6_open.report()==old6_before)
+ 	check("old_content6_resume_transactional",not g.resume_session(old6_descriptor,SCOPE).ok and before_revision_reject==g.report())
+ 	check("old_content6_migration_cannot_downgrade",not g.migrate_session(PROFILE,old6_descriptor,next_epoch).ok and before_revision_reject==g.report())
+ 	var old6_replay: Dictionary={"format":1,"descriptor":old6_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
+ 	check("old_content6_replay_rejected_before_reconstruction",not g.validate_replay(old6_replay,[]).ok and before_revision_reject==g.report())
+-	var forged_content6: Dictionary=old6_descriptor.duplicate(true);forged_content6.versions.content=7
++	var forged_content6: Dictionary=old6_descriptor.duplicate(true);forged_content6.versions.content=8
+ 	check("old_content6_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content6).ok)
+ 	var stale_digest6: Dictionary=local.duplicate(true);stale_digest6.content_sha256=old5_descriptor.content_sha256
+ 	var stale_digest_result: Dictionary=Contracts.compatibility(local,stale_digest6)
+-	check("revision7_with_revision5_digest_still_rejected",not stale_digest_result.ok and stale_digest_result.code=="MISMATCH_CONTENT_SHA256")
+-	check("valid_revision7_admitted_after_revision5_rejection",old5_open.open_session(PROFILE,local,SCOPE).ok and old5_open.report().session.descriptor.versions.content==7)
++	check("revision8_with_revision5_digest_still_rejected",not stale_digest_result.ok and stale_digest_result.code=="MISMATCH_CONTENT_SHA256")
++	check("valid_revision8_admitted_after_revision5_rejection",old5_open.open_session(PROFILE,local,SCOPE).ok and old5_open.report().session.descriptor.versions.content==8)
+ 	var stale_current_digest: Dictionary=local.duplicate(true);stale_current_digest.content_sha256=old6_descriptor.content_sha256
+ 	var digest_gate: Dictionary=Contracts.compatibility(local,stale_current_digest)
+-	check("revision7_with_released_revision6_digest_rejected",not digest_gate.ok and digest_gate.code=="MISMATCH_CONTENT_SHA256")
+-	check("valid_revision7_admitted_after_revision6_rejection",old6_open.open_session(PROFILE,local,SCOPE).ok and old6_open.report().session.descriptor.versions.content==7)
++	check("revision8_with_released_revision6_digest_rejected",not digest_gate.ok and digest_gate.code=="MISMATCH_CONTENT_SHA256")
++	check("valid_revision8_admitted_after_revision6_rejection",old6_open.open_session(PROFILE,local,SCOPE).ok and old6_open.report().session.descriptor.versions.content==8)
++
++	var old7_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT7_CATALOG_PATH))
++	var old7_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT7_DESCRIPTOR_PATH))
++	var old7_profile: Dictionary=old7_catalog.profiles[1]
++	var old7_versions: Dictionary=old7_catalog.envelope_versions.duplicate(true);old7_versions.content=7
++	var derived_old7 := {"contract_id":old7_catalog.contract_id,"profile_id":old7_profile.id,"versions":old7_versions,"protocol":old7_profile.protocol,"rules_sha256":JSON.stringify({"profile":old7_profile,"coordinates":old7_catalog.coordinate_contract,"limits":old7_catalog.limits},"",true).sha256_text(),"map_id":old7_profile.map_id,"map_sha256":old7_profile.map_sha256,"content_sha256":old7_profile.content_sha256}
++	check("preserved_revision7_descriptor_matches_exact_catalog_derivation",Contracts.compatibility(derived_old7,old7_descriptor).ok,{"derived":derived_old7,"fixture":old7_descriptor})
++	var old7_result: Dictionary=Contracts.validate_catalog(old7_catalog)
++	check("preserved_revision7_catalog_rejected",not old7_result.ok and old7_result.code=="CATALOG_CONTENT_REVISION")
++	var old7_open := Contracts.new();assert(old7_open.load_catalog().ok)
++	var old7_before: Dictionary=old7_open.report()
++	var old7_load: Dictionary=old7_open.load_catalog(CONTENT7_CATALOG_PATH)
++	check("revision7_catalog_load_cannot_replace_revision8_identity",not old7_load.ok and old7_open.descriptor(PROFILE)==local and old7_open.report()==old7_before)
++	var old7_mismatch: Dictionary=old7_open.open_session(PROFILE,old7_descriptor,SCOPE)
++	check("old_content7_cannot_open_revision8",not old7_mismatch.ok and old7_mismatch.code=="MISMATCH_VERSIONS" and old7_mismatch.details.field=="content" and old7_open.report()==old7_before)
++	check("old_content7_resume_transactional",not g.resume_session(old7_descriptor,SCOPE).ok and before_revision_reject==g.report())
++	check("old_content7_migration_cannot_downgrade",not g.migrate_session(PROFILE,old7_descriptor,next_epoch).ok and before_revision_reject==g.report())
++	var old7_replay: Dictionary={"format":1,"descriptor":old7_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
++	check("old_content7_replay_rejected_before_reconstruction",not g.validate_replay(old7_replay,[]).ok and before_revision_reject==g.report())
++	var forged_content7: Dictionary=old7_descriptor.duplicate(true);forged_content7.versions.content=8
++	check("old_content7_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content7).ok)
++	var stale_digest7: Dictionary=local.duplicate(true);stale_digest7.content_sha256=old7_descriptor.content_sha256
++	var stale7_gate: Dictionary=Contracts.compatibility(local,stale_digest7)
++	check("revision8_with_previous_revision7_digest_rejected",not stale7_gate.ok and stale7_gate.code=="MISMATCH_CONTENT_SHA256")
++	check("valid_revision8_admitted_after_revision7_rejection",old7_open.open_session(PROFILE,local,SCOPE).ok and old7_open.report().session.descriptor.versions.content==8)
+ 
+ 	for field in ["contract_id","profile_id","protocol","rules_sha256","map_id","map_sha256","content_sha256"]:
+ 		var bad := local.duplicate(true)
+diff --git a/games/yuga-native/tests/native_contract_package_cases.py b/games/yuga-native/tests/native_contract_package_cases.py
+index ba083ac7..8535e75e 100644
+--- a/games/yuga-native/tests/native_contract_package_cases.py
++++ b/games/yuga-native/tests/native_contract_package_cases.py
+@@ -1,6 +1,7 @@
+ #!/usr/bin/env python3
+ """Actual source-checker counterexamples for package preflight; never run Godot."""
+ import argparse
++import hashlib
+ import importlib.util
+ import json
+ from pathlib import Path
+@@ -8,6 +9,7 @@ import shutil
+ import subprocess
+ import tempfile
+ from types import SimpleNamespace
++from unittest.mock import patch
+ 
+ PROJECT = Path(__file__).resolve().parents[1]
+ spec = importlib.util.spec_from_file_location('contract_packaging', PROJECT / 'tools/package-native.py')
+@@ -47,6 +49,21 @@ def main():
+                 error = str(caught)
+             checks.append({'name': name, 'passed': error is not None and reason in error, 'rejection': error})
+ 
++        # This contract fixture supplies valid unrelated UID/engine identity
++        # prerequisites. The real contract subprocess and source binding are
++        # never mocked; engine/UID policy has its own dedicated fixtures.
++        fixture_selection = {'exporter': {'version': 'contract-fixture'}}
++
++        def export_contract_gate():
++            with patch.object(packaging, 'validate_runtime_script_uids', return_value={}), \
++                 patch.object(packaging, 'linux_engine_selection', return_value=fixture_selection):
++                return packaging.export_all(SimpleNamespace(), folder())
++
++        def package_contract_gate(exported):
++            exported = {'engine_selection': fixture_selection, 'godot_version': 'contract-fixture', **exported}
++            with patch.object(packaging, 'linux_engine_selection', return_value=fixture_selection):
++                return packaging.package_all(SimpleNamespace(), folder(), exported)
++
+         proof_dir = folder()
+         valid = packaging.prove_native_contract_sources(proof_dir / 'report.json', project)
+         valid_report = json.loads((proof_dir / 'report.json').read_text())
+@@ -65,20 +82,20 @@ def main():
+                        'passed': any(item['name'] == 'native-offline-triad_content_games/yuga-native/scripts/player.gd'
+                                      and item['passed'] is False for item in actual_stale['checks'])})
+         packaging.PROJECT = project
+-        rejected('export rejects stale player before any engine parameters are accessed',
+-                 lambda: packaging.export_all(SimpleNamespace(), folder()), 'Native contract source check failed')
+-        rejected('package rejects stale player before any engine parameters are accessed',
+-                 lambda: packaging.package_all(SimpleNamespace(), folder(), {'native_contracts': valid}),
++        rejected('export rejects stale player after valid unrelated prerequisites',
++                 export_contract_gate, 'Native contract source check failed')
++        rejected('package rejects stale player after valid engine identity',
++                 lambda: package_contract_gate({'native_contracts': valid}),
+                  'Native contract source check failed')
+         player.write_bytes(original_player)
+         rejected('old export without a source-bound native contract proof rejects before engine',
+-                 lambda: packaging.package_all(SimpleNamespace(), folder(), {}),
++                 lambda: package_contract_gate({}),
+                  'Native contract sources or proof changed since export')
+         fixture = project / 'tests/fixtures/contracts/native-content3-descriptor.json'
+         fixture_original = fixture.read_bytes()
+         fixture.write_bytes(fixture_original + b'\n')
+         rejected('changed retained input rejects even when checker still passes',
+-                 lambda: packaging.package_all(SimpleNamespace(), folder(), {'native_contracts': valid}),
++                 lambda: package_contract_gate({'native_contracts': valid}),
+                  'Native contract sources or proof changed since export')
+         fixture.write_bytes(fixture_original)
+         rejected('existing successful report cannot stand in for fresh execution',
+@@ -101,11 +118,39 @@ def main():
+                  lambda: packaging.prove_native_contract_sources(folder() / 'report.json', project),
+                  'report/source bindings changed or differ')
+         checker.write_bytes(checker_original)
++        # Each new retained identity is a direct packaging input: absence
++        # and changed bytes must reject instead of replaying an older proof.
++        for revision in (6, 7):
++            for kind in ('catalog', 'descriptor'):
++                retained = project / f'tests/fixtures/contracts/native-content{revision}-{kind}.json'
++                retained_bytes = retained.read_bytes()
++                retained.write_bytes(retained_bytes + b'\n')
++                rejected(f'changed retained content{revision} {kind} rejects source proof',
++                         lambda: packaging.prove_native_contract_sources(folder() / 'report.json', project),
++                         'Native contract source check failed')
++                retained.write_bytes(retained_bytes)
++                retained.unlink()
++                rejected(f'missing retained content{revision} {kind} rejects input closure',
++                         lambda: packaging._native_contract_inputs(project),
++                         'Missing or unsafe native contract input')
++                retained.write_bytes(retained_bytes)
+         # The exact rejected source state is reconstructed from committed bytes,
+-        # independent of the currently corrected revision6 catalog/checker.
++        # independent of the currently corrected revision8 catalog/checker.
+         for relative in ['assets/contracts/native-contracts-v1.json', 'tools/check-native-contracts.py', 'scripts/native_contracts.gd']:
+             (project / relative).write_bytes(subprocess.check_output([
+                 'git', 'show', '83f88f840c59934155aec19d95b41d920d15c6c1:games/yuga-native/' + relative], cwd=PROJECT))
++        historical_catalog = json.loads((project / 'assets/contracts/native-contracts-v1.json').read_text())
++        for profile in historical_catalog['profiles']:
++            for relative, expected_sha in profile['content_sources'].items():
++                if relative == 'games/yuga-native/scripts/player.gd':
++                    continue  # Preserve the intended real current-player mismatch.
++                historical_bytes = subprocess.check_output([
++                    'git', 'show', '83f88f840c59934155aec19d95b41d920d15c6c1:' + relative], cwd=PROJECT)
++                if hashlib.sha256(historical_bytes).hexdigest() != expected_sha:
++                    raise ValueError('Historical non-player input does not match frozen catalog: ' + relative)
++                target = repository / relative
++                target.parent.mkdir(parents=True, exist_ok=True)
++                target.write_bytes(historical_bytes)
+         old_dir = folder()
+         rejected('exact rejected83f catalog checker and runtime refuse its actual player',
+                  lambda: packaging.prove_native_contract_sources(old_dir / 'report.json', project),
+diff --git a/games/yuga-native/tools/check-native-contracts.py b/games/yuga-native/tools/check-native-contracts.py
+index 60ea5237..59e07377 100644
+--- a/games/yuga-native/tools/check-native-contracts.py
++++ b/games/yuga-native/tools/check-native-contracts.py
+@@ -37,10 +37,10 @@ def main():
+         canonical = json.dumps(profile["content_sources"], sort_keys=True, separators=(",", ":")).encode()
+         check(profile["id"] + "_content_aggregate", hashlib.sha256(canonical).hexdigest() == profile["content_sha256"])
+         check(profile["id"] + "_no_live_handshake_claim", profile["live_handshake"] is False)
+-    check("per_profile_content_revisions", [p.get("content_revision") for p in data["profiles"]] == [1, 7, 1])
++    check("per_profile_content_revisions", [p.get("content_revision") for p in data["profiles"]] == [1, 8, 1])
+     check("wire_versions_unchanged", data["envelope_versions"] == {key: 1 for key in ["contract", "rules", "map", "content", "replay", "input", "event", "entity"]})
+     # Preserve the exact previously accepted catalog and its Godot-derived
+-    # descriptor. Revision 7 changes the infantry presentation source identity;
++    # descriptor. Revision 8 changes only army/status presentation identities;
+     # it does not redefine browser/production or claim all art is wire-pinned.
+     old_catalog_path = NATIVE / "tests/fixtures/contracts/native-content4-catalog.json"
+     old_descriptor_path = NATIVE / "tests/fixtures/contracts/native-content4-descriptor.json"
+@@ -66,13 +66,21 @@ def main():
+     revision6_native = revision6_catalog["profiles"][1]
+     historical_changed_paths6 = {path for path in revision6_native["content_sources"] if revision6_native["content_sources"][path] != revision5_native["content_sources"].get(path)}
+     check("preserved_revision5_to6_changes_only_player_source_pin", set(revision6_native["content_sources"]) == set(revision5_native["content_sources"]) and historical_changed_paths6 == {"games/yuga-native/scripts/player.gd"})
++    revision7_catalog_path = NATIVE / "tests/fixtures/contracts/native-content7-catalog.json"
++    revision7_descriptor_path = NATIVE / "tests/fixtures/contracts/native-content7-descriptor.json"
++    check("preserved_revision7_catalog_exact_bytes", digest(revision7_catalog_path) == "cfb956462042a867f6ac1a51d7be77fc98310acfae8d15d112456fc2a19eb191")
++    check("preserved_revision7_descriptor_exact_bytes", digest(revision7_descriptor_path) == "7ea8e560742081487df9d8b15b25e122b2f2a363fa6bead4f569559dd63354ef")
++    revision7_native = json.loads(revision7_catalog_path.read_text())["profiles"][1]
++    changed_paths7 = {path for path in revision7_native["content_sources"] if revision7_native["content_sources"][path] != revision6_native["content_sources"].get(path)}
++    check("revision7_changes_only_minion_source_pin", set(revision7_native["content_sources"]) == set(revision6_native["content_sources"]) and changed_paths7 == {"games/yuga-native/scripts/lane_minion.gd"})
++    check("revision7_preserves_noncontent_native_rules", all(revision7_native[key] == value for key, value in revision6_native.items() if key not in ("content_sources", "content_revision", "content_sha256")))
+     current_native = data["profiles"][1]
+-    changed_paths = {path for path in current_native["content_sources"] if current_native["content_sources"][path] != revision6_native["content_sources"].get(path)}
+-    check("revision7_changes_only_minion_source_pin", set(current_native["content_sources"]) == set(revision6_native["content_sources"]) and changed_paths == {"games/yuga-native/scripts/lane_minion.gd"})
+-    check("revision7_preserves_noncontent_native_rules", all(current_native[key] == value for key, value in revision6_native.items() if key not in ("content_sources", "content_revision", "content_sha256")))
++    changed_paths = {path for path in current_native["content_sources"] if current_native["content_sources"][path] != revision7_native["content_sources"].get(path)}
++    check("revision8_changes_only_army_and_minion_source_pins", set(current_native["content_sources"]) == set(revision7_native["content_sources"]) and changed_paths == {"games/yuga-native/scripts/lane_army.gd", "games/yuga-native/scripts/lane_minion.gd"})
++    check("revision8_preserves_noncontent_native_rules", all(current_native[key] == value for key, value in revision7_native.items() if key not in ("content_sources", "content_revision", "content_sha256")))
+ 
+     required_native = {"games/yuga-native/" + path for path in ["scripts/lane_army.gd", "scripts/lane_minion.gd", "scripts/relay_control.gd", "scripts/player_traversal.gd", "scripts/ultimate_rules.gd", "scripts/ultimate_session.gd", "assets/design/native-ultimate-rules.json", "scripts/player.gd", "scripts/rama_ability_kit.gd", "scripts/rama_hero_runtime.gd", "scripts/rama_vitals.gd", "scripts/rama_practice_army.gd", "scripts/rama_practice_target.gd", "assets/design/rama-ability-kit.json", "scripts/rama_action_buffer.gd"]}
+-    check("native_revision7_retains_existing_authority_sources", set(data["profiles"][1]["content_sources"]) == required_native)
++    check("native_revision8_retains_existing_authority_sources", set(data["profiles"][1]["content_sources"]) == required_native)
+     check("native_hero_health_declared_and_vitals_pinned", data["profiles"][1]["features"]["hero_health"] is True and "scripts/rama_vitals.gd" in " ".join(required_native))
+     types = (ROOT / "games/yuga/shared/types.ts").read_text()
+     map_text = (ROOT / "games/yuga/shared/map.ts").read_text()
+diff --git a/games/yuga-native/tools/package-native.py b/games/yuga-native/tools/package-native.py
+index 09faa32b..cb186f03 100755
+--- a/games/yuga-native/tools/package-native.py
++++ b/games/yuga-native/tools/package-native.py
+@@ -1584,7 +1584,7 @@ def _native_contract_inputs(project: Path) -> dict:
+         'games/yuga-native/docs/GAME_DESIGN_MASTER.md',
+         'games/yuga-native/scripts/relay_control.gd',
+         *[f'games/yuga-native/tests/fixtures/contracts/native-content{revision}-{kind}.json'
+-          for revision in (3, 4, 5) for kind in ('catalog', 'descriptor')],
++          for revision in (3, 4, 5, 6, 7) for kind in ('catalog', 'descriptor')],
+     }
+     catalog = json.loads((project / 'assets/contracts/native-contracts-v1.json').read_text())
+     for profile in catalog['profiles']:

@@ -1584,7 +1584,7 @@ def _native_contract_inputs(project: Path) -> dict:
         'games/yuga-native/docs/GAME_DESIGN_MASTER.md',
         'games/yuga-native/scripts/relay_control.gd',
         *[f'games/yuga-native/tests/fixtures/contracts/native-content{revision}-{kind}.json'
-          for revision in (3, 4, 5) for kind in ('catalog', 'descriptor')],
+          for revision in (3, 4, 5, 6, 7) for kind in ('catalog', 'descriptor')],
     }
     catalog = json.loads((project / 'assets/contracts/native-contracts-v1.json').read_text())
     for profile in catalog['profiles']:

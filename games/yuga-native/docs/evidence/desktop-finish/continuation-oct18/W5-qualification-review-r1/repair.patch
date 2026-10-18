@@ -1,0 +1,139 @@
+--- original-d7632448
++++ reviewed-16110615
+@@ -11,6 +11,52 @@
+ import zipfile
+ sys.dont_write_bytecode = True
+ HERE = Path(__file__).resolve().parent
++WINDOWS_ENGINE = {'bytes': 172409864, 'sha256': 'ef90e929ba1a6a4322860285d97f40f4aa349c90329a91b0e8b55b8df0f4cb00'}
++WINDOWS_PROOF = Path('/workspace/tooling/native-engine/godot-windows-provenance.json')
++WINDOWS_PROOF_SHA = 'c83f2555fdd573e3ef090d4575185596d1a9c908a321c8c61632e727d9c2703e'
++
++
++def expected_phase_command(repo, out, native, phase):
++    return ['taskset', '-c', '0,1', 'python3', 'games/yuga-native/tools/package-native.py',
++            '--linux-engine', '/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64',
++            '--linux-runtime', '/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-pipeline-low-priority',
++            '--linux-runtime-variant', 'pipeline-low-priority', '--linux-runtime-provenance',
++            str(repo / native / 'docs/evidence/desktop-finish/G0/template-priority-build-r1/finished-build-verification.json'),
++            '--windows-engine', '/workspace/tooling/native-engine/Godot_v4.6.3-stable_win64.exe',
++            '--build-dir', str(out / 'build'), '--' + phase + '-only']
++
++
++def phase_binding_matches(receipt, phase, preparation_sha, commit, repo, out, native):
++    expected_environment = {name: str(out / 'user' / suffix) for name, suffix in
++                            [('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')]}
++    expected_environment.update(OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1')
++    return (receipt.get('exit_code') == 0 and receipt.get('after_source_passed') is True and
++            not receipt.get('failure') and not receipt.get('terminated_reason') and
++            receipt.get('source_commit') == commit and receipt.get('preparation_sha256') == preparation_sha and
++            receipt.get('cwd') == str(repo) and receipt.get('command') == expected_phase_command(repo, out, native, phase) and
++            receipt.get('environment') == expected_environment)
++
++
++def contract_proof_matches(proof, raw, actual_record, expected_sources, expected_report_sources, required_names):
++    checks = raw.get('checks', [])
++    return (proof.get('schema') == 1 and proof.get('report') == actual_record and
++            proof.get('sources') == expected_sources and raw.get('source_sha256') == expected_report_sources and
++            raw.get('passed') is True and isinstance(checks, list) and bool(checks) and
++            len(checks) == proof.get('checks') and all(isinstance(c, dict) and c.get('passed') is True and isinstance(c.get('name'), str) for c in checks) and
++            len({c['name'] for c in checks}) == len(checks) and required_names.issubset({c['name'] for c in checks}))
++
++
++def windows_provenance_matches(pm, expected_proof):
++    return (pm.get('windows_engine_provenance') == expected_proof and
++            pm.get('runtime', {}).get('provenance') == expected_proof and
++            {key: pm.get('runtime', {}).get(key) for key in ['bytes', 'sha256']} == WINDOWS_ENGINE)
++
++
++def required_log_names():
++    return ['logs/export.stdout', 'logs/export.stderr', 'logs/package.stdout', 'logs/package.stderr',
++            'build/export-linux.log', 'build/export-windows.log',
++            'build/native-contracts-export.log', 'build/native-contracts-package.log',
++            'build/font-bindings-export.log', 'build/font-bindings-package.log']
+ 
+ def module(name, path):
+     spec = importlib.util.spec_from_file_location(name, path)
+@@ -53,7 +99,6 @@
+     if out.parent != s.AREA or repo != out / 'ANDOLAN' or out.resolve() != out:
+         p.error('Unexpected artifact root')
+     build, project = out / 'build', repo / s.NATIVE
+-    tool = module('audited_packager', project / 'tools/package-native.py')
+     result = {'schema': 1, 'source_commit': a.expected_commit, 'passed': False,
+               'preparation_sha256': a.preparation_sha256, 'checks': [],
+               'scope': 'Full tracked source/index/isolation/cache and exact PCK/ZIP/member/provenance qualification only. No extraction, engine execution, cleanup, transport or publication; actual warm/cold qualification remains separate.'}
+@@ -62,9 +107,11 @@
+         if not okay:
+             raise ValueError(name)
+     try:
++        phase_records = {}
+         for phase in ['export', 'package']:
+             receipt = json.loads((out / (phase + '-execution.json')).read_text())
+-            check(phase + ' exit0 and unchanged after-source audit', receipt.get('exit_code') == 0 and receipt.get('after_source_passed') is True and not receipt.get('failure') and not receipt.get('terminated_reason') and receipt.get('source_commit') == a.expected_commit)
++            check(phase + ' exact preparation source cwd command environment and successful after-audit', phase_binding_matches(receipt, phase, a.preparation_sha256, a.expected_commit, repo, out, s.NATIVE))
++            phase_records[phase] = rec(out / (phase + '-execution.json'))
+         s.audit(s.SOURCE, prep['entries']); s.audit(repo, prep['entries'])
+         s.audit_index(s.SOURCE, prep['entries']); s.audit_index(repo, prep['entries'])
+         s.audit_isolation(s.SOURCE, repo, prep['entries'])
+@@ -72,6 +119,9 @@
+         check('artifact HEAD exact and native/full status clean', s.git(repo, 'rev-parse', 'HEAD').decode().strip() == a.expected_commit and not s.git(repo, 'status', '--porcelain', '--untracked-files=all'))
+         check('approved exact nonruntime exclusions unchanged', rec(repo / '.git/info/exclude')['sha256'] == prep['exclude_sha256'] == s.APPROVED_EXCLUDE_SHA256)
+         check('canonical cache seed unchanged and mutable cache inodes private', s.cache_records(Path(prep['cache_seed']['path'])) == prep['cache_seed']['files'] and all((Path(prep['cache_seed']['path']) / row['path']).stat().st_ino != (project / '.godot' / row['path']).stat().st_ino for row in prep['cache_seed']['files']))
++        # Never execute artifact Python until the full declared tracked source,
++        # index and phase/preparation bindings have passed independently.
++        tool = module('audited_packager', project / 'tools/package-native.py')
+         exported = json.loads((build / 'native-export-manifest.json').read_text())
+         packaged = json.loads((build / 'native-package-manifest.json').read_text())
+         check('export and package bind the same exact clean source', exported['git']['head'] == a.expected_commit and exported['git']['native_worktree_status'] == '' and exported['git'] == packaged['git'])
+@@ -80,6 +130,23 @@
+         check('official exporter and explicit reviewed patched runtime remain distinct', engines == packaged['engine_selection'] and engines['exporter']['sha256'] == 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3' and engines['linux_runtime']['sha256'] == 'e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e' and engines['linux_runtime']['kind'] == 'patched-public-source-template-debug' and engines['linux_runtime']['provenance']['variant'] == 'pipeline-low-priority-v1' and engines['linux_runtime']['provenance']['source_patches'] == 1 and len(engines['linux_runtime']['provenance']['evidence']) == 11)
+         check('runtime UID preflight remains exact', tool.validate_runtime_script_uids() == exported['runtime_uids'])
+         check('native contract checks nonempty passed and same at export/package', packaged['native_contracts'] == exported['native_contracts'] and exported['native_contracts']['checks'] > 0)
++        expected_contract_sources = tool._native_contract_inputs(project)
++        expected_report_sources = {str(s.NATIVE / relative): rec(project / relative)['sha256'] for relative in
++                                   ['assets/contracts/native-contracts-v1.json', 'assets/contracts/native-envelope-v1.schema.json',
++                                    'tools/check-native-contracts.py', 'scripts/native_contracts.gd']}
++        contract_catalog = json.loads((project / 'assets/contracts/native-contracts-v1.json').read_text())
++        required_contract_names = {'three_exact_profiles', 'per_profile_content_revisions', 'wire_versions_unchanged'}
++        for profile in contract_catalog['profiles']:
++            required_contract_names.add(profile['id'] + '_content_aggregate')
++            required_contract_names.update(profile['id'] + '_content_' + name for name in profile['content_sources'])
++        contract_records = {}
++        for phase in ['export', 'package']:
++            proof_path = build / ('native-contracts-' + phase + '.json')
++            raw_proof = json.loads(proof_path.read_text())
++            check(phase + ' exact raw contract proof all gates passed and source closure bound', contract_proof_matches(exported['native_contracts'], raw_proof, rec(proof_path), expected_contract_sources, expected_report_sources, required_contract_names))
++            contract_records[phase] = rec(proof_path)
++        check('fixed official Windows engine provenance source proof exact', rec(WINDOWS_PROOF)['sha256'] == WINDOWS_PROOF_SHA and rec(Path('/workspace/tooling/native-engine/Godot_v4.6.3-stable_win64.exe')) == WINDOWS_ENGINE)
++        windows_proof = json.loads(WINDOWS_PROOF.read_text())
+         archives = {}
+         for platform in ['linux', 'windows']:
+             raw = build / f'yuga-native-{platform}.pck'
+@@ -110,9 +177,12 @@
+                     check('Linux declares exact patched runtime and source build proof mapping', pm['runtime'] == engines['linux_runtime'] and 'patched-public-template-debug' in pm['packaging'] and json.loads(archive.read(base + 'NOTICE/GODOT-RUNTIME-PROVENANCE.json')) == engines and set(proof_map) == set(provenance['evidence']) and len(set(proof_map.values())) == len(proof_map) == 11 and all(member_rec(archive, base + target) == provenance['evidence'][source] for source, target in proof_map.items()))
+                     check('Linux modified-runtime notice and executable modes explicit', b'This is a modified runtime' in archive.read(base + 'START-HERE.txt') and b'Source patches: 1' in archive.read(base + 'NOTICE/GODOT-RUNTIME.txt') and all(stat.S_IMODE(archive.getinfo(base + name).external_attr >> 16) == 0o755 for name in ['godot', 'launch.sh']))
+                 else:
+-                    check('Windows official engine provenance distinct and no Linux patch declaration', pm['windows_engine_provenance'] == pm['runtime']['provenance'] and base + 'NOTICE/GODOT-RUNTIME-PROVENANCE.json' not in names and b'bundled official Godot' in archive.read(base + 'START-HERE.txt'))
++                    check('Windows fixed official engine provenance and no Linux patch declaration', windows_provenance_matches(pm, windows_proof) and base + 'NOTICE/GODOT-RUNTIME-PROVENANCE.json' not in names and b'bundled official Godot' in archive.read(base + 'START-HERE.txt'))
+             check(platform + ' archive unchanged through audit and outer manifest exact', rec(archive_path) == before_archive == {key: packaged['packages'][platform][key] for key in ['bytes', 'sha256']} and packaged['packages'][platform]['filename'] == archive_path.name)
+             archives[platform] = {**before_archive, 'filename': archive_path.name, 'members': len(staged), 'member_records': staged, 'pck': {key: pack[key] for key in ['bytes', 'sha256', 'entry_count']}}
++        required_logs = [out / name for name in required_log_names()]
++        check('all required phase contract font and platform export logs present', all(f.is_file() and not f.is_symlink() for f in required_logs))
++        log_records = {str(f.relative_to(out)): rec(f) for f in required_logs}
+         logs = [*sorted((out / 'logs').glob('*')), *sorted(build.glob('*.log'))]
+         diagnostics = {str(f.relative_to(out)): [line for line in f.read_text(errors='replace').splitlines() if any(marker in line for marker in ['ERROR:', 'WARNING:', 'SCRIPT ERROR:'])] for f in logs}
+         check('all phase exporter and package logs have no errors or warnings', not any(diagnostics.values()))
+@@ -128,8 +198,13 @@
+         s.audit_index(s.SOURCE, prep['entries']); s.audit_index(repo, prep['entries'])
+         s.audit_isolation(s.SOURCE, repo, prep['entries'])
+         check('all source and index guards still pass after complete archive audit', True)
++        check('phase receipts raw contract proofs official Windows proof and required logs unchanged through audit',
++              all(rec(out / (phase + '-execution.json')) == value for phase, value in phase_records.items()) and
++              all(rec(build / ('native-contracts-' + phase + '.json')) == value for phase, value in contract_records.items()) and
++              rec(WINDOWS_PROOF)['sha256'] == WINDOWS_PROOF_SHA and
++              all(rec(out / name) == value for name, value in log_records.items()))
+         check('approved export free-space reserve remains', s.free_bytes(s.AREA) >= prep['reserve_bytes'])
+-        result.update({'passed': True, 'tracked_files': len(prep['entries']), 'runtime_files': len(exported['source']['files']), 'archives': archives, 'engine_selection': engines, 'diagnostics': diagnostics, 'five_assets': {f.name: rec(f) for f in [*files, checksum_file]}, 'free_bytes_after': s.free_bytes(s.AREA)})
++        result.update({'passed': True, 'tracked_files': len(prep['entries']), 'runtime_files': len(exported['source']['files']), 'archives': archives, 'engine_selection': engines, 'diagnostics': diagnostics, 'phase_receipts': phase_records, 'raw_contract_proofs': contract_records, 'required_logs': log_records, 'windows_proof_sha256': WINDOWS_PROOF_SHA, 'five_assets': {f.name: rec(f) for f in [*files, checksum_file]}, 'free_bytes_after': s.free_bytes(s.AREA)})
+     except Exception as error:
+         result['failure'] = repr(error)
+     result['finished_unix'] = time.time()

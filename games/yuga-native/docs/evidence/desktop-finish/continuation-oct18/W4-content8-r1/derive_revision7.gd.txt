@@ -1,0 +1,10 @@
+extends SceneTree
+const Contracts=preload("res://scripts/native_contracts.gd")
+func _initialize() -> void:
+	var guard:=Contracts.new()
+	var result:=guard.load_catalog("res://tests/fixtures/contracts/native-content7-catalog.json")
+	if not result.ok:push_error(JSON.stringify(result));quit(1);return
+	var descriptor:=guard.descriptor("native-offline-triad")
+	FileAccess.open("res://tests/fixtures/contracts/native-content7-descriptor.json",FileAccess.WRITE).store_string(JSON.stringify(descriptor,"\t",true)+"\n")
+	print(JSON.stringify({"descriptor":descriptor,"runtime_sha256":FileAccess.get_sha256("res://scripts/native_contracts.gd"),"catalog_sha256":FileAccess.get_sha256("res://tests/fixtures/contracts/native-content7-catalog.json")}))
+	quit(0)

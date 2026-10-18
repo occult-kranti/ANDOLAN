@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "original_qualifier_sha256": "d76324480cf6b4b54fa463c744a86d8c74421db63571a6a9e4db6b19fff42334",
+  "witnesses": [
+    {
+      "name": "phase preparation_sha256 substitution",
+      "kind": "exact original predicate replay, not full package qualification",
+      "accepted": true,
+      "unexpected_acceptance": true,
+      "altered": {
+        "exit_code": 0,
+        "after_source_passed": true,
+        "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preparation_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "cwd": "/expected/artifact/ANDOLAN",
+        "command": [
+          "expected",
+          "--export-only"
+        ]
+      }
+    },
+    {
+      "name": "phase cwd substitution",
+      "kind": "exact original predicate replay, not full package qualification",
+      "accepted": true,
+      "unexpected_acceptance": true,
+      "altered": {
+        "exit_code": 0,
+        "after_source_passed": true,
+        "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preparation_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "cwd": "/different/artifact/ANDOLAN",
+        "command": [
+          "expected",
+          "--export-only"
+        ]
+      }
+    },
+    {
+      "name": "phase command substitution",
+      "kind": "exact original predicate replay, not full package qualification",
+      "accepted": true,
+      "unexpected_acceptance": true,
+      "altered": {
+        "exit_code": 0,
+        "after_source_passed": true,
+        "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preparation_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "cwd": "/expected/artifact/ANDOLAN",
+        "command": [
+          "unrelated",
+          "--package-only"
+        ]
+      }
+    },
+    {
+      "name": "nonzero export exit negative control",
+      "accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "contract manifest summary with unverified raw report",
+      "kind": "exact original predicate only; raw report is not read by this gate",
+      "accepted": true,
+      "unbound_report": {
+        "checks": 1,
+        "sources": {},
+        "report": {
+          "bytes": 1,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      }
+    },
+    {
+      "name": "self-consistent arbitrary Windows provenance",
+      "kind": "exact original Windows provenance predicate, not whole ZIP admission",
+      "accepted": true,
+      "arbitrary_engine_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "name": "actual original helper imports artifact module before failing export phase/source audit",
+      "kind": "full main synthetic private fixture; no real package files touched",
+      "exit_code": 1,
+      "artifact_module_executed": true,
+      "tracked_audit_called": false,
+      "report": {
+        "schema": 1,
+        "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "passed": false,
+        "preparation_sha256": "ffb69e9cc7b6287a5110cdca819b467b1cc5ddd0606b272706fee6e636cc1fd9",
+        "checks": [
+          {
+            "name": "export exit0 and unchanged after-source audit",
+            "passed": false
+          }
+        ],
+        "scope": "Full tracked source/index/isolation/cache and exact PCK/ZIP/member/provenance qualification only. No extraction, engine execution, cleanup, transport or publication; actual warm/cold qualification remains separate.",
+        "failure": "ValueError('export exit0 and unchanged after-source audit')",
+        "finished_unix": 1792335950.1247125
+      }
+    }
+  ],
+  "subprocess_socket_operations": [],
+  "scope": "Import-order reproduced through original main with synthetic private files; phase/contract/Windows findings replay only exact original predicates, not a forged full-package acceptance. No engine/network/Git or actual artifact mutation."
+}
