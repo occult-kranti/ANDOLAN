@@ -1,0 +1,69 @@
+{
+  "status": "NO_BOUNDED_SOURCE_BLOCKER_ACTUAL_CONFIRMATION_PENDING",
+  "source_commit": "9fa119c5ab70ed27d42dbc31bafe00e1661fb719",
+  "previous_source": "1365aaa40052abf80163884b2e31dc5c28c65af1",
+  "scope": "Read-only exact-commit source/test diff and retained owner report review; no engine or pixel execution.",
+  "sources": {
+    "scripts/loading_presentation.gd": {
+      "sha256": "c3c785b8fe73876510109601b0a4f80c3567ced2ba6fb12ed38b54d1182088d7",
+      "bytes": 6533
+    },
+    "tests/desktop_finish_s2_loading_view_cases.gd": {
+      "sha256": "4dc638081d84d163cfcbe0b143917cc7e4de134554f528768e81a35611ef1554",
+      "bytes": 7623
+    }
+  },
+  "checks": {
+    "only_loading_presentation_and_existing_fixture_change_in_commit": true,
+    "controller_boot_theme_bytes_exact": true,
+    "lifecycle_binding_phase_and_progress_methods_exact": [
+      "_ready",
+      "bind_transition",
+      "_on_phase_changed",
+      "present_phase"
+    ],
+    "six_public_control_references_preserved": true,
+    "compact_mode_removes_decorative_identity_and_minimum_spacers_only": true,
+    "heading_context_operation_scope_actions_and_font_roles_preserved": true,
+    "normal_size_restores_decoration_and_minimum_slots": true,
+    "fixture_checks_live_100_to_200_to_normal_scaling_and_ancestor_clips": true,
+    "long_recovery_now_checks_both_visible_actions_outside_scroll": true
+  },
+  "owner_results": {
+    "baseline": {
+      "passed": 17,
+      "total": 20
+    },
+    "candidate": {
+      "passed": 20,
+      "total": 20
+    },
+    "reviewer_rerun": false
+  },
+  "owner_files_observed": {
+    "source-freeze.json": {
+      "sha256": "e79f23dac1c072bc0f266b62d629e079a2743fd9be08f25b9291313f4a639cc3",
+      "bytes": 680
+    },
+    "final-fixture/baseline/report.json": {
+      "sha256": "a721b0be9be8c5c12c1317828c65e9d512cc9d9e913b7791803c3eed3cb385fc",
+      "bytes": 6319
+    },
+    "final-fixture/candidate/report.json": {
+      "sha256": "ce23e4340bd7fc77d53a92c2a38f4481c5a9cac2bbd8206fa63964edd6e298fc",
+      "bytes": 6315
+    },
+    "final-fixture/baseline/execution.json": {
+      "sha256": "663f253c7017bfb51eded23277f35144789bfd77cf8f53959b293e3a63942093",
+      "bytes": 3285
+    },
+    "final-fixture/candidate/execution.json": {
+      "sha256": "60237b4008468101c183675a38eaf145ff53f527da09a14c0a93d2502b17b8a3",
+      "bytes": 3287
+    }
+  },
+  "limits": [
+    "Owner geometry checks do not prove glyph pixels; W1 actual compact-loading confirmation remains pending.",
+    "No gameplay, transition timing, focus, error recovery or package-source acceptance is inferred from this view-only review."
+  ]
+}

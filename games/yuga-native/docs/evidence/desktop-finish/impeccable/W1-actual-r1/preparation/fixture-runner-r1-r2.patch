@@ -1,0 +1,18 @@
+--- original-runner322e
++++ private-fixture-cache-font-successor
+@@ -160,8 +160,14 @@
+         if a.mode=='transition_fixture': files += ['tools/ui-campaign/transition_board.gd']
+         files += [str(path.relative_to(source)) for path in (source/'assets/fonts').glob('*') if path.is_file()]
+         files += [str(path.relative_to(source)) for path in (source/'.godot/imported').glob('*.ttf-*') if path.is_file()]
++        files += ['.godot/global_script_class_cache.cfg']
+         for file in files:
+-            dst=project/file; dst.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(source/file,dst); pins[file]=sha(dst)
++            dst=project/file; dst.parent.mkdir(parents=True,exist_ok=True)
++            if file.startswith(('assets/fonts/','.godot/imported/')):
++                if (source/file).stat().st_mode & 0o222: raise ValueError('Fixture font source must be immutable before hardlink')
++                os.link(source/file,dst)
++            else: shutil.copy2(source/file,dst)
++            pins[file]=sha(dst)
+         main='res://scenes/boot.tscn' if a.mode=='boot_recovery' else ('res://scenes/courtyard.tscn' if a.mode=='transition_fixture' else '')
+         (project/'project.godot').write_text('[application]\nconfig/name="YUGA UI component fixture"\n'+('run/main_scene="'+main+'"\n' if main else '')+'[display]\nwindow/size/viewport_width='+str(a.width)+'\nwindow/size/viewport_height='+str(a.height)+'\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
+         pins['project.godot']=sha(project/'project.godot')

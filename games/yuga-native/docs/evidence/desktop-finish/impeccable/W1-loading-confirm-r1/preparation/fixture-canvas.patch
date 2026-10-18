@@ -1,0 +1,11 @@
+--- fixed-tiny-runner
++++ matching-canvas-runner
+@@ -169,7 +169,7 @@
+             else: shutil.copy2(source/file,dst)
+             pins[file]=sha(dst)
+         main='res://scenes/boot.tscn' if a.mode=='boot_recovery' else ('res://scenes/courtyard.tscn' if a.mode=='transition_fixture' else '')
+-        (project/'project.godot').write_text('[application]\nconfig/name="YUGA UI component fixture"\n'+('run/main_scene="'+main+'"\n' if main else '')+'[display]\nwindow/size/viewport_width='+str(a.width)+'\nwindow/size/viewport_height='+str(a.height)+'\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
++        (project/'project.godot').write_text('[application]\nconfig/name="YUGA UI component fixture"\n'+('run/main_scene="'+main+'"\n' if main else '')+'[display]\nwindow/size/viewport_width=1280\nwindow/size/viewport_height=720\nwindow/stretch/mode="canvas_items"\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
+         pins['project.godot']=sha(project/'project.godot')
+         if a.mode=='transition_fixture':
+             (project/'scenes').mkdir(exist_ok=True)

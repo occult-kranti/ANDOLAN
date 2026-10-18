@@ -1,0 +1,36 @@
+--- r4-observer
++++ ui-review-scale-observer
+@@ -15,6 +15,10 @@
+ 	call_deferred("_boot")
+ 
+ func _boot() -> void:
++	# Declared capture-only scale; navigation remains external native XTest.
++	var review_scale := OS.get_environment("YUGA_UI_REVIEW_SCALE")
++	assert(review_scale in ["1", "2"])
++	root.content_scale_factor = float(review_scale)
+ 	root.title = "YUGA UI campaign"
+ 	if mode == "component":
+ 		var board = load("res://tools/ui-campaign/board.gd").new()
+@@ -74,9 +78,10 @@
+ 	capturing = true
+ 	await RenderingServer.frame_post_draw
+ 	var path := output + "/" + id + ".png"
+-	var status := root.get_texture().get_image().save_png(path)
++	var framebuffer := root.get_texture().get_image()
++	var status := framebuffer.save_png(path)
+ 	var state := snapshot()
+-	state.merge({"file": id + ".png", "png_status":status, "sha256":FileAccess.get_sha256(path)}, true)
++	state.merge({"framebuffer_size":[framebuffer.get_width(),framebuffer.get_height()],"file": id + ".png", "png_status":status, "sha256":FileAccess.get_sha256(path)}, true)
+ 	_write(output + "/" + id + ".json", state)
+ 	captured.append(id)
+ 	capturing = false
+@@ -171,6 +176,9 @@
+ 			result.controls.append({"path":str(node.get_path()),"name":str(node.name),"text":node.text,"disabled":node.disabled,"interactive":node.can_process() and not node.disabled,"rect":[rect.position.x,rect.position.y,rect.size.x,rect.size.y],"input_rect":[screen_rect.position.x,screen_rect.position.y,screen_rect.size.x,screen_rect.size.y],"focus":node.has_focus()})
+ 		if node.get_script() and node.get_script().resource_path.ends_with("launch_shell.gd"):
+ 			result.launch = node.snapshot()
++			result.launch.description_text = node.mode_description.text
++			result.launch.description_rect = str(node.mode_description.get_global_rect())
++			result.launch.description_visible = node.mode_description.is_visible_in_tree()
+ 		if node.get_script() and node.get_script().resource_path.ends_with("scene_transition.gd"):
+ 			result.loader_count += 1
+ 			result.transition = node.snapshot()

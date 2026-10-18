@@ -318,7 +318,7 @@ In the current managed session, standard Git HTTPS and `gh api` work through the
 
 ## 9. Pick the next bounded packet
 
-For the active desktop request, read [ACTIVE_DESKTOP_HANDOFF.md](ACTIVE_DESKTOP_HANDOFF.md) and [DESKTOP_FINISH_CAMPAIGN.json](DESKTOP_FINISH_CAMPAIGN.json) first: ten screen rounds plus three integration rounds, six workers each, 14/78 accepted scoped packets and 0/13 complete rounds. Next are actual frontage, continuous-hair clay, shoulder and sustained-motion reviews. The earlier five-plus-three screen campaign has separate completed outcomes; do not restart or recount it.
+For the active desktop request, read [ACTIVE_DESKTOP_HANDOFF.md](ACTIVE_DESKTOP_HANDOFF.md) and [DESKTOP_FINISH_CAMPAIGN.json](DESKTOP_FINISH_CAMPAIGN.json) first: ten screen rounds plus three integration rounds, six workers each, 14/78 accepted scoped packets and 0/13 complete rounds. The second frontage is accepted in source and passed production-path review and corrected native CI. The current Impeccable title/loading pass has targeted checks, source review, actual 100/200% acceptance and passing source CI; exact evidence is in the handoff. C1–C4 hair attempts remain rejected. Next art gates are a credible gathered-hair silhouette, compact shoulder and the observed sustained-motion landing defect. The earlier five-plus-three screen campaign has separate completed outcomes; do not restart or recount it.
 
 [ROADMAP_BACKLOG.json](ROADMAP_BACKLOG.json) owns full-game dependency readiness and [FULL_GAME_PRODUCTION_ROADMAP.md](FULL_GAME_PRODUCTION_ROADMAP.md) defines production completion. The current offline preview does not close native online authority, the full roster or production art/performance gates.
 

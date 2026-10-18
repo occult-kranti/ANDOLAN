@@ -11,6 +11,7 @@ Choose **Confluence** or **Bow training**, then the primary action. LMB draws/sh
 | Working on | Start here |
 | --- | --- |
 | New chat, contributor or worker | [Project handoff](docs/START_HERE.md) |
+| Native UI context and pinned Impeccable guidance | [Product](games/yuga-native/PRODUCT.md) · [Design](games/yuga-native/DESIGN.md) · [Reference pack](games/yuga-native/docs/research/impeccable/README.md) |
 | Native build, tests and art pipeline | [Build handbook](games/yuga-native/docs/BUILD_HANDBOOK.md) |
 | Production game, features and milestones | [Production roadmap](games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md) |
 | Mythology, game design and open-source reuse | [Research brief](games/yuga-native/docs/research/RESEARCH_BRIEF.md) |

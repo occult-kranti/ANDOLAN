@@ -2,6 +2,8 @@
 
 **Active desktop work:** [resume handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.
 
+For native UI work, read [YUGA PRODUCT](../games/yuga-native/PRODUCT.md), [DESIGN](../games/yuga-native/DESIGN.md) and the [pinned Impeccable application contract](../games/yuga-native/docs/research/impeccable/README.md). The root product/design files belong to the separate browser game.
+
 Updated 18 October 2026. Start here, then open only the subsystem assigned to your task. This repository contains separate native, browser and protest games.
 
 **Deferred mobile planning track:** [YUGA 5v5 mobile roadmap](../games/yuga-native/docs/MOBILE_PRODUCTION_ROADMAP.md) → [code/stack decisions](../games/yuga-native/docs/mobile/CODE_AND_STACK_DECISIONS.md) → [108 planned implementation packets](../games/yuga-native/docs/MOBILE_PRODUCTION_BACKLOG.json). Six completed research assignments cover original mobile controls/art/maps/services and device qualification. This is planning evidence, not a playable Android/iOS release or completion of the separate native G1–G6 graphics campaign. When mobile work resumes, start at M1; do not assume the existing native 6v6 proposal or browser protocol 2 implements 5v5.

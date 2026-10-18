@@ -1,0 +1,13 @@
+# Single compact-loading confirmation
+
+ACCEPT the bounded compact layout. W1 and W2 directly opened all 14 planned originals. Root directly opened all seven 200% endpoints and the 100% queued/loading/constructing/error views. At 200%, the operation, resource scope, loading bar and focused Cancel now fit initially. Context and chosen fonts remain. Both error actions and the full specific recovery message are visible. Native Retry increments the real controller attempt; Back and queued cancellation restore the active local opener and release input ownership. At 100%, the normal wordmark/rule and composition remain.
+
+This is the one correction after the first batch's hidden 200% progress/scope. Only logical heights at or below 360 hide the redundant wordmark/rule and remove artificial detail/progress minimum heights. Title69162 and theme5a726 remain unchanged. No further correction or raster is requested.
+
+The 960×540 native windows have exactly observed logical1280×720 and640×360 at scale1/2. This small GL fixture uses production loading presentation c3c785 and unchanged transition a5d236, with real XTest keyboard input. Keys1/2/3 deliberately hold visual queued/loading/constructing samples. The displayed48% comes from declared sample0.475 and is NOT measured resource timing. Keys4/Return/Escape and the5+Escape burst exercise genuine missing-resource/error, Retry, Back and queued-cancel controller behavior. The fixture loads no world or hero; it is not a new integrated/package run. Original genuine boot phases remain in ../W1-actual-r1 unchanged.
+
+Each successful take exited the outer runner0 in about3.60s, with7 planned and5 automatic originals. Automatic sample frames retain truthful held_sample metadata; auto-queued7/8 belong to real controller attempts. The engine is exact e69; no cache seed was supplied. Both logs retain one expected GL V-Sync warning and no engine errors. After planned endpoints the runner terminates its own process; this is not a native Quit claim.
+
+The first attempt failed before images because the new fixture board inferred an untyped key. Its complete log/source identity and zero-PNG report are preserved. The sole harness correction is `var key :=` to `var key: int =`; check-only passed before the two successful takes. The earlier missing global-script-cache error is preserved separately in W1-actual-r1. Neither failure is reclassified as success.
+
+All24 originals and sidecars are hashed; W1's direct visual review covers14 planned frames. Closed files are hardlinked into this packet to preserve the500MiB reserve; caches and fonts are not duplicated. No runtime promotion, export or full campaign-round completion is inferred.

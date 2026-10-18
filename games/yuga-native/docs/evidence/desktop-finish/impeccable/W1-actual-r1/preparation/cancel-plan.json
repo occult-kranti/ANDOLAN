@@ -1,0 +1,28 @@
+[
+  {
+    "expect": {
+      "state.page_title": "Sample A",
+      "loader_count": 1,
+      "transition_layer_count": 1,
+      "scene_can_process": true
+    },
+    "capture": "01-local-caller"
+  },
+  {
+    "burst": [
+      {
+        "click_name": "OpenLocalSample"
+      },
+      {
+        "key": "Escape"
+      }
+    ],
+    "expect": {
+      "transition.phase": "cancelled",
+      "state.page_title": "Sample A",
+      "scene_can_process": true,
+      "transition_owner_present": false
+    },
+    "capture": "02-queued-cancel-return"
+  }
+]

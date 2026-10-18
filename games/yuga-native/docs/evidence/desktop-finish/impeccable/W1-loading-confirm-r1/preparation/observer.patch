@@ -1,0 +1,11 @@
+--- first-batch-observer
++++ fixture-observer
+@@ -164,6 +164,8 @@
+ 					if receiver.has_method("report"): result.audio_state[key]=receiver.report()
+ 		if "rama_runtime" in current_scene and is_instance_valid(current_scene.rama_runtime) and is_instance_valid(current_scene.rama_runtime.action_audio):
+ 			result.audio_state.action_audio=current_scene.rama_runtime.action_audio.report()
++	if current_scene and current_scene.has_method("fixture_report") and is_instance_valid(current_scene.loader):
++		result.fixture_review = current_scene.fixture_report()
+ 	return result
+ 
+ func _walk(node: Node, result: Dictionary) -> void:

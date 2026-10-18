@@ -1,0 +1,64 @@
+[
+  {
+    "key": "1",
+    "expect": {
+      "state.page_title": "sample-queued"
+    },
+    "capture": "01-sample-queued"
+  },
+  {
+    "key": "2",
+    "expect": {
+      "state.page_title": "sample-loading"
+    },
+    "capture": "02-sample-loading"
+  },
+  {
+    "key": "3",
+    "expect": {
+      "state.page_title": "sample-constructing"
+    },
+    "capture": "03-sample-constructing"
+  },
+  {
+    "key": "4",
+    "expect": {
+      "transition.phase": "error",
+      "state.page_title": "controller-error"
+    },
+    "capture": "04-real-error"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "transition.phase": "error",
+      "transition.attempt": 8
+    },
+    "capture": "05-real-retry"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "transition.phase": "cancelled",
+      "scene_can_process": true,
+      "transition_owner_present": false
+    },
+    "capture": "06-real-back"
+  },
+  {
+    "burst": [
+      {
+        "key": "5"
+      },
+      {
+        "key": "Escape"
+      }
+    ],
+    "expect": {
+      "transition.phase": "cancelled",
+      "scene_can_process": true,
+      "transition_owner_present": false
+    },
+    "capture": "07-real-queued-cancel"
+  }
+]

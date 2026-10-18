@@ -1,0 +1,13 @@
+# Impeccable first changed-surface batch
+
+The six title originals at 100% and 200% support the factual offline clarification. Both mode descriptions, selected mode, primary action and keyboard focus remain visible. The complete hero stays in frame. Root and W5 independently viewed all six; title requires no correction.
+
+The six automatic real boot originals show queued, resource-loading and constructing at both scales. At 100%, the one operation sentence, resource scope and focused Cancel are visible. At 200%, the operation and action remain visible, but resource progress/scope is below the body scroll fold. This incumbent limitation prompted the one separately declared compact-loading correction; this first batch remains unchanged. It does not establish that all progress text was initially visible at 200%.
+
+The missing-scene recovery fixture produced five legible manual endpoints and three queued originals, including actual Retry, return to usable boot, reopen and native Quit 0. Its outer run FAILED with the preserved global-script-cache error. The tiny fixture omitted an existing five-byte cache metadata file. The corrected external transport adds that exact file and hardlinks only immutable font payloads; it changes no product runtime. The subsequent actual native queued-cancel fixture passed, returned focus to its active caller and released transition ownership. Its process ended through declared runner cleanup (-15), not native Quit. Both tiny GL runs retain the expected V-Sync warning; title logs are clean.
+
+All 22 original PNGs decode to 960×540 and match their sidecars. Their observed scales are asserted, not inferred. The title uses the public patched e69 Forward+ runtime with declared copied shader caches; the small recovery/cancel fixtures use the same runtime with GL compatibility and no world. Sampled source/import identities remain exact. This is changed-surface review, not a new export, package qualification, full menu journey or 3D quality acceptance.
+
+W1 directly reviewed all 12 title/loading originals, all five manual recovery endpoints, one representative queued-recovery original and both cancel originals. The two other queued-recovery PNGs are byte-identical to the directly viewed representative. Recovery stills alone do not prove cancellation responsiveness; the separate native burst and recorded controller/owner/caller state do.
+
+The archive hardlinks closed originals and logs without duplicating cache data. Original sources, observer changes, transport correction and the failed run are retained. W5 title visual companion: ../W5-title-visual-r1/receipt.json (c77d93779ac949f9fffa2d9210ea401f153b48503f43dea05ded94781ba34fa1).

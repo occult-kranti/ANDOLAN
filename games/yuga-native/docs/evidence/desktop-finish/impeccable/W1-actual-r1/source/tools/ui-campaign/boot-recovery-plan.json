@@ -1,0 +1,8 @@
+[
+  {"expect":{"scene_path":"res://scenes/boot.tscn","transition.phase":"error"},"capture":"01-initial-missing-scene"},
+  {"key":"Return","expect":{"transition.phase":"error","transition.attempt":2},"capture":"02-keyboard-retry"},
+  {"key":"Escape","expect":{"transition.phase":"cancelled","transition.visible":false},"capture":"03-usable-boot-recovery"},
+  {"click_text":"Retry opening YUGA","expect":{"transition.phase":"error"},"capture":"04-reopen-error"},
+  {"key":"Escape","expect":{"transition.phase":"cancelled","transition.visible":false},"capture":"05-back-to-quit"},
+  {"click_text":"Quit","expect_exit":0}
+]

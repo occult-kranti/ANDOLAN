@@ -1,0 +1,30 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done",
+      "launch.selected_mode": "world"
+    },
+    "capture": "01-confluence-title"
+  },
+  {
+    "click_name": "TrainingMode",
+    "expect": {
+      "launch.selected_mode": "train"
+    },
+    "capture": "02-training-title"
+  },
+  {
+    "tab_to_name": "ExploreConfluence",
+    "capture": "03-training-primary-focus"
+  },
+  {
+    "tab_to_name": "Quit"
+  },
+  {
+    "key": "Return",
+    "expect_exit": 0
+  }
+]
