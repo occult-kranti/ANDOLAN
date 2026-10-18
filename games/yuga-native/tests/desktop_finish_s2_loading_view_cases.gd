@@ -39,9 +39,12 @@ func _run() -> void:
 	view.back_button.disabled = true
 	view.progress_bar.value = 47.5
 	view.progress_bar.hide()
+	view.detail.text = "Preparing the scene… This step may take a moment."
 	view.present_phase(&"constructing", &"courtyard", -1)
 	_check("View preserves controller atomic-commit and bar ownership", view.back_button.disabled and not view.progress_bar.visible and is_equal_approx(view.progress_bar.value,47.5) and view.back_button.text == "Cancel loading")
-	_check("Construction does not invent a percentage or ready actor", not view.progress_scope.text.contains("%") and view.stage.text == "PREPARING SCENE AND ACTORS" and view.context.text == "PRACTICE MENU")
+	_check("Construction preserves the controller operation without inventing readiness", not view.progress_scope.text.contains("%") and view.detail.text == "Preparing the scene… This step may take a moment." and view.context.text == "PRACTICE MENU")
+	var operation_labels := view.find_children("*", "Label", true, false).filter(func(label: Label): return label.text.to_lower().contains("prepar"))
+	_check("Construction explains its operation once", operation_labels.size() == 1 and operation_labels[0] == view.detail, {"operation_labels":operation_labels.size()})
 	view.present_phase(&"loading", &"combat_film", -1)
 	_check("Unknown progress remains unavailable and film is explicitly scripted", view.progress_scope.text.contains("unavailable") and not view.progress_scope.text.contains("%") and view.context.text == "SCRIPTED DUEL")
 	view.back_button.disabled = false

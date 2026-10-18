@@ -2,7 +2,6 @@ extends Control
 ## Presentation only. The transition controller owns every navigation decision.
 const UI = preload("res://scripts/hero_ui_theme.gd")
 const CONTEXT := {&"courtyard":"PRACTICE MENU", &"confluence":"OFFLINE LANES", &"combat_film":"SCRIPTED DUEL"}
-const STAGES := {&"queued":"STARTING", &"loading":"LOADING SCENE RESOURCES", &"constructing":"PREPARING SCENE AND ACTORS", &"error":"LOADING STOPPED", &"done":"SCENE MOUNTED", &"cancelled":"LOADING CANCELLED"}
 
 var card: PanelContainer
 var heading: Label
@@ -11,7 +10,6 @@ var progress_bar: ProgressBar
 var retry_button: Button
 var back_button: Button
 var context: Label
-var stage: Label
 var progress_scope: Label
 var body_scroll: ScrollContainer
 var actions: HBoxContainer
@@ -37,11 +35,10 @@ func _on_phase_changed(phase: StringName, _message: String, progress: float) -> 
 
 func present_phase(phase: StringName, destination: StringName, progress: float) -> void:
 	context.text = CONTEXT.get(destination, "LOCAL SCENE")
-	stage.text = STAGES.get(phase, "PREPARING")
 	if phase == &"loading" and is_finite(progress) and progress >= 0 and progress <= 1:
 		progress_scope.text = "Resources · %d%%  —  scene preparation follows" % roundi(progress * 100)
 	elif phase == &"constructing":
-		progress_scope.text = "Scene and actors are being prepared. No overall percentage is available."
+		progress_scope.text = "No overall percentage is available."
 	elif phase == &"error":
 		# The specific controller error above already explains recovery.
 		progress_scope.text = ""
@@ -109,9 +106,8 @@ func _build() -> void:
 	progress_slot.custom_minimum_size.y = 88
 	progress_slot.add_theme_constant_override("separation", UI.SPACE_XS)
 	body.add_child(progress_slot)
-	stage = UI.label("PREPARING", UI.TYPE_CAPTION, UI.GOLD)
-	stage.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	progress_slot.add_child(stage)
+	# The controller's detail is the visible operation, including specific errors.
+	# This region adds only resource progress and its scope, without a second status.
 	var bar_slot := Control.new()
 	bar_slot.custom_minimum_size.y = 14
 	progress_slot.add_child(bar_slot)

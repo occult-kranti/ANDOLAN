@@ -50,6 +50,7 @@ SUITES = (
 )
 SCREEN_SUITES = (
     ("ui-launch", "godot", "tests/launch_shell_cases.gd", ()),
+    ("ui-launch-offline-context", "godot", "tests/impeccable_title_context_cases.gd", ()),
     ("ui-theme", "godot", "tests/ui_theme_cases.gd", ()),
     ("ui-fonts", "godot", "tests/ui_font_cases.gd", ()),
     ("ui-hud-information", "godot", "tests/ui_hud_information_cases.gd", ()),
