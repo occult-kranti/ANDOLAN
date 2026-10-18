@@ -1,0 +1,29 @@
+{
+  "status": "rejected frame conversion; geometry tests retained",
+  "source_assembly_manifest_sha256": "d77012b4f3f3bdeeed2afdc52761b86b330969294dd7048bf9584d05ae707715",
+  "failed_assertion": "max abs dot NORMAL,TANGENT.xyz <2e-6",
+  "observed_near_material_max_abs_dot": {
+    "Worked warm gold": 5.4240227e-06,
+    "Cobalt handwoven silk": 4.3809414e-06,
+    "Recessed antique gold": 5.155802e-06
+  },
+  "source_rest_basis_gram": [
+    [
+      0.99999982,
+      1.2644282e-06,
+      6.8228576e-07
+    ],
+    [
+      1.2644282e-06,
+      1.0000077,
+      4.3993637e-06
+    ],
+    [
+      6.8228576e-07,
+      4.3993637e-06,
+      1.000003
+    ]
+  ],
+  "diagnosis": "Authored normal must use inverse transpose of existing rest basis; source basis is not exactly orthogonal. No source rig correction.",
+  "correction": "New vertices only: inverse-transpose normals; transformed tangent orthogonalized against transformed normal."
+}

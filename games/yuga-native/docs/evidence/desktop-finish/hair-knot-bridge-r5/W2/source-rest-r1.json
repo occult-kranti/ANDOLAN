@@ -1,0 +1,872 @@
+{
+  "scope": "R5 incremental new attachment triangles plus exact inherited R4 identity. Source/offline declared-pose checks only, not candidate import or visible continuity.",
+  "manifest_sha256": "becd2571f2aaa88c62d80c56a0d3036368205840bd045f3730bb1c6a86d1f402",
+  "checker_sha256": "539c103ae7490db0e77f7edf1845a41f7de90c7ab38e5aa3b999be6f5cad1131",
+  "narrow_phase_sha256": "324c2f688dbefc6c3ac86f5b5ca346c069efd1f7b8916252ad9489fcf0ad532c",
+  "triangle_selfcheck": {
+    "separated_parallel_triangle_gap_m": 0.005,
+    "edge_through_face_crossing": true
+  },
+  "mode": "rest",
+  "checks": [
+    {
+      "name": "near:complete R4 binary prefix exact",
+      "passed": true
+    },
+    {
+      "name": "near:nonhair and all prior JSON exact",
+      "passed": true
+    },
+    {
+      "name": "near:unchanged active R4 POSITION",
+      "passed": true
+    },
+    {
+      "name": "near:unchanged active R4 NORMAL",
+      "passed": true
+    },
+    {
+      "name": "near:unchanged active R4 TEXCOORD_0",
+      "passed": true
+    },
+    {
+      "name": "near:unchanged active R4 TANGENT",
+      "passed": true
+    },
+    {
+      "name": "near:unchanged active R4 COLOR_0",
+      "passed": true
+    },
+    {
+      "name": "near:unchanged active R4 COLOR_1",
+      "passed": true
+    },
+    {
+      "name": "near:unchanged active R4 JOINTS_0",
+      "passed": true
+    },
+    {
+      "name": "near:unchanged active R4 WEIGHTS_0",
+      "passed": true
+    },
+    {
+      "name": "near:unchanged active R4 indices",
+      "passed": true
+    },
+    {
+      "name": "near:new arrays finite",
+      "passed": true
+    },
+    {
+      "name": "near:unit orthogonal TBN",
+      "passed": true
+    },
+    {
+      "name": "near:white anchored head binding",
+      "passed": true
+    },
+    {
+      "name": "near:bounded UVs",
+      "passed": true
+    },
+    {
+      "name": "near:nondegenerate new triangles",
+      "passed": true,
+      "minimum_area_m2": 4.73048402227505e-07
+    },
+    {
+      "name": "near:compact stored envelope",
+      "passed": true,
+      "minimum": [
+        -0.02514098398387432,
+        1.8379852771759033,
+        -0.05800028145313263
+      ],
+      "maximum": [
+        0.02561444602906704,
+        1.8610005378723145,
+        0.001914830761961639
+      ]
+    },
+    {
+      "name": "near:complete new triangles clear full_head_and_features",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0031413372176232897,
+        "guaranteed_lower_bound_m": 0.0031413372176232897,
+        "near_pairs": 5904,
+        "crossings": 0,
+        "witness_triangles": [
+          768,
+          26222
+        ],
+        "witness_hair_triangle": [
+          [
+            -0.0010003040079027414,
+            1.8420233726501465,
+            -0.010016720741987228
+          ],
+          [
+            0.023322034627199173,
+            1.839824914932251,
+            -0.00844633113592863
+          ],
+          [
+            0.022844331339001656,
+            1.840989351272583,
+            -0.00570222781971097
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            -8.731149137020111e-11,
+            1.8350566625595093,
+            -0.018153222277760506
+          ],
+          [
+            0.0097580561414361,
+            1.840787410736084,
+            -0.0007925161626189947
+          ],
+          [
+            0.010062905959784985,
+            1.834502100944519,
+            -0.018004141747951508
+          ]
+        ]
+      }
+    },
+    {
+      "name": "near:complete new triangles clear all_head_gold_and_gems",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.01158690890531607,
+        "guaranteed_lower_bound_m": 0.01158690890531607,
+        "near_pairs": 5596,
+        "crossings": 0,
+        "witness_triangles": [
+          672,
+          1
+        ],
+        "witness_hair_triangle": [
+          [
+            0.024643782526254654,
+            1.86008620262146,
+            -0.03959843888878822
+          ],
+          [
+            0.024327773600816727,
+            1.8607614040374756,
+            -0.0406339205801487
+          ],
+          [
+            0.023674750700592995,
+            1.8601362705230713,
+            -0.035282719880342484
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.034658629447221756,
+            1.8661295175552368,
+            -0.03986099734902382
+          ],
+          [
+            0.03386309742927551,
+            1.8686676025390625,
+            -0.04357282444834709
+          ],
+          [
+            0.03443831950426102,
+            1.8661295175552368,
+            -0.0436413399875164
+          ]
+        ]
+      }
+    },
+    {
+      "name": "near:positive hair overlap unchanged_knot",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0,
+        "guaranteed_lower_bound_m": 0.0,
+        "near_pairs": 141005,
+        "crossings": 442,
+        "witness_triangles": [
+          485,
+          3892
+        ],
+        "witness_hair_triangle": [
+          [
+            0.017997214570641518,
+            1.8554989099502563,
+            -0.02038699947297573
+          ],
+          [
+            0.021705128252506256,
+            1.8566718101501465,
+            -0.025830425322055817
+          ],
+          [
+            0.01789434440433979,
+            1.8569676876068115,
+            -0.022728951647877693
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.019076747819781303,
+            1.8563945293426514,
+            -0.023537514731287956
+          ],
+          [
+            0.019618017598986626,
+            1.8590524196624756,
+            -0.026706984266638756
+          ],
+          [
+            0.020962778478860855,
+            1.8586827516555786,
+            -0.02417655475437641
+          ]
+        ]
+      }
+    },
+    {
+      "name": "near:positive hair overlap unchanged_reduced_crown",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0,
+        "guaranteed_lower_bound_m": 0.0,
+        "near_pairs": 112714,
+        "crossings": 458,
+        "witness_triangles": [
+          56,
+          2867
+        ],
+        "witness_hair_triangle": [
+          [
+            0.012155316770076752,
+            1.8449904918670654,
+            0.00021332591131795198
+          ],
+          [
+            0.01238116156309843,
+            1.8454790115356445,
+            -0.0006689946167171001
+          ],
+          [
+            0.006002183072268963,
+            1.8457132577896118,
+            0.0012889287900179625
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.012064609676599503,
+            1.8452059030532837,
+            -2.573725942056626e-05
+          ],
+          [
+            0.009164276532828808,
+            1.8451770544052124,
+            -0.0010719280689954758
+          ],
+          [
+            0.010279601439833641,
+            1.8469579219818115,
+            0.006636003963649273
+          ]
+        ]
+      }
+    },
+    {
+      "name": "mid:complete R4 binary prefix exact",
+      "passed": true
+    },
+    {
+      "name": "mid:nonhair and all prior JSON exact",
+      "passed": true
+    },
+    {
+      "name": "mid:unchanged active R4 POSITION",
+      "passed": true
+    },
+    {
+      "name": "mid:unchanged active R4 NORMAL",
+      "passed": true
+    },
+    {
+      "name": "mid:unchanged active R4 TEXCOORD_0",
+      "passed": true
+    },
+    {
+      "name": "mid:unchanged active R4 TANGENT",
+      "passed": true
+    },
+    {
+      "name": "mid:unchanged active R4 COLOR_0",
+      "passed": true
+    },
+    {
+      "name": "mid:unchanged active R4 COLOR_1",
+      "passed": true
+    },
+    {
+      "name": "mid:unchanged active R4 JOINTS_0",
+      "passed": true
+    },
+    {
+      "name": "mid:unchanged active R4 WEIGHTS_0",
+      "passed": true
+    },
+    {
+      "name": "mid:unchanged active R4 indices",
+      "passed": true
+    },
+    {
+      "name": "mid:new arrays finite",
+      "passed": true
+    },
+    {
+      "name": "mid:unit orthogonal TBN",
+      "passed": true
+    },
+    {
+      "name": "mid:white anchored head binding",
+      "passed": true
+    },
+    {
+      "name": "mid:bounded UVs",
+      "passed": true
+    },
+    {
+      "name": "mid:nondegenerate new triangles",
+      "passed": true,
+      "minimum_area_m2": 1.3144493777872412e-06
+    },
+    {
+      "name": "mid:compact stored envelope",
+      "passed": true,
+      "minimum": [
+        -0.02514098398387432,
+        1.8379852771759033,
+        -0.05800028145313263
+      ],
+      "maximum": [
+        0.02560504898428917,
+        1.8610005378723145,
+        0.001914830761961639
+      ]
+    },
+    {
+      "name": "mid:complete new triangles clear full_head_and_features",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0031413372176232897,
+        "guaranteed_lower_bound_m": 0.0031413372176232897,
+        "near_pairs": 3441,
+        "crossings": 0,
+        "witness_triangles": [
+          384,
+          26222
+        ],
+        "witness_hair_triangle": [
+          [
+            -0.0010003040079027414,
+            1.8420233726501465,
+            -0.010016720741987228
+          ],
+          [
+            0.023322034627199173,
+            1.839824914932251,
+            -0.00844633113592863
+          ],
+          [
+            0.022006016224622726,
+            1.841683030128479,
+            -0.004438058938831091
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            -8.731149137020111e-11,
+            1.8350566625595093,
+            -0.018153222277760506
+          ],
+          [
+            0.0097580561414361,
+            1.840787410736084,
+            -0.0007925161626189947
+          ],
+          [
+            0.010062905959784985,
+            1.834502100944519,
+            -0.018004141747951508
+          ]
+        ]
+      }
+    },
+    {
+      "name": "mid:complete new triangles clear all_head_gold_and_gems",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.011592253437122313,
+        "guaranteed_lower_bound_m": 0.011592253437122313,
+        "near_pairs": 3496,
+        "crossings": 0,
+        "witness_triangles": [
+          320,
+          0
+        ],
+        "witness_hair_triangle": [
+          [
+            0.02483888529241085,
+            1.8594245910644531,
+            -0.03858356550335884
+          ],
+          [
+            0.024433832615613937,
+            1.8605817556381226,
+            -0.04035838693380356
+          ],
+          [
+            0.022750262171030045,
+            1.8595619201660156,
+            -0.032311756163835526
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.034658629447221756,
+            1.8661295175552368,
+            -0.03986099734902382
+          ],
+          [
+            0.03408035635948181,
+            1.8686676025390625,
+            -0.039826665073633194
+          ],
+          [
+            0.03443831950426102,
+            1.8661295175552368,
+            -0.0436413399875164
+          ]
+        ]
+      }
+    },
+    {
+      "name": "mid:positive hair overlap unchanged_knot",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0,
+        "guaranteed_lower_bound_m": 0.0,
+        "near_pairs": 47970,
+        "crossings": 330,
+        "witness_triangles": [
+          257,
+          1365
+        ],
+        "witness_hair_triangle": [
+          [
+            0.0232260599732399,
+            1.8559659719467163,
+            -0.02674080990254879
+          ],
+          [
+            0.02518511936068535,
+            1.857676386833191,
+            -0.035902269184589386
+          ],
+          [
+            0.023010363802313805,
+            1.8579661846160889,
+            -0.029845165088772774
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.02022542431950569,
+            1.8569999933242798,
+            -0.02924429439008236
+          ],
+          [
+            0.027361515909433365,
+            1.8580937385559082,
+            -0.02954871580004692
+          ],
+          [
+            0.02022542431950569,
+            1.8569999933242798,
+            -0.02924429439008236
+          ]
+        ]
+      }
+    },
+    {
+      "name": "mid:positive hair overlap unchanged_reduced_crown",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0,
+        "guaranteed_lower_bound_m": 0.0,
+        "near_pairs": 41987,
+        "crossings": 340,
+        "witness_triangles": [
+          19,
+          1156
+        ],
+        "witness_hair_triangle": [
+          [
+            -0.01770382560789585,
+            1.8379852771759033,
+            -0.016515666618943214
+          ],
+          [
+            -0.02249058708548546,
+            1.8387402296066284,
+            -0.013135007582604885
+          ],
+          [
+            -0.017374098300933838,
+            1.838362693786621,
+            -0.01720966398715973
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            -0.0130426911637187,
+            1.8378320932388306,
+            -0.02057003602385521
+          ],
+          [
+            -0.019100025296211243,
+            1.8376349210739136,
+            -0.017964348196983337
+          ],
+          [
+            -0.011075733229517937,
+            1.8418042659759521,
+            -0.010681471787393093
+          ]
+        ]
+      }
+    },
+    {
+      "name": "far:complete R4 binary prefix exact",
+      "passed": true
+    },
+    {
+      "name": "far:nonhair and all prior JSON exact",
+      "passed": true
+    },
+    {
+      "name": "far:unchanged active R4 POSITION",
+      "passed": true
+    },
+    {
+      "name": "far:unchanged active R4 NORMAL",
+      "passed": true
+    },
+    {
+      "name": "far:unchanged active R4 TEXCOORD_0",
+      "passed": true
+    },
+    {
+      "name": "far:unchanged active R4 TANGENT",
+      "passed": true
+    },
+    {
+      "name": "far:unchanged active R4 COLOR_0",
+      "passed": true
+    },
+    {
+      "name": "far:unchanged active R4 COLOR_1",
+      "passed": true
+    },
+    {
+      "name": "far:unchanged active R4 JOINTS_0",
+      "passed": true
+    },
+    {
+      "name": "far:unchanged active R4 WEIGHTS_0",
+      "passed": true
+    },
+    {
+      "name": "far:unchanged active R4 indices",
+      "passed": true
+    },
+    {
+      "name": "far:new arrays finite",
+      "passed": true
+    },
+    {
+      "name": "far:unit orthogonal TBN",
+      "passed": true
+    },
+    {
+      "name": "far:white anchored head binding",
+      "passed": true
+    },
+    {
+      "name": "far:bounded UVs",
+      "passed": true
+    },
+    {
+      "name": "far:nondegenerate new triangles",
+      "passed": true,
+      "minimum_area_m2": 3.7809413697686978e-06
+    },
+    {
+      "name": "far:compact stored envelope",
+      "passed": true,
+      "minimum": [
+        -0.02514098398387432,
+        1.8379875421524048,
+        -0.05800028145313263
+      ],
+      "maximum": [
+        0.025596188381314278,
+        1.8610005378723145,
+        0.001914830761961639
+      ]
+    },
+    {
+      "name": "far:complete new triangles clear full_head_and_features",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0031413372176232897,
+        "guaranteed_lower_bound_m": 0.0031413372176232897,
+        "near_pairs": 2012,
+        "crossings": 0,
+        "witness_triangles": [
+          192,
+          26222
+        ],
+        "witness_hair_triangle": [
+          [
+            -0.0010003040079027414,
+            1.8420233726501465,
+            -0.010016720741987228
+          ],
+          [
+            0.023322034627199173,
+            1.839824914932251,
+            -0.00844633113592863
+          ],
+          [
+            0.020768508315086365,
+            1.8424395322799683,
+            -0.0032739820890128613
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            -8.731149137020111e-11,
+            1.8350566625595093,
+            -0.018153222277760506
+          ],
+          [
+            0.0097580561414361,
+            1.840787410736084,
+            -0.0007925161626189947
+          ],
+          [
+            0.010062905959784985,
+            1.834502100944519,
+            -0.018004141747951508
+          ]
+        ]
+      }
+    },
+    {
+      "name": "far:complete new triangles clear all_head_gold_and_gems",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.011484050412280344,
+        "guaranteed_lower_bound_m": 0.011484050412280344,
+        "near_pairs": 1728,
+        "crossings": 0,
+        "witness_triangles": [
+          177,
+          933
+        ],
+        "witness_hair_triangle": [
+          [
+            -0.020096899941563606,
+            1.8601815700531006,
+            -0.03130272775888443
+          ],
+          [
+            -0.012000062502920628,
+            1.8610005378723145,
+            -0.0262779388576746
+          ],
+          [
+            -0.02078470028936863,
+            1.861000418663025,
+            -0.032500334084033966
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            -0.03569835051894188,
+            1.8652970790863037,
+            -0.03999999910593033
+          ],
+          [
+            -0.02526845596730709,
+            1.8652970790863037,
+            -0.016196871176362038
+          ],
+          [
+            -0.032413043081760406,
+            1.8652970790863037,
+            -0.020658668130636215
+          ]
+        ]
+      }
+    },
+    {
+      "name": "far:positive hair overlap unchanged_knot",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0,
+        "guaranteed_lower_bound_m": 0.0,
+        "near_pairs": 18344,
+        "crossings": 213,
+        "witness_triangles": [
+          156,
+          268
+        ],
+        "witness_hair_triangle": [
+          [
+            -0.022843701764941216,
+            1.857618808746338,
+            -0.035862747579813004
+          ],
+          [
+            -0.02336137555539608,
+            1.8600704669952393,
+            -0.039587318897247314
+          ],
+          [
+            -0.020159350708127022,
+            1.857421636581421,
+            -0.04404512420296669
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            -0.02500000037252903,
+            1.8569999933242798,
+            -0.04100000113248825
+          ],
+          [
+            -0.021348807960748672,
+            1.8589013814926147,
+            -0.03666415810585022
+          ],
+          [
+            -0.02500000037252903,
+            1.8569999933242798,
+            -0.04100000113248825
+          ]
+        ]
+      }
+    },
+    {
+      "name": "far:positive hair overlap unchanged_reduced_crown",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0,
+        "guaranteed_lower_bound_m": 0.0,
+        "near_pairs": 15943,
+        "crossings": 248,
+        "witness_triangles": [
+          2,
+          597
+        ],
+        "witness_hair_triangle": [
+          [
+            0.020768508315086365,
+            1.8424395322799683,
+            -0.0032739820890128613
+          ],
+          [
+            0.021289698779582977,
+            1.8431477546691895,
+            -0.004482666030526161
+          ],
+          [
+            0.011929738335311413,
+            1.8448773622512817,
+            0.0005221543251536787
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.023792212828993797,
+            1.8435239791870117,
+            -0.0016948473639786243
+          ],
+          [
+            0.01648789830505848,
+            1.8432536125183105,
+            -0.005744533147662878
+          ],
+          [
+            0.017717404291033745,
+            1.847599744796753,
+            0.010227635502815247
+          ]
+        ]
+      }
+    }
+  ],
+  "levels": [
+    {
+      "level": "near",
+      "stored_min": [
+        -0.02514098398387432,
+        1.8379852771759033,
+        -0.05800028145313263
+      ],
+      "stored_max": [
+        0.02561444602906704,
+        1.8610005378723145,
+        0.001914830761961639
+      ],
+      "new_triangles": 816
+    },
+    {
+      "level": "mid",
+      "stored_min": [
+        -0.02514098398387432,
+        1.8379852771759033,
+        -0.05800028145313263
+      ],
+      "stored_max": [
+        0.02560504898428917,
+        1.8610005378723145,
+        0.001914830761961639
+      ],
+      "new_triangles": 416
+    },
+    {
+      "level": "far",
+      "stored_min": [
+        -0.02514098398387432,
+        1.8379875421524048,
+        -0.05800028145313263
+      ],
+      "stored_max": [
+        0.025596188381314278,
+        1.8610005378723145,
+        0.001914830761961639
+      ],
+      "new_triangles": 216
+    }
+  ],
+  "passed": true,
+  "complete": true
+}

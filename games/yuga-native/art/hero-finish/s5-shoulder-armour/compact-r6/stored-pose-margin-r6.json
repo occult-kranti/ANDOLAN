@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "passed": true,
+  "checker_sha256": "410ba973a7d954813023075c3884c9a59c1d35e93eb71deb0646c4100d054526",
+  "replacement_proof_sha256": "c1fc8495f67feac004250028b3b2576231916a153dd1f4efdc5bb1ccb7bdfbe8",
+  "admission_sha256": "5beeec5e37dd5f734097cd732fce857d79195d87a7410857225fd54887a7947a",
+  "stress_sha256": "fc52adbed49d4c1cf925d6af516b7ee50da070afea63fe8a9bca0de874eea897",
+  "rows": [
+    {
+      "level": "near",
+      "checked_pose_operators": 385,
+      "maximum_operator_norm": 1.0000035151201652,
+      "maximum_actual_float32_storage_error_m": 6.130185819072796e-08,
+      "maximum_posed_surface_error_bound_m": 6.130307367412585e-08,
+      "minimum_checked_contact_lower_bound_m": 0.0019701900601548795,
+      "retained_clearance_after_storage_bound_m": 0.0019701287570812053,
+      "passed": true
+    },
+    {
+      "level": "mid",
+      "checked_pose_operators": 385,
+      "maximum_operator_norm": 1.0000035151201652,
+      "maximum_actual_float32_storage_error_m": 6.096006708509182e-08,
+      "maximum_posed_surface_error_bound_m": 6.09612813670529e-08,
+      "minimum_checked_contact_lower_bound_m": 0.004908200741439141,
+      "retained_clearance_after_storage_bound_m": 0.004908139780157774,
+      "passed": true
+    },
+    {
+      "level": "far",
+      "checked_pose_operators": 385,
+      "maximum_operator_norm": 1.0000035151201652,
+      "maximum_actual_float32_storage_error_m": 6.048172954284143e-08,
+      "maximum_posed_surface_error_bound_m": 6.048294214338857e-08,
+      "minimum_checked_contact_lower_bound_m": 0.006,
+      "retained_clearance_after_storage_bound_m": 0.005999939517057857,
+      "passed": true
+    }
+  ],
+  "argument": "Every new vertex differs only by bounded world-rest float32 rounding. Existing rigid49 skin operator bounds posed vertex error; linear triangle interpolation has the same bound. Original colliders are byte-exact. All source gaps exceed this bound, so final stored new triangles retain positive clearance in the checked fixtures. Newarmoursecondaryalpha0. This is a numerical transfer bound, not new imported/GPU execution."
+}

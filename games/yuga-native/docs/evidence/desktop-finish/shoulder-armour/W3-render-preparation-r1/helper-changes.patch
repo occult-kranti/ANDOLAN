@@ -1,0 +1,20 @@
+--- sealed-8c377-opposite-profile-helper
++++ prepared-5023-anatomical-left-profile-helper
+@@ -14,7 +14,7 @@
+   ]
+ }
+ const RAW_PATHS := ["res://assets/heroes/rama-hero.glb", "res://assets/heroes/rama-hero-mid.glb", "res://assets/heroes/rama-hero-far.glb"]
+-const REQUIRED_MOTION := "8c3771a343a0538d749147393d0c407b1fb377d774a91b4cf99734e4852520f8"
++const REQUIRED_MOTION := "5023b301ff4c4585e3b6a22827f55f4696045bb0206374ee1656a5b4bad6e4a5"
+ const REQUIRED_FINISH := "6eb51ce8f34a3d5a33deb142ca92aaa20505516b0ee8fff3ca445bcab603078a"
+ const SHOULDER_SELECTION := {
+   "baseline": {"bone":50,"materials":{"Worked warm gold":5896,"Recessed antique gold":2498,"Polished sapphire":722}},
+@@ -45,7 +45,7 @@
+ 	sources=source_hashes()
+ 	contract={"stills":[
+ 		{"id":"rest-front","player_position_m":[19,.4400999976158142,-15],"visual_yaw_degrees":-90,"camera_position_m":[17.2,1.9400999976158142,-15],"look_at_m":[19,1.9400999976158142,-15],"fov_degrees":38,"near_m":.05,"night":false,"required_bounds":"shoulder"},
+-		{"id":"rest-profile","player_position_m":[19,.4400999976158142,-1],"visual_yaw_degrees":0,"camera_position_m":[17.2,1.9400999976158142,-1],"look_at_m":[19,1.9400999976158142,-1],"fov_degrees":38,"near_m":.05,"night":false,"required_bounds":"shoulder"},
++		{"id":"rest-profile","player_position_m":[19,.4400999976158142,-1],"visual_yaw_degrees":180,"camera_position_m":[17.2,1.9400999976158142,-1],"look_at_m":[19,1.9400999976158142,-1],"fov_degrees":38,"near_m":.05,"night":false,"required_bounds":"shoulder"},
+ 		{"id":"rest-rear","player_position_m":[19,.4400999976158142,-1],"visual_yaw_degrees":90,"camera_position_m":[17.2,1.9400999976158142,-1],"look_at_m":[19,1.9400999976158142,-1],"fov_degrees":38,"near_m":.05,"night":false,"required_bounds":"shoulder"}]}
+ 	scene=load("res://scenes/courtyard.tscn").instantiate(); root.add_child(scene); current_scene=scene
+ 	await draw(6); player=scene.player

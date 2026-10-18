@@ -1,0 +1,72 @@
+--- canonical-d1dd-run_focus.py
++++ private-hair-run_focus.py
+@@ -74,9 +74,9 @@
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--project', type=Path, required=True)
+     parser.add_argument('--output', type=Path, required=True)
+-    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair', 'scene-anchors', 'compact-screens', 'compact-screens-125', 'diadem-review', 'sash-review'], required=True)
++    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair', 'scene-anchors', 'compact-screens', 'compact-screens-125', 'hair-review', 'sash-review'], required=True)
+     parser.add_argument('--review-branch', choices=['baseline', 'candidate'],
+-                        help='Required for source-pinned diadem or sash comparisons')
++                        help='Required for source-pinned hair or sash comparisons')
+     parser.add_argument('--display', type=int, default=192)
+     parser.add_argument('--engine', type=Path,
+                         help='Explicit isolated diagnostic engine; default uses installed godot')
+@@ -91,8 +91,8 @@
+     parser.add_argument('--timeout', type=float, default=300)
+     parser.add_argument('--no-progress-timeout', type=float, default=120)
+     args = parser.parse_args()
+-    if (args.case in ('diadem-review', 'sash-review')) != (args.review_branch is not None):
+-        parser.error('--review-branch is required only with diadem-review or sash-review')
++    if (args.case in ('hair-review', 'sash-review')) != (args.review_branch is not None):
++        parser.error('--review-branch is required only with hair-review or sash-review')
+     if not 0 < args.timeout <= 900 or not 0 < args.no_progress_timeout <= args.timeout:
+         parser.error('Require 0 < no-progress-timeout <= timeout <= 900 seconds')
+     project, output = args.project.resolve(), args.output.resolve()
+@@ -107,7 +107,7 @@
+     helper_name = {'gold-pair': 'capture_gold.gd', 'scene-anchors': 'capture_scene_anchors.gd',
+                    'compact-screens': 'capture_compact_screens.gd',
+                    'compact-screens-125': 'capture_compact_screens.gd',
+-                   'diadem-review': 's4_diadem_capture.gd',
++                   'hair-review': 'hair_capture.gd',
+                    'sash-review': 'sash_uv_capture.gd'}.get(args.case, 'capture_focus.gd')
+     helper = project / 'tools/graphics-six' / helper_name
+     if not helper.is_file():
+@@ -120,7 +120,7 @@
+                '--disable-vsync', '--fixed-fps', '30',
+                '--script', 'res://tools/graphics-six/' + helper_name, '--',
+                '--output=' + str(output)]
+-    if args.case in ('diadem-review', 'sash-review'):
++    if args.case in ('hair-review', 'sash-review'):
+         command.append('--mode=groom-stills')
+     elif args.case not in ('compact-screens', 'compact-screens-125'):
+         command.append('--case=' + args.case)
+@@ -148,7 +148,7 @@
+     env = os.environ.copy()
+     env.update(LP_NUM_THREADS='2', OPENBLAS_NUM_THREADS='1', OMP_NUM_THREADS='1', MKL_NUM_THREADS='1')
+     if args.review_branch:
+-        env['YUGA_SASH_REVIEW' if args.case == 'sash-review' else 'YUGA_DIADEM_REVIEW'] = args.review_branch
++        env['YUGA_SASH_REVIEW' if args.case == 'sash-review' else 'YUGA_HAIR_REVIEW'] = args.review_branch
+     for key, suffix in [('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')]:
+         folder = logs / 'user' / suffix
+         folder.mkdir(parents=True)
+@@ -208,14 +208,14 @@
+         report_path = output / ('preflight.json' if args.preflight else 'capture.json')
+         report = json.loads(report_path.read_text())
+         shots = report['shots']
+-        expected_shots = {'entry-cancel': 60, 'compact-screens': 8, 'compact-screens-125': 10, 'diadem-review': 4}.get(args.case, 2)
++        expected_shots = {'entry-cancel': 60, 'compact-screens': 8, 'compact-screens-125': 10, 'hair-review': 4}.get(args.case, 2)
+         if report['complete'] is not True or len(shots) != expected_shots:
+             raise RuntimeError('Capture did not satisfy declared checks/count')
+-        if args.case == 'diadem-review':
++        if args.case == 'hair-review':
+             if [s['id'] for s in shots] != ['rest-front', 'rest-profile', 'rest-rear', 'cast-three-quarter']:
+-                raise RuntimeError('Unexpected diadem view sequence')
+-            if any(s.get('diadem_branch') != args.review_branch for s in shots):
+-                raise RuntimeError('Diadem report branch differs from declared source branch')
++                raise RuntimeError('Unexpected hair view sequence')
++            if any(s.get('hair_branch') != args.review_branch for s in shots):
++                raise RuntimeError('Hair report branch differs from declared source branch')
+         if args.case == 'sash-review':
+             if [s['id'] for s in shots] != ['rest-front', 'cast-three-quarter']:
+                 raise RuntimeError('Unexpected sash view sequence')

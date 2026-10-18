@@ -1,0 +1,54 @@
+--- sealed-5f69
++++ shared-cleanup-derivative
+@@ -94,10 +94,10 @@
+ func groom_frame(id: String, required: String) -> void:
+ 	super.groom_frame(id,required)
+ 	if done: return
+-	shots[-1]["diadem_branch"]=branch
++	shots[-1]["hair_branch"]=branch
+ 	shots[-1]["rendered_pose_globals"]=normal(posed_globals)
+ 	shots[-1]["rendered_pose_pin"]=JSON.stringify(normal(posed_globals),"",true,true).sha256_text()
+-	shots[-1]["scope"]="S4 original diadem rail source comparison. Rest stations are staged; cast uses the actual public ability and final modifier pose. Head projection is not visibility, collision or general motion acceptance."
++	shots[-1]["scope"]="Original authored swept-hair source comparison on accepted UV/crown. Rest stations are staged; cast uses the actual public ability and final modifier pose. Head projection is not visibility, collision or general motion acceptance."
+ 
+ func source_hashes() -> Dictionary:
+ 	var result:=super.source_hashes()
+@@ -105,3 +105,38 @@
+ 	var helper_path: String=get_script().resource_path
+ 	result[helper_path]=FileAccess.get_sha256(helper_path)
+ 	return result
++
++
++func finish(failure: String) -> void:
++	if done: return
++	done = true
++	var after := source_hashes() if not sources.is_empty() else {}
++	var report: Dictionary
++	if preflight:
++		report = {"complete":failure.is_empty() and shots.size()==expected and sources==after,"failure":failure,"shots":shots,"expected":expected,"events":events,"controls":sequence_controls,"source_sha256":sources,"source_after_sha256":after,"source_unchanged":sources==after,"scope":"Headless real-input and final-modifier-pose projection preflight. No framebuffer or rendered art claim."}
++	else:
++		report = {"schema":1,"kind":"actual-native-visual-rounds","camera_contract":"hair-front-profile-rear-cast-v1","mode":mode,"context":context,"complete":failure.is_empty() and sources==after and shots.size()==expected,"failure":failure,"source_sha256":sources,"source_after_sha256":after,"source_unchanged":sources==after,"shots":shots,"ability_events":events,"sequence_controls":sequence_controls,"expected_raw_pngs":expected,"time_controls":time_controls,"clocks":{"fixed_capture_process_hz":30,"physics_hz":Engine.physics_ticks_per_second,"army_authority_hz":20,"hardware_fps_measured":false},"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"godot":Engine.get_version_info(),"wall_elapsed_ms":Time.get_ticks_msec()-started,"scope":"Original Forward+ matched front/profile/rear and actual public cast framebuffers. Fixed30Hz capture is simulation sampling, not hardware FPS. No full gameplay/continuous motion acceptance."}
++	# After the last observation only. Dummy audio releases on its real mixer,
++	# so a few fast headless process frames do not establish completed cleanup.
++	paused = false
++	if is_instance_valid(scene):
++		for node in scene.find_children("*", "AudioStreamPlayer", true, false): node.stop(); node.stream = null
++		scene.queue_free()
++	for unused in 8: await process_frame
++	var cleanup_started := Time.get_ticks_usec()
++	var previous := AudioServer.get_time_since_last_mix()
++	var observed := 0
++	var samples: Array[Dictionary] = []
++	while observed < 2 and Time.get_ticks_usec()-cleanup_started < 250000:
++		OS.delay_msec(1)
++		var now := AudioServer.get_time_since_last_mix()
++		if now+.0002 < previous: observed += 1
++		samples.append({"wall_usec":Time.get_ticks_usec()-cleanup_started,"since_mix_s":now,"ticks":observed})
++		previous = now
++	var wait_usec := Time.get_ticks_usec()-cleanup_started
++	for unused in 8: await process_frame
++	report.audio_cleanup = {"scope":"Capture shutdown after all shots and scene free; no runtime audio change.","observed_mixer_ticks":observed,"wait_usec":wait_usec,"budget_usec":250000,"samples":samples,"main_cleanup_frames":8}
++	report.complete = report.complete and observed == 2 and wait_usec <= 250000
++	if output.is_absolute_path() and DirAccess.dir_exists_absolute(output): FileAccess.open(output.path_join("preflight.json" if preflight else "capture.json"),FileAccess.WRITE).store_string(JSON.stringify(report,"  ",true,true)+"\n")
++	print("HAIR_CAPTURE_COMPLETE ",report.complete," ",failure)
++	quit(0 if report.complete else 1)

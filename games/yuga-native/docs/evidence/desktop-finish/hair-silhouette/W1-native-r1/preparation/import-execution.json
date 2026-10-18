@@ -1,0 +1,32 @@
+{
+  "started_utc": "2026-10-18T08:28:11.192273+00:00",
+  "command": [
+    "env",
+    "LP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "XDG_CACHE_HOME=/tmp/yuga-hair-import-r1/user/cache",
+    "XDG_CONFIG_HOME=/tmp/yuga-hair-import-r1/user/config",
+    "XDG_DATA_HOME=/tmp/yuga-hair-import-r1/user/data",
+    "taskset",
+    "-c",
+    "0,1",
+    "timeout",
+    "120s",
+    "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "--headless",
+    "--path",
+    "/tmp/yuga-hair-import-r1/candidate-project",
+    "--editor",
+    "--import",
+    "--quit"
+  ],
+  "declared_preparation_command_delta": "taskset affinity4\u21920,1 on W1 exclusive import lane; all engine/import/source/settings unchanged",
+  "exit_code": 0,
+  "elapsed_seconds": 11.122910602998672,
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "preparation_sha256": "2ebe24640d5770c11ceb53398687c64dd1bbddf0db181c288cf1e311ce2df6bd",
+  "log_sha256": "8c4b2998e0d50547e2cb97098e0d835ce9ba01e88b83a4d0b6252c20a52dd193",
+  "scope": "Private candidate import only; no canonical or shared-store writes; Godot worker pool not explicitly bounded."
+}

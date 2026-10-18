@@ -1,0 +1,11 @@
+# R5: one compact attachment under the unchanged knot
+
+Actual R4 rear and live-cast originals show background between the retained topknot/tie and the reduced crown. The R4 source/import tests passed, but visual continuity failed. Root rejected promotion; the complete R4 generator, models and actual rejection stay unchanged.
+
+Add one short swept oval root beneath the existing knot. Its foot must overlap the existing reduced crown, its upper end must enter the unchanged knot's lower root, and its outer envelope must stay inside the existing knot/tie width. It should read as a compact gathered attachment rather than restoring the previous broad forehead lobe. Do not move the knot, gold tie, accepted crown or sash. Do not redesign the stiff lower nape in this round.
+
+The measured near-LOD retained knot spans y1.855912–1.920085m and x±41.71mm; its lowest root spans about x±35.3mm. The nearest reduced-crown/root point gap is12.92mm. The gold tie lies at y1.865–1.871m around z−40mm, with outer radius~40mm. A roughly50mm-wide swept attachment beneath that aperture leaves room to preserve the gold ring and original knot silhouette.
+
+Start the compact foot on the unchanged anatomical envelope plus the existing hair relief, around z−10mm; sweep upward/backward into the knot near z−41mm/y1.861m. Seat complete ring samples to the head rather than only fitting control points. End caps remain closed and intentionally embedded in existing hair. Keep zero secondary alpha, the same opaque hair material and exact single-head binding. Use the same authored shape at three declining LOD resolutions.
+
+The R4 active hair records and indices must remain byte-exact as a prefix of the new hair arrays; add only the attachment. All other R4 source payloads, original knot/tie positions, head skin, crown/sash, rig, morphs, materials and animation data remain exact. Check finite UV/TBN/indices, positive head/gold clearance and intentional hair-to-hair contact at both attachment ends. Replay only new triangles against declared poses and draw/stress inputs; inherit unchanged R4 geometry checks only through exact source identity. New actual rear/profile/live-cast originals remain required before any acceptance.

@@ -1,0 +1,211 @@
+{
+  "passed": true,
+  "checks": {
+    "all8_originals_hash_dimension_exact": true,
+    "both_render_sources_unchanged": true,
+    "both_exit0_without_error_or_leak": true,
+    "strict_render9_checks": true,
+    "strict_preflight8_checks": true,
+    "actual_import_hair_only": true
+  },
+  "originals": [
+    {
+      "branch": "baseline",
+      "file": "rest-front.png",
+      "sha256": "4faf46298147939533244155faccdc6c51aadba0717b90068c7de4fbc714ba32",
+      "bytes": 817736,
+      "pixels": [
+        1280,
+        960
+      ],
+      "directly_viewed": true,
+      "frame": 17,
+      "physics_frame": 35
+    },
+    {
+      "branch": "baseline",
+      "file": "rest-profile.png",
+      "sha256": "88d737ec72dff3062c1b9070691e16a5166eadc2c075ed6df2d6f5c254731169",
+      "bytes": 621574,
+      "pixels": [
+        1280,
+        960
+      ],
+      "directly_viewed": true,
+      "frame": 21,
+      "physics_frame": 43
+    },
+    {
+      "branch": "baseline",
+      "file": "rest-rear.png",
+      "sha256": "04ce3184cadb8b2472479339d4d602691a247d08abccdc8dbc78cc97e106fe68",
+      "bytes": 607185,
+      "pixels": [
+        1280,
+        960
+      ],
+      "directly_viewed": true,
+      "frame": 25,
+      "physics_frame": 51
+    },
+    {
+      "branch": "baseline",
+      "file": "cast-three-quarter.png",
+      "sha256": "55a19445733db3e8f71a0ff49fca814b6b1b84f682a45e6583cb6850785d02e9",
+      "bytes": 942011,
+      "pixels": [
+        1280,
+        960
+      ],
+      "directly_viewed": true,
+      "frame": 46,
+      "physics_frame": 93
+    },
+    {
+      "branch": "candidate",
+      "file": "rest-front.png",
+      "sha256": "9fe019e533771b490cb2185cf0fa5acf7e98a307d8015eb367197a85787be8c2",
+      "bytes": 816643,
+      "pixels": [
+        1280,
+        960
+      ],
+      "directly_viewed": true,
+      "frame": 17,
+      "physics_frame": 35
+    },
+    {
+      "branch": "candidate",
+      "file": "rest-profile.png",
+      "sha256": "ab37e5933939ec7709aa106dfa4651138391abcf3ee9aa750a42e54cb2a4f7cf",
+      "bytes": 619453,
+      "pixels": [
+        1280,
+        960
+      ],
+      "directly_viewed": true,
+      "frame": 21,
+      "physics_frame": 43
+    },
+    {
+      "branch": "candidate",
+      "file": "rest-rear.png",
+      "sha256": "13f5742256df8aed8d0597b07843e37776b1d6eacada007f710dd71c08772148",
+      "bytes": 609217,
+      "pixels": [
+        1280,
+        960
+      ],
+      "directly_viewed": true,
+      "frame": 25,
+      "physics_frame": 51
+    },
+    {
+      "branch": "candidate",
+      "file": "cast-three-quarter.png",
+      "sha256": "a37499af3aabfc5f2006ab2f76652c72a1f2804427f7de7787969c069a109bc8",
+      "bytes": 943974,
+      "pixels": [
+        1280,
+        960
+      ],
+      "directly_viewed": true,
+      "frame": 46,
+      "physics_frame": 93
+    }
+  ],
+  "executions": {
+    "baseline": {
+      "engine_sha256": "dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f",
+      "engine_exit": 0,
+      "engine_elapsed_s": 71.95267217199944,
+      "wrapper": {
+        "branch": "baseline",
+        "command": [
+          "taskset",
+          "-c",
+          "0,1",
+          "python3",
+          "/tmp/yuga-hair-r5-import-r1/evidence/runner/run_focus.py",
+          "--project",
+          "/tmp/yuga-hair-r5-review-r1/baseline",
+          "--output",
+          "/tmp/yuga-hair-r5-review-r1/render-baseline-r1",
+          "--case",
+          "hair-review",
+          "--review-branch",
+          "baseline",
+          "--engine",
+          "/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-unmodified",
+          "--timeout",
+          "600",
+          "--no-progress-timeout",
+          "300",
+          "--verbose",
+          "--display",
+          "185",
+          "--shader-cache-seed",
+          "/tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/cache/mesa",
+          "--godot-shader-cache-seed",
+          "/tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/data/godot/app_userdata/YUGA \u2022 Confluence/shader_cache"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 72.80348927500017,
+        "log_sha256": "288cfb7da35cced149b96ce2f912a2ba96de3b50103d744a6738b98cc8850bc0",
+        "scope": "Explicit display185 operational override; exact frozen commoncontrols/current runtime, unmodified public dce engine. Component art review only."
+      },
+      "warning_count": 63,
+      "warning_types": [
+        "WARNING: Image format RGB8 not supported by hardware, converting to RGBA8."
+      ]
+    },
+    "candidate": {
+      "engine_sha256": "dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f",
+      "engine_exit": 0,
+      "engine_elapsed_s": 71.18255450799916,
+      "wrapper": {
+        "branch": "candidate",
+        "command": [
+          "taskset",
+          "-c",
+          "0,1",
+          "python3",
+          "/tmp/yuga-hair-r5-import-r1/evidence/runner/run_focus.py",
+          "--project",
+          "/tmp/yuga-hair-r5-review-r1/candidate",
+          "--output",
+          "/tmp/yuga-hair-r5-review-r1/render-candidate-r1",
+          "--case",
+          "hair-review",
+          "--review-branch",
+          "candidate",
+          "--engine",
+          "/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-unmodified",
+          "--timeout",
+          "600",
+          "--no-progress-timeout",
+          "300",
+          "--verbose",
+          "--display",
+          "186",
+          "--shader-cache-seed",
+          "/tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/cache/mesa",
+          "--godot-shader-cache-seed",
+          "/tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/data/godot/app_userdata/YUGA \u2022 Confluence/shader_cache"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 72.10425182200015,
+        "log_sha256": "89a9ff1465df388b00aeb6702c1dc0eee2fa0566486475b2dadff5e2f4394240",
+        "scope": "Explicit display186 operational override; exact frozen commoncontrols/current runtime, unmodified public dce engine. Component art review only."
+      },
+      "warning_count": 63,
+      "warning_types": [
+        "WARNING: Image format RGB8 not supported by hardware, converting to RGBA8."
+      ]
+    }
+  },
+  "visual_accepted": false,
+  "source_activated": false,
+  "disposition": "REJECT FULL HAIRSTYLE; geometric attachment finding only",
+  "decision": "Root directly viewed all8 current-source originals. Literal gap closes, but tall knot on thin stalk and stiff separated profile locks remain visually incoherent; retained baseline preferred despite bulk. W1 agrees these limitations prevent promotion."
+}
