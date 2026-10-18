@@ -34,7 +34,8 @@ def main():
           len({s[0] for s in suites}) == len(suites) and all((PROJECT/s[2]).is_file() for s in suites))
     for kind, expected in [('visual', {'desktop-release-continuity','desktop-motion-scene-entry',
                                      'desktop-motion-transition-guard','desktop-world-route-parity',
-                                     'desktop-volley-feedback'}),
+                                     'desktop-volley-feedback','desktop-landing-support-boundary',
+                                     'desktop-landing-pause'}),
                            ('screens', {'ui-boot-recovery','ui-title-portrait','ui-launch-composition',
                             'ui-world-atlas','ui-action-hud','ui-action-hud-fit',
                             'ui-host-replacement','ui-loading-presentation',
@@ -90,6 +91,13 @@ def main():
         'desktop-motion-transition-guard': {'tests/graphics_g2_support_cases.gd',
                                            'docs/evidence/desktop-finish/S3/W5/baseline/rama_motion.gd',
                                            'docs/evidence/desktop-finish/S3/W5/guard-witness.json'},
+        'desktop-landing-support-boundary': {'tests/desktop_landing_support_boundary_cases.gd',
+                                            'tests/graphics_g2_support_cases.gd',
+                                            'scripts/rama_motion.gd','assets/heroes/rama-hero.glb.import'},
+        'desktop-landing-pause': {'tests/desktop_landing_pause_cases.gd',
+                                 'tests/graphics_g2_support_cases.gd',
+                                 'docs/evidence/desktop-finish/S3/W5/baseline/rama_motion.gd',
+                                 'scenes/courtyard.tscn','scripts/player.gd','scripts/rama_motion.gd'},
     }.items():
         pins = catalog.sources([next(s for s in suites if s[0] == name)])
         check(name+' pins its invoked or inherited tests and loading view',
@@ -104,6 +112,9 @@ def main():
     volley = next(s for s in suites if s[0] == 'desktop-volley-feedback')
     check('Volley combined-boundary CLI retains the nonzero authority warmup',
           volley[3] == ('--warmup-ticks=200',))
+    check('Landing boundaries and pause retain120Hz fixed sampling without changing other suites',
+          catalog.SUITE_FIXED_FPS == {'desktop-landing-support-boundary':120,'desktop-landing-pause':120}
+          and all(next(s for s in suites if s[0] == name)[3] == () for name in catalog.SUITE_FIXED_FPS))
 
     with tempfile.TemporaryDirectory(prefix='yuga-motion-trace-cases-') as temporary:
         report = Path(temporary)/'result.json'

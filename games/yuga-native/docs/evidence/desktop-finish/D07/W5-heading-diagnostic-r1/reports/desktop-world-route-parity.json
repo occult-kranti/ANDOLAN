@@ -1,0 +1,1340 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "capsule_radius": 0.649999976158142
+      },
+      "name": "queries use the actual configured native hero capsule",
+      "passed": true
+    },
+    {
+      "detail": {
+        "atlas_primary_segments": 7,
+        "paving_count": 7
+      },
+      "name": "actual paving primary segments agree with atlas lane data",
+      "passed": true
+    },
+    {
+      "detail": {
+        "capsule": {
+          "blocked": false
+        },
+        "floor": {
+          "collider": "AuthorityFloor",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(0.0, 0.0, -60.0)"
+        },
+        "from": "(0.0, 0.05, -64.0)",
+        "lane": 1,
+        "to": "(0.0, 0.05, -56.0)"
+      },
+      "name": "sampled primary route has real floor and capsule clearance: temple-mid",
+      "passed": true
+    },
+    {
+      "detail": {
+        "capsule": {
+          "blocked": false
+        },
+        "floor": {
+          "collider": "AuthorityFloor",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(-40.0, 0.0, -88.0)"
+        },
+        "from": "(-34.0, 0.05, -91.6)",
+        "lane": 0,
+        "to": "(-40.0, 0.05, -88.0)"
+      },
+      "name": "sampled primary route has real floor and capsule clearance: ghat-spawn-bend",
+      "passed": true
+    },
+    {
+      "detail": {
+        "capsule": {
+          "blocked": false
+        },
+        "floor": {
+          "collider": "AuthorityFloor",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(40.0, 0.0, -88.0)"
+        },
+        "from": "(34.0, 0.05, -91.6)",
+        "lane": 2,
+        "to": "(40.0, 0.05, -88.0)"
+      },
+      "name": "sampled primary route has real floor and capsule clearance: metro-spawn-bend",
+      "passed": true
+    },
+    {
+      "detail": {
+        "map_west_edge": 53.5857124328613,
+        "passed": true,
+        "projected_hit": "(53.58571, 105.8385)",
+        "ray": {
+          "collider": "authority-solid-0",
+          "hit": true,
+          "normal": "(-1.0, 0.0, 0.0)",
+          "position": "(-29.0, 1.0, -28.0)"
+        }
+      },
+      "name": "observed blocker west wall agrees with atlas footprint",
+      "passed": true
+    },
+    {
+      "detail": {
+        "blocked": true,
+        "collider": "authority-solid-0",
+        "normal": "(-1.0, 0.0, 0.0)",
+        "position": "(-29.0, 1.2, -28.0)",
+        "travel": "(5.214844, 0.0, 0.0)"
+      },
+      "name": "same wall actually blocks the hero capsule",
+      "passed": true
+    },
+    {
+      "detail": {
+        "passed": false,
+        "ray": {
+          "hit": false
+        }
+      },
+      "name": "counterexample rejects a map wall whose actual collider is disabled",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "restored real collider restores wall parity",
+      "passed": true
+    },
+    {
+      "detail": {
+        "map_west_edge": 56.6285705566406,
+        "passed": false,
+        "projected_hit": "(53.58571, 105.8385)",
+        "ray": {
+          "collider": "authority-solid-0",
+          "hit": true,
+          "normal": "(-1.0, 0.0, 0.0)",
+          "position": "(-29.0, 1.0, -28.0)"
+        }
+      },
+      "name": "counterexample rejects a three-metre atlas-only wall shift",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "restored atlas data restores wall parity",
+      "passed": true
+    },
+    {
+      "detail": {
+        "XZ_projection_discards_height": true,
+        "above_top_capsule": {
+          "blocked": false
+        },
+        "footprint": "[P: (58.65714, 49.46923), S: (8.114281, 7.046154)]",
+        "landing_capsule": {
+          "blocked": true,
+          "collider": "sun-lift-west-deck",
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(-20.0, 8.0, -88.0)",
+          "travel": "(0.0, -11.97656, 0.0)"
+        },
+        "ray": {
+          "collider": "sun-lift-west-deck",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(-20.0, 8.0, -88.0)"
+        },
+        "street_capsule": {
+          "blocked": true,
+          "collider": "sun-lift-west-deck",
+          "normal": "(-1.0, 0.0, 0.0)",
+          "position": "(-24.0, 1.2, -88.0)",
+          "travel": "(1.3125, 0.0, 0.0)"
+        },
+        "top_y": 8.0
+      },
+      "name": "deck footprint is XZ truth while street/top collisions differ: sun-lift-west-deck",
+      "passed": true
+    },
+    {
+      "detail": {
+        "XZ_projection_discards_height": true,
+        "above_top_capsule": {
+          "blocked": false
+        },
+        "footprint": "[P: (134.2214, 204.925), S: (7.099991, 6.165375)]",
+        "landing_capsule": {
+          "blocked": true,
+          "collider": "moon-shrine-east-deck",
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(54.0, 10.0, 88.0)",
+          "travel": "(0.0, -9.925781, 0.0)"
+        },
+        "ray": {
+          "collider": "moon-shrine-east-deck",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(54.0, 10.0, 88.0)"
+        },
+        "street_capsule": {
+          "blocked": true,
+          "collider": "moon-shrine-east-deck",
+          "normal": "(-1.0, 0.0, 0.0)",
+          "position": "(50.5, 1.2, 88.0)",
+          "travel": "(1.332031, 0.0, 0.0)"
+        },
+        "top_y": 10.0
+      },
+      "name": "deck footprint is XZ truth while street/top collisions differ: moon-shrine-east-deck",
+      "passed": true
+    },
+    {
+      "detail": {
+        "actual_surface": {
+          "collider": "AuthorityFloor",
+          "hit": true,
+          "normal": "(0.0, 1.0, 0.0)",
+          "position": "(0.0, 0.0, -44.0)"
+        },
+        "ring_y": 15.0
+      },
+      "name": "sky-ring marker does not invent a landing platform at ring height",
+      "passed": true
+    },
+    {
+      "detail": {
+        "actual_surface": {
+          "hit": false
+        },
+        "sample": "(90.0, 0.0, 0.0)"
+      },
+      "name": "visible terrain apron outside native floor is not counted as walkable",
+      "passed": true
+    },
+    {
+      "detail": {
+        "blocked_street_to_sky_ring": true,
+        "clear_spawn_to_landing_ring": true
+      },
+      "name": "anchor marker does not bypass the real tether obstruction test",
+      "passed": true
+    },
+    {
+      "detail": {
+        "after": {
+          "active_camera": "/root/ConfluenceWorld/World/Rama/CameraPivot/CameraCollision/PlayerCamera",
+          "camera_forward_minus_z": [
+            0.703574180603027,
+            -0.0998334214091301,
+            0.703574180603027
+          ],
+          "diagonal_heading": [
+            0.755054116249084,
+            -0.655662417411804
+          ],
+          "expected_diagonal_heading": [
+            0.755054354667664,
+            -0.65566211938858
+          ],
+          "expected_heading": [
+            0.755054354667664,
+            0.65566211938858
+          ],
+          "expected_normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            83.0,
+            31.8538475036621
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "original_compound_terms": {
+            "player_camera_current": true,
+            "player_position_held": true,
+            "raw_local_point_restored": true
+          },
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414",
+          "player_camera_current": true,
+          "player_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            142.0,
+            229.0
+          ],
+          "review_camera_current": false,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "before": {
+          "active_camera": "/root/ConfluenceWorld/World/Rama/CameraPivot/CameraCollision/PlayerCamera",
+          "camera_forward_minus_z": [
+            0.703574180603027,
+            -0.0998334214091301,
+            0.703574180603027
+          ],
+          "diagonal_heading": [
+            0.755054116249084,
+            -0.655662417411804
+          ],
+          "expected_diagonal_heading": [
+            0.755054354667664,
+            -0.65566211938858
+          ],
+          "expected_heading": [
+            0.755054354667664,
+            0.65566211938858
+          ],
+          "expected_normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            83.0,
+            31.8538475036621
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414",
+          "player_camera_current": true,
+          "player_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            142.0,
+            229.0
+          ],
+          "review_camera_current": false,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "during": {
+          "active_camera": "/root/ConfluenceWorld/World/ReviewCamera",
+          "camera_forward_minus_z": [
+            0.703574180603027,
+            -0.0998334214091301,
+            0.703574180603027
+          ],
+          "diagonal_heading": [
+            0.70710676908493,
+            -0.70710676908493
+          ],
+          "expected_diagonal_heading": [
+            0.70710676908493,
+            -0.70710676908493
+          ],
+          "expected_heading": [
+            0.70710676908493,
+            0.70710676908493
+          ],
+          "expected_normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            110.0,
+            41.2000007629395
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "original_compound_terms": {
+            "marker_position_held": true,
+            "player_position_held": true,
+            "projected_heading_held": true,
+            "raw_local_point_held": false,
+            "review_camera_current": true
+          },
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414/AtlasGuide/KeyScroll/@VBoxContainer@423",
+          "player_camera_current": false,
+          "player_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            196.0,
+            364.0
+          ],
+          "review_camera_current": true,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "name": "marker heading follows actual hero visual +Z through overview: (0.0, 0.05, -112.0)",
+      "passed": false
+    },
+    {
+      "detail": {
+        "heading": "(0.0, -1.0)",
+        "map_point": "(83.0, 31.85385)",
+        "world_position": "(0.0, 0.05, -112.0)"
+      },
+      "name": "actual live/overview camera switch preserves marker position and heading: (0.0, 0.05, -112.0)",
+      "passed": false
+    },
+    {
+      "detail": {
+        "after": {
+          "active_camera": "/root/ConfluenceWorld/World/Rama/CameraPivot/CameraCollision/PlayerCamera",
+          "camera_forward_minus_z": [
+            -0.703574120998383,
+            -0.0998334214091301,
+            0.703574240207672
+          ],
+          "diagonal_heading": [
+            0.755059063434601,
+            -0.655656814575195
+          ],
+          "expected_diagonal_heading": [
+            0.755054354667664,
+            -0.65566211938858
+          ],
+          "expected_heading": [
+            -0.755054354667664,
+            0.65566211938858
+          ],
+          "expected_normalized_point": [
+            0.885714292526245,
+            0.838461518287659
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            137.771423339844,
+            208.007690429688
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "normalized_point": [
+            0.8857142329216,
+            0.838461518287659
+          ],
+          "original_compound_terms": {
+            "player_camera_current": true,
+            "player_position_held": true,
+            "raw_local_point_restored": true
+          },
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414",
+          "player_camera_current": true,
+          "player_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            142.0,
+            229.0
+          ],
+          "review_camera_current": false,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            -0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "before": {
+          "active_camera": "/root/ConfluenceWorld/World/Rama/CameraPivot/CameraCollision/PlayerCamera",
+          "camera_forward_minus_z": [
+            -0.703574120998383,
+            -0.0998334214091301,
+            0.703574240207672
+          ],
+          "diagonal_heading": [
+            0.755059063434601,
+            -0.655656814575195
+          ],
+          "expected_diagonal_heading": [
+            0.755054354667664,
+            -0.65566211938858
+          ],
+          "expected_heading": [
+            -0.755054354667664,
+            0.65566211938858
+          ],
+          "expected_normalized_point": [
+            0.885714292526245,
+            0.838461518287659
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            137.771423339844,
+            208.007690429688
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "normalized_point": [
+            0.8857142329216,
+            0.838461518287659
+          ],
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414",
+          "player_camera_current": true,
+          "player_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            142.0,
+            229.0
+          ],
+          "review_camera_current": false,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            -0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "during": {
+          "active_camera": "/root/ConfluenceWorld/World/ReviewCamera",
+          "camera_forward_minus_z": [
+            -0.703574120998383,
+            -0.0998334214091301,
+            0.703574240207672
+          ],
+          "diagonal_heading": [
+            0.707101345062256,
+            -0.70711225271225
+          ],
+          "expected_diagonal_heading": [
+            0.70710676908493,
+            -0.70710676908493
+          ],
+          "expected_heading": [
+            -0.70710676908493,
+            0.70710676908493
+          ],
+          "expected_normalized_point": [
+            0.885714292526245,
+            0.838461518287659
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            185.600006103516,
+            321.200012207031
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "normalized_point": [
+            0.885714292526245,
+            0.838461577892303
+          ],
+          "original_compound_terms": {
+            "marker_position_held": true,
+            "player_position_held": true,
+            "projected_heading_held": true,
+            "raw_local_point_held": false,
+            "review_camera_current": true
+          },
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414/AtlasGuide/KeyScroll/@VBoxContainer@423",
+          "player_camera_current": false,
+          "player_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            196.0,
+            364.0
+          ],
+          "review_camera_current": true,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            -0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "name": "marker heading follows actual hero visual +Z through overview: (54.0, 10.05, 88.0)",
+      "passed": false
+    },
+    {
+      "detail": {
+        "heading": "(0.0, -1.0)",
+        "map_point": "(137.7714, 208.0077)",
+        "world_position": "(54.0, 10.05, 88.0)"
+      },
+      "name": "actual live/overview camera switch preserves marker position and heading: (54.0, 10.05, 88.0)",
+      "passed": false
+    },
+    {
+      "detail": {
+
+      },
+      "name": "fixture restores collision/map mutations and preserves source manifest army and files",
+      "passed": true
+    }
+  ],
+  "count": 21,
+  "observations": {
+    "overview_mapping": [
+      {
+        "after": {
+          "active_camera": "/root/ConfluenceWorld/World/Rama/CameraPivot/CameraCollision/PlayerCamera",
+          "camera_forward_minus_z": [
+            0.703574180603027,
+            -0.0998334214091301,
+            0.703574180603027
+          ],
+          "diagonal_heading": [
+            0.755054116249084,
+            -0.655662417411804
+          ],
+          "expected_diagonal_heading": [
+            0.755054354667664,
+            -0.65566211938858
+          ],
+          "expected_heading": [
+            0.755054354667664,
+            0.65566211938858
+          ],
+          "expected_normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            83.0,
+            31.8538475036621
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "original_compound_terms": {
+            "player_camera_current": true,
+            "player_position_held": true,
+            "raw_local_point_restored": true
+          },
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414",
+          "player_camera_current": true,
+          "player_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            142.0,
+            229.0
+          ],
+          "review_camera_current": false,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "before": {
+          "active_camera": "/root/ConfluenceWorld/World/Rama/CameraPivot/CameraCollision/PlayerCamera",
+          "camera_forward_minus_z": [
+            0.703574180603027,
+            -0.0998334214091301,
+            0.703574180603027
+          ],
+          "diagonal_heading": [
+            0.755054116249084,
+            -0.655662417411804
+          ],
+          "expected_diagonal_heading": [
+            0.755054354667664,
+            -0.65566211938858
+          ],
+          "expected_heading": [
+            0.755054354667664,
+            0.65566211938858
+          ],
+          "expected_normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            83.0,
+            31.8538475036621
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414",
+          "player_camera_current": true,
+          "player_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            142.0,
+            229.0
+          ],
+          "review_camera_current": false,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "camera_yaw": 45.0,
+        "during": {
+          "active_camera": "/root/ConfluenceWorld/World/ReviewCamera",
+          "camera_forward_minus_z": [
+            0.703574180603027,
+            -0.0998334214091301,
+            0.703574180603027
+          ],
+          "diagonal_heading": [
+            0.70710676908493,
+            -0.70710676908493
+          ],
+          "expected_diagonal_heading": [
+            0.70710676908493,
+            -0.70710676908493
+          ],
+          "expected_heading": [
+            0.70710676908493,
+            0.70710676908493
+          ],
+          "expected_normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            110.0,
+            41.2000007629395
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "normalized_point": [
+            0.5,
+            0.0692307725548744
+          ],
+          "original_compound_terms": {
+            "marker_position_held": true,
+            "player_position_held": true,
+            "projected_heading_held": true,
+            "raw_local_point_held": false,
+            "review_camera_current": true
+          },
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414/AtlasGuide/KeyScroll/@VBoxContainer@423",
+          "player_camera_current": false,
+          "player_xyz": [
+            0.0,
+            0.0500000007450581,
+            -112.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            196.0,
+            364.0
+          ],
+          "review_camera_current": true,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "original_marker_correct": true,
+        "position": [
+          0.0,
+          0.0500000007450581,
+          -112.0
+        ]
+      },
+      {
+        "after": {
+          "active_camera": "/root/ConfluenceWorld/World/Rama/CameraPivot/CameraCollision/PlayerCamera",
+          "camera_forward_minus_z": [
+            -0.703574120998383,
+            -0.0998334214091301,
+            0.703574240207672
+          ],
+          "diagonal_heading": [
+            0.755059063434601,
+            -0.655656814575195
+          ],
+          "expected_diagonal_heading": [
+            0.755054354667664,
+            -0.65566211938858
+          ],
+          "expected_heading": [
+            -0.755054354667664,
+            0.65566211938858
+          ],
+          "expected_normalized_point": [
+            0.885714292526245,
+            0.838461518287659
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            137.771423339844,
+            208.007690429688
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "normalized_point": [
+            0.8857142329216,
+            0.838461518287659
+          ],
+          "original_compound_terms": {
+            "player_camera_current": true,
+            "player_position_held": true,
+            "raw_local_point_restored": true
+          },
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414",
+          "player_camera_current": true,
+          "player_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            142.0,
+            229.0
+          ],
+          "review_camera_current": false,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            -0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "before": {
+          "active_camera": "/root/ConfluenceWorld/World/Rama/CameraPivot/CameraCollision/PlayerCamera",
+          "camera_forward_minus_z": [
+            -0.703574120998383,
+            -0.0998334214091301,
+            0.703574240207672
+          ],
+          "diagonal_heading": [
+            0.755059063434601,
+            -0.655656814575195
+          ],
+          "expected_diagonal_heading": [
+            0.755054354667664,
+            -0.65566211938858
+          ],
+          "expected_heading": [
+            -0.755054354667664,
+            0.65566211938858
+          ],
+          "expected_normalized_point": [
+            0.885714292526245,
+            0.838461518287659
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            137.771423339844,
+            208.007690429688
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "normalized_point": [
+            0.8857142329216,
+            0.838461518287659
+          ],
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414",
+          "player_camera_current": true,
+          "player_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            142.0,
+            229.0
+          ],
+          "review_camera_current": false,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            -0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "camera_yaw": -45.0,
+        "during": {
+          "active_camera": "/root/ConfluenceWorld/World/ReviewCamera",
+          "camera_forward_minus_z": [
+            -0.703574120998383,
+            -0.0998334214091301,
+            0.703574240207672
+          ],
+          "diagonal_heading": [
+            0.707101345062256,
+            -0.70711225271225
+          ],
+          "expected_diagonal_heading": [
+            0.70710676908493,
+            -0.70710676908493
+          ],
+          "expected_heading": [
+            -0.70710676908493,
+            0.70710676908493
+          ],
+          "expected_normalized_point": [
+            0.885714292526245,
+            0.838461518287659
+          ],
+          "heading": [
+            0.0,
+            -1.0
+          ],
+          "local_point": [
+            185.600006103516,
+            321.200012207031
+          ],
+          "marker_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "marker_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "normalized_point": [
+            0.885714292526245,
+            0.838461577892303
+          ],
+          "original_compound_terms": {
+            "marker_position_held": true,
+            "player_position_held": true,
+            "projected_heading_held": true,
+            "raw_local_point_held": false,
+            "review_camera_current": true
+          },
+          "parent": "/root/ConfluenceWorld/WorldInterface/@Control@414/AtlasGuide/KeyScroll/@VBoxContainer@423",
+          "player_camera_current": false,
+          "player_xyz": [
+            54.0,
+            10.0500001907349,
+            88.0
+          ],
+          "plot_position": [
+            12.0,
+            16.0
+          ],
+          "plot_size": [
+            196.0,
+            364.0
+          ],
+          "review_camera_current": true,
+          "terms": {
+            "diagonal_heading_matches": true,
+            "heading_matches": false,
+            "manifest_bounds_unchanged": true,
+            "marker_forward_matches": false,
+            "marker_xyz_matches": true,
+            "normalized_point_matches": true,
+            "player_held": true,
+            "visual_forward_held": true
+          },
+          "visual_forward_plus_z": [
+            -0.70710676908493,
+            0.0,
+            0.70710676908493
+          ],
+          "world_forward": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        },
+        "original_marker_correct": true,
+        "position": [
+          54.0,
+          10.0500001907349,
+          88.0
+        ]
+      }
+    ],
+    "secondary_routes": {
+      "painted_rotation_segments": 18,
+      "scope": "Current atlas draws primary lanes only; this gate does not claim all painted rotation/circuit links appear on the atlas."
+    }
+  },
+  "passed": false,
+  "physics_frames": 84,
+  "scope": "Actual current native world/PhysicsSpace, configured hero predictive capsule sweeps, real ray hits, paving uniforms, atlas projection and live overview camera switch. Three short primary-route samples, one blocker, two decks, one sky ring and one visual apron point only. Two isolated scene-instance counterexamples are restored. XZ map footprints do not encode elevation, ramps, navmesh connectivity, all-terrain clearance, army elevation, browser/online authority or rendered art acceptance.",
+  "source_sha256": {
+    "res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "res://scripts/confluence_world.gd": "cc014ac25009da5852f6fce646522f0e195eb3ec0a11ababc171e4ed990df8b2",
+    "res://scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+    "res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+    "res://scripts/world_atlas.gd": "1cf4b7f22b4e34fdeb4300d8e9c591cd3ecad2990a13a7ed8941bf3f4d32cce5",
+    "res://tests/desktop_world_route_parity_cases.gd": "3dd21a644e4e59e6f14c21a3fd8bdc0a2eb7a7950c854ff6acfa2daa4e975b3b"
+  }
+}

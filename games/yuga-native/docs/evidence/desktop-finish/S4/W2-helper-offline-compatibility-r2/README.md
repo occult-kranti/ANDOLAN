@@ -1,0 +1,9 @@
+# Final decision: offline compatibility, original optional runtime
+
+Root's source review superseded the growing runtime raw-hash admission list: the helper checked that list against its guide JSON, not the active GLB. The existing 164-bone/head-rest/material contract already supports unchanged hair. A duplicate runtime list added no asset identity protection.
+
+Canonical `rama_upper_hair_layers.gd`, `upper-hair-layers.json`, and `graphics_g2_hair_layers_cases.gd` are restored byte-for-byte to pushed `3db9158`, including original schema 1 and R7 guide authoring SHA. The historical authoring builder is unchanged. No optional helper is activated. Root explicitly required no lifecycle rerun for this exact restoration. The fresh 30/30 execution and exact generated geometry comparison in the first sealed compatibility packet remain historical evidence from the abandoned metadata-only implementation; its `executed/` sources and receipt are not rewritten or represented as final runtime.
+
+`art/hero-finish/prove_hair_compatibility.py` is read-only. `asset-proof.json` proves all nine original hair accessors (attributes, indices, morphs) byte-identical in each of the three LODs across original R7, accepted smooth-crown R2 and accepted sash-UV R2. Hair primitive/rig/node/animation/material JSON also remains exact. Signed zero is retained by byte comparison. The artifact pins exact accepted source hashes and W1's actual imported crown comparison. It does not repin guide authoring history, generate geometry, write guide metadata or imply new principal-hair acceptance.
+
+The new swept principal-hair experiment remains isolated on the exact smooth-crown R2 parent. Before private import it must be composed explicitly with accepted UV bytes, since the full parent hash changes even though geometry is identical. No contact pass is transferred to changed geometry.

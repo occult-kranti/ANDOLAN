@@ -1,0 +1,27 @@
+{
+  "command": [
+    "env",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "LP_NUM_THREADS=1",
+    "taskset",
+    "-c",
+    "4",
+    "python3",
+    "tools/run-visual-checks.py",
+    "--catalog",
+    "screens",
+    "--suite",
+    "ui-title-portrait",
+    "--engine",
+    "/usr/local/bin/godot",
+    "--max-cpus",
+    "1",
+    "--output",
+    "/workspace/scratch/desktop-crown-title-camera-r1"
+  ],
+  "cwd": "/workspace/ANDOLAN/games/yuga-native",
+  "no_import_or_render": true,
+  "scope": "Existing actual-scene title camera/projection/lifecycle regression; visual light quality remains tied to separate W1/root original reviews."
+}

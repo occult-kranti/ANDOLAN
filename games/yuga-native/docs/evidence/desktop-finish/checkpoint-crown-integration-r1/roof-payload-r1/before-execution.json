@@ -1,0 +1,24 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "4",
+    "python3",
+    "tests/traversal_security_cases.py",
+    "--report",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/checkpoint-crown-integration-r1/roof-payload-r1/before-report.json"
+  ],
+  "exit": 1,
+  "elapsed_seconds": 0.16614517999914824,
+  "checks": 115,
+  "failed": [
+    "missing active world roof dependency rejects",
+    "world roof filename substitution rejects",
+    "orphan world roof remap rejects"
+  ],
+  "sources": {
+    "tools/package-native.py": "19490dd0d8e3a5fbb6979ecbd3470e9e6b1c496526bca02a97ce7c1414f517c9",
+    "tests/traversal_security_cases.py": "eddedfd07afbb5ac913e18617b3d956d66d310afd25eac5bbb22e056b7c72af5"
+  },
+  "expected_counterexample": true
+}

@@ -1,0 +1,67 @@
+{
+  "catalog": "screens",
+  "checked_sources_unchanged": true,
+  "checks": 18,
+  "engine_probe": {
+    "command": [
+      "/usr/local/bin/godot",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.041
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "schema": 1,
+  "scope": "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance.",
+  "selected_suites": [
+    "ui-title-portrait"
+  ],
+  "sources_after_sha256": "9e738832a3aed92341764b3fa6eecff17e9a4396a3e5c8fa6d039d1f7c643af1",
+  "sources_before_sha256": "9e738832a3aed92341764b3fa6eecff17e9a4396a3e5c8fa6d039d1f7c643af1",
+  "suites": [
+    {
+      "checks": 18,
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/ui_s1_portrait_cases.gd",
+        "--",
+        "--report=/workspace/scratch/desktop-crown-title-camera-r1/reports/ui-title-portrait.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "ui-title-portrait",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/ui-title-portrait.json",
+      "report_sha256": "9dd49d06ea71cb2572fa2a5bf8a4958e34c7c817afa8a0e40139efa5f7370fb6",
+      "stderr": "logs/ui-title-portrait.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/ui-title-portrait.stdout",
+      "stdout_sha256": "e56362d19e99ef69a472cdf7c25bf05621d65af1c2c72cc2b8a95e691f9317f4",
+      "timed_out": false,
+      "wall_seconds": 1.758
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "shape_registration": {
+    "failed_runs": [
+      "candidate-boundary-120-r4",
+      "candidate-boundary-120-plane-debug-r1"
+    ],
+    "result": "29/30: new plane-positive premise had no real ray hit; unsupported convex also had no registered hit.",
+    "repair": "Fixture waits for one complete physics step after replacing shape type. Positive plane and negative unsupported-convex now both require actual hits; no runtime threshold altered.",
+    "final_run": "candidate-boundary-120-r5"
+  },
+  "coordination": {
+    "initial_concern": "A delayed W4 message mentioned an active cleanup probe after W5 launched boundary-r4.",
+    "resolved": "No overlap established: W4 receipt was written after reap at2026-10-18T07:36:49.646805Z; W5 receipt07:37:43.430071Z minus11.600s engine time places start approximately07:37:31.830071Z, over42s later. No repeat made solely for message ordering.",
+    "earlier_real_sequencing_error": "sequencing-correction.json remains unchanged and excludes the genuine prior guard/legacy overlap."
+  },
+  "strict_cli_correction": "An initial --label -r2 invocation was rejected by argparse before reading inputs; corrected to --label=-r2. No runtime or assertion executed in that rejected command."
+}

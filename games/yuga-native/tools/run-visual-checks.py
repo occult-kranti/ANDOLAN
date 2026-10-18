@@ -43,6 +43,8 @@ SUITES = (
     ("desktop-motion-scene-entry", "godot", "tests/desktop_s3_transition_scene_cases.gd",
      ("--hz=60", "--summary-report")),
     ("desktop-motion-transition-guard", "godot", "tests/desktop_s3_transition_guard_cases.gd", ()),
+    ("desktop-landing-support-boundary", "godot", "tests/desktop_landing_support_boundary_cases.gd", ()),
+    ("desktop-landing-pause", "godot", "tests/desktop_landing_pause_cases.gd", ()),
     ("desktop-world-route-parity", "godot", "tests/desktop_world_route_parity_cases.gd", ()),
     ("desktop-volley-feedback", "godot", "tests/desktop_i02_volley_feedback_cases.gd", ("--warmup-ticks=200",)),
 )
@@ -108,7 +110,13 @@ SUITE_DEPENDENCIES = {
     "desktop-motion-transition-guard": ("tests/graphics_g2_support_cases.gd",
                                         "docs/evidence/desktop-finish/S3/W5/baseline/rama_motion.gd",
                                         "docs/evidence/desktop-finish/S3/W5/guard-witness.json"),
+    "desktop-landing-support-boundary": ("tests/graphics_g2_support_cases.gd",),
+    "desktop-landing-pause": ("tests/graphics_g2_support_cases.gd",
+                               "docs/evidence/desktop-finish/S3/W5/baseline/rama_motion.gd"),
 }
+# These fixtures explicitly use 120 Hz physics; pause/resume observes exactly
+# one physics tick per process frame. Preserve their sealed invocation cadence.
+SUITE_FIXED_FPS = {"desktop-landing-support-boundary": 120, "desktop-landing-pause": 120}
 
 
 def sources(selected: list[tuple]) -> dict:
@@ -217,7 +225,7 @@ def main() -> int:
         suite_env.update(XDG_DATA_HOME=str(user / "data"), XDG_CONFIG_HOME=str(user / "config"), XDG_CACHE_HOME=str(user / "cache"))
         if kind == "godot":
             command = [engine, "--headless", "--single-threaded-scene", "--audio-driver", "Dummy",
-                       "--path", str(PROJECT), "--fixed-fps", "60", "--script", "res://" + source,
+                       "--path", str(PROJECT), "--fixed-fps", str(SUITE_FIXED_FPS.get(suite_id, 60)), "--script", "res://" + source,
                        "--", "--report=" + str(report), *arguments]
         elif kind == "fixture":
             command = [python, str(PROJECT / source), "--engine", engine,

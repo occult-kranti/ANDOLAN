@@ -1,0 +1,1 @@
+Rejected before writing any GLB. The first generator incorrectly assumed the UV accessor has no min/max metadata; its assertion stopped the build. The revised candidate must verify global accessor bounds remain exact, rather than ignore metadata. Original proposed scale was [0.25,1.1875].

@@ -1,0 +1,92 @@
+extends SceneTree
+## Live overview composition counterexample, candidate only with explicit flag.
+var checks:Array[Dictionary]=[]
+var output:="/tmp/yuga-overview-composition.json"
+var candidate:=false
+var world
+func _initialize() -> void:
+	for value in OS.get_cmdline_user_args():
+		if value=="--candidate":candidate=true
+		elif value.begins_with("--output="):output=value.trim_prefix("--output=")
+	call_deferred("run")
+func check(name:String,passed:bool,detail:Dictionary={}) -> void:
+	checks.append({"name":name,"passed":passed,"detail":detail})
+	print("PASS " if passed else "FAIL ",name)
+func frames(count:int) -> void:
+	for unused in count:await process_frame;await physics_frame
+func key(code:Key) -> void:
+	for pressed in [true,false]:
+		var event:=InputEventKey.new();event.keycode=code;event.physical_keycode=code;event.pressed=pressed
+		root.push_input(event)
+		await frames(2)
+func route_points() -> PackedVector3Array:
+	var result:=PackedVector3Array()
+	for lane in world.manifest.lanes:
+		for endpoint in [lane.points[0],lane.points[-1]]:result.append(Vector3(endpoint[0],0,endpoint[2]))
+	for deck in world.manifest.traversal.native_collision_boxes:
+		var position:=Vector3(deck.position[0],deck.position[1],deck.position[2])
+		var size:=Vector3(deck.size[0],deck.size[1],deck.size[2])
+		for x in [-.5,.5]:
+			for z in [-.5,.5]: result.append(position+Vector3(x*size.x,size.y,z*size.z))
+	for prop in world.manifest.props:
+		if prop.kit=="skyline":result.append(Vector3(prop.position[0],prop.position[1]+prop.scale[1],prop.position[2]))
+	return result
+func run() -> void:
+	Engine.max_fps=60
+	root.size=Vector2i(960,540);root.content_scale_size=Vector2i(1280,720);root.content_scale_factor=1.0
+	world=load("res://scenes/confluence_world.tscn").instantiate()
+	if candidate:world.set_script(load("res://art/world-finish/overview-composition-r1/confluence_world.candidate.gd"))
+	root.add_child(world);current_scene=world
+	await frames(16)
+	var player_start:Transform3D=world.player.global_transform
+	await key(KEY_F1);await frames(12)
+	check("real_F1_enters_suspended_overview",world.overview and not paused and not world.player.active and world.rama_runtime.suspended)
+	var army_clock:float=world.army.elapsed
+	var kit_clock:float=world.rama_runtime.kit.elapsed
+	for scale in [1.0,1.25,1.5,2.0,1.0]:
+		root.content_scale_factor=scale
+		await frames(20)
+		var screen:=root.get_visible_rect()
+		var guide:Rect2=world.atlas_guide.get_global_rect()
+		var free:=Rect2(Vector2(12,12),Vector2(guide.position.x-24,screen.size.y-24)).grow(-8)
+		var obsolete:Array[String]=[]
+		for name in ["TitleCard","RelayStatus","ControlsCard","TraversalStatus"]:
+			if world.hud.get_node(name).is_visible_in_tree():obsolete.append(name)
+		var minimums:={}
+		if candidate:
+			for item in [world.atlas_guide,world.atlas_guide_scroll,world._overview_copy,world.map_control,world._overview_heading,world.atlas_guide_return,world.atlas_live_details]:minimums[String(item.name)]={"minimum":str(item.get_combined_minimum_size()),"size":str(item.size)}
+		check("overview_has_one_information_column_"+str(scale),obsolete.is_empty() and not world.rama_hud.visible and not world.compact_world_card.visible and guide.position.x>screen.size.x*.5 and screen.encloses(guide),{"obsolete_visible":obsolete,"guide":str(guide),"screen":str(screen),"minimums":minimums})
+		var failures:Array[Dictionary]=[]
+		for point in route_points():
+			var projected:Vector2=world.review_camera.unproject_position(point)
+			if free.size.x<=0 or free.size.y<=0 or not world.review_camera.is_position_in_frustum(point) or not free.has_point(projected):failures.append({"world":str(point),"screen":str(projected)})
+		var camera_detail:={"free":str(free),"failures":failures,"camera_position":str(world.review_camera.global_position),"camera_far":world.review_camera.far}
+		if candidate:
+			camera_detail.geometry_bounds=str(world.review_camera.get_meta("overview_projected_geometry"))
+			camera_detail.geometry_points=world._overview_geometry_points.size()
+			camera_detail.actual_skyline7=[]
+			var node=world.props_root.get_node("skyline-7")
+			var meshes:Array=node.find_children("*","MeshInstance3D",true,false)
+			if node is MeshInstance3D:meshes.push_front(node)
+			for mesh in meshes:camera_detail.actual_skyline7.append({"visible":mesh.is_visible_in_tree(),"bounds":str(mesh.get_aabb()),"transform":str(mesh.global_transform)})
+		check("lane_deck_skyline_points_clear_of_sidebar_"+str(scale),failures.is_empty(),camera_detail)
+		var plot:Rect2=world.map_control._plot_rect()
+		check("existing_atlas_whole_plot_preserves_XZ_aspect_"+str(scale),absf(plot.size.x/plot.size.y-140.0/260.0)<.015 and world.map_control.is_visible_in_tree(),{"plot":str(plot),"card":str(world.map_control.get_global_rect())})
+		check("overview_holds_actual_authority_clocks_"+str(scale),world.army.elapsed==army_clock and world.rama_runtime.kit.elapsed==kit_clock and world.player.global_transform.is_equal_approx(player_start))
+	var bar:VScrollBar=world.atlas_guide_scroll.get_v_scroll_bar()
+	var before:int=world.atlas_guide_scroll.scroll_vertical
+	await key(KEY_DOWN)
+	check("real_Down_reads_full_key_column",world.atlas_guide_scroll.scroll_vertical>before and root.gui_get_focus_owner()==world.atlas_guide_scroll)
+	await key(KEY_END)
+	check("real_End_reaches_world_details",world.atlas_guide_scroll.scroll_vertical>=bar.max_value-bar.page-1)
+	await key(KEY_HOME)
+	check("real_Home_returns_map_and_heading",world.atlas_guide_scroll.scroll_vertical==0)
+	await key(KEY_F1);await frames(12)
+	check("F1_exit_restores_original_player_camera_and_liveHUD",not world.overview and world.player.active and root.get_camera_3d()==world.player.camera and world.rama_hud.visible and world.map_control.get_parent()==world.hud)
+	var failed:=0
+	for entry in checks:
+		if not entry.passed:failed+=1
+	FileAccess.open(output,FileAccess.WRITE).store_string(JSON.stringify({"passed":checks.size()-failed,"total":checks.size(),"candidate":candidate,"checks":checks,"scope":"Actual viewport-key/live scale overview composition, primary geometry projection and clock/focus contract only; no native pixels, full interaction routes or performance acceptance."},"  ")+"\n")
+	world.queue_free()
+	await frames(4)
+	quit(0 if failed==0 else 1)

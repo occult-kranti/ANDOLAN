@@ -1,0 +1,67 @@
+{
+  "catalog": "screens",
+  "checked_sources_unchanged": true,
+  "checks": 15,
+  "engine_probe": {
+    "command": [
+      "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.041
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "schema": 1,
+  "scope": "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance.",
+  "selected_suites": [
+    "ui-world-atlas"
+  ],
+  "sources_after_sha256": "569c1bb8d2d0629f115615dc0501e318a7061ce7ca3f0f47c3c9fe0a6ae5a82a",
+  "sources_before_sha256": "569c1bb8d2d0629f115615dc0501e318a7061ce7ca3f0f47c3c9fe0a6ae5a82a",
+  "suites": [
+    {
+      "checks": 15,
+      "command": [
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_finish_s1_atlas_cases.gd",
+        "--",
+        "--report=/tmp/yuga-world-atlas-repaired-r2/reports/ui-world-atlas.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "ui-world-atlas",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/ui-world-atlas.json",
+      "report_sha256": "2d7fba75c640e501949b43f21d9878ff564bd537e5c6fdb0339fb71f4270c927",
+      "stderr": "logs/ui-world-atlas.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/ui-world-atlas.stdout",
+      "stdout_sha256": "7220567f50a1bf999d0b49e747a6923247abd7e6a12b7d7b4654741610f90728",
+      "timed_out": false,
+      "wall_seconds": 0.268
+    }
+  ]
+}

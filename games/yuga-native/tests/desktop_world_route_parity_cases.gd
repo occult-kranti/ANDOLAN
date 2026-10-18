@@ -8,6 +8,7 @@ var observations: Dictionary = {}
 var world: Node3D
 var atlas: Control
 var source_start: Dictionary = {}
+var nominal_bounds: Array = []
 
 func _initialize() -> void:
 	for argument in OS.get_cmdline_user_args():
@@ -29,6 +30,61 @@ func physics_flush() -> void:
 
 func vec(value: Array) -> Vector3:
 	return Vector3(value[0],value[1],value[2])
+
+func xy(value: Vector2) -> Array:
+	return [value.x,value.y]
+
+func xyz(value: Vector3) -> Array:
+	return [value.x,value.y,value.z]
+
+func transform_receipt(value: Transform3D) -> Array:
+	return [xyz(value.basis.x),xyz(value.basis.y),xyz(value.basis.z),xyz(value.origin)]
+
+func mapping_snapshot(position_before: Vector3, facing_before: Vector3) -> Dictionary:
+	# Expected values come from captured world-manifest bounds and the actual
+	# authored visual's +Z facing, never from another atlas projection.
+	var plot: Rect2=atlas._plot_rect()
+	var point: Vector2=atlas.project(atlas.hero_position)
+	var fraction: Vector2=(point-plot.position)/plot.size
+	var span:=Vector2(float(nominal_bounds[1])-float(nominal_bounds[0]),float(nominal_bounds[3])-float(nominal_bounds[2]))
+	var expected_fraction: Vector2=(Vector2(position_before.x,position_before.z)-Vector2(nominal_bounds[0],nominal_bounds[2]))/span
+	var scale: Vector2=plot.size/span
+	var expected_heading: Vector2=(Vector2(facing_before.x,facing_before.z)*scale).normalized()
+	var heading: Vector2=atlas.project_heading(atlas.hero_forward)
+	var diagonal:=Vector3(1,0,-1).normalized()
+	var expected_diagonal: Vector2=(Vector2(diagonal.x,diagonal.z)*scale).normalized()
+	var actual_diagonal: Vector2=atlas.project_heading(diagonal)
+	return {
+		"player_xyz":xyz(world.player.global_position),
+		"world_root_forward_minus_z":xyz(-world.player.global_basis.z),
+		"visual_forward_plus_z":xyz(world.player.visual.global_basis.z),
+		"camera_forward_minus_z":xyz(-world.player.pivot.global_basis.z),
+		"player_camera_global_transform":transform_receipt(world.player.camera.global_transform),
+		"player_camera_local_transform":transform_receipt(world.player.camera.transform),
+		"camera_parent_global_transform":transform_receipt(world.player.camera.get_parent().global_transform),
+		"marker_xyz":xyz(atlas.hero_position),"marker_forward":xyz(atlas.hero_forward),
+		"nominal_bounds":nominal_bounds.duplicate(),
+		"plot_position":xy(plot.position),"plot_size":xy(plot.size),
+		"local_point":xy(point),"normalized_point":xy(fraction),
+		"expected_normalized_point":xy(expected_fraction),
+		"heading":xy(heading),"expected_heading":xy(expected_heading),
+		"diagonal_heading":xy(actual_diagonal),"expected_diagonal_heading":xy(expected_diagonal),
+		"parent":String(atlas.get_parent().get_path()),
+		"active_camera":String(root.get_camera_3d().get_path()),
+		"terms":{
+			"player_held":world.player.global_position==position_before,
+			"visual_facing_held":world.player.visual.global_basis.z==facing_before,
+			"marker_xyz_matches":atlas.hero_position==position_before,
+			"marker_facing_matches":atlas.hero_forward==facing_before,
+			"normalized_point_matches":fraction.is_equal_approx(expected_fraction),
+			"heading_matches":heading.is_equal_approx(expected_heading),
+			"diagonal_heading_matches":actual_diagonal.is_equal_approx(expected_diagonal),
+			"manifest_bounds_unchanged":world.manifest.bounds.nominal_xz==nominal_bounds},
+		"player_camera_current":world.player.camera.current,
+		"review_camera_current":world.review_camera.current}
+
+func mapping_valid(snapshot: Dictionary) -> bool:
+	return snapshot.terms.values().all(func(value):return value==true)
 
 func ray(from: Vector3, to: Vector3) -> Dictionary:
 	var query:=PhysicsRayQueryParameters3D.create(from,to,1,[world.player.get_rid()])
@@ -77,6 +133,7 @@ func run() -> void:
 	atlas=world.map_control
 	await physics_flush()
 	var manifest_before:=JSON.stringify(world.manifest)
+	nominal_bounds=world.manifest.bounds.nominal_xz.duplicate()
 	var army_before: Dictionary=world.army.report()
 	var capsule_radius:=-1.0
 	for child in world.player.get_children():
@@ -155,24 +212,79 @@ func run() -> void:
 	var occluded_anchor:bool=world.player.traversal._clear_ray(Vector3(-35,1.28,-28),sky_position)
 	check("anchor marker does not bypass the real tether obstruction test",clear_anchor and not occluded_anchor,{"clear_spawn_to_landing_ring":clear_anchor,"blocked_street_to_sky_ring":not occluded_anchor})
 
+	observations.overview_mapping=[]
 	for fixture in [{"position":Vector3(0,.05,-112),"yaw":45.0},{"position":Vector3(54,10.05,88),"yaw":-45.0}]:
 		world.teleport_to(fixture.position,fixture.yaw)
 		await frames(12)
 		var position_before: Vector3=world.player.global_position
+		var facing_before: Vector3=world.player.visual.global_basis.z
+		var parent_before: Node=atlas.get_parent()
+		var plot_before: Rect2=atlas._plot_rect()
 		var point_before: Vector2=atlas.project(atlas.hero_position)
 		var heading_before: Vector2=atlas.project_heading(atlas.hero_forward)
-		var marker_correct: bool=atlas.hero_position.is_equal_approx(position_before) and point_before.is_equal_approx(atlas.project(position_before))
+		var camera_before: Transform3D=world.player.camera.global_transform
+		var camera_parent_before: Transform3D=world.player.camera.get_parent().global_transform
+		var camera_parent_node: Node=world.player.camera.get_parent()
+		var before:=mapping_snapshot(position_before,facing_before)
 		world.set_overview(true)
 		await frames(12)
-		var held: bool=world.review_camera.current and world.player.global_position.is_equal_approx(position_before) and atlas.hero_position.is_equal_approx(position_before) and atlas.project(atlas.hero_position).is_equal_approx(point_before) and atlas.project_heading(atlas.hero_forward).is_equal_approx(heading_before)
+		var during:=mapping_snapshot(position_before,facing_before)
+		var overview_terms:={
+			"review_camera_active":root.get_camera_3d()==world.review_camera and world.review_camera.current and not world.player.camera.current,
+			"map_in_guide":world.atlas_guide.is_ancestor_of(atlas) and atlas.get_parent()!=parent_before,
+			"exact_player_camera_origin_held":world.player.camera.global_position==camera_before.origin,
+			"exact_player_camera_parent_held":world.player.camera.get_parent()==camera_parent_node and camera_parent_node.global_transform==camera_parent_before,
+			# SpringArm global/local basis round-trips show measured 8.90e-8 drift.
+			"player_camera_basis_approx_held":world.player.camera.global_basis.is_equal_approx(camera_before.basis),
+			"root_forward_held":during.world_root_forward_minus_z==before.world_root_forward_minus_z,
+			"aspect_witness_changes_as_expected":during.diagonal_heading!=before.diagonal_heading and during.expected_diagonal_heading!=before.expected_diagonal_heading}
+
+		# Mutate only this disposable map instance, synchronously. An awaited
+		# live refresh could overwrite the corruption before it is observed.
+		var marker_before: Vector3=atlas.hero_position
+		var marker_facing_before: Vector3=atlas.hero_forward
+		atlas.hero_position+=Vector3(.25,0,0)
+		var corrupt_marker:=mapping_snapshot(position_before,facing_before)
+		atlas.hero_position=marker_before
+		check("counterexample rejects a 25cm marker-only shift: "+str(fixture.position),not mapping_valid(corrupt_marker) and not corrupt_marker.terms.normalized_point_matches,corrupt_marker)
+		atlas.hero_forward=(marker_facing_before+Vector3(.1,0,0)).normalized()
+		var corrupt_heading:=mapping_snapshot(position_before,facing_before)
+		atlas.hero_forward=marker_facing_before
+		check("counterexample rejects marker-only facing corruption: "+str(fixture.position),not mapping_valid(corrupt_heading) and not corrupt_heading.terms.heading_matches,corrupt_heading)
+		var diagonal:=Vector3(1,0,-1).normalized()
+		var heading_near: Vector2=atlas.project_heading(diagonal)
+		atlas.hero_position+=Vector3(10000,50,-10000)
+		var heading_far: Vector2=atlas.project_heading(diagonal)
+		atlas.hero_position=marker_before
+		var zero_heading: Vector2=atlas.project_heading(Vector3.ZERO)
+		var nan_heading: Vector2=atlas.project_heading(Vector3(NAN,0,1))
+		var infinite_heading: Vector2=atlas.project_heading(Vector3(1,0,INF))
+		check("heading is position-independent and rejects zero/nonfinite direction: "+str(fixture.position),heading_near==heading_far and zero_heading==Vector2.ZERO and nan_heading==Vector2.ZERO and infinite_heading==Vector2.ZERO and atlas.hero_position==marker_before,{"near":xy(heading_near),"translated_10km":xy(heading_far),"zero":xy(zero_heading),"nan":xy(nan_heading),"infinite":xy(infinite_heading),"marker_restored_exactly":atlas.hero_position==marker_before})
+		var restored:=mapping_snapshot(position_before,facing_before)
+		check("synchronous marker restoration recovers the same mapping: "+str(fixture.position),mapping_valid(restored) and atlas.hero_position==marker_before and atlas.hero_forward==marker_facing_before,restored)
+
 		world.set_overview(false)
 		await frames(12)
-		check("actual live/overview camera switch preserves marker position and heading: "+str(fixture.position),marker_correct and held and world.player.camera.current and world.player.global_position.is_equal_approx(position_before) and atlas.project(atlas.hero_position).is_equal_approx(point_before),{"world_position":str(position_before),"map_point":str(point_before),"heading":str(heading_before)})
+		var after:=mapping_snapshot(position_before,facing_before)
+		var restoration_terms:={
+			"same_live_parent":atlas.get_parent()==parent_before,
+			"exact_plot_restored":atlas._plot_rect()==plot_before,
+			"exact_raw_point_restored":atlas.project(atlas.hero_position)==point_before,
+			"exact_heading_restored":atlas.project_heading(atlas.hero_forward)==heading_before,
+			"same_player_camera_active":root.get_camera_3d()==world.player.camera and world.player.camera.current and not world.review_camera.current,
+			"exact_player_camera_origin_restored":world.player.camera.global_position==camera_before.origin,
+			"exact_player_camera_parent_restored":world.player.camera.get_parent()==camera_parent_node and camera_parent_node.global_transform==camera_parent_before,
+			"player_camera_basis_approx_restored":world.player.camera.global_basis.is_equal_approx(camera_before.basis),
+			"root_forward_held":after.world_root_forward_minus_z==before.world_root_forward_minus_z}
+		var valid: bool=mapping_valid(before) and mapping_valid(during) and mapping_valid(after) and overview_terms.values().all(func(value):return value==true) and restoration_terms.values().all(func(value):return value==true)
+		var detail:={"position":xyz(fixture.position),"teleport_facing_degrees":fixture.yaw,"before":before,"during":during,"after":after,"overview_terms":overview_terms,"restoration_terms":restoration_terms}
+		observations.overview_mapping.append(detail)
+		check("live/overview preserves manifest XZ and actual hero facing, then exactly restores live layout: "+str(fixture.position),valid,detail)
 
 	var stable:bool=JSON.stringify(world.manifest)==manifest_before and atlas.data==original_data and world.army.report()==army_before
 	for path in source_start:stable=stable and source_start[path]==FileAccess.get_sha256(path)
 	check("fixture restores collision/map mutations and preserves source manifest army and files",stable and body.collision_layer==original_layer)
-	var result:={"passed":checks.all(func(row):return row.passed),"count":checks.size(),"checks":checks,"observations":observations,"source_sha256":source_start,"physics_frames":Engine.get_physics_frames(),"scope":"Actual current native world/PhysicsSpace, configured hero predictive capsule sweeps, real ray hits, paving uniforms, atlas projection and live overview camera switch. Three short primary-route samples, one blocker, two decks, one sky ring and one visual apron point only. Two isolated scene-instance counterexamples are restored. XZ map footprints do not encode elevation, ramps, navmesh connectivity, all-terrain clearance, army elevation, browser/online authority or rendered art acceptance."}
+	var result:={"passed":checks.all(func(row):return row.passed),"count":checks.size(),"checks":checks,"observations":observations,"source_sha256":source_start,"physics_frames":Engine.get_physics_frames(),"scope":"Actual current native world/PhysicsSpace, configured hero predictive capsule sweeps, real ray hits, paving uniforms, atlas projection and live overview camera switch. Three short primary-route samples, one blocker, two decks, one sky ring and one visual apron point only. Two collision/map counterexamples and four marker/facing counterexamples are restored. Overview mapping expectations use captured manifest bounds and actual visual +Z facing; exact parent, pixels, plot, heading, player-camera origin/parent/owner restoration and approximate camera basis are required. Synchronous 10km position translations verify heading invariance plus zero/nonfinite handling. XZ map footprints do not encode elevation, ramps, navmesh connectivity, all-terrain clearance, army elevation, browser/online authority or rendered art acceptance."}
 	FileAccess.open(output,FileAccess.WRITE).store_string(JSON.stringify(result,"  ")+"\n")
 	current_scene=null;world.queue_free();await frames(8)
 	# Fixed-fps headless frames are unthrottled; give the real audio mixer a

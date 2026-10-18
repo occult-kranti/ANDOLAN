@@ -1,0 +1,9 @@
+# Optional upper-hair helper: smooth-crown compatibility
+
+The original seven-guide authoring input remains R7 near `8b6cf0f4…84d5c`, with historical generator `build_g2_hair_layers.py` unchanged at `8b929a7b…d934`. Guide points, widths, depths and outward directions are unchanged. Schema 2 records both that original input and reviewed smooth-crown R2 near `e98c9110…c2b82` as admitted sources.
+
+`art/hero-finish/admit_smooth_crown_hair_layers.py` is a separate compatibility overlay, run after any historical guide regeneration. It verifies the exact original and promoted near model hashes, complete equal GLB JSON, and byte-equal indices, every hair attribute and hair morph accessor. `source-proof.json` contains all nine unchanged accessor digests and pins W1's independent actual imported comparison. The historical generator must be run against its original R7 model; it is deliberately not repinned to its own derivative.
+
+The optional runtime helper validates the schema/admission ledger and retains its existing 164-bone, head-rest and material checks. That ledger is not runtime raw-file identity verification; exports can remap GLB resources to SCNs. No optional-helper activation or geometry change is included. The separate new principal-hair experiment is not admitted here.
+
+The focused existing imported-rig suite checks material and mesh resource identity, 100 repeat configurations, single ownership, head following, release/reconfigure/transfer, finite frames and original pose restoration. Four added metadata assertions require preserved original authorship, the exact reviewed admission pair, rejection of an unreviewed third hash and rejection of unoverlaid historical metadata. Actual execution and source pins belong to the sealed receipt; no rendered or whole-action clearance claim follows from these checks.

@@ -1,0 +1,22 @@
+{
+  "task": "Unchanged-assertion overview diagnostic",
+  "source_sha256": {
+    "res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "res://scripts/confluence_world.gd": "cc014ac25009da5852f6fce646522f0e195eb3ec0a11ababc171e4ed990df8b2",
+    "res://scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+    "res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+    "res://scripts/world_atlas.gd": "1cf4b7f22b4e34fdeb4300d8e9c591cd3ecad2990a13a7ed8941bf3f4d32cce5",
+    "res://tests/desktop_world_route_parity_cases.gd": "0b538cff37aff95ab36e4f916c3772001af634910e1a1c762fee1e6d57a2a138"
+  },
+  "result": {
+    "passed": false,
+    "checks": 19,
+    "passed_count": 17,
+    "source_unchanged": true,
+    "exit_code": 1,
+    "engine_diagnostics": []
+  },
+  "original_failure": "../W5-atlas-route-regression-r1/receipt.json",
+  "findings": "Only raw_local_point_held fails for both cases. Intentional plot dimensions 142x229 become196x364, return exactly. Player/markerXYZ, world root-forward, camera terms and independent normalizedXZ/current-aspect heading all pass. Existing assertions preserved unchanged.",
+  "runtime_edits": false
+}

@@ -1,0 +1,15 @@
+{
+  "affected": [
+    "candidate-guard-60-r3",
+    "legacy-scene-30-r3"
+  ],
+  "reason": "Coordinator incorrectly started the legacy scene probe while its owned guard process was still running. Both were confined toCPU4/private projects. An attempted verified-PID termination found the new engine already exited; no process was killed. This overlap is retained and neither run is presented as serial resource/timing evidence. Subsequent probes are strictly serial; no runtime/test assertion changed.",
+  "scope": "The overlap does not modify source or fixed-step authority, but wall durations are not comparable performance evidence.",
+  "guard_failure": {
+    "dependency": "res://docs/evidence/desktop-finish/S3/W5/guard-witness.json",
+    "kind": "missing staged tracked fixture data; no tests completed",
+    "termination": "verified owned PID26607 SIGTERM after107.938s; original log/execution retained",
+    "repair": "Copied unchanged tracked witness into private stages; no runtime or assertion edits"
+  },
+  "final_evidence": "Both affected invocations will be retained but excluded from final serial gate results."
+}

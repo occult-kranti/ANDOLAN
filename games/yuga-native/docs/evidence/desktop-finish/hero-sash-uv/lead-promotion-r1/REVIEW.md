@@ -1,0 +1,3 @@
+The lead directly viewed all four original front/cast images. The candidate turns long scratch-like streaks into recognizable, more evenly proportioned flowers and gives the cobalt field a calmer pattern. Gold edging and folds remain legible; no new seam or normal-map blotch is visible. W1 and W3 independently support this bounded improvement.
+
+Promoted three raw files and six validated compiled payloads exactly after checking all source, destination and descriptor pins. Only selected sash UV bytes change after the accepted crown stage. No geometry, materials, images, rig, morphs or other primitive data change; schema6 validates the finite ordered stages under its original parent. This is texture proportion acceptance, not cloth sculpt, animation or full-hero quality.

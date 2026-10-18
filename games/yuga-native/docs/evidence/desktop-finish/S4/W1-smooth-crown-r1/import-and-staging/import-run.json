@@ -1,0 +1,29 @@
+{
+  "command": [
+    "env",
+    "LP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "XDG_CACHE_HOME=/tmp/yuga-s4-smooth-import-r1-user/cache",
+    "XDG_CONFIG_HOME=/tmp/yuga-s4-smooth-import-r1-user/config",
+    "XDG_DATA_HOME=/tmp/yuga-s4-smooth-import-r1-user/data",
+    "taskset",
+    "-c",
+    "0,1",
+    "timeout",
+    "120s",
+    "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "--headless",
+    "--path",
+    "/tmp/yuga-s4-smooth-import-r1/candidate-project",
+    "--editor",
+    "--import",
+    "--quit"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 11.081709498000237,
+  "log_sha256": "8c4b2998e0d50547e2cb97098e0d835ce9ba01e88b83a4d0b6252c20a52dd193",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "scope": "Private isolated3GLB import only; CPU affinity0,1/LP1; no validated Godot worker-pool cap; canonical and shared compiled store unchanged."
+}

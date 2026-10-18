@@ -51,7 +51,9 @@ godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/ra
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_practice_cases.gd -- --report="$validation_dir/rama-practice.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_layout_cases.gd -- --report="$validation_dir/rama-hud-layout.json"
 godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_expiry_cases.gd -- --report="$validation_dir/rama-hud-expiry.json"
-python3 games/yuga-native/tests/rama_package_cases.py --report="$validation_dir/rama-package.json"
+python3 games/yuga-native/tests/rama_package_cases.py --groom-review games/yuga-native --report="$validation_dir/rama-package.json"
+python3 games/yuga-native/tests/graphics_package_cases.py --report="$validation_dir/graphics-package.json"
+python3 games/yuga-native/tests/rama_crown_package_cases.py --report="$validation_dir/rama-crown-package.json"
 # Each new Godot component suite uses isolated XDG state. Headless checks do not
 # accept rendered art, OS input, human feel/listening, native online play or GPU FPS.
 "$native_python_root/bin/python" games/yuga-native/tools/run-quality-checks.py --engine godot --python "$native_python_root/bin/python" --output "$validation_dir/rama-quality"

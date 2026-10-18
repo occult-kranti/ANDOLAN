@@ -374,8 +374,8 @@ def groom_review_cases(checks: list, review: Path) -> None:
     """Challenge the real frozen proposal in disposable copies, including BIN/JSON drift."""
     validated = packaging.validate_rama_hero_notice(review)
     original = json.loads((review / 'NOTICE/RAMA-HERO-PROVENANCE.json').read_text())
-    if original['schema'] not in (4, 5):
-        raise ValueError('--groom-review must contain the complete schema4 or schema5 proposal')
+    if original['schema'] not in (4, 5, 6):
+        raise ValueError('--groom-review must contain the complete schema4, schema5 or schema6 proposal')
     schema = original['schema']
     checks.append({'name': f'schema{schema} real complete source validates', 'passed': True})
     with tempfile.TemporaryDirectory(prefix='rama-groom-package-cases-') as folder:
@@ -386,7 +386,13 @@ def groom_review_cases(checks: list, review: Path) -> None:
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(review / relative, target)
         (root / 'NOTICE').mkdir(exist_ok=True)
-        if schema == 5:
+        if schema == 6:
+            # The crown's outputs are not the groom's historical runtime trio.
+            # Reconstruct the exact old binding before running unchanged adversaries.
+            original = json.loads((root / packaging.RAMA_CROWN_PARENT).read_text())
+            for name, _, _ in packaging.RAMA_CROWN_OUTPUTS.values():
+                shutil.copyfile(root / f'{packaging.RAMA_GROOM_BASE}/{name}', root / f'assets/heroes/{name}')
+        if original['schema'] == 5:
             original = json.loads((root / packaging.RAMA_SURFACE_PARENT).read_text())
             shutil.copyfile(root / packaging.RAMA_SURFACE_OLD_BINDING,
                             root / 'scripts/rama_surface_finish.gd')
@@ -605,7 +611,7 @@ def bundled_font_cases(checks: list, engine: Path | None = None, evidence: Path 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--report', type=Path)
-    parser.add_argument('--groom-review', type=Path, help='Complete schema4/5 proposal; preserves schema4 own-binding adversaries')
+    parser.add_argument('--groom-review', type=Path, help='Complete schema4/5/6 proposal; preserves schema4 own-binding adversaries')
     parser.add_argument('--font-engine', type=Path, help='Optional actual FontFile decode and substituted-cache adversary')
     parser.add_argument('--font-evidence', type=Path)
     args = parser.parse_args()
@@ -690,7 +696,7 @@ def main() -> int:
               'source_sha256': {'tools/package-native.py': packaging.digest(PROJECT / 'tools/package-native.py'),
                                 'tests/rama_package_cases.py': packaging.digest(Path(__file__))},
               'groom_review': str(args.groom_review) if args.groom_review else None,
-              'scope': 'Historical schema1/schema2 and fixed schema3 remain covered. --groom-review accepts schema4/5 source closures and tests schema4 with its exact historical surface binding, nonhair BIN/JSON preservation, dependencies, editable identity, source paths and excluded shader. Separate graphics_package_cases.py challenges schema5. Bundled font raw/license identities and exact payload/remap qualification are covered; optional --font-engine runs actual FontFile.data binding and a substituted-cache adversary. No visual acceptance or complete release export.'}
+              'scope': 'Historical schema1/schema2 and fixed schema3 remain covered. --groom-review accepts schema4/5/6 source closures and tests schema4 with its exact historical trio and surface binding, nonhair BIN/JSON preservation, dependencies, editable identity, source paths and excluded shader. Separate graphics_package_cases.py challenges preserved schema5; rama_crown_package_cases.py challenges schema6. Bundled font raw/license identities and exact payload/remap qualification are covered; optional --font-engine runs actual FontFile.data binding and a substituted-cache adversary. No visual acceptance or complete release export.'}
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + '\n')

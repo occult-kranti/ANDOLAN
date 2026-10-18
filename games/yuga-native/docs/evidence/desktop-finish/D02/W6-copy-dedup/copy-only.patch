@@ -1,0 +1,14 @@
+diff --git a/games/yuga-native/scripts/loading_presentation.gd b/games/yuga-native/scripts/loading_presentation.gd
+index 8732853..8f9f3b7 100644
+--- a/games/yuga-native/scripts/loading_presentation.gd
++++ b/games/yuga-native/scripts/loading_presentation.gd
+@@ -43,7 +43,8 @@ func present_phase(phase: StringName, destination: StringName, progress: float)
+ 	elif phase == &"constructing":
+ 		progress_scope.text = "Scene and actors are being prepared. No overall percentage is available."
+ 	elif phase == &"error":
+-		progress_scope.text = "Retry this destination, or return to the previous screen."
++		# The specific controller error above already explains recovery.
++		progress_scope.text = ""
+ 	elif phase == &"loading":
+ 		progress_scope.text = "Resource progress is unavailable."
+ 	else:

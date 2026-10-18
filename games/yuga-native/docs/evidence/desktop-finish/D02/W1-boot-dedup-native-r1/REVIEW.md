@@ -1,0 +1,5 @@
+The duplicate generic guidance is removed from the missing-scene error card. W1 directly opened the new initial-error original: the destination-specific instruction remains once, with Retry/Back and a contained focus ring. The already-failed loader can still be dismissed into the usable boot screen.
+
+The same native plan completed five manual plus three queued automatic originals, actual Quit and cleanup exit0, in3.574 seconds. The27-file fixture closure differs from the prior actual run only in loading_presentation.gd (a01b5289…). Exact plan, controller, callbacks, font imports and runner remain fixed. Source identity remained unchanged during capture. Full logs retain one expected unsupported V-Sync-mode warning, with no errors.
+
+This is the isolated960×600 Compatibility fixture using the installed editor, fresh XDG and CPU0/LP1, not a3D world render or process-relaunch test. The missing courtyard is deliberate. Escape is dismissal after a completed failed load, not in-flight cancellation. Both old and new original takes are retained; no broad graphics or hardware-performance acceptance is implied.

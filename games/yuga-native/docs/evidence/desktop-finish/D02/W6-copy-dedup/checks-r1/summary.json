@@ -1,0 +1,123 @@
+{
+  "catalog": "screens",
+  "checked_sources_unchanged": true,
+  "checks": 64,
+  "engine_probe": {
+    "command": [
+      "/usr/local/bin/godot",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.041
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "schema": 1,
+  "scope": "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance.",
+  "selected_suites": [
+    "ui-boot-recovery",
+    "ui-loading-presentation",
+    "ui-cancel-focus"
+  ],
+  "sources_after_sha256": "e6d5ef25bd0bc03ee4e8861bd189e1941e80a15ac546cd6c1eeb0461c7a3a868",
+  "sources_before_sha256": "e6d5ef25bd0bc03ee4e8861bd189e1941e80a15ac546cd6c1eeb0461c7a3a868",
+  "suites": [
+    {
+      "checks": 29,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/tests/ui_s1_loading_fixture.py",
+        "--engine",
+        "/usr/local/bin/godot",
+        "--report=/workspace/scratch/desktop-loading-dedup-checks-r1/reports/ui-boot-recovery.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "ui-boot-recovery",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/ui-boot-recovery.json",
+      "report_sha256": "330b378edce41ff1d4c8fb92eeb0d7f4d2fa314a2795c483ecab5b69eceb47b6",
+      "stderr": "logs/ui-boot-recovery.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/ui-boot-recovery.stdout",
+      "stdout_sha256": "78b0ac69abdbe3c5f6d1dfb73157fc72790a20c9534cb1aec7ba79ad78d6b85d",
+      "timed_out": false,
+      "wall_seconds": 1.205
+    },
+    {
+      "checks": 12,
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_finish_s2_loading_view_cases.gd",
+        "--",
+        "--report=/workspace/scratch/desktop-loading-dedup-checks-r1/reports/ui-loading-presentation.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "ui-loading-presentation",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/ui-loading-presentation.json",
+      "report_sha256": "45fc46c1b80bc86e3e3455c597d597fe68c3c4e54ab54e82927af5eaf6a4253c",
+      "stderr": "logs/ui-loading-presentation.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/ui-loading-presentation.stdout",
+      "stdout_sha256": "a24ee0f09f8a756303e4e6d61926099f01c2dd80f6a9bae7f7f603746a4d5fe6",
+      "timed_out": false,
+      "wall_seconds": 0.269
+    },
+    {
+      "checks": 23,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/tests/ui_s1_loading_fixture.py",
+        "--engine",
+        "/usr/local/bin/godot",
+        "--report=/workspace/scratch/desktop-loading-dedup-checks-r1/reports/ui-cancel-focus.json",
+        "--case",
+        "cancel-focus"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "ui-cancel-focus",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/ui-cancel-focus.json",
+      "report_sha256": "190125c34ea887bd1d31e7f28cc6a6d2f83ed46a3403f58bbfe349abb90f5cc4",
+      "stderr": "logs/ui-cancel-focus.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/ui-cancel-focus.stdout",
+      "stdout_sha256": "d6d8a4ff26c5fb6d7816d16c62797aef02ca58b8d1e24c4937c4ac05b21d92e6",
+      "timed_out": false,
+      "wall_seconds": 0.755
+    }
+  ]
+}

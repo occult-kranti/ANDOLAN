@@ -1,0 +1,71 @@
+{
+  "catalog": "visual",
+  "checked_sources_unchanged": true,
+  "checks": 19,
+  "engine_probe": {
+    "command": [
+      "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.041
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": false,
+  "schema": 1,
+  "scope": "Headless visual component, real resource and native identity contracts only; no rendered-art, continuous-motion, physical-GPU, online or release acceptance.",
+  "selected_suites": [
+    "desktop-world-route-parity"
+  ],
+  "sources_after_sha256": "0e546e81ea381c809de561990a643a438d0ea9907cd3734a5d874e58acbbb875",
+  "sources_before_sha256": "0e546e81ea381c809de561990a643a438d0ea9907cd3734a5d874e58acbbb875",
+  "suites": [
+    {
+      "checks": 19,
+      "command": [
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_world_route_parity_cases.gd",
+        "--",
+        "--report=/tmp/yuga-world-regression-parity-diagnostic-r1/reports/desktop-world-route-parity.json"
+      ],
+      "executed": true,
+      "exit_code": 1,
+      "id": "desktop-world-route-parity",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": false,
+      "problems": [
+        "suite_report_not_passed",
+        "suite_contains_failed_or_unrecognized_check",
+        "native_process_failed"
+      ],
+      "process_error": null,
+      "report": "reports/desktop-world-route-parity.json",
+      "report_sha256": "7a1b03c399d755d46405628b87ba30c5e74c307f426f043197d2968031405ab6",
+      "stderr": "logs/desktop-world-route-parity.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/desktop-world-route-parity.stdout",
+      "stdout_sha256": "cac68d8209032851d8e1eab670055c0f073fcd4b04b65d32b23375452c246c75",
+      "timed_out": false,
+      "wall_seconds": 2.153
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "original_helper_sha256": "e1fce29c25f2694a6e8f5b9e3e6f5aa88c4f89d8bf1b2aa033c9ba5e96934637",
+  "corrected_helper_sha256": "bd74ee6478935357db7b22c491496de676974514bcfbb4b80fba455862a0c208",
+  "preserved_failures": [
+    "/tmp/yuga-sash-uv-review-r1/preflight-baseline-r1-logs",
+    "/tmp/yuga-sash-uv-review-r1/preflight-baseline-verbose-r1-logs"
+  ],
+  "observed_leak_classes": [
+    "AudioStreamWAV",
+    "AudioStreamPlaybackWAV"
+  ],
+  "observed_resource": "res://assets/audio/rama-quality/draw_piercing_dawn.wav",
+  "correction": "After all shots only: stop and release AudioStreamPlayer streams, free scene, observe2 real mixer ticks within250ms then8 main cleanup frames. Also null inapplicable head projection fields.",
+  "runtime_changes": false,
+  "camera_and_pose_changes": false,
+  "fresh_corrected_preflights": "2/2 observations per branch, engineexit0 and clean verbose logs; exact164 poses/control comparison passed."
+}

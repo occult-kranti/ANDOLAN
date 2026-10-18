@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "same_recorded_controls": true,
+  "rows": [
+    {
+      "id": "00-title",
+      "same_recorded_controls": true,
+      "metadata_differences": [
+        {
+          "path": "/sha256",
+          "a": "39f6a43474c70ee1b99faaac7d5889271f6324fde425024378aa14c8ff0f0e54",
+          "b": "a81b65985ba29733f2ea9cdc192df5a39b373310904237129bbcc50940b82989"
+        }
+      ],
+      "unignored_differences": [],
+      "pixel_difference": {
+        "changed_pixels": 131802,
+        "max_channel_delta": 110,
+        "mean_absolute_channel_delta": 1.2770518261316872
+      },
+      "baseline_sha256": "39f6a43474c70ee1b99faaac7d5889271f6324fde425024378aa14c8ff0f0e54",
+      "candidate_sha256": "a81b65985ba29733f2ea9cdc192df5a39b373310904237129bbcc50940b82989"
+    },
+    {
+      "id": "01-training",
+      "same_recorded_controls": true,
+      "metadata_differences": [],
+      "unignored_differences": [],
+      "pixel_difference": {
+        "changed_pixels": 0,
+        "max_channel_delta": 0,
+        "mean_absolute_channel_delta": 0.0
+      },
+      "baseline_sha256": "15a65422c2233ba6741049248067888236987cfe64d88df2a338483f84ba8921",
+      "candidate_sha256": "15a65422c2233ba6741049248067888236987cfe64d88df2a338483f84ba8921"
+    }
+  ],
+  "source_delta": [
+    "scripts/courtyard.gd"
+  ],
+  "equal_launch_controls": {
+    "engine_sha256": true,
+    "runner_sha256": true,
+    "helper_sha256": true,
+    "affinity": true,
+    "thread_limits": true,
+    "godot_worker_pool_limit": true,
+    "render_thread_override": true,
+    "shader_cache_seed": true,
+    "godot_shader_cache_seed": true
+  },
+  "baseline_reused": "/tmp/yuga-title-floor-normal-r1/render-baseline-r1",
+  "candidate": "/tmp/yuga-title-fill-r1/render-candidate-r1",
+  "scope": "Exact recorded scene/camera/hero/state/clock controls. Helper does not record all164 final bone matrices or actual light numeric state; light-only assignments are source-pinned."
+}

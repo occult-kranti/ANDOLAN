@@ -48,8 +48,11 @@ func _core_caption_rect(objective: Dictionary) -> Rect2:
 
 func project_heading(direction: Vector3) -> Vector2:
 	if not direction.is_finite(): return Vector2.ZERO
-	# Use the same anisotropic map projection as roads and objective positions.
-	var projected := project(hero_position + direction) - project(hero_position)
+	# Project the direction directly: subtracting two map positions loses
+	# precision and makes the heading depend on the marker location.
+	var bounds: Array=data.get("bounds",{}).get("nominal_xz",[-70,70,-130,130])
+	var plot := _plot_rect()
+	var projected := Vector2(direction.x/(bounds[1]-bounds[0])*plot.size.x, direction.z/(bounds[3]-bounds[2])*plot.size.y)
 	return projected.normalized() if projected.is_finite() and not projected.is_zero_approx() else Vector2.ZERO
 
 func _draw() -> void:

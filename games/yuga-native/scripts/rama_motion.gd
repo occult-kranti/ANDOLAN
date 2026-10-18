@@ -85,6 +85,16 @@ var finite := true
 var floor_y := 0.0
 var idle_support_y := {"L":0.0,"R":0.0}
 var support_exclude: Array[RID] = []
+# Descent clearance is admitted only after real flat support has been seen.
+# Every candidate plane is freshly measured during the current physics update.
+var measured_support_seen := false
+var descent_support_y := {}
+var descent_support_xz := {}
+var descent_support_transform := Transform3D.IDENTITY
+var descent_support_owner := {}
+var descent_support_owner_transform := {}
+var descent_support_shape := {}
+var support_chains := {}
 var idle_support_ready := true
 var idle_support_pending := {"L":false,"R":false}
 var idle_support_age := {"L":IDLE_SUPPORT_SETTLE_S,"R":IDLE_SUPPORT_SETTLE_S}
@@ -133,6 +143,14 @@ func configure(visual: Node, animator: AnimationPlayer = null) -> bool:
 		rest_globals.append(rig.get_bone_global_rest(index))
 		var name_:=String(rig.get_bone_name(index))
 		upper.append(not (name_=="root" or name_.begins_with("pelvis") or name_.contains("leg") or name_.begins_with("foot") or name_.begins_with("toe")))
+	for side in ["L","R"]:
+		var chain:Array[int]=[]
+		var cursor:=rig.find_bone("foot."+side)
+		for unused in rig.get_bone_count():
+			if cursor<0:break
+			chain.push_front(cursor)
+			cursor=rig.get_bone_parent(cursor)
+		support_chains[side]=chain
 	for clip in library.get_animation_list():
 		var rows:=[]
 		var anim:=library.get_animation(clip)
@@ -259,6 +277,7 @@ func update_motion(delta: float, state: Dictionary) -> bool:
 			idle_support_pending[side]=false
 			idle_support_age[side]=IDLE_SUPPORT_SETTLE_S
 	_update_idle_support()
+	_update_descent_support()
 	return true
 
 func _update_idle_support() -> void:
@@ -279,6 +298,72 @@ func _update_idle_support() -> void:
 		var hit:=world.direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from,to,1,support_exclude))
 		if not hit.is_empty() and Vector3(hit.normal).dot(Vector3.UP)>.9999 and absf(float(hit.position.y)-floor_y)<=IDLE_SUPPORT_PROBE_M:
 			idle_support_y[side]=float(hit.position.y)
+
+func _update_descent_support() -> void:
+	descent_support_y.clear()
+	descent_support_xz.clear()
+	descent_support_owner.clear()
+	descent_support_owner_transform.clear()
+	descent_support_shape.clear()
+	if support_exclude.is_empty() or not Engine.is_in_physics_frame() or not rig.is_inside_tree():return
+	if traversal!="ground":
+		measured_support_seen=false
+		return
+	if action=="death" or (action=="measured_step" and action_stage!="none"):return
+	if not grounded and (locomotion!="fall" or world_velocity.y>0 or not measured_support_seen):return
+	var world:=rig.get_world_3d()
+	if not is_instance_valid(world):return
+	var pose:Dictionary={} if grounded else _motion_pose()
+	descent_support_transform=rig.global_transform
+	for side in ["L","R"]:
+		var foot:=rig.find_bone("foot."+side)
+		var point:Vector3=rig.global_transform*last_globals[foot].origin if grounded else _support_foot_world(side,pose)
+		var from:=Vector3(point.x,floor_y+IDLE_SUPPORT_PROBE_M,point.z)
+		var to:=Vector3(point.x,floor_y-IDLE_SUPPORT_PROBE_M,point.z)
+		var hit:=world.direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from,to,1,support_exclude))
+		if hit.is_empty() or Vector3(hit.normal).dot(Vector3.UP)<=.9999 or absf(float(hit.position.y)-floor_y)>IDLE_SUPPORT_PROBE_M:continue
+		if grounded:measured_support_seen=true
+		else:
+			var shape_state:=_descent_shape_state(hit.collider,int(hit.shape))
+			if shape_state.is_empty():continue
+			descent_support_shape[side]=shape_state
+			descent_support_y[side]=float(hit.position.y)
+			descent_support_xz[side]=Vector2(point.x,point.z)
+			descent_support_owner[side]=weakref(hit.collider)
+			descent_support_owner_transform[side]=hit.collider.global_transform
+
+func _descent_shape_geometry(shape:Shape3D) -> Array:
+	# Only bounded, inspectable flat-support geometry participates in advance
+	# clearance. Complex/multi-shape supports retain the ordinary contact path.
+	if shape is BoxShape3D:return ["box",shape.size]
+	if shape is WorldBoundaryShape3D:return ["plane",shape.plane]
+	return []
+
+func _descent_shape_state(collider:Object,shape_index:int) -> Dictionary:
+	if not collider is CollisionObject3D or (collider.collision_layer&1)==0:return {}
+	var owner_id:int=collider.shape_find_owner(shape_index)
+	if collider.is_shape_owner_disabled(owner_id) or collider.shape_owner_get_shape_count(owner_id)!=1:return {}
+	var shape:Shape3D=collider.shape_owner_get_shape(owner_id,0)
+	var geometry:=_descent_shape_geometry(shape)
+	if geometry.is_empty():return {}
+	return {"owner_id":owner_id,"index":shape_index,"shape":weakref(shape),"geometry":geometry,"transform":collider.shape_owner_get_transform(owner_id)}
+
+func _descent_shape_valid(collider:CollisionObject3D,state:Dictionary) -> bool:
+	if (collider.collision_layer&1)==0 or not collider.get_shape_owners().has(state.owner_id):return false
+	var owner_id:int=state.owner_id
+	if collider.is_shape_owner_disabled(owner_id) or collider.shape_owner_get_shape_count(owner_id)!=1:return false
+	var shape_owner:Object=collider.shape_owner_get_owner(owner_id)
+	if shape_owner is Node and (not shape_owner.is_inside_tree() or shape_owner.is_queued_for_deletion()):return false
+	var shape:Shape3D=collider.shape_owner_get_shape(owner_id,0)
+	return shape==state.shape.get_ref() and collider.shape_owner_get_shape_index(owner_id,0)==state.index and collider.shape_owner_get_transform(owner_id)==state.transform and _descent_shape_geometry(shape)==state.geometry
+
+func _support_foot_world(side:String,pose:Dictionary) -> Vector3:
+	# Pure forward transform through the fixed imported chain. No Skeleton or
+	# clock mutation; evaluate_pose consumes the same sampled/blended locals.
+	var result:=Transform3D.IDENTITY
+	for index in support_chains[side]:
+		result=result*Transform3D(Basis(pose.rotations[index]).scaled(rig.get_bone_pose_scale(index)),pose.positions[index])
+	return rig.global_transform*result.origin
 
 func request_action(ability_id: String, duration := .18, recovery_seconds := .22) -> bool:
 	if not configured or not ACTIONS.has(ability_id) or not is_finite(duration) or not is_finite(recovery_seconds) or duration<=0 or recovery_seconds<=0 or duration>5 or recovery_seconds>5: return false
@@ -328,6 +413,11 @@ func cancel(reason := "reset") -> void:
 	cancel_action(reason)
 	action=""; action_stage="none"; action_blend=0
 	phase=0; locomotion="idle"; locomotion_age=0
+	descent_support_y.clear()
+	descent_support_xz.clear()
+	descent_support_owner.clear()
+	descent_support_owner_transform.clear()
+	descent_support_shape.clear()
 	aim_weight=0; aim_target=0; aim_pitch=0; aim_yaw=0
 	action_aim_entry_weight=0; action_aim_cancel_weight=0
 	foot_locks={"L":false,"R":false}
@@ -405,13 +495,23 @@ func _protect_transition_floor() -> void:
 	# A grounded actor can settle below the root height of the previous
 	# contact-corrected snapshot. Ordinary planting waits for the crossfade;
 	# keep that wait from carrying its soles through the floor meanwhile.
-	if support_exclude.is_empty() or transition_age<=0 or transition_age>=transition_duration:return
-	if not grounded or traversal!="ground" or locomotion not in ["idle","walk","run","sprint","land"]:return
+	if support_exclude.is_empty() or traversal!="ground":return
 	if action=="death" or (action=="measured_step" and action_stage!="none"):return
+	if grounded:
+		if transition_age<=0 or transition_age>=transition_duration or locomotion not in ["idle","walk","run","sprint","land"]:return
+	elif locomotion!="fall" or descent_support_y.is_empty() or not rig.is_inside_tree() or rig.global_transform!=descent_support_transform:return
 	for side in ["L","R"]:
+		if not grounded:
+			if not descent_support_y.has(side) or not descent_support_owner.has(side):continue
+			var owner:Node3D=descent_support_owner[side].get_ref()
+			if not is_instance_valid(owner) or not owner.is_inside_tree() or owner.is_queued_for_deletion() or owner.global_transform!=descent_support_owner_transform[side]:continue
+			if not descent_support_shape.has(side) or not _descent_shape_valid(owner,descent_support_shape[side]):continue
 		var foot:=rig.find_bone("foot."+side)
 		var point:Vector3=rig.global_transform*rig.get_bone_global_pose(foot).origin
-		var support_y:float=idle_support_y[side] if locomotion=="idle" else floor_y
+		# Ten micrometres admits float32 transform roundoff only. An action or
+		# pose change after the query must not borrow another footprint's hit.
+		if not grounded and (not descent_support_xz.has(side) or Vector2(point.x,point.z).distance_squared_to(descent_support_xz[side])>1e-10):continue
+		var support_y:float=(idle_support_y[side] if locomotion=="idle" else floor_y) if grounded else float(descent_support_y[side])
 		var minimum_y:=support_y+rest_globals[foot].origin.y
 		var lift:=minimum_y-point.y
 		if lift>.001 and lift<=IDLE_SUPPORT_PROBE_M:
@@ -481,8 +581,7 @@ func _apply_contact() -> void:
 		var actual:=rig.global_transform*rig.get_bone_global_pose(rig.find_bone("foot."+side)).origin
 		max_contact_error=maxf(max_contact_error,actual.distance_to(foot_targets[side]))
 
-func evaluate_pose() -> void:
-	if not configured: return
+func _motion_pose() -> Dictionary:
 	var normalized:=phase
 	if locomotion in ["jump","land","dash"]: normalized=clampf(locomotion_age/library.get_animation(locomotion).length,0,1)
 	var pose:=_sample(locomotion,normalized)
@@ -515,6 +614,12 @@ func evaluate_pose() -> void:
 		var transition:={"positions":transition_positions.duplicate(),"rotations":transition_rotations.duplicate()}
 		_mix_pose(transition,pose,_smooth(transition_age/transition_duration),true)
 		pose=transition
+	return pose
+
+func evaluate_pose() -> void:
+	if not configured: return
+	var pose:=_motion_pose()
+	var direction_angle:=atan2(local_velocity.x,local_velocity.z) if movement_speed>.12 else 0.0
 	finite=true
 	for index in rest_positions.size():
 		if not pose.positions[index].is_finite() or not pose.rotations[index].is_finite():

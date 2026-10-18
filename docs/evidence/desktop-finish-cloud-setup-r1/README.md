@@ -1,0 +1,3 @@
+The cloud configuration draft now declares the existing ANDOLAN checkout at the remotely verified3db9158 source, preserving the mount path and existing setup/start instructions, network and credential requirements. Full workspace discovery found the user checkout plus four explicitly classified third-party reference/tool-source caches under scratch; none was removed, moved, reset or added as another user project.
+
+The existing runtime/tooling checks and actual render/native-input evidence are linked by games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md. No fresh-environment restoration was attempted here. Saving the draft is confirmed but does not publish/apply it or back up uncommitted files; review/save and Publish through Environment Settings activates the snapshot.

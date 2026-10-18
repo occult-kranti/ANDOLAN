@@ -1,0 +1,81 @@
+{
+  "scope": "Exact public engine source corresponding to tested unmodified public template; not proof of every runtime lifecycle.",
+  "findings": "No explicit candidate reference cycle. Player stop drops local playback refs but server fades/deletes on mixer thread and releases refs on main cleanup. PlaybackWAV retains WAV via Ref base.",
+  "sources": {
+    "servers/audio/audio_server.cpp": {
+      "sha256": "77e3a947e8b4fc114fcb58d9b846bae346937656057525febfb5746b14fdcc28",
+      "source_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "excerpts": [
+        {
+          "start": 723,
+          "end": 732,
+          "text": "void AudioServer::_delete_stream_playback_list_node(AudioStreamPlaybackListNode *p_playback_node) {\n\t// Remove the playback from the list, registering a destructor to be run on the main thread.\n\tplayback_list.erase(p_playback_node, [](AudioStreamPlaybackListNode *p) {\n\t\tdelete p->prev_bus_details;\n\t\tdelete p->bus_details.load();\n\t\tp->stream_playback.unref();\n\t\tdelete p;\n\t});\n}\n"
+        },
+        {
+          "start": 1295,
+          "end": 1312,
+          "text": "\tAudioStreamPlaybackListNode *playback_node = _find_playback_list_node(p_playback);\n\tif (!playback_node) {\n\t\treturn;\n\t}\n\n\tAudioStreamPlaybackListNode::PlaybackState new_state, old_state;\n\tdo {\n\t\told_state = playback_node->state.load();\n\t\tif (old_state == AudioStreamPlaybackListNode::AWAITING_DELETION) {\n\t\t\tbreak; // Don't fade out again.\n\t\t}\n\t\tnew_state = AudioStreamPlaybackListNode::FADE_OUT_TO_DELETION;\n\n\t} while (!playback_node->state.compare_exchange_strong(old_state, new_state));\n}\n\nvoid AudioServer::set_playback_bus_exclusive(Ref<AudioStreamPlayback> p_playback, const StringName &p_bus, Vector<AudioFrame> p_volumes) {\n\tERR_FAIL_COND(p_volumes.size() != MAX_CHANNELS_PER_BUS);"
+        },
+        {
+          "start": 518,
+          "end": 531,
+          "text": "\t\t\tfor (int j = 0; j < MAX_CHANNELS_PER_BUS; j++) {\n\t\t\t\tplayback->prev_bus_details->volume[i][j] = bus_details.volume[i][j];\n\t\t\t}\n\t\t}\n\n\t\tswitch (playback->state.load()) {\n\t\t\tcase AudioStreamPlaybackListNode::AWAITING_DELETION:\n\t\t\tcase AudioStreamPlaybackListNode::FADE_OUT_TO_DELETION:\n\t\t\t\t// Remove the playback from the list.\n\t\t\t\t_delete_stream_playback_list_node(playback);\n\t\t\t\tbreak;\n\t\t\tcase AudioStreamPlaybackListNode::FADE_OUT_TO_PAUSE: {\n\t\t\t\t// Pause the stream.\n\t\t\t\tplayback->state.store(AudioStreamPlaybackListNode::PAUSED);"
+        },
+        {
+          "start": 1615,
+          "end": 1621,
+          "text": "void AudioServer::_cleanup_lists() {\n\tmix_callback_list.maybe_cleanup();\n\tupdate_callback_list.maybe_cleanup();\n\tlistener_changed_callback_list.maybe_cleanup();\n\tplayback_list.maybe_cleanup();\n\tfor (AudioStreamPlaybackBusDetails *bus_details : bus_details_graveyard_frame_old) {\n\t\tbus_details_graveyard_frame_old.erase(bus_details, [](AudioStreamPlaybackBusDetails *d) { delete d; });"
+        }
+      ]
+    },
+    "scene/audio/audio_stream_player_internal.cpp": {
+      "sha256": "799c144760c87839522122b2731cab9a35e5b06c072d7d76197c2df3470e5a80",
+      "source_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "excerpts": [
+        {
+          "start": 100,
+          "end": 114,
+          "text": "\t\tcase Node::NOTIFICATION_EXIT_TREE: {\n\t\t\tset_stream_paused(true);\n\t\t} break;\n\n\t\tcase Node::NOTIFICATION_INTERNAL_PROCESS: {\n\t\t\tprocess();\n\t\t} break;\n\n\t\tcase Node::NOTIFICATION_PREDELETE: {\n\t\t\tfor (Ref<AudioStreamPlayback> &playback : stream_playbacks) {\n\t\t\t\tAudioServer::get_singleton()->stop_playback_stream(playback);\n\t\t\t}\n\t\t\tstream_playbacks.clear();\n\t\t} break;\n"
+        },
+        {
+          "start": 274,
+          "end": 282,
+          "text": "void AudioStreamPlayerInternal::stop_basic() {\n\tfor (Ref<AudioStreamPlayback> &playback : stream_playbacks) {\n\t\tAudioServer::get_singleton()->stop_playback_stream(playback);\n\t}\n\tstream_playbacks.clear();\n\n\tactive.clear();\n\t_set_process(false);\n}"
+        }
+      ]
+    },
+    "servers/audio/audio_driver_dummy.cpp": {
+      "sha256": "fd1000997903aef8ca9005f7b0008ba8652e351b6c520e8ae37d42af503a111d",
+      "source_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "excerpts": [
+        {
+          "start": 56,
+          "end": 75,
+          "text": "void AudioDriverDummy::thread_func(void *p_udata) {\n\tAudioDriverDummy *ad = static_cast<AudioDriverDummy *>(p_udata);\n\n\tuint64_t usdelay = (ad->buffer_frames / float(ad->mix_rate)) * 1000000;\n\n\twhile (!ad->exit_thread.is_set()) {\n\t\tif (ad->active.is_set()) {\n\t\t\tad->lock();\n\t\t\tad->start_counting_ticks();\n\n\t\t\tad->audio_server_process(ad->buffer_frames, ad->samples_in);\n\n\t\t\tad->stop_counting_ticks();\n\t\t\tad->unlock();\n\t\t}\n\n\t\tOS::get_singleton()->delay_usec(usdelay);\n\t}\n}\n"
+        }
+      ]
+    },
+    "scene/resources/audio_stream_wav.h": {
+      "sha256": "2dc2997686df79850f9fbba3f8473e65ee8a0081dc10ffa94e299b83750ae329",
+      "source_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "excerpts": [
+        {
+          "start": 58,
+          "end": 68,
+          "text": "\t\tuint32_t dec_len = 0;\n\t} qoa;\n\n\tint64_t offset = 0;\n\tint8_t sign = 1;\n\tbool active = false;\n\tfriend class AudioStreamWAV;\n\tRef<AudioStreamWAV> base;\n\n\ttemplate <typename Depth, bool is_stereo, bool is_ima_adpcm, bool is_qoa>\n\tvoid decode_samples(const Depth *p_src, AudioFrame *p_dst, int64_t &p_offset, int8_t &p_increment, uint32_t p_amount, IMA_ADPCM_State *p_ima_adpcm, QOA_State *p_qoa);"
+        }
+      ]
+    },
+    "scene/resources/surface_tool.cpp": {
+      "sha256": "64454eadf4cbf494ea8feba0036307c3fb648c60a826884d715d8b8bdfcf5722",
+      "source_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "excerpts": [
+        {
+          "start": 712,
+          "end": 741,
+          "text": "Ref<ArrayMesh> SurfaceTool::commit(const Ref<ArrayMesh> &p_existing, uint64_t p_compress_flags) {\n\tRef<ArrayMesh> mesh;\n\tif (p_existing.is_valid()) {\n\t\tmesh = p_existing;\n\t} else {\n\t\tmesh.instantiate();\n\t}\n\n\tint varr_len = vertex_array.size();\n\n\tif (varr_len == 0) {\n\t\treturn mesh;\n\t}\n\n\tint surface = mesh->get_surface_count();\n\n\tArray a = commit_to_arrays();\n\n\tuint64_t compress_flags = (p_compress_flags >> RS::ARRAY_COMPRESS_FLAGS_BASE) << RS::ARRAY_COMPRESS_FLAGS_BASE;\n\tstatic const uint64_t shift[RS::ARRAY_CUSTOM_COUNT] = { Mesh::ARRAY_FORMAT_CUSTOM0_SHIFT, Mesh::ARRAY_FORMAT_CUSTOM1_SHIFT, Mesh::ARRAY_FORMAT_CUSTOM2_SHIFT, Mesh::ARRAY_FORMAT_CUSTOM3_SHIFT };\n\tfor (int i = 0; i < RS::ARRAY_CUSTOM_COUNT; i++) {\n\t\tif (last_custom_format[i] != CUSTOM_MAX) {\n\t\t\tcompress_flags |= uint64_t(last_custom_format[i]) << shift[i];\n\t\t}\n\t}\n\n\tmesh->add_surface_from_arrays(primitive, a, Array(), Dictionary(), compress_flags);\n\n\tif (material.is_valid()) {\n\t\tmesh->surface_set_material(surface, material);"
+        }
+      ]
+    }
+  }
+}

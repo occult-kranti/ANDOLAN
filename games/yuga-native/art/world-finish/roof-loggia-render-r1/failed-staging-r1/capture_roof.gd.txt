@@ -1,0 +1,115 @@
+extends "res://tools/graphics-six/capture_compact_screens.gd"
+## Two explicit matched views, reusing native boot/key/camera/snapshot helpers.
+## Installed only as capture_scene_anchors.gd in declared isolated children.
+## The outer runner's scene-anchors alias transports two shots; this is not a
+## title/training observation. No clock/pose/authority override is performed.
+var review_camera: Camera3D
+
+func transform_values(value: Transform3D) -> Array:
+	return [vector(value.basis.x),vector(value.basis.y),vector(value.basis.z),vector(value.origin)]
+
+func collision_inventory(node: Node, result: Array[Dictionary]) -> void:
+	if node is CollisionObject3D:
+		var row:={"path":String(node.get_path()),"class":node.get_class(),"layer":node.collision_layer,"mask":node.collision_mask,"transform":transform_values(node.global_transform),"shapes":[]}
+		for child in node.get_children():
+			if child is not CollisionShape3D: continue
+			var shape:Shape3D=child.shape
+			var item:={"class":shape.get_class(),"disabled":child.disabled,"transform":transform_values(child.transform)}
+			if shape is BoxShape3D: item.size=vector(shape.size)
+			elif shape is CapsuleShape3D: item.height=shape.height;item.radius=shape.radius
+			elif shape is ConcavePolygonShape3D:
+				var values:Array=[]
+				for point in shape.get_faces(): values.append(vector(point))
+				item.faces=values.size()/3;item.faces_sha256=JSON.stringify(values).sha256_text();item.backface_collision=shape.backface_collision
+			row.shapes.append(item)
+		result.append(row)
+	for child in node.get_children(): collision_inventory(child,result)
+
+func snapshot(id:String) -> Dictionary:
+	var state:=super.snapshot(id)
+	var scene=current_scene
+	state.review_scope="Current product gameplay camera followed by explicit close silhouette camera; same running player/army/light state per paired branch, no production camera change."
+	state.product_camera=camera_state(scene.player.camera)
+	state.hero_skeleton={"bone_names":[],"bone_global_poses":[]}
+	var rig:Skeleton3D=scene.player.rama_motion.rig
+	for index in rig.get_bone_count():
+		state.hero_skeleton.bone_names.append(String(rig.get_bone_name(index)))
+		state.hero_skeleton.bone_global_poses.append(transform_values(rig.get_bone_global_pose(index)))
+	state.army_units=[]
+	for unit in scene.army.units:
+		var joints:={}
+		var names:Array=unit.joints.keys();names.sort()
+		for name in names:
+			if unit.joints[name] is Node3D: joints[name]=transform_values(unit.joints[name].transform)
+		state.army_units.append({"id":unit.unit_id,"team":unit.team,"role":unit.role,"health":unit.health,"alive":unit.alive,"state":unit.state,"transform":transform_values(unit.global_transform),"joints":joints})
+	var environment:Environment=scene.world_environment.environment
+	state.light_state={"diagnostics":scene.lighting.diagnostics(),"exposure":environment.tonemap_exposure,"ambient":environment.ambient_light_energy,"ambient_color":str(environment.ambient_light_color),"sun_transform":transform_values(scene.sun.global_transform),"sun_energy":scene.sun.light_energy,"sun_color":str(scene.sun.light_color)}
+	state.collision_objects=[]
+	collision_inventory(scene.world,state.collision_objects)
+	var replacement:=scene.world.get_node_or_null("ReviewBlock2RoofLoggia")
+	state.roof={"branch":"candidate" if replacement else "baseline","old_visible":scene.world.get_node("CityArt/block-2-roof").visible,"old_transform":transform_values(scene.world.get_node("CityArt/block-2-roof").global_transform),"candidate_triangles":0,"new_environment_bodies":0}
+	if replacement:
+		var mesh:ArrayMesh=replacement.get_node("LoggiaTwoSharedSurfaces").mesh
+		for surface in mesh.get_surface_count(): state.roof.candidate_triangles+=mesh.surface_get_array_len(surface)/3
+		state.roof.new_environment_bodies=1
+		state.roof.candidate_surfaces=mesh.get_surface_count()
+	return state
+
+func run() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--output="): output=arg.trim_prefix("--output=")
+		elif arg=="--preflight": preflight=true
+		elif arg=="--case=scene-anchors": pass
+		else: finish("Unknown argument: "+arg);return
+	if not output.is_absolute_path() or DirAccess.dir_exists_absolute(output): finish("Fresh absolute output required");return
+	DirAccess.make_dir_recursive_absolute(output)
+	if not preflight and (DisplayServer.get_name()!="X11" or RenderingServer.get_current_rendering_method()!="forward_plus"): finish("X11 Forward+ required");return
+	source_start=hashes()
+	if source_start.is_empty(): finish("Immutable source manifest required");return
+	root.size=Vector2i(960,540);root.content_scale_size=Vector2i(1280,720);root.content_scale_factor=1.0
+	if not preflight: root.show()
+	checkpoint("actual_boot_main_scene")
+	if change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))!=OK: finish("Main scene failed");return
+	if not await wait_scene("res://scenes/courtyard.tscn"): finish("Boot did not reach title");return
+	await frames(SETTLE_FRAMES)
+	var court=current_scene
+	# Preserve the current ten-shot helper's settled title scale sequence, without PNGs.
+	for scale in SCALES: root.content_scale_factor=scale;await frames(SETTLE_FRAMES)
+	root.content_scale_factor=1.0;await frames(SETTLE_FRAMES)
+	court.main_panel.primary_button.grab_focus();await key(KEY_ENTER)
+	if not await wait_scene("res://scenes/confluence_world.tscn"): finish("Primary action did not reach world");return
+	await frames(SETTLE_FRAMES)
+	var scene=current_scene
+	if not scene.world_ready or not scene.player.model_ready: finish("World/hero missing");return
+	root.content_scale_factor=1.0;await frames(SETTLE_FRAMES)
+	check("first view uses current live product camera",root.get_camera_3d()==scene.player.camera and scene.player.active and not scene.overview and not paused)
+	if not take("00-world-product"):return
+	# Supplemental diagnostic camera only. Hero, physics, lighting, UI and clocks stay live.
+	review_camera=Camera3D.new();review_camera.name="ReviewRoofSilhouetteCamera"
+	review_camera.fov=45.0;review_camera.near=.08;review_camera.far=380.0
+	scene.world.add_child(review_camera)
+	review_camera.global_position=Vector3(30,20,-45)
+	review_camera.look_at(Vector3(20,16.5,-28),Vector3.UP)
+	review_camera.make_current()
+	await frames(SETTLE_FRAMES)
+	check("supplement uses declared close silhouette camera",root.get_camera_3d()==review_camera and scene.player.active and not scene.overview and not paused)
+	if not take("01-roof-close"):return
+	check("world clocks remain live",shots[1].army_elapsed>shots[0].army_elapsed and shots[1].kit_elapsed>shots[0].kit_elapsed)
+	check("full sampled hero skeleton recorded",shots.all(func(item):return item.hero_skeleton.bone_names.size()==164 and item.hero_skeleton.bone_global_poses.size()==164))
+	check("exact branch collider delta exposed",shots.all(func(item):return (item.roof.branch=="baseline" and item.roof.old_visible and item.roof.new_environment_bodies==0) or (item.roof.branch=="candidate" and not item.roof.old_visible and item.roof.new_environment_bodies==1 and item.roof.candidate_triangles==828 and item.roof.candidate_surfaces==2)))
+	finish("")
+
+func finish(failure:String) -> void:
+	if done:return
+	done=true
+	var after:=hashes() if not source_start.is_empty() else {}
+	check("two declared matched views",shots.size()==2)
+	check("source unchanged",not source_start.is_empty() and source_start==after)
+	var passed:=failure.is_empty() and checks.all(func(item):return item.passed)
+	var report:={"schema":1,"case":"roof-loggia-review","outer_transport_alias":"scene-anchors","complete":passed,"failure":failure,"preflight":preflight,"shots":shots,"checks":checks,"checkpoints":checkpoints,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"Two source-bound views: actual current world camera and explicitly authored close silhouette supplement. One roof replacement and one matching local3D collider is the declared candidate delta. Full sampled hero bone poses/unit transforms are recorded for strict pair comparison, not a deformation/online/elevated combat/performance claim."}
+	if not output.is_empty() and DirAccess.dir_exists_absolute(output):write_json(output.path_join("preflight.json" if preflight else "capture.json"),report)
+	print("ROOF_LOGGIA_COMPLETE ",passed," ",failure)
+	paused=false
+	if is_instance_valid(current_scene):current_scene.queue_free()
+	for unused in 8:await process_frame
+	quit(0 if passed else 1)

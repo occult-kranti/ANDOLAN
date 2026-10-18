@@ -1,0 +1,62 @@
+[
+  {
+    "branch": "baseline",
+    "command": [
+      "env",
+      "LP_NUM_THREADS=1",
+      "OPENBLAS_NUM_THREADS=1",
+      "OMP_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "XDG_CACHE_HOME=/tmp/yuga-sash-uv-import-r1/probe-baseline-user/cache",
+      "XDG_CONFIG_HOME=/tmp/yuga-sash-uv-import-r1/probe-baseline-user/config",
+      "XDG_DATA_HOME=/tmp/yuga-sash-uv-import-r1/probe-baseline-user/data",
+      "taskset",
+      "-c",
+      "0,1",
+      "timeout",
+      "30s",
+      "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/tmp/yuga-sash-uv-import-r1/baseline-project",
+      "--script",
+      "/tmp/yuga-sash-uv-import-r1/evidence/import_semantics.gd",
+      "--",
+      "--output=/tmp/yuga-sash-uv-import-r1/semantics-baseline"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 2.33275599999979,
+    "log_sha256": "64bcdcd5d98aa307d1a11241aa1ed1c72e2177ef11893d398db9e3560d5225c4",
+    "probe_sha256": "b9e79d548738f558613c5cd9401ddf74aff00081c6de644a5f8afef577dfda9c"
+  },
+  {
+    "branch": "candidate",
+    "command": [
+      "env",
+      "LP_NUM_THREADS=1",
+      "OPENBLAS_NUM_THREADS=1",
+      "OMP_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "XDG_CACHE_HOME=/tmp/yuga-sash-uv-import-r1/probe-candidate-user/cache",
+      "XDG_CONFIG_HOME=/tmp/yuga-sash-uv-import-r1/probe-candidate-user/config",
+      "XDG_DATA_HOME=/tmp/yuga-sash-uv-import-r1/probe-candidate-user/data",
+      "taskset",
+      "-c",
+      "0,1",
+      "timeout",
+      "30s",
+      "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/tmp/yuga-sash-uv-import-r1/candidate-project",
+      "--script",
+      "/tmp/yuga-sash-uv-import-r1/evidence/import_semantics.gd",
+      "--",
+      "--output=/tmp/yuga-sash-uv-import-r1/semantics-candidate"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 2.219212182000774,
+    "log_sha256": "64bcdcd5d98aa307d1a11241aa1ed1c72e2177ef11893d398db9e3560d5225c4",
+    "probe_sha256": "b9e79d548738f558613c5cd9401ddf74aff00081c6de644a5f8afef577dfda9c"
+  }
+]

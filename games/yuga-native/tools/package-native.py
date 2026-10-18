@@ -414,7 +414,7 @@ def rama_groom_preservation(source, candidate):
             'candidate_hair_vertices': new['accessors'][after['attributes']['POSITION']]['count']}
 
 
-def _validate_rama_groom_stage(project, stage, historical, sources):
+def _validate_rama_groom_stage(project, stage, historical, sources, runtime_relocations=None):
     required = {'id', 'parent', 'asset', 'sha256', 'editableSource', 'editableSha256',
                 'generator', 'generatorSha256', 'metadata', 'metadataSha256',
                 'generatedDependencies', 'inputEditableSha256', 'inputAssetSha256',
@@ -447,7 +447,8 @@ def _validate_rama_groom_stage(project, stage, historical, sources):
         parent_path = f'{RAMA_FORM_BASE}/candidate.glb' if level == 'near' else f'{RAMA_FORM_BASE}/{name}'
         if sources[parent_path]['sha256'] != input_sha:
             raise ValueError('Rama groom parent LOD differs from corrected R2')
-        sources[f'assets/heroes/{name}'] = _rama_source(project, f'assets/heroes/{name}', RAMA_GROOM_OUTPUTS[level])
+        runtime_path = (runtime_relocations or {}).get(f'assets/heroes/{name}', f'assets/heroes/{name}')
+        sources[runtime_path] = _rama_source(project, runtime_path, RAMA_GROOM_OUTPUTS[level])
         receipt = metadata['levels'][level]
         if receipt['input_sha256'] != input_sha or receipt['output_sha256'] != RAMA_GROOM_OUTPUTS[level]:
             raise ValueError('Rama groom generator receipt lineage differs')
@@ -494,6 +495,9 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
     receipt; the optional secondary shader is expressly outside this contract.
     Schema 5 adds the fixed original roughness stage, retaining the exact schema 4
     notice and its own historical surface binding.
+    Schema 6 preserves that exact schema5 notice and admits a finite ordered
+    sequence of original diadem rail and selected sash UV edits. The original
+    crown-only declaration remains an exact historical fixture.
     Historical rama.glb/rama-production.glb retain their separate checks.
     """
     project = (project or PROJECT).resolve()
@@ -501,6 +505,15 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
     if notice_path.is_symlink() or not notice_path.resolve().is_relative_to(project):
         raise ValueError('Rama hero notice is unsafe')
     notice = json.loads(notice_path.read_text())
+    if isinstance(notice, dict) and type(notice.get('schema')) is int and notice['schema'] == 6:
+        if 'editStages' in notice:
+            return _validate_rama_finish_notice(project, notice, notice_path)
+        return _validate_rama_crown_notice(project, notice, notice_path)
+    return _validate_rama_notice(project, notice, notice_path)
+
+
+def _validate_rama_notice(project, notice, notice_path, runtime_relocations=None):
+    """Keep schemas 1–5 exact; schema6 alone supplies fixed historical GLB locations."""
     if not isinstance(notice, dict) or type(notice.get('schema')) is not int:
         raise ValueError('Rama hero provenance must declare an integer schema')
     surface_sources, surface_stage = {}, None
@@ -521,9 +534,10 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
         raise ValueError('Schema-2 generators/dependencies belong to their authoring stage')
     if notice.get('asset') != 'assets/heroes/rama-hero.glb':
         raise ValueError('Rama hero provenance has unexpected asset')
-    sources = {notice['asset']: _rama_source(project, notice['asset'], notice.get('sha256'))}
+    asset_path = (runtime_relocations or {}).get(notice['asset'], notice['asset'])
+    sources = {asset_path: _rama_source(project, asset_path, notice.get('sha256'))}
     sources.update(surface_sources)
-    if type(notice.get('bytes')) is not int or notice['bytes'] != sources[notice['asset']]['bytes']:
+    if type(notice.get('bytes')) is not int or notice['bytes'] != sources[asset_path]['bytes']:
         raise ValueError('Rama hero provenance byte count differs from active asset')
     stages = notice.get('authoringStages')
     stage_count = len(RAMA_HERO_STAGE_PATHS) + max(0, notice['schema'] - 2)
@@ -636,7 +650,8 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
                                                         runtime_bindings=notice['schema'] == 3))
         previous = stages[3]
     if notice['schema'] == 4:
-        reviewed_stages.append(_validate_rama_groom_stage(project, stages[4], stages[:4], sources))
+        reviewed_stages.append(_validate_rama_groom_stage(project, stages[4], stages[:4], sources,
+                                                        runtime_relocations=runtime_relocations))
         _validate_rama_cloth_stage(project, notice.get('clothStage'), sources, historical_binding=surface_stage is not None)
         previous = stages[4]
     elif 'clothStage' in notice:
@@ -649,6 +664,277 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
     if surface_stage is not None:
         result['surfaceStage'] = surface_stage
     return result
+
+
+# Schema 6 changes only the original diadem rail's P/N/T records in three
+# existing GLBs. The complete schema5 notice and its old runtime trio remain
+# independently verifiable history, not rewritten as the crown's output.
+RAMA_CROWN_BASE = 'art/hero-finish/s4-diadem-smooth'
+RAMA_CROWN_PARENT = 'art/hero-finish/history/schema5-notice.json'
+RAMA_CROWN_PARENT_SHA = 'c48713bc763522f2763b8d8e229a17c51981b51df60c28379e09547acf452d42'
+RAMA_CROWN_OUTPUTS = {
+    'near': ('rama-hero.glb', 'e98c9110161e49b653e98b6f4ca1dda997ad891cf73b737abd18f319bb3c2b82', 36049948),
+    'mid': ('rama-hero-mid.glb', 'dfa9a41adab7cfd5c60416a66d2b95c4d1ab06d081b64ee7a9f5ff5c7744474b', 25847144),
+    'far': ('rama-hero-far.glb', '8b74504c07d38416032ea22e37061d69061baaf0b86e78dec27417c8927e39f9', 20901820),
+}
+RAMA_CROWN_DEPENDENCIES = {
+    f'{RAMA_CROWN_BASE}/build_candidate.py': 'b81482a8021d35f19adb6e2ee548f28a4823a1c42dcd446f1f0d999873927564',
+    f'{RAMA_CROWN_BASE}/candidate-r2/source-manifest.json': 'ae869c0d3a645ad3221b0427d8036976db2564d8f10c4a8786e2fa3acd2772b0',
+    f'{RAMA_CROWN_BASE}/NOTICE.md': '37d06774f752aa2f8415faa073858b8e1cefa163d68ab1071a8f1f2cfeef89b5',
+    'art/hero-finish/s4-diadem-fit/build_candidate.py': 'c785e858881f85aa3ed09f0b0dec0323a27ba1d2b209dd1224b681b0b22b8c58',
+    'art/hero-rama-lod/glb_lod.py': '83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7',
+    'docs/evidence/visual-rounds/round3/role10/geometry_probe.py': '324c2f688dbefc6c3ac86f5b5ca346c069efd1f7b8916252ad9489fcf0ad532c',
+    'assets/heroes/rama-hero.glb.import': 'c9480cdb1c83f72a5b3479d91402aa81a50ff7d8e62c2775405108784639151a',
+    'assets/heroes/rama-hero-mid.glb.import': '893f150856eba4a372d0f24a7bbdd1e591f9f28c999f85a53c24de61562b6598',
+    'assets/heroes/rama-hero-far.glb.import': '60c2d7585242b7e0130da031a9e98316d9f4ded36eb6c2ed437ab01c687a0c66',
+}
+
+
+def rama_crown_notice() -> dict:
+    """Finite reviewed declaration; never derives trusted pins from mutable input."""
+    return {
+        'schema': 6, 'asset': 'assets/heroes/rama-hero.glb',
+        'sha256': RAMA_CROWN_OUTPUTS['near'][1], 'bytes': RAMA_CROWN_OUTPUTS['near'][2],
+        'parentNotice': RAMA_CROWN_PARENT, 'parentNoticeSha256': RAMA_CROWN_PARENT_SHA,
+        'crownStage': {
+            'id': 'smooth-diadem-rail-v1',
+            'generatedDependencies': [{'path': p, 'sha256': h} for p, h in RAMA_CROWN_DEPENDENCIES.items()],
+            'runtimeAssets': [
+                {'asset': f'assets/heroes/{name}', 'sha256': sha, 'bytes': size,
+                 'inputAsset': f'{RAMA_GROOM_BASE}/{name}', 'inputSha256': RAMA_GROOM_OUTPUTS[level],
+                 'authoredAsset': f'{RAMA_CROWN_BASE}/candidate-r2/{name}'}
+                for level, (name, sha, size) in RAMA_CROWN_OUTPUTS.items()],
+            'editScope': {'mesh': 2, 'primitive': 2, 'attributes': ['POSITION', 'NORMAL', 'TANGENT'],
+                          'allOtherBinaryBytesExact': True, 'jsonExact': True},
+        },
+        'limitations': [
+            'One bounded original diadem rail correction; broader hero art and continuous contact quality remain open.',
+            'The schema5 editable is historical parent geometry. The crown is a reproducible GLB postprocess, not a newly edited Blender source.',
+            'Source/PCK identity is separate from imported-cache, native execution, Windows and physical-GPU acceptance.',
+        ],
+    }
+
+
+def rama_crown_preservation(source: Path, candidate: Path, selected_ids: list) -> dict:
+    """Independent finite BIN/JSON gate; only fixed-manifest rail P/N/T may differ."""
+    old, old_bin = _rama_glb(source)
+    new, new_bin = _rama_glb(candidate)
+    def prefix(path):
+        with path.open('rb') as stream:
+            header = stream.read(20)
+            return header + stream.read(struct.unpack_from('<I', header, 12)[0] + 8)
+    if (old != new or prefix(source) != prefix(candidate) or len(old_bin) != len(new_bin)
+            or source.stat().st_size != candidate.stat().st_size):
+        raise ValueError('Rama crown changed GLB JSON, binary length or file size')
+    primitive = old['meshes'][2]['primitives'][2]
+    if old['materials'][primitive['material']]['name'] != 'Worked warm gold':
+        raise ValueError('Rama crown selected a different material primitive')
+    if (not isinstance(selected_ids, list) or not selected_ids
+            or any(type(i) is not int or i < 0 for i in selected_ids)
+            or sorted(set(selected_ids)) != selected_ids):
+        raise ValueError('Rama crown rail vertex set is malformed')
+    intervals = []
+    for attribute, width in (('POSITION', 3), ('NORMAL', 3), ('TANGENT', 4)):
+        accessor = old['accessors'][primitive['attributes'][attribute]]
+        view = old['bufferViews'][accessor['bufferView']]
+        size = 4 * width
+        stride = view.get('byteStride', size)
+        if (accessor['componentType'] != 5126 or accessor['type'] != f'VEC{width}'
+                or 'sparse' in accessor or accessor.get('normalized', False)
+                or selected_ids[-1] >= accessor['count'] or stride < size or stride % 4):
+            raise ValueError('Rama crown rail accessor contract differs')
+        base = view.get('byteOffset', 0) + accessor.get('byteOffset', 0)
+        for vertex in selected_ids:
+            start = base + vertex * stride
+            end = start + size
+            if start < 0 or end > len(old_bin) or end > view.get('byteOffset', 0) + view['byteLength']:
+                raise ValueError('Rama crown rail record is outside its binary view')
+            intervals.append((start, end))
+    intervals.sort()
+    cursor, changed = 0, 0
+    for start, end in intervals:
+        if start < cursor:
+            raise ValueError('Rama crown allowed records overlap')
+        if old_bin[cursor:start] != new_bin[cursor:start]:
+            raise ValueError('Rama crown changed nonrail binary payload')
+        changed += sum(a != b for a, b in zip(old_bin[start:end], new_bin[start:end]))
+        cursor = end
+    if old_bin[cursor:] != new_bin[cursor:]:
+        raise ValueError('Rama crown changed nonrail binary payload')
+    return {'json_exact': True, 'outside_selected_records_exact': True,
+            'selected_vertices': len(selected_ids), 'changed_binary_bytes': changed,
+            'allowed_record_bytes': sum(end - start for start, end in intervals)}
+
+
+def _validate_rama_crown_notice(project, notice, notice_path, historical_runtime=False):
+    if json.dumps(notice, sort_keys=True) != json.dumps(rama_crown_notice(), sort_keys=True):
+        raise ValueError('Rama schema6 crown declaration differs from the fixed reviewed stage')
+    parent_record = _rama_source(project, RAMA_CROWN_PARENT, RAMA_CROWN_PARENT_SHA)
+    parent = json.loads((project / RAMA_CROWN_PARENT).read_text())
+    if type(parent.get('schema')) is not int or parent['schema'] != 5:
+        raise ValueError('Rama schema6 requires the exact schema5 historical parent')
+    relocations = {f'assets/heroes/{name}': f'{RAMA_GROOM_BASE}/{name}'
+                   for name, _, _ in RAMA_CROWN_OUTPUTS.values()}
+    history = _validate_rama_notice(project, parent, project / RAMA_CROWN_PARENT, relocations)
+    sources = history['sources']
+    sources[RAMA_CROWN_PARENT] = parent_record
+    stage = notice['crownStage']
+    _rama_fixed_dependencies(project, stage['generatedDependencies'], RAMA_CROWN_DEPENDENCIES, sources)
+    metadata = json.loads((project / f'{RAMA_CROWN_BASE}/candidate-r2/source-manifest.json').read_text())
+    if (type(metadata.get('schema')) is not int or metadata['schema'] != 1
+            or set(metadata.get('levels', {})) != set(RAMA_CROWN_OUTPUTS)
+            or metadata.get('generator_sha256') != RAMA_CROWN_DEPENDENCIES[f'{RAMA_CROWN_BASE}/build_candidate.py']
+            or metadata.get('derived_builder_sha256') != RAMA_CROWN_DEPENDENCIES['art/hero-finish/s4-diadem-fit/build_candidate.py']):
+        raise ValueError('Rama crown generator/metadata ancestry differs')
+    costs = {}
+    for (level, (name, sha, size)), binding in zip(RAMA_CROWN_OUTPUTS.items(), stage['runtimeAssets']):
+        runtime_path = binding['authoredAsset'] if historical_runtime else binding['asset']
+        for path in dict.fromkeys((runtime_path, binding['authoredAsset'])):
+            sources[path] = _rama_source(project, path, sha)
+            if sources[path]['bytes'] != size:
+                raise ValueError('Rama crown GLB size differs')
+        row = metadata['levels'][level]
+        if (row.get('source') != binding['asset'] or row.get('source_sha256') != binding['inputSha256']
+                or Path(row.get('output', '')).name != name or row.get('sha256') != sha
+                or type(row.get('bytes')) is not int or row['bytes'] != size
+                or row.get('json_exact') is not True or row.get('outside_selected_records_exact') is not True):
+            raise ValueError('Rama crown LOD manifest differs from input/output bindings')
+        proof = rama_crown_preservation(project / binding['inputAsset'], project / runtime_path,
+                                       row.get('selected_vertex_ids'))
+        if any(proof[key] != row.get(key) for key in proof):
+            raise ValueError('Rama crown direct preservation differs from the reviewed manifest')
+        costs[level] = proof
+    return {'notice': record(notice_path), 'sources': sources,
+            'authoringStages': history['authoringStages'], 'surfaceStage': history['surfaceStage'],
+            'crownStage': stage, 'crownPreservation': costs,
+            'historicalParent': {'path': RAMA_CROWN_PARENT, **parent_record}}
+
+
+# The schema6 envelope has a finite ordered edit sequence. Its parent remains
+# schema5; the crown-only declaration is an exact historical fixture, not a new
+# nested parent for each subsequent asset edit.
+RAMA_CROWN_NOTICE_HISTORY = 'art/hero-finish/history/schema6-crown-notice.json'
+RAMA_CROWN_NOTICE_HISTORY_SHA = 'b5e27702835234e46ece84fc2840b719e40e0bae16c2fa5c37dde735a4a39f3c'
+RAMA_SASH_BASE = 'art/hero-finish/sash-texel-r1'
+RAMA_SASH_OUTPUTS = {
+    'near': ('rama-hero.glb', 'db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e', 36049948, 7716, 9789),
+    'mid': ('rama-hero-mid.glb', 'b5949c9d427e9684a13fa525212eedc87dfa207d2c70fba5ebe6a4b1eda61005', 25847144, 2211, 3179),
+    'far': ('rama-hero-far.glb', 'aef8ae5837c0bf0a9ed5850ae649d6368ec1e87c0728d501f1780bba325a9d6a', 20901820, 956, 1388),
+}
+RAMA_SASH_DEPENDENCIES = {
+    f'{RAMA_SASH_BASE}/build_candidate.py': 'b3449399008ebae1fa38518306da16347237fccd35d1ad713e8c3ad1fa7e8fc4',
+    f'{RAMA_SASH_BASE}/candidate-r2/manifest.json': 'ae3b0a6aac2803ff6121c05629abad1d050a2ca0e16777a11b631b29048fbb51',
+    f'{RAMA_SASH_BASE}/README.md': '9f90da673cccfba7bf2090249fb8156d1d66cbe2d91905e4c044e809ee0832eb',
+}
+
+
+def rama_finish_notice() -> dict:
+    crown = rama_crown_notice()
+    return {
+        'schema': 6, 'asset': 'assets/heroes/rama-hero.glb',
+        'sha256': RAMA_SASH_OUTPUTS['near'][1], 'bytes': RAMA_SASH_OUTPUTS['near'][2],
+        'parentNotice': RAMA_CROWN_PARENT, 'parentNoticeSha256': RAMA_CROWN_PARENT_SHA,
+        'historicalCrownNotice': RAMA_CROWN_NOTICE_HISTORY,
+        'historicalCrownNoticeSha256': RAMA_CROWN_NOTICE_HISTORY_SHA,
+        'editStages': [crown['crownStage'], {
+            'id': 'sash-textile-uv-v1', 'inputStage': crown['crownStage']['id'],
+            'generatedDependencies': [{'path': p, 'sha256': h} for p, h in RAMA_SASH_DEPENDENCIES.items()],
+            'runtimeAssets': [
+                {'asset': f'assets/heroes/{name}', 'sha256': sha, 'bytes': size,
+                 'inputAsset': f'{RAMA_CROWN_BASE}/candidate-r2/{name}',
+                 'inputSha256': RAMA_CROWN_OUTPUTS[level][1],
+                 'authoredAsset': f'{RAMA_SASH_BASE}/candidate-r2/{name}',
+                 'selectedVertexRangeInclusive': [first, last]}
+                for level, (name, sha, size, first, last) in RAMA_SASH_OUTPUTS.items()],
+            'editScope': {'mesh': 2, 'primitive': 3, 'attributes': ['TEXCOORD_0'],
+                          'scaleUV': [0.2, 0.95], 'allOtherBinaryBytesExact': True, 'jsonExact': True},
+        }],
+        'limitations': [
+            'Two bounded accepted edits: original diadem rail and selected sash UV scale. Broader hero/contact quality remains open.',
+            'Stage1 logical runtime names identify its immutable crown intermediates; only the final stage supplies active runtime outputs.',
+            'Schema5 Blender editable remains historical parent geometry; both edits are reproducible original GLB postprocesses.',
+            'Authoring manifest status records pre-promotion history. This active declaration binds the accepted outputs.',
+            'Source/PCK identity is separate from imported-cache, native execution, Windows and physical-GPU acceptance.',
+        ],
+    }
+
+
+def rama_sash_preservation(source: Path, candidate: Path, selected_range: list) -> dict:
+    """Only fixed selected UV records may differ, each replayed as float32 scale."""
+    old, old_bin = _rama_glb(source)
+    new, new_bin = _rama_glb(candidate)
+    def prefix(path):
+        with path.open('rb') as stream:
+            header = stream.read(20)
+            return header + stream.read(struct.unpack_from('<I', header, 12)[0] + 8)
+    if (old != new or prefix(source) != prefix(candidate) or len(old_bin) != len(new_bin)
+            or source.stat().st_size != candidate.stat().st_size):
+        raise ValueError('Rama sash changed GLB JSON, binary length or file size')
+    primitive = old['meshes'][2]['primitives'][3]
+    if old['materials'][primitive['material']]['name'] != 'Cobalt handwoven silk':
+        raise ValueError('Rama sash selected a different material primitive')
+    accessor = old['accessors'][primitive['attributes']['TEXCOORD_0']]
+    view = old['bufferViews'][accessor['bufferView']]
+    stride = view.get('byteStride', 8)
+    if (not isinstance(selected_range, list) or len(selected_range) != 2
+            or any(type(i) is not int for i in selected_range)
+            or not 0 <= selected_range[0] <= selected_range[1] < accessor['count']
+            or accessor['componentType'] != 5126 or accessor['type'] != 'VEC2'
+            or 'sparse' in accessor or accessor.get('normalized', False) or stride < 8 or stride % 4):
+        raise ValueError('Rama sash UV record contract differs')
+    base = view.get('byteOffset', 0) + accessor.get('byteOffset', 0)
+    cursor, changed = 0, 0
+    for vertex in range(selected_range[0], selected_range[1] + 1):
+        start = base + vertex * stride
+        end = start + 8
+        if start < cursor or end > len(old_bin) or end > view.get('byteOffset', 0) + view['byteLength']:
+            raise ValueError('Rama sash selected UV record is outside its binary view')
+        if old_bin[cursor:start] != new_bin[cursor:start]:
+            raise ValueError('Rama sash changed nonselected UV or non-UV payload')
+        u, v = struct.unpack_from('<ff', old_bin, start)
+        if new_bin[start:end] != struct.pack('<ff', u * 0.2, v * 0.95):
+            raise ValueError('Rama sash selected UV differs from exact float32 scale replay')
+        changed += sum(a != b for a, b in zip(old_bin[start:end], new_bin[start:end]))
+        cursor = end
+    if old_bin[cursor:] != new_bin[cursor:]:
+        raise ValueError('Rama sash changed nonselected UV or non-UV payload')
+    return {'json_exact': True, 'outside_selected_uv_bytes_exact': True, 'scale_replay_exact': True,
+            'selected_vertices': selected_range[1] - selected_range[0] + 1, 'changed_bytes': changed}
+
+
+def _validate_rama_finish_notice(project, notice, notice_path):
+    if json.dumps(notice, sort_keys=True) != json.dumps(rama_finish_notice(), sort_keys=True):
+        raise ValueError('Rama schema6 ordered edit declaration differs from the fixed reviewed stages')
+    archived = _rama_source(project, RAMA_CROWN_NOTICE_HISTORY, RAMA_CROWN_NOTICE_HISTORY_SHA)
+    crown = json.loads((project / RAMA_CROWN_NOTICE_HISTORY).read_text())
+    history = _validate_rama_crown_notice(project, crown, project / RAMA_CROWN_NOTICE_HISTORY,
+                                         historical_runtime=True)
+    sources = history['sources']
+    sources[RAMA_CROWN_NOTICE_HISTORY] = archived
+    stage = notice['editStages'][1]
+    _rama_fixed_dependencies(project, stage['generatedDependencies'], RAMA_SASH_DEPENDENCIES, sources)
+    metadata = json.loads((project / f'{RAMA_SASH_BASE}/candidate-r2/manifest.json').read_text())
+    if (type(metadata.get('schema')) is not int or metadata['schema'] != 1
+            or metadata.get('generator_sha256') != RAMA_SASH_DEPENDENCIES[f'{RAMA_SASH_BASE}/build_candidate.py']
+            or metadata.get('scale_uv') != [0.2, 0.95] or len(metadata.get('lods', [])) != 3):
+        raise ValueError('Rama sash generator/metadata ancestry differs')
+    costs = {}
+    for (level, (name, sha, size, first, last)), binding, row in zip(
+            RAMA_SASH_OUTPUTS.items(), stage['runtimeAssets'], metadata['lods']):
+        if (row.get('file') != name or row.get('input_sha256') != binding['inputSha256']
+                or row.get('output_sha256') != sha or row.get('mesh') != 2 or row.get('primitive') != 3):
+            raise ValueError('Rama sash LOD manifest differs from input/output bindings')
+        for path in (binding['asset'], binding['authoredAsset']):
+            sources[path] = _rama_source(project, path, sha)
+            if sources[path]['bytes'] != size:
+                raise ValueError('Rama sash GLB size differs')
+        proof = rama_sash_preservation(project / binding['inputAsset'], project / binding['asset'], [first, last])
+        if any(proof[key] != row.get(key) for key in proof if key != 'scale_replay_exact'):
+            raise ValueError('Rama sash direct preservation differs from the reviewed manifest')
+        costs[level] = proof
+    return {**history, 'notice': record(notice_path), 'sources': sources,
+            'editStages': notice['editStages'], 'sashPreservation': costs,
+            'historicalCrown': {'path': RAMA_CROWN_NOTICE_HISTORY, **archived}}
 
 
 def json_write(path: Path, value: dict) -> None:
@@ -854,6 +1140,7 @@ FIRST_LOAD_RESOURCES = ('scenes/boot.tscn', 'scripts/boot.gd',
 GRAPHICS_SCRIPT_RESOURCES = (
     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
+    'scripts/world_roof_loggia.gd',
 )
 GRAPHICS_DIRECT_RESOURCES = ('assets/environment-finish/masonry.gdshader',
                              'assets/hero-finish/g1-manifest.json',
@@ -1204,6 +1491,24 @@ def start_readme(platform: str) -> str:
     return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. The bundled official Godot 4.6.3\nengine opens yuga-native.pck directly using --main-pack. This portable package\ncontains the full engine binary and is larger than a release-template export.\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. Flight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWatch duel opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
 
 
+def copy_rama_crown_companions(project: Path, destination: Path) -> dict:
+    """Keep the schema6 parent/attribution references readable in a portable ZIP."""
+    copied = {}
+    companions = [(RAMA_CROWN_PARENT, RAMA_CROWN_PARENT_SHA),
+                  (f'{RAMA_CROWN_BASE}/NOTICE.md', RAMA_CROWN_DEPENDENCIES[f'{RAMA_CROWN_BASE}/NOTICE.md'])]
+    if 'editStages' in json.loads((project / 'NOTICE/RAMA-HERO-PROVENANCE.json').read_text()):
+        companions += [(RAMA_CROWN_NOTICE_HISTORY, RAMA_CROWN_NOTICE_HISTORY_SHA),
+                       (f'{RAMA_SASH_BASE}/README.md', RAMA_SASH_DEPENDENCIES[f'{RAMA_SASH_BASE}/README.md'])]
+    for relative, sha in companions:
+        copied[relative] = _rama_source(project, relative, sha)
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(project / relative, target)
+        if record(target) != copied[relative]:
+            raise ValueError('Portable crown provenance companion differs from its exact source')
+    return copied
+
+
 def safe_notice_copy(destination: Path) -> None:
     notices = PROJECT / 'NOTICE'
     required = ['GODOT-LICENSE.txt', 'GODOT-COPYRIGHT.txt', 'MAKEHUMAN-ASSET-LICENSE.md',
@@ -1225,6 +1530,8 @@ def safe_notice_copy(destination: Path) -> None:
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(item, target)
     validate_bundled_font_notices(destination)
+    if json.loads((notices / 'RAMA-HERO-PROVENANCE.json').read_text()).get('schema') == 6:
+        copy_rama_crown_companions(PROJECT, destination)
 
 
 def zip_directory(staging: Path, output: Path) -> dict:

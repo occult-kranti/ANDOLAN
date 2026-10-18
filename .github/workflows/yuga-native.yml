@@ -106,7 +106,9 @@ jobs:
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_practice_cases.gd -- --report="$RUNNER_TEMP/rama-practice.json"
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_layout_cases.gd -- --report="$RUNNER_TEMP/rama-hud-layout.json"
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/rama_hud_expiry_cases.gd -- --report="$RUNNER_TEMP/rama-hud-expiry.json"
-          python3 games/yuga-native/tests/rama_package_cases.py --report="$RUNNER_TEMP/rama-package.json"
+          python3 games/yuga-native/tests/rama_package_cases.py --groom-review games/yuga-native --report="$RUNNER_TEMP/rama-package.json"
+          python3 games/yuga-native/tests/graphics_package_cases.py --report="$RUNNER_TEMP/graphics-package.json"
+          python3 games/yuga-native/tests/rama_crown_package_cases.py --report="$RUNNER_TEMP/rama-crown-package.json"
       - name: Mythic catalogue, editable hero, carry and version contracts
         run: |
           python3 games/yuga-native/tools/check-hero-codex.py --report="$RUNNER_TEMP/hero-codex.json"
@@ -205,6 +207,8 @@ jobs:
             ${{ runner.temp }}/rama-hud-layout.json
             ${{ runner.temp }}/rama-hud-expiry.json
             ${{ runner.temp }}/rama-package.json
+            ${{ runner.temp }}/graphics-package.json
+            ${{ runner.temp }}/rama-crown-package.json
             ${{ runner.temp }}/rama-quality/summary.json
             ${{ runner.temp }}/rama-quality/source-before.json
             ${{ runner.temp }}/rama-quality/source-after.json

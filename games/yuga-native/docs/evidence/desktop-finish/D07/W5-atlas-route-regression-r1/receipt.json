@@ -1,0 +1,136 @@
+{
+  "task": "Changed-world existing atlas/route-parity regression only",
+  "head": "8acd7b35e6cb7d03b173594941b40b8acd68b4c0",
+  "runtime_pins": {
+    "scripts/confluence_world.gd": {
+      "sha256": "cc014ac25009da5852f6fce646522f0e195eb3ec0a11ababc171e4ed990df8b2",
+      "bytes": 84420
+    },
+    "scripts/rama_motion.gd": {
+      "sha256": "5023b301ff4c4585e3b6a22827f55f4696045bb0206374ee1656a5b4bad6e4a5",
+      "bytes": 37695
+    },
+    "assets/heroes/rama-hero.glb": {
+      "sha256": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e",
+      "bytes": 36049948
+    },
+    "assets/heroes/rama-hero-mid.glb": {
+      "sha256": "b5949c9d427e9684a13fa525212eedc87dfa207d2c70fba5ebe6a4b1eda61005",
+      "bytes": 25847144
+    },
+    "assets/heroes/rama-hero-far.glb": {
+      "sha256": "aef8ae5837c0bf0a9ed5850ae649d6368ec1e87c0728d501f1780bba325a9d6a",
+      "bytes": 20901820
+    }
+  },
+  "source_copies": {
+    "tests/desktop_world_route_parity_cases.gd": {
+      "sha256": "cbc0b426fc7338c811e2e5affe1792a6189ed310d99def2b672ee6f0663298b0",
+      "bytes": 12889
+    },
+    "tests/desktop_finish_s1_atlas_cases.gd": {
+      "sha256": "249ad34fa61d2042039d1725551a2d2687458200cc7a4fc2a3e336d838b03e87",
+      "bytes": 6470
+    },
+    "scripts/confluence_world.gd": {
+      "sha256": "cc014ac25009da5852f6fce646522f0e195eb3ec0a11ababc171e4ed990df8b2",
+      "bytes": 84420
+    },
+    "scripts/world_atlas.gd": {
+      "sha256": "1cf4b7f22b4e34fdeb4300d8e9c591cd3ecad2990a13a7ed8941bf3f4d32cce5",
+      "bytes": 6136
+    },
+    "tools/run-visual-checks.py": {
+      "sha256": "3021f04905b190f2db92ed4e4e3e9c73e27dca4505a90c74bd442ca4a530de4a",
+      "bytes": 17277
+    }
+  },
+  "results": {
+    "atlas": {
+      "passed": true,
+      "checks": 15,
+      "source_unchanged": true,
+      "summary": "atlas/summary.json"
+    },
+    "parity": {
+      "passed": false,
+      "checks": 19,
+      "source_unchanged": true,
+      "summary": "parity/summary.json"
+    }
+  },
+  "failed_assertions": [
+    {
+      "detail": {
+        "heading": "(0.0, -1.0)",
+        "map_point": "(83.0, 31.85385)",
+        "world_position": "(0.0, 0.05, -112.0)"
+      },
+      "name": "actual live/overview camera switch preserves marker position and heading: (0.0, 0.05, -112.0)",
+      "passed": false
+    },
+    {
+      "detail": {
+        "heading": "(0.0, -1.0)",
+        "map_point": "(137.7714, 208.0077)",
+        "world_position": "(54.0, 10.05, 88.0)"
+      },
+      "name": "actual live/overview camera switch preserves marker position and heading: (54.0, 10.05, 88.0)",
+      "passed": false
+    }
+  ],
+  "native_exits": {
+    "atlas": 0,
+    "parity": 1
+  },
+  "engine_diagnostics": [],
+  "commands": {
+    "atlas": [
+      "env",
+      "OMP_NUM_THREADS=1",
+      "OPENBLAS_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "taskset",
+      "-c",
+      "4",
+      "python3",
+      "tools/run-visual-checks.py",
+      "--engine",
+      "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+      "--catalog",
+      "screens",
+      "--suite",
+      "ui-world-atlas",
+      "--max-cpus",
+      "1",
+      "--output",
+      "/tmp/yuga-world-regression-atlas-r1"
+    ],
+    "parity": [
+      "env",
+      "OMP_NUM_THREADS=1",
+      "OPENBLAS_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "taskset",
+      "-c",
+      "4",
+      "python3",
+      "tools/run-visual-checks.py",
+      "--engine",
+      "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+      "--catalog",
+      "visual",
+      "--suite",
+      "desktop-world-route-parity",
+      "--max-cpus",
+      "1",
+      "--output",
+      "/tmp/yuga-world-regression-parity-r1"
+    ]
+  },
+  "interpretation": "Two compound overview marker assertions fail. Source requires unchanged raw local projected pixels across intentionally different map sizes. Current receipt does not isolate all compound terms; no runtime defect or corrected pass claimed.",
+  "source_edits": false,
+  "scope": "Existing15atlas and19routeparity assertions only; predictive capsule/ray/component scope, no new raster or fullroute clearance. Failed raw report and exact source retained."
+}

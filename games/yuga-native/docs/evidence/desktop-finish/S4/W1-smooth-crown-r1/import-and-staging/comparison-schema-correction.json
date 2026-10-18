@@ -1,0 +1,14 @@
+{
+  "scope": "Harness-only comparator correction; no engine/source changes or reruns",
+  "rejected_attempts": [
+    {
+      "file": "compare_views-rejected-schema-r0.py",
+      "exception": "KeyError source_unchanged"
+    },
+    {
+      "file": "compare_views-rejected-schema-r1.py",
+      "exception": "KeyError source_after_sha256"
+    }
+  ],
+  "cause": "Preflight deliberately has a smaller schema than actual capture: source-before, controls, camera/motion/secondary/pose only. Actual comparison retains its richer exact fields. Source/store postchecks remain outer-runner and snapshot.verify gates."
+}

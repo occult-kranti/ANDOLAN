@@ -119,6 +119,11 @@ var kit_templates: Dictionary = {}
 var material_cache: Dictionary = {}
 var start_position := Vector3(0, 0.05, -112)
 var overview := false
+var _overview_copy: VBoxContainer
+var _overview_heading: Label
+var _overview_content_rect:=Rect2()
+var _overview_geometry_points:=PackedVector3Array()
+var _overview_layout_busy:=false
 
 
 func _ready() -> void:
@@ -144,6 +149,7 @@ func _ready() -> void:
 	_build_water()
 	MythicEnvironment.configure(world, "confluence")
 	_build_lighting()
+	load("res://scripts/world_roof_loggia.gd").configure(world)
 	_build_player()
 	if not _build_army_audio() or not player.traversal_report().get("enabled",false):
 		push_error("Confluence requires a configured army and traversal controller.")
@@ -918,6 +924,11 @@ func _wire_pause_focus() -> void:
 
 func _layout_world_hud() -> void:
 	if not is_inside_tree() or not is_instance_valid(hud) or not is_instance_valid(rama_hud): return
+	if overview:
+		_layout_overview_composition()
+		return
+	rama_hud.show()
+	_restore_overview_map_parent()
 	var screen := get_viewport().get_visible_rect().size
 	var compact := screen.x < 1100
 	_constrained_world=screen.x<900 or screen.y<500
@@ -974,10 +985,12 @@ func _build_atlas_guide() -> void:
 	atlas_guide_scroll.gui_input.connect(_atlas_guide_input)
 	atlas_guide.add_child(atlas_guide_scroll)
 	var copy:=VBoxContainer.new()
+	_overview_copy=copy
 	copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	copy.add_theme_constant_override("separation",HeroUI.SPACE_SM)
 	atlas_guide_scroll.add_child(copy)
-	copy.add_child(_label("TACTICAL KEY",HeroUI.TYPE_SECTION,HeroUI.GOLD))
+	_overview_heading=_label("TACTICAL KEY",HeroUI.TYPE_SECTION,HeroUI.GOLD)
+	copy.add_child(_overview_heading)
 	atlas_guide_return=_label("",HeroUI.TYPE_HUD_DETAIL,HeroUI.MIST)
 	atlas_guide_return.name="ReturnHint"
 	atlas_guide_return.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
@@ -994,6 +1007,10 @@ func _build_atlas_guide() -> void:
 
 func _layout_atlas() -> void:
 	if not is_inside_tree() or not is_instance_valid(map_control) or not is_instance_valid(rama_hud): return
+	if overview:
+		_layout_overview_composition()
+		return
+	_restore_overview_map_parent()
 	var screen:=get_viewport().get_visible_rect().size
 	var compact:=screen.x<1100
 	var margin:=float(HeroUI.SPACE_MD if _constrained_world else HeroUI.SPACE_LG)
@@ -1127,6 +1144,8 @@ func _refresh_compact_world(battle: Dictionary={}) -> void:
 		var detail_rows:PackedStringArray=["WORLD DETAILS",location_label.text,score_label.text,lane_label.text,objective_label.text,relay_hint.text,ability_label.text,"Energy %d / %d" % [energy,report.get("max_energy",100)],goal_label.text]
 		for relay in relay_labels: detail_rows.append(relay.text.replace("\n",": "))
 		for help in help_labels: detail_rows.append(help.text)
+		if overview: detail_rows.insert(1,"Rama health "+rama_hud.life_text.text)
+		if overview: detail_rows.append("Reading: ↑ / ↓ · PgUp / PgDn · Home / End")
 		atlas_live_details.text="\n".join(detail_rows)
 
 func _layout_pause_panel() -> void:
@@ -1179,7 +1198,8 @@ func _process(delta: float) -> void:
 		_update_practice_hud()
 		_update_invocation_hud()
 		map_control.hero_position=player.position
-		map_control.hero_forward=-player.global_basis.z
+		# The authored hero faces +Z; the CharacterBody root only translates.
+		map_control.hero_forward=player.visual.global_basis.z
 		map_control.queue_redraw()
 
 func _physics_process(_delta: float) -> void:
@@ -1480,6 +1500,7 @@ func set_overview(value: bool) -> void:
 		review_camera.look_at(Vector3(0,0,0))
 		review_camera.current=true
 	else: player.camera.current=true
+	_layout_world_hud()
 	Input.mouse_mode=Input.MOUSE_MODE_VISIBLE if value or paused else Input.MOUSE_MODE_CAPTURED
 
 func get_review_camera_views() -> Array:
@@ -1600,3 +1621,119 @@ func _settle_world_hud() -> void:
 		await tree.process_frame
 		if not is_inside_tree() or get_tree() != tree or not is_instance_valid(hud): return
 		_layout_world_hud()
+
+func _restore_overview_map_parent() -> void:
+	if not is_instance_valid(map_control) or not is_instance_valid(hud): return
+	if map_control.get_parent()!=hud: map_control.reparent(hud,false)
+	map_control.custom_minimum_size=Vector2.ZERO
+	map_control.size_flags_horizontal=Control.SIZE_FILL
+	if is_instance_valid(_overview_heading): _overview_heading.text="TACTICAL KEY"
+
+func _layout_overview_composition() -> void:
+	if _overview_layout_busy or not is_instance_valid(atlas_guide) or not is_instance_valid(_overview_copy): return
+	_overview_layout_busy=true
+	var screen:=get_viewport().get_visible_rect().size
+	var margin:=12.0
+	var column:=minf(300,maxf(208,screen.x*.26))
+	column=minf(column,maxf(1,screen.x-margin*2))
+	for name in ["TitleCard","RelayStatus","ControlsCard","TraversalStatus"]: hud.get_node(name).hide()
+	rama_hud.hide()
+	compact_world_card.hide()
+	atlas_guide.visible=not paused
+	_overview_heading.text="OVERVIEW"
+	atlas_guide_return.text="Health %s\n%s back · %s pause\n%s keys · ↑↓ read" % [rama_hud.life_text.text,Bindings.label("world_overview"),Bindings.label("pause_game"),Bindings.label("help_controls")]
+	_refresh_compact_world()
+	if map_control.get_parent()!=_overview_copy:
+		map_control.reparent(_overview_copy,false)
+		_overview_copy.move_child(map_control,2)
+	map_control.get_node("AtlasLegend").text=_atlas_key_text()
+	map_control.get_node("AtlasLegend").hide()
+	map_control.footer_height=0
+	var inner_width:=maxf(1,column-HeroUI.SPACE_MD*2-16)
+	var heading_height:=float(_overview_heading.get_theme_font("font").get_height(_overview_heading.get_theme_font_size("font_size")))
+	var hint_height:=atlas_guide_return.get_theme_font("font").get_multiline_string_size(atlas_guide_return.text,HORIZONTAL_ALIGNMENT_LEFT,inner_width,atlas_guide_return.get_theme_font_size("font_size")).y
+	var available_height:=maxf(80,screen.y-margin*2-HeroUI.SPACE_MD*2-heading_height-hint_height-HeroUI.SPACE_SM*3-32)
+	var plot_width:=maxf(1,minf(196,inner_width-24))
+	var plot_height:=minf(plot_width*260.0/140.0,available_height)
+	plot_width=plot_height*140.0/260.0
+	map_control.custom_minimum_size=Vector2(plot_width+24,plot_height+32)
+	map_control.size_flags_horizontal=Control.SIZE_SHRINK_CENTER
+	map_control.queue_redraw()
+	# Shrink child minima before assigning the parent rectangle on live resize.
+	atlas_guide.reset_size()
+	atlas_guide.size=Vector2(column,screen.y-margin*2)
+	atlas_guide.position=Vector2(screen.x-margin-atlas_guide.size.x,margin)
+	_overview_content_rect=Rect2(Vector2(margin,margin),Vector2(maxf(1,atlas_guide.position.x-margin*2),maxf(1,screen.y-margin*2)))
+	if review_camera.current: _fit_overview_camera(_overview_content_rect.grow(-12))
+	_overview_layout_busy=false
+
+func _overview_points() -> PackedVector3Array:
+	if not _overview_geometry_points.is_empty(): return _overview_geometry_points
+	# Exact visual prop extents plus existing nominal floor, solid decks and anchors.
+	# No new map reconstruction or cached simulation state is created.
+	var bounds:Array=manifest.bounds.nominal_xz
+	for x in [bounds[0],bounds[1]]:
+		for z in [bounds[2],bounds[3]]: _overview_geometry_points.append(Vector3(x,0,z))
+	for entry in manifest.authority_collision_boxes+manifest.traversal.native_collision_boxes:
+		var base:=_v(entry.position)
+		var dimensions:=_v(entry.size)
+		var box:=AABB(base-Vector3(dimensions.x*.5,0,dimensions.z*.5),dimensions)
+		for index in 8: _overview_geometry_points.append(box.get_endpoint(index))
+	for entry in manifest.traversal.anchors: _overview_geometry_points.append(_v(entry.position))
+	for node in props_root.find_children("*","MeshInstance3D",true,false):
+		var mesh:=node as MeshInstance3D
+		if mesh.mesh==null or not mesh.is_visible_in_tree(): continue
+		var box:=mesh.get_aabb()
+		for index in 8: _overview_geometry_points.append(mesh.global_transform*box.get_endpoint(index))
+	return _overview_geometry_points
+
+func _overview_projection_bounds() -> Rect2:
+	return _overview_projection_state().rect
+
+func _overview_projection_state() -> Dictionary:
+	var result:=Rect2()
+	var first:=true
+	var edge_depths:=Vector4.ONE
+	var inverse:=review_camera.get_camera_transform().affine_inverse()
+	for point in _overview_points():
+		var projected:=review_camera.unproject_position(point)
+		var depth:=maxf(.1,-(inverse*point).z)
+		if first:
+			result=Rect2(projected,Vector2.ZERO);first=false
+			edge_depths=Vector4(depth,depth,depth,depth)
+		else:
+			if projected.x<result.position.x:edge_depths.x=depth
+			if projected.x>result.end.x:edge_depths.y=depth
+			if projected.y<result.position.y:edge_depths.z=depth
+			if projected.y>result.end.y:edge_depths.w=depth
+			result=result.expand(projected)
+	return {"rect":result,"x_depth":2.0/(1.0/edge_depths.x+1.0/edge_depths.y),"y_depth":2.0/(1.0/edge_depths.z+1.0/edge_depths.w)}
+
+func _fit_overview_camera(free_rect:Rect2) -> void:
+	var points:=_overview_points()
+	if points.is_empty() or free_rect.size.x<32 or free_rect.size.y<32: return
+	var bounds:=AABB(points[0],Vector3.ZERO)
+	for point in points: bounds=bounds.expand(point)
+	var centre:=bounds.get_center()
+	var orientation:=review_camera.global_basis.orthonormalized()
+	var distance:=Vector3(118,155,195).length()
+	var shift:=Vector2.ZERO
+	var screen:=get_viewport().get_visible_rect().size
+	# A bounded project-and-fit solve keeps the existing oblique orientation.
+	# Camera translates only; no world/hero pose or control changes occur.
+	for unused in 20:
+		review_camera.global_transform=Transform3D(orientation,centre+orientation.z*distance+orientation.x*shift.x+orientation.y*shift.y)
+		var projection:=_overview_projection_state()
+		var projected:Rect2=projection.rect
+		var ratio:=maxf(projected.size.x/free_rect.size.x,projected.size.y/free_rect.size.y)
+		var error:=projected.get_center()-free_rect.get_center()
+		# Pan sensitivity is set by the actual depth of each projected edge,
+		# not the city's centre depth (which oversteers a nearby skyline).
+		var middle:=review_camera.project_position(screen*.5,1.0)
+		var x_pixel:float=middle.distance_to(review_camera.project_position(screen*.5+Vector2.RIGHT,1.0))
+		var y_pixel:float=middle.distance_to(review_camera.project_position(screen*.5+Vector2.DOWN,1.0))
+		shift+=Vector2(error.x*x_pixel*projection.x_depth,-error.y*y_pixel*projection.y_depth)*.7
+		distance=clampf(distance*sqrt(clampf(ratio*1.025,.5,2.0)),100,400)
+	review_camera.global_transform=Transform3D(orientation,centre+orientation.z*distance+orientation.x*shift.x+orientation.y*shift.y)
+	review_camera.set_meta("overview_free_rect",free_rect)
+	review_camera.set_meta("overview_projected_geometry",_overview_projection_bounds())

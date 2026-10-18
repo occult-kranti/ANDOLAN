@@ -24,11 +24,14 @@ F = module('graphics_pck_fixtures', PROJECT / 'tests/traversal_security_cases.py
 def surface_cases(checks):
     notice_path = PROJECT / 'NOTICE/RAMA-HERO-PROVENANCE.json'
     notice = json.loads(notice_path.read_text())
-    assert notice['schema'] == 5, 'These adversaries require the exact schema-5 proposal'
+    active_schema = notice['schema']
+    assert notice['schema'] in (5, 6), 'These adversaries require the exact current or preserved schema-5 proposal'
     validated = P.validate_rama_hero_notice(PROJECT)
+    if notice['schema'] == 6:
+        notice = json.loads((PROJECT / P.RAMA_CROWN_PARENT).read_text())
     before = {path: P.record(PROJECT / path) for path in validated['sources']}
     before['NOTICE/RAMA-HERO-PROVENANCE.json'] = P.record(notice_path)
-    checks.append({'name': 'complete actual schema5 source closure validates', 'passed': True,
+    checks.append({'name': f'complete actual schema{active_schema} source closure validates with exact schema5 surface history', 'passed': True,
                    'sources': len(validated['sources'])})
     checks.append({'name': 'schema5 records current and historical surface bindings separately',
                    'passed': all(path in validated['sources'] for path in
@@ -190,7 +193,7 @@ def main():
               'source_sha256':{p:P.digest(PROJECT/p) for p in ('tools/package-native.py',
                   'tests/graphics_package_cases.py','tests/traversal_security_cases.py')},
               'provenance_sources':sources,
-              'scope':'Actual schema5 source closure and small disposable mutation fixtures; structural PCK mappings only. No texture decoding, export, engine, visual acceptance or activated optional hair claim.'}
+              'scope':'Actual current source closure with preserved schema5 surface history and small disposable mutation fixtures; structural PCK mappings only. No texture decoding, export, engine, visual acceptance or activated optional hair claim.'}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({'passed':passed,'count':len(checks),'failures':[c for c in checks if not c['passed']]}))

@@ -1,0 +1,11 @@
+--- frozen6cf/run_focus.py
++++ overview3shot/run_focus.py
+@@ -195,7 +195,7 @@
+         report_path = output / ('preflight.json' if args.preflight else 'capture.json')
+         report = json.loads(report_path.read_text())
+         shots = report['shots']
+-        expected_shots = {'entry-cancel': 60, 'compact-screens': 8}.get(args.case, 2)
++        expected_shots = {'entry-cancel': 60, 'compact-screens': 8, 'scene-anchors': 3}.get(args.case, 2)
+         if report['complete'] is not True or len(shots) != expected_shots:
+             raise RuntimeError('Capture did not satisfy declared checks/count')
+         if args.case == 'entry-cancel':

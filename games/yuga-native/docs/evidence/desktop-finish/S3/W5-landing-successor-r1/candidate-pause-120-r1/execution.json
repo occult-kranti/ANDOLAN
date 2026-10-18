@@ -1,0 +1,59 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "4",
+    "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "--headless",
+    "--fixed-fps",
+    "120",
+    "--path",
+    "/tmp/yuga-s3-landing-successor-r1/candidate/project",
+    "--script",
+    "res://tests/desktop_landing_pause_cases.gd",
+    "--",
+    "--report=/tmp/yuga-candidate-pause-120-r1.json"
+  ],
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "exit_code": 0,
+  "timeout": false,
+  "wall_seconds": 2.675,
+  "motion_before": "57d0098c3d05e976229cd5f2314d5356af85429e1128688d75e39ec5fdbb3b52",
+  "motion_after": "57d0098c3d05e976229cd5f2314d5356af85429e1128688d75e39ec5fdbb3b52",
+  "affinity": [
+    4
+  ],
+  "library_threads": 1,
+  "engine_worker_pool": "not capped",
+  "raw_report": "/tmp/yuga-candidate-pause-120-r1.json",
+  "scope": "Headless actual imported resources; no raster or motion-quality acceptance.",
+  "complete": true,
+  "checks": [
+    {
+      "detail": {},
+      "name": "public pause interrupts actual descending native player",
+      "passed": true
+    },
+    {
+      "detail": {
+        "physics_before": 27,
+        "physics_held": 39
+      },
+      "name": "paused descent holds complete pose root anchors and authority",
+      "passed": true
+    },
+    {
+      "detail": {
+        "held_age": 0.0166666666666667,
+        "resumed_age": 0.025
+      },
+      "name": "first resumed update advances one physics delta without catchup",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "pause witness uses unchanged actual imported sources",
+      "passed": true
+    }
+  ]
+}

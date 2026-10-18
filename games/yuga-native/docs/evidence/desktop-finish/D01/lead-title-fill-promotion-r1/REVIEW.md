@@ -1,0 +1,3 @@
+The lead directly reviewed the matched daylight100%, moonlit100% and current-title200% originals. Moving the existing fill toward the camera gives a modest improvement in facial and upper-chest readability. No new bright floor patch, washed-out gold stripe or orange skin cast is visible in these views. The day comparison reports zero changed training pixels. The extended pair preserves current title layout, all164 bone transforms, camera, settings, clocks and seed caches; only the declared light parameters differ.
+
+Promoted courtyard SHA43f512dc retains the same camera and a single existing light, with no new texture, draw, resource or gameplay writer. Full hero geometry/material/animation quality remains open.

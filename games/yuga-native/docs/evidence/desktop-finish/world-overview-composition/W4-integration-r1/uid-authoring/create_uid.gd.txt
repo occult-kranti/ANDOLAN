@@ -1,0 +1,7 @@
+extends SceneTree
+func _initialize() -> void:
+	var value:=ResourceUID.create_id()
+	var text:=ResourceUID.id_to_text(value)
+	assert(value!=ResourceUID.INVALID_ID and ResourceUID.text_to_id(text)==value)
+	FileAccess.open("/tmp/yuga-roof-uid-r1/uid.json",FileAccess.WRITE).store_string(JSON.stringify({"id":value,"uid":text,"engine":Engine.get_version_info(),"source":"ResourceUID.create_id, Godot generated; no manually invented identifier."},"  ")+"\n")
+	quit()

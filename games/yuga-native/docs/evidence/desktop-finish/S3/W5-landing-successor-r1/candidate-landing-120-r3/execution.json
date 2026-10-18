@@ -1,0 +1,72 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "4",
+    "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "--headless",
+    "--fixed-fps",
+    "120",
+    "--path",
+    "/tmp/yuga-s3-landing-successor-r1/candidate/project",
+    "--script",
+    "res://tools/graphics-six/capture_transition.gd",
+    "--",
+    "--case=landing120",
+    "--output=/tmp/yuga-candidate-landing-120-r3-original",
+    "--preflight"
+  ],
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "exit_code": 0,
+  "timeout": false,
+  "wall_seconds": 7.229,
+  "motion_before": "57d0098c3d05e976229cd5f2314d5356af85429e1128688d75e39ec5fdbb3b52",
+  "motion_after": "57d0098c3d05e976229cd5f2314d5356af85429e1128688d75e39ec5fdbb3b52",
+  "affinity": [
+    4
+  ],
+  "library_threads": 1,
+  "engine_worker_pool": "not capped",
+  "raw_report": "/tmp/yuga-candidate-landing-120-r3-original/preflight.json",
+  "scope": "Headless actual imported resources; no raster or motion-quality acceptance.",
+  "raw_sha256": "eed31d4b79ed1baa671a3e62458f26ee2e6998c6f39cafdec1d489f680ed2720",
+  "raw_bytes": 6912256,
+  "gzip_sha256": "325ea1ff7355ba1790438bcf665585f20ccd97db0c365e59b246265887f50cde",
+  "gzip_bytes": 1135553,
+  "complete": true,
+  "checks": [
+    {
+      "expected": 40,
+      "name": "all declared consecutive final-modifier observations",
+      "passed": true
+    },
+    {
+      "name": "callback body and actual sole sample share physics counter",
+      "passed": true
+    },
+    {
+      "capture_hz": 120,
+      "name": "actual physics step matches capture cadence",
+      "passed": true,
+      "physics_hz": 120
+    },
+    {
+      "name": "every actual render is adjacent",
+      "passed": true,
+      "scope": "not applicable to headless preflight"
+    },
+    {
+      "name": "same declared camera active and required geometry framed",
+      "passed": true
+    },
+    {
+      "gaits": [
+        "idle",
+        "fall",
+        "land"
+      ],
+      "name": "landing actually occurs",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "task": "D07 changed-world atlas and route parity, diagnostic-led repair",
+  "product": "YUGA native desktop",
+  "results": {
+    "route": {
+      "passed": true,
+      "count": 27,
+      "source_unchanged": true,
+      "exit_code": 0,
+      "seconds": 2.027,
+      "engine_diagnostics": [],
+      "summary": "route/summary.json",
+      "report": "route/reports/desktop-world-route-parity.json",
+      "command": [
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_world_route_parity_cases.gd",
+        "--",
+        "--report=/tmp/yuga-world-route-repaired-r2/reports/desktop-world-route-parity.json"
+      ],
+      "source_before_sha256": "64ee3aecd67c3f9407b68db1fadc0afd93e291c05bde4eb737447c8b1c4c0c27",
+      "source_after_sha256": "64ee3aecd67c3f9407b68db1fadc0afd93e291c05bde4eb737447c8b1c4c0c27"
+    },
+    "atlas": {
+      "passed": true,
+      "count": 15,
+      "source_unchanged": true,
+      "exit_code": 0,
+      "seconds": 0.268,
+      "engine_diagnostics": [],
+      "summary": "atlas/summary.json",
+      "report": "atlas/reports/ui-world-atlas.json",
+      "command": [
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_finish_s1_atlas_cases.gd",
+        "--",
+        "--report=/tmp/yuga-world-atlas-repaired-r2/reports/ui-world-atlas.json"
+      ],
+      "source_before_sha256": "569c1bb8d2d0629f115615dc0501e318a7061ce7ca3f0f47c3c9fe0a6ae5a82a",
+      "source_after_sha256": "569c1bb8d2d0629f115615dc0501e318a7061ce7ca3f0f47c3c9fe0a6ae5a82a"
+    }
+  },
+  "source_pins": {
+    "tests/desktop_world_route_parity_cases.gd": {
+      "bytes": 20864,
+      "sha256": "75f947176c620506a46a968105e8ceb8318ee477d1644719deb37e904d6094c8"
+    },
+    "tests/desktop_finish_s1_atlas_cases.gd": {
+      "bytes": 6470,
+      "sha256": "249ad34fa61d2042039d1725551a2d2687458200cc7a4fc2a3e336d838b03e87"
+    },
+    "scripts/confluence_world.gd": {
+      "bytes": 84498,
+      "sha256": "42e617a379f815e51a32b9bbd9cca86c6ba3ac6a7c809e2d2d8c6c89619fc0cb"
+    },
+    "scripts/world_atlas.gd": {
+      "bytes": 6341,
+      "sha256": "138c54e86adc4f41ee0ee915619efd58ec8fd6ed6c0d53179f9b770d64b7fdc7"
+    },
+    "tools/run-visual-checks.py": {
+      "bytes": 17277,
+      "sha256": "3021f04905b190f2db92ed4e4e3e9c73e27dca4505a90c74bd442ca4a530de4a"
+    },
+    "scripts/rama_motion.gd": {
+      "bytes": 37695,
+      "sha256": "5023b301ff4c4585e3b6a22827f55f4696045bb0206374ee1656a5b4bad6e4a5"
+    },
+    "assets/heroes/rama-hero.glb": {
+      "bytes": 36049948,
+      "sha256": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e"
+    },
+    "assets/heroes/rama-hero-mid.glb": {
+      "bytes": 25847144,
+      "sha256": "b5949c9d427e9684a13fa525212eedc87dfa207d2c70fba5ebe6a4b1eda61005"
+    },
+    "assets/heroes/rama-hero-far.glb": {
+      "bytes": 20901820,
+      "sha256": "aef8ae5837c0bf0a9ed5850ae649d6368ec1e87c0728d501f1780bba325a9d6a"
+    }
+  },
+  "changed_by_W5": [
+    "tests/desktop_world_route_parity_cases.gd"
+  ],
+  "runtime_changes_by_lead": [
+    "scripts/confluence_world.gd: marker actual visual +Z facing",
+    "scripts/world_atlas.gd: translation-independent direct XZ direction projection"
+  ],
+  "retained_history": [
+    {
+      "path": "../W5-atlas-route-regression-r1/artifact-manifest.json",
+      "bytes": 4391,
+      "sha256": "3f7976f2473644ae84cbc669ae977684b3d584ad8b55cbdd3d1ed55d00fb49d9"
+    },
+    {
+      "path": "../W5-route-diagnostic-r1/artifact-manifest.json",
+      "bytes": 2071,
+      "sha256": "32cd3ddb966358da4e585a8d1731d32223aaf5ea59d9925344c2c578e6a82911"
+    },
+    {
+      "path": "../W5-heading-diagnostic-r1/artifact-manifest.json",
+      "bytes": 1928,
+      "sha256": "5982514df470ba51cb96c70f081f745050df972dfa49a3e449bab4e79350251c"
+    },
+    {
+      "path": "../W5-route-repaired-r1/artifact-manifest.json",
+      "bytes": 2083,
+      "sha256": "8e1fcc4ff53e3cdfb4597aaf846c623841dde57924d496ee7b6fceabbe074226"
+    },
+    {
+      "path": "../W5-camera-numeric-diagnostic-r1/artifact-manifest.json",
+      "bytes": 1928,
+      "sha256": "176aa94545a5ef8a44e7c938d8c61fa2ada77ae28155b793fc28a2241325c1ac"
+    }
+  ],
+  "diagnoses": [
+    {
+      "case": "Obsolete raw-pixel hold across intentional overview resize",
+      "original": "17/19 route checks; original15/15 atlas",
+      "diagnostic": "Unchanged assertions17/19; only raw_local_point_held false. Plot142x229\u2192196x364\u2192142x229. Manifest-normalized XZ stays correct."
+    },
+    {
+      "case": "Actual marker heading source defect",
+      "diagnostic": "17/21 on worldcc014; actual visual+Z faces\u00b145degrees while marker uses fixed root-Z north. Lead corrected assignment."
+    },
+    {
+      "case": "Float32 finite-difference heading and exact SpringArm basis assumptions",
+      "diagnostic": "23/25 retained twice; expected-vs-actual heading components differ up to1.09672546e-5 at far deck; camera origin/parent exact, basis delta8.89603129e-8. Lead removed subtraction cancellation. Fixture compares basis approximately only."
+    }
+  ],
+  "final_contract": [
+    "Independent expected XZ fractions from copied world.manifest bounds",
+    "Actual unchanged visual+Z facing and independent current-plot aspect direction",
+    "Non-cardinal aspect witness; exact diagonal heading across synchronous10km marker translation",
+    "Zero/NAN/INF direction returnszero",
+    "Four synchronous marker/facing corruptions rejected by the same mapping predicate and specific coordinate/heading terms, then exactly restored",
+    "Exact live parent, plot, rawpixel point, heading, playercamera owner/origin/parent restoration; Basis.is_equal_approx only for measured SpringArm drift"
+  ],
+  "review": "W4 independently reviewed the test-only changes and numerical diagnosis; root accepted final27/27+15/15. No rendered-image acceptance is inferred.",
+  "scope": "Headless current actual-world component/physics/atlas checks only. Predictive capsule samples are unchanged. No raster, fullroute, natural locomotion, physicalGPU or package execution claim. Motion5023 unchanged; existing strict26/27 motion limitation unaffected.",
+  "engine": "Godot4.6.3.stable.official.7d41c59c4",
+  "execution_scope": "CPU4 affinity via catalog --max-cpus1; OMP/BLAS/MKL1; catalog LP2. No Godot workerpool cap claimed.",
+  "next_owner": "Root/W6 checkpoint and package, then W1 actual packaged heading/overview review. No further W5 test run required."
+}

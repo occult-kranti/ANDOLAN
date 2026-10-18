@@ -1,0 +1,18 @@
+{
+  "command": [
+    "env",
+    "OPENBLAS_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "taskset",
+    "-c",
+    "0,1",
+    "/workspace/tooling/yuga-native-python/bin/python",
+    "/tmp/yuga-sash-uv-import-r1/evidence/compare_import.py"
+  ],
+  "exit_code": 0,
+  "stdout": "PASS:9 exact semantic differences,3LOD selected UV scaled bytes,all other source/imported semantics exact.",
+  "elapsed_seconds": null,
+  "elapsed_scope": "Not measured; no duration claim.",
+  "comparison_sha256": "da707ae40d664fc914f07679918c938d3bb9d216995288df04e6e9846f63c288"
+}

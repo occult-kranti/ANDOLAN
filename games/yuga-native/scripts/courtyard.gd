@@ -263,9 +263,9 @@ func _create_title_camera() -> void:
 	title_camera.make_current()
 	title_light = OmniLight3D.new()
 	title_light.name = "HeroPortraitFill"
-	title_light.position = player.position + Vector3(-1.8, 2.8, -2.0)
-	title_light.light_color = Color("b4d4e5")
-	title_light.light_energy = 1.8
+	title_light.position = player.position + Vector3(1.8, 2.8, -2.4)
+	title_light.light_color = Color("e4d8c8")
+	title_light.light_energy = 2.2
 	title_light.omni_range = 5.5
 	title_light.shadow_enabled = false
 	world.add_child(title_light)

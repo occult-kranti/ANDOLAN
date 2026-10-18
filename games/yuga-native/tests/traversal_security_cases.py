@@ -43,6 +43,7 @@ FIRST_LOAD_NAMES = ['scenes/boot.tscn', 'scripts/boot.gd',
 GRAPHICS_NAMES = [
     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
+    'scripts/world_roof_loggia.gd',
     'assets/environment-finish/masonry.gdshader', 'assets/hero-finish/g1-manifest.json',
     'assets/hero-finish/s1-manifest.json',
 ]
@@ -224,6 +225,20 @@ def main() -> int:
                    for name, value in remapped]
         evaluate('first-load scene remapped to other scene rejects', pack(changed)[0])
         evaluate('ambiguous direct and remapped first-load source rejects', pack(remapped + [(source, b'direct fixture')])[0])
+        roof = 'scripts/world_roof_loggia.gd'
+        evaluate('missing active world roof dependency rejects',
+                 pack([entry for entry in entries if entry[0] != roof])[0],
+                 rejection_contains='Required first-load resource missing or ambiguous: ' + roof)
+        evaluate('world roof filename substitution rejects',
+                 pack([(name + '-extra' if name == roof else name, value) for name, value in entries])[0],
+                 rejection_contains='Required first-load resource missing or ambiguous: ' + roof)
+        compiled_roof = [entry for entry in entries if entry[0] != roof] + [
+            (roof + '.remap', b'[remap]\npath="res://scripts/world_roof_loggia.gdc"\n'),
+            (roof + 'c', b'benign compiled roof fixture')]
+        evaluate('compiled world roof remap accepts', pack(compiled_roof)[0], True)
+        evaluate('orphan world roof remap rejects',
+                 pack([entry for entry in compiled_roof if entry[0] != roof + 'c'])[0],
+                 rejection_contains='First-load remap destination missing or ambiguous: ' + roof)
         corrupt = bytearray(baseline)
         corrupt[-1] ^= 1
         evaluate("payload checksum corruption rejected", bytes(corrupt))

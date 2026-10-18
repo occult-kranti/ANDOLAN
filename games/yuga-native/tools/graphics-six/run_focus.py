@@ -74,9 +74,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--project', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair', 'scene-anchors', 'compact-screens', 'compact-screens-125', 'diadem-review'], required=True)
+    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair', 'scene-anchors', 'compact-screens', 'compact-screens-125', 'diadem-review', 'sash-review'], required=True)
     parser.add_argument('--review-branch', choices=['baseline', 'candidate'],
-                        help='Required only for the source-pinned diadem comparison')
+                        help='Required for source-pinned diadem or sash comparisons')
     parser.add_argument('--display', type=int, default=192)
     parser.add_argument('--engine', type=Path,
                         help='Explicit isolated diagnostic engine; default uses installed godot')
@@ -91,8 +91,8 @@ def main():
     parser.add_argument('--timeout', type=float, default=300)
     parser.add_argument('--no-progress-timeout', type=float, default=120)
     args = parser.parse_args()
-    if (args.case == 'diadem-review') != (args.review_branch is not None):
-        parser.error('--review-branch is required only with --case diadem-review')
+    if (args.case in ('diadem-review', 'sash-review')) != (args.review_branch is not None):
+        parser.error('--review-branch is required only with diadem-review or sash-review')
     if not 0 < args.timeout <= 900 or not 0 < args.no_progress_timeout <= args.timeout:
         parser.error('Require 0 < no-progress-timeout <= timeout <= 900 seconds')
     project, output = args.project.resolve(), args.output.resolve()
@@ -107,7 +107,8 @@ def main():
     helper_name = {'gold-pair': 'capture_gold.gd', 'scene-anchors': 'capture_scene_anchors.gd',
                    'compact-screens': 'capture_compact_screens.gd',
                    'compact-screens-125': 'capture_compact_screens.gd',
-                   'diadem-review': 's4_diadem_capture.gd'}.get(args.case, 'capture_focus.gd')
+                   'diadem-review': 's4_diadem_capture.gd',
+                   'sash-review': 'sash_uv_capture.gd'}.get(args.case, 'capture_focus.gd')
     helper = project / 'tools/graphics-six' / helper_name
     if not helper.is_file():
         parser.error('Refresh the snapshot with the new capture helper first')
@@ -119,7 +120,7 @@ def main():
                '--disable-vsync', '--fixed-fps', '30',
                '--script', 'res://tools/graphics-six/' + helper_name, '--',
                '--output=' + str(output)]
-    if args.case == 'diadem-review':
+    if args.case in ('diadem-review', 'sash-review'):
         command.append('--mode=groom-stills')
     elif args.case not in ('compact-screens', 'compact-screens-125'):
         command.append('--case=' + args.case)
@@ -147,7 +148,7 @@ def main():
     env = os.environ.copy()
     env.update(LP_NUM_THREADS='2', OPENBLAS_NUM_THREADS='1', OMP_NUM_THREADS='1', MKL_NUM_THREADS='1')
     if args.review_branch:
-        env['YUGA_DIADEM_REVIEW'] = args.review_branch
+        env['YUGA_SASH_REVIEW' if args.case == 'sash-review' else 'YUGA_DIADEM_REVIEW'] = args.review_branch
     for key, suffix in [('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')]:
         folder = logs / 'user' / suffix
         folder.mkdir(parents=True)
@@ -215,6 +216,11 @@ def main():
                 raise RuntimeError('Unexpected diadem view sequence')
             if any(s.get('diadem_branch') != args.review_branch for s in shots):
                 raise RuntimeError('Diadem report branch differs from declared source branch')
+        if args.case == 'sash-review':
+            if [s['id'] for s in shots] != ['rest-front', 'cast-three-quarter']:
+                raise RuntimeError('Unexpected sash view sequence')
+            if any(s.get('sash_branch') != args.review_branch for s in shots):
+                raise RuntimeError('Sash report branch differs from declared source branch')
         if args.case == 'entry-cancel':
             if not all(b['physics_frame'] - a['physics_frame'] == 2 for a, b in zip(shots, shots[1:])):
                 raise RuntimeError('Missing physics sampling interval')

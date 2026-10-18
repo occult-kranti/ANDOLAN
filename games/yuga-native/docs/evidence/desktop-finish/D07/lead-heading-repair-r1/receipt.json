@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "utc": "2026-10-18T08:41:43.410868+00:00",
+  "path": "games/yuga-native/scripts/confluence_world.gd",
+  "before_sha256": "cc014ac25009da5852f6fce646522f0e195eb3ec0a11ababc171e4ed990df8b2",
+  "after_sha256": "42e617a379f815e51a32b9bbd9cca86c6ba3ac6a7c809e2d2d8c6c89619fc0cb",
+  "change": "Map marker takes +Z of the actual hero visual instead of -Z of the unrotated CharacterBody root. One assignment plus explanatory comment.",
+  "contract": "Arrow represents actual hero-facing XZ; camera orbit alone does not change the arrow. WorldAtlas independently projects this direction using the current plot aspect.",
+  "failure": "../W5-heading-diagnostic-r1/receipt.json",
+  "failure_receipt_sha256": "d745fe15c9463722b3bda5e3590aafced5f68405fe817b33bfb8d24654d1d275",
+  "validation_status": "Accepted bounded repair: final route27/27 and atlas15/15 pass on exact world42e617/atlas138c54/motion5023; earlier failures retained. Independent W4 reviewed source and predicates. Actual packaged rotated-heading input remains next.",
+  "direction_projection": {
+    "path": "games/yuga-native/scripts/world_atlas.gd",
+    "before_sha256": "1cf4b7f22b4e34fdeb4300d8e9c591cd3ecad2990a13a7ed8941bf3f4d32cce5",
+    "after_sha256": "138c54e86adc4f41ee0ee915619efd58ec8fd6ed6c0d53179f9b770d64b7fdc7",
+    "change": "Apply current map scale directly to XZ direction, preserving normalization/finite/zero guards. This removes position subtraction and its measured float32 cancellation.",
+    "evidence": "W5 recorded a ~1.1e-5 component discrepancy against independent analytic heading after the real facing fix. The separate camera basis discrepancy is ~8.90e-8; no camera code is changed."
+  },
+  "validation_receipt": "../W5-route-repair-final-r1/receipt.json",
+  "validation_receipt_sha256": "220334417720d9ddb4ce26fa3efde6025ae5689eb0e9a6fd94b4e7e57734982b"
+}

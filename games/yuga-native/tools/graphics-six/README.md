@@ -101,3 +101,14 @@ python3 games/yuga-native/tools/ui-campaign/run.py --dry-run \
 Dry-run validates request parsing, not live label/focus navigation. If a redesigned
 label changes, retain the failed plan/run and update the explicit target; never
 call product navigation methods to make a native-input claim pass.
+
+The source-pinned sash comparison uses `run_focus.py --case sash-review
+--review-branch baseline|candidate` with two separately sealed children. It
+captures exactly `rest-front` and `cast-three-quarter`; the common
+`sash_uv_capture.gd` checks all three raw hero hashes, motion/finish hashes,
+the final 164-bone pose and the complete selected imported sash projection.
+The front station is staged; the cast uses the actual public ability at its
+declared windup age. Use the same explicit engine and copied Godot/Mesa seeds
+for both branches. This helper has a bounded, post-shot audio-mixer cleanup;
+it changes no runtime audio behavior or observed pose. Preserve original
+failed preflights separately from the successful successor.
