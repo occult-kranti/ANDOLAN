@@ -1,0 +1,15 @@
+--- /workspace/scratch/yuga-hair-clay-r1/framing-r3/capture_clay_framing_r3.py
++++ /workspace/scratch/yuga-hair-clay-r1/actual-execution-r2/capture_clay_raw_r4.py
+@@ -13,10 +13,10 @@
+     parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);parser.add_argument('--preflight',action='store_true')
+     a=parser.parse_args(sys.argv[sys.argv.index('--')+1:]);assert not a.output.exists()
+     scene_path=Path(bpy.data.filepath);assert sha(scene_path)==BLEND_SHA
+-    scene=bpy.context.scene;scene.cycles.device='CPU';a.output.mkdir(parents=True)
++    scene=bpy.context.scene;scene.cycles.device='CPU';scene.cycles.use_denoising=False;a.output.mkdir(parents=True)
+     result=dict(scope='Four real authoring clay views only; not runtime frames, animated cast, material acceptance, or promotion.',
+                 blend_sha256=BLEND_SHA,helper_sha256=sha(Path(__file__)),blender_version=bpy.app.version_string,
+-                preflight_only=a.preflight,render_engine=scene.render.engine,samples=scene.cycles.samples,
++                preflight_only=a.preflight,render_engine=scene.render.engine,samples=scene.cycles.samples,use_denoising=scene.cycles.use_denoising,
+                 resolution=[scene.render.resolution_x,scene.render.resolution_y],source_glb_sha256=scene['source_glb_sha256'],views=[])
+     hair=bpy.data.objects['EDITABLE_WholeHair_CoarseClay']
+     _,reference_points=points(scene)

@@ -1,0 +1,99 @@
+--- /workspace/scratch/yuga-frontage-helper-r1/capture_frontage.gd	2026-10-18 11:23:08.031647061 +0000
++++ /workspace/scratch/yuga-frontage-helper-r2/capture_frontage.gd	2026-10-18 11:29:45.612497682 +0000
+@@ -10,6 +10,34 @@
+ var resource_rows: Dictionary = {}
+ var material_ids: Dictionary = {}
+ var route_checks: Dictionary = {}
++var final_pose: Dictionary = {}
++var final_pose_signals := 0
++var completed_post_draws := 0
++
++func frames(count: int) -> void:
++	# Identical inherited frame schedule; this counter observes actual completed draws.
++	for unused in count:
++		await process_frame
++		if not preflight:
++			await RenderingServer.frame_post_draw
++			completed_post_draws += 1
++
++
++func observe_final_pose() -> void:
++	# Observe while completed RamaMotion transforms exist, before Skeleton3D restores them.
++	var scene: Node3D = current_scene
++	var rig: Skeleton3D = scene.player.rama_motion.rig
++	var names: Array = []
++	var poses: Array = []
++	for index in rig.get_bone_count():
++		names.append(String(rig.get_bone_name(index)))
++		poses.append(encode_value(rig.get_bone_global_pose(index)))
++	var active_modifiers: Array = []
++	for child in rig.get_children():
++		if child is SkeletonModifier3D and child.active and child.influence>0.0: active_modifiers.append(String(child.name))
++	final_pose_signals += 1
++	final_pose = {"bone_names":names,"bone_global_poses":poses,"rig_transform":transform_values(rig.global_transform),"hero_transform":transform_values(scene.player.global_transform),"active_modifiers":active_modifiers,"observer_modifier":String(scene.player.rama_motion.name),"signals":final_pose_signals,"completed_post_draws":completed_post_draws,"process_frame":Engine.get_process_frames(),"physics_frame":Engine.get_physics_frames(),"drawn_frame":Engine.get_frames_drawn()}
++
+ 
+ func transform_values(value: Transform3D) -> Array:
+ 	return [vector(value.basis.x),vector(value.basis.y),vector(value.basis.z),vector(value.origin)]
+@@ -165,7 +193,11 @@
+ 	if shape is BoxShape3D: result.box_size = vector(shape.size)
+ 	if branch == "candidate" and frontage_result.get("ok",false):
+ 		var instance: MeshInstance3D = frontage_result.mesh
+-		var faces: PackedVector3Array = shape.get_faces()
++		if not shape is ConcavePolygonShape3D:
++			serialization_errors.append("candidate shape is not ConcavePolygonShape3D")
++			return result
++		var concave := shape as ConcavePolygonShape3D
++		var faces: PackedVector3Array = concave.get_faces()
+ 		var source: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(Frontage.DATA))
+ 		var offset := 0
+ 		var local_exact := true
+@@ -189,7 +221,7 @@
+ 					max_world_error = maxf(max_world_error,visual.distance_to(physical))
+ 					local_index += 1; offset += 1
+ 		result.candidate_transform = transform_values(instance.global_transform)
+-		result.geometry = {"triangles":offset/3,"surfaces":instance.mesh.get_surface_count(),"local_vertices_exact_raw":local_exact,"body_local_vertices_exact":body_local_exact,"world_vertices_equal_approx":world_approx,"max_world_vertex_error_m":max_world_error,"vertex_count_matches":offset==faces.size(),"bounds":encode_value(instance.mesh.get_aabb()),"body_bounds":encode_value(shape.get_debug_mesh().get_aabb()),"backface_collision":shape.backface_collision}
++		result.geometry = {"triangles":offset/3,"surfaces":instance.mesh.get_surface_count(),"local_vertices_exact_raw":local_exact,"body_local_vertices_exact":body_local_exact,"world_vertices_equal_approx":world_approx,"max_world_vertex_error_m":max_world_error,"vertex_count_matches":offset==faces.size(),"bounds":encode_value(instance.mesh.get_aabb()),"body_bounds":encode_value(concave.get_debug_mesh().get_aabb()),"backface_collision":concave.backface_collision}
+ 		result.material_identity_reused = frontage_result.materials == existing
+ 		result.surface_material_ids = []
+ 		for index in instance.mesh.get_surface_count(): result.surface_material_ids.append(material_id(instance.get_active_material(index)))
+@@ -204,11 +236,14 @@
+ 	resource_rows.clear(); material_ids.clear()
+ 	state.product_camera = camera_state(scene.player.camera)
+ 	state.camera_properties = stored_properties(root.get_camera_3d())
+-	state.hero_skeleton = {"bone_names":[],"bone_global_poses":[]}
+-	var rig: Skeleton3D = scene.player.rama_motion.rig
+-	for index in rig.get_bone_count():
+-		state.hero_skeleton.bone_names.append(String(rig.get_bone_name(index)))
+-		state.hero_skeleton.bone_global_poses.append(transform_values(rig.get_bone_global_pose(index)))
++	state.hero_skeleton = final_pose.duplicate(true)
++	# Raw counters remain available; comparator excludes ONLY these named absolute counters.
++	state.pose_signal_counters = {}
++	state.hero_skeleton.erase("completed_post_draws")
++	for name in ["process_frame","physics_frame","drawn_frame"]:
++		state.pose_signal_counters[name] = state.hero_skeleton.get(name,-1)
++		state.hero_skeleton.erase(name)
++	state.pose_correlation = {"source":"RamaMotion.modification_processed","preflight_no_draw":preflight,"process_age":Engine.get_process_frames()-int(final_pose.get("process_frame",-1)),"physics_age":Engine.get_physics_frames()-int(final_pose.get("physics_frame",-1)),"draw_age":Engine.get_frames_drawn()-int(final_pose.get("drawn_frame",-1)),"post_draw_age":completed_post_draws-int(final_pose.get("completed_post_draws",-1))}
+ 	state.hero_global_transform = encode_value(scene.player.global_transform)
+ 	state.hero_velocity = encode_value(scene.player.velocity)
+ 	state.visual_transform = encode_value(scene.player.visual.global_transform)
+@@ -246,7 +281,10 @@
+ func take_frontage(id: String) -> bool:
+ 	if not take(id): return false
+ 	var item: Dictionary = shots.back()
+-	check(id+" full164poses and finite supported controls",item.hero_skeleton.bone_names.size()==164 and item.hero_skeleton.bone_global_poses.size()==164 and item.serialization_errors.is_empty())
++	check(id+" full164final-modifier poses and finite supported controls",item.hero_skeleton.get("bone_names",[]).size()==164 and item.hero_skeleton.get("bone_global_poses",[]).size()==164 and item.hero_skeleton.get("signals",0)>0 and item.serialization_errors.is_empty())
++	var mods: Array = item.hero_skeleton.get("active_modifiers",[])
++	check(id+" observed modifier is last active skeleton modifier",not mods.is_empty() and mods.back()==item.hero_skeleton.get("observer_modifier",""))
++	check(id+" final-modifier sample belongs to captured frame",item.pose_correlation.process_age==0 and item.pose_correlation.physics_age==0 and (item.pose_correlation.post_draw_age==0 if preflight else item.pose_correlation.post_draw_age==1))
+ 	var f: Dictionary = item.frontage
+ 	var common := f.active_shape_count==1 and f.shape_owner_count==1 and f.body_metadata.authority_id==Frontage.BODY and f.body_metadata.dimensions==[18.0,15.0,18.0] and f.body_metadata.position_base==[20.0,0.0,-28.0]
+ 	if branch=="baseline":
+@@ -289,6 +327,7 @@
+ 	var body: StaticBody3D = scene.world.get_node(Frontage.BODY)
+ 	var old_identity := body.get_instance_id()
+ 	var original_manifest := JSON.stringify(scene.manifest).sha256_text()
++	scene.player.rama_motion.modification_processed.connect(observe_final_pose)
+ 	if branch=="candidate":
+ 		frontage_result=Frontage.configure(scene.world,"near")
+ 		if not frontage_result.get("ok",false): finish("Candidate admission rejected: "+str(frontage_result));return

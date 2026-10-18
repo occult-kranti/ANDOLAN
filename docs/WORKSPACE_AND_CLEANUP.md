@@ -4,13 +4,15 @@ Updated 18 October 2026. Start with the [active desktop handoff](../games/yuga-n
 
 ## Current state
 
-The active desktop campaign has reclaimed **10,198,446,080 allocated file bytes** through separately recorded operations. This is historical reclamation, not current free space or a sum of every cleanup in the repository. Later source restoration consumes storage again. Only inactive, exactly recoverable duplicates were removed. Current runtime, accepted and rejected art, original captures, meaningful failure evidence, tools, caches and user state remain.
+The active desktop campaign has reclaimed **10,668,011,520 allocated file bytes** through separately recorded operations. This is historical reclamation, not current free space or a sum of every cleanup in the repository. Later source restoration consumes storage again. Only inactive, exactly recoverable duplicates were removed. Current runtime, accepted and rejected art, original captures, meaningful failure evidence, tools, caches and user state remain.
 
-The latest r2/r3 expanded-package cleanup removed 216 exact duplicate files after the recovery maps were pushed in96d5:662,401,024 and695,898,112 allocated bytes. ZIPs, Linux raw PCKs, unique metadata and actual captures remain. [r2 execution](evidence/desktop-finish-r2-expanded-cleanup-r1/execution-receipt.json) and [r3 execution](evidence/desktop-finish-r3-expanded-cleanup-r1/execution-receipt.json) record each identity and archive recovery route.
+The earlier r2/r3 expanded-package cleanup removed 216 exact duplicate files after the recovery maps were pushed in `96d5b9cd`: 662,401,024 and 695,898,112 allocated bytes. ZIPs, Linux raw PCKs, unique metadata and actual captures remain. [r2 execution](evidence/desktop-finish-r2-expanded-cleanup-r1/execution-receipt.json) and [r3 execution](evidence/desktop-finish-r3-expanded-cleanup-r1/execution-receipt.json) record each identity and archive recovery route.
 
-The earlier [package-source cleanup](evidence/desktop-finish-package-source-cleanup-r1/execution-receipt.json) removed2,732 historical files from `/tmp/yuga-desktop-integrated-package-r1/ANDOLAN`. Those files were subsequently restored byte-for-byte before r4 export. The checkout is now clean detached96d5 with18,038 tracked files; the [r4 source/export receipt](../games/yuga-native/docs/evidence/desktop-finish/package-export-r4/W6/receipt.json) records restoration and before/after integrity. Do not repeat recovery using the obsolete partial-state marker. Other historical partial trees still require their own exact maps before reuse.
+The latest [r4 cleanup](evidence/desktop-finish-r4-expanded-cleanup-r1/execution-receipt.json) removed 80 exact expanded-package/Windows-PCK duplicates, reclaiming 469,565,440 allocated bytes after the recovery map and independent public audit were pushed in `37bb953503a1a374f7c0c6aae1ef3d43cfba8867`. Actual extracted runtime, all five release files, Linux PCK, logs, captures and unique source remain.
 
-The [inactive art backup](../games/yuga-native/docs/evidence/desktop-finish/inactive-art-backup-r1/README.md) is pushed at `d1bfbe28850899aba12226227bc5d567a50a3bcb`. It preserves rejected hair R4/R5 and source-only shoulder work. Its exact duplicate mappings explain intentionally omitted local copies. R6 hair is separate current work; an untracked status never makes a file disposable.
+The earlier [package-source cleanup](evidence/desktop-finish-package-source-cleanup-r1/execution-receipt.json) removed 2,732 historical files from `/tmp/yuga-desktop-integrated-package-r1/ANDOLAN`. Those files were subsequently restored byte-for-byte before r4 export. The checkout is now clean detached `96d5b9cd` with 18,038 tracked files; the [r4 source/export receipt](../games/yuga-native/docs/evidence/desktop-finish/package-export-r4/W6/receipt.json) records restoration and before/after integrity. Do not repeat recovery using the obsolete partial-state marker. Other historical partial trees still require their own exact maps before reuse.
+
+The [inactive art backup](../games/yuga-native/docs/evidence/desktop-finish/inactive-art-backup-r1/README.md) is pushed at `d1bfbe28850899aba12226227bc5d567a50a3bcb`. It preserves rejected hair R4/R5 and source-only shoulder work. Its exact duplicate mappings explain intentionally omitted local copies. The [37bb953 backup](../games/yuga-native/docs/evidence/desktop-finish/backup-after-96d5-r1/README.md) adds rejected R6, the generated concept, editable continuous-hair clay, source/native frontage candidate, AO diagnostic and exact r4 publication evidence. Its recovery maps preserve intentionally omitted duplicate paths. An untracked status never makes a file disposable.
 
 ## Directory ownership
 
@@ -36,7 +38,7 @@ The `/workspace` and `/tmp` filesystems differ. Cross-device hardlinks do not wo
 5. Delete only the reviewed allowlist after a final identity/ownership check. No broad `git clean -fdx`, `/tmp` erasure, cache wipe or Git pruning.
 6. Record actual deleted bytes and retained paths. Push the execution receipt and update the handoff/cloud draft. Run a relevant development check only when cleanup could affect it.
 
-Use the [build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) to regenerate dependencies and packages. A rebuilt artifact is not byte-identical unless checked. Use each release's own checksum manifest and source identity for downloads; the [current public UI preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-native-ui-2026-10-18) remains distinct from newer source and held draft artifacts.
+Use the [build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) to regenerate dependencies and packages. A rebuilt artifact is not byte-identical unless checked. Use each release's own checksum manifest and source identity for downloads; the [current desktop finish preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-desktop-finish-2026-10-18) is exact source `96d5b9cd`. The older UI `9e81a7c` preview is historical; source backup commits do not relabel either executable.
 
 ## Recovery records
 
@@ -44,8 +46,9 @@ These records describe separate operations. Some contain cumulative figures; do 
 
 | Operation | Exact evidence |
 | --- | --- |
+| r4 expanded packages and duplicate Windows PCK:469,565,440 allocated bytes | [Map](evidence/desktop-finish-r4-expanded-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-r4-expanded-cleanup-r1/execution-receipt.json) |
 | r3 expanded packages and r2/r3 duplicate Windows PCKs:695,898,112 allocated bytes | [Map](evidence/desktop-finish-r3-expanded-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-r3-expanded-cleanup-r1/execution-receipt.json) |
-| r2 expanded packages:662,401,024 allocated bytes | [Map](evidence/desktop-finish-r2-expanded-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-r2-expanded-cleanup-r1/execution-receipt.json) |
+| r2 expanded packages: 662,401,024 allocated bytes | [Map](evidence/desktop-finish-r2-expanded-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-r2-expanded-cleanup-r1/execution-receipt.json) |
 | Latest historical package-source duplicates: 3,112,771,584 allocated bytes | [Recovery map](evidence/desktop-finish-package-source-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-package-source-cleanup-r1/execution-receipt.json) |
 | Four inactive roof/overview source children: 728,309,760 allocated bytes | [Map](evidence/desktop-finish-package-reserve-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-package-reserve-cleanup-r1/execution-receipt.json) |
 | Historical capture-source duplicates: 3,064,627,200 allocated bytes | [Map](evidence/desktop-finish-old-source-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-old-source-cleanup-r1/execution-receipt.json) |

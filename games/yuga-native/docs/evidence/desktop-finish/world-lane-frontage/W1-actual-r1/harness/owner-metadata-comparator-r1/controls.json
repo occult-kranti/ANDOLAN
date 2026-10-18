@@ -1,0 +1,98 @@
+{
+  "checks": [
+    {
+      "case": "real metadata-only witness",
+      "expected": true,
+      "actual": true,
+      "passed": true,
+      "errors": [],
+      "shot_errors": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "case": "mixed owner rejected",
+      "expected": false,
+      "actual": false,
+      "passed": true,
+      "errors": [
+        "candidate one stable finish owner across all four materials/all views"
+      ],
+      "shot_errors": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "case": "boolean owner rejected",
+      "expected": false,
+      "actual": false,
+      "passed": true,
+      "errors": [
+        "candidate positive integer finish owner metadata"
+      ],
+      "shot_errors": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "case": "actual material property change rejected",
+      "expected": false,
+      "actual": false,
+      "passed": true,
+      "errors": [],
+      "shot_errors": [
+        [
+          "strict sampled controls equal",
+          "all existing geometry/material/transform controls exact"
+        ],
+        [],
+        []
+      ]
+    },
+    {
+      "case": "other metadata change rejected",
+      "expected": false,
+      "actual": false,
+      "passed": true,
+      "errors": [],
+      "shot_errors": [
+        [
+          "strict sampled controls equal",
+          "all existing geometry/material/transform controls exact"
+        ],
+        [],
+        []
+      ]
+    },
+    {
+      "case": "wrong named material rejected",
+      "expected": false,
+      "actual": false,
+      "passed": true,
+      "errors": [
+        "candidate only four named finish ShaderMaterials",
+        "candidate exact four owned material rows per view"
+      ],
+      "shot_errors": [
+        [
+          "strict sampled controls equal",
+          "all existing geometry/material/transform controls exact"
+        ],
+        [],
+        []
+      ]
+    }
+  ],
+  "passed": true,
+  "comparator_sha256": "1afa1cfc1f389da6febc11b8487d279487dd9658560a97d02ca9e58ac2a62a0b",
+  "inputs": {
+    "/workspace/scratch/yuga-frontage-review-r1/baseline-preflight-r4/preflight.json": "d0dcaf453cbfa9cfc3a08d8eabbe11af40e807e3091d83df0a0cfafec685a007",
+    "/workspace/scratch/yuga-frontage-review-r1/candidate-preflight-r4/preflight.json": "5d8360d36a624aaa6aff67cfd1d4ca9ef2bb7acbe58ceee93692b7eea3795dd1"
+  }
+}

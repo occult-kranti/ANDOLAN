@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "status": "frozen-source-only",
+  "product_source": "96d5b9cd3114b9732f7dc80433b1ca0a1d4a9b12",
+  "files": {
+    "capture_frontage.gd": {
+      "sha256": "26edf83a7bda7582ef683a88baa3cf400f37e96ec7bde5216b66cf6e1b9da797",
+      "bytes": 24564
+    },
+    "compare_frontage.py": {
+      "sha256": "be113a9aa601751fb20e03bcb6a8836ba8fca754691bdb3a34eaab934f84078c",
+      "bytes": 12483
+    },
+    "test_comparator.py": {
+      "sha256": "94eb573953f6137a053139535e82dea331a0144d42e9466e44164c53ad86ad30",
+      "bytes": 8573
+    },
+    "comparator-tests.json": {
+      "sha256": "c952ae05405146261440c72498fbb730eca1615eb5a566a987d174ac461d0b54",
+      "bytes": 3405
+    },
+    "README.md": {
+      "sha256": "097c1bb530eae1cc8f7eac1f4fdb8be67287d53f0902f160d522a8df30d1a0e7",
+      "bytes": 5647
+    }
+  },
+  "inputs": {
+    "tools/graphics-six/capture_compact_screens.gd": "9a0fb75c6fab298f0babb19c1c7d6aa7e5234b94b9472971086e34a54391c51e",
+    "art/world-finish/lane-frontage-r1/candidate.gd": "cc78e2b941c175ad535cb317619f4282a1a6a06d3ce040fbabcfb31af6f1b924",
+    "art/world-finish/lane-frontage-r1/candidate-mesh.json": "117123f32c232dc2c2693bbf0180578feb85396fcddaf1518b7c6d653698f141",
+    "art/world-finish/roof-loggia-render-r2/capture_roof.gd": "555a4abbc1d00c7a2b874615e3f882936bfcdb1e3845837a00dbcdd4acf67985",
+    "art/world-finish/overview-render-r1/capture_overview.gd": "d15683f5e8461576cbe37047dfb2ea898063ff9a86348fbfe4507226912751ae",
+    "art/world-finish/title-floor-ssao-plan-r1/capture_floor_ao.UNRUN.gd": "86e0037ce4875f96e03cb932e1b84a2012ae4ec8be16d18c8fb7cb8bff1ede9e"
+  },
+  "executed": [
+    {
+      "command": "taskset -c 3 python /workspace/scratch/yuga-frontage-helper-r1/test_comparator.py",
+      "result": "27/27 synthetic JSON controls pass; no engine"
+    },
+    {
+      "command": "ast.parse compare_frontage.py and test_comparator.py",
+      "result": "Python source parses"
+    }
+  ],
+  "unrun": [
+    "GDScript parse",
+    "native paired preflight",
+    "raster",
+    "pixel/art acceptance"
+  ],
+  "canonical_changes": [],
+  "next_owner": "W1: private same-source staging, native preflights, strict comparator, then matched3+3 actual views if admitted",
+  "source_draft_builder": "build_helper.py is a historical preparation draft, NOT an executable rebuild contract or staged input."
+}

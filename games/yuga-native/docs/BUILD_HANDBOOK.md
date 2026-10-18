@@ -112,7 +112,7 @@ godot --version
 bash tools/cloud/setup-native.sh
 ```
 
-The setup script installs locked npm dependencies and the audio Python environment, imports Godot assets, runs the native/browser-rule suites and prepares the renderer. It prints a new `/tmp/yuga-native-setup-*` report directory. It expects Godot 4.6.3 on PATH and the usual cloud Python/Node utilities; it does not install Blender or manufacture missing editable source art.
+The setup script installs locked npm dependencies and the audio Python environment, imports Godot assets, runs the native/browser-rule suites and prepares the renderer. It prints a new `/tmp/yuga-native-setup-*` report directory; check `/tmp` reserve before a full reinstall. Ordinary resumption uses the installed tools and focused checks. It expects Godot 4.6.3 on PATH and the usual cloud Python/Node utilities; it does not install Blender or manufacture missing editable source art.
 
 If Godot is missing, the checked installer downloads and verifies the official Linux and Windows engines. Put the Linux binary on PATH as `godot`, then run setup:
 
@@ -224,7 +224,7 @@ The sixteen invocation cues are original deterministic oscillator synthesis: sha
 Import first. Give each run a new absolute report directory and isolated settings. This example runs a real headless suite; change only the suite/report name for the matrix below:
 
 ```sh
-YUGA_CHECKS="$(mktemp -d /tmp/yuga-checks-XXXXXX)"
+YUGA_CHECKS="$(mktemp -d /workspace/scratch/yuga-checks-XXXXXX)"
 mkdir -p "$YUGA_CHECKS/user"
 XDG_DATA_HOME="$YUGA_CHECKS/user" godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/input_binding_cases.gd -- --report="$YUGA_CHECKS/controls.json"
 python3 games/yuga-native/tools/check-roadmap.py --report "$YUGA_CHECKS/roadmap.json"
@@ -256,19 +256,19 @@ A nonzero exit, `passed:false`, missing report or script error fails the run. Ar
 
 ## 7. Actual capture and packaged-window review
 
-The current [I3 package review](evidence/ui-campaign/I3/role03/REVIEW.md) uses `tools/ui-campaign/run.py` with the actual extracted ELF/PCK and external observer. Consult `--help` and its archived commands for a new run. Preserve native input and source receipts; wait for stable target geometry before pointer activation. The first run's two native fixture recoveries remain explicit, while relaunch and the separate staged supplement completed without recovery. Label authority-fixture views as staged; they do not establish naturally played outcomes. Software Vulkan and Dummy audio establish no hardware FPS or listening quality.
+The current [r4 package review](evidence/desktop-finish/package-native-review/W1-patched-r1/REVIEW.md) and its [independent review](evidence/desktop-finish/package-native-review/W6-r4-independent-r1/REVIEW.md) bind the exact extracted executable, input and all 59 originals. Warm/cold routes both passed; use their source-bound preparation and commands for a successor. The earlier [I3 package review](evidence/ui-campaign/I3/role03/REVIEW.md) used `tools/ui-campaign/run.py` with the actual extracted ELF/PCK and external observer. Consult `--help` and its archived commands for a new run. Preserve native input and source receipts; wait for stable target geometry before pointer activation. The first run's two native fixture recoveries remain explicit, while relaunch and the separate staged supplement completed without recovery. Label authority-fixture views as staged; they do not establish naturally played outcomes. Software Vulkan and Dummy audio establish no hardware FPS or listening quality.
 
 Only one heavy renderer at a time. Freeze owned source while capturing, choose a fresh absolute output name and an unused X display in 90–199. The helper owns/cleans only its processes and isolates user settings. These commands launch real software Vulkan rendering:
 
 ```sh
 python3 games/yuga-native/tools/setup-render-runtime.py
-python3 games/yuga-native/art/hero-rama-motion/run_capture.py --output /tmp/yuga-rama-NEW-motion --display 145 --asset=res://assets/heroes/rama-hero.glb --full
+python3 games/yuga-native/art/hero-rama-motion/run_capture.py --output /workspace/scratch/yuga-rama-NEW-motion --display 145 --asset=res://assets/heroes/rama-hero.glb --full
 python3 games/yuga-native/tools/run-rama-gameplay.py --help
-python3 games/yuga-native/tools/run-traversal-capture.py --preview --output /tmp/yuga-traversal-NEW-preview --display 117
-python3 games/yuga-native/tools/run-traversal-capture.py --output /tmp/yuga-traversal-NEW-full --display 117
-python3 games/yuga-native/tools/run-world-capture.py --output /tmp/yuga-world-NEW --display 110
-python3 games/yuga-native/tools/run-ultimate-capture.py --output /tmp/yuga-ultimates-NEW --display 119
-python3 games/yuga-native/tools/run-combat-film.py --preview --output /tmp/yuga-film-NEW-preview --display 118
+python3 games/yuga-native/tools/run-traversal-capture.py --preview --output /workspace/scratch/yuga-traversal-NEW-preview --display 117
+python3 games/yuga-native/tools/run-traversal-capture.py --output /workspace/scratch/yuga-traversal-NEW-full --display 117
+python3 games/yuga-native/tools/run-world-capture.py --output /workspace/scratch/yuga-world-NEW --display 110
+python3 games/yuga-native/tools/run-ultimate-capture.py --output /workspace/scratch/yuga-ultimates-NEW --display 119
+python3 games/yuga-native/tools/run-combat-film.py --preview --output /workspace/scratch/yuga-film-NEW-preview --display 118
 ```
 
 Run only the capture relevant to the changed behavior. Replace `NEW` each time; prior evidence is not overwritten. Traversal preview is 24 frames at 960 × 540; full capture is 180 frames at 1280 × 720, 30 simulated FPS and 60 Hz physics, encoded to a silent six-second movie. Film full capture omits `--preview`; it is a separate 24-second timeline. Full video needs FFmpeg/ffprobe. The ultimate helper has no preview flag: it records fourteen warning/motif stills, three quality/overlap variants and a four-second, 120-frame staged Rama/Sita take. It applies no gameplay damage; Sita is cancelled before normal expiry. All fourteen full rendered lifecycles remain a later gate. Inspect actual images and meaningful transitions after successful capture; output existence is not visual approval.
@@ -279,24 +279,26 @@ For actual keyboard/mouse interaction with an extracted package, the window help
 
 ```sh
 YUGA_RUNTIME=/workspace/tooling/native-render/runtime
-LD_LIBRARY_PATH="$YUGA_RUNTIME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" VK_ICD_FILENAMES="$YUGA_RUNTIME/usr/share/vulkan/icd.d/lvp_icd.json" LP_NUM_THREADS=2 python3 games/yuga-native/tools/native-window-review.py --engine /absolute/linux-engine --pack /absolute/project.pck --output /tmp/yuga-window-NEW --xvfb "$YUGA_RUNTIME/usr/bin/Xvfb" --display :107
+LD_LIBRARY_PATH="$YUGA_RUNTIME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" VK_ICD_FILENAMES="$YUGA_RUNTIME/usr/share/vulkan/icd.d/lvp_icd.json" LP_NUM_THREADS=2 python3 games/yuga-native/tools/native-window-review.py --engine /absolute/linux-engine --pack /absolute/project.pck --output /workspace/scratch/yuga-window-NEW --xvfb "$YUGA_RUNTIME/usr/bin/Xvfb" --display :107
 ```
 
 Keep stdin interactive for the review session; closing it immediately terminates the helper. It accepts JSON lines, for example `{"action":"capture","name":"title"}`, `{"action":"key","key":"F2"}`, and `{"action":"quit"}`. Wait for the real screen before the next event, and let software-rendered focus updates settle before asserting a screenshot. Its exit cleanup is distinct from a crash; inspect `input-review.json` and logs. Dummy audio does not verify listening quality.
 
 ## 8. Package and release
 
-The portable package contains the official Godot engine plus an exported PCK; no editor export templates are required. Install verified engines as above, then:
+The portable package contains a declared Godot runtime plus an exported PCK; no editor export templates are required. The simple default route below uses the official Linux engine for export and runtime. It is not the current r4 runtime selection. Install verified engines as above, then:
 
 ```sh
-python3 games/yuga-native/tools/package-native.py --linux-engine /workspace/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64 --windows-engine /workspace/tooling/native-engine/Godot_v4.6.3-stable_win64.exe --build-dir /tmp/yuga-package-NEW
+python3 games/yuga-native/tools/package-native.py --linux-engine /workspace/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64 --windows-engine /workspace/tooling/native-engine/Godot_v4.6.3-stable_win64.exe --build-dir /workspace/scratch/yuga-package-NEW
 ```
+
+The qualified r4 command also supplies `--linux-runtime-variant pipeline-low-priority`, `--linux-runtime /workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-pipeline-low-priority` and `--linux-runtime-provenance games/yuga-native/docs/evidence/desktop-finish/G0/template-priority-build-r1/finished-build-verification.json`. Keep `--linux-engine` as the official exporter; those binaries have different hashes. Use a complete clean owned source checkout and a fresh `/workspace/scratch` build directory. [Exact executed r4 export/package records](evidence/desktop-finish/package-export-r4/W6/receipt.json) preserve actual commands and qualification; do not silently replace bytes inside a released archive.
 
 `--export-only` validates resource packs without needing the Windows engine; `--package-only` packages existing exports. Inspect the generated export/package manifests, notices, file inventories and checksums. Extract and run the actual package, not just the source project. Clean imports can alter generated scene IDs/tiny quantized imported values: investigate differing bytes and record limits instead of claiming byte identity or perceptual equivalence.
 
 The package helper now requires a successful source-bound native contract proof before either export or package engine calls, then rechecks the retained inputs. A content-source change needs an intentional contract revision; do not replace a stale digest in place. [I3 build provenance](evidence/ui-campaign/I3/role06/REVIEW.md) preserves the rejected revision-5 package and the accepted revision-6 package from source `9e81a7c`. The `yuga-native-ui-2026-10-18` preview is published, and independent downloads match all five public asset hashes and the qualified archives. Its [publication receipt](evidence/ui-campaign/I3/published/REVIEW.md) retains the earlier HTTP 401 failure and exact release evidence. The byte audit did not repeat gameplay execution. Do not infer release completion from an export or successful CI alone.
 
-Branch CI is [yuga-native.yml](../../../.github/workflows/yuga-native.yml). Publication is [yuga-native-release.yml](../../../.github/workflows/yuga-native-release.yml): tags matching `yuga-traversal-armies-*` or `yuga-confluence-duel-*` trigger frozen-source validation, mandatory reports, exports, staging and a separate least-privilege publish job. The workflow's exact command order and check filenames are authoritative. Do not replace failed or missing gates with unrelated successful reports. After a runtime change, capture fresh source-matched archives and update the applicable directory constants in `tools/release-native.py`. Triad's three `triad-*-render-r2` archives are historical. The published exact `-mythic` tag requires the new `mythic-traversal-render-r2` and `mythic-ultimates-render-r3` archives, plus typed source-bound invocation/bridge/physics/audio reports. The gate validates nonempty successful checks, current source/export hashes, the actual scripted event chronology, positive warning-still ages and captured media. Inspect the tag-specific `release_checks(tag)` and capture validators before staging. Changing hashes alone cannot replace a new render, and staged ornament footage does not prove actual troop effects.
+Branch CI is [yuga-native.yml](../../../.github/workflows/yuga-native.yml). The current desktop-finish preview used the separately reviewed fixed-draft Actions transport and exact public-byte audit linked in its [publication record](evidence/desktop-finish/published/release-r4/REVIEW.md). The following tag-triggered route is historical and does not automatically publish a `yuga-desktop-finish-*` tag. Historical publication is [yuga-native-release.yml](../../../.github/workflows/yuga-native-release.yml): tags matching `yuga-traversal-armies-*` or `yuga-confluence-duel-*` trigger frozen-source validation, mandatory reports, exports, staging and a separate least-privilege publish job. The workflow's exact command order and check filenames are authoritative. Do not replace failed or missing gates with unrelated successful reports. After a runtime change, capture fresh source-matched archives and update the applicable directory constants in `tools/release-native.py`. Triad's three `triad-*-render-r2` archives are historical. The published exact `-mythic` tag requires the new `mythic-traversal-render-r2` and `mythic-ultimates-render-r3` archives, plus typed source-bound invocation/bridge/physics/audio reports. The gate validates nonempty successful checks, current source/export hashes, the actual scripted event chronology, positive warning-still ages and captured media. Inspect the tag-specific `release_checks(tag)` and capture validators before staging. Changing hashes alone cannot replace a new render, and staged ornament footage does not prove actual troop effects.
 
 For an authorized release, commit the reviewed changes first, choose a **new** tag, and push that commit/tag; never move an existing verified tag:
 
@@ -308,19 +310,21 @@ git push origin HEAD
 git push origin "$YUGA_TAG"
 ```
 
-Replace the illustrative tag value before use. Observe the actual workflow result; then download all uploaded assets into a new directory and run `python3 games/yuga-native/tools/release-native.py verify --directory /tmp/yuga-downloaded-NEW --tag "$YUGA_TAG" --commit "$YUGA_COMMIT"`. Execute the downloaded Linux package and report Windows separately. The workflow publishes using its `GITHUB_TOKEN`; local rendering/building needs no credential. Manual `stage`/`publish` subcommands exist, but require the same complete check/archive inventory; inspect `--help` and the workflow before use.
+Replace the illustrative tag value before use. Observe the actual workflow result; then download all uploaded assets into a new directory and run `python3 games/yuga-native/tools/release-native.py verify --directory /workspace/scratch/yuga-downloaded-NEW --tag "$YUGA_TAG" --commit "$YUGA_COMMIT"`. Execute the downloaded Linux package and report Windows separately. The workflow publishes using its `GITHUB_TOKEN`; local rendering/building needs no credential. Manual `stage`/`publish` subcommands exist, but require the same complete check/archive inventory; inspect `--help` and the workflow before use.
 
 The Rama milestone has different footage and gates from the historical Mythic release. A `yuga-rama-hero-*` delivery must identify the exact package source commit, successful foundation CI, current Rama integration/combat/contact reports, actual five-ability footage, and the exact packaged Linux input review. That tag family does not invoke the historical prerelease workflow. Record manual publication explicitly, preserve prior failed candidates, and verify every downloaded release asset against its SHA-256 manifest. Never relabel an old invocation video as evidence of the new kit.
 
-In this managed session, `gh api` and Git HTTPS with a process-local Bearer header worked; the ordinary Basic credential helper did not. Check current credential/network readiness before diagnosing a recurrence. A command-scoped `GIT_CONFIG_COUNT`/`GIT_CONFIG_KEY_n`/`GIT_CONFIG_VALUE_n` environment can supply `http.https://github.com/.extraheader` from the existing `GH_TOKEN` without printing or persisting it. Keep proxy/CA settings, do not save the header in Git configuration, and do not read uploaded credential files to work around a functioning session identity.
+In the current managed session, standard Git HTTPS and `gh api` work through the supplied authentication. Use those existing routes; do not extract proxy credentials, print token values or read uploaded credential files. Direct release-asset upload returned 401. The reviewed Actions transport uploaded exact qualified artifacts with its builtin job token, while root published separately through the working API. Preserve these operation-specific observations instead of inferring that all GitHub access is broken.
 
 ## 9. Pick the next bounded packet
 
-[ROADMAP_BACKLOG.json](ROADMAP_BACKLOG.json) is authoritative for dependency readiness; [the full roadmap](FULL_GAME_PRODUCTION_ROADMAP.md) defines completion. Recheck `next_packets` and the [screen handoff](SCREEN_CAMPAIGN_HANDOFF.md) before assigning work. The five UI and three integration rounds have bounded completed outcomes, including Linux package acceptance and publication. These do not close native online authority, the full roster or production art/performance gates. [MYTHIC_BATCHES.md](MYTHIC_BATCHES.md) describes an earlier release with separate evidence.
+For the active desktop request, read [ACTIVE_DESKTOP_HANDOFF.md](ACTIVE_DESKTOP_HANDOFF.md) and [DESKTOP_FINISH_CAMPAIGN.json](DESKTOP_FINISH_CAMPAIGN.json) first: ten screen rounds plus three integration rounds, six workers each, 14/78 accepted scoped packets and 0/13 complete rounds. Next are actual frontage, continuous-hair clay, shoulder and sustained-motion reviews. The earlier five-plus-three screen campaign has separate completed outcomes; do not restart or recount it.
+
+[ROADMAP_BACKLOG.json](ROADMAP_BACKLOG.json) owns full-game dependency readiness and [FULL_GAME_PRODUCTION_ROADMAP.md](FULL_GAME_PRODUCTION_ROADMAP.md) defines production completion. The current offline preview does not close native online authority, the full roster or production art/performance gates.
 
 The critical integration sequence remains FG00-T04 → FG04-T02/FG05-T02 (scene/entity/3D authority contract) → FG04-T03 (two rendered native clients) → FG06 full three-hero match. Offline decks do not close shared elevation; local core outcomes do not close FG06. FG01 visual targets and real hardware traces run alongside this work. Existing offline army/control evidence supports FG08/FG13 but does not close their production acceptance.
 
-For a small presentation follow-up, use the supporting packets' current `next_action` and inspect the exact accepted images first. Small HUD copy, continuous contact/material review and crowded warning readability remain useful targets; cold-start budgets still need measurement. Preserve the completed loader, modal, overview and persistence regressions. Keep these improvements separate from the full-game dependency graph.
+For a small presentation follow-up, use the supporting packets' current `next_action` and inspect the exact accepted images first. Small HUD copy, continuous contact/material review and crowded warning readability remain useful targets; physical-GPU cold-start/performance budgets still need measurement. Preserve the completed loader, modal, overview and persistence regressions. Keep these improvements separate from the full-game dependency graph.
 
 Use one owner per file set. Good independent squads are player/traversal, world/UI, army/AI, art, audio and QA; reserve integration ownership for shared manifests, packaging and release. Agree API/action names/coordinates before parallel edits. Agents report after three or four rounds: inspect/contract → implement → independent test/render review → bounded correction and integration. Heavy capture/package phases use frozen source. These are bounded workers, not a permanently running swarm.
 

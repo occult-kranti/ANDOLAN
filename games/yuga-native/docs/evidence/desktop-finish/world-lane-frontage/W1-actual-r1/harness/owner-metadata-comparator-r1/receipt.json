@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "scope": "Comparator-only process-local finish-owner metadata normalization; no scene/helper/source change.",
+  "files": {
+    "compare_frontage.py": {
+      "bytes": 16780,
+      "sha256": "1afa1cfc1f389da6febc11b8487d279487dd9658560a97d02ca9e58ac2a62a0b"
+    },
+    "controls.json": {
+      "bytes": 2386,
+      "sha256": "22e8af655cb44f7bb8ecae5b3c5a24986308a156faefbf193e4b876f13714976"
+    },
+    "derive.py": {
+      "bytes": 4215,
+      "sha256": "4bf48bf53b127d12a59591ea315e635bee81235f7ee333523e21726d6b7188fa"
+    },
+    "check_controls.py": {
+      "bytes": 1911,
+      "sha256": "72f29e5f42c33138e21cc51b23b308d8ce53b26db938e889438802bae2f96fd4"
+    },
+    "parent-successor.patch": {
+      "bytes": 5656,
+      "sha256": "b88dd9357f8448f021347a81144ae05cc9722c6afeb40a6c9b6d3fd8f8c8c8fd"
+    }
+  },
+  "parent": {
+    "path": "/workspace/scratch/yuga-frontage-helper-r2/compare_frontage.py",
+    "sha256": "bb171583c40dd017ba2d4e0e531ab31962b1b2d27a9f147d7661ad038bf5dd25"
+  },
+  "source_semantics": {
+    "source": "scripts/rama_surface_finish.gd",
+    "definition": "OWNER_META yuga_surface_finish_owner; assigned get_instance_id at line163; same-process ownership checks/release bookkeeping",
+    "limitation": "Actual finish Node instance ID is not separately observed; only per-branch consistency and source semantics."
+  },
+  "preflight_original_failure_preserved": "/workspace/scratch/yuga-frontage-review-r1/preflight-comparison-r1.json",
+  "successful_replay": {
+    "path": "/workspace/scratch/yuga-frontage-review-r1/preflight-comparison-r2.json",
+    "sha256": "353600145b7d0e4de9d251efaecbd382c4d77b4f8bb5939d19bf9d8d414a8006"
+  },
+  "independent_source_review": "W4 accepted exact1afa1cfc on2026-10-18; all renderer properties and other metadata remain strict."
+}

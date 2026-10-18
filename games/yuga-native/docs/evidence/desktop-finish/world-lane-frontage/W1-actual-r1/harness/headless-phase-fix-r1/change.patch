@@ -1,0 +1,26 @@
+--- /workspace/scratch/yuga-frontage-review-r1/harness/world-clock-fix-r1/capture_frontage.gd
++++ capture_frontage.gd
+@@ -13,11 +13,15 @@
+ var final_pose: Dictionary = {}
+ var final_pose_signals := 0
+ var completed_post_draws := 0
++var final_observer_connected := false
+ 
+ func frames(count: int) -> void:
+ 	# Identical inherited frame schedule; this counter observes actual completed draws.
+ 	for unused in count:
+ 		await process_frame
++		if preflight and final_observer_connected:
++			# Observe this same frame after the final modifier; do not add simulated steps.
++			await current_scene.player.rama_motion.modification_processed
+ 		if not preflight:
+ 			await RenderingServer.frame_post_draw
+ 			completed_post_draws += 1
+@@ -328,6 +332,7 @@
+ 	var old_identity := body.get_instance_id()
+ 	var original_manifest := JSON.stringify(scene.manifest).sha256_text()
+ 	scene.player.rama_motion.modification_processed.connect(observe_final_pose)
++	final_observer_connected = true
+ 	if branch=="candidate":
+ 		frontage_result=Frontage.configure(scene.world,"near")
+ 		if not frontage_result.get("ok",false): finish("Candidate admission rejected: "+str(frontage_result));return

@@ -1,0 +1,11 @@
+--- /workspace/scratch/yuga-frontage-review-r1/harness/type-fix-r1/capture_frontage.gd
++++ capture_frontage.gd
+@@ -270,7 +270,7 @@
+ 	collision_inventory(scene.world,state.collision_objects)
+ 	var motion := {}
+ 	for name in ["phase","locomotion_age","transition_age","action_elapsed","action","action_stage","locomotion","grounded","traversal"]: motion[name] = encode_value(scene.player.rama_motion.get(name))
+-	state.clocks = {"elapsed":scene.elapsed,"footstep_clock":scene.footstep_clock,"feedback_clock":scene.feedback_clock,"motion":motion,"kit":encode_value(scene.rama_runtime.kit.report()),"traversal":encode_value(scene.player.traversal.report())}
++	state.clocks = {"phase_clock":scene.phase_clock,"ui_clock":scene.ui_clock,"motion":motion,"kit":encode_value(scene.rama_runtime.kit.report()),"traversal":encode_value(scene.player.traversal.report())}
+ 	state.render_settings = {}
+ 	for name in ["rendering/anti_aliasing/quality/msaa_3d","rendering/anti_aliasing/quality/use_taa","rendering/textures/default_filters/anisotropic_filtering_level","rendering/textures/default_filters/use_nearest_mipmap_filter"]: state.render_settings[name] = encode_value(ProjectSettings.get_setting(name))
+ 	state.viewport_msaa_3d = root.msaa_3d

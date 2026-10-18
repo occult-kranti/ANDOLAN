@@ -1,0 +1,11 @@
+--- /workspace/scratch/yuga-frontage-helper-r2/capture_frontage.gd
++++ capture_frontage.gd
+@@ -286,7 +286,7 @@
+ 	check(id+" observed modifier is last active skeleton modifier",not mods.is_empty() and mods.back()==item.hero_skeleton.get("observer_modifier",""))
+ 	check(id+" final-modifier sample belongs to captured frame",item.pose_correlation.process_age==0 and item.pose_correlation.physics_age==0 and (item.pose_correlation.post_draw_age==0 if preflight else item.pose_correlation.post_draw_age==1))
+ 	var f: Dictionary = item.frontage
+-	var common := f.active_shape_count==1 and f.shape_owner_count==1 and f.body_metadata.authority_id==Frontage.BODY and f.body_metadata.dimensions==[18.0,15.0,18.0] and f.body_metadata.position_base==[20.0,0.0,-28.0]
++	var common: bool = f.active_shape_count==1 and f.shape_owner_count==1 and f.body_metadata.authority_id==Frontage.BODY and f.body_metadata.dimensions==[18.0,15.0,18.0] and f.body_metadata.position_base==[20.0,0.0,-28.0]
+ 	if branch=="baseline":
+ 		check(id+" declared original visible/sole18x15x18box",common and f.target_visible and not f.replacement_present and f.shape_class=="BoxShape3D" and f.box_size==[18.0,15.0,18.0])
+ 	else:
