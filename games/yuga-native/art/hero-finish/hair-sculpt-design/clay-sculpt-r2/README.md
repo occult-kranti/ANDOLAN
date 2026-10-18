@@ -1,0 +1,13 @@
+# Direct-cage clay revision — visually rejected
+
+This is the one separately authorized C2 major-mass revision. All four actual raw32sample clay views were reviewed and **rejected**. No detail, UVs, rigging, LOD, GLB or canonical promotion follows. Do not continue adjusting this source as another hairstyle attempt.
+
+The source directly deforms the preceding scalp/gather cage, rolls its upper fold, replaces the crossed roots with one collected posterior patch and splits it lower down. A localized depth group drives the inward Solidify thickness from2mm on scalp to16mm on the falls. The actual images show that an open C-section plus thickness still reads as a hanging sheet. The small dome displacement and inherited horizontal knot rings also retain the helmet/cap appearance. These construction choices failed the approved gathered-flow target despite passing source eligibility checks.
+
+`master-cage.json` and `master-cage.obj` are the editable final cage in glTF metres. `authoring-payload/whole-hair-clay-sculpt-r2.blend` is the exact editable scene, SHA256 `161233be93ed7b340707d8f267d85bf3b174880361ed1124b92561abf2593368`. The recovery map restores exact initial fit-failure, intermediate framing-failure and final JSON/scene bytes from deterministic gzip. Locked references, materials, lights and all four camera transforms/lenses are preserved from parent71763; only hair geometry/groups/depth differ.
+
+Final source and actual evaluated geometry each pass12 rest checks. Evaluated lower-bound distances are1.134mm to checked head/face,1.962mm to checked head gold/gems, and at least8mm to the checked nearby clothing/quiver extraction. These checks use the existing rest extraction (source triangles above1.42m), with head gold selected above1.75m. They do not qualify all animated contacts, skinning, secondary motion, every accessory, or runtime appearance.
+
+Two meaningful eligibility failures are preserved: subdivision of the first rolled fold crossed the fixed tie (57 triangle pairs), corrected only inside its aperture; then the first long lower tip missed the fixed profile/rear frame. Lower-third lengths were compacted without changing the four cameras. Final four-view projection passes. These corrections are one design's fit/framing drafts, not additional accepted art variants.
+
+The capture helper changes only the admitted scene hash from W1's raw32sample/no-denoise helper. The actual four-view owner is `docs/evidence/desktop-finish/hair-sculpt-design/W1-clay-actual-r2/`; the independent rejection is `W2-clay-sculpt-r2-visual/`. The fourth view is rest-space cast-angle authoring, not an animated game cast. The canonical head/rig/crown/sash assets and rejected preceding packets remain untouched.

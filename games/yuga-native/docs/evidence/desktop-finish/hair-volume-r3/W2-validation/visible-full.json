@@ -1,0 +1,146 @@
+{
+  "scope": "Independent rest-space closed source/visible volume check; intentional hair-to-hair source overlap is excluded. No visual, pose, rig or runtime acceptance.",
+  "part": "EDITABLE_WholeHair_CoarseClay",
+  "geometry_sha256": "b5cadc487a82e2faa498928ccc75ec7bb7199536b60ae2e0123c8f4e9b98a648",
+  "reference_sha256": "b0a8ee2213b9ee7fc21285ab4884e6b270ff396d1abfaf94a7db8cab7f35eb99",
+  "checker_sha256": "42797518463dfb01828d9f31c622aee7b1f25f99150fb7e21ddd8bfadc3153de",
+  "probe_sha256": "324c2f688dbefc6c3ac86f5b5ca346c069efd1f7b8916252ad9489fcf0ad532c",
+  "calibration": {
+    "triangle_distance": {
+      "separated_parallel_triangle_gap_m": 0.005,
+      "edge_through_face_crossing": true
+    },
+    "closed_cube_volume_m3": 8,
+    "inside_outside_two_rays": true
+  },
+  "checks": [
+    {
+      "name": "finite bounded complete triangles",
+      "passed": true,
+      "vertices": 120364,
+      "triangles": 240728
+    },
+    {
+      "name": "one closed consistently wound nondegenerate positive volume",
+      "passed": true,
+      "components": 1,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "minimum_triangle_area_m2": 4.404335131140751e-09,
+      "degenerate_triangles": 0,
+      "signed_volume_m3": 0.0021916341169158893
+    },
+    {
+      "name": "all protected parent reference triangles clear in rest",
+      "passed": false,
+      "comparison": {
+        "minimum_distance_m": 0.0,
+        "guaranteed_lower_bound_m": 0.0,
+        "near_pairs": 418028,
+        "crossings": 1401,
+        "witness_triangles": [
+          37334,
+          90390
+        ],
+        "witness_hair_triangle": [
+          [
+            -0.022288106381893158,
+            1.7941570281982422,
+            0.14879117906093597
+          ],
+          [
+            -0.021796606481075287,
+            1.7949166297912598,
+            0.14838945865631104
+          ],
+          [
+            -0.021288232877850533,
+            1.7943203449249268,
+            0.14889931678771973
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            -0.021305955946445465,
+            1.791521668434143,
+            0.15081976354122162
+          ],
+          [
+            -0.0159901212900877,
+            1.7957046031951904,
+            0.14908459782600403
+          ],
+          [
+            -0.021508563309907913,
+            1.7949862480163574,
+            0.14839401841163635
+          ]
+        ],
+        "source_face_index": 18667,
+        "reference_name": "LOCKED_2_11_Rama warm skin",
+        "reference_triangle_index": 1765
+      }
+    }
+  ],
+  "complete": true,
+  "topology": {
+    "components": 1,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_winding_edges": 0,
+    "minimum_triangle_area_m2": 4.404335131140751e-09,
+    "degenerate_triangles": 0,
+    "signed_volume_m3": 0.0021916341169158893
+  },
+  "reference_comparison": {
+    "minimum_distance_m": 0.0,
+    "guaranteed_lower_bound_m": 0.0,
+    "near_pairs": 418028,
+    "crossings": 1401,
+    "witness_triangles": [
+      37334,
+      90390
+    ],
+    "witness_hair_triangle": [
+      [
+        -0.022288106381893158,
+        1.7941570281982422,
+        0.14879117906093597
+      ],
+      [
+        -0.021796606481075287,
+        1.7949166297912598,
+        0.14838945865631104
+      ],
+      [
+        -0.021288232877850533,
+        1.7943203449249268,
+        0.14889931678771973
+      ]
+    ],
+    "witness_other_triangle": [
+      [
+        -0.021305955946445465,
+        1.791521668434143,
+        0.15081976354122162
+      ],
+      [
+        -0.0159901212900877,
+        1.7957046031951904,
+        0.14908459782600403
+      ],
+      [
+        -0.021508563309907913,
+        1.7949862480163574,
+        0.14839401841163635
+      ]
+    ],
+    "source_face_index": 18667,
+    "reference_name": "LOCKED_2_11_Rama warm skin",
+    "reference_triangle_index": 1765
+  },
+  "containment": "Not classified because surface crossing or nonclosed geometry already fails.",
+  "passed": false,
+  "elapsed_seconds": 9.500201130998903
+}

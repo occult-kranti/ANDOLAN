@@ -1,0 +1,62 @@
+--- /workspace/ANDOLAN/games/yuga-native/art/world-finish/lane-frontage-r2/capture_frontage.gd
++++ capture_frontage.gd
+@@ -1,9 +1,10 @@
+ extends "res://tools/graphics-six/capture_compact_screens.gd"
+ ## Private three-view frontage review; identical helper in both sibling branches.
+ ## No canonical runtime/authority/pose/time/lighting edits.
+-const Frontage = preload("res://art/world-finish/lane-frontage-r2/candidate.gd")
++const Frontage = preload("res://scripts/world_lane_frontage.gd")
+ const SELECTION := "res://tools/visual-rounds/frontage-review.json"
+ var branch := ""
++var production_admission: Dictionary = {}
+ var review_camera: Camera3D
+ var frontage_result: Dictionary = {}
+ var serialization_errors: Array[String] = []
+@@ -312,6 +313,7 @@
+ 	var selection: Variant = JSON.parse_string(FileAccess.get_file_as_string(SELECTION))
+ 	if not selection is Dictionary or selection.keys().size()!=1 or selection.get("branch","") not in ["baseline","candidate"]: finish("Explicit one-field branch JSON required");return
+ 	branch=selection.branch
++	if branch!="candidate": finish("Production observer requires candidate branch");return
+ 	source_start=hashes()
+ 	if source_start.is_empty(): finish("Immutable source manifest required");return
+ 	root.size=Vector2i(960,540);root.content_scale_size=Vector2i(1280,720);root.content_scale_factor=1.0
+@@ -331,11 +333,27 @@
+ 	var body: StaticBody3D = scene.world.get_node(Frontage.BODY)
+ 	var old_identity := body.get_instance_id()
+ 	var original_manifest := JSON.stringify(scene.manifest).sha256_text()
++	# Observe the default production installation BEFORE connecting the observer.
++	# No configure/remove/material/shape/visibility mutation is performed here.
++	var admission_frame := Engine.get_process_frames()
++	var installed: Node3D = scene.world.get_node_or_null(Frontage.ROOT)
++	var holder: CollisionShape3D
++	for child in body.get_children():
++		if child is CollisionShape3D and not child.disabled: holder=child
++	if installed==null or holder==null or not holder.shape is ConcavePolygonShape3D:
++		finish("Default production frontage root/shape missing before observer");return
++	var installed_mesh := installed.get_node_or_null("ClosedCivicFrontage") as MeshInstance3D
++	if installed_mesh==null or installed_mesh.mesh==null:
++		finish("Default production visible mesh missing before observer");return
++	var installed_materials: Array = []
++	for surface in installed_mesh.mesh.get_surface_count(): installed_materials.append(installed_mesh.get_active_material(surface))
++	var same_materials: bool = installed_materials==existing_materials(scene.world.get_node(Frontage.TARGET))
++	frontage_result={"ok":true,"mesh":installed_mesh,"materials":installed_materials,"new_materials":0 if same_materials else -1,"new_textures":0,"new_lights":0}
++	production_admission={"module_path":"res://scripts/world_lane_frontage.gd","module_sha256":FileAccess.get_sha256("res://scripts/world_lane_frontage.gd"),"caller_sha256":FileAccess.get_sha256("res://scripts/confluence_world.gd"),"data_path":Frontage.DATA,"data_sha256":FileAccess.get_sha256(Frontage.DATA),"root_path":String(installed.get_path()),"root_present_before_observer":true,"published_shape_identity":holder.shape==installed.get_meta("published_shape"),"admission_process_frame":admission_frame}
+ 	scene.player.rama_motion.modification_processed.connect(observe_final_pose)
+ 	final_observer_connected = true
+-	if branch=="candidate":
+-		frontage_result=Frontage.configure(scene.world,"near")
+-		if not frontage_result.get("ok",false): finish("Candidate admission rejected: "+str(frontage_result));return
++	production_admission.same_frame_as_observer_connection = Engine.get_process_frames()==admission_frame
++	check("actual default production root/shape/material admission precedes observer",production_admission.published_shape_identity and production_admission.same_frame_as_observer_connection and same_materials and not scene.world.get_node(Frontage.TARGET).visible)
+ 	await frames(SETTLE_FRAMES)
+ 	check("same native body identity/nav retained after optional configure",body.get_instance_id()==old_identity and JSON.stringify(scene.manifest).sha256_text()==original_manifest)
+ 	check("first view uses current live product camera",root.get_camera_3d()==scene.player.camera and scene.player.active and not scene.overview and not paused)
+@@ -376,7 +394,7 @@
+ 	check("three declared matched views",shots.size()==3)
+ 	check("source unchanged",not source_start.is_empty() and source_start==after)
+ 	var passed:=failure.is_empty() and checks.all(func(item):return item.passed)
+-	var report:={"schema":1,"case":"lane-frontage-review","outer_transport_alias":"scene-anchors","complete":passed,"failure":failure,"preflight":preflight,"shots":shots,"checks":checks,"checkpoints":checkpoints,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"route_checks":route_checks,"branch":branch,"selection_sha256":FileAccess.get_sha256(SELECTION),"scope":"Three source-bound product/contact/native-overview views. Only named block2 visible mesh and existing sole local3D collider detail are declared differences; no art/performance/authority acceptance."}
++	var report:={"schema":1,"case":"lane-frontage-review","outer_transport_alias":"scene-anchors","complete":passed,"failure":failure,"preflight":preflight,"shots":shots,"checks":checks,"checkpoints":checkpoints,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"route_checks":route_checks,"production_admission":production_admission,"branch":branch,"selection_sha256":FileAccess.get_sha256(SELECTION),"scope":"Three source-bound product/contact/native-overview views. Only named block2 visible mesh and existing sole local3D collider detail are declared differences; no art/performance/authority acceptance."}
+ 	frontage_result.clear()
+ 	paused=false
+ 	if is_instance_valid(current_scene):current_scene.queue_free()

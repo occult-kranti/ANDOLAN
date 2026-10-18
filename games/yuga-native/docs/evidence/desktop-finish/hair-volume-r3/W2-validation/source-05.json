@@ -1,0 +1,146 @@
+{
+  "scope": "Independent rest-space closed source/visible volume check; intentional hair-to-hair source overlap is excluded. No visual, pose, rig or runtime acceptance.",
+  "part": "SOURCE_LOFT_05_Dominant_collected_S_fall",
+  "geometry_sha256": "d118cf58edd01cdb6196d0c7802e205cfbe934207a52e1e6d094a1f33356030b",
+  "reference_sha256": "b0a8ee2213b9ee7fc21285ab4884e6b270ff396d1abfaf94a7db8cab7f35eb99",
+  "checker_sha256": "42797518463dfb01828d9f31c622aee7b1f25f99150fb7e21ddd8bfadc3153de",
+  "probe_sha256": "324c2f688dbefc6c3ac86f5b5ca346c069efd1f7b8916252ad9489fcf0ad532c",
+  "calibration": {
+    "triangle_distance": {
+      "separated_parallel_triangle_gap_m": 0.005,
+      "edge_through_face_crossing": true
+    },
+    "closed_cube_volume_m3": 8,
+    "inside_outside_two_rays": true
+  },
+  "checks": [
+    {
+      "name": "finite bounded complete triangles",
+      "passed": true,
+      "vertices": 144,
+      "triangles": 284
+    },
+    {
+      "name": "one closed consistently wound nondegenerate positive volume",
+      "passed": true,
+      "components": 1,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "minimum_triangle_area_m2": 9.786374966089926e-08,
+      "degenerate_triangles": 0,
+      "signed_volume_m3": 0.001033340077960477
+    },
+    {
+      "name": "all protected parent reference triangles clear in rest",
+      "passed": false,
+      "comparison": {
+        "minimum_distance_m": 0.0,
+        "guaranteed_lower_bound_m": 0.0,
+        "near_pairs": 1445,
+        "crossings": 34,
+        "witness_triangles": [
+          32,
+          18702
+        ],
+        "witness_hair_triangle": [
+          [
+            0.009195245802402496,
+            1.804585337638855,
+            -0.07500000298023224
+          ],
+          [
+            0.01331060379743576,
+            1.7798466682434082,
+            -0.0949999988079071
+          ],
+          [
+            0.009767754003405571,
+            1.7836309671401978,
+            -0.10745671391487122
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.015932340174913406,
+            1.7951933145523071,
+            -0.0858025997877121
+          ],
+          [
+            0.007688916753977537,
+            1.7951418161392212,
+            -0.08406457304954529
+          ],
+          [
+            0.01532005611807108,
+            1.7951109409332275,
+            -0.08282890915870667
+          ]
+        ],
+        "source_face_index": 16,
+        "reference_name": "LOCKED_2_2_Worked warm gold",
+        "reference_triangle_index": 1162
+      }
+    }
+  ],
+  "complete": true,
+  "topology": {
+    "components": 1,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_winding_edges": 0,
+    "minimum_triangle_area_m2": 9.786374966089926e-08,
+    "degenerate_triangles": 0,
+    "signed_volume_m3": 0.001033340077960477
+  },
+  "reference_comparison": {
+    "minimum_distance_m": 0.0,
+    "guaranteed_lower_bound_m": 0.0,
+    "near_pairs": 1445,
+    "crossings": 34,
+    "witness_triangles": [
+      32,
+      18702
+    ],
+    "witness_hair_triangle": [
+      [
+        0.009195245802402496,
+        1.804585337638855,
+        -0.07500000298023224
+      ],
+      [
+        0.01331060379743576,
+        1.7798466682434082,
+        -0.0949999988079071
+      ],
+      [
+        0.009767754003405571,
+        1.7836309671401978,
+        -0.10745671391487122
+      ]
+    ],
+    "witness_other_triangle": [
+      [
+        0.015932340174913406,
+        1.7951933145523071,
+        -0.0858025997877121
+      ],
+      [
+        0.007688916753977537,
+        1.7951418161392212,
+        -0.08406457304954529
+      ],
+      [
+        0.01532005611807108,
+        1.7951109409332275,
+        -0.08282890915870667
+      ]
+    ],
+    "source_face_index": 16,
+    "reference_name": "LOCKED_2_2_Worked warm gold",
+    "reference_triangle_index": 1162
+  },
+  "containment": "Not classified because surface crossing or nonclosed geometry already fails.",
+  "passed": false,
+  "elapsed_seconds": 0.5327129760007665
+}

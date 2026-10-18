@@ -1,0 +1,15 @@
+The full metadata walk of `/workspace` completed at 2026-10-18T12:15:38.794292+00:00 against primary source `0412db42f0a3da8afa1c30b33be6239d04f7afe8`. It visited **39,303 directories** and observed **143,706 non-symlink file entries**, with **zero inaccessible/error paths**. Only the five `.git` directory internals were pruned; all other ordinary directories, including unknown scratch/tool/dependency directories, were traversed. **396 symlinks** are recorded but were not followed. Roots reachable only through symlinks or outside `/workspace` are outside this scan.
+
+The five Git roots are unchanged from Backup A. One is the owned product monorepo; the other four are third-party dependency/reference clones, not additional product repositories. Origin URLs below are sanitized from local Git configuration: username/password/query/fragment omitted; no credential or environment values printed. No network request was performed.
+
+| Root | Classification | Exact HEAD | Sanitized origin |
+|---|---|---|---|
+| `/workspace/ANDOLAN` | primary project monorepo | `0412db42f0a3da8afa1c30b33be6239d04f7afe8` | https://github.com/occult-kranti/ANDOLAN.git |
+| `/workspace/scratch/community-reuse/animation/sources/blender-addons` | third-party dependency/reference Git checkout; not an owned product repository | `b42d68627734cb18af0e6f41537063984313a284` | https://github.com/blender/blender-addons.git |
+| `/workspace/scratch/community-reuse/animation/sources/godot-demo-projects` | third-party dependency/reference Git checkout; not an owned product repository | `b761b4cd5718a7118f2c95eb55f181d0a5f004f1` | https://github.com/godotengine/godot-demo-projects.git |
+| `/workspace/scratch/community-reuse/animation/sources/ozz-animation` | third-party dependency/reference Git checkout; not an owned product repository | `744eb9d99f606eda849acb0b1204f7a3dc20bca1` | https://github.com/guillaumeblanc/ozz-animation.git |
+| `/workspace/scratch/community-reuse/art/upstream/material-maker` | third-party dependency/reference Git checkout; not an owned product repository | `b4fcad06f0b13785de423c42b36406df605c8321` | https://github.com/RodZill4/material-maker.git |
+
+The 1053 directories containing recognized build/project markers are listed in the JSON. They include dependencies, tooling, examples and evidence snapshots and must not be interpreted as 1053 independently owned projects. The primary monorepo contains native YUGA at `games/yuga-native`, browser YUGA under `games/yuga`, and the root ANDOLAN web application. Existing docs/START_HERE.md determines which workflow is requested.
+
+This is repository-membership/configuration evidence, not application readiness, art acceptance, legal-reuse permission or a new import/build check. Normal primary HEAD/index remained exact before/after. Parent owns the cloud draft save. Later evidence-only source commits need an exact primary HEAD re-read; repeat the full walk only if membership or filesystem roots change. Active art outputs remain outside the current backup inventory.

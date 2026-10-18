@@ -1,0 +1,7 @@
+{
+  "engine_started": false,
+  "stage_created": false,
+  "failure": "Previous snapshot changed: two frontage art paths",
+  "cause": "Wrong validator selected: in-project historical snapshot.py omits the two declared art ROOT_FILES, although actual bytes exactly match the current marker. W1 external harness/snapshot.py includes those paths. No input source drift observed.",
+  "corrective_action": "Use and pin W1 current external validator in both stager and runner; retain original helper/runtime files unchanged."
+}

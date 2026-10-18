@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Only two existing affected fixtures on production startup integration. Full runtime bytes and selected tests pinned before/after; no imports/clones/raster/source edits or unrelated suites. Headless route/collision/atlas controls do not certify art/GPU/full traversal/online behavior.",
+  "source_commit": "0964564d1ba283a5ac0aee8eab0a6cccd8f443f3",
+  "runtime_sources_unchanged": true,
+  "source_files": 557,
+  "suite_results": [
+    {
+      "suite": "desktop-world-route-parity",
+      "fixture": "tests/desktop_world_route_parity_cases.gd",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_world_route_parity_cases.gd",
+        "--",
+        "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/world-lane-frontage/W4-production-world-support-r1/desktop-world-route-parity/report.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.0775711569986015,
+      "timeout_seconds": 120,
+      "count": 27,
+      "passed_checks": 27,
+      "all_checks_pass": true,
+      "log_diagnostics": [],
+      "failures": []
+    },
+    {
+      "suite": "ui-world-atlas",
+      "fixture": "tests/desktop_finish_s1_atlas_cases.gd",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_finish_s1_atlas_cases.gd",
+        "--",
+        "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/world-lane-frontage/W4-production-world-support-r1/ui-world-atlas/report.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.2695328359986888,
+      "timeout_seconds": 120,
+      "count": 15,
+      "passed_checks": 15,
+      "all_checks_pass": true,
+      "log_diagnostics": [],
+      "failures": []
+    }
+  ],
+  "production_receipt": "../W4-production-r1/receipt.json",
+  "production_receipt_sha256": "a91951f6f8f8ee2e82c6c1ac92d165d65eb686e24714297f154b3140859001ee",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "artifacts": {
+    "source-before.json": {
+      "sha256": "910c2caaa8fa1420cc93199ec60c551a1f6061431b0859ec8fb26b3e0994c681",
+      "bytes": 88558
+    },
+    "source-after.json": {
+      "sha256": "910c2caaa8fa1420cc93199ec60c551a1f6061431b0859ec8fb26b3e0994c681",
+      "bytes": 88558
+    },
+    "desktop-world-route-parity/run.json": {
+      "sha256": "d747342b4efda68bba8bbb0373c2998339e6b944505bcb1de463f529d262aea5",
+      "bytes": 829
+    },
+    "desktop-world-route-parity/godot.log": {
+      "sha256": "bed4a2965ea3be8bea7e3dcbf4bdacb24a0f8153e58e8774c285531420a670c6",
+      "bytes": 16847
+    },
+    "desktop-world-route-parity/report.json": {
+      "sha256": "bebbee83d9465fe9e7c734eb1b9411ea744e8d1ffbd8d2301226f374c35351f1",
+      "bytes": 84103
+    },
+    "ui-world-atlas/run.json": {
+      "sha256": "9f12d148e2572d043d1b07686603ab6617cac05e73255b4626d9a83467da9133",
+      "bytes": 799
+    },
+    "ui-world-atlas/godot.log": {
+      "sha256": "7220567f50a1bf999d0b49e747a6923247abd7e6a12b7d7b4654741610f90728",
+      "bytes": 1154
+    },
+    "ui-world-atlas/report.json": {
+      "sha256": "2d7fba75c640e501949b43f21d9878ff564bd537e5c6fdb0339fb71f4270c927",
+      "bytes": 3531
+    }
+  }
+}
