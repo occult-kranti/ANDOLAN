@@ -1,0 +1,13 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS menu ready before transition 1
+FAIL Explore button enters actual world 1
+PASS flow sources unchanged during run
+YUGA_WORLD_FLOW {"checks":[{"details":{"button_visible":true},"name":"menu ready before transition 1","passed":true},{"details":{"courtyard_freed":false,"scene":"res://scenes/courtyard.tscn"},"name":"Explore button enters actual world 1","passed":false},{"details":{},"name":"flow sources unchanged during run","passed":true}],"engine":"4.6.3-stable (official)","passed":false,"scope":"Three complete courtyard -> wired Explore button -> real world -> injected Escape -> wired Return button -> fresh courtyard cycles, with old instances and collision groups removed. Headless scene lifecycle and callback proof; not OS input, image quality or online match evidence.","sources":{"res://assets/world/confluence-map.json":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","res://scenes/confluence_world.tscn":"06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3","res://scenes/courtyard.tscn":"8a901cbe8bd5a44d50b6d2f46fc728e7430810bf5b794bdedb6839e7722be0f5","res://scripts/confluence_world.gd":"827b2c34cac135f13e53a0a82190c5a5631f41c5f30a05c5b11bcb69101d7208","res://scripts/courtyard.gd":"9cd53e74c9978c09a8018da9ee1272940e5fc71f0e5ef8c495c4e872484bf959","res://scripts/player.gd":"d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17","res://tests/world_flow_cases.gd":"9d18f8b55f36f497a2acdb540895ed8392d8b6f85bacee9a8cc11995ccf193bf"}}
+ERROR: Parse Error: Failed. [Resource file res://scenes/confluence_world.tscn:6]
+   at: _parse_node_tag (scene/resources/resource_format_text.cpp:292)
+ERROR: Failed loading resource: res://scenes/confluence_world.tscn.
+   at: _load (core/io/resource_loader.cpp:343)
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2663)

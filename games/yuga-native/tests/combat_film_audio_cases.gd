@@ -119,19 +119,29 @@ func _run() -> void:
 	audible.set_playing(true)
 	var previous: WeakRef=weakref(audible)
 	audible.return_to_courtyard()
+	var loader := root.get_node("YugaSceneTransitionLayer/SceneTransition")
+	var deadline := Time.get_ticks_msec() + 30000
+	while Time.get_ticks_msec() < deadline and loader.phase not in [&"done", &"error"]:
+		await process_frame
 	for unused in range(5): await process_frame
+	_record("Film return completes through the persistent loader",loader.phase == &"done" and current_scene != null and current_scene.scene_file_path=="res://scenes/courtyard.tscn")
 	var owned_callbacks:=true
 	var courtyard_callback:=false
+	var loader_callbacks := 0
 	for connection in root.focus_exited.get_connections():
 		var owner: Object=connection.callable.get_object()
-		owned_callbacks=owned_callbacks and (owner==current_scene or (owner is Node and current_scene.is_ancestor_of(owner)))
+		owned_callbacks=owned_callbacks and (owner==loader or owner==current_scene or (owner is Node and current_scene != null and current_scene.is_ancestor_of(owner)))
 		courtyard_callback=courtyard_callback or owner==current_scene
-	_record("Return frees film and retains only active courtyard-owned focus callbacks",not is_instance_valid(previous.get_ref()) and current_scene.scene_file_path=="res://scenes/courtyard.tscn" and owned_callbacks and courtyard_callback)
+		if owner == loader: loader_callbacks += 1
+	_record("Return frees film and retains only courtyard and singleton loader callbacks",not is_instance_valid(previous.get_ref()) and owned_callbacks and courtyard_callback and loader_callbacks == 1)
 	root.focus_exited.emit()
-	current_scene.queue_free()
+	if current_scene != null: current_scene.queue_free()
 	current_scene=null
 	await create_timer(.1).timeout
-	_record("scene cleanup releases remaining focus callback",root.focus_exited.get_connections().size()==focus_baseline)
+	_record("Scene cleanup leaves only the live persistent loader callback",root.focus_exited.get_connections().size()==focus_baseline+1 and root.focus_exited.get_connections().any(func(connection): return connection.callable.get_object()==loader))
+	loader.get_parent().queue_free()
+	await create_timer(.1).timeout
+	_record("Loader cleanup releases the final owned focus callback",root.focus_exited.get_connections().size()==focus_baseline)
 	if had_settings:
 		var restored:=FileAccess.open(SETTINGS,FileAccess.WRITE)
 		restored.store_buffer(saved_settings)

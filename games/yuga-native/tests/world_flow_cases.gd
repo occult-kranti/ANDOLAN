@@ -25,7 +25,7 @@ func _run() -> void:
 		_record("menu ready before transition " + str(round_index+1),menu_ready,{"button_visible":is_instance_valid(explore) and explore.is_visible_in_tree()})
 		if not menu_ready: break
 		# Exercise the real connected callback, including courtyard menu sound and
-		# change_scene_to_file, rather than calling the world constructor directly.
+		# the persistent loader, rather than calling the world constructor directly.
 		explore.pressed.emit()
 		var world_open := await _wait_scene("res://scenes/confluence_world.tscn")
 		var world := current_scene
@@ -56,11 +56,17 @@ func _run() -> void:
 	await _finish()
 
 func _wait_scene(path: String) -> bool:
-	for _i in range(120):
+	# Headless frames may run much faster than threaded resource loading. Bound
+	# the real transition by elapsed time, preserving the actual scene assertion.
+	var deadline := Time.get_ticks_msec() + 30000
+	while Time.get_ticks_msec() < deadline:
 		await process_frame
 		if is_instance_valid(current_scene) and current_scene.scene_file_path==path:
 			for _j in range(3): await process_frame
 			return true
+		var transition := root.get_node_or_null("YugaSceneTransitionLayer/SceneTransition")
+		if is_instance_valid(transition) and transition.phase == "error":
+			return false
 	return false
 
 func _key(code: Key) -> void:
