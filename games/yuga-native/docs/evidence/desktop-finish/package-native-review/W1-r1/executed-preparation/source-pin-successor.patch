@@ -1,0 +1,31 @@
+--- W1/run_package_review.py
++++ W1-r2/run_package_review.py
+@@ -12,7 +12,7 @@
+ 
+ HERE = Path(__file__).resolve().parent
+ OFFICIAL = 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3'
+-EXPECTED_SOURCE = 'b4d2871723a8cb66354d66abb17bd56fbd22c598'
++EXPECTED_SOURCE = '5542e61610d20e591effbed9dec15fd10398e31d'
+ GDB = Path('/workspace/tooling/native-debug/gdb-local')
+ 
+ 
+@@ -81,7 +81,7 @@
+         parser.error('This attempt is bound to the exact official f64 packaged binary')
+     exported = json.loads(args.export_manifest.read_text())
+     if exported.get('git', {}).get('head') != EXPECTED_SOURCE or exported.get('git', {}).get('native_worktree_status') != '':
+-        parser.error('Export must identify the exact clean approved b4d287 source checkpoint')
++        parser.error('Export must identify the exact clean approved 5542e61 source checkpoint')
+     command = [sys.executable, str(HERE / 'tools/ui-campaign/run.py'),
+                '--mode', 'package', '--project', str(args.project.resolve()),
+                '--executable', str(args.executable.resolve()), '--package', str(args.package.resolve()),
+--- W1/verify_package_review.py
++++ W1-r2/verify_package_review.py
+@@ -7,7 +7,7 @@
+ from pathlib import Path
+ 
+ HERE = Path(__file__).resolve().parent
+-EXPECTED_SOURCE = 'b4d2871723a8cb66354d66abb17bd56fbd22c598'
++EXPECTED_SOURCE = '5542e61610d20e591effbed9dec15fd10398e31d'
+ OFFICIAL = 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3'
+ 
+ 

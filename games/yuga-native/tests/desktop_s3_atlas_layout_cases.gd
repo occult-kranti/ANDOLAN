@@ -12,6 +12,8 @@ func check(label:String,passed:bool,detail:Dictionary={})->void:
 	print("PASS " if passed else "FAIL ",label)
 func frames(n:=4)->void:
 	for unused in n:await process_frame
+func visible_peers_disjoint(a:Control,b:Control)->bool:
+	return not (a.is_visible_in_tree() and b.is_visible_in_tree()) or not a.get_global_rect().intersects(b.get_global_rect())
 func run()->void:
 	var world:Node3D=load("res://scenes/confluence_world.tscn").instantiate()
 	root.add_child(world);current_scene=world;await frames()
@@ -101,7 +103,14 @@ func run()->void:
 		check("real traversal energy cooldown mode and unavailable capability survive condensation: "+str(dimensions),resource_ok and flight_ok and world.compact_world_labels[3].text.contains("unavailable"))
 		for property in ["energy","mode","enabled","flight_cooldown","grapple_cooldown"]:world.player.traversal.set(property,original[property])
 		world._update_practice_hud();world.set_overview(true);await frames()
-		check("constrained overview gives focus and scrollable live details without covering combat: "+str(dimensions),world.atlas_guide.visible and not state.visible and viewport.encloses(world.atlas_guide.get_global_rect()) and not world.atlas_guide.get_global_rect().intersects(world.rama_hud.get_global_rect()) and world.atlas_live_details.text.contains(world.score_label.text) and world.atlas_live_details.text.contains(world.goal_label.text) and root.gui_get_focus_owner()==world.atlas_guide_scroll)
+		check("constrained overview gives focus and scrollable live details without covering combat: "+str(dimensions),world.atlas_guide.visible and not state.visible and not world.rama_hud.is_visible_in_tree() and viewport.encloses(world.atlas_guide.get_global_rect()) and visible_peers_disjoint(world.atlas_guide,world.rama_hud) and world.atlas_live_details.text.contains(world.score_label.text) and world.atlas_live_details.text.contains(world.goal_label.text) and root.gui_get_focus_owner()==world.atlas_guide_scroll,{"guide_visible":world.atlas_guide.visible,"summary_hidden":not state.visible,"guide_inside":viewport.encloses(world.atlas_guide.get_global_rect()),"combat_visible":world.rama_hud.is_visible_in_tree(),"guide_rect":str(world.atlas_guide.get_global_rect()),"combat_rect":str(world.rama_hud.get_global_rect()),"raw_no_intersection":not world.atlas_guide.get_global_rect().intersects(world.rama_hud.get_global_rect()),"score_present":world.atlas_live_details.text.contains(world.score_label.text),"goal_present":world.atlas_live_details.text.contains(world.goal_label.text),"focused":root.gui_get_focus_owner()==world.atlas_guide_scroll})
+		# Synchronous presentation-only corruption: an actually visible combat
+		# rectangle must be rejected, then restore before another scene frame.
+		var combat_was_visible:bool=world.rama_hud.visible
+		world.rama_hud.show()
+		var rejects_overlap:bool=not visible_peers_disjoint(world.atlas_guide,world.rama_hud)
+		world.rama_hud.visible=combat_was_visible
+		check("visible overlap counterexample rejects actual combat and restores overview: "+str(dimensions),rejects_overlap and not world.rama_hud.is_visible_in_tree() and visible_peers_disjoint(world.atlas_guide,world.rama_hud),{"visible_overlap_rejected":rejects_overlap,"combat_visible_after_restore":world.rama_hud.is_visible_in_tree()})
 		world.set_overview(false);await frames()
 	# Exercise the production path independently: the world presentation process
 	# stays active, scale changes emit native resize signals, and no manual

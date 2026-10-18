@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build auditable, portable native packages without editor export templates.
 
-The official MIT-licensed Godot engine runs the exported project with --main-pack.
+The selected MIT-licensed Godot runtime opens the exported project with --main-pack.
 No downloaded tools or credentials are embedded. Windows packages are not treated
 as executed merely because export and archive validation succeed on Linux.
 """
@@ -43,6 +43,128 @@ def digest(path: Path) -> str:
 
 def record(path: Path) -> dict:
     return {'bytes': path.stat().st_size, 'sha256': digest(path)}
+
+
+PUBLIC_LINUX_RUNTIME = {
+    'bytes': 85447128,
+    'sha256': 'dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f',
+    'version': '4.6.3.stable.custom_build',
+}
+PUBLIC_RUNTIME_EXPORTER_SHA = 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3'
+PUBLIC_RUNTIME_EXPORTER_VERSION = '4.6.3.stable.official.7d41c59c4'
+PUBLIC_RUNTIME_PROOF = 'docs/evidence/desktop-finish/G0/template-baseline-r1/finished-build-verification.json'
+PUBLIC_RUNTIME_EVIDENCE = {
+    PUBLIC_RUNTIME_PROOF: '70fc1633d8f29fed62a9d0db37103cc442bc7c066acda21ab78f2db560a16abd',
+    'docs/evidence/desktop-finish/G0/template-baseline-r1/build-result.json': 'ef3611ef2f428dc36b1fc46b5784b8ec10ea1600fce0dce65d39aeb720def32c',
+    'docs/evidence/desktop-finish/G0/template-build-preparation-r1/source-recovery.json': '33c58d013b84143be96e29f968fe26553a07e26e067fa61496506df79d1b5b20',
+    'NOTICE/GODOT-LICENSE.txt': 'b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80',
+    'NOTICE/GODOT-COPYRIGHT.txt': 'b3330849267d56ddd3d62a513817506606c2195034411fe05859f0140bff9d8a',
+}
+
+
+def public_runtime_provenance(proof_path: Path) -> dict:
+    """Admit one reviewed unmodified build, never arbitrary self-attestation."""
+    if not proof_path.is_file() or digest(proof_path) != PUBLIC_RUNTIME_EVIDENCE[PUBLIC_RUNTIME_PROOF]:
+        raise ValueError('Linux runtime provenance is not the reviewed unmodified build proof')
+    evidence = {}
+    for relative, sha in PUBLIC_RUNTIME_EVIDENCE.items():
+        path = PROJECT / relative
+        if not path.is_file() or digest(path) != sha:
+            raise ValueError('Public runtime evidence changed or is missing: ' + relative)
+        evidence[relative] = record(path)
+    proof = json.loads(proof_path.read_text())
+    build = json.loads((PROJECT / 'docs/evidence/desktop-finish/G0/template-baseline-r1/build-result.json').read_text())
+    recovery = json.loads((PROJECT / 'docs/evidence/desktop-finish/G0/template-build-preparation-r1/source-recovery.json').read_text())
+    return {
+        'kind': 'unmodified-public-source-template-debug',
+        'source_commit': proof['source_commit'], 'source_patches': proof['source_patches'],
+        'source_url': 'https://github.com/godotengine/godot/tree/' + proof['source_commit'],
+        'source_archive': recovery['downloads']['godot-35e80b3a.tar.gz'],
+        'source_archive_url': 'https://github.com/godotengine/godot/archive/' + proof['source_commit'] + '.tar.gz',
+        'build_command': build['command'], 'target': 'template_debug',
+        'evidence': evidence,
+        'license': 'MIT; bundled GODOT-LICENSE.txt and GODOT-COPYRIGHT.txt include third-party attributions.',
+        'scope': 'Build identity only. Archive validation does not establish execution or visual acceptance.',
+    }
+
+
+def linux_engine_selection(args: argparse.Namespace, expected: dict | None = None, *, probe_versions: bool = False) -> dict:
+    """Bind exporter/font probe and Linux runtime independently across phases.
+
+    An expected selection uses its already-probed versions only after matching
+    binary bytes; this avoids executing a changed binary during final guards.
+    """
+    runtime = getattr(args, 'linux_runtime', None)
+    proof = getattr(args, 'linux_runtime_provenance', None)
+    if bool(runtime) != bool(proof):
+        raise ValueError('--linux-runtime and --linux-runtime-provenance must be supplied together')
+    exporter_record = record(args.linux_engine)
+    runtime_record = record(runtime) if runtime else exporter_record
+    provenance = None
+    if runtime:
+        if exporter_record['sha256'] != PUBLIC_RUNTIME_EXPORTER_SHA:
+            raise ValueError('Public Linux runtime requires the reviewed official exporter')
+        if runtime_record != {key: PUBLIC_LINUX_RUNTIME[key] for key in ('bytes', 'sha256')}:
+            raise ValueError('Linux runtime is not the reviewed unmodified public binary')
+        provenance = public_runtime_provenance(proof)
+    if expected is not None:
+        for key, actual in [('exporter', exporter_record), ('linux_runtime', runtime_record)]:
+            if actual != {field: expected.get(key, {}).get(field) for field in ('bytes', 'sha256')}:
+                raise ValueError('Linux engine identity changed since export: ' + key)
+        version = expected['exporter']['version']
+        runtime_version = expected['linux_runtime']['version']
+    if expected is None or probe_versions:
+        version = subprocess.check_output([str(args.linux_engine), '--version'], text=True, timeout=15).strip()
+        runtime_version = (subprocess.check_output([str(runtime), '--version'], text=True, timeout=15).strip()
+                           if runtime else version)
+    if not version.startswith(EXPECTED_VERSION + '.'):
+        raise ValueError(f'Expected Godot {EXPECTED_VERSION}; found {version}')
+    if runtime and version != PUBLIC_RUNTIME_EXPORTER_VERSION:
+        raise ValueError('Official exporter version differs from reviewed build')
+    if runtime and runtime_version != PUBLIC_LINUX_RUNTIME['version']:
+        raise ValueError('Public Linux runtime version differs from reviewed build')
+    selected = {
+        'exporter': {**exporter_record, 'version': version, 'role': 'PCK export and imported-font proof'},
+        'linux_runtime': {**runtime_record, 'version': runtime_version,
+                          'kind': 'unmodified-public-source-template-debug' if runtime else 'exporter-binary',
+                          'provenance': provenance},
+    }
+    if record(args.linux_engine) != exporter_record or (runtime and record(runtime) != runtime_record):
+        raise ValueError('Linux engine changed during identity validation')
+    if expected is not None and selected != expected:
+        raise ValueError('Linux exporter/runtime selection or provenance changed since export')
+    return selected
+
+
+def copy_public_runtime_notice(destination: Path, selection: dict) -> None:
+    provenance = selection['linux_runtime']['provenance']
+    if provenance is None:
+        return
+    notice = destination / 'NOTICE'
+    for relative, pinned in provenance['evidence'].items():
+        source = PROJECT / relative
+        if record(source) != pinned:
+            raise ValueError('Public runtime evidence changed before notice copy: ' + relative)
+        if relative.startswith('NOTICE/'):
+            if record(notice / Path(relative).name) != pinned:
+                raise ValueError('Bundled public runtime attribution differs from reviewed source')
+        else:
+            target = notice / 'godot-public-runtime' / Path(relative).name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, target)
+            if record(target) != pinned:
+                raise ValueError('Public runtime proof copy differs from reviewed source')
+    json_write(notice / 'GODOT-RUNTIME-PROVENANCE.json', selection)
+    (notice / 'GODOT-RUNTIME.txt').write_text(
+        'Linux runtime: community-built, unmodified Godot public-source template_debug.\n'
+        'It is not the official editor binary used to export and qualify fonts.\n'
+        f"Runtime SHA-256: {selection['linux_runtime']['sha256']}\n"
+        f"Exporter SHA-256: {selection['exporter']['sha256']}\n"
+        f"Public source: {provenance['source_url']}\n"
+        'Source patches: 0. Build command and archive hash: GODOT-RUNTIME-PROVENANCE.json.\n'
+        'Original build/source verification records: godot-public-runtime/.\n'
+        'License and third-party notices: GODOT-LICENSE.txt and GODOT-COPYRIGHT.txt.\n'
+        'Package execution and visual qualification are separate from this build proof.\n', encoding='utf-8')
 
 
 RAMA_HERO_STAGE_PATHS = (
@@ -1471,11 +1593,10 @@ def validate_runtime_script_uids(project: Path | None = None) -> dict:
 
 def export_all(args: argparse.Namespace, build: Path) -> dict:
     runtime_uids = validate_runtime_script_uids()
+    engines = linux_engine_selection(args)
     native_contracts = prove_native_contract_sources(build / 'native-contracts-export.json')
     subprocess.run([sys.executable, str(PROJECT / 'tools/stage-world.py'), '--check'], check=True)
-    version = subprocess.check_output([str(args.linux_engine), '--version'], text=True).strip()
-    if not version.startswith(EXPECTED_VERSION + '.'):
-        raise ValueError(f'Expected Godot {EXPECTED_VERSION}; found {version}')
+    version = engines['exporter']['version']
     font_bindings = prove_imported_font_bindings(args.linux_engine, build / 'font-bindings-export.json')
     rama = PROJECT / 'assets/heroes/rama.glb'
     original_rama = REPOSITORY / 'games/yuga/client/assets/heroes/rama.glb'
@@ -1517,7 +1638,9 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
         raise ValueError('Rama hero provenance changed during export; rerun on a frozen tree')
     if native_contracts['sources'] != _native_contract_inputs(PROJECT):
         raise ValueError('Native contract inputs changed during export')
+    linux_engine_selection(args, engines)
     manifest = {'schema': 1, 'kind': 'native-pck-export', 'godot_version': version,
+                'engine_selection': engines,
                 'git': git_context(), 'source': after, 'packs': packs,
                 'rama_matches_existing_yuga_source': True,
                 'rama_hero_provenance': rama_hero_notice,
@@ -1529,9 +1652,18 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
     return manifest
 
 
-def start_readme(platform: str) -> str:
+def start_readme(platform: str, engines: dict | None = None) -> str:
     start = './launch.sh' if platform == 'linux' else 'launch.bat'
-    return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. The bundled official Godot 4.6.3\nengine opens yuga-native.pck directly using --main-pack. This portable package\ncontains the full engine binary and is larger than a release-template export.\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. Flight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWatch duel opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
+    runtime_text = ('The bundled official Godot 4.6.3\n'
+                    'engine opens yuga-native.pck directly using --main-pack. This portable package\n'
+                    'contains the full engine binary and is larger than a release-template export.')
+    if platform == 'linux' and engines and engines['linux_runtime']['provenance'] is not None:
+        runtime_text = ('This Linux package uses a community-built, unmodified Godot 4.6.3\n'
+                        'public-source template-debug runtime to open yuga-native.pck with --main-pack.\n'
+                        'The official Linux editor binary performed PCK export and font qualification;\n'
+                        'it is not the bundled Linux runtime. See NOTICE/GODOT-RUNTIME.txt for exact\n'
+                        'runtime/source/build/license identities. Archive checks do not prove execution.')
+    return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. {runtime_text}\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. Flight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWatch duel opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
 
 
 def copy_rama_crown_companions(project: Path, destination: Path) -> dict:
@@ -1607,6 +1739,11 @@ def zip_directory(staging: Path, output: Path) -> dict:
 
 
 def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
+    if 'engine_selection' not in exported:
+        raise ValueError('Export manifest lacks exporter/runtime identity; export with this tool before packaging')
+    engines = linux_engine_selection(args, exported['engine_selection'], probe_versions=True)
+    if exported.get('godot_version') != engines['exporter']['version']:
+        raise ValueError('Export manifest Godot version contradicts its exporter identity')
     native_contracts = prove_native_contract_sources(build / 'native-contracts-package.json')
     if native_contracts != exported.get('native_contracts'):
         raise ValueError('Native contract sources or proof changed since export; export again before packaging')
@@ -1628,8 +1765,10 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
         if staging.exists():
             shutil.rmtree(staging)
         staging.mkdir()
-        engine = args.linux_engine if platform == 'linux' else args.windows_engine
+        engine = (getattr(args, 'linux_runtime', None) or args.linux_engine) if platform == 'linux' else args.windows_engine
         shutil.copyfile(engine, staging / ('godot' if platform == 'linux' else 'godot.exe'))
+        if platform == 'linux' and record(staging / 'godot') != {key: engines['linux_runtime'][key] for key in ('bytes', 'sha256')}:
+            raise ValueError('Copied Linux runtime differs from selected identity')
         pack = build / f'yuga-native-{platform}.pck'
         actual_pack = inspect_pack(pack)
         actual_pack['font_qualification'] = qualify_bundled_font_package(actual_pack, font_bindings)
@@ -1644,11 +1783,17 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
         else:
             launcher = '@echo off\r\n"%~dp0godot.exe" --main-pack "%~dp0yuga-native.pck" %*\r\n'
             (staging / 'launch.bat').write_bytes(launcher.encode())
-        (staging / 'START-HERE.txt').write_text(start_readme(platform), encoding='utf-8')
+        (staging / 'START-HERE.txt').write_text(start_readme(platform, engines), encoding='utf-8')
         safe_notice_copy(staging)
+        if platform == 'linux':
+            copy_public_runtime_notice(staging, engines)
         payloads = {str(p.relative_to(staging)): record(p) for p in sorted(staging.rglob('*')) if p.is_file()}
         manifest = {'schema': 1, 'platform': f'{platform}-x86_64', 'godot_version': exported['godot_version'],
-                    'packaging': 'official-full-engine-with-exported-pck', 'git': exported['git'],
+                    'packaging': ('unmodified-public-template-debug-with-official-exported-pck'
+                                  if platform == 'linux' and engines['linux_runtime']['provenance'] is not None
+                                  else 'official-full-engine-with-exported-pck'), 'git': exported['git'],
+                    'exporter': engines['exporter'],
+                    'runtime': engines['linux_runtime'] if platform == 'linux' else {**record(engine), 'provenance': verified_windows},
                     'runtime_source': exported['source'], 'payloads': payloads,
                     'pck': actual_pack, 'execution_status': 'not_executed_by_packager',
                     'font_bindings': font_bindings,
@@ -1661,7 +1806,9 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
                              'execution_status': 'not_executed_by_packager'}
     if native_contracts['sources'] != _native_contract_inputs(PROJECT):
         raise ValueError('Native contract inputs changed during packaging')
+    linux_engine_selection(args, engines)
     aggregate = {'schema': 1, 'kind': 'native-portable-packages', 'git': exported['git'],
+                 'engine_selection': engines,
                  'runtime_source_sha256': exported['source']['sha256'], 'packages': results,
                  'packaging_script': record(Path(__file__)),
                  'native_contracts': native_contracts,
@@ -1673,6 +1820,8 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--linux-engine', type=Path, default=DEFAULT_LINUX)
+    parser.add_argument('--linux-runtime', type=Path, help='Optional exact reviewed public-source Linux runtime; exporter remains --linux-engine')
+    parser.add_argument('--linux-runtime-provenance', type=Path, help='Required with --linux-runtime: reviewed unmodified finished-build-verification.json')
     parser.add_argument('--windows-engine', type=Path, default=DEFAULT_WINDOWS)
     parser.add_argument('--build-dir', type=Path, default=PROJECT / 'build')
     modes = parser.add_mutually_exclusive_group()

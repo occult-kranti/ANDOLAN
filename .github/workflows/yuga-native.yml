@@ -32,7 +32,7 @@ concurrency:
 jobs:
   native-core:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
@@ -86,6 +86,8 @@ jobs:
           node games/yuga-native/tools/research/check-gltf.mjs --validator-dir "$RUNNER_TEMP/gltf-validator" --report "$RUNNER_TEMP/gltf-validation.json" --asset games/yuga-native/assets/heroes/rama-production.glb --asset games/yuga-native/assets/heroes/rama-hero.glb --asset games/yuga-native/assets/heroes/rama-hero-mid.glb --asset games/yuga-native/assets/heroes/rama-hero-far.glb --asset games/yuga-native/assets/environment/lanka_courtyard.glb --asset games/yuga-native/assets/world/architecture.glb --asset games/yuga-native/assets/world/nature.glb --asset games/yuga-native/assets/cinematics/ravana-sentinel.glb
       - name: Check runtime UID closure before editor import
         run: python3 games/yuga-native/tests/package_runtime_uid_cases.py --report="$RUNNER_TEMP/package-runtime-uids.json"
+      - name: Check explicit Linux runtime provenance and package identity
+        run: python3 games/yuga-native/tests/package_linux_runtime_cases.py --report="$RUNNER_TEMP/package-linux-runtime.json"
       - name: Import native project
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --editor --import --quit
       - name: Audit actual animation library without runtime replacement

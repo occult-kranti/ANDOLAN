@@ -1,0 +1,28 @@
+--- existing/ui_independent_capture_cases.py
++++ package/audit_package_originals.py
+@@ -27,12 +27,14 @@
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("--capture", type=Path, required=True)
+-    parser.add_argument("--freeze", type=Path, required=True)
++    parser.add_argument("--freeze", type=Path, required=True, help="Exact exported source project")
++    parser.add_argument("--export-manifest", type=Path, required=True)
+     parser.add_argument("--report", type=Path, required=True)
+     args = parser.parse_args()
+     capture, freeze = args.capture.resolve(), args.freeze.resolve()
+     run = json.loads((capture / "run.json").read_text())
+-    receipt = json.loads((freeze / "ui-source-freeze.json").read_text())
++    exported = json.loads(args.export_manifest.read_text())
++    receipt = {"source_sha256": {name: row["sha256"] for name, row in exported["source"]["files"].items()}}
+     checks, originals = [], []
+ 
+     def check(name, passed, details=None):
+@@ -101,7 +103,7 @@
+     check("Capture engine has no errors or leaked-object diagnostics", not errors, errors)
+     report = {"passed": all(row["passed"] for row in checks), "count": len(checks), "checks": checks,
+               "originals": originals, "run_sha256": digest(capture / "run.json"),
+-              "freeze_receipt_sha256": digest(freeze / "ui-source-freeze.json"),
++              "export_manifest_sha256": digest(args.export_manifest),
+               "validator_sha256": digest(Path(__file__)),
+               "scope": "Independent original-frame/source/state identity validation. Native navigation and explicit staged authority are distinct. Manual pixel review, OS DPI, hardware FPS, online play and packaging remain separate."}
+     args.report.parent.mkdir(parents=True, exist_ok=True)

@@ -17,6 +17,7 @@ fi
 "$native_python_root/bin/python" -m pip install --disable-pip-version-check numpy==2.3.5 scipy==1.15.3 Pillow==12.3.0
 python3 games/yuga-native/tools/stage-world.py --check
 python3 games/yuga-native/tests/package_runtime_uid_cases.py
+python3 games/yuga-native/tests/package_linux_runtime_cases.py
 godot --headless --path games/yuga-native --editor --import --quit
 python3 games/yuga-native/tools/check-roadmap.py
 python3 games/yuga-native/art/validate_courtyard.py

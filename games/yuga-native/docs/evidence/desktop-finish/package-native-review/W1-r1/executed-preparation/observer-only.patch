@@ -1,0 +1,39 @@
+--- existing/observer.gd
++++ package-review/observer.gd
+@@ -132,14 +132,35 @@
+ 			result.state.player_grounded = current_scene.player.is_on_floor()
+ 			var actor: Node3D = current_scene.player
+ 			result.presentation = {"suspended":actor.presentation_suspended,"player_sensitivity":actor.sensitivity,"player_invert_y":actor.invert_y,"player_position":[actor.global_position.x,actor.global_position.y,actor.global_position.z]}
++			# Read-only package acceptance: authored hero faces +Z, gameplay camera faces -Z.
++			if is_instance_valid(actor.visual):
++				var facing: Vector3 = actor.visual.global_basis.z
++				result.presentation.visual_forward = [facing.x, facing.y, facing.z]
++				result.presentation.visual_yaw = actor.visual.global_rotation.y
++				var camera_facing: Vector3 = -actor.pivot.global_basis.z
++				result.presentation.camera_forward = [camera_facing.x,camera_facing.y,camera_facing.z]
+ 			if is_instance_valid(actor.rama_motion):
+ 				result.presentation.motion = actor.rama_motion.diagnostics()
+ 				result.presentation.motion.locomotion_age = actor.rama_motion.locomotion_age
+ 			if is_instance_valid(actor.rama_secondary): result.presentation.secondary = actor.rama_secondary.report()
+ 			if is_instance_valid(actor.rama_face): result.presentation.face = actor.rama_face.report()
+-			if "map_control" in current_scene and is_instance_valid(current_scene.map_control):
++			if "map_control" in current_scene and is_instance_valid(current_scene.map_control) and is_instance_valid(actor.visual):
+ 				var location: Vector3=current_scene.map_control.hero_position
+ 				result.presentation.atlas_position=[location.x,location.y,location.z]
++				var atlas_forward: Vector3 = current_scene.map_control.hero_forward
++				var atlas_heading: Vector2 = current_scene.map_control.project_heading(atlas_forward)
++				var actual_heading: Vector2 = current_scene.map_control.project_heading(actor.visual.global_basis.z)
++				result.presentation.atlas_forward = [atlas_forward.x, atlas_forward.y, atlas_forward.z]
++				result.presentation.atlas_heading = [atlas_heading.x, atlas_heading.y]
++				result.presentation.projected_visual_heading = [actual_heading.x, actual_heading.y]
++				result.presentation.atlas_heading_error = atlas_heading.distance_to(actual_heading)
++				var plot: Rect2 = current_scene.map_control._plot_rect()
++				result.presentation.atlas_plot_rect = [plot.position.x,plot.position.y,plot.size.x,plot.size.y]
++				result.presentation.atlas_world_bounds = current_scene.map_control.data.get("bounds",{}).get("nominal_xz",[-70,70,-130,130])
++				result.presentation.atlas_heading_agrees = atlas_heading.distance_to(actual_heading) < 0.00001
++				var flat_facing := Vector2(actor.visual.global_basis.z.x,actor.visual.global_basis.z.z).normalized()
++				result.presentation.visual_not_north = flat_facing.dot(Vector2(0,-1)) < 0.8
++
+ 				result.presentation.position_spaces="Player global; atlas world-local (identity world transform)."
+ 		if "rama_runtime" in current_scene and is_instance_valid(current_scene.rama_runtime) and is_instance_valid(current_scene.rama_runtime.kit):
+ 			result.kit=current_scene.rama_runtime.kit.report()

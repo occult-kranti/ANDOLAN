@@ -1,0 +1,89 @@
+{
+  "original_names_retained": true,
+  "previously_passing_checks_still_pass": 36,
+  "original_failing_checks": [
+    "constrained overview gives focus and scrollable live details without covering combat: (640, 360)",
+    "constrained overview gives focus and scrollable live details without covering combat: (768, 432)",
+    "constrained overview gives focus and scrollable live details without covering combat: (853, 480)"
+  ],
+  "original_failures_now_pass": true,
+  "added_negative_checks": [
+    {
+      "detail": {
+        "combat_visible_after_restore": false,
+        "visible_overlap_rejected": true
+      },
+      "name": "visible overlap counterexample rejects actual combat and restores overview: (640, 360)",
+      "passed": true
+    },
+    {
+      "detail": {
+        "combat_visible_after_restore": false,
+        "visible_overlap_rejected": true
+      },
+      "name": "visible overlap counterexample rejects actual combat and restores overview: (768, 432)",
+      "passed": true
+    },
+    {
+      "detail": {
+        "combat_visible_after_restore": false,
+        "visible_overlap_rejected": true
+      },
+      "name": "visible overlap counterexample rejects actual combat and restores overview: (853, 480)",
+      "passed": true
+    }
+  ],
+  "diagnostic_failed_subterms": [
+    {
+      "detail": {
+        "combat_rect": "[P: (12.0, 242.0), S: (616.0, 100.0)]",
+        "combat_visible": false,
+        "focused": true,
+        "goal_present": true,
+        "guide_inside": true,
+        "guide_rect": "[P: (420.0, 12.0), S: (208.0, 336.0)]",
+        "guide_visible": true,
+        "raw_no_intersection": false,
+        "score_present": true,
+        "summary_hidden": true
+      },
+      "name": "constrained overview gives focus and scrollable live details without covering combat: (640, 360)",
+      "passed": false
+    },
+    {
+      "detail": {
+        "combat_rect": "[P: (12.0, 314.0), S: (744.0, 100.0)]",
+        "combat_visible": false,
+        "focused": true,
+        "goal_present": true,
+        "guide_inside": true,
+        "guide_rect": "[P: (548.0, 12.0), S: (208.0, 408.0)]",
+        "guide_visible": true,
+        "raw_no_intersection": false,
+        "score_present": true,
+        "summary_hidden": true
+      },
+      "name": "constrained overview gives focus and scrollable live details without covering combat: (768, 432)",
+      "passed": false
+    },
+    {
+      "detail": {
+        "combat_rect": "[P: (16.5, 350.0), S: (820.0, 112.0)]",
+        "combat_visible": false,
+        "focused": true,
+        "goal_present": true,
+        "guide_inside": true,
+        "guide_rect": "[P: (619.22, 12.0), S: (221.78, 456.0)]",
+        "guide_visible": true,
+        "raw_no_intersection": false,
+        "score_present": true,
+        "summary_hidden": true
+      },
+      "name": "constrained overview gives focus and scrollable live details without covering combat: (853, 480)",
+      "passed": false
+    }
+  ],
+  "pinned_source_changes": [
+    "games/yuga-native/tests/desktop_s3_atlas_layout_cases.gd"
+  ]
+}

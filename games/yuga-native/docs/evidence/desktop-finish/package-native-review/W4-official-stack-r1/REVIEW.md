@@ -1,0 +1,11 @@
+Independent finite official-package native stack review
+
+The single guarded 120 s capture is from the actual extracted official Linux package of source 5542e616, PID 46982/start 1421783. Its recorded executable SHA f64d4ed1… matches the earlier binary-level independent mapping. This is not the public 35e80/dce template build or a source-scene render. The original 17,475-byte stack belongs to W1; this companion pins it without duplicating large inputs.
+
+Main waits in pthread_cond_wait through 0x480a6a5→0x3d3d597→0x3dc0b98. All five WorkerThread stacks wait in pthread_mutex_lock through 0x3dc09d2→0x3e15096→0x3db99ac. Historical exact-binary function/error/path string cross-references and unwind/disassembly identify these as WorkerThreadPool group completion, ShaderRD version compilation completion and version_get_shader paths. No active LLVM compilation frames appear in this snapshot.
+
+The fresh capture deliberately lacks mutex addresses/owner arguments. Therefore it independently establishes the repeated native wait shape, NOT a newly proved same-mutex/main-owner cycle for this PID. Historical owner TID 220843 is not a fresh owner observation. Exact source correspondence remains qualified: this official binary embeds 7d41c59c4, while the public 4.6.3 tag used for source analysis is 35e80b3a8822a9df9be390814b62f44c0a9c69e8. No new native symbols or exact-build source identity are invented.
+
+Practical disposition: the warm official package remains unqualified for 3D startup: three boot 2D originals and zero title originals; root-directed stop completed in 223.819 s with all owned processes gone. Preserve this attempt and skip a redundant cold retry. This does not identify bad shader mathematics, justify material reductions, prove a specific mutex owner, or qualify hardware performance. There was no observer attach, engine execution, source/shader/cache mutation or rerun.
+
+The next separately labelled public unmodified dce runtime package can test an explicit exporter/runtime split with pinned engine/source/build provenance. It must earn its own actual startup/scene/package evidence; it cannot retroactively qualify this failed official package. Exact 5542 GitHub CI is a separate headless source/export gate and was still in progress at this companion's creation.

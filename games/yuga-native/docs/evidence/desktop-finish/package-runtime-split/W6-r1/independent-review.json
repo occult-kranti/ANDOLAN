@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "count": 7,
+  "source_sha256": "fd55af78d8a7f7b1245d06d05e4ca0ee6b266b4b63017f01cbcdd215fc19b5ee",
+  "checks": [
+    {
+      "name": "actual_f64_and_dce_bytes_admitted_by_final_no_execution_guard",
+      "passed": true,
+      "detail": {
+        "exporter": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+        "runtime": "dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f"
+      }
+    },
+    {
+      "name": "invented_exporter_version_rejected",
+      "passed": true,
+      "detail": "Official exporter version differs from reviewed build"
+    },
+    {
+      "name": "manifest_cannot_claim_patched_provenance",
+      "passed": true,
+      "detail": "Linux exporter/runtime selection or provenance changed since export"
+    },
+    {
+      "name": "official_exporter_cannot_silently_occupy_public_runtime_slot",
+      "passed": true,
+      "detail": "Linux runtime is not the reviewed unmodified public binary"
+    },
+    {
+      "name": "default_and_windows_readme_bytes_equal_prior_source",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "public_readme_explicitly_distinguishes_template_and_exporter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review_source_stable",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "scope": "Independent Python source/identity checks using exact existing binary bytes and retained provenance. All engine subprocess calls blocked. No engine/export/package or game execution; author 30-case suite read, not rerun."
+}

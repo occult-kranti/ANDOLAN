@@ -1,0 +1,43 @@
+{
+  "working_directory": "games/yuga-native",
+  "source_head": "5542e61610d20e591effbed9dec15fd10398e31d",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "tests/package_linux_runtime_cases.py",
+        "--report=/tmp/yuga-runtime-split-check-r1.json"
+      ],
+      "exit_code": 0,
+      "checks": 30,
+      "engine_executed": false
+    },
+    {
+      "argv": [
+        "python3",
+        "tests/package_runtime_uid_cases.py",
+        "--report=/tmp/yuga-runtime-split-uids-r1.json"
+      ],
+      "exit_code": 0,
+      "checks": 14,
+      "engine_executed": false
+    },
+    {
+      "argv": [
+        "bash",
+        "-n",
+        "../../tools/cloud/setup-native.sh"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "note": "No export, renderer, font probe, or package execution during this source change."
+}

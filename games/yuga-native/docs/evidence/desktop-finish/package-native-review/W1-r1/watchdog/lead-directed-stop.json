@@ -1,0 +1,168 @@
+{
+  "directive": "Lead-authorized diagnostic termination before900s overall bound; skip redundant cold attempt.",
+  "reason": "No3D title and reproduced native wait stack shape; fresh mutex ownership was not collected.",
+  "utc": "2026-10-18T09:21:48.433703+00:00",
+  "runner": {
+    "pid": 46980,
+    "state": "S",
+    "ppid": 46976,
+    "pgrp": 46980,
+    "session": 46980,
+    "start_ticks": 1421691,
+    "cpu_seconds": 3.66,
+    "rss_bytes": 41771008,
+    "exe": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "cmdline": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 /workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/package-review-preparation/W1-r2/tools/ui-campaign/run.py --mode package --project /tmp/yuga-desktop-integrated-package-r1/ANDOLAN/games/yuga-native --executable /tmp/yuga-desktop-integrated-package-r2/extracted/yuga-native-linux-x86_64/godot --package /tmp/yuga-desktop-integrated-package-r2/extracted/yuga-native-linux-x86_64/yuga-native.pck --package-archive /tmp/yuga-desktop-integrated-package-r2/build/yuga-native-linux-x86_64.zip --export-manifest /tmp/yuga-desktop-integrated-package-r2/build/native-export-manifest.json --output /tmp/yuga-desktop-package-warm-r1 --plan /workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/package-review-preparation/W1-r2/package-warm-plan.json --renderer forward_plus --render-threads 2 --width 960 --height 600 --display 183 --timeout 600 --allow-authority-staging --shader-cache-seed /tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/cache/mesa --godot-shader-cache-seed /tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/data/godot/app_userdata/YUGA \u2022 Confluence/shader_cache "
+  },
+  "engine": {
+    "pid": 46982,
+    "state": "S",
+    "ppid": 46980,
+    "pgrp": 46980,
+    "session": 46980,
+    "start_ticks": 1421783,
+    "cpu_seconds": 15.71,
+    "rss_bytes": 1011212288,
+    "exe": "/tmp/yuga-desktop-integrated-package-r2/extracted/yuga-native-linux-x86_64/godot",
+    "cmdline": "/tmp/yuga-desktop-integrated-package-r2/extracted/yuga-native-linux-x86_64/godot --main-pack /tmp/yuga-desktop-integrated-package-r2/extracted/yuga-native-linux-x86_64/yuga-native.pck --display-driver x11 --rendering-method forward_plus --audio-driver Dummy --resolution 960x600 --position 0,0 --max-fps 20 --disable-vsync --script /tmp/yuga-desktop-package-warm-r1/integrated_capture.gd -- --mode=package --output=/tmp/yuga-desktop-package-warm-r1 "
+  },
+  "threads": [
+    {
+      "tid": 46982,
+      "name": "godot",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 46986,
+      "name": "godot",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 46987,
+      "name": "WorkerThread 0",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 46988,
+      "name": "WorkerThread 1",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 46989,
+      "name": "WorkerThread 2",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 46990,
+      "name": "WorkerThread 3",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 46991,
+      "name": "WorkerThread 4",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 47001,
+      "name": "godot",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 47002,
+      "name": "llvmpipe-0",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 47003,
+      "name": "llvmpipe-1",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 47004,
+      "name": "godot",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 47005,
+      "name": "godot",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 47006,
+      "name": "godot:disk$0",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 47007,
+      "name": "godot",
+      "state": "S",
+      "wchan": "do_select"
+    },
+    {
+      "tid": 47009,
+      "name": "godot",
+      "state": "S",
+      "wchan": "hrtimer_nanosleep"
+    },
+    {
+      "tid": 47010,
+      "name": "godot",
+      "state": "S",
+      "wchan": "hrtimer_nanosleep"
+    },
+    {
+      "tid": 47018,
+      "name": "godot",
+      "state": "S",
+      "wchan": "hrtimer_nanosleep"
+    },
+    {
+      "tid": 47024,
+      "name": "WSI swapchain q",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 47025,
+      "name": "WSI swapchain e",
+      "state": "S",
+      "wchan": "__futex_wait"
+    },
+    {
+      "tid": 47026,
+      "name": "godot",
+      "state": "S",
+      "wchan": "__futex_wait"
+    }
+  ],
+  "native_gdb_sha256": "05047022e3c73e8cd3eb8e840cc61dd003b81a7f469cc71ef75802da82e4c8ec",
+  "originals": {
+    "auto-constructing-1.png": {
+      "sha256": "1bdd3624cf5b3ffa7b8afaa9e8480c2906b387226261ba68c3222f77d5d10e83",
+      "bytes": 30869
+    },
+    "auto-loading-1.png": {
+      "sha256": "63731b2e339938e38cba02c2b0e38eb4577707a9e6b35f6d8a03f62277a73908",
+      "bytes": 25211
+    },
+    "auto-queued-1.png": {
+      "sha256": "09b85cd74628b0270d24f5d403e4398097d787391aefe37b47bbcfb6506f8815",
+      "bytes": 23089
+    }
+  },
+  "signal": "SIGINT to exact owned Python runner only, allowing its existing finally cleanup to preserve run.json and terminate descendants.",
+  "actual_cold_attempts": 0
+}
