@@ -1,0 +1,41 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+YUGA_CONFLUENCE_READY {"army":{"alive":30,"alive_by_lane":[10,10,10],"cap":72,"configured":true,"core_arrivals":[0,0,0],"cores":{"moon":100.0,"sun":100.0},"corpse_cap":24,"elapsed":0.0,"finite":true,"gold":0,"invalid_damage":0,"invalid_pulses":0,"invalid_steps":0,"kills":0,"kills_by_lane":[0,0,0],"max_alive_seen":30,"max_attacks_seen":0,"max_corpses_seen":0,"max_nodes_seen":30,"next_wave_seconds":30.0,"pending_cleanup":0,"queued_attacks":0,"queued_for_deletion":0,"rejected_wave_pairs":0,"route_blocked_moves":0,"scope":"Offline deterministic original lane armies; no live network or commercial-game reconstruction.","separation_waits":0,"total_cap":96,"unit_nodes":30,"wave_events":1,"waves":1,"winner":""},"audio":{"active_music":true,"dropped_events":0,"duck_db":0.0,"focused":true,"music_enabled":true,"music_paused":false,"muted":false,"played_events":0,"playing_cues":0,"pool_size":6,"suspended":false,"volume":0.35},"authority_boxes":8,"builtin_procedural_props":5,"camps":4,"floor_bodies":1,"hero_model_ready":true,"hero_radius":0.65,"imported_props":58,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","kit_sha256":{"architecture":"8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a","nature":"856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f"},"landmarks":{"anchors":10,"landmarks":8,"materials":7,"mesh_budget":300,"mesh_instances":238,"scope":"Original procedural stone decks, chhatri facade relief, lotus courts and luminous fictional traversal relics. No historical reconstruction."},"lanes":3,"lighting":{"day_phase":0.0,"directional_budget":2,"night_phase":1.0,"phase":0.0,"practical_budget":12,"practical_count":12,"practical_shadow_count":0,"screen_space_reflections":false,"shadow_distance_m":72.0,"volumetric_fog":false,"water_geometry_displacement":false},"manifest_path":"res://assets/world/confluence-map.json","manifest_revision":3.0,"manifest_sha256":"d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c","missing_presets":[],"native_bounds":[-68.0,68.0,-128.0,128.0],"native_platforms":8,"objectives":8,"procedural_props":5,"props":63,"ready":true,"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim.","traversal":{"altitude":0.0500000007450581,"altitude_cap":24.0,"anchor_count":10,"candidate":{},"enabled":true,"energy":100.0,"flight_cooldown":0.0,"grapple_cooldown":0.0,"max_energy":100.0,"max_range":36.0,"mode":"ground","pose":{"action_suppressed":false,"hard_angle_limit":0.733038285837618,"mapped_bones":10,"maximum_angle_radians":0.0,"mode":"ground","modified_samples":0,"phase":0.0,"scope":"Original additive body pose; upper-body grip and continuous visual quality require rendered review.","weight":0.0},"rope_visible":false,"speed_cap":12.0,"status":"Traversal ready","target":{}}}
+PASS world owns configured traversal army audio and controls
+PASS six lane-team formations are live on actual scene entry
+PASS native bounds and separate collision domains present
+PASS actual capsule lands on all eight native decks
+PASS platform takeoff spends stamina and never grounded-recharges in flight
+PASS visible native ring pulls player from sun-lift-west-ring
+PASS visible native ring pulls player from moon-lift-east-ring
+PASS all four expanded edges retain the full capsule
+PASS world ceiling and flight dash exclusion hold together
+PASS pause freezes army and movement while cancelling traversal and audio
+PASS resume releases held horizontal movement
+PASS atlas freezes army and suppresses traversal input and sound
+PASS atlas exit resumes army with neutral movement
+PASS Escape cancels remap capture without unpausing world
+PASS focus loss cancels pending capture and retains visible paused controls
+PASS controls card remains inside viewport 1280x720
+PASS controls card remains inside viewport 960x600
+PASS closing controls after focus loss returns to pause
+PASS world projectile damages opposing unit through actual collision
+PASS projectile impact reaches bounded world audio pool
+PASS all roles award exact last-hit gold once through world wallet
+PASS player pulse signal damages nearby enemy through integrated army
+PASS muted event burst stays silent with fixed audio allocation
+PASS same-frame projectile and impact bursts obey world caps
+PASS world teleport clears queued projectiles and active traversal
+PASS fifty same-frame resets never retain old army nodes or attacks
+PASS same-frame army death burst retains at most24 corpses and96 nodes
+PASS independent accelerated army uses the actual manifest
+PASS independent20-minute army sweep has bounded finite live state
+PASS independent soak includes combat in every lane without static obstruction
+PASS simultaneous opposing core arrivals settle as draw once
+PASS finished army cannot continue scoring or scheduling
+PASS post-outcome reset restores two cores and no previous attacks
+PASS restart restores world spawn and clean wallet
+YUGA_NATIVE_READY {"collision_meshes":8,"environment":true,"hero":true,"renderer":"forward_plus","targets":5}
+PASS return disposes world army and audio ownership
+PASS integrated sources remain unchanged during test
+YUGA_TRAVERSAL_ARMY_STRESS {"army_ticks":24000,"checks":36,"passed":true,"physics_frames":1187}

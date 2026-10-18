@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "scope": "Strict private import expectations; all actual imported comparisons remain W1 responsibility. Candidate is inactive.",
+  "baseline_stage": "accepted sash-UV R2 on accepted smooth-crown R2",
+  "baseline_sources": {
+    "near": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e",
+    "mid": "b5949c9d427e9684a13fa525212eedc87dfa207d2c70fba5ebe6a4b1eda61005",
+    "far": "aef8ae5837c0bf0a9ed5850ae649d6368ec1e87c0728d501f1780bba325a9d6a"
+  },
+  "candidate_sources": {
+    "near": "ecf5d8d142ab47266d929af10c64bb993ddcef022e34a3e86edde7b73b74e6ac",
+    "mid": "445a3a63d07c9e0532fa4354f9ac691d023cc01471a749553b24233c53a64e80",
+    "far": "d72f953508e994285bab6e2a994f51574214c150193259b533aa034e7e100ae8"
+  },
+  "only_geometry_surface_changed": {
+    "node": "RamaHero",
+    "mesh_source_index": 2,
+    "primitive_source_index": 0,
+    "material": "Swept black hair",
+    "allowed_source_attributes": [
+      "POSITION",
+      "NORMAL",
+      "TEXCOORD_0",
+      "TANGENT",
+      "COLOR_0",
+      "COLOR_1",
+      "JOINTS_0",
+      "WEIGHTS_0"
+    ],
+    "indices_changed": true,
+    "source_material_index": 5
+  },
+  "must_remain_exact": [
+    "164 imported bone names/order/parents/rest transforms",
+    "all skin binds and attachments",
+    "all nonhair primitive arrays and indices, including full skin, separate face, accepted crown and sash UV/tangents",
+    "all nonhair morph arrays/weights and animations",
+    "all materials, actual texture payloads and shader ownership",
+    "three mesh nodes and surface/material assignments"
+  ],
+  "source_retained_brows_topknot": "Byte-exact in source; imported hair surface repacking may change quantization/order, so do not infer source correspondence from imported vertex indices.",
+  "runtime_helpers": "None added or activated. Original optional upperhair remains original schema1.",
+  "helper": {
+    "path": "art/hero-finish/hair-silhouette-r1/capture_review.gd",
+    "sha256": "5f69ed2fbe26e55e7932a1cdadda69006c41ee21275cd79af5061095b0c5e922",
+    "environment": "YUGA_HAIR_REVIEW=baseline|candidate",
+    "mode": "groom-stills",
+    "expected_views": [
+      "rest-front",
+      "rest-profile",
+      "rest-rear",
+      "cast-three-quarter"
+    ],
+    "motion_sha256": "8c3771a343a0538d749147393d0c407b1fb377d774a91b4cf99734e4852520f8",
+    "finish_sha256": "6eb51ce8f34a3d5a33deb142ca92aaa20505516b0ee8fff3ca445bcab603078a",
+    "comparison_controls": "Reuse same acceptedUV baseline hierarchy/cache identities. Same helper/camera/light/body/face/bone poses/LOD/clocks/background controls between branches; fresh actual baseline if any required identity differs. No implicit canonical mix."
+  }
+}

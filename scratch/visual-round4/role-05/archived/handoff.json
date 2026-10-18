@@ -1,0 +1,395 @@
+{
+  "task": "MOTION-RAPID-REVERSAL-01",
+  "decision": "REJECT all prototypes; retain canonical runtime unchanged; edge remains OPEN",
+  "canonical_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+  "canonical_files_changed": [],
+  "findings": [
+    "Instantaneous local direction atan2 turns0\u2192pi while gait remainsrun; authored stride is mirrored with no transition.",
+    "Bounded angular and planar direction response reduce the original instantaneous jump but expose replant/support-release discontinuities.",
+    "Preserving a reachable support anchor postpones replant, but instantaneous forcedrootreversal ultimatelymakesoldanchorunreachable.",
+    "Nearest reachable floor projection retains numericalcontact but deliberatelymovesanchors; explicitdrift and ordinaryaccelerated-case regression make it unsuitable forpromotion."
+  ],
+  "baseline_case": "Actual imported 164-bone hero, aimed fixedvisualfacing,6m/s cardinalvelocity changedinstantaneously every0.2s; this isadversarialpresentationinput,not normalplayervelocityintegration.",
+  "ordinary_comparison": "Same actualrig anddesired cardinaldirections every0.4s, withper-axis move_toward acceleration38m/s\u00b2 andspeed6m/s copied frompinnedplayer.gd. This reconstructs the velocity law; itdoesnotrun CharacterBody collision or fullinteractiveplayer.",
+  "ordinary_source_sha256": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+  "metrics": [
+    {
+      "report": "angular-r1.json",
+      "report_sha256": "ee1f45d6905ab0e6a9b8aeaf2bcc525a3b4256e90afaf1f4005c41a2bdd7caee",
+      "finite_and_event_clock_checks": 42,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "bc08f4df1f0978db519e1632764b935b503fdbc9f0a390cc23beee521afaa616",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.461193442344666,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.81946733796212e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.461013615131378,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 5.70541317301831e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.409311294555664,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 6.22870345523552e-07,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96
+        }
+      ]
+    },
+    {
+      "report": "vector-r1.json",
+      "report_sha256": "c924292e2561b24200046fd450f5544695a066168e862e1c3e48944dedcec2e0",
+      "finite_and_event_clock_checks": 42,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "175aa23df168c95d3f133e674ab008f0ea51a9c54ae6cb8cd1f18342c451b032",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.280039191246033,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.63172830475378e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.336406111717224,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 6.95103608450154e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.357353210449219,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 1.30263902065053e-06,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96
+        }
+      ]
+    },
+    {
+      "report": "vector-reach-r1.json",
+      "report_sha256": "f8467a4dcfe5dc9b75eeb1e55580f9f29dee5b12046e7293fed578f20dd65b96",
+      "finite_and_event_clock_checks": 42,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "f7d1d5ab6d24eadbce2b8e4f129492a6ae5e004c1d78da42c2aa7a5cdd34b709",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.32454177737236,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.63172830475378e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.484474897384644,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 6.95103608450154e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.534474670886993,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 1.30263902065053e-06,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96
+        }
+      ]
+    },
+    {
+      "report": "vector-projection-r2.json",
+      "report_sha256": "caab7226db10dd0c2018f29d13ccc21d41724ffd5695fc2a3dda62cbac42499c",
+      "finite_and_event_clock_checks": 42,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "bf7c47bac04d538108711b5d0de1426abdd8066f342b519d8396787e82b7f0a3",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.32454177737236,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.63172830475378e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.386755079030991,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 6.95103608450154e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.41642963886261,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 1.30263902065053e-06,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96
+        }
+      ]
+    },
+    {
+      "report": "acceleration-projection-r1.json",
+      "report_sha256": "6bbc7bf6ffdf1694f622a59bf02de11e908b694b377eb3c51f2f8c507e26ab87",
+      "finite_and_event_clock_checks": 12,
+      "finite_and_event_clock_checks_passed": true,
+      "source_sha256": "bf7c47bac04d538108711b5d0de1426abdd8066f342b519d8396787e82b7f0a3",
+      "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "quality_accepted": false,
+      "measurements": [
+        {
+          "scenario": "accelerated_reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.338847935199738,
+          "baseline_joint_step_m": 0.339283376932144,
+          "candidate_contact_error_m": 5.2830870345133e-07,
+          "baseline_contact_error_m": 6.69060455038561e-07,
+          "candidate_support_frames": 15,
+          "baseline_support_frames": 15,
+          "candidate_anchor_drift_max_m": 0.0,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.0,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "reversal",
+          "hz": 30.0,
+          "candidate_joint_step_m": 0.32454177737236,
+          "baseline_joint_step_m": 0.949559807777405,
+          "candidate_contact_error_m": 3.63172830475378e-07,
+          "baseline_contact_error_m": 4.60265596302634e-07,
+          "candidate_support_frames": 23,
+          "baseline_support_frames": 23,
+          "candidate_anchor_drift_max_m": 0.0,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.0,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "accelerated_reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.311608344316483,
+          "baseline_joint_step_m": 0.30980321764946,
+          "candidate_contact_error_m": 5.11220605403651e-07,
+          "baseline_contact_error_m": 5.23028631960187e-07,
+          "candidate_support_frames": 26,
+          "baseline_support_frames": 26,
+          "candidate_anchor_drift_max_m": 0.0,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.0,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "reversal",
+          "hz": 60.0,
+          "candidate_joint_step_m": 0.386755079030991,
+          "baseline_joint_step_m": 0.927054286003113,
+          "candidate_contact_error_m": 6.95103608450154e-07,
+          "baseline_contact_error_m": 4.88169405343797e-07,
+          "candidate_support_frames": 46,
+          "baseline_support_frames": 46,
+          "candidate_anchor_drift_max_m": 0.0924290865659714,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.21168882958591,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "accelerated_reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.26553151011467,
+          "baseline_joint_step_m": 0.16191890835762,
+          "candidate_contact_error_m": 4.5491270839193e-07,
+          "baseline_contact_error_m": 4.99800137276907e-07,
+          "candidate_support_frames": 50,
+          "baseline_support_frames": 50,
+          "candidate_anchor_drift_max_m": 0.0,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.0,
+          "baseline_anchor_drift_total_m": 0.0
+        },
+        {
+          "scenario": "reversal",
+          "hz": 120.0,
+          "candidate_joint_step_m": 0.41642963886261,
+          "baseline_joint_step_m": 0.912670791149139,
+          "candidate_contact_error_m": 1.30263902065053e-06,
+          "baseline_contact_error_m": 6.65339882743865e-07,
+          "candidate_support_frames": 96,
+          "baseline_support_frames": 96,
+          "candidate_anchor_drift_max_m": 0.0462985411286354,
+          "baseline_anchor_drift_max_m": 0.0,
+          "candidate_anchor_drift_total_m": 0.211693810299039,
+          "baseline_anchor_drift_total_m": 0.0
+        }
+      ]
+    }
+  ],
+  "failed_tool_run": {
+    "candidate": "rama_motion.vector-projection-r1.gd",
+    "log": "vector-projection-r1.log",
+    "failure": "Duplicate local variable caused GDScript parseerror; owned Godotprobe explicitlyterminated. Fixed only in scratchr2; r1not counted as acceptance."
+  },
+  "limits": [
+    "No renderedframes were generated or visuallyreviewed.",
+    "Nohumanfeel/commercialquality acceptance.",
+    "The2mmcontact gate was retained; movedtargets wereexplicitlymeasured ratherthanreported as no-slip.",
+    "Canonical motion andtests wereheldfrozen throughout thisinvestigation."
+  ],
+  "next_owner": "Future animation/IK milestone: explicitfootplant releaseinertia andcontinuousrendered turns with ordinarycontrolleracceleration; do not promote currentprototypes.",
+  "archive_files": [
+    {
+      "path": "acceleration-projection-r1.json",
+      "size": 1252095,
+      "sha256": "6bbc7bf6ffdf1694f622a59bf02de11e908b694b377eb3c51f2f8c507e26ab87"
+    },
+    {
+      "path": "acceleration-projection-r1.log",
+      "size": 671,
+      "sha256": "e63ce0b92e0918e41a8f79dfa3697fd1376f6552bb703e865164b8c9ec5f0f67"
+    },
+    {
+      "path": "angular-r1.json",
+      "size": 4796613,
+      "sha256": "ee1f45d6905ab0e6a9b8aeaf2bcc525a3b4256e90afaf1f4005c41a2bdd7caee"
+    },
+    {
+      "path": "angular-r1.log",
+      "size": 1974,
+      "sha256": "a09bba49e8192dc42f9007aa125da01d0a217f8f5ecc0cae032d2ed141e0b21f"
+    },
+    {
+      "path": "manifest.json",
+      "size": 286,
+      "sha256": "96a4cb12cf40af4f8d9650570df906dafbdb8db469fce2aba15be777f206c15d"
+    },
+    {
+      "path": "player.source.gd",
+      "size": 20196,
+      "sha256": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17"
+    },
+    {
+      "path": "probe-acceleration.gd",
+      "size": 10657,
+      "sha256": "ae3a68490ebabd57e285bcdfd10e2db4c6174015cde22bee0c4062a60da63874"
+    },
+    {
+      "path": "probe.gd",
+      "size": 9718,
+      "sha256": "22a9db3cfb14c65473b3e04f77cda68180d518cfc029d02a9d9dcd26b68c083d"
+    },
+    {
+      "path": "rama_motion.angular-r1.gd",
+      "size": 26035,
+      "sha256": "bc08f4df1f0978db519e1632764b935b503fdbc9f0a390cc23beee521afaa616"
+    },
+    {
+      "path": "rama_motion.before.gd",
+      "size": 25878,
+      "sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1"
+    },
+    {
+      "path": "rama_motion.vector-projection-r1.gd",
+      "size": 26933,
+      "sha256": "ccc24d8ccbe4a8b6415c9587003dacaa28563a14a0eeb84683f4667ba810f5d5"
+    },
+    {
+      "path": "rama_motion.vector-projection-r2.gd",
+      "size": 26963,
+      "sha256": "bf7c47bac04d538108711b5d0de1426abdd8066f342b519d8396787e82b7f0a3"
+    },
+    {
+      "path": "rama_motion.vector-r1.gd",
+      "size": 26198,
+      "sha256": "175aa23df168c95d3f133e674ab008f0ea51a9c54ae6cb8cd1f18342c451b032"
+    },
+    {
+      "path": "rama_motion.vector-reach-r1.gd",
+      "size": 26778,
+      "sha256": "f7d1d5ab6d24eadbce2b8e4f129492a6ae5e004c1d78da42c2aa7a5cdd34b709"
+    },
+    {
+      "path": "vector-projection-r1.log",
+      "size": 1838,
+      "sha256": "4a5e3ebaadb9b2b860b7cd88733fae5a568aa7fbdbdcbdede3dd342cbf9878b9"
+    },
+    {
+      "path": "vector-projection-r2.json",
+      "size": 4796900,
+      "sha256": "caab7226db10dd0c2018f29d13ccc21d41724ffd5695fc2a3dda62cbac42499c"
+    },
+    {
+      "path": "vector-projection-r2.log",
+      "size": 1974,
+      "sha256": "a09bba49e8192dc42f9007aa125da01d0a217f8f5ecc0cae032d2ed141e0b21f"
+    },
+    {
+      "path": "vector-r1.json",
+      "size": 4796844,
+      "sha256": "c924292e2561b24200046fd450f5544695a066168e862e1c3e48944dedcec2e0"
+    },
+    {
+      "path": "vector-r1.log",
+      "size": 1974,
+      "sha256": "a09bba49e8192dc42f9007aa125da01d0a217f8f5ecc0cae032d2ed141e0b21f"
+    },
+    {
+      "path": "vector-reach-r1.json",
+      "size": 4796826,
+      "sha256": "f8467a4dcfe5dc9b75eeb1e55580f9f29dee5b12046e7293fed578f20dd65b96"
+    },
+    {
+      "path": "vector-reach-r1.log",
+      "size": 1974,
+      "sha256": "a09bba49e8192dc42f9007aa125da01d0a217f8f5ecc0cae032d2ed141e0b21f"
+    }
+  ]
+}

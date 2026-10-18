@@ -1,3 +1,5 @@
+> Recovery snapshot only. Historical work and generated UID files here are not an accepted game build. Use [game/yuga-native-production](https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production) for current implementation and next steps. See [the backup manifest](docs/evidence/workspace-backup-2026-10-18/README.md).
+
 # ANDOLAN / YUGA
 
 This repository contains two games: **YUGA**, an original mythology-inspired native 3D game, and **ANDOLAN**, a separate browser city game.

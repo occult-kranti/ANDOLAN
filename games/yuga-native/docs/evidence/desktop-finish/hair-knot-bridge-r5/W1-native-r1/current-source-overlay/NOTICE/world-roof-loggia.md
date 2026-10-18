@@ -1,0 +1,5 @@
+This review candidate contains original project geometry and procedural code. No commercial game, historical sculpture, downloaded model, image or new texture is copied.
+
+Materials are references to the existing original Confluence architecture resources authored by `art/world/build-architecture.py`; their existing finish bindings are reused exactly. No new material/shader/texture/license dependency is introduced. Geometry/code follows the repository's existing project license; this notice does not relicense existing resources.
+
+Motif provenance is the repository's `art/production/SOURCE_LIBRARY.md` and pinned `source-index.json`: R1 Griffith *Ramayana* Book V Canto III lines45794–45810 (porticoes/pale courts), A1 Fergusson lines12407–12512 (oblong roof/entrance/portico distinction). The latter is a dated colonial secondary account; its chronology, value judgments and descent claims are not adopted. This invented civic roof loggia is not attributed to one historical architectural tradition or presented as an archaeological reconstruction. Literary motifs do not establish this building's dimensions, plan or gameplay.

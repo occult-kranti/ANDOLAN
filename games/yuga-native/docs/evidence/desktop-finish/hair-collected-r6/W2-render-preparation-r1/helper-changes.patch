@@ -1,0 +1,42 @@
+--- sealed-R5-current-opposite-profile
++++ R6-current-anatomical-left-profile
+@@ -1,6 +1,6 @@
+ extends "res://tools/visual-rounds/capture_groom.gd"
+-## Review-only authored swept-hair replacement; exact accepted UV/crown parent.
+-## Same four native views as reviewed crown packet; no runtime helper/material writes.
++## Review-only R6 collected hairstyle; exact accepted UV/crown parent.
++## Four view IDs retained; anatomical-left profile explicitly uses visual yaw180.
+ ## Both branches use this exact helper; admission differs only in three GLBs.
+ const SOURCE_PINS := {
+ 	"baseline": [
+@@ -8,9 +8,9 @@
+ 		"b5949c9d427e9684a13fa525212eedc87dfa207d2c70fba5ebe6a4b1eda61005",
+ 		"aef8ae5837c0bf0a9ed5850ae649d6368ec1e87c0728d501f1780bba325a9d6a"],
+ 	"candidate": [
+-		"47f9436af131713b28b56130289f7ca0ec8cf7941e66d840fdaf32ca019828a9",
+-		"7309ec863adb8f169916e6b700770b46a55f95f848aba31390181eac027ef777",
+-		"6c0811f304be06d4dbf2c7e54bd9c5ec90ca34a2516ef772bc601f2d37a3c9c7"]}
++		"4d4dbede6bfe45d9c053e23ff87a7ef01d45e5d25669889f76e8d67f61f7f5c5",
++		"174583e633c6b7f4e3fbc70947f915754a514035748da21625c1cf1d379077be",
++		"b410d875f63b729da86984f18159a23fac4b451050987b8cc0aa22b84bc12d22"]}
+ const RAW_PATHS := ["res://assets/heroes/rama-hero.glb", "res://assets/heroes/rama-hero-mid.glb", "res://assets/heroes/rama-hero-far.glb"]
+ const REQUIRED_MOTION := "5023b301ff4c4585e3b6a22827f55f4696045bb0206374ee1656a5b4bad6e4a5"
+ const REQUIRED_FINISH := "6eb51ce8f34a3d5a33deb142ca92aaa20505516b0ee8fff3ca445bcab603078a"
+@@ -39,7 +39,7 @@
+ 	sources=source_hashes()
+ 	contract={"stills":[
+ 		{"id":"rest-front","player_position_m":[19,.4400999976158142,-15],"visual_yaw_degrees":-90,"camera_position_m":[17.4,1.5000999976158143,-15],"look_at_m":[19,2.0000999976158145,-15],"fov_degrees":38,"near_m":.05,"night":false,"required_bounds":"head"},
+-		{"id":"rest-profile","player_position_m":[19,.4400999976158142,-1],"visual_yaw_degrees":0,"camera_position_m":[17.4,1.5000999976158143,-1],"look_at_m":[19,2.0000999976158145,-1],"fov_degrees":38,"near_m":.05,"night":false,"required_bounds":"head"},
++		{"id":"rest-profile","player_position_m":[19,.4400999976158142,-1],"visual_yaw_degrees":180,"camera_position_m":[17.4,1.5000999976158143,-1],"look_at_m":[19,2.0000999976158145,-1],"fov_degrees":38,"near_m":.05,"night":false,"required_bounds":"head"},
+ 		{"id":"rest-rear","player_position_m":[19,.4400999976158142,-1],"visual_yaw_degrees":90,"camera_position_m":[17.4,1.5000999976158143,-1],"look_at_m":[19,2.0000999976158145,-1],"fov_degrees":38,"near_m":.05,"night":false,"required_bounds":"head"}]}
+ 	scene=load("res://scenes/courtyard.tscn").instantiate(); root.add_child(scene); current_scene=scene
+ 	await draw(6); player=scene.player
+@@ -115,7 +115,7 @@
+ 	if preflight:
+ 		report = {"complete":failure.is_empty() and shots.size()==expected and sources==after,"failure":failure,"shots":shots,"expected":expected,"events":events,"controls":sequence_controls,"source_sha256":sources,"source_after_sha256":after,"source_unchanged":sources==after,"scope":"Headless real-input and final-modifier-pose projection preflight. No framebuffer or rendered art claim."}
+ 	else:
+-		report = {"schema":1,"kind":"actual-native-visual-rounds","camera_contract":"hair-front-profile-rear-cast-v1","mode":mode,"context":context,"complete":failure.is_empty() and sources==after and shots.size()==expected,"failure":failure,"source_sha256":sources,"source_after_sha256":after,"source_unchanged":sources==after,"shots":shots,"ability_events":events,"sequence_controls":sequence_controls,"expected_raw_pngs":expected,"time_controls":time_controls,"clocks":{"fixed_capture_process_hz":30,"physics_hz":Engine.physics_ticks_per_second,"army_authority_hz":20,"hardware_fps_measured":false},"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"godot":Engine.get_version_info(),"wall_elapsed_ms":Time.get_ticks_msec()-started,"scope":"Original Forward+ matched front/profile/rear and actual public cast framebuffers. Fixed30Hz capture is simulation sampling, not hardware FPS. No full gameplay/continuous motion acceptance."}
++		report = {"schema":1,"kind":"actual-native-visual-rounds","camera_contract":"hair-front-leftprofile-rear-cast-v2","mode":mode,"context":context,"complete":failure.is_empty() and sources==after and shots.size()==expected,"failure":failure,"source_sha256":sources,"source_after_sha256":after,"source_unchanged":sources==after,"shots":shots,"ability_events":events,"sequence_controls":sequence_controls,"expected_raw_pngs":expected,"time_controls":time_controls,"clocks":{"fixed_capture_process_hz":30,"physics_hz":Engine.physics_ticks_per_second,"army_authority_hz":20,"hardware_fps_measured":false},"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"godot":Engine.get_version_info(),"wall_elapsed_ms":Time.get_ticks_msec()-started,"scope":"Original Forward+ matched front/profile/rear and actual public cast framebuffers. Fixed30Hz capture is simulation sampling, not hardware FPS. No full gameplay/continuous motion acceptance."}
+ 	# After the last observation only. Dummy audio releases on its real mixer,
+ 	# so a few fast headless process frames do not establish completed cleanup.
+ 	paused = false
