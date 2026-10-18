@@ -1,0 +1,82 @@
+"""Full-triangle source candidate contacts; distinct from native/raster acceptance."""
+import argparse, hashlib, importlib.util, json
+from pathlib import Path
+import numpy as np
+from build_candidate import PROJECT, GLB, PINS, sha
+
+p=PROJECT/'docs/evidence/visual-rounds/round3/role10/geometry_probe.py'
+spec=importlib.util.spec_from_file_location('narrow_phase',p);narrow=importlib.util.module_from_spec(spec);spec.loader.exec_module(narrow)
+
+
+def part(g,mi,pi,selection=None):
+ primitive=g.doc['meshes'][mi]['primitives'][pi]
+ v=g.array(primitive['attributes']['POSITION']).astype(float);t=g.array(primitive['indices']).reshape(-1,3)
+ if selection is not None:t=t[selection(v,t)]
+ used,index=np.unique(t,return_inverse=True)
+ c=g.array(primitive['attributes']['COLOR_0'],True)[used,3] if 'COLOR_0' in primitive['attributes'] else np.zeros(len(used))
+ return {'v':v[used],'tri':index.reshape(-1,3),'j':g.array(primitive['attributes']['JOINTS_0'])[used],
+         'w':g.array(primitive['attributes']['WEIGHTS_0'])[used],'alpha':c}
+
+
+def posed(piece,transforms,offset=None):
+ v=np.c_[piece['v'],np.ones(len(piece['v']))];result=np.zeros((len(v),3))
+ for slot in range(4):result+=np.einsum('nij,nj->ni',transforms[piece['j'][:,slot]],v)[:,:3]*piece['w'][:,slot,None]
+ if offset is not None:result+=offset*piece['alpha'][:,None]**2
+ return result[piece['tri']]
+
+
+def setup(manifest,level):
+ row=manifest['levels'][level];g=GLB(row['output']);old=GLB(row['source'])
+ assert sha(g.path)==row['output_sha256'] and sha(old.path)==PINS[level]
+ hp=g.doc['meshes'][2]['primitives'][0];v=g.array(hp['attributes']['POSITION']).astype(float);t=g.array(hp['indices']).reshape(-1,3)
+ new=part(g,2,0,lambda v,t:np.arange(len(t))>=row['retained_triangles'])
+ lower=part(g,2,0,lambda v,t:(np.arange(len(t))>=row['retained_triangles']) & np.any(v[t,1]<1.71,axis=1))
+ inv=g.array(g.doc['skins'][0]['inverseBindMatrices']).reshape(-1,4,4).transpose(0,2,1).astype(float)
+ names=[g.doc['nodes'][i]['name'] for i in g.doc['skins'][0]['joints']]
+ assert names[104]=='head' and len(names)==164
+ return row,g,old,new,lower,v[t],inv,names
+
+
+def main():
+ ap=argparse.ArgumentParser();ap.add_argument('--manifest',type=Path,required=True);ap.add_argument('--output',type=Path,required=True)
+ ap.add_argument('--mode',choices=['poses','stress'],required=True);ap.add_argument('--poses',type=Path);ap.add_argument('--stress-contract',choices=['runtime','historical_all_colliders'],default='runtime')
+ ap.add_argument('--level',choices=['near','mid','far','all'],default='all');ap.add_argument('--start',type=int,default=0);ap.add_argument('--count',type=int,default=37)
+ a=ap.parse_args();assert not a.output.exists();m=json.loads(a.manifest.read_text());checks=[]
+ result={'scope':'Stored source triangles; actual captured baseline matrices replayed offline. No candidate import/raster/general motion claim.',
+  'mode':a.mode,'stress_contract':a.stress_contract,'secondary_owner_sha256':sha(PROJECT/'scripts/rama_secondary_motion.gd'),'neck_secondary_offset_applied':a.stress_contract=='historical_all_colliders','manifest_sha256':sha(a.manifest),'checker_sha256':sha(__file__),'triangle_dependency_sha256':sha(p),'selfcheck':narrow.selfcheck(),'rows':checks}
+ levels=['near','mid','far'] if a.level=='all' else [a.level]
+ tape=json.loads(a.poses.read_text()) if a.poses else None
+ if tape:
+  assert tape['passed'] and tape['source_pins']['res://assets/heroes/rama-hero.glb']=='e98c9110161e49b653e98b6f4ca1dda997ad891cf73b737abd18f319bb3c2b82'
+  result['actual_pose_tape_sha256']=sha(a.poses)
+ for level in levels:
+  row,g,old,new,lower,allhair,inv,names=setup(m,level)
+  reference=GLB(PROJECT/'art/hero-finish/s4-diadem-smooth/candidate-r2'/old.path.name)
+  for key in ['skins','nodes','animations','materials']:assert old.doc.get(key)==reference.doc.get(key)
+  assert old.array(old.doc['skins'][0]['inverseBindMatrices']).tobytes()==reference.array(reference.doc['skins'][0]['inverseBindMatrices']).tobytes()
+  for mi,pi,pr in reference.primitives():
+   if(mi,pi)==(2,0):continue
+   op=old.doc['meshes'][mi]['primitives'][pi]
+   for key in ['POSITION','NORMAL','JOINTS_0','WEIGHTS_0']:assert reference.array(pr['attributes'][key]).tobytes()==old.array(op['attributes'][key]).tobytes()
+   assert reference.array(pr['indices']).tobytes()==old.array(op['indices']).tobytes()
+  result['pose_transfer']='Exact accepted-R2 skeleton/inverse binds/nonhair collision arrays; UV-only accepted sash changes do not alter these matrices or surfaces. Captured ancestor poses replayed offline; not current-motion runtime qualification.'
+
+  assert tape is not None
+  collars={label:part(old,2,pi,lambda v,t:np.any(v[t,1]>1.40,axis=1)&np.any(v[t,1]<1.72,axis=1)&(v[t,0].min(axis=1)<.30)&(v[t,0].max(axis=1)>-.30)) for label,pi in [('gold',2),('silk',3),('brocade',4),('neck',11)]}
+  samples=tape['samples'][a.start:a.start+a.count]
+  if a.mode=='stress':samples=[s for s in samples if s['id'] in ['rest','piercing_dawn_windup','measured_step_release','measured_step_recoil']]
+  for sample in samples:
+   poses=np.array([sample['bone_global_poses'][name] for name in names]);transforms=poses@inv
+   offsets=[('nominal',None,None)] if a.mode=='poses' else [(str(axis.tolist())+'*'+str(sign),axis*sign*.018,-axis*sign*.075) for axis in [np.array([1.,0,0]),np.array([0.,1,0]),np.array([0.,0,1]),np.ones(3)/np.sqrt(3)] for sign in [-1,1]]
+   for label,ho,co in offsets:
+    hair=posed(lower,transforms,ho)
+    comparisons={name:narrow.compare(hair,posed(piece,transforms,co if name!='neck' or a.stress_contract=='historical_all_colliders' else None),band=.010) for name,piece in collars.items()}
+    passed=all(v['crossings']==0 and v['guaranteed_lower_bound_m']>.0002 for v in comparisons.values())
+    checks.append({'level':level,'pose':sample['id'],'offset':label,'comparisons':comparisons,'passed':passed})
+    print(level,sample['id'],label,{k:(v['crossings'],round(v['guaranteed_lower_bound_m']*1000,3)) for k,v in comparisons.items()},flush=True)
+    a.output.write_text(json.dumps({**result,'passed':all(r['passed'] for r in checks),'complete':False},indent=2)+'\n')
+ result.update(passed=all(r['passed'] for r in checks),complete=True)
+ a.output.write_text(json.dumps(result,indent=2)+'\n')
+ raise SystemExit(0 if result['passed'] else 1)
+
+if __name__=='__main__':main()

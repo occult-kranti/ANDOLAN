@@ -1,0 +1,10 @@
+--- original86e
++++ typed-null-r2
+@@ -101,6 +101,7 @@
+ 				result[String(key)] = encode_value(value[key],depth+1)
+ 			return result
+ 		TYPE_OBJECT:
++			if value == null: return null
+ 			if value is Resource: return resource_value(value,depth+1)
+ 			if value is Node: return {"node_path":String(current_scene.get_path_to(value))}
+ 			serialization_errors.append("unsupported object "+value.get_class())

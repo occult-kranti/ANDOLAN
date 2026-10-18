@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "disposition": "ACCEPT_PREPARATION_ONLY",
+  "reviewed_utc": "2026-10-18T11:25:50.760875+00:00",
+  "owner_receipt": {
+    "path": "docs/evidence/desktop-finish-r4-expanded-cleanup-r1/receipt.json",
+    "sha256": "d46b161140d824f18d435f501cf9ae6a1f210f5a0f9b429fbba16965bff7c8e3"
+  },
+  "map_sha256": "948751bed1ed24d98b2f7f723c374d8d6c6f616ab41ea49b02053c0f93851087",
+  "guard_sha256": "8531430b87a39406d85cccb2b7259c4b998e6f17c4e7564dc7ede8c10bc3c9d1",
+  "artifacts_rehashed": 9,
+  "scope_count": 80,
+  "logical_bytes": 469341307,
+  "allocated_bytes": 469565440,
+  "mode_differences": 77,
+  "public_audit_sha256": "63c9acc1ea8eedaadf137151e7ad34ef44645dcc87ab40d5be0654f59bbe60a3",
+  "reviewed_controls": [
+    "Exact two r4 build roots plus one standalone Windows PCK; actual extracted runtime excluded",
+    "All five public release files and Linux raw PCK are pinned protected build siblings",
+    "Every mapped file has an exact retained ZIP member recovery identity and disk-mode metadata",
+    "Published map/audit/guard/ownership/public-reference/public-audit bytes must equal the specified remote-backed commit before removal",
+    "Fresh ZIP/member/file digest plus inode/mode/allocation/mtime/ctime and no-symlink/single-link checks precede unlink",
+    "Accessible same-UID process holders or inaccessible owned entries block removal",
+    "Each explicit file identity is rechecked directly before unlink; directories and unrelated siblings are not removed",
+    "Protected build files rehashed before and after possible removal",
+    "Default mode reports verification only, no removal"
+  ],
+  "executed_here": "Read-only source/map/receipt review and nine small artifact SHA checks; no guard invocation, full payload replay, engine, network or deletion. Owner80/80 default verification cited separately.",
+  "remaining_gate": "Root must publish the exact recovery packet and pinned public audit, then explicitly authorize/invoke removal; this review does not authorize it."
+}

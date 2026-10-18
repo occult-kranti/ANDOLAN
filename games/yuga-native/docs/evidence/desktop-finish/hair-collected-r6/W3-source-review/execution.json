@@ -1,0 +1,43 @@
+{
+  "command": [
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "taskset",
+    "-c",
+    "2",
+    "timeout",
+    "20s",
+    "/workspace/tooling/yuga-native-python/bin/python",
+    "games/yuga-native/docs/evidence/desktop-finish/hair-collected-r6/W3-source-review/probe.py"
+  ],
+  "cwd": "/workspace/ANDOLAN",
+  "exit_code": 0,
+  "observed_stdout": [
+    {
+      "level": "near",
+      "width_mm": 74.4127326744979,
+      "connected": true,
+      "pairs_examined": 21,
+      "nondegenerate_join": true
+    },
+    {
+      "level": "mid",
+      "width_mm": 72.92511007039448,
+      "connected": true,
+      "pairs_examined": 21,
+      "nondegenerate_join": true
+    },
+    {
+      "level": "far",
+      "width_mm": 68.55790740772106,
+      "connected": true,
+      "pairs_examined": 20,
+      "nondegenerate_join": true
+    }
+  ],
+  "engine_runs": 0,
+  "source_mutations": false
+}

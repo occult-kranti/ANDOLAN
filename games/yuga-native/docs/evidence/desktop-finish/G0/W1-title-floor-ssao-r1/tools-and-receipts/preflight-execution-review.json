@@ -1,0 +1,40 @@
+{
+  "failure": "Original helper queried get_class() on typed-null TYPE_OBJECT; outer runner correctly rejected SCRIPT ERROR despite inner complete flag.",
+  "correction": "Only null Object serializes JSON null; all non-null unsupported/opaque/depth/nonfinite guards preserved.",
+  "runtime_changed": false,
+  "original_failed_branch_preserved": true,
+  "same_successor_helper_both_branches": true,
+  "independent_reviewer": "/root/mobile_render reviewed exact one-line diff and accepted scope",
+  "runs": {
+    "baseline-preflight-r1": {
+      "complete": false,
+      "engine_exit": 0,
+      "elapsed_s": 6.012485925999499,
+      "script_errors": 2288,
+      "errors": 0,
+      "warnings": 0,
+      "run_sha256": "3b0e868a4a119cc6b7d61d27cc4ee380207432c1ceac593d9adb9cba6a167626",
+      "log_sha256": "038b2160d018ef03933b0e105369f6b7d540258b4b23365ac6b63346bac600c0"
+    },
+    "baseline-preflight-r2": {
+      "complete": true,
+      "engine_exit": 0,
+      "elapsed_s": 5.507177187999332,
+      "script_errors": 0,
+      "errors": 0,
+      "warnings": 0,
+      "run_sha256": "356a9e424d35bda6973e086f52028cd104c3c5cbd3c928db5e8e473945619e75",
+      "log_sha256": "64ea7c931d3dd32f91f6b99c73394e08c872cf04a29d9d3390652988ac500e30"
+    },
+    "candidate-preflight-r2": {
+      "complete": true,
+      "engine_exit": 0,
+      "elapsed_s": 5.75694633600142,
+      "script_errors": 0,
+      "errors": 0,
+      "warnings": 0,
+      "run_sha256": "386d3c14056aa60c41fcd850118863aa5cbd4351952bef62b9de19a2c241e2e4",
+      "log_sha256": "53230e419b353bccaf013fd5b22f4e2d66b110af99158d3d7b22911bf2784ee7"
+    }
+  }
+}

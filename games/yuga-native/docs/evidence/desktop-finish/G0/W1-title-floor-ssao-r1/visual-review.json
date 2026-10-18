@@ -1,0 +1,35 @@
+{
+  "disposition": "REJECT AO-off as dotted-floor repair; no promotion",
+  "all_four_full_originals_directly_viewed": true,
+  "images": {
+    "baseline-render-r2/00-title.png": {
+      "sha256": "8b5864eef143f22a47fcc6aaa0dc63a1c37fe6bcd7127521354caed994e2a2da",
+      "bytes": 339673,
+      "directly_opened_by_W1": true
+    },
+    "baseline-render-r2/01-training.png": {
+      "sha256": "bde49b180a2b0462e86048acbb35f720b9483ed63927d50dacb0d3c9bc89b435",
+      "bytes": 375484,
+      "directly_opened_by_W1": true
+    },
+    "candidate-render-r2/00-title.png": {
+      "sha256": "cb96f09055d91cc652fe4ef59adcbaea1bdc627a0f113f6d18620a0cc984a875",
+      "bytes": 339589,
+      "directly_opened_by_W1": true
+    },
+    "candidate-render-r2/01-training.png": {
+      "sha256": "3c64e321f5a1507002489746e3e4a1077c02fd59b8b646efc500efb2f0190d21",
+      "bytes": 375001,
+      "directly_opened_by_W1": true
+    }
+  },
+  "findings": [
+    "Dotted joints remain in ordinary title and training views.",
+    "All four preselected floor ROIs and all three contact-cost ROIs are RGB byte-identical.",
+    "All interior framebuffer columns0\u2013958 are RGB byte-identical; every changed pixel is on final column959. No unsupported edge-effect cause is assigned.",
+    "Actual environment AO getter true versus false, all164 bone poses, scene controls, materials, light, camera, clocks, renderer,MSAA and other environment settings match exactly.",
+    "No temporal, hardware-performance, universal AO inactivity or permanent AO-off claim."
+  ],
+  "warnings": "Each actual run retained63 RGB8-to-RGBA8 format warnings; no script errors, ERROR lines or ObjectDB leak warning.",
+  "failed_preflight": "Initial typed-null serializer produced2288 SCRIPT ERROR entries despite inner helper complete=true; outer runner correctly rejected. Preserved exact original/helper/take. Common successor adds only nullObject\u2192JSONnull handling; unsupported nonnull/RID/depth/nonfinite checks remain."
+}

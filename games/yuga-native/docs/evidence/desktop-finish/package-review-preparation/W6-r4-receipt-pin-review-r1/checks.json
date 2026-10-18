@@ -1,0 +1,106 @@
+{
+  "status": "accepted_narrow_repair",
+  "scope": "Two in-process dry-run guard replays with all subprocess entry points forbidden; no engine, extraction, archive or source mutation.",
+  "checks": {
+    "exact_receipt_and45_member_extraction_admitted": true,
+    "same_omitted_notice_witness_rejected_before_subprocess": true,
+    "validator_requires_same_exact_receipt_hash": true,
+    "all_four_sources_unchanged": true
+  },
+  "trials": [
+    {
+      "label": "exact",
+      "command": [
+        "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/package-review-preparation/W1-r4-receipt-pin-r1/run_package_review.py",
+        "--project",
+        "/tmp/yuga-desktop-integrated-package-r1/ANDOLAN/games/yuga-native",
+        "--executable",
+        "/workspace/scratch/yuga-desktop-integrated-package-r4/extracted/yuga-native-linux-x86_64/godot",
+        "--package",
+        "/workspace/scratch/yuga-desktop-integrated-package-r4/extracted/yuga-native-linux-x86_64/yuga-native.pck",
+        "--package-archive",
+        "/workspace/scratch/yuga-desktop-integrated-package-r4/build/yuga-native-linux-x86_64.zip",
+        "--export-manifest",
+        "/workspace/scratch/yuga-desktop-integrated-package-r4/build/native-export-manifest.json",
+        "--extraction-report",
+        "/workspace/scratch/yuga-desktop-integrated-package-r4/extraction-verification.json",
+        "--output",
+        "/workspace/scratch/yuga-w6-r4-receipt-dryrun-uncreated",
+        "--phase",
+        "warm",
+        "--display",
+        "185",
+        "--shader-cache-seed",
+        "/tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/cache/mesa",
+        "--godot-shader-cache-seed",
+        "/tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/data/godot/app_userdata/YUGA \u2022 Confluence/shader_cache",
+        "--dry-run"
+      ],
+      "exit_code": 0,
+      "subprocess_calls": 0
+    },
+    {
+      "label": "omitted",
+      "command": [
+        "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/package-review-preparation/W1-r4-receipt-pin-r1/run_package_review.py",
+        "--project",
+        "/tmp/yuga-desktop-integrated-package-r1/ANDOLAN/games/yuga-native",
+        "--executable",
+        "/workspace/scratch/yuga-desktop-integrated-package-r4/extracted/yuga-native-linux-x86_64/godot",
+        "--package",
+        "/workspace/scratch/yuga-desktop-integrated-package-r4/extracted/yuga-native-linux-x86_64/yuga-native.pck",
+        "--package-archive",
+        "/workspace/scratch/yuga-desktop-integrated-package-r4/build/yuga-native-linux-x86_64.zip",
+        "--export-manifest",
+        "/workspace/scratch/yuga-desktop-integrated-package-r4/build/native-export-manifest.json",
+        "--extraction-report",
+        "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/package-review-preparation/W5-r4-source-review-r1/omitted-notice-extraction-receipt.json",
+        "--output",
+        "/workspace/scratch/yuga-w6-r4-receipt-dryrun-uncreated",
+        "--phase",
+        "warm",
+        "--display",
+        "185",
+        "--shader-cache-seed",
+        "/tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/cache/mesa",
+        "--godot-shader-cache-seed",
+        "/tmp/yuga-public463-template-baseline-cold-600-r1-logs/user/data/godot/app_userdata/YUGA \u2022 Confluence/shader_cache",
+        "--dry-run"
+      ],
+      "exit_code": 2,
+      "subprocess_calls": 0
+    }
+  ],
+  "sources": {
+    "package_identity.py": {
+      "bytes": 1932,
+      "sha256": "f83928f5cff04b06ccaee905704d87f09f8c87eb69ce7d6d6e42f571210a72d8"
+    },
+    "run_package_review.py": {
+      "bytes": 13357,
+      "sha256": "8e28da78e4da3bc9ec5ddf785d022cac064ac7e70f44d5b6c2c64687ef906e50"
+    },
+    "verify_package_review.py": {
+      "bytes": 9071,
+      "sha256": "b574bc7eee0a758f1bb4c3cf9d4d4d24dab71388a475351e40ad9b2354fe458a"
+    },
+    "verify_extract.py": {
+      "bytes": 8415,
+      "sha256": "1157c6193d17a38b4f0f6b9dcb3293e81c786ea12821d74f2b31ac54b893a40d"
+    }
+  },
+  "w5_original_witness": {
+    "bytes": 2509,
+    "sha256": "d726691407f60786acc2791a4655c2ee5dbbd575e76dcb53a3701a19ac6d387a"
+  },
+  "exact_extraction_receipt": {
+    "bytes": 14865,
+    "sha256": "740bca01edb24e0ab56be9bb9ace922f4cd8dcf10e024ecb1fe841be048e950b"
+  },
+  "superseded_review": {
+    "path": "docs/evidence/desktop-finish/package-review-preparation/W6-r4-independent/receipt.json",
+    "bytes": 1890,
+    "sha256": "56bdd1f2d774679330193e64404a4e5793e1846335661d0b527109c6f1723979"
+  },
+  "disposition": "The earlier W6 source review missed mutable extraction-member subset integrity. Retain it as historical; this successor specifically closes and independently replays that seam."
+}

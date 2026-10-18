@@ -2,6 +2,8 @@
 
 **Resume current desktop work:** [ACTIVE_DESKTOP_HANDOFF.md](ACTIVE_DESKTOP_HANDOFF.md) gives the live source, owners, renderer gate and next command. [DESKTOP_FINISH_CAMPAIGN.md](DESKTOP_FINISH_CAMPAIGN.md) is the active ten-screen/three-integration queue. Mobile is deferred by the user; older campaigns below retain historical evidence and commands.
 
+**Current executable:** [desktop finish preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-desktop-finish-2026-10-18), source `96d5b9cd`. Its exact Linux archive passed warm and fresh-user cold native input; all five public files were downloaded and verified. Windows is archive-validated only. [Release evidence](evidence/desktop-finish/published/release-r4/REVIEW.md).
+
 For the proposed mobile version, use [MOBILE_PRODUCTION_ROADMAP.md](MOBILE_PRODUCTION_ROADMAP.md) and its [code migration map](mobile/CODE_AND_STACK_DECISIONS.md). The existing commands below prepare the desktop/native workflow. Android/iOS exports, physical-device performance and operated 5v5 services require the separate mobile gates; an existing mobile renderer override is not a qualified mobile build.
 
 Read this in 5–10 minutes before changing the native game. Start with the repository [START_HERE](../../../docs/START_HERE.md), use this handbook for execution, and read the [research brief](research/RESEARCH_BRIEF.md) only when the task needs design/source context. Do not load every historical report to begin a small change.
@@ -51,7 +53,7 @@ Optional temple wisps and rapid-reversal prototypes were rejected. The visual
 target remains open.
 
 The integrated current-source check entry point is included in ordinary setup
-and native CI. It covers twelve visual/resource/motion/identity suites; numerical
+and native CI. It covers the catalogued visual/resource/motion/identity suites; numerical
 passing results do not replace actual image and continuous-motion reviews:
 
 ```sh
@@ -124,6 +126,10 @@ export PATH="/workspace/tooling/native-engine/bin:$PATH"
 No game API key is needed to build or play offline. Rendering cannot use a headless-only invocation; use the owned-display capture helpers below. If downloads fail, inspect the managed environment/network status instead of repeatedly rerunning a failing install. Keep credentials outside source, logs, assets and release archives.
 
 ## 3. Launch and source map
+
+In this managed cloud, keep the official Godot editor/exporter separate from the reviewed public Linux template. The current package uses the explicitly named `pipeline-low-priority` variant; the [active handoff](ACTIVE_DESKTOP_HANDOFF.md#runtime-and-rendering) pins all three binaries and the one-line source patch. The official editor remains the import/export tool. For actual Forward+ captures, pass the reviewed template's exact path to the capture runner's `--engine` argument and use an isolated imported source snapshot. Earlier official/unmodified runtime first-draw failures remain documented; do not silently substitute one binary or reduce rendering quality. The package's `launch.sh` selects its included runtime.
+
+The following ordinary editor commands apply on a desktop with a display. The cloud uses the owned-display capture helpers and serialized CPU0,1/`LP_NUM_THREADS=2` lane. Put new output and isolated XDG/cache state under `/workspace/scratch`; `/tmp` is near its reserve floor.
 
 ```sh
 godot --headless --path games/yuga-native --editor --import --quit

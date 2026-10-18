@@ -1,0 +1,7 @@
+# Source bound clarification before eligibility
+
+The first source-rest check preserved two fixture failures, without changing the candidate. The retained reindex table is computed as int64 while the GLB stores uint32; its values and all eight vertex attribute byte ranges were exact. The corrected check compares the exact uint32 representation.
+
+The initial front z≤0.150 m limit also excluded the existing fitted anatomical scalp edge. R6's maximum foundation z is exactly the same float32 value as R4's fitted foundation at each LOD: approximately 0.15345 m. The foundation alone may reach z 0.155 m; every authored lock group keeps the original 0.150 m limit. The complete-triangle head/gold checks remain unchanged. No candidate geometry, source shape brief or model hash was rewritten to address either fixture failure. See the preserved first report and fixture-correction-r1.json.
+
+W3 correctly distinguished the nominal ellipsoid section from the finished support. The nominal ellipse alone is only about 35 mm wide at the knot's lower-root height. The fitted foundation/union changes that section. Exact stored scalp-triangle plane cuts at the actual retained knot minimum Y measure 74.413/72.925/68.558 mm at near/mid/far. The corrected source gate measures this plane directly; it does not infer root support from the control ellipse or a loose vertex band. Positive whole-triangle overlap with the unchanged knot and gold/head separation remain separate requirements.

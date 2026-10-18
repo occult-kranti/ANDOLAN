@@ -1,0 +1,242 @@
+{
+  "scope": "R6 source identity and complete new triangles in rest space. No candidate import, native pose, rendered image or visual acceptance.",
+  "manifest_sha256": "81ceaecd8c8fb550c1b0c9072da186e36d4c7ebfc99959d6ec88263ae5b15eb8",
+  "checker_sha256": "561b024bd08e5624baa30f0fdffb48b1542abc5f5e98f36a4b15a94108533dce",
+  "narrow_phase_sha256": "324c2f688dbefc6c3ac86f5b5ca346c069efd1f7b8916252ad9489fcf0ad532c",
+  "selfcheck": {
+    "separated_parallel_triangle_gap_m": 0.005,
+    "edge_through_face_crossing": true
+  },
+  "level": "near",
+  "checks": [
+    {
+      "name": "exact source and output pins",
+      "passed": true
+    },
+    {
+      "name": "complete accepted-UV binary prefix exact",
+      "passed": true
+    },
+    {
+      "name": "original JSON exact except hair append references",
+      "passed": true
+    },
+    {
+      "name": "original brows and topknot byte-exact",
+      "passed": false
+    },
+    {
+      "name": "original nonhair primitives exact",
+      "passed": true
+    },
+    {
+      "name": "all generated attributes finite",
+      "passed": true
+    },
+    {
+      "name": "indices in bounds and generated indices separate",
+      "passed": true
+    },
+    {
+      "name": "no new degenerate triangles",
+      "passed": true,
+      "minimum_area_m2": 9.366988962256073e-09
+    },
+    {
+      "name": "finite unit orthogonal tangent frames",
+      "passed": true
+    },
+    {
+      "name": "bounded UVs",
+      "passed": true
+    },
+    {
+      "name": "same single head104 binding",
+      "passed": true
+    },
+    {
+      "name": "white RGB and declared secondary alpha cap",
+      "passed": true,
+      "maximum_alpha": 0.2571145189593347
+    },
+    {
+      "name": "upper parts anchored",
+      "passed": true
+    },
+    {
+      "name": "declared principal silhouette bounds",
+      "passed": false,
+      "minimum": [
+        -0.10112296789884567,
+        1.5808250904083252,
+        -0.16059961915016174
+      ],
+      "maximum": [
+        0.10236611217260361,
+        1.8612651824951172,
+        0.15344956517219543
+      ]
+    },
+    {
+      "name": "continuous scalp winding outward",
+      "passed": true
+    },
+    {
+      "name": "collected scalp stays below tie upper bound",
+      "passed": true,
+      "maximum_y_m": 1.8612651824951172
+    },
+    {
+      "name": "broad continuous collected root sampled width",
+      "passed": true,
+      "width_m": 0.1021728441119194,
+      "vertices": 117
+    },
+    {
+      "name": "foundation directly overlaps unchanged knot",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.0,
+        "guaranteed_lower_bound_m": 0.0,
+        "near_pairs": 50524,
+        "crossings": 394,
+        "witness_triangles": [
+          3163,
+          516
+        ],
+        "witness_hair_triangle": [
+          [
+            0.014999398961663246,
+            1.8535131216049194,
+            -0.06893174350261688
+          ],
+          [
+            0.013427001424133778,
+            1.8575302362442017,
+            -0.056988202035427094
+          ],
+          [
+            0.01978406310081482,
+            1.8572207689285278,
+            -0.05446120351552963
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.013666965067386627,
+            1.8569965362548828,
+            -0.05605509132146835
+          ],
+          [
+            0.014327337965369225,
+            1.8588299751281738,
+            -0.05892566218972206
+          ],
+          [
+            0.016176262870430946,
+            1.8576661348342896,
+            -0.05692950263619423
+          ]
+        ]
+      }
+    },
+    {
+      "name": "all generated triangles clear full_head_and_features",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.00101174577139318,
+        "guaranteed_lower_bound_m": 0.00101174577139318,
+        "near_pairs": 369062,
+        "crossings": 0,
+        "witness_triangles": [
+          12231,
+          31156
+        ],
+        "witness_hair_triangle": [
+          [
+            0.04955301806330681,
+            1.8060725927352905,
+            -0.031342409551143646
+          ],
+          [
+            0.04723082855343819,
+            1.8009042739868164,
+            -0.040340304374694824
+          ],
+          [
+            0.05121149122714996,
+            1.7995364665985107,
+            -0.034548092633485794
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.05386099964380264,
+            1.7983609437942505,
+            -0.02969086915254593
+          ],
+          [
+            0.04890476539731026,
+            1.8022966384887695,
+            -0.03355087712407112
+          ],
+          [
+            0.05037916451692581,
+            1.8106778860092163,
+            -0.023367326706647873
+          ]
+        ]
+      }
+    },
+    {
+      "name": "all generated triangles clear all_head_gold_and_gems",
+      "passed": true,
+      "comparison": {
+        "minimum_distance_m": 0.004171893000602722,
+        "guaranteed_lower_bound_m": 0.004171893000602722,
+        "near_pairs": 55344,
+        "crossings": 0,
+        "witness_triangles": [
+          13033,
+          472
+        ],
+        "witness_hair_triangle": [
+          [
+            0.056076813489198685,
+            1.7930057048797607,
+            -0.051941417157649994
+          ],
+          [
+            0.05945633351802826,
+            1.7834104299545288,
+            -0.05148923769593239
+          ],
+          [
+            0.05748964846134186,
+            1.784364938735962,
+            -0.05481928959488869
+          ]
+        ],
+        "witness_other_triangle": [
+          [
+            0.06270261853933334,
+            1.7902268171310425,
+            -0.052833348512649536
+          ],
+          [
+            0.05648723617196083,
+            1.7930558919906616,
+            -0.05874629318714142
+          ],
+          [
+            0.056783080101013184,
+            1.790049433708191,
+            -0.05905952304601669
+          ]
+        ]
+      }
+    }
+  ],
+  "passed": false,
+  "complete": true
+}

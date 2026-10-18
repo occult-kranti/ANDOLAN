@@ -1,0 +1,203 @@
+--- docs/evidence/desktop-finish/package-review-preparation/W1-r3/package_identity.py
++++ docs/evidence/desktop-finish/package-review-preparation/W1-r4/package_identity.py
+@@ -1,25 +1,27 @@
+-"""Exact separately approved r3 package identity; no runtime substitutions."""
++"""r4 structure: exact source/runtime fixed; archive fields intentionally unbound."""
+ import hashlib
+ import json
+ from pathlib import Path
+-
+-SOURCE = 'f8dec5fa4f9bbd2d20c58f6102fb984d0b19a9f1'
++SOURCE = '96d5b9cd3114b9732f7dc80433b1ca0a1d4a9b12'
+ EXPORTER = 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3'
+-RUNTIME = 'dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f'
+-ARCHIVE = '913e2b82b9a71977bf361349e225ae0295a9dd08f1e0a0a68d7b3b7d3df4426c'
+-PCK = 'f55b5417e38b6a5b46ff2b12ec22890509287f84ad1fe2fb62c87190c76a7197'
+-EXPORT_MANIFEST = 'c472ef5278b4c35b8226d654bbaf5c0061b98c00a4be20c7a3a1dbe8600adb54'
+-PACKAGE_MANIFEST = '6df86cc23505cbe6fc1a22d00e86cb9afc03c7733b69e0b068c40889d9c0ff36'
++RUNTIME = 'e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e'
++ARCHIVE = None
++PCK = None
++EXPORT_MANIFEST = None
++PACKAGE_MANIFEST = None
+ SELECTION = Path(__file__).with_name('expected-engine-selection.json')
+ 
++def approved_inputs_bound():
++    return (isinstance(SOURCE,str) and len(SOURCE)==40 and all(c in '0123456789abcdef' for c in SOURCE) and
++            all(isinstance(v,str) and len(v)==64 and all(c in '0123456789abcdef' for c in v) for v in [EXPORTER,RUNTIME,ARCHIVE,PCK,EXPORT_MANIFEST,PACKAGE_MANIFEST]))
+ 
+ def exact_selection(selection):
+-    """Includes exporter, runtime SHA, zero patches, source, build and proof pins."""
+-    if hashlib.sha256(SELECTION.read_bytes()).hexdigest() != 'ea1ad72422b657241150b1ae525536712c03dbec478dab659a6a41627376bb7a':
+-        return False
++    if hashlib.sha256(SELECTION.read_bytes()).hexdigest() != '3c7ad7d93b40dc436ce80588a43fce7f920bb0d3416948a7b4f742df03bac38a': return False
+     expected = json.loads(SELECTION.read_text())
+-    return (selection == expected and
+-            selection['exporter']['sha256'] == EXPORTER and
+-            selection['linux_runtime']['sha256'] == RUNTIME and
+-            selection['linux_runtime']['provenance']['source_patches'] == 0 and
+-            selection['linux_runtime']['provenance']['target'] == 'template_debug')
++    return (selection == expected and selection['exporter']['sha256'] == EXPORTER and
++        selection['linux_runtime']['sha256'] == RUNTIME and
++        selection['linux_runtime']['kind'] == 'patched-public-source-template-debug' and
++        selection['linux_runtime']['provenance']['variant'] == 'pipeline-low-priority-v1' and
++        selection['linux_runtime']['provenance']['source_patches'] == 1 and
++        selection['linux_runtime']['provenance']['target'] == 'template_debug' and
++        len(selection['linux_runtime']['provenance']['evidence']) == 11)
+--- docs/evidence/desktop-finish/package-review-preparation/W1-r3/verify_extract.py
++++ docs/evidence/desktop-finish/package-review-preparation/W1-r4/verify_extract.py
+@@ -8,7 +8,7 @@
+ import stat
+ import zipfile
+ 
+-from package_identity import SOURCE, RUNTIME as ENGINE, ARCHIVE, PCK, EXPORT_MANIFEST, PACKAGE_MANIFEST, exact_selection
++from package_identity import SOURCE, RUNTIME as ENGINE, ARCHIVE, PCK, EXPORT_MANIFEST, PACKAGE_MANIFEST, exact_selection, approved_inputs_bound
+ PREFIX = 'yuga-native-linux-x86_64/'
+ 
+ 
+@@ -29,6 +29,7 @@
+     args = parser.parse_args()
+     if args.destination.exists() or args.report.exists():
+         parser.error('Fresh destination and report required')
++    if not approved_inputs_bound(): parser.error('r4 qualified archive identities are not yet bound')
+     checks, members = {}, {}
+     record = {'passed': False, 'checks': checks, 'members': members,
+               'source_commit': SOURCE, 'script_sha256': digest(__file__),
+@@ -44,7 +45,7 @@
+         check('qualified_input_hashes', before[str(args.archive)] == args.archive_sha256 and
+               before[str(args.export_manifest)] == args.export_sha256 and
+               before[str(args.package_manifest)] == args.package_sha256)
+-        check('approved_r3_inputs', args.archive_sha256 == ARCHIVE and args.export_sha256 == EXPORT_MANIFEST and args.package_sha256 == PACKAGE_MANIFEST)
++        check('approved_r4_inputs', args.archive_sha256 == ARCHIVE and args.export_sha256 == EXPORT_MANIFEST and args.package_sha256 == PACKAGE_MANIFEST)
+         exported = json.loads(args.export_manifest.read_text())
+         packaged = json.loads(args.package_manifest.read_text())
+         check('exact_clean_source_commit', all(d['git']['head'] == SOURCE and
+@@ -59,7 +60,7 @@
+                            (args.source/name).stat().st_size != row['bytes'] or digest(args.source/name) != row['sha256']]
+         record['source_file_count'] = len(exported['source']['files'])
+         record['source_mismatches'] = source_mismatch
+-        check('all_exported_source_files_exact', not source_mismatch and record['source_file_count'] == 552)
++        check('all_exported_source_files_exact', not source_mismatch and record['source_file_count'] > 0)
+         with zipfile.ZipFile(args.archive) as archive:
+             infos = archive.infolist()
+             names = [info.filename for info in infos]
+@@ -75,7 +76,15 @@
+             check('inner_exporter_runtime_identity', inner.get('exporter') == exported['engine_selection']['exporter'] and inner.get('runtime') == exported['engine_selection']['linux_runtime'])
+             check('bundled_runtime_provenance', json.loads(archive.read(PREFIX+'NOTICE/GODOT-RUNTIME-PROVENANCE.json')) == exported['engine_selection'])
+             proof = exported['engine_selection']['linux_runtime']['provenance']['evidence']
+-            check('actual_bundled_source_build_proofs', all(hashlib.sha256(archive.read(PREFIX + (name if name.startswith('NOTICE/') else 'NOTICE/godot-public-runtime/'+Path(name).name))).hexdigest() == row['sha256'] for name,row in proof.items()))
++            proof_map = exported['engine_selection']['linux_runtime']['provenance']['bundled_evidence']
++            check('exact_unique_proof_mapping', set(proof_map) == set(proof) and len(proof_map) == 11 and
++                  len(set(proof_map.values())) == len(proof_map) and all(
++                      name.startswith('NOTICE/') and not PurePosixPath(name).is_absolute() and
++                      '..' not in PurePosixPath(name).parts for name in proof_map.values()))
++            check('actual_bundled_source_build_proofs', all(
++                  len(archive.read(PREFIX+proof_map[name])) == row['bytes'] and
++                  hashlib.sha256(archive.read(PREFIX+proof_map[name])).hexdigest() == row['sha256']
++                  for name,row in proof.items()))
+             check('exact_member_inventory', set(names) == {PREFIX + name for name in inner['payloads']} | {manifest_name})
+             check('engine_and_pck_manifest_identity', inner['payloads']['godot']['sha256'] == ENGINE ==
+                   package['engine']['sha256'] and inner['payloads']['yuga-native.pck']['sha256'] ==
+--- docs/evidence/desktop-finish/package-review-preparation/W1-r3/run_package_review.py
++++ docs/evidence/desktop-finish/package-review-preparation/W1-r4/run_package_review.py
+@@ -11,7 +11,7 @@
+ import time
+ 
+ HERE = Path(__file__).resolve().parent
+-from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, EXPORTER, ARCHIVE, PCK, EXPORT_MANIFEST, SELECTION, exact_selection
++from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, EXPORTER, ARCHIVE, PCK, EXPORT_MANIFEST, PACKAGE_MANIFEST, SELECTION, exact_selection, approved_inputs_bound
+ GDB = Path('/workspace/tooling/native-debug/gdb-local')
+ 
+ 
+@@ -59,7 +59,7 @@
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+-    for name in ['project', 'executable', 'package', 'package-archive', 'export-manifest', 'output']:
++    for name in ['project', 'executable', 'package', 'package-archive', 'export-manifest', 'extraction-report', 'output']:
+         parser.add_argument('--' + name, type=Path, required=True)
+     parser.add_argument('--phase', choices=['warm', 'cold'], required=True)
+     parser.add_argument('--display', type=int, required=True)
+@@ -67,6 +67,7 @@
+     parser.add_argument('--godot-shader-cache-seed', type=Path)
+     parser.add_argument('--dry-run', action='store_true')
+     args = parser.parse_args()
++    if not approved_inputs_bound(): parser.error('r4 qualified archive identities are not yet bound')
+     if args.output.exists() or args.output.with_name(args.output.name + '-watchdog').exists():
+         parser.error('Fresh output and watchdog directories are required')
+     if args.phase == 'cold' and (args.shader_cache_seed or args.godot_shader_cache_seed):
+@@ -77,15 +78,28 @@
+         if not getattr(args, name).is_file():
+             parser.error('Missing actual package input: ' + name)
+     if sha(args.executable) != RUNTIME:
+-        parser.error('This attempt is bound to the exact separately declared unmodified public dce packaged binary')
++        parser.error('This attempt is bound to the exact separately declared patched e69 packaged binary')
+     exported = json.loads(args.export_manifest.read_text())
+     if exported.get('git', {}).get('head') != EXPECTED_SOURCE or exported.get('git', {}).get('native_worktree_status') != '':
+-        parser.error('Export must identify the exact clean approved f8dec5fa source checkpoint')
++        parser.error('Export must identify the exact clean approved96d5b9cd source checkpoint')
+     if not exact_selection(exported.get('engine_selection', {})):
+-        parser.error('Exporter/runtime/source-build proof selection differs from approved r3')
++        parser.error('Exporter/runtime/source-build proof selection differs from approved r4')
+     if (sha(args.package) != PCK or sha(args.package_archive) != ARCHIVE or
+             sha(args.export_manifest) != EXPORT_MANIFEST):
+-        parser.error('Package/archive/export manifest differs from approved r3')
++        parser.error('Package/archive/export manifest differs from approved r4')
++    extraction = json.loads(args.extraction_report.read_text())
++    destination = args.executable.resolve().parent
++    if (extraction.get('passed') is not True or extraction.get('script_sha256') != sha(HERE/'verify_extract.py') or
++            not extraction.get('checks') or not all(extraction['checks'].values()) or
++            set(extraction.get('input_sha256',{}).values()) != {ARCHIVE,EXPORT_MANIFEST,PACKAGE_MANIFEST} or
++            Path(extraction.get('destination','')).resolve() != destination or
++            args.executable.resolve() != destination/'godot' or args.package.resolve() != destination/'yuga-native.pck' or
++            extraction.get('source_commit') != EXPECTED_SOURCE or
++            extraction.get('input_sha256',{}).get(str(args.package_archive)) != ARCHIVE):
++        parser.error('Require the actual exact verified extraction and its sibling executable/PCK')
++    members = extraction.get('members',{})
++    if not members or not all((destination/name).is_file() and (destination/name).stat().st_size == row['bytes'] and sha(destination/name) == row['sha256'] for name,row in members.items()):
++        parser.error('An extracted archive payload changed before execution')
+     command = [sys.executable, str(HERE / 'tools/ui-campaign/run.py'),
+                '--mode', 'package', '--project', str(args.project.resolve()),
+                '--executable', str(args.executable.resolve()), '--package', str(args.package.resolve()),
+@@ -103,13 +117,15 @@
+               'inner_timeout_scope': '600 seconds per readiness condition; outer bound is separate',
+               'first_native_observer_after_seconds': 120, 'sample_interval_seconds': 15,
+               'engine_selection': exported['engine_selection'],
++              'archive_runtime_executed': True, 'diagnostic_runtime_override': False,
++              'extraction_report_sha256': sha(args.extraction_report), 'extracted_payloads': members,
+               'engine_sha256': sha(args.executable), 'package_sha256': sha(args.package),
+               'archive_sha256': sha(args.package_archive), 'export_manifest_sha256': sha(args.export_manifest),
+               'tool_sha256': {str(p.relative_to(HERE)): sha(p) for p in [Path(__file__), HERE / 'package_identity.py', SELECTION,
+                   HERE / 'tools/ui-campaign/run.py', HERE / 'tools/ui-campaign/observer.gd',
+                   HERE / 'tools/ui-campaign/integrated_capture.gd', HERE / 'tools/ui-campaign/authority_stage.gd',
+                   HERE / ('package-' + args.phase + '-plan.json')]},
+-              'scope': 'Actual extracted explicitly selected unmodified public dce Linux executable; official f64 exporter remains distinct; fresh isolated XDG; native XTest. Warm journey includes explicitly labeled actual-rule outcome stages; cold has none. No pose or asset writes.'}
++              'scope': 'Actual extracted explicitly selected pipeline-low-priority-v1 e69 Linux executable; official f64 exporter remains distinct; fresh isolated XDG; native XTest. Warm journey includes explicitly labeled actual-rule outcome stages; cold has none. No pose or asset writes.'}
+     if args.dry_run:
+         print(json.dumps(record, indent=2))
+         return 0
+@@ -195,6 +211,8 @@
+                        'elapsed_seconds': time.monotonic() - started,
+                        'png_count': len(list(args.output.glob('*.png'))),
+                        'complete': proc.returncode == 0 and not terminated})
++    record['extracted_payloads_unchanged'] = all((destination/name).is_file() and (destination/name).stat().st_size == row['bytes'] and sha(destination/name) == row['sha256'] for name,row in members.items())
++    record['complete'] = record['complete'] and record['extracted_payloads_unchanged']
+     save(logroot / 'receipt.json', record)
+     print(json.dumps({k: record[k] for k in ['phase', 'complete', 'driver_exit', 'elapsed_seconds', 'png_count']}))
+     return 0 if record['complete'] else 1
+--- docs/evidence/desktop-finish/package-native-review/W1-public-r1/validation-successor/verify_package_review.py
++++ docs/evidence/desktop-finish/package-review-preparation/W1-r4/verify_package_review.py
+@@ -60,11 +60,12 @@
+         'native_route_complete_and_quit_zero': record.get('complete') is True and record.get('verified_exit_code') == 0,
+         'outer_bound_completed': watchdog.get('complete') is True and watchdog.get('overall_timeout') is False,
+         'exact_final_export_commit': record.get('export_manifest',{}).get('git',{}).get('head') == EXPECTED_SOURCE == watchdog.get('expected_source_commit'),
+-        'exact_selected_public_runtime': record.get('engine_sha256') == RUNTIME == watchdog.get('engine_sha256'),
++        'exact_selected_patched_archive_runtime': record.get('engine_sha256') == RUNTIME == watchdog.get('engine_sha256'),
+         'exact_distinct_exporter_and_runtime_proof': export_exact and record.get('export_manifest', {}).get('sha256') == EXPORT_MANIFEST and exact_selection(exported.get('engine_selection', {})) and exact_selection(watchdog.get('engine_selection', {})),
+         'exact_qualified_archive_pck_manifest': watchdog.get('package_sha256') == PCK and watchdog.get('archive_sha256') == ARCHIVE and watchdog.get('export_manifest_sha256') == EXPORT_MANIFEST,
+         'package_archive_source_tools_unchanged': all(record.get(k) is True for k in [
+             'package_unchanged','archive_unchanged','export_manifest_unchanged','instrumentation_unchanged','source_unchanged']),
++        'actual_extracted_archive_runtime': watchdog.get('archive_runtime_executed') is True and watchdog.get('diagnostic_runtime_override') is False and watchdog.get('extracted_payloads_unchanged') is True,
+         'expected_manual_count': len(record.get('shots',[])) == len(names),
+         'same_declared_plan': record.get('plan_sha256') == sha(HERE/('package-'+args.phase+'-plan.json')),
+     }

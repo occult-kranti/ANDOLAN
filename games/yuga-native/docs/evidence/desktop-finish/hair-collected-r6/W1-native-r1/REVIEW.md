@@ -1,0 +1,13 @@
+# R6 collected-hair pair: revise, no promotion
+
+The candidate closes the literal knot gap and reduces the baseline's side bulk, but the complete hairstyle is rejected. In the matched rear view, the foundation reads as a horizontal puck beneath the retained knot with a separate scalloped nape cluster. The cast view exposes a puffed bridge and isolated pointed locks. Front clarity improves, but the mass still does not read as one coherent collected sweep. W1 and the lead directly opened all eight full originals; shipping hair remains unchanged.
+
+The private official-f64 import completed in12.186s without errors/warnings. Both resource probes passed. Strict three-LOD import comparison allows only the declared hair arrays/topology and preserves every nonhair imported/source byte including signed zeros, all164 bones/binds, morphs, materials/textures and animation semantics. The retained accepted-UV baseline is frozen20aed49d, with motion5023 and finish6eb51; this is a frozen runtime selection, not every current Git file.
+
+Both four-view headless preflights completed. Their paired comparison passes8/8. Actual baseline/candidate captures completed in77.374/72.758s with four originals each. The final paired comparison passes9/9, requiring exact164 final bone matrices and all recorded controls except the explicitly import-proven hair mask/census/bounds deltas. The common helper865d2c92 uses anatomical-left profile yaw180 in both branches, plus front, rear and the actual public-cast three-quarter procedure. These are fresh matched controls; older R5 pixels were not reused.
+
+Both actual runs used the unchanged public dce engine, the same copied warm Godot/Mesa seeds, camera/light/pose settings and600s/300s whole/no-progress bounds. Each log retains63 identical hardware RGB8-to-RGBA8 conversion warnings. Neither has an engine error or object-leak report; this is not a warning-free claim. Source/cache identities remain unchanged, and no canonical runtime/model/cache was edited.
+
+The packet retains exact originals, full render/preflight logs, snapshots, command/exit receipts, executed tools, source references, imported semantic payloads and candidate compiled-import archive. Generated per-run user/cache directories remain in their original /tmp take locations; seed identities are preserved in the raw runner records. The source geometry receipt and failed prior hair revisions remain separate and unchanged.
+
+No full-motion, ordinary-gameplay-distance, hardware FPS, final material quality or complete character-art acceptance follows from these static views or structural checks. Root owns any later art direction; this candidate remains inactive.

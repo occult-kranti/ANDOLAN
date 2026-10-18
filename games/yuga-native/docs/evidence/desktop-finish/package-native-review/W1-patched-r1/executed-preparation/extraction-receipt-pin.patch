@@ -1,0 +1,56 @@
+--- sealed025/package_identity.py
++++ receipt-pin-r1/package_identity.py
+@@ -9,11 +9,12 @@
+ PCK = 'b84ac0f4f1e70fbfc5366234729a9e97012e5664bd6a3a43bfb77fe61e7b6903'
+ EXPORT_MANIFEST = '4cb3316300092dcdb99016f3c0e6f024066df2f94999a3b7b4944247870aa4a7'
+ PACKAGE_MANIFEST = '01581b3d740097aa61bd35c3722a85dca1021dddb1766a2a28e1c1b53645417c'
++EXTRACTION_REPORT = '740bca01edb24e0ab56be9bb9ace922f4cd8dcf10e024ecb1fe841be048e950b'
+ SELECTION = Path(__file__).with_name('expected-engine-selection.json')
+ 
+ def approved_inputs_bound():
+     return (isinstance(SOURCE,str) and len(SOURCE)==40 and all(c in '0123456789abcdef' for c in SOURCE) and
+-            all(isinstance(v,str) and len(v)==64 and all(c in '0123456789abcdef' for c in v) for v in [EXPORTER,RUNTIME,ARCHIVE,PCK,EXPORT_MANIFEST,PACKAGE_MANIFEST]))
++            all(isinstance(v,str) and len(v)==64 and all(c in '0123456789abcdef' for c in v) for v in [EXPORTER,RUNTIME,ARCHIVE,PCK,EXPORT_MANIFEST,PACKAGE_MANIFEST,EXTRACTION_REPORT]))
+ 
+ def exact_selection(selection):
+     if hashlib.sha256(SELECTION.read_bytes()).hexdigest() != '3c7ad7d93b40dc436ce80588a43fce7f920bb0d3416948a7b4f742df03bac38a': return False
+--- sealed025/run_package_review.py
++++ receipt-pin-r1/run_package_review.py
+@@ -11,7 +11,7 @@
+ import time
+ 
+ HERE = Path(__file__).resolve().parent
+-from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, EXPORTER, ARCHIVE, PCK, EXPORT_MANIFEST, PACKAGE_MANIFEST, SELECTION, exact_selection, approved_inputs_bound
++from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, EXPORTER, ARCHIVE, PCK, EXPORT_MANIFEST, PACKAGE_MANIFEST, EXTRACTION_REPORT, SELECTION, exact_selection, approved_inputs_bound
+ GDB = Path('/workspace/tooling/native-debug/gdb-local')
+ 
+ 
+@@ -87,6 +87,8 @@
+     if (sha(args.package) != PCK or sha(args.package_archive) != ARCHIVE or
+             sha(args.export_manifest) != EXPORT_MANIFEST):
+         parser.error('Package/archive/export manifest differs from approved r4')
++    if not args.extraction_report.is_file() or sha(args.extraction_report) != EXTRACTION_REPORT:
++        parser.error('Exact qualified extraction receipt hash required; member inventory cannot be replaced')
+     extraction = json.loads(args.extraction_report.read_text())
+     destination = args.executable.resolve().parent
+     if (extraction.get('passed') is not True or extraction.get('script_sha256') != sha(HERE/'verify_extract.py') or
+--- sealed025/verify_package_review.py
++++ receipt-pin-r1/verify_package_review.py
+@@ -7,7 +7,7 @@
+ from pathlib import Path
+ 
+ HERE = Path(__file__).resolve().parent
+-from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, ARCHIVE, PCK, EXPORT_MANIFEST, exact_selection
++from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, ARCHIVE, PCK, EXPORT_MANIFEST, EXTRACTION_REPORT, exact_selection
+ 
+ 
+ def sha(path):
+@@ -65,7 +65,7 @@
+         'exact_qualified_archive_pck_manifest': watchdog.get('package_sha256') == PCK and watchdog.get('archive_sha256') == ARCHIVE and watchdog.get('export_manifest_sha256') == EXPORT_MANIFEST,
+         'package_archive_source_tools_unchanged': all(record.get(k) is True for k in [
+             'package_unchanged','archive_unchanged','export_manifest_unchanged','instrumentation_unchanged','source_unchanged']),
+-        'actual_extracted_archive_runtime': watchdog.get('archive_runtime_executed') is True and watchdog.get('diagnostic_runtime_override') is False and watchdog.get('extracted_payloads_unchanged') is True,
++        'actual_extracted_archive_runtime': watchdog.get('archive_runtime_executed') is True and watchdog.get('diagnostic_runtime_override') is False and watchdog.get('extracted_payloads_unchanged') is True and watchdog.get('extraction_report_sha256') == EXTRACTION_REPORT,
+         'expected_manual_count': len(record.get('shots',[])) == len(names),
+         'same_declared_plan': record.get('plan_sha256') == sha(HERE/('package-'+args.phase+'-plan.json')),
+     }

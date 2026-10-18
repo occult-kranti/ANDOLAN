@@ -1,0 +1,134 @@
+--- reviewed-r3/audit.py
++++ r4/audit.py
+@@ -1,13 +1,13 @@
+-"""Read-only fixed r3 expansions and two Windows PCK duplicates audit; never removes files."""
++"""Read-only fixed r4 build expansions and one Windows PCK duplicate audit; never removes files."""
+ from pathlib import Path
+ import datetime, hashlib, json, os, stat, subprocess, zipfile
+ REPO = Path('/workspace/ANDOLAN')
+-BASE = Path('/tmp/yuga-desktop-integrated-package-r3')
++BASE = Path('/workspace/scratch/yuga-desktop-integrated-package-r4')
+ OUT = Path(__file__).resolve().parent
+-ROOTS = (BASE/'build/yuga-native-linux-x86_64', BASE/'build/yuga-native-windows-x86_64', BASE/'extracted/yuga-native-linux-x86_64')
+-EXPECTED = {'yuga-native-linux-x86_64.zip':'913e2b82b9a71977bf361349e225ae0295a9dd08f1e0a0a68d7b3b7d3df4426c','yuga-native-windows-x86_64.zip':'ee8026ca24b47a4f43b875a8aeea39aa680fb3161eaad4327f970a404ccad722'}
+-SOURCE='f8dec5fa4f9bbd2d20c58f6102fb984d0b19a9f1'
+-TARGET_FILES=(Path('/tmp/yuga-desktop-integrated-package-r2/build/yuga-native-windows.pck'),BASE/'build/yuga-native-windows.pck')
++ROOTS = (BASE/'build/yuga-native-linux-x86_64', BASE/'build/yuga-native-windows-x86_64')
++EXPECTED = {'yuga-native-linux-x86_64.zip':'27c36e5523643c647b245614721c0160b3d1548bf6da851d922886cffc180d0e','yuga-native-windows-x86_64.zip':'34d8c19d30f7cafe6ad56247c2524d09c15f307cc0cde20572a56eb3d29b1fc6'}
++SOURCE='96d5b9cd3114b9732f7dc80433b1ca0a1d4a9b12'
++TARGET_FILES=(BASE/'build/yuga-native-windows.pck',)
+ def sha_stream(f):
+  h=hashlib.sha256()
+  for block in iter(lambda:f.read(1024*1024),b''):h.update(block)
+@@ -72,7 +72,7 @@
+   p=safe(BASE/'build'/name);record=pin(p);assert record['sha256']==expected
+   archives[str(p)]=record
+   with zipfile.ZipFile(p) as z:
+-   infos=z.infolist();assert len(infos)==len({i.filename for i in infos})==(39 if 'linux' in name else 34)
++   infos=z.infolist();assert len(infos)==len({i.filename for i in infos})==(45 if 'linux' in name else 34)
+    members[str(p)]={}
+    for i in infos:
+     member=Path(i.filename)
+@@ -82,13 +82,6 @@
+     members[str(p)][i.filename]={'bytes':i.file_size,'sha256':h,'zip_mode':oct(stat.S_IMODE(i.external_attr>>16)),'crc32':format(i.CRC,'08x')}
+    inner=json.loads(z.read(name[:-4]+'/PACKAGE-MANIFEST.json'))
+    assert inner['git']['head']==SOURCE and inner['git']['native_worktree_status']=='',inner.get('git')
+- r2zip=TARGET_FILES[0].parent/'yuga-native-windows-x86_64.zip'
+- archives[str(r2zip)]=pin(safe(r2zip));assert archives[str(r2zip)]['sha256']=='4c50c10020c0fb5c6c1d27f7ee295da177fe5ea092b44fcf4bb071c2101dfc7e'
+- with zipfile.ZipFile(r2zip) as z:
+-  infos=z.infolist();assert len(infos)==len({i.filename for i in infos})==34
+-  i=z.getinfo('yuga-native-windows-x86_64/yuga-native.pck');assert stat.S_ISREG(i.external_attr>>16)
+-  with z.open(i) as stream:h=sha_stream(stream)
+-  members[str(r2zip)]={i.filename:{'bytes':i.file_size,'sha256':h,'zip_mode':oct(stat.S_IMODE(i.external_attr>>16)),'crc32':format(i.CRC,'08x')}}
+  for root in ROOTS:
+   safe(root);assert root.is_dir()
+   zpath=str(BASE/'build'/(root.name+'.zip'));seen=[]
+@@ -109,11 +102,14 @@
+   filepin=pin(p);assert filepin['bytes']==m['bytes'] and filepin['sha256']==m['sha256'],p
+   after=p.stat();assert(s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns)==(after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_ctime_ns)
+   records.append({'root':str(p.parent),'path':p.name,'archive':zpath,'member':member,**filepin,'disk_mode':oct(stat.S_IMODE(s.st_mode)),**{k:v for k,v in m.items() if k not in ('bytes','sha256')},'device':s.st_dev,'inode':s.st_ino,'hardlinks':s.st_nlink,'allocated_bytes':s.st_blocks*512,'mtime_ns':s.st_mtime_ns,'ctime_ns':s.st_ctime_ns})
+- processes=process_observation();assert not processes['holders'],processes['holders']
++ protected={str(p):pin(safe(p)) for p in sorted((BASE/'build').iterdir()) if p.is_file() and p not in TARGET_FILES}
++ processes=process_observation();assert not processes['holders'] and not processes['inaccessible_owned_entries'],processes
+  remote=subprocess.check_output(['git','ls-remote','origin','refs/heads/game/yuga-native-production'],cwd=REPO,text=True).strip();remote_commit=remote.split()[0]
+  subprocess.run(['git','merge-base','--is-ancestor',SOURCE,remote_commit],cwd=REPO,check=True)
+  spaces={str(p):{'available_bytes':os.statvfs(p).f_bavail*os.statvfs(p).f_frsize,'device':p.stat().st_dev} for p in [Path('/tmp'),Path('/workspace')]}
+- result={'schema':1,'status':'prepared_only_no_deletion','utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_commit':SOURCE,'recovery_note':'Exact compiled payload bytes come from retained local ZIPs; source Git provenance alone cannot reconstruct byte-identical PCKs. Restore disk_mode from this map, not ZIP mode. Directories remain. Timestamps are diagnostic metadata, not a promised restoration property.','roots':[str(r) for r in ROOTS],'standalone_paths':[str(f) for f in TARGET_FILES],'archives':archives,'files':records,'directories_retained':dirs,'count':len(records),'logical_bytes':sum(r['bytes'] for r in records),'allocated_file_bytes':sum(r['allocated_bytes'] for r in records),'disk_zip_mode_differences':sum(r['disk_mode']!=r['zip_mode'] for r in records),'remote_source':{'branch_observation':remote,'source_is_ancestor':True},'space':spaces,'protected':'All ZIPs/Linux raw PCKs/metadata/logs/users/caches, all r1/current cold/owned clone/R6/unique evidence/art; only listed r3 regular expanded files and exact two standalone Windows raw PCK duplicates may later be removed. Other build siblings remain.'}
++ result={'schema':1,'status':'prepared_only_no_deletion','utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_commit':SOURCE,'recovery_note':'Exact compiled payload bytes come from retained local ZIPs; source Git provenance alone cannot reconstruct byte-identical PCKs. Restore disk_mode from this map, not ZIP mode. Directories remain. Timestamps are diagnostic metadata, not a promised restoration property.','roots':[str(r) for r in ROOTS],'standalone_paths':[str(f) for f in TARGET_FILES],'archives':archives,'files':records,'directories_retained':dirs,'count':len(records),'logical_bytes':sum(r['bytes'] for r in records),'allocated_file_bytes':sum(r['allocated_bytes'] for r in records),'disk_zip_mode_differences':sum(r['disk_mode']!=r['zip_mode'] for r in records),'remote_source':{'branch_observation':remote,'source_is_ancestor':True},'space':spaces,'protected':'Only listed files in two r4 build expansions and the standalone Windows raw PCK may later be removed. All five release files, Linux raw PCK, actual extracted runtime, logs, manifests, proofs, captures, user/cache state, owned clone and unique art/evidence remain.'}
++ result['protected_build_files']=protected
++ result['protected_actual_extraction']=str(BASE/'extracted')
+  target.write_text(json.dumps(result,indent=2)+'\n');(OUT/'process-observation.json').write_text(json.dumps(processes,indent=2)+'\n')
+  print(json.dumps({k:result[k] for k in ['count','logical_bytes','allocated_file_bytes','disk_zip_mode_differences','space']},indent=2))
+ if __name__=='__main__':main()
+--- reviewed-r3/guard.py
++++ r4/guard.py
+@@ -5,8 +5,8 @@
+ import argparse, datetime, hashlib, importlib.util, json, os, stat, subprocess, zipfile
+ HERE=Path(__file__).resolve().parent
+ REPO=Path('/workspace/ANDOLAN')
+-MAP_SHA='bc64c58a83126da779128c6bac31c4c82a4b565f85c1237b87328566567c05f2'
+-spec=importlib.util.spec_from_file_location('r3_duplicate_audit',HERE/'audit.py')
++MAP_SHA='948751bed1ed24d98b2f7f723c374d8d6c6f616ab41ea49b02053c0f93851087'
++spec=importlib.util.spec_from_file_location('r4_duplicate_audit',HERE/'audit.py')
+ audit=importlib.util.module_from_spec(spec);spec.loader.exec_module(audit)
+ 
+ def meta(p):
+@@ -22,16 +22,24 @@
+  ap.add_argument('--published-commit')
+  a=ap.parse_args();assert not a.report.exists() and not a.report.is_symlink()
+  raw=(HERE/'recovery-map.json').read_bytes();assert hashlib.sha256(raw).hexdigest()==MAP_SHA
+- m=json.loads(raw);assert m['roots']==[str(p) for p in audit.ROOTS] and m['standalone_paths']==[str(p) for p in audit.TARGET_FILES] and m['count']==len(m['files'])==114
+- assert len({(r['root'],r['path']) for r in m['files']})==114
++ m=json.loads(raw);assert m['roots']==[str(p) for p in audit.ROOTS] and m['standalone_paths']==[str(p) for p in audit.TARGET_FILES] and m['count']==len(m['files'])==80
++ assert len({(r['root'],r['path']) for r in m['files']})==80
++ reference=json.loads((HERE/'public-audit-reference.json').read_text())
++ public_path=REPO/reference['path'];assert public_path.resolve().is_relative_to(REPO) and not public_path.is_symlink()
++ assert audit.pin(public_path)['sha256']==reference['sha256']=='63c9acc1ea8eedaadf137151e7ad34ef44645dcc87ab40d5be0654f59bbe60a3'
++ public=json.loads(public_path.read_text())
++ assert public['passed'] is True and public['source_commit']==m['source_commit'] and public['public_release_id']==416367666 and len(public['downloads'])==5
++ downloads={r['name']:{'bytes':r['bytes'],'sha256':r['sha256']} for r in public['downloads']};assert len(downloads)==5
++ for name,pin in m['archives'].items():assert downloads[Path(name).name]==pin
+  if a.remove:
+   assert a.published_commit and len(a.published_commit)==40
+   remote=subprocess.check_output(['git','ls-remote','origin','refs/heads/game/yuga-native-production'],cwd=REPO,text=True).split()[0]
+   subprocess.run(['git','merge-base','--is-ancestor',a.published_commit,remote],cwd=REPO,check=True)
+-  for name in ['recovery-map.json','audit.py','guard.py','ownership.json']:
++  for name in ['recovery-map.json','audit.py','guard.py','ownership.json','public-audit-reference.json']:
+    p=HERE/name
+    assert subprocess.check_output(['git','show',a.published_commit+':'+p.relative_to(REPO).as_posix()],cwd=REPO)==p.read_bytes(),name
+   subprocess.run(['git','merge-base','--is-ancestor',m['source_commit'],remote],cwd=REPO,check=True)
++  assert subprocess.check_output(['git','show',a.published_commit+':'+public_path.relative_to(REPO).as_posix()],cwd=REPO)==public_path.read_bytes(),'published public-byte audit'
+  else:assert a.published_commit is None,'published commit is meaningful only for explicit removal'
+  for root in audit.ROOTS:
+   audit.safe(root)
+@@ -45,7 +53,7 @@
+  with_zip={}
+  for name in m['archives']:
+   with zipfile.ZipFile(name) as z:
+-   infos=z.infolist();assert len(infos)==len({i.filename for i in infos})==(39 if 'linux' in name else 34)
++   infos=z.infolist();assert len(infos)==len({i.filename for i in infos})==(45 if 'linux' in name else 34)
+    with_zip[name]={}
+    for i in infos:
+     assert stat.S_ISREG(i.external_attr>>16)
+@@ -56,16 +64,18 @@
+   p=audit.safe(root/rel);assert meta(p)==expected(r)
+   assert audit.pin(p)=={'bytes':r['bytes'],'sha256':r['sha256']}
+   assert with_zip[r['archive']][r['member']]==(r['bytes'],r['sha256'],r['zip_mode'])
++ for name,pin in m['protected_build_files'].items():assert audit.pin(audit.safe(Path(name)))==pin
+  for r in m['directories_retained']:
+   p=audit.safe(Path(r['root'])/r['path']);assert p.is_dir() and stat.S_IMODE(p.stat().st_mode)==int(r['mode'],8)
+  processes=audit.process_observation();assert not processes['holders'] and not processes['inaccessible_owned_entries'],processes
+- before=os.statvfs('/tmp');removed=[]
++ before=os.statvfs('/workspace');removed=[]
+  if a.remove:
+   for r in m['files']:
+    p=audit.safe(Path(r['root'])/r['path']);assert meta(p)==expected(r);p.unlink();removed.append(str(p))
+   assert all(not (Path(r['root'])/r['path']).exists() for r in m['files'])
+- after=os.statvfs('/tmp')
+- result={'schema':1,'status':'removed_exact_files' if a.remove else 'verified_only_no_deletion','utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'map_sha256':MAP_SHA,'published_commit':a.published_commit,'verified_files':114,'removed_files':len(removed),'removed_paths':removed,'logical_bytes':m['logical_bytes'],'allocated_file_bytes':m['allocated_file_bytes'],'process_observation':processes,'tmp_available_before':before.f_bavail*before.f_frsize,'tmp_available_after':after.f_bavail*after.f_frsize,'scope':'Only114 mapped regular files:3r3 expansions plus2 explicit Windows rawPCKs; all directories, archives, LinuxrawPCKs, unrelated build siblings, unique metadata/logs/users/cache and other roots retained. Concurrent writes can affect free-space delta.'}
++ for name,pin in m['protected_build_files'].items():assert audit.pin(audit.safe(Path(name)))==pin
++ after=os.statvfs('/workspace')
++ result={'schema':1,'status':'removed_exact_files' if a.remove else 'verified_only_no_deletion','utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'map_sha256':MAP_SHA,'published_commit':a.published_commit,'verified_files':80,'removed_files':len(removed),'removed_paths':removed,'logical_bytes':m['logical_bytes'],'allocated_file_bytes':m['allocated_file_bytes'],'process_observation':processes,'workspace_available_before':before.f_bavail*before.f_frsize,'workspace_available_after':after.f_bavail*after.f_frsize,'scope':'Only80 mapped regular files:2r4 build expansions plus1 standalone Windows rawPCK; all directories, five release assets, LinuxrawPCK, actual extracted runtime, unrelated build siblings, unique metadata/logs/users/cache and other roots retained. Concurrent writes can affect free-space delta.'}
+  a.report.parent.mkdir(parents=True,exist_ok=True);a.report.write_text(json.dumps(result,indent=2)+'\n')
+  print(json.dumps({k:result[k] for k in ['status','verified_files','removed_files','logical_bytes','allocated_file_bytes']}))
+ if __name__=='__main__':main()

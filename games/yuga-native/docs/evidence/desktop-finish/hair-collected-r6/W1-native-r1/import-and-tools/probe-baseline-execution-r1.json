@@ -1,0 +1,27 @@
+{
+  "command": [
+    "env",
+    "LP_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "XDG_DATA_HOME=/tmp/yuga-hair-r6-import-r1/probe-user-baseline/data",
+    "XDG_CONFIG_HOME=/tmp/yuga-hair-r6-import-r1/probe-user-baseline/config",
+    "taskset",
+    "-c",
+    "4",
+    "timeout",
+    "60s",
+    "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "--headless",
+    "--path",
+    "/tmp/yuga-hair-r6-import-r1/baseline-project",
+    "--script",
+    "/tmp/yuga-hair-r6-import-r1/evidence/import_semantics.gd",
+    "--",
+    "--output=/tmp/yuga-hair-r6-import-r1/semantics-baseline"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 2.7826786041259766,
+  "log_sha256": "64bcdcd5d98aa307d1a11241aa1ed1c72e2177ef11893d398db9e3560d5225c4"
+}
