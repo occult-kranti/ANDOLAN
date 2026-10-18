@@ -1,0 +1,82 @@
+{
+  "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+  "motion_sha256": "ba318d5f6bedab8626fbac8c571607619b3b14f2db82eb4b682e2654c74da45c",
+  "worker_pool_capped": false,
+  "records": [
+    {
+      "name": "preparation-guards-r1",
+      "passed": true,
+      "count": 10,
+      "exit_code": 0,
+      "command": [
+        "env",
+        "LP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "XDG_DATA_HOME=/workspace/scratch/yuga-landing-preparation-candidate-r2/guard-user/data",
+        "XDG_CONFIG_HOME=/workspace/scratch/yuga-landing-preparation-candidate-r2/guard-user/config",
+        "XDG_CACHE_HOME=/workspace/scratch/yuga-landing-preparation-candidate-r2/guard-user/cache",
+        "timeout",
+        "45s",
+        "taskset",
+        "-c",
+        "4",
+        "/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-pipeline-low-priority",
+        "--headless",
+        "--path",
+        "/workspace/scratch/yuga-landing-preparation-candidate-r2/project",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/next-motion/W5-landing-preparation-candidate-r1/preparation_guard_cases.gd",
+        "--",
+        "--report=/workspace/scratch/yuga-landing-preparation-candidate-r2/preparation-guards-r1.json"
+      ],
+      "fixture_sha256": "fe0911ff4f8ce21942d293f31398317608a82804551a954b025a32fc84052e73",
+      "raw_report": {
+        "path": "/workspace/scratch/yuga-landing-preparation-candidate-r2/preparation-guards-r1.json",
+        "bytes": 778154,
+        "sha256": "47a9cd31af28a458a7a04ecd9add2b6ea1a8c4d96da9e57eda39a412e137546d"
+      }
+    },
+    {
+      "name": "existing-boundaries-r1",
+      "passed": true,
+      "count": 30,
+      "exit_code": 0,
+      "command": [
+        "env",
+        "LP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "XDG_DATA_HOME=/workspace/scratch/yuga-landing-preparation-candidate-r2/boundary-user/data",
+        "XDG_CONFIG_HOME=/workspace/scratch/yuga-landing-preparation-candidate-r2/boundary-user/config",
+        "XDG_CACHE_HOME=/workspace/scratch/yuga-landing-preparation-candidate-r2/boundary-user/cache",
+        "timeout",
+        "45s",
+        "taskset",
+        "-c",
+        "4",
+        "/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-pipeline-low-priority",
+        "--headless",
+        "--path",
+        "/workspace/scratch/yuga-landing-preparation-candidate-r2/project",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/next-motion/W5-landing-preparation-candidate-r1/existing_boundary_external.gd",
+        "--",
+        "--report=/workspace/scratch/yuga-landing-preparation-candidate-r2/existing-boundaries-r1.json"
+      ],
+      "fixture_sha256": "5f981fdfe813322ca7243d3c82c236bf6de07065ea02334df09bb5a5f94c640c",
+      "raw_report": {
+        "path": "/workspace/scratch/yuga-landing-preparation-candidate-r2/existing-boundaries-r1.json",
+        "bytes": 4938003,
+        "sha256": "50ff6224e6c477a9743e6dd72338f27c30b770f2d9ff96e05f6ed1fcc519797a"
+      }
+    }
+  ],
+  "limits": "Existing out_of_range label remains its historical injected state at300mm; it proves no correction for that pose, not that300mm lies outside the new450mm query. New positive preparation witness supplies meaningful downward correction before invalidation."
+}

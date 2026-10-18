@@ -1,0 +1,66 @@
+--- baseline5023/rama_motion.gd
++++ private-candidate-r1/rama_motion.gd
+@@ -22,6 +22,10 @@
+ # Resolve only a nearby flat support plane; never move the actor or its capsule.
+ const IDLE_SUPPORT_PROBE_M := .08
+ const IDLE_SUPPORT_SETTLE_S := .12
++# Private candidate: prepare ordinary descending legs near a freshly measured
++# support, before the unchanged whole-body landing crossfade begins.
++const LANDING_PREPARE_HEIGHT_M := .45
++const LANDING_PREPARE_MAX_EXTENSION_M := .16
+ const ACTIONS := {
+ 	"kodanda":["draw","release",false],
+ 	"piercing_dawn":["piercing_draw","piercing_release",false],
+@@ -314,14 +318,17 @@
+ 	var world:=rig.get_world_3d()
+ 	if not is_instance_valid(world):return
+ 	var pose:Dictionary={} if grounded else _motion_pose()
++	var neutral_fall:=not grounded and action.is_empty() and action_stage=="none" and aim_weight<=.001
++	var probe_depth:=LANDING_PREPARE_HEIGHT_M if neutral_fall else IDLE_SUPPORT_PROBE_M
+ 	descent_support_transform=rig.global_transform
+ 	for side in ["L","R"]:
+ 		var foot:=rig.find_bone("foot."+side)
+ 		var point:Vector3=rig.global_transform*last_globals[foot].origin if grounded else _support_foot_world(side,pose)
+ 		var from:=Vector3(point.x,floor_y+IDLE_SUPPORT_PROBE_M,point.z)
+-		var to:=Vector3(point.x,floor_y-IDLE_SUPPORT_PROBE_M,point.z)
++		var to:=Vector3(point.x,floor_y-probe_depth,point.z)
+ 		var hit:=world.direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from,to,1,support_exclude))
+-		if hit.is_empty() or Vector3(hit.normal).dot(Vector3.UP)<=.9999 or absf(float(hit.position.y)-floor_y)>IDLE_SUPPORT_PROBE_M:continue
++		if hit.is_empty() or Vector3(hit.normal).dot(Vector3.UP)<=.9999:continue
++		if float(hit.position.y)<floor_y-probe_depth or float(hit.position.y)>floor_y+IDLE_SUPPORT_PROBE_M:continue
+ 		if grounded:measured_support_seen=true
+ 		else:
+ 			var shape_state:=_descent_shape_state(hit.collider,int(hit.shape))
+@@ -519,7 +526,32 @@
+ 			# Clearance only: keep horizontal motion and plant anchors intact.
+ 			_solve_leg(side,rig.global_transform.affine_inverse()*point)
+ 
++func _prepare_landing_legs() -> void:
++	# Airborne visual extension only. The target remains at the actor's own
++	# support-relative height; feet are never pulled down to a distant plane.
++	# No cached preparation is carried into ground admission or invalid hits.
++	if grounded or traversal!="ground" or locomotion!="fall" or world_velocity.y>0:return
++	if not action.is_empty() or action_stage!="none" or aim_weight>.001:return
++	if descent_support_y.is_empty() or not rig.is_inside_tree() or rig.global_transform!=descent_support_transform:return
++	for side in ["L","R"]:
++		if not descent_support_y.has(side) or not descent_support_owner.has(side):continue
++		var owner:Node3D=descent_support_owner[side].get_ref()
++		if not is_instance_valid(owner) or not owner.is_inside_tree() or owner.is_queued_for_deletion() or owner.global_transform!=descent_support_owner_transform[side]:continue
++		if not descent_support_shape.has(side) or not _descent_shape_valid(owner,descent_support_shape[side]):continue
++		var foot:=rig.find_bone("foot."+side)
++		var point:Vector3=rig.global_transform*rig.get_bone_global_pose(foot).origin
++		if not descent_support_xz.has(side) or Vector2(point.x,point.z).distance_squared_to(descent_support_xz[side])>1e-10:continue
++		var support_y:float=descent_support_y[side]
++		var clearance:=floor_y-support_y
++		if clearance<0 or clearance>=LANDING_PREPARE_HEIGHT_M:continue
++		var standing_y:=maxf(floor_y,support_y)+rest_globals[foot].origin.y
++		var extension:=clampf(point.y-standing_y,0,LANDING_PREPARE_MAX_EXTENSION_M)
++		if extension<=.001:continue
++		point.y-=extension*_smooth(1-clearance/LANDING_PREPARE_HEIGHT_M)
++		_solve_leg(side,rig.global_transform.affine_inverse()*point)
++
+ func _apply_contact() -> void:
++	_prepare_landing_legs()
+ 	_protect_transition_floor()
+ 	var contact_allowed:=transition_age>=transition_duration and grounded and traversal=="ground" and locomotion in ["idle","walk","run","sprint","land"] and action!="death" and not (action=="measured_step" and action_stage!="none")
+ 	var targets:={}

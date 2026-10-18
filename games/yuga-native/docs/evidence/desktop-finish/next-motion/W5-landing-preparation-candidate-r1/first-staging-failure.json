@@ -1,0 +1,6 @@
+{
+  "error": "AttributeError: module snapshot has no attribute sha",
+  "cause": "One-off stager used sha instead of existing digest helper. Failed before child creation or engine launch.",
+  "followup_shell": "redirect output directory absent; no runner started",
+  "correction": "Stored stage_candidate.py uses digest; no source/pin relaxation."
+}

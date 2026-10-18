@@ -1,0 +1,11 @@
+--- baseline/scripts/launch_shell.gd
++++ candidate/scripts/launch_shell.gd
+@@ -248,7 +248,7 @@
+ 	for item in [world_mode_button, train_mode_button]:
+ 		_style_mode(item, item.button_pressed)
+ 	mode_title.text = "Confluence" if world_selected else "Bow training"
+-	mode_description.text = "Join local army battles across three lanes and capture relays as Rama." if world_selected else "Practice Rama’s bow and four abilities against courtyard targets. Reset whenever you want."
++	mode_description.text = "Offline practice with local armies, three lanes and capture relays as Rama." if world_selected else "Offline practice with Rama’s bow and four abilities against courtyard targets. Reset anytime."
+ 	primary_button.text = ("Enter Confluence  →" if world_selected else "Begin bow training  →")
+ 	var loading := launch_state == "loading"
+ 	for action in _actions: action.disabled = loading
