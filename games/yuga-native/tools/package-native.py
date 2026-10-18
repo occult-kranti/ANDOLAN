@@ -1332,11 +1332,11 @@ def git_context() -> dict:
 
 FIRST_LOAD_RESOURCES = ('scenes/boot.tscn', 'scripts/boot.gd',
                         'scripts/scene_transition.gd', 'scripts/loading_presentation.gd', 'scripts/launch_shell.gd',
-                        'scripts/hero_ui_theme.gd')
+                        'scripts/hero_ui_theme.gd', 'scripts/ui_scroll_focus.gd')
 GRAPHICS_SCRIPT_RESOURCES = (
     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
-    'scripts/world_roof_loggia.gd', 'scripts/world_lane_frontage.gd',
+    'scripts/world_roof_loggia.gd', 'scripts/world_lane_frontage.gd', 'scripts/world_render_resources.gd',
 )
 GRAPHICS_DIRECT_RESOURCES = ('assets/environment-finish/masonry.gdshader',
                              'assets/hero-finish/g1-manifest.json',

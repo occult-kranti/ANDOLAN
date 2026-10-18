@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "status": "FOCUSED_PACKAGE_DEPENDENCY_CHECKS_PASS",
+  "at_utc": "2026-10-18T14:12:43.716934+00:00",
+  "source_before_sha256": "79c899ad88f3ef862752fc5b54d2cbfcf35435cad773b55518b9b7639dfe65cf",
+  "source_after_sha256": "04299c2dbb18ff7ad95b3ce927cfcd762e56e22f4f77cd7ddfaf88f6fbdf333b",
+  "fixture_sha256": "3217b9abb4fe31c95b21d249569bc983915bf63c8ef572996a8dc5d60363508f",
+  "command": "python games/yuga-native/tests/traversal_security_cases.py --report <fresh-path>",
+  "before": {
+    "passed": 127,
+    "total": 132,
+    "exit_code": 1,
+    "failed": [
+      "missing first-load dependency rejected: scripts/ui_scroll_focus.gd",
+      "first-load substring substitution rejected: scripts/ui_scroll_focus.gd",
+      "missing first-load remap destination rejected: scripts/ui_scroll_focus.gd",
+      "missing world primitive pool rejects",
+      "orphan world primitive pool remap rejects"
+    ]
+  },
+  "after": {
+    "passed": 132,
+    "total": 132,
+    "exit_code": 0
+  },
+  "unchanged_ast_outside_two_resource_lists": true,
+  "changes": [
+    "Require ui_scroll_focus.gd under existing first-load resource/remap qualification.",
+    "Require world_render_resources.gd under existing graphics script/remap qualification.",
+    "Independent synthetic pack fixtures exercise missing and orphan dependencies, correct compiled layout and ui helper filename substitution. All original controls retained."
+  ],
+  "artifacts": [
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/package-source-before.py.txt",
+      "bytes": 130122,
+      "sha256": "79c899ad88f3ef862752fc5b54d2cbfcf35435cad773b55518b9b7639dfe65cf"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/package-helper-checks/baseline.json",
+      "bytes": 35766,
+      "sha256": "9ce9b4eb4e0ff8734142c3129671890d0bbed2dabe4286738afe49a30a7a4a92"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/package-helper-checks/baseline.log",
+      "bytes": 1437,
+      "sha256": "2f499c6e666d9f02ef11b6d7d904cae2e64f564e70e60ad25e796b7d8580d9e2"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/package-helper-checks/candidate.json",
+      "bytes": 36204,
+      "sha256": "aa9f479704dfbda7e22f94e4fa81debb25054114388eb8ef5ca1677f5fb81b6d"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/package-helper-checks/candidate.log",
+      "bytes": 54,
+      "sha256": "726860cdf5d7679ac2b8284e5fe73920b7749c37d1c550861873c4149362de07"
+    }
+  ],
+  "engine_or_export_runs": 0,
+  "limits": [
+    "Structural PCK dependency proof only; no executable or visual qualification.",
+    "Current published96d5 package remains unchanged."
+  ]
+}

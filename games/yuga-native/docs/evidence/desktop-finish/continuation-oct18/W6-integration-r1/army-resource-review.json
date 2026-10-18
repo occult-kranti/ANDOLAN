@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "at_utc": "2026-10-18T14:24:26.494555+00:00",
+  "status": "BOUNDED_SOURCE_REVIEW_ACCEPT_ACTUAL_PENDING",
+  "owner_receipt": {
+    "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-army-resources-r1/receipt.json",
+    "bytes": 6999,
+    "sha256": "20bf9e6ece9e551ba892875dedf3968ae23e69228d787e4e4847f9c6aed9fdc1"
+  },
+  "artifact_pins_verified": 18,
+  "source_pins_verified": [
+    {
+      "path": "games/yuga-native/scripts/lane_army.gd",
+      "bytes": 30837,
+      "sha256": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e"
+    },
+    {
+      "path": "games/yuga-native/scripts/lane_minion.gd",
+      "bytes": 10489,
+      "sha256": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387"
+    },
+    {
+      "path": "games/yuga-native/tests/desktop_army_render_resources_cases.gd",
+      "bytes": 11451,
+      "sha256": "85c30bd971f4d257de155db34c6fe64a876f79c64f52a22f771527c88d839f65"
+    },
+    {
+      "path": "games/yuga-native/tests/desktop_army_render_resources_cases.gd.uid",
+      "bytes": 20,
+      "sha256": "44ce2c7d930b95f4e6fc789d3189c39ede0c1a34a537d6b316084def7e38902b"
+    },
+    {
+      "path": "games/yuga-native/scripts/world_render_resources.gd",
+      "bytes": 2140,
+      "sha256": "9c05d06cd78fd8e9326ac55f89939038ffd08fa69d1f5cdac00dc8a5a1b93472"
+    }
+  ],
+  "independent_function_comparison": {
+    "lane_army.gd": {
+      "old_git_blob_exact": true,
+      "changed_existing_functions": [],
+      "new_functions": [
+        "presentation_mesh_resources"
+      ],
+      "unchanged_function_count": 42
+    },
+    "lane_minion.gd": {
+      "old_git_blob_exact": true,
+      "changed_existing_functions": [
+        "_ready"
+      ],
+      "new_functions": [],
+      "unchanged_function_count": 21
+    }
+  },
+  "owner_same_fixture_results": {
+    "baseline": "16/21",
+    "candidate": "21/21"
+  },
+  "findings": [
+    "The lazy RefCounted pool is owned by each army; standalone units construct an independent fallback. No static/global cache or cross-army lifetime extension.",
+    "Only three fixed BoxMesh constructors and one fixed CylinderMesh constructor are replaced. Shared geometry has no embedded material; ninety per-unit material identities and thirty capsule resources remain distinct.",
+    "All42 existing army functions and21 of22 unit functions remain byte-identical; only unit _ready changes. The fixture compares all5roles\u00d72teams against exact committed original geometry arrays, transforms, material state and capsule dimensions.",
+    "Actual reset, later wave, corpse teardown, independent army, fallback, damage/shield/material-mutation and deliberately wrong geometry/material controls meaningfully exercise the ownership claim.",
+    "Source-only tiny capture helper/comparator read found no property/mode blocker; exact six-source controls and two source delta pins remain required."
+  ],
+  "limits": [
+    "No independent engine or screenshot run; source/native owner evidence only. 102 mesh instances include hidden status/arrow slots and are not102 draw calls. No FPS, rendering cost or art-quality acceptance."
+  ]
+}

@@ -2,6 +2,7 @@ extends Control
 ## Shared modal. Callers own pause state; this panel owns keyboard capture and focus.
 const Bindings = preload("res://scripts/input_bindings.gd")
 const UI = preload("res://scripts/hero_ui_theme.gd")
+const ScrollFocus = preload("res://scripts/ui_scroll_focus.gd")
 const BINDING_GROUPS := [
 	{"title":"Movement","actions":["move_forward","move_back","move_left","move_right","jump","sprint"]},
 	{"title":"Flight and tether","actions":["fly","grapple","descend"]},
@@ -17,6 +18,7 @@ var done_button: Button
 var cancel_button: Button
 var reset_button: Button
 var focus_order: Array[Control] = []
+var _last_viewport := Vector2.ZERO
 
 func _ready() -> void:
 	name = "KeyboardControls"
@@ -135,9 +137,13 @@ func _accepts_input() -> bool:
 func _layout() -> void:
 	if not card: return
 	var viewport := get_viewport_rect().size
+	var resized_viewport := viewport != _last_viewport
+	_last_viewport = viewport
 	var target := Vector2(minf(680,viewport.x-UI.SPACE_XL),minf(700,viewport.y-UI.SPACE_XL))
 	card.size = target
 	card.position = (viewport-card.size)/2
+	if resized_viewport:
+		ScrollFocus.reveal_after_layout(self,card.find_child("MappingsScroll",true,false))
 
 func open() -> void:
 	Bindings.release_gameplay()

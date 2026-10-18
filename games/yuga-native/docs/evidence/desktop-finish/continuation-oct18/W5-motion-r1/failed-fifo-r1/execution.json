@@ -1,0 +1,48 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "3",
+    "/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-pipeline-low-priority",
+    "--path",
+    "/workspace/scratch/yuga-continuation-W5-r1/project",
+    "--audio-driver",
+    "Dummy",
+    "--disable-vsync",
+    "--fixed-fps",
+    "30",
+    "--headless",
+    "--script",
+    "res://tools/graphics-six/capture_locomotion.gd",
+    "--",
+    "--output=/workspace/scratch/yuga-continuation-W5-r1/natural-r1",
+    "--case=locomotion",
+    "--preflight"
+  ],
+  "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+  "stage_sha256": "720c5d400443b9f6ba2e4871ff46493aa01f0f0227202b4ff2b8fed470863422",
+  "started_unix": 1792331700.4712417,
+  "timeout_s": 180,
+  "streaming_gzip": true,
+  "raw_limit_bytes": 20971520,
+  "source_scope": "Historical96d5 stage plus private motion; full helper/input/import bytes unchanged. Headless only; no rendering or cache seeding.",
+  "worker_pool_capped": false,
+  "affinity": "3",
+  "thread_environment": {
+    "LP_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "pid": 83425,
+  "passed": false,
+  "failure": "TimeoutExpired(['taskset', '-c', '3', '/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-pipeline-low-priority', '--path', '/workspace/scratch/yuga-continuation-W5-r1/project', '--audio-driver', 'Dummy', '--disable-vsync', '--fixed-fps', '30', '--headless', '--script', 'res://tools/graphics-six/capture_locomotion.gd', '--', '--output=/workspace/scratch/yuga-continuation-W5-r1/natural-r1', '--case=locomotion', '--preflight'], 180)",
+  "stream": {
+    "raw_bytes": 0,
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gzip_bytes": 20,
+    "gzip_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  "elapsed_s": 180.0220543030009,
+  "finished_unix": 1792331880.493306
+}

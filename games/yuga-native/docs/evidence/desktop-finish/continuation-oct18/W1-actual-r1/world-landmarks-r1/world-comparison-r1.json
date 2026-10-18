@@ -1,0 +1,2208 @@
+{
+  "reports_complete": true,
+  "checks_pass": true,
+  "admitted_difference_paths": [
+    "/drawn_frame",
+    "/frontage/branch",
+    "/physics_frame",
+    "/pose_signal_counters/drawn_frame",
+    "/pose_signal_counters/physics_frame",
+    "/pose_signal_counters/process_frame",
+    "/process_frame",
+    "/sha256"
+  ],
+  "all_shot_differences": [
+    {
+      "path": "/drawn_frame",
+      "baseline": 65,
+      "candidate": 67
+    },
+    {
+      "path": "/frontage/branch",
+      "baseline": "baseline",
+      "candidate": "candidate"
+    },
+    {
+      "path": "/materials/09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "baseline": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 215352347404,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Worked warm gold \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-basecolor.png",
+            "source_sha256": "0c95ba75207012e1c503446acd25825654db6aa2bb34047ebec5e39cd3a3ba16"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-roughness.png",
+            "source_sha256": "be927a1c3c212e8c97cde16e1e6401cb306641e459a007c99c8bcf349565dd7c"
+          },
+          "shader_parameter/metallic_value": 0.88,
+          "shader_parameter/normal_strength": 0.239999994635582,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-normal.png",
+            "source_sha256": "f8dd12be87b44811ca7ea26b3b025a5ab70c1e5a3b167677e3bb3d322db8006f"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/s1-hammered-gold-roughness.png",
+            "source_sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.48,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-basecolor.png",
+            "source_sha256": "0c95ba75207012e1c503446acd25825654db6aa2bb34047ebec5e39cd3a3ba16"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-roughness.png",
+            "source_sha256": "be927a1c3c212e8c97cde16e1e6401cb306641e459a007c99c8bcf349565dd7c"
+          },
+          "metallic_value": 0.88,
+          "normal_strength": 0.239999994635582,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-normal.png",
+            "source_sha256": "f8dd12be87b44811ca7ea26b3b025a5ab70c1e5a3b167677e3bb3d322db8006f"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/s1-hammered-gold-roughness.png",
+            "source_sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.48,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      },
+      "candidate": null
+    },
+    {
+      "path": "/materials/1a4af08658e1648e5efbd271c40ad1b76ac078b06a7f711f0e2eb77cc3d271e8",
+      "baseline": null,
+      "candidate": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 212584106538,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Swept black hair \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-basecolor.png",
+            "source_sha256": "394a3a4a3babb546f89b76aad70238b0d8b5d1973f3004985ad915a10823cc56"
+          },
+          "shader_parameter/metal_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": null,
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.239999994635582,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-normal.png",
+            "source_sha256": "037278b9204258fe9d9b10561b9c19f8564041f30dd5464348d10fe98950a257"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/hair-bundle-roughness.png",
+            "source_sha256": "93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            1.27839261399032e-09,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.29,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": false,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-basecolor.png",
+            "source_sha256": "394a3a4a3babb546f89b76aad70238b0d8b5d1973f3004985ad915a10823cc56"
+          },
+          "metal_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "metal_texture": null,
+          "metallic_value": 0.0,
+          "normal_strength": 0.239999994635582,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-normal.png",
+            "source_sha256": "037278b9204258fe9d9b10561b9c19f8564041f30dd5464348d10fe98950a257"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/hair-bundle-roughness.png",
+            "source_sha256": "93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            1.27839261399032e-09,
+            0.0
+          ],
+          "specular_value": 0.29,
+          "use_base_texture": true,
+          "use_metal_texture": false,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      }
+    },
+    {
+      "path": "/materials/282350e7ecd1ffeb8c520e1eb4c49134706e20329f764e8800d25a0a6d847612",
+      "baseline": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 215352347404,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Cobalt handwoven silk \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-basecolor.png",
+            "source_sha256": "f1369ca6a4b4ca838b54305ffddd2dddef7b104c5dadc9c6fd0be5ea9a6a459c"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-roughness.png",
+            "source_sha256": "27f953c6aa77293459f886135305c8e2215bce3c5d310e3f345452f29ede7680"
+          },
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.449999988079071,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-normal.png",
+            "source_sha256": "3ae45b6e897d956e20cbbf70f49cca3ddebe207254fd52257a8129b31144f1f2"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.38,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-basecolor.png",
+            "source_sha256": "f1369ca6a4b4ca838b54305ffddd2dddef7b104c5dadc9c6fd0be5ea9a6a459c"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-roughness.png",
+            "source_sha256": "27f953c6aa77293459f886135305c8e2215bce3c5d310e3f345452f29ede7680"
+          },
+          "metallic_value": 0.0,
+          "normal_strength": 0.449999988079071,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-normal.png",
+            "source_sha256": "3ae45b6e897d956e20cbbf70f49cca3ddebe207254fd52257a8129b31144f1f2"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.38,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      },
+      "candidate": null
+    },
+    {
+      "path": "/materials/3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535",
+      "baseline": null,
+      "candidate": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 212584106538,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Worked warm gold \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-basecolor.png",
+            "source_sha256": "0c95ba75207012e1c503446acd25825654db6aa2bb34047ebec5e39cd3a3ba16"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-roughness.png",
+            "source_sha256": "be927a1c3c212e8c97cde16e1e6401cb306641e459a007c99c8bcf349565dd7c"
+          },
+          "shader_parameter/metallic_value": 0.88,
+          "shader_parameter/normal_strength": 0.239999994635582,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-normal.png",
+            "source_sha256": "f8dd12be87b44811ca7ea26b3b025a5ab70c1e5a3b167677e3bb3d322db8006f"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/s1-hammered-gold-roughness.png",
+            "source_sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.48,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-basecolor.png",
+            "source_sha256": "0c95ba75207012e1c503446acd25825654db6aa2bb34047ebec5e39cd3a3ba16"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-roughness.png",
+            "source_sha256": "be927a1c3c212e8c97cde16e1e6401cb306641e459a007c99c8bcf349565dd7c"
+          },
+          "metallic_value": 0.88,
+          "normal_strength": 0.239999994635582,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-normal.png",
+            "source_sha256": "f8dd12be87b44811ca7ea26b3b025a5ab70c1e5a3b167677e3bb3d322db8006f"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/s1-hammered-gold-roughness.png",
+            "source_sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.48,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      }
+    },
+    {
+      "path": "/materials/632204bf33a2d672ae943788bf999600a5da36ab14f36806ca2fb117334e0c09",
+      "baseline": null,
+      "candidate": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 212584106538,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Cobalt lotus brocade \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-basecolor.png",
+            "source_sha256": "9a65d1fb3c9385d6be98966a0d26bab74dbc5dcb84e897bcdeca7f6652094d46"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-roughness.png",
+            "source_sha256": "6f1e38864f259584ac41f79039aae8602405e80ae93a00e5bc2ac93f860f88b0"
+          },
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.449999988079071,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-normal.png",
+            "source_sha256": "877d9698ac5a237b90a9fe42a14ca1a51bda4263f95163b74a120088c7b5710c"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.38,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-basecolor.png",
+            "source_sha256": "9a65d1fb3c9385d6be98966a0d26bab74dbc5dcb84e897bcdeca7f6652094d46"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-roughness.png",
+            "source_sha256": "6f1e38864f259584ac41f79039aae8602405e80ae93a00e5bc2ac93f860f88b0"
+          },
+          "metallic_value": 0.0,
+          "normal_strength": 0.449999988079071,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-normal.png",
+            "source_sha256": "877d9698ac5a237b90a9fe42a14ca1a51bda4263f95163b74a120088c7b5710c"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.38,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      }
+    },
+    {
+      "path": "/materials/96397f22580cf9304826f74e619658772af99201be50f3f71c03b682a336dc05",
+      "baseline": null,
+      "candidate": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 212584106538,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Cobalt handwoven silk \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-basecolor.png",
+            "source_sha256": "f1369ca6a4b4ca838b54305ffddd2dddef7b104c5dadc9c6fd0be5ea9a6a459c"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-roughness.png",
+            "source_sha256": "27f953c6aa77293459f886135305c8e2215bce3c5d310e3f345452f29ede7680"
+          },
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.449999988079071,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-normal.png",
+            "source_sha256": "3ae45b6e897d956e20cbbf70f49cca3ddebe207254fd52257a8129b31144f1f2"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.38,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-basecolor.png",
+            "source_sha256": "f1369ca6a4b4ca838b54305ffddd2dddef7b104c5dadc9c6fd0be5ea9a6a459c"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-roughness.png",
+            "source_sha256": "27f953c6aa77293459f886135305c8e2215bce3c5d310e3f345452f29ede7680"
+          },
+          "metallic_value": 0.0,
+          "normal_strength": 0.449999988079071,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-normal.png",
+            "source_sha256": "3ae45b6e897d956e20cbbf70f49cca3ddebe207254fd52257a8129b31144f1f2"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.38,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      }
+    },
+    {
+      "path": "/materials/c6d53ba73fcf24768736bb7a4414750d244b9dd9a337658df7dd8834feff35f5",
+      "baseline": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 215352347404,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Cobalt lotus brocade \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-basecolor.png",
+            "source_sha256": "9a65d1fb3c9385d6be98966a0d26bab74dbc5dcb84e897bcdeca7f6652094d46"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-roughness.png",
+            "source_sha256": "6f1e38864f259584ac41f79039aae8602405e80ae93a00e5bc2ac93f860f88b0"
+          },
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.449999988079071,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-normal.png",
+            "source_sha256": "877d9698ac5a237b90a9fe42a14ca1a51bda4263f95163b74a120088c7b5710c"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.38,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-basecolor.png",
+            "source_sha256": "9a65d1fb3c9385d6be98966a0d26bab74dbc5dcb84e897bcdeca7f6652094d46"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-roughness.png",
+            "source_sha256": "6f1e38864f259584ac41f79039aae8602405e80ae93a00e5bc2ac93f860f88b0"
+          },
+          "metallic_value": 0.0,
+          "normal_strength": 0.449999988079071,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-normal.png",
+            "source_sha256": "877d9698ac5a237b90a9fe42a14ca1a51bda4263f95163b74a120088c7b5710c"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.38,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      },
+      "candidate": null
+    },
+    {
+      "path": "/materials/cdccf861f68388b1fc517d811b5005c24fa20187cc16d03677bbe651d2409966",
+      "baseline": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 215352347404,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Swept black hair \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-basecolor.png",
+            "source_sha256": "394a3a4a3babb546f89b76aad70238b0d8b5d1973f3004985ad915a10823cc56"
+          },
+          "shader_parameter/metal_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": null,
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.239999994635582,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-normal.png",
+            "source_sha256": "037278b9204258fe9d9b10561b9c19f8564041f30dd5464348d10fe98950a257"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/hair-bundle-roughness.png",
+            "source_sha256": "93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            1.27839261399032e-09,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.29,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": false,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-basecolor.png",
+            "source_sha256": "394a3a4a3babb546f89b76aad70238b0d8b5d1973f3004985ad915a10823cc56"
+          },
+          "metal_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "metal_texture": null,
+          "metallic_value": 0.0,
+          "normal_strength": 0.239999994635582,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-normal.png",
+            "source_sha256": "037278b9204258fe9d9b10561b9c19f8564041f30dd5464348d10fe98950a257"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/hair-bundle-roughness.png",
+            "source_sha256": "93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            1.27839261399032e-09,
+            0.0
+          ],
+          "specular_value": 0.29,
+          "use_base_texture": true,
+          "use_metal_texture": false,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      },
+      "candidate": null
+    },
+    {
+      "path": "/meshes/354/surfaces/0",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/356/surfaces/0",
+      "baseline": "cdccf861f68388b1fc517d811b5005c24fa20187cc16d03677bbe651d2409966",
+      "candidate": "1a4af08658e1648e5efbd271c40ad1b76ac078b06a7f711f0e2eb77cc3d271e8"
+    },
+    {
+      "path": "/meshes/356/surfaces/2",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/356/surfaces/3",
+      "baseline": "282350e7ecd1ffeb8c520e1eb4c49134706e20329f764e8800d25a0a6d847612",
+      "candidate": "96397f22580cf9304826f74e619658772af99201be50f3f71c03b682a336dc05"
+    },
+    {
+      "path": "/meshes/356/surfaces/4",
+      "baseline": "c6d53ba73fcf24768736bb7a4414750d244b9dd9a337658df7dd8834feff35f5",
+      "candidate": "632204bf33a2d672ae943788bf999600a5da36ab14f36806ca2fb117334e0c09"
+    },
+    {
+      "path": "/meshes/359/surfaces/0",
+      "baseline": "cdccf861f68388b1fc517d811b5005c24fa20187cc16d03677bbe651d2409966",
+      "candidate": "1a4af08658e1648e5efbd271c40ad1b76ac078b06a7f711f0e2eb77cc3d271e8"
+    },
+    {
+      "path": "/meshes/359/surfaces/2",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/359/surfaces/3",
+      "baseline": "282350e7ecd1ffeb8c520e1eb4c49134706e20329f764e8800d25a0a6d847612",
+      "candidate": "96397f22580cf9304826f74e619658772af99201be50f3f71c03b682a336dc05"
+    },
+    {
+      "path": "/meshes/359/surfaces/4",
+      "baseline": "c6d53ba73fcf24768736bb7a4414750d244b9dd9a337658df7dd8834feff35f5",
+      "candidate": "632204bf33a2d672ae943788bf999600a5da36ab14f36806ca2fb117334e0c09"
+    },
+    {
+      "path": "/meshes/360/surfaces/0",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/361/surfaces/0",
+      "baseline": "cdccf861f68388b1fc517d811b5005c24fa20187cc16d03677bbe651d2409966",
+      "candidate": "1a4af08658e1648e5efbd271c40ad1b76ac078b06a7f711f0e2eb77cc3d271e8"
+    },
+    {
+      "path": "/meshes/361/surfaces/2",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/361/surfaces/3",
+      "baseline": "282350e7ecd1ffeb8c520e1eb4c49134706e20329f764e8800d25a0a6d847612",
+      "candidate": "96397f22580cf9304826f74e619658772af99201be50f3f71c03b682a336dc05"
+    },
+    {
+      "path": "/meshes/361/surfaces/4",
+      "baseline": "c6d53ba73fcf24768736bb7a4414750d244b9dd9a337658df7dd8834feff35f5",
+      "candidate": "632204bf33a2d672ae943788bf999600a5da36ab14f36806ca2fb117334e0c09"
+    },
+    {
+      "path": "/meshes/362/surfaces/0",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/physics_frame",
+      "baseline": 131,
+      "candidate": 135
+    },
+    {
+      "path": "/pose_signal_counters/drawn_frame",
+      "baseline": 65,
+      "candidate": 67
+    },
+    {
+      "path": "/pose_signal_counters/physics_frame",
+      "baseline": 131,
+      "candidate": 135
+    },
+    {
+      "path": "/pose_signal_counters/process_frame",
+      "baseline": 65,
+      "candidate": 67
+    },
+    {
+      "path": "/process_frame",
+      "baseline": 65,
+      "candidate": 67
+    }
+  ],
+  "unexpected_shot_differences": [
+    {
+      "path": "/materials/09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "baseline": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 215352347404,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Worked warm gold \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-basecolor.png",
+            "source_sha256": "0c95ba75207012e1c503446acd25825654db6aa2bb34047ebec5e39cd3a3ba16"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-roughness.png",
+            "source_sha256": "be927a1c3c212e8c97cde16e1e6401cb306641e459a007c99c8bcf349565dd7c"
+          },
+          "shader_parameter/metallic_value": 0.88,
+          "shader_parameter/normal_strength": 0.239999994635582,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-normal.png",
+            "source_sha256": "f8dd12be87b44811ca7ea26b3b025a5ab70c1e5a3b167677e3bb3d322db8006f"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/s1-hammered-gold-roughness.png",
+            "source_sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.48,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-basecolor.png",
+            "source_sha256": "0c95ba75207012e1c503446acd25825654db6aa2bb34047ebec5e39cd3a3ba16"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-roughness.png",
+            "source_sha256": "be927a1c3c212e8c97cde16e1e6401cb306641e459a007c99c8bcf349565dd7c"
+          },
+          "metallic_value": 0.88,
+          "normal_strength": 0.239999994635582,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-normal.png",
+            "source_sha256": "f8dd12be87b44811ca7ea26b3b025a5ab70c1e5a3b167677e3bb3d322db8006f"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/s1-hammered-gold-roughness.png",
+            "source_sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.48,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      },
+      "candidate": null
+    },
+    {
+      "path": "/materials/1a4af08658e1648e5efbd271c40ad1b76ac078b06a7f711f0e2eb77cc3d271e8",
+      "baseline": null,
+      "candidate": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 212584106538,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Swept black hair \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-basecolor.png",
+            "source_sha256": "394a3a4a3babb546f89b76aad70238b0d8b5d1973f3004985ad915a10823cc56"
+          },
+          "shader_parameter/metal_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": null,
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.239999994635582,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-normal.png",
+            "source_sha256": "037278b9204258fe9d9b10561b9c19f8564041f30dd5464348d10fe98950a257"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/hair-bundle-roughness.png",
+            "source_sha256": "93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            1.27839261399032e-09,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.29,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": false,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-basecolor.png",
+            "source_sha256": "394a3a4a3babb546f89b76aad70238b0d8b5d1973f3004985ad915a10823cc56"
+          },
+          "metal_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "metal_texture": null,
+          "metallic_value": 0.0,
+          "normal_strength": 0.239999994635582,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-normal.png",
+            "source_sha256": "037278b9204258fe9d9b10561b9c19f8564041f30dd5464348d10fe98950a257"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/hair-bundle-roughness.png",
+            "source_sha256": "93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            1.27839261399032e-09,
+            0.0
+          ],
+          "specular_value": 0.29,
+          "use_base_texture": true,
+          "use_metal_texture": false,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      }
+    },
+    {
+      "path": "/materials/282350e7ecd1ffeb8c520e1eb4c49134706e20329f764e8800d25a0a6d847612",
+      "baseline": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 215352347404,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Cobalt handwoven silk \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-basecolor.png",
+            "source_sha256": "f1369ca6a4b4ca838b54305ffddd2dddef7b104c5dadc9c6fd0be5ea9a6a459c"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-roughness.png",
+            "source_sha256": "27f953c6aa77293459f886135305c8e2215bce3c5d310e3f345452f29ede7680"
+          },
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.449999988079071,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-normal.png",
+            "source_sha256": "3ae45b6e897d956e20cbbf70f49cca3ddebe207254fd52257a8129b31144f1f2"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.38,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-basecolor.png",
+            "source_sha256": "f1369ca6a4b4ca838b54305ffddd2dddef7b104c5dadc9c6fd0be5ea9a6a459c"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-roughness.png",
+            "source_sha256": "27f953c6aa77293459f886135305c8e2215bce3c5d310e3f345452f29ede7680"
+          },
+          "metallic_value": 0.0,
+          "normal_strength": 0.449999988079071,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-normal.png",
+            "source_sha256": "3ae45b6e897d956e20cbbf70f49cca3ddebe207254fd52257a8129b31144f1f2"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.38,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      },
+      "candidate": null
+    },
+    {
+      "path": "/materials/3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535",
+      "baseline": null,
+      "candidate": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 212584106538,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Worked warm gold \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-basecolor.png",
+            "source_sha256": "0c95ba75207012e1c503446acd25825654db6aa2bb34047ebec5e39cd3a3ba16"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-roughness.png",
+            "source_sha256": "be927a1c3c212e8c97cde16e1e6401cb306641e459a007c99c8bcf349565dd7c"
+          },
+          "shader_parameter/metallic_value": 0.88,
+          "shader_parameter/normal_strength": 0.239999994635582,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-normal.png",
+            "source_sha256": "f8dd12be87b44811ca7ea26b3b025a5ab70c1e5a3b167677e3bb3d322db8006f"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/s1-hammered-gold-roughness.png",
+            "source_sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.48,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-basecolor.png",
+            "source_sha256": "0c95ba75207012e1c503446acd25825654db6aa2bb34047ebec5e39cd3a3ba16"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-roughness.png",
+            "source_sha256": "be927a1c3c212e8c97cde16e1e6401cb306641e459a007c99c8bcf349565dd7c"
+          },
+          "metallic_value": 0.88,
+          "normal_strength": 0.239999994635582,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_worked-warm-gold-normal.png",
+            "source_sha256": "f8dd12be87b44811ca7ea26b3b025a5ab70c1e5a3b167677e3bb3d322db8006f"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/s1-hammered-gold-roughness.png",
+            "source_sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.48,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      }
+    },
+    {
+      "path": "/materials/632204bf33a2d672ae943788bf999600a5da36ab14f36806ca2fb117334e0c09",
+      "baseline": null,
+      "candidate": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 212584106538,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Cobalt lotus brocade \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-basecolor.png",
+            "source_sha256": "9a65d1fb3c9385d6be98966a0d26bab74dbc5dcb84e897bcdeca7f6652094d46"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-roughness.png",
+            "source_sha256": "6f1e38864f259584ac41f79039aae8602405e80ae93a00e5bc2ac93f860f88b0"
+          },
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.449999988079071,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-normal.png",
+            "source_sha256": "877d9698ac5a237b90a9fe42a14ca1a51bda4263f95163b74a120088c7b5710c"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.38,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-basecolor.png",
+            "source_sha256": "9a65d1fb3c9385d6be98966a0d26bab74dbc5dcb84e897bcdeca7f6652094d46"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-roughness.png",
+            "source_sha256": "6f1e38864f259584ac41f79039aae8602405e80ae93a00e5bc2ac93f860f88b0"
+          },
+          "metallic_value": 0.0,
+          "normal_strength": 0.449999988079071,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-normal.png",
+            "source_sha256": "877d9698ac5a237b90a9fe42a14ca1a51bda4263f95163b74a120088c7b5710c"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.38,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      }
+    },
+    {
+      "path": "/materials/96397f22580cf9304826f74e619658772af99201be50f3f71c03b682a336dc05",
+      "baseline": null,
+      "candidate": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 212584106538,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Cobalt handwoven silk \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-basecolor.png",
+            "source_sha256": "f1369ca6a4b4ca838b54305ffddd2dddef7b104c5dadc9c6fd0be5ea9a6a459c"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-roughness.png",
+            "source_sha256": "27f953c6aa77293459f886135305c8e2215bce3c5d310e3f345452f29ede7680"
+          },
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.449999988079071,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-normal.png",
+            "source_sha256": "3ae45b6e897d956e20cbbf70f49cca3ddebe207254fd52257a8129b31144f1f2"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.38,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-basecolor.png",
+            "source_sha256": "f1369ca6a4b4ca838b54305ffddd2dddef7b104c5dadc9c6fd0be5ea9a6a459c"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-roughness.png",
+            "source_sha256": "27f953c6aa77293459f886135305c8e2215bce3c5d310e3f345452f29ede7680"
+          },
+          "metallic_value": 0.0,
+          "normal_strength": 0.449999988079071,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_q1-cobalt-ornamental-weave-normal.png",
+            "source_sha256": "3ae45b6e897d956e20cbbf70f49cca3ddebe207254fd52257a8129b31144f1f2"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.38,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      }
+    },
+    {
+      "path": "/materials/c6d53ba73fcf24768736bb7a4414750d244b9dd9a337658df7dd8834feff35f5",
+      "baseline": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 215352347404,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Cobalt lotus brocade \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-basecolor.png",
+            "source_sha256": "9a65d1fb3c9385d6be98966a0d26bab74dbc5dcb84e897bcdeca7f6652094d46"
+          },
+          "shader_parameter/metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-roughness.png",
+            "source_sha256": "6f1e38864f259584ac41f79039aae8602405e80ae93a00e5bc2ac93f860f88b0"
+          },
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.449999988079071,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-normal.png",
+            "source_sha256": "877d9698ac5a237b90a9fe42a14ca1a51bda4263f95163b74a120088c7b5710c"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.38,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": true,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-basecolor.png",
+            "source_sha256": "9a65d1fb3c9385d6be98966a0d26bab74dbc5dcb84e897bcdeca7f6652094d46"
+          },
+          "metal_channel": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "metal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-roughness.png",
+            "source_sha256": "6f1e38864f259584ac41f79039aae8602405e80ae93a00e5bc2ac93f860f88b0"
+          },
+          "metallic_value": 0.0,
+          "normal_strength": 0.449999988079071,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_cobalt-lotus-brocade-normal.png",
+            "source_sha256": "877d9698ac5a237b90a9fe42a14ca1a51bda4263f95163b74a120088c7b5710c"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/materials/rama-finish/woven-roughness.png",
+            "source_sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            3.73956282828658e-07,
+            0.0
+          ],
+          "specular_value": 0.38,
+          "use_base_texture": true,
+          "use_metal_texture": true,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      },
+      "candidate": null
+    },
+    {
+      "path": "/materials/cdccf861f68388b1fc517d811b5005c24fa20187cc16d03677bbe651d2409966",
+      "baseline": {
+        "class": "ShaderMaterial",
+        "path": "",
+        "properties": {
+          "metadata/yuga_surface_finish_owner": 215352347404,
+          "next_pass": null,
+          "render_priority": 0,
+          "resource_local_to_scene": false,
+          "resource_name": "Swept black hair \u00b7 bounded secondary",
+          "shader": {
+            "class": "Shader",
+            "code": "shader_type spatial;\nrender_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;\n\n// Authored white vertex RGB + alpha are semantic motion weights, not opacity.\n// No TIME, extra skeleton modifier, screen texture, transient light or particles.\n// Forward+ supplies an already-skinned local vertex. Static authored alpha\n// identifies the same vertices through every pose; offset is in hero local space.\nuniform vec4 base_color : source_color = vec4(1.0);\nuniform sampler2D base_texture : source_color, filter_linear_mipmap, repeat_enable;\nuniform sampler2D rough_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D metal_texture : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_texture : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform bool use_base_texture = false;\nuniform bool use_rough_texture = false;\nuniform bool use_metal_texture = false;\nuniform bool use_normal_texture = false;\nuniform float roughness_value : hint_range(0.0, 1.0) = 0.5;\nuniform float metallic_value : hint_range(0.0, 1.0) = 0.0;\nuniform float normal_strength : hint_range(-16.0, 16.0) = 1.0;\nuniform float specular_value : hint_range(0.0, 1.0) = 0.5;\nuniform vec4 rough_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec4 metal_channel = vec4(1.0, 0.0, 0.0, 0.0);\nuniform vec3 secondary_offset = vec3(0.0);\n\nvoid vertex() {\n\t// The same continuous field is authored on mantle and its metallic hem.\n\t// Fixed edges, chest, belt, fitted panels, scalp and brows have exactly zero.\n\tfloat weight = clamp(COLOR.a, 0.0, 1.0);\n\tVERTEX += secondary_offset * weight * weight;\n}\n\nvoid fragment() {\n\tvec4 texel = use_base_texture ? texture(base_texture, UV) : vec4(1.0);\n\tALBEDO = base_color.rgb * texel.rgb;\n\tROUGHNESS = clamp(roughness_value * (use_rough_texture ? dot(texture(rough_texture, UV), rough_channel) : 1.0), 0.0, 1.0);\n\tMETALLIC = clamp(metallic_value * (use_metal_texture ? dot(texture(metal_texture, UV), metal_channel) : 1.0), 0.0, 1.0);\n\tSPECULAR = specular_value;\n\tif (use_normal_texture) {\n\t\tNORMAL_MAP = texture(normal_texture, UV).rgb;\n\t\tNORMAL_MAP_DEPTH = normal_strength;\n\t}\n\t// Opaque by design: COLOR.a is a mask, never surface transparency.\n}\n",
+            "path": "res://shaders/rama_secondary_cloth.gdshader",
+            "source_sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+          },
+          "shader_parameter/base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shader_parameter/base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-basecolor.png",
+            "source_sha256": "394a3a4a3babb546f89b76aad70238b0d8b5d1973f3004985ad915a10823cc56"
+          },
+          "shader_parameter/metal_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/metal_texture": null,
+          "shader_parameter/metallic_value": 0.0,
+          "shader_parameter/normal_strength": 0.239999994635582,
+          "shader_parameter/normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-normal.png",
+            "source_sha256": "037278b9204258fe9d9b10561b9c19f8564041f30dd5464348d10fe98950a257"
+          },
+          "shader_parameter/rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shader_parameter/rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/hair-bundle-roughness.png",
+            "source_sha256": "93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4"
+          },
+          "shader_parameter/roughness_value": 1.0,
+          "shader_parameter/secondary_offset": [
+            0.0,
+            1.27839261399032e-09,
+            0.0
+          ],
+          "shader_parameter/specular_value": 0.29,
+          "shader_parameter/use_base_texture": true,
+          "shader_parameter/use_metal_texture": false,
+          "shader_parameter/use_normal_texture": true,
+          "shader_parameter/use_rough_texture": true
+        },
+        "shader_uniforms": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-basecolor.png",
+            "source_sha256": "394a3a4a3babb546f89b76aad70238b0d8b5d1973f3004985ad915a10823cc56"
+          },
+          "metal_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "metal_texture": null,
+          "metallic_value": 0.0,
+          "normal_strength": 0.239999994635582,
+          "normal_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/heroes/rama-hero_swept-black-hair-normal.png",
+            "source_sha256": "037278b9204258fe9d9b10561b9c19f8564041f30dd5464348d10fe98950a257"
+          },
+          "rough_channel": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rough_texture": {
+            "class": "CompressedTexture2D",
+            "path": "res://assets/hero-finish/hair-bundle-roughness.png",
+            "source_sha256": "93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4"
+          },
+          "roughness_value": 1.0,
+          "secondary_offset": [
+            0.0,
+            1.27839261399032e-09,
+            0.0
+          ],
+          "specular_value": 0.29,
+          "use_base_texture": true,
+          "use_metal_texture": false,
+          "use_normal_texture": true,
+          "use_rough_texture": true
+        }
+      },
+      "candidate": null
+    },
+    {
+      "path": "/meshes/354/surfaces/0",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/356/surfaces/0",
+      "baseline": "cdccf861f68388b1fc517d811b5005c24fa20187cc16d03677bbe651d2409966",
+      "candidate": "1a4af08658e1648e5efbd271c40ad1b76ac078b06a7f711f0e2eb77cc3d271e8"
+    },
+    {
+      "path": "/meshes/356/surfaces/2",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/356/surfaces/3",
+      "baseline": "282350e7ecd1ffeb8c520e1eb4c49134706e20329f764e8800d25a0a6d847612",
+      "candidate": "96397f22580cf9304826f74e619658772af99201be50f3f71c03b682a336dc05"
+    },
+    {
+      "path": "/meshes/356/surfaces/4",
+      "baseline": "c6d53ba73fcf24768736bb7a4414750d244b9dd9a337658df7dd8834feff35f5",
+      "candidate": "632204bf33a2d672ae943788bf999600a5da36ab14f36806ca2fb117334e0c09"
+    },
+    {
+      "path": "/meshes/359/surfaces/0",
+      "baseline": "cdccf861f68388b1fc517d811b5005c24fa20187cc16d03677bbe651d2409966",
+      "candidate": "1a4af08658e1648e5efbd271c40ad1b76ac078b06a7f711f0e2eb77cc3d271e8"
+    },
+    {
+      "path": "/meshes/359/surfaces/2",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/359/surfaces/3",
+      "baseline": "282350e7ecd1ffeb8c520e1eb4c49134706e20329f764e8800d25a0a6d847612",
+      "candidate": "96397f22580cf9304826f74e619658772af99201be50f3f71c03b682a336dc05"
+    },
+    {
+      "path": "/meshes/359/surfaces/4",
+      "baseline": "c6d53ba73fcf24768736bb7a4414750d244b9dd9a337658df7dd8834feff35f5",
+      "candidate": "632204bf33a2d672ae943788bf999600a5da36ab14f36806ca2fb117334e0c09"
+    },
+    {
+      "path": "/meshes/360/surfaces/0",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/361/surfaces/0",
+      "baseline": "cdccf861f68388b1fc517d811b5005c24fa20187cc16d03677bbe651d2409966",
+      "candidate": "1a4af08658e1648e5efbd271c40ad1b76ac078b06a7f711f0e2eb77cc3d271e8"
+    },
+    {
+      "path": "/meshes/361/surfaces/2",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    },
+    {
+      "path": "/meshes/361/surfaces/3",
+      "baseline": "282350e7ecd1ffeb8c520e1eb4c49134706e20329f764e8800d25a0a6d847612",
+      "candidate": "96397f22580cf9304826f74e619658772af99201be50f3f71c03b682a336dc05"
+    },
+    {
+      "path": "/meshes/361/surfaces/4",
+      "baseline": "c6d53ba73fcf24768736bb7a4414750d244b9dd9a337658df7dd8834feff35f5",
+      "candidate": "632204bf33a2d672ae943788bf999600a5da36ab14f36806ca2fb117334e0c09"
+    },
+    {
+      "path": "/meshes/362/surfaces/0",
+      "baseline": "09aaf4101e80daf3e997a47071e156c672f1ca03392beb89b48e5b2c7e44e977",
+      "candidate": "3eb7c510f76225f6e3e2e93aecdc9b7ef19ab0b9b9f978076159f2605449a535"
+    }
+  ],
+  "pixel_check": {
+    "mode": "RGBA all four channels; independent RGB bbox",
+    "size": [
+      960,
+      540
+    ],
+    "different_pixels": 0,
+    "max_channel_delta": 0,
+    "all_channel_bbox": null,
+    "rgb_bbox": null
+  },
+  "resource_census": {
+    "baseline": {
+      "families": {
+        "BoxMesh": 156,
+        "CylinderMesh": 8,
+        "SphereMesh": 64,
+        "TorusMesh": 10
+      },
+      "mesh_instances": 238,
+      "scope": "Native full world; only mesh alias distribution differs; no reduction of geometry/light/materials/entities.",
+      "unique_mesh_resources": 238
+    },
+    "candidate": {
+      "families": {
+        "BoxMesh": 156,
+        "CylinderMesh": 8,
+        "SphereMesh": 64,
+        "TorusMesh": 10
+      },
+      "mesh_instances": 238,
+      "scope": "Native full world; only mesh alias distribution differs; no reduction of geometry/light/materials/entities.",
+      "unique_mesh_resources": 13
+    }
+  },
+  "projection_exact": true,
+  "passed": false
+}

@@ -1,0 +1,25 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS retained original builder parses
+PASS full manifest node topology geometry arrays transforms materials and metadata match retained original
+PASS independent builds produce deterministic full geometry and material state
+PASS public build report retains original counts and scope
+PASS all 238 visible landmark mesh instances retained
+PASS 238 formerly distinct primitive resources become exactly 13 shared resources
+PASS shared meshes never contain mutable material bindings
+PASS independent builders do not share mutable materials or geometry
+PASS builder adds no physics bodies colliders or lights
+PASS mutating one build material cannot bleed into another build
+PASS negative moved node is detected despite shared geometry
+PASS negative changed geometry resource is detected
+PASS restoring negative controls restores exact geometry material and transform state
+PASS equal complete parameters return actual same resource
+PASS close dimensions cannot alias through rounded text keys
+PASS box subdivision and flipped orientation are distinct
+PASS cylinder caps height rings radii and segments participate in identity
+PASS sphere hemisphere rings radial segments height and orientation remain distinct
+PASS torus radii rings segment count and orientation remain distinct
+PASS reusing a builder starts a fresh per-build mesh and material pool
+PASS freed first world releases its resources without global retention
+PASS surviving independent world remains exact after peer teardown
+PASS all input sources and manifest remain byte-identical during checks

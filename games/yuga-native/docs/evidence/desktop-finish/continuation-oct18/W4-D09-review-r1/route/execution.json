@@ -1,0 +1,33 @@
+{
+  "command": [
+    "timeout",
+    "60s",
+    "taskset",
+    "-c",
+    "4",
+    "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "--headless",
+    "--audio-driver",
+    "Dummy",
+    "--path",
+    "/workspace/ANDOLAN/games/yuga-native",
+    "--single-threaded-scene",
+    "--fixed-fps",
+    "60",
+    "--script",
+    "res://tests/desktop_world_route_parity_cases.gd",
+    "--",
+    "--report=/workspace/scratch/yuga-continuation-W4-integration-r1/route/report.json"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 2.137860325994552,
+  "env": {
+    "LP_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "XDG_DATA_HOME": "/workspace/scratch/yuga-continuation-W4-integration-r1/route/user/data",
+    "XDG_CONFIG_HOME": "/workspace/scratch/yuga-continuation-W4-integration-r1/route/user/config",
+    "XDG_CACHE_HOME": "/workspace/scratch/yuga-continuation-W4-integration-r1/route/user/cache"
+  }
+}

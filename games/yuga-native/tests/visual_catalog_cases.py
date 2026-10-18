@@ -35,14 +35,15 @@ def main():
     for kind, expected in [('visual', {'desktop-release-continuity','desktop-motion-scene-entry',
                                      'desktop-motion-transition-guard','desktop-world-route-parity',
                                      'desktop-volley-feedback','desktop-landing-support-boundary',
-                                     'desktop-landing-pause'}),
+                                     'desktop-landing-pause','desktop-world-render-resources',
+                                     'desktop-army-render-resources'}),
                            ('screens', {'ui-boot-recovery','ui-title-portrait','ui-launch-composition',
                             'ui-world-atlas','ui-action-hud','ui-action-hud-fit',
                             'ui-host-replacement','ui-loading-presentation',
                             'ui-loading-readiness','ui-hud-readability','ui-atlas-layout','ui-cancel-focus',
                             'ui-preferences-relaunch','ui-compact-navigation-routes','ui-world-compact-title',
                             'ui-title-identity','ui-outcome-shortcuts','ui-world-compact-first-entry',
-                            'ui-focus-recovery'})]:
+                            'ui-focus-recovery','ui-modal-resize-focus','ui-idle-traversal-hud'})]:
         result = subprocess.run([sys.executable,str(RUNNER),'--catalog',kind,'--list'],capture_output=True,text=True)
         listed = json.loads(result.stdout)
         check(kind+' CLI exposes new contracts with bounded acceptance scope',
@@ -53,6 +54,24 @@ def main():
     result = subprocess.run([sys.executable,str(RUNNER),'--catalog','screens','--suite','desktop-volley-feedback','--list'],capture_output=True,text=True)
     check('A combat presentation suite cannot silently run under screen acceptance',result.returncode == 2 and 'selected --catalog' in result.stderr)
     for name, expected in {
+        'ui-idle-traversal-hud': {'tests/ui_idle_traversal_hud_cases.gd',
+                                 'scripts/confluence_world.gd', 'scripts/player.gd',
+                                 'scripts/player_traversal.gd', 'scripts/input_bindings.gd',
+                                 'scripts/lane_army.gd', 'assets/world/confluence-map.json'},
+        'desktop-army-render-resources': {'tests/desktop_army_render_resources_cases.gd',
+                                          'scripts/lane_army.gd',
+                                          'scripts/lane_minion.gd',
+                                          'scripts/world_render_resources.gd',
+                                          'docs/evidence/desktop-finish/continuation-oct18/W4-army-resources-r1/baseline-lane_minion.gd.txt'},
+        'ui-modal-resize-focus': {'tests/ui_modal_resize_focus_cases.gd',
+                                  'scripts/controls_overlay.gd',
+                                  'scripts/rama_hero_panel.gd',
+                                  'scripts/ui_scroll_focus.gd'},
+        'desktop-world-render-resources': {'tests/desktop_world_render_resources_cases.gd',
+                                           'scripts/traversal_landmarks.gd',
+                                           'scripts/world_render_resources.gd',
+                                           'assets/world/confluence-map.json',
+                                           'docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-traversal_landmarks.gd.txt'},
         'ui-boot-recovery': {'tests/ui_s1_loading_cases.gd'},
         'ui-focus-recovery': {'tests/ui_focus_recovery_cases.gd',
                               'scripts/rama_hero_panel.gd','scripts/controls_overlay.gd',

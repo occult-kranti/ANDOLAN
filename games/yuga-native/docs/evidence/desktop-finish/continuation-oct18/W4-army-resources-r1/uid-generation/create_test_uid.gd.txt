@@ -1,0 +1,13 @@
+extends SceneTree
+func _initialize() -> void:
+	var path := "res://tests/desktop_army_render_resources_cases.gd.uid"
+	if FileAccess.file_exists(path):
+		push_error("Refusing to replace an existing UID")
+		quit(1)
+		return
+	var value := ResourceUID.id_to_text(ResourceUID.create_id())
+	var file := FileAccess.open(path,FileAccess.WRITE)
+	file.store_string(value+"\n")
+	file.close()
+	print(JSON.stringify({"method":"ResourceUID.create_id/id_to_text","path":path,"uid":value,"sha256":FileAccess.get_sha256(path)}))
+	quit(0)

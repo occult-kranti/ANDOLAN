@@ -1,0 +1,3 @@
+Actual native input confirms the live-scale focus repair. Both baseline focused targets are visible at100%; at200% the Guardian capture remains active but its button disappears, and the selected Dawn Volley button disappears. The current200% originals keep both focused controls fully inside their scroll clips, preserving capture text and selection. Full native routes including Esc return focus to the correct opener in both branches. W1 and W2 independently opened all six originals.
+
+This is a tiny production-modal fixture with a declared F8 scale hook, not integrated3D or package qualification. Guide details remain intentionally scrollable. No further correction is requested. Root review remains pending.

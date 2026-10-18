@@ -1,0 +1,75 @@
+diff --git a/games/yuga-native/scripts/traversal_landmarks.gd b/games/yuga-native/scripts/traversal_landmarks.gd
+index 3a80bcb..1b1ba26 100644
+--- a/games/yuga-native/scripts/traversal_landmarks.gd
++++ b/games/yuga-native/scripts/traversal_landmarks.gd
+@@ -2,9 +2,11 @@ extends RefCounted
+ ## Original raised courts and luminous tether relics. Eight solid decks are
+ ## declared separately in the manifest; this builder adds no hidden collision.
+ const DeckShader = preload("res://scripts/traversal_stone.gdshader")
++const RenderResources = preload("res://scripts/world_render_resources.gd")
+ 
+ var materials: Dictionary = {}
+ var meshes := 0
++var geometry = RenderResources.new()
+ 
+ func _deck_material(dimensions: Vector3) -> ShaderMaterial:
+ 	var key := "deck:"+str(dimensions)
+@@ -39,11 +41,14 @@ func _mesh(parent: Node3D, shape: Mesh, at: Vector3, material: Material, label_:
+ 	return node
+ 
+ func _box(parent: Node3D, at: Vector3, size_: Vector3, material: Material, label_: String) -> MeshInstance3D:
+-	var shape := BoxMesh.new()
+-	shape.size=size_
++	var shape := geometry.box(size_)
+ 	return _mesh(parent,shape,at,material,label_)
+ 
+ func build(parent: Node3D, data: Dictionary) -> Dictionary:
++	# A reused builder must not couple mutable materials or retain old worlds.
++	materials = {}
++	meshes = 0
++	geometry = RenderResources.new()
+ 	var root := Node3D.new()
+ 	root.name="TraversalRelics"
+ 	parent.add_child(root)
+@@ -66,37 +71,20 @@ func build(parent: Node3D, data: Dictionary) -> Dictionary:
+ 				_box(node,Vector3(0,level,side*(size_.z*.5+.004)),Vector3(size_.x-.2,.12,.008),trim,"CorniceFace")
+ 		# Shallow chhatri/lotus motifs are facade ornament, below the landing top.
+ 		for side in [-1.0,1.0]:
+-			var arch := SphereMesh.new()
+-			arch.radius=.9
+-			arch.height=.9
+-			arch.is_hemisphere=true
+-			arch.radial_segments=12
+-			arch.rings=6
++			var arch := geometry.sphere(.9,.9,12,6,true)
+ 			var dome := _mesh(node,arch,Vector3(side*(size_.x*.5-.12),size_.y*.63,0),trim,"ChhatriRelief")
+ 			dome.scale=Vector3(.16,1,1)
+ 			for pillar in [-.65,.65]:
+ 				_box(node,Vector3(side*(size_.x*.5+.006),size_.y*.49,pillar),Vector3(.012,size_.y*.25,.10),shade,"ReliefColumn")
+-		var disk := CylinderMesh.new()
+-		disk.top_radius=1.5
+-		disk.bottom_radius=1.5
+-		disk.height=.012
+-		disk.radial_segments=24
++		var disk := geometry.cylinder(1.5,1.5,.012,24)
+ 		_mesh(node,disk,Vector3(0,size_.y+.006,0),shade,"ClearLandingMedallion")
+ 		for petal in range(6):
+ 			var angle := float(petal)*TAU/6.0
+-			var lamp := SphereMesh.new()
+-			lamp.radius=.10
+-			lamp.height=.18
+-			lamp.radial_segments=8
+-			lamp.rings=4
++			var lamp := geometry.sphere(.10,.18,8,4)
+ 			_mesh(node,lamp,Vector3(cos(angle)*1.8,size_.y+.10,sin(angle)*1.8),_material(Color("ecb45e"),1.4),"DiyaEmber")
+ 	for anchor in data.get("anchors",[]):
+ 		var position_ := Vector3(anchor.position[0],anchor.position[1],anchor.position[2])
+-		var ring := TorusMesh.new()
+-		ring.inner_radius=.70
+-		ring.outer_radius=.92
+-		ring.rings=24
+-		ring.ring_segments=6
++		var ring := geometry.torus(.70,.92,24,6)
+ 		var halo := _mesh(root,ring,position_,_material(Color("e9c877"),1.1),anchor.id)
+ 		halo.rotation.x=PI*.5
+ 		halo.set_meta("grapple_anchor_id",anchor.id)

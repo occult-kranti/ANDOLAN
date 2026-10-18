@@ -40,11 +40,11 @@ RAMA_NAMES = [
 ]
 FIRST_LOAD_NAMES = ['scenes/boot.tscn', 'scripts/boot.gd',
                     'scripts/scene_transition.gd', 'scripts/loading_presentation.gd', 'scripts/launch_shell.gd',
-                    'scripts/hero_ui_theme.gd']
+                    'scripts/hero_ui_theme.gd', 'scripts/ui_scroll_focus.gd']
 GRAPHICS_NAMES = [
     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
-    'scripts/world_roof_loggia.gd', 'scripts/world_lane_frontage.gd',
+    'scripts/world_roof_loggia.gd', 'scripts/world_lane_frontage.gd', 'scripts/world_render_resources.gd',
     'assets/environment-finish/masonry.gdshader', 'assets/hero-finish/g1-manifest.json',
     'assets/hero-finish/s1-manifest.json', 'assets/world/block2-frontage.json',
 ]
@@ -240,6 +240,17 @@ def main() -> int:
         evaluate('orphan world roof remap rejects',
                  pack([entry for entry in compiled_roof if entry[0] != roof + 'c'])[0],
                  rejection_contains='First-load remap destination missing or ambiguous: ' + roof)
+        resource_pool = 'scripts/world_render_resources.gd'
+        evaluate('missing world primitive pool rejects',
+                 pack([entry for entry in entries if entry[0] != resource_pool])[0],
+                 rejection_contains='Required first-load resource missing or ambiguous: ' + resource_pool)
+        compiled_pool = [entry for entry in entries if entry[0] != resource_pool] + [
+            (resource_pool + '.remap', b'[remap]\npath="res://scripts/world_render_resources.gdc"\n'),
+            (resource_pool + 'c', b'benign compiled primitive pool fixture')]
+        evaluate('compiled world primitive pool remap accepts', pack(compiled_pool)[0], True)
+        evaluate('orphan world primitive pool remap rejects',
+                 pack([entry for entry in compiled_pool if entry[0] != resource_pool + 'c'])[0],
+                 rejection_contains='First-load remap destination missing or ambiguous: ' + resource_pool)
         frontage = 'scripts/world_lane_frontage.gd'
         frontage_data = 'assets/world/block2-frontage.json'
         for resource, reason in (

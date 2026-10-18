@@ -4,7 +4,7 @@ Updated 18 October 2026. Start with the [active desktop handoff](../games/yuga-n
 
 ## Current state
 
-The active desktop campaign has reclaimed **11,121,836,032 allocated file bytes** through separately recorded operations. This is historical reclamation, not current free space or a sum of every cleanup in the repository. Later source restoration consumes storage again. Only inactive, exactly recoverable duplicates were removed. Current runtime, accepted and rejected art, original captures, meaningful failure evidence, tools, caches and user state remain.
+The active desktop campaign has reclaimed **12,156,579,840 allocated file bytes** through separately recorded operations. This is historical reclamation, not current free space or a sum of every cleanup in the repository. Later source restoration consumes storage again. Only inactive, exactly recoverable duplicates were removed. Current runtime, accepted and rejected art, original captures, meaningful failure evidence, tools, caches and user state remain.
 
 The earlier r2/r3 expanded-package cleanup removed 216 exact duplicate files after the recovery maps were pushed in `96d5b9cd`: 662,401,024 and 695,898,112 allocated bytes. ZIPs, Linux raw PCKs, unique metadata and actual captures remain. [r2 execution](evidence/desktop-finish-r2-expanded-cleanup-r1/execution-receipt.json) and [r3 execution](evidence/desktop-finish-r3-expanded-cleanup-r1/execution-receipt.json) record each identity and archive recovery route.
 
@@ -48,6 +48,7 @@ These records describe separate operations. Some contain cumulative figures; do 
 
 | Operation | Exact evidence |
 | --- | --- |
+| 182 inactive capture-project asset copies: 1,034,743,808 allocated bytes | [Map](../games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/recovery-map.json), [execution](../games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W6-integration-r1/storage-execution.json); map pushed in d199f607 before deletion |
 | Eleven inactive historical aliases: 171,728,896 allocated bytes | [Map](evidence/desktop-finish-inactive-alias-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-inactive-alias-cleanup-r1/execution-receipt.json) |
 | r4 expanded packages and duplicate Windows PCK:469,565,440 allocated bytes | [Map](evidence/desktop-finish-r4-expanded-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-r4-expanded-cleanup-r1/execution-receipt.json) |
 | r3 expanded packages and r2/r3 duplicate Windows PCKs:695,898,112 allocated bytes | [Map](evidence/desktop-finish-r3-expanded-cleanup-r1/recovery-map.json), [execution](evidence/desktop-finish-r3-expanded-cleanup-r1/execution-receipt.json) |

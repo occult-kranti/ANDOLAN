@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "at_utc": "2026-10-18T14:21:10.734171+00:00",
+  "status": "BOUNDED_SOURCE_REVIEW_ACCEPT",
+  "owner_receipt": {
+    "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W2-screens-r1/source-receipt.json",
+    "bytes": 8480,
+    "sha256": "d2ef86de57588eb625f43c709efa5560021f7d91a7f9048be3f875a60048e4a2"
+  },
+  "owner_artifacts_verified": 35,
+  "reviewed_sources": [
+    {
+      "path": "games/yuga-native/scripts/controls_overlay.gd",
+      "bytes": 9799,
+      "sha256": "e2a3ee57a2d0d320b52d09758a9ad25331f85c38e6a063f98efec88d0bc5fb3f"
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_hero_panel.gd",
+      "bytes": 18472,
+      "sha256": "ab4eb279c2f92d5b88b5adc411b909889a36d8db1f22ba704160fee8ba2de205"
+    },
+    {
+      "path": "games/yuga-native/scripts/ui_scroll_focus.gd",
+      "bytes": 1793,
+      "sha256": "c0e9e0a9d6a117ebe5c03939cdaa9159b0b7ee7d1487fb9f45898f04acc7c129"
+    },
+    {
+      "path": "games/yuga-native/scripts/ui_scroll_focus.gd.uid",
+      "bytes": 20,
+      "sha256": "21891fc8a53c38f7c9a33a04acf5bca147be91568a5cd371e16d5544551edc41"
+    },
+    {
+      "path": "games/yuga-native/tests/ui_modal_resize_focus_cases.gd",
+      "bytes": 6591,
+      "sha256": "a4d693f9c877739d85105c4c160c26054fd6c320d6c6c648ef9cd791eae364ad"
+    },
+    {
+      "path": "games/yuga-native/tests/ui_modal_resize_focus_cases.gd.uid",
+      "bytes": 20,
+      "sha256": "a11410daaa4ad874069ac55e7de301ec5d285c7732d1f4093038fbd0d3cf6869"
+    }
+  ],
+  "function_comparison": {
+    "controls_overlay.gd": {
+      "changed_functions": [
+        "_layout"
+      ],
+      "unchanged_function_count": 15
+    },
+    "rama_hero_panel.gd": {
+      "changed_functions": [
+        "_layout"
+      ],
+      "unchanged_function_count": 25
+    }
+  },
+  "runtime_uid_census": {
+    "scripts": 75,
+    "new_sidecar": {
+      "uid": "uid://b8uc3y583d6ti",
+      "bytes": 20,
+      "sha256": "21891fc8a53c38f7c9a33a04acf5bca147be91568a5cd371e16d5544551edc41"
+    }
+  },
+  "same_fixture_owner_results": {
+    "baseline": "21/23",
+    "candidate": "23/23",
+    "failed_baseline_names": [
+      "controls unchanged focus is revealed after200 layout",
+      "guide unchanged focus is revealed after200 layout"
+    ]
+  },
+  "findings": [
+    "Reveal runs only after actual viewport geometry changes, waits two native container frames and only scrolls the pane containing unchanged existing focus when clipped.",
+    "Weak references are resolved before the typed validity boundary; owner/scroll/focus lifetime, tree/ancestry, visibility, caller input eligibility and focused control eligibility are rechecked after each await.",
+    "No focus grab or authority/persistence/capture changes. All pre-existing functions except the two layout functions remain byte-identical.",
+    "The same fixture exercises native keyboard/capture/selection/escape routes, ancestor clipping, manual scroll preservation and moved/hidden/disabled/freed focus/modal cases. Earlier typed-boundary and parse failures are retained."
+  ],
+  "limits": [
+    "Source/evidence and UID-format review only; no independent engine run, OS or pixel acceptance. W1 actual review remains separate."
+  ]
+}

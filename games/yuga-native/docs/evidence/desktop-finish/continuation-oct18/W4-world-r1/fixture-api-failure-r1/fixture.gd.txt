@@ -1,0 +1,170 @@
+extends SceneTree
+## Actual immutable primitive reuse against the retained pre-change builder.
+## No imported scenes, renderer, audio, physics authority or performance claim.
+const Builder = preload("res://scripts/traversal_landmarks.gd")
+const Pool = preload("res://scripts/world_render_resources.gd")
+const MAP := "res://assets/world/confluence-map.json"
+const ORACLE := "res://docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-traversal_landmarks.gd.txt"
+var checks: Array[Dictionary] = []
+var report_path := ""
+var baseline := false
+
+func _initialize() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--report="): report_path = arg.trim_prefix("--report=")
+		if arg == "--baseline": baseline = true
+	call_deferred("run")
+
+func check(label: String, passed: bool, detail: Dictionary = {}) -> void:
+	checks.append({"name": label, "passed": passed, "details": detail})
+	print("PASS " if passed else "FAIL ",label)
+
+func hash_value(value: Variant) -> String:
+	var h := HashingContext.new()
+	h.start(HashingContext.HASH_SHA256)
+	h.update(var_to_bytes(value))
+	return h.finish().hex_encode()
+
+func material_state(material: Material) -> Dictionary:
+	if material is ShaderMaterial:
+		return {"class":"ShaderMaterial", "shader":material.shader.resource_path,
+			"height":material.get_shader_parameter("deck_height"), "width":material.get_shader_parameter("deck_width")}
+	var m := material as StandardMaterial3D
+	return {"class":"StandardMaterial3D", "color":m.albedo_color, "roughness":m.roughness,
+		"emission_enabled":m.emission_enabled, "emission":m.emission, "energy":m.emission_energy_multiplier}
+
+func mesh_state(mesh: Mesh) -> Dictionary:
+	var surfaces: Array = []
+	for index in mesh.get_surface_count():
+		surfaces.append({"primitive":mesh.surface_get_primitive_type(index), "arrays":hash_value(mesh.surface_get_arrays(index))})
+	return {"class":mesh.get_class(), "aabb":mesh.get_aabb(), "surfaces":surfaces}
+
+func ordered_path(node: Node, parent: Node) -> Array:
+	var indices: Array = []
+	while node != parent:
+		indices.push_front(node.get_index())
+		node = node.get_parent()
+	return indices
+
+func scene_state(parent: Node3D) -> Array:
+	var rows: Array = []
+	for n in parent.find_children("*", "Node3D", true, false):
+		var row := {"path":ordered_path(n,parent), "name":n.get_class() if String(n.name).begins_with("@") else String(n.name), "class":n.get_class(), "transform":n.transform,
+			"visible":n.visible, "metadata":{}}
+		for key in n.get_meta_list(): row.metadata[key] = n.get_meta(key)
+		if n is MeshInstance3D:
+			row.mesh = mesh_state(n.mesh)
+			row.material = material_state(n.material_override)
+			row.cast_shadow = n.cast_shadow
+		rows.append(row)
+	return rows
+
+func mesh_ids(parent: Node3D) -> Dictionary:
+	var ids: Dictionary = {}
+	for n in parent.find_children("*", "MeshInstance3D", true, false): ids[n.mesh.get_instance_id()] = true
+	return ids
+
+func material_ids(parent: Node3D) -> Dictionary:
+	var ids: Dictionary = {}
+	for n in parent.find_children("*", "MeshInstance3D", true, false): ids[n.material_override.get_instance_id()] = true
+	return ids
+
+func disjoint(a: Dictionary, b: Dictionary) -> bool:
+	for key in a:
+		if b.has(key): return false
+	return true
+
+func no_embedded_materials(parent: Node3D) -> bool:
+	for n in parent.find_children("*", "MeshInstance3D", true, false):
+		for index in n.mesh.get_surface_count():
+			if n.mesh.surface_get_material(index) != null: return false
+	return true
+
+func run() -> void:
+	var inputs := ["res://scripts/traversal_landmarks.gd", "res://scripts/world_render_resources.gd", MAP, ORACLE, get_script().resource_path]
+	var before: Dictionary = {}
+	for path in inputs: before[path] = FileAccess.get_sha256(path)
+	var old_script := GDScript.new()
+	old_script.source_code = FileAccess.get_file_as_string(ORACLE)
+	var old_ok := old_script.reload() == OK
+	check("retained original builder parses", old_ok)
+	if not old_ok: quit(1); return
+	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(MAP)).traversal
+	var old_parent := Node3D.new()
+	var first := Node3D.new()
+	var second := Node3D.new()
+	root.add_child(old_parent)
+	root.add_child(first)
+	root.add_child(second)
+	var original = old_script.new()
+	var builder = old_script.new() if baseline else Builder.new()
+	var other = old_script.new() if baseline else Builder.new()
+	var old_report: Dictionary = original.build(old_parent, data)
+	var first_report: Dictionary = builder.build(first, data)
+	var second_report: Dictionary = other.build(second, data)
+	var oracle_state := scene_state(old_parent)
+	var first_state := scene_state(first)
+	check("full manifest node topology geometry arrays transforms materials and metadata match retained original", first_state == oracle_state)
+	check("independent builds produce deterministic full geometry and material state", scene_state(second) == first_state)
+	check("public build report retains original counts and scope", first_report == old_report and second_report == old_report, {"report":first_report})
+	var count := first.find_children("*", "MeshInstance3D", true, false).size()
+	check("all 238 visible landmark mesh instances retained", count == 238)
+	check("238 formerly distinct primitive resources become exactly 13 shared resources", mesh_ids(old_parent).size() == 238 and mesh_ids(first).size() == 13, {"old_unique":mesh_ids(old_parent).size(), "current_unique":mesh_ids(first).size(), "instances":count})
+	check("shared meshes never contain mutable material bindings", no_embedded_materials(first) and no_embedded_materials(second))
+	check("independent builders do not share mutable materials or geometry", disjoint(material_ids(first),material_ids(second)) and disjoint(mesh_ids(first),mesh_ids(second)))
+	check("builder adds no physics bodies colliders or lights", first.find_children("*", "CollisionObject3D", true, false).is_empty() and first.find_children("*", "CollisionShape3D", true, false).is_empty() and first.find_children("*", "Light3D", true, false).is_empty())
+	var ember: MeshInstance3D = first.find_children("DiyaEmber", "MeshInstance3D", true, false)[0]
+	var original_energy: float = ember.material_override.emission_energy_multiplier
+	ember.material_override.emission_energy_multiplier = 99.0
+	check("mutating one build material cannot bleed into another build", scene_state(second) == first_state and scene_state(first) != first_state)
+	ember.material_override.emission_energy_multiplier = original_energy
+	var old_transform := ember.transform
+	ember.position.x += 1.0
+	check("negative moved node is detected despite shared geometry", scene_state(first) != oracle_state and scene_state(second) == first_state)
+	ember.transform = old_transform
+	var old_mesh: Mesh = ember.mesh
+	ember.mesh = old_mesh.duplicate()
+	(ember.mesh as SphereMesh).radius += .01
+	check("negative changed geometry resource is detected", scene_state(first) != oracle_state)
+	ember.mesh = old_mesh
+	old_mesh = null
+	check("restoring negative controls restores exact geometry material and transform state", scene_state(first) == oracle_state)
+	# Full parameter keys must distinguish subdivisions, orientation, caps and
+	# very close floating values; none is rounded into a human-readable string.
+	var pool := Pool.new()
+	var box := pool.box(Vector3.ONE)
+	check("equal complete parameters return actual same resource", pool.box(Vector3.ONE) == box)
+	check("close dimensions cannot alias through rounded text keys", pool.box(Vector3(1.000001,1,1)) != box)
+	check("box subdivision and flipped orientation are distinct", pool.box(Vector3.ONE,Vector3i(1,0,0)) != box and pool.box(Vector3.ONE,Vector3i.ZERO,true) != box)
+	var disk := pool.cylinder(1,1,.1,24)
+	check("cylinder caps height rings radii and segments participate in identity", pool.cylinder(1,1,.1,24,4,false) != disk and pool.cylinder(1,1,.1,24,5) != disk and pool.cylinder(.9,1,.1,24) != disk and pool.cylinder(1,1,.2,24) != disk and pool.cylinder(1,1,.1,25) != disk)
+	var sphere := pool.sphere(.9,.9,12,6,true)
+	check("sphere hemisphere rings radial segments height and orientation remain distinct", pool.sphere(.9,.9,12,6,false) != sphere and pool.sphere(.9,.9,12,7,true) != sphere and pool.sphere(.9,.9,13,6,true) != sphere and pool.sphere(.9,1,12,6,true) != sphere and pool.sphere(.9,.9,12,6,true,true) != sphere)
+	var torus := pool.torus(.7,.92,24,6)
+	check("torus radii rings segment count and orientation remain distinct", pool.torus(.71,.92,24,6) != torus and pool.torus(.7,.93,24,6) != torus and pool.torus(.7,.92,25,6) != torus and pool.torus(.7,.92,24,7) != torus and pool.torus(.7,.92,24,6,true) != torus)
+	# A builder may be reused, but each new build must own mutable material state.
+	var third := Node3D.new()
+	root.add_child(third)
+	var third_report: Dictionary = builder.build(third,data)
+	check("reusing a builder starts a fresh per-build mesh and material pool", third_report == old_report and disjoint(material_ids(first),material_ids(third)) and disjoint(mesh_ids(first),mesh_ids(third)) and scene_state(third) == oracle_state)
+	var mesh_weak: WeakRef = weakref(ember.mesh)
+	var material_weak: WeakRef = weakref(ember.material_override)
+	ember = null
+	first.free()
+	await process_frame
+	check("freed first world releases its resources without global retention", mesh_weak.get_ref() == null and material_weak.get_ref() == null)
+	check("surviving independent world remains exact after peer teardown", scene_state(second) == first_state)
+	old_parent.free()
+	second.free()
+	third.free()
+	original = null
+	builder = null
+	other = null
+	await process_frame
+	var after: Dictionary = {}
+	for path in inputs: after[path] = FileAccess.get_sha256(path)
+	check("all input sources and manifest remain byte-identical during checks", before == after)
+	var passed: bool = checks.all(func(row): return row.passed)
+	var result := {"passed":passed,"baseline_original_builder":baseline,"engine_generated_uid":ResourceUID.id_to_text(ResourceUID.create_id()),"count":checks.size(),"checks":checks,"source_before":before,"source_after":after,"scope":"Actual full-manifest primitive/node/material equality against retained original builder, resource identity and parameter separation, cross-build material isolation, teardown and geometry corruption controls. No imports, 3D raster, physics-authority, draw-call/FPS, hardware or whole-map art acceptance."}
+	if not report_path.is_empty(): FileAccess.open(report_path,FileAccess.WRITE).store_string(JSON.stringify(result,"\t")+"\n")
+	quit(0 if passed else 1)

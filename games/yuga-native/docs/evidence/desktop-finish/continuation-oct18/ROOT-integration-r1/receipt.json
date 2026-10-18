@@ -1,0 +1,113 @@
+{
+  "scope": "Final focused catalog integration on frozen runtime; not native pixels, full CI or package qualification",
+  "base_head": "d199f6071d67ae5072fde0359361ec64b81844d1",
+  "checks": {
+    "catalog": 39,
+    "screens": 41,
+    "resources": 44
+  },
+  "commands": [
+    "python3 games/yuga-native/tests/visual_catalog_cases.py --report /workspace/scratch/yuga-continuation-root-r1/visual-catalog.json",
+    "taskset -c 4 python3 games/yuga-native/tools/run-visual-checks.py --engine /opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64 --catalog screens --suite ui-modal-resize-focus --suite ui-idle-traversal-hud --max-cpus 1 --output /workspace/scratch/yuga-continuation-root-r1/focused-screens",
+    "taskset -c 4 python3 games/yuga-native/tools/run-visual-checks.py --engine /opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64 --catalog visual --suite desktop-world-render-resources --suite desktop-army-render-resources --max-cpus 1 --output /workspace/scratch/yuga-continuation-root-r1/focused-resources"
+  ],
+  "artifacts": {
+    "focused-resources/logs/desktop-army-render-resources.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused-resources/logs/desktop-army-render-resources.stdout": {
+      "bytes": 1504,
+      "sha256": "df93ed160bedd0b92c8d52c35daba2d17455d22092332d2915c07c01906cc0a0"
+    },
+    "focused-resources/logs/desktop-world-render-resources.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused-resources/logs/desktop-world-render-resources.stdout": {
+      "bytes": 1653,
+      "sha256": "b408b1ae5744c0add41d8ffd7bcd062db9c7ea3e31c291ddb2e29e791de78c50"
+    },
+    "focused-resources/logs/engine-version.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused-resources/logs/engine-version.stdout": {
+      "bytes": 32,
+      "sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f"
+    },
+    "focused-resources/reports/desktop-army-render-resources.json": {
+      "bytes": 4621,
+      "sha256": "c1cdd76139f40a47b9a691d8f5ce67465cdfdc20cfa9046eab3543393d00c565"
+    },
+    "focused-resources/reports/desktop-world-render-resources.json": {
+      "bytes": 5016,
+      "sha256": "2d6d230de537e5f3661cdaa1e649285c77c10ae9b6af2886cc5247719d91ba9e"
+    },
+    "focused-resources/source-after.json": {
+      "bytes": 91180,
+      "sha256": "6eb062817efb3421a6dc7b756f952a26b1ff431e4b29b092ca1584c76763c62f"
+    },
+    "focused-resources/source-before.json": {
+      "bytes": 91180,
+      "sha256": "6eb062817efb3421a6dc7b756f952a26b1ff431e4b29b092ca1584c76763c62f"
+    },
+    "focused-resources/summary.json": {
+      "bytes": 3786,
+      "sha256": "7cd948bcda2bf729b74776a5c06a349de8e6cdcfc81adcdc378a07a7d66b6352"
+    },
+    "focused-screens/logs/engine-version.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused-screens/logs/engine-version.stdout": {
+      "bytes": 32,
+      "sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f"
+    },
+    "focused-screens/logs/ui-idle-traversal-hud.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused-screens/logs/ui-idle-traversal-hud.stdout": {
+      "bytes": 15877,
+      "sha256": "6ae429ca387a1b4cd8b81d93573895f3f35a95a6e30baa4b5550a7355e727040"
+    },
+    "focused-screens/logs/ui-modal-resize-focus.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused-screens/logs/ui-modal-resize-focus.stdout": {
+      "bytes": 1499,
+      "sha256": "58b2ea3e656b0d9713c7b05afd5d2d225bcbcc0d2ddd456baf90fcc05e531b8e"
+    },
+    "focused-screens/reports/ui-idle-traversal-hud.json": {
+      "bytes": 3495,
+      "sha256": "308dc11f8a9a22fcc7188f9c14865be85f4258c2f09b536945025b40dafe3c89"
+    },
+    "focused-screens/reports/ui-modal-resize-focus.json": {
+      "bytes": 4072,
+      "sha256": "aa23e6ebdc9b9b09353d07cf3baa320222ead682377077c4efb5f514021cc894"
+    },
+    "focused-screens/source-after.json": {
+      "bytes": 90743,
+      "sha256": "4692dbfa8fbdaf57cb19a847a60a6b746f23d2235e999df3caa8e0e5fd1e917f"
+    },
+    "focused-screens/source-before.json": {
+      "bytes": 90743,
+      "sha256": "4692dbfa8fbdaf57cb19a847a60a6b746f23d2235e999df3caa8e0e5fd1e917f"
+    },
+    "focused-screens/summary.json": {
+      "bytes": 3674,
+      "sha256": "229e9e5a154158ee0c73247dde4ecf111ebf9d114fb49a87856290f037919bdd"
+    },
+    "roadmap-precommit.json": {
+      "bytes": 317,
+      "sha256": "770f14d290ed3ee1ce7fd20a240850f0f17fb72044d8ec4466a60ee1e565f585"
+    },
+    "visual-catalog.json": {
+      "bytes": 6194,
+      "sha256": "81eec878ec1104dd318fbf6abdc5533caf3669ca8f4758eff7476f607c28010f"
+    }
+  },
+  "passed": true
+}

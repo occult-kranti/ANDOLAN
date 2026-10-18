@@ -1,0 +1,107 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "3",
+    "/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-pipeline-low-priority",
+    "--path",
+    "/workspace/scratch/yuga-continuation-W5-r1/project",
+    "--audio-driver",
+    "Dummy",
+    "--disable-vsync",
+    "--fixed-fps",
+    "30",
+    "--headless",
+    "--script",
+    "res://tools/graphics-six/capture_locomotion.gd",
+    "--",
+    "--output=/workspace/scratch/yuga-continuation-W5-r1/natural-r2",
+    "--case=locomotion",
+    "--preflight"
+  ],
+  "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+  "stage_sha256": "720c5d400443b9f6ba2e4871ff46493aa01f0f0227202b4ff2b8fed470863422",
+  "started_unix": 1792332215.739124,
+  "timeout_s": 180,
+  "streaming_gzip_after_regular_report": true,
+  "raw_limit_bytes": 20971520,
+  "source_scope": "Historical96d5 stage plus private motion; full helper/input/import bytes unchanged. Headless only; no rendering or cache seeding.",
+  "worker_pool_capped": false,
+  "affinity": "3",
+  "thread_environment": {
+    "LP_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "pid": 85087,
+  "exit_code": 0,
+  "checks": [
+    {
+      "name": "all270 consecutive final-modifier observations",
+      "passed": true
+    },
+    {
+      "draw_scope": "not applicable to headless preflight",
+      "name": "actual60Hz physics and30Hz capture counters",
+      "passed": true
+    },
+    {
+      "name": "pose body and imported soles share physics counter",
+      "passed": true
+    },
+    {
+      "name": "requested camera and imported fullbody bounds retained",
+      "passed": true
+    },
+    {
+      "declared_window_frames": [
+        15,
+        74
+      ],
+      "matching_samples": 58,
+      "name": "sustained actual walk covers at least1.6seconds",
+      "passed": true
+    },
+    {
+      "idle_stop_samples": 15,
+      "name": "actual run precedes natural release and settled stop",
+      "passed": true,
+      "run_samples": 25
+    },
+    {
+      "left_samples": 25,
+      "name": "both lateral control directions sustain actual movement",
+      "passed": true,
+      "right_samples": 20,
+      "scope": "Controller-relative lateral motion; visual rotation/local velocity remain unforced and recorded."
+    },
+    {
+      "name": "one public jump becomes airborne then grounded and settles",
+      "passed": true
+    },
+    {
+      "maximum_horizontal_frame_m": 0.20000004768371582,
+      "maximum_vertical_frame_m": 0.23573338985443115,
+      "name": "no reset generation or root teleport during measurement",
+      "passed": true
+    },
+    {
+      "name": "no incidental combat cast changes locomotion premise",
+      "passed": true
+    }
+  ],
+  "engine_diagnostics": [],
+  "passed": true,
+  "source_unchanged": true,
+  "stream": {
+    "raw_bytes": 15710623,
+    "raw_sha256": "2f97f045cee93f15639b08881c1a29f0dea718c25b960ea9d1e04953d2e95ecc",
+    "gzip_bytes": 6057503,
+    "gzip_sha256": "2e458e3ccf9f4b4a30a9c4ee2a0838f4d30ba8bc88d4f9bc4e66de725e4478f4",
+    "roundtrip_sha256": "2f97f045cee93f15639b08881c1a29f0dea718c25b960ea9d1e04953d2e95ecc",
+    "new_raw_duplicate_removed": true
+  },
+  "elapsed_s": 112.450147861,
+  "finished_unix": 1792332328.1892798
+}

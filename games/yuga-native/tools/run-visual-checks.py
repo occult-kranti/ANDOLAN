@@ -46,6 +46,8 @@ SUITES = (
     ("desktop-landing-support-boundary", "godot", "tests/desktop_landing_support_boundary_cases.gd", ()),
     ("desktop-landing-pause", "godot", "tests/desktop_landing_pause_cases.gd", ()),
     ("desktop-world-route-parity", "godot", "tests/desktop_world_route_parity_cases.gd", ()),
+    ("desktop-world-render-resources", "godot", "tests/desktop_world_render_resources_cases.gd", ()),
+    ("desktop-army-render-resources", "godot", "tests/desktop_army_render_resources_cases.gd", ()),
     ("desktop-volley-feedback", "godot", "tests/desktop_i02_volley_feedback_cases.gd", ("--warmup-ticks=200",)),
 )
 SCREEN_SUITES = (
@@ -68,6 +70,8 @@ SCREEN_SUITES = (
     ("ui-map-consistency", "godot", "tests/ui_theme_map_consistency_cases.gd", ()),
     ("ui-independent-modal", "godot", "tests/ui_independent_modal_cases.gd", ()),
     ("ui-resize-navigation", "godot", "tests/ui_resize_navigation_cases.gd", ()),
+    ("ui-modal-resize-focus", "godot", "tests/ui_modal_resize_focus_cases.gd", ()),
+    ("ui-idle-traversal-hud", "godot", "tests/ui_idle_traversal_hud_cases.gd", ()),
     ("ui-hud-edges", "godot", "tests/ui_hud_edge_cases.gd", ()),
     ("ui-preference-edges", "godot", "tests/ui_preferences_edge_cases.gd", ()),
     ("ui-independent-theme", "godot", "tests/ui_independent_theme_cases.gd", ()),
@@ -97,6 +101,8 @@ SCREEN_LIMITS = "Headless native screen, glyph, input-state and scene-lifecycle 
 # Tests inherited by selected scripts and tests invoked by fixture runners are
 # sources too. Pin them explicitly instead of claiming every historical archive.
 SUITE_DEPENDENCIES = {
+    "desktop-army-render-resources": ("docs/evidence/desktop-finish/continuation-oct18/W4-army-resources-r1/baseline-lane_minion.gd.txt",),
+    "desktop-world-render-resources": ("docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-traversal_landmarks.gd.txt",),
     "ui-transition-signals": ("tests/ui_transition_signal_cases.gd",),
     "ui-boot-recovery": ("tests/ui_s1_loading_cases.gd",),
     "ui-host-replacement": ("tests/ui_s2_transition_cases.gd",),

@@ -1,0 +1,15 @@
+# Fixed analytical alternative — not implemented
+
+The fixed450mm corridor can contain only one or two30Hz pose intervals at the measured fall speed. Completing extension earlier inside that same corridor fixes the sole endpoint but compresses the knee bend into a larger step. Root requested a different mechanism, not another endpoint adjustment.
+
+Proposed fixed contract for one later trial:
+
+- Keep neutral airborne fall eligibility, previously observed support, exact two per-foot rays, same sampled foot XZ and same owner/shape/layer/transform validity checks. Retain existing near-flat normal criterion (`dot(up)>0.9999`), no slope broadening.
+- Require finite downward speed and valid existing update delta. For positive downward speed `v`, set fresh ray depth to `min(1.20 m, max(0.08 m, v × 0.150 s))`. The1.20m cap is provisional but fixed before a trial; it does not expand extension magnitude or move an actor. Complex/mutable unsupported shapes retain ordinary fallback.
+- From each fresh hit compute nonnegative root clearance `h` and a **linear time proxy** `tau=h/v`. This is not an authority prediction: accelerating fall can arrive earlier, and no gravity constant is copied from player code.
+- Set completion time `min(delta, 1/30 s)` and cubic weight `smooth((0.150−tau)/(0.150−completion_time))`. Its easing interval is at least116.7ms. Keep the same maximum160mm root-relative extension target, with no air anchor, no new clock or accumulated preparation state.
+- On support loss, root/footprint mismatch, shape/layer mutation, ascent, flight/grapple, action/aim, reset or invalid input, apply no fresh preparation. Quantify the resulting leg transition rather than treating safe invalidation as automatically smooth. Land transition and fixed anchor admission stay unchanged.
+
+`ttc-feasibility.json` evaluates only the scalar formula on the retained canonical headless trajectory and its recorded real floor hit. It predicts weights0.005,0.352,0.801,1.000 at airborne frames246–249 (clearances736,551,346,121mm), instead of concentrating visible reach into248–249. Thus there are four potential30Hz samples across100ms, with three meaningful changes. This is analytically plausible; no new rays, solved poses or pixels were generated. Actual shape/bone nonlinearities and animation changes can still produce a kick.
+
+Fixed next trial gates: same natural270 inputs; same five rate/support component pairs; same stale support and interrupted action/aim guards; exact root/nonleg/authority/clocks/anchors; first grounded≤5mm and no additional negative penetration; retain all sampled knee/ankle changes and compare their peaks against997 and3a0. Add only the new cap boundary/invalid-speed cases if implementation proceeds. A fast descent that skips the capped window, a low-drop entry, moving support or support-edge exit cannot be claimed covered by the scalar forecast. If the new mechanism remains temporally compressed, report/reject it rather than widen constants through a tuning loop. Actual adjacent images remain mandatory before promotion.

@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "at_utc": "2026-10-18T14:21:10.763472+00:00",
+  "status": "INACTIVE_SOURCE_REVIEW_WITH_SMOOTHNESS_HOLD",
+  "owner_receipt": {
+    "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W5-motion-r1/receipt.json",
+    "bytes": 10984,
+    "sha256": "72614d6ec18149bfd979ac90cc542b6940ec61f000c454a76de1b0ebfaaba892"
+  },
+  "owner_artifacts_verified": 62,
+  "reviewed_sources": [
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W5-motion-r1/rama_motion.gd",
+      "bytes": 40702,
+      "sha256": "997bfb18add769c43dcfaf482c8b1677b620c5c7a5a1143b1b3310332bdaad11"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W5-motion-r1/candidate-timestep.patch",
+      "bytes": 2094,
+      "sha256": "3039a464b9fa26da6f4188363ed89cde5273a6fdb3ee5e55f477fb87af8bd5fb"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W5-motion-r1/canonical-to-successor.patch",
+      "bytes": 4963,
+      "sha256": "8a60e9530db4b26f492a9a75ea5a98883e667f9b676ec769e8913c6a57ea90f1"
+    }
+  ],
+  "canonical_unchanged": {
+    "path": "games/yuga-native/scripts/rama_motion.gd",
+    "bytes": 37695,
+    "sha256": "5023b301ff4c4585e3b6a22827f55f4696045bb0206374ee1656a5b4bad6e4a5"
+  },
+  "reported_owner_results": {
+    "candidate3a0_natural_coverage": "10/10",
+    "candidate3a0_natural_differential": "9/9",
+    "candidate3a0_support_guards": "12/12",
+    "first_component_fixture": "7/15; fixture defects preserved",
+    "corrected_component3a0": "14/15; real30Hz first-contact failure retained",
+    "successor997_component": "15/15",
+    "successor997_support_guards": "16/16",
+    "successor997_natural_coverage": "10/10",
+    "successor997_natural_differential": "9/9"
+  },
+  "findings": [
+    "No new root, authority clock, anchor admission or support-validation change was found in the bounded successor diff. Finite velocity/delta checks reject invalid timing; completion clearance is capped at 0.29m and the ease span remains at least 0.16m.",
+    "Reserving velocity times timestep intentionally advances preparation according to update rate. The root-relative target and bounded 0.16m extension remain; no preparation anchor is carried into grounded contact.",
+    "Endpoint improvement does not establish smoothness: preserved component maximum local knee step grows 24.22 to45.86 degrees at30Hz,29.34 to33.67 at60Hz, and falls32.78 to27.59 at120Hz. Root holds this candidate.",
+    "Natural270 source/authority differential remains owner-reported9/9 with first-ground soles0.589mm; sampled leg rotations and the prior general motion limitation remain explicit."
+  ],
+  "limits": [
+    "No independent engine or render, no promotion. Analytical time-to-contact proposal remains unimplemented. Future actual review needs adjacent airborne/landing/cloth images and continuous timing evidence."
+  ]
+}

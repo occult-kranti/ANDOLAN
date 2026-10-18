@@ -1,0 +1,197 @@
+{
+  "schema": 1,
+  "status": "SOURCE_AND_NATIVE_RESOURCE_PARITY_PASS_ACTUAL_VIEW_PENDING",
+  "goal": "D07/I01 immutable per-build traversal mesh reuse",
+  "source_commit": "a7c9f46bbbfeef59a042919231978436892be934",
+  "owned_sources": [
+    {
+      "path": "games/yuga-native/scripts/traversal_landmarks.gd",
+      "bytes": 4397,
+      "sha256": "9d2af384370560e805fdab965b04a30638c9632a36fa0a71cac7b53a7ccea887"
+    },
+    {
+      "path": "games/yuga-native/scripts/world_render_resources.gd",
+      "bytes": 2140,
+      "sha256": "9c05d06cd78fd8e9326ac55f89939038ffd08fa69d1f5cdac00dc8a5a1b93472"
+    },
+    {
+      "path": "games/yuga-native/scripts/world_render_resources.gd.uid",
+      "bytes": 19,
+      "sha256": "1b396bd017c1e4bbf83db7631bb8ff4f7a15908802149b89f85a47cbbe0391da"
+    },
+    {
+      "path": "games/yuga-native/tests/desktop_world_render_resources_cases.gd",
+      "bytes": 10527,
+      "sha256": "71d1c639ccc61f0b8eca015c78bd04905e360bd7439fe36c6055fc32de3d2294"
+    },
+    {
+      "path": "games/yuga-native/tests/desktop_world_render_resources_cases.gd.uid",
+      "bytes": 20,
+      "sha256": "e9956d9cdd3411c28ff52a6ab6469c10de86fb8f55491a8fb4ceec766192af8d"
+    }
+  ],
+  "unchanged_other_runtime_pins": [
+    {
+      "path": "games/yuga-native/scripts/confluence_world.gd",
+      "bytes": 84754,
+      "sha256": "1301701f7f8b6a711de7a36a6d283d88f1240708a7186053fa51bfc572ca8c76"
+    },
+    {
+      "path": "games/yuga-native/scripts/world_lane_frontage.gd",
+      "bytes": 5929,
+      "sha256": "dcd0c73d8a12fc32e2fc32fa69ccc3466c3835ab0f4c15b8f18b72e8990dda72"
+    },
+    {
+      "path": "games/yuga-native/scripts/world_roof_loggia.gd",
+      "bytes": 6678,
+      "sha256": "e6305e3fd2734901a488d61b4a715e0c6b75f6b95c7ef6810e945a62e7b69c3c"
+    },
+    {
+      "path": "games/yuga-native/scripts/traversal_stone.gdshader",
+      "bytes": 2719,
+      "sha256": "711a5cc8bbdeff0d7456379c7a921ec26f2019c59695363ec0b3e59a3327f548"
+    },
+    {
+      "path": "games/yuga-native/assets/world/confluence-map.json",
+      "bytes": 53971,
+      "sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c"
+    }
+  ],
+  "oracle_git_blob": "3a80bcbd5e40e54448dba6fe6f4085f7388b5ba5",
+  "oracle_sha256": "ee070b0a4b1c0bb07ac645681e6ef3dcf0311adb88afe07ece3ecc75b4ab971b",
+  "engine": {
+    "path": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3"
+  },
+  "results": {
+    "valid_original_baseline": "20/23",
+    "initial_candidate": "23/23",
+    "final_deterministic_candidate": "23/23",
+    "existing_world_scene": "29/29"
+  },
+  "actual_unique_mesh_resources": {
+    "original": 238,
+    "candidate": 13,
+    "mesh_instances_unchanged": 238,
+    "reduction": 225
+  },
+  "fixture_failure_retained": "Invalid PrimitiveMesh method call in first fixture attempt; not accepted. Corrected fixture before valid baseline/candidate. First native exit not separately captured.",
+  "catalog_dependencies": [
+    "games/yuga-native/tests/desktop_world_render_resources_cases.gd",
+    "games/yuga-native/scripts/traversal_landmarks.gd",
+    "games/yuga-native/scripts/world_render_resources.gd",
+    "games/yuga-native/scripts/traversal_stone.gdshader",
+    "games/yuga-native/assets/world/confluence-map.json",
+    "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-traversal_landmarks.gd.txt"
+  ],
+  "independent_source_review": "W6 inspected exact9d2af384/9c05d06c/71d1c639 and found no blocker; no independent engine rerun.",
+  "imports_render_downloads_commits": false,
+  "scope_limits": [
+    "No static/global pool or mutable shared material globalization.",
+    "No instance/draw-call reduction or measured frame-time/GPU-memory/art-quality claim.",
+    "W1 actual matched full-world view pending; no pixel equivalence accepted yet.",
+    "Existing material/node builder function bodies remain byte-exact; no geometry/collision/nav/authority/light/texture changes."
+  ],
+  "artifacts": [
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/REVIEW.md",
+      "bytes": 4390,
+      "sha256": "eb78d8cdbaba78de6bc6c20e0f3791b5c9369a37e18d110a15d037a5b4986a71"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-original-r2/execution.json",
+      "bytes": 839,
+      "sha256": "dbaf0bba91ec157aaddcfd4ac0816024a59245aed04a7be0a58684cd34621ff8"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-original-r2/godot.log",
+      "bytes": 1627,
+      "sha256": "5696f630d6b4f0f181c38877a358127cce99898f88adfa99d41afb4f73df30c0"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-original-r2/report.json",
+      "bytes": 5042,
+      "sha256": "7767444c6e5b241622b4b89532fec16073c24d34ae8cee64999daeff093d6671"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-traversal_landmarks.gd.txt",
+      "bytes": 4467,
+      "sha256": "ee070b0a4b1c0bb07ac645681e6ef3dcf0311adb88afe07ece3ecc75b4ab971b"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/candidate-final-r2/execution.json",
+      "bytes": 824,
+      "sha256": "0db5f76284351e9facdba9c42303676169d3378bb509cf293a2449944aa62705"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/candidate-final-r2/godot.log",
+      "bytes": 1653,
+      "sha256": "b408b1ae5744c0add41d8ffd7bcd062db9c7ea3e31c291ddb2e29e791de78c50"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/candidate-final-r2/report.json",
+      "bytes": 5016,
+      "sha256": "2d6d230de537e5f3661cdaa1e649285c77c10ae9b6af2886cc5247719d91ba9e"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/candidate-r1/execution.json",
+      "bytes": 824,
+      "sha256": "4978aad5c6ef8dbee138d34681d4ab92e86812414f7ba194467207bb76aa57be"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/candidate-r1/godot.log",
+      "bytes": 1627,
+      "sha256": "4086ca0e3f3ca11654330c23fb4005eb9c61f2464ebf2e8ab6f1e2e4678b34ca"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/candidate-r1/report.json",
+      "bytes": 5037,
+      "sha256": "2621a573e8f2d5bb04ae3904ec2d307dfc38b438c0e379230b7973fd333e3c3c"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/executed-fixture-before-root-pin.gd.txt",
+      "bytes": 10431,
+      "sha256": "c16384be5fb74a37cc292ff2054ab824f31118867256eb3395db0f70d83198ab"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/fixture-api-failure-r1/fixture.gd.txt",
+      "bytes": 10483,
+      "sha256": "dddf8d234861e8e754fbc23ad84b12eb2ea963e3e61afe6913d059166f0b37e4"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/fixture-api-failure-r1/godot.log.gz",
+      "bytes": 6992,
+      "sha256": "63f6c8b394237bc52b47011f29221954755db1c807f2e11c1f0f5f7c4b686e6d"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/fixture-api-failure-r1/report.json",
+      "bytes": 5043,
+      "sha256": "a4b4ebf338e79e5efd4675da97c408abe4394fd7bc134e1d90f8d9fc5b17cfe3"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/runtime.patch",
+      "bytes": 3233,
+      "sha256": "6fe097887624e45702fa752d5e442c468877c01378746edd8735b165d0b89e25"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/uid-generation.json",
+      "bytes": 753,
+      "sha256": "5d0ed66189a949e647cae9b47fa748d83f6936760cab7483f6a54d459f816d94"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/world-scene-r1/execution.json",
+      "bytes": 812,
+      "sha256": "d86780e33a92bdbb03b902ff3fb0f5d016556a5bfb2c0a1f1c6e90386e745d4e"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/world-scene-r1/godot.log",
+      "bytes": 26455,
+      "sha256": "d3a48cae4f4b0c8f179ace1d1509ea8cb529cf9ad883dc15cfbc7de3cc150d75"
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/world-scene-r1/report.json",
+      "bytes": 13945,
+      "sha256": "1c5e22ec15fcac185590e108cccf066b5f7d78a64d0e45ec2d8a8e2fb732cb48"
+    }
+  ]
+}

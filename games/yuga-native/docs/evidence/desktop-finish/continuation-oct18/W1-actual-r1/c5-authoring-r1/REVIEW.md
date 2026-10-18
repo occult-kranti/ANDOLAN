@@ -1,0 +1,1 @@
+C5 fails the major-shape target in all four actual fixed-camera views. The continuous scalp coverage is improved, but a smooth helmet, upright capped peg and single wide curling ribbon remain. Rear volume reads as a flat plate rather than gathered falling locks. Crown and tie are readable. W1 opened every original. Root must review all four; no production GLB is admitted.

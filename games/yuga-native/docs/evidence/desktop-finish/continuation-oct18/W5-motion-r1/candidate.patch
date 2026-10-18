@@ -1,0 +1,28 @@
+--- private-ba318/rama_motion.gd
++++ continuation-r1/rama_motion.gd
+@@ -529,7 +529,8 @@
+ func _prepare_landing_legs() -> void:
+ 	# Airborne visual extension only. The target remains at the actor's own
+ 	# support-relative height; feet are never pulled down to a distant plane.
+-	# No cached preparation is carried into ground admission or invalid hits.
++	# No extra preparation state is carried into ground admission. The solved
++	# pose naturally becomes the outgoing snapshot of the normal land blend.
+ 	if grounded or traversal!="ground" or locomotion!="fall" or world_velocity.y>0:return
+ 	if not action.is_empty() or action_stage!="none" or aim_weight>.001:return
+ 	if descent_support_y.is_empty() or not rig.is_inside_tree() or rig.global_transform!=descent_support_transform:return
+@@ -547,7 +548,14 @@
+ 		var standing_y:=maxf(floor_y,support_y)+rest_globals[foot].origin.y
+ 		var extension:=clampf(point.y-standing_y,0,LANDING_PREPARE_MAX_EXTENSION_M)
+ 		if extension<=.001:continue
+-		point.y-=extension*_smooth(1-clearance/LANDING_PREPARE_HEIGHT_M)
++		# Reach neutral leg extension before impact: finish when the remaining
++		# body descent is no greater than this foot's bounded extension. The
++		# old zero-clearance endpoint left a raised leg in the outgoing land
++		# snapshot. Both ends retain zero ease slope; the target still falls
++		# with the actor and never becomes an airborne world-space anchor.
++		var preparation_span:=LANDING_PREPARE_HEIGHT_M-extension
++		var weight:=_smooth((LANDING_PREPARE_HEIGHT_M-clearance)/preparation_span)
++		point.y-=extension*weight
+ 		_solve_leg(side,rig.global_transform.affine_inverse()*point)
+ 
+ func _apply_contact() -> void:

@@ -1,5 +1,7 @@
 # YUGA native build handbook
 
+Current six-role continuation: [accepted changes, rejected candidates and exact evidence](evidence/desktop-finish/continuation-oct18/ROOT_REVIEW.md). New targeted catalog IDs are `ui-modal-resize-focus`, `ui-idle-traversal-hud`, `desktop-world-render-resources` and `desktop-army-render-resources`; the latter two pin their preserved baseline oracles. Resource-allocation counts are not draw-call or FPS measurements.
+
 **Resume current desktop work:** [ACTIVE_DESKTOP_HANDOFF.md](ACTIVE_DESKTOP_HANDOFF.md) gives the live source, owners, renderer gate and next command. [DESKTOP_FINISH_CAMPAIGN.md](DESKTOP_FINISH_CAMPAIGN.md) is the active ten-screen/three-integration queue. Mobile is deferred by the user; older campaigns below retain historical evidence and commands.
 
 **Current executable:** [desktop finish preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-desktop-finish-2026-10-18), source `96d5b9cd`. Its exact Linux archive passed warm and fresh-user cold native input; all five public files were downloaded and verified. Windows is archive-validated only. [Release evidence](evidence/desktop-finish/published/release-r4/REVIEW.md).

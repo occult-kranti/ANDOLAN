@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "passed": true,
+  "checks": [
+    {
+      "name": "Screen catalog selects exact reviewed fixture with no custom-world argument",
+      "passed": true
+    },
+    {
+      "name": "Normal fixture directly extends SceneTree and has canonical world default",
+      "passed": true
+    },
+    {
+      "name": "All normal explicit resource paths and expected transitive runtime/map inputs are inventoried",
+      "passed": true
+    },
+    {
+      "name": "No external oracle or inherited test is invoked by normal catalog command",
+      "passed": true
+    },
+    {
+      "name": "Catalog selftest explicitly asserts the new suite and expected normal source inputs",
+      "passed": true
+    },
+    {
+      "name": "Previous three-entry receipt remains byte exact",
+      "passed": true
+    },
+    {
+      "name": "Normal selected source inventory remained unchanged during read-only review",
+      "passed": true
+    }
+  ],
+  "scope": "Independent source/registration review only; no engine or catalog selftest execution. Owner native results remain separate.",
+  "suite": {
+    "id": "ui-idle-traversal-hud",
+    "kind": "godot",
+    "source": "tests/ui_idle_traversal_hud_cases.gd",
+    "arguments": []
+  },
+  "normal_explicit_resource_paths": [
+    "scripts/confluence_world.gd",
+    "scripts/input_bindings.gd",
+    "scripts/player.gd",
+    "scripts/player_traversal.gd"
+  ],
+  "expected_runtime_inputs": [
+    "assets/world/confluence-map.json",
+    "scripts/confluence_world.gd",
+    "scripts/input_bindings.gd",
+    "scripts/lane_army.gd",
+    "scripts/player.gd",
+    "scripts/player_traversal.gd",
+    "tests/ui_idle_traversal_hud_cases.gd"
+  ],
+  "catalog_source_count": 570,
+  "catalog_source_bytes": 181163055,
+  "source_pins": {
+    "assets/world/confluence-map.json": {
+      "bytes": 53971,
+      "sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c"
+    },
+    "scripts/confluence_world.gd": {
+      "bytes": 86450,
+      "sha256": "5fde1f003fa9f9d08309c4db656a078b2a028412dcad97d84e101bf7ee3ed6a8"
+    },
+    "scripts/input_bindings.gd": {
+      "bytes": 11170,
+      "sha256": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243"
+    },
+    "scripts/lane_army.gd": {
+      "bytes": 30837,
+      "sha256": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e"
+    },
+    "scripts/player.gd": {
+      "bytes": 20337,
+      "sha256": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86"
+    },
+    "scripts/player_traversal.gd": {
+      "bytes": 10637,
+      "sha256": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f"
+    },
+    "scripts/rama_motion.gd": {
+      "bytes": 37695,
+      "sha256": "5023b301ff4c4585e3b6a22827f55f4696045bb0206374ee1656a5b4bad6e4a5"
+    },
+    "tests/ui_idle_traversal_hud_cases.gd": {
+      "bytes": 7814,
+      "sha256": "cbba4fe1c398ecc78cb6739c0b69ad2b4e17c73a0d27d8ec5f0e2f9a1f78bca1"
+    },
+    "tests/ui_idle_traversal_hud_cases.gd.uid": {
+      "bytes": 20,
+      "sha256": "4b3e61e6275bdaa03031a5f86de356d3aa80c595a985ab9caec435a36e296fd3"
+    },
+    "tests/visual_catalog_cases.py": {
+      "bytes": 15940,
+      "sha256": "dfb2e1697fb46bced0c0f249db5d13fda3db4bdc3bcb8cd0555bdc7eb007d51b"
+    },
+    "tools/run-authoring-checks.py": {
+      "bytes": 25065,
+      "sha256": "f756914c39a724461db3251d7b543c6c49597c1b6cab7a3e548d69e6eef19062"
+    },
+    "tools/run-visual-checks.py": {
+      "bytes": 18094,
+      "sha256": "3513266e58955892bbd803432c86e519c5e9a02820f57d75c3ed421813acd753"
+    }
+  },
+  "previous_review": {
+    "path": "docs/evidence/desktop-finish/continuation-oct18/W5-catalog-review-r1/receipt.json",
+    "bytes": 515,
+    "sha256": "1fc1f7c224a4110054cdf8f870f1ab02418ed195277b307ebd75494d1719fd0e"
+  },
+  "optional_world_script": "Used only by owner baseline invocation; normal catalog passes no override. Any future catalog custom-world argument requires that path in declared source closure.",
+  "limits": [
+    "Before/after hashing detects persistent source changes, not a transient mutation followed by byte-exact restoration.",
+    "Imported cache payloads are qualified separately. Test UID is recorded for provenance; direct --script path invokes the fixture, not its UID.",
+    "No runtime/test/catalog change, engine, network, export or publication operation by this reviewer."
+  ]
+}

@@ -1,0 +1,91 @@
+diff --git a/games/yuga-native/scripts/lane_army.gd b/games/yuga-native/scripts/lane_army.gd
+index c2bee97..6cda16e 100644
+--- a/games/yuga-native/scripts/lane_army.gd
++++ b/games/yuga-native/scripts/lane_army.gd
+@@ -10,6 +10,7 @@ signal simulation_stepped(delta: float)
+ signal simulation_reset(reason: String)
+ 
+ const Unit = preload("res://scripts/lane_minion.gd")
++const RenderResources = preload("res://scripts/world_render_resources.gd")
+ const STEP := .05
+ const CAP := 72
+ const CORPSE_CAP := 24
+@@ -64,6 +65,14 @@ var siege_rejected_pairs := 0
+ var _next_siege_id := 1
+ var _receiver_depth := 0
+ var _pending_reset := false
++var _presentation_meshes: RenderResources
++
++## Fixed status/arrow meshes live with this army, never in a global cache.
++## Units retain independent material overrides and collider resources.
++func presentation_mesh_resources() -> RenderResources:
++	if _presentation_meshes == null:
++		_presentation_meshes = RenderResources.new()
++	return _presentation_meshes
+ 
+ func _ready() -> void:
+ 	process_mode = Node.PROCESS_MODE_PAUSABLE
+diff --git a/games/yuga-native/scripts/lane_minion.gd b/games/yuga-native/scripts/lane_minion.gd
+index 4051e3a..cfb3d23 100644
+--- a/games/yuga-native/scripts/lane_minion.gd
++++ b/games/yuga-native/scripts/lane_minion.gd
+@@ -4,6 +4,7 @@ extends StaticBody3D
+ signal defeated(unit: Node3D, by_player: bool)
+ 
+ const Art = preload("res://scripts/lane_infantry_art.gd")
++const RenderResources = preload("res://scripts/world_render_resources.gd")
+ const VehicleArt = preload("res://scripts/lane_vehicle_art.gd")
+ const VEHICLE_ROLES := ["cannon_cart", "royal_chariot"]
+ const STATS := {
+@@ -81,6 +82,11 @@ func _ready() -> void:
+ 	shape.position.y = capsule.height*.5
+ 	add_child(shape)
+ 	if render_art:
++		var geometry: RenderResources
++		if is_instance_valid(army) and army.has_method("presentation_mesh_resources"):
++			geometry = army.call("presentation_mesh_resources") as RenderResources
++		# Standalone unit fixtures and non-army callers keep their own geometry.
++		if geometry == null: geometry = RenderResources.new()
+ 		var result: Dictionary = VehicleArt.build(team,role) if role in VEHICLE_ROLES else Art.build(team,role)
+ 		if role in VEHICLE_ROLES:
+ 			vehicle_art = result
+@@ -96,14 +102,12 @@ func _ready() -> void:
+ 		dark.albedo_color = Color("1a2024")
+ 		dark.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+ 		var background := MeshInstance3D.new()
+-		var box := BoxMesh.new()
+-		box.size = Vector3(.82,.075,.055)
++		var box := geometry.box(Vector3(.82,.075,.055))
+ 		background.mesh = box
+ 		background.material_override = dark
+ 		bar.add_child(background)
+ 		health_fill = MeshInstance3D.new()
+-		var fill := BoxMesh.new()
+-		fill.size = Vector3(.78,.045,.065)
++		var fill := geometry.box(Vector3(.78,.045,.065))
+ 		health_fill.mesh = fill
+ 		var color := StandardMaterial3D.new()
+ 		color.albedo_color = Color("edb860") if team == "sun" else Color("70c7eb")
+@@ -111,8 +115,7 @@ func _ready() -> void:
+ 		health_fill.material_override = color
+ 		bar.add_child(health_fill)
+ 		shield_fill = MeshInstance3D.new()
+-		var shield_mesh := BoxMesh.new()
+-		shield_mesh.size = Vector3(.78,.022,.07)
++		var shield_mesh := geometry.box(Vector3(.78,.022,.07))
+ 		shield_fill.mesh = shield_mesh
+ 		var shield_color := StandardMaterial3D.new()
+ 		shield_color.albedo_color = Color("b8ecfa")
+@@ -123,11 +126,7 @@ func _ready() -> void:
+ 		bar.add_child(shield_fill)
+ 		if role == "bow_guard":
+ 			arrow = MeshInstance3D.new()
+-			var shaft := CylinderMesh.new()
+-			shaft.top_radius = .018
+-			shaft.bottom_radius = .018
+-			shaft.height = .70
+-			shaft.radial_segments = 6
++			var shaft := geometry.cylinder(.018,.018,.70,6)
+ 			arrow.mesh = shaft
+ 			arrow.material_override = color
+ 			arrow.visible = false

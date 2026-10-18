@@ -1,0 +1,31 @@
+--- candidate-3a0.gd
++++ rama_motion.gd
+@@ -531,6 +531,7 @@
+ 	# support-relative height; feet are never pulled down to a distant plane.
+ 	# No extra preparation state is carried into ground admission. The solved
+ 	# pose naturally becomes the outgoing snapshot of the normal land blend.
++	if not world_velocity.is_finite() or not is_finite(pending_delta) or pending_delta<=0 or pending_delta>.1:return
+ 	if grounded or traversal!="ground" or locomotion!="fall" or world_velocity.y>0:return
+ 	if not action.is_empty() or action_stage!="none" or aim_weight>.001:return
+ 	if descent_support_y.is_empty() or not rig.is_inside_tree() or rig.global_transform!=descent_support_transform:return
+@@ -548,12 +549,14 @@
+ 		var standing_y:=maxf(floor_y,support_y)+rest_globals[foot].origin.y
+ 		var extension:=clampf(point.y-standing_y,0,LANDING_PREPARE_MAX_EXTENSION_M)
+ 		if extension<=.001:continue
+-		# Reach neutral leg extension before impact: finish when the remaining
+-		# body descent is no greater than this foot's bounded extension. The
+-		# old zero-clearance endpoint left a raised leg in the outgoing land
+-		# snapshot. Both ends retain zero ease slope; the target still falls
+-		# with the actor and never becomes an airborne world-space anchor.
+-		var preparation_span:=LANDING_PREPARE_HEIGHT_M-extension
++		# Finish preparation before the next physics update can reach contact.
++		# Reserve one measured descent step in addition to the foot extension;
++		# cap completion height so a full extension-length ease span remains.
++		# This changes only pose timing. The target still falls with the actor,
++		# and the fresh support/footprint guards above remain mandatory.
++		var next_descent:=maxf(0.0,-world_velocity.y)*pending_delta
++		var completion_clearance:=minf(LANDING_PREPARE_HEIGHT_M-LANDING_PREPARE_MAX_EXTENSION_M,extension+next_descent)
++		var preparation_span:=LANDING_PREPARE_HEIGHT_M-completion_clearance
+ 		var weight:=_smooth((LANDING_PREPARE_HEIGHT_M-clearance)/preparation_span)
+ 		point.y-=extension*weight
+ 		_solve_leg(side,rig.global_transform.affine_inverse()*point)

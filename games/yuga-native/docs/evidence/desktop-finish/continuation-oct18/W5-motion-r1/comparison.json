@@ -1,0 +1,479 @@
+{
+  "status": "HEADLESS_COMPARISON_ONLY",
+  "passed": true,
+  "count": 9,
+  "checks": [
+    {
+      "name": "both native headless coverage gates complete",
+      "passed": true
+    },
+    {
+      "name": "same270 frame identities and bone order",
+      "passed": true
+    },
+    {
+      "name": "motion is sole runtime difference and exact child marker accounts for it",
+      "passed": true,
+      "changed": [
+        "res://.graphics-six-snapshot.json",
+        "res://scripts/rama_motion.gd"
+      ],
+      "file_delta": [
+        "scripts/rama_motion.gd"
+      ]
+    },
+    {
+      "name": "root capsule input authority and all clocks exact",
+      "passed": true,
+      "differences": [],
+      "count": 0
+    },
+    {
+      "name": "nonleg final matrices exact",
+      "passed": true,
+      "differences": [],
+      "count": 0,
+      "maximum_scalar_delta": 0.0
+    },
+    {
+      "name": "ordinary fixed-anchor admission schedule exact",
+      "passed": true,
+      "different_frames": []
+    },
+    {
+      "name": "all sampled soles retain existing minus5mm floor",
+      "passed": true,
+      "baseline_min_mm": -3.796233795583248,
+      "candidate_min_mm": -3.796233795583248
+    },
+    {
+      "name": "sampled minimum penetration does not increase",
+      "passed": true,
+      "baseline_min_mm": -3.796233795583248,
+      "candidate_min_mm": -3.796233795583248
+    },
+    {
+      "name": "first grounded sole gaps are within5mm",
+      "passed": true,
+      "frame": 250,
+      "baseline": {
+        "frame": 250,
+        "physics": 589,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 111.42178624868393,
+          "R": 75.347401201725
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      "candidate": {
+        "frame": 250,
+        "physics": 589,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 0.5898404633626342,
+          "R": 3.2458831556141376
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      }
+    }
+  ],
+  "baseline": {
+    "path": "games/yuga-native/docs/evidence/desktop-finish/next-motion/W5-locomotion-preflight-current-r1/preflight.json.gz",
+    "bytes": 6057421,
+    "sha256": "42c0e18493f434f5413833f50fa011a817f2a089738aaffcfdbd289aa48a1136"
+  },
+  "candidate": {
+    "path": "/workspace/scratch/yuga-continuation-W5-r1/natural-r2/preflight.json.gz",
+    "bytes": 6057503,
+    "sha256": "2e458e3ccf9f4b4a30a9c4ee2a0838f4d30ba8bc88d4f9bc4e66de725e4478f4"
+  },
+  "landing_witness": {
+    "baseline": [
+      {
+        "frame": 246,
+        "physics": 581,
+        "grounded": false,
+        "gait": "fall",
+        "sole_mm": {
+          "L": 856.9002747535706,
+          "R": 816.9009685516357
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 247,
+        "physics": 583,
+        "grounded": false,
+        "gait": "fall",
+        "sole_mm": {
+          "L": 671.90021276474,
+          "R": 631.9009065628052
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 248,
+        "physics": 585,
+        "grounded": false,
+        "gait": "fall",
+        "sole_mm": {
+          "L": 466.900110244751,
+          "R": 426.90080404281616
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 249,
+        "physics": 587,
+        "grounded": false,
+        "gait": "fall",
+        "sole_mm": {
+          "L": 241.8999969959259,
+          "R": 201.90070569515228
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 250,
+        "physics": 589,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 111.42178624868393,
+          "R": 75.347401201725
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 251,
+        "physics": 591,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 61.34951859712601,
+          "R": 41.70038178563118
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 252,
+        "physics": 593,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 10.773331858217716,
+          "R": 7.475823629647493
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 253,
+        "physics": 595,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.4105053851380944,
+          "R": 1.4104597503319383
+        },
+        "locks": {
+          "L": true,
+          "R": true
+        }
+      },
+      {
+        "frame": 254,
+        "physics": 597,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.41043309122324,
+          "R": 1.410465920343995
+        },
+        "locks": {
+          "L": true,
+          "R": true
+        }
+      },
+      {
+        "frame": 255,
+        "physics": 599,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.4104776782914996,
+          "R": 1.4104337897151709
+        },
+        "locks": {
+          "L": true,
+          "R": true
+        }
+      },
+      {
+        "frame": 256,
+        "physics": 601,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.410564174875617,
+          "R": 1.410420285537839
+        },
+        "locks": {
+          "L": true,
+          "R": true
+        }
+      },
+      {
+        "frame": 257,
+        "physics": 603,
+        "grounded": true,
+        "gait": "idle",
+        "sole_mm": {
+          "L": 1.3842134503647685,
+          "R": 1.3841033214703202
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 258,
+        "physics": 605,
+        "grounded": true,
+        "gait": "idle",
+        "sole_mm": {
+          "L": 1.2914675753563643,
+          "R": 1.2915681581944227
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      }
+    ],
+    "candidate": [
+      {
+        "frame": 246,
+        "physics": 581,
+        "grounded": false,
+        "gait": "fall",
+        "sole_mm": {
+          "L": 856.9002747535706,
+          "R": 816.9009685516357
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 247,
+        "physics": 583,
+        "grounded": false,
+        "gait": "fall",
+        "sole_mm": {
+          "L": 671.90021276474,
+          "R": 631.9009065628052
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 248,
+        "physics": 585,
+        "grounded": false,
+        "gait": "fall",
+        "sole_mm": {
+          "L": 438.3925199508667,
+          "R": 411.31913661956787
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 249,
+        "physics": 587,
+        "grounded": false,
+        "gait": "fall",
+        "sole_mm": {
+          "L": 121.41108512878418,
+          "R": 124.08015877008438
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 250,
+        "physics": 589,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 0.5898404633626342,
+          "R": 3.2458831556141376
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 251,
+        "physics": 591,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.4105354202911258,
+          "R": 1.4104596339166164
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 252,
+        "physics": 593,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.4105219161137938,
+          "R": 1.4105165610089898
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 253,
+        "physics": 595,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.4105053851380944,
+          "R": 1.4104597503319383
+        },
+        "locks": {
+          "L": true,
+          "R": true
+        }
+      },
+      {
+        "frame": 254,
+        "physics": 597,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.41043309122324,
+          "R": 1.410465920343995
+        },
+        "locks": {
+          "L": true,
+          "R": true
+        }
+      },
+      {
+        "frame": 255,
+        "physics": 599,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.4104776782914996,
+          "R": 1.4104337897151709
+        },
+        "locks": {
+          "L": true,
+          "R": true
+        }
+      },
+      {
+        "frame": 256,
+        "physics": 601,
+        "grounded": true,
+        "gait": "land",
+        "sole_mm": {
+          "L": 1.410564174875617,
+          "R": 1.410420285537839
+        },
+        "locks": {
+          "L": true,
+          "R": true
+        }
+      },
+      {
+        "frame": 257,
+        "physics": 603,
+        "grounded": true,
+        "gait": "idle",
+        "sole_mm": {
+          "L": 1.3842134503647685,
+          "R": 1.3841033214703202
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      },
+      {
+        "frame": 258,
+        "physics": 605,
+        "grounded": true,
+        "gait": "idle",
+        "sole_mm": {
+          "L": 1.2914675753563643,
+          "R": 1.2915681581944227
+        },
+        "locks": {
+          "L": false,
+          "R": false
+        }
+      }
+    ]
+  },
+  "changed_pose_samples": 190,
+  "changed_pose_bounds": {
+    "first_frame": 248,
+    "last_frame": 252
+  },
+  "limits": [
+    "Prior strict26/27 comparative limitation remains.",
+    "No new raster or human full-speed review.",
+    "An invalid pre-contact support retains legacy fallback."
+  ]
+}

@@ -10,6 +10,7 @@ signal simulation_stepped(delta: float)
 signal simulation_reset(reason: String)
 
 const Unit = preload("res://scripts/lane_minion.gd")
+const RenderResources = preload("res://scripts/world_render_resources.gd")
 const STEP := .05
 const CAP := 72
 const CORPSE_CAP := 24
@@ -64,6 +65,14 @@ var siege_rejected_pairs := 0
 var _next_siege_id := 1
 var _receiver_depth := 0
 var _pending_reset := false
+var _presentation_meshes: RenderResources
+
+## Fixed status/arrow meshes live with this army, never in a global cache.
+## Units retain independent material overrides and collider resources.
+func presentation_mesh_resources() -> RenderResources:
+	if _presentation_meshes == null:
+		_presentation_meshes = RenderResources.new()
+	return _presentation_meshes
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE

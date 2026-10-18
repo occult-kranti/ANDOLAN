@@ -4,6 +4,7 @@ extends Control
 const UI = preload("res://scripts/hero_ui_theme.gd")
 const Bindings = preload("res://scripts/input_bindings.gd")
 const Glyph = preload("res://scripts/rama_ability_glyph.gd")
+const ScrollFocus = preload("res://scripts/ui_scroll_focus.gd")
 const KIT_PATH := "res://assets/design/rama-ability-kit.json"
 
 signal closed
@@ -383,12 +384,16 @@ func _process(_delta: float) -> void:
 
 func _layout() -> void:
 	if not card: return
+	var resized_viewport := _last_size != get_viewport_rect().size
 	_last_size = get_viewport_rect().size
 	card.size = Vector2(minf(920, _last_size.x - 48), minf(520, _last_size.y - 48))
 	card.position = (_last_size - card.size) * .5
 	abilities_scroll.custom_minimum_size.x = 252 if _last_size.x >= 1100 else 236
 	_split.add_theme_constant_override("separation", UI.SPACE_LG)
 	_schedule_initial_choice()
+	if resized_viewport:
+		ScrollFocus.reveal_after_layout(self,abilities_scroll)
+		ScrollFocus.reveal_after_layout(self,details_scroll)
 
 func _schedule_initial_choice() -> void:
 	if _reveal_pending: return

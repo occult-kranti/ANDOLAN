@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "at_utc": "2026-10-18T14:05:07.478775+00:00",
+  "status": "BOUNDED_SOURCE_REVIEW_ACCEPT",
+  "owner_receipt": {
+    "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/receipt.json",
+    "sha256": "fdaa1b1c3bd64d88453a30d6a097912ade4376aa10f7bea8715ac7f127c517dd"
+  },
+  "reviewed_sources": [
+    {
+      "path": "games/yuga-native/scripts/traversal_landmarks.gd",
+      "bytes": 4397,
+      "sha256": "9d2af384370560e805fdab965b04a30638c9632a36fa0a71cac7b53a7ccea887"
+    },
+    {
+      "path": "games/yuga-native/scripts/world_render_resources.gd",
+      "bytes": 2140,
+      "sha256": "9c05d06cd78fd8e9326ac55f89939038ffd08fa69d1f5cdac00dc8a5a1b93472"
+    },
+    {
+      "path": "games/yuga-native/scripts/world_render_resources.gd.uid",
+      "bytes": 19,
+      "sha256": "1b396bd017c1e4bbf83db7631bb8ff4f7a15908802149b89f85a47cbbe0391da"
+    },
+    {
+      "path": "games/yuga-native/tests/desktop_world_render_resources_cases.gd",
+      "bytes": 10527,
+      "sha256": "71d1c639ccc61f0b8eca015c78bd04905e360bd7439fe36c6055fc32de3d2294"
+    },
+    {
+      "path": "games/yuga-native/tests/desktop_world_render_resources_cases.gd.uid",
+      "bytes": 20,
+      "sha256": "e9956d9cdd3411c28ff52a6ab6469c10de86fb8f55491a8fb4ceec766192af8d"
+    }
+  ],
+  "verified_owner_payloads": 30,
+  "retained_baseline_matches_git": true,
+  "unchanged_function_bodies": {
+    "_deck_material": true,
+    "_material": true,
+    "_mesh": true
+  },
+  "findings": [
+    "Primitive sharing keys include complete typed dimensions, subdivision, cap, hemisphere, ring and orientation values; no rounded string key introduced.",
+    "A fresh pool/material dictionary/count per build prevents cross-world mutable state and unbounded global retention. Node material_override remains separate from material-free shared mesh.",
+    "Exact geometry arrays/topology/transforms/material state are compared against a pinned old builder, with moved-node and geometry mutation rejection plus peer disposal.",
+    "No collider, light, gameplay authority or instance-count change appears in the diff. Lower unique primitive count alone is not a draw-call/FPS/GPU-memory claim."
+  ],
+  "owner_executed_results": {
+    "valid_original_baseline": "20/23",
+    "initial_candidate": "23/23",
+    "final_deterministic_candidate": "23/23",
+    "existing_world_scene": "29/29"
+  },
+  "independent_engine_runs": 0,
+  "remaining_gates": [
+    "W1 actual matched world view remains pending.",
+    "Final source CI and any new package qualification must use the successor commit."
+  ]
+}

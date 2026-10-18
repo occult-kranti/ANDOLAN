@@ -1,0 +1,106 @@
+[
+  {
+    "click_name": "OpenKeyboard",
+    "expect": {
+      "state.page_title": "controls"
+    }
+  },
+  {
+    "key_down": "Shift_L"
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key_up": "Shift_L"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "state.capture_action": "guardian_circle",
+      "fixture_review.focus_name": "Binding_guardian_circle",
+      "fixture_review.focused_control_in_scroll": true
+    },
+    "capture": "01-controls-capture-100"
+  },
+  {
+    "key": "F8",
+    "expect": {
+      "content_scale_factor": 2.0,
+      "state.capture_action": "guardian_circle",
+      "fixture_review.capture_status": "Press a new key for Guardian Circle. Esc cancels."
+    },
+    "capture": "02-controls-capture-200"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "state.capture_action": ""
+    }
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "state.page_title": "board",
+      "focus_name": "OpenKeyboard"
+    },
+    "capture": "03-controls-return-200"
+  },
+  {
+    "key": "F8",
+    "expect": {
+      "content_scale_factor": 1.0
+    }
+  },
+  {
+    "click_name": "OpenGuide",
+    "expect": {
+      "state.page_title": "guide"
+    }
+  },
+  {
+    "key_down": "Shift_L"
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key_up": "Shift_L"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "guide.selected_id": "dawn_volley",
+      "fixture_review.focused_control_in_scroll": true
+    },
+    "capture": "04-guide-selection-100"
+  },
+  {
+    "key": "F8",
+    "expect": {
+      "content_scale_factor": 2.0,
+      "guide.selected_id": "dawn_volley"
+    },
+    "capture": "05-guide-selection-200"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "state.page_title": "board",
+      "focus_name": "OpenGuide"
+    },
+    "capture": "06-guide-return-200"
+  }
+]

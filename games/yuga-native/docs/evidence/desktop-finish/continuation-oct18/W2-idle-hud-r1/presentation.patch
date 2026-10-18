@@ -1,0 +1,84 @@
+--- original1301701f
++++ current5fde1f
+@@ -102,6 +102,7 @@
+ var compact_world_card: Panel
+ var compact_world_labels: Array[Label] = []
+ var _constrained_world := false
++var _traversal_idle := false
+ var review_camera: Camera3D
+ var world_ready := false
+ var paused := false
+@@ -959,7 +960,7 @@
+ 	controls.size = controls.custom_minimum_size
+ 	var combat_top := screen.y+ rama_hud.offset_top
+ 	controls.position = Vector2(margin,combat_top-HeroUI.SPACE_MD-controls.size.y)
+-	traversal.custom_minimum_size = Vector2(232,116)
++	traversal.custom_minimum_size = Vector2(232,88 if _traversal_idle else 116)
+ 	traversal.size = traversal.custom_minimum_size
+ 	traversal.position = Vector2(screen.x-margin-traversal.size.x,combat_top-HeroUI.SPACE_MD-traversal.size.y)
+ 	_layout_atlas()
+@@ -1115,6 +1116,7 @@
+ 	var flight_cd:=float(report.get("flight_cooldown",0))
+ 	var tether_cd:=float(report.get("grapple_cooldown",0))
+ 	var mode:=String(report.get("mode","ground"))
++	var idle_copy:=_idle_traversal_copy(report,battle,player.active and player.is_on_floor())
+ 	compact_world_labels[0].text="%s · %s" % [district_at(player.position),score_label.text.trim_prefix("Cores · ")]
+ 	var objective:="Escort Sun troops to the Moon core."
+ 	if not String(battle.get("winner","")).is_empty(): objective=WorldOutcome.headline(battle.winner)+" · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
+@@ -1133,8 +1135,8 @@
+ 			else: objective="Capture relay: stay in the marked zone."
+ 			break
+ 	compact_world_labels[1].text=objective
+-	compact_world_labels[2].text="%s %dm · Energy %d/%d · Flight %.1fs · Tether %.1fs" % [mode.capitalize(),roundi(player.position.y),energy,report.get("max_energy",100),flight_cd,tether_cd]
+-	var prompt:="%s tether ≤36m · %s flight" % [Bindings.label("grapple"),Bindings.label("fly")]
++	compact_world_labels[2].text=idle_copy.energy if not idle_copy.is_empty() else "%s %dm · Energy %d/%d · Flight %.1fs · Tether %.1fs" % [mode.capitalize(),roundi(player.position.y),energy,report.get("max_energy",100),flight_cd,tether_cd]
++	var prompt:String=idle_copy.prompt if not idle_copy.is_empty() else "%s tether ≤36m · %s flight" % [Bindings.label("grapple"),Bindings.label("fly")]
+ 	if not report.get("enabled",false): prompt="Traversal unavailable in this scene."
+ 	elif mode in ["flight","flying"]: prompt="%s rise · %s descend · %s land to refill" % [Bindings.label("jump"),Bindings.label("descend"),Bindings.label("fly")]
+ 	elif mode in ["grapple","grappling"]: prompt="%s release tether · %s flight" % [Bindings.label("grapple"),Bindings.label("fly")]
+@@ -1304,6 +1306,7 @@
+ 			practice_hint_label.text=practice_error if not practice_error.is_empty() else ("Break enemy engines before impact to protect Sun troops. Enemy siege blasts damage Rama; step out of the warning ring. Restart lane practice exits this drill." if siege_drill else "Try cannon carts and royal chariots in the central court. Blasts damage troops; enemy siege blasts damage Rama.")
+ 		if not String(battle.get("winner","")).is_empty():
+ 			objective_label.text=WorldOutcome.headline(battle.winner)+"\nRestart lane practice from the pause menu."
++			_set_traversal_idle(false)
+ 			goal_label.text="Round ended · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
+ 			_refresh_compact_world(battle)
+ 			return
+@@ -1317,7 +1320,11 @@
+ 	var flight_cd: float=float(report.get("flight_cooldown",0))
+ 	var grapple_cd: float=float(report.get("grapple_cooldown",0))
+ 	var candidate: Dictionary=report.get("candidate",{})
+-	if mode=="grapple" or mode=="grappling":
++	var idle_copy:=_idle_traversal_copy(report,battle,player.active and player.is_on_floor())
++	if not idle_copy.is_empty():
++		ability_label.text=idle_copy.energy
++		goal_label.text=idle_copy.prompt
++	elif mode=="grapple" or mode=="grappling":
+ 		traversal_seen=true
+ 		goal_label.text="%s release tether · %s flight" % [Bindings.label("grapple"),Bindings.label("fly")]
+ 	elif mode=="flight" or mode=="flying":
+@@ -1338,7 +1345,24 @@
+ 		elif String(report.get("status","")).begins_with("Aim at"): context="No clear anchor in your aim"
+ 		goal_label.text="%s tether: aim at a gold ring ≤36m\n%s" % [Bindings.label("grapple"),context]
+ 
++	_set_traversal_idle(not idle_copy.is_empty())
+ 	_refresh_compact_world(battle)
++
++func _idle_traversal_copy(report:Dictionary,battle:Dictionary,grounded:bool)->Dictionary:
++	# Presentation only: consume authority values without changing traversal state.
++	if not grounded or not report.get("enabled",false) or String(report.get("mode","")) not in ["ground","grounded"]: return {}
++	var maximum:=float(report.get("max_energy",100))
++	if maximum<=0 or float(report.get("energy",0))<maximum or float(report.get("flight_cooldown",0))>0 or float(report.get("grapple_cooldown",0))>0: return {}
++	if String(report.get("status","")).begins_with("Aim at") or String(report.get("status","")).begins_with("No clear"): return {}
++	if not report.get("candidate",{}).is_empty() or battle.get("siege_drill",false) or not String(battle.get("winner","")).is_empty(): return {}
++	return {"energy":"Energy %d / %d" % [report.energy,maximum],"prompt":"%s flight · %s tether ≤%dm" % [Bindings.label("fly"),Bindings.label("grapple"),report.get("max_range",36)]}
++
++func _set_traversal_idle(value:bool)->void:
++	if _traversal_idle==value: return
++	_traversal_idle=value
++	goal_label.custom_minimum_size.y=0 if value else 42
++	energy_bar.show_percentage=not value
++	_layout_world_hud()
+ 
+ func district_at(position_: Vector3) -> String:
+ 	var selected:="Confluence streets"
