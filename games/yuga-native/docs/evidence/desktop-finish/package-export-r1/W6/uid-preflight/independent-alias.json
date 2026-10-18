@@ -1,0 +1,20 @@
+{
+  "package_sha256": "1dc56efcae0404dadc6603f3e6a49ba0ba52781706f8769efd711509656663d2",
+  "case": "distinct strings same actual Godot resource ID",
+  "uids": [
+    "uid://b",
+    "uid://ab"
+  ],
+  "decoded_ids": [
+    1,
+    1
+  ],
+  "accepted": true,
+  "primary_source": {
+    "url": "https://raw.githubusercontent.com/godotengine/godot/4.6.3-stable/core/io/resource_uid.cpp",
+    "sha256": "ada847833d49bb245435039e44df7ebc45671780a443af7e362119ba54b00266",
+    "semantics": "base34; a contributes zero, so leading a is an alias. id_to_text emits no leading a except zero."
+  },
+  "correction": "uid://invalid is ordinary accepted text, not the reserved uid://<invalid> sentinel; it is not asserted as a bug.",
+  "engine_executed": false
+}

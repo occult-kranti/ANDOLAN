@@ -1,0 +1,142 @@
+{
+  "task": "Maintained Volley regression after accepted motion successor",
+  "reported_ci": {
+    "run_id": 39113365079,
+    "source": "b4d2871723a8cb66354d66abb17bd56fbd22c598",
+    "suite": "desktop-volley-feedback",
+    "total_checks": 17,
+    "remote_assertion_report": "Unavailable: W4 GitHub artifact12132045978 download redirects to managed-path-disallowed Azure host and returns403. Failed-step log establishes suite failure, not which assertion.",
+    "failed_step_log": {
+      "bytes": 5688,
+      "sha256": "2eb700d6623573ba70afc015840d0ba242cdadf83b935ff703b4c569de274340"
+    }
+  },
+  "executed_local": {
+    "baseline": {
+      "passed": false,
+      "checks": 17,
+      "passed_count": 16,
+      "exit_code": 1,
+      "seconds": 2.495,
+      "engine_diagnostics": [],
+      "sources_unchanged": true,
+      "command": [
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_i02_volley_feedback_cases.gd",
+        "--",
+        "--report=/tmp/yuga-current-volley-baseline-r1/reports/desktop-volley-feedback.json",
+        "--warmup-ticks=200"
+      ],
+      "fixture_sha256": "2cc5425fa44b09b61682a0b224066b78a1c181af343b91166d0c8699b1c4436c"
+    },
+    "repaired": {
+      "passed": true,
+      "checks": 17,
+      "passed_count": 17,
+      "exit_code": 0,
+      "seconds": 2.51,
+      "engine_diagnostics": [],
+      "sources_unchanged": true,
+      "command": [
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_i02_volley_feedback_cases.gd",
+        "--",
+        "--report=/tmp/yuga-current-volley-repaired-r1/reports/desktop-volley-feedback.json",
+        "--warmup-ticks=200"
+      ],
+      "fixture_sha256": "f8ffbd028c5a9635d6ec8d26b7cdfac94b788c67053c7228a67915a5325d7201"
+    }
+  },
+  "diagnosis": "Unchanged historical fixture2cc5425f fails only first readiness check because it requires8c377 motion; accepted current source is5023. All16 other behavior/source checks pass. Local reproduction is independent of unavailable remote assertion report.",
+  "repair": "Only replace obsolete content literal with actual current Script path, Resource identity and loaded-source SHA binding; retain all original readiness and16 other predicates/tolerances. Full source/import before-after hashes remain.",
+  "live_readiness": {
+    "details": {
+      "audio_ready": true,
+      "audio_suspended": false,
+      "grounded": true,
+      "live_script_bound": true,
+      "motion_resource": "res://scripts/rama_motion.gd",
+      "motion_sha256": "5023b301ff4c4585e3b6a22827f55f4696045bb0206374ee1656a5b4bad6e4a5",
+      "runtime_configured": true
+    },
+    "name": "Current motion resource and actual imported world ready",
+    "passed": true
+  },
+  "nonfixture_input_pins_identical": true,
+  "all16_other_check_results_identical": true,
+  "b4d_gameplay_source_comparison": [
+    {
+      "path": "res://scripts/confluence_world.gd",
+      "sha256": "42e617a379f815e51a32b9bbd9cca86c6ba3ac6a7c809e2d2d8c6c89619fc0cb",
+      "equals_local": true
+    },
+    {
+      "path": "res://scripts/player.gd",
+      "sha256": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+      "equals_local": true
+    },
+    {
+      "path": "res://scripts/rama_ability_effects.gd",
+      "sha256": "119353e71e5ad1eee61360d52db036075a6be60ec30c4c2ee228b5656243db66",
+      "equals_local": true
+    },
+    {
+      "path": "res://scripts/rama_ability_kit.gd",
+      "sha256": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+      "equals_local": true
+    },
+    {
+      "path": "res://scripts/rama_action_audio.gd",
+      "sha256": "6091e288e9236ee54ea11839db3eef31a59b306b738d7008ae46287c8f5e3c89",
+      "equals_local": true
+    },
+    {
+      "path": "res://scripts/rama_action_buffer.gd",
+      "sha256": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+      "equals_local": true
+    },
+    {
+      "path": "res://scripts/rama_hero_hud.gd",
+      "sha256": "68e3cc06b4176cd8720a6a132ae06582a0c605ff8113a421b048d60550238ea9",
+      "equals_local": true
+    },
+    {
+      "path": "res://scripts/rama_hero_runtime.gd",
+      "sha256": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+      "equals_local": true
+    },
+    {
+      "path": "res://scripts/rama_motion.gd",
+      "sha256": "5023b301ff4c4585e3b6a22827f55f4696045bb0206374ee1656a5b4bad6e4a5",
+      "equals_local": true
+    },
+    {
+      "path": "res://scripts/rama_vitals.gd",
+      "sha256": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+      "equals_local": true
+    }
+  ],
+  "runtime_edits": false,
+  "import_or_raster": false,
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "scope": "Exactly two local catalog invocations: diagnosis and repaired verification, fixed60Hz and warmup200. CPU4, OMP/BLAS/MKL1, catalogLP2; no validated workerpool cap. Headless real-world subscriber/authority evidence, no pixels/listening/feel or wholeCI success claim.",
+  "historical_report": "../W5/REVIEW.md retains exact8c source identity and originalFX failure/proof."
+}

@@ -1427,7 +1427,50 @@ def prove_native_contract_sources(output: Path, project: Path | None = None) -> 
             'scope': 'Actual source-pin checker, nonempty successful checks and exact stable catalog/tool/source/fixture bytes; no network or gameplay acceptance.'}
 
 
+def validate_runtime_script_uids(project: Path | None = None) -> dict:
+    """Reject missing runtime UID metadata before the editor can create it.
+
+    Test/tool sidecars are generated non-runtime metadata and are outside this
+    gate. The existing full runtime source-stability guard still runs at export.
+    """
+    project = (project or PROJECT).resolve()
+    script_root = project / 'scripts'
+    for path in [script_root, *script_root.rglob('*')]:
+        if path.is_symlink():
+            raise ValueError('Runtime scripts contain a symlink: ' + str(path.relative_to(project)))
+    scripts = sorted(script_root.rglob('*.gd'))
+    if not scripts:
+        raise ValueError('Runtime UID preflight found no scripts')
+    seen = {}
+    records = {}
+    for script in scripts:
+        if not script.is_file():
+            raise ValueError('Runtime script is not a regular file: ' + str(script.relative_to(project)))
+        sidecar = script.with_suffix(script.suffix + '.uid')
+        relative = str(sidecar.relative_to(project))
+        if not sidecar.is_file() or sidecar.is_symlink():
+            raise ValueError('Missing regular runtime UID sidecar: ' + relative)
+        payload = sidecar.read_bytes()
+        # Godot 4.6.3 ResourceUID::id_to_text uses canonical base34, no
+        # leading zero ('a'), and a nonnegative signed-63-bit identifier.
+        if not re.fullmatch(rb'uid://(?:a|[b-y0-8][a-y0-8]{0,12})\n', payload):
+            raise ValueError('Malformed runtime UID sidecar: ' + relative)
+        uid = payload.decode('ascii').strip()
+        numeric_id = 0
+        for character in uid.removeprefix('uid://'):
+            numeric_id = numeric_id * 34 + 'abcdefghijklmnopqrstuvwxy012345678'.index(character)
+        if numeric_id > 0x7FFFFFFFFFFFFFFF:
+            raise ValueError('Out-of-range runtime UID sidecar: ' + relative)
+        if numeric_id in seen:
+            raise ValueError('Duplicate runtime UID: ' + relative + ' and ' + seen[numeric_id])
+        seen[numeric_id] = relative
+        records[relative] = {'uid': uid, **record(sidecar)}
+    return {'scripts': len(scripts), 'sidecars': records,
+            'scope': 'Runtime scripts only; format and uniqueness, not import or gameplay qualification.'}
+
+
 def export_all(args: argparse.Namespace, build: Path) -> dict:
+    runtime_uids = validate_runtime_script_uids()
     native_contracts = prove_native_contract_sources(build / 'native-contracts-export.json')
     subprocess.run([sys.executable, str(PROJECT / 'tools/stage-world.py'), '--check'], check=True)
     version = subprocess.check_output([str(args.linux_engine), '--version'], text=True).strip()
@@ -1479,7 +1522,7 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
                 'rama_matches_existing_yuga_source': True,
                 'rama_hero_provenance': rama_hero_notice,
                 'native_contracts': native_contracts,
-                'font_bindings': font_bindings,
+                'font_bindings': font_bindings, 'runtime_uids': runtime_uids,
                 'limits': ['No Windows execution performed by this tool.',
                            'PCK and archive checks do not establish visual quality or gameplay acceptance.']}
     json_write(build / 'native-export-manifest.json', manifest)

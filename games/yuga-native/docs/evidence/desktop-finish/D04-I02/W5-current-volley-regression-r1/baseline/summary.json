@@ -1,0 +1,72 @@
+{
+  "catalog": "visual",
+  "checked_sources_unchanged": true,
+  "checks": 17,
+  "engine_probe": {
+    "command": [
+      "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.041
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": false,
+  "schema": 1,
+  "scope": "Headless visual component, real resource and native identity contracts only; no rendered-art, continuous-motion, physical-GPU, online or release acceptance.",
+  "selected_suites": [
+    "desktop-volley-feedback"
+  ],
+  "sources_after_sha256": "2cd428679b2f68ea0e7aff3eb10dd6d0de90ea786b1cc276d61600147298ed20",
+  "sources_before_sha256": "2cd428679b2f68ea0e7aff3eb10dd6d0de90ea786b1cc276d61600147298ed20",
+  "suites": [
+    {
+      "checks": 17,
+      "command": [
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_i02_volley_feedback_cases.gd",
+        "--",
+        "--report=/tmp/yuga-current-volley-baseline-r1/reports/desktop-volley-feedback.json",
+        "--warmup-ticks=200"
+      ],
+      "executed": true,
+      "exit_code": 1,
+      "id": "desktop-volley-feedback",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": false,
+      "problems": [
+        "suite_report_not_passed",
+        "suite_contains_failed_or_unrecognized_check",
+        "native_process_failed"
+      ],
+      "process_error": null,
+      "report": "reports/desktop-volley-feedback.json",
+      "report_sha256": "22faa0aa21071a35c8e89eeee6c52e170385b9ba9c95772606350dc529119874",
+      "stderr": "logs/desktop-volley-feedback.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/desktop-volley-feedback.stdout",
+      "stdout_sha256": "16335fa295d7ca995682ef0297cde04ab35ede8ce75fc753bc4a871f37d4881a",
+      "timed_out": false,
+      "wall_seconds": 2.495
+    }
+  ]
+}

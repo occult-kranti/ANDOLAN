@@ -83,7 +83,9 @@ func run() -> void:
 	var audio: Node3D=runtime.action_audio
 	runtime.set_volume(.35)
 	runtime.combat_event.connect(func(e: Dictionary):events.append(e.duplicate(true)))
-	check("Exact frozen motion and actual imported world ready",run_before["res://scripts/rama_motion.gd"]=="8c3771a343a0538d749147393d0c407b1fb377d774a91b4cf99734e4852520f8" and runtime.configured and scene.player.is_on_floor() and audio.report().ready and not audio.report().suspended)
+	var motion_script: Script=scene.player.rama_motion.get_script() if is_instance_valid(scene.player.rama_motion) else null
+	var motion_bound: bool=motion_script!=null and motion_script.resource_path=="res://scripts/rama_motion.gd" and motion_script==load("res://scripts/rama_motion.gd") and motion_script.source_code.sha256_text()==run_before["res://scripts/rama_motion.gd"]
+	check("Current motion resource and actual imported world ready",motion_bound and runtime.configured and scene.player.is_on_floor() and audio.report().ready and not audio.report().suspended,{"motion_resource":motion_script.resource_path if motion_script else "", "motion_sha256":run_before["res://scripts/rama_motion.gd"],"live_script_bound":motion_bound,"runtime_configured":runtime.configured,"grounded":scene.player.is_on_floor(),"audio_ready":audio.report().ready,"audio_suspended":audio.report().suspended})
 	for unused in warmup_ticks:scene.army.step_simulation(.05)
 	var before:=snapshot("ready")
 	var accepted: Dictionary=scene.cast_rama_ability("dawn_volley")

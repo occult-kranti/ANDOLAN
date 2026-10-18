@@ -1,0 +1,38 @@
+{
+  "package_sha256": "104fd7122e19ccf0c7bfd483ae6c05308df058a9b04caee7c95ea6c7ce346a73",
+  "source_unchanged": true,
+  "passed": true,
+  "count": 6,
+  "checks": [
+    {
+      "case": "nested_directory_symlink_missing_uid",
+      "passed": true,
+      "error": "Runtime scripts contain a symlink: scripts/linked"
+    },
+    {
+      "case": "script_symlink",
+      "passed": true,
+      "error": "Runtime scripts contain a symlink: scripts/alias.gd"
+    },
+    {
+      "case": "same_numeric_uid_leading_a_alias",
+      "passed": true,
+      "error": "Malformed runtime UID sidecar: scripts/two.gd.uid"
+    },
+    {
+      "case": "above_signed63_bit_range",
+      "passed": true,
+      "error": "Out-of-range runtime UID sidecar: scripts/two.gd.uid"
+    },
+    {
+      "case": "canonical_max_uid_admitted",
+      "passed": true
+    },
+    {
+      "case": "current72_canonical_uids",
+      "passed": true
+    }
+  ],
+  "engine_executed": false,
+  "scope": "Tiny independent Python temporary guard replay; no broad suite, canonical write or import."
+}
