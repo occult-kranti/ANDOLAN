@@ -10,6 +10,12 @@ The cloud cannot download Actions artifacts because its running egress policy ex
 
 The [six-owner plan](evidence/desktop-finish/continuation-oct18b/WORK_PLAN.md) retains the existing 13-round ledger. Thin-film stills and the matched temporal gate pass. Root’s separate paving bevel remains private after stable day/night captures showed too little visible benefit. C6–C8 hair models are rejected; the next artist-controlled task addresses silhouette, swept flow and joins before any UV, skin or LOD work. The accepted hero assets remain unchanged.
 
+## Workspace backup and immediate next actions
+
+All accepted work is pushed. A separate [historical recovery snapshot](https://github.com/occult-kranti/ANDOLAN/tree/backup/yuga-workspace-2026-10-18), commit `cd3180e1de00eccfc335587ba6283585236019c0`, additionally preserves 773 untracked/ignored source, art, evidence, log, design-note and UID files (71,839,371 bytes). [The manifest and remote receipt](../../../docs/evidence/workspace-backup-2026-10-18/README.md) bind their exact bytes. No local files were removed and no historical candidate was activated. Restore individual files only after checking their context.
+
+Follow [the ordered next steps](evidence/desktop-finish/continuation-oct18b/NEXT_SIX_OWNERS.md): restore capacity, activate artifact access, qualify the exact package, then continue the six-owner art/UI/motion work. The latest backup observed 446,820,352 free bytes; earlier capacity observations below retain their timestamps/context.
+
 ## Current executable and source
 
 The [desktop polish preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-desktop-polish-2026-10-18) is an **offline Rama slice**. Native online matches, the full roster, commercial graphics and animation, physical-GPU profiling, Windows execution and human listening/full-speed feel remain open. No supplied proprietary Deadlock/Overwatch clients were analyzed or recovered. Actual native originals, rather than concepts, own visual acceptance.
