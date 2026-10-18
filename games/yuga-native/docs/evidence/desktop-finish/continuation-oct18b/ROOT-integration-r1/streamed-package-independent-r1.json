@@ -1,0 +1,331 @@
+{
+  "passed": true,
+  "count": 64,
+  "checks": [
+    {
+      "name": "linux streamed ZIP creates no engine/PCK staging copies",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "linux streamed ZIP byte-identical to unchanged legacy",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "linux deterministic sorted exact platform members",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "linux fixed timestamp and permissions",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "linux source bytes inode and permissions unmodified",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "linux copied runtime conflict rejects under streamed mode",
+      "passed": true,
+      "error": "Unsafe or duplicate streamed archive member: godot"
+    },
+    {
+      "name": "windows streamed ZIP creates no engine/PCK staging copies",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "windows streamed ZIP byte-identical to unchanged legacy",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "windows deterministic sorted exact platform members",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "windows fixed timestamp and permissions",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "windows source bytes inode and permissions unmodified",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "windows copied runtime conflict rejects under streamed mode",
+      "passed": true,
+      "error": "Unsafe or duplicate streamed archive member: godot.exe"
+    },
+    {
+      "name": "unsafe/incorrect virtual name '../escape'",
+      "passed": true,
+      "error": "Streamed archive requires the exact platform engine/PCK names"
+    },
+    {
+      "name": "unsafe/incorrect virtual name '/absolute'",
+      "passed": true,
+      "error": "Streamed archive requires the exact platform engine/PCK names"
+    },
+    {
+      "name": "unsafe/incorrect virtual name 'x/../godot'",
+      "passed": true,
+      "error": "Streamed archive requires the exact platform engine/PCK names"
+    },
+    {
+      "name": "unsafe/incorrect virtual name 'x\\\\godot'",
+      "passed": true,
+      "error": "Streamed archive requires the exact platform engine/PCK names"
+    },
+    {
+      "name": "unsafe/incorrect virtual name './godot'",
+      "passed": true,
+      "error": "Streamed archive requires the exact platform engine/PCK names"
+    },
+    {
+      "name": "unsafe/incorrect virtual name ''",
+      "passed": true,
+      "error": "Streamed archive requires the exact platform engine/PCK names"
+    },
+    {
+      "name": "Windows engine name in Linux archive rejects",
+      "passed": true,
+      "error": "Streamed archive requires the exact platform engine/PCK names"
+    },
+    {
+      "name": "Linux engine name in Windows archive rejects",
+      "passed": true,
+      "error": "Streamed archive requires the exact platform engine/PCK names"
+    },
+    {
+      "name": "missing virtual PCK rejects",
+      "passed": true,
+      "error": "Streamed archive requires the exact platform engine/PCK names"
+    },
+    {
+      "name": "changed frozen engine rejects",
+      "passed": true,
+      "error": "Frozen large archive payload changed: godot"
+    },
+    {
+      "name": "changed frozen PCK rejects",
+      "passed": true,
+      "error": "Frozen large archive payload changed: yuga-native.pck"
+    },
+    {
+      "name": "changed frozen mode rejects",
+      "passed": true,
+      "error": "Frozen large archive payload changed: godot"
+    },
+    {
+      "name": "same bytes replacement inode rejects",
+      "passed": true,
+      "error": "Frozen large archive payload changed: godot"
+    },
+    {
+      "name": "direct virtual symlink rejects",
+      "passed": true,
+      "error": "Streamed archive source must be a regular nonsymlink path: /workspace/scratch/yuga-next-root-r1/stream-package-u_4d3thl/16/symlink"
+    },
+    {
+      "name": "virtual parent symlink rejects",
+      "passed": true,
+      "error": "Streamed archive source must be a regular nonsymlink path: /workspace/scratch/yuga-next-root-r1/stream-package-u_4d3thl/17/linkdir/engine"
+    },
+    {
+      "name": "virtual directory rejects",
+      "passed": true,
+      "error": "Streamed archive source must be a regular nonsymlink path: /workspace/scratch/yuga-next-root-r1/stream-package-u_4d3thl/18/inputs"
+    },
+    {
+      "name": "virtual FIFO rejects without opening",
+      "passed": true,
+      "error": "Streamed archive source must be a regular nonsymlink path: /workspace/scratch/yuga-next-root-r1/stream-package-u_4d3thl/19/fifo"
+    },
+    {
+      "name": "staged symlink rejects",
+      "passed": true,
+      "error": "Streamed archive staging rejects symlinks: /workspace/scratch/yuga-next-root-r1/stream-package-u_4d3thl/20/yuga-native-linux-x86_64/bad-link"
+    },
+    {
+      "name": "staged directory symlink rejects",
+      "passed": true,
+      "error": "Streamed archive staging rejects symlinks: /workspace/scratch/yuga-next-root-r1/stream-package-u_4d3thl/21/yuga-native-linux-x86_64/linked-dir"
+    },
+    {
+      "name": "staged FIFO rejects without opening",
+      "passed": true,
+      "error": "Streamed archive source must be a regular nonsymlink path: /workspace/scratch/yuga-next-root-r1/stream-package-u_4d3thl/22/yuga-native-linux-x86_64/fifo"
+    },
+    {
+      "name": "staged backslash member rejects",
+      "passed": true,
+      "error": "Unsafe staged archive member: back\\slash"
+    },
+    {
+      "name": "output symlink rejects without engine clobber",
+      "passed": true,
+      "error": "Streamed archive output rejects symlink paths"
+    },
+    {
+      "name": "output symlink engine remains exact",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "output engine exact path rejects before truncation",
+      "passed": true,
+      "error": "Streamed archive output aliases an input source"
+    },
+    {
+      "name": "rejected engine exact path preserves source bytes inode mode",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "output engine hardlink rejects before truncation",
+      "passed": true,
+      "error": "Streamed archive output aliases an input source"
+    },
+    {
+      "name": "rejected engine hardlink preserves source bytes inode mode",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "output pck exact path rejects before truncation",
+      "passed": true,
+      "error": "Streamed archive output aliases an input source"
+    },
+    {
+      "name": "rejected pck exact path preserves source bytes inode mode",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "output pck hardlink rejects before truncation",
+      "passed": true,
+      "error": "Streamed archive output aliases an input source"
+    },
+    {
+      "name": "rejected pck hardlink preserves source bytes inode mode",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "output staged exact path rejects before truncation",
+      "passed": true,
+      "error": "Streamed archive output aliases an input source"
+    },
+    {
+      "name": "rejected staged exact path preserves source bytes inode mode",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "output staged hardlink rejects before truncation",
+      "passed": true,
+      "error": "Streamed archive output aliases an input source"
+    },
+    {
+      "name": "rejected staged hardlink preserves source bytes inode mode",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "nonregular output rejects before opening",
+      "passed": true,
+      "error": "Streamed archive output must be a regular file"
+    },
+    {
+      "name": "nonregular output preserves engine",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "mid-read bytes mutation rejects",
+      "passed": true,
+      "error": "Streamed archive input changed during read: yuga-native-linux-x86_64/godot"
+    },
+    {
+      "name": "mid-read mode mutation rejects",
+      "passed": true,
+      "error": "Streamed archive input changed during read: yuga-native-linux-x86_64/godot"
+    },
+    {
+      "name": "mid-read replace mutation rejects",
+      "passed": true,
+      "error": "Streamed archive input changed during read: yuga-native-linux-x86_64/godot"
+    },
+    {
+      "name": "mutation between real1MiB blocks rejects",
+      "passed": true,
+      "error": "Streamed archive input changed during read: yuga-native-linux-x86_64/godot"
+    },
+    {
+      "name": "source mutation after archive write rejects",
+      "passed": true,
+      "error": "Streamed archive source changed after verification: yuga-native-linux-x86_64/godot"
+    },
+    {
+      "name": "unsupported source platform rejects",
+      "passed": true,
+      "error": "Streamed archive platform must be linux or windows"
+    },
+    {
+      "name": "actual package_all linux archive byte equivalence",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "actual package_all linux virtual manifest payload records",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "actual package_all linux no expanded large payloads",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "actual package_all windows archive byte equivalence",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "actual package_all windows virtual manifest payload records",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "actual package_all windows no expanded large payloads",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "actual assembly never changes engine inode bytes or modes",
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "assembly rejects changed previously validated PCK",
+      "passed": true,
+      "error": "Streamed engine/PCK differs from validated identity"
+    },
+    {
+      "name": "assembly rejects changed previously validated runtime",
+      "passed": true,
+      "error": "Streamed engine/PCK differs from validated identity"
+    }
+  ],
+  "source_sha256": {
+    "tools/package-native.py": "94fa83fb4c586e665a6fb10348fb6100bd2ea9d12022c76119c33210dc337246",
+    "tests/streamed_package_cases.py": "efca7fc9e96e36f8870836da8356fee1982e748f01055157c026053b54389227"
+  },
+  "scope": "Tiny actual ZIP reads/writes, unchanged legacy byte-equivalence and path/source/mutation adversaries only. No export, Godot, real engine execution or release qualification."
+}

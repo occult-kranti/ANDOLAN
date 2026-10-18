@@ -43,7 +43,8 @@ def main():
                             'ui-loading-readiness','ui-hud-readability','ui-atlas-layout','ui-cancel-focus',
                             'ui-preferences-relaunch','ui-compact-navigation-routes','ui-world-compact-title',
                             'ui-title-identity','ui-outcome-shortcuts','ui-world-compact-first-entry',
-                            'ui-focus-recovery','ui-modal-resize-focus','ui-idle-traversal-hud'})]:
+                            'ui-focus-recovery','ui-modal-resize-focus','ui-idle-traversal-hud',
+                            'ui-traversal-availability'})]:
         result = subprocess.run([sys.executable,str(RUNNER),'--catalog',kind,'--list'],capture_output=True,text=True)
         listed = json.loads(result.stdout)
         check(kind+' CLI exposes new contracts with bounded acceptance scope',
@@ -54,6 +55,11 @@ def main():
     result = subprocess.run([sys.executable,str(RUNNER),'--catalog','screens','--suite','desktop-volley-feedback','--list'],capture_output=True,text=True)
     check('A combat presentation suite cannot silently run under screen acceptance',result.returncode == 2 and 'selected --catalog' in result.stderr)
     for name, expected in {
+        'ui-traversal-availability': {'tests/ui_traversal_availability_cases.gd',
+                                      'scripts/confluence_world.gd', 'scripts/player.gd',
+                                      'scripts/rama_vitals.gd', 'scripts/rama_hero_runtime.gd',
+                                      'scripts/player_traversal.gd', 'scripts/input_bindings.gd',
+                                      'scripts/lane_army.gd'},
         'ui-idle-traversal-hud': {'tests/ui_idle_traversal_hud_cases.gd',
                                  'scripts/confluence_world.gd', 'scripts/player.gd',
                                  'scripts/player_traversal.gd', 'scripts/input_bindings.gd',

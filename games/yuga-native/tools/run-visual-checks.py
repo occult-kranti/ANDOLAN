@@ -72,6 +72,7 @@ SCREEN_SUITES = (
     ("ui-resize-navigation", "godot", "tests/ui_resize_navigation_cases.gd", ()),
     ("ui-modal-resize-focus", "godot", "tests/ui_modal_resize_focus_cases.gd", ()),
     ("ui-idle-traversal-hud", "godot", "tests/ui_idle_traversal_hud_cases.gd", ()),
+    ("ui-traversal-availability", "godot", "tests/ui_traversal_availability_cases.gd", ()),
     ("ui-hud-edges", "godot", "tests/ui_hud_edge_cases.gd", ()),
     ("ui-preference-edges", "godot", "tests/ui_preferences_edge_cases.gd", ()),
     ("ui-independent-theme", "godot", "tests/ui_independent_theme_cases.gd", ()),

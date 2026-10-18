@@ -1117,6 +1117,7 @@ func _refresh_compact_world(battle: Dictionary={}) -> void:
 	var tether_cd:=float(report.get("grapple_cooldown",0))
 	var mode:=String(report.get("mode","ground"))
 	var idle_copy:=_idle_traversal_copy(report,battle,player.active and player.is_on_floor())
+	var unavailable_copy:=_traversal_unavailable_copy(report,battle)
 	compact_world_labels[0].text="%s · %s" % [district_at(player.position),score_label.text.trim_prefix("Cores · ")]
 	var objective:="Escort Sun troops to the Moon core."
 	if not String(battle.get("winner","")).is_empty(): objective=WorldOutcome.headline(battle.winner)+" · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
@@ -1137,7 +1138,8 @@ func _refresh_compact_world(battle: Dictionary={}) -> void:
 	compact_world_labels[1].text=objective
 	compact_world_labels[2].text=idle_copy.energy if not idle_copy.is_empty() else "%s %dm · Energy %d/%d · Flight %.1fs · Tether %.1fs" % [mode.capitalize(),roundi(player.position.y),energy,report.get("max_energy",100),flight_cd,tether_cd]
 	var prompt:String=idle_copy.prompt if not idle_copy.is_empty() else "%s tether ≤36m · %s flight" % [Bindings.label("grapple"),Bindings.label("fly")]
-	if not report.get("enabled",false): prompt="Traversal unavailable in this scene."
+	if not unavailable_copy.is_empty(): prompt=unavailable_copy.prompt
+	elif not report.get("enabled",false): prompt="Traversal unavailable in this scene."
 	elif mode in ["flight","flying"]: prompt="%s rise · %s descend · %s land to refill" % [Bindings.label("jump"),Bindings.label("descend"),Bindings.label("fly")]
 	elif mode in ["grapple","grappling"]: prompt="%s release tether · %s flight" % [Bindings.label("grapple"),Bindings.label("fly")]
 	elif energy<18: prompt="Land to refill traversal energy · tether needs 18."
@@ -1307,7 +1309,9 @@ func _update_practice_hud() -> void:
 		if not String(battle.get("winner","")).is_empty():
 			objective_label.text=WorldOutcome.headline(battle.winner)+"\nRestart lane practice from the pause menu."
 			_set_traversal_idle(false)
-			goal_label.text="Round ended · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
+			var terminal_copy:=_traversal_unavailable_copy({},battle)
+			ability_label.text=terminal_copy.heading
+			goal_label.text=terminal_copy.detail
 			_refresh_compact_world(battle)
 			return
 	if not player.has_method("traversal_report"): return
@@ -1321,7 +1325,11 @@ func _update_practice_hud() -> void:
 	var grapple_cd: float=float(report.get("grapple_cooldown",0))
 	var candidate: Dictionary=report.get("candidate",{})
 	var idle_copy:=_idle_traversal_copy(report,battle,player.active and player.is_on_floor())
-	if not idle_copy.is_empty():
+	var unavailable_copy:=_traversal_unavailable_copy(report,battle)
+	if not unavailable_copy.is_empty():
+		ability_label.text=unavailable_copy.heading
+		goal_label.text=unavailable_copy.detail
+	elif not idle_copy.is_empty():
 		ability_label.text=idle_copy.energy
 		goal_label.text=idle_copy.prompt
 	elif mode=="grapple" or mode=="grappling":
@@ -1347,6 +1355,26 @@ func _update_practice_hud() -> void:
 
 	_set_traversal_idle(not idle_copy.is_empty())
 	_refresh_compact_world(battle)
+
+func _traversal_unavailable_copy(report:Dictionary,battle:Dictionary)->Dictionary:
+	# Outcome keeps its existing restart guidance; availability only describes UI.
+	if not String(battle.get("winner","")).is_empty():
+		return {"heading":"VAYU LIFT · ROUND ENDED","prompt":"Flight and tether are unavailable after round end.","detail":"Round ended · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]}
+	var state:=""
+	var message:=""
+	if is_instance_valid(rama_runtime) and is_instance_valid(rama_runtime.vitals) and not rama_runtime.vitals.alive:
+		state="RETURNING"
+		message="Flight and tether resume after respawn."
+	elif not player.active:
+		state="PAUSED" if paused or overview else "UNAVAILABLE"
+		message="Return to practice to use flight and tether."
+	else: return {}
+	var detail:=message
+	var flight_cd:=float(report.get("flight_cooldown",0))
+	var tether_cd:=float(report.get("grapple_cooldown",0))
+	if flight_cd>0 or tether_cd>0:
+		detail="Flight %.1fs · Tether %.1fs\n%s" % [flight_cd,tether_cd,message]
+	return {"heading":"VAYU LIFT · "+state,"prompt":message,"detail":detail}
 
 func _idle_traversal_copy(report:Dictionary,battle:Dictionary,grounded:bool)->Dictionary:
 	# Presentation only: consume authority values without changing traversal state.

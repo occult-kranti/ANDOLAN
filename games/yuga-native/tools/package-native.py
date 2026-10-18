@@ -16,6 +16,7 @@ import os
 from pathlib import Path, PurePosixPath
 import re
 import shutil
+import stat
 import struct
 import subprocess
 import sys
@@ -1808,7 +1809,7 @@ def safe_notice_copy(destination: Path) -> None:
         copy_rama_crown_companions(PROJECT, destination)
 
 
-def zip_directory(staging: Path, output: Path) -> dict:
+def _legacy_zip_directory(staging: Path, output: Path) -> dict:
     files = sorted(p for p in staging.rglob('*') if p.is_file())
     with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for path in files:
@@ -1837,6 +1838,121 @@ def zip_directory(staging: Path, output: Path) -> dict:
     return {**record(output), 'entry_count': len(files), 'all_crc_and_payload_sha256_verified': True}
 
 
+def _stream_source_snapshot(path: Path) -> dict:
+    """Freeze a regular resolved input; never chmod/link/write its inode."""
+    if (not path.is_absolute() or path.resolve() != path or '..' in path.parts
+            or not stat.S_ISREG(path.lstat().st_mode)):
+        raise ValueError('Streamed archive source must be a regular nonsymlink path: ' + str(path))
+    before = path.stat()
+    value = record(path)
+    after = path.stat()
+    fields = ('st_dev', 'st_ino', 'st_size', 'st_mtime_ns', 'st_ctime_ns', 'st_mode')
+    if any(getattr(before, key) != getattr(after, key) for key in fields):
+        raise ValueError('Streamed archive source changed while hashing: ' + str(path))
+    return {**value, 'device': after.st_dev, 'inode': after.st_ino,
+            'mode': stat.S_IMODE(after.st_mode), 'mtime_ns': after.st_mtime_ns,
+            'ctime_ns': after.st_ctime_ns}
+
+
+def _large_payload_sources(platform: str, engine: Path, pack: Path) -> dict:
+    if platform not in ('linux', 'windows'):
+        raise ValueError('Streamed archive platform must be linux or windows')
+    names = {'godot' if platform == 'linux' else 'godot.exe': engine,
+             'yuga-native.pck': pack}
+    return {name: {'path': path.absolute(), 'snapshot': _stream_source_snapshot(path.absolute())}
+            for name, path in names.items()}
+
+
+def _stream_archive_sources(staging: Path, virtual: dict) -> dict:
+    platforms = {'yuga-native-linux-x86_64': 'godot',
+                 'yuga-native-windows-x86_64': 'godot.exe'}
+    if staging.name not in platforms or set(virtual) != {platforms[staging.name], 'yuga-native.pck'}:
+        raise ValueError('Streamed archive requires the exact platform engine/PCK names')
+    if staging.resolve() != staging.absolute() or not staging.is_dir():
+        raise ValueError('Streamed archive staging must be a regular nonsymlink directory')
+    sources = {}
+    for path in staging.rglob('*'):
+        if path.is_symlink() or path.resolve() != path.absolute():
+            raise ValueError('Streamed archive staging rejects symlinks: ' + str(path))
+        if path.is_dir():
+            continue
+        name = path.relative_to(staging).as_posix()
+        if '\\' in name or PurePosixPath(name).as_posix() != name:
+            raise ValueError('Unsafe staged archive member: ' + name)
+        sources[name] = {'path': path, 'snapshot': _stream_source_snapshot(path)}
+    for name, source in virtual.items():
+        relative = PurePosixPath(name)
+        if (relative.is_absolute() or '..' in relative.parts or '\\' in name
+                or relative.as_posix() != name or name in sources):
+            raise ValueError('Unsafe or duplicate streamed archive member: ' + name)
+        if _stream_source_snapshot(source['path']) != source['snapshot']:
+            raise ValueError('Frozen large archive payload changed: ' + name)
+        sources[name] = source
+    return {name: sources[name] for name in sorted(sources, key=lambda name: PurePosixPath(name).parts)}
+
+
+def zip_directory(staging: Path, output: Path, streamed_sources: dict | None = None) -> dict:
+    if streamed_sources is None:
+        return _legacy_zip_directory(staging, output)
+    if output.is_symlink() or output.resolve() != output.absolute():
+        raise ValueError('Streamed archive output rejects symlink paths')
+    sources = _stream_archive_sources(staging, streamed_sources)
+    expected = {staging.name + '/' + name: source for name, source in sources.items()}
+    # Opening an archive with 'w' truncates an existing file immediately. Reject
+    # exact-path and hardlink input aliases before that first possible write.
+    if output.exists():
+        existing = output.stat()
+        if not stat.S_ISREG(existing.st_mode):
+            raise ValueError('Streamed archive output must be a regular file')
+        output_identity = (existing.st_dev, existing.st_ino)
+        if any(output_identity == (row['snapshot']['device'], row['snapshot']['inode'])
+               for row in expected.values()):
+            raise ValueError('Streamed archive output aliases an input source')
+    with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
+        for name, source in expected.items():
+            path, frozen = source['path'], source['snapshot']
+            if _stream_source_snapshot(path) != frozen:
+                raise ValueError('Streamed archive input changed before read: ' + name)
+            info = zipfile.ZipInfo(name, date_time=(2026, 1, 1, 0, 0, 0))
+            info.create_system = 3
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = ((0o100755 if PurePosixPath(name).name in {'godot', 'launch.sh'}
+                                   else 0o100644) << 16)
+            digest_ = hashlib.sha256()
+            size = 0
+            with path.open('rb') as stream, archive.open(info, 'w') as target:
+                opened = os.fstat(stream.fileno())
+                if (opened.st_dev, opened.st_ino) != (frozen['device'], frozen['inode']):
+                    raise ValueError('Streamed archive input inode changed on open: ' + name)
+                for block in iter(lambda: stream.read(1024 * 1024), b''):
+                    digest_.update(block)
+                    size += len(block)
+                    target.write(block)
+            if ({'bytes': size, 'sha256': digest_.hexdigest()}
+                    != {key: frozen[key] for key in ('bytes', 'sha256')}
+                    or _stream_source_snapshot(path) != frozen):
+                raise ValueError('Streamed archive input changed during read: ' + name)
+    with zipfile.ZipFile(output) as archive:
+        if len(archive.namelist()) != len(expected) or set(archive.namelist()) != set(expected):
+            raise ValueError('ZIP entry set differs from streamed source set')
+        bad = archive.testzip()
+        if bad is not None:
+            raise ValueError('ZIP CRC failure: ' + bad)
+        for name, source in expected.items():
+            value, size = hashlib.sha256(), 0
+            with archive.open(name) as stream:
+                for block in iter(lambda: stream.read(1024 * 1024), b''):
+                    value.update(block)
+                    size += len(block)
+            frozen = source['snapshot']
+            if {'bytes': size, 'sha256': value.hexdigest()} != {key: frozen[key] for key in ('bytes', 'sha256')}:
+                raise ValueError('ZIP payload mismatch: ' + name)
+    for name, source in expected.items():
+        if _stream_source_snapshot(source['path']) != source['snapshot']:
+            raise ValueError('Streamed archive source changed after verification: ' + name)
+    return {**record(output), 'entry_count': len(expected), 'all_crc_and_payload_sha256_verified': True}
+
+
 def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
     if 'engine_selection' not in exported:
         raise ValueError('Export manifest lacks exporter/runtime identity; export with this tool before packaging')
@@ -1859,27 +1975,40 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
     windows_entry = next(entry for entry in verified_windows['files'] if entry['name'] == args.windows_engine.name)
     if digest(args.windows_engine) != windows_entry['sha256']:
         raise ValueError('Windows engine differs from its independently downloaded provenance')
+    stream_large = getattr(args, 'stream_large_payloads', False)
     for platform in PLATFORMS:
         staging = build / f'yuga-native-{platform}-x86_64'
         if staging.exists():
             shutil.rmtree(staging)
         staging.mkdir()
         engine = (getattr(args, 'linux_runtime', None) or args.linux_engine) if platform == 'linux' else args.windows_engine
-        shutil.copyfile(engine, staging / ('godot' if platform == 'linux' else 'godot.exe'))
-        if platform == 'linux' and record(staging / 'godot') != {key: engines['linux_runtime'][key] for key in ('bytes', 'sha256')}:
-            raise ValueError('Copied Linux runtime differs from selected identity')
+        if not stream_large:
+            shutil.copyfile(engine, staging / ('godot' if platform == 'linux' else 'godot.exe'))
+            if platform == 'linux' and record(staging / 'godot') != {key: engines['linux_runtime'][key] for key in ('bytes', 'sha256')}:
+                raise ValueError('Copied Linux runtime differs from selected identity')
         pack = build / f'yuga-native-{platform}.pck'
         actual_pack = inspect_pack(pack)
         actual_pack['font_qualification'] = qualify_bundled_font_package(actual_pack, font_bindings)
         actual_pack['frontage_qualification'] = qualify_world_frontage_package(actual_pack, exported['source'].get('files', {}))
         if actual_pack['sha256'] != exported['packs'][platform]['sha256']:
             raise ValueError('PCK changed after export manifest validation')
-        shutil.copyfile(pack, staging / 'yuga-native.pck')
+        streamed = _large_payload_sources(platform, engine, pack) if stream_large else None
+        if streamed is not None:
+            runtime_name = 'godot' if platform == 'linux' else 'godot.exe'
+            expected_runtime = ({key: engines['linux_runtime'][key] for key in ('bytes', 'sha256')}
+                                if platform == 'linux' else {key: windows_entry[key] for key in ('bytes', 'sha256')})
+            if ({key: streamed[runtime_name]['snapshot'][key] for key in ('bytes', 'sha256')} != expected_runtime
+                    or {key: streamed['yuga-native.pck']['snapshot'][key] for key in ('bytes', 'sha256')}
+                    != {key: actual_pack[key] for key in ('bytes', 'sha256')}):
+                raise ValueError('Streamed engine/PCK differs from validated identity')
+        else:
+            shutil.copyfile(pack, staging / 'yuga-native.pck')
         if platform == 'linux':
             launcher = '#!/bin/sh\nset -eu\nPACKAGE_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)\nexec "$PACKAGE_DIR/godot" --main-pack "$PACKAGE_DIR/yuga-native.pck" "$@"\n'
             (staging / 'launch.sh').write_text(launcher)
             (staging / 'launch.sh').chmod(0o755)
-            (staging / 'godot').chmod(0o755)
+            if not stream_large:
+                (staging / 'godot').chmod(0o755)
         else:
             launcher = '@echo off\r\n"%~dp0godot.exe" --main-pack "%~dp0yuga-native.pck" %*\r\n'
             (staging / 'launch.bat').write_bytes(launcher.encode())
@@ -1887,7 +2016,11 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
         safe_notice_copy(staging)
         if platform == 'linux':
             copy_public_runtime_notice(staging, engines)
-        payloads = {str(p.relative_to(staging)): record(p) for p in sorted(staging.rglob('*')) if p.is_file()}
+        if streamed is None:
+            payloads = {str(p.relative_to(staging)): record(p) for p in sorted(staging.rglob('*')) if p.is_file()}
+        else:
+            payloads = {name: {key: source['snapshot'][key] for key in ('bytes', 'sha256')}
+                        for name, source in _stream_archive_sources(staging, streamed).items()}
         manifest = {'schema': 1, 'platform': f'{platform}-x86_64', 'godot_version': exported['godot_version'],
                     'packaging': (('patched-public-template-debug-with-official-exported-pck'
                                    if engines['linux_runtime']['kind'] == 'patched-public-source-template-debug'
@@ -1903,7 +2036,7 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
                     'windows_engine_provenance': verified_windows if platform == 'windows' else None}
         json_write(staging / 'PACKAGE-MANIFEST.json', manifest)
         archive = build / f'yuga-native-{platform}-x86_64.zip'
-        results[platform] = {'filename': archive.name, **zip_directory(staging, archive),
+        results[platform] = {'filename': archive.name, **zip_directory(staging, archive, streamed),
                              'engine': record(engine), 'pck': {k: actual_pack[k] for k in ['bytes', 'sha256', 'entry_count']},
                              'execution_status': 'not_executed_by_packager'}
     if native_contracts['sources'] != _native_contract_inputs(PROJECT):
@@ -1928,6 +2061,8 @@ def main() -> int:
                         help='Explicit reviewed runtime variant; the patched variant requires both runtime arguments')
     parser.add_argument('--windows-engine', type=Path, default=DEFAULT_WINDOWS)
     parser.add_argument('--build-dir', type=Path, default=PROJECT / 'build')
+    parser.add_argument('--stream-large-payloads', action='store_true',
+                        help='Stream validated engine/PCK sources into identical ZIP entries without expanded copies')
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument('--export-only', action='store_true')
     modes.add_argument('--package-only', action='store_true')

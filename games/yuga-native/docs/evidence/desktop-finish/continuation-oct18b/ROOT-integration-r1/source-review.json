@@ -1,0 +1,51 @@
+{
+  "status": "independent_source_and_component_checks_pass",
+  "source": {
+    "games/yuga-native/tools/package-native.py": {
+      "bytes": 138386,
+      "sha256": "94fa83fb4c586e665a6fb10348fb6100bd2ea9d12022c76119c33210dc337246"
+    },
+    "games/yuga-native/tests/streamed_package_cases.py": {
+      "bytes": 16160,
+      "sha256": "efca7fc9e96e36f8870836da8356fee1982e748f01055157c026053b54389227"
+    },
+    "games/yuga-native/tools/ci-native-package.py": {
+      "bytes": 10045,
+      "sha256": "63976f3400a940698b45dba390f43d25e0cb4c52a499692859a0b421edcce6b1"
+    },
+    "games/yuga-native/tests/ci_native_package_cases.py": {
+      "bytes": 10188,
+      "sha256": "7dbf0806d6315dbdb2182cffa42f8315f66514bb0c4b11c15faeb63eda60fe2f"
+    },
+    ".github/workflows/yuga-native-package.yml": {
+      "bytes": 5329,
+      "sha256": "0eec7bac95580ee720840bbd4fe3d8d1aecf4708e8a92a0b5d86613d3dc73f96"
+    }
+  },
+  "tests": [
+    {
+      "command": "TMPDIR=/workspace/scratch/yuga-next-root-r1 python3 -B games/yuga-native/tests/streamed_package_cases.py --report /workspace/scratch/yuga-next-root-r1/streamed-package-independent-r1.json",
+      "exit": 0,
+      "checks": 64,
+      "report": {
+        "bytes": 10610,
+        "sha256": "efba404ef63a80e6f55b9db6679ab00f61743719fd7bd68d0e33f7178e008433"
+      }
+    },
+    {
+      "command": "TMPDIR=/workspace/scratch/yuga-next-root-r1 python3 -B games/yuga-native/tests/ci_native_package_cases.py",
+      "exit": 0,
+      "tests": 13,
+      "seconds": 0.019,
+      "output": "13 named unittest cases each ok; Ran 13 tests in 0.019s; OK; exact terminal output retained in session tool response"
+    }
+  ],
+  "review": [
+    "Read exact streaming implementation and before-write source alias rejection. Legacy ZIP function body preserved. Source mutation, symlink and exact/hardlink alias counterexamples passed independently.",
+    "Read NOTICE census/byte binding, unsafe path rejection and focused positive/negative fixtures. Independent rerun13/13. Prior missing-NOTICE witness remains preserved.",
+    "CI candidates bind commit/runtime/notices; fixed action digests, readonly repository permissions, no publish action. Actual CI run and archive qualification remain pending."
+  ],
+  "limits": [
+    "No claim of actual large-package build, native execution, new release, FPS or art acceptance from these Python tests."
+  ]
+}
