@@ -1,0 +1,16 @@
+[
+  {"expect":{"state.page_title":"Sample A","loader_count":1,"transition_layer_count":1,"scene_can_process":true},"capture":"01-local-caller"},
+  {"burst":[{"click_name":"OpenLocalSample"},{"click_name":"OpenLocalSample"},{"key":"Escape"}],"expect":{"transition.phase":"cancelled","state.page_title":"Sample A","scene_can_process":true,"transition_owner_present":false},"capture":"02-queued-duplicate-cancel"},
+  {"click_name":"PauseFixture","expect":{"paused":true}},
+  {"burst":[{"click_name":"OpenLocalSample"},{"key":"Escape"}],"expect":{"transition.phase":"cancelled","paused":true,"scene_can_process":true,"transition_owner_present":false},"capture":"03-paused-cancel"},
+  {"click_name":"PauseFixture","expect":{"paused":false}},
+  {"click_name":"OpenLocalSample","immediate":true,"expect":{"transition.phase":"loading"}},
+  {"key":"Escape","immediate":true,"expect":{"transition.phase":"cancelled","state.page_title":"Sample A","scene_can_process":true},"capture":"04-threaded-cancel"},
+  {"click_name":"OpenLocalSample","expect":{"transition.phase":"done","state.page_title":"Sample B","loader_count":1,"transition_layer_count":1},"capture":"05-reentry-b"},
+  {"click_name":"OpenLocalSample","expect":{"transition.phase":"done","state.page_title":"Sample A","loader_count":1,"transition_layer_count":1},"capture":"06-return-a"},
+  {"click_name":"OpenLocalSample","expect":{"transition.phase":"done","state.page_title":"Sample B","loader_count":1,"transition_layer_count":1},"capture":"07-second-entry-b"},
+  {"click_name":"OpenMissingSample","expect":{"transition.phase":"error","state.page_title":"Sample B","scene_can_process":false},"capture":"08-real-missing-error"},
+  {"key":"Return","expect":{"transition.phase":"error","state.page_title":"Sample B"},"capture":"09-keyboard-retry"},
+  {"key":"Escape","expect":{"transition.phase":"cancelled","state.page_title":"Sample B","scene_can_process":true,"transition_owner_present":false},"capture":"10-error-back-focus"},
+  {"click_name":"OpenLocalSample","expect":{"transition.phase":"done","state.page_title":"Sample A","loader_count":1,"transition_layer_count":1,"scene_can_process":true,"transition_owner_present":false},"capture":"11-final-reentry"}
+]

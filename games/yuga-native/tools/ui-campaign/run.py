@@ -15,7 +15,7 @@ def wait_for(test, seconds=30):
     while time.monotonic()<deadline:
         result=test()
         if result: return result
-        time.sleep(.1)
+        time.sleep(.01)
     raise TimeoutError('Readiness condition not reached')
 class NativeInput:
     def __init__(self, display):
@@ -46,17 +46,35 @@ class NativeInput:
         self.x.XGetInputFocus(self.d,C.byref(actual),C.byref(revert))
         if actual.value!=target: raise RuntimeError('Owned window did not receive X focus')
         return target
-    def event(self, step):
-        target=self.focus()
-        if 'key' in step:
+    def _inject(self, step, delay=.15, flush=True):
+        if 'wheel' in step:
+            x,y=step['point']; self.xt.XTestFakeMotionEvent(self.d,-1,int(x),int(y),0)
+            button=4 if step['wheel']>0 else 5
+            for _ in range(abs(step['wheel'])):
+                for down in [1,0]: self.xt.XTestFakeButtonEvent(self.d,button,down,0)
+                if flush: self.x.XFlush(self.d)
+                if delay: time.sleep(delay)
+        elif 'key' in step:
             code=self.x.XKeysymToKeycode(self.d,self.x.XStringToKeysym(step['key'].encode()))
             if not code: raise ValueError('Unknown keysym')
             for down in [1,0]:
-                self.xt.XTestFakeKeyEvent(self.d,code,down,0); self.x.XFlush(self.d); time.sleep(.15)
+                self.xt.XTestFakeKeyEvent(self.d,code,down,0)
+                if flush: self.x.XFlush(self.d)
+                if delay: time.sleep(delay)
         else:
             x,y=step['point']; self.xt.XTestFakeMotionEvent(self.d,-1,int(x),int(y),0)
             for down in [1,0]:
-                self.xt.XTestFakeButtonEvent(self.d,1,down,0); self.x.XFlush(self.d); time.sleep(.15)
+                self.xt.XTestFakeButtonEvent(self.d,1,down,0)
+                if flush: self.x.XFlush(self.d)
+                if delay: time.sleep(delay)
+    def event(self, step):
+        target=self.focus()
+        self._inject(step,0 if step.get('immediate') else .15)
+        return target
+    def burst(self, events):
+        target=self.focus()
+        for event in events: self._inject(event,0,False)
+        self.x.XFlush(self.d)
         return target
 
 def matches(state, expected):
@@ -69,15 +87,19 @@ def matches(state, expected):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--output',type=P,required=True); p.add_argument('--project',type=P,default=PROJECT)
-    p.add_argument('--mode',choices=['component','boot_recovery','integrated'],default='component'); p.add_argument('--plan',type=P)
+    p.add_argument('--mode',choices=['component','boot_recovery','transition_fixture','integrated'],default='component'); p.add_argument('--plan',type=P)
     p.add_argument('--display',type=int,default=176); p.add_argument('--width',type=int,default=1280); p.add_argument('--height',type=int,default=720)
     p.add_argument('--renderer',default='gl_compatibility',choices=['gl_compatibility','forward_plus']); p.add_argument('--dry-run',action='store_true')
     p.add_argument('--runtime',type=P,default=P('/workspace/tooling/native-render/runtime'))
     p.add_argument('--timeout',type=float,default=120,help='Maximum seconds for each observed readiness/capture condition')
+    p.add_argument('--render-threads',type=int,choices=[1,2],default=1)
+    p.add_argument('--shader-cache-seed',type=P,help='Copy an existing Mesa cache into this run; never mutate the seed')
+    p.add_argument('--allow-authority-staging',action='store_true',help='Explicit integrated fixture: allow labeled actual-rule staging steps in the plan')
     a=p.parse_args(); out=a.output.resolve(); source=a.project.resolve()
     if not a.output.is_absolute() or out.exists(): p.error('Use fresh absolute output; failures are preserved')
     if not 90<=a.display<=199 or P(f'/tmp/.X11-unix/X{a.display}').exists(): p.error('Choose unused display90–199')
-    if a.mode=='integrated' and not a.plan: p.error('Integrated capture requires an explicit readiness/action plan')
+    if a.mode in ['integrated','transition_fixture'] and not a.plan: p.error('This mode requires an explicit readiness/action plan')
+    if a.shader_cache_seed and not a.shader_cache_seed.is_dir(): p.error('Shader cache seed must be an existing directory')
     plan=read(a.plan) if a.plan else [
         {'capture':'01-launch','expect':{'launch.selected_mode':'world'}},
         {'click_name':'TrainingMode','expect':{'launch.selected_mode':'train'},'capture':'02-training-selected'},
@@ -86,18 +108,30 @@ def main():
         {'key':'Return','expect':{'transition.phase':'error','transition.attempt':2},'capture':'05-retry-error'},
         {'key':'Escape','expect':{'transition.phase':'cancelled'},'capture':'06-back-focus'},
     ]
-    if a.dry_run: print(json.dumps({'mode':a.mode,'plan':plan,'starts_processes':False},indent=2)); return
+    if any('stage' in step for step in plan) and (a.mode!='integrated' or not a.allow_authority_staging): p.error('Stage steps require integrated mode and explicit --allow-authority-staging')
+    if a.allow_authority_staging and a.mode!='integrated': p.error('Authority staging is only available in integrated mode')
+    if a.dry_run: print(json.dumps({'mode':a.mode,'plan':plan,'render_threads':a.render_threads,'shader_cache_seed':str(a.shader_cache_seed) if a.shader_cache_seed else None,'starts_processes':False},indent=2)); return
     out.mkdir(parents=True); project=source
     pins={}
     files=['scripts/launch_shell.gd','scripts/hero_ui_theme.gd','scripts/scene_transition.gd','tools/ui-campaign/board.gd','tools/ui-campaign/observer.gd','tools/ui-campaign/run.py','tests/ui_campaign_flow_cases.gd']
-    if a.mode in ['component','boot_recovery']:
+    if a.allow_authority_staging: files += ['tools/ui-campaign/integrated_capture.gd','tools/ui-campaign/authority_stage.gd']
+    if a.mode in ['component','boot_recovery','transition_fixture']:
         project=out/'fixture'; project.mkdir()
         if a.mode=='boot_recovery': files += ['scripts/boot.gd','scenes/boot.tscn']
+        if a.mode=='transition_fixture': files += ['tools/ui-campaign/transition_board.gd']
         files += [str(path.relative_to(source)) for path in (source/'assets/fonts').glob('*') if path.is_file()]
         files += [str(path.relative_to(source)) for path in (source/'.godot/imported').glob('*.ttf-*') if path.is_file()]
         for file in files:
             dst=project/file; dst.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(source/file,dst); pins[file]=sha(dst)
-        (project/'project.godot').write_text('[application]\nconfig/name="YUGA UI component fixture"\n'+('run/main_scene="res://scenes/boot.tscn"\n' if a.mode=='boot_recovery' else '')+'[display]\nwindow/size/viewport_width='+str(a.width)+'\nwindow/size/viewport_height='+str(a.height)+'\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
+        main='res://scenes/boot.tscn' if a.mode=='boot_recovery' else ('res://scenes/courtyard.tscn' if a.mode=='transition_fixture' else '')
+        (project/'project.godot').write_text('[application]\nconfig/name="YUGA UI component fixture"\n'+('run/main_scene="'+main+'"\n' if main else '')+'[display]\nwindow/size/viewport_width='+str(a.width)+'\nwindow/size/viewport_height='+str(a.height)+'\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
+        pins['project.godot']=sha(project/'project.godot')
+        if a.mode=='transition_fixture':
+            (project/'scenes').mkdir(exist_ok=True)
+            for scene,label in [('courtyard','Sample A'),('confluence_world','Sample B')]:
+                file='scenes/'+scene+'.tscn'
+                (project/file).write_text('[gd_scene load_steps=2 format=3]\n[ext_resource type="Script" path="res://tools/ui-campaign/transition_board.gd" id="1"]\n[node name="TransitionSample" type="Control"]\nscript = ExtResource("1")\npage_title = "'+label+'"\n')
+                pins[file]=sha(project/file)
     else:
         for directory in ['scripts','scenes','shaders','assets','NOTICE']:
             for file in (source/directory).rglob('*'):
@@ -109,11 +143,35 @@ def main():
         for file in files:
             pins[file]=sha(source/file)
     env=os.environ.copy(); runtime=a.runtime
-    env.update(DISPLAY=f':{a.display}',LP_NUM_THREADS='1',VK_ICD_FILENAMES=str(runtime/'usr/share/vulkan/icd.d/lvp_icd.json'),LD_LIBRARY_PATH=str(runtime/'usr/lib/x86_64-linux-gnu'))
+    env.update(DISPLAY=f':{a.display}',LP_NUM_THREADS=str(a.render_threads),OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1',VK_ICD_FILENAMES=str(runtime/'usr/share/vulkan/icd.d/lvp_icd.json'),LD_LIBRARY_PATH=str(runtime/'usr/lib/x86_64-linux-gnu'))
     for key,folder in [('XDG_DATA_HOME','data'),('XDG_CONFIG_HOME','config'),('XDG_CACHE_HOME','cache')]:
         path=out/'user'/folder; path.mkdir(parents=True); env[key]=str(path)
-    command=[shutil.which('godot'),'--path',str(project),'--display-driver','x11','--rendering-method',a.renderer,'--audio-driver','Dummy','--resolution',f'{a.width}x{a.height}','--position','0,0','--max-fps','20','--max-threads','1','--script','res://tools/ui-campaign/observer.gd','--','--mode='+a.mode,'--output='+str(out)]
+    env['MESA_SHADER_CACHE_DIR']=str(out/'user/cache/mesa')
+    seed_pins={}
+    if a.shader_cache_seed:
+        a.shader_cache_seed=a.shader_cache_seed.resolve()
+        seed_pins={str(f.relative_to(a.shader_cache_seed)):sha(f) for f in a.shader_cache_seed.rglob('*') if f.is_file()}
+        if not seed_pins: raise ValueError('Shader cache seed contains no files')
+        shutil.copytree(a.shader_cache_seed,env['MESA_SHADER_CACHE_DIR'])
+        if any(sha(P(env['MESA_SHADER_CACHE_DIR'])/f)!=h for f,h in seed_pins.items()): raise RuntimeError('Shader cache copy differs')
+    driver='res://tools/ui-campaign/integrated_capture.gd' if a.allow_authority_staging else 'res://tools/ui-campaign/observer.gd'
+    command=[shutil.which('godot'),'--path',str(project),'--display-driver','x11','--rendering-method',a.renderer,'--audio-driver','Dummy','--resolution',f'{a.width}x{a.height}','--position','0,0','--max-fps','20','--max-threads',str(a.render_threads),'--script',driver,'--','--mode='+a.mode,'--output='+str(out)]
     record={'complete':False,'scope':'Actual XTest input and raw framebuffer; component fixture is not integrated gameplay.','mode':a.mode,'command':command,'source_sha256':pins,'plan':plan,'plan_sha256':sha(a.plan) if a.plan else None,'events':[],'shots':[],'started_unix':time.time(),'renderer_requested':a.renderer,'engine_sha256':sha(command[0])}
+    record['scheduling']={'cpu_affinity':sorted(os.sched_getaffinity(0)),'render_threads':a.render_threads,'LP_NUM_THREADS':env['LP_NUM_THREADS'],'OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1','MKL_NUM_THREADS':'1'}
+    record['authority_staging']={'enabled':a.allow_authority_staging,'stages':[],'scope':'Only explicit stage steps use authority fixtures. Navigation remains native XTest. Staged outcomes are not native-playthrough claims.'}
+    record['shader_cache_seed']={'path':str(a.shader_cache_seed) if a.shader_cache_seed else None,'copied_to':env['MESA_SHADER_CACHE_DIR'],'files_sha256':seed_pins,'scope':'Copied warm Mesa cache; no cold-start or hardware-performance claim.' if seed_pins else 'No Mesa cache seed supplied.'}
+    def resolve_event(step,state):
+        event=dict(step)
+        if 'wheel' in step:
+            if not isinstance(step['wheel'],int) or not 1<=abs(step['wheel'])<=12: raise ValueError('Wheel steps must be 1–12 signed ticks')
+            if len(step.get('point',[]))!=2 or not 0<=step['point'][0]<a.width or not 0<=step['point'][1]<a.height: raise ValueError('Wheel point must be inside owned window')
+        elif 'key' not in step:
+            field='name' if 'click_name' in step else 'text'; value=step.get('click_name',step.get('click_text'))
+            controls=[c for c in state['controls'] if c[field]==value and c.get('interactive',not c['disabled'])]
+            if len(controls)!=1: raise RuntimeError(f'Expected unique enabled control {value}: {controls}')
+            x,y,w,h=controls[0].get('input_rect',controls[0]['rect']); event['point']=[x+w/2,y+h/2]
+            if not 0<=event['point'][0]<a.width or not 0<=event['point'][1]<a.height: raise RuntimeError('Control outside viewport; scroll with actual input first')
+        return event
     server=game=native=None
     try:
         with (out/'xvfb.log').open('w') as xl,(out/'godot.log').open('w') as gl:
@@ -123,6 +181,17 @@ def main():
             native=NativeInput(env['DISPLAY']); native.focus()
             for index,step in enumerate(plan):
                 state=wait_for(lambda:read(out/'state.json'),a.timeout)
+                if 'stage' in step:
+                    stage_id='stage-'+str(index+1)
+                    save(out/'stage-request.json',{'id':stage_id,'action':step['stage']})
+                    receipt=wait_for(lambda:r if (r:=read(out/'stage-result.json')).get('id')==stage_id else None,a.timeout)
+                    record['authority_staging']['stages'].append(receipt)
+                    if receipt.get('passed') is not True: raise RuntimeError('Authority stage failed: '+str(receipt))
+                    state=wait_for(lambda:s if (s:=read(out/'state.json')).get('frame',-1)>receipt['frame'] else None,a.timeout)
+                if 'burst' in step:
+                    events=[resolve_event(event,state) for event in step['burst']]
+                    window_id=native.burst(events)
+                    record['events'].append({'burst':events,'window_id':window_id,'before':state,'time_unix':time.time()})
                 if 'tab_to_text' in step:
                     for tab_index in range(40):
                         if state.get('focus_text')==step['tab_to_text']: break
@@ -131,14 +200,8 @@ def main():
                         record['events'].append({'key':'Tab','window_id':window_id,'before':before,'time_unix':time.time(),'purpose':'Reach '+step['tab_to_text']})
                         state=wait_for(lambda:s if (s:=read(out/'state.json')).get('frame',-1)>before.get('frame',-1) else None,a.timeout)
                     else: raise RuntimeError('Tab chain did not reach '+step['tab_to_text'])
-                if 'key' in step or 'click_name' in step or 'click_text' in step:
-                    event=dict(step)
-                    if 'key' not in step:
-                        field='name' if 'click_name' in step else 'text'; value=step.get('click_name',step.get('click_text'))
-                        controls=[c for c in state['controls'] if c[field]==value and c.get('interactive',not c['disabled'])]
-                        if len(controls)!=1: raise RuntimeError(f'Expected unique enabled control {value}: {controls}')
-                        x,y,w,h=controls[0].get('input_rect',controls[0]['rect']); event['point']=[x+w/2,y+h/2]
-                        if not 0<=event['point'][0]<a.width or not 0<=event['point'][1]<a.height: raise RuntimeError('Control outside viewport; scroll with actual input first')
+                if 'key' in step or 'click_name' in step or 'click_text' in step or 'wheel' in step:
+                    event=resolve_event(step,state)
                     repeat=int(step.get('repeat',1))
                     if not 1<=repeat<=40: raise ValueError('Input repetition must be 1–40')
                     for _ in range(repeat): event['window_id']=native.event(event)
@@ -156,10 +219,13 @@ def main():
                     shot=wait_for(lambda:read(out/(name+'.json')),a.timeout)
                     if sha(out/shot['file'])!=shot['sha256']: raise RuntimeError('PNG hash differs')
                     record['shots'].append(shot)
+                    if not matches(shot,expected): raise RuntimeError('Captured framebuffer state differs from requested expectation: '+name)
                 save(out/'run.json',record)
             record['automatic_shots']=[read(file) for file in sorted(out.glob('auto-*.json'))]
             record['source_unchanged']=all(sha(project/f)==h for f,h in pins.items())
             if not record['source_unchanged']: raise RuntimeError('Source changed during capture')
+            record['shader_cache_seed_unchanged']=not seed_pins or seed_pins=={str(f.relative_to(a.shader_cache_seed)):sha(f) for f in a.shader_cache_seed.rglob('*') if f.is_file()}
+            if not record['shader_cache_seed_unchanged']: raise RuntimeError('Source shader cache changed during capture')
             record['complete']=True
     except Exception as error:
         record['failure']=repr(error)

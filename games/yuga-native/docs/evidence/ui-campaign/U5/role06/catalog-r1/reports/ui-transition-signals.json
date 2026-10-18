@@ -1,0 +1,116 @@
+{
+  "checks": [
+    {
+      "details": {},
+      "name": "Real parse fixture starts",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Real threaded scene completes",
+      "passed": true
+    },
+    {
+      "details": {
+        "duplicate_notifications": 0,
+        "total_notifications": 5
+      },
+      "name": "Unchanged resource polls do not repeat notifications",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Actual load and construction remain observable",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Success emits exactly once",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "New attempt accepts reentrant queued cancellation",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Reentrant cancellation restores caller without late completion",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Cancelled loader can begin another attempt",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Reentry completes exactly once",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Exact duplicates are suppressed but tiny progress and message changes survive",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Terminal state does not emit repeated updates",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Detached callers cannot acquire navigation ownership",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "Detaching a live caller cancels its threaded attempt",
+      "passed": true
+    }
+  ],
+  "count": 13,
+  "failed_count": 0,
+  "loader_sha256": "8ecaa8ae6359b2a5a89f1acbdd1d544058570a3effe656698b97a9adab7ec5e0",
+  "passed": true,
+  "passed_count": 13,
+  "scope": "Actual small threaded PackedScene parsing and reentrant cancellation, plus an explicitly synthetic sub-percent signal boundary check. No renderer or total-game percentage claim.",
+  "source_unchanged": true,
+  "harness": {
+    "command": [
+      "/usr/local/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/yuga-transition-check-lqzh7g9_",
+      "--script",
+      "res://tests/ui_transition_signal_cases.gd",
+      "--",
+      "--report=/tmp/yuga-transition-check-lqzh7g9_/report.json"
+    ],
+    "exit_code": 0,
+    "source_sha256": {
+      "scripts/scene_transition.gd": "8ecaa8ae6359b2a5a89f1acbdd1d544058570a3effe656698b97a9adab7ec5e0",
+      "scripts/hero_ui_theme.gd": "b1d630e9087f939ba6a68a5bbfac6f126064d417393786380c324317ac5d39a6",
+      "tests/ui_transition_signal_cases.gd": "279f6b45272289de02a0d6b1de25bb6f56a0af43efacdceb022168a9e2644a04",
+      "assets/fonts/NotoSerif-Regular.ttf.import": "d2b38a67ee6a5962bd073b551085f1f4c29d1af64474e90450f56f33b5e96a5b",
+      "assets/fonts/NotoSerif-Regular.ttf": "9d7583b7dc9e812afd32a14280c5cac3160012efe50c8d08938f4fea266ff67f",
+      "assets/fonts/NotoSans-Regular.ttf.import": "7ddb7fe1898a55896f6790224f4f00070a4b99d83c0ba9b0bb02d6ba74e342cd",
+      "assets/fonts/NotoSans-Regular.ttf": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+      "assets/fonts/DejaVuSans.ttf.import": "3d1c9315fe118a11830f3b2cb13c7fa88f47028f229100a8053705799bd777a6",
+      "assets/fonts/DejaVuSans.ttf": "57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e",
+      ".godot/imported/NotoSansSymbols-Regular.ttf-7ee3050129f981bdb85e2c00dcf059bf.fontdata": "3bf4f09edfa3fa2db10a8f63ad2833a3c3dbb16b345545252f7f643b662eaa10",
+      ".godot/imported/NotoSerif-Regular.ttf-6e3f67e84ff840e5e437d5cce0416d65.fontdata": "a2b62772d5dfe5765b9d5d99768652c915494966b950563a8bdeb224a4ad0e55",
+      ".godot/imported/NotoSans-Regular.ttf-674bcff8e78e1ac2b0101362155b4faa.fontdata": "1e6192539e600859edca6a02304d085f9fa2c432a1bf272e67c2d1dc8ca9fda6",
+      ".godot/imported/NotoSansSymbols2-Regular.ttf-7788f1b789d60481fa956b02b4581693.md5": "937d5ef785cc11ecbad7fa3c4aa6c9fa6fe56883397b12c76310da6a2fc58981",
+      ".godot/imported/NotoSansSymbols-Regular.ttf-7ee3050129f981bdb85e2c00dcf059bf.md5": "494c1f8f3bc161d86eef2e0c2bed9a7e6057838565f14250d1b047eda9bea445",
+      ".godot/imported/NotoSans-Regular.ttf-674bcff8e78e1ac2b0101362155b4faa.md5": "6471f2b105ce3461fcc42c475867cbffb768c24f6f2cd8774de703f81b1c1a3c",
+      ".godot/imported/NotoSerif-Regular.ttf-6e3f67e84ff840e5e437d5cce0416d65.md5": "dc7a1c0584ee966f5a440f4a68a58285575ff450609f22b3a02ed2706f08fbc8",
+      ".godot/imported/DejaVuSans.ttf-0dcd47e426510e02f045e926ff1bfdf0.fontdata": "68d0b938e9b8dd12b9d527059a91598fc8cadaa9b8ed6d45b27991d15ee03381",
+      ".godot/imported/NotoSansSymbols2-Regular.ttf-7788f1b789d60481fa956b02b4581693.fontdata": "2ec5ae7ec0020f3d1d3181d321174c5f82d9e83b93455ad785973cc615caeb9b",
+      ".godot/imported/DejaVuSans.ttf-0dcd47e426510e02f045e926ff1bfdf0.md5": "8827886add3c5260014a2d9a26fac932a3d62146d8182b7bf15b1bf40781a38e"
+    },
+    "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+    "output_sha256": "f20564de8537fe01f23ec77b991e8395fa51b6a558af9ceff810f280eadf0e7f",
+    "scope": "Temporary tiny PackedScene project; copies existing fonts/imports and performs no editor import or 3D rendering."
+  }
+}

@@ -363,6 +363,12 @@ func _create_ui() -> void:
 	hud.add_child(feedback_label)
 	main_panel = LaunchShell.new()
 	root.add_child(main_panel)
+	# Keep the player's practice selection across film/world scene replacement.
+	# This is session UI context, independent of saved gameplay preferences.
+	var remembered_mode: Variant = get_tree().root.get_meta("yuga_launch_mode", "world")
+	if remembered_mode is String and remembered_mode in ["world", "train"]:
+		main_panel.set_mode(remembered_mode)
+	main_panel.mode_changed.connect(func(mode: String): get_tree().root.set_meta("yuga_launch_mode", mode))
 	main_panel.world_requested.connect(enter_confluence)
 	main_panel.train_requested.connect(start_training)
 	main_panel.guide_requested.connect(_open_hero)
@@ -818,6 +824,7 @@ func _open_help() -> void:
 	_set_practice_suspended(true)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	help_back.grab_focus()
+	call_deferred("_settle_modal_entry", help_panel, help_back)
 
 func _close_help() -> void:
 	help_panel.hide()
@@ -912,19 +919,23 @@ func _open_settings(from_menu: bool) -> void:
 	call_deferred("_settle_settings_entry")
 
 func _settle_settings_entry() -> void:
+	if not is_inside_tree() or is_queued_for_deletion() or not is_instance_valid(settings_panel): return
+	await _settle_modal_entry(settings_panel, settings_panel.get_node("Card/Scroll/Content/Sensitivity"))
+
+func _settle_modal_entry(modal: Control, primary: Control) -> void:
 	# Focus may scroll against the hidden panel's old container geometry. Wait
 	# for both layout passes, then reveal the heading without taking focus away.
 	if not is_inside_tree() or is_queued_for_deletion(): return
-	var scroll: ScrollContainer = settings_panel.get_node("Card/Scroll")
-	var sensitivity_control: Control = scroll.get_node("Content/Sensitivity")
+	if not is_instance_valid(modal) or not is_instance_valid(primary): return
+	var scroll: ScrollContainer = modal.get_node("Card/Scroll")
 	for unused in range(2):
 		await get_tree().process_frame
 		if not is_inside_tree() or is_queued_for_deletion(): return
-		if not settings_panel.visible or get_viewport().gui_get_focus_owner() != sensitivity_control: return
-	if sensitivity_control.position.y + sensitivity_control.size.y <= scroll.size.y:
+		if not is_instance_valid(modal) or not is_instance_valid(primary) or not modal.is_visible_in_tree() or get_viewport().gui_get_focus_owner() != primary: return
+	if primary.position.y + primary.size.y <= scroll.size.y:
 		scroll.scroll_vertical = 0
 	else:
-		scroll.ensure_control_visible(sensitivity_control)
+		scroll.ensure_control_visible(primary)
 
 func _close_settings() -> void:
 	settings_panel.visible = false

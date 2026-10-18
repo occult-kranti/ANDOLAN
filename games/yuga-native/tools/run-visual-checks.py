@@ -59,6 +59,7 @@ SCREEN_SUITES = (
     ("ui-independent-theme", "godot", "tests/ui_independent_theme_cases.gd", ()),
     ("ui-independent-lifetime", "godot", "tests/ui_independent_lifecycle_cases.gd", ()),
     ("ui-transition-signals", "fixture", "tools/ui-campaign/check-transition.py", ()),
+    ("ui-effects-feedback", "godot", "tests/ui_u5_effect_feedback_cases.gd", ()),
 )
 SCREEN_LIMITS = "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance."
 

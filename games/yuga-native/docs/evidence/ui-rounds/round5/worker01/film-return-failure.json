@@ -1,0 +1,36 @@
+{
+  "case": "Training-selected title -> native Watch duel -> native Escape -> title",
+  "entry_mode": "train",
+  "exit_mode": "world",
+  "selection_preserved": false,
+  "input_plan": [
+    {
+      "key": "Return",
+      "expect": {
+        "panels.main_panel": true,
+        "state.started": false,
+        "paused": false
+      },
+      "capture": "37-training-return-title"
+    },
+    {
+      "click_name": "WatchConfluenceDuel",
+      "expect": {
+        "scene_path": "res://scenes/combat_film.tscn",
+        "state.ready_to_play": true,
+        "transition.phase": "done"
+      },
+      "capture": "38-scripted-duel-screen"
+    },
+    {
+      "key": "Escape",
+      "expect": {
+        "scene_path": "res://scenes/courtyard.tscn",
+        "panels.main_panel": true,
+        "transition.phase": "done"
+      },
+      "capture": "39-duel-return-title"
+    }
+  ],
+  "scope": "Observed route context loss; exit and title recovery succeed. No authority or disk preference failure asserted."
+}

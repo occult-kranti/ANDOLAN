@@ -1,0 +1,43 @@
+{
+  "scope": "Validator self-check only, historical U4 real originals and a deliberately altered copy; no new U5 visual acceptance.",
+  "positive_exit": 0,
+  "negative_exit": 1,
+  "stdout_positive": "{\"passed\": true, \"checks\": 18, \"originals\": 6}\n",
+  "stdout_negative": "{\"passed\": false, \"checks\": 18, \"originals\": 6}\n",
+  "stderr_positive": "",
+  "stderr_negative": "",
+  "commands": [
+    [
+      "python3",
+      "games/yuga-native/tests/ui_independent_capture_cases.py",
+      "--capture",
+      "/tmp/yuga-u5-receipt-validator-check-r1/capture",
+      "--freeze",
+      "/tmp/yuga-u5-receipt-validator-check-r1/freeze",
+      "--report",
+      "/tmp/yuga-u5-receipt-validator-check-r1/accepted-original.json"
+    ],
+    [
+      "python3",
+      "games/yuga-native/tests/ui_independent_capture_cases.py",
+      "--capture",
+      "/tmp/yuga-u5-receipt-validator-check-r1/capture",
+      "--freeze",
+      "/tmp/yuga-u5-receipt-validator-check-r1/freeze",
+      "--report",
+      "/tmp/yuga-u5-receipt-validator-check-r1/rejected-altered.json"
+    ]
+  ],
+  "final_positive_command": [
+    "python3",
+    "games/yuga-native/tests/ui_independent_capture_cases.py",
+    "--capture",
+    "/tmp/yuga-u5-receipt-validator-check-r1/capture-original",
+    "--freeze",
+    "/tmp/yuga-u5-receipt-validator-check-r1/freeze",
+    "--report",
+    "/tmp/yuga-u5-receipt-validator-check-r1/accepted-original-r2.json"
+  ],
+  "final_positive_exit": 0,
+  "earlier_positive_scope": "Initial positive run used capture/ before its one-byte alteration; immutable original copy and repeated positive receipt are now capture-original/ and accepted-original-r2.json."
+}

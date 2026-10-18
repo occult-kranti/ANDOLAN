@@ -37,9 +37,13 @@ RAMA_NAMES = [
         "rama_motion", "rama_hero_hud", "rama_hero_panel", "hero_ui_theme",
         "rama_practice_army", "rama_practice_target")],
 ]
+FIRST_LOAD_NAMES = ['scenes/boot.tscn', 'scripts/boot.gd',
+                    'scripts/scene_transition.gd', 'scripts/launch_shell.gd',
+                    'scripts/hero_ui_theme.gd']
 NAMES = [
     *INVOCATION_NAMES,
     *RAMA_NAMES,
+    *[name for name in FIRST_LOAD_NAMES if name not in RAMA_NAMES],
     "assets/audio/siege/provenance.json", "project.binary", "scenes/courtyard.tscn", "scenes/confluence_world.tscn",
     "scenes/combat_film.tscn", "assets/world/confluence-map.json",
     "assets/cinematics/confluence-duel.json", "shaders/production_water.gdshader",
@@ -63,11 +67,12 @@ NAMES = [
 
 
 def pack(entries: list[tuple[str, bytes]], *, flags: int = 0, version: int = 2,
-         count: int | None = None, entry_flags: int = 0) -> tuple[bytes, list[int]]:
+         count: int | None = None, entry_flags: int = 0,
+         prefix_names: bool = True) -> tuple[bytes, list[int]]:
     """Godot documented v2 header, padded directory names, absolute payload offsets."""
     encoded = []
     for name, payload in entries:
-        raw = ("res://" + name).encode()
+        raw = (("res://" if prefix_names else "") + name).encode()
         raw += b"\0" * ((-len(raw)) % 4)
         encoded.append((raw, payload))
     start = 100 + sum(4 + len(name) + 36 for name, _ in encoded)
@@ -125,6 +130,16 @@ def main() -> int:
         evaluate("zero resource count rejected", pack(entries, count=0)[0])
         evaluate("encrypted entry rejected", pack(entries, entry_flags=1)[0])
         evaluate("duplicate entry rejected", pack(entries + [entries[0]])[0])
+        evaluate("canonical bare paths remain accepted", pack(entries, prefix_names=False)[0], True)
+        for alias in ("scripts/./boot.gd", "scripts//boot.gd", "scripts/boot.gd/",
+                      "./scripts/boot.gd", "scripts/./boot.gd.remap"):
+            evaluate("noncanonical first-load alias rejected: " + alias,
+                     pack(entries + [(alias, b'conflicting structural fixture')])[0],
+                     rejection_contains='Unsafe or duplicate pack path: ')
+        for duplicate in ('scripts/boot.gd', 'scripts/relay_control.gd'):
+            mixed = [('res://' + name, value) for name, value in entries] + [(duplicate, b'alias')]
+            evaluate('bare/res duplicate identity rejected: ' + duplicate,
+                     pack(mixed, prefix_names=False)[0], rejection_contains='Unsafe or duplicate pack path: ')
         for name, bad_name in [
             ("parent path", "scripts/../escape.gd"),
             ("absolute path", "/scripts/escape.gd"),
@@ -153,6 +168,44 @@ def main() -> int:
             evaluate("missing Rama resource rejected: " + missing,
                      pack([entry for entry in entries if entry[0] != missing])[0],
                      rejection_contains="Required runtime resource missing: " + token)
+        for missing in FIRST_LOAD_NAMES:
+            # hero_ui_theme is also an older mandatory Rama dependency.
+            reason = 'Required runtime resource missing: ' if missing in RAMA_NAMES else 'Required first-load resource missing or ambiguous: '
+            evaluate('missing first-load dependency rejected: ' + missing,
+                     pack([entry for entry in entries if entry[0] != missing])[0],
+                     rejection_contains=reason + missing)
+            renamed = [(name + '-extra' if name == missing else name, value) for name, value in entries]
+            evaluate('first-load substring substitution rejected: ' + missing, pack(renamed)[0],
+                     rejection_contains='Required first-load resource missing or ambiguous: ' + missing)
+        remapped = [entry for entry in entries if entry[0] not in FIRST_LOAD_NAMES]
+        targets = {}
+        for source in FIRST_LOAD_NAMES:
+            compiled_path = source + 'c' if source.endswith('.gd') else '.godot/exported/123/export-' + 'a' * 32 + '-boot.scn'
+            targets[source] = compiled_path
+            remapped += [(source + '.remap', ('[remap]\n\npath="res://' + compiled_path + '"\n').encode()),
+                         (compiled_path, ('structural compiled fixture ' + source).encode())]
+        evaluate('current Godot compiled-script and scene remap layout accepts', pack(remapped)[0], True)
+        evaluate('compiled target noncanonical alias rejected',
+                 pack(remapped + [('scripts/./boot.gdc', b'compiled alias')])[0],
+                 rejection_contains='Unsafe or duplicate pack path: ')
+        for source, compiled_path in targets.items():
+            evaluate('missing first-load remap destination rejected: ' + source,
+                     pack([entry for entry in remapped if entry[0] != compiled_path])[0],
+                     rejection_contains='First-load remap destination missing or ambiguous: ' + source)
+        source = 'scripts/boot.gd'
+        for label, replacement in (
+                ('wrong section', b'[deps]\npath="res://scripts/boot.gdc"\n'),
+                ('default section injection', b'[DEFAULT]\npath="res://scripts/boot.gdc"\n[remap]\n'),
+                ('duplicate key', b'[remap]\npath="res://scripts/boot.gdc"\npath="res://scripts/boot.gdc"\n'),
+                ('other script substitution', b'[remap]\npath="res://scripts/launch_shell.gdc"\n'),
+                ('parent traversal', b'[remap]\npath="res://scripts/../boot.gdc"\n'),
+                ('self-remap cycle', b'[remap]\npath="res://scripts/boot.gd.remap"\n')):
+            changed = [(name, replacement if name == source + '.remap' else value) for name, value in remapped]
+            evaluate('first-load remap ' + label + ' rejected', pack(changed)[0])
+        changed = [(name, value.replace(b'-boot.scn', b'-courtyard.scn') if name == 'scenes/boot.tscn.remap' else value)
+                   for name, value in remapped]
+        evaluate('first-load scene remapped to other scene rejects', pack(changed)[0])
+        evaluate('ambiguous direct and remapped first-load source rejects', pack(remapped + [(source, b'direct fixture')])[0])
         corrupt = bytearray(baseline)
         corrupt[-1] ^= 1
         evaluate("payload checksum corruption rejected", bytes(corrupt))

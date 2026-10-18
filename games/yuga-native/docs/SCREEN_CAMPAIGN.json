@@ -749,7 +749,7 @@
     {
       "id": "U3",
       "title": "Combat, map and outcomes",
-      "status": "completed_implementation_integrated_render_gate_open",
+      "status": "completed_bounded_rendered_screen_acceptance",
       "depends_on": [
         "U2"
       ],
@@ -766,49 +766,49 @@
               "sha256": "44e4dd2084f0e160c7f48367fc5f6e79166d2b2bf3c609c8acb060451b0e207a"
             }
           ],
-          "review_disposition": "Implemented and reviewed bounded native checks; actual guide pixels reviewed by06; combined map/outcome rendered gate remains U5."
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U3-02",
           "role": "Shared visual system",
           "task": "Unify HUD, map legend and outcome surfaces while retaining warning priority and readable scale.",
           "agent": "r4_05_motion",
-          "status": "completed_headless_pending_integrated_pixels",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-rounds/round3/worker02/REVIEW.md",
               "sha256": "951fe620d2ac6f3414b22db61e936b5a785f77a3607ce6bc72600114a00391b5"
             }
           ],
-          "review_disposition": "Bounded source/native checks complete; integrated current-source rendered review remains open."
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U3-03",
           "role": "Loading and recovery",
           "task": "Handle restart/defeat/scene disposal without stale loading overlays or stuck input.",
           "agent": "ui_03_loading",
-          "status": "completed_headless_pending_integrated_pixels",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/U3/role03/REVIEW.md",
               "sha256": "9b49987749628765ef5c6ec7706c884ef83aacbeebffacce660e26ee246c949d"
             }
           ],
-          "review_disposition": "Bounded source/native checks complete; integrated current-source rendered review remains open."
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U3-04",
           "role": "Combat HUD and map information",
           "task": "Improve real map/army/goal/status and outcome presentation; preserve authoritative timers and outcomes.",
           "agent": "ui_02_system",
-          "status": "completed_headless_pending_integrated_pixels",
+          "status": "returned_reviewed",
           "artifacts": [
             {
               "path": "docs/evidence/ui-campaign/U3/role04/REVIEW.md",
               "sha256": "9056603d0ebb3a66061ac9146ae114aab558caa23150cbbdafe4479d49fca864"
             }
           ],
-          "review_disposition": "Bounded source/native checks complete; integrated current-source rendered review remains open."
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U3-05",
@@ -822,7 +822,7 @@
               "sha256": "ad06909e8bd439bdb1bc7a53c4386369f14f6cb03e1a47a6b131554efcebb1c2"
             }
           ],
-          "review_disposition": "Implemented and reviewed bounded native checks; actual guide pixels reviewed by06; combined map/outcome rendered gate remains U5."
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U3-06",
@@ -836,18 +836,29 @@
               "sha256": "8743fbad5988e17ee774405d113940246079ae0bb54b28ad34dbeec3dee523e6"
             }
           ],
-          "review_disposition": "Implemented and reviewed bounded native checks; actual guide pixels reviewed by06; combined map/outcome rendered gate remains U5."
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         }
       ],
       "integration_review": {
         "path": "docs/evidence/ui-campaign/U3/integration/REVIEW.json",
         "sha256": "d9672a35069a93644341d47afc1501b2160efebc830fc2ebe8c1e229584798e3"
-      }
+      },
+      "acceptance_scope": "U5 r1 original screens plus exact r2 fixes close the combined rendered gate. Compact text remains limited; later overview fix is I1, package execution is I3.",
+      "final_render_reviews": [
+        {
+          "path": "docs/evidence/ui-campaign/U5/role02/REVIEW.md",
+          "sha256": "5f20222e0595c0b8394e12d11246a06e106062515bf74b1b16ae17d7aac001bd"
+        },
+        {
+          "path": "docs/evidence/ui-campaign/U5/role06/REVIEW.md",
+          "sha256": "a4f62b545d81bc559a06466e49763f0597867fc96a2d1cb0d060a9fc9b6ed291"
+        }
+      ]
     },
     {
       "id": "U4",
       "title": "Edge cases and adaptation",
-      "status": "in_progress",
+      "status": "completed_bounded_rendered_screen_acceptance",
       "depends_on": [
         "U3"
       ],
@@ -857,61 +868,116 @@
           "role": "Launch and navigation",
           "task": "Repair observed layout/focus errors across narrow and large native windows and UI scaling.",
           "agent": "r4_05_motion",
-          "status": "in_progress",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-rounds/round4/worker01/REVIEW.md",
+              "sha256": "8a2a3432e091a2493988e8e73160259e63f1b2970800f62478294facc0c89d73"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim.",
+          "executed_report": {
+            "path": "docs/evidence/ui-rounds/round4/worker01/REVIEW.md",
+            "sha256": "6f0b21be1c194577e54fa08fc737f9af931845e37f25bb119a66591478113828"
+          }
         },
         {
           "id": "U4-02",
           "role": "Shared visual system",
           "task": "Validate contrast and focus across backgrounds; repair disabled/hover/pressed/selected inconsistencies.",
           "agent": "ui_06_acceptance",
-          "status": "in_progress",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U4/role02/REVIEW.md",
+              "sha256": "dbaa7d00d12fbd4bbf38c7b6dc38b49b0b69ca66f07ac3f0d42a37bf30d8564f"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim.",
+          "executed_report": {
+            "path": "docs/evidence/ui-campaign/U4/role02/REVIEW.md",
+            "sha256": "dbaa7d00d12fbd4bbf38c7b6dc38b49b0b69ca66f07ac3f0d42a37bf30d8564f"
+          }
         },
         {
           "id": "U4-03",
           "role": "Loading and recovery",
           "task": "Stress rapid transitions, invalid paths and recoverable load failures with preserved user state.",
           "agent": "ui_03_loading",
-          "status": "in_progress",
+          "status": "returned_reviewed",
           "artifacts": [],
-          "review_disposition": null
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim.",
+          "executed_report": {
+            "path": "docs/evidence/ui-campaign/U4/role03/REVIEW.md",
+            "sha256": "0afc61c68fdf6c4fbce41bd63af6a3ca942a2ce54019dee79b6055bdbb08e40b"
+          }
         },
         {
           "id": "U4-04",
           "role": "Combat HUD and map information",
           "task": "Stress dense warnings, long goal text, zero/max values, defeat/respawn and resized HUD.",
           "agent": "ui_02_system",
-          "status": "in_progress",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U4/role04/REVIEW.md",
+              "sha256": "2e016cfc64e2b348dc4f0ba54fba2097f29ae53c0ad37977cf80166b6522070f"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim.",
+          "executed_report": {
+            "path": "docs/evidence/ui-campaign/U4/role04/REVIEW.md",
+            "sha256": "04d56b8ffbe574ac2945b5bb19b50a2c41c184aa9bdf51ea2bff4b6520b7e739"
+          }
         },
         {
           "id": "U4-05",
           "role": "Settings, guide and controls",
           "task": "Test remap conflicts, cancelled capture, settings reset/save failures and reduced effects options.",
           "agent": "ui_02_system",
-          "status": "assigned",
-          "artifacts": [],
-          "review_disposition": null
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U4/role05/REVIEW.md",
+              "sha256": "f64e3a06bc970565644298ac5000721b7228c6dc88f2e2083e27b76deb87c7eb"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim.",
+          "executed_report": {
+            "path": "docs/evidence/ui-campaign/U4/role05/REVIEW.md",
+            "sha256": "8bbec1d20649311c3c642c3c0e9b07e19961ca4b41769d915e2eaa26df3b35ee"
+          }
         },
         {
           "id": "U4-06",
           "role": "Independent UI verification and packaging",
           "task": "Independently test resize/input/focus/error counterexamples and report exact uncovered limits.",
           "agent": "ui_06_acceptance",
-          "status": "assigned",
+          "status": "returned_reviewed",
           "artifacts": [],
-          "review_disposition": null
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim.",
+          "executed_report": {
+            "path": "docs/evidence/ui-campaign/U4/role06/REVIEW.md",
+            "sha256": "911d1dad35ba7ee0d479c83babddba66ad48c43131b304e43243b27c57641997"
+          }
+        }
+      ],
+      "acceptance_scope": "U5 r1 original screens plus exact r2 fixes close the combined rendered gate. Compact text remains limited; later overview fix is I1, package execution is I3.",
+      "final_render_reviews": [
+        {
+          "path": "docs/evidence/ui-campaign/U5/role02/REVIEW.md",
+          "sha256": "5f20222e0595c0b8394e12d11246a06e106062515bf74b1b16ae17d7aac001bd"
+        },
+        {
+          "path": "docs/evidence/ui-campaign/U5/role06/REVIEW.md",
+          "sha256": "a4f62b545d81bc559a06466e49763f0597867fc96a2d1cb0d060a9fc9b6ed291"
         }
       ]
     },
     {
       "id": "U5",
       "title": "Rendered polish and screen consolidation",
-      "status": "pending",
+      "status": "completed_bounded_rendered_screen_acceptance",
       "depends_on": [
         "U4"
       ],
@@ -920,62 +986,103 @@
           "id": "U5-01",
           "role": "Launch and navigation",
           "task": "Inspect final launch captures; correct composition/copy defects and remove superseded launch scaffolding.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "r4_05_motion",
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-rounds/round5/worker01/REVIEW.md",
+              "sha256": "b7d459bc0b2e6e5bcddcb22cda500088738d34b2c2a7dbbf1c8fe7b1c765afbb"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U5-02",
           "role": "Shared visual system",
           "task": "Inspect all changed screen states, correct spacing/type/contrast and document reusable component rules.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "ui_06_acceptance",
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U5/role02/REVIEW.md",
+              "sha256": "5f20222e0595c0b8394e12d11246a06e106062515bf74b1b16ae17d7aac001bd"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U5-03",
           "role": "Loading and recovery",
           "task": "Inspect real loading/error/recovery captures and correct any dishonest progress or dead end.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "ui_03_loading",
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U5/role03/REVIEW.md",
+              "sha256": "78baaf8ebffe5e6cdddb15d5a9832518d3fdb59c1ec825fcf551de965c2996d1"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U5-04",
           "role": "Combat HUD and map information",
           "task": "Inspect gameplay/map/result captures and correct warning or information occlusion.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "ui_02_system",
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U5/role04/REVIEW.md",
+              "sha256": "e753d44e2265a3e0be860f9adc9b5f10cce95f6bfa0e64b51e0169c006d59b2a"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U5-05",
           "role": "Settings, guide and controls",
           "task": "Inspect settings/guide/help captures; correct clipped controls and inconsistent navigation copy.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "ui_02_system",
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U5/role05/REVIEW.md",
+              "sha256": "f174d4105370f71b2986600e557916507b1f11118c5329fe921c5f68befc43e5"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
         },
         {
           "id": "U5-06",
           "role": "Independent UI verification and packaging",
           "task": "Run final screen catalog, archive original captures/input receipts and give independent acceptance.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
-          "review_disposition": null
+          "agent": "ui_06_acceptance",
+          "status": "returned_reviewed",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/U5/role06/REVIEW.md",
+              "sha256": "a4f62b545d81bc559a06466e49763f0597867fc96a2d1cb0d060a9fc9b6ed291"
+            }
+          ],
+          "review_disposition": "Executed bounded implementation/review; integrated originals and correction overlay accepted in U5. No commercial-quality/GPU/online claim."
+        }
+      ],
+      "acceptance_scope": "U5 r1 original screens plus exact r2 fixes close the combined rendered gate. Compact text remains limited; later overview fix is I1, package execution is I3.",
+      "final_render_reviews": [
+        {
+          "path": "docs/evidence/ui-campaign/U5/role02/REVIEW.md",
+          "sha256": "5f20222e0595c0b8394e12d11246a06e106062515bf74b1b16ae17d7aac001bd"
+        },
+        {
+          "path": "docs/evidence/ui-campaign/U5/role06/REVIEW.md",
+          "sha256": "a4f62b545d81bc559a06466e49763f0597867fc96a2d1cb0d060a9fc9b6ed291"
         }
       ]
     },
     {
       "id": "I1",
       "title": "Integrate accepted hero art with complete UI",
-      "status": "pending",
+      "status": "native_integration_sealed_targeted_overview_pixels_pending_package",
       "depends_on": [
         "U5"
       ],
@@ -984,26 +1091,36 @@
           "id": "I1-01",
           "role": "Launch and navigation",
           "task": "Check launch hero framing and navigation against accepted visual rounds2\u20134.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
+          "agent": "r4_05_motion",
+          "status": "executed_review_sealing",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I1/role01/REVIEW.md",
+              "sha256": "edc915d4a405b0cee31c1bc9e19f78eba1ccb59441d20cd3857df97fadc619d0"
+            }
+          ],
           "review_disposition": null
         },
         {
           "id": "I1-02",
           "role": "Shared visual system",
           "task": "Check day/night world and character presentation behind UI and repair observed contrast defects.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
+          "agent": "ui_06_acceptance",
+          "status": "executed_review_sealing",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I1/role02/REVIEW.md",
+              "sha256": "18cb623ffae49d2239edd4b5de14d560fad831afcc0a5ece8e7fd2b459de5d7e"
+            }
+          ],
           "review_disposition": null
         },
         {
           "id": "I1-03",
           "role": "Loading and recovery",
           "task": "Check first-load/imported-resource availability and lifecycle with accepted asset provenance.",
-          "agent": null,
-          "status": "pending",
+          "agent": "r3_08_groom",
+          "status": "executed_review_sealing",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1011,26 +1128,36 @@
           "id": "I1-04",
           "role": "Combat HUD and map information",
           "task": "Check movement/action/timer/HUD sync using actual combined runtime sources.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
+          "agent": "ui_02_system",
+          "status": "executed_review_sealing",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I1/role04/REVIEW.md",
+              "sha256": "4a091872429925d255f9536c0dff39f6ac91003b3457a1cbfa0fb7f5ed0f6f77"
+            }
+          ],
           "review_disposition": null
         },
         {
           "id": "I1-05",
           "role": "Settings, guide and controls",
           "task": "Check persisted controls/sound/display settings across both modes and scene returns.",
-          "agent": null,
-          "status": "pending",
-          "artifacts": [],
+          "agent": "ui_02_system",
+          "status": "executed_review_sealing",
+          "artifacts": [
+            {
+              "path": "docs/evidence/ui-campaign/I1/role05/REVIEW.md",
+              "sha256": "8c790a3b95cd682f7f831f21172aaeaa2c4742e603853f41148260774957ac36"
+            }
+          ],
           "review_disposition": null
         },
         {
           "id": "I1-06",
           "role": "Independent UI verification and packaging",
           "task": "Freeze integrated runtime; independently compare source pins, notices and actual views.",
-          "agent": null,
-          "status": "pending",
+          "agent": "root",
+          "status": "executed_review_sealing",
           "artifacts": [],
           "review_disposition": null
         }
@@ -1039,7 +1166,7 @@
     {
       "id": "I2",
       "title": "Stress, edge and resource qualification",
-      "status": "pending",
+      "status": "in_progress_final_frozen_source_stress",
       "depends_on": [
         "I1"
       ],
@@ -1048,8 +1175,8 @@
           "id": "I2-01",
           "role": "Launch and navigation",
           "task": "Run repeated launch/play/pause/title loops and repair concrete duplicate/listener leaks.",
-          "agent": null,
-          "status": "pending",
+          "agent": "root",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1057,8 +1184,8 @@
           "id": "I2-02",
           "role": "Shared visual system",
           "task": "Check shared theme/material ownership and repeated view creation costs under stress.",
-          "agent": null,
-          "status": "pending",
+          "agent": "r3_08_groom",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1066,8 +1193,8 @@
           "id": "I2-03",
           "role": "Loading and recovery",
           "task": "Challenge allowed scene paths, malformed progress/failure state and reentrant transitions.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_03_loading",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1075,8 +1202,8 @@
           "id": "I2-04",
           "role": "Combat HUD and map information",
           "task": "Challenge action/hitch/defeat/results transitions and information-state synchronization.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_02_system",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1084,8 +1211,8 @@
           "id": "I2-05",
           "role": "Settings, guide and controls",
           "task": "Challenge invalid saved preferences/remaps, focus loss and modal interruption.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_02_system",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1093,8 +1220,8 @@
           "id": "I2-06",
           "role": "Independent UI verification and packaging",
           "task": "Run affected numerical catalogs and resource census, reporting hardware limits without simulatedFPSclaims.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_06_acceptance",
+          "status": "in_progress",
           "artifacts": [],
           "review_disposition": null
         }
@@ -1103,7 +1230,7 @@
     {
       "id": "I3",
       "title": "Package and release review",
-      "status": "pending",
+      "status": "preparing_source_matched_packages",
       "depends_on": [
         "I2"
       ],
@@ -1112,8 +1239,8 @@
           "id": "I3-01",
           "role": "Launch and navigation",
           "task": "Inspect packaged launch/play/return path and repair package-only navigation defects.",
-          "agent": null,
-          "status": "pending",
+          "agent": "r4_05_motion",
+          "status": "assigned_pending_export",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1121,8 +1248,8 @@
           "id": "I3-02",
           "role": "Shared visual system",
           "task": "Inspect packaged fonts/images/themes and confirm all actual display dependencies included.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_06_acceptance",
+          "status": "assigned_pending_export",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1130,8 +1257,8 @@
           "id": "I3-03",
           "role": "Loading and recovery",
           "task": "Verify packaged scene loading and meaningful recoverable errors without source-only assumptions.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_03_loading",
+          "status": "assigned_pending_export",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1139,8 +1266,8 @@
           "id": "I3-04",
           "role": "Combat HUD and map information",
           "task": "Inspect packaged HUD/map/outcomes and source-matched action/continuous-motion receipts.",
-          "agent": null,
-          "status": "pending",
+          "agent": "r2_06_capture",
+          "status": "assigned_pending_export",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1148,8 +1275,8 @@
           "id": "I3-05",
           "role": "Settings, guide and controls",
           "task": "Inspect packaged settings persistence and keyboard controls using isolated user data.",
-          "agent": null,
-          "status": "pending",
+          "agent": "ui_02_system",
+          "status": "assigned_pending_export",
           "artifacts": [],
           "review_disposition": null
         },
@@ -1157,8 +1284,8 @@
           "id": "I3-06",
           "role": "Independent UI verification and packaging",
           "task": "Build and qualify release artifacts, verify hashes/notices and archive independent publication disposition.",
-          "agent": null,
-          "status": "pending",
+          "agent": "r3_08_groom",
+          "status": "assigned_pending_export",
           "artifacts": [],
           "review_disposition": null
         }
@@ -1166,11 +1293,28 @@
     }
   ],
   "repeated_request_note": "The repeated five-plus-three request refers to this same 48-assignment track and does not create duplicate rounds.",
-  "completed_screen_rounds": 2,
+  "completed_screen_rounds": 5,
   "completed_integration_rounds": 0,
-  "remaining_screen_rounds": 3,
+  "remaining_screen_rounds": 0,
   "remaining_integration_rounds": 3,
-  "implemented_screen_rounds_with_open_render_gates": [
-    "U3"
+  "implemented_screen_rounds_with_open_render_gates": [],
+  "source_checkpoints": [
+    {
+      "commit": "5bf84061e3c6212248d218d7768386616082070a",
+      "scope": "Frozen U3 UI plus accepted secondary-material teardown ownership fix",
+      "remote_verified": true,
+      "headless_checks": 378
+    },
+    {
+      "commit": "013288b7ae296c184c34ef4f8ac4f2000eb17cee",
+      "scope": "F3 opener test reconciliation; full138 native integration passes",
+      "remote_pushed": true,
+      "ci_run": 39082007988,
+      "ci_status_at_recording": "in_progress"
+    },
+    {
+      "commit": "495fae3aad59bfcce22506cc27f9d042741cd4ab",
+      "scope": "Threaded film/world return regression contracts; frozenU3passes28film+13worldchecks. R7/U4newerworkingtree pendingintegratedcheckpoint."
+    }
   ]
 }

@@ -1060,8 +1060,7 @@ func _update_practice_hud() -> void:
 		for unit in map_control.units:
 			if unit.get("team","")=="moon" and unit.get("role","") in ["cannon_cart","royal_chariot"]: enemy_siege+=1
 		if siege_drill:
-			var roles: Dictionary=battle.get("roles_alive",{})
-			score_label.text="Siege %d · Cannons %d · Chariots %d · Gold %d" % [enemy_siege,roles.get("cannon_cart",0),roles.get("royal_chariot",0),battle.get("gold",0)]
+			score_label.text="Siege %d enemies · Gold %d" % [enemy_siege,battle.get("gold",0)]
 			objective_label.text="Break enemy engines before their shots land.\nStep outside the blast warning rings."
 		else:
 			score_label.text="Cores · Sun %d / Moon %d · Gold %d" % [cores.get("sun",0),cores.get("moon",0),battle.get("gold",0)]
@@ -1262,6 +1261,7 @@ func visit_anchor(id: String) -> bool:
 
 func set_overview(value: bool) -> void:
 	overview=value
+	player.presentation_suspended=value
 	release_actions()
 	if army: army.process_mode=Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_PAUSABLE
 	if relays: relays.process_mode=Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_PAUSABLE

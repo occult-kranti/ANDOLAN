@@ -1,0 +1,39 @@
+{
+  "scope": "Validator negative control only: historical U4 original then one-byte-altered copy. No U5 visual acceptance counted.",
+  "validator_sha256": "4d575ad45abd142388fa274f7b9ef7f3d85b5b9941c68609775dc892105b8ae2",
+  "passed": true,
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "games/yuga-native/tests/ui_independent_capture_cases.py",
+        "--capture",
+        "/tmp/yuga-u5-receipt-validator-check-r1/capture-original",
+        "--freeze",
+        "/tmp/yuga-u5-receipt-validator-check-r1/freeze",
+        "--report",
+        "games/yuga-native/docs/evidence/ui-campaign/U5/role06/validator-selfcheck/final-intact.json"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "stdout": "{\"passed\": true, \"checks\": 19, \"originals\": 6}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "games/yuga-native/tests/ui_independent_capture_cases.py",
+        "--capture",
+        "/tmp/yuga-u5-receipt-validator-check-r1/capture",
+        "--freeze",
+        "/tmp/yuga-u5-receipt-validator-check-r1/freeze",
+        "--report",
+        "games/yuga-native/docs/evidence/ui-campaign/U5/role06/validator-selfcheck/final-altered.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout": "{\"passed\": false, \"checks\": 19, \"originals\": 6}\n",
+      "stderr": ""
+    }
+  ]
+}

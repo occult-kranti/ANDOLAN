@@ -1,0 +1,17 @@
+# U5-05 — combined guide, settings and control review
+
+Reviewer: `ui_02_system`. Status: original and targeted derivative review complete for the stated scope. Sixteen original integrated images were opened directly, with hashes and findings in [original review](original-review-r1.json), backed by the [central immutable archive](../role03/integrated-r1/). [Capture identity](capture-identity-r1.json) records the exact first freeze, separately from current correction sources. Native window 960×600, framebuffer 960×540, logical canvas 1280×720.
+
+Bow and four-ability grouping, timing/context detail, fixed Back, settings Done, capture state, and exact focus restoration are visible in the observed title/world/training contexts. The key-capture original selects **Move forward**, not Jump. Settings remain paused when Done returns to the Settings opener. The world guide loads real saved ability-effects reductions; no global camera/accessibility or online capability is implied.
+
+Original frame04 shows checked options and focus but hides the Saved notice below the details viewport. That failed visual claim remains preserved. The authorized guide correction defers notice reveal until layout settles while retaining the focused toggle; newer selection, newer focus, close, ancestor disable and detachment invalidate the pending reveal. It does not move focus. Both successful saves and honest session-only failed writes use the same path. `rama_hero_panel.gd` SHA-256 is `ff710c7aad3a4214ccd0398bc1d8cac9064ca8ec9f864a1faf94744346f256c5`.
+
+[Confirmed execution](execution-confirmed.json): **36/36**, comprising eight new feedback checks, 18 guide capability checks and ten preference edge checks, Godot 4.6.3 on CPU2/one thread with isolated XDG and clean logs. The new tests prove toggle-plus-notice containment at 960×540 and 1280×720 for success and failed writes, plus selection/focus/close/detach lifetime safety. The [original rejected run](feedback-rejected-r1.json) and [original guide source](guide-before-feedback.gd.txt) are retained. The later confirmed run adds the detach-after-await counterexample; earlier passing receipts are not overwritten.
+
+Fresh Help entry also hides its heading in the first capture. Parent owns that separate repair; this role retains the rejected original and reviews the separate derivative below. CPU assertions do not establish rendered save feedback or Help repair. No renderer, OS fullscreen, audio listening, physical-GPU performance, other platform or unseen scale claim is made here.
+
+## Targeted correction acceptance
+
+[Derivative original review](supplement-review-r2.json) records each directly opened PNG/JSON hash from the separate completed r2 capture. The original r1 remains unchanged. Executed sources: world `1a11e57c1ae5a6e663b993a12d565228f30dec618a4336856c19d471ddf71c6b`, guide `ff710c7aad3a4214ccd0398bc1d8cac9064ca8ec9f864a1faf94744346f256c5`, courtyard `197a2349cebdf26d195bcec64c9380f74c76537970def2ea9bea3193086b5a30`, fixture `0ad1f073701fd2815253e68eebfa1478f06432660717dc8659baf5479cc891e7`. Capture exited 0 and all captured source hashes stayed unchanged.
+
+Five targeted originals establish visible Saved feedback together with the focused toggle, preserved Help heading on fresh entry and reopen, reachable lower Help copy by native wheel, and contained fixed Done. Failed-write notice visibility is covered by the eight-case CPU suite only; no failed-write screenshot is claimed. Help correction belongs to the parent, while this role owns the guide notice reveal.

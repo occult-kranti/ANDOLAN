@@ -1,0 +1,251 @@
+{
+  "complete": true,
+  "command": [
+    "/usr/local/bin/godot",
+    "--path",
+    "/tmp/yuga-u5-source-r2/ANDOLAN/games/yuga-native",
+    "--display-driver",
+    "x11",
+    "--rendering-method",
+    "forward_plus",
+    "--audio-driver",
+    "Dummy",
+    "--resolution",
+    "960x600",
+    "--position",
+    "0,0",
+    "--max-fps",
+    "20",
+    "--max-threads",
+    "2",
+    "--script",
+    "res://tools/ui-campaign/integrated_capture.gd",
+    "--",
+    "--mode=integrated",
+    "--output=/tmp/yuga-u5-integrated-window-r2"
+  ],
+  "plan_sha256": "046ef59607c9f52102016fc4fbce90c701eddd8f2f41b9bfff1556235b93dfa8",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "scheduling": {
+    "cpu_affinity": [
+      0,
+      1
+    ],
+    "render_threads": 2,
+    "LP_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "verified_exit_code": 0,
+  "source_unchanged": true,
+  "run_json_sha256": "00a4cc4915f08d2657e26da893c1260f0c6a4b36900f35ae6c50ee6426a19245",
+  "executed_sources": {
+    "scripts/confluence_world.gd": "1a11e57c1ae5a6e663b993a12d565228f30dec618a4336856c19d471ddf71c6b",
+    "scripts/rama_hero_panel.gd": "ff710c7aad3a4214ccd0398bc1d8cac9064ca8ec9f864a1faf94744346f256c5",
+    "scripts/courtyard.gd": "197a2349cebdf26d195bcec64c9380f74c76537970def2ea9bea3193086b5a30",
+    "tools/ui-campaign/authority_stage.gd": "0ad1f073701fd2815253e68eebfa1478f06432660717dc8659baf5479cc891e7"
+  },
+  "frames": [
+    {
+      "file": "../role03/integrated-r2/08-STAGED-respawn-atlas-corrected.png",
+      "sha256": "819be687f7788bc33f919bd83126cbaac02cc240cbd56677ab94e06611ad26bf",
+      "json_sha256": "c250f552105aa37ddc49463aa8211fe2666f31841dee712bf1da8e6c98b72935",
+      "manually_opened": true,
+      "finding": "Actual rule respawn is paired with unchanged-authority presentation refresh; Surya arrival-court text and atlas hero position now agree. Full health, arrival notice and ready slots visible.",
+      "frame": 80,
+      "focus": "",
+      "guide": {
+        "abilities_scroll": 0,
+        "detail_title": "Kodanda",
+        "details_scroll": 0,
+        "effects_enabled": true,
+        "notice": "Rama\u2019s ability effects only. Warnings and timing stay visible.",
+        "notice_fully_visible": false,
+        "receiver_present": true,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "selected_id": "kodanda"
+      },
+      "world": {
+        "goal_label": "G tether: aim at a gold ring \u226436m\nOptional: reach a raised landing court",
+        "lane_label": "Ghat promenade \u00b7 10 troops \u00b7 Wave 1",
+        "objective_label": "Escort Sun troops to the Moon core.",
+        "outcome_detail": "",
+        "outcome_heading": "",
+        "outcome_visible": false,
+        "relay_hint": "Hold lane relays for supplies \u00b7 \u25b2 Sun \u00b7 \u25a0 Moon \u00b7 X Contested",
+        "score_label": "Cores \u00b7 Sun 100 / Moon 100 \u00b7 Gold 0"
+      },
+      "authority_staging": {
+        "completed_steps": 3,
+        "enabled": true,
+        "last_action": "respawn",
+        "simulation_hold": true
+      }
+    },
+    {
+      "file": "../role03/integrated-r2/09-STAGED-sun-outcome-atlas-corrected.png",
+      "sha256": "97ae8ea5d862492817d5a991960d63471d79c039f4a346438976a169859f91ec",
+      "json_sha256": "a0afacebf5686e57632ac610e372dfde41405dbdd6c9c34bf3ff2134b8a9a3ac",
+      "manually_opened": true,
+      "finding": "Sun victory and Sun100/Moon0 visible; real signal recorded; arrival-court atlas/player agreement restored; Restart inset focus contained.",
+      "frame": 84,
+      "focus": "/root/ConfluenceWorld/WorldInterface/PausePanel/MenuScroll/MenuActions/@Button@651",
+      "guide": {
+        "abilities_scroll": 0,
+        "detail_title": "Kodanda",
+        "details_scroll": 0,
+        "effects_enabled": true,
+        "notice": "Rama\u2019s ability effects only. Warnings and timing stay visible.",
+        "notice_fully_visible": false,
+        "receiver_present": true,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "selected_id": "kodanda"
+      },
+      "world": {
+        "goal_label": "Round ended \u00b7 Open pause to restart.",
+        "lane_label": "Ghat promenade \u00b7 10 troops \u00b7 Wave 1",
+        "objective_label": "Sun core victory\nRestart lane practice from the pause menu.",
+        "outcome_detail": "Final cores \u00b7 Sun 100 / Moon 0\nLane simulation and relay supplies have stopped.\nRestart lane practice below to begin a new round.",
+        "outcome_heading": "Sun core victory",
+        "outcome_visible": true,
+        "relay_hint": "Round ended \u00b7 Relay capture and supplies stopped",
+        "score_label": "Cores \u00b7 Sun 100 / Moon 0 \u00b7 Gold 0"
+      },
+      "authority_staging": {
+        "completed_steps": 4,
+        "enabled": true,
+        "last_action": "outcome-sun",
+        "simulation_hold": true
+      }
+    },
+    {
+      "file": "../role03/integrated-r2/10-STAGED-moon-outcome-atlas-corrected.png",
+      "sha256": "a639015e65953bf414621452b0be7bc435790aa5826d68f4a1b0197dcfea4043",
+      "json_sha256": "442408a3f474b658dbf1555656ebf1dd5ea64c6d350bfbfb866b1d5d97c82f66",
+      "manually_opened": true,
+      "finding": "Moon victory and Sun0/Moon100 visible; real signal recorded; arrival-court atlas/player agreement restored; Restart inset focus contained.",
+      "frame": 88,
+      "focus": "/root/ConfluenceWorld/WorldInterface/PausePanel/MenuScroll/MenuActions/@Button@651",
+      "guide": {
+        "abilities_scroll": 0,
+        "detail_title": "Kodanda",
+        "details_scroll": 0,
+        "effects_enabled": true,
+        "notice": "Rama\u2019s ability effects only. Warnings and timing stay visible.",
+        "notice_fully_visible": false,
+        "receiver_present": true,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "selected_id": "kodanda"
+      },
+      "world": {
+        "goal_label": "Round ended \u00b7 Open pause to restart.",
+        "lane_label": "Ghat promenade \u00b7 10 troops \u00b7 Wave 1",
+        "objective_label": "Moon core victory\nRestart lane practice from the pause menu.",
+        "outcome_detail": "Final cores \u00b7 Sun 0 / Moon 100\nLane simulation and relay supplies have stopped.\nRestart lane practice below to begin a new round.",
+        "outcome_heading": "Moon core victory",
+        "outcome_visible": true,
+        "relay_hint": "Round ended \u00b7 Relay capture and supplies stopped",
+        "score_label": "Cores \u00b7 Sun 0 / Moon 100 \u00b7 Gold 0"
+      },
+      "authority_staging": {
+        "completed_steps": 5,
+        "enabled": true,
+        "last_action": "outcome-moon",
+        "simulation_hold": true
+      }
+    },
+    {
+      "file": "../role03/integrated-r2/11-STAGED-draw-outcome-atlas-corrected.png",
+      "sha256": "10f4fb3c5545f50b8e4401cd8ff62ec8b59245817c71165a2b5889340937c0ef",
+      "json_sha256": "d86d88e850909ebb2044e4b489707588934818e8e33b3cfa675c381c9a04bc31",
+      "manually_opened": true,
+      "finding": "Draw and Sun0/Moon0 visible; real signal recorded; arrival-court atlas/player agreement restored; Restart inset focus contained.",
+      "frame": 91,
+      "focus": "/root/ConfluenceWorld/WorldInterface/PausePanel/MenuScroll/MenuActions/@Button@651",
+      "guide": {
+        "abilities_scroll": 0,
+        "detail_title": "Kodanda",
+        "details_scroll": 0,
+        "effects_enabled": true,
+        "notice": "Rama\u2019s ability effects only. Warnings and timing stay visible.",
+        "notice_fully_visible": false,
+        "receiver_present": true,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "selected_id": "kodanda"
+      },
+      "world": {
+        "goal_label": "Round ended \u00b7 Open pause to restart.",
+        "lane_label": "Ghat promenade \u00b7 10 troops \u00b7 Wave 1",
+        "objective_label": "Draw \u00b7 both cores destroyed\nRestart lane practice from the pause menu.",
+        "outcome_detail": "Final cores \u00b7 Sun 0 / Moon 0\nLane simulation and relay supplies have stopped.\nRestart lane practice below to begin a new round.",
+        "outcome_heading": "Draw \u00b7 both cores destroyed",
+        "outcome_visible": true,
+        "relay_hint": "Round ended \u00b7 Relay capture and supplies stopped",
+        "score_label": "Cores \u00b7 Sun 0 / Moon 0 \u00b7 Gold 0"
+      },
+      "authority_staging": {
+        "completed_steps": 6,
+        "enabled": true,
+        "last_action": "outcome-draw",
+        "simulation_hold": true
+      }
+    },
+    {
+      "file": "../role03/integrated-r2/12-siege-enemy-count-corrected.png",
+      "sha256": "4710423bdaaad46334b441a1279b56b6c77ee66a6e0bb066720f115f98d91371",
+      "json_sha256": "1cf9b39227e0aef63f8a5daa1d6a2e991f956fd82fc594e8f4a9ea03d322f274",
+      "manually_opened": true,
+      "finding": "Visible Siege2 enemies / Gold0 uses one enemy-only denominator; actual siege native route and live ready HUD fit.",
+      "frame": 102,
+      "focus": "",
+      "guide": {
+        "abilities_scroll": 0,
+        "detail_title": "Kodanda",
+        "details_scroll": 0,
+        "effects_enabled": true,
+        "notice": "Rama\u2019s ability effects only. Warnings and timing stay visible.",
+        "notice_fully_visible": false,
+        "receiver_present": true,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "selected_id": "kodanda"
+      },
+      "world": {
+        "goal_label": "Break enemy engines to cancel shots.\nEnemy blast marks also hurt Rama.",
+        "lane_label": "Ghat promenade \u00b7 10 troops \u00b7 Wave 1",
+        "objective_label": "Break enemy engines before their shots land.\nStep outside the blast warning rings.",
+        "outcome_detail": "Final cores \u00b7 Sun 0 / Moon 0\nLane simulation and relay supplies have stopped.\nRestart lane practice below to begin a new round.",
+        "outcome_heading": "Draw \u00b7 both cores destroyed",
+        "outcome_visible": false,
+        "relay_hint": "Relays inactive during siege drill \u00b7 F5 restarts lane practice",
+        "score_label": "Siege 2 enemies \u00b7 Gold 0"
+      },
+      "authority_staging": {
+        "completed_steps": 7,
+        "enabled": true,
+        "last_action": "release",
+        "simulation_hold": false
+      }
+    }
+  ],
+  "dimensions": {
+    "native_window": [
+      960,
+      600
+    ],
+    "framebuffer": [
+      960,
+      540
+    ],
+    "logical_canvas": [
+      1280,
+      720
+    ]
+  },
+  "scope": "Targeted derivative acceptance of the stated pixels only; original rejected r1 remains unchanged. Failed-write feedback has CPU containment evidence but no failed-write screenshot."
+}

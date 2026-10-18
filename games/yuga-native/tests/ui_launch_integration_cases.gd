@@ -18,15 +18,19 @@ func _frames(count: int = 5) -> void:
 	for unused in range(count): await process_frame
 
 func _scene(path: String) -> bool:
-	for unused in range(240):
+	var deadline := Time.get_ticks_msec() + 30000
+	while Time.get_ticks_msec() < deadline:
 		if is_instance_valid(current_scene) and current_scene.scene_file_path == path:
 			await _frames()
 			return true
+		var loader := root.get_node_or_null("YugaSceneTransitionLayer/SceneTransition")
+		if is_instance_valid(loader) and loader.phase == &"error": return false
 		await process_frame
 	return false
 
 func _phase(loader: Control, phase: StringName) -> bool:
-	for unused in range(180):
+	var deadline := Time.get_ticks_msec() + 30000
+	while Time.get_ticks_msec() < deadline:
 		if loader.phase == phase: return true
 		await process_frame
 	return false
@@ -115,6 +119,7 @@ func _run() -> void:
 	await _frames()
 	_record("Cancelling queued world launch restores selected primary", current_scene == court and shell.selected_mode == "world" and root.gui_get_focus_owner() == shell.primary_button and not loader.visible)
 	# Exercise a real failure followed by Retry through the actual film destination.
+	shell.set_mode("train")
 	shell.film_button.pressed.emit()
 	loader._path = "res://scenes/ui-launch-intentionally-missing.tscn"
 	await _phase(loader,&"error")
@@ -129,6 +134,7 @@ func _run() -> void:
 		var returned := await _scene("res://scenes/courtyard.tscn")
 		_record("Film return reaches a fresh usable courtyard title", returned and current_scene.main_panel.visible and not current_scene.started and not paused)
 		if returned:
+			_record("Film round trip retains selected training and matching primary", current_scene.main_panel.selected_mode == "train" and current_scene.main_panel.primary_button.text.begins_with("Begin bow training") and root.gui_get_focus_owner() == current_scene.main_panel.primary_button)
 			var reused: Control = current_scene._ensure_scene_transition()
 			_record("Round trip reuses one persistent transition layer", reused == loader and root.find_children("YugaSceneTransitionLayer","CanvasLayer",false,false).size() == 1)
 	await _finish()

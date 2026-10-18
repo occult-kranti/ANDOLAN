@@ -23,6 +23,13 @@ func run() -> void:
 	var court:Node3D=load("res://scenes/courtyard.tscn").instantiate();root.add_child(court);current_scene=court
 	await frames()
 	check("title starts with one visible owner and no live practice",court.main_panel.visible and not court.started and not court.player.active and not paused)
+	court._open_help();await frames(5)
+	var help_scroll:ScrollContainer=court.help_panel.get_node("Card/Scroll")
+	var help_heading:Control=help_scroll.get_node("Content").get_child(0)
+	check("fresh Help keeps heading and focused Back visible",help_scroll.get_global_rect().encloses(help_heading.get_global_rect()) and help_scroll.get_global_rect().encloses(court.help_back.get_global_rect()) and root.gui_get_focus_owner()==court.help_back,{"scroll":help_scroll.scroll_vertical})
+	await key(KEY_PAGEDOWN)
+	check("Help reading scroll remains under keyboard control",help_scroll.scroll_vertical>0)
+	court._close_help();await frames()
 	court.start_training();court.set_paused(true);await frames()
 	var resume:Button=court.resume_button;resume.disabled=true
 	var quit_button:=button(court.pause_panel,"QUIT TO DESKTOP");quit_button.grab_focus();await key(KEY_TAB)

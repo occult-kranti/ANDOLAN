@@ -34,6 +34,7 @@ var _last_size := Vector2.ZERO
 var _effects_receiver: WeakRef
 var _effects_options := {"reduced_effects":false,"reduced_motion":false}
 var _reveal_pending := false
+var _feedback_revision := 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -187,6 +188,7 @@ func _binding(id: String) -> String:
 	return Bindings.label(action) if InputMap.has_action(action) else str(_rules.get(id, {}).get("key", "—"))
 
 func select_ability(id: String) -> void:
+	_feedback_revision += 1
 	if not _rules.has(id): return
 	selected_id = id
 	var rule: Dictionary = _rules[id]
@@ -252,10 +254,31 @@ func _change_effect_option(value: bool, key: String) -> void:
 	if not result.ok:
 		_sync_effect_controls()
 		_effect_notice("Could not save effect preferences. Current ability effects are unchanged.",true)
+		_schedule_effect_feedback()
 		return
 	_effects_options = candidate
 	receiver.set_options(_effects_options)
 	_effect_notice("Ability effect preferences saved. Warnings and timing stay visible.")
+	_schedule_effect_feedback()
+
+func _schedule_effect_feedback() -> void:
+	_feedback_revision += 1
+	if not _accepts_input(): return
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused not in [reduced_effects_button,reduced_motion_button]: return
+	_reveal_effect_feedback.call_deferred(_feedback_revision,selected_id,weakref(focused))
+
+func _reveal_effect_feedback(revision: int, ability_id: String, focus_ref: WeakRef) -> void:
+	# Text wrapping and focus scrolling settle in separate native layout passes.
+	# Reveal the outcome without changing focus or following an obsolete action.
+	if not _accepts_input(): return
+	var tree := get_tree()
+	for unused in 2:
+		await tree.process_frame
+		if not _accepts_input() or get_tree()!=tree or revision!=_feedback_revision or selected_id!=ability_id: return
+		var focused: Control = focus_ref.get_ref()
+		if not is_instance_valid(focused) or get_viewport().gui_get_focus_owner()!=focused: return
+	details_scroll.ensure_control_visible(effects_notice)
 
 func _number(value: Variant) -> String:
 	return ("%.2f" % float(value)).trim_suffix("0").trim_suffix(".0")
@@ -276,6 +299,7 @@ func open(screen_context: String = "confluence", return_focus: Control = null) -
 
 func close() -> void:
 	if not visible: return
+	_feedback_revision += 1
 	hide()
 	Bindings.release_gameplay()
 	closed.emit()

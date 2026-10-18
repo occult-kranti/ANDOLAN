@@ -33,6 +33,8 @@ var animator: AnimationPlayer
 var clips: Dictionary = {}
 var active_clip := ""
 var active := false
+# Overview holds presentation independently of the inactive title's idle pose.
+var presentation_suspended := false
 var ammo := MAGAZINE
 var reload_remaining := 0.0
 var fire_remaining := 0.0
@@ -470,7 +472,7 @@ func reset() -> void:
 	changed.emit()
 
 func _update_rama_motion(delta: float) -> void:
-	if not is_instance_valid(rama_motion): return
+	if presentation_suspended or not is_instance_valid(rama_motion): return
 	var aim_forward: Vector3 = invocation_facing if rama_committed else -pivot.global_basis.z
 	var aim_offset := wrapf(atan2(aim_forward.x, aim_forward.z) - visual.rotation.y, -PI, PI)
 	rama_motion.update_motion(delta, {"velocity":velocity, "local_velocity":visual.global_basis.inverse()*velocity, "grounded":is_on_floor() or not active, "traversal":traversal.mode, "aim_pitch":pitch, "aim_yaw":aim_offset, "aiming":Input.is_action_pressed("fire") and active or action_time>0, "dash":dash_time>0, "floor_y":global_position.y})

@@ -780,6 +780,52 @@ def git_context() -> dict:
             'native_worktree_status': git('status', '--short', '--', 'games/yuga-native')}
 
 
+FIRST_LOAD_RESOURCES = ('scenes/boot.tscn', 'scripts/boot.gd',
+                        'scripts/scene_transition.gd', 'scripts/launch_shell.gd',
+                        'scripts/hero_ui_theme.gd')
+
+
+def _first_load_remap(payload: bytes, source: str) -> str:
+    config = configparser.ConfigParser(interpolation=None, strict=True, delimiters=('=',))
+    config.optionxform = str
+    try:
+        config.read_string(payload.rstrip(b'\x00').decode('utf-8'))
+    except configparser.Error as error:
+        raise ValueError('First-load resource remap is malformed: ' + source) from error
+    if config.defaults() or config.sections() != ['remap'] or set(config['remap']) != {'path'}:
+        raise ValueError('First-load resource requires one explicit remap path: ' + source)
+    match = re.fullmatch(r'"(res://[^"\r\n]+)"', config['remap']['path'])
+    if match is None:
+        raise ValueError('First-load resource remap target is malformed: ' + source)
+    target = match[1].removeprefix('res://')
+    if source.endswith('.gd'):
+        valid = target == source + 'c'
+    else:
+        valid = re.fullmatch(r'\.godot/exported/[0-9]+/export-[0-9a-f]{32}-'
+                            + re.escape(Path(source).stem) + r'\.scn', target) is not None
+    if not valid:
+        raise ValueError('First-load resource remaps to an unexpected target: ' + source)
+    return target
+
+
+def _qualify_first_load_resources(entries: list) -> dict:
+    result = {}
+    for source in FIRST_LOAD_RESOURCES:
+        matches = [entry for entry in entries
+                   if entry['path'].removeprefix('res://') in (source, source + '.remap')]
+        if len(matches) != 1:
+            raise ValueError('Required first-load resource missing or ambiguous: ' + source)
+        binding = matches[0]
+        if binding['path'].endswith('.remap'):
+            target = binding.get('first_load_remap_target')
+            targets = [entry for entry in entries if entry['path'].removeprefix('res://') == target]
+            if len(targets) != 1:
+                raise ValueError('First-load remap destination missing or ambiguous: ' + source)
+            binding = targets[0]
+        result[source] = {key: binding[key] for key in ('path', 'bytes', 'sha256')}
+    return result
+
+
 def inspect_pack(path: Path) -> dict:
     """Read Godot v2/v3 PCK directory and verify every member's stored MD5.
 
@@ -820,10 +866,12 @@ def inspect_pack(path: Path) -> dict:
         if entry_flags:
             raise ValueError(f'Encrypted/removal/delta entry is not allowed: {name}')
         relative = name.removeprefix('res://')
-        parts = PurePosixPath(relative).parts
-        if not parts or '..' in parts or relative.startswith('/') or '\\' in relative or name in seen:
+        canonical = PurePosixPath(relative)
+        parts = canonical.parts
+        if (not parts or '..' in parts or relative.startswith('/') or '\\' in relative
+                or relative != canonical.as_posix() or relative in seen):
             raise ValueError(f'Unsafe or duplicate pack path: {name}')
-        seen.add(name)
+        seen.add(relative)
         if parts[0] not in {'.godot', 'assets', 'scripts', 'shaders', 'scenes', 'project.binary'}:
             raise ValueError(f'Unexpected runtime resource directory: {name}')
         if parts[0] == '.godot' and len(parts) > 1 and parts[1] not in {
@@ -843,6 +891,8 @@ def inspect_pack(path: Path) -> dict:
                  'stored_md5_verified': True}
         if relative.endswith('.ttf.import') and relative[:-7] in BUNDLED_FONT_FILES:
             entry['font_import_target'] = _font_import_target(payload, relative[:-7])
+        if relative.endswith('.remap') and relative[:-6] in FIRST_LOAD_RESOURCES:
+            entry['first_load_remap_target'] = _first_load_remap(payload, relative[:-6])
         entries.append(entry)
     required = ('rama.glb-', 'rama-production.glb-', 'rama-hero.glb-', 'lanka_courtyard.glb-',
                 'architecture.glb-', 'nature.glb-', 'assets/world/confluence-map.json',
@@ -881,6 +931,7 @@ def inspect_pack(path: Path) -> dict:
             raise ValueError(f'Required runtime resource missing: {item}')
     return {'format': version, 'engine': f'{major}.{minor}.{patch}', 'entries': entries,
             'entry_count': count, 'all_entry_md5_verified': True,
+            'first_load_resources': _qualify_first_load_resources(entries),
             'no_tools_tests_documents_or_credential_markers': True, **record(path)}
 
 
@@ -956,7 +1007,7 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
 
 def start_readme(platform: str) -> str:
     start = './launch.sh' if platform == 'linux' else 'launch.bat'
-    return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. The bundled official Godot 4.6.3\nengine opens yuga-native.pck directly using --main-pack. This portable package\ncontains the full engine binary and is larger than a release-template export.\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. Flight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWATCH CONFLUENCE DUEL opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
+    return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. The bundled official Godot 4.6.3\nengine opens yuga-native.pck directly using --main-pack. This portable package\ncontains the full engine binary and is larger than a release-template export.\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. Flight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWatch duel opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
 
 
 def safe_notice_copy(destination: Path) -> None:

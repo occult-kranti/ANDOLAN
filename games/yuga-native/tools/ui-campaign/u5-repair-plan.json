@@ -1,0 +1,263 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done"
+    },
+    "capture": "01-repaired-source-title"
+  },
+  {
+    "click_name": "RamaAbilities",
+    "expect": {
+      "panels.rama_panel": true,
+      "guide.selected_id": "kodanda"
+    }
+  },
+  {
+    "key": "Down",
+    "repeat": 4
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "guide.selected_id": "dawn_volley"
+    }
+  },
+  {
+    "tab_to_text": "Fewer decorative layers"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "guide.reduced_effects": true,
+      "effect_options.reduced_effects": true
+    }
+  },
+  {
+    "key": "Tab"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "guide.reduced_motion": true,
+      "effect_options.reduced_motion": true,
+      "guide.notice_fully_visible": true
+    },
+    "capture": "02-guide-save-status-visible"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.rama_panel": false
+    }
+  },
+  {
+    "click_name": "Help",
+    "expect": {
+      "panels.help_panel": true,
+      "modal_scroll.help_panel": 0
+    },
+    "capture": "03-help-fresh-header"
+  },
+  {
+    "wheel": -5,
+    "point": [
+      480,
+      300
+    ],
+    "expect": {
+      "panels.help_panel": true
+    },
+    "capture": "04-help-native-scroll"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.help_panel": false
+    }
+  },
+  {
+    "click_name": "Help",
+    "expect": {
+      "panels.help_panel": true,
+      "modal_scroll.help_panel": 0
+    },
+    "capture": "05-help-reopened-header"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.help_panel": false
+    }
+  },
+  {
+    "click_name": "Settings",
+    "expect": {
+      "panels.settings_panel": true,
+      "modal_scroll.settings_panel": 0
+    },
+    "capture": "06-settings-fixed-done"
+  },
+  {
+    "click_name": "Done",
+    "expect": {
+      "panels.main_panel": true,
+      "panels.settings_panel": false
+    }
+  },
+  {
+    "click_name": "ExploreConfluence",
+    "expect": {
+      "scene_path": "res://scenes/confluence_world.tscn",
+      "state.world_ready": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "key": "n",
+    "expect": {
+      "state.night": true,
+      "state.phase": 1.0
+    }
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "state.night": true,
+      "state.phase": 1.0,
+      "focus_text": "Continue practice"
+    },
+    "capture": "07-night-world-pause"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": false
+    }
+  },
+  {
+    "stage": "lane"
+  },
+  {
+    "stage": "defeat"
+  },
+  {
+    "stage": "respawn",
+    "expect": {
+      "state.player_active": true,
+      "hero_hud.health": 300
+    },
+    "capture": "08-STAGED-respawn-atlas-corrected"
+  },
+  {
+    "stage": "outcome-sun",
+    "expect": {
+      "army.winner": "sun",
+      "paused": true,
+      "world.outcome_visible": true
+    },
+    "capture": "09-STAGED-sun-outcome-atlas-corrected"
+  },
+  {
+    "stage": "outcome-moon",
+    "expect": {
+      "army.winner": "moon",
+      "paused": true,
+      "world.outcome_visible": true
+    },
+    "capture": "10-STAGED-moon-outcome-atlas-corrected"
+  },
+  {
+    "stage": "outcome-draw",
+    "expect": {
+      "army.winner": "draw",
+      "paused": true,
+      "world.outcome_visible": true
+    },
+    "capture": "11-STAGED-draw-outcome-atlas-corrected"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "army.winner": "",
+      "paused": false,
+      "world.outcome_visible": false
+    }
+  },
+  {
+    "stage": "release"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    }
+  },
+  {
+    "tab_to_text": "Siege practice \u00b7 enter drill"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "army.siege_drill": true,
+      "paused": false
+    },
+    "capture": "12-siege-enemy-count-corrected"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    }
+  },
+  {
+    "tab_to_text": "Return to courtyard"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "transition.phase": "done"
+    },
+    "capture": "13-repaired-source-return-title"
+  },
+  {
+    "click_name": "TrainingMode",
+    "expect": {
+      "launch.selected_mode": "train"
+    },
+    "capture": "14-training-before-duel"
+  },
+  {
+    "click_name": "WatchConfluenceDuel",
+    "expect": {
+      "scene_path": "res://scenes/combat_film.tscn",
+      "state.ready_to_play": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "launch.selected_mode": "train",
+      "focus_text": "Begin bow training  \u2192",
+      "transition.phase": "done"
+    },
+    "capture": "15-training-selection-after-duel"
+  },
+  {
+    "click_name": "Quit",
+    "expect_exit": 0
+  }
+]

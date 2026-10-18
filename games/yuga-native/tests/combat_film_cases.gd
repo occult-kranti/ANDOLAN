@@ -240,11 +240,14 @@ func _library_checks() -> void:
 		await _frames(2)
 
 func _wait_scene(path: String) -> bool:
-	for _i in range(120):
+	var deadline := Time.get_ticks_msec() + 30000
+	while Time.get_ticks_msec() < deadline:
 		await process_frame
 		if is_instance_valid(current_scene) and current_scene.scene_file_path==path:
 			await _frames(3)
 			return true
+		var loader := root.get_node_or_null("YugaSceneTransitionLayer/SceneTransition")
+		if is_instance_valid(loader) and loader.phase == &"error": return false
 	return false
 
 func _hash_variant(value: Variant) -> String:

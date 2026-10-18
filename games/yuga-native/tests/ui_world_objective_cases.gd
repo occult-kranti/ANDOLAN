@@ -89,6 +89,15 @@ func _run() -> void:
 	scene._start_siege_practice()
 	scene._update_practice_hud()
 	record("Siege goal reflects actual drill with inactive relays",scene.army.siege_drill and scene.objective_label.text.contains("enemy engines") and scene.relay_hint.text.contains("inactive") and scene.map_control.relays.is_empty())
+	var all_engines := 0
+	var enemy_engines := 0
+	for unit in scene.army.minimap_units():
+		if unit.get("role", "") in ["cannon_cart", "royal_chariot"]:
+			all_engines += 1
+			if unit.get("team", "") == "moon": enemy_engines += 1
+	var siege_authority: Dictionary = scene.army.report()
+	scene._update_practice_hud()
+	record("Siege counter identifies two enemy engines without mixing four allied and enemy engines",enemy_engines == 2 and all_engines == 4 and scene.score_label.text == "Siege %d enemies · Gold %d" % [enemy_engines, siege_authority.gold] and scene.army.report() == siege_authority,{"enemy_engines":enemy_engines,"all_engines":all_engines,"score":scene.score_label.text})
 	var passed := true
 	for check in checks: passed = passed and check.passed
 	var report := {"passed":passed,"checks":checks,"scope":"Headless existing world and read-only presentation. Relay actors and terminal cores are staged through actual rule ticks. Logical layout at 960x540/960x600/1280x720; no OS input, rendered, 2x scale or hardware claim.","sources":{}}

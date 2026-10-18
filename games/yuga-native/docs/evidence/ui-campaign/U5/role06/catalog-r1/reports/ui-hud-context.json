@@ -1,0 +1,114 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "Unconfigured HUD does not invent full life or ready actions",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Configured world HUD reads real health and available kit",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Pause clears action readiness on the first presentation frame",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "HUD pause presentation never advances authority or overwrites notices",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Resume restores real readiness without waiting for the slot throttle",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Overview uses its actual suspended practice state",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual defeat preserves return timer and removes ready actions",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual army outcome supersedes combat availability",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "HUD action names and keys use the saved binding source",
+			"passed": true
+		},
+		{
+			"details": {
+				"hud": "[P: (180.0, 419.0), S: (600.0, 103.0)]"
+			},
+			"name": "HUD status and slots remain contained at (960, 540)",
+			"passed": true
+		},
+		{
+			"details": {
+				"hud": "[P: (340.0, 599.0), S: (600.0, 103.0)]"
+			},
+			"name": "HUD status and slots remain contained at (1280, 720)",
+			"passed": true
+		},
+		{
+			"details": {
+				"hud": "[P: (660.0, 959.0), S: (600.0, 103.0)]"
+			},
+			"name": "HUD status and slots remain contained at (1920, 1080)",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Detaching runtime retires stale live readouts",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Reattaching actual runtime restores its state",
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Headless existing world, actual pause/overview/vitals, staged terminal core followed by normal outcome tick, binding persistence and HUD containment. No new render or OS input claim.",
+	"sources": {
+		"res://scripts/confluence_world.gd": "1ab344c5d5532184ccd22c014c4e7b0186853302c6c111b7952e2c3633bf10df",
+		"res://scripts/hero_ui_theme.gd": "b1d630e9087f939ba6a68a5bbfac6f126064d417393786380c324317ac5d39a6",
+		"res://scripts/input_bindings.gd": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+		"res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+		"res://scripts/rama_hero_hud.gd": "4531ec0cb22f6aaa5ef1466f2a98b88967b077df6af1039f90450dd3ab24b760",
+		"res://scripts/rama_hero_runtime.gd": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+		"res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+		"res://tests/ui_hud_context_cases.gd": "c0042ae59c865dde0b8a2b1e2a4d1284a3198149ed4d7243e7d9e8d997987e61"
+	}
+}
