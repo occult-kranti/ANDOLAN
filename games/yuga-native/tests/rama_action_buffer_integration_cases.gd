@@ -122,7 +122,10 @@ func run() -> void:
 	var motion_before: Dictionary = scene.player.rama_motion.diagnostics()
 	await tap("ultimate")
 	scene.rama_hud._process(FRAME)
-	check("Final-recovery input reaches the adapter through normal player polling", buffer.report().pending.get("ability_id") == "dawn_volley" and is_equal_approx(kit.elapsed, .85) and runtime.notice == "Dawn Volley · queued after recovery" and scene.rama_hud.note.text == runtime.notice, {"buffer":buffer.report(), "note":scene.rama_hud.note.text})
+	check("Final-recovery input reaches the adapter through normal player polling", buffer.report().pending.get("ability_id") == "dawn_volley" and is_equal_approx(kit.elapsed, .85) and runtime.notice == "Dawn Volley · queued after recovery", {"buffer":buffer.report(), "note":scene.rama_hud.note.text})
+	# The HUD composes current recovery and queued intent; the runtime notice
+	# remains the truthful input receipt rather than the entire visible summary.
+	check("Queued HUD describes both the real current recovery and next action", scene.rama_hud.note.text.contains("Piercing Dawn · RECOVERING") and scene.rama_hud.note.text.contains("Dawn Volley QUEUED") and scene.rama_hud.slots[4].text.contains("QUEUED"), {"note":scene.rama_hud.note.text,"queued_slot":scene.rama_hud.slots[4].text,"kit":kit.report(),"buffer":buffer.report()})
 	check("Queued UI feedback does not fake begin, sound or animation", kit.accepted_casts == accepted_before and begin_count("dawn_volley") == 0 and runtime.action_audio.report().played == voices_before and scene.player.rama_motion.diagnostics().action == motion_before.action and scene.player.rama_motion.diagnostics().release_count == motion_before.release_count and kit.report().cooldowns.dawn_volley == 0)
 	var old_forward: Vector3 = last_begin("piercing_dawn").forward
 	scene.player.yaw += .35; scene.player._update_camera()
