@@ -33,6 +33,7 @@ var _list: VBoxContainer
 var _last_size := Vector2.ZERO
 var _effects_receiver: WeakRef
 var _effects_options := {"reduced_effects":false,"reduced_motion":false}
+var _reveal_pending := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -213,18 +214,28 @@ func _load_effect_options() -> void:
 	var receiver := _effect_receiver()
 	for toggle in [reduced_effects_button,reduced_motion_button]: toggle.disabled = not is_instance_valid(receiver)
 	if not is_instance_valid(receiver):
-		effects_notice.text = "Ability effects settings are unavailable in this view."
+		_effect_notice("Ability effects settings are unavailable in this view.")
 		return
 	var result := Bindings.read_config(Bindings.config_path)
 	if not result.ok:
-		effects_notice.text = "Could not read effect preferences. Current ability effects are unchanged."
+		_effect_notice("Could not read effect preferences. Current ability effects are unchanged.",true)
 	else:
+		var candidate := {}
 		for key in _effects_options:
 			var value: Variant = result.config.get_value("rama_effects",key,false)
-			if value is bool: _effects_options[key] = value
-		effects_notice.text = "Rama’s ability effects only. Warnings and timing stay visible."
+			if not value is bool:
+				_effect_notice("Invalid effect preference. Current ability effects are unchanged.",true)
+				_sync_effect_controls()
+				return
+			candidate[key] = value
+		_effects_options = candidate
+		_effect_notice("Rama’s ability effects only. Warnings and timing stay visible.")
 	receiver.set_options(_effects_options)
 	_sync_effect_controls()
+
+func _effect_notice(message: String, error := false) -> void:
+	effects_notice.text = message
+	effects_notice.add_theme_color_override("font_color",UI.GOLD if error else UI.MIST)
 
 func _sync_effect_controls() -> void:
 	reduced_effects_button.set_pressed_no_signal(_effects_options.reduced_effects)
@@ -240,13 +251,11 @@ func _change_effect_option(value: bool, key: String) -> void:
 	var result := Bindings.merge_settings({"rama_effects":candidate},Bindings.config_path)
 	if not result.ok:
 		_sync_effect_controls()
-		effects_notice.text = "Could not save effect preferences. Current ability effects are unchanged."
-		effects_notice.add_theme_color_override("font_color",UI.GOLD)
+		_effect_notice("Could not save effect preferences. Current ability effects are unchanged.",true)
 		return
 	_effects_options = candidate
 	receiver.set_options(_effects_options)
-	effects_notice.text = "Ability effect preferences saved. Warnings and timing stay visible."
-	effects_notice.add_theme_color_override("font_color",UI.MIST)
+	_effect_notice("Ability effect preferences saved. Warnings and timing stay visible.")
 
 func _number(value: Variant) -> String:
 	return ("%.2f" % float(value)).trim_suffix("0").trim_suffix(".0")
@@ -263,6 +272,7 @@ func open(screen_context: String = "confluence", return_focus: Control = null) -
 	if _accepts_input():
 		if ability_buttons.has(selected_id): ability_buttons[selected_id].grab_focus()
 		else: close_button.grab_focus()
+	_schedule_initial_choice()
 
 func close() -> void:
 	if not visible: return
@@ -305,6 +315,7 @@ func _accepts_input() -> bool:
 
 func _process(_delta: float) -> void:
 	if not visible: return
+	if not is_instance_valid(_effect_receiver()) and not reduced_effects_button.disabled: _load_effect_options()
 	var viewport := get_viewport_rect().size
 	# Wrapped labels settle after the first container sort. Reapply the bounded
 	# card rectangle when an earlier zero-width minimum briefly made it taller.
@@ -317,3 +328,21 @@ func _layout() -> void:
 	card.position = (_last_size - card.size) * .5
 	abilities_scroll.custom_minimum_size.x = 252 if _last_size.x >= 1100 else 236
 	_split.add_theme_constant_override("separation", UI.SPACE_LG)
+	_schedule_initial_choice()
+
+func _schedule_initial_choice() -> void:
+	if _reveal_pending: return
+	_reveal_pending = true
+	_reveal_initial_choice.call_deferred()
+
+func _reveal_initial_choice() -> void:
+	# Native focus scrolling can run after the first container sort. Preserve
+	# the Bow heading only while that initial choice still owns focus.
+	for unused in range(2):
+		if not is_inside_tree():
+			_reveal_pending = false
+			return
+		await get_tree().process_frame
+	_reveal_pending = false
+	if _accepts_input() and selected_id=="kodanda" and get_viewport().gui_get_focus_owner()==ability_buttons.get("kodanda"):
+		abilities_scroll.scroll_vertical = 0

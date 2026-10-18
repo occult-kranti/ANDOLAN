@@ -1,0 +1,88 @@
+{
+  "checks": [
+    {
+      "details": {
+
+      },
+      "name": "Real parse fixture starts",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "Real threaded scene completes",
+      "passed": true
+    },
+    {
+      "details": {
+        "duplicate_notifications": 7,
+        "total_notifications": 12
+      },
+      "name": "Unchanged resource polls do not repeat notifications",
+      "passed": false
+    },
+    {
+      "details": {
+
+      },
+      "name": "Actual load and construction remain observable",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "Success emits exactly once",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "New attempt accepts reentrant queued cancellation",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "Reentrant cancellation restores caller without late completion",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "Cancelled loader can begin another attempt",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "Reentry completes exactly once",
+      "passed": true
+    },
+    {
+      "details": {
+
+      },
+      "name": "Exact duplicates are suppressed but tiny progress and message changes survive",
+      "passed": false
+    },
+    {
+      "details": {
+
+      },
+      "name": "Terminal state does not emit repeated updates",
+      "passed": true
+    }
+  ],
+  "count": 11,
+  "failed_count": 2,
+  "loader_sha256": "3e026a5f2138d175cc80f4d2c57787b37a63947701ebd3a170f7761ab80f1262",
+  "passed": false,
+  "passed_count": 9,
+  "scope": "Actual small threaded PackedScene parsing and reentrant cancellation, plus an explicitly synthetic sub-percent signal boundary check. No renderer or total-game percentage claim."
+}

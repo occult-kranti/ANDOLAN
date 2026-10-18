@@ -1,0 +1,54 @@
+[
+  {
+    "capture": "01-bow-initial",
+    "expect": {
+      "panels.hero_panel": true,
+      "independent.ability_scroll": 0,
+      "independent.effects_enabled": true
+    }
+  },
+  {
+    "key": "End",
+    "capture": "02-options-enabled",
+    "expect": {
+      "independent.motion_enabled": true
+    }
+  },
+  {
+    "click_name": "reduced_effects",
+    "capture": "03-fewer-layers-saved",
+    "expect": {
+      "independent.effects_checked": true,
+      "independent.receiver_effects": true,
+      "independent.saved_effects": true
+    }
+  },
+  {
+    "key": "Tab",
+    "key_unused": "none",
+    "capture": "04-motion-focus",
+    "expect": {
+      "focus_text": "Still ornamental motion"
+    }
+  },
+  {
+    "key": "space",
+    "capture": "05-motion-saved",
+    "expect": {
+      "independent.motion_checked": true,
+      "independent.receiver_motion": true,
+      "independent.saved_motion": true
+    }
+  },
+  {
+    "key": "Home",
+    "capture": "06-bow-return",
+    "expect": {
+      "independent.detail_scroll": 0,
+      "independent.saved_effects": true,
+      "independent.saved_motion": true,
+      "independent.receiver_meshes": 0,
+      "independent.receiver_casts": 0
+    }
+  }
+]

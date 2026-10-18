@@ -1,0 +1,137 @@
+{
+  "complete": false,
+  "scope": "Actual XTest input and raw framebuffer; component fixture is not integrated gameplay.",
+  "mode": "integrated",
+  "command": [
+    "/usr/local/bin/godot",
+    "--path",
+    "/tmp/yuga-u4-independent-options-960-r1/fixture",
+    "--display-driver",
+    "x11",
+    "--rendering-method",
+    "gl_compatibility",
+    "--audio-driver",
+    "Dummy",
+    "--resolution",
+    "960x540",
+    "--position",
+    "0,0",
+    "--max-fps",
+    "20",
+    "--max-threads",
+    "1",
+    "--script",
+    "res://tools/ui-campaign/observer.gd",
+    "--",
+    "--mode=integrated",
+    "--output=/tmp/yuga-u4-independent-options-960-r1/window"
+  ],
+  "source_sha256": {
+    "scripts/rama_ability_effects.gd": "573cf061b9d16056d3c384261ead2965aa57726e29d0bb44b2ba21503bfbde2c",
+    "scripts/scene_transition.gd": "a3e98ce60b1f05a1b3d84a7ae4805ca053ae0d9aeb7293a8be03b2818655ba39",
+    "scripts/launch_shell.gd": "b27081977afb5e95e91523702e0cf0e040e7d4d7f71e737b38037ac9f01946b7",
+    "scripts/hero_ui_theme.gd": "b1d630e9087f939ba6a68a5bbfac6f126064d417393786380c324317ac5d39a6",
+    "scripts/input_bindings.gd": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+    "scripts/rama_hero_panel.gd": "b4dca2a54617ab5798ee60522eb103fc50a87f82c73c214d15f8d28df981fdc3",
+    "scenes/guide.tscn": "b5b31fe9ce78306e7d91dae2b8ef44c3b1529b65136bcd6ccd53000cfc763d53",
+    "shaders/rama_ability_boundary.gdshader": "482cfd71a199ee03bea7f7d8c774f569e91f917b2cdff0190751ada560677da7",
+    "shaders/rama_ability_calligraphy.gdshader": "5b5ae03de886c30ef29ec6cadbbbbe12e616730db1f9c4531b378327624e5301",
+    "shaders/rama_ribbon.gdshader": "6fa1b9f1064a5b4396a36eebe1e0d232b1bf5ef8fda5a0e6ab03b0a7ac53e7de",
+    "assets/fonts/NotoSerif-Regular.ttf.import": "d2b38a67ee6a5962bd073b551085f1f4c29d1af64474e90450f56f33b5e96a5b",
+    "assets/fonts/NotoSerif-Regular.ttf": "9d7583b7dc9e812afd32a14280c5cac3160012efe50c8d08938f4fea266ff67f",
+    "assets/fonts/DejaVuSans.ttf": "57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e",
+    "assets/fonts/NotoSans-Regular.ttf.import": "7ddb7fe1898a55896f6790224f4f00070a4b99d83c0ba9b0bb02d6ba74e342cd",
+    "assets/fonts/DejaVuSans.ttf.import": "3d1c9315fe118a11830f3b2cb13c7fa88f47028f229100a8053705799bd777a6",
+    "assets/fonts/NotoSans-Regular.ttf": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+    "assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "project.godot": "977ee6947bbf96b9e977658121cf3c49cf4d50b88eba20d34832d15ceaa5c37f",
+    "export_presets.cfg": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tools/ui-campaign/board.gd": "543abdd42226226fdf4f9a5e01a471b4b42282e6e161c86c0c38f77742996750",
+    "tools/ui-campaign/observer.gd": "c43ea8ac0aca3e7d42de12be0652b1749650158179f1bf13d8c5e2b521c47d2c",
+    "tools/ui-campaign/run.py": "82ff57569a1d882e33e27ac8b389112f802bbe4137d4832bdb81fd35f2483169",
+    "tests/ui_campaign_flow_cases.gd": "4cc08e1019718131e70bd6c78922c7117faf98b1f6d62da12f0f2f351c577f81"
+  },
+  "plan": [
+    {
+      "capture": "01-bow-initial",
+      "expect": {
+        "panels.hero_panel": true,
+        "independent.ability_scroll": 0,
+        "independent.effects_enabled": true
+      }
+    },
+    {
+      "key": "End",
+      "capture": "02-options-enabled",
+      "expect": {
+        "independent.motion_enabled": true
+      }
+    },
+    {
+      "click_name": "reduced_effects",
+      "capture": "03-fewer-layers-saved",
+      "expect": {
+        "independent.effects_checked": true,
+        "independent.receiver_effects": true,
+        "independent.saved_effects": true
+      }
+    },
+    {
+      "key": "Tab",
+      "key_unused": "none",
+      "capture": "04-motion-focus",
+      "expect": {
+        "focus_text": "Still ornamental motion"
+      }
+    },
+    {
+      "key": "space",
+      "capture": "05-motion-saved",
+      "expect": {
+        "independent.motion_checked": true,
+        "independent.receiver_motion": true,
+        "independent.saved_motion": true
+      }
+    },
+    {
+      "key": "Home",
+      "capture": "06-bow-return",
+      "expect": {
+        "independent.detail_scroll": 0,
+        "independent.saved_effects": true,
+        "independent.saved_motion": true,
+        "independent.receiver_meshes": 0,
+        "independent.receiver_casts": 0
+      }
+    }
+  ],
+  "plan_sha256": "35e31f8b38270574e04a7e1237d8dd8c47ef458941b846c16d11cfe378362e93",
+  "events": [],
+  "shots": [],
+  "started_unix": 1792282846.1706166,
+  "renderer_requested": "gl_compatibility",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "scheduling": {
+    "cpu_affinity": [
+      3
+    ],
+    "render_threads": 1,
+    "LP_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "shader_cache_seed": {
+    "path": null,
+    "copied_to": "/tmp/yuga-u4-independent-options-960-r1/window/user/cache/mesa",
+    "files_sha256": {},
+    "scope": "No Mesa cache seed supplied."
+  },
+  "failure": "TimeoutError('Readiness condition not reached')",
+  "finished_unix": 1792282893.9414015,
+  "cleanup_exit": -15,
+  "logs": {
+    "godot.log": "9ff561ef125499d0f624993931835269da16663126ef834f1fbedc71f0de9d8e",
+    "xvfb.log": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+  }
+}

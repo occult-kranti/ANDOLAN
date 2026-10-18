@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/yuga-u4-independent-options-960-r1/fixture/tools/ui-campaign/run.py", line 223, in <module>
+    if __name__=='__main__': main()
+                             ^^^^^^
+  File "/tmp/yuga-u4-independent-options-960-r1/fixture/tools/ui-campaign/run.py", line 193, in main
+    state=wait_for(lambda:s if matches(s:=read(out/'state.json'),expected) else None,a.timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/yuga-u4-independent-options-960-r1/fixture/tools/ui-campaign/run.py", line 19, in wait_for
+    raise TimeoutError('Readiness condition not reached')
+TimeoutError: Readiness condition not reached

@@ -1,0 +1,77 @@
+{
+	"checks": [
+		{
+			"details": {
+				"heading": "[P: (44.0, 139.0), S: (220.0, 20.0)]",
+				"scroll": 0
+			},
+			"name": "Compact initial focus retains Bow heading and selected button",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Invalid typed preference rejects the pair without silently changing active effects",
+			"passed": false
+		},
+		{
+			"details": {
+
+			},
+			"name": "Unsupported settings bytes preserve current effects with visible error",
+			"passed": false
+		},
+		{
+			"details": {
+
+			},
+			"name": "Failed option write preserves corrupt bytes and active value",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Explicit corrupt reset preserves original bytes in one backup",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Repeated conflicts and cancellations never save or close the modal",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Reopening after explicit reset loads actual default effect values",
+			"passed": false
+		},
+		{
+			"details": {
+
+			},
+			"name": "Normal key reset preserves real sound display and effect preferences",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Disposed effect owner retires capability instead of offering dead controls",
+			"passed": false
+		}
+	],
+	"passed": false,
+	"scope": "Headless native input with actual effect receiver and isolated user settings. Explicit typed/unsupported corruption, rollback, backup reset, repeated conflict/cancel, compact initial focus and disposed capability. No renderer/OS input claim.",
+	"sources": {
+		"res://scripts/controls_overlay.gd": "3ee995c889c6dbd658d4d3dceba649970a61f5cacf848676c7f1b23847a8ceb9",
+		"res://scripts/hero_ui_theme.gd": "562a6658f7a64acb11ba183904ef8e62814d913825f98f678e4a9c3eef2b883c",
+		"res://scripts/input_bindings.gd": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+		"res://scripts/rama_hero_panel.gd": "60d1cd7d90a23309839a5a2f87647b1480fdd56b2a7d7049ea756d75c79adf10",
+		"res://tests/ui_preferences_edge_cases.gd": "e71ecd0b55a0e8cb6340b119baa06eb31dd1085f120a0491fc7303e78eea4623"
+	}
+}

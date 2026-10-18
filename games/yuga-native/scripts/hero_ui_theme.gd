@@ -180,7 +180,9 @@ static func _set_button_theme(theme: Theme, type: StringName, variant: StringNam
 	theme.set_stylebox("focus", type, _focus(variant))
 
 static func _set_choice_controls(theme: Theme) -> void:
-	for state in ["normal", "hover", "pressed", "disabled"]:
+	# An open OptionButton uses hover_pressed while its popup owns input.
+	# Keep its arrow gutter and mirrored text inset equal to every other state.
+	for state in ["normal", "hover", "pressed", "hover_pressed", "disabled"]:
 		var regular: StyleBoxFlat = theme.get_stylebox(state, "OptionButton")
 		regular.content_margin_right = SPACE_XL + SPACE_SM
 		var mirrored := regular.duplicate() as StyleBoxFlat

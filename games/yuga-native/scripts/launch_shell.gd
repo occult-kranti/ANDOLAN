@@ -5,6 +5,7 @@ extends Control
 const HeroUITheme = preload("res://scripts/hero_ui_theme.gd")
 const MODE_WORLD := "world"
 const MODE_TRAIN := "train"
+const WINDOW_MINIMUM := Vector2i(960, 540)
 
 signal world_requested
 signal train_requested
@@ -35,6 +36,8 @@ var _actions: Array[Button] = []
 var _compact := false
 
 func _ready() -> void:
+	# The native window must keep menu controls usable at the supported base size.
+	get_window().min_size = get_window().min_size.max(WINDOW_MINIMUM)
 	name = "MainMenu"
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
@@ -169,6 +172,15 @@ func _layout() -> void:
 	mode_title.add_theme_font_size_override("font_size", 24 if _compact else 30)
 	content.add_theme_constant_override("separation", 8 if _compact else 12)
 	queue_redraw()
+	call_deferred("_reveal_resized_focus")
+
+func _reveal_resized_focus() -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
+	await get_tree().process_frame
+	if not is_inside_tree() or is_queued_for_deletion() or not is_visible_in_tree(): return
+	var focused := get_viewport().gui_get_focus_owner()
+	if is_instance_valid(focused) and scroll.is_ancestor_of(focused):
+		scroll.ensure_control_visible(focused)
 
 func set_mode(mode: String) -> bool:
 	if mode not in [MODE_WORLD, MODE_TRAIN] or launch_state == "loading": return false
@@ -230,6 +242,7 @@ func _on_visibility_changed() -> void:
 	if is_visible_in_tree(): call_deferred("_focus_when_unclaimed")
 
 func _focus_when_unclaimed() -> void:
+	if not is_inside_tree() or is_queued_for_deletion() or not is_visible_in_tree(): return
 	var focused := get_viewport().gui_get_focus_owner()
 	# A host may already have restored the Settings/Help/Guide opener.
 	if focused != null and is_ancestor_of(focused): return

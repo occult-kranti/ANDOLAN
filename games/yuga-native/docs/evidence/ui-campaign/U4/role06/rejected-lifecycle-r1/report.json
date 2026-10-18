@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "name": "Detached launch cannot steal recovery focus",
+      "passed": true
+    },
+    {
+      "name": "Detached guide cannot steal recovery focus",
+      "passed": true
+    },
+    {
+      "name": "Detached courtyard leaves recovery focus and tree running",
+      "passed": true
+    },
+    {
+      "name": "Detached world leaves recovery focus without stale modal restoration",
+      "passed": true
+    }
+  ],
+  "count": 4,
+  "passed": true,
+  "scope": "Real native UI and imported scenes, explicit queued/start-then-detach lifecycle counterexamples. The execution wrapper must reject any ERROR or SCRIPT ERROR even if focus assertions pass. No renderer or OS input claim.",
+  "source_start": {
+    "scripts/confluence_world.gd": "abb1b4c53a3e8040dd31c6db9052a2ff947e925a07b93e8288c44bc6de578422",
+    "scripts/courtyard.gd": "c99cb84837b5d32e3e74442f97e4403a285538edf075cc231fd585f19c6fda7b",
+    "scripts/launch_shell.gd": "b27081977afb5e95e91523702e0cf0e040e7d4d7f71e737b38037ac9f01946b7",
+    "scripts/rama_hero_hud.gd": "4531ec0cb22f6aaa5ef1466f2a98b88967b077df6af1039f90450dd3ab24b760",
+    "scripts/rama_hero_panel.gd": "b4dca2a54617ab5798ee60522eb103fc50a87f82c73c214d15f8d28df981fdc3",
+    "tests/ui_independent_lifecycle_cases.gd": "1efe8e7bbd699f5d46d66e9d7c4955564036b7422d20c98165f43a5d01d9fcac"
+  },
+  "source_unchanged": true
+}

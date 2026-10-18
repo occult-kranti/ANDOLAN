@@ -89,6 +89,8 @@ func begin(id: StringName, caller: Node = null, return_focus: Control = null) ->
 	# A caller owning this overlay would delete it during scene replacement.
 	if is_instance_valid(caller) and (caller == self or caller.is_ancestor_of(self)):
 		return false
+	if is_instance_valid(caller) and (not caller.is_inside_tree() or caller.get_tree() != get_tree()):
+		return false
 	var owner: Variant = get_tree().root.get_meta(OWNER_META) if get_tree().root.has_meta(OWNER_META) else null
 	if is_instance_valid(owner) and owner != self:
 		return false
@@ -171,9 +173,11 @@ func _start_loading() -> void:
 
 func _process(_delta: float) -> void:
 	_drain_abandoned()
-	if _owns_input and not _committing and _caller != null and not is_instance_valid(_caller.get_ref()):
-		cancel()
-		return
+	if _owns_input and not _committing and _caller != null:
+		var caller: Node = _caller.get_ref()
+		if not is_instance_valid(caller) or not caller.is_inside_tree() or caller.get_tree() != get_tree():
+			cancel()
+			return
 	# Frame counters let the status paint before work, without orphaned await states on disposal.
 	if phase in [&"queued", &"constructing"] and not _committing:
 		_wait_frames -= 1
@@ -258,6 +262,10 @@ func _is_current(ticket: int) -> bool:
 	return is_inside_tree() and ticket == _ticket and is_busy()
 
 func _set_phase(next: StringName, text: String, progress: float) -> void:
+	# Polling can report the same resource state many times between worker updates.
+	# Keep exact values: even a sub-percent change remains observable.
+	if phase == next and message == text and resource_progress == progress:
+		return
 	phase = next
 	message = text
 	resource_progress = progress

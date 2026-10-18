@@ -1,0 +1,2470 @@
+{
+  "complete": true,
+  "scope": "Actual XTest input and raw framebuffer; component fixture is not integrated gameplay.",
+  "mode": "integrated",
+  "command": [
+    "/usr/local/bin/godot",
+    "--path",
+    "/tmp/yuga-u4-independent-options-960-r3/fixture",
+    "--display-driver",
+    "x11",
+    "--rendering-method",
+    "gl_compatibility",
+    "--audio-driver",
+    "Dummy",
+    "--resolution",
+    "960x540",
+    "--position",
+    "0,0",
+    "--max-fps",
+    "20",
+    "--max-threads",
+    "1",
+    "--script",
+    "res://tools/ui-campaign/observer.gd",
+    "--",
+    "--mode=integrated",
+    "--output=/tmp/yuga-u4-independent-options-960-r3/window"
+  ],
+  "source_sha256": {
+    "scripts/rama_ability_effects.gd": "573cf061b9d16056d3c384261ead2965aa57726e29d0bb44b2ba21503bfbde2c",
+    "scripts/scene_transition.gd": "a3e98ce60b1f05a1b3d84a7ae4805ca053ae0d9aeb7293a8be03b2818655ba39",
+    "scripts/launch_shell.gd": "6ee0c9a6d5abae28745d9e064ee127959fdf3b2bcc459138b5aacb9b14e09de2",
+    "scripts/hero_ui_theme.gd": "b1d630e9087f939ba6a68a5bbfac6f126064d417393786380c324317ac5d39a6",
+    "scripts/input_bindings.gd": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+    "scripts/rama_hero_panel.gd": "b4dca2a54617ab5798ee60522eb103fc50a87f82c73c214d15f8d28df981fdc3",
+    "scenes/guide.tscn": "b5b31fe9ce78306e7d91dae2b8ef44c3b1529b65136bcd6ccd53000cfc763d53",
+    "shaders/rama_ability_boundary.gdshader": "482cfd71a199ee03bea7f7d8c774f569e91f917b2cdff0190751ada560677da7",
+    "shaders/rama_ability_calligraphy.gdshader": "5b5ae03de886c30ef29ec6cadbbbbe12e616730db1f9c4531b378327624e5301",
+    "shaders/rama_ribbon.gdshader": "6fa1b9f1064a5b4396a36eebe1e0d232b1bf5ef8fda5a0e6ab03b0a7ac53e7de",
+    "assets/fonts/NotoSerif-Regular.ttf.import": "d2b38a67ee6a5962bd073b551085f1f4c29d1af64474e90450f56f33b5e96a5b",
+    "assets/fonts/NotoSerif-Regular.ttf": "9d7583b7dc9e812afd32a14280c5cac3160012efe50c8d08938f4fea266ff67f",
+    "assets/fonts/DejaVuSans.ttf": "57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e",
+    "assets/fonts/NotoSans-Regular.ttf.import": "7ddb7fe1898a55896f6790224f4f00070a4b99d83c0ba9b0bb02d6ba74e342cd",
+    "assets/fonts/DejaVuSans.ttf.import": "3d1c9315fe118a11830f3b2cb13c7fa88f47028f229100a8053705799bd777a6",
+    "assets/fonts/NotoSans-Regular.ttf": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+    "assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "project.godot": "977ee6947bbf96b9e977658121cf3c49cf4d50b88eba20d34832d15ceaa5c37f",
+    "export_presets.cfg": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tools/ui-campaign/board.gd": "543abdd42226226fdf4f9a5e01a471b4b42282e6e161c86c0c38f77742996750",
+    "tools/ui-campaign/observer.gd": "c43ea8ac0aca3e7d42de12be0652b1749650158179f1bf13d8c5e2b521c47d2c",
+    "tools/ui-campaign/run.py": "82ff57569a1d882e33e27ac8b389112f802bbe4137d4832bdb81fd35f2483169",
+    "tests/ui_campaign_flow_cases.gd": "4cc08e1019718131e70bd6c78922c7117faf98b1f6d62da12f0f2f351c577f81"
+  },
+  "plan": [
+    {
+      "capture": "01-bow-initial",
+      "expect": {
+        "panels.hero_panel": true,
+        "independent.ability_scroll": 0,
+        "independent.effects_enabled": true
+      }
+    },
+    {
+      "key": "End",
+      "capture": "02-options-enabled",
+      "expect": {
+        "independent.motion_enabled": true
+      }
+    },
+    {
+      "click_name": "reduced_effects",
+      "capture": "03-fewer-layers-saved",
+      "expect": {
+        "independent.effects_checked": true,
+        "independent.receiver_effects": true,
+        "independent.saved_effects": true
+      }
+    },
+    {
+      "key": "Tab",
+      "capture": "04-motion-focus",
+      "expect": {
+        "focus_text": "Still ornamental motion"
+      }
+    },
+    {
+      "key": "space",
+      "capture": "05-motion-saved",
+      "expect": {
+        "independent.motion_checked": true,
+        "independent.receiver_motion": true,
+        "independent.saved_motion": true
+      }
+    },
+    {
+      "key": "Home",
+      "capture": "06-bow-return",
+      "expect": {
+        "independent.detail_scroll": 0,
+        "independent.saved_effects": true,
+        "independent.saved_motion": true,
+        "independent.receiver_meshes": 0,
+        "independent.receiver_casts": 0
+      }
+    }
+  ],
+  "plan_sha256": "d4305a8687dd2adde379f5c3a9be33c2bc303ce3a44e77a43480c361088020c8",
+  "events": [
+    {
+      "key": "End",
+      "capture": "02-options-enabled",
+      "expect": {
+        "independent.motion_enabled": true
+      },
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "kodanda",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+            "rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "text": "LMB   Kodanda"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "piercing_dawn",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+            "rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "text": "Q   Piercing Dawn"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "measured_step",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+            "rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "text": "E   Measured Step"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "guardian_circle",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+            "rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "text": "C   Guardian Circle"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "dawn_volley",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+            "rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "text": "X   Dawn Volley"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              300.0,
+              477.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_effects",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+            "rect": [
+              300.0,
+              477.0,
+              600.0,
+              50.0
+            ],
+            "text": "Fewer decorative layers"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              300.0,
+              539.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_motion",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+            "rect": [
+              300.0,
+              539.0,
+              600.0,
+              50.0
+            ],
+            "text": "Still ornamental motion"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Back",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+            "rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+        "focus_text": "LMB   Kodanda",
+        "frame": 7,
+        "independent": {
+          "ability_scroll": 0,
+          "detail_scroll": 0,
+          "effects_checked": false,
+          "effects_enabled": true,
+          "motion_checked": false,
+          "motion_enabled": true,
+          "notice": "Rama\u2019s ability effects only. Warnings and timing stay visible.",
+          "receiver_casts": 0,
+          "receiver_effects": false,
+          "receiver_meshes": 0,
+          "receiver_motion": false,
+          "save_status": 7,
+          "saved_effects": false,
+          "saved_motion": false,
+          "selected": "kodanda"
+        },
+        "loader_count": 0,
+        "mode": "integrated",
+        "mouse_mode": 0,
+        "panels": {
+          "RamaHeroPanel": true,
+          "hero_panel": true
+        },
+        "paused": false,
+        "scene": "IndependentOptionsHost",
+        "scene_can_process": true,
+        "scene_path": "res://scenes/guide.tscn",
+        "scene_process_mode": 0,
+        "size": [
+          960,
+          540
+        ],
+        "state": {},
+        "transition_event_count": 0,
+        "transition_layer_count": 0,
+        "transition_owner_present": false,
+        "window_focused": true
+      },
+      "time_unix": 1792282939.6758256
+    },
+    {
+      "click_name": "reduced_effects",
+      "capture": "03-fewer-layers-saved",
+      "expect": {
+        "independent.effects_checked": true,
+        "independent.receiver_effects": true,
+        "independent.saved_effects": true
+      },
+      "point": [
+        600.0,
+        317.0
+      ],
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "kodanda",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+            "rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "text": "LMB   Kodanda"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "piercing_dawn",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+            "rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "text": "Q   Piercing Dawn"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "measured_step",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+            "rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "text": "E   Measured Step"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "guardian_circle",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+            "rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "text": "C   Guardian Circle"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "dawn_volley",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+            "rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "text": "X   Dawn Volley"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              300.0,
+              292.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_effects",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+            "rect": [
+              300.0,
+              292.0,
+              600.0,
+              50.0
+            ],
+            "text": "Fewer decorative layers"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              300.0,
+              354.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_motion",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+            "rect": [
+              300.0,
+              354.0,
+              600.0,
+              50.0
+            ],
+            "text": "Still ornamental motion"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Back",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+            "rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+        "focus_text": "LMB   Kodanda",
+        "frame": 15,
+        "independent": {
+          "ability_scroll": 0,
+          "detail_scroll": 185,
+          "effects_checked": false,
+          "effects_enabled": true,
+          "motion_checked": false,
+          "motion_enabled": true,
+          "notice": "Rama\u2019s ability effects only. Warnings and timing stay visible.",
+          "receiver_casts": 0,
+          "receiver_effects": false,
+          "receiver_meshes": 0,
+          "receiver_motion": false,
+          "save_status": 7,
+          "saved_effects": false,
+          "saved_motion": false,
+          "selected": "kodanda"
+        },
+        "loader_count": 0,
+        "mode": "integrated",
+        "mouse_mode": 0,
+        "panels": {
+          "RamaHeroPanel": true,
+          "hero_panel": true
+        },
+        "paused": false,
+        "scene": "IndependentOptionsHost",
+        "scene_can_process": true,
+        "scene_path": "res://scenes/guide.tscn",
+        "scene_process_mode": 0,
+        "size": [
+          960,
+          540
+        ],
+        "state": {},
+        "transition_event_count": 0,
+        "transition_layer_count": 0,
+        "transition_owner_present": false,
+        "window_focused": true
+      },
+      "time_unix": 1792282940.1025271
+    },
+    {
+      "key": "Tab",
+      "capture": "04-motion-focus",
+      "expect": {
+        "focus_text": "Still ornamental motion"
+      },
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "kodanda",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+            "rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "text": "LMB   Kodanda"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "piercing_dawn",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+            "rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "text": "Q   Piercing Dawn"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "measured_step",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+            "rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "text": "E   Measured Step"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "guardian_circle",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+            "rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "text": "C   Guardian Circle"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "dawn_volley",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+            "rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "text": "X   Dawn Volley"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              300.0,
+              292.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_effects",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+            "rect": [
+              300.0,
+              292.0,
+              600.0,
+              50.0
+            ],
+            "text": "Fewer decorative layers"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              300.0,
+              354.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_motion",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+            "rect": [
+              300.0,
+              354.0,
+              600.0,
+              50.0
+            ],
+            "text": "Still ornamental motion"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Back",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+            "rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+        "focus_text": "Fewer decorative layers",
+        "frame": 23,
+        "independent": {
+          "ability_scroll": 0,
+          "detail_scroll": 185,
+          "effects_checked": true,
+          "effects_enabled": true,
+          "motion_checked": false,
+          "motion_enabled": true,
+          "notice": "Ability effect preferences saved. Warnings and timing stay visible.",
+          "receiver_casts": 0,
+          "receiver_effects": true,
+          "receiver_meshes": 0,
+          "receiver_motion": false,
+          "save_status": 0,
+          "saved_effects": true,
+          "saved_motion": false,
+          "selected": "kodanda"
+        },
+        "loader_count": 0,
+        "mode": "integrated",
+        "mouse_mode": 0,
+        "panels": {
+          "RamaHeroPanel": true,
+          "hero_panel": true
+        },
+        "paused": false,
+        "scene": "IndependentOptionsHost",
+        "scene_can_process": true,
+        "scene_path": "res://scenes/guide.tscn",
+        "scene_process_mode": 0,
+        "size": [
+          960,
+          540
+        ],
+        "state": {},
+        "transition_event_count": 0,
+        "transition_layer_count": 0,
+        "transition_owner_present": false,
+        "window_focused": true
+      },
+      "time_unix": 1792282940.5119734
+    },
+    {
+      "key": "space",
+      "capture": "05-motion-saved",
+      "expect": {
+        "independent.motion_checked": true,
+        "independent.receiver_motion": true,
+        "independent.saved_motion": true
+      },
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "kodanda",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+            "rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "text": "LMB   Kodanda"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "piercing_dawn",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+            "rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "text": "Q   Piercing Dawn"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "measured_step",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+            "rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "text": "E   Measured Step"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "guardian_circle",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+            "rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "text": "C   Guardian Circle"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "dawn_volley",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+            "rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "text": "X   Dawn Volley"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              300.0,
+              292.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_effects",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+            "rect": [
+              300.0,
+              292.0,
+              600.0,
+              50.0
+            ],
+            "text": "Fewer decorative layers"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              300.0,
+              354.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_motion",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+            "rect": [
+              300.0,
+              354.0,
+              600.0,
+              50.0
+            ],
+            "text": "Still ornamental motion"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Back",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+            "rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+        "focus_text": "Still ornamental motion",
+        "frame": 33,
+        "independent": {
+          "ability_scroll": 0,
+          "detail_scroll": 185,
+          "effects_checked": true,
+          "effects_enabled": true,
+          "motion_checked": false,
+          "motion_enabled": true,
+          "notice": "Ability effect preferences saved. Warnings and timing stay visible.",
+          "receiver_casts": 0,
+          "receiver_effects": true,
+          "receiver_meshes": 0,
+          "receiver_motion": false,
+          "save_status": 0,
+          "saved_effects": true,
+          "saved_motion": false,
+          "selected": "kodanda"
+        },
+        "loader_count": 0,
+        "mode": "integrated",
+        "mouse_mode": 0,
+        "panels": {
+          "RamaHeroPanel": true,
+          "hero_panel": true
+        },
+        "paused": false,
+        "scene": "IndependentOptionsHost",
+        "scene_can_process": true,
+        "scene_path": "res://scenes/guide.tscn",
+        "scene_process_mode": 0,
+        "size": [
+          960,
+          540
+        ],
+        "state": {},
+        "transition_event_count": 0,
+        "transition_layer_count": 0,
+        "transition_owner_present": false,
+        "window_focused": true
+      },
+      "time_unix": 1792282941.0109289
+    },
+    {
+      "key": "Home",
+      "capture": "06-bow-return",
+      "expect": {
+        "independent.detail_scroll": 0,
+        "independent.saved_effects": true,
+        "independent.saved_motion": true,
+        "independent.receiver_meshes": 0,
+        "independent.receiver_casts": 0
+      },
+      "window_id": 8388611,
+      "before": {
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "kodanda",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+            "rect": [
+              44.0,
+              167.0,
+              220.0,
+              47.0
+            ],
+            "text": "LMB   Kodanda"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "piercing_dawn",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+            "rect": [
+              44.0,
+              250.0,
+              220.0,
+              47.0
+            ],
+            "text": "Q   Piercing Dawn"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "measured_step",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+            "rect": [
+              44.0,
+              305.0,
+              220.0,
+              47.0
+            ],
+            "text": "E   Measured Step"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "guardian_circle",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+            "rect": [
+              44.0,
+              360.0,
+              220.0,
+              47.0
+            ],
+            "text": "C   Guardian Circle"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "interactive": true,
+            "name": "dawn_volley",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+            "rect": [
+              44.0,
+              415.0,
+              220.0,
+              47.0
+            ],
+            "text": "X   Dawn Volley"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              300.0,
+              292.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_effects",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+            "rect": [
+              300.0,
+              292.0,
+              600.0,
+              50.0
+            ],
+            "text": "Fewer decorative layers"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              300.0,
+              354.0,
+              600.0,
+              50.0
+            ],
+            "interactive": true,
+            "name": "reduced_motion",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+            "rect": [
+              300.0,
+              354.0,
+              600.0,
+              50.0
+            ],
+            "text": "Still ornamental motion"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Back",
+            "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+            "rect": [
+              776.0,
+              448.0,
+              140.0,
+              48.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+        "focus_text": "Still ornamental motion",
+        "frame": 44,
+        "independent": {
+          "ability_scroll": 0,
+          "detail_scroll": 185,
+          "effects_checked": true,
+          "effects_enabled": true,
+          "motion_checked": true,
+          "motion_enabled": true,
+          "notice": "Ability effect preferences saved. Warnings and timing stay visible.",
+          "receiver_casts": 0,
+          "receiver_effects": true,
+          "receiver_meshes": 0,
+          "receiver_motion": true,
+          "save_status": 0,
+          "saved_effects": true,
+          "saved_motion": true,
+          "selected": "kodanda"
+        },
+        "loader_count": 0,
+        "mode": "integrated",
+        "mouse_mode": 0,
+        "panels": {
+          "RamaHeroPanel": true,
+          "hero_panel": true
+        },
+        "paused": false,
+        "scene": "IndependentOptionsHost",
+        "scene_can_process": true,
+        "scene_path": "res://scenes/guide.tscn",
+        "scene_process_mode": 0,
+        "size": [
+          960,
+          540
+        ],
+        "state": {},
+        "transition_event_count": 0,
+        "transition_layer_count": 0,
+        "transition_owner_present": false,
+        "window_focused": true
+      },
+      "time_unix": 1792282941.5427976
+    }
+  ],
+  "shots": [
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "kodanda",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+          "rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "text": "LMB   Kodanda"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "piercing_dawn",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+          "rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "text": "Q   Piercing Dawn"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "measured_step",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+          "rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "text": "E   Measured Step"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "guardian_circle",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+          "rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "text": "C   Guardian Circle"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "dawn_volley",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+          "rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "text": "X   Dawn Volley"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            300.0,
+            477.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_effects",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+          "rect": [
+            300.0,
+            477.0,
+            600.0,
+            50.0
+          ],
+          "text": "Fewer decorative layers"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            300.0,
+            539.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_motion",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+          "rect": [
+            300.0,
+            539.0,
+            600.0,
+            50.0
+          ],
+          "text": "Still ornamental motion"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Back",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+          "rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "01-bow-initial.png",
+      "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+      "focus_text": "LMB   Kodanda",
+      "frame": 7,
+      "independent": {
+        "ability_scroll": 0,
+        "detail_scroll": 0,
+        "effects_checked": false,
+        "effects_enabled": true,
+        "motion_checked": false,
+        "motion_enabled": true,
+        "notice": "Rama\u2019s ability effects only. Warnings and timing stay visible.",
+        "receiver_casts": 0,
+        "receiver_effects": false,
+        "receiver_meshes": 0,
+        "receiver_motion": false,
+        "save_status": 7,
+        "saved_effects": false,
+        "saved_motion": false,
+        "selected": "kodanda"
+      },
+      "loader_count": 0,
+      "mode": "integrated",
+      "mouse_mode": 0,
+      "panels": {
+        "RamaHeroPanel": true,
+        "hero_panel": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "IndependentOptionsHost",
+      "scene_can_process": true,
+      "scene_path": "res://scenes/guide.tscn",
+      "scene_process_mode": 0,
+      "sha256": "1b0005f7989afc697b574f8ffc19254e280a3b071d686b5f80d751bc05f8a82a",
+      "size": [
+        960,
+        540
+      ],
+      "state": {},
+      "transition_event_count": 0,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "kodanda",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+          "rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "text": "LMB   Kodanda"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "piercing_dawn",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+          "rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "text": "Q   Piercing Dawn"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "measured_step",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+          "rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "text": "E   Measured Step"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "guardian_circle",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+          "rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "text": "C   Guardian Circle"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "dawn_volley",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+          "rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "text": "X   Dawn Volley"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            300.0,
+            292.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_effects",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+          "rect": [
+            300.0,
+            292.0,
+            600.0,
+            50.0
+          ],
+          "text": "Fewer decorative layers"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            300.0,
+            354.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_motion",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+          "rect": [
+            300.0,
+            354.0,
+            600.0,
+            50.0
+          ],
+          "text": "Still ornamental motion"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Back",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+          "rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "02-options-enabled.png",
+      "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+      "focus_text": "LMB   Kodanda",
+      "frame": 15,
+      "independent": {
+        "ability_scroll": 0,
+        "detail_scroll": 185,
+        "effects_checked": false,
+        "effects_enabled": true,
+        "motion_checked": false,
+        "motion_enabled": true,
+        "notice": "Rama\u2019s ability effects only. Warnings and timing stay visible.",
+        "receiver_casts": 0,
+        "receiver_effects": false,
+        "receiver_meshes": 0,
+        "receiver_motion": false,
+        "save_status": 7,
+        "saved_effects": false,
+        "saved_motion": false,
+        "selected": "kodanda"
+      },
+      "loader_count": 0,
+      "mode": "integrated",
+      "mouse_mode": 0,
+      "panels": {
+        "RamaHeroPanel": true,
+        "hero_panel": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "IndependentOptionsHost",
+      "scene_can_process": true,
+      "scene_path": "res://scenes/guide.tscn",
+      "scene_process_mode": 0,
+      "sha256": "40fab4d2d27624224bf50a632767c5e629e18eb669c505e6c631e3272ca2830e",
+      "size": [
+        960,
+        540
+      ],
+      "state": {},
+      "transition_event_count": 0,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "kodanda",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+          "rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "text": "LMB   Kodanda"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "piercing_dawn",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+          "rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "text": "Q   Piercing Dawn"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "measured_step",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+          "rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "text": "E   Measured Step"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "guardian_circle",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+          "rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "text": "C   Guardian Circle"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "dawn_volley",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+          "rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "text": "X   Dawn Volley"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            300.0,
+            292.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_effects",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+          "rect": [
+            300.0,
+            292.0,
+            600.0,
+            50.0
+          ],
+          "text": "Fewer decorative layers"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            300.0,
+            354.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_motion",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+          "rect": [
+            300.0,
+            354.0,
+            600.0,
+            50.0
+          ],
+          "text": "Still ornamental motion"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Back",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+          "rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "03-fewer-layers-saved.png",
+      "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+      "focus_text": "Fewer decorative layers",
+      "frame": 23,
+      "independent": {
+        "ability_scroll": 0,
+        "detail_scroll": 185,
+        "effects_checked": true,
+        "effects_enabled": true,
+        "motion_checked": false,
+        "motion_enabled": true,
+        "notice": "Ability effect preferences saved. Warnings and timing stay visible.",
+        "receiver_casts": 0,
+        "receiver_effects": true,
+        "receiver_meshes": 0,
+        "receiver_motion": false,
+        "save_status": 0,
+        "saved_effects": true,
+        "saved_motion": false,
+        "selected": "kodanda"
+      },
+      "loader_count": 0,
+      "mode": "integrated",
+      "mouse_mode": 0,
+      "panels": {
+        "RamaHeroPanel": true,
+        "hero_panel": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "IndependentOptionsHost",
+      "scene_can_process": true,
+      "scene_path": "res://scenes/guide.tscn",
+      "scene_process_mode": 0,
+      "sha256": "96cbbae90de2e085dab6679c988a46c4c04bc35ebad401b2c3f3f56c8be10e69",
+      "size": [
+        960,
+        540
+      ],
+      "state": {},
+      "transition_event_count": 0,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "kodanda",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+          "rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "text": "LMB   Kodanda"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "piercing_dawn",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+          "rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "text": "Q   Piercing Dawn"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "measured_step",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+          "rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "text": "E   Measured Step"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "guardian_circle",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+          "rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "text": "C   Guardian Circle"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "dawn_volley",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+          "rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "text": "X   Dawn Volley"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            300.0,
+            292.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_effects",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+          "rect": [
+            300.0,
+            292.0,
+            600.0,
+            50.0
+          ],
+          "text": "Fewer decorative layers"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            300.0,
+            354.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_motion",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+          "rect": [
+            300.0,
+            354.0,
+            600.0,
+            50.0
+          ],
+          "text": "Still ornamental motion"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Back",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+          "rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "04-motion-focus.png",
+      "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+      "focus_text": "Still ornamental motion",
+      "frame": 33,
+      "independent": {
+        "ability_scroll": 0,
+        "detail_scroll": 185,
+        "effects_checked": true,
+        "effects_enabled": true,
+        "motion_checked": false,
+        "motion_enabled": true,
+        "notice": "Ability effect preferences saved. Warnings and timing stay visible.",
+        "receiver_casts": 0,
+        "receiver_effects": true,
+        "receiver_meshes": 0,
+        "receiver_motion": false,
+        "save_status": 0,
+        "saved_effects": true,
+        "saved_motion": false,
+        "selected": "kodanda"
+      },
+      "loader_count": 0,
+      "mode": "integrated",
+      "mouse_mode": 0,
+      "panels": {
+        "RamaHeroPanel": true,
+        "hero_panel": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "IndependentOptionsHost",
+      "scene_can_process": true,
+      "scene_path": "res://scenes/guide.tscn",
+      "scene_process_mode": 0,
+      "sha256": "04a66fe5c68515baa8fbe3d48203081abfecfa9d62bb4914f3cd3c1fc5328d2e",
+      "size": [
+        960,
+        540
+      ],
+      "state": {},
+      "transition_event_count": 0,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "kodanda",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+          "rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "text": "LMB   Kodanda"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "piercing_dawn",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+          "rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "text": "Q   Piercing Dawn"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "measured_step",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+          "rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "text": "E   Measured Step"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "guardian_circle",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+          "rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "text": "C   Guardian Circle"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "dawn_volley",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+          "rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "text": "X   Dawn Volley"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            300.0,
+            292.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_effects",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+          "rect": [
+            300.0,
+            292.0,
+            600.0,
+            50.0
+          ],
+          "text": "Fewer decorative layers"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            300.0,
+            354.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_motion",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+          "rect": [
+            300.0,
+            354.0,
+            600.0,
+            50.0
+          ],
+          "text": "Still ornamental motion"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Back",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+          "rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "05-motion-saved.png",
+      "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+      "focus_text": "Still ornamental motion",
+      "frame": 43,
+      "independent": {
+        "ability_scroll": 0,
+        "detail_scroll": 185,
+        "effects_checked": true,
+        "effects_enabled": true,
+        "motion_checked": true,
+        "motion_enabled": true,
+        "notice": "Ability effect preferences saved. Warnings and timing stay visible.",
+        "receiver_casts": 0,
+        "receiver_effects": true,
+        "receiver_meshes": 0,
+        "receiver_motion": true,
+        "save_status": 0,
+        "saved_effects": true,
+        "saved_motion": true,
+        "selected": "kodanda"
+      },
+      "loader_count": 0,
+      "mode": "integrated",
+      "mouse_mode": 0,
+      "panels": {
+        "RamaHeroPanel": true,
+        "hero_panel": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "IndependentOptionsHost",
+      "scene_can_process": true,
+      "scene_path": "res://scenes/guide.tscn",
+      "scene_process_mode": 0,
+      "sha256": "e4e82689618275203acfe81d1365b9f950ea8dce696edc8525da28ff6697a1df",
+      "size": [
+        960,
+        540
+      ],
+      "state": {},
+      "transition_event_count": 0,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    },
+    {
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "kodanda",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/kodanda",
+          "rect": [
+            44.0,
+            167.0,
+            220.0,
+            47.0
+          ],
+          "text": "LMB   Kodanda"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "piercing_dawn",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/piercing_dawn",
+          "rect": [
+            44.0,
+            250.0,
+            220.0,
+            47.0
+          ],
+          "text": "Q   Piercing Dawn"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "measured_step",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/measured_step",
+          "rect": [
+            44.0,
+            305.0,
+            220.0,
+            47.0
+          ],
+          "text": "E   Measured Step"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "guardian_circle",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/guardian_circle",
+          "rect": [
+            44.0,
+            360.0,
+            220.0,
+            47.0
+          ],
+          "text": "C   Guardian Circle"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "interactive": true,
+          "name": "dawn_volley",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/AbilitiesScroll/@VBoxContainer@16/dawn_volley",
+          "rect": [
+            44.0,
+            415.0,
+            220.0,
+            47.0
+          ],
+          "text": "X   Dawn Volley"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            300.0,
+            477.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_effects",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_effects",
+          "rect": [
+            300.0,
+            477.0,
+            600.0,
+            50.0
+          ],
+          "text": "Fewer decorative layers"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            300.0,
+            539.0,
+            600.0,
+            50.0
+          ],
+          "interactive": true,
+          "name": "reduced_motion",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+          "rect": [
+            300.0,
+            539.0,
+            600.0,
+            50.0
+          ],
+          "text": "Still ornamental motion"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Back",
+          "path": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@30/Back",
+          "rect": [
+            776.0,
+            448.0,
+            140.0,
+            48.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "06-bow-return.png",
+      "focus": "/root/IndependentOptionsHost/RamaHeroPanel/Card/@VBoxContainer@6/@HBoxContainer@13/DetailsScroll/@VBoxContainer@19/reduced_motion",
+      "focus_text": "Still ornamental motion",
+      "frame": 52,
+      "independent": {
+        "ability_scroll": 0,
+        "detail_scroll": 0,
+        "effects_checked": true,
+        "effects_enabled": true,
+        "motion_checked": true,
+        "motion_enabled": true,
+        "notice": "Ability effect preferences saved. Warnings and timing stay visible.",
+        "receiver_casts": 0,
+        "receiver_effects": true,
+        "receiver_meshes": 0,
+        "receiver_motion": true,
+        "save_status": 0,
+        "saved_effects": true,
+        "saved_motion": true,
+        "selected": "kodanda"
+      },
+      "loader_count": 0,
+      "mode": "integrated",
+      "mouse_mode": 0,
+      "panels": {
+        "RamaHeroPanel": true,
+        "hero_panel": true
+      },
+      "paused": false,
+      "png_status": 0,
+      "scene": "IndependentOptionsHost",
+      "scene_can_process": true,
+      "scene_path": "res://scenes/guide.tscn",
+      "scene_process_mode": 0,
+      "sha256": "705d55ca0a3a17703617ec0dd1b70f80f9fb6f7cebe3b0c6767df98d8191e2c8",
+      "size": [
+        960,
+        540
+      ],
+      "state": {},
+      "transition_event_count": 0,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    }
+  ],
+  "started_unix": 1792282937.2249417,
+  "renderer_requested": "gl_compatibility",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "scheduling": {
+    "cpu_affinity": [
+      3
+    ],
+    "render_threads": 1,
+    "LP_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "shader_cache_seed": {
+    "path": null,
+    "copied_to": "/tmp/yuga-u4-independent-options-960-r3/window/user/cache/mesa",
+    "files_sha256": {},
+    "scope": "No Mesa cache seed supplied."
+  },
+  "automatic_shots": [],
+  "source_unchanged": true,
+  "shader_cache_seed_unchanged": true,
+  "finished_unix": 1792282941.719889,
+  "cleanup_exit": -15,
+  "logs": {
+    "godot.log": "ca6a6076d56c50cdb8141aa8fd840714831fbd8df31d377235fe4ba3b3147c8e",
+    "xvfb.log": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+  }
+}

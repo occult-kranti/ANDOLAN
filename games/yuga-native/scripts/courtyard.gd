@@ -392,7 +392,7 @@ func _create_ui() -> void:
 	pause_content.add_child(_button("RESET COURTYARD", func(): reset_training(); set_paused(false)))
 	pause_content.add_child(_button("RETURN TO TITLE", return_to_menu))
 	pause_content.add_child(_button("QUIT TO DESKTOP", _quit))
-	settings_panel = _modal(root, "Settings", true)
+	settings_panel = _modal(root, "Settings", true, true)
 	var settings := _modal_content(settings_panel)
 	settings.add_child(_label("YOUR PREFERENCES", 13, GOLD))
 	settings.add_child(_label("Settings", 34, CREAM))
@@ -426,8 +426,15 @@ func _create_ui() -> void:
 	settings.add_child(_check("Moonlit courtyard", night, func(value: bool): night = value; _apply_settings(); _save_settings()))
 	controls_button = _button("CUSTOMIZE KEYBOARD CONTROLS", _open_controls)
 	settings.add_child(controls_button)
-	settings_back = _button("BACK", _close_settings)
-	settings.add_child(settings_back)
+	settings_back = _button("DONE", _close_settings)
+	settings_back.name = "Done"
+	HeroUITheme.button(settings_back, true)
+	settings_panel.get_node("Card").add_child(settings_back)
+	settings_back.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	settings_back.offset_left = 16
+	settings_back.offset_right = -16
+	settings_back.offset_top = -64
+	settings_back.offset_bottom = -16
 	help_panel = _modal(root,"ControlsHelp",true)
 	var help_content := _modal_content(help_panel)
 	help_content.add_child(_label("CONTROLS & HELP",28,CREAM))
@@ -490,7 +497,7 @@ func _card() -> PanelContainer:
 	card.add_theme_stylebox_override("panel", style)
 	return card
 
-func _modal(root: Control, label: String, centered: bool) -> Control:
+func _modal(root: Control, label: String, centered: bool, fixed_footer := false) -> Control:
 	var veil := Control.new()
 	veil.name = label
 	veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -517,7 +524,12 @@ func _modal(root: Control, label: String, centered: bool) -> Control:
 		wash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		wash.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		veil.add_child(wash)
-	var panel := _card()
+	var panel: Control
+	if fixed_footer:
+		panel = Panel.new()
+		panel.add_theme_stylebox_override("panel", HeroUITheme.panel_style(false, 16))
+	else:
+		panel = _card()
 	panel.name = "Card"
 	if not centered:
 		var title_style := StyleBoxEmpty.new()
@@ -533,6 +545,12 @@ func _modal(root: Control, label: String, centered: bool) -> Control:
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.follow_focus = true
 	panel.add_child(scroll)
+	if fixed_footer:
+		scroll.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		scroll.offset_left = 16
+		scroll.offset_right = -16
+		scroll.offset_top = 16
+		scroll.offset_bottom = -76
 	var stack := VBoxContainer.new()
 	stack.name = "Content"
 	stack.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -843,6 +861,18 @@ func _layout_interface() -> void:
 		panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
 		panel.size = Vector2(minf(560, viewport.x - 48), minf(620, viewport.y - 48))
 		panel.position = (viewport - panel.size) * .5
+	call_deferred("_reveal_resized_modal_focus")
+
+func _reveal_resized_modal_focus() -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
+	await get_tree().process_frame
+	if not is_inside_tree() or is_queued_for_deletion(): return
+	var focused := get_viewport().gui_get_focus_owner()
+	if not is_instance_valid(focused): return
+	for modal in [pause_panel,settings_panel,help_panel]:
+		if not modal.is_visible_in_tree(): continue
+		var scroll: ScrollContainer = modal.get_node("Card/Scroll")
+		if scroll.is_ancestor_of(focused): scroll.ensure_control_visible(focused)
 
 func _trap_modal_focus(event: InputEvent) -> bool:
 	if not event is InputEventKey or not event.pressed or event.keycode != KEY_TAB: return false
@@ -884,12 +914,17 @@ func _open_settings(from_menu: bool) -> void:
 func _settle_settings_entry() -> void:
 	# Focus may scroll against the hidden panel's old container geometry. Wait
 	# for both layout passes, then reveal the heading without taking focus away.
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	var scroll: ScrollContainer = settings_panel.get_node("Card/Scroll")
 	var sensitivity_control: Control = scroll.get_node("Content/Sensitivity")
 	for unused in range(2):
 		await get_tree().process_frame
+		if not is_inside_tree() or is_queued_for_deletion(): return
 		if not settings_panel.visible or get_viewport().gui_get_focus_owner() != sensitivity_control: return
-	scroll.scroll_vertical = 0
+	if sensitivity_control.position.y + sensitivity_control.size.y <= scroll.size.y:
+		scroll.scroll_vertical = 0
+	else:
+		scroll.ensure_control_visible(sensitivity_control)
 
 func _close_settings() -> void:
 	settings_panel.visible = false

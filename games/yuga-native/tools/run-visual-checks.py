@@ -53,6 +53,12 @@ SCREEN_SUITES = (
     ("ui-pause-navigation", "godot", "tests/ui_pause_navigation_cases.gd", ()),
     ("ui-map-consistency", "godot", "tests/ui_theme_map_consistency_cases.gd", ()),
     ("ui-independent-modal", "godot", "tests/ui_independent_modal_cases.gd", ()),
+    ("ui-resize-navigation", "godot", "tests/ui_resize_navigation_cases.gd", ()),
+    ("ui-hud-edges", "godot", "tests/ui_hud_edge_cases.gd", ()),
+    ("ui-preference-edges", "godot", "tests/ui_preferences_edge_cases.gd", ()),
+    ("ui-independent-theme", "godot", "tests/ui_independent_theme_cases.gd", ()),
+    ("ui-independent-lifetime", "godot", "tests/ui_independent_lifecycle_cases.gd", ()),
+    ("ui-transition-signals", "fixture", "tools/ui-campaign/check-transition.py", ()),
 )
 SCREEN_LIMITS = "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance."
 
@@ -62,6 +68,8 @@ def sources(selected: list[tuple]) -> dict:
     # runner dependencies are frozen. Imported cache contents are not sources.
     paths = {Path(__file__).resolve(), HELPER_PATH, PROJECT / "project.godot",
              PROJECT / "export_presets.cfg", *(PROJECT / item[2] for item in selected)}
+    if any(item[0] == "ui-transition-signals" for item in selected):
+        paths.add(PROJECT / "tests/ui_transition_signal_cases.gd")
     for folder in ("scripts", "shaders", "scenes", "assets", "tests/fixtures/contracts"):
         paths.update(path for path in (PROJECT / folder).rglob("*") if path.is_file())
     records = {str(path.relative_to(PROJECT)): {"bytes": path.stat().st_size,
@@ -130,6 +138,9 @@ def main() -> int:
             command = [engine, "--headless", "--single-threaded-scene", "--audio-driver", "Dummy",
                        "--path", str(PROJECT), "--fixed-fps", "60", "--script", "res://" + source,
                        "--", "--report=" + str(report), *arguments]
+        elif kind == "fixture":
+            command = [python, str(PROJECT / source), "--engine", engine,
+                       "--report=" + str(report), *arguments]
         else:
             command = [python, str(PROJECT / source), "--report=" + str(report), *arguments]
         result = helper.execute_suite(suite_id, command, report, output, env=suite_env, timeout=args.timeout)

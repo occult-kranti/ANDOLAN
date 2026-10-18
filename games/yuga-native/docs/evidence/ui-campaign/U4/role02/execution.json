@@ -1,0 +1,37 @@
+{
+  "source_commit": "bc1a3dceaddc11f5c0745e73ad1f25f2ca77a0fb",
+  "commands": [
+    "env XDG_DATA_HOME=/tmp/yuga-u4-theme-independent-r3/user OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 taskset -c 2,3 timeout 60s godot --headless --path games/yuga-native --script res://tests/ui_independent_theme_cases.gd -- --report=/tmp/yuga-u4-theme-independent-r3/report.json",
+    "env XDG_DATA_HOME=/tmp/yuga-u4-theme-regression-r1/user OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 taskset -c 2,3 timeout 60s godot --headless --path games/yuga-native --script res://tests/ui_theme_cases.gd -- --report=/tmp/yuga-u4-theme-regression-r1/report.json",
+    "env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 LP_NUM_THREADS=1 taskset -c 3 python3 games/yuga-native/tests/ui_independent_theme_capture.py --output /tmp/yuga-u4-theme-pixels-after-r2 --display 186"
+  ],
+  "cwd": "/workspace/ANDOLAN",
+  "exit_codes": [
+    0,
+    0,
+    0
+  ],
+  "headless_independent": {
+    "passed": 8,
+    "count": 8
+  },
+  "headless_regression": {
+    "passed": 88,
+    "count": 88
+  },
+  "native_x11": {
+    "passed": 10,
+    "count": 10,
+    "events": 50,
+    "originals": 12
+  },
+  "theme_before": "562a6658f7a64acb11ba183904ef8e62814d913825f98f678e4a9c3eef2b883c",
+  "theme_after": "b1d630e9087f939ba6a68a5bbfac6f126064d417393786380c324317ac5d39a6",
+  "zero_glb_fixture": true,
+  "sources": {
+    "scripts/hero_ui_theme.gd": "b1d630e9087f939ba6a68a5bbfac6f126064d417393786380c324317ac5d39a6",
+    "tests/ui_independent_theme_cases.gd": "62a208c86e2ea97aec6a64b605ef057e779617d4815f267657e98679e7ab6790",
+    "tests/ui_independent_theme_board.gd": "42a12afa5c044265863e718ac98180878f181da68cc9360e0e1d5129250fce6a",
+    "tests/ui_independent_theme_capture.py": "0decfe4ffe59da352dcd3ccdb800e6ac31b805b49b5a23f996064bd3f4efe2e8"
+  }
+}

@@ -1,0 +1,98 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "Fixture uses configured real kit, vitals and visible HUD",
+			"passed": true
+		},
+		{
+			"details": {
+				"accepted": true,
+				"cast_id": 1,
+				"generation": 2,
+				"reason": "Guardian Circle · drawing",
+				"recovery_s": 0.3,
+				"windup_s": 0.55
+			},
+			"name": "Actual Guardian cast accepted around its real hero receiver",
+			"passed": true
+		},
+		{
+			"details": {
+				"authority_s": 4.99999999999999,
+				"expiry_s": 5.05,
+				"life_text": "300 / 300 +55",
+				"note": "Guardian Circle · field active",
+				"shield": 55.0
+			},
+			"name": "Final live authority tick displays real shield and field status",
+			"passed": true
+		},
+		{
+			"details": {
+				"authority_s": 5.04999999999999,
+				"notice": "Rama is ready",
+				"shield": 0.0
+			},
+			"name": "Exact authority expiry removes the ward before presentation retirement",
+			"passed": true
+		},
+		{
+			"details": {
+				"life_text": "300 / 300",
+				"note": "Rama is ready",
+				"render_delta": 0.0166666666666667
+			},
+			"name": "First 16.7 ms render after expiry removes visible shield and active note",
+			"passed": true
+		},
+		{
+			"details": {
+				"life": 275.0,
+				"life_text": "275 / 300",
+				"note": "Hit · 275 health"
+			},
+			"name": "First render after real damage updates health bar and number",
+			"passed": true
+		},
+		{
+			"details": {
+				"life": 0.0,
+				"life_text": "0 / 300",
+				"note": "RETURNING IN 3.0s"
+			},
+			"name": "First render after defeat displays the live return timer",
+			"passed": true
+		},
+		{
+			"details": {
+				"life": 300.0,
+				"life_text": "300 / 300",
+				"note": "Rama is ready"
+			},
+			"name": "First render after real reset clears stale defeat and shield data",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "HUD authority sources remain unchanged during the fixture",
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Real native-world kit/vitals authority steps followed by normal HUD _process(1/60). No forced refresh at expiry, renderer, OS input or performance claim.",
+	"sources": {
+		"res://assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+		"res://scripts/confluence_world.gd": "7f041a62d888353664f2a00e60c7fd082eb95e0718fc2ff267389df419ed0502",
+		"res://scripts/lane_army.gd": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+		"res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+		"res://scripts/rama_hero_hud.gd": "4531ec0cb22f6aaa5ef1466f2a98b88967b077df6af1039f90450dd3ab24b760",
+		"res://scripts/rama_hero_runtime.gd": "7ff170bbb9f5b5e20dabd84a3116e38982deb1decfa200666aeed1f37c15627a",
+		"res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+		"res://tests/rama_hud_expiry_cases.gd": "18d40bfbba13784ab25dfbbf0aba884d64d6c5a36089c1d60d55122ed873058c"
+	}
+}

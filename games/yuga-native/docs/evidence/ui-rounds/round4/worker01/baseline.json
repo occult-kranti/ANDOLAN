@@ -1,0 +1,148 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "minimum": "(64, 64)"
+      },
+      "name": "native menu establishes usable window minimum",
+      "passed": false
+    },
+    {
+      "detail": {
+        "actual_window": "(64, 64)",
+        "logical_canvas": "(1280.0, 720.0)"
+      },
+      "name": "engine rejects an unusable 64x64 window request",
+      "passed": false
+    },
+    {
+      "detail": {
+        "focused": "[P: (349.0, 519.0), S: (141.0, 48.0)]",
+        "scroll": "[P: (52.0, 42.0), S: (438.0, 636.0)]",
+        "viewport": "[P: (0.0, 0.0), S: (1280.0, 720.0)]"
+      },
+      "name": "live title resize retains and reveals focus (960, 540) x1.0",
+      "passed": true
+    },
+    {
+      "detail": {
+        "focused": "[P: (265.0, 438.0), S: (111.0, 48.0)]",
+        "scroll": "[P: (28.0, 24.0), S: (364.0, 312.0)]",
+        "viewport": "[P: (0.0, 0.0), S: (640.0, 360.0)]"
+      },
+      "name": "live title resize retains and reveals focus (960, 540) x2.0",
+      "passed": false
+    },
+    {
+      "detail": {
+        "focused": "[P: (276.0, 438.0), S: (116.0, 48.0)]",
+        "scroll": "[P: (28.0, 24.0), S: (364.0, 528.0)]",
+        "viewport": "[P: (0.0, 0.0), S: (1024.0, 576.0)]"
+      },
+      "name": "live title resize retains and reveals focus (1280, 720) x1.25",
+      "passed": true
+    },
+    {
+      "detail": {
+        "focused": "[P: (349.0, 519.0), S: (141.0, 48.0)]",
+        "scroll": "[P: (52.0, 42.0), S: (438.0, 636.0)]",
+        "viewport": "[P: (0.0, 0.0), S: (1280.0, 720.0)]"
+      },
+      "name": "live title resize retains and reveals focus (960, 540) x1.0",
+      "passed": true
+    },
+    {
+      "detail": {
+        "body": "[P: (376.0, 66.0), S: (528.0, 588.0)]",
+        "done": "[P: (376.0, 651.0), S: (512.0, 48.0)]"
+      },
+      "name": "settings Done stays outside scrolling body at scale1.0 scroll0",
+      "passed": false
+    },
+    {
+      "detail": {
+        "body": "[P: (376.0, 66.0), S: (528.0, 588.0)]",
+        "done": "[P: (376.0, 606.0), S: (512.0, 48.0)]"
+      },
+      "name": "settings Done stays outside scrolling body at scale1.0 scroll100000",
+      "passed": false
+    },
+    {
+      "detail": {
+        "body": "[P: (248.0, 40.0), S: (528.0, 496.0)]",
+        "done": "[P: (248.0, 625.0), S: (512.0, 48.0)]"
+      },
+      "name": "settings Done stays outside scrolling body at scale1.25 scroll0",
+      "passed": false
+    },
+    {
+      "detail": {
+        "body": "[P: (248.0, 40.0), S: (528.0, 496.0)]",
+        "done": "[P: (248.0, 488.0), S: (512.0, 48.0)]"
+      },
+      "name": "settings Done stays outside scrolling body at scale1.25 scroll100000",
+      "passed": false
+    },
+    {
+      "detail": {
+        "body": "[P: (56.0, 40.0), S: (528.0, 280.0)]",
+        "done": "[P: (56.0, 625.0), S: (512.0, 48.0)]"
+      },
+      "name": "settings Done stays outside scrolling body at scale2.0 scroll0",
+      "passed": false
+    },
+    {
+      "detail": {
+        "body": "[P: (56.0, 40.0), S: (528.0, 280.0)]",
+        "done": "[P: (56.0, 272.0), S: (512.0, 48.0)]"
+      },
+      "name": "settings Done stays outside scrolling body at scale2.0 scroll100000",
+      "passed": false
+    },
+    {
+      "detail": {
+
+      },
+      "name": "scaled settings keyboard change still persists real preference",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "scaled settings Done is reachable through actual Tab chain",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "scaled Done returns exact title opener with practice stopped",
+      "passed": true
+    },
+    {
+      "detail": {
+
+      },
+      "name": "live courtyard pause resize reveals retained lower action",
+      "passed": false
+    },
+    {
+      "detail": {
+
+      },
+      "name": "live world pause resize reveals retained lower action and holds clock",
+      "passed": false
+    }
+  ],
+  "count": 17,
+  "passed": false,
+  "scope": "Actual Window size/content_scale_factor mutations with retained1280x720 base, native keyboard dispatch, real persisted preference in isolated test user data. Headless engine boundary; no OS-window-manager/DPI or rasterized acceptance.",
+  "sources": {
+    "res://scripts/confluence_world.gd": "7f041a62d888353664f2a00e60c7fd082eb95e0718fc2ff267389df419ed0502",
+    "res://scripts/courtyard.gd": "9cd53e74c9978c09a8018da9ee1272940e5fc71f0e5ef8c495c4e872484bf959",
+    "res://scripts/hero_ui_theme.gd": "562a6658f7a64acb11ba183904ef8e62814d913825f98f678e4a9c3eef2b883c",
+    "res://scripts/launch_shell.gd": "fe91529269661435ef3b4490bb974a3d0fbfea99af971061f7f68962342e9e21",
+    "res://tests/ui_resize_navigation_cases.gd": "b7143c2685357efed10c06f6d63e4522910fb60436ee54aa601bd613e448ce9b"
+  }
+}

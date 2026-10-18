@@ -41,6 +41,7 @@ func _ready() -> void:
 	note = UI.label("Practice unavailable", HUD_TEXT_SIZE)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	note.clip_text = true
+	note.max_lines_visible = 1
 	note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	status_column.add_child(note)
 	var health_row := HBoxContainer.new()

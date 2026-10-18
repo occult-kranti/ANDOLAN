@@ -75,6 +75,7 @@ var energy_bar: ProgressBar
 var ability_label: Label
 var score_label: Label
 var objective_label: Label
+var lane_label: Label
 var outcome_summary: VBoxContainer
 var goal_label: Label
 var help_labels: Array[Label] = []
@@ -654,10 +655,19 @@ func _build_ui() -> void:
 	status_label=_label("OFFLINE LANE PRACTICE",11,HeroUI.MIST)
 	copy.add_child(status_label)
 	score_label=_label("Lane status unavailable",12,HeroUI.CREAM)
+	score_label.clip_text=true
+	score_label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	copy.add_child(score_label)
+	lane_label=_label("",12,HeroUI.MIST)
+	lane_label.name="LanePopulation"
+	lane_label.clip_text=true
+	lane_label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+	copy.add_child(lane_label)
 	objective_label=_label("",12,HeroUI.CREAM)
 	objective_label.name="LaneObjective"
 	objective_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	objective_label.max_lines_visible=2
+	objective_label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	copy.add_child(objective_label)
 	map_control=Atlas.new()
 	map_control.name="WorldAtlas"
@@ -688,10 +698,15 @@ func _build_ui() -> void:
 	for index in 3:
 		var label:=_label("",12,CREAM)
 		label.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		label.clip_text=true
+		label.max_lines_visible=2
+		label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 		relay_row.add_child(label)
 		relay_labels.append(label)
 	relay_hint=_label("Hold a relay: supplies every 5s · Contest stops supply",11,HeroUI.MIST)
 	relay_hint.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	relay_hint.max_lines_visible=3
+	relay_hint.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	relay_column.add_child(relay_hint)
 	var help:=_card(hud,Vector2(20,-214),Vector2(238,72))
 	help.name="ControlsCard"
@@ -890,7 +905,7 @@ func _wire_pause_focus() -> void:
 		control.focus_previous=control.get_path_to(pause_actions[posmod(index-1,pause_actions.size())])
 
 func _layout_world_hud() -> void:
-	if not hud or not rama_hud: return
+	if not is_inside_tree() or not is_instance_valid(hud) or not is_instance_valid(rama_hud): return
 	var screen := get_viewport().get_visible_rect().size
 	var compact := screen.x < 1100
 	var margin := float(HeroUI.SPACE_LG)
@@ -924,11 +939,14 @@ func _layout_world_hud() -> void:
 
 func _layout_pause_panel() -> void:
 	if not pause_panel: return
+	var before := pause_panel.get_global_rect()
 	var screen:=get_viewport().get_visible_rect().size
 	var size_:=Vector2(minf(480,screen.x-32),minf(600,screen.y-32))
 	pause_panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	pause_panel.size=size_
 	pause_panel.position=(screen-pause_panel.size)/2
+	if not before.is_equal_approx(pause_panel.get_global_rect()):
+		call_deferred("_reveal_pause_focus")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo: return
@@ -1007,8 +1025,8 @@ func _update_relay_hud() -> void:
 		var state:="Contested" if site.contested else (String(site.owner).capitalize() if secured else "%d%%" % roundi(absf(site.progress)/rules.CAPTURE_REQUIRED*100))
 		if not site.contested and absf(site.progress)>.001 and not secured:
 			state="%s %d%%" % ["▲" if site.capture_team=="sun" else "■",roundi(absf(site.progress)/rules.CAPTURE_REQUIRED*100)]
-		if site.owner=="neutral" and absf(site.progress)<.001: state="Open"
-		label.text="%s · %s" % [short_name,state]
+		if not site.contested and site.owner=="neutral" and absf(site.progress)<.001: state="Open"
+		label.text="%s\n%s" % [short_name,state]
 		label.modulate=Color.WHITE
 		label.add_theme_color_override("font_color",HeroUI.GOLD if site.owner=="sun" else (HeroUI.MIST if site.owner=="moon" else HeroUI.CREAM))
 		var distance: float=Vector2(player.position.x-site.position.x,player.position.z-site.position.z).length()
@@ -1037,6 +1055,7 @@ func _update_practice_hud() -> void:
 		outcome_summary.present(battle)
 		var cores: Dictionary=battle.get("cores",{})
 		siege_drill=battle.get("siege_drill",false)
+		lane_label.visible=not siege_drill and String(battle.get("winner","")).is_empty()
 		if army.has_method("minimap_units"): map_control.units=army.minimap_units()
 		for unit in map_control.units:
 			if unit.get("team","")=="moon" and unit.get("role","") in ["cannon_cart","royal_chariot"]: enemy_siege+=1
@@ -1061,7 +1080,8 @@ func _update_practice_hud() -> void:
 			var troops: Array = battle.get("alive_by_lane",[])
 			var lane_id: int = nearest_lane.get("id",-1)
 			var lane_status := "%s · %d troops" % [nearest_lane.name,troops[lane_id]] if lane_id>=0 and lane_id<troops.size() else "Three lanes"
-			objective_label.text="%s · Wave %d\nEscort Sun troops to the Moon core." % [lane_status,battle.get("waves",0)]
+			lane_label.text="%s · Wave %d" % [lane_status,battle.get("waves",0)]
+			objective_label.text="Escort Sun troops to the Moon core."
 		if practice_mode_label: practice_mode_label.text="OFFLINE SIEGE DRILL" if siege_drill else "OFFLINE LANE PRACTICE"
 		if siege_practice_button: siege_practice_button.text="Siege practice · restart drill" if siege_drill else "Siege practice · enter drill"
 		if practice_hint_label:
@@ -1186,7 +1206,9 @@ func _restore_pause_focus(previous_ref: WeakRef) -> void:
 func _reveal_pause_focus() -> void:
 	# Focus can predate the visible container's final sort, or already belong to
 	# an offscreen button. Reveal after layout without stealing a newer focus.
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	await get_tree().process_frame
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	if not paused or not pause_panel.visible: return
 	if controls_overlay and controls_overlay.visible: return
 	if invocation_panel and invocation_panel.visible: return
@@ -1371,6 +1393,8 @@ func _settle_world_hud() -> void:
 	# Word wrapping is shaped after the first container sort. Reapply preferred
 	# sizes after that minimum shrinks; this also covers the startup resolution.
 	for pass_index in 2:
-		await get_tree().process_frame
-		if not is_instance_valid(hud): return
+		if not is_inside_tree(): return
+		var tree := get_tree()
+		await tree.process_frame
+		if not is_inside_tree() or get_tree() != tree or not is_instance_valid(hud): return
 		_layout_world_hud()
