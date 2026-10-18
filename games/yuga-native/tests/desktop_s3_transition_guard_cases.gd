@@ -3,6 +3,11 @@ extends "res://tests/graphics_g2_support_cases.gd"
 const WITNESS := "res://docs/evidence/desktop-finish/S3/W5/guard-witness.json"
 var witness:Dictionary
 
+class GuardDisabled:
+	extends "res://scripts/rama_motion.gd"
+	func _protect_transition_floor() -> void:
+		pass
+
 func unpack(values:Array) -> Transform3D:
 	return Transform3D(Basis(Quaternion(values[3],values[4],values[5],values[6])),Vector3(values[0],values[1],values[2]))
 
@@ -90,20 +95,51 @@ func one_asset(asset:String) -> void:
 		check(asset.get_file()+" "+scenario,passed,detail)
 	body.free()
 
+func same_stream(a:Array,b:Array) -> bool:
+	if a.size()!=b.size():return false
+	for index in a.size():
+		if a[index].keys()!=b[index].keys():return false
+		for key in a[index]:
+			if key=="poses":
+				if not unchanged(a[index][key],b[index][key]):return false
+			elif a[index][key]!=b[index][key]:return false
+	return true
+
+func stream_hash(value:Variant) -> String:
+	var context:=HashingContext.new();context.start(HashingContext.HASH_SHA256)
+	context.update(var_to_bytes(value));return context.finish().hex_encode()
+
 func never_grounded() -> void:
-	var streams:=[]
-	for path in [baseline_path,candidate_path]:
+	var streams:=[];var nonleg_streams:=[];var premise:=true
+	for variant in 3:
 		var body:=CharacterBody3D.new();root.add_child(body);body.position.y=.05
 		var model:Node3D=load("res://assets/heroes/rama-hero.glb").instantiate();body.add_child(model)
-		var m=load(path).new();assert(m.configure(model,find_kind(model,"AnimationPlayer")));m.active=false
-		var frames:=[]
-		# First submitted state and every later state are airborne: no grounded warmup.
+		var m=GuardDisabled.new() if variant==2 else load(baseline_path if variant==0 else candidate_path).new()
+		assert(m.configure(model,find_kind(model,"AnimationPlayer")));m.active=false
+		var frames:=[];var historical:=[]
+		# No grounded warmup: current-vs-current isolates only this guard.
+		# Historical whole fall poses intentionally differ after authored descent.
 		for unused in 18:
-			m.update_motion(1.0/60,{"grounded":false,"floor_y":0.0,"velocity":Vector3(0,-1,0),"traversal":"ground"});m.evaluate_pose();frames.append(capture(m))
-		streams.append(frames);body.free()
-	var same:=true
-	for index in streams[0].size():same=same and unchanged(streams[0][index],streams[1][index])
-	check("never-grounded actual imported actor remains baseline-equal for18 updates",same)
+			m.update_motion(1.0/60,{"grounded":false,"floor_y":0.0,"velocity":Vector3(0,-1,0),"traversal":"ground"});m.evaluate_pose()
+			var poses:=capture(m);var upper:Array[Transform3D]=[]
+			for index in poses.size():
+				var name_:String=m.rig.get_bone_name(index)
+				if not (name_.begins_with("upperleg") or name_.begins_with("lowerleg") or name_.begins_with("foot") or name_.begins_with("toe")):upper.append(poses[index])
+			var state:={"poses":poses,"root":body.transform,"clocks":[m.phase,m.locomotion_age,m.action_elapsed,m.transition_age,m.transition_duration,m.release_count,m.cancel_count,m.pending_delta],"anchors":m.foot_targets.duplicate(),"locks":m.foot_locks.duplicate(),"grounded":m.grounded,"locomotion":m.locomotion}
+			var old_comparable:Dictionary=state.duplicate(true);old_comparable.poses=upper;historical.append(old_comparable)
+			if variant>0:
+				state["support"]={"seen":m.measured_support_seen,"y":m.descent_support_y.duplicate(true),"xz":m.descent_support_xz.duplicate(true),"transform":m.descent_support_transform,"owner":m.descent_support_owner.duplicate(true),"owner_transform":m.descent_support_owner_transform.duplicate(true),"shape":m.descent_support_shape.duplicate(true)}
+				premise=premise and not m.grounded and not m.measured_support_seen and m.descent_support_y.is_empty() and not m.foot_locks.L and not m.foot_locks.R
+			frames.append(state)
+		streams.append(frames);nonleg_streams.append(historical);body.free()
+	var same:=same_stream(streams[1],streams[2])
+	var old_upper_same:=same_stream(nonleg_streams[0],nonleg_streams[1])
+	var pose_negative:Array=streams[2].duplicate(true)
+	var changed:Transform3D=pose_negative[9].poses[4];changed.origin.y+=.001;pose_negative[9].poses[4]=changed
+	var clock_negative:Array=streams[2].duplicate(true);clock_negative[9].clocks[0]+=1.0/60
+	check("never-grounded current guard preserves all164 bones root clocks anchors and support for18 updates",premise and same,{"premise":premise,"frames":18,"current_sha256":stream_hash(streams[1]),"guard_disabled_sha256":stream_hash(streams[2]),"pose_tolerance":"existing Transform3D.is_equal_approx; all other fields exact"})
+	check("never-grounded historical nonleg root clocks and anchors remain unchanged",old_upper_same,{"nonleg_bones":nonleg_streams[0][0].poses.size(),"old_sha256":stream_hash(nonleg_streams[0]),"current_sha256":stream_hash(nonleg_streams[1]),"scope":"Historical whole-leg fall pose equality is intentionally superseded; all54 direct guard cases and their thresholds remain unchanged."})
+	check("never-grounded comparator rejects lowerleg correction and clock mutation",same and not same_stream(streams[1],pose_negative) and not same_stream(streams[1],clock_negative),{"lowerleg_correction_m":.001,"clock_mutation_s":1.0/60,"scope":"Only copied control records mutated; runtime poses and clocks remain untouched."})
 
 func run() -> void:
 	baseline_path="res://docs/evidence/desktop-finish/S3/W5/baseline/rama_motion.gd"
@@ -115,7 +151,7 @@ func run() -> void:
 	var stable:=true
 	for path in source_pins:stable=stable and FileAccess.get_sha256(path)==source_pins[path]
 	check("guard fixture and exact imported inputs remain stable",stable)
-	var result:={"passed":checks.all(func(row):return row.passed),"count":checks.size(),"checks":checks,"source_sha256":source_pins,"trials":trials,"scope":"Actual imported near/mid/far skin on the retained native failure pose; direct guard boundary injection isolates eligibility and write ownership. Never-grounded case uses full update/evaluate from first submission. No native input/render/temporal acceptance."}
+	var result:={"passed":checks.all(func(row):return row.passed),"count":checks.size(),"checks":checks,"source_sha256":source_pins,"trials":trials,"scope":"Actual imported near/mid/far skin on the retained native failure pose; direct guard boundary injection isolates eligibility and write ownership. Never-grounded case uses full update/evaluate from first submission against same-current motion with only the guard disabled, plus historical nonleg/authority comparison and copied-record negatives. No native input/render/temporal acceptance."}
 	FileAccess.open(report_path,FileAccess.WRITE).store_string(JSON.stringify(result)+"\n")
 	for unused in 4:await process_frame
 	quit(0 if result.passed else 1)
