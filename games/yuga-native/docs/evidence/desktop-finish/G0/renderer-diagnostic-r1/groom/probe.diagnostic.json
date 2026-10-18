@@ -1,0 +1,50 @@
+{
+  "complete": false,
+  "project": "/tmp/yuga-graphics-six-project",
+  "output": "/tmp/yuga-g0-groom-probe-r1",
+  "driver_sha256": "b399888c442fd3aaf9e279fabea8fd5ebb0ba8539e8ebb3cf84de30e9dbfe02a",
+  "snapshot_sha256": "5d94a7b64b2387f9f8899e82b6a499fb28a93a3ac0a4ace921496af5b589a8ca",
+  "legacy_runner_sha256": "e63e72c5f7ad3be5336486135d97a6d82af9d121d636c0099dd65129df3c2f1a",
+  "helper_sha256": "8d36d76839a873f7e5d1baf175170a5b179dca074c94ea7594a9f279f2c8c855",
+  "watchdog_helper_sha256": "dc2ea827978d56ec88f161dd45d0e38a0c68f88c06ff666134302c135f70d896",
+  "case": "unchanged prior G1 groom-probe on G2 runtime",
+  "overrides": [
+    "verbose logging",
+    "remove unsupported max-threads flag",
+    "300s overall and120s no-progress watchdog"
+  ],
+  "command": [
+    "/usr/local/bin/godot",
+    "--verbose",
+    "--path",
+    "/tmp/yuga-graphics-six-project",
+    "--display-driver",
+    "x11",
+    "--rendering-method",
+    "forward_plus",
+    "--audio-driver",
+    "Dummy",
+    "--disable-vsync",
+    "--fixed-fps",
+    "30",
+    "--script",
+    "res://tools/visual-rounds/capture_groom.gd",
+    "--",
+    "--output=/tmp/yuga-g0-groom-probe-r1",
+    "--mode=groom-probe",
+    "--context=courtyard"
+  ],
+  "engine_pid": 215210,
+  "native_ready_elapsed_s": 8.273740417003864,
+  "watchdog_failure": "No new engine log bytes or PNG count after native-ready (120s)",
+  "engine_exit": -15,
+  "engine_elapsed_s": 128.8173109710042,
+  "observed_png_count": 0,
+  "final_log_bytes": 78527,
+  "failure": "TimeoutError('No new engine log bytes or PNG count after native-ready (120s)')",
+  "snapshot_unchanged": true,
+  "logs": {
+    "/tmp/yuga-g0-groom-probe-r1.godot.log": "934588ebba99585e8abe74e9e95bafe87ebb0ab7462d9964e33e0b46848d9918",
+    "/tmp/yuga-g0-groom-probe-r1.xvfb.log": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+  }
+}

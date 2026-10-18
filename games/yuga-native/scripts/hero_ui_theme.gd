@@ -33,6 +33,11 @@ const TYPE_ACTION := 18
 const TYPE_HUD := 16
 const TYPE_HUD_DETAIL := TYPE_CAPTION
 const TYPE_HUD_TITLE := 18
+# Launcher composition has its own scale; shared HUD/modal type stays unchanged.
+const TYPE_LAUNCH_WORDMARK := 72
+const TYPE_LAUNCH_WORDMARK_COMPACT := 54
+const TYPE_LAUNCH_PRACTICE := 32
+const TYPE_LAUNCH_PRACTICE_COMPACT := 26
 const TARGET_MIN := 44
 const FOCUS_WIDTH := 2
 const CORNER := 3

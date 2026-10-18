@@ -66,7 +66,7 @@ func _run() -> void:
 	# This fixture checks visual/control state, not listening or audio teardown.
 	# Prevent many fast synthetic button activations from queuing menu sounds.
 	scene.sounds.clear()
-	var explore: Button = scene._modal_content(scene.main_panel).get_node("ExploreConfluence")
+	var explore: Button = scene.main_panel.primary_button
 	var settings: Button = _button_with_text(scene.main_panel, "Settings")
 	var help: Button = _button_with_text(scene.main_panel, "Help")
 	_record("Initial title focus is the primary world action", root.gui_get_focus_owner() == explore)

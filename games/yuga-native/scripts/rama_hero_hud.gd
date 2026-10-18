@@ -20,6 +20,7 @@ var slot_glyphs: Array[TextureRect] = []
 var _slot_states: Array[StringName] = []
 var clock := 0.0
 var _last_availability: StringName = &""
+var _last_action_signature: Array = []
 func _ready() -> void:
 	name = "RamaHeroHUD"
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -111,20 +112,24 @@ func _process(delta: float) -> void:
 	# Authority can expire a ward or change life between slot-format updates.
 	# Critical status must describe that state on the very next rendered frame.
 	var availability := _availability()
-	_refresh_vitals(availability)
+	var feedback := _action_feedback(availability)
+	_refresh_vitals(availability, feedback)
 	clock += delta
-	if clock >= SLOT_REFRESH_SECONDS or availability != _last_availability:
+	if clock >= SLOT_REFRESH_SECONDS or feedback.signature != _last_action_signature:
 		clock = 0
-		_refresh_slots(availability)
+		_refresh_slots(availability, feedback)
 	_last_availability = availability
+	_last_action_signature = feedback.signature
 func _refresh() -> void:
 	var availability := _availability()
-	_refresh_vitals(availability)
-	_refresh_slots(availability)
+	var feedback := _action_feedback(availability)
+	_refresh_vitals(availability, feedback)
+	_refresh_slots(availability, feedback)
 	_last_availability = availability
+	_last_action_signature = feedback.signature
 func _availability() -> StringName:
 	if not is_inside_tree(): return &"unavailable"
-	if not is_instance_valid(runtime) or not runtime.configured: return &"unavailable"
+	if not is_instance_valid(runtime) or not runtime.is_inside_tree() or runtime.is_queued_for_deletion() or not runtime.configured: return &"unavailable"
 	for node in [runtime.vitals, runtime.kit, runtime.player, runtime.army]:
 		if not is_instance_valid(node): return &"unavailable"
 	if not String(runtime.army.winner).is_empty(): return &"ended"
@@ -132,7 +137,35 @@ func _availability() -> StringName:
 	if runtime.suspended or get_tree().paused: return &"paused"
 	if not runtime.player.active: return &"inactive"
 	return &"active"
-func _refresh_vitals(availability: StringName = &"") -> void:
+
+func _action_feedback(availability: StringName) -> Dictionary:
+	var state: Dictionary = runtime.kit.report() if availability != &"unavailable" else {}
+	var active_id := ""
+	var phase := ""
+	var queued_id := ""
+	var locked: bool = availability == &"active" and state.get("action_locked", false)
+	if locked:
+		for cast in state.get("casts", []):
+			if int(cast.cast_id) == int(state.active_cast_id):
+				active_id = String(cast.ability_id)
+				phase = "RECOVERING" if cast.released else "DRAWING"
+				break
+		if is_instance_valid(runtime.action_buffer):
+			var pending: Dictionary = runtime.action_buffer.report().get("pending", {})
+			if not pending.is_empty() and int(pending.generation) == int(state.generation) and int(pending.cast_id) == int(state.active_cast_id) and float(pending.expires_at) + 1e-8 >= float(state.elapsed):
+				queued_id = String(pending.ability_id)
+	var signature: Array = [availability, state.get("generation", -1), state.get("active_cast_id", 0), phase, queued_id]
+	if availability != &"unavailable":
+		signature.append(runtime.player.ammo)
+		signature.append(runtime.player.reload_remaining > 0)
+	for id in IDS: signature.append(float(state.get("cooldowns", {}).get(id, 0)) > .05)
+	return {"state":state,"locked":locked,"active_id":active_id,"phase":phase,"queued_id":queued_id,"signature":signature}
+
+func _ability_title(id: String) -> String:
+	var index := IDS.find(id)
+	return "Kodanda" if index == 0 else (String(Bindings.TITLES[ACTIONS[index]]) if index > 0 else id)
+
+func _refresh_vitals(availability: StringName = &"", feedback: Dictionary = {}) -> void:
 	if not life: return
 	if availability.is_empty(): availability = _availability()
 	if availability == &"unavailable":
@@ -150,19 +183,29 @@ func _refresh_vitals(availability: StringName = &"") -> void:
 			note.text = "Round ended · " + ("Draw" if winner == "draw" else winner.capitalize() + " victory")
 		&"returning": note.text = "RETURNING IN %.1fs" % vitality.respawn_remaining
 		&"paused": note.text = "Practice paused"
-		_: note.text = runtime.notice
-func _refresh_slots(availability: StringName = &"") -> void:
+		_:
+			if feedback.is_empty(): feedback = _action_feedback(availability)
+			if not String(feedback.phase).is_empty():
+				note.text = _ability_title(feedback.active_id) + " · " + String(feedback.phase)
+				if not String(feedback.queued_id).is_empty(): note.text += " · " + _ability_title(feedback.queued_id) + " QUEUED"
+			else: note.text = runtime.notice
+func _refresh_slots(availability: StringName = &"", feedback: Dictionary = {}) -> void:
 	if not life: return
 	if availability.is_empty(): availability = _availability()
-	var state: Dictionary = runtime.kit.report() if availability != &"unavailable" else {}
+	if feedback.is_empty(): feedback = _action_feedback(availability)
+	var state: Dictionary = feedback.state
 	for i in IDS.size():
 		var cooldown := float(state.get("cooldowns", {}).get(IDS[i], 0))
 		var status := "%.1fs" % cooldown if cooldown > .05 else "READY"
 		if availability != &"active": status = "—"
 		elif IDS[i] == "kodanda": status = "%d / %d" % [runtime.player.ammo, runtime.player.MAGAZINE] if runtime.player.reload_remaining <= 0 else "RELOADING"
+		if availability == &"active" and feedback.locked:
+			if IDS[i] == feedback.queued_id: status = "QUEUED"
+			elif IDS[i] != feedback.active_id and cooldown <= .05:
+				status = "BUSY %d/%d" % [runtime.player.ammo, runtime.player.MAGAZINE] if i == 0 and runtime.player.reload_remaining <= 0 else "BUSY"
 		var title := "Kodanda" if i == 0 else String(Bindings.TITLES[ACTIONS[i]])
 		slots[i].text = "%s  ·  %s\n%s%s" % [Bindings.label(ACTIONS[i]), status, _glyph_indent(slots[i]), title]
-		var waiting: bool = cooldown > .05 or (i == 0 and availability == &"active" and runtime.player.reload_remaining > 0)
+		var waiting: bool = cooldown > .05 or feedback.locked or (i == 0 and availability == &"active" and runtime.player.reload_remaining > 0)
 		slots[i].add_theme_color_override("font_color", UI.MUTED if availability != &"active" else (UI.MIST if waiting else UI.CREAM))
 		var visual_state: StringName = &"unavailable" if availability != &"active" else (&"cooling" if waiting else &"ready")
 		slot_glyphs[i].present(IDS[i], visual_state)

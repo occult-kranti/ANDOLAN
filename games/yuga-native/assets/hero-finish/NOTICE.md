@@ -30,3 +30,24 @@ Rebuild the guide file with `python3 art/hero-finish/build_g2_hair_layers.py` fr
 the native project directory. This offline source-fitting step requires NumPy
 and the repository's existing `glb_lod.py` reader; it does not import or re-export
 a model. Actual model/art acceptance requires the matched off/on captures.
+
+## Desktop S1 gold response candidate
+
+`s1-hammered-gold-roughness.png` is an original periodic scalar field authored
+by [`art/hero-finish/build_s1_gold.py`](../../art/hero-finish/build_s1_gold.py).
+It develops the original G1 forging formula with a higher roughness floor and
+lower-amplitude tool marks. No source image, commercial game data, model or
+third-party texture is used. The existing G1 files remain separate and exact.
+`s1-manifest.json` pins this generator and the deterministic PNG output.
+
+The 512×512 lossless grayscale PNG uses linear RED, scalar multiplier1.0,
+matching wrap edges and a full mip chain. It changes only the roughness map of
+`Worked warm gold`; modeled ornament, original normal/albedo, metallic response,
+geometry, rig and secondary masks remain authored by their existing owners.
+This map changes surface response; it does not add modeled hammered relief.
+
+Rebuild with `python3 art/hero-finish/build_s1_gold.py` from the native project.
+Use `--verify-only --report <fresh-report.json>` to check exact reconstruction,
+bounded values, edge continuity and a CPU filtering model. Pillow is an offline
+authoring dependency. Actual imported-map checks and matched gold highlights
+remain separate review gates in `docs/evidence/desktop-finish/S1/W3.md`.

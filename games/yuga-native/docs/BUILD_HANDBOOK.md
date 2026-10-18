@@ -1,5 +1,7 @@
 # YUGA native build handbook
 
+**Resume current desktop work:** [ACTIVE_DESKTOP_HANDOFF.md](ACTIVE_DESKTOP_HANDOFF.md) gives the live source, owners, renderer gate and next command. [DESKTOP_FINISH_CAMPAIGN.md](DESKTOP_FINISH_CAMPAIGN.md) is the active five-screen/ten-integration queue. Mobile is deferred by the user; older campaigns below retain historical evidence and commands.
+
 For the proposed mobile version, use [MOBILE_PRODUCTION_ROADMAP.md](MOBILE_PRODUCTION_ROADMAP.md) and its [code migration map](mobile/CODE_AND_STACK_DECISIONS.md). The existing commands below prepare the desktop/native workflow. Android/iOS exports, physical-device performance and operated 5v5 services require the separate mobile gates; an existing mobile renderer override is not a qualified mobile build.
 
 Read this in 5–10 minutes before changing the native game. Start with the repository [START_HERE](../../../docs/START_HERE.md), use this handbook for execution, and read the [research brief](research/RESEARCH_BRIEF.md) only when the task needs design/source context. Do not load every historical report to begin a small change.
@@ -12,7 +14,7 @@ For the completed five screen rounds and three integration rounds, begin with [S
 
 Current source work is the [Rama hero milestone](RAMA_HERO_MILESTONE.md): a new smooth-skinned `rama-hero.glb`, editable Blender source, one full-body motion controller, five fixed combat actions, real health/respawn, and shared training/world screens. Start with that document and its [acceptance record](RAMA_HERO_ACCEPTANCE.md). `rama_hero_runtime.gd` is the integration entry; `rama_ability_kit.gd` owns the 20 Hz combat timing. This is still an offline native milestone; production art, hardware performance and online matches remain separate gates.
 
-The active follow-up is the [fifteen-role quality pass](RAMA_QUALITY_MILESTONE.md).
+An earlier follow-up is the [fifteen-role quality pass](RAMA_QUALITY_MILESTONE.md).
 Use its file map, [squad ownership](PRODUCTION_SQUADS.md) and
 [quality gates](DEADLOCK_QUALITY_TARGET.md) before editing hero art, materials,
 secondary/facial motion, LOD, action buffering or action audio. Source-bound
@@ -39,7 +41,7 @@ The runner stages an isolated material project because `art/.gdignore` excludes
 authoring textures from normal product imports. Preserve that boundary. Actual
 render comparisons use the separate commands in `art/open-art-wave/render/README.md`.
 
-The current visual implementation is the [ten-round campaign](VISUAL_CAMPAIGN.md).
+The earlier visual implementation is the [ten-round campaign](VISUAL_CAMPAIGN.md).
 Start with its [current handoff](VISUAL_CAMPAIGN_HANDOFF.md), then the
 [execution ledger](VISUAL_CAMPAIGN.json). Fifteen initial specialist assignments
 have returned work; this is not 150 completed assignments. Raw R1/R2/R3 captures

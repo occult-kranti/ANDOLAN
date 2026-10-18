@@ -11,12 +11,12 @@
   "target_status": "open",
   "prior_g1_g2": "G1 bounded render review; G2 candidate/render closure pending. New packets are not prior campaign counts.",
   "prior_pending_g3_g6": "Incorporated as pending goals into X1-X10; not claimed completed.",
-  "active_gate": "G0",
+  "active_gate": "S1-implementation-with-render-acceptance-pending",
   "rounds": [
     {
       "id": "S1",
       "title": "Initial screen",
-      "status": "planned",
+      "status": "in_progress",
       "depends_on": [
         "G0-checkpoint-and-render-gate"
       ],
@@ -25,73 +25,90 @@
           "id": "S1-W1",
           "role": "renderer_acceptance",
           "agent": "ui_06_acceptance",
-          "status": "planned",
+          "status": "in_progress",
           "goal": "Recover first draw and review title originals",
           "report": "evidence/desktop-finish/S1/W1.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ]
         },
         {
           "id": "S1-W2",
           "role": "screen_design",
           "agent": "mobile_touch",
-          "status": "planned",
+          "status": "implemented_pending_visual_integration",
           "goal": "Recompose launcher hierarchy and shared button roles",
           "report": "evidence/desktop-finish/S1/W2.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "904cffd4a8c02b02ceada6e46ae0295066eddfb46f33469b3cbfc57e57ee9d5d"
         },
         {
           "id": "S1-W3",
           "role": "hero_art",
           "agent": "r3_08_groom",
-          "status": "planned",
+          "status": "implemented_pending_visual_integration",
           "goal": "Soften gold glare with original material candidate",
           "report": "evidence/desktop-finish/S1/W3.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "4e4f847d36ee318cc80dbc2d0ec5ba08f513e8a139888260150ba11c42cf66a1"
         },
         {
           "id": "S1-W4",
           "role": "world_atlas_units",
           "agent": "mobile_render",
-          "status": "planned",
+          "status": "implemented_pending_visual_integration",
           "goal": "Clarify title/world values and atlas deck/marker hierarchy",
           "report": "evidence/desktop-finish/S1/W4.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "6a3ffdf531a8a3525013f9be9baaa023402909962f243fea561c95c9de0a42fc"
         },
         {
           "id": "S1-W5",
           "role": "motion_hud",
           "agent": "r4_05_motion",
-          "status": "planned",
+          "status": "implemented_pending_visual_integration",
           "goal": "Correct full-body release handoff and lock-state HUD feedback",
           "report": "evidence/desktop-finish/S1/W5.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "7cf466b63e4e0a7f3e2655eb30b24e00c1517ae677149967b15e927d7e3db302"
         },
         {
           "id": "S1-W6",
           "role": "loading_package",
           "agent": "ui_03_loading",
-          "status": "planned",
+          "status": "implemented_pending_visual_integration",
           "goal": "Harden real boot entry and package/provenance integration",
           "report": "evidence/desktop-finish/S1/W6.md",
           "source_sha256": {},
           "checks": [],
           "actual_review": [],
-          "remaining": []
+          "remaining": [
+            "Actual frozen-source visual/integration acceptance pending"
+          ],
+          "report_sha256": "e87c9f48dfe5b019b0629e2e92d539828d503dd758e57b687f5861513deba47f"
         }
       ]
     },
@@ -1243,5 +1260,14 @@
         }
       ]
     }
-  ]
+  ],
+  "checkpoint_source": "613ff5ca84313edfbcc2a70987919fa03bed5226",
+  "g0": {
+    "status": "source_and_package_preserved_render_cause_isolating",
+    "source_remote_verified": "613ff5ca84313edfbcc2a70987919fa03bed5226",
+    "cleanup_receipt": "../../../docs/evidence/desktop-finish-storage-cleanup.json",
+    "package_checks_passed": 504,
+    "renderer": "Derivative-free wash with full bindings rendered two originals, 6 checks including actual camera identity; exact explicit derivative trigger narrowed. Feature-preserving production shader candidate pending."
+  },
+  "implemented_packets_pending_review": 5
 }

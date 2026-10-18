@@ -8,7 +8,7 @@ const SUFFIX := " · Rama finish v2"
 const ROOT := "res://assets/materials/rama-finish/"
 const DETAIL_ROOT := "res://assets/hero-finish/"
 const MAP_PATHS := {
-	"skin":ROOT+"skin-roughness.png", "gold":DETAIL_ROOT+"forged-gold-roughness.png",
+	"skin":ROOT+"skin-roughness.png", "gold":DETAIL_ROOT+"s1-hammered-gold-roughness.png",
 	"ivory":ROOT+"ivory-roughness.png", "hair":DETAIL_ROOT+"hair-bundle-roughness.png",
 	"woven":ROOT+"woven-roughness.png",
 }

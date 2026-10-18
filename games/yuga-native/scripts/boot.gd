@@ -35,12 +35,17 @@ func open_game() -> bool:
 	return true
 
 func _on_failed(_destination: StringName, message: String) -> void:
+	if not is_inside_tree(): return
 	_last_error = message
 
 func _on_cancelled(_destination: StringName) -> void:
+	# The persistent loader can cancel after its live caller leaves the tree.
+	# A hidden/disabled boot screen must not take focus from the replacement host.
+	if not is_inside_tree(): return
 	status.text = "Loading stopped. Open YUGA when you are ready." if _last_error.is_empty() else "YUGA could not open. Retry, or quit and open the game again."
 	open_button.text = "Retry opening YUGA" if not _last_error.is_empty() else "Open YUGA"
-	open_button.grab_focus()
+	if is_visible_in_tree() and can_process() and not open_button.disabled:
+		open_button.grab_focus()
 
 func quit_game() -> void:
 	if is_instance_valid(scene_transition) and scene_transition.is_busy():

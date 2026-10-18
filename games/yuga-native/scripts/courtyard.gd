@@ -252,12 +252,14 @@ func _create_title_camera() -> void:
 	# Show the actual gameplay actor in its environment, including its idle clip.
 	title_camera = Camera3D.new()
 	title_camera.name = "RamaTitleCamera"
-	title_camera.fov = 34
+	# Portrait fills roughly two thirds of the supported title height; leave
+	# the bow, feet and idle extremities visible beside the practice column.
+	title_camera.fov = 27
 	title_camera.near = .1
 	title_camera.far = 100
 	world.add_child(title_camera)
 	title_camera.global_position = player.global_position + Vector3(3.4, 1.7, -5.2)
-	title_camera.look_at(player.global_position + Vector3(1.65, 1.15, .6), Vector3.UP)
+	title_camera.look_at(player.global_position + Vector3(1.25, 1.15, .6), Vector3.UP)
 	title_camera.make_current()
 	title_light = OmniLight3D.new()
 	title_light.name = "HeroPortraitFill"

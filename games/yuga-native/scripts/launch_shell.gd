@@ -34,6 +34,8 @@ var _subtitle: Label
 var _status_message := ""
 var _actions: Array[Button] = []
 var _compact := false
+var _identity_gap: Control
+var _footer_gap: Control
 
 func _ready() -> void:
 	# The native window must keep menu controls usable at the supported base size.
@@ -57,8 +59,8 @@ func _build() -> void:
 	texture.fill_from = Vector2.ZERO
 	texture.fill_to = Vector2.RIGHT
 	texture.gradient = Gradient.new()
-	texture.gradient.offsets = PackedFloat32Array([0, .32, .47, .66, 1])
-	texture.gradient.colors = PackedColorArray([Color(HeroUITheme.DEEP,.98), Color(HeroUITheme.DEEP,.95), Color(HeroUITheme.DEEP,.65), Color(HeroUITheme.DEEP,0), Color(HeroUITheme.DEEP,0)])
+	texture.gradient.offsets = PackedFloat32Array([0, .32, .45, .64, 1])
+	texture.gradient.colors = PackedColorArray([Color(HeroUITheme.DEEP,.98), Color(HeroUITheme.DEEP,.95), Color(HeroUITheme.DEEP,.62), Color(HeroUITheme.DEEP,0), Color(HeroUITheme.DEEP,0)])
 	wash.texture = texture
 	wash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	wash.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -75,30 +77,38 @@ func _build() -> void:
 	content = VBoxContainer.new()
 	content.name = "Content"
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content.add_theme_constant_override("separation", 10)
+	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.add_theme_constant_override("separation", 0)
 	scroll.add_child(content)
 	var identity := VBoxContainer.new()
 	identity.name = "Identity"
 	identity.add_theme_constant_override("separation", 0)
 	content.add_child(identity)
-	title_wordmark = HeroUITheme.label("YUGA", HeroUITheme.TYPE_DISPLAY)
+	title_wordmark = HeroUITheme.label("YUGA", HeroUITheme.TYPE_LAUNCH_WORDMARK)
 	title_wordmark.name = "Wordmark"
 	title_wordmark.add_theme_font_override("font", HeroUITheme.display_font())
 	identity.add_child(title_wordmark)
 	_subtitle = HeroUITheme.label("RAMA  /  THE SOLAR ARCHER", HeroUITheme.TYPE_CAPTION, HeroUITheme.GOLD)
 	identity.add_child(_subtitle)
-	content.add_child(HSeparator.new())
+	_identity_gap = Control.new()
+	_identity_gap.name = "IdentityBreathingRoom"
+	_identity_gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(_identity_gap)
+	var decision := VBoxContainer.new()
+	decision.name = "PracticeDecision"
+	decision.add_theme_constant_override("separation", HeroUITheme.SPACE_MD)
+	content.add_child(decision)
 	var choices := VBoxContainer.new()
 	choices.name = "ModeChoice"
 	choices.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
-	content.add_child(choices)
-	choices.add_child(HeroUITheme.label("CHOOSE YOUR PRACTICE", HeroUITheme.TYPE_CAPTION, HeroUITheme.MIST))
+	decision.add_child(choices)
+	choices.add_child(HeroUITheme.label("CHOOSE A PRACTICE", HeroUITheme.TYPE_CAPTION, HeroUITheme.MIST))
 	var modes := HBoxContainer.new()
 	modes.name = "PracticeModes"
 	modes.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
 	choices.add_child(modes)
-	world_mode_button = _button("Confluence", "ConfluenceMode", func(): set_mode(MODE_WORLD))
-	train_mode_button = _button("Bow training", "TrainingMode", func(): set_mode(MODE_TRAIN))
+	world_mode_button = _button("Confluence", "ConfluenceMode", func(): set_mode(MODE_WORLD), &"selected" if selected_mode == MODE_WORLD else &"secondary")
+	train_mode_button = _button("Bow training", "TrainingMode", func(): set_mode(MODE_TRAIN), &"selected" if selected_mode == MODE_TRAIN else &"secondary")
 	for mode_button in [world_mode_button, train_mode_button]:
 		mode_button.toggle_mode = true
 		mode_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -106,50 +116,60 @@ func _build() -> void:
 	var description := VBoxContainer.new()
 	description.name = "ModeDescription"
 	description.add_theme_constant_override("separation", 6)
-	content.add_child(description)
-	mode_title = HeroUITheme.label("", 30)
+	decision.add_child(description)
+	mode_title = HeroUITheme.label("", HeroUITheme.TYPE_LAUNCH_PRACTICE)
 	mode_title.name = "ModeTitle"
+	mode_title.add_theme_font_override("font", HeroUITheme.display_font())
 	description.add_child(mode_title)
 	mode_description = HeroUITheme.label("", HeroUITheme.TYPE_BODY, HeroUITheme.MIST)
 	mode_description.name = "ModeDescriptionText"
 	mode_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	description.add_child(mode_description)
 	# Stable automation ID retained for the selected-mode primary action.
-	primary_button = _button("", "ExploreConfluence", _launch)
-	HeroUITheme.button(primary_button, true)
-	primary_button.custom_minimum_size.y = 54
-	content.add_child(primary_button)
+	primary_button = _button("", "ExploreConfluence", _launch, &"primary")
+	primary_button.custom_minimum_size.y = 56
+	decision.add_child(primary_button)
+	_footer_gap = Control.new()
+	_footer_gap.name = "FooterBreathingRoom"
+	_footer_gap.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_footer_gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(_footer_gap)
+	var footer := VBoxContainer.new()
+	footer.name = "LaunchFooter"
+	footer.add_theme_constant_override("separation", HeroUITheme.SPACE_XS)
+	content.add_child(footer)
 	var secondary := HBoxContainer.new()
 	secondary.name = "LearnAndWatch"
 	secondary.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
-	content.add_child(secondary)
-	guide_button = _button("Rama’s abilities", "RamaAbilities", func(): _emit_utility("guide"))
-	film_button = _button("Watch duel", "WatchConfluenceDuel", func(): _emit_utility("film"))
+	footer.add_child(secondary)
+	guide_button = _button("Rama’s abilities", "RamaAbilities", func(): _emit_utility("guide"), &"utility")
+	film_button = _button("Watch duel", "WatchConfluenceDuel", func(): _emit_utility("film"), &"utility")
 	for secondary_button in [guide_button, film_button]:
 		secondary_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		HeroUITheme.button(secondary_button, false, true)
 		secondary.add_child(secondary_button)
-	content.add_child(HSeparator.new())
+	footer.add_child(HSeparator.new())
 	var utilities := HBoxContainer.new()
 	utilities.name = "TitleUtilities"
 	utilities.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
-	content.add_child(utilities)
+	footer.add_child(utilities)
 	for entry in [{"text":"Help", "action":"help"}, {"text":"Settings", "action":"settings"}, {"text":"Quit", "action":"quit"}]:
-		var utility := _button(entry.text, entry.text, _emit_utility.bind(entry.action))
+		var utility := _button(entry.text, entry.text, _emit_utility.bind(entry.action), &"utility")
 		utility.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		HeroUITheme.button(utility, false, true)
 		utilities.add_child(utility)
 	menu_hint = HeroUITheme.label("Offline practice  ·  F2 help  ·  F3 abilities", HeroUITheme.TYPE_CAPTION, HeroUITheme.MIST)
 	menu_hint.name = "LaunchStatus"
 	menu_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	content.add_child(menu_hint)
+	footer.add_child(menu_hint)
 	_connect_focus_order()
 
-func _button(text: String, node_name: String, callback: Callable) -> Button:
+func _button(text: String, node_name: String, callback: Callable, role: StringName = &"secondary") -> Button:
 	var result := Button.new()
 	result.name = node_name
 	result.text = text
-	HeroUITheme.button(result)
+	HeroUITheme.button_variant(result, role)
+	# Flat launcher navigation keeps its native hover/focus/disabled behavior.
+	# Other screens retain the shared opaque utility surfaces.
+	result.flat = role == &"utility"
 	result.pressed.connect(callback)
 	_actions.append(result)
 	return result
@@ -168,9 +188,10 @@ func _layout() -> void:
 	# Reflow the column rather than scaling text; shorter windows can scroll.
 	card.position = Vector2(inset, 24 if _compact else 42)
 	card.size = Vector2(minf(column_width, size.x - inset * 2), maxf(100, size.y - card.position.y * 2))
-	title_wordmark.add_theme_font_size_override("font_size", 44 if _compact else HeroUITheme.TYPE_DISPLAY)
-	mode_title.add_theme_font_size_override("font_size", 24 if _compact else 30)
-	content.add_theme_constant_override("separation", HeroUITheme.SPACE_SM if _compact else HeroUITheme.SPACE_MD)
+	title_wordmark.add_theme_font_size_override("font_size", HeroUITheme.TYPE_LAUNCH_WORDMARK_COMPACT if _compact else HeroUITheme.TYPE_LAUNCH_WORDMARK)
+	mode_title.add_theme_font_size_override("font_size", HeroUITheme.TYPE_LAUNCH_PRACTICE_COMPACT if _compact else HeroUITheme.TYPE_LAUNCH_PRACTICE)
+	_identity_gap.custom_minimum_size.y = HeroUITheme.SPACE_MD if _compact else HeroUITheme.SPACE_LG
+	_footer_gap.custom_minimum_size.y = HeroUITheme.SPACE_MD if _compact else HeroUITheme.SPACE_LG
 	queue_redraw()
 	call_deferred("_reveal_resized_focus")
 
@@ -206,7 +227,7 @@ func _refresh() -> void:
 	for item in [world_mode_button, train_mode_button]:
 		_style_mode(item, item.button_pressed)
 	mode_title.text = "Confluence" if world_selected else "Bow training"
-	mode_description.text = "Explore three lanes, join local army battles, and capture relays as Rama." if world_selected else "Practice Rama’s bow and four abilities against courtyard targets. Reset and practice at your own pace."
+	mode_description.text = "Join local army battles across three lanes and capture relays as Rama." if world_selected else "Practice Rama’s bow and four abilities against courtyard targets. Reset whenever you want."
 	primary_button.text = ("Enter Confluence  →" if world_selected else "Begin bow training  →")
 	var loading := launch_state == "loading"
 	for action in _actions: action.disabled = loading
@@ -216,7 +237,9 @@ func _refresh() -> void:
 	menu_hint.add_theme_color_override("font_color", HeroUITheme.GOLD if launch_state == "error" else HeroUITheme.MIST)
 
 func _style_mode(button: Button, selected: bool) -> void:
-	HeroUITheme.button_variant(button, &"selected" if selected else &"secondary")
+	var role: StringName = &"selected" if selected else &"secondary"
+	if button.theme_type_variation != HeroUITheme.BUTTON_TYPES[role]:
+		HeroUITheme.button_variant(button, role)
 	button.tooltip_text = "Selected practice: " + button.text if selected else "Choose " + button.text
 
 func _launch() -> void:

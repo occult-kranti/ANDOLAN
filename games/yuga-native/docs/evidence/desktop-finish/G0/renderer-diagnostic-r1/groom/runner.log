@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/tmp/yuga-g0-source-research-r1/groom_probe_driver.py", line 22, in <module>
+    legacy.main();record['complete']=True
+    ^^^^^^^^^^^^^
+  File "/tmp/yuga-graphics-six-project/tools/visual-rounds/run.py", line 73, in main
+    result = subprocess.run(command, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=1200)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/yuga-g0-source-research-r1/groom_probe_driver.py", line 16, in bounded
+    code=focus.run_engine(command,kwargs['env'],kwargs['stdout'],output.with_suffix('.godot.log'),output,300,120,record)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/yuga-graphics-six-project/tools/graphics-six/run_focus.py", line 55, in run_engine
+    raise TimeoutError(reason)
+TimeoutError: No new engine log bytes or PNG count after native-ready (120s)

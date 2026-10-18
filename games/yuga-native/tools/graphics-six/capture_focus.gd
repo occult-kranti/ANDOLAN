@@ -56,6 +56,9 @@ func run() -> void:
 		focus_checkpoint("after_title_anchor")
 		if done:return
 		scene.start_training();scene.ui.hide()
+		# start_training selects the gameplay camera. Restore the declared review
+		# camera before waiting for any frame used by this fixture.
+		follow_camera();review_camera.make_current()
 		focus_checkpoint("before_training_draw12")
 		await draw(12)
 		focus_checkpoint("after_training_draw12")
@@ -64,6 +67,7 @@ func run() -> void:
 		motion_frame("01-training-support")
 	else:
 		scene.start_training();scene.ui.hide();scene.title_light.hide()
+		follow_camera();review_camera.make_current()
 		# Explicit review-only aim setup before the uninterrupted take. Runtime
 		# still owns model yaw, authority, casts, contact and every pose update.
 		player.pitch=-.45;player.yaw=.6;player._update_camera()
@@ -99,6 +103,7 @@ func focus_checkpoint(stage: String) -> void:
 
 func verify_tape() -> void:
 	capture_checks=[{"name":"all requested original observations","passed":shots.size()==expected},
+		{"name":"actual viewport camera matches declared review camera","passed":shots.all(func(s):return s.get("actual_camera_identity",{}).get("matches_requested",false))},
 		{"name":"imported fullbody bounds all sampled","passed":shots.all(func(s):return s.bounds.get("passed",false))},
 		{"name":"final pose body and soles share physics frame","passed":shots.all(func(s):return s.final_modifier_body.physics_frame==s.sole_contacts.physics_frame)},
 		{"name":"actual support rays hit","passed":shots.all(func(s):return s.final_modifier_body.ground_ray.hit and s.sole_contacts.sides.has("L") and s.sole_contacts.sides.has("R") and s.sole_contacts.sides.L.ground_ray.hit and s.sole_contacts.sides.R.ground_ray.hit)}]
@@ -116,8 +121,11 @@ func verify_tape() -> void:
 		capture_checks.append({"name":"presentation settles after release","passed":shots[-1].action.stage=="none" and not shots[-1].action.nocked})
 
 func motion_frame(id: String) -> void:
+	if root.get_camera_3d()!=review_camera:
+		finish("Active viewport camera differs from declared review camera: "+id);return
 	super.motion_frame(id)
 	if not done and not shots.is_empty():
+		shots[-1]["actual_camera_identity"]={"matches_requested":true,"path":str(review_camera.get_path()),"scope":"Active viewport Camera3D checked at capture; review camera selected before awaited frames."}
 		shots[-1]["scope"]="Graphics-six "+focus_case+"; source-bound final modifier observation, declared review camera and actual runtime control paths."
 
 func body_state() -> Dictionary:

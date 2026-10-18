@@ -297,7 +297,16 @@ func _restore_caller() -> void:
 	var caller: Node = _caller.get_ref() if _caller != null else null
 	if is_instance_valid(caller): caller.process_mode = _caller_process_mode
 	var focus: Control = _return_focus.get_ref() if _return_focus != null else null
-	if is_instance_valid(focus) and focus.is_inside_tree() and focus.is_visible_in_tree(): focus.grab_focus()
+	# A paused caller can legitimately retain focus. Reject explicitly disabled
+	# processing owners without treating the restored SceneTree pause as disposal.
+	var process_owner: Node = focus
+	while is_instance_valid(process_owner) and process_owner.process_mode == Node.PROCESS_MODE_INHERIT:
+		process_owner = process_owner.get_parent()
+	var disabled_owner := is_instance_valid(process_owner) and process_owner.process_mode == Node.PROCESS_MODE_DISABLED
+	if (is_instance_valid(focus) and focus.is_inside_tree() and focus.is_visible_in_tree()
+			and not disabled_owner and focus.focus_mode != Control.FOCUS_NONE
+			and (not focus is BaseButton or not focus.disabled)):
+		focus.grab_focus()
 	_caller = null
 	_return_focus = null
 

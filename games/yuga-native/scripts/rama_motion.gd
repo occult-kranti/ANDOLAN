@@ -289,6 +289,11 @@ func request_action(ability_id: String, duration := .18, recovery_seconds := .22
 
 func release_action(ability_id: String) -> bool:
 	if not configured or ability_id!=action or action_stage not in ["windup","hold"]: return false
+	# Full-body recovery already blends its first100ms. Start that blend at
+	# the outgoing pose, not the stale snapshot from before this windup.
+	if bool(ACTIONS[action][2]):
+		action_from_positions=blend_positions.duplicate()
+		action_from_rotations=blend_rotations.duplicate()
 	action_stage="recovery"
 	action_elapsed=0
 	action_blend=1

@@ -296,13 +296,13 @@ RAMA_SURFACE_PARENT_SHA = '5026675c7af8b83412eb375b9883ffe52efd883e20c7fd9594bdf
 RAMA_SURFACE_OLD_BINDING = 'art/hero-finish/history/schema4-surface-finish.gd'
 RAMA_SURFACE_DEPENDENCIES = {
     'scripts/rama_surface_finish.gd':
-        '67c1168ccc9dd2cd957197f361b28e6920dff7b9567b5801fc069ae60c92cb9a',
+        '473a33c30d6cc2df093c28be28b52c8ef4554c7b903817e08d1aa29342941c24',
     'art/hero-finish/build_g1_maps.py':
         '7082d83da791f1af16e61c082c40a0809321a57cfd024ec39ba34116ecfe0fbe',
     'assets/hero-finish/g1-manifest.json':
         '6e91c36db8fb785d5d8899adf3ad0d6d528b8d05189638269955121afec88134',
     'assets/hero-finish/NOTICE.md':
-        '88ca7f172ae063f41514a4612db74a9b218bcdf64803239dc07e7e5688f2d127',
+        'a58d301b021ac224dfc4af12e3d981f0cdb98da01e83871d8883757935851bd2',
     'assets/hero-finish/hair-bundle-roughness.png':
         '93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4',
     'assets/hero-finish/hair-bundle-roughness.png.import':
@@ -311,6 +311,14 @@ RAMA_SURFACE_DEPENDENCIES = {
         'd2a3314a54bf1fe46bc8bfb9b9adbf3dadce42298221163b4b3c2865c5c36155',
     'assets/hero-finish/forged-gold-roughness.png.import':
         'fdb67effe9126ebac95782e31475af5e6bfb66381ece0aea5fc79a7d86553ed4',
+    'art/hero-finish/build_s1_gold.py':
+        'bae80fea52e6ad865abd430eea91dad2f78b0ec25fefedbc41bdf51ff3c457fd',
+    'assets/hero-finish/s1-manifest.json':
+        '34eb6de2ebf56cd5ab2f8ff7b3f68e928cb651e86c3efe8657df023e78386808',
+    'assets/hero-finish/s1-hammered-gold-roughness.png':
+        'f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d',
+    'assets/hero-finish/s1-hammered-gold-roughness.png.import':
+        'cdfb8349abbf66ef4672b1a32f7edf8220e4cac2044050941a92a850c2abf197',
 }
 
 
@@ -848,12 +856,15 @@ GRAPHICS_SCRIPT_RESOURCES = (
     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
 )
 GRAPHICS_DIRECT_RESOURCES = ('assets/environment-finish/masonry.gdshader',
-                             'assets/hero-finish/g1-manifest.json')
+                             'assets/hero-finish/g1-manifest.json',
+                             'assets/hero-finish/s1-manifest.json')
 GRAPHICS_TEXTURE_RESOURCES = {
     'assets/hero-finish/hair-bundle-roughness.png':
         '.godot/imported/hair-bundle-roughness.png-72ae2ebe2b8005e106f441ea2c4cfa15.ctex',
     'assets/hero-finish/forged-gold-roughness.png':
         '.godot/imported/forged-gold-roughness.png-80aebbe05d54ced6709fe5d72aaa378a.ctex',
+    'assets/hero-finish/s1-hammered-gold-roughness.png':
+        '.godot/imported/s1-hammered-gold-roughness.png-c93c92f35fe086748d0140298caef508.ctex',
 }
 # The optional upper-hair helper is not activated by this package contract.
 

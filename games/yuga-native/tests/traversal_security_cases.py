@@ -44,12 +44,15 @@ GRAPHICS_NAMES = [
     'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
     'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
     'assets/environment-finish/masonry.gdshader', 'assets/hero-finish/g1-manifest.json',
+    'assets/hero-finish/s1-manifest.json',
 ]
 GRAPHICS_TEXTURE_FIXTURES = {
     'assets/hero-finish/hair-bundle-roughness.png':
         '.godot/imported/hair-bundle-roughness.png-72ae2ebe2b8005e106f441ea2c4cfa15.ctex',
     'assets/hero-finish/forged-gold-roughness.png':
         '.godot/imported/forged-gold-roughness.png-80aebbe05d54ced6709fe5d72aaa378a.ctex',
+    'assets/hero-finish/s1-hammered-gold-roughness.png':
+        '.godot/imported/s1-hammered-gold-roughness.png-c93c92f35fe086748d0140298caef508.ctex',
 }
 NAMES = [
     *GRAPHICS_NAMES,

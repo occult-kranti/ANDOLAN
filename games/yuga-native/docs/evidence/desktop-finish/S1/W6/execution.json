@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "task": "S1-W6 boot/loading and package candidate integration",
+  "passed": true,
+  "passed_count": 334,
+  "source_checkpoint": "613ff5ca84313edfbcc2a70987919fa03bed5226",
+  "source_sha256": {
+    "scripts/boot.gd": "c14fa334fd9555973cc3b3603df3cb606cf130adf4d8905f463e135df06e655b",
+    "scripts/scene_transition.gd": "81e2ef601dbc6888ac79ee3f866d8c8f436a3126464915cddd4aeebb6b68de07",
+    "tests/ui_s1_loading_cases.gd": "a1cf1b742923f22e31d64aac397769f3bbbc26411fd557d03a8a702a50775375",
+    "tests/ui_s1_loading_fixture.py": "256e0e65c303e2b7049b137bcb7d1d33d26caaac1a11ada9d6806b800e5a5b16",
+    "tools/package-native.py": "e19d1ec7cfd2ff5f170bf1947a3bc6cddf0484c66998c76be3b5457c9691d556",
+    "tests/traversal_security_cases.py": "e0e547118fb4ca6950c8ce35681b0cb55cb1bac8b8d52d1c32fccc240d21e74a"
+  },
+  "active_notice_sha256": "418ecef43fb45a9bd1004ce9fd154a21317bbdae44d0c48c20166ff5d21b2668",
+  "historical_pins": {
+    "art/hero-finish/history/schema4-notice.json": "5026675c7af8b83412eb375b9883ffe52efd883e20c7fd9594bdf3fdd9c8f5d8",
+    "art/hero-finish/history/schema4-surface-finish.gd": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1"
+  },
+  "final_checks": [
+    {
+      "name": "loading",
+      "report": "yuga-s1-loading-fixed-r3.json",
+      "passed_count": 29,
+      "exit_code": 0
+    },
+    {
+      "name": "seeded paused/caller stress",
+      "report": "yuga-s1-loading-stress-r2.json",
+      "passed_count": 35,
+      "exit_code": 0
+    },
+    {
+      "name": "existing boot fixture",
+      "report": "yuga-s1-loading-legacy-r2.json",
+      "passed_count": 29,
+      "exit_code": 0
+    },
+    {
+      "name": "graphics package",
+      "report": "yuga-s1-graphics-package-r1.json",
+      "passed_count": 133,
+      "exit_code": 0
+    },
+    {
+      "name": "PCK security",
+      "report": "yuga-s1-pck-security-r1.json",
+      "passed_count": 108,
+      "exit_code": 0
+    }
+  ],
+  "commands": [
+    "taskset -c 3 python3 tests/ui_s1_loading_fixture.py --report /tmp/yuga-s1-loading-fixed-r3.json",
+    "taskset -c 3 python3 tests/ui_s1_loading_fixture.py --case stress --report /tmp/yuga-s1-loading-stress-r2.json",
+    "taskset -c 3 python3 tests/ui_s1_loading_fixture.py --case legacy --report /tmp/yuga-s1-loading-legacy-r2.json",
+    "taskset -c 3 python3 tests/ui_s1_loading_fixture.py --source-boot /tmp/yuga-s1-boot-detach-probe/scripts/boot.gd --source-transition /tmp/yuga-s1-boot-detach-probe/scripts/scene_transition.gd --report /tmp/yuga-s1-loading-baseline-r2.json",
+    "python3 tests/graphics_package_cases.py --report /tmp/yuga-s1-graphics-package-r1.json",
+    "python3 tests/traversal_security_cases.py --report /tmp/yuga-s1-pck-security-r1.json"
+  ],
+  "negative_control": {
+    "report": "yuga-s1-loading-baseline-r2.json",
+    "passed": false,
+    "passed_count": 20,
+    "count": 29,
+    "expected_exit_code": 1,
+    "meaning": "Same final test, exact historical boot and transition source; nine relevant lifecycle assertions fail, and detached grab_focus logs errors."
+  },
+  "retained_failures": [
+    {
+      "reports": [
+        "yuga-s1-loading-baseline-r1.json",
+        "yuga-s1-loading-fixed-r1.json"
+      ],
+      "disposition": "Fixture initially sampled already-disabled caller mode; corrected expectation to documented boot ALWAYS mode. Real disabled-owner/opener failures remained."
+    },
+    {
+      "report": "yuga-s1-loading-stress-r1.json",
+      "disposition": "Broad can_process restoration guard rejected six legitimate paused-caller cases. Narrowed to effective PROCESS_MODE_DISABLED ownership; final stress35/35 passes."
+    }
+  ],
+  "limits": [
+    "No 3D render, editor import, export or hardware startup timing by W6.",
+    "W3 performed separately recorded gold-map authoring/import. This source closure establishes candidate identity only; matched gold visual review remains W1.",
+    "G0 historical287-case suite was not repeated because its history/validator logic did not change; new candidate dependency and PCK cases were rerun."
+  ],
+  "evidence_sha256": {
+    "yuga-s1-loading-stress-r2.json": "36f4b9c54e8b6bcba784551d395f3118bfe40aea73b1e8aa9b3da308fb37c092",
+    "yuga-s1-loading-stress-r1.log": "261389a72668f5d8b5aba72cc3a9f31c7811edec726dcbaf98989d7bc15787e1",
+    "yuga-s1-graphics-package-r1.json": "9ddc52579f1a833937d39b68b5f8b03f94ab28ce5a7bdbe2ec642dc137a22315",
+    "yuga-s1-loading-baseline-r1.log": "ae31798e51e99e929087186c3a8d02acf362a654f266293af714868d9fb7edcf",
+    "yuga-s1-loading-legacy-r2.log": "489aa987ac441e0df090e6556a913ed81016b30c8b19d2e15e6462dd7011ad9a",
+    "yuga-s1-loading-baseline-r2.json": "3d04ba06af2b8cc4d448833c88f4123262839ba0ba774f962c3f2569a29082b1",
+    "yuga-s1-loading-fixed-r3.log": "1b728d89c976cebf69141de3ab2e80f1c27199633a4ddc7fbd76a04afdedcf70",
+    "yuga-s1-pck-security-r1.json": "53324a4b1a09a7a947fa050a45546973f91dca4f3e62597a934770c0c44ae5ed",
+    "yuga-s1-loading-stress-r2.log": "77e725c1466e8c59bffb1b4bfe3e888cbe0e9c51a943a0cb2b7e2aec4e84ab7a",
+    "yuga-s1-loading-legacy-r1.json": "f7bc79660528e507be266e25986eeaf7be6cf9b171a98524d1725b4acdb2acc8",
+    "yuga-s1-loading-fixed-r3.json": "7d7f089bd5f4e6177e93c1759c3b5aad1a87782cdf56dd398369153801ea596e",
+    "yuga-s1-loading-fixed-r1.json": "2468fccb94e94e751de92ba9c5e03b241fb8811cfe45aaaf253f9c53b8b413e1",
+    "yuga-s1-loading-legacy-r2.json": "336fa099e84b7f338912f9ed7c5f4610a379ea6ca99cd7a6acfa726a6a411ce7",
+    "yuga-s1-loading-fixed-r2.log": "1b728d89c976cebf69141de3ab2e80f1c27199633a4ddc7fbd76a04afdedcf70",
+    "yuga-s1-loading-fixed-r2.json": "579e941dc53112747820916e638eb882789dee09ff306d7bab284dd46ce5de40",
+    "yuga-s1-loading-baseline-r1.json": "9f3aa43627bf4d9b793e2a1bcd01f50a909ceddf4a1358956b8b80d2b59fa853",
+    "yuga-s1-loading-baseline-r2.log": "72791de3a9797f443839d155b99882390840236b3d8687f6cde925c0c99ec40f",
+    "surface-stage-proposal.json": "90dfbebbe63743a9e1a743715e90e93752ffd5ed8fbf4306486f9fea5002cbf7",
+    "yuga-s1-loading-fixed-r1.log": "fa3dfb16f7bccc816a8fbd6a77a9c83d8b176306ea292acc9d92a3893597d6a4",
+    "yuga-s1-loading-legacy-r1.log": "489aa987ac441e0df090e6556a913ed81016b30c8b19d2e15e6462dd7011ad9a",
+    "yuga-s1-loading-stress-r1.json": "4c5c441d5eeb6a8182bd461009c69b6abbf6f041bc40e8697a492197b1fd19fe",
+    "initial-probe/probe.gd": "d0535ee16a91afb5d1c3f4aadf3d9a1df7147698963bd91f8b38b3ac813a2b5f",
+    "initial-probe/execution.json": "7f2833696c164398da3cb70bcaee742decec589e2b0839a7a2bb9599d5b9c404",
+    "initial-probe/godot.log": "0c096a9b515243fa5c9d8b9a77e133791767cbbe36443a2308cf35a88df6fe94",
+    "initial-probe/scripts/scene_transition.gd": "8ecaa8ae6359b2a5a89f1acbdd1d544058570a3effe656698b97a9adab7ec5e0",
+    "initial-probe/scripts/boot.gd": "14446f76ddb4ee8d5b394af50213c3d1ff9ef9ea5715c78216df48890d03e821"
+  }
+}
