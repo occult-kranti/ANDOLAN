@@ -1,0 +1,1739 @@
+{
+  "task": "R3-04",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "algorithm_checks": {
+    "parallel_triangle_40mm": true,
+    "identical_triangle_zero": true,
+    "far_triangle_lower_bound": true
+  },
+  "samples": [
+    {
+      "id": "kodanda_windup",
+      "motion": {
+        "action": "kodanda",
+        "action_elapsed": 0.15,
+        "aim_weight": 0.834701111778414,
+        "cancel_count": 0,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 3.68634374581234e-07,
+        "max_string_error_m": 0.0,
+        "modified_samples": 393,
+        "nocked": true,
+        "phase": 0.1575,
+        "recovery": 0.22,
+        "rejected_states": 0,
+        "release_count": 0,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "windup",
+        "windup": 0.18
+      },
+      "authority_extra": {
+        "authority_release_count": 0
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.06908054693997401,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 59956,
+          "minimum_bound_pair": {
+            "first_triangle": 634,
+            "bow_triangle": 21218,
+            "first_xyz": [
+              [
+                -0.05627625447202065,
+                1.7224887889430136,
+                0.20358706107341068
+              ],
+              [
+                -0.057596989641727006,
+                1.722650464496351,
+                0.2013140939170321
+              ],
+              [
+                -0.05751111436133475,
+                1.7224263949026644,
+                0.20129169581381623
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.07166395067146136,
+                1.5291832698450167,
+                0.17883171502762324
+              ],
+              [
+                -0.07195918797396156,
+                1.5293723785417124,
+                0.17798284871666237
+              ],
+              [
+                -0.0935723512559197,
+                2.0876084682828107,
+                0.5315634588111212
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.051080546939974006,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.04198400641992406,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 72766,
+          "minimum_bound_pair": {
+            "first_triangle": 62242,
+            "bow_triangle": 21210,
+            "first_xyz": [
+              [
+                -0.07999498617433375,
+                1.2069393904965338,
+                0.1912862088212172
+              ],
+              [
+                -0.08957985999949844,
+                1.1943020368329422,
+                0.1887868795011816
+              ],
+              [
+                -0.08551624897297411,
+                1.1953489065587153,
+                0.1851242376858662
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.09389865537851283,
+                0.9650920269025202,
+                0.28159005878625326
+              ],
+              [
+                -0.07195918797396156,
+                1.5293723785417124,
+                0.17798284871666237
+              ],
+              [
+                -0.07166395067146136,
+                1.5291832698450167,
+                0.17883171502762324
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          533.0176651529507,
+          258.70291159116067
+        ],
+        "max": [
+          747.6978915621098,
+          687.5888669114541
+        ],
+        "min_depth_m": 4.523161119727464,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "kodanda_release",
+      "motion": {
+        "action": "kodanda",
+        "action_elapsed": 0.05,
+        "aim_weight": 0.909282046710588,
+        "cancel_count": 0,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 3.68634374581234e-07,
+        "max_string_error_m": 0.0,
+        "modified_samples": 397,
+        "nocked": false,
+        "phase": 0.18,
+        "recovery": 0.22,
+        "rejected_states": 0,
+        "release_count": 1,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.18
+      },
+      "authority_extra": {
+        "authority_release_count": 1
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.062,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.03085479692265139,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 22093,
+          "minimum_bound_pair": {
+            "first_triangle": 72424,
+            "bow_triangle": 21206,
+            "first_xyz": [
+              [
+                -0.10628967341609158,
+                1.5030568450083692,
+                0.4307902590537378
+              ],
+              [
+                -0.10241281274629374,
+                1.5062304298751876,
+                0.4379813124642966
+              ],
+              [
+                -0.10145623937593415,
+                1.500752413803945,
+                0.4399098855522088
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.08618090647849075,
+                0.9869077197606941,
+                0.29316068986202237
+              ],
+              [
+                -0.08588531440130087,
+                0.9867259931772124,
+                0.2940110412555283
+              ],
+              [
+                -0.08589832103905448,
+                1.5490402637004106,
+                0.4141947169696032
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          532.8250606704664,
+          253.69237062654935
+        ],
+        "max": [
+          746.4291611375323,
+          687.5888574589035
+        ],
+        "min_depth_m": 4.503936951778036,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "kodanda_recoil",
+      "motion": {
+        "action": "kodanda",
+        "action_elapsed": 0.15,
+        "aim_weight": 0.972676277552707,
+        "cancel_count": 0,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 3.68634374581234e-07,
+        "max_string_error_m": 0.0,
+        "modified_samples": 403,
+        "nocked": false,
+        "phase": 0.225,
+        "recovery": 0.22,
+        "rejected_states": 0,
+        "release_count": 1,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.18
+      },
+      "authority_extra": {},
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.062,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.0384369314563566,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 29317,
+          "minimum_bound_pair": {
+            "first_triangle": 72330,
+            "bow_triangle": 21189,
+            "first_xyz": [
+              [
+                -0.13800143347064348,
+                1.4812564704363163,
+                0.40328731841209053
+              ],
+              [
+                -0.13342505514999692,
+                1.4845157139859575,
+                0.4100138723800949
+              ],
+              [
+                -0.1309770323956928,
+                1.4791082138703355,
+                0.4109977672606101
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.09655205065975137,
+                0.9624225451697215,
+                0.28176679490780737
+              ],
+              [
+                -0.0957042659204711,
+                1.524630943388857,
+                0.40242910098340245
+              ],
+              [
+                -0.09652800603749956,
+                1.5247193670862578,
+                0.4020327031019393
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          533.0537709400016,
+          259.2501360416313
+        ],
+        "max": [
+          747.7276002770964,
+          687.5888495734511
+        ],
+        "min_depth_m": 4.525195065986888,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "piercing_dawn_windup",
+      "motion": {
+        "action": "piercing_dawn",
+        "action_elapsed": 0.6,
+        "aim_weight": 0.999253414191623,
+        "cancel_count": 2,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.01645139238826e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 452,
+        "nocked": true,
+        "phase": 0.36,
+        "recovery": 0.3,
+        "rejected_states": 0,
+        "release_count": 1,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "windup",
+        "windup": 0.65
+      },
+      "authority_extra": {
+        "authority_release_count": 0
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.03970166711070877,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 35786,
+          "minimum_bound_pair": {
+            "first_triangle": 6127,
+            "bow_triangle": 21216,
+            "first_xyz": [
+              [
+                -0.057602107874112594,
+                1.690847017418236,
+                0.18751116627914036
+              ],
+              [
+                -0.05757086934523487,
+                1.6910759200117924,
+                0.18744227753493703
+              ],
+              [
+                -0.057434441939584364,
+                1.6912221716092248,
+                0.1873077607911163
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.08430771312982294,
+                1.5504841879714188,
+                0.1483196502346732
+              ],
+              [
+                -0.08343801542855578,
+                1.5505484433544499,
+                0.1480314736062248
+              ],
+              [
+                -0.08474429569441586,
+                2.107887483616676,
+                0.547203044976272
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.021701667110708773,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.05021744171443482,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 96375,
+          "minimum_bound_pair": {
+            "first_triangle": 62242,
+            "bow_triangle": 21210,
+            "first_xyz": [
+              [
+                -0.07999941463816616,
+                1.1762079443195845,
+                0.18781911065579446
+              ],
+              [
+                -0.08958421755044722,
+                1.1635203710705413,
+                0.18555173604408148
+              ],
+              [
+                -0.08552037004408114,
+                1.1644611927273743,
+                0.18188300398529827
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.08462322704837211,
+                0.9858327287321094,
+                0.2952269008381053
+              ],
+              [
+                -0.08332716339755358,
+                1.5509171001801452,
+                0.14637862513195893
+              ],
+              [
+                -0.08303191109209013,
+                1.5507278095406147,
+                0.14722744558936446
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          532.3046350292345,
+          253.99508571186826
+        ],
+        "max": [
+          745.5332695657978,
+          687.1550554495119
+        ],
+        "min_depth_m": 4.502240934653629,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "piercing_dawn_release",
+      "motion": {
+        "action": "piercing_dawn",
+        "action_elapsed": 0.05,
+        "aim_weight": 0.99959026502102,
+        "cancel_count": 2,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.01645139238826e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 456,
+        "nocked": false,
+        "phase": 0.3825,
+        "recovery": 0.3,
+        "rejected_states": 0,
+        "release_count": 2,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.65
+      },
+      "authority_extra": {
+        "authority_release_count": 1
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.062,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.03626465596867394,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 22957,
+          "minimum_bound_pair": {
+            "first_triangle": 52512,
+            "bow_triangle": 21213,
+            "first_xyz": [
+              [
+                -0.12246274620532198,
+                1.4967015608453915,
+                0.4001497592144896
+              ],
+              [
+                -0.1271679893867926,
+                1.5014746893221529,
+                0.40064415315435703
+              ],
+              [
+                -0.12479664225319899,
+                1.5023492205987576,
+                0.3990280275803878
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.08579224665221885,
+                0.9869550593340622,
+                0.2923149470588199
+              ],
+              [
+                -0.08619809023664804,
+                0.9867826963270194,
+                0.2931206340316175
+              ],
+              [
+                -0.08288339923354582,
+                1.5500870270259361,
+                0.39978395689389906
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          532.816922475998,
+          253.73092400468448
+        ],
+        "max": [
+          746.1340631228464,
+          687.1550049548846
+        ],
+        "min_depth_m": 4.503857909733622,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "piercing_dawn_recoil",
+      "motion": {
+        "action": "piercing_dawn",
+        "action_elapsed": 0.15,
+        "aim_weight": 0.999876590195913,
+        "cancel_count": 2,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.01645139238826e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 462,
+        "nocked": false,
+        "phase": 0.4275,
+        "recovery": 0.3,
+        "rejected_states": 0,
+        "release_count": 2,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.65
+      },
+      "authority_extra": {},
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.062,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.036485042672768725,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 31120,
+          "minimum_bound_pair": {
+            "first_triangle": 72282,
+            "bow_triangle": 21189,
+            "first_xyz": [
+              [
+                -0.12857115046016876,
+                1.5004364012091445,
+                0.4083517549851613
+              ],
+              [
+                -0.12422253987249693,
+                1.5038120444784653,
+                0.4151713750688533
+              ],
+              [
+                -0.1218041631068224,
+                1.498358857462483,
+                0.41635771867715005
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.08604120692142947,
+                0.9867826924808792,
+                0.29375152710446584
+              ],
+              [
+                -0.08521973765653224,
+                1.5489882304148745,
+                0.41442744929634134
+              ],
+              [
+                -0.0860434792915632,
+                1.5490766264058031,
+                0.41403104831374415
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          532.8270799910508,
+          253.6875091120026
+        ],
+        "max": [
+          747.6015972592868,
+          687.1550049548846
+        ],
+        "min_depth_m": 4.504065618420098,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "measured_step_windup",
+      "motion": {
+        "action": "measured_step",
+        "action_elapsed": 0.05,
+        "aim_weight": 0.451188363905974,
+        "cancel_count": 4,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": false,
+          "R": false
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.01645139238826e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 478,
+        "nocked": false,
+        "phase": 0.1125,
+        "recovery": 0.25,
+        "rejected_states": 0,
+        "release_count": 2,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "windup",
+        "windup": 0.1
+      },
+      "authority_extra": {
+        "authority_release_count": 0
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.15169454081471867,
+          "method": "whole-group AABB",
+          "near_triangle_pairs": 0,
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.13369454081471868,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 68278,
+          "minimum_bound_pair": {
+            "first_triangle": 33645,
+            "bow_triangle": 3141,
+            "first_xyz": [
+              [
+                -0.29486941391006793,
+                0.5554445711156707,
+                0.06822018647474265
+              ],
+              [
+                -0.2884004361751034,
+                0.5458691795336709,
+                0.07990528562918389
+              ],
+              [
+                -0.28612771664968634,
+                0.5614169787727555,
+                0.07738794977800684
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.28832567994257874,
+                0.5560117797209947,
+                0.08442931880751545
+              ],
+              [
+                -0.2884007073161624,
+                0.5481084297603936,
+                0.0788486305370463
+              ],
+              [
+                -0.2894979620322071,
+                0.5547265247758835,
+                0.08551782596555127
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          533.2216506844069,
+          310.69152873271986
+        ],
+        "max": [
+          749.0474489488452,
+          700.1193428677274
+        ],
+        "min_depth_m": 4.649498274193959,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "measured_step_release",
+      "motion": {
+        "action": "measured_step",
+        "action_elapsed": 0.05,
+        "aim_weight": 0.698805788087798,
+        "cancel_count": 4,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": false,
+          "R": false
+        },
+        "last_reason": "combat reset",
+        "locomotion": "dash",
+        "max_contact_error_m": 1.01645139238826e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 481,
+        "nocked": false,
+        "phase": 0.135,
+        "recovery": 0.25,
+        "rejected_states": 0,
+        "release_count": 3,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.1
+      },
+      "authority_extra": {
+        "authority_release_count": 1
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.15061327195498347,
+          "method": "whole-group AABB",
+          "near_triangle_pairs": 0,
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.13261327195498349,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 71504,
+          "minimum_bound_pair": {
+            "first_triangle": 33645,
+            "bow_triangle": 3131,
+            "first_xyz": [
+              [
+                -0.29454631210406473,
+                0.5598763041305876,
+                0.06276898701494188
+              ],
+              [
+                -0.2880790508617249,
+                0.5501823550549029,
+                0.07432489715513006
+              ],
+              [
+                -0.2858222296637108,
+                0.5657545409886358,
+                0.07202351919016434
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.2900447905884487,
+                0.5600462075041173,
+                0.07807871487207507
+              ],
+              [
+                -0.28874534652884876,
+                0.5521821293741447,
+                0.07258070572077696
+              ],
+              [
+                -0.2898312615338613,
+                0.5585310817499094,
+                0.07950950444937246
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          533.8392632854346,
+          309.4760903031628
+        ],
+        "max": [
+          748.8667239369724,
+          699.8317393693131
+        ],
+        "min_depth_m": 4.653541974181583,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "measured_step_recoil",
+      "motion": {
+        "action": "measured_step",
+        "action_elapsed": 0.15,
+        "aim_weight": 0.909282046710588,
+        "cancel_count": 4,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": false,
+          "R": false
+        },
+        "last_reason": "combat reset",
+        "locomotion": "dash",
+        "max_contact_error_m": 1.01645139238826e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 487,
+        "nocked": false,
+        "phase": 0.18,
+        "recovery": 0.25,
+        "rejected_states": 0,
+        "release_count": 3,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.1
+      },
+      "authority_extra": {},
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.14344510260012616,
+          "method": "whole-group AABB",
+          "near_triangle_pairs": 0,
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.12544510260012617,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 66305,
+          "minimum_bound_pair": {
+            "first_triangle": 33485,
+            "bow_triangle": 3142,
+            "first_xyz": [
+              [
+                -0.2914502805098508,
+                0.5640350801456847,
+                0.04050284293458308
+              ],
+              [
+                -0.2836200599291964,
+                0.5517176099230342,
+                0.054455649528636706
+              ],
+              [
+                -0.282757562362661,
+                0.5696430333523776,
+                0.04865722594414373
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.2826079443304056,
+                0.5601375444306393,
+                0.05771609988279952
+              ],
+              [
+                -0.2836536083686034,
+                0.5532918760263508,
+                0.05092675984962672
+              ],
+              [
+                -0.2845779633265423,
+                0.5596095453536839,
+                0.057942975918988754
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          535.5442540648761,
+          331.22320179154167
+        ],
+        "max": [
+          749.818238418543,
+          705.1051745441962
+        ],
+        "min_depth_m": 4.656178649875677,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "guardian_circle_windup",
+      "motion": {
+        "action": "guardian_circle",
+        "action_elapsed": 0.5,
+        "aim_weight": 0.997521247823334,
+        "cancel_count": 6,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.02037597571325e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 530,
+        "nocked": false,
+        "phase": 0.315,
+        "recovery": 0.3,
+        "rejected_states": 0,
+        "release_count": 3,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "windup",
+        "windup": 0.55
+      },
+      "authority_extra": {
+        "authority_release_count": 0
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.062,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 26889,
+          "minimum_bound_pair": {
+            "first_triangle": 2130,
+            "bow_triangle": 3280,
+            "first_xyz": [
+              [
+                -0.18764092084714004,
+                0.7632728313785636,
+                0.14976004466184964
+              ],
+              [
+                -0.173495376934581,
+                0.7431957563773128,
+                0.15962601642767438
+              ],
+              [
+                -0.1699941406104103,
+                0.7613570357173371,
+                0.15656160499422223
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.1721649185789082,
+                0.7635948125126958,
+                0.1546991154397716
+              ],
+              [
+                -0.17417423213275762,
+                0.7604479883525865,
+                0.15782054729030814
+              ],
+              [
+                -0.17208745368804496,
+                0.7623812405394199,
+                0.15407228452111701
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          534.6960306415053,
+          297.3080186623429
+        ],
+        "max": [
+          746.7648230642095,
+          687.1549786608207
+        ],
+        "min_depth_m": 4.41456776032024,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "guardian_circle_release",
+      "motion": {
+        "action": "guardian_circle",
+        "action_elapsed": 0.05,
+        "aim_weight": 0.998639631962452,
+        "cancel_count": 6,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.02037597571325e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 533,
+        "nocked": false,
+        "phase": 0.3375,
+        "recovery": 0.3,
+        "rejected_states": 0,
+        "release_count": 4,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.55
+      },
+      "authority_extra": {
+        "authority_release_count": 1
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.062,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 18523,
+          "minimum_bound_pair": {
+            "first_triangle": 2130,
+            "bow_triangle": 3173,
+            "first_xyz": [
+              [
+                -0.188488057187972,
+                0.7649380705730993,
+                0.12856630213137665
+              ],
+              [
+                -0.17439491179469763,
+                0.743964053344228,
+                0.13637119919971394
+              ],
+              [
+                -0.17089469859321388,
+                0.7623552093715735,
+                0.1352744390539433
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.17875926639488937,
+                0.7653446731597078,
+                0.1355916424831148
+              ],
+              [
+                -0.17690613242905662,
+                0.7605099986677915,
+                0.12983284145784083
+              ],
+              [
+                -0.1771184108719439,
+                0.7660465455150558,
+                0.134997065766269
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          535.2356327951777,
+          291.7647284001232
+        ],
+        "max": [
+          746.1340623361755,
+          687.154991040119
+        ],
+        "min_depth_m": 4.729504192227146,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "guardian_circle_recoil",
+      "motion": {
+        "action": "guardian_circle",
+        "action_elapsed": 0.15,
+        "aim_weight": 0.99959026502102,
+        "cancel_count": 6,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.02037597571325e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 539,
+        "nocked": false,
+        "phase": 0.3825,
+        "recovery": 0.3,
+        "rejected_states": 0,
+        "release_count": 4,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.55
+      },
+      "authority_extra": {},
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.08272870378023373,
+          "method": "whole-group AABB",
+          "near_triangle_pairs": 0,
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.06472870378023372,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.0,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 49544,
+          "minimum_bound_pair": {
+            "first_triangle": 777,
+            "bow_triangle": 3140,
+            "first_xyz": [
+              [
+                -0.23188906864643596,
+                0.6988579406359776,
+                0.09519337753987372
+              ],
+              [
+                -0.22322288872354326,
+                0.6793079385331193,
+                0.10914021763450105
+              ],
+              [
+                -0.22300211783287838,
+                0.7018420774461301,
+                0.10810678366336991
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.2251319442027918,
+                0.6975492281885953,
+                0.11287303005032032
+              ],
+              [
+                -0.2240715491184685,
+                0.6898712713765478,
+                0.10712328517887842
+              ],
+              [
+                -0.22493865214416053,
+                0.6960200243890845,
+                0.11422780746719735
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          536.0462155689595,
+          293.42646951335655
+        ],
+        "max": [
+          747.6015972592868,
+          687.1550049548846
+        ],
+        "min_depth_m": 4.7102122807567754,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "dawn_volley_windup",
+      "motion": {
+        "action": "dawn_volley",
+        "action_elapsed": 0.900000000000001,
+        "aim_weight": 0.999979600496589,
+        "cancel_count": 8,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.02037597571325e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 606,
+        "nocked": true,
+        "phase": 0.495,
+        "recovery": 0.55,
+        "rejected_states": 0,
+        "release_count": 4,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "windup",
+        "windup": 0.95
+      },
+      "authority_extra": {
+        "authority_release_count": 0
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.04067370467092524,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 31900,
+          "minimum_bound_pair": {
+            "first_triangle": 6127,
+            "bow_triangle": 21202,
+            "first_xyz": [
+              [
+                -0.057597001988157266,
+                1.66904390293629,
+                0.16746184426054253
+              ],
+              [
+                -0.057565765035807785,
+                1.6692730449149957,
+                0.16739375507398999
+              ],
+              [
+                -0.05742934072083034,
+                1.6694197657144751,
+                0.16725974704694138
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.08578495493326643,
+                1.5518775102100846,
+                0.14322889629379676
+              ],
+              [
+                -0.08492792045680206,
+                2.1091008881389475,
+                0.5482971825842846
+              ],
+              [
+                -0.08491526363477953,
+                1.5519417626247247,
+                0.1429406927378646
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.02267370467092524,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.05620231173635704,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 93182,
+          "minimum_bound_pair": {
+            "first_triangle": 72794,
+            "bow_triangle": 5267,
+            "first_xyz": [
+              [
+                -0.11625324155246183,
+                1.4859451140795685,
+                0.5284598730859453
+              ],
+              [
+                -0.11247718756668013,
+                1.4897945605437515,
+                0.535368995239724
+              ],
+              [
+                -0.11734350441136998,
+                1.4913996085872778,
+                0.5371599471524728
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.0941092054448287,
+                1.4759305600478898,
+                0.5907076361302752
+              ],
+              [
+                -0.09799301221430096,
+                1.4764115766364154,
+                0.5934191571643543
+              ],
+              [
+                -0.09392983668061339,
+                1.4769144156564824,
+                0.5913708227425163
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          531.9065963120493,
+          253.8360632671217
+        ],
+        "max": [
+          743.8227139440504,
+          687.1550132426936
+        ],
+        "min_depth_m": 4.49931795353092,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "dawn_volley_release",
+      "motion": {
+        "action": "dawn_volley",
+        "action_elapsed": 0.05,
+        "aim_weight": 0.999988804515157,
+        "cancel_count": 8,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.02037597571325e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 610,
+        "nocked": false,
+        "phase": 0.5175,
+        "recovery": 0.55,
+        "rejected_states": 0,
+        "release_count": 5,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.95
+      },
+      "authority_extra": {
+        "authority_release_count": 1
+      },
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 12505,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.062,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.056193008146878415,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 26603,
+          "minimum_bound_pair": {
+            "first_triangle": 51919,
+            "bow_triangle": 5267,
+            "first_xyz": [
+              [
+                -0.12414185672558575,
+                1.4896707996754865,
+                0.5260442084672621
+              ],
+              [
+                -0.11505112891692448,
+                1.491215702595866,
+                0.5306920717065213
+              ],
+              [
+                -0.1196626340447286,
+                1.4933185752894638,
+                0.532635261905483
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.09410337706863714,
+                1.4764251590103783,
+                0.5847517166258027
+              ],
+              [
+                -0.0979871915367635,
+                1.4769061637483607,
+                0.5874632299328184
+              ],
+              [
+                -0.09392401288560293,
+                1.4774090154225339,
+                0.5854149026619906
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          532.8193879654524,
+          253.69983610060896
+        ],
+        "max": [
+          746.5186767120232,
+          687.1550049548846
+        ],
+        "min_depth_m": 4.503833978767248,
+        "margin24_pass": true
+      }
+    },
+    {
+      "id": "dawn_volley_recoil",
+      "motion": {
+        "action": "dawn_volley",
+        "action_elapsed": 0.15,
+        "aim_weight": 0.999996627984766,
+        "cancel_count": 8,
+        "clip_count": 23,
+        "configured": true,
+        "finite": true,
+        "foot_locks": {
+          "L": true,
+          "R": true
+        },
+        "last_reason": "combat reset",
+        "locomotion": "idle",
+        "max_contact_error_m": 1.02037597571325e-06,
+        "max_string_error_m": 0.0,
+        "modified_samples": 616,
+        "nocked": false,
+        "phase": 0.5625,
+        "recovery": 0.55,
+        "rejected_states": 0,
+        "release_count": 5,
+        "scope": "Original full-body clips with layered authority-driven actions and support-foot IK; continuous rendered review remains separate.",
+        "stage": "recovery",
+        "windup": 0.95
+      },
+      "authority_extra": {},
+      "triangle_counts": {
+        "bow": 21232,
+        "hair": 29448,
+        "cloth": 83972
+      },
+      "gaps": {
+        "hair": {
+          "lower_bound_m": 0.08,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 0,
+          "minimum_bound_pair": null,
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.018,
+          "guaranteed_after_maximum_offset_m": 0.062,
+          "one_mm_clearance_proven_for_all_offsets": true
+        },
+        "cloth": {
+          "lower_bound_m": 0.032398304400530875,
+          "method": "triangle AABB + normalized separating axes; radius-partitioned sphere broadphase, unqueried pairs exceed returned bound",
+          "near_triangle_pairs": 23513,
+          "minimum_bound_pair": {
+            "first_triangle": 72282,
+            "bow_triangle": 21189,
+            "first_xyz": [
+              [
+                -0.1236854972047916,
+                1.5036401011063834,
+                0.4070386070758185
+              ],
+              [
+                -0.11964813120844148,
+                1.5067823893812804,
+                0.41415466728489125
+              ],
+              [
+                -0.11731537131390746,
+                1.5012809349000156,
+                0.41528843075872185
+              ]
+            ],
+            "bow_xyz": [
+              [
+                -0.08588802319560707,
+                0.9867862097456163,
+                0.2939659682270929
+              ],
+              [
+                -0.08507529498527971,
+                1.5489920479136308,
+                0.4146400003699421
+              ],
+              [
+                -0.08589903608372318,
+                1.549080430335324,
+                0.41424359499778546
+              ]
+            ]
+          },
+          "limit": "Zero bound is unresolved overlap, not proof of penetration; positive is conservative separation.",
+          "secondary_envelope_m": 0.075,
+          "guaranteed_after_maximum_offset_m": 0,
+          "one_mm_clearance_proven_for_all_offsets": false
+        }
+      },
+      "projection": {
+        "min": [
+          532.818373565475,
+          253.68769770980654
+        ],
+        "max": [
+          746.6552897240106,
+          687.1550049548846
+        ],
+        "min_depth_m": 4.503821541992092,
+        "margin24_pass": true
+      }
+    }
+  ],
+  "sample_count": 15,
+  "all_five_abilities_three_phases_present": true,
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role04/check_action_clearance.py": "2a3683fcde5a012c2acd591cb73565c976a90261c04cd9794547a7e76ed9f7eb",
+    "/workspace/scratch/visual-round3/role-08/groom-r6/rama-hero.glb": "bdd917daa88254bdf203fd0bb92c7fb1167fda05a3c223dea4c9f3a3bc0453d1",
+    "/workspace/scratch/visual-round2/role-05/baseline-runtime-r3.json": "8edd6d7dc9217d877a8a013f287b43a98d3a3869f5bb3cec387689df07e7a00d",
+    "/workspace/ANDOLAN/games/yuga-native/assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_motion.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_secondary_motion.gd": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+    "/workspace/ANDOLAN/games/yuga-native/art/visual-rounds/groom/replay_motion.py": "94c3cd63593268dd380397aac03df621b9dd291e2d82b88187a716805f6fa06e"
+  },
+  "source_projection_passed": true,
+  "clearance_gate_passed": false,
+  "scope": "Previously executed runtime poses, replayed offline on actual current source triangles. No newly executed runtime/collision/render. Secondary offsets were not captured in this old tape; subtract full allowed bounds rather than invent actual offsets. Includes all bow primitives and selected actual cloth/hair triangles; quiver integrated gold/cloth classification and dynamic arrow/string sweeps remain separate."
+}

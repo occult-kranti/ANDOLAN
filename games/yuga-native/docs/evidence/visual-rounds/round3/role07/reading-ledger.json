@@ -1,0 +1,263 @@
+{
+  "schema": 1,
+  "task": "R3-07",
+  "date": "2026-10-17",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "sources": [
+    {
+      "id": "GODOT-PLANE",
+      "local_cache": "/workspace/scratch/visual-round3/role-07/sources/core__math__plane.h",
+      "repository": "godotengine/godot",
+      "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "path": "core/math/plane.h",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/core/math/plane.h",
+      "sha256": "edf65fd773716fc6c556b60c1fd2d271159861ec04abad980afa954c48895dfa",
+      "bytes": 5899,
+      "actual_read_scope": "1-37 copyright/header; 125-141 Plane constructor and equality boundary",
+      "license": "MIT",
+      "decision": "adopted offline face-normal construction only"
+    },
+    {
+      "id": "GODOT-SURFACE",
+      "local_cache": "/workspace/scratch/visual-round3/role-07/sources/scene__resources__surface_tool.cpp",
+      "repository": "godotengine/godot",
+      "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "path": "scene/resources/surface_tool.cpp",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/scene/resources/surface_tool.cpp",
+      "sha256": "64454eadf4cbf494ea8feba0036307c3fb648c60a826884d715d8b8bdfcf5722",
+      "bytes": 44047,
+      "actual_read_scope": "symbol search; 1186-1245 generate_normals and immediate boundary",
+      "license": "MIT",
+      "decision": "adopted face-normal usage pattern; no smoothing-group implementation copied"
+    },
+    {
+      "id": "SpringBoneSimulator3D.xml",
+      "local_cache": "/workspace/scratch/community-reuse/animation/sources/godot/doc/classes/SpringBoneSimulator3D.xml",
+      "repository": "godotengine/godot",
+      "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "path": "doc/classes/SpringBoneSimulator3D.xml",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/SpringBoneSimulator3D.xml",
+      "sha256": "b180dc03d30829762969a581543c92be63a8c469cfaf96379996262298445a9a",
+      "bytes": 29919,
+      "actual_read_scope": "1-90: description, scale/chain constraints and initial accessors",
+      "license": "MIT",
+      "decision": "research-only comparator; no runtime adoption"
+    },
+    {
+      "id": "TwoBoneIK3D.xml",
+      "local_cache": "/workspace/scratch/community-reuse/animation/sources/godot/doc/classes/TwoBoneIK3D.xml",
+      "repository": "godotengine/godot",
+      "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "path": "doc/classes/TwoBoneIK3D.xml",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/TwoBoneIK3D.xml",
+      "sha256": "87ff27d074217c4b1fd26f9bb56188920f51b72ea07d69f7adf236e9da1ccb76",
+      "bytes": 8932,
+      "actual_read_scope": "1-70: description, virtual-bone constraint and initial accessors",
+      "license": "MIT",
+      "decision": "research-only comparator; no runtime adoption"
+    },
+    {
+      "id": "GODOT-LICENSE",
+      "local_cache": "/workspace/scratch/community-reuse/animation/sources/godot/LICENSE.txt",
+      "repository": "godotengine/godot",
+      "commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "path": "LICENSE.txt",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/LICENSE.txt",
+      "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "bytes": 1149,
+      "actual_read_scope": "full license",
+      "license": "MIT",
+      "decision": "required notice retained"
+    },
+    {
+      "id": "MM-weave.mmg",
+      "local_cache": "/workspace/scratch/community-reuse/art/source-files/material-maker/addons/material_maker/nodes/weave.mmg",
+      "repository": "RodZill4/material-maker",
+      "commit": "b4fcad06f0b13785de423c42b36406df605c8321",
+      "path": "addons/material_maker/nodes/weave.mmg",
+      "url": "https://github.com/RodZill4/material-maker/blob/b4fcad06f0b13785de423c42b36406df605c8321/addons/material_maker/nodes/weave.mmg",
+      "sha256": "bf15c428137a2145c027abd8fa929224edf7cdb5b12b284bb11c2afbac2f51d5",
+      "bytes": 1807,
+      "actual_read_scope": "full file",
+      "license": "MIT",
+      "decision": "research-only; no node, bake or formula copied"
+    },
+    {
+      "id": "MM-godot.tres.tmpl",
+      "local_cache": "/workspace/scratch/community-reuse/art/source-files/material-maker/addons/material_maker/nodes/godot.tres.tmpl",
+      "repository": "RodZill4/material-maker",
+      "commit": "b4fcad06f0b13785de423c42b36406df605c8321",
+      "path": "addons/material_maker/nodes/godot.tres.tmpl",
+      "url": "https://github.com/RodZill4/material-maker/blob/b4fcad06f0b13785de423c42b36406df605c8321/addons/material_maker/nodes/godot.tres.tmpl",
+      "sha256": "af27ee02a9b73868ec913c1d995ee1aefeea3e87393cef9ae0d92669f358eaa4",
+      "bytes": 1864,
+      "actual_read_scope": "full file",
+      "license": "MIT",
+      "decision": "research-only; no node, bake or formula copied"
+    },
+    {
+      "id": "MM-LICENSE.md",
+      "local_cache": "/workspace/scratch/community-reuse/art/source-files/material-maker/LICENSE.md",
+      "repository": "RodZill4/material-maker",
+      "commit": "b4fcad06f0b13785de423c42b36406df605c8321",
+      "path": "LICENSE.md",
+      "url": "https://github.com/RodZill4/material-maker/blob/b4fcad06f0b13785de423c42b36406df605c8321/LICENSE.md",
+      "sha256": "db17817a68e6c06c3aba6242d50ec34285c02f1ada4fbd8cd7382110f95c09de",
+      "bytes": 1100,
+      "actual_read_scope": "full file",
+      "license": "MIT",
+      "decision": "research-only; no node, bake or formula copied"
+    },
+    {
+      "id": "NYSTROM-nystrom-loop.txt",
+      "local_cache": "/workspace/scratch/yuga-design-reuse-source-r1/nystrom-loop.txt",
+      "repository": "munificent/game-programming-patterns",
+      "commit": "898b1f2e1818c80d7eed5eba98e9903ec13b7771",
+      "path": "book/game-loop.markdown",
+      "url": "https://github.com/munificent/game-programming-patterns/blob/898b1f2e1818c80d7eed5eba98e9903ec13b7771/book/game-loop.markdown",
+      "sha256": "79693a60713c71b1e0e9a66a1f254325449f66ff8ed7f67444aa70a9d0f2b465",
+      "bytes": 29665,
+      "actual_read_scope": "373-493",
+      "license": "CC BY-NC-ND 4.0 prose; MIT qualifying code, per LICENSE",
+      "decision": "selected reading only; original paraphrase and contract; no book code/prose copied"
+    },
+    {
+      "id": "NYSTROM-nystrom-update.txt",
+      "local_cache": "/workspace/scratch/yuga-design-reuse-source-r1/nystrom-update.txt",
+      "repository": "munificent/game-programming-patterns",
+      "commit": "898b1f2e1818c80d7eed5eba98e9903ec13b7771",
+      "path": "book/update-method.markdown",
+      "url": "https://github.com/munificent/game-programming-patterns/blob/898b1f2e1818c80d7eed5eba98e9903ec13b7771/book/update-method.markdown",
+      "sha256": "d594f50c40ef2946eb55cbb7bb66eb0209229fe33edbb121d20f21ece96a285c",
+      "bytes": 25217,
+      "actual_read_scope": "200-265",
+      "license": "CC BY-NC-ND 4.0 prose; MIT qualifying code, per LICENSE",
+      "decision": "selected reading only; original paraphrase and contract; no book code/prose copied"
+    },
+    {
+      "id": "NYSTROM-nystrom-component.txt",
+      "local_cache": "/workspace/scratch/yuga-design-reuse-source-r1/nystrom-component.txt",
+      "repository": "munificent/game-programming-patterns",
+      "commit": "898b1f2e1818c80d7eed5eba98e9903ec13b7771",
+      "path": "book/component.markdown",
+      "url": "https://github.com/munificent/game-programming-patterns/blob/898b1f2e1818c80d7eed5eba98e9903ec13b7771/book/component.markdown",
+      "sha256": "97eaca93c7e0137d905e5dfc8868a65eae10f8957b0bd375e9c94d8cb3aabe7a",
+      "bytes": 30783,
+      "actual_read_scope": "184-246; 469-535",
+      "license": "CC BY-NC-ND 4.0 prose; MIT qualifying code, per LICENSE",
+      "decision": "selected reading only; original paraphrase and contract; no book code/prose copied"
+    },
+    {
+      "id": "NYSTROM-nystrom-license.txt",
+      "local_cache": "/workspace/scratch/yuga-design-reuse-source-r1/nystrom-license.txt",
+      "repository": "munificent/game-programming-patterns",
+      "commit": "898b1f2e1818c80d7eed5eba98e9903ec13b7771",
+      "path": "LICENSE",
+      "url": "https://github.com/munificent/game-programming-patterns/blob/898b1f2e1818c80d7eed5eba98e9903ec13b7771/LICENSE",
+      "sha256": "38d0c2db8c6f5aaf7ac649e5f44a0d3a982c837f6510cc9f6aefd563ea1a5b1e",
+      "bytes": 4402,
+      "actual_read_scope": "full license",
+      "license": "CC BY-NC-ND 4.0 prose; MIT qualifying code, per LICENSE",
+      "decision": "selected reading only; original paraphrase and contract; no book code/prose copied"
+    }
+  ],
+  "cached_hash_crosschecks": [
+    {
+      "source_id": "MM-weave.mmg",
+      "matched_retained_ledger": "games/yuga-native/docs/research/community-reuse/art-sources.json",
+      "sha256": "bf15c428137a2145c027abd8fa929224edf7cdb5b12b284bb11c2afbac2f51d5"
+    },
+    {
+      "source_id": "MM-godot.tres.tmpl",
+      "matched_retained_ledger": "games/yuga-native/docs/research/community-reuse/art-sources.json",
+      "sha256": "af27ee02a9b73868ec913c1d995ee1aefeea3e87393cef9ae0d92669f358eaa4"
+    },
+    {
+      "source_id": "MM-LICENSE.md",
+      "matched_retained_ledger": "games/yuga-native/docs/research/community-reuse/art-sources.json",
+      "sha256": "db17817a68e6c06c3aba6242d50ec34285c02f1ada4fbd8cd7382110f95c09de"
+    },
+    {
+      "source_id": "SpringBoneSimulator3D.xml",
+      "matched_retained_ledger": "games/yuga-native/docs/research/community-reuse/animation-sources.json",
+      "sha256": "b180dc03d30829762969a581543c92be63a8c469cfaf96379996262298445a9a"
+    },
+    {
+      "source_id": "TwoBoneIK3D.xml",
+      "matched_retained_ledger": "games/yuga-native/docs/research/community-reuse/animation-sources.json",
+      "sha256": "87ff27d074217c4b1fd26f9bb56188920f51b72ea07d69f7adf236e9da1ccb76"
+    },
+    {
+      "source_id": "GODOT-LICENSE",
+      "matched_retained_ledger": "games/yuga-native/docs/research/community-reuse/animation-sources.json",
+      "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80"
+    },
+    {
+      "source_id": "NYSTROM-nystrom-loop.txt",
+      "matched_retained_ledger": "games/yuga-native/docs/research/game-design-reuse-sources.json",
+      "sha256": "79693a60713c71b1e0e9a66a1f254325449f66ff8ed7f67444aa70a9d0f2b465"
+    },
+    {
+      "source_id": "NYSTROM-nystrom-update.txt",
+      "matched_retained_ledger": "games/yuga-native/docs/research/game-design-reuse-sources.json",
+      "sha256": "d594f50c40ef2946eb55cbb7bb66eb0209229fe33edbb121d20f21ece96a285c"
+    },
+    {
+      "source_id": "NYSTROM-nystrom-component.txt",
+      "matched_retained_ledger": "games/yuga-native/docs/research/game-design-reuse-sources.json",
+      "sha256": "97eaca93c7e0137d905e5dfc8868a65eae10f8957b0bd375e9c94d8cb3aabe7a"
+    },
+    {
+      "source_id": "NYSTROM-nystrom-license.txt",
+      "matched_retained_ledger": "games/yuga-native/docs/research/game-design-reuse-sources.json",
+      "sha256": "38d0c2db8c6f5aaf7ac649e5f44a0d3a982c837f6510cc9f6aefd563ea1a5b1e"
+    }
+  ],
+  "project_inputs": [
+    {
+      "path": "games/yuga-native/shaders/rama_secondary_cloth.gdshader",
+      "sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+      "scope": "full file"
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_secondary_motion.gd",
+      "sha256": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+      "scope": "full file"
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_motion.gd",
+      "sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+      "scope": "selected functions"
+    },
+    {
+      "path": "games/yuga-native/scripts/player.gd",
+      "sha256": "d02f1312d63852931fc668dc8fba827fa452e690fe20b9dae37887b0551d4f17",
+      "scope": "selected functions"
+    },
+    {
+      "path": "games/yuga-native/assets/heroes/rama-hero.glb",
+      "sha256": "de61dc4c470920eab6f3265bc5467da7f9fb33d6fae2129a9353e7ca6d24d3f5",
+      "scope": "binary geometry/accessor audit only"
+    }
+  ],
+  "network": {
+    "new_requests": 2,
+    "host": "raw.githubusercontent.com",
+    "transport": "inherited HTTPS proxy and verified TLS",
+    "policy_snapshot": "restricted, VPN false",
+    "runtime_observations_current": true,
+    "runtime_policy_state": "unknown"
+  },
+  "book_claim": "Selected sections of three chapters; no complete book claim; full bodies scratch only",
+  "actual_visuals_or_input_reviewed": [],
+  "research_vs_adoption": {
+    "adopted": "small MIT offline triangle-normal diagnostic",
+    "research_only": [
+      "Nystrom ownership/update reasoning",
+      "Material Maker weave/template",
+      "Godot SpringBone/TwoBoneIK"
+    ],
+    "runtime_assets_changed": false,
+    "renders_imports": false
+  }
+}

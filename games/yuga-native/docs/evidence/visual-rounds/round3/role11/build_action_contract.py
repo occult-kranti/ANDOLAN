@@ -1,0 +1,44 @@
+from pathlib import Path
+import sys,json,math,hashlib,itertools
+import numpy as np
+R=Path('/workspace/ANDOLAN/games/yuga-native'); O=Path(__file__).resolve().parent
+sys.path.insert(0,str(R/'art/hero-rama-lod'));from glb_lod import GLB
+sys.path.insert(0,str(R/'art/visual-rounds/groom'));from replay_motion import skin
+sys.path.insert(0,str(R/'docs/evidence/visual-rounds/round3/role02'));from scene_geometry import glb,ray_hits,rotate
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+base=Path('/workspace/scratch/visual-round2/role-08/face-form-candidate-r6/candidate.glb'); candidate=Path('/workspace/scratch/visual-round3/role-08/groom-r7/rama-hero.glb');rp=Path('/workspace/scratch/visual-round2/role-05/baseline-runtime-r3.json');samples={s['id']:s for s in json.loads(rp.read_text())['samples']};kit=json.loads((R/'assets/design/rama-ability-kit.json').read_text());parts=[(tri,mat,name)for name,items in glb('assets/environment/lanka_courtyard.glb').items()for tri,mat in items]
+origin=np.array([-.65,.0001,0]);aim_hit=np.array([0,1.5001,-7.775]);forward=aim_hit-origin;forward[1]=0;forward/=np.linalg.norm(forward);heading=math.degrees(math.atan2(forward[0],forward[2]));receiver=np.array([0,0,-8.]);receiverbox=np.array(list(itertools.product([-.60,.60],[0,2.65],[-.30,.30])))+receiver
+
+def project(points,camera,target,fov):
+ camera=np.array(camera);f=np.array(target)-camera;f/=np.linalg.norm(f);r=np.cross(f,[0,1,0]);r/=np.linalg.norm(r);u=np.cross(r,f);delta=points-camera;z=delta@f;s=960/(2*math.tan(math.radians(fov)*.5));pix=np.c_[640+s*(delta@r)/z,480-s*(delta@u)/z];return {'min':pix.min(0).tolist(),'max':pix.max(0).tolist(),'min_depth_m':float(z.min()),'vertices':len(points),'passed24':bool(z.min()>.05 and np.all(pix.min(0)>=24)and np.all(pix.max(0)<=[1256,936]))}
+rows=[]
+for spec in kit['abilities']:
+ id=spec['id'];phase='release'if id=='measured_step'else'windup';sample=samples[id+'_'+phase];cam=[4.5,6.3,7.5]if id=='guardian_circle'else[3.0,3.0,4.8];target=[-.1,.7,-4.0]if id=='guardian_circle'else[-.2,1.,-2.5];fov=58;bounds={}
+ for label,path in [('baseline',base),('candidate_r7',candidate)]:
+  g=GLB(path);points=[]
+  for mi,pi,p in g.primitives():
+   v=g.array(p['attributes']['POSITION']);posed=skin(g,p,v,sample['bone_global_poses'])if'JOINTS_0'in p['attributes']else v;points.append(rotate(posed,heading)+origin)
+  points=np.vstack(points)
+  # Expand by the entire allowed secondary displacement and, for dash, the whole root path.
+  points=np.concatenate([points+off for off in itertools.product([-.075,.075],repeat=3)])
+  if id=='measured_step':points=np.vstack([points,points+forward*4.5])
+  bounds[label]=project(points,cam,target,fov)
+ if id=='guardian_circle':
+  t=np.linspace(0,2*np.pi,181);warning=np.c_[5*np.sin(t),np.full_like(t,.055),5*np.cos(t)]+np.array([aim_hit[0],0,aim_hit[2]])
+ elif id=='measured_step':warning=np.vstack([origin,origin+forward*4.5])+[0,.06,0]
+ else:
+  warning=[]
+  for angle in spec.get('yaw_offsets_rad',[0]):
+   fw=rotate(forward,math.degrees(angle));right=np.array([fw[2],0,-fw[0]])
+   for sign in [-1,1]:warning.extend([origin+right*spec['radius_m']*sign+[0,.055,0],origin+fw*spec['range_m']+right*spec['radius_m']*sign+[0,.055,0]])
+  warning=np.array(warning)
+ probes=[]
+ for name,p in [('head',origin+[0,1.9,0]),('feet',origin+[0,.08,0]),('receiver',receiver+[0,1.65,0])]:
+  hits=ray_hits(parts,cam,p-np.array(cam));distance=np.linalg.norm(p-np.array(cam));probes.append({'id':name,'first_scene_hit':hits[0]if hits else None,'foreground':bool(hits and hits[0]['distance_m']<distance-.02)})
+ rows.append({'id':id+'-normal','ability':id,'reduced_effects':False,'source_pose':sample['id'],'source_projection':bounds,'receiver_projection':project(receiverbox,cam,target,fov),'warning_projection':project(warning,cam,target,fov),'scene_rays':probes,'camera_position_m':cam,'look_at_m':target,'fov_degrees':fov,'target_authority_age_s':{'kodanda':.15,'piercing_dawn':.60,'measured_step':.20,'guardian_circle':.50,'dawn_volley':.90}[id],'required_motion_stage':'recovery'if id=='measured_step'else'windup','required_release_count':1 if id=='measured_step'else 0,'reason':{'kodanda':'Late draw exposes bow/string against torso before release.','piercing_dawn':'Near-complete solar charge is the dense normal-effect aiming overlap.','measured_step':'At .10 s after authority release, moving cloth and its echo overlap the real weapon.','guardian_circle':'Late windup shows the complete 5 m warning boundary and grown petals.','dawn_volley':'Late windup shows all three converging blades; paired reduced version tests dense charge readability.'}[id]})
+ rows[-1]['projection_passed']=all(b['passed24']for b in bounds.values())and rows[-1]['receiver_projection']['passed24']and rows[-1]['warning_projection']['passed24']and not any(p['foreground']for p in probes)
+ print(id,rows[-1]['projection_passed'],{k:[v['min'],v['max']]for k,v in bounds.items()},'warning',rows[-1]['warning_projection']['passed24'],flush=True)
+reduced=json.loads(json.dumps(rows[-1]));reduced['id']='dawn_volley-reduced';reduced['reduced_effects']=True;rows.append(reduced)
+paths=[Path(__file__),base,candidate,rp,R/'scripts/courtyard.gd',R/'scripts/player.gd',R/'scripts/target.gd',R/'scripts/rama_hero_runtime.gd',R/'scripts/rama_ability_kit.gd',R/'scripts/rama_ability_effects.gd',R/'assets/design/rama-ability-kit.json',R/'assets/environment/lanka_courtyard.glb']
+contract={'schema':1,'task':'R3-11','source_commit':'0437ea91edf6989ff78c1eeadb3661f4825b60f2','viewport':[1280,960],'raw_stills_per_branch':6,'scene':'res://scenes/courtyard.tscn','player_position_m':origin.tolist(),'player_yaw_radians':0,'player_pitch_radians':0,'visual_yaw_degrees_initial':180,'actual_receiver':{'node':'World/Target03','root_position_m':receiver.tolist(),'collision_size_m':[1.12,1.5,.45],'collision_center_m':[0,1.2,-8],'rendered_bounds_conservative_m':{'min':receiverbox.min(0).tolist(),'max':receiverbox.max(0).tolist()},'aim_basis':'Normal player camera with existing spring offset x=.65 and yaw/pitch0. At player x=-.65, center ray should hit Target03 front z=-7.775 at world x0, y1.5001. Require actual ray hit Target03; fail if different rather than override accepted event geometry.'},'predicted_forward':forward.tolist(),'predicted_target_ground_m':[0,0,-7.775],'near_m':.05,'far_m':180,'normal_reduced_motion':False,'shots':rows,'all_source_projections_passed':all(s['projection_passed']for s in rows),'source_sha256':{str(p):sha(p)for p in paths},'control_contract':['Reset actual training per shot; release all movement/fire input; start training and hide UI/title light; normal day lighting inherited from frozen R3 baseline.','Set only initial player transform/zero velocity and yaw/pitch; update native camera, keep native player.camera pointer. Set review_camera separately. Set actual fx.set_options({reduced_effects: shot flag, reduced_motion:false}) before cast.','Allow actual physics to settle; require is_on_floor and actual downward collision normal UP/support y0; reset face/secondary consistently through existing scene controls. No per-frame root, pose, geometry or effect-age override.','Use scene.rama_runtime.cast_ability(id), not synthetic events. Require accepted result and log begin event/cast id/generation plus actual native camera center-ray hit.','Sample at the first rendered process boundary whose actual kit age since begin reaches target_authority_age_s within1e-6; require age not exceeding target+.025, expected release count and motion stage. Record actual motion/action/secondary/time fields. Freeze only after reaching this actual state and capture final modifier snapshot.','For Measured Step require exactly one release at authority age .10; sample .10 after it. Preserve actual movement receiver; camera fixed in world so full4.5m path stays framed.','Normal and reduced Dawn Volley use identical reset, cast, kit age, camera, light and transforms. Compare actual source state and event hashes; effects flag is the only intended rendering control difference.','Require actual imported full hero/weapon vertices plus live shader offsets in frame24px, plus actual Target03 rendered/collision bounds and active warning mesh bounds in frame. Source replay does not replace this capture gate.','Retain normal depth/occlusion. Full-range warning lines can terminate visually at courtyard cover; record actual event target/receiver. No threat recipient or boundary geometry moved for framing.','No second long sequence. Six sampled views per branch; missing release/hit/expiry/cancel/reduced variants remain outside acceptance.'], 'scope':'Source bounds and scene rays only; actual imported projection, event phases, target ray, threat occlusion and candidate pixel review pending. Candidate r7 must pass parent diagnostic acceptance before matched final captures.'}
+(O/'action-capture-contract.json').write_text(json.dumps(contract,indent=2)+'\n')

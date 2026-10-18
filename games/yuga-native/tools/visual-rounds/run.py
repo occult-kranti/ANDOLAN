@@ -27,7 +27,7 @@ def main():
     parser.add_argument('--shader-cache-seed', type=Path)
     parser.add_argument('--godot', default=shutil.which('godot'))
     parser.add_argument('--display', type=int, default=158)
-    parser.add_argument('--mode', choices=['stills','continuity','actions','probe','forms'], default='stills')
+    parser.add_argument('--mode', choices=['stills','continuity','actions','probe','forms','groom-stills','groom-continuity','groom-probe','groom-diagnostic','groom-actions'], default='stills')
     parser.add_argument('--context', choices=['courtyard','stone','foliage'], default='courtyard')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
@@ -43,6 +43,9 @@ def main():
     command = [args.godot, '--path', str(project), '--display-driver', 'x11', '--rendering-method', 'forward_plus', '--audio-driver', 'Dummy', '--disable-vsync', '--fixed-fps', '30', '--max-threads', '2', '--script', 'res://tools/visual-rounds/capture.gd', '--', '--output=' + str(output)]
     command.extend(['--mode='+args.mode, '--context='+args.context])
     expected = 3 if args.mode == 'forms' else 36 if args.mode == 'continuity' else (5 if args.mode == 'actions' else (1 if args.mode == 'probe' else (10 if args.context == 'courtyard' else 2)))
+    if args.mode.startswith('groom-'):
+        command[command.index('--script')+1] = 'res://tools/visual-rounds/capture_groom.gd'
+        expected = {'groom-stills':8,'groom-continuity':150,'groom-probe':1,'groom-diagnostic':3,'groom-actions':6}[args.mode]
     if args.dry_run:
         print(json.dumps({'command': command, 'starts_processes': False, 'raw_pngs': expected}, indent=2)); return
     runner_sha = digest(__file__)
@@ -92,6 +95,20 @@ def main():
         cancelled = [e for e in report['ability_events'] if e['kind']=='cancel' and e['cast_id']==casts['piercing_dawn']['cast_id']]
         forbidden = [e for e in report['ability_events'] if e['kind'] in ['release','impact'] and e['cast_id']==casts['piercing_dawn']['cast_id']]
         if not release or not cancelled or forbidden: raise ValueError('Cast-specific release/cancel contract failed')
+    if args.mode == 'groom-continuity':
+        sequence = report['shots']
+        if any(b['render_frame'] != a['render_frame']+1 for a,b in zip(sequence,sequence[1:])):
+            raise ValueError('Groom sequence skipped a rendered frame')
+        casts = [x for x in report['sequence_controls'] if x['kind']=='cast']
+        if {x['ability'] for x in casts} != {'kodanda','measured_step'}: raise ValueError('Required actual casts absent')
+        for cast in casts:
+            if not cast['result']['accepted'] or not any(e['kind']=='release' and e['cast_id']==cast['result']['cast_id'] for e in report['ability_events']):
+                raise ValueError('Actual cast release absent: '+cast['ability'])
+        if not any(x['kind']=='actual_reset' for x in report['sequence_controls']): raise ValueError('Actual reset absent')
+        positions = [tuple(s['player_transform'][3]) for s in sequence]
+        if len(set(positions)) < 20: raise ValueError('Actual movement absent')
+        if not all(s['bounds']['passed'] and s['secondary']['finite'] for s in sequence): raise ValueError('Framing or finite-state failure')
+        if max(abs(v) for v in sequence[-1]['secondary']['cloth_offset'])>.001: raise ValueError('Reset did not settle cloth')
     for resource, sha in report['source_sha256'].items():
         path = project / resource.removeprefix('res://')
         if digest(path) != sha: raise ValueError('Changed source: ' + resource)
@@ -101,7 +118,7 @@ def main():
     warnings = [line for line in log_text.splitlines() if 'WARNING:' in line]
     receipt = {'complete': True, 'godot_exit_code': result.returncode, 'command': command, 'raw_pngs': expected, 'renderer': report['renderer'], 'adapter': report['adapter'], 'source_pins': len(report['source_sha256']), 'report_sha256': digest(report_path), 'runner_sha256': runner_sha, 'godot_log_sha256': digest(log_path), 'xvfb_log_sha256': digest(xlog_path), 'warnings': warnings, 'scope': report['scope']}
     (output / 'run.json').write_text(json.dumps(receipt, indent=2) + '\n')
-    if args.mode == 'continuity':
+    if args.mode in ['continuity','groom-continuity']:
         subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-n','-framerate','30','-i',str(output/'frame-%03d.png'),'-an','-c:v','libx264','-threads','2','-crf','18','-pix_fmt','yuv420p',str(output/'continuity.mp4')],check=True)
     print(json.dumps(receipt, indent=2))
 

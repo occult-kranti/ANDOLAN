@@ -8,6 +8,8 @@ as executed merely because export and archive validation succeed on Linux.
 from __future__ import annotations
 
 import argparse
+import configparser
+import copy
 import hashlib
 import json
 import os
@@ -17,6 +19,7 @@ import shutil
 import struct
 import subprocess
 import sys
+import tempfile
 import zipfile
 
 PROJECT = Path(__file__).resolve().parents[1]
@@ -133,7 +136,8 @@ def _validate_rama_schema1(project: Path, notice: dict, asset_relocation: str | 
     return sources
 
 
-def _validate_rama_form_stage(project: Path, stage: dict, historical: list, sources: dict) -> dict:
+def _validate_rama_form_stage(project: Path, stage: dict, historical: list, sources: dict,
+                              runtime_bindings: bool = True) -> dict:
     """One bounded GLB form stage; editable data is imported from its output.
 
     This checks provenance identities, not the numerical or visual truth of an
@@ -214,7 +218,8 @@ def _validate_rama_form_stage(project: Path, stage: dict, historical: list, sour
         if (not isinstance(binding, dict) or set(binding) != {'asset', 'sha256'}
                 or binding.get('asset') != asset or binding.get('sha256') != sources[source]['sha256']):
             raise ValueError('Rama form runtime LOD binding differs from its authored output')
-        sources[asset] = _rama_source(project, asset, binding['sha256'])
+        if runtime_bindings:
+            sources[asset] = _rama_source(project, asset, binding['sha256'])
         if sources[f'{RAMA_FORM_BASE}/input/rama-hero-{level}.glb']['sha256'] != input_hash:
             raise ValueError('Rama form original LOD input differs from frozen historical bytes')
         receipt = lod['levels'][level]
@@ -229,6 +234,196 @@ def _validate_rama_form_stage(project: Path, stage: dict, historical: list, sour
             'editableOrigin': stage['editableOrigin'], 'runtimeLods': bindings}
 
 
+# Schema4 is one frozen proposal, not an open-ended authoring-stage mechanism.
+# A later art revision needs a separately reviewed contract and new pins.
+RAMA_GROOM_BASE = 'art/visual-rounds/groom/principal-groom-v1'
+RAMA_GROOM_PARENT_NOTICE = '754f81cef0da3d3fb03a21e083e0e3ab7a8b6feed7e0b95fcd47b88a99c33f58'
+RAMA_GROOM_INPUTS = {
+    'near': '140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a',
+    'mid': '27d998d924d2732b13bc8e18c3e3ec1ce9d58f0408bf3fda1ff0613cf32cba9f',
+    'far': 'ea9818e1464c9b6bc077ae83f8354a6357fb19d2a18fc84b2deb65c58aff901a',
+}
+RAMA_GROOM_OUTPUTS = {
+    'near': '8b6cf0f4c5520696d1d843e5bdebb2454c1dbd4341e17171c5b6d20353384d5c',
+    'mid': 'd95a061e2243477afc0227bf52564252fbcb20cb039d303ad10292ea5d85beed',
+    'far': 'ee2e35278ce49efdda6751850fddbb8f1b4de99ad019e6992c10e7702dc6317c',
+}
+RAMA_GROOM_FILES = {
+    f'{RAMA_GROOM_BASE}/rama-hero.glb': RAMA_GROOM_OUTPUTS['near'],
+    f'{RAMA_GROOM_BASE}/reconstruction.blend': '940c8208d8f5ee8c2e8dd9e4bea2d9893450026189f1a4eb24cd0b1874378f25',
+    'art/visual-rounds/groom/build_groom.py': '4bcdb1121a52c68f2cb3f35850ace8956fb0554d120a85ce292c4f4afa8f6044',
+    f'{RAMA_GROOM_BASE}/groom-manifest.json': '948bed857f31609df81ea228663cb63055dd88148bda84a9fd5c04c48c30e6bc',
+}
+RAMA_GROOM_DEPENDENCIES = {
+    'art/visual-rounds/groom/import_editable.py': '1f171a16886636726b1be71a799d5792dcf3834a48e50ab9a51e1ea196e5ae6d',
+    'art/visual-rounds/groom/source-manifest-r7.json': '27bd394314e331c3d40d3c5fa88d06e0546e57e31dbe45a8c59eb1403f84114a',
+    'art/visual-rounds/groom/NOTICE.md': '732c14adcb44d88cf88837dec040af9be29aab70daa3c4f2a8238e1c72d4aa4f',
+    'art/hero-rama-lod/glb_lod.py': '83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7',
+    f'{RAMA_GROOM_BASE}/reconstruction.inspection.json': '9af85ce316cc3a270ef62bef98ad4b203218c6f29a5a27c81dc6d4af8d28e031',
+    f'{RAMA_GROOM_BASE}/rama-hero-mid.glb': RAMA_GROOM_OUTPUTS['mid'],
+    f'{RAMA_GROOM_BASE}/rama-hero-far.glb': RAMA_GROOM_OUTPUTS['far'],
+    f'{RAMA_GROOM_BASE}/input/RAMA-HERO-PROVENANCE.json': RAMA_GROOM_PARENT_NOTICE,
+}
+RAMA_GROOM_RUNTIME_SOURCES = {
+    # Separately approved lifecycle fix, already committed in 5bf8406. This is
+    # a required runtime dependency, not part of the GLB authoring ancestry.
+    'scripts/rama_secondary_motion.gd': '2b8e467df254dcda175694ab988071f24b41ddaa93275f5cbb9768abcb143f34',
+}
+RAMA_CLOTH_BASE = 'art/visual-rounds/cloth'
+RAMA_CLOTH_ASSET = 'assets/materials/rama-finish/woven-roughness.png'
+RAMA_CLOTH_SHA256 = 'eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500'
+RAMA_CLOTH_IMPORT_SHA256 = '646c1b220662472d42a56884d8a1b51bddb625724b6de53d9f61cbf621109c24'
+RAMA_CLOTH_DEPENDENCIES = {
+    f'{RAMA_CLOTH_BASE}/textures/woven-roughness-r3.png': RAMA_CLOTH_SHA256,
+    f'{RAMA_CLOTH_BASE}/build_candidate.py': '8f89cc177a3cb70f8f05b385f653533717d718b6cf0a949486cb019e1b14543a',
+    f'{RAMA_CLOTH_BASE}/material-profile.json': 'f4ffe5e11364e1aa5905a93731063f24b4ca96036bceb963c84d26503caa299a',
+    f'{RAMA_CLOTH_BASE}/source-manifest.json': 'd0c6ad6d7c82f721d3b4ebe749aee933b38caadd2af5cb7cc1a95da9b9c7c4d8',
+    f'{RAMA_CLOTH_BASE}/NOTICE.md': '980a21ef68eda2db274528f10707746c5a496b0cf5bc02a4dbe1579aebe26a2f',
+    f'{RAMA_CLOTH_BASE}/input/woven-roughness.png': '80f837f65096a4579e8b1de3c346f6f99f4d8b31d88c574fd5c18cd28889e4d3',
+    f'{RAMA_CLOTH_BASE}/input/woven-roughness.png.import': 'c1fb4726ef765526cb67d2c5e78a85a0a8c49de6181a6e0b7e56286208ab3b8a',
+    'scripts/rama_surface_finish.gd': '7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1',
+    'shaders/rama_secondary_cloth.gdshader': 'c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7',
+}
+
+
+def _rama_fixed_dependencies(project, declared, expected, sources):
+    if declared != [{'path': p, 'sha256': h} for p, h in expected.items()]:
+        raise ValueError('Rama schema4 dependencies differ from the frozen ordered source pins')
+    for path, sha in expected.items():
+        sources[path] = _rama_source(project, path, sha)
+
+
+def _rama_glb(path):
+    """Read the exact two-chunk GLB used by the finite schema4 contract."""
+    data = path.read_bytes()
+    if len(data) < 28 or struct.unpack_from('<III', data) != (0x46546c67, 2, len(data)):
+        raise ValueError('Rama schema4 GLB header differs')
+    length, kind = struct.unpack_from('<II', data, 12)
+    end = 20 + length
+    if kind != 0x4e4f534a or end + 8 > len(data):
+        raise ValueError('Rama schema4 GLB JSON chunk differs')
+    document = json.loads(data[20:end])
+    length, kind = struct.unpack_from('<II', data, end)
+    if kind != 0x004e4942 or end + 8 + length != len(data):
+        raise ValueError('Rama schema4 GLB BIN chunk differs')
+    return document, data[end + 8:]
+
+
+def rama_groom_preservation(source, candidate):
+    """Prove nonhair JSON/BIN preservation and report live versus stored cost."""
+    old, prefix = _rama_glb(source)
+    new, binary = _rama_glb(candidate)
+    if binary[:len(prefix)] != prefix:
+        raise ValueError('Rama groom changed its original binary prefix')
+    restored = copy.deepcopy(new)
+    restored['accessors'] = restored['accessors'][:len(old['accessors'])]
+    restored['bufferViews'] = restored['bufferViews'][:len(old['bufferViews'])]
+    restored['buffers'][0]['byteLength'] = old['buffers'][0]['byteLength']
+    restored['meshes'][2]['primitives'][0] = old['meshes'][2]['primitives'][0]
+    if restored != old:
+        raise ValueError('Rama groom changed JSON beyond the single hair primitive and appended data')
+    before, after = old['meshes'][2]['primitives'][0], new['meshes'][2]['primitives'][0]
+    if (before['material'] != after['material'] or before.get('mode', 4) != after.get('mode', 4)
+            or set(before['attributes']) != set(after['attributes'])):
+        raise ValueError('Rama groom changed hair material, topology mode or attribute contract')
+    # All original hair views are exclusive in these pinned inputs. Count them
+    # once; their contents remain stored but are not referenced by live meshes.
+    old_ids = set(before['attributes'].values()) | {before['indices']}
+    old_views = {old['accessors'][i]['bufferView'] for i in old_ids}
+    live_views = set()
+    for mesh in new['meshes']:
+        for primitive in mesh['primitives']:
+            ids = set(primitive['attributes'].values()) | {primitive['indices']}
+            ids.update(i for target in primitive.get('targets', []) for i in target.values())
+            for i in ids:
+                accessor = new['accessors'][i]
+                if 'bufferView' in accessor:
+                    live_views.add(accessor['bufferView'])
+                for sparse in accessor.get('sparse', {}).values():
+                    if isinstance(sparse, dict) and 'bufferView' in sparse:
+                        live_views.add(sparse['bufferView'])
+    if old_views & live_views:
+        raise ValueError('Rama groom retained source hair views are unexpectedly live')
+    triangles = lambda doc: sum(doc['accessors'][p['indices']]['count'] // 3
+                               for m in doc['meshes'] for p in m['primitives'])
+    return {'original_binary_prefix_exact': True, 'nonhair_json_exact': True,
+            'source_file_bytes': source.stat().st_size, 'candidate_file_bytes': candidate.stat().st_size,
+            'retained_binary_prefix_bytes': len(prefix), 'appended_binary_bytes': len(binary) - len(prefix),
+            'retained_dead_hair_view_bytes': sum(old['bufferViews'][i]['byteLength'] for i in old_views),
+            'source_active_triangles': triangles(old), 'candidate_active_triangles': triangles(new),
+            'source_hair_triangles': old['accessors'][before['indices']]['count'] // 3,
+            'candidate_hair_triangles': new['accessors'][after['indices']]['count'] // 3,
+            'candidate_hair_vertices': new['accessors'][after['attributes']['POSITION']]['count']}
+
+
+def _validate_rama_groom_stage(project, stage, historical, sources):
+    required = {'id', 'parent', 'asset', 'sha256', 'editableSource', 'editableSha256',
+                'generator', 'generatorSha256', 'metadata', 'metadataSha256',
+                'generatedDependencies', 'inputEditableSha256', 'inputAssetSha256',
+                'editableOrigin', 'runtimeLods', 'runtimeSources'}
+    if not isinstance(stage, dict) or set(stage) != required:
+        raise ValueError('Rama groom stage is malformed')
+    if (stage['id'] != 'principal-groom-v1' or stage['parent'] != 'principal-facial-form-v1'
+            or stage['inputAssetSha256'] != RAMA_GROOM_INPUTS['near']
+            or stage['inputEditableSha256'] is not None or stage['editableOrigin'] != 'imported-stage-asset'):
+        raise ValueError('Rama groom must derive from the frozen R2 GLB, with an imported editable companion')
+    for (field, hash_field), (path, sha) in zip(
+            (('asset', 'sha256'), ('editableSource', 'editableSha256'),
+             ('generator', 'generatorSha256'), ('metadata', 'metadataSha256')), RAMA_GROOM_FILES.items()):
+        if stage[field] != path or stage[hash_field] != sha:
+            raise ValueError('Rama groom identity differs from the fixed r7 proposal')
+        sources[path] = _rama_source(project, path, sha)
+    _rama_fixed_dependencies(project, stage['generatedDependencies'], RAMA_GROOM_DEPENDENCIES, sources)
+    _rama_fixed_dependencies(project, stage['runtimeSources'], RAMA_GROOM_RUNTIME_SOURCES, sources)
+    archived = json.loads((project / f'{RAMA_GROOM_BASE}/input/RAMA-HERO-PROVENANCE.json').read_text())
+    if archived['schema'] != 3 or archived['authoringStages'] != historical:
+        raise ValueError('Rama groom rewrote the accepted R2 historical stages')
+    expected_lods = [{'asset': f'assets/heroes/rama-hero-{level}.glb', 'sha256': RAMA_GROOM_OUTPUTS[level]}
+                     for level in ('mid', 'far')]
+    if stage['runtimeLods'] != expected_lods:
+        raise ValueError('Rama groom runtime LOD bindings differ from r7')
+    metadata = json.loads((project / stage['metadata']).read_text())
+    costs = {}
+    for level, input_sha in RAMA_GROOM_INPUTS.items():
+        name = 'rama-hero.glb' if level == 'near' else f'rama-hero-{level}.glb'
+        parent_path = f'{RAMA_FORM_BASE}/candidate.glb' if level == 'near' else f'{RAMA_FORM_BASE}/{name}'
+        if sources[parent_path]['sha256'] != input_sha:
+            raise ValueError('Rama groom parent LOD differs from corrected R2')
+        sources[f'assets/heroes/{name}'] = _rama_source(project, f'assets/heroes/{name}', RAMA_GROOM_OUTPUTS[level])
+        receipt = metadata['levels'][level]
+        if receipt['input_sha256'] != input_sha or receipt['output_sha256'] != RAMA_GROOM_OUTPUTS[level]:
+            raise ValueError('Rama groom generator receipt lineage differs')
+        costs[level] = rama_groom_preservation(project / parent_path, project / f'{RAMA_GROOM_BASE}/{name}')
+    inspection = json.loads((project / f'{RAMA_GROOM_BASE}/reconstruction.inspection.json').read_text())
+    if (inspection['candidate_sha256'] != stage['sha256'] or inspection['editable_sha256'] != stage['editableSha256']
+            or inspection['native_source_sha256'] != historical[2]['editableSha256']
+            or inspection['importer_sha256'] != RAMA_GROOM_DEPENDENCIES['art/visual-rounds/groom/import_editable.py']
+            or inspection['candidate_import'] != inspection['reopened'] or inspection['guide_curves'] != 16
+            or inspection['reopened']['bones'] != [164] or len(inspection['reopened']['actions']) != 9
+            or len(inspection['reopened']['packed_images']) != 17):
+        raise ValueError('Rama groom imported editable/reopen identity differs')
+    return {key: stage[key] for key in ('id', 'parent', 'asset', 'sha256', 'editableSource',
+                                       'editableSha256', 'editableOrigin', 'runtimeLods', 'runtimeSources')} | {'costs': costs}
+
+
+def _validate_rama_cloth_stage(project, stage, sources):
+    required = {'id', 'parentNoticeSha256', 'asset', 'sha256', 'importConfig', 'importConfigSha256',
+                'generatedDependencies'}
+    if not isinstance(stage, dict) or set(stage) != required:
+        raise ValueError('Rama schema4 requires one separate finite cloth texture receipt')
+    expected = {'id': 'smooth-woven-roughness-v1', 'parentNoticeSha256': RAMA_GROOM_PARENT_NOTICE,
+                'asset': RAMA_CLOTH_ASSET, 'sha256': RAMA_CLOTH_SHA256,
+                'importConfig': RAMA_CLOTH_ASSET + '.import', 'importConfigSha256': RAMA_CLOTH_IMPORT_SHA256}
+    if any(stage[k] != v for k, v in expected.items()):
+        raise ValueError('Rama cloth stage differs from the reviewed texture/import binding')
+    _rama_fixed_dependencies(project, stage['generatedDependencies'], RAMA_CLOTH_DEPENDENCIES, sources)
+    for path, sha in ((RAMA_CLOTH_ASSET, RAMA_CLOTH_SHA256), (RAMA_CLOTH_ASSET + '.import', RAMA_CLOTH_IMPORT_SHA256)):
+        sources[path] = _rama_source(project, path, sha)
+    old = (project / f'{RAMA_CLOTH_BASE}/input/woven-roughness.png.import').read_bytes()
+    if (project / stage['importConfig']).read_bytes() != old.replace(b'mipmaps/generate=false', b'mipmaps/generate=true'):
+        raise ValueError('Rama cloth import changed beyond mipmap generation')
+
+
 def validate_rama_hero_notice(project: Path | None = None) -> dict:
     """Verify source identity and ordered authoring, not anatomy or art acceptance.
 
@@ -236,6 +431,8 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
     authoring, so the R7 generator is never mislabeled as the final generator.
     Schema 3 appends one bounded form stage and its coherent mid/far body LODs,
     preserving the schema2 notice and all three historical stages exactly.
+    Schema 4 appends the exact original groom-r7 and a separate cloth texture
+    receipt; the optional secondary shader is expressly outside this contract.
     Historical rama.glb/rama-production.glb retain their separate checks.
     """
     project = (project or PROJECT).resolve()
@@ -247,8 +444,12 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
         raise ValueError('Rama hero provenance must declare an integer schema')
     if notice['schema'] == 1:
         return {'notice': record(notice_path), 'sources': _validate_rama_schema1(project, notice)}
-    if notice['schema'] not in (2, 3):
+    if notice['schema'] not in (2, 3, 4):
         raise ValueError('Rama hero provenance has an unknown schema')
+    if notice['schema'] == 4 and set(notice) != {
+            'schema', 'asset', 'sha256', 'bytes', 'editableSource', 'editableSha256',
+            'authoringStages', 'limitations', 'clothStage'}:
+        raise ValueError('Rama schema4 admits only the fixed groom stage and separate cloth receipt')
     obsolete = {'generator', 'generatorSha256', 'weightCorrectionGenerator',
                 'weightCorrectionGeneratorSha256', 'weightCorrection',
                 'weightCorrectionSha256', 'generatedDependencies'}
@@ -260,7 +461,7 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
     if type(notice.get('bytes')) is not int or notice['bytes'] != sources[notice['asset']]['bytes']:
         raise ValueError('Rama hero provenance byte count differs from active asset')
     stages = notice.get('authoringStages')
-    stage_count = len(RAMA_HERO_STAGE_PATHS) + (notice['schema'] == 3)
+    stage_count = len(RAMA_HERO_STAGE_PATHS) + max(0, notice['schema'] - 2)
     if not isinstance(stages, list) or len(stages) != stage_count:
         raise ValueError('Rama hero requires the schema-specific ordered R7/Q3/face[/form] stages')
     required_keys = {'id', 'parent', 'asset', 'sha256', 'editableSource', 'editableSha256',
@@ -365,9 +566,16 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
                                 'asset': asset, 'sha256': stage['sha256'],
                                 'editableSource': editable, 'editableSha256': stage['editableSha256']})
         previous = stage
-    if notice['schema'] == 3:
-        reviewed_stages.append(_validate_rama_form_stage(project, stages[3], stages[:3], sources))
+    if notice['schema'] >= 3:
+        reviewed_stages.append(_validate_rama_form_stage(project, stages[3], stages[:3], sources,
+                                                        runtime_bindings=notice['schema'] == 3))
         previous = stages[3]
+    if notice['schema'] == 4:
+        reviewed_stages.append(_validate_rama_groom_stage(project, stages[4], stages[:4], sources))
+        _validate_rama_cloth_stage(project, notice.get('clothStage'), sources)
+        previous = stages[4]
+    elif 'clothStage' in notice:
+        raise ValueError('Rama cloth stage requires the exact schema4 groom/cloth proposal')
     if (notice.get('sha256') != previous['sha256']
             or notice.get('editableSource') != previous['editableSource']
             or notice.get('editableSha256') != previous['editableSha256']):
@@ -377,6 +585,182 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
 
 def json_write(path: Path, value: dict) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+
+
+# Raw font/license identities are stable source pins. Imported resource hashes
+# are deliberately measured for each export: Godot may generate cache metadata
+# differently in a clean checkout, so those hashes are not permanent constants.
+BUNDLED_FONT_FILES = {
+    'assets/fonts/NotoSans-Regular.ttf': {'bytes': 512672, 'sha256': '89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d'},
+    'assets/fonts/NotoSerif-Regular.ttf': {'bytes': 588876, 'sha256': '9d7583b7dc9e812afd32a14280c5cac3160012efe50c8d08938f4fea266ff67f'},
+    'assets/fonts/DejaVuSans.ttf': {'bytes': 759720, 'sha256': '57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e'},
+}
+BUNDLED_FONT_NOTICES = {
+    'NOTICE/Noto-fonts/COPYRIGHT.txt': '075f91382875da1c4b491f1facf2586f55448705133264d98ce15cab6211b125',
+    'NOTICE/Noto-fonts/manifest.json': 'ee39170795d70e44cb7af8fe36fe71996b9b54b511eb62603d71e85dfb38ac42',
+    'NOTICE/Noto-fonts/README.md': 'bdc131e443fd2f312a28aab79a910f2bfcd910954b4fff40fda3ba19d42bee30',
+    'NOTICE/DejaVu-font/COPYRIGHT.txt': '63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9',
+    'NOTICE/DejaVu-font/manifest.json': 'b546663108a0d4f4eb052a13ea35d945572b1e551a426e9db0e7f8dbdce99508',
+}
+
+
+def validate_bundled_font_notices(project: Path) -> dict:
+    return {path: _rama_source(project.resolve(), path, sha) for path, sha in BUNDLED_FONT_NOTICES.items()}
+
+
+def validate_bundled_font_sources(project: Path | None = None) -> dict:
+    project = (project or PROJECT).resolve()
+    records = validate_bundled_font_notices(project)
+    for path, expected in BUNDLED_FONT_FILES.items():
+        records[path] = _rama_source(project, path, expected['sha256'])
+        if records[path] != expected:
+            raise ValueError('Bundled font byte count differs: ' + path)
+    return records
+
+
+def _font_resource_path(source: str, resource: str) -> str:
+    expected = r'res://\.godot/imported/' + re.escape(Path(source).name) + r'-[0-9a-f]{32}\.fontdata'
+    if not isinstance(resource, str) or re.fullmatch(expected, resource) is None:
+        raise ValueError('Bundled font import resource path is malformed: ' + source)
+    return resource.removeprefix('res://')
+
+
+def _font_import_target(payload: bytes, source: str) -> str:
+    """Validate the remap that Godot retains after trimming export descriptors."""
+    text = payload.rstrip(b'\x00').decode('utf-8')
+    config = configparser.ConfigParser(interpolation=None, strict=True, delimiters=('=',))
+    config.optionxform = str
+    try:
+        config.read_string(text)
+    except configparser.Error as error:
+        raise ValueError('Bundled font descriptor has ambiguous sections/keys: ' + source) from error
+    required = {'path', 'importer', 'type'}
+    if (config.defaults() or not config.has_section('remap')
+            or any(required.intersection(config[section]) for section in config.sections() if section != 'remap')
+            or not required.issubset(config['remap'])):
+        raise ValueError('Bundled font descriptor requires explicit [remap] keys: ' + source)
+    values = {}
+    for key in required:
+        match = re.fullmatch(r'"([^"\r\n]+)"', config['remap'][key])
+        if match is None:
+            raise ValueError('Bundled font remap value is malformed: ' + source)
+        values[key] = match[1]
+    if values['importer'] != 'font_data_dynamic' or values['type'] != 'FontFile':
+        raise ValueError('Bundled font import descriptor is malformed: ' + source)
+    _font_resource_path(source, values['path'])
+    return values['path']
+
+
+def prove_imported_font_bindings(godot: Path, output: Path, project: Path | None = None) -> dict:
+    """Load copies of this export's imported fonts in an isolated font-only tree.
+
+    No import or world scene runs here. FontFile.data proves that each actual
+    imported resource embeds its pinned raw TTF. The copied resource payloads
+    must then appear byte-identically in the PCK made from this same export.
+    """
+    project = (project or PROJECT).resolve()
+    sources = validate_bundled_font_sources(project)
+    imports = {}
+    for source in BUNDLED_FONT_FILES:
+        config_path = source + '.import'
+        config_record = _rama_source(project, config_path, digest(project / config_path))
+        config = (project / config_path).read_text()
+        resource_path = _font_import_target(config.encode(), source)
+        source_files = re.findall(r'^source_file="([^"]+)"$', config, re.M)
+        if source_files != ['res://' + source]:
+            raise ValueError('Bundled font import does not bind the required source: ' + source)
+        resource = _font_resource_path(source, resource_path)
+        payload = _rama_source(project, resource, digest(project / resource))
+        imports[source] = {'import_config': {'path': config_path, **config_record},
+                           'resource': {'path': resource_path, **payload}}
+    paths = json.dumps(['res://' + path for path in BUNDLED_FONT_FILES])
+    script = '''extends SceneTree
+func _initialize() -> void:
+    var report_path := ""
+    for arg in OS.get_cmdline_user_args():
+        if arg.begins_with("--report="):
+            report_path = arg.trim_prefix("--report=")
+    var result := {"schema": 1, "fonts": {}}
+    var failed := false
+    for path in FONT_PATHS:
+        var font := load(path) as FontFile
+        if font == null:
+            failed = true
+            continue
+        var hash := HashingContext.new()
+        hash.start(HashingContext.HASH_SHA256)
+        hash.update(font.data)
+        result.fonts[path] = {"bytes": font.data.size(), "sha256": hash.finish().hex_encode()}
+    var file := FileAccess.open(report_path, FileAccess.WRITE)
+    if file == null:
+        quit(2)
+        return
+    file.store_string(JSON.stringify(result, "\\t") + "\\n")
+    file.close()
+    quit(1 if failed else 0)
+'''.replace('FONT_PATHS', paths)
+    output = output.resolve()
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='font-bindings-', dir=output.parent) as folder:
+        isolated = Path(folder)
+        (isolated / 'project.godot').write_text('config_version=5\n[application]\nconfig/name="Font binding proof"\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
+        (isolated / 'font_probe.gd').write_text(script)
+        for source, entry in imports.items():
+            for relative in (source, entry['import_config']['path'], entry['resource']['path'].removeprefix('res://')):
+                target = isolated / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(project / relative, target)
+                if record(target) != record(project / relative):
+                    raise ValueError('Font source changed while preparing isolated binding proof')
+        command = [str(godot), '--headless', '--path', str(isolated), '--script', 'res://font_probe.gd', '--', '--report=' + str(output)]
+        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+        output.with_suffix('.log').write_text(result.stdout + result.stderr)
+        if result.returncode or 'SCRIPT ERROR:' in result.stdout + result.stderr or '\nERROR:' in result.stdout + result.stderr:
+            raise ValueError('Actual FontFile binding proof failed; inspect ' + str(output.with_suffix('.log')))
+    observed = json.loads(output.read_text())
+    expected = {'schema': 1, 'fonts': {'res://' + path: record for path, record in BUNDLED_FONT_FILES.items()}}
+    if observed != expected:
+        raise ValueError('Imported FontFile.data differs from the exact bundled raw TTFs')
+    if sources != validate_bundled_font_sources(project):
+        raise ValueError('Bundled font sources or licenses changed during binding proof')
+    for source, entry in imports.items():
+        for kind in ('import_config', 'resource'):
+            record_ = entry[kind]
+            relative = record_['path'].removeprefix('res://')
+            if _rama_source(project, relative, record_['sha256']) != {k: record_[k] for k in ('bytes', 'sha256')}:
+                raise ValueError('Imported font changed during binding proof')
+        entry['decoded_raw_ttf'] = observed['fonts']['res://' + source]
+    return {'schema': 1, 'sources': sources, 'imports': imports,
+            'probe_sha256': hashlib.sha256(script.encode()).hexdigest(), 'probe_result': record(output),
+            'scope': 'Same-export imported resource bytes with actual FontFile.data SHA256 equal to pinned raw TTFs; no platform-independent cache hash assumption.'}
+
+
+def qualify_bundled_font_package(pack: dict, bindings: dict, project: Path | None = None) -> dict:
+    sources = validate_bundled_font_sources(project)
+    if (not isinstance(bindings, dict) or type(bindings.get('schema')) is not int
+            or bindings['schema'] != 1 or bindings.get('sources') != sources
+            or not isinstance(bindings.get('imports'), dict) or set(bindings['imports']) != set(BUNDLED_FONT_FILES)):
+        raise ValueError('Font package qualification lacks this export\'s verified complete source bindings')
+    verified = {}
+    for source, expected in BUNDLED_FONT_FILES.items():
+        binding = bindings['imports'][source]
+        resource = binding.get('resource', {})
+        _font_resource_path(source, resource.get('path'))
+        if binding.get('decoded_raw_ttf') != expected:
+            raise ValueError('Font package binding decoded a substituted raw TTF: ' + source)
+        matches = [entry for entry in pack.get('entries', [])
+                   if entry.get('path', '').removeprefix('res://') == resource['path'].removeprefix('res://')]
+        if (len(matches) != 1 or any(matches[0].get(k) != resource.get(k) for k in ('bytes', 'sha256'))
+                or matches[0].get('stored_md5_verified') is not True):
+            raise ValueError('Required exact font payload missing or substituted in PCK: ' + source)
+        remaps = [entry for entry in pack.get('entries', [])
+                  if entry.get('path', '').removeprefix('res://') == source + '.import']
+        if (len(remaps) != 1 or remaps[0].get('font_import_target') != resource['path']
+                or remaps[0].get('stored_md5_verified') is not True):
+            raise ValueError('Required font runtime remap missing or substituted in PCK: ' + source)
+        verified[source] = resource
+    return {'sources': sources, 'packed_fonts': verified, 'all_three_exact_font_payloads_present': True,
+            'notices_required_outside_pck': list(BUNDLED_FONT_NOTICES)}
 
 
 def source_state() -> dict:
@@ -455,8 +839,11 @@ def inspect_pack(path: Path) -> dict:
             raise ValueError(f'Packed payload MD5 mismatch: {name}')
         if SECRET_CONTENT.search(payload):
             raise ValueError(f'Potential credential marker in payload: {name}')
-        entries.append({'path': name, 'bytes': size, 'sha256': hashlib.sha256(payload).hexdigest(),
-                        'stored_md5_verified': True})
+        entry = {'path': name, 'bytes': size, 'sha256': hashlib.sha256(payload).hexdigest(),
+                 'stored_md5_verified': True}
+        if relative.endswith('.ttf.import') and relative[:-7] in BUNDLED_FONT_FILES:
+            entry['font_import_target'] = _font_import_target(payload, relative[:-7])
+        entries.append(entry)
     required = ('rama.glb-', 'rama-production.glb-', 'rama-hero.glb-', 'lanka_courtyard.glb-',
                 'architecture.glb-', 'nature.glb-', 'assets/world/confluence-map.json',
                 'production_water.gdshader', 'world_water.gdshader', 'project.binary',
@@ -517,6 +904,7 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
     version = subprocess.check_output([str(args.linux_engine), '--version'], text=True).strip()
     if not version.startswith(EXPECTED_VERSION + '.'):
         raise ValueError(f'Expected Godot {EXPECTED_VERSION}; found {version}')
+    font_bindings = prove_imported_font_bindings(args.linux_engine, build / 'font-bindings-export.json')
     rama = PROJECT / 'assets/heroes/rama.glb'
     original_rama = REPOSITORY / 'games/yuga/client/assets/heroes/rama.glb'
     if digest(rama) != digest(original_rama):
@@ -549,6 +937,7 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
         pack = build / f'yuga-native-{platform}.pck'
         run_export(args.linux_engine, platform, pack, build / f'export-{platform}.log')
         packs[platform] = inspect_pack(pack)
+        packs[platform]['font_qualification'] = qualify_bundled_font_package(packs[platform], font_bindings)
     after = source_state()
     if before['sha256'] != after['sha256']:
         raise ValueError('Runtime source changed during export; rerun on a frozen/imported tree')
@@ -558,6 +947,7 @@ def export_all(args: argparse.Namespace, build: Path) -> dict:
                 'git': git_context(), 'source': after, 'packs': packs,
                 'rama_matches_existing_yuga_source': True,
                 'rama_hero_provenance': rama_hero_notice,
+                'font_bindings': font_bindings,
                 'limits': ['No Windows execution performed by this tool.',
                            'PCK and archive checks do not establish visual quality or gameplay acceptance.']}
     json_write(build / 'native-export-manifest.json', manifest)
@@ -589,6 +979,7 @@ def safe_notice_copy(destination: Path) -> None:
             target = destination / 'NOTICE' / item.relative_to(notices)
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(item, target)
+    validate_bundled_font_notices(destination)
 
 
 def zip_directory(staging: Path, output: Path) -> dict:
@@ -625,6 +1016,9 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
         raise ValueError('Runtime sources changed since PCK export; export again before packaging')
     if exported.get('rama_hero_provenance') != validate_rama_hero_notice():
         raise ValueError('Rama hero provenance changed since PCK export; export again before packaging')
+    font_bindings = prove_imported_font_bindings(args.linux_engine, build / 'font-bindings-package.json')
+    if font_bindings != exported.get('font_bindings'):
+        raise ValueError('Font source/import bindings changed since PCK export; export again before packaging')
     results = {}
     windows_provenance = args.windows_engine.parent / 'godot-windows-provenance.json'
     verified_windows = json.loads(windows_provenance.read_text())
@@ -640,6 +1034,7 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
         shutil.copyfile(engine, staging / ('godot' if platform == 'linux' else 'godot.exe'))
         pack = build / f'yuga-native-{platform}.pck'
         actual_pack = inspect_pack(pack)
+        actual_pack['font_qualification'] = qualify_bundled_font_package(actual_pack, font_bindings)
         if actual_pack['sha256'] != exported['packs'][platform]['sha256']:
             raise ValueError('PCK changed after export manifest validation')
         shutil.copyfile(pack, staging / 'yuga-native.pck')
@@ -658,6 +1053,7 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
                     'packaging': 'official-full-engine-with-exported-pck', 'git': exported['git'],
                     'runtime_source': exported['source'], 'payloads': payloads,
                     'pck': actual_pack, 'execution_status': 'not_executed_by_packager',
+                    'font_bindings': font_bindings,
                     'windows_engine_provenance': verified_windows if platform == 'windows' else None}
         json_write(staging / 'PACKAGE-MANIFEST.json', manifest)
         archive = build / f'yuga-native-{platform}-x86_64.zip'

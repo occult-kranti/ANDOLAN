@@ -7,6 +7,8 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
+import shutil
+import struct
 import tempfile
 
 PROJECT = Path(__file__).resolve().parents[1]
@@ -244,7 +246,7 @@ def form_stage_cases(checks: list) -> None:
         historical_bytes = (PROJECT / 'NOTICE/RAMA-HERO-PROVENANCE.json').read_bytes()
         historical_notice = json.loads(historical_bytes)
         # Tests remain useful after promotion: recover the immutable schema2 notice.
-        if historical_notice['schema'] == 3:
+        if historical_notice['schema'] >= 3:
             historical_bytes = (PROJECT / base / 'input/RAMA-HERO-PROVENANCE.json').read_bytes()
             historical_notice = json.loads(historical_bytes)
         historical = historical_notice['authoringStages']
@@ -368,9 +370,231 @@ def form_stage_cases(checks: list) -> None:
         run('restored fixed form stage accepted', valid=True)
 
 
+def groom_review_cases(checks: list, review: Path) -> None:
+    """Challenge the real frozen proposal in disposable copies, including BIN/JSON drift."""
+    validated = packaging.validate_rama_hero_notice(review)
+    original = json.loads((review / 'NOTICE/RAMA-HERO-PROVENANCE.json').read_text())
+    if original['schema'] != 4:
+        raise ValueError('--groom-review must contain the complete schema4 proposal')
+    checks.append({'name': 'schema4 real complete source validates', 'passed': True})
+    with tempfile.TemporaryDirectory(prefix='rama-groom-package-cases-') as folder:
+        root = Path(folder) / 'project'
+        shutil.copytree(review, root)
+        baseline = original['authoringStages'][-1]
+        historical = original['authoringStages'][:-1]
+
+        def run(name, mutate=None, valid=False, cloth=False):
+            value = copy.deepcopy(original['clothStage'] if cloth else baseline)
+            if mutate:
+                mutate(value)
+            error = None
+            try:
+                if cloth:
+                    packaging._validate_rama_cloth_stage(root, value, {})
+                else:
+                    packaging._validate_rama_groom_stage(root, value, historical, copy.deepcopy(validated['sources']))
+            except (ValueError, OSError) as exc:
+                error = str(exc)
+            checks.append({'name': 'schema4 ' + name, 'passed': (error is None) == valid, 'rejection': error})
+
+        run('exact groom-r7 stage passes', valid=True)
+        for key in baseline:
+            run('missing groom field rejects: ' + key, lambda value, key=key: value.pop(key))
+        for key, changed in {'id': 'future-groom', 'parent': 'face', 'asset': '../outside.glb',
+                             'sha256': '0' * 64, 'inputAssetSha256': '0' * 64,
+                             'inputEditableSha256': historical[-1]['editableSha256'],
+                             'editableOrigin': 'native-modeling-stack', 'editableSha256': '0' * 64,
+                             'metadataSha256': '0' * 64, 'generatorSha256': '0' * 64}.items():
+            run('substituted groom field rejects: ' + key, lambda value, key=key, changed=changed: value.update({key: changed}))
+        run('extra groom stage field rejects', lambda value: value.update(optionalShader=True))
+        run('missing groom dependency rejects', lambda value: value['generatedDependencies'].pop())
+        run('reordered groom dependencies reject', lambda value: value['generatedDependencies'].reverse())
+        run('self-rehashed source substitution rejects', lambda value: value['generatedDependencies'][0].update(sha256='0' * 64))
+        run('required runtime lifecycle substitution rejects', lambda value: value['runtimeSources'][0].update(sha256='0' * 64))
+        run('old R2 runtime LOD binding rejects', lambda value: value['runtimeLods'][0].update(sha256=packaging.RAMA_GROOM_INPUTS['mid']))
+        run('extra runtime LOD rejects', lambda value: value['runtimeLods'].append(value['runtimeLods'][0]))
+        for relative in (f'{packaging.RAMA_GROOM_BASE}/rama-hero.glb',
+                         'assets/heroes/rama-hero-mid.glb',
+                         f'{packaging.RAMA_GROOM_BASE}/input/RAMA-HERO-PROVENANCE.json'):
+            path = root / relative
+            before = path.read_bytes()
+            path.write_bytes(before + b' changed')
+            run('changed source rejects: ' + relative)
+            path.write_bytes(before)
+        path = root / f'{packaging.RAMA_GROOM_BASE}/reconstruction.blend'
+        before = path.read_bytes()
+        path.unlink()
+        path.symlink_to(review / f'{packaging.RAMA_GROOM_BASE}/reconstruction.blend')
+        run('byte-identical external editable symlink rejects')
+        path.unlink()
+        path.write_bytes(before)
+        run('exact cloth receipt passes', valid=True, cloth=True)
+        for key in original['clothStage']:
+            run('missing cloth field rejects: ' + key, lambda value, key=key: value.pop(key), cloth=True)
+        run('cloth ancestry substitution rejects', lambda value: value.update(parentNoticeSha256='0' * 64), cloth=True)
+        run('extra cloth shader declaration rejects', lambda value: value.update(optionalShader=True), cloth=True)
+        for relative in (packaging.RAMA_CLOTH_ASSET, packaging.RAMA_CLOTH_ASSET + '.import',
+                         'shaders/rama_secondary_cloth.gdshader', 'scripts/rama_surface_finish.gd'):
+            path = root / relative
+            before = path.read_bytes()
+            path.write_bytes(before + b' changed')
+            run('changed cloth/runtime source rejects: ' + relative, cloth=True)
+            path.write_bytes(before)
+        notice_path = root / 'NOTICE/RAMA-HERO-PROVENANCE.json'
+        notice = copy.deepcopy(original)
+        notice['optionalShader'] = {'approved': True}
+        notice_path.write_text(json.dumps(notice))
+        try:
+            packaging.validate_rama_hero_notice(root)
+            rejected = False
+        except ValueError:
+            rejected = True
+        checks.append({'name': 'schema4 undeclared optional top-level shader rejects', 'passed': rejected})
+        notice_path.write_text(json.dumps(original))
+        # Independently exercise preservation rather than relying on hash pins.
+        source = root / f'{packaging.RAMA_FORM_BASE}/candidate.glb'
+        candidate = root / f'{packaging.RAMA_GROOM_BASE}/rama-hero.glb'
+        doc, binary = packaging._rama_glb(candidate)
+        for kind in ('nonhair-bin', 'nonhair-json'):
+            changed_doc, changed_bin = copy.deepcopy(doc), bytearray(binary)
+            if kind == 'nonhair-bin':
+                changed_bin[0] ^= 1
+            else:
+                changed_doc['nodes'][0]['name'] += '-unauthorized'
+            json_bytes = json.dumps(changed_doc, separators=(',', ':')).encode()
+            json_bytes += b' ' * (-len(json_bytes) % 4)
+            value = struct.pack('<III', 0x46546c67, 2, 28 + len(json_bytes) + len(changed_bin))
+            value += struct.pack('<II', len(json_bytes), 0x4e4f534a) + json_bytes
+            value += struct.pack('<II', len(changed_bin), 0x004e4942) + changed_bin
+            changed_path = root / f'{kind}.glb'
+            changed_path.write_bytes(value)
+            try:
+                packaging.rama_groom_preservation(source, changed_path)
+                rejected = False
+            except ValueError:
+                rejected = True
+            checks.append({'name': 'schema4 direct preservation rejects ' + kind, 'passed': rejected})
+        run('restored groom accepts after adversaries', valid=True)
+        run('restored cloth accepts after adversaries', valid=True, cloth=True)
+
+
+def bundled_font_cases(checks: list, engine: Path | None = None, evidence: Path | None = None) -> None:
+    """Pin source licenses, challenge exact PCK mappings, optionally decode real imports."""
+    with tempfile.TemporaryDirectory(prefix='bundled-font-cases-') as folder:
+        root = Path(folder) / 'project'
+        sources = packaging.validate_bundled_font_sources()
+        for relative in sources:
+            target = root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(PROJECT / relative, target)
+
+        def run(name, action, valid=False):
+            error = None
+            try:
+                action()
+            except (ValueError, OSError) as exc:
+                error = str(exc)
+            checks.append({'name': 'fonts: ' + name, 'passed': (error is None) == valid, 'rejection': error})
+
+        run('three exact raw fonts and five notice files accept', lambda: packaging.validate_bundled_font_sources(root), True)
+        for relative in sources:
+            path = root / relative
+            original = path.read_bytes()
+            path.write_bytes(original + b' changed')
+            run('changed source rejects ' + relative, lambda: packaging.validate_bundled_font_sources(root))
+            path.unlink()
+            run('missing source rejects ' + relative, lambda: packaging.validate_bundled_font_sources(root))
+            path.write_bytes(original)
+        font = next(iter(packaging.BUNDLED_FONT_FILES))
+        path = root / font
+        original = path.read_bytes()
+        path.unlink()
+        path.symlink_to(PROJECT / font)
+        run('matching external raw-font symlink rejects', lambda: packaging.validate_bundled_font_sources(root))
+        path.unlink()
+        path.write_bytes(original)
+        bindings = {'schema': 1, 'sources': sources, 'imports': {}}
+        pack = {'entries': []}
+        for source, raw in packaging.BUNDLED_FONT_FILES.items():
+            resource = 'res://.godot/imported/' + Path(source).name + '-' + 'a' * 32 + '.fontdata'
+            payload = ('synthetic imported payload for ' + source).encode()
+            record = {'path': resource, 'bytes': len(payload), 'sha256': packaging.hashlib.sha256(payload).hexdigest()}
+            bindings['imports'][source] = {'resource': record, 'decoded_raw_ttf': raw}
+            pack['entries'].extend([{**record, 'stored_md5_verified': True},
+                {'path': 'res://' + source + '.import', 'font_import_target': resource, 'stored_md5_verified': True}])
+        run('complete exact payload and remap fixture accepts', lambda: packaging.qualify_bundled_font_package(pack, bindings, root), True)
+        unprefixed = copy.deepcopy(pack)
+        for entry in unprefixed['entries']:
+            entry['path'] = entry['path'].removeprefix('res://')
+        run('actual-export unprefixed paths accept', lambda: packaging.qualify_bundled_font_package(unprefixed, bindings, root), True)
+        for name, mutate in (
+            ('missing font payload', lambda value: value['entries'].pop(0)),
+            ('missing runtime remap', lambda value: value['entries'].pop(1)),
+            ('duplicate font path', lambda value: value['entries'].append(copy.deepcopy(value['entries'][0]))),
+            ('duplicate alias font path', lambda value: value['entries'].append(dict(value['entries'][0], path=value['entries'][0]['path'].removeprefix('res://')))),
+            ('duplicate runtime remap', lambda value: value['entries'].append(copy.deepcopy(value['entries'][1]))),
+            ('payload substring trick', lambda value: value['entries'][0].update(path=value['entries'][0]['path'] + '-extra')),
+            ('substituted font bytes', lambda value: value['entries'][0].update(sha256='0' * 64)),
+            ('substituted font size', lambda value: value['entries'][0].update(bytes=1)),
+            ('unverified font payload', lambda value: value['entries'][0].update(stored_md5_verified=False)),
+            ('wrong remap target', lambda value: value['entries'][1].update(font_import_target=value['entries'][2]['path'])),
+            ('unverified runtime remap', lambda value: value['entries'][1].update(stored_md5_verified=False)),
+        ):
+            changed = copy.deepcopy(pack)
+            mutate(changed)
+            run(name + ' rejects', lambda: packaging.qualify_bundled_font_package(changed, bindings, root))
+        for name, mutate in (
+            ('boolean schema', lambda value: value.update(schema=True)),
+            ('missing binding', lambda value: value['imports'].pop(font)),
+            ('wrong decoded TTF', lambda value: value['imports'][font].update(decoded_raw_ttf={'bytes': 1, 'sha256': '0' * 64})),
+            ('wrong raw-source pin', lambda value: value['sources'][font].update(sha256='0' * 64)),
+            ('traversal resource path', lambda value: value['imports'][font]['resource'].update(path='res://../outside.fontdata')),
+        ):
+            changed = copy.deepcopy(bindings)
+            mutate(changed)
+            run(name + ' rejects', lambda: packaging.qualify_bundled_font_package(pack, changed, root))
+        resource = bindings['imports'][font]['resource']['path']
+        descriptor = ('[remap]\nimporter="font_data_dynamic"\ntype="FontFile"\npath="' + resource + '"\n').encode()
+        run('trimmed Godot remap parses', lambda: packaging._font_import_target(descriptor + b'\0', font), True)
+        run('duplicate remap target rejects', lambda: packaging._font_import_target(descriptor + ('path="' + resource + '"\n').encode(), font))
+        run('wrong importer rejects', lambda: packaging._font_import_target(descriptor.replace(b'font_data_dynamic', b'texture'), font))
+        run('wrong resource type rejects', lambda: packaging._font_import_target(descriptor.replace(b'FontFile', b'Texture2D'), font))
+        run('other font target rejects', lambda: packaging._font_import_target(descriptor.replace(b'NotoSans', b'NotoSerif'), font))
+        run('target in wrong section rejects', lambda: packaging._font_import_target(descriptor.replace(b'[remap]', b'[deps]'), font))
+        run('split remap target rejects', lambda: packaging._font_import_target(descriptor.replace(b'path=', b'[deps]\npath='), font))
+        run('duplicate remap section rejects', lambda: packaging._font_import_target(descriptor + b'[remap]\nuid="uid://unused"\n', font))
+        run('default section target injection rejects', lambda: packaging._font_import_target(descriptor.replace(b'[remap]', b'[DEFAULT]'), font))
+        run('wrong-case section rejects', lambda: packaging._font_import_target(descriptor.replace(b'[remap]', b'[Remap]'), font))
+        run('duplicate cross-section target rejects', lambda: packaging._font_import_target(descriptor + ('[deps]\npath="' + resource + '"\n').encode(), font))
+        if engine:
+            output = evidence or Path(folder) / 'evidence'
+            output.mkdir(parents=True, exist_ok=True)
+            for source in packaging.BUNDLED_FONT_FILES:
+                config = PROJECT / (source + '.import')
+                target = root / (source + '.import')
+                shutil.copyfile(config, target)
+                resource = packaging._font_import_target(config.read_bytes(), source).removeprefix('res://')
+                target = root / resource
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(PROJECT / resource, target)
+            actual = packaging.prove_imported_font_bindings(engine, output / 'fontfile-data.json', root)
+            packaging.json_write(output / 'font-bindings.json', actual)
+            repeated = packaging.prove_imported_font_bindings(engine, output / 'fontfile-data-repeat.json', root)
+            checks.append({'name': 'fonts: actual three FontFile.data identities and repeated proof stable', 'passed': actual == repeated})
+            font_names = list(packaging.BUNDLED_FONT_FILES)
+            wrong = actual['imports'][font_names[1]]['resource']['path'].removeprefix('res://')
+            replaced = actual['imports'][font_names[0]]['resource']['path'].removeprefix('res://')
+            shutil.copyfile(root / wrong, root / replaced)
+            run('real cache substitution rejects despite intact pinned raw fonts',
+                lambda: packaging.prove_imported_font_bindings(engine, output / 'substituted-fontfile-data.json', root))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--report', type=Path)
+    parser.add_argument('--groom-review', type=Path, help='Complete external schema4 proposal; runs real-source adversaries')
+    parser.add_argument('--font-engine', type=Path, help='Optional actual FontFile decode and substituted-cache adversary')
+    parser.add_argument('--font-evidence', type=Path)
     args = parser.parse_args()
     checks = []
     with tempfile.TemporaryDirectory(prefix='rama-package-cases-') as folder:
@@ -443,13 +667,17 @@ def main() -> int:
         asset.unlink()
         asset.write_bytes(files[original['asset']])
         run('restored source passes', valid=True)
+    bundled_font_cases(checks, args.font_engine, args.font_evidence)
     authoring_chain_cases(checks)
     form_stage_cases(checks)
+    if args.groom_review:
+        groom_review_cases(checks, args.groom_review.resolve(strict=True))
     passed = all(check['passed'] for check in checks)
     report = {'suite': 'rama_package_cases', 'passed': passed, 'checks': checks,
               'source_sha256': {'tools/package-native.py': packaging.digest(PROJECT / 'tools/package-native.py'),
                                 'tests/rama_package_cases.py': packaging.digest(Path(__file__))},
-              'scope': 'Historical schema1/schema2 plus fixed schema3 form append, complete LOD identities, honest imported editable origin, ancestry and safe-path counterexamples; not GLB format or art quality.'}
+              'groom_review': str(args.groom_review) if args.groom_review else None,
+              'scope': 'Historical schema1/schema2 and fixed schema3 remain covered. --groom-review additionally challenges real frozen schema4 groom/cloth sources, exact nonhair BIN/JSON preservation, dependencies, imported editable identity, source paths and excluded shader. Bundled font raw/license identities and exact payload/remap qualification are covered; optional --font-engine runs actual FontFile.data binding and a substituted-cache adversary. No visual acceptance or complete release export.'}
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + '\n')

@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "task": "R3-14-package-support-overlay",
+  "status": "final-independent-review-pending",
+  "accepted_asset_proposal": {
+    "path": "/workspace/scratch/visual-round3/role-14/r7-review-r2/promotion-manifest.json",
+    "bytes": 24436,
+    "sha256": "394ffea43f8c7f79ce911e7d0c3c8b9428c4ffa571c0aeca6bdf1e4e32478ff5"
+  },
+  "accepted_proposed_notice": {
+    "bytes": 14676,
+    "sha256": "5026675c7af8b83412eb375b9883ffe52efd883e20c7fd9594bdf3fdd9c8f5d8"
+  },
+  "promotion_files_changed": false,
+  "raw_font_or_license_pins_changed": false,
+  "support_files": {
+    "tools/package-native.py": {
+      "accepted_proposal_support": {
+        "bytes": 73945,
+        "sha256": "3552b25fe37453ffa7ad129d90eca8dabf37928027a691aa9e3abf8c17fe2cbd"
+      },
+      "reviewed_overlay": {
+        "bytes": 74708,
+        "sha256": "6dac20395c4e274f752b3d50d452dccf4c69522b88a9cdbfa2cf7a7474073d84"
+      },
+      "snapshot": "/workspace/scratch/visual-round3/role-14/r7-support-r3/tools/package-native.py"
+    },
+    "tests/rama_package_cases.py": {
+      "accepted_proposal_support": {
+        "bytes": 49553,
+        "sha256": "80703c0ecccd2a7c181224ff36db9984b1640e2ec580b596aee242dd94758e60"
+      },
+      "reviewed_overlay": {
+        "bytes": 50400,
+        "sha256": "4af47e519eb0927623ff45c1dcb00bb86b89627acbc0d0855b2e63022e05499c"
+      },
+      "snapshot": "/workspace/scratch/visual-round3/role-14/r7-support-r3/tests/rama_package_cases.py"
+    },
+    "tools/visual-rounds/integration/prepare_groom_review.py": {
+      "accepted_proposal_support": {
+        "bytes": 8587,
+        "sha256": "371e5a91b06c7e29b6356a1887fd0396db720ee8c30d4d1906d0d45261642764"
+      },
+      "reviewed_overlay": {
+        "bytes": 8587,
+        "sha256": "371e5a91b06c7e29b6356a1887fd0396db720ee8c30d4d1906d0d45261642764"
+      },
+      "snapshot": "/workspace/scratch/visual-round3/role-14/r7-support-r3/tools/visual-rounds/integration/prepare_groom_review.py"
+    }
+  },
+  "correction": "Independent reviewer found out-of-section font remap keys accepted. Require explicit case-sensitive remap section, reject defaults/duplicate sections/duplicate or cross-section binding keys; six new counterexamples pass.",
+  "checks": {
+    "package": 288,
+    "pck_security": 75,
+    "actual_cold_font_only_export": true,
+    "actual_swapped_import_rejected": true
+  },
+  "diagnostic_proposal": {
+    "path": "/workspace/scratch/visual-round3/role-14/r7-review-r3",
+    "role": "Copy-only support-hash diagnostic created before root froze accepted r2; identical24 promotion files/NOTICE, not the asset promotion identity."
+  },
+  "limitations": [
+    "No complete native release export/package performed",
+    "Optional secondary frame shader remains excluded",
+    "Asset/art/motion disposition belongs to root"
+  ]
+}

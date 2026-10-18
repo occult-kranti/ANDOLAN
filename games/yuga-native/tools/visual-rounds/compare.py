@@ -23,6 +23,21 @@ def main():
     for c in candidate['shots']:
         b=index[c['id']]
         controls={k:b[k]==c[k] for k in ['viewport','camera','player_transform','visual_yaw','night','pose_pin','face','motion','lod']}
+        # R3 observes the final SkeletonModifier3D pose before Godot restores
+        # public bone poses. Missing one side is a failed control, never equality.
+        for key in ['rendered_pose_pin','body_velocity','ground_contact']:
+            if key in b or key in c:
+                controls[key] = key in b and key in c and b[key] == c[key]
+        if 'secondary' in b or 'secondary' in c:
+            # The authored groom intentionally changes vertex counts. Compare
+            # the complete dynamics/ownership report separately from those counts.
+            controls['secondary_dynamics'] = 'secondary' in b and 'secondary' in c and {
+                k:v for k,v in b['secondary'].items() if k not in ['anchored_vertices','masked_vertices']
+            } == {k:v for k,v in c['secondary'].items() if k not in ['anchored_vertices','masked_vertices']}
+        if 'rendered_pose_pin' in b or 'rendered_pose_pin' in c:
+            controls['actual_imported_bounds_passed'] = bool(b.get('bounds',{}).get('passed') and c.get('bounds',{}).get('passed'))
+        controls['render_settings'] = b.get('render_settings') == c.get('render_settings')
+        controls['ui_visible'] = b.get('ui_visible') == c.get('ui_visible')
         light_common={k:b['light'][k]==c['light'][k] for k in b['light'] if k in c['light']}
         bp,cp=a.baseline/b['file'],a.candidate/c['file']
         assert sha(bp)==b['sha256'] and sha(cp)==c['sha256']

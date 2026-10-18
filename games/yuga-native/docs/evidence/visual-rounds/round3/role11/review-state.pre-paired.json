@@ -1,0 +1,291 @@
+{
+  "task": "R3-11",
+  "status": "baseline_and_source_review_complete_candidate_sampled_visibility_pending",
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_ability_effects.gd": "573cf061b9d16056d3c384261ead2965aa57726e29d0bb44b2ba21503bfbde2c",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+    "/workspace/ANDOLAN/games/yuga-native/tests/rama_ability_visual_cases.gd": "b3e4234e40b1c9286d739e5e43adac6d74214abc013f390f1e8acd37d6cdb4f1",
+    "/workspace/ANDOLAN/games/yuga-native/shaders/rama_ability_boundary.gdshader": "482cfd71a199ee03bea7f7d8c774f569e91f917b2cdff0190751ada560677da7",
+    "/workspace/ANDOLAN/games/yuga-native/shaders/rama_ability_calligraphy.gdshader": "5b5ae03de886c30ef29ec6cadbbbbe12e616730db1f9c4531b378327624e5301",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role06/baseline/stills/capture.json": "2a956257e7631832cd157bb8b6a1d4e692362f236d5cbeb0f04bd1dc3d9d7867",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role06/baseline/stills/run.json": "e8430539996b0e0de2dff914a103be2c24fa6d242a77f5a99b6d70fdc168e63e",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role06/baseline/continuity/capture.json": "7d7a27136824b190c4bdc5268db80920129eaadb5284ee92b8b24e8f26183445",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role06/baseline/continuity/run.json": "07821be1a22b1a7d3994ee6538092f6aeeffac47660fc90138c127d6974627fa",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role11/action-capture-contract.json": "7672c4663b3112c0fff862198a7c2a45cd6430166b2058c70bdb23c24e20fc53"
+  },
+  "native_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 taskset -c 0,1 timeout 30s godot --headless --path /workspace/ANDOLAN/games/yuga-native --script res://tests/rama_ability_visual_cases.gd -- --report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role11/reduced-effects-native.json > /workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role11/reduced-effects-native.log 2>&1",
+  "native_exit_code": 0,
+  "native_checks": 72,
+  "native_passed": 72,
+  "scope": "Actual accepted kit events and effects geometry; no hero import and no framebuffer. Does not prove imported hair/cloth occlusion or user-visible reduced-effects readability.",
+  "baseline_continuity_abilities": [
+    "kodanda",
+    "measured_step"
+  ],
+  "selected_actual_events": [
+    {
+      "ability_id": "kodanda",
+      "kind": "begin",
+      "time_s": 1.5000000000000007,
+      "age_s": 0.0,
+      "release_age_s": -1.0,
+      "reason": null,
+      "contact_position": null
+    },
+    {
+      "ability_id": "kodanda",
+      "kind": "release",
+      "time_s": 1.7000000000000008,
+      "age_s": 0.20000000000000018,
+      "release_age_s": 0.20000000000000018,
+      "reason": null,
+      "contact_position": null
+    },
+    {
+      "ability_id": "kodanda",
+      "kind": "impact",
+      "time_s": 2.3499999999999996,
+      "age_s": 0.849999999999999,
+      "release_age_s": 0.20000000000000018,
+      "reason": "wall",
+      "contact_position": [
+        -1.243508219718933,
+        1.4710876941680908,
+        -24.780000686645508
+      ]
+    },
+    {
+      "ability_id": "kodanda",
+      "kind": "end",
+      "time_s": 2.6499999999999986,
+      "age_s": 1.149999999999998,
+      "release_age_s": 0.20000000000000018,
+      "reason": null,
+      "contact_position": null
+    },
+    {
+      "ability_id": "measured_step",
+      "kind": "begin",
+      "time_s": 2.9999999999999973,
+      "age_s": 0.0,
+      "release_age_s": -1.0,
+      "reason": null,
+      "contact_position": null
+    },
+    {
+      "ability_id": "measured_step",
+      "kind": "release",
+      "time_s": 3.099999999999997,
+      "age_s": 0.09999999999999964,
+      "release_age_s": 0.09999999999999964,
+      "reason": null,
+      "contact_position": null
+    },
+    {
+      "ability_id": "measured_step",
+      "kind": "impact",
+      "time_s": 3.099999999999997,
+      "age_s": 0.09999999999999964,
+      "release_age_s": 0.09999999999999964,
+      "reason": "movement_accepted",
+      "contact_position": [
+        -0.4045577049255371,
+        0.0001953102182596922,
+        7.504246234893799
+      ]
+    },
+    {
+      "ability_id": "measured_step",
+      "kind": "end",
+      "time_s": 3.399999999999996,
+      "age_s": 0.3999999999999986,
+      "release_age_s": 0.09999999999999964,
+      "reason": null,
+      "contact_position": null
+    }
+  ],
+  "new_capture_contract_sha256": "7672c4663b3112c0fff862198a7c2a45cd6430166b2058c70bdb23c24e20fc53",
+  "pending": [
+    "Baseline/candidate six matched action originals with actual phase and full imported bounds gates",
+    "Independent actual five-action sampled weapon/threat visibility comparison",
+    "Late Dawn Volley normal/reduced effects comparison",
+    "Every lifecycle phase, continuous visual contact, ordinary speed and hardware performance remain outside six-still acceptance"
+  ],
+  "baseline_action_preflight": {
+    "path": "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role06/preflight/capture-preflight-actions-baseline-r1/preflight.json",
+    "sha256": "eebc5ebc98d55c6eb98bbf8d118e23bea8d789e0a235962f42e6868e9d29b515",
+    "complete": true,
+    "shots": 6,
+    "actual_phase_rows": [
+      {
+        "id": "kodanda-normal",
+        "actual_authority_age_s": 0.14999999999999997,
+        "release_count": 0,
+        "native_aim_ray": {
+          "collider": "/root/LankaCourtyard/World/Target03",
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "hit": [
+            0.0,
+            1.500100016593933,
+            -7.774999618530273
+          ],
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "origin": [
+            0.0,
+            1.500100016593933,
+            3.5
+          ]
+        }
+      },
+      {
+        "id": "piercing_dawn-normal",
+        "actual_authority_age_s": 0.6000000000000002,
+        "release_count": 0,
+        "native_aim_ray": {
+          "collider": "/root/LankaCourtyard/World/Target03",
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "hit": [
+            0.0,
+            1.500100016593933,
+            -7.774999618530273
+          ],
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "origin": [
+            0.0,
+            1.500100016593933,
+            3.5
+          ]
+        }
+      },
+      {
+        "id": "measured_step-normal",
+        "actual_authority_age_s": 0.19999999999999996,
+        "release_count": 1,
+        "native_aim_ray": {
+          "collider": "/root/LankaCourtyard/World/Target03",
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "hit": [
+            0.0,
+            1.500100016593933,
+            -7.774999618530273
+          ],
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "origin": [
+            0.0,
+            1.500100016593933,
+            3.5
+          ]
+        }
+      },
+      {
+        "id": "guardian_circle-normal",
+        "actual_authority_age_s": 0.5000000000000001,
+        "release_count": 0,
+        "native_aim_ray": {
+          "collider": "/root/LankaCourtyard/World/Target03",
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "hit": [
+            0.0,
+            1.500100016593933,
+            -7.774999618530273
+          ],
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "origin": [
+            0.0,
+            1.500100016593933,
+            3.5
+          ]
+        }
+      },
+      {
+        "id": "dawn_volley-normal",
+        "actual_authority_age_s": 0.9000000000000004,
+        "release_count": 0,
+        "native_aim_ray": {
+          "collider": "/root/LankaCourtyard/World/Target03",
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "hit": [
+            0.0,
+            1.500100016593933,
+            -7.774999618530273
+          ],
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "origin": [
+            0.0,
+            1.500100016593933,
+            3.5
+          ]
+        }
+      },
+      {
+        "id": "dawn_volley-reduced",
+        "actual_authority_age_s": 0.9000000000000004,
+        "release_count": 0,
+        "native_aim_ray": {
+          "collider": "/root/LankaCourtyard/World/Target03",
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "hit": [
+            0.0,
+            1.500100016593933,
+            -7.774999618530273
+          ],
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "origin": [
+            0.0,
+            1.500100016593933,
+            3.5
+          ]
+        }
+      }
+    ],
+    "scope": "Actual baseline public-cast phase, Target03 collision ray and imported projection; no framebuffer."
+  }
+}

@@ -45,8 +45,10 @@ def main():
                 if path not in source_cache: source_cache[path] = sha(path)
                 exact = exact and source_cache[path] == digest
             checks['frozen_sources_still_exact'] = exact
-            checks['archived_harness_exact'] = all(sha(folder/'harness'/name) == report['source_sha256']['res://tools/visual-rounds/'+name]
-                for name in ['capture.gd','run.py'])
+            checks['archived_harness_exact'] = all(
+                sha(folder/'harness'/resource.removeprefix('res://tools/visual-rounds/')) == digest
+                for resource,digest in report['source_sha256'].items()
+                if resource.startswith('res://tools/visual-rounds/'))
         else:
             checks['failed_producer_explicitly_retained'] = rejected and not report['complete']
         for key, passed in checks.items():

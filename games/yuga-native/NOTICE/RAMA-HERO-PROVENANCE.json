@@ -1,10 +1,10 @@
 {
-  "schema": 3,
+  "schema": 4,
   "asset": "assets/heroes/rama-hero.glb",
-  "sha256": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
-  "bytes": 34322216,
-  "editableSource": "art/visual-rounds/face/principal-form-v1/reconstruction.blend",
-  "editableSha256": "1a917821f2cb50854a16ff40ed4e80847e011f4e023d116540c569620808c6d9",
+  "sha256": "8b6cf0f4c5520696d1d843e5bdebb2454c1dbd4341e17171c5b6d20353384d5c",
+  "bytes": 36049948,
+  "editableSource": "art/visual-rounds/groom/principal-groom-v1/reconstruction.blend",
+  "editableSha256": "940c8208d8f5ee8c2e8dd9e4bea2d9893450026189f1a4eb24cd0b1874378f25",
   "authoringStages": [
     {
       "id": "r7",
@@ -169,12 +169,124 @@
           "sha256": "ea9818e1464c9b6bc077ae83f8354a6357fb19d2a18fc84b2deb65c58aff901a"
         }
       ]
+    },
+    {
+      "id": "principal-groom-v1",
+      "parent": "principal-facial-form-v1",
+      "asset": "art/visual-rounds/groom/principal-groom-v1/rama-hero.glb",
+      "sha256": "8b6cf0f4c5520696d1d843e5bdebb2454c1dbd4341e17171c5b6d20353384d5c",
+      "editableSource": "art/visual-rounds/groom/principal-groom-v1/reconstruction.blend",
+      "editableSha256": "940c8208d8f5ee8c2e8dd9e4bea2d9893450026189f1a4eb24cd0b1874378f25",
+      "generator": "art/visual-rounds/groom/build_groom.py",
+      "generatorSha256": "4bcdb1121a52c68f2cb3f35850ace8956fb0554d120a85ce292c4f4afa8f6044",
+      "metadata": "art/visual-rounds/groom/principal-groom-v1/groom-manifest.json",
+      "metadataSha256": "948bed857f31609df81ea228663cb63055dd88148bda84a9fd5c04c48c30e6bc",
+      "inputAssetSha256": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+      "inputEditableSha256": null,
+      "editableOrigin": "imported-stage-asset",
+      "generatedDependencies": [
+        {
+          "path": "art/visual-rounds/groom/import_editable.py",
+          "sha256": "1f171a16886636726b1be71a799d5792dcf3834a48e50ab9a51e1ea196e5ae6d"
+        },
+        {
+          "path": "art/visual-rounds/groom/source-manifest-r7.json",
+          "sha256": "27bd394314e331c3d40d3c5fa88d06e0546e57e31dbe45a8c59eb1403f84114a"
+        },
+        {
+          "path": "art/visual-rounds/groom/NOTICE.md",
+          "sha256": "732c14adcb44d88cf88837dec040af9be29aab70daa3c4f2a8238e1c72d4aa4f"
+        },
+        {
+          "path": "art/hero-rama-lod/glb_lod.py",
+          "sha256": "83683afcfd3ce40b9e7193ef988793d37ff9b9107f16252c8cfe2715428a69e7"
+        },
+        {
+          "path": "art/visual-rounds/groom/principal-groom-v1/reconstruction.inspection.json",
+          "sha256": "9af85ce316cc3a270ef62bef98ad4b203218c6f29a5a27c81dc6d4af8d28e031"
+        },
+        {
+          "path": "art/visual-rounds/groom/principal-groom-v1/rama-hero-mid.glb",
+          "sha256": "d95a061e2243477afc0227bf52564252fbcb20cb039d303ad10292ea5d85beed"
+        },
+        {
+          "path": "art/visual-rounds/groom/principal-groom-v1/rama-hero-far.glb",
+          "sha256": "ee2e35278ce49efdda6751850fddbb8f1b4de99ad019e6992c10e7702dc6317c"
+        },
+        {
+          "path": "art/visual-rounds/groom/principal-groom-v1/input/RAMA-HERO-PROVENANCE.json",
+          "sha256": "754f81cef0da3d3fb03a21e083e0e3ab7a8b6feed7e0b95fcd47b88a99c33f58"
+        }
+      ],
+      "runtimeSources": [
+        {
+          "path": "scripts/rama_secondary_motion.gd",
+          "sha256": "2b8e467df254dcda175694ab988071f24b41ddaa93275f5cbb9768abcb143f34"
+        }
+      ],
+      "runtimeLods": [
+        {
+          "asset": "assets/heroes/rama-hero-mid.glb",
+          "sha256": "d95a061e2243477afc0227bf52564252fbcb20cb039d303ad10292ea5d85beed"
+        },
+        {
+          "asset": "assets/heroes/rama-hero-far.glb",
+          "sha256": "ee2e35278ce49efdda6751850fddbb8f1b4de99ad019e6992c10e7702dc6317c"
+        }
+      ]
     }
   ],
   "limitations": [
     "Q3 art and R4f native blink are LIMITED integration inputs; the commercial-game visual target is not achieved.",
     "Three cloth tangent records were repaired from the exact independently reviewed facial input; broader nonorthogonal material frames remain a Q02 finding.",
     "Facial geometry/morph/skin/image/animation payloads transfer through an exact unchanged-byte audit; actual world, hardware and human qualification remain separate gates.",
-    "Bounded principal form and coherent LOD source proposal; root/art acceptance remains pending. Editable companion is an import of the stage output."
-  ]
+    "Bounded principal form and coherent LOD source proposal; root/art acceptance remains pending. Editable companion is an import of the stage output.",
+    "Exact original groom-r7 plus independent scalar cloth texture stage. Imported editable is a saved/reopened GLB import, not a recovered modeling stack. Retained dead original hair data increases file size despite fewer active triangles. The rest nape correction clears the measured collar region; measured_step_recoil and bounded secondary stress contacts remain open. Diagnostic art review authorized full comparison, not default promotion. The separately approved lifecycle script is an explicit runtime dependency. Optional secondary frame shader is excluded."
+  ],
+  "clothStage": {
+    "id": "smooth-woven-roughness-v1",
+    "parentNoticeSha256": "754f81cef0da3d3fb03a21e083e0e3ab7a8b6feed7e0b95fcd47b88a99c33f58",
+    "asset": "assets/materials/rama-finish/woven-roughness.png",
+    "sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500",
+    "importConfig": "assets/materials/rama-finish/woven-roughness.png.import",
+    "importConfigSha256": "646c1b220662472d42a56884d8a1b51bddb625724b6de53d9f61cbf621109c24",
+    "generatedDependencies": [
+      {
+        "path": "art/visual-rounds/cloth/textures/woven-roughness-r3.png",
+        "sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+      },
+      {
+        "path": "art/visual-rounds/cloth/build_candidate.py",
+        "sha256": "8f89cc177a3cb70f8f05b385f653533717d718b6cf0a949486cb019e1b14543a"
+      },
+      {
+        "path": "art/visual-rounds/cloth/material-profile.json",
+        "sha256": "f4ffe5e11364e1aa5905a93731063f24b4ca96036bceb963c84d26503caa299a"
+      },
+      {
+        "path": "art/visual-rounds/cloth/source-manifest.json",
+        "sha256": "d0c6ad6d7c82f721d3b4ebe749aee933b38caadd2af5cb7cc1a95da9b9c7c4d8"
+      },
+      {
+        "path": "art/visual-rounds/cloth/NOTICE.md",
+        "sha256": "980a21ef68eda2db274528f10707746c5a496b0cf5bc02a4dbe1579aebe26a2f"
+      },
+      {
+        "path": "art/visual-rounds/cloth/input/woven-roughness.png",
+        "sha256": "80f837f65096a4579e8b1de3c346f6f99f4d8b31d88c574fd5c18cd28889e4d3"
+      },
+      {
+        "path": "art/visual-rounds/cloth/input/woven-roughness.png.import",
+        "sha256": "c1fb4726ef765526cb67d2c5e78a85a0a8c49de6181a6e0b7e56286208ab3b8a"
+      },
+      {
+        "path": "scripts/rama_surface_finish.gd",
+        "sha256": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1"
+      },
+      {
+        "path": "shaders/rama_secondary_cloth.gdshader",
+        "sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+      }
+    ]
+  }
 }

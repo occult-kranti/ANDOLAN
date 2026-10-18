@@ -1,0 +1,7 @@
+# Independent final R3-14 support review
+
+Accepted with the focused font descriptor correction. The immutable asset proposal remains r7-review-r2, SHA394ffea43f8c7f79ce911e7d0c3c8b9428c4ffa571c0aeca6bdf1e4e32478ff5; proposed NOTICE remains5026675c7af8b83412eb375b9883ffe52efd883e20c7fd9594bdf3fdd9c8f5d8. The separate support overlay changes package validation/tests, not assets, shader, ancestry or imported resource settings.
+
+Independent31/31 checks pass against corrected package6dac20395c4e274f752b3d50d452dccf4c69522b88a9cdbfa2cf7a7474073d84. These cover all66 fixed source records and promotion bytes, original BIN/nonhair preservation for all three LODs, lifecycle dependency identity, parent/editable/LOD substitution rejection, external ancestor symlinks/traversal, and six font section/default/duplicate counterexamples. The exact actual cold-export font payloads independently qualify; forged decoded TTF and incorrect resource basename reject. The cold import/export itself is author evidence; this reviewer performed no import/export.
+
+The initial parser accepted required keys in [deps], including split [remap]/[deps] keys. The executed failure is retained in font-section-failure.json. The owner corrected the parser to require the actual [remap] section, and the same independent witnesses now reject. No remaining path/ancestry/font-binding counterexample was found in this bounded review. Full package export/platform qualification and R4 motion are separate. R3-15 owns the bounded visual disposition.

@@ -1,0 +1,84 @@
+{
+  "task": "R3-03",
+  "source_commit": "0437ea91edf6989ff78c1eeadb3661f4825b60f2",
+  "checks": {
+    "groom_preserves_all_material_json": true,
+    "rough_sampler_linear_no_source_color": true,
+    "actual_roughness_multiplies_map": true,
+    "finish_sets_scalar_one_and_red": true,
+    "woven_profile_targets_only_two_cobalt_materials": true,
+    "candidate_retains_specular_038": true,
+    "candidate_map_mean_increases": true,
+    "candidate_map_variation_decreases": true
+  },
+  "passed": true,
+  "maps": {
+    "woven_baseline": {
+      "path": "/workspace/ANDOLAN/games/yuga-native/assets/materials/rama-finish/woven-roughness.png",
+      "sha256": "80f837f65096a4579e8b1de3c346f6f99f4d8b31d88c574fd5c18cd28889e4d3",
+      "mode": "L",
+      "size": [
+        1024,
+        1024
+      ],
+      "red_min": 0.6666666666666666,
+      "red_max": 0.796078431372549,
+      "red_mean": 0.7267287310431985,
+      "red_std": 0.040927453913987645,
+      "rgb_channels_equal": true
+    },
+    "woven_candidate": {
+      "path": "/workspace/ANDOLAN/games/yuga-native/art/visual-rounds/cloth/textures/woven-roughness-r3.png",
+      "sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500",
+      "mode": "L",
+      "size": [
+        1024,
+        1024
+      ],
+      "red_min": 0.7725490196078432,
+      "red_max": 0.8117647058823529,
+      "red_mean": 0.7899816176470591,
+      "red_std": 0.009565841990379603,
+      "rgb_channels_equal": true
+    },
+    "hair_unchanged": {
+      "path": "/workspace/ANDOLAN/games/yuga-native/assets/materials/rama-finish/hair-roughness.png",
+      "sha256": "4e162808e3fc1a01b3ba9621b5db6ce645096125d69bdd5ddb66792101f2da4f",
+      "mode": "L",
+      "size": [
+        512,
+        512
+      ],
+      "red_min": 0.47058823529411764,
+      "red_max": 0.6313725490196078,
+      "red_mean": 0.5509939904306449,
+      "red_std": 0.04931885032119729,
+      "rgb_channels_equal": true
+    }
+  },
+  "import_settings": {
+    "woven": {
+      "sha256": "c1fb4726ef765526cb67d2c5e78a85a0a8c49de6181a6e0b7e56286208ab3b8a",
+      "declares_mipmaps_generate": false
+    },
+    "hair": {
+      "sha256": "7a224d987233f476d843c8932326f565f84e8605d8530ee187c2e9392191c26b",
+      "declares_mipmaps_generate": false
+    }
+  },
+  "source_sha256": {
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/visual-rounds/round3/role03/check_material_controls.py": "9adfcca1366da181bf5e90f29e6759546b615c4fa749a6628efab70e44dc941c",
+    "/workspace/scratch/visual-round2/role-08/face-form-candidate-r6/candidate.glb": "140f8ff3695bb3d28bd894cb74bca8cd5f1756bbffcf59dad6c4630f377c351a",
+    "/workspace/scratch/visual-round3/role-08/groom-r6/rama-hero.glb": "bdd917daa88254bdf203fd0bb92c7fb1167fda05a3c223dea4c9f3a3bc0453d1",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_surface_finish.gd": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/rama_secondary_motion.gd": "937aebfede5c6c25eb109c98599cfc28649984159ab65622d046d0d80a11e0b7",
+    "/workspace/ANDOLAN/games/yuga-native/shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+    "/workspace/ANDOLAN/games/yuga-native/scripts/production_lighting.gd": "09eb9203a41b4047742c95155512d41e8df8fadfb08cfae8f3bea82b7c24cb58",
+    "/workspace/ANDOLAN/games/yuga-native/art/visual-rounds/cloth/material-profile.json": "f4ffe5e11364e1aa5905a93731063f24b4ca96036bceb963c84d26503caa299a",
+    "/workspace/ANDOLAN/games/yuga-native/assets/materials/rama-finish/woven-roughness.png": "80f837f65096a4579e8b1de3c346f6f99f4d8b31d88c574fd5c18cd28889e4d3",
+    "/workspace/ANDOLAN/games/yuga-native/art/visual-rounds/cloth/textures/woven-roughness-r3.png": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500",
+    "/workspace/ANDOLAN/games/yuga-native/assets/materials/rama-finish/hair-roughness.png": "4e162808e3fc1a01b3ba9621b5db6ce645096125d69bdd5ddb66792101f2da4f"
+  },
+  "decision": "No light or hair material correction justified by this source audit; use existing woven candidate as the sole roughness change, preserve lights. Enable candidate woven mips in isolated import and verify actual payload. Hair mips remain an explicit possible independent diagnostic, not bundled art correction.",
+  "scope": "Source scalar distributions, shader/owner contract and material preservation only. No BRDF luminance, native imported binding or new pixels measured."
+}

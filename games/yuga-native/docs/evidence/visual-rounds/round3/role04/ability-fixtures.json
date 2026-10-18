@@ -1,0 +1,176 @@
+{
+  "task": "R3-04",
+  "fixtures": [
+    {
+      "ability": "kodanda",
+      "windup_seconds": 0.18,
+      "recovery_seconds": 0.22,
+      "source_pose_samples": [
+        {
+          "id": "kodanda_windup",
+          "actual_recorded_motion_stage": "windup",
+          "stage_elapsed_seconds": 0.15,
+          "authority_release_count_for_sample": 0
+        },
+        {
+          "id": "kodanda_release",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.05,
+          "authority_release_count_for_sample": 1
+        },
+        {
+          "id": "kodanda_recoil",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.15,
+          "authority_release_count_for_sample": null
+        }
+      ],
+      "minimum_hair_bow_lower_bound_m": 0.06908054693997401,
+      "minimum_cloth_bow_lower_bound_m": 0.03085479692265139,
+      "cloth_clearance_status": "MAXIMUM_SECONDARY_ENVELOPE_UNPROVEN"
+    },
+    {
+      "ability": "piercing_dawn",
+      "windup_seconds": 0.65,
+      "recovery_seconds": 0.3,
+      "source_pose_samples": [
+        {
+          "id": "piercing_dawn_windup",
+          "actual_recorded_motion_stage": "windup",
+          "stage_elapsed_seconds": 0.6,
+          "authority_release_count_for_sample": 0
+        },
+        {
+          "id": "piercing_dawn_release",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.05,
+          "authority_release_count_for_sample": 1
+        },
+        {
+          "id": "piercing_dawn_recoil",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.15,
+          "authority_release_count_for_sample": null
+        }
+      ],
+      "minimum_hair_bow_lower_bound_m": 0.03970166711070877,
+      "minimum_cloth_bow_lower_bound_m": 0.03626465596867394,
+      "cloth_clearance_status": "MAXIMUM_SECONDARY_ENVELOPE_UNPROVEN"
+    },
+    {
+      "ability": "measured_step",
+      "windup_seconds": 0.1,
+      "recovery_seconds": 0.25,
+      "source_pose_samples": [
+        {
+          "id": "measured_step_windup",
+          "actual_recorded_motion_stage": "windup",
+          "stage_elapsed_seconds": 0.05,
+          "authority_release_count_for_sample": 0
+        },
+        {
+          "id": "measured_step_release",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.05,
+          "authority_release_count_for_sample": 1
+        },
+        {
+          "id": "measured_step_recoil",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.15,
+          "authority_release_count_for_sample": null
+        }
+      ],
+      "minimum_hair_bow_lower_bound_m": 0.14344510260012616,
+      "minimum_cloth_bow_lower_bound_m": 0.0,
+      "cloth_clearance_status": "FAILED_SOURCE_CROSSING"
+    },
+    {
+      "ability": "guardian_circle",
+      "windup_seconds": 0.55,
+      "recovery_seconds": 0.3,
+      "source_pose_samples": [
+        {
+          "id": "guardian_circle_windup",
+          "actual_recorded_motion_stage": "windup",
+          "stage_elapsed_seconds": 0.5,
+          "authority_release_count_for_sample": 0
+        },
+        {
+          "id": "guardian_circle_release",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.05,
+          "authority_release_count_for_sample": 1
+        },
+        {
+          "id": "guardian_circle_recoil",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.15,
+          "authority_release_count_for_sample": null
+        }
+      ],
+      "minimum_hair_bow_lower_bound_m": 0.08,
+      "minimum_cloth_bow_lower_bound_m": 0.0,
+      "cloth_clearance_status": "FAILED_SOURCE_CROSSING"
+    },
+    {
+      "ability": "dawn_volley",
+      "windup_seconds": 0.95,
+      "recovery_seconds": 0.55,
+      "source_pose_samples": [
+        {
+          "id": "dawn_volley_windup",
+          "actual_recorded_motion_stage": "windup",
+          "stage_elapsed_seconds": 0.900000000000001,
+          "authority_release_count_for_sample": 0
+        },
+        {
+          "id": "dawn_volley_release",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.05,
+          "authority_release_count_for_sample": 1
+        },
+        {
+          "id": "dawn_volley_recoil",
+          "actual_recorded_motion_stage": "recovery",
+          "stage_elapsed_seconds": 0.15,
+          "authority_release_count_for_sample": null
+        }
+      ],
+      "minimum_hair_bow_lower_bound_m": 0.04067370467092524,
+      "minimum_cloth_bow_lower_bound_m": 0.032398304400530875,
+      "cloth_clearance_status": "MAXIMUM_SECONDARY_ENVELOPE_UNPROVEN"
+    }
+  ],
+  "sample_selection": "Select observed real cast events; windup at windup_s-.05; recovery samples .05 and .15 seconds after actual release. Record event cast_id/generation/event_seq and physics time, not filename assumptions. Current authority ticks are20Hz.",
+  "camera": {
+    "offset_from_player_m": [
+      -3,
+      2.2,
+      -4
+    ],
+    "target_offset_m": [
+      0,
+      1,
+      0
+    ],
+    "fov_degrees": 50,
+    "viewport": [
+      1280,
+      960
+    ],
+    "near_m": 0.05,
+    "far_m": 180,
+    "visual_yaw_radians": 3.141592653589793,
+    "scope": "Common fullbody diagnostic; exact actual imported full head/cloth/bow projection required before capture. This source projection includes all meshes but no shader offset."
+  },
+  "integration": "Keep eight-still budget and one continuous take. These15 source samples do not authorize15 additional stills. Record the five actual abilities sequentially within that one take, using public cast controls after prior recovery; include start/stop/turn/reset when time budget allows. Raw original fullbody frames at the phases above can be selected from the single continuous recording.",
+  "clearance_gate": "Zero secondary source replay has six strict triangle crossings. Actual live offsets could alter contact; require current imported fullbody side/three-quarter pixels and geometric witnesses before any clearance approval. Hair pass cannot promote cloth. Bow/source mesh includes all4primitives, all bow alpha is0. Gold cloth hem/quiver and dynamically posed runtime string/arrow need additional actual state coverage.",
+  "warning_and_weapon_requirements": [
+    "Keep ordinary gameplay camera/HUD context distinct from diagnostic front camera. The garment must not erase ground warning boundary or aimed receiver; camera must show the relevant target and warning if claiming tactical readability.",
+    "Kodanda intentionally has no ground warning; do not add one. Piercing warning disappears on actual release. Guardian warning remains until authority active expiry4.5s; use ground context for expiry, not face crop.",
+    "Dawn Volley uses three actual projectiles with delays0,.1,.2s; record released-event identity and full weapon lane. Bow, nocked arrow, string and hands must remain visible through windup/release/recovery.",
+    "Measured Step changes position over.22s; follow only player translation for fixed relative diagnostic camera, and log actual traveled distance/cover-limited result. No teleport may stand in for the dash."
+  ],
+  "scope": "Source and fixture contract only; no actual imported action capture executed by this role."
+}

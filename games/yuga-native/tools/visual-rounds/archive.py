@@ -31,8 +31,11 @@ def main():
     for optional in ['candidate-overlay.json','import-receipt.json','import.log']:
         if (a.project/optional).is_file(): shutil.copy2(a.project/optional,a.output/optional)
     target=a.output/'harness';target.mkdir()
-    for name in ['capture.gd','run.py']:
-        shutil.copy2(a.project/'tools/visual-rounds'/name,target/name)
+    for resource in capture['source_sha256']:
+        if resource.startswith('res://tools/visual-rounds/'):
+            relative=Path(resource.removeprefix('res://tools/visual-rounds/'))
+            destination=target/relative; destination.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copy2(a.project/'tools/visual-rounds'/relative,destination)
     print(json.dumps({'complete':True,'raw_pngs':len(capture['shots']),'archive':str(a.output)}))
 
 if __name__=='__main__':main()
