@@ -1,0 +1,41 @@
+{
+  "created_utc": "2026-10-18T05:34:52.709907+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "SCons",
+    "-n",
+    "-j2",
+    "platform=linuxbsd",
+    "target=template_debug",
+    "dev_build=no",
+    "debug_symbols=no",
+    "lto=none",
+    "use_sowrap=yes",
+    "disable_path_overrides=no"
+  ],
+  "passed": true,
+  "checks": {
+    "exit_zero": true,
+    "dry_run_finished": true,
+    "no_feature_warnings": true,
+    "runtime_feature_paths_present": true,
+    "no_editor_directory_compilation": true
+  },
+  "compile_actions": 2434,
+  "runtime_feature_paths": [
+    "platform/linuxbsd/x11",
+    "platform/linuxbsd/wayland",
+    "drivers/vulkan",
+    "drivers/gles3",
+    "modules/gltf",
+    "modules/gdscript",
+    "modules/text_server_adv",
+    "servers/rendering",
+    "scene/3d"
+  ],
+  "log_sha256": "0baf69873058ed4fd4caa675930f1b9497d5c63f548d9e53f10c73f21c956644",
+  "source_patches": 0,
+  "target": "template_debug",
+  "comparison_limit": "Different target/public source commit from installed editor; patch attribution requires matching unmodified and patched template builds."
+}

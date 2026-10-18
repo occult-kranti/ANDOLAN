@@ -1,0 +1,469 @@
+
+/tmp/yuga-engine-template-baseline-r1/godot-35e80b3a8822a9df9be390814b62f44c0a9c69e8/bin/obj/servers/rendering/renderer_rd/forward_clustered/scene_shader_forward_clustered.linuxbsd.template_debug.x86_64.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000930 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const>:
+     930:	41 57                	push   %r15
+     932:	41 56                	push   %r14
+     934:	41 55                	push   %r13
+     936:	41 54                	push   %r12
+     938:	55                   	push   %rbp
+     939:	53                   	push   %rbx
+     93a:	48 83 ec 08          	sub    $0x8,%rsp
+     93e:	48 8b 8f 40 01 00 00 	mov    0x140(%rdi),%rcx
+     945:	48 85 c9             	test   %rcx,%rcx
+     948:	0f 84 7f 01 00 00    	je     acd <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x19d>
+     94e:	48 8b 2d 00 00 00 00 	mov    0x0(%rip),%rbp        # 955 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x25>
+			951: R_X86_64_PC32	RendererSceneRenderImplementation::SceneShaderForwardClustered::singleton-0x4
+     955:	48 85 ed             	test   %rbp,%rbp
+     958:	0f 84 d2 01 00 00    	je     b30 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x200>
+     95e:	48 8b 45 28          	mov    0x28(%rbp),%rax
+     962:	0f b7 de             	movzwl %si,%ebx
+     965:	48 85 c0             	test   %rax,%rax
+     968:	0f 84 22 01 00 00    	je     a90 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x160>
+     96e:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+     972:	4c 39 c3             	cmp    %r8,%rbx
+     975:	0f 8d 18 01 00 00    	jge    a93 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x163>
+     97b:	48 8b 45 38          	mov    0x38(%rbp),%rax
+     97f:	48 85 c0             	test   %rax,%rax
+     982:	0f 84 60 01 00 00    	je     ae8 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1b8>
+     988:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+     98c:	4c 39 c3             	cmp    %r8,%rbx
+     98f:	0f 8d 56 01 00 00    	jge    aeb <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1bb>
+     995:	80 3c 18 00          	cmpb   $0x0,(%rax,%rbx,1)
+     999:	0f 84 e1 02 00 00    	je     c80 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x350>
+     99f:	89 c8                	mov    %ecx,%eax
+     9a1:	8b 95 c4 00 00 00    	mov    0xc4(%rbp),%edx
+     9a7:	39 d1                	cmp    %edx,%ecx
+     9a9:	0f 83 81 02 00 00    	jae    c30 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x300>
+     9af:	31 d2                	xor    %edx,%edx
+     9b1:	48 8b b5 b0 00 00 00 	mov    0xb0(%rbp),%rsi
+     9b8:	48 c1 e9 20          	shr    $0x20,%rcx
+     9bc:	f7 b5 c0 00 00 00    	divl   0xc0(%rbp)
+     9c2:	89 d2                	mov    %edx,%edx
+     9c4:	4c 8d 24 92          	lea    (%rdx,%rdx,4),%r12
+     9c8:	49 c1 e4 05          	shl    $0x5,%r12
+     9cc:	4c 03 24 c6          	add    (%rsi,%rax,8),%r12
+     9d0:	41 8b 84 24 98 00 00 	mov    0x98(%r12),%eax
+     9d7:	00 
+     9d8:	39 c8                	cmp    %ecx,%eax
+     9da:	0f 85 10 02 00 00    	jne    bf0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x2c0>
+     9e0:	4d 8b 2c 24          	mov    (%r12),%r13
+     9e4:	4d 85 ed             	test   %r13,%r13
+     9e7:	0f 84 00 00 00 00    	je     9ed <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0xbd>
+			9e9: R_X86_64_PC32	.text.unlikely+0x19
+     9ed:	4c 89 ef             	mov    %r13,%rdi
+     9f0:	e8 00 00 00 00       	call   9f5 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0xc5>
+			9f1: R_X86_64_PLT32	pthread_mutex_lock-0x4
+     9f5:	85 c0                	test   %eax,%eax
+     9f7:	0f 85 00 00 00 00    	jne    9fd <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0xcd>
+			9f9: R_X86_64_PC32	.text.unlikely+0x12
+     9fd:	41 80 bc 24 91 00 00 	cmpb   $0x0,0x91(%r12)
+     a04:	00 00 
+     a06:	4c 8d 7d 10          	lea    0x10(%rbp),%r15
+     a0a:	0f 85 70 01 00 00    	jne    b80 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x250>
+     a10:	48 8b 45 48          	mov    0x48(%rbp),%rax
+     a14:	48 85 c0             	test   %rax,%rax
+     a17:	0f 84 cb 00 00 00    	je     ae8 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1b8>
+     a1d:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+     a21:	4c 39 c3             	cmp    %r8,%rbx
+     a24:	0f 8d c1 00 00 00    	jge    aeb <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1bb>
+     a2a:	8b 0c 98             	mov    (%rax,%rbx,4),%ecx
+     a2d:	49 8b 44 24 68       	mov    0x68(%r12),%rax
+     a32:	45 31 c0             	xor    %r8d,%r8d
+     a35:	48 89 ca             	mov    %rcx,%rdx
+     a38:	48 85 c0             	test   %rax,%rax
+     a3b:	0f 84 1f 01 00 00    	je     b60 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x230>
+     a41:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+     a45:	4c 39 c1             	cmp    %r8,%rcx
+     a48:	0f 8d 12 01 00 00    	jge    b60 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x230>
+     a4e:	48 83 3c c8 00       	cmpq   $0x0,(%rax,%rcx,8)
+     a53:	0f 85 07 02 00 00    	jne    c60 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x330>
+     a59:	41 80 bc 24 90 00 00 	cmpb   $0x0,0x90(%r12)
+     a60:	00 00 
+     a62:	0f 84 78 01 00 00    	je     be0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x2b0>
+     a68:	49 8b 84 24 88 00 00 	mov    0x88(%r12),%rax
+     a6f:	00 
+     a70:	48 85 c0             	test   %rax,%rax
+     a73:	74 73                	je     ae8 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1b8>
+     a75:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+     a79:	4c 39 c3             	cmp    %r8,%rbx
+     a7c:	7d 6d                	jge    aeb <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1bb>
+     a7e:	48 8b 1c d8          	mov    (%rax,%rbx,8),%rbx
+     a82:	e9 5b 01 00 00       	jmp    be2 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x2b2>
+     a87:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+     a8e:	00 00 
+     a90:	45 31 c0             	xor    %r8d,%r8d
+     a93:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # a9a <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x16a>
+			a96: R_X86_64_PC32	.LC3-0x4
+     a9a:	6a 00                	push   $0x0
+     a9c:	4c 8d 0d 00 00 00 00 	lea    0x0(%rip),%r9        # aa3 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x173>
+			a9f: R_X86_64_PC32	.LC0-0x4
+     aa3:	48 89 d9             	mov    %rbx,%rcx
+     aa6:	6a 00                	push   $0x0
+     aa8:	ba b4 00 00 00       	mov    $0xb4,%edx
+     aad:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # ab4 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x184>
+			ab0: R_X86_64_PC32	.LC1-0x4
+     ab4:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # abb <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x18b>
+			ab7: R_X86_64_PC32	.LC2-0x4
+     abb:	50                   	push   %rax
+     abc:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # ac3 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x193>
+			abf: R_X86_64_PC32	.LC4-0x4
+     ac3:	50                   	push   %rax
+     ac4:	e8 00 00 00 00       	call   ac9 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x199>
+			ac5: R_X86_64_PLT32	_err_print_index_error(char const*, char const*, int, long, long, char const*, char const*, char const*, bool, bool)-0x4
+     ac9:	48 83 c4 20          	add    $0x20,%rsp
+     acd:	31 db                	xor    %ebx,%ebx
+     acf:	48 83 c4 08          	add    $0x8,%rsp
+     ad3:	48 89 d8             	mov    %rbx,%rax
+     ad6:	5b                   	pop    %rbx
+     ad7:	5d                   	pop    %rbp
+     ad8:	41 5c                	pop    %r12
+     ada:	41 5d                	pop    %r13
+     adc:	41 5e                	pop    %r14
+     ade:	41 5f                	pop    %r15
+     ae0:	c3                   	ret
+     ae1:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+     ae8:	45 31 c0             	xor    %r8d,%r8d
+     aeb:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # af2 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1c2>
+			aee: R_X86_64_PC32	.LC3-0x4
+     af2:	6a 01                	push   $0x1
+     af4:	4c 8d 0d 00 00 00 00 	lea    0x0(%rip),%r9        # afb <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1cb>
+			af7: R_X86_64_PC32	.LC5-0x4
+     afb:	48 89 d9             	mov    %rbx,%rcx
+     afe:	6a 00                	push   $0x0
+     b00:	50                   	push   %rax
+     b01:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # b08 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1d8>
+			b04: R_X86_64_PC32	.LC8-0x4
+     b08:	50                   	push   %rax
+     b09:	ba c1 00 00 00       	mov    $0xc1,%edx
+     b0e:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # b15 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1e5>
+			b11: R_X86_64_PC32	.LC6-0x4
+     b15:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # b1c <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1ec>
+			b18: R_X86_64_PC32	.LC7-0x4
+     b1c:	e8 00 00 00 00       	call   b21 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1f1>
+			b1d: R_X86_64_PLT32	_err_print_index_error(char const*, char const*, int, long, long, char const*, char const*, char const*, bool, bool)-0x4
+     b21:	48 83 c4 20          	add    $0x20,%rsp
+     b25:	e8 00 00 00 00       	call   b2a <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1fa>
+			b26: R_X86_64_PLT32	_err_flush_stdout()-0x4
+     b2a:	0f 0b                	ud2
+     b2c:	0f 1f 40 00          	nopl   0x0(%rax)
+     b30:	45 31 c9             	xor    %r9d,%r9d
+     b33:	45 31 c0             	xor    %r8d,%r8d
+     b36:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # b3d <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x20d>
+			b39: R_X86_64_PC32	.LC26-0x4
+     b3d:	ba 07 02 00 00       	mov    $0x207,%edx
+     b42:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # b49 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x219>
+			b45: R_X86_64_PC32	.LC27-0x4
+     b49:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # b50 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x220>
+			b4c: R_X86_64_PC32	.LC28-0x4
+     b50:	e8 00 00 00 00       	call   b55 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x225>
+			b51: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+     b55:	e9 73 ff ff ff       	jmp    acd <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x19d>
+     b5a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+     b60:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # b67 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x237>
+			b63: R_X86_64_PC32	.LC3-0x4
+     b67:	6a 01                	push   $0x1
+     b69:	4c 8d 0d 00 00 00 00 	lea    0x0(%rip),%r9        # b70 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x240>
+			b6c: R_X86_64_PC32	.LC5-0x4
+     b70:	6a 00                	push   $0x0
+     b72:	50                   	push   %rax
+     b73:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # b7a <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x24a>
+			b76: R_X86_64_PC32	.LC8-0x4
+     b7a:	50                   	push   %rax
+     b7b:	eb 8c                	jmp    b09 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x1d9>
+     b7d:	0f 1f 00             	nopl   (%rax)
+     b80:	4c 89 e6             	mov    %r12,%rsi
+     b83:	4c 89 ff             	mov    %r15,%rdi
+     b86:	45 31 f6             	xor    %r14d,%r14d
+     b89:	e8 00 00 00 00       	call   b8e <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x25e>
+			b8a: R_X86_64_PLT32	ShaderRD::_initialize_version(ShaderRD::Version*)-0x4
+     b8e:	48 8b 85 80 00 00 00 	mov    0x80(%rbp),%rax
+     b95:	48 85 c0             	test   %rax,%rax
+     b98:	0f 84 72 fe ff ff    	je     a10 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0xe0>
+     b9e:	44 89 f2             	mov    %r14d,%edx
+     ba1:	4c 3b 70 f0          	cmp    -0x10(%rax),%r14
+     ba5:	0f 8d 65 fe ff ff    	jge    a10 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0xe0>
+     bab:	42 80 3c 30 00       	cmpb   $0x0,(%rax,%r14,1)
+     bb0:	4c 89 e6             	mov    %r12,%rsi
+     bb3:	4c 89 ff             	mov    %r15,%rdi
+     bb6:	0f 84 b4 00 00 00    	je     c70 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x340>
+     bbc:	e8 00 00 00 00       	call   bc1 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x291>
+			bbd: R_X86_64_PLT32	ShaderRD::_compile_version_start(ShaderRD::Version*, int)-0x4
+     bc1:	48 8b 85 80 00 00 00 	mov    0x80(%rbp),%rax
+     bc8:	49 83 c6 01          	add    $0x1,%r14
+     bcc:	48 85 c0             	test   %rax,%rax
+     bcf:	75 cd                	jne    b9e <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x26e>
+     bd1:	e9 3a fe ff ff       	jmp    a10 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0xe0>
+     bd6:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+     bdd:	00 00 00 
+     be0:	31 db                	xor    %ebx,%ebx
+     be2:	4c 89 ef             	mov    %r13,%rdi
+     be5:	e8 00 00 00 00       	call   bea <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x2ba>
+			be6: R_X86_64_PLT32	pthread_mutex_unlock-0x4
+     bea:	e9 e0 fe ff ff       	jmp    acf <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x19f>
+     bef:	90                   	nop
+     bf0:	05 00 00 00 80       	add    $0x80000000,%eax
+     bf5:	3d fe ff ff 7f       	cmp    $0x7ffffffe,%eax
+     bfa:	77 34                	ja     c30 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x300>
+     bfc:	48 83 ec 08          	sub    $0x8,%rsp
+     c00:	ba 01 01 00 00       	mov    $0x101,%edx
+     c05:	45 31 c9             	xor    %r9d,%r9d
+     c08:	6a 00                	push   $0x0
+     c0a:	4c 8d 05 00 00 00 00 	lea    0x0(%rip),%r8        # c11 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x2e1>
+			c0d: R_X86_64_PC32	.LC11-0x4
+     c11:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # c18 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x2e8>
+			c14: R_X86_64_PC32	.LC12-0x4
+     c18:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # c1f <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x2ef>
+			c1b: R_X86_64_PC32	.LC13-0x4
+     c1f:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # c26 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x2f6>
+			c22: R_X86_64_PC32	.LC14-0x4
+     c26:	e8 00 00 00 00       	call   c2b <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x2fb>
+			c27: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, char const*, bool, ErrorHandlerType)-0x4
+     c2b:	58                   	pop    %rax
+     c2c:	5a                   	pop    %rdx
+     c2d:	0f 1f 00             	nopl   (%rax)
+     c30:	45 31 c9             	xor    %r9d,%r9d
+     c33:	45 31 c0             	xor    %r8d,%r8d
+     c36:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # c3d <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x30d>
+			c39: R_X86_64_PC32	.LC10-0x4
+     c3d:	ba b8 00 00 00       	mov    $0xb8,%edx
+     c42:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # c49 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x319>
+			c45: R_X86_64_PC32	.LC1-0x4
+     c49:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # c50 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x320>
+			c4c: R_X86_64_PC32	.LC2-0x4
+     c50:	e8 00 00 00 00       	call   c55 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x325>
+			c51: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+     c55:	e9 73 fe ff ff       	jmp    acd <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x19d>
+     c5a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+     c60:	4c 89 e6             	mov    %r12,%rsi
+     c63:	4c 89 ff             	mov    %r15,%rdi
+     c66:	e8 00 00 00 00       	call   c6b <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x33b>
+			c67: R_X86_64_PLT32	ShaderRD::_compile_version_end(ShaderRD::Version*, int)-0x4
+     c6b:	e9 e9 fd ff ff       	jmp    a59 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x129>
+     c70:	e8 00 00 00 00       	call   c75 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x345>
+			c71: R_X86_64_PLT32	ShaderRD::_allocate_placeholders(ShaderRD::Version*, int)-0x4
+     c75:	e9 47 ff ff ff       	jmp    bc1 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x291>
+     c7a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+     c80:	45 31 c9             	xor    %r9d,%r9d
+     c83:	45 31 c0             	xor    %r8d,%r8d
+     c86:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # c8d <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x35d>
+			c89: R_X86_64_PC32	.LC9-0x4
+     c8d:	ba b5 00 00 00       	mov    $0xb5,%edx
+     c92:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # c99 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x369>
+			c95: R_X86_64_PC32	.LC1-0x4
+     c99:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # ca0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x370>
+			c9c: R_X86_64_PC32	.LC2-0x4
+     ca0:	e8 00 00 00 00       	call   ca5 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x375>
+			ca1: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+     ca5:	e9 23 fe ff ff       	jmp    acd <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const+0x19d>
+
+Disassembly of section .text._ZN17PipelineHashMapRDIN33RendererSceneRenderImplementation27SceneShaderForwardClustered10ShaderData11PipelineKeyES2_MS2_FvS3_EE15clear_pipelinesEv:
+
+0000000000000930 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x930>:
+ 930:	4c 3b 71 10          	cmp    0x10(%rcx),%r14
+ 934:	0f 85 49 02 00 00    	jne    b83 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb83>
+ 93a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+ 940:	48 89 c8             	mov    %rcx,%rax
+ 943:	48 8b 49 18          	mov    0x18(%rcx),%rcx
+ 947:	48 39 41 10          	cmp    %rax,0x10(%rcx)
+ 94b:	74 f3                	je     940 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x940>
+ 94d:	48 39 43 28          	cmp    %rax,0x28(%rbx)
+ 951:	0f 85 95 f9 ff ff    	jne    2ec <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x2ec>
+ 957:	49 c7 46 28 00 00 00 	movq   $0x0,0x28(%r14)
+ 95e:	00 
+ 95f:	48 85 f6             	test   %rsi,%rsi
+ 962:	0f 85 8d f9 ff ff    	jne    2f5 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x2f5>
+ 968:	e9 99 f9 ff ff       	jmp    306 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x306>
+ 96d:	0f 1f 00             	nopl   (%rax)
+ 970:	8d 4a 01             	lea    0x1(%rdx),%ecx
+ 973:	39 ca                	cmp    %ecx,%edx
+ 975:	0f 83 c1 01 00 00    	jae    b3c <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb3c>
+ 97b:	89 c8                	mov    %ecx,%eax
+ 97d:	64 48 8b 7d 08       	mov    %fs:0x8(%rbp),%rdi
+ 982:	d1 e8                	shr    $1,%eax
+ 984:	01 d0                	add    %edx,%eax
+ 986:	ba 02 00 00 00       	mov    $0x2,%edx
+ 98b:	39 d0                	cmp    %edx,%eax
+ 98d:	48 0f 42 c2          	cmovb  %rdx,%rax
+ 991:	39 c8                	cmp    %ecx,%eax
+ 993:	48 0f 42 c1          	cmovb  %rcx,%rax
+ 997:	31 d2                	xor    %edx,%edx
+ 999:	64 89 45 04          	mov    %eax,%fs:0x4(%rbp)
+ 99d:	48 8d 34 c5 00 00 00 	lea    0x0(,%rax,8),%rsi
+ 9a4:	00 
+ 9a5:	e8 00 00 00 00       	call   9aa <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x9aa>
+			9a6: R_X86_64_PLT32	Memory::realloc_static(void*, unsigned long, bool)-0x4
+ 9aa:	64 48 89 45 08       	mov    %rax,%fs:0x8(%rbp)
+ 9af:	48 85 c0             	test   %rax,%rax
+ 9b2:	0f 84 31 02 00 00    	je     be9 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbe9>
+ 9b8:	64 8b 4d 00          	mov    %fs:0x0(%rbp),%ecx
+ 9bc:	e9 d4 f6 ff ff       	jmp    95 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x95>
+ 9c1:	48 8b 57 08          	mov    0x8(%rdi),%rdx
+ 9c5:	48 89 93 a8 00 00 00 	mov    %rdx,0xa8(%rbx)
+ 9cc:	48 8b 38             	mov    (%rax),%rdi
+ 9cf:	e9 18 fd ff ff       	jmp    6ec <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x6ec>
+ 9d4:	48 8b 17             	mov    (%rdi),%rdx
+ 9d7:	48 89 93 a0 00 00 00 	mov    %rdx,0xa0(%rbx)
+ 9de:	48 8b 38             	mov    (%rax),%rdi
+ 9e1:	e9 f9 fc ff ff       	jmp    6df <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x6df>
+ 9e6:	48 8d 48 01          	lea    0x1(%rax),%rcx
+ 9ea:	48 8d 7a e0          	lea    -0x20(%rdx),%rdi
+ 9ee:	48 d1 e9             	shr    $1,%rcx
+ 9f1:	48 01 c1             	add    %rax,%rcx
+ 9f4:	b8 02 00 00 00       	mov    $0x2,%eax
+ 9f9:	48 39 c1             	cmp    %rax,%rcx
+ 9fc:	48 0f 42 c8          	cmovb  %rax,%rcx
+ a00:	31 d2                	xor    %edx,%edx
+ a02:	48 8d 34 8d 20 00 00 	lea    0x20(,%rcx,4),%rsi
+ a09:	00 
+ a0a:	48 89 4c 24 20       	mov    %rcx,0x20(%rsp)
+ a0f:	e8 00 00 00 00       	call   a14 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xa14>
+			a10: R_X86_64_PLT32	Memory::realloc_static(void*, unsigned long, bool)-0x4
+ a14:	48 8b 4c 24 20       	mov    0x20(%rsp),%rcx
+ a19:	48 85 c0             	test   %rax,%rax
+ a1c:	0f 84 70 01 00 00    	je     b92 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb92>
+ a22:	48 8d 50 20          	lea    0x20(%rax),%rdx
+ a26:	64 48 89 55 08       	mov    %rdx,%fs:0x8(%rbp)
+ a2b:	48 89 48 08          	mov    %rcx,0x8(%rax)
+ a2f:	e9 40 fe ff ff       	jmp    874 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x874>
+ a34:	31 f6                	xor    %esi,%esi
+ a36:	31 d2                	xor    %edx,%edx
+ a38:	e9 43 f9 ff ff       	jmp    380 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x380>
+ a3d:	48 8b 44 24 18       	mov    0x18(%rsp),%rax
+ a42:	c7 40 40 00 00 00 00 	movl   $0x0,0x40(%rax)
+ a49:	e9 80 f9 ff ff       	jmp    3ce <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x3ce>
+ a4e:	64 48 8b 04 25 00 00 	mov    %fs:0x0,%rax
+ a55:	00 00 
+ a57:	48 8d 15 00 00 00 00 	lea    0x0(%rip),%rdx        # a5e <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xa5e>
+			a5a: R_X86_64_PC32	__dso_handle-0x4
+ a5e:	64 48 c7 04 25 00 00 	movq   $0x0,%fs:0x0
+ a65:	00 00 00 00 00 00 
+			a63: R_X86_64_TPOFF32	PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::_wait_for_all_pipelines()::tasks_to_wait
+ a6b:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # a72 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xa72>
+			a6e: R_X86_64_PC32	LocalVector<long, unsigned int, false, false>::~LocalVector()-0x4
+ a72:	64 48 c7 04 25 00 00 	movq   $0x0,%fs:0x0
+ a79:	00 00 00 00 00 00 
+			a77: R_X86_64_TPOFF32	PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::_wait_for_all_pipelines()::tasks_to_wait+0x8
+ a7f:	64 c6 04 25 00 00 00 	movb   $0x1,%fs:0x0
+ a86:	00 01 
+			a83: R_X86_64_TPOFF32	guard variable for PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::_wait_for_all_pipelines()::tasks_to_wait
+ a88:	48 8d b0 00 00 00 00 	lea    0x0(%rax),%rsi
+			a8b: R_X86_64_TPOFF32	PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::_wait_for_all_pipelines()::tasks_to_wait
+ a8f:	e8 00 00 00 00       	call   a94 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xa94>
+			a90: R_X86_64_PLT32	__cxa_thread_atexit-0x4
+ a94:	e9 89 f5 ff ff       	jmp    22 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x22>
+ a99:	64 48 8b 2c 25 00 00 	mov    %fs:0x0,%rbp
+ aa0:	00 00 
+ aa2:	48 8d 15 00 00 00 00 	lea    0x0(%rip),%rdx        # aa9 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xaa9>
+			aa5: R_X86_64_PC32	__dso_handle-0x4
+ aa9:	64 48 c7 04 25 00 00 	movq   $0x0,%fs:0x0
+ ab0:	00 00 00 00 00 00 
+			aae: R_X86_64_TPOFF32	PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::_add_new_pipelines_to_map()::hashes_added+0x8
+ ab6:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # abd <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xabd>
+			ab9: R_X86_64_PC32	Vector<unsigned int>::~Vector()-0x4
+ abd:	64 c6 04 25 00 00 00 	movb   $0x1,%fs:0x0
+ ac4:	00 01 
+			ac1: R_X86_64_TPOFF32	guard variable for PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::_add_new_pipelines_to_map()::hashes_added
+ ac6:	4c 8d a5 00 00 00 00 	lea    0x0(%rbp),%r12
+			ac9: R_X86_64_TPOFF32	PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::_add_new_pipelines_to_map()::hashes_added
+ acd:	4c 89 e6             	mov    %r12,%rsi
+ ad0:	e8 00 00 00 00       	call   ad5 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xad5>
+			ad1: R_X86_64_PLT32	__cxa_thread_atexit-0x4
+ ad5:	48 8d bd 00 00 00 00 	lea    0x0(%rbp),%rdi
+			ad8: R_X86_64_TPOFF32	PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::_add_new_pipelines_to_map()::hashes_added+0x8
+ adc:	e8 00 00 00 00       	call   ae1 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xae1>
+			add: R_X86_64_PLT32	CowData<unsigned int>::_unref()-0x4
+ ae1:	48 8b 44 24 18       	mov    0x18(%rsp),%rax
+ ae6:	4c 8d 70 50          	lea    0x50(%rax),%r14
+ aea:	e9 27 f6 ff ff       	jmp    116 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x116>
+ aef:	45 31 c9             	xor    %r9d,%r9d
+ af2:	45 31 c0             	xor    %r8d,%r8d
+ af5:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # afc <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xafc>
+			af8: R_X86_64_PC32	.LC19-0x4
+ afc:	ba d4 01 00 00       	mov    $0x1d4,%edx
+ b01:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # b08 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb08>
+			b04: R_X86_64_PC32	.LC6-0x4
+ b08:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # b0f <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb0f>
+			b0b: R_X86_64_PC32	.LC20-0x4
+ b0f:	e8 00 00 00 00       	call   b14 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb14>
+			b10: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+ b14:	64 48 8b 45 08       	mov    %fs:0x8(%rbp),%rax
+ b19:	e9 e0 fc ff ff       	jmp    7fe <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x7fe>
+ b1e:	4c 89 ca             	mov    %r9,%rdx
+ b21:	41 bc 01 00 00 00    	mov    $0x1,%r12d
+ b27:	e9 7e fa ff ff       	jmp    5aa <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x5aa>
+ b2c:	ba 01 00 00 00       	mov    $0x1,%edx
+ b31:	41 bc 01 00 00 00    	mov    $0x1,%r12d
+ b37:	e9 78 f9 ff ff       	jmp    4b4 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x4b4>
+ b3c:	e8 00 00 00 00       	call   b41 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb41>
+			b3d: R_X86_64_PLT32	is_print_verbose_enabled()-0x4
+ b41:	84 c0                	test   %al,%al
+ b43:	75 77                	jne    bbc <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbbc>
+ b45:	64 48 8b 45 08       	mov    %fs:0x8(%rbp),%rax
+ b4a:	e9 69 fe ff ff       	jmp    9b8 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x9b8>
+ b4f:	48 89 ce             	mov    %rcx,%rsi
+ b52:	e9 f6 fc ff ff       	jmp    84d <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x84d>
+ b57:	45 31 c9             	xor    %r9d,%r9d
+ b5a:	45 31 c0             	xor    %r8d,%r8d
+ b5d:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # b64 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb64>
+			b60: R_X86_64_PC32	.LC75-0x4
+ b64:	ba a2 00 00 00       	mov    $0xa2,%edx
+ b69:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # b70 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb70>
+			b6c: R_X86_64_PC32	.LC6-0x4
+ b70:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # b77 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb77>
+			b73: R_X86_64_PC32	.LC76-0x4
+ b77:	e8 00 00 00 00       	call   b7c <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb7c>
+			b78: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+ b7c:	e8 00 00 00 00       	call   b81 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb81>
+			b7d: R_X86_64_PLT32	_err_flush_stdout()-0x4
+ b81:	0f 0b                	ud2
+ b83:	4c 3b 73 28          	cmp    0x28(%rbx),%r14
+ b87:	0f 85 5f f7 ff ff    	jne    2ec <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x2ec>
+ b8d:	e9 c5 fd ff ff       	jmp    957 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x957>
+ b92:	45 31 c9             	xor    %r9d,%r9d
+ b95:	45 31 c0             	xor    %r8d,%r8d
+ b98:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # b9f <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb9f>
+			b9b: R_X86_64_PC32	.LC19-0x4
+ b9f:	ba e6 01 00 00       	mov    $0x1e6,%edx
+ ba4:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # bab <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbab>
+			ba7: R_X86_64_PC32	.LC6-0x4
+ bab:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # bb2 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbb2>
+			bae: R_X86_64_PC32	.LC22-0x4
+ bb2:	e8 00 00 00 00       	call   bb7 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbb7>
+			bb3: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+ bb7:	e9 e6 f7 ff ff       	jmp    3a2 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0x3a2>
+ bbc:	41 b9 01 00 00 00    	mov    $0x1,%r9d
+ bc2:	45 31 c0             	xor    %r8d,%r8d
+ bc5:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # bcc <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbcc>
+			bc8: R_X86_64_PC32	.LC70-0x4
+ bcc:	ba b5 00 00 00       	mov    $0xb5,%edx
+ bd1:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # bd8 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbd8>
+			bd4: R_X86_64_PC32	.LC68-0x4
+ bd8:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # bdf <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbdf>
+			bdb: R_X86_64_PC32	.LC69-0x4
+ bdf:	e8 00 00 00 00       	call   be4 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbe4>
+			be0: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+ be4:	e9 5c ff ff ff       	jmp    b45 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xb45>
+ be9:	48 83 ec 08          	sub    $0x8,%rsp
+ bed:	45 31 c9             	xor    %r9d,%r9d
+ bf0:	4c 8d 05 00 00 00 00 	lea    0x0(%rip),%r8        # bf7 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xbf7>
+			bf3: R_X86_64_PC32	.LC66-0x4
+ bf7:	ba b3 00 00 00       	mov    $0xb3,%edx
+ bfc:	6a 00                	push   $0x0
+ bfe:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # c05 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xc05>
+			c01: R_X86_64_PC32	.LC67-0x4
+ c05:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # c0c <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xc0c>
+			c08: R_X86_64_PC32	.LC68-0x4
+ c0c:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # c13 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xc13>
+			c0f: R_X86_64_PC32	.LC69-0x4
+ c13:	e8 00 00 00 00       	call   c18 <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xc18>
+			c14: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, char const*, bool, ErrorHandlerType)-0x4
+ c18:	e8 00 00 00 00       	call   c1d <PipelineHashMapRD<RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey, RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData, void (RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::*)(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>::clear_pipelines()+0xc1d>
+			c19: R_X86_64_PLT32	_err_flush_stdout()-0x4
+ c1d:	0f 0b                	ud2
+ c1f:	89 c7                	mov    %eax,%edi
+ c21:	e8 00 00 00 00       	call   c26 <.LC292+0x8>
+			c22: R_X86_64_PLT32	std::__throw_system_error(int)-0x4

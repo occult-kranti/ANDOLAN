@@ -1,0 +1,44 @@
+[
+  {
+    "label": "baseline",
+    "command": [
+      "taskset",
+      "-c",
+      "4",
+      "timeout",
+      "30s",
+      "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/tmp/yuga-s4-diadem-baseline-r1",
+      "--script",
+      "res://import_semantics.gd",
+      "--",
+      "--output=/tmp/yuga-s4-diadem-semantics-baseline-r1"
+    ],
+    "output": "/tmp/yuga-s4-diadem-semantics-baseline-r1",
+    "exit_code": 0,
+    "elapsed_s": 2.225701894999929
+  },
+  {
+    "label": "candidate",
+    "command": [
+      "taskset",
+      "-c",
+      "4",
+      "timeout",
+      "30s",
+      "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/tmp/yuga-s4-diadem-import-r1",
+      "--script",
+      "res://import_semantics.gd",
+      "--",
+      "--output=/tmp/yuga-s4-diadem-semantics-candidate-r1"
+    ],
+    "output": "/tmp/yuga-s4-diadem-semantics-candidate-r1",
+    "exit_code": 0,
+    "elapsed_s": 2.1104835030000686
+  }
+]

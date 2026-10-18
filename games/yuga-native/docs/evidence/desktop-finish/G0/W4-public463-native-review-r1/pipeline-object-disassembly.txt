@@ -1,0 +1,867 @@
+
+/tmp/yuga-engine-template-baseline-r1/godot-35e80b3a8822a9df9be390814b62f44c0a9c69e8/bin/obj/servers/rendering/renderer_rd/forward_clustered/scene_shader_forward_clustered.linuxbsd.template_debug.x86_64.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000001e00 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)>:
+    1e00:	41 57                	push   %r15
+    1e02:	41 56                	push   %r14
+    1e04:	41 55                	push   %r13
+    1e06:	41 54                	push   %r12
+    1e08:	55                   	push   %rbp
+    1e09:	53                   	push   %rbx
+    1e0a:	48 89 fb             	mov    %rdi,%rbx
+    1e0d:	48 81 ec 68 02 00 00 	sub    $0x268,%rsp
+    1e14:	8b b3 10 03 00 00    	mov    0x310(%rbx),%esi
+    1e1a:	48 8b 84 24 b8 02 00 	mov    0x2b8(%rsp),%rax
+    1e21:	00 
+    1e22:	48 8d 7c 24 60       	lea    0x60(%rsp),%rdi
+    1e27:	66 48 0f 6e c8       	movq   %rax,%xmm1
+    1e2c:	48 89 04 24          	mov    %rax,(%rsp)
+    1e30:	41 89 c4             	mov    %eax,%r12d
+    1e33:	66 0f 3a 16 4c 24 08 	pextrd $0x1,%xmm1,0x8(%rsp)
+    1e3a:	01 
+    1e3b:	e8 00 00 00 00       	call   1e40 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x40>
+			1e3c: R_X86_64_PLT32	RendererRD::MaterialStorage::ShaderData::blend_mode_to_blend_attachment(RendererRD::MaterialStorage::ShaderData::BlendMode)-0x4
+    1e40:	66 0f 6f 44 24 60    	movdqa 0x60(%rsp),%xmm0
+    1e46:	8b 05 00 00 00 00    	mov    0x0(%rip),%eax        # 1e4c <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x4c>
+			1e48: R_X86_64_PC32	.LC51-0x4
+    1e4c:	31 f6                	xor    %esi,%esi
+    1e4e:	0f 28 15 00 00 00 00 	movaps 0x0(%rip),%xmm2        # 1e55 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x55>
+			1e51: R_X86_64_PC32	.LC50-0x4
+    1e55:	bf 80 00 00 00       	mov    $0x80,%edi
+    1e5a:	c6 84 24 b0 00 00 00 	movb   $0x0,0xb0(%rsp)
+    1e61:	00 
+    1e62:	0f 29 84 24 00 02 00 	movaps %xmm0,0x200(%rsp)
+    1e69:	00 
+    1e6a:	66 0f 6f 44 24 70    	movdqa 0x70(%rsp),%xmm0
+    1e70:	c7 84 24 b4 00 00 00 	movl   $0x0,0xb4(%rsp)
+    1e77:	00 00 00 00 
+    1e7b:	0f 29 84 24 10 02 00 	movaps %xmm0,0x210(%rsp)
+    1e82:	00 
+    1e83:	66 0f ef c0          	pxor   %xmm0,%xmm0
+    1e87:	48 c7 84 24 c0 00 00 	movq   $0x0,0xc0(%rsp)
+    1e8e:	00 00 00 00 00 
+    1e93:	c6 84 24 20 02 00 00 	movb   $0x0,0x220(%rsp)
+    1e9a:	00 
+    1e9b:	48 c7 84 24 34 02 00 	movq   $0x0,0x234(%rsp)
+    1ea2:	00 00 00 00 00 
+    1ea7:	89 84 24 3c 02 00 00 	mov    %eax,0x23c(%rsp)
+    1eae:	c6 84 24 40 02 00 00 	movb   $0x0,0x240(%rsp)
+    1eb5:	00 
+    1eb6:	48 c7 84 24 54 02 00 	movq   $0x0,0x254(%rsp)
+    1ebd:	00 00 00 00 00 
+    1ec2:	89 84 24 5c 02 00 00 	mov    %eax,0x25c(%rsp)
+    1ec9:	0f 11 94 24 c8 00 00 	movups %xmm2,0xc8(%rsp)
+    1ed0:	00 
+    1ed1:	0f 11 84 24 24 02 00 	movups %xmm0,0x224(%rsp)
+    1ed8:	00 
+    1ed9:	0f 11 84 24 44 02 00 	movups %xmm0,0x244(%rsp)
+    1ee0:	00 
+    1ee1:	e8 00 00 00 00       	call   1ee6 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xe6>
+			1ee2: R_X86_64_PLT32	void* Memory::alloc_static<false>(unsigned long, bool)-0x4
+    1ee6:	48 85 c0             	test   %rax,%rax
+    1ee9:	0f 84 11 0a 00 00    	je     2900 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb00>
+    1eef:	48 8d 68 20          	lea    0x20(%rax),%rbp
+    1ef3:	48 c7 00 01 00 00 00 	movq   $0x1,(%rax)
+    1efa:	48 c7 40 08 03 00 00 	movq   $0x3,0x8(%rax)
+    1f01:	00 
+    1f02:	66 0f 6f 84 24 00 02 	movdqa 0x200(%rsp),%xmm0
+    1f09:	00 00 
+    1f0b:	0f 11 40 20          	movups %xmm0,0x20(%rax)
+    1f0f:	66 0f 6f 84 24 10 02 	movdqa 0x210(%rsp),%xmm0
+    1f16:	00 00 
+    1f18:	0f 11 45 10          	movups %xmm0,0x10(%rbp)
+    1f1c:	66 0f 6f 84 24 20 02 	movdqa 0x220(%rsp),%xmm0
+    1f23:	00 00 
+    1f25:	0f 11 45 20          	movups %xmm0,0x20(%rbp)
+    1f29:	66 0f 6f 84 24 30 02 	movdqa 0x230(%rsp),%xmm0
+    1f30:	00 00 
+    1f32:	0f 11 45 30          	movups %xmm0,0x30(%rbp)
+    1f36:	66 0f 6f 84 24 40 02 	movdqa 0x240(%rsp),%xmm0
+    1f3d:	00 00 
+    1f3f:	0f 11 45 40          	movups %xmm0,0x40(%rbp)
+    1f43:	66 0f 6f 84 24 50 02 	movdqa 0x250(%rsp),%xmm0
+    1f4a:	00 00 
+    1f4c:	0f 11 45 50          	movups %xmm0,0x50(%rbp)
+    1f50:	48 c7 40 10 03 00 00 	movq   $0x3,0x10(%rax)
+    1f57:	00 
+    1f58:	48 39 ac 24 c0 00 00 	cmp    %rbp,0xc0(%rsp)
+    1f5f:	00 
+    1f60:	74 17                	je     1f79 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x179>
+    1f62:	48 8d bc 24 c0 00 00 	lea    0xc0(%rsp),%rdi
+    1f69:	00 
+    1f6a:	e8 00 00 00 00       	call   1f6f <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x16f>
+			1f6b: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    1f6f:	48 89 ac 24 c0 00 00 	mov    %rbp,0xc0(%rsp)
+    1f76:	00 
+    1f77:	31 ed                	xor    %ebp,%ebp
+    1f79:	48 89 ac 24 d8 01 00 	mov    %rbp,0x1d8(%rsp)
+    1f80:	00 
+    1f81:	48 8d ac 24 d8 01 00 	lea    0x1d8(%rsp),%rbp
+    1f88:	00 
+    1f89:	45 31 f6             	xor    %r14d,%r14d
+    1f8c:	48 89 ef             	mov    %rbp,%rdi
+    1f8f:	e8 00 00 00 00       	call   1f94 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x194>
+			1f90: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    1f94:	48 8d bc 24 e0 00 00 	lea    0xe0(%rsp),%rdi
+    1f9b:	00 
+    1f9c:	be 03 00 00 00       	mov    $0x3,%esi
+    1fa1:	e8 00 00 00 00       	call   1fa6 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x1a6>
+			1fa2: R_X86_64_PLT32	RenderingDeviceCommons::PipelineColorBlendState::create_disabled(int)-0x4
+    1fa6:	48 8d bc 24 10 01 00 	lea    0x110(%rsp),%rdi
+    1fad:	00 
+    1fae:	be 01 00 00 00       	mov    $0x1,%esi
+    1fb3:	e8 00 00 00 00       	call   1fb8 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x1b8>
+			1fb4: R_X86_64_PLT32	RenderingDeviceCommons::PipelineColorBlendState::create_disabled(int)-0x4
+    1fb8:	48 8d bc 24 40 01 00 	lea    0x140(%rsp),%rdi
+    1fbf:	00 
+    1fc0:	be 02 00 00 00       	mov    $0x2,%esi
+    1fc5:	e8 00 00 00 00       	call   1fca <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x1ca>
+			1fc6: R_X86_64_PLT32	RenderingDeviceCommons::PipelineColorBlendState::create_disabled(int)-0x4
+    1fca:	66 0f 6f 05 00 00 00 	movdqa 0x0(%rip),%xmm0        # 1fd2 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x1d2>
+    1fd1:	00 
+			1fce: R_X86_64_PC32	.LC54-0x4
+    1fd2:	8b 83 0c 03 00 00    	mov    0x30c(%rbx),%eax
+    1fd8:	66 44 89 b4 24 00 02 	mov    %r14w,0x200(%rsp)
+    1fdf:	00 00 
+    1fe1:	c7 84 24 04 02 00 00 	movl   $0x7,0x204(%rsp)
+    1fe8:	07 00 00 00 
+    1fec:	0f 11 84 24 18 02 00 	movups %xmm0,0x218(%rsp)
+    1ff3:	00 
+    1ff4:	66 0f 6f 05 00 00 00 	movdqa 0x0(%rip),%xmm0        # 1ffc <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x1fc>
+    1ffb:	00 
+			1ff8: R_X86_64_PC32	.LC55-0x4
+    1ffc:	c6 84 24 08 02 00 00 	movb   $0x0,0x208(%rsp)
+    2003:	00 
+    2004:	0f 11 84 24 28 02 00 	movups %xmm0,0x228(%rsp)
+    200b:	00 
+    200c:	66 0f 6f 05 00 00 00 	movdqa 0x0(%rip),%xmm0        # 2014 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x214>
+    2013:	00 
+			2010: R_X86_64_PC32	.LC56-0x4
+    2014:	48 c7 84 24 0c 02 00 	movq   $0x0,0x20c(%rsp)
+    201b:	00 00 00 00 00 
+    2020:	c6 84 24 14 02 00 00 	movb   $0x0,0x214(%rsp)
+    2027:	00 
+    2028:	48 c7 84 24 48 02 00 	movq   $0x0,0x248(%rsp)
+    202f:	00 00 00 00 00 
+    2034:	0f 11 84 24 38 02 00 	movups %xmm0,0x238(%rsp)
+    203b:	00 
+    203c:	85 c0                	test   %eax,%eax
+    203e:	74 2e                	je     206e <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x26e>
+    2040:	44 8b ab 08 03 00 00 	mov    0x308(%rbx),%r13d
+    2047:	c6 84 24 00 02 00 00 	movb   $0x1,0x200(%rsp)
+    204e:	01 
+    204f:	45 85 ed             	test   %r13d,%r13d
+    2052:	0f 95 84 24 01 02 00 	setne  0x201(%rsp)
+    2059:	00 
+    205a:	83 f8 02             	cmp    $0x2,%eax
+    205d:	0f 95 c0             	setne  %al
+    2060:	0f b6 c0             	movzbl %al,%eax
+    2063:	8d 44 80 01          	lea    0x1(%rax,%rax,4),%eax
+    2067:	89 84 24 04 02 00 00 	mov    %eax,0x204(%rsp)
+    206e:	80 bb 44 03 00 00 00 	cmpb   $0x0,0x344(%rbx)
+    2075:	74 0a                	je     2081 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x281>
+    2077:	41 83 fc 09          	cmp    $0x9,%r12d
+    207b:	0f 84 7f 06 00 00    	je     2700 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x900>
+    2081:	e8 00 00 00 00       	call   2086 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x286>
+			2082: R_X86_64_PLT32	ProjectSettings::get_singleton()-0x4
+    2086:	4c 8d ac 24 d0 01 00 	lea    0x1d0(%rsp),%r13
+    208d:	00 
+    208e:	8b 90 34 01 00 00    	mov    0x134(%rax),%edx
+    2094:	3b 15 00 00 00 00    	cmp    0x0(%rip),%edx        # 209a <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x29a>
+			2096: R_X86_64_PC32	.bss+0x5c
+    209a:	74 34                	je     20d0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x2d0>
+    209c:	b9 01 00 00 00       	mov    $0x1,%ecx
+    20a1:	c6 84 24 d0 01 00 00 	movb   $0x0,0x1d0(%rsp)
+    20a8:	00 
+    20a9:	41 0f b6 45 00       	movzbl 0x0(%r13),%eax
+    20ae:	f0 0f b0 0d 00 00 00 	lock cmpxchg %cl,0x0(%rip)        # 20b6 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x2b6>
+    20b5:	00 
+			20b2: R_X86_64_PC32	.bss+0x1c
+    20b6:	74 50                	je     2108 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x308>
+    20b8:	41 88 45 00          	mov    %al,0x0(%r13)
+    20bc:	f3 90                	pause
+    20be:	0f b6 05 00 00 00 00 	movzbl 0x0(%rip),%eax        # 20c5 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x2c5>
+			20c1: R_X86_64_PC32	.bss+0x1c
+    20c5:	84 c0                	test   %al,%al
+    20c7:	75 f3                	jne    20bc <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x2bc>
+    20c9:	eb d6                	jmp    20a1 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x2a1>
+    20cb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+    20d0:	ba 01 00 00 00       	mov    $0x1,%edx
+    20d5:	c6 84 24 d0 01 00 00 	movb   $0x0,0x1d0(%rsp)
+    20dc:	00 
+    20dd:	41 0f b6 45 00       	movzbl 0x0(%r13),%eax
+    20e2:	f0 0f b0 15 00 00 00 	lock cmpxchg %dl,0x0(%rip)        # 20ea <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x2ea>
+    20e9:	00 
+			20e6: R_X86_64_PC32	.bss+0x1c
+    20ea:	0f 84 90 00 00 00    	je     2180 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x380>
+    20f0:	41 88 45 00          	mov    %al,0x0(%r13)
+    20f4:	f3 90                	pause
+    20f6:	0f b6 05 00 00 00 00 	movzbl 0x0(%rip),%eax        # 20fd <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x2fd>
+			20f9: R_X86_64_PC32	.bss+0x1c
+    20fd:	84 c0                	test   %al,%al
+    20ff:	75 f3                	jne    20f4 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x2f4>
+    2101:	eb d2                	jmp    20d5 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x2d5>
+    2103:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+    2108:	89 15 00 00 00 00    	mov    %edx,0x0(%rip)        # 210e <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x30e>
+			210a: R_X86_64_PC32	.bss+0x5c
+    210e:	4c 8d b4 24 a0 01 00 	lea    0x1a0(%rsp),%r14
+    2115:	00 
+    2116:	e8 00 00 00 00       	call   211b <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x31b>
+			2117: R_X86_64_PLT32	ProjectSettings::get_singleton()-0x4
+    211b:	31 d2                	xor    %edx,%edx
+    211d:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 2124 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x324>
+			2120: R_X86_64_PC32	.LC57-0x4
+    2124:	4c 89 f7             	mov    %r14,%rdi
+    2127:	49 89 c7             	mov    %rax,%r15
+    212a:	e8 00 00 00 00       	call   212f <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x32f>
+			212b: R_X86_64_PLT32	StringName::StringName(char const*, bool)-0x4
+    212f:	4c 89 f2             	mov    %r14,%rdx
+    2132:	4c 89 fe             	mov    %r15,%rsi
+    2135:	4c 89 ef             	mov    %r13,%rdi
+    2138:	e8 00 00 00 00       	call   213d <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x33d>
+			2139: R_X86_64_PLT32	ProjectSettings::get_setting_with_override(StringName const&) const-0x4
+    213d:	4c 89 ef             	mov    %r13,%rdi
+    2140:	e8 00 00 00 00       	call   2145 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x345>
+			2141: R_X86_64_PLT32	Variant::operator bool() const-0x4
+    2145:	48 8d 15 00 00 00 00 	lea    0x0(%rip),%rdx        # 214c <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x34c>
+			2148: R_X86_64_PC32	Variant::needs_deinit-0x4
+    214c:	88 05 00 00 00 00    	mov    %al,0x0(%rip)        # 2152 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x352>
+			214e: R_X86_64_PC32	.bss+0x60
+    2152:	48 63 84 24 d0 01 00 	movslq 0x1d0(%rsp),%rax
+    2159:	00 
+    215a:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1)
+    215e:	0f 85 dc 08 00 00    	jne    2a40 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc40>
+    2164:	80 3d 00 00 00 00 00 	cmpb   $0x0,0x0(%rip)        # 216b <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x36b>
+			2166: R_X86_64_PC32	StringName::configured-0x5
+    216b:	74 13                	je     2180 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x380>
+    216d:	48 83 bc 24 a0 01 00 	cmpq   $0x0,0x1a0(%rsp)
+    2174:	00 00 
+    2176:	74 08                	je     2180 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x380>
+    2178:	4c 89 f7             	mov    %r14,%rdi
+    217b:	e8 00 00 00 00       	call   2180 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x380>
+			217c: R_X86_64_PLT32	StringName::unref()-0x4
+    2180:	44 0f b6 35 00 00 00 	movzbl 0x0(%rip),%r14d        # 2188 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x388>
+    2187:	00 
+			2184: R_X86_64_PC32	.bss+0x60
+    2188:	c6 05 00 00 00 00 00 	movb   $0x0,0x0(%rip)        # 218f <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x38f>
+			218a: R_X86_64_PC32	.bss+0x1b
+    218f:	c7 44 24 50 07 00 00 	movl   $0x7,0x50(%rsp)
+    2196:	00 
+    2197:	66 0f 6f 05 00 00 00 	movdqa 0x0(%rip),%xmm0        # 219f <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x39f>
+    219e:	00 
+			219b: R_X86_64_PC32	.LC58-0x4
+    219f:	44 0f b6 bb 20 03 00 	movzbl 0x320(%rbx),%r15d
+    21a6:	00 
+    21a7:	0f 29 44 24 40       	movaps %xmm0,0x40(%rsp)
+    21ac:	45 84 ff             	test   %r15b,%r15b
+    21af:	0f 84 fb 03 00 00    	je     25b0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x7b0>
+    21b5:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 21bc <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x3bc>
+			21b8: R_X86_64_PC32	RendererSceneRenderImplementation::SceneShaderForwardClustered::singleton-0x4
+    21bc:	44 0f b6 b8 58 06 00 	movzbl 0x658(%rax),%r15d
+    21c3:	00 
+    21c4:	45 84 ff             	test   %r15b,%r15b
+    21c7:	0f 84 19 09 00 00    	je     2ae6 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xce6>
+    21cd:	c7 44 24 0c 05 00 00 	movl   $0x5,0xc(%rsp)
+    21d4:	00 
+    21d5:	8b 84 24 b0 02 00 00 	mov    0x2b0(%rsp),%eax
+    21dc:	45 31 d2             	xor    %r10d,%r10d
+    21df:	0f 28 1d 00 00 00 00 	movaps 0x0(%rip),%xmm3        # 21e6 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x3e6>
+			21e2: R_X86_64_PC32	.LC50-0x4
+    21e6:	c7 84 24 88 00 00 00 	movl   $0x0,0x88(%rsp)
+    21ed:	00 00 00 00 
+    21f1:	66 44 89 94 24 80 00 	mov    %r10w,0x80(%rsp)
+    21f8:	00 00 
+    21fa:	89 84 24 84 00 00 00 	mov    %eax,0x84(%rsp)
+    2201:	0f b6 83 2d 03 00 00 	movzbl 0x32d(%rbx),%eax
+    2208:	c6 84 24 8c 00 00 00 	movb   $0x0,0x8c(%rsp)
+    220f:	00 
+    2210:	c7 84 24 a0 00 00 00 	movl   $0x1,0xa0(%rsp)
+    2217:	01 00 00 00 
+    221b:	0f 29 9c 24 90 00 00 	movaps %xmm3,0x90(%rsp)
+    2222:	00 
+    2223:	84 c0                	test   %al,%al
+    2225:	75 0e                	jne    2235 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x435>
+    2227:	44 8b 8c 24 cc 02 00 	mov    0x2cc(%rsp),%r9d
+    222e:	00 
+    222f:	45 85 c9             	test   %r9d,%r9d
+    2232:	0f 95 c0             	setne  %al
+    2235:	45 31 c0             	xor    %r8d,%r8d
+    2238:	88 84 24 82 00 00 00 	mov    %al,0x82(%rsp)
+    223f:	66 44 89 84 24 90 01 	mov    %r8w,0x190(%rsp)
+    2246:	00 00 
+    2248:	c7 84 24 70 01 00 00 	movl   $0x0,0x170(%rsp)
+    224f:	00 00 00 00 
+    2253:	c6 84 24 74 01 00 00 	movb   $0x0,0x174(%rsp)
+    225a:	00 
+    225b:	c7 84 24 78 01 00 00 	movl   $0x0,0x178(%rsp)
+    2262:	00 00 00 00 
+    2266:	48 c7 84 24 88 01 00 	movq   $0x0,0x188(%rsp)
+    226d:	00 00 00 00 00 
+    2272:	e8 00 00 00 00       	call   2277 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x477>
+			2273: R_X86_64_PLT32	RenderingDevice::get_singleton()-0x4
+    2277:	31 d2                	xor    %edx,%edx
+    2279:	48 89 c7             	mov    %rax,%rdi
+    227c:	48 8b 84 24 a8 02 00 	mov    0x2a8(%rsp),%rax
+    2283:	00 
+    2284:	48 89 c6             	mov    %rax,%rsi
+    2287:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
+    228c:	e8 00 00 00 00       	call   2291 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x491>
+			228d: R_X86_64_PLT32	RenderingDevice::framebuffer_format_get_texture_samples(long, unsigned int)-0x4
+    2291:	0f 28 25 00 00 00 00 	movaps 0x0(%rip),%xmm4        # 2298 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x498>
+			2294: R_X86_64_PC32	.LC50-0x4
+    2298:	c6 84 24 a0 01 00 00 	movb   $0x0,0x1a0(%rsp)
+    229f:	00 
+    22a0:	89 84 24 70 01 00 00 	mov    %eax,0x170(%rsp)
+    22a7:	c7 84 24 a4 01 00 00 	movl   $0x0,0x1a4(%rsp)
+    22ae:	00 00 00 00 
+    22b2:	48 c7 84 24 b0 01 00 	movq   $0x0,0x1b0(%rsp)
+    22b9:	00 00 00 00 00 
+    22be:	0f 11 a4 24 b8 01 00 	movups %xmm4,0x1b8(%rsp)
+    22c5:	00 
+    22c6:	41 83 fc 09          	cmp    $0x9,%r12d
+    22ca:	0f 84 f8 02 00 00    	je     25c8 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x7c8>
+    22d0:	41 83 fc 08          	cmp    $0x8,%r12d
+    22d4:	0f 87 96 00 00 00    	ja     2370 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x570>
+    22da:	48 8d 15 00 00 00 00 	lea    0x0(%rip),%rdx        # 22e1 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x4e1>
+			22dd: R_X86_64_PC32	.rodata+0x24
+    22e1:	44 89 e0             	mov    %r12d,%eax
+    22e4:	48 63 04 82          	movslq (%rdx,%rax,4),%rax
+    22e8:	48 01 d0             	add    %rdx,%rax
+    22eb:	ff e0                	jmp    *%rax
+    22ed:	0f 1f 00             	nopl   (%rax)
+    22f0:	be 05 00 00 00       	mov    $0x5,%esi
+    22f5:	4c 89 ef             	mov    %r13,%rdi
+    22f8:	e8 00 00 00 00       	call   22fd <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x4fd>
+			22f9: R_X86_64_PLT32	RenderingDeviceCommons::PipelineColorBlendState::create_disabled(int)-0x4
+    22fd:	0f b6 84 24 d0 01 00 	movzbl 0x1d0(%rsp),%eax
+    2304:	00 
+    2305:	4c 8b b4 24 e0 01 00 	mov    0x1e0(%rsp),%r14
+    230c:	00 
+    230d:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+    2314:	8b 84 24 d4 01 00 00 	mov    0x1d4(%rsp),%eax
+    231b:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+    2322:	4c 39 b4 24 b0 01 00 	cmp    %r14,0x1b0(%rsp)
+    2329:	00 
+    232a:	74 21                	je     234d <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x54d>
+    232c:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+    2333:	00 
+    2334:	e8 00 00 00 00       	call   2339 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x539>
+			2335: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    2339:	4c 89 b4 24 b0 01 00 	mov    %r14,0x1b0(%rsp)
+    2340:	00 
+    2341:	48 c7 84 24 e0 01 00 	movq   $0x0,0x1e0(%rsp)
+    2348:	00 00 00 00 00 
+    234d:	f3 0f 6f 84 24 e8 01 	movdqu 0x1e8(%rsp),%xmm0
+    2354:	00 00 
+    2356:	48 8d bc 24 e0 01 00 	lea    0x1e0(%rsp),%rdi
+    235d:	00 
+    235e:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+    2365:	00 
+    2366:	e8 00 00 00 00       	call   236b <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x56b>
+			2367: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    236b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+    2370:	8b 84 24 c0 02 00 00 	mov    0x2c0(%rsp),%eax
+    2377:	48 89 ef             	mov    %rbp,%rdi
+    237a:	4c 8d 74 24 34       	lea    0x34(%rsp),%r14
+    237f:	48 c7 84 24 d8 01 00 	movq   $0x0,0x1d8(%rsp)
+    2386:	00 00 00 00 00 
+    238b:	48 c7 44 24 28 01 00 	movq   $0x1,0x28(%rsp)
+    2392:	00 00 
+    2394:	4c 89 f6             	mov    %r14,%rsi
+    2397:	89 44 24 3c          	mov    %eax,0x3c(%rsp)
+    239b:	48 c7 44 24 34 01 00 	movq   $0x1,0x34(%rsp)
+    23a2:	00 00 
+    23a4:	e8 d7 e1 ff ff       	call   580 <CowData<RenderingDeviceCommons::PipelineSpecializationConstant>::push_back(RenderingDeviceCommons::PipelineSpecializationConstant&&) [clone .isra.0]>
+    23a9:	c7 44 24 2c 01 00 00 	movl   $0x1,0x2c(%rsp)
+    23b0:	00 
+    23b1:	48 8b 44 24 28       	mov    0x28(%rsp),%rax
+    23b6:	48 89 ef             	mov    %rbp,%rdi
+    23b9:	4c 89 f6             	mov    %r14,%rsi
+    23bc:	48 89 44 24 34       	mov    %rax,0x34(%rsp)
+    23c1:	8b 84 24 c4 02 00 00 	mov    0x2c4(%rsp),%eax
+    23c8:	89 44 24 3c          	mov    %eax,0x3c(%rsp)
+    23cc:	e8 af e1 ff ff       	call   580 <CowData<RenderingDeviceCommons::PipelineSpecializationConstant>::push_back(RenderingDeviceCommons::PipelineSpecializationConstant&&) [clone .isra.0]>
+    23d1:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 23d8 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x5d8>
+			23d4: R_X86_64_PC32	.LC62-0x4
+    23d8:	48 89 ef             	mov    %rbp,%rdi
+    23db:	4c 89 f6             	mov    %r14,%rsi
+    23de:	c7 44 24 30 00 00 00 	movl   $0x0,0x30(%rsp)
+    23e5:	00 
+    23e6:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+    23eb:	48 b8 00 00 00 00 02 	movabs $0x200000000,%rax
+    23f2:	00 00 00 
+    23f5:	44 88 7c 24 30       	mov    %r15b,0x30(%rsp)
+    23fa:	48 89 44 24 34       	mov    %rax,0x34(%rsp)
+    23ff:	8b 44 24 30          	mov    0x30(%rsp),%eax
+    2403:	89 44 24 3c          	mov    %eax,0x3c(%rsp)
+    2407:	e8 74 e1 ff ff       	call   580 <CowData<RenderingDeviceCommons::PipelineSpecializationConstant>::push_back(RenderingDeviceCommons::PipelineSpecializationConstant&&) [clone .isra.0]>
+    240c:	8b 54 24 08          	mov    0x8(%rsp),%edx
+    2410:	31 c9                	xor    %ecx,%ecx
+    2412:	48 89 df             	mov    %rbx,%rdi
+    2415:	8b b4 24 d0 02 00 00 	mov    0x2d0(%rsp),%esi
+    241c:	85 f6                	test   %esi,%esi
+    241e:	44 89 e6             	mov    %r12d,%esi
+    2421:	0f 95 c1             	setne  %cl
+    2424:	e8 00 00 00 00       	call   2429 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x629>
+			2425: R_X86_64_PLT32	RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_version(RendererSceneRenderImplementation::SceneShaderForwardClustered::PipelineVersion, unsigned int, bool) const-0x4
+    2429:	48 89 df             	mov    %rbx,%rdi
+    242c:	0f b7 f0             	movzwl %ax,%esi
+    242f:	e8 00 00 00 00       	call   2434 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x634>
+			2430: R_X86_64_PLT32	RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_get_shader_variant(unsigned short) const-0x4
+    2434:	48 89 c5             	mov    %rax,%rbp
+    2437:	48 85 c0             	test   %rax,%rax
+    243a:	0f 84 10 05 00 00    	je     2950 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb50>
+    2440:	e8 00 00 00 00       	call   2445 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x645>
+			2441: R_X86_64_PLT32	RenderingDevice::get_singleton()-0x4
+    2445:	41 55                	push   %r13
+    2447:	48 89 ee             	mov    %rbp,%rsi
+    244a:	6a 00                	push   $0x0
+    244c:	48 89 c7             	mov    %rax,%rdi
+    244f:	6a 00                	push   $0x0
+    2451:	48 8d 84 24 b8 01 00 	lea    0x1b8(%rsp),%rax
+    2458:	00 
+    2459:	50                   	push   %rax
+    245a:	48 8d 84 24 20 02 00 	lea    0x220(%rsp),%rax
+    2461:	00 
+    2462:	50                   	push   %rax
+    2463:	48 8d 84 24 98 01 00 	lea    0x198(%rsp),%rax
+    246a:	00 
+    246b:	50                   	push   %rax
+    246c:	44 8b 44 24 3c       	mov    0x3c(%rsp),%r8d
+    2471:	48 8b 8c 24 d0 02 00 	mov    0x2d0(%rsp),%rcx
+    2478:	00 
+    2479:	48 8b 54 24 40       	mov    0x40(%rsp),%rdx
+    247e:	4c 8d 8c 24 b0 00 00 	lea    0xb0(%rsp),%r9
+    2485:	00 
+    2486:	e8 00 00 00 00       	call   248b <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x68b>
+			2487: R_X86_64_PLT32	RenderingDevice::render_pipeline_create(RID, long, long, RenderingDeviceCommons::RenderPrimitive, RenderingDeviceCommons::PipelineRasterizationState const&, RenderingDeviceCommons::PipelineMultisampleState const&, RenderingDeviceCommons::PipelineDepthStencilState const&, RenderingDeviceCommons::PipelineColorBlendState const&, BitField<RenderingDeviceCommons::PipelineDynamicStateFlags>, unsigned int, Vector<RenderingDeviceCommons::PipelineSpecializationConstant> const&)-0x4
+    248b:	48 83 c4 30          	add    $0x30,%rsp
+    248f:	48 89 c5             	mov    %rax,%rbp
+    2492:	48 85 c0             	test   %rax,%rax
+    2495:	0f 84 f5 04 00 00    	je     2990 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb90>
+    249b:	48 8b 04 24          	mov    (%rsp),%rax
+    249f:	48 8d bc 24 a0 02 00 	lea    0x2a0(%rsp),%rdi
+    24a6:	00 
+    24a7:	4c 8d ab b0 00 00 00 	lea    0xb0(%rbx),%r13
+    24ae:	48 89 84 24 b8 02 00 	mov    %rax,0x2b8(%rsp)
+    24b5:	00 
+    24b6:	e8 00 00 00 00       	call   24bb <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x6bb>
+			24b7: R_X86_64_PLT32	RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey::hash() const-0x4
+    24bb:	4c 89 ef             	mov    %r13,%rdi
+    24be:	41 89 c4             	mov    %eax,%r12d
+    24c1:	e8 00 00 00 00       	call   24c6 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x6c6>
+			24c2: R_X86_64_PLT32	pthread_mutex_lock-0x4
+    24c6:	85 c0                	test   %eax,%eax
+    24c8:	0f 85 00 00 00 00    	jne    24ce <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x6ce>
+			24ca: R_X86_64_PC32	.text.unlikely+0x34
+    24ce:	8b 93 a0 00 00 00    	mov    0xa0(%rbx),%edx
+    24d4:	3b 93 a4 00 00 00    	cmp    0xa4(%rbx),%edx
+    24da:	0f 84 f0 04 00 00    	je     29d0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xbd0>
+    24e0:	48 8b 83 a8 00 00 00 	mov    0xa8(%rbx),%rax
+    24e7:	8d 4a 01             	lea    0x1(%rdx),%ecx
+    24ea:	48 c1 e2 04          	shl    $0x4,%rdx
+    24ee:	4c 89 ef             	mov    %r13,%rdi
+    24f1:	48 01 d0             	add    %rdx,%rax
+    24f4:	89 8b a0 00 00 00    	mov    %ecx,0xa0(%rbx)
+    24fa:	44 89 20             	mov    %r12d,(%rax)
+    24fd:	48 89 68 08          	mov    %rbp,0x8(%rax)
+    2501:	e8 00 00 00 00       	call   2506 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x706>
+			2502: R_X86_64_PLT32	pthread_mutex_unlock-0x4
+    2506:	48 8b 84 24 d8 01 00 	mov    0x1d8(%rsp),%rax
+    250d:	00 
+    250e:	48 85 c0             	test   %rax,%rax
+    2511:	74 36                	je     2549 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x749>
+    2513:	f0 48 83 68 e0 01    	lock subq $0x1,-0x20(%rax)
+    2519:	75 2e                	jne    2549 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x749>
+    251b:	48 8b bc 24 d8 01 00 	mov    0x1d8(%rsp),%rdi
+    2522:	00 
+    2523:	31 f6                	xor    %esi,%esi
+    2525:	48 c7 84 24 d8 01 00 	movq   $0x0,0x1d8(%rsp)
+    252c:	00 00 00 00 00 
+    2531:	48 83 ef 20          	sub    $0x20,%rdi
+    2535:	e8 00 00 00 00       	call   253a <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x73a>
+			2536: R_X86_64_PLT32	Memory::free_static(void*, bool)-0x4
+    253a:	48 83 bc 24 d8 01 00 	cmpq   $0x0,0x1d8(%rsp)
+    2541:	00 00 
+    2543:	0f 85 07 05 00 00    	jne    2a50 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc50>
+    2549:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+    2550:	00 
+    2551:	e8 00 00 00 00       	call   2556 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x756>
+			2552: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    2556:	48 8d bc 24 88 01 00 	lea    0x188(%rsp),%rdi
+    255d:	00 
+    255e:	e8 00 00 00 00       	call   2563 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x763>
+			255f: R_X86_64_PLT32	CowData<unsigned int>::_unref()-0x4
+    2563:	48 8d bc 24 50 01 00 	lea    0x150(%rsp),%rdi
+    256a:	00 
+    256b:	e8 00 00 00 00       	call   2570 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x770>
+			256c: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    2570:	48 8d bc 24 20 01 00 	lea    0x120(%rsp),%rdi
+    2577:	00 
+    2578:	e8 00 00 00 00       	call   257d <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x77d>
+			2579: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    257d:	48 8d bc 24 f0 00 00 	lea    0xf0(%rsp),%rdi
+    2584:	00 
+    2585:	e8 00 00 00 00       	call   258a <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x78a>
+			2586: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    258a:	48 8d bc 24 c0 00 00 	lea    0xc0(%rsp),%rdi
+    2591:	00 
+    2592:	e8 00 00 00 00       	call   2597 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x797>
+			2593: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    2597:	48 81 c4 68 02 00 00 	add    $0x268,%rsp
+    259e:	5b                   	pop    %rbx
+    259f:	5d                   	pop    %rbp
+    25a0:	41 5c                	pop    %r12
+    25a2:	41 5d                	pop    %r13
+    25a4:	41 5e                	pop    %r14
+    25a6:	41 5f                	pop    %r15
+    25a8:	c3                   	ret
+    25a9:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    25b0:	48 63 84 24 b4 02 00 	movslq 0x2b4(%rsp),%rax
+    25b7:	00 
+    25b8:	8b 44 84 40          	mov    0x40(%rsp,%rax,4),%eax
+    25bc:	89 44 24 0c          	mov    %eax,0xc(%rsp)
+    25c0:	e9 10 fc ff ff       	jmp    21d5 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x3d5>
+    25c5:	0f 1f 00             	nopl   (%rax)
+    25c8:	f6 44 24 08 01       	testb  $0x1,0x8(%rsp)
+    25cd:	0f 84 8d 02 00 00    	je     2860 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xa60>
+    25d3:	8b 83 1c 03 00 00    	mov    0x31c(%rbx),%eax
+    25d9:	83 f8 01             	cmp    $0x1,%eax
+    25dc:	0f 84 de 01 00 00    	je     27c0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x9c0>
+    25e2:	83 f8 02             	cmp    $0x2,%eax
+    25e5:	0f 85 dd 01 00 00    	jne    27c8 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x9c8>
+    25eb:	bf 01 01 00 00       	mov    $0x101,%edi
+    25f0:	66 89 bc 24 90 01 00 	mov    %di,0x190(%rsp)
+    25f7:	00 
+    25f8:	e9 cb 01 00 00       	jmp    27c8 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x9c8>
+    25fd:	0f 1f 00             	nopl   (%rax)
+    2600:	0f b6 84 24 40 01 00 	movzbl 0x140(%rsp),%eax
+    2607:	00 
+    2608:	4c 8b b4 24 50 01 00 	mov    0x150(%rsp),%r14
+    260f:	00 
+    2610:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+    2617:	8b 84 24 44 01 00 00 	mov    0x144(%rsp),%eax
+    261e:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+    2625:	4d 85 f6             	test   %r14,%r14
+    2628:	74 3a                	je     2664 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x864>
+    262a:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+    2631:	00 
+    2632:	e8 00 00 00 00       	call   2637 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x837>
+			2633: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    2637:	49 8d 56 e0          	lea    -0x20(%r14),%rdx
+    263b:	48 8b 02             	mov    (%rdx),%rax
+    263e:	48 85 c0             	test   %rax,%rax
+    2641:	74 21                	je     2664 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x864>
+    2643:	48 8d 48 01          	lea    0x1(%rax),%rcx
+    2647:	f0 48 0f b1 0a       	lock cmpxchg %rcx,(%rdx)
+    264c:	75 ed                	jne    263b <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x83b>
+    264e:	48 83 f8 ff          	cmp    $0xffffffffffffffff,%rax
+    2652:	74 10                	je     2664 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x864>
+    2654:	48 8b 84 24 50 01 00 	mov    0x150(%rsp),%rax
+    265b:	00 
+    265c:	48 89 84 24 b0 01 00 	mov    %rax,0x1b0(%rsp)
+    2663:	00 
+    2664:	f3 0f 6f 84 24 58 01 	movdqu 0x158(%rsp),%xmm0
+    266b:	00 00 
+    266d:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+    2674:	00 
+    2675:	e9 f6 fc ff ff       	jmp    2370 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x570>
+    267a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    2680:	0f b6 84 24 10 01 00 	movzbl 0x110(%rsp),%eax
+    2687:	00 
+    2688:	4c 8b b4 24 20 01 00 	mov    0x120(%rsp),%r14
+    268f:	00 
+    2690:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+    2697:	8b 84 24 14 01 00 00 	mov    0x114(%rsp),%eax
+    269e:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+    26a5:	4d 85 f6             	test   %r14,%r14
+    26a8:	74 3a                	je     26e4 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x8e4>
+    26aa:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+    26b1:	00 
+    26b2:	e8 00 00 00 00       	call   26b7 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x8b7>
+			26b3: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    26b7:	49 8d 56 e0          	lea    -0x20(%r14),%rdx
+    26bb:	48 8b 02             	mov    (%rdx),%rax
+    26be:	48 85 c0             	test   %rax,%rax
+    26c1:	74 21                	je     26e4 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x8e4>
+    26c3:	48 8d 48 01          	lea    0x1(%rax),%rcx
+    26c7:	f0 48 0f b1 0a       	lock cmpxchg %rcx,(%rdx)
+    26cc:	75 ed                	jne    26bb <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x8bb>
+    26ce:	48 83 f8 ff          	cmp    $0xffffffffffffffff,%rax
+    26d2:	74 10                	je     26e4 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x8e4>
+    26d4:	48 8b 84 24 20 01 00 	mov    0x120(%rsp),%rax
+    26db:	00 
+    26dc:	48 89 84 24 b0 01 00 	mov    %rax,0x1b0(%rsp)
+    26e3:	00 
+    26e4:	f3 0f 6f 84 24 28 01 	movdqu 0x128(%rsp),%xmm0
+    26eb:	00 00 
+    26ed:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+    26f4:	00 
+    26f5:	e9 76 fc ff ff       	jmp    2370 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x570>
+    26fa:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    2700:	48 63 93 4c 03 00 00 	movslq 0x34c(%rbx),%rdx
+    2707:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 270e <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x90e>
+			270a: R_X86_64_PC32	.rodata+0x4c
+    270e:	c6 84 24 14 02 00 00 	movb   $0x1,0x214(%rsp)
+    2715:	01 
+    2716:	8b b3 50 03 00 00    	mov    0x350(%rbx),%esi
+    271c:	8b 3c 90             	mov    (%rax,%rdx,4),%edi
+    271f:	8b 83 48 03 00 00    	mov    0x348(%rbx),%eax
+    2725:	89 c2                	mov    %eax,%edx
+    2727:	89 c1                	mov    %eax,%ecx
+    2729:	83 e2 01             	and    $0x1,%edx
+    272c:	f7 da                	neg    %edx
+    272e:	19 d2                	sbb    %edx,%edx
+    2730:	0f b6 d2             	movzbl %dl,%edx
+    2733:	83 e1 02             	and    $0x2,%ecx
+    2736:	0f 85 84 02 00 00    	jne    29c0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xbc0>
+    273c:	45 31 c0             	xor    %r8d,%r8d
+    273f:	83 e0 04             	and    $0x4,%eax
+    2742:	74 0a                	je     274e <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x94e>
+    2744:	b9 ff 00 00 00       	mov    $0xff,%ecx
+    2749:	b8 02 00 00 00       	mov    $0x2,%eax
+    274e:	c7 84 24 18 02 00 00 	movl   $0x0,0x218(%rsp)
+    2755:	00 00 00 00 
+    2759:	44 89 84 24 1c 02 00 	mov    %r8d,0x21c(%rsp)
+    2760:	00 
+    2761:	89 84 24 20 02 00 00 	mov    %eax,0x220(%rsp)
+    2768:	89 bc 24 24 02 00 00 	mov    %edi,0x224(%rsp)
+    276f:	89 94 24 28 02 00 00 	mov    %edx,0x228(%rsp)
+    2776:	89 8c 24 2c 02 00 00 	mov    %ecx,0x22c(%rsp)
+    277d:	89 b4 24 30 02 00 00 	mov    %esi,0x230(%rsp)
+    2784:	c7 84 24 34 02 00 00 	movl   $0x0,0x234(%rsp)
+    278b:	00 00 00 00 
+    278f:	44 89 84 24 38 02 00 	mov    %r8d,0x238(%rsp)
+    2796:	00 
+    2797:	89 84 24 3c 02 00 00 	mov    %eax,0x23c(%rsp)
+    279e:	89 bc 24 40 02 00 00 	mov    %edi,0x240(%rsp)
+    27a5:	89 94 24 44 02 00 00 	mov    %edx,0x244(%rsp)
+    27ac:	89 8c 24 48 02 00 00 	mov    %ecx,0x248(%rsp)
+    27b3:	89 b4 24 4c 02 00 00 	mov    %esi,0x24c(%rsp)
+    27ba:	e9 c2 f8 ff ff       	jmp    2081 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x281>
+    27bf:	90                   	nop
+    27c0:	c6 84 24 90 01 00 00 	movb   $0x1,0x190(%rsp)
+    27c7:	01 
+    27c8:	0f b6 84 24 b0 00 00 	movzbl 0xb0(%rsp),%eax
+    27cf:	00 
+    27d0:	4c 8b b4 24 c0 00 00 	mov    0xc0(%rsp),%r14
+    27d7:	00 
+    27d8:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+    27df:	8b 84 24 b4 00 00 00 	mov    0xb4(%rsp),%eax
+    27e6:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+    27ed:	4d 85 f6             	test   %r14,%r14
+    27f0:	74 3a                	je     282c <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xa2c>
+    27f2:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+    27f9:	00 
+    27fa:	e8 00 00 00 00       	call   27ff <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x9ff>
+			27fb: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    27ff:	49 8d 56 e0          	lea    -0x20(%r14),%rdx
+    2803:	48 8b 02             	mov    (%rdx),%rax
+    2806:	48 85 c0             	test   %rax,%rax
+    2809:	74 21                	je     282c <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xa2c>
+    280b:	48 8d 48 01          	lea    0x1(%rax),%rcx
+    280f:	f0 48 0f b1 0a       	lock cmpxchg %rcx,(%rdx)
+    2814:	75 ed                	jne    2803 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xa03>
+    2816:	48 83 f8 ff          	cmp    $0xffffffffffffffff,%rax
+    281a:	74 10                	je     282c <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xa2c>
+    281c:	48 8b 84 24 c0 00 00 	mov    0xc0(%rsp),%rax
+    2823:	00 
+    2824:	48 89 84 24 b0 01 00 	mov    %rax,0x1b0(%rsp)
+    282b:	00 
+    282c:	f3 0f 6f 84 24 c8 00 	movdqu 0xc8(%rsp),%xmm0
+    2833:	00 00 
+    2835:	83 bb 08 03 00 00 01 	cmpl   $0x1,0x308(%rbx)
+    283c:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+    2843:	00 
+    2844:	0f 85 26 fb ff ff    	jne    2370 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x570>
+    284a:	c6 84 24 01 02 00 00 	movb   $0x0,0x201(%rsp)
+    2851:	00 
+    2852:	e9 19 fb ff ff       	jmp    2370 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x570>
+    2857:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    285e:	00 00 
+    2860:	0f b6 84 24 e0 00 00 	movzbl 0xe0(%rsp),%eax
+    2867:	00 
+    2868:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+    286f:	8b 84 24 e4 00 00 00 	mov    0xe4(%rsp),%eax
+    2876:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+    287d:	48 8b 84 24 f0 00 00 	mov    0xf0(%rsp),%rax
+    2884:	00 
+    2885:	48 85 c0             	test   %rax,%rax
+    2888:	48 89 44 24 18       	mov    %rax,0x18(%rsp)
+    288d:	74 3f                	je     28ce <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xace>
+    288f:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+    2896:	00 
+    2897:	e8 00 00 00 00       	call   289c <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xa9c>
+			2898: R_X86_64_PLT32	CowData<RenderingDeviceCommons::PipelineColorBlendState::Attachment>::_unref()-0x4
+    289c:	48 8b 44 24 18       	mov    0x18(%rsp),%rax
+    28a1:	48 8d 50 e0          	lea    -0x20(%rax),%rdx
+    28a5:	48 8b 02             	mov    (%rdx),%rax
+    28a8:	48 85 c0             	test   %rax,%rax
+    28ab:	74 21                	je     28ce <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xace>
+    28ad:	48 8d 48 01          	lea    0x1(%rax),%rcx
+    28b1:	f0 48 0f b1 0a       	lock cmpxchg %rcx,(%rdx)
+    28b6:	75 ed                	jne    28a5 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xaa5>
+    28b8:	48 83 f8 ff          	cmp    $0xffffffffffffffff,%rax
+    28bc:	74 10                	je     28ce <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xace>
+    28be:	48 8b 84 24 f0 00 00 	mov    0xf0(%rsp),%rax
+    28c5:	00 
+    28c6:	48 89 84 24 b0 01 00 	mov    %rax,0x1b0(%rsp)
+    28cd:	00 
+    28ce:	f3 0f 6f 84 24 f8 00 	movdqu 0xf8(%rsp),%xmm0
+    28d5:	00 00 
+    28d7:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+    28de:	00 
+    28df:	45 84 f6             	test   %r14b,%r14b
+    28e2:	0f 84 88 fa ff ff    	je     2370 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x570>
+    28e8:	c7 84 24 04 02 00 00 	movl   $0x2,0x204(%rsp)
+    28ef:	02 00 00 00 
+    28f3:	e9 52 ff ff ff       	jmp    284a <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xa4a>
+    28f8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+    28ff:	00 
+    2900:	48 8d 1d 00 00 00 00 	lea    0x0(%rip),%rbx        # 2907 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb07>
+			2903: R_X86_64_PC32	.LC6-0x4
+    2907:	45 31 c9             	xor    %r9d,%r9d
+    290a:	45 31 c0             	xor    %r8d,%r8d
+    290d:	ba d4 01 00 00       	mov    $0x1d4,%edx
+    2912:	48 89 de             	mov    %rbx,%rsi
+    2915:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # 291c <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb1c>
+			2918: R_X86_64_PC32	.LC19-0x4
+    291c:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 2923 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb23>
+			291f: R_X86_64_PC32	.LC20-0x4
+    2923:	e8 00 00 00 00       	call   2928 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb28>
+			2924: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+    2928:	45 31 c9             	xor    %r9d,%r9d
+    292b:	45 31 c0             	xor    %r8d,%r8d
+    292e:	ba 36 02 00 00       	mov    $0x236,%edx
+    2933:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # 293a <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb3a>
+			2936: R_X86_64_PC32	.LC52-0x4
+    293a:	48 89 de             	mov    %rbx,%rsi
+    293d:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 2944 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb44>
+			2940: R_X86_64_PC32	.LC53-0x4
+    2944:	e8 00 00 00 00       	call   2949 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb49>
+			2945: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+    2949:	e8 00 00 00 00       	call   294e <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb4e>
+			294a: R_X86_64_PLT32	_err_flush_stdout()-0x4
+    294e:	0f 0b                	ud2
+    2950:	45 31 c9             	xor    %r9d,%r9d
+    2953:	45 31 c0             	xor    %r8d,%r8d
+    2956:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # 295d <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb5d>
+			2959: R_X86_64_PC32	.LC63-0x4
+    295d:	ba f3 01 00 00       	mov    $0x1f3,%edx
+    2962:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 2969 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb69>
+			2965: R_X86_64_PC32	.LC27-0x4
+    2969:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 2970 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb70>
+			296c: R_X86_64_PC32	.LC64-0x4
+    2970:	e8 00 00 00 00       	call   2975 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb75>
+			2971: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+    2975:	48 8b 84 24 d8 01 00 	mov    0x1d8(%rsp),%rax
+    297c:	00 
+    297d:	48 85 c0             	test   %rax,%rax
+    2980:	0f 85 8d fb ff ff    	jne    2513 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x713>
+    2986:	e9 be fb ff ff       	jmp    2549 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x749>
+    298b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+    2990:	45 31 c9             	xor    %r9d,%r9d
+    2993:	45 31 c0             	xor    %r8d,%r8d
+    2996:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # 299d <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb9d>
+			2999: R_X86_64_PC32	.LC65-0x4
+    299d:	ba f6 01 00 00       	mov    $0x1f6,%edx
+    29a2:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 29a9 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xba9>
+			29a5: R_X86_64_PC32	.LC27-0x4
+    29a9:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 29b0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xbb0>
+			29ac: R_X86_64_PC32	.LC64-0x4
+    29b0:	e8 00 00 00 00       	call   29b5 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xbb5>
+			29b1: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+    29b5:	eb be                	jmp    2975 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xb75>
+    29b7:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    29be:	00 00 
+    29c0:	b9 ff 00 00 00       	mov    $0xff,%ecx
+    29c5:	41 b8 02 00 00 00    	mov    $0x2,%r8d
+    29cb:	e9 6f fd ff ff       	jmp    273f <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x93f>
+    29d0:	8d 4a 01             	lea    0x1(%rdx),%ecx
+    29d3:	39 ca                	cmp    %ecx,%edx
+    29d5:	73 51                	jae    2a28 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc28>
+    29d7:	89 c8                	mov    %ecx,%eax
+    29d9:	48 8b bb a8 00 00 00 	mov    0xa8(%rbx),%rdi
+    29e0:	d1 e8                	shr    $1,%eax
+    29e2:	01 d0                	add    %edx,%eax
+    29e4:	ba 02 00 00 00       	mov    $0x2,%edx
+    29e9:	39 d1                	cmp    %edx,%ecx
+    29eb:	0f 42 ca             	cmovb  %edx,%ecx
+    29ee:	39 c8                	cmp    %ecx,%eax
+    29f0:	0f 42 c1             	cmovb  %ecx,%eax
+    29f3:	31 d2                	xor    %edx,%edx
+    29f5:	89 83 a4 00 00 00    	mov    %eax,0xa4(%rbx)
+    29fb:	89 c6                	mov    %eax,%esi
+    29fd:	48 c1 e6 04          	shl    $0x4,%rsi
+    2a01:	e8 00 00 00 00       	call   2a06 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc06>
+			2a02: R_X86_64_PLT32	Memory::realloc_static(void*, unsigned long, bool)-0x4
+    2a06:	48 89 83 a8 00 00 00 	mov    %rax,0xa8(%rbx)
+    2a0d:	48 85 c0             	test   %rax,%rax
+    2a10:	0f 84 9a 00 00 00    	je     2ab0 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xcb0>
+    2a16:	8b 93 a0 00 00 00    	mov    0xa0(%rbx),%edx
+    2a1c:	e9 c6 fa ff ff       	jmp    24e7 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x6e7>
+    2a21:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    2a28:	e8 00 00 00 00       	call   2a2d <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc2d>
+			2a29: R_X86_64_PLT32	is_print_verbose_enabled()-0x4
+    2a2d:	84 c0                	test   %al,%al
+    2a2f:	75 55                	jne    2a86 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc86>
+    2a31:	48 8b 83 a8 00 00 00 	mov    0xa8(%rbx),%rax
+    2a38:	eb dc                	jmp    2a16 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc16>
+    2a3a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    2a40:	4c 89 ef             	mov    %r13,%rdi
+    2a43:	e8 00 00 00 00       	call   2a48 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc48>
+			2a44: R_X86_64_PLT32	Variant::_clear_internal()-0x4
+    2a48:	e9 17 f7 ff ff       	jmp    2164 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x364>
+    2a4d:	0f 1f 00             	nopl   (%rax)
+    2a50:	48 83 ec 08          	sub    $0x8,%rsp
+    2a54:	ba 04 01 00 00       	mov    $0x104,%edx
+    2a59:	45 31 c9             	xor    %r9d,%r9d
+    2a5c:	6a 00                	push   $0x0
+    2a5e:	4c 8d 05 00 00 00 00 	lea    0x0(%rip),%r8        # 2a65 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc65>
+			2a61: R_X86_64_PC32	.LC16-0x4
+    2a65:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # 2a6c <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc6c>
+			2a68: R_X86_64_PC32	.LC17-0x4
+    2a6c:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 2a73 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc73>
+			2a6f: R_X86_64_PC32	.LC6-0x4
+    2a73:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 2a7a <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc7a>
+			2a76: R_X86_64_PC32	.LC18-0x4
+    2a7a:	e8 00 00 00 00       	call   2a7f <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc7f>
+			2a7b: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, char const*, bool, ErrorHandlerType)-0x4
+    2a7f:	58                   	pop    %rax
+    2a80:	5a                   	pop    %rdx
+    2a81:	e9 c3 fa ff ff       	jmp    2549 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x749>
+    2a86:	41 b9 01 00 00 00    	mov    $0x1,%r9d
+    2a8c:	45 31 c0             	xor    %r8d,%r8d
+    2a8f:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # 2a96 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc96>
+			2a92: R_X86_64_PC32	.LC70-0x4
+    2a96:	ba b5 00 00 00       	mov    $0xb5,%edx
+    2a9b:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 2aa2 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xca2>
+			2a9e: R_X86_64_PC32	.LC68-0x4
+    2aa2:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 2aa9 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xca9>
+			2aa5: R_X86_64_PC32	.LC69-0x4
+    2aa9:	e8 00 00 00 00       	call   2aae <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xcae>
+			2aaa: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+    2aae:	eb 81                	jmp    2a31 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xc31>
+    2ab0:	48 83 ec 08          	sub    $0x8,%rsp
+    2ab4:	45 31 c9             	xor    %r9d,%r9d
+    2ab7:	4c 8d 05 00 00 00 00 	lea    0x0(%rip),%r8        # 2abe <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xcbe>
+			2aba: R_X86_64_PC32	.LC66-0x4
+    2abe:	ba b3 00 00 00       	mov    $0xb3,%edx
+    2ac3:	6a 00                	push   $0x0
+    2ac5:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # 2acc <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xccc>
+			2ac8: R_X86_64_PC32	.LC67-0x4
+    2acc:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 2ad3 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xcd3>
+			2acf: R_X86_64_PC32	.LC68-0x4
+    2ad3:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 2ada <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xcda>
+			2ad6: R_X86_64_PC32	.LC69-0x4
+    2ada:	e8 00 00 00 00       	call   2adf <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xcdf>
+			2adb: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, char const*, bool, ErrorHandlerType)-0x4
+    2adf:	e8 00 00 00 00       	call   2ae4 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0xce4>
+			2ae0: R_X86_64_PLT32	_err_flush_stdout()-0x4
+    2ae4:	0f 0b                	ud2
+    2ae6:	45 31 db             	xor    %r11d,%r11d
+    2ae9:	44 89 5c 24 0c       	mov    %r11d,0xc(%rsp)
+    2aee:	e9 e2 f6 ff ff       	jmp    21d5 <RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::_create_pipeline(RendererSceneRenderImplementation::SceneShaderForwardClustered::ShaderData::PipelineKey)+0x3d5>

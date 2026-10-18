@@ -1,0 +1,28 @@
+{
+  "command": [
+    "env",
+    "LP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "XDG_CACHE_HOME=/tmp/yuga-s4-diadem-import-r1-user/cache",
+    "XDG_CONFIG_HOME=/tmp/yuga-s4-diadem-import-r1-user/config",
+    "XDG_DATA_HOME=/tmp/yuga-s4-diadem-import-r1-user/data",
+    "taskset",
+    "-c",
+    "4",
+    "timeout",
+    "120s",
+    "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+    "--headless",
+    "--path",
+    "/tmp/yuga-s4-diadem-import-r1",
+    "--editor",
+    "--import",
+    "--quit"
+  ],
+  "exit_code": 0,
+  "elapsed_s": 16.47494889299992,
+  "import_attempt": 1,
+  "automatic_retry": false
+}

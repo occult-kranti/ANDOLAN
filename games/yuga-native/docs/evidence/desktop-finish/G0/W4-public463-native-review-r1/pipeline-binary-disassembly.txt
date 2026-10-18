@@ -1,0 +1,772 @@
+
+/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-unmodified:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+00000000030dda80 <.text+0x2c741c0>:
+ 30dda80:	41 57                	push   %r15
+ 30dda82:	41 56                	push   %r14
+ 30dda84:	41 55                	push   %r13
+ 30dda86:	41 54                	push   %r12
+ 30dda88:	55                   	push   %rbp
+ 30dda89:	53                   	push   %rbx
+ 30dda8a:	48 89 fb             	mov    %rdi,%rbx
+ 30dda8d:	48 81 ec 68 02 00 00 	sub    $0x268,%rsp
+ 30dda94:	8b b3 10 03 00 00    	mov    0x310(%rbx),%esi
+ 30dda9a:	48 8b 84 24 b8 02 00 	mov    0x2b8(%rsp),%rax
+ 30ddaa1:	00 
+ 30ddaa2:	48 8d 7c 24 60       	lea    0x60(%rsp),%rdi
+ 30ddaa7:	66 48 0f 6e c8       	movq   %rax,%xmm1
+ 30ddaac:	48 89 04 24          	mov    %rax,(%rsp)
+ 30ddab0:	41 89 c4             	mov    %eax,%r12d
+ 30ddab3:	66 0f 3a 16 4c 24 08 	pextrd $0x1,%xmm1,0x8(%rsp)
+ 30ddaba:	01 
+ 30ddabb:	e8 b0 ad 05 00       	call   3138870 <ZSTD_trace_compress_begin@plt+0x2ccefd8>
+ 30ddac0:	66 0f 6f 44 24 60    	movdqa 0x60(%rsp),%xmm0
+ 30ddac6:	8b 05 ac 57 f4 00    	mov    0xf457ac(%rip),%eax        # 4023278 <ZSTD_trace_compress_begin@plt+0x3bb99e0>
+ 30ddacc:	31 f6                	xor    %esi,%esi
+ 30ddace:	0f 28 15 eb 02 1d 01 	movaps 0x11d02eb(%rip),%xmm2        # 42addc0 <ZSTD_trace_compress_begin@plt+0x3e44528>
+ 30ddad5:	bf 80 00 00 00       	mov    $0x80,%edi
+ 30ddada:	c6 84 24 b0 00 00 00 	movb   $0x0,0xb0(%rsp)
+ 30ddae1:	00 
+ 30ddae2:	0f 29 84 24 00 02 00 	movaps %xmm0,0x200(%rsp)
+ 30ddae9:	00 
+ 30ddaea:	66 0f 6f 44 24 70    	movdqa 0x70(%rsp),%xmm0
+ 30ddaf0:	c7 84 24 b4 00 00 00 	movl   $0x0,0xb4(%rsp)
+ 30ddaf7:	00 00 00 00 
+ 30ddafb:	0f 29 84 24 10 02 00 	movaps %xmm0,0x210(%rsp)
+ 30ddb02:	00 
+ 30ddb03:	66 0f ef c0          	pxor   %xmm0,%xmm0
+ 30ddb07:	48 c7 84 24 c0 00 00 	movq   $0x0,0xc0(%rsp)
+ 30ddb0e:	00 00 00 00 00 
+ 30ddb13:	c6 84 24 20 02 00 00 	movb   $0x0,0x220(%rsp)
+ 30ddb1a:	00 
+ 30ddb1b:	48 c7 84 24 34 02 00 	movq   $0x0,0x234(%rsp)
+ 30ddb22:	00 00 00 00 00 
+ 30ddb27:	89 84 24 3c 02 00 00 	mov    %eax,0x23c(%rsp)
+ 30ddb2e:	c6 84 24 40 02 00 00 	movb   $0x0,0x240(%rsp)
+ 30ddb35:	00 
+ 30ddb36:	48 c7 84 24 54 02 00 	movq   $0x0,0x254(%rsp)
+ 30ddb3d:	00 00 00 00 00 
+ 30ddb42:	89 84 24 5c 02 00 00 	mov    %eax,0x25c(%rsp)
+ 30ddb49:	0f 11 94 24 c8 00 00 	movups %xmm2,0xc8(%rsp)
+ 30ddb50:	00 
+ 30ddb51:	0f 11 84 24 24 02 00 	movups %xmm0,0x224(%rsp)
+ 30ddb58:	00 
+ 30ddb59:	0f 11 84 24 44 02 00 	movups %xmm0,0x244(%rsp)
+ 30ddb60:	00 
+ 30ddb61:	e8 ca d8 55 00       	call   363b430 <ZSTD_trace_compress_begin@plt+0x31d1b98>
+ 30ddb66:	48 85 c0             	test   %rax,%rax
+ 30ddb69:	0f 84 11 0a 00 00    	je     30de580 <ZSTD_trace_compress_begin@plt+0x2c74ce8>
+ 30ddb6f:	48 8d 68 20          	lea    0x20(%rax),%rbp
+ 30ddb73:	48 c7 00 01 00 00 00 	movq   $0x1,(%rax)
+ 30ddb7a:	48 c7 40 08 03 00 00 	movq   $0x3,0x8(%rax)
+ 30ddb81:	00 
+ 30ddb82:	66 0f 6f 84 24 00 02 	movdqa 0x200(%rsp),%xmm0
+ 30ddb89:	00 00 
+ 30ddb8b:	0f 11 40 20          	movups %xmm0,0x20(%rax)
+ 30ddb8f:	66 0f 6f 84 24 10 02 	movdqa 0x210(%rsp),%xmm0
+ 30ddb96:	00 00 
+ 30ddb98:	0f 11 45 10          	movups %xmm0,0x10(%rbp)
+ 30ddb9c:	66 0f 6f 84 24 20 02 	movdqa 0x220(%rsp),%xmm0
+ 30ddba3:	00 00 
+ 30ddba5:	0f 11 45 20          	movups %xmm0,0x20(%rbp)
+ 30ddba9:	66 0f 6f 84 24 30 02 	movdqa 0x230(%rsp),%xmm0
+ 30ddbb0:	00 00 
+ 30ddbb2:	0f 11 45 30          	movups %xmm0,0x30(%rbp)
+ 30ddbb6:	66 0f 6f 84 24 40 02 	movdqa 0x240(%rsp),%xmm0
+ 30ddbbd:	00 00 
+ 30ddbbf:	0f 11 45 40          	movups %xmm0,0x40(%rbp)
+ 30ddbc3:	66 0f 6f 84 24 50 02 	movdqa 0x250(%rsp),%xmm0
+ 30ddbca:	00 00 
+ 30ddbcc:	0f 11 45 50          	movups %xmm0,0x50(%rbp)
+ 30ddbd0:	48 c7 40 10 03 00 00 	movq   $0x3,0x10(%rax)
+ 30ddbd7:	00 
+ 30ddbd8:	48 39 ac 24 c0 00 00 	cmp    %rbp,0xc0(%rsp)
+ 30ddbdf:	00 
+ 30ddbe0:	74 17                	je     30ddbf9 <ZSTD_trace_compress_begin@plt+0x2c74361>
+ 30ddbe2:	48 8d bc 24 c0 00 00 	lea    0xc0(%rsp),%rdi
+ 30ddbe9:	00 
+ 30ddbea:	e8 41 46 d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30ddbef:	48 89 ac 24 c0 00 00 	mov    %rbp,0xc0(%rsp)
+ 30ddbf6:	00 
+ 30ddbf7:	31 ed                	xor    %ebp,%ebp
+ 30ddbf9:	48 89 ac 24 d8 01 00 	mov    %rbp,0x1d8(%rsp)
+ 30ddc00:	00 
+ 30ddc01:	48 8d ac 24 d8 01 00 	lea    0x1d8(%rsp),%rbp
+ 30ddc08:	00 
+ 30ddc09:	45 31 f6             	xor    %r14d,%r14d
+ 30ddc0c:	48 89 ef             	mov    %rbp,%rdi
+ 30ddc0f:	e8 1c 46 d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30ddc14:	48 8d bc 24 e0 00 00 	lea    0xe0(%rsp),%rdi
+ 30ddc1b:	00 
+ 30ddc1c:	be 03 00 00 00       	mov    $0x3,%esi
+ 30ddc21:	e8 8a ff f6 ff       	call   304dbb0 <ZSTD_trace_compress_begin@plt+0x2be4318>
+ 30ddc26:	48 8d bc 24 10 01 00 	lea    0x110(%rsp),%rdi
+ 30ddc2d:	00 
+ 30ddc2e:	be 01 00 00 00       	mov    $0x1,%esi
+ 30ddc33:	e8 78 ff f6 ff       	call   304dbb0 <ZSTD_trace_compress_begin@plt+0x2be4318>
+ 30ddc38:	48 8d bc 24 40 01 00 	lea    0x140(%rsp),%rdi
+ 30ddc3f:	00 
+ 30ddc40:	be 02 00 00 00       	mov    $0x2,%esi
+ 30ddc45:	e8 66 ff f6 ff       	call   304dbb0 <ZSTD_trace_compress_begin@plt+0x2be4318>
+ 30ddc4a:	66 0f 6f 05 5e 73 1d 	movdqa 0x11d735e(%rip),%xmm0        # 42b4fb0 <ZSTD_trace_compress_begin@plt+0x3e4b718>
+ 30ddc51:	01 
+ 30ddc52:	8b 83 0c 03 00 00    	mov    0x30c(%rbx),%eax
+ 30ddc58:	66 44 89 b4 24 00 02 	mov    %r14w,0x200(%rsp)
+ 30ddc5f:	00 00 
+ 30ddc61:	c7 84 24 04 02 00 00 	movl   $0x7,0x204(%rsp)
+ 30ddc68:	07 00 00 00 
+ 30ddc6c:	0f 11 84 24 18 02 00 	movups %xmm0,0x218(%rsp)
+ 30ddc73:	00 
+ 30ddc74:	66 0f 6f 05 54 08 1d 	movdqa 0x11d0854(%rip),%xmm0        # 42ae4d0 <ZSTD_trace_compress_begin@plt+0x3e44c38>
+ 30ddc7b:	01 
+ 30ddc7c:	c6 84 24 08 02 00 00 	movb   $0x0,0x208(%rsp)
+ 30ddc83:	00 
+ 30ddc84:	0f 11 84 24 28 02 00 	movups %xmm0,0x228(%rsp)
+ 30ddc8b:	00 
+ 30ddc8c:	66 0f 6f 05 2c 73 1d 	movdqa 0x11d732c(%rip),%xmm0        # 42b4fc0 <ZSTD_trace_compress_begin@plt+0x3e4b728>
+ 30ddc93:	01 
+ 30ddc94:	48 c7 84 24 0c 02 00 	movq   $0x0,0x20c(%rsp)
+ 30ddc9b:	00 00 00 00 00 
+ 30ddca0:	c6 84 24 14 02 00 00 	movb   $0x0,0x214(%rsp)
+ 30ddca7:	00 
+ 30ddca8:	48 c7 84 24 48 02 00 	movq   $0x0,0x248(%rsp)
+ 30ddcaf:	00 00 00 00 00 
+ 30ddcb4:	0f 11 84 24 38 02 00 	movups %xmm0,0x238(%rsp)
+ 30ddcbb:	00 
+ 30ddcbc:	85 c0                	test   %eax,%eax
+ 30ddcbe:	74 2e                	je     30ddcee <ZSTD_trace_compress_begin@plt+0x2c74456>
+ 30ddcc0:	44 8b ab 08 03 00 00 	mov    0x308(%rbx),%r13d
+ 30ddcc7:	c6 84 24 00 02 00 00 	movb   $0x1,0x200(%rsp)
+ 30ddcce:	01 
+ 30ddccf:	45 85 ed             	test   %r13d,%r13d
+ 30ddcd2:	0f 95 84 24 01 02 00 	setne  0x201(%rsp)
+ 30ddcd9:	00 
+ 30ddcda:	83 f8 02             	cmp    $0x2,%eax
+ 30ddcdd:	0f 95 c0             	setne  %al
+ 30ddce0:	0f b6 c0             	movzbl %al,%eax
+ 30ddce3:	8d 44 80 01          	lea    0x1(%rax,%rax,4),%eax
+ 30ddce7:	89 84 24 04 02 00 00 	mov    %eax,0x204(%rsp)
+ 30ddcee:	80 bb 44 03 00 00 00 	cmpb   $0x0,0x344(%rbx)
+ 30ddcf5:	74 0a                	je     30ddd01 <ZSTD_trace_compress_begin@plt+0x2c74469>
+ 30ddcf7:	41 83 fc 09          	cmp    $0x9,%r12d
+ 30ddcfb:	0f 84 7f 06 00 00    	je     30de380 <ZSTD_trace_compress_begin@plt+0x2c74ae8>
+ 30ddd01:	e8 4a 89 b9 00       	call   3c76650 <ZSTD_trace_compress_begin@plt+0x380cdb8>
+ 30ddd06:	4c 8d ac 24 d0 01 00 	lea    0x1d0(%rsp),%r13
+ 30ddd0d:	00 
+ 30ddd0e:	8b 90 34 01 00 00    	mov    0x134(%rax),%edx
+ 30ddd14:	3b 15 06 72 0f 02    	cmp    0x20f7206(%rip),%edx        # 51d4f20 <stdin@GLIBC_2.2.5+0x577f0>
+ 30ddd1a:	74 34                	je     30ddd50 <ZSTD_trace_compress_begin@plt+0x2c744b8>
+ 30ddd1c:	b9 01 00 00 00       	mov    $0x1,%ecx
+ 30ddd21:	c6 84 24 d0 01 00 00 	movb   $0x0,0x1d0(%rsp)
+ 30ddd28:	00 
+ 30ddd29:	41 0f b6 45 00       	movzbl 0x0(%r13),%eax
+ 30ddd2e:	f0 0f b0 0d aa 71 0f 	lock cmpxchg %cl,0x20f71aa(%rip)        # 51d4ee0 <stdin@GLIBC_2.2.5+0x577b0>
+ 30ddd35:	02 
+ 30ddd36:	74 50                	je     30ddd88 <ZSTD_trace_compress_begin@plt+0x2c744f0>
+ 30ddd38:	41 88 45 00          	mov    %al,0x0(%r13)
+ 30ddd3c:	f3 90                	pause
+ 30ddd3e:	0f b6 05 9b 71 0f 02 	movzbl 0x20f719b(%rip),%eax        # 51d4ee0 <stdin@GLIBC_2.2.5+0x577b0>
+ 30ddd45:	84 c0                	test   %al,%al
+ 30ddd47:	75 f3                	jne    30ddd3c <ZSTD_trace_compress_begin@plt+0x2c744a4>
+ 30ddd49:	eb d6                	jmp    30ddd21 <ZSTD_trace_compress_begin@plt+0x2c74489>
+ 30ddd4b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+ 30ddd50:	ba 01 00 00 00       	mov    $0x1,%edx
+ 30ddd55:	c6 84 24 d0 01 00 00 	movb   $0x0,0x1d0(%rsp)
+ 30ddd5c:	00 
+ 30ddd5d:	41 0f b6 45 00       	movzbl 0x0(%r13),%eax
+ 30ddd62:	f0 0f b0 15 76 71 0f 	lock cmpxchg %dl,0x20f7176(%rip)        # 51d4ee0 <stdin@GLIBC_2.2.5+0x577b0>
+ 30ddd69:	02 
+ 30ddd6a:	0f 84 90 00 00 00    	je     30dde00 <ZSTD_trace_compress_begin@plt+0x2c74568>
+ 30ddd70:	41 88 45 00          	mov    %al,0x0(%r13)
+ 30ddd74:	f3 90                	pause
+ 30ddd76:	0f b6 05 63 71 0f 02 	movzbl 0x20f7163(%rip),%eax        # 51d4ee0 <stdin@GLIBC_2.2.5+0x577b0>
+ 30ddd7d:	84 c0                	test   %al,%al
+ 30ddd7f:	75 f3                	jne    30ddd74 <ZSTD_trace_compress_begin@plt+0x2c744dc>
+ 30ddd81:	eb d2                	jmp    30ddd55 <ZSTD_trace_compress_begin@plt+0x2c744bd>
+ 30ddd83:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+ 30ddd88:	89 15 92 71 0f 02    	mov    %edx,0x20f7192(%rip)        # 51d4f20 <stdin@GLIBC_2.2.5+0x577f0>
+ 30ddd8e:	4c 8d b4 24 a0 01 00 	lea    0x1a0(%rsp),%r14
+ 30ddd95:	00 
+ 30ddd96:	e8 b5 88 b9 00       	call   3c76650 <ZSTD_trace_compress_begin@plt+0x380cdb8>
+ 30ddd9b:	31 d2                	xor    %edx,%edx
+ 30ddd9d:	48 8d 35 dc e5 fe 00 	lea    0xfee5dc(%rip),%rsi        # 40cc380 <ZSTD_trace_compress_begin@plt+0x3c62ae8>
+ 30ddda4:	4c 89 f7             	mov    %r14,%rdi
+ 30ddda7:	49 89 c7             	mov    %rax,%r15
+ 30dddaa:	e8 81 a0 b5 00       	call   3c37e30 <ZSTD_trace_compress_begin@plt+0x37ce598>
+ 30dddaf:	4c 89 f2             	mov    %r14,%rdx
+ 30dddb2:	4c 89 fe             	mov    %r15,%rsi
+ 30dddb5:	4c 89 ef             	mov    %r13,%rdi
+ 30dddb8:	e8 03 a5 b9 00       	call   3c782c0 <ZSTD_trace_compress_begin@plt+0x380ea28>
+ 30dddbd:	4c 89 ef             	mov    %r13,%rdi
+ 30dddc0:	e8 0b 25 a0 00       	call   3ae02d0 <ZSTD_trace_compress_begin@plt+0x3676a38>
+ 30dddc5:	48 8d 15 94 b2 1c 01 	lea    0x11cb294(%rip),%rdx        # 42a9060 <ZSTD_trace_compress_begin@plt+0x3e3f7c8>
+ 30dddcc:	88 05 52 71 0f 02    	mov    %al,0x20f7152(%rip)        # 51d4f24 <stdin@GLIBC_2.2.5+0x577f4>
+ 30dddd2:	48 63 84 24 d0 01 00 	movslq 0x1d0(%rsp),%rax
+ 30dddd9:	00 
+ 30dddda:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1)
+ 30dddde:	0f 85 dc 08 00 00    	jne    30de6c0 <ZSTD_trace_compress_begin@plt+0x2c74e28>
+ 30ddde4:	80 3d 75 f9 09 02 00 	cmpb   $0x0,0x209f975(%rip)        # 517d760 <stdin@GLIBC_2.2.5+0x30>
+ 30dddeb:	74 13                	je     30dde00 <ZSTD_trace_compress_begin@plt+0x2c74568>
+ 30ddded:	48 83 bc 24 a0 01 00 	cmpq   $0x0,0x1a0(%rsp)
+ 30dddf4:	00 00 
+ 30dddf6:	74 08                	je     30dde00 <ZSTD_trace_compress_begin@plt+0x2c74568>
+ 30dddf8:	4c 89 f7             	mov    %r14,%rdi
+ 30dddfb:	e8 50 9c b5 00       	call   3c37a50 <ZSTD_trace_compress_begin@plt+0x37ce1b8>
+ 30dde00:	44 0f b6 35 1c 71 0f 	movzbl 0x20f711c(%rip),%r14d        # 51d4f24 <stdin@GLIBC_2.2.5+0x577f4>
+ 30dde07:	02 
+ 30dde08:	c6 05 d1 70 0f 02 00 	movb   $0x0,0x20f70d1(%rip)        # 51d4ee0 <stdin@GLIBC_2.2.5+0x577b0>
+ 30dde0f:	c7 44 24 50 07 00 00 	movl   $0x7,0x50(%rsp)
+ 30dde16:	00 
+ 30dde17:	66 0f 6f 05 f1 4d 1d 	movdqa 0x11d4df1(%rip),%xmm0        # 42b2c10 <ZSTD_trace_compress_begin@plt+0x3e49378>
+ 30dde1e:	01 
+ 30dde1f:	44 0f b6 bb 20 03 00 	movzbl 0x320(%rbx),%r15d
+ 30dde26:	00 
+ 30dde27:	0f 29 44 24 40       	movaps %xmm0,0x40(%rsp)
+ 30dde2c:	45 84 ff             	test   %r15b,%r15b
+ 30dde2f:	0f 84 fb 03 00 00    	je     30de230 <ZSTD_trace_compress_begin@plt+0x2c74998>
+ 30dde35:	48 8b 05 84 70 0f 02 	mov    0x20f7084(%rip),%rax        # 51d4ec0 <stdin@GLIBC_2.2.5+0x57790>
+ 30dde3c:	44 0f b6 b8 58 06 00 	movzbl 0x658(%rax),%r15d
+ 30dde43:	00 
+ 30dde44:	45 84 ff             	test   %r15b,%r15b
+ 30dde47:	0f 84 19 09 00 00    	je     30de766 <ZSTD_trace_compress_begin@plt+0x2c74ece>
+ 30dde4d:	c7 44 24 0c 05 00 00 	movl   $0x5,0xc(%rsp)
+ 30dde54:	00 
+ 30dde55:	8b 84 24 b0 02 00 00 	mov    0x2b0(%rsp),%eax
+ 30dde5c:	45 31 d2             	xor    %r10d,%r10d
+ 30dde5f:	0f 28 1d 5a ff 1c 01 	movaps 0x11cff5a(%rip),%xmm3        # 42addc0 <ZSTD_trace_compress_begin@plt+0x3e44528>
+ 30dde66:	c7 84 24 88 00 00 00 	movl   $0x0,0x88(%rsp)
+ 30dde6d:	00 00 00 00 
+ 30dde71:	66 44 89 94 24 80 00 	mov    %r10w,0x80(%rsp)
+ 30dde78:	00 00 
+ 30dde7a:	89 84 24 84 00 00 00 	mov    %eax,0x84(%rsp)
+ 30dde81:	0f b6 83 2d 03 00 00 	movzbl 0x32d(%rbx),%eax
+ 30dde88:	c6 84 24 8c 00 00 00 	movb   $0x0,0x8c(%rsp)
+ 30dde8f:	00 
+ 30dde90:	c7 84 24 a0 00 00 00 	movl   $0x1,0xa0(%rsp)
+ 30dde97:	01 00 00 00 
+ 30dde9b:	0f 29 9c 24 90 00 00 	movaps %xmm3,0x90(%rsp)
+ 30ddea2:	00 
+ 30ddea3:	84 c0                	test   %al,%al
+ 30ddea5:	75 0e                	jne    30ddeb5 <ZSTD_trace_compress_begin@plt+0x2c7461d>
+ 30ddea7:	44 8b 8c 24 cc 02 00 	mov    0x2cc(%rsp),%r9d
+ 30ddeae:	00 
+ 30ddeaf:	45 85 c9             	test   %r9d,%r9d
+ 30ddeb2:	0f 95 c0             	setne  %al
+ 30ddeb5:	45 31 c0             	xor    %r8d,%r8d
+ 30ddeb8:	88 84 24 82 00 00 00 	mov    %al,0x82(%rsp)
+ 30ddebf:	66 44 89 84 24 90 01 	mov    %r8w,0x190(%rsp)
+ 30ddec6:	00 00 
+ 30ddec8:	c7 84 24 70 01 00 00 	movl   $0x0,0x170(%rsp)
+ 30ddecf:	00 00 00 00 
+ 30dded3:	c6 84 24 74 01 00 00 	movb   $0x0,0x174(%rsp)
+ 30ddeda:	00 
+ 30ddedb:	c7 84 24 78 01 00 00 	movl   $0x0,0x178(%rsp)
+ 30ddee2:	00 00 00 00 
+ 30ddee6:	48 c7 84 24 88 01 00 	movq   $0x0,0x188(%rsp)
+ 30ddeed:	00 00 00 00 00 
+ 30ddef2:	e8 a9 2f cd ff       	call   2db0ea0 <ZSTD_trace_compress_begin@plt+0x2947608>
+ 30ddef7:	31 d2                	xor    %edx,%edx
+ 30ddef9:	48 89 c7             	mov    %rax,%rdi
+ 30ddefc:	48 8b 84 24 a8 02 00 	mov    0x2a8(%rsp),%rax
+ 30ddf03:	00 
+ 30ddf04:	48 89 c6             	mov    %rax,%rsi
+ 30ddf07:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
+ 30ddf0c:	e8 9f 17 cd ff       	call   2daf6b0 <ZSTD_trace_compress_begin@plt+0x2945e18>
+ 30ddf11:	0f 28 25 a8 fe 1c 01 	movaps 0x11cfea8(%rip),%xmm4        # 42addc0 <ZSTD_trace_compress_begin@plt+0x3e44528>
+ 30ddf18:	c6 84 24 a0 01 00 00 	movb   $0x0,0x1a0(%rsp)
+ 30ddf1f:	00 
+ 30ddf20:	89 84 24 70 01 00 00 	mov    %eax,0x170(%rsp)
+ 30ddf27:	c7 84 24 a4 01 00 00 	movl   $0x0,0x1a4(%rsp)
+ 30ddf2e:	00 00 00 00 
+ 30ddf32:	48 c7 84 24 b0 01 00 	movq   $0x0,0x1b0(%rsp)
+ 30ddf39:	00 00 00 00 00 
+ 30ddf3e:	0f 11 a4 24 b8 01 00 	movups %xmm4,0x1b8(%rsp)
+ 30ddf45:	00 
+ 30ddf46:	41 83 fc 09          	cmp    $0x9,%r12d
+ 30ddf4a:	0f 84 f8 02 00 00    	je     30de248 <ZSTD_trace_compress_begin@plt+0x2c749b0>
+ 30ddf50:	41 83 fc 08          	cmp    $0x8,%r12d
+ 30ddf54:	0f 87 96 00 00 00    	ja     30ddff0 <ZSTD_trace_compress_begin@plt+0x2c74758>
+ 30ddf5a:	48 8d 15 27 e3 42 01 	lea    0x142e327(%rip),%rdx        # 450c288 <ZSTD_trace_compress_begin@plt+0x40a29f0>
+ 30ddf61:	44 89 e0             	mov    %r12d,%eax
+ 30ddf64:	48 63 04 82          	movslq (%rdx,%rax,4),%rax
+ 30ddf68:	48 01 d0             	add    %rdx,%rax
+ 30ddf6b:	ff e0                	jmp    *%rax
+ 30ddf6d:	0f 1f 00             	nopl   (%rax)
+ 30ddf70:	be 05 00 00 00       	mov    $0x5,%esi
+ 30ddf75:	4c 89 ef             	mov    %r13,%rdi
+ 30ddf78:	e8 33 fc f6 ff       	call   304dbb0 <ZSTD_trace_compress_begin@plt+0x2be4318>
+ 30ddf7d:	0f b6 84 24 d0 01 00 	movzbl 0x1d0(%rsp),%eax
+ 30ddf84:	00 
+ 30ddf85:	4c 8b b4 24 e0 01 00 	mov    0x1e0(%rsp),%r14
+ 30ddf8c:	00 
+ 30ddf8d:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+ 30ddf94:	8b 84 24 d4 01 00 00 	mov    0x1d4(%rsp),%eax
+ 30ddf9b:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+ 30ddfa2:	4c 39 b4 24 b0 01 00 	cmp    %r14,0x1b0(%rsp)
+ 30ddfa9:	00 
+ 30ddfaa:	74 21                	je     30ddfcd <ZSTD_trace_compress_begin@plt+0x2c74735>
+ 30ddfac:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+ 30ddfb3:	00 
+ 30ddfb4:	e8 77 42 d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30ddfb9:	4c 89 b4 24 b0 01 00 	mov    %r14,0x1b0(%rsp)
+ 30ddfc0:	00 
+ 30ddfc1:	48 c7 84 24 e0 01 00 	movq   $0x0,0x1e0(%rsp)
+ 30ddfc8:	00 00 00 00 00 
+ 30ddfcd:	f3 0f 6f 84 24 e8 01 	movdqu 0x1e8(%rsp),%xmm0
+ 30ddfd4:	00 00 
+ 30ddfd6:	48 8d bc 24 e0 01 00 	lea    0x1e0(%rsp),%rdi
+ 30ddfdd:	00 
+ 30ddfde:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+ 30ddfe5:	00 
+ 30ddfe6:	e8 45 42 d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30ddfeb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+ 30ddff0:	8b 84 24 c0 02 00 00 	mov    0x2c0(%rsp),%eax
+ 30ddff7:	48 89 ef             	mov    %rbp,%rdi
+ 30ddffa:	4c 8d 74 24 34       	lea    0x34(%rsp),%r14
+ 30ddfff:	48 c7 84 24 d8 01 00 	movq   $0x0,0x1d8(%rsp)
+ 30de006:	00 00 00 00 00 
+ 30de00b:	48 c7 44 24 28 01 00 	movq   $0x1,0x28(%rsp)
+ 30de012:	00 00 
+ 30de014:	4c 89 f6             	mov    %r14,%rsi
+ 30de017:	89 44 24 3c          	mov    %eax,0x3c(%rsp)
+ 30de01b:	48 c7 44 24 34 01 00 	movq   $0x1,0x34(%rsp)
+ 30de022:	00 00 
+ 30de024:	e8 d7 e1 ff ff       	call   30dc200 <ZSTD_trace_compress_begin@plt+0x2c72968>
+ 30de029:	c7 44 24 2c 01 00 00 	movl   $0x1,0x2c(%rsp)
+ 30de030:	00 
+ 30de031:	48 8b 44 24 28       	mov    0x28(%rsp),%rax
+ 30de036:	48 89 ef             	mov    %rbp,%rdi
+ 30de039:	4c 89 f6             	mov    %r14,%rsi
+ 30de03c:	48 89 44 24 34       	mov    %rax,0x34(%rsp)
+ 30de041:	8b 84 24 c4 02 00 00 	mov    0x2c4(%rsp),%eax
+ 30de048:	89 44 24 3c          	mov    %eax,0x3c(%rsp)
+ 30de04c:	e8 af e1 ff ff       	call   30dc200 <ZSTD_trace_compress_begin@plt+0x2c72968>
+ 30de051:	48 8b 05 c0 73 1d 01 	mov    0x11d73c0(%rip),%rax        # 42b5418 <ZSTD_trace_compress_begin@plt+0x3e4bb80>
+ 30de058:	48 89 ef             	mov    %rbp,%rdi
+ 30de05b:	4c 89 f6             	mov    %r14,%rsi
+ 30de05e:	c7 44 24 30 00 00 00 	movl   $0x0,0x30(%rsp)
+ 30de065:	00 
+ 30de066:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+ 30de06b:	48 b8 00 00 00 00 02 	movabs $0x200000000,%rax
+ 30de072:	00 00 00 
+ 30de075:	44 88 7c 24 30       	mov    %r15b,0x30(%rsp)
+ 30de07a:	48 89 44 24 34       	mov    %rax,0x34(%rsp)
+ 30de07f:	8b 44 24 30          	mov    0x30(%rsp),%eax
+ 30de083:	89 44 24 3c          	mov    %eax,0x3c(%rsp)
+ 30de087:	e8 74 e1 ff ff       	call   30dc200 <ZSTD_trace_compress_begin@plt+0x2c72968>
+ 30de08c:	8b 54 24 08          	mov    0x8(%rsp),%edx
+ 30de090:	31 c9                	xor    %ecx,%ecx
+ 30de092:	48 89 df             	mov    %rbx,%rdi
+ 30de095:	8b b4 24 d0 02 00 00 	mov    0x2d0(%rsp),%esi
+ 30de09c:	85 f6                	test   %esi,%esi
+ 30de09e:	44 89 e6             	mov    %r12d,%esi
+ 30de0a1:	0f 95 c1             	setne  %cl
+ 30de0a4:	e8 07 e4 ff ff       	call   30dc4b0 <ZSTD_trace_compress_begin@plt+0x2c72c18>
+ 30de0a9:	48 89 df             	mov    %rbx,%rdi
+ 30de0ac:	0f b7 f0             	movzwl %ax,%esi
+ 30de0af:	e8 fc e4 ff ff       	call   30dc5b0 <ZSTD_trace_compress_begin@plt+0x2c72d18>
+ 30de0b4:	48 89 c5             	mov    %rax,%rbp
+ 30de0b7:	48 85 c0             	test   %rax,%rax
+ 30de0ba:	0f 84 10 05 00 00    	je     30de5d0 <ZSTD_trace_compress_begin@plt+0x2c74d38>
+ 30de0c0:	e8 db 2d cd ff       	call   2db0ea0 <ZSTD_trace_compress_begin@plt+0x2947608>
+ 30de0c5:	41 55                	push   %r13
+ 30de0c7:	48 89 ee             	mov    %rbp,%rsi
+ 30de0ca:	6a 00                	push   $0x0
+ 30de0cc:	48 89 c7             	mov    %rax,%rdi
+ 30de0cf:	6a 00                	push   $0x0
+ 30de0d1:	48 8d 84 24 b8 01 00 	lea    0x1b8(%rsp),%rax
+ 30de0d8:	00 
+ 30de0d9:	50                   	push   %rax
+ 30de0da:	48 8d 84 24 20 02 00 	lea    0x220(%rsp),%rax
+ 30de0e1:	00 
+ 30de0e2:	50                   	push   %rax
+ 30de0e3:	48 8d 84 24 98 01 00 	lea    0x198(%rsp),%rax
+ 30de0ea:	00 
+ 30de0eb:	50                   	push   %rax
+ 30de0ec:	44 8b 44 24 3c       	mov    0x3c(%rsp),%r8d
+ 30de0f1:	48 8b 8c 24 d0 02 00 	mov    0x2d0(%rsp),%rcx
+ 30de0f8:	00 
+ 30de0f9:	48 8b 54 24 40       	mov    0x40(%rsp),%rdx
+ 30de0fe:	4c 8d 8c 24 b0 00 00 	lea    0xb0(%rsp),%r9
+ 30de105:	00 
+ 30de106:	e8 c5 54 d2 ff       	call   2e035d0 <ZSTD_trace_compress_begin@plt+0x2999d38>
+ 30de10b:	48 83 c4 30          	add    $0x30,%rsp
+ 30de10f:	48 89 c5             	mov    %rax,%rbp
+ 30de112:	48 85 c0             	test   %rax,%rax
+ 30de115:	0f 84 f5 04 00 00    	je     30de610 <ZSTD_trace_compress_begin@plt+0x2c74d78>
+ 30de11b:	48 8b 04 24          	mov    (%rsp),%rax
+ 30de11f:	48 8d bc 24 a0 02 00 	lea    0x2a0(%rsp),%rdi
+ 30de126:	00 
+ 30de127:	4c 8d ab b0 00 00 00 	lea    0xb0(%rbx),%r13
+ 30de12e:	48 89 84 24 b8 02 00 	mov    %rax,0x2b8(%rsp)
+ 30de135:	00 
+ 30de136:	e8 c5 8e ff ff       	call   30d7000 <ZSTD_trace_compress_begin@plt+0x2c6d768>
+ 30de13b:	4c 89 ef             	mov    %r13,%rdi
+ 30de13e:	41 89 c4             	mov    %eax,%r12d
+ 30de141:	e8 3a ad 38 fd       	call   468e80 <pthread_mutex_lock@plt>
+ 30de146:	85 c0                	test   %eax,%eax
+ 30de148:	0f 85 24 cf 39 fd    	jne    47b072 <ZSTD_trace_compress_begin@plt+0x117da>
+ 30de14e:	8b 93 a0 00 00 00    	mov    0xa0(%rbx),%edx
+ 30de154:	3b 93 a4 00 00 00    	cmp    0xa4(%rbx),%edx
+ 30de15a:	0f 84 f0 04 00 00    	je     30de650 <ZSTD_trace_compress_begin@plt+0x2c74db8>
+ 30de160:	48 8b 83 a8 00 00 00 	mov    0xa8(%rbx),%rax
+ 30de167:	8d 4a 01             	lea    0x1(%rdx),%ecx
+ 30de16a:	48 c1 e2 04          	shl    $0x4,%rdx
+ 30de16e:	4c 89 ef             	mov    %r13,%rdi
+ 30de171:	48 01 d0             	add    %rdx,%rax
+ 30de174:	89 8b a0 00 00 00    	mov    %ecx,0xa0(%rbx)
+ 30de17a:	44 89 20             	mov    %r12d,(%rax)
+ 30de17d:	48 89 68 08          	mov    %rbp,0x8(%rax)
+ 30de181:	e8 4a ac 38 fd       	call   468dd0 <pthread_mutex_unlock@plt>
+ 30de186:	48 8b 84 24 d8 01 00 	mov    0x1d8(%rsp),%rax
+ 30de18d:	00 
+ 30de18e:	48 85 c0             	test   %rax,%rax
+ 30de191:	74 36                	je     30de1c9 <ZSTD_trace_compress_begin@plt+0x2c74931>
+ 30de193:	f0 48 83 68 e0 01    	lock subq $0x1,-0x20(%rax)
+ 30de199:	75 2e                	jne    30de1c9 <ZSTD_trace_compress_begin@plt+0x2c74931>
+ 30de19b:	48 8b bc 24 d8 01 00 	mov    0x1d8(%rsp),%rdi
+ 30de1a2:	00 
+ 30de1a3:	31 f6                	xor    %esi,%esi
+ 30de1a5:	48 c7 84 24 d8 01 00 	movq   $0x0,0x1d8(%rsp)
+ 30de1ac:	00 00 00 00 00 
+ 30de1b1:	48 83 ef 20          	sub    $0x20,%rdi
+ 30de1b5:	e8 46 d1 55 00       	call   363b300 <ZSTD_trace_compress_begin@plt+0x31d1a68>
+ 30de1ba:	48 83 bc 24 d8 01 00 	cmpq   $0x0,0x1d8(%rsp)
+ 30de1c1:	00 00 
+ 30de1c3:	0f 85 07 05 00 00    	jne    30de6d0 <ZSTD_trace_compress_begin@plt+0x2c74e38>
+ 30de1c9:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+ 30de1d0:	00 
+ 30de1d1:	e8 5a 40 d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30de1d6:	48 8d bc 24 88 01 00 	lea    0x188(%rsp),%rdi
+ 30de1dd:	00 
+ 30de1de:	e8 fd c8 57 fd       	call   65aae0 <ZSTD_trace_compress_begin@plt+0x1f1248>
+ 30de1e3:	48 8d bc 24 50 01 00 	lea    0x150(%rsp),%rdi
+ 30de1ea:	00 
+ 30de1eb:	e8 40 40 d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30de1f0:	48 8d bc 24 20 01 00 	lea    0x120(%rsp),%rdi
+ 30de1f7:	00 
+ 30de1f8:	e8 33 40 d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30de1fd:	48 8d bc 24 f0 00 00 	lea    0xf0(%rsp),%rdi
+ 30de204:	00 
+ 30de205:	e8 26 40 d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30de20a:	48 8d bc 24 c0 00 00 	lea    0xc0(%rsp),%rdi
+ 30de211:	00 
+ 30de212:	e8 19 40 d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30de217:	48 81 c4 68 02 00 00 	add    $0x268,%rsp
+ 30de21e:	5b                   	pop    %rbx
+ 30de21f:	5d                   	pop    %rbp
+ 30de220:	41 5c                	pop    %r12
+ 30de222:	41 5d                	pop    %r13
+ 30de224:	41 5e                	pop    %r14
+ 30de226:	41 5f                	pop    %r15
+ 30de228:	c3                   	ret
+ 30de229:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+ 30de230:	48 63 84 24 b4 02 00 	movslq 0x2b4(%rsp),%rax
+ 30de237:	00 
+ 30de238:	8b 44 84 40          	mov    0x40(%rsp,%rax,4),%eax
+ 30de23c:	89 44 24 0c          	mov    %eax,0xc(%rsp)
+ 30de240:	e9 10 fc ff ff       	jmp    30dde55 <ZSTD_trace_compress_begin@plt+0x2c745bd>
+ 30de245:	0f 1f 00             	nopl   (%rax)
+ 30de248:	f6 44 24 08 01       	testb  $0x1,0x8(%rsp)
+ 30de24d:	0f 84 8d 02 00 00    	je     30de4e0 <ZSTD_trace_compress_begin@plt+0x2c74c48>
+ 30de253:	8b 83 1c 03 00 00    	mov    0x31c(%rbx),%eax
+ 30de259:	83 f8 01             	cmp    $0x1,%eax
+ 30de25c:	0f 84 de 01 00 00    	je     30de440 <ZSTD_trace_compress_begin@plt+0x2c74ba8>
+ 30de262:	83 f8 02             	cmp    $0x2,%eax
+ 30de265:	0f 85 dd 01 00 00    	jne    30de448 <ZSTD_trace_compress_begin@plt+0x2c74bb0>
+ 30de26b:	bf 01 01 00 00       	mov    $0x101,%edi
+ 30de270:	66 89 bc 24 90 01 00 	mov    %di,0x190(%rsp)
+ 30de277:	00 
+ 30de278:	e9 cb 01 00 00       	jmp    30de448 <ZSTD_trace_compress_begin@plt+0x2c74bb0>
+ 30de27d:	0f 1f 00             	nopl   (%rax)
+ 30de280:	0f b6 84 24 40 01 00 	movzbl 0x140(%rsp),%eax
+ 30de287:	00 
+ 30de288:	4c 8b b4 24 50 01 00 	mov    0x150(%rsp),%r14
+ 30de28f:	00 
+ 30de290:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+ 30de297:	8b 84 24 44 01 00 00 	mov    0x144(%rsp),%eax
+ 30de29e:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+ 30de2a5:	4d 85 f6             	test   %r14,%r14
+ 30de2a8:	74 3a                	je     30de2e4 <ZSTD_trace_compress_begin@plt+0x2c74a4c>
+ 30de2aa:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+ 30de2b1:	00 
+ 30de2b2:	e8 79 3f d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30de2b7:	49 8d 56 e0          	lea    -0x20(%r14),%rdx
+ 30de2bb:	48 8b 02             	mov    (%rdx),%rax
+ 30de2be:	48 85 c0             	test   %rax,%rax
+ 30de2c1:	74 21                	je     30de2e4 <ZSTD_trace_compress_begin@plt+0x2c74a4c>
+ 30de2c3:	48 8d 48 01          	lea    0x1(%rax),%rcx
+ 30de2c7:	f0 48 0f b1 0a       	lock cmpxchg %rcx,(%rdx)
+ 30de2cc:	75 ed                	jne    30de2bb <ZSTD_trace_compress_begin@plt+0x2c74a23>
+ 30de2ce:	48 83 f8 ff          	cmp    $0xffffffffffffffff,%rax
+ 30de2d2:	74 10                	je     30de2e4 <ZSTD_trace_compress_begin@plt+0x2c74a4c>
+ 30de2d4:	48 8b 84 24 50 01 00 	mov    0x150(%rsp),%rax
+ 30de2db:	00 
+ 30de2dc:	48 89 84 24 b0 01 00 	mov    %rax,0x1b0(%rsp)
+ 30de2e3:	00 
+ 30de2e4:	f3 0f 6f 84 24 58 01 	movdqu 0x158(%rsp),%xmm0
+ 30de2eb:	00 00 
+ 30de2ed:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+ 30de2f4:	00 
+ 30de2f5:	e9 f6 fc ff ff       	jmp    30ddff0 <ZSTD_trace_compress_begin@plt+0x2c74758>
+ 30de2fa:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+ 30de300:	0f b6 84 24 10 01 00 	movzbl 0x110(%rsp),%eax
+ 30de307:	00 
+ 30de308:	4c 8b b4 24 20 01 00 	mov    0x120(%rsp),%r14
+ 30de30f:	00 
+ 30de310:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+ 30de317:	8b 84 24 14 01 00 00 	mov    0x114(%rsp),%eax
+ 30de31e:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+ 30de325:	4d 85 f6             	test   %r14,%r14
+ 30de328:	74 3a                	je     30de364 <ZSTD_trace_compress_begin@plt+0x2c74acc>
+ 30de32a:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+ 30de331:	00 
+ 30de332:	e8 f9 3e d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30de337:	49 8d 56 e0          	lea    -0x20(%r14),%rdx
+ 30de33b:	48 8b 02             	mov    (%rdx),%rax
+ 30de33e:	48 85 c0             	test   %rax,%rax
+ 30de341:	74 21                	je     30de364 <ZSTD_trace_compress_begin@plt+0x2c74acc>
+ 30de343:	48 8d 48 01          	lea    0x1(%rax),%rcx
+ 30de347:	f0 48 0f b1 0a       	lock cmpxchg %rcx,(%rdx)
+ 30de34c:	75 ed                	jne    30de33b <ZSTD_trace_compress_begin@plt+0x2c74aa3>
+ 30de34e:	48 83 f8 ff          	cmp    $0xffffffffffffffff,%rax
+ 30de352:	74 10                	je     30de364 <ZSTD_trace_compress_begin@plt+0x2c74acc>
+ 30de354:	48 8b 84 24 20 01 00 	mov    0x120(%rsp),%rax
+ 30de35b:	00 
+ 30de35c:	48 89 84 24 b0 01 00 	mov    %rax,0x1b0(%rsp)
+ 30de363:	00 
+ 30de364:	f3 0f 6f 84 24 28 01 	movdqu 0x128(%rsp),%xmm0
+ 30de36b:	00 00 
+ 30de36d:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+ 30de374:	00 
+ 30de375:	e9 76 fc ff ff       	jmp    30ddff0 <ZSTD_trace_compress_begin@plt+0x2c74758>
+ 30de37a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+ 30de380:	48 63 93 4c 03 00 00 	movslq 0x34c(%rbx),%rdx
+ 30de387:	48 8d 05 22 df 42 01 	lea    0x142df22(%rip),%rax        # 450c2b0 <ZSTD_trace_compress_begin@plt+0x40a2a18>
+ 30de38e:	c6 84 24 14 02 00 00 	movb   $0x1,0x214(%rsp)
+ 30de395:	01 
+ 30de396:	8b b3 50 03 00 00    	mov    0x350(%rbx),%esi
+ 30de39c:	8b 3c 90             	mov    (%rax,%rdx,4),%edi
+ 30de39f:	8b 83 48 03 00 00    	mov    0x348(%rbx),%eax
+ 30de3a5:	89 c2                	mov    %eax,%edx
+ 30de3a7:	89 c1                	mov    %eax,%ecx
+ 30de3a9:	83 e2 01             	and    $0x1,%edx
+ 30de3ac:	f7 da                	neg    %edx
+ 30de3ae:	19 d2                	sbb    %edx,%edx
+ 30de3b0:	0f b6 d2             	movzbl %dl,%edx
+ 30de3b3:	83 e1 02             	and    $0x2,%ecx
+ 30de3b6:	0f 85 84 02 00 00    	jne    30de640 <ZSTD_trace_compress_begin@plt+0x2c74da8>
+ 30de3bc:	45 31 c0             	xor    %r8d,%r8d
+ 30de3bf:	83 e0 04             	and    $0x4,%eax
+ 30de3c2:	74 0a                	je     30de3ce <ZSTD_trace_compress_begin@plt+0x2c74b36>
+ 30de3c4:	b9 ff 00 00 00       	mov    $0xff,%ecx
+ 30de3c9:	b8 02 00 00 00       	mov    $0x2,%eax
+ 30de3ce:	c7 84 24 18 02 00 00 	movl   $0x0,0x218(%rsp)
+ 30de3d5:	00 00 00 00 
+ 30de3d9:	44 89 84 24 1c 02 00 	mov    %r8d,0x21c(%rsp)
+ 30de3e0:	00 
+ 30de3e1:	89 84 24 20 02 00 00 	mov    %eax,0x220(%rsp)
+ 30de3e8:	89 bc 24 24 02 00 00 	mov    %edi,0x224(%rsp)
+ 30de3ef:	89 94 24 28 02 00 00 	mov    %edx,0x228(%rsp)
+ 30de3f6:	89 8c 24 2c 02 00 00 	mov    %ecx,0x22c(%rsp)
+ 30de3fd:	89 b4 24 30 02 00 00 	mov    %esi,0x230(%rsp)
+ 30de404:	c7 84 24 34 02 00 00 	movl   $0x0,0x234(%rsp)
+ 30de40b:	00 00 00 00 
+ 30de40f:	44 89 84 24 38 02 00 	mov    %r8d,0x238(%rsp)
+ 30de416:	00 
+ 30de417:	89 84 24 3c 02 00 00 	mov    %eax,0x23c(%rsp)
+ 30de41e:	89 bc 24 40 02 00 00 	mov    %edi,0x240(%rsp)
+ 30de425:	89 94 24 44 02 00 00 	mov    %edx,0x244(%rsp)
+ 30de42c:	89 8c 24 48 02 00 00 	mov    %ecx,0x248(%rsp)
+ 30de433:	89 b4 24 4c 02 00 00 	mov    %esi,0x24c(%rsp)
+ 30de43a:	e9 c2 f8 ff ff       	jmp    30ddd01 <ZSTD_trace_compress_begin@plt+0x2c74469>
+ 30de43f:	90                   	nop
+ 30de440:	c6 84 24 90 01 00 00 	movb   $0x1,0x190(%rsp)
+ 30de447:	01 
+ 30de448:	0f b6 84 24 b0 00 00 	movzbl 0xb0(%rsp),%eax
+ 30de44f:	00 
+ 30de450:	4c 8b b4 24 c0 00 00 	mov    0xc0(%rsp),%r14
+ 30de457:	00 
+ 30de458:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+ 30de45f:	8b 84 24 b4 00 00 00 	mov    0xb4(%rsp),%eax
+ 30de466:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+ 30de46d:	4d 85 f6             	test   %r14,%r14
+ 30de470:	74 3a                	je     30de4ac <ZSTD_trace_compress_begin@plt+0x2c74c14>
+ 30de472:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+ 30de479:	00 
+ 30de47a:	e8 b1 3d d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30de47f:	49 8d 56 e0          	lea    -0x20(%r14),%rdx
+ 30de483:	48 8b 02             	mov    (%rdx),%rax
+ 30de486:	48 85 c0             	test   %rax,%rax
+ 30de489:	74 21                	je     30de4ac <ZSTD_trace_compress_begin@plt+0x2c74c14>
+ 30de48b:	48 8d 48 01          	lea    0x1(%rax),%rcx
+ 30de48f:	f0 48 0f b1 0a       	lock cmpxchg %rcx,(%rdx)
+ 30de494:	75 ed                	jne    30de483 <ZSTD_trace_compress_begin@plt+0x2c74beb>
+ 30de496:	48 83 f8 ff          	cmp    $0xffffffffffffffff,%rax
+ 30de49a:	74 10                	je     30de4ac <ZSTD_trace_compress_begin@plt+0x2c74c14>
+ 30de49c:	48 8b 84 24 c0 00 00 	mov    0xc0(%rsp),%rax
+ 30de4a3:	00 
+ 30de4a4:	48 89 84 24 b0 01 00 	mov    %rax,0x1b0(%rsp)
+ 30de4ab:	00 
+ 30de4ac:	f3 0f 6f 84 24 c8 00 	movdqu 0xc8(%rsp),%xmm0
+ 30de4b3:	00 00 
+ 30de4b5:	83 bb 08 03 00 00 01 	cmpl   $0x1,0x308(%rbx)
+ 30de4bc:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+ 30de4c3:	00 
+ 30de4c4:	0f 85 26 fb ff ff    	jne    30ddff0 <ZSTD_trace_compress_begin@plt+0x2c74758>
+ 30de4ca:	c6 84 24 01 02 00 00 	movb   $0x0,0x201(%rsp)
+ 30de4d1:	00 
+ 30de4d2:	e9 19 fb ff ff       	jmp    30ddff0 <ZSTD_trace_compress_begin@plt+0x2c74758>
+ 30de4d7:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+ 30de4de:	00 00 
+ 30de4e0:	0f b6 84 24 e0 00 00 	movzbl 0xe0(%rsp),%eax
+ 30de4e7:	00 
+ 30de4e8:	88 84 24 a0 01 00 00 	mov    %al,0x1a0(%rsp)
+ 30de4ef:	8b 84 24 e4 00 00 00 	mov    0xe4(%rsp),%eax
+ 30de4f6:	89 84 24 a4 01 00 00 	mov    %eax,0x1a4(%rsp)
+ 30de4fd:	48 8b 84 24 f0 00 00 	mov    0xf0(%rsp),%rax
+ 30de504:	00 
+ 30de505:	48 85 c0             	test   %rax,%rax
+ 30de508:	48 89 44 24 18       	mov    %rax,0x18(%rsp)
+ 30de50d:	74 3f                	je     30de54e <ZSTD_trace_compress_begin@plt+0x2c74cb6>
+ 30de50f:	48 8d bc 24 b0 01 00 	lea    0x1b0(%rsp),%rdi
+ 30de516:	00 
+ 30de517:	e8 14 3d d5 ff       	call   2e32230 <ZSTD_trace_compress_begin@plt+0x29c8998>
+ 30de51c:	48 8b 44 24 18       	mov    0x18(%rsp),%rax
+ 30de521:	48 8d 50 e0          	lea    -0x20(%rax),%rdx
+ 30de525:	48 8b 02             	mov    (%rdx),%rax
+ 30de528:	48 85 c0             	test   %rax,%rax
+ 30de52b:	74 21                	je     30de54e <ZSTD_trace_compress_begin@plt+0x2c74cb6>
+ 30de52d:	48 8d 48 01          	lea    0x1(%rax),%rcx
+ 30de531:	f0 48 0f b1 0a       	lock cmpxchg %rcx,(%rdx)
+ 30de536:	75 ed                	jne    30de525 <ZSTD_trace_compress_begin@plt+0x2c74c8d>
+ 30de538:	48 83 f8 ff          	cmp    $0xffffffffffffffff,%rax
+ 30de53c:	74 10                	je     30de54e <ZSTD_trace_compress_begin@plt+0x2c74cb6>
+ 30de53e:	48 8b 84 24 f0 00 00 	mov    0xf0(%rsp),%rax
+ 30de545:	00 
+ 30de546:	48 89 84 24 b0 01 00 	mov    %rax,0x1b0(%rsp)
+ 30de54d:	00 
+ 30de54e:	f3 0f 6f 84 24 f8 00 	movdqu 0xf8(%rsp),%xmm0
+ 30de555:	00 00 
+ 30de557:	0f 11 84 24 b8 01 00 	movups %xmm0,0x1b8(%rsp)
+ 30de55e:	00 
+ 30de55f:	45 84 f6             	test   %r14b,%r14b
+ 30de562:	0f 84 88 fa ff ff    	je     30ddff0 <ZSTD_trace_compress_begin@plt+0x2c74758>
+ 30de568:	c7 84 24 04 02 00 00 	movl   $0x2,0x204(%rsp)
+ 30de56f:	02 00 00 00 
+ 30de573:	e9 52 ff ff ff       	jmp    30de4ca <ZSTD_trace_compress_begin@plt+0x2c74c32>
+ 30de578:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+ 30de57f:	00 
+ 30de580:	48 8d 1d 36 68 10 01 	lea    0x1106836(%rip),%rbx        # 41e4dbd <ZSTD_trace_compress_begin@plt+0x3d7b525>
+ 30de587:	45 31 c9             	xor    %r9d,%r9d
+ 30de58a:	45 31 c0             	xor    %r8d,%r8d
+ 30de58d:	ba d4 01 00 00       	mov    $0x1d4,%edx
+ 30de592:	48 89 de             	mov    %rbx,%rsi
+ 30de595:	48 8d 0d 9c 68 10 01 	lea    0x110689c(%rip),%rcx        # 41e4e38 <ZSTD_trace_compress_begin@plt+0x3d7b5a0>
+ 30de59c:	48 8d 3d b2 68 10 01 	lea    0x11068b2(%rip),%rdi        # 41e4e55 <ZSTD_trace_compress_begin@plt+0x3d7b5bd>
+ 30de5a3:	e8 38 a2 bb 00       	call   3c987e0 <ZSTD_trace_compress_begin@plt+0x382ef48>
+ 30de5a8:	45 31 c9             	xor    %r9d,%r9d
+ 30de5ab:	45 31 c0             	xor    %r8d,%r8d
+ 30de5ae:	ba 36 02 00 00       	mov    $0x236,%edx
+ 30de5b3:	48 8d 0d 7e 39 f5 00 	lea    0xf5397e(%rip),%rcx        # 4031f38 <ZSTD_trace_compress_begin@plt+0x3bc86a0>
+ 30de5ba:	48 89 de             	mov    %rbx,%rsi
+ 30de5bd:	48 8d 3d f9 6d 11 01 	lea    0x1116df9(%rip),%rdi        # 41f53bd <ZSTD_trace_compress_begin@plt+0x3d8bb25>
+ 30de5c4:	e8 17 a2 bb 00       	call   3c987e0 <ZSTD_trace_compress_begin@plt+0x382ef48>
+ 30de5c9:	e8 52 a0 bb 00       	call   3c98620 <ZSTD_trace_compress_begin@plt+0x382ed88>
+ 30de5ce:	0f 0b                	ud2
+ 30de5d0:	45 31 c9             	xor    %r9d,%r9d
+ 30de5d3:	45 31 c0             	xor    %r8d,%r8d
+ 30de5d6:	48 8d 0d 8b fd 08 01 	lea    0x108fd8b(%rip),%rcx        # 416e368 <ZSTD_trace_compress_begin@plt+0x3d04ad0>
+ 30de5dd:	ba f3 01 00 00       	mov    $0x1f3,%edx
+ 30de5e2:	48 8d 35 ef fc 08 01 	lea    0x108fcef(%rip),%rsi        # 416e2d8 <ZSTD_trace_compress_begin@plt+0x3d04a40>
+ 30de5e9:	48 8d 3d 90 78 1a 01 	lea    0x11a7890(%rip),%rdi        # 4285e80 <ZSTD_trace_compress_begin@plt+0x3e1c5e8>
+ 30de5f0:	e8 eb a1 bb 00       	call   3c987e0 <ZSTD_trace_compress_begin@plt+0x382ef48>
+ 30de5f5:	48 8b 84 24 d8 01 00 	mov    0x1d8(%rsp),%rax
+ 30de5fc:	00 
+ 30de5fd:	48 85 c0             	test   %rax,%rax
+ 30de600:	0f 85 8d fb ff ff    	jne    30de193 <ZSTD_trace_compress_begin@plt+0x2c748fb>
+ 30de606:	e9 be fb ff ff       	jmp    30de1c9 <ZSTD_trace_compress_begin@plt+0x2c74931>
+ 30de60b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+ 30de610:	45 31 c9             	xor    %r9d,%r9d
+ 30de613:	45 31 c0             	xor    %r8d,%r8d
+ 30de616:	48 8d 0d 7b fd 08 01 	lea    0x108fd7b(%rip),%rcx        # 416e398 <ZSTD_trace_compress_begin@plt+0x3d04b00>
+ 30de61d:	ba f6 01 00 00       	mov    $0x1f6,%edx
+ 30de622:	48 8d 35 af fc 08 01 	lea    0x108fcaf(%rip),%rsi        # 416e2d8 <ZSTD_trace_compress_begin@plt+0x3d04a40>
+ 30de629:	48 8d 3d 50 78 1a 01 	lea    0x11a7850(%rip),%rdi        # 4285e80 <ZSTD_trace_compress_begin@plt+0x3e1c5e8>
+ 30de630:	e8 ab a1 bb 00       	call   3c987e0 <ZSTD_trace_compress_begin@plt+0x382ef48>
+ 30de635:	eb be                	jmp    30de5f5 <ZSTD_trace_compress_begin@plt+0x2c74d5d>
+ 30de637:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+ 30de63e:	00 00 
+ 30de640:	b9 ff 00 00 00       	mov    $0xff,%ecx
+ 30de645:	41 b8 02 00 00 00    	mov    $0x2,%r8d
+ 30de64b:	e9 6f fd ff ff       	jmp    30de3bf <ZSTD_trace_compress_begin@plt+0x2c74b27>
+ 30de650:	8d 4a 01             	lea    0x1(%rdx),%ecx
+ 30de653:	39 ca                	cmp    %ecx,%edx
+ 30de655:	73 51                	jae    30de6a8 <ZSTD_trace_compress_begin@plt+0x2c74e10>
+ 30de657:	89 c8                	mov    %ecx,%eax
+ 30de659:	48 8b bb a8 00 00 00 	mov    0xa8(%rbx),%rdi
+ 30de660:	d1 e8                	shr    $1,%eax
+ 30de662:	01 d0                	add    %edx,%eax
+ 30de664:	ba 02 00 00 00       	mov    $0x2,%edx
+ 30de669:	39 d1                	cmp    %edx,%ecx
+ 30de66b:	0f 42 ca             	cmovb  %edx,%ecx
+ 30de66e:	39 c8                	cmp    %ecx,%eax
+ 30de670:	0f 42 c1             	cmovb  %ecx,%eax
+ 30de673:	31 d2                	xor    %edx,%edx
+ 30de675:	89 83 a4 00 00 00    	mov    %eax,0xa4(%rbx)
+ 30de67b:	89 c6                	mov    %eax,%esi
+ 30de67d:	48 c1 e6 04          	shl    $0x4,%rsi
+ 30de681:	e8 aa cb 55 00       	call   363b230 <ZSTD_trace_compress_begin@plt+0x31d1998>
+ 30de686:	48 89 83 a8 00 00 00 	mov    %rax,0xa8(%rbx)
+ 30de68d:	48 85 c0             	test   %rax,%rax
+ 30de690:	0f 84 9a 00 00 00    	je     30de730 <ZSTD_trace_compress_begin@plt+0x2c74e98>
+ 30de696:	8b 93 a0 00 00 00    	mov    0xa0(%rbx),%edx
+ 30de69c:	e9 c6 fa ff ff       	jmp    30de167 <ZSTD_trace_compress_begin@plt+0x2c748cf>
+ 30de6a1:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+ 30de6a8:	e8 63 6f b5 00       	call   3c35610 <ZSTD_trace_compress_begin@plt+0x37cbd78>
+ 30de6ad:	84 c0                	test   %al,%al
+ 30de6af:	75 55                	jne    30de706 <ZSTD_trace_compress_begin@plt+0x2c74e6e>
+ 30de6b1:	48 8b 83 a8 00 00 00 	mov    0xa8(%rbx),%rax
+ 30de6b8:	eb dc                	jmp    30de696 <ZSTD_trace_compress_begin@plt+0x2c74dfe>
+ 30de6ba:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+ 30de6c0:	4c 89 ef             	mov    %r13,%rdi
+ 30de6c3:	e8 38 3f 7e 00       	call   38c2600 <ZSTD_trace_compress_begin@plt+0x3458d68>
+ 30de6c8:	e9 17 f7 ff ff       	jmp    30ddde4 <ZSTD_trace_compress_begin@plt+0x2c7454c>
+ 30de6cd:	0f 1f 00             	nopl   (%rax)
+ 30de6d0:	48 83 ec 08          	sub    $0x8,%rsp
+ 30de6d4:	ba 04 01 00 00       	mov    $0x104,%edx
+ 30de6d9:	45 31 c9             	xor    %r9d,%r9d
+ 30de6dc:	6a 00                	push   $0x0
+ 30de6de:	4c 8d 05 8b 53 f4 00 	lea    0xf4538b(%rip),%r8        # 4023a70 <ZSTD_trace_compress_begin@plt+0x3bba1d8>
+ 30de6e5:	48 8d 0d d4 53 f4 00 	lea    0xf453d4(%rip),%rcx        # 4023ac0 <ZSTD_trace_compress_begin@plt+0x3bba228>
+ 30de6ec:	48 8d 35 ca 66 10 01 	lea    0x11066ca(%rip),%rsi        # 41e4dbd <ZSTD_trace_compress_begin@plt+0x3d7b525>
+ 30de6f3:	48 8d 3d c7 c9 15 01 	lea    0x115c9c7(%rip),%rdi        # 423b0c1 <ZSTD_trace_compress_begin@plt+0x3dd1829>
+ 30de6fa:	e8 41 9f bb 00       	call   3c98640 <ZSTD_trace_compress_begin@plt+0x382eda8>
+ 30de6ff:	58                   	pop    %rax
+ 30de700:	5a                   	pop    %rdx
+ 30de701:	e9 c3 fa ff ff       	jmp    30de1c9 <ZSTD_trace_compress_begin@plt+0x2c74931>
+ 30de706:	41 b9 01 00 00 00    	mov    $0x1,%r9d
+ 30de70c:	45 31 c0             	xor    %r8d,%r8d
+ 30de70f:	48 8d 0d 8a 74 f4 00 	lea    0xf4748a(%rip),%rcx        # 4025ba0 <ZSTD_trace_compress_begin@plt+0x3bbc308>
+ 30de716:	ba b5 00 00 00       	mov    $0xb5,%edx
+ 30de71b:	48 8d 35 f6 70 f4 00 	lea    0xf470f6(%rip),%rsi        # 4025818 <ZSTD_trace_compress_begin@plt+0x3bbbf80>
+ 30de722:	48 8d 3d f7 b6 11 01 	lea    0x111b6f7(%rip),%rdi        # 41f9e20 <ZSTD_trace_compress_begin@plt+0x3d90588>
+ 30de729:	e8 b2 a0 bb 00       	call   3c987e0 <ZSTD_trace_compress_begin@plt+0x382ef48>
+ 30de72e:	eb 81                	jmp    30de6b1 <ZSTD_trace_compress_begin@plt+0x2c74e19>
+ 30de730:	48 83 ec 08          	sub    $0x8,%rsp
+ 30de734:	45 31 c9             	xor    %r9d,%r9d
+ 30de737:	4c 8d 05 f8 7b 10 01 	lea    0x1107bf8(%rip),%r8        # 41e6336 <ZSTD_trace_compress_begin@plt+0x3d7ca9e>
+ 30de73e:	ba b3 00 00 00       	mov    $0xb3,%edx
+ 30de743:	6a 00                	push   $0x0
+ 30de745:	48 8d 0d 04 74 f4 00 	lea    0xf47404(%rip),%rcx        # 4025b50 <ZSTD_trace_compress_begin@plt+0x3bbc2b8>
+ 30de74c:	48 8d 35 c5 70 f4 00 	lea    0xf470c5(%rip),%rsi        # 4025818 <ZSTD_trace_compress_begin@plt+0x3bbbf80>
+ 30de753:	48 8d 3d c6 b6 11 01 	lea    0x111b6c6(%rip),%rdi        # 41f9e20 <ZSTD_trace_compress_begin@plt+0x3d90588>
+ 30de75a:	e8 e1 9e bb 00       	call   3c98640 <ZSTD_trace_compress_begin@plt+0x382eda8>
+ 30de75f:	e8 bc 9e bb 00       	call   3c98620 <ZSTD_trace_compress_begin@plt+0x382ed88>
+ 30de764:	0f 0b                	ud2
+ 30de766:	45 31 db             	xor    %r11d,%r11d
+ 30de769:	44 89 5c 24 0c       	mov    %r11d,0xc(%rsp)
+ 30de76e:	e9 e2 f6 ff ff       	jmp    30dde55 <ZSTD_trace_compress_begin@plt+0x2c745bd>

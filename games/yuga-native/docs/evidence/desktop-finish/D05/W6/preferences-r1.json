@@ -1,0 +1,199 @@
+{
+  "passed": true,
+  "count": 28,
+  "checks": [
+    {
+      "detail": {},
+      "name": "write: Fresh writer starts with default keys and no saved file",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Real Settings callbacks save and apply aim sound and display values",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Saved J binding reaches InputMap and the real mapping control",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Conflicting remap leaves the save and active mapping exact",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Capture cancel preserves its owner and existing mapping",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Guide loads saved remap and both real effect receiver options",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Fixture creates a real non-writable save target with exact original backup",
+      "passed": true
+    },
+    {
+      "detail": {
+        "notice": "Could not save effect preferences. Current ability effects are unchanged."
+      },
+      "name": "write: Failed ability preference write rolls back the toggle and real receiver",
+      "passed": true
+    },
+    {
+      "detail": {
+        "notice": "Settings could not be saved: Can't open file"
+      },
+      "name": "write: Failed remap write retains J with visible failure and capture available",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Fixture restores exactly the original valid save",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Retry after storage recovery commits a new mapping without restarting",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Restoring J persists while retaining unrelated sections",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Writes retain every other settings section",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "write: Relevant runtime and test sources remain exact",
+      "passed": true
+    },
+    {
+      "name": "write exits clean with an actual assertion report",
+      "passed": true
+    },
+    {
+      "detail": {
+        "initial_sha256": "70063361bbc743dac4e97b7a863405242fb3e9bb28a50c5c1694b6974b8b1a55",
+        "user_directory": "/workspace/scratch/desktop-finish/D05-W6-r1/preferences-r1-processes/data/godot/app_userdata/YUGA \u2022 Confluence"
+      },
+      "name": "read: Independent process loads saved settings into real controls and player",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "read: Saved J binding reaches InputMap and the real mapping control",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "read: Conflicting remap leaves the save and active mapping exact",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "read: Capture cancel preserves its owner and existing mapping",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "read: Guide loads saved remap and both real effect receiver options",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "read: Writes retain every other settings section",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "read: Opening and cancelling after relaunch never rewrites saved bytes",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "read: Relevant runtime and test sources remain exact",
+      "passed": true
+    },
+    {
+      "name": "read exits clean with an actual assertion report",
+      "passed": true
+    },
+    {
+      "name": "The two runs are distinct real processes",
+      "passed": true
+    },
+    {
+      "name": "The second process reuses only the same isolated user directory",
+      "passed": true
+    },
+    {
+      "name": "The persisted file is exact after fresh-process reload",
+      "passed": true
+    },
+    {
+      "name": "All runtime and fixture sources remain exact",
+      "passed": true
+    }
+  ],
+  "processes": [
+    {
+      "phase": "write",
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--script",
+        "res://tests/desktop_d05_preferences_cases.gd",
+        "--",
+        "--desktop-prefs-fixture",
+        "--phase=write",
+        "--report=/workspace/scratch/desktop-finish/D05-W6-r1/preferences-r1-processes/write.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.777602368999851,
+      "diagnostics": []
+    },
+    {
+      "phase": "read",
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--script",
+        "res://tests/desktop_d05_preferences_cases.gd",
+        "--",
+        "--desktop-prefs-fixture",
+        "--phase=read",
+        "--report=/workspace/scratch/desktop-finish/D05-W6-r1/preferences-r1-processes/read.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.699549095000066,
+      "diagnostics": []
+    }
+  ],
+  "engine": {
+    "path": "/usr/local/bin/godot",
+    "version": "4.6.3.stable.official.7d41c59c4",
+    "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3"
+  },
+  "source_files": 560,
+  "source_manifest_sha256": "67bedb9f580a11dd8c916692b0027c499132d4cb839ce062b2f9c9012bcb255c",
+  "scope": "Separate headless processes, actual title callbacks and GUI events with isolated saves; no OS input, renderer, hardware or package acceptance."
+}

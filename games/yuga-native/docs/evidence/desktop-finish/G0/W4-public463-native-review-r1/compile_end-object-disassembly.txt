@@ -1,0 +1,287 @@
+
+/tmp/yuga-engine-template-baseline-r1/godot-35e80b3a8822a9df9be390814b62f44c0a9c69e8/bin/obj/servers/rendering/renderer_rd/shader_rd.linuxbsd.template_debug.x86_64.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000007200 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)>:
+    7200:	41 57                	push   %r15
+    7202:	41 56                	push   %r14
+    7204:	4c 63 f2             	movslq %edx,%r14
+    7207:	41 55                	push   %r13
+    7209:	41 54                	push   %r12
+    720b:	55                   	push   %rbp
+    720c:	4c 89 f5             	mov    %r14,%rbp
+    720f:	53                   	push   %rbx
+    7210:	48 83 ec 18          	sub    $0x18,%rsp
+    7214:	48 8b 46 68          	mov    0x68(%rsi),%rax
+    7218:	89 54 24 0c          	mov    %edx,0xc(%rsp)
+    721c:	48 85 c0             	test   %rax,%rax
+    721f:	0f 84 43 01 00 00    	je     7368 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x168>
+    7225:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+    7229:	4d 39 f0             	cmp    %r14,%r8
+    722c:	7e 15                	jle    7243 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x43>
+    722e:	4d 85 f6             	test   %r14,%r14
+    7231:	0f 88 3d 01 00 00    	js     7374 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x174>
+    7237:	48 89 f3             	mov    %rsi,%rbx
+    723a:	4a 8b 34 f0          	mov    (%rax,%r14,8),%rsi
+    723e:	48 85 f6             	test   %rsi,%rsi
+    7241:	75 15                	jne    7258 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x58>
+    7243:	48 83 c4 18          	add    $0x18,%rsp
+    7247:	5b                   	pop    %rbx
+    7248:	5d                   	pop    %rbp
+    7249:	41 5c                	pop    %r12
+    724b:	41 5d                	pop    %r13
+    724d:	41 5e                	pop    %r14
+    724f:	41 5f                	pop    %r15
+    7251:	c3                   	ret
+    7252:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    7258:	49 89 fd             	mov    %rdi,%r13
+    725b:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 7262 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x62>
+			725e: R_X86_64_PC32	WorkerThreadPool::singleton-0x4
+    7262:	e8 00 00 00 00       	call   7267 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x67>
+			7263: R_X86_64_PLT32	WorkerThreadPool::wait_for_group_task_completion(long)-0x4
+    7267:	48 8b 43 68          	mov    0x68(%rbx),%rax
+    726b:	48 85 c0             	test   %rax,%rax
+    726e:	0f 84 6c 01 00 00    	je     73e0 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1e0>
+    7274:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+    7278:	4d 39 c6             	cmp    %r8,%r14
+    727b:	0f 8d 62 01 00 00    	jge    73e3 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1e3>
+    7281:	48 8d 7b 68          	lea    0x68(%rbx),%rdi
+    7285:	e8 00 00 00 00       	call   728a <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x8a>
+			7286: R_X86_64_PLT32	CowData<long>::_copy_on_write()-0x4
+    728a:	41 89 c4             	mov    %eax,%r12d
+    728d:	85 c0                	test   %eax,%eax
+    728f:	0f 85 cb 01 00 00    	jne    7460 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x260>
+    7295:	48 8b 43 68          	mov    0x68(%rbx),%rax
+    7299:	4d 8d 7d 40          	lea    0x40(%r13),%r15
+    729d:	4c 89 ff             	mov    %r15,%rdi
+    72a0:	4a c7 04 f0 00 00 00 	movq   $0x0,(%rax,%r14,8)
+    72a7:	00 
+    72a8:	4c 8d 74 24 0c       	lea    0xc(%rsp),%r14
+    72ad:	4c 89 f6             	mov    %r14,%rsi
+    72b0:	e8 00 00 00 00       	call   72b5 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0xb5>
+			72b1: R_X86_64_PLT32	HashMap<int, LocalVector<int, unsigned int, false, false>, HashMapHasherDefault, HashMapComparatorDefault<int, void>, DefaultTypedAllocator<HashMapElement<int, LocalVector<int, unsigned int, false, false> > > >::operator[](int const&)-0x4
+    72b5:	44 3b 20             	cmp    (%rax),%r12d
+    72b8:	0f 83 8a 00 00 00    	jae    7348 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x148>
+    72be:	4c 89 f6             	mov    %r14,%rsi
+    72c1:	4c 89 ff             	mov    %r15,%rdi
+    72c4:	e8 00 00 00 00       	call   72c9 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0xc9>
+			72c5: R_X86_64_PLT32	HashMap<int, LocalVector<int, unsigned int, false, false>, HashMapHasherDefault, HashMapComparatorDefault<int, void>, DefaultTypedAllocator<HashMapElement<int, LocalVector<int, unsigned int, false, false> > > >::operator[](int const&)-0x4
+    72c9:	44 8b 00             	mov    (%rax),%r8d
+    72cc:	45 39 c4             	cmp    %r8d,%r12d
+    72cf:	0f 83 5b 01 00 00    	jae    7430 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x230>
+    72d5:	48 8b 48 08          	mov    0x8(%rax),%rcx
+    72d9:	44 89 e2             	mov    %r12d,%edx
+    72dc:	49 8b 45 28          	mov    0x28(%r13),%rax
+    72e0:	48 63 0c 91          	movslq (%rcx,%rdx,4),%rcx
+    72e4:	48 85 c9             	test   %rcx,%rcx
+    72e7:	0f 88 c8 00 00 00    	js     73b5 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1b5>
+    72ed:	48 85 c0             	test   %rax,%rax
+    72f0:	0f 84 ca 00 00 00    	je     73c0 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c0>
+    72f6:	48 3b 48 f0          	cmp    -0x10(%rax),%rcx
+    72fa:	0f 8d 28 01 00 00    	jge    7428 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x228>
+    7300:	80 3c 08 00          	cmpb   $0x0,(%rax,%rcx,1)
+    7304:	74 2a                	je     7330 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x130>
+    7306:	48 8b 83 88 00 00 00 	mov    0x88(%rbx),%rax
+    730d:	48 85 c0             	test   %rax,%rax
+    7310:	0f 84 aa 00 00 00    	je     73c0 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c0>
+    7316:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+    731a:	4c 39 c1             	cmp    %r8,%rcx
+    731d:	0f 8d a0 00 00 00    	jge    73c3 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c3>
+    7323:	48 8b 0c c8          	mov    (%rax,%rcx,8),%rcx
+    7327:	48 85 c9             	test   %rcx,%rcx
+    732a:	0f 84 5c 01 00 00    	je     748c <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x28c>
+    7330:	4c 89 f6             	mov    %r14,%rsi
+    7333:	4c 89 ff             	mov    %r15,%rdi
+    7336:	41 83 c4 01          	add    $0x1,%r12d
+    733a:	e8 00 00 00 00       	call   733f <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x13f>
+			733b: R_X86_64_PLT32	HashMap<int, LocalVector<int, unsigned int, false, false>, HashMapHasherDefault, HashMapComparatorDefault<int, void>, DefaultTypedAllocator<HashMapElement<int, LocalVector<int, unsigned int, false, false> > > >::operator[](int const&)-0x4
+    733f:	44 3b 20             	cmp    (%rax),%r12d
+    7342:	0f 82 76 ff ff ff    	jb     72be <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0xbe>
+    7348:	41 80 bd 70 01 00 00 	cmpb   $0x0,0x170(%r13)
+    734f:	00 
+    7350:	0f 85 44 02 00 00    	jne    759a <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x39a>
+    7356:	c6 83 90 00 00 00 01 	movb   $0x1,0x90(%rbx)
+    735d:	e9 e1 fe ff ff       	jmp    7243 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x43>
+    7362:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    7368:	45 31 c0             	xor    %r8d,%r8d
+    736b:	45 85 f6             	test   %r14d,%r14d
+    736e:	0f 89 cf fe ff ff    	jns    7243 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x43>
+    7374:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 737b <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x17b>
+			7377: R_X86_64_PC32	.LC15-0x4
+    737b:	6a 01                	push   $0x1
+    737d:	4c 8d 0d 00 00 00 00 	lea    0x0(%rip),%r9        # 7384 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x184>
+			7380: R_X86_64_PC32	.LC17-0x4
+    7384:	4c 89 f1             	mov    %r14,%rcx
+    7387:	6a 00                	push   $0x0
+    7389:	50                   	push   %rax
+    738a:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 7391 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x191>
+			738d: R_X86_64_PC32	.LC19-0x4
+    7391:	50                   	push   %rax
+    7392:	ba c1 00 00 00       	mov    $0xc1,%edx
+    7397:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 739e <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x19e>
+			739a: R_X86_64_PC32	.LC6-0x4
+    739e:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 73a5 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1a5>
+			73a1: R_X86_64_PC32	.LC18-0x4
+    73a5:	e8 00 00 00 00       	call   73aa <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1aa>
+			73a6: R_X86_64_PLT32	_err_print_index_error(char const*, char const*, int, long, long, char const*, char const*, char const*, bool, bool)-0x4
+    73aa:	48 83 c4 20          	add    $0x20,%rsp
+    73ae:	e8 00 00 00 00       	call   73b3 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1b3>
+			73af: R_X86_64_PLT32	_err_flush_stdout()-0x4
+    73b3:	0f 0b                	ud2
+    73b5:	48 85 c0             	test   %rax,%rax
+    73b8:	75 6e                	jne    7428 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x228>
+    73ba:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    73c0:	45 31 c0             	xor    %r8d,%r8d
+    73c3:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 73ca <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1ca>
+			73c6: R_X86_64_PC32	.LC15-0x4
+    73ca:	6a 01                	push   $0x1
+    73cc:	4c 8d 0d 00 00 00 00 	lea    0x0(%rip),%r9        # 73d3 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1d3>
+			73cf: R_X86_64_PC32	.LC17-0x4
+    73d3:	6a 00                	push   $0x0
+    73d5:	50                   	push   %rax
+    73d6:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 73dd <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1dd>
+			73d9: R_X86_64_PC32	.LC19-0x4
+    73dd:	50                   	push   %rax
+    73de:	eb b2                	jmp    7392 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x192>
+    73e0:	45 31 c0             	xor    %r8d,%r8d
+    73e3:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 73ea <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1ea>
+			73e6: R_X86_64_PC32	.LC15-0x4
+    73ea:	6a 01                	push   $0x1
+    73ec:	4c 8d 0d 00 00 00 00 	lea    0x0(%rip),%r9        # 73f3 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1f3>
+			73ef: R_X86_64_PC32	.LC17-0x4
+    73f3:	4c 89 f1             	mov    %r14,%rcx
+    73f6:	6a 00                	push   $0x0
+    73f8:	ba 36 00 00 00       	mov    $0x36,%edx
+    73fd:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 7404 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x204>
+			7400: R_X86_64_PC32	.LC82-0x4
+    7404:	50                   	push   %rax
+    7405:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 740c <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x20c>
+			7408: R_X86_64_PC32	.LC83-0x4
+    740c:	50                   	push   %rax
+    740d:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 7414 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x214>
+			7410: R_X86_64_PC32	.LC22-0x4
+    7414:	e8 00 00 00 00       	call   7419 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x219>
+			7415: R_X86_64_PLT32	_err_print_index_error(char const*, char const*, int, long, long, char const*, char const*, char const*, bool, bool)-0x4
+    7419:	48 83 c4 20          	add    $0x20,%rsp
+    741d:	e8 00 00 00 00       	call   7422 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x222>
+			741e: R_X86_64_PLT32	_err_flush_stdout()-0x4
+    7422:	0f 0b                	ud2
+    7424:	0f 1f 40 00          	nopl   0x0(%rax)
+    7428:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+    742c:	eb 95                	jmp    73c3 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c3>
+    742e:	66 90                	xchg   %ax,%ax
+    7430:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 7437 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x237>
+			7433: R_X86_64_PC32	.LC15-0x4
+    7437:	6a 01                	push   $0x1
+    7439:	44 89 e1             	mov    %r12d,%ecx
+    743c:	4c 8d 0d 00 00 00 00 	lea    0x0(%rip),%r9        # 7443 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x243>
+			743f: R_X86_64_PC32	.LC17-0x4
+    7443:	6a 00                	push   $0x0
+    7445:	ba ce 00 00 00       	mov    $0xce,%edx
+    744a:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 7451 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x251>
+			744d: R_X86_64_PC32	.LC62-0x4
+    7451:	50                   	push   %rax
+    7452:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 7459 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x259>
+			7455: R_X86_64_PC32	.LC88-0x4
+    7459:	50                   	push   %rax
+    745a:	eb b1                	jmp    740d <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x20d>
+    745c:	0f 1f 40 00          	nopl   0x0(%rax)
+    7460:	45 31 c9             	xor    %r9d,%r9d
+    7463:	45 31 c0             	xor    %r8d,%r8d
+    7466:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # 746d <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x26d>
+			7469: R_X86_64_PC32	.LC84-0x4
+    746d:	ba a2 00 00 00       	mov    $0xa2,%edx
+    7472:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 7479 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x279>
+			7475: R_X86_64_PC32	.LC6-0x4
+    7479:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 7480 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x280>
+			747c: R_X86_64_PC32	.LC85-0x4
+    7480:	e8 00 00 00 00       	call   7485 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x285>
+			7481: R_X86_64_PLT32	_err_print_error(char const*, char const*, int, char const*, bool, ErrorHandlerType)-0x4
+    7485:	e8 00 00 00 00       	call   748a <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x28a>
+			7486: R_X86_64_PLT32	_err_flush_stdout()-0x4
+    748a:	0f 0b                	ud2
+    748c:	49 8b 55 18          	mov    0x18(%r13),%rdx
+    7490:	48 85 d2             	test   %rdx,%rdx
+    7493:	74 79                	je     750e <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x30e>
+    7495:	48 3b 4a f0          	cmp    -0x10(%rdx),%rcx
+    7499:	7d 73                	jge    750e <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x30e>
+    749b:	49 8b 45 28          	mov    0x28(%r13),%rax
+    749f:	48 85 c0             	test   %rax,%rax
+    74a2:	0f 84 18 ff ff ff    	je     73c0 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c0>
+    74a8:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+    74ac:	49 39 c8             	cmp    %rcx,%r8
+    74af:	0f 8e 0e ff ff ff    	jle    73c3 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c3>
+    74b5:	80 3c 08 00          	cmpb   $0x0,(%rax,%rcx,1)
+    74b9:	74 4a                	je     7505 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x305>
+    74bb:	48 8d 04 49          	lea    (%rcx,%rcx,2),%rax
+    74bf:	49 8b 75 70          	mov    0x70(%r13),%rsi
+    74c3:	48 63 04 c2          	movslq (%rdx,%rax,8),%rax
+    74c7:	48 85 c0             	test   %rax,%rax
+    74ca:	78 5c                	js     7528 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x328>
+    74cc:	48 85 f6             	test   %rsi,%rsi
+    74cf:	74 5c                	je     752d <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x32d>
+    74d1:	48 3b 46 f0          	cmp    -0x10(%rsi),%rax
+    74d5:	0f 8d d1 00 00 00    	jge    75ac <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x3ac>
+    74db:	80 3c 06 00          	cmpb   $0x0,(%rsi,%rax,1)
+    74df:	74 24                	je     7505 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x305>
+    74e1:	48 8b 83 88 00 00 00 	mov    0x88(%rbx),%rax
+    74e8:	48 85 c0             	test   %rax,%rax
+    74eb:	0f 84 cf fe ff ff    	je     73c0 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c0>
+    74f1:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+    74f5:	4c 39 c1             	cmp    %r8,%rcx
+    74f8:	0f 8d c5 fe ff ff    	jge    73c3 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c3>
+    74fe:	48 83 3c c8 00       	cmpq   $0x0,(%rax,%rcx,8)
+    7503:	75 4e                	jne    7553 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x353>
+    7505:	48 83 c1 01          	add    $0x1,%rcx
+    7509:	48 85 d2             	test   %rdx,%rdx
+    750c:	75 87                	jne    7495 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x295>
+    750e:	48 8d bb 88 00 00 00 	lea    0x88(%rbx),%rdi
+    7515:	e8 00 00 00 00       	call   751a <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x31a>
+			7516: R_X86_64_PLT32	CowData<RID>::_unref()-0x4
+    751a:	48 8d 7b 78          	lea    0x78(%rbx),%rdi
+    751e:	e8 00 00 00 00       	call   7523 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x323>
+			751f: R_X86_64_PLT32	CowData<Vector<unsigned char> >::_unref()-0x4
+    7523:	e9 1b fd ff ff       	jmp    7243 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x43>
+    7528:	48 85 f6             	test   %rsi,%rsi
+    752b:	75 7f                	jne    75ac <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x3ac>
+    752d:	45 31 c0             	xor    %r8d,%r8d
+    7530:	48 8d 1d 00 00 00 00 	lea    0x0(%rip),%rbx        # 7537 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x337>
+			7533: R_X86_64_PC32	.LC15-0x4
+    7537:	6a 01                	push   $0x1
+    7539:	4c 8d 0d 00 00 00 00 	lea    0x0(%rip),%r9        # 7540 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x340>
+			753c: R_X86_64_PC32	.LC17-0x4
+    7540:	48 89 c1             	mov    %rax,%rcx
+    7543:	6a 00                	push   $0x0
+    7545:	53                   	push   %rbx
+    7546:	48 8d 1d 00 00 00 00 	lea    0x0(%rip),%rbx        # 754d <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x34d>
+			7549: R_X86_64_PC32	.LC19-0x4
+    754d:	53                   	push   %rbx
+    754e:	e9 3f fe ff ff       	jmp    7392 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x192>
+    7553:	48 89 0c 24          	mov    %rcx,(%rsp)
+    7557:	e8 00 00 00 00       	call   755c <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x35c>
+			7558: R_X86_64_PLT32	RenderingDevice::get_singleton()-0x4
+    755c:	48 8b 0c 24          	mov    (%rsp),%rcx
+    7560:	48 89 c7             	mov    %rax,%rdi
+    7563:	48 8b 83 88 00 00 00 	mov    0x88(%rbx),%rax
+    756a:	48 85 c0             	test   %rax,%rax
+    756d:	0f 84 4d fe ff ff    	je     73c0 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c0>
+    7573:	4c 8b 40 f0          	mov    -0x10(%rax),%r8
+    7577:	4c 39 c1             	cmp    %r8,%rcx
+    757a:	0f 8d 43 fe ff ff    	jge    73c3 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x1c3>
+    7580:	48 8b 34 c8          	mov    (%rax,%rcx,8),%rsi
+    7584:	48 89 0c 24          	mov    %rcx,(%rsp)
+    7588:	e8 00 00 00 00       	call   758d <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x38d>
+			7589: R_X86_64_PLT32	RenderingDevice::free_rid(RID)-0x4
+    758d:	49 8b 55 18          	mov    0x18(%r13),%rdx
+    7591:	48 8b 0c 24          	mov    (%rsp),%rcx
+    7595:	e9 6b ff ff ff       	jmp    7505 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x305>
+    759a:	89 ea                	mov    %ebp,%edx
+    759c:	48 89 de             	mov    %rbx,%rsi
+    759f:	4c 89 ef             	mov    %r13,%rdi
+    75a2:	e8 00 00 00 00       	call   75a7 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x3a7>
+			75a3: R_X86_64_PLT32	ShaderRD::_save_to_cache(ShaderRD::Version*, int)-0x4
+    75a7:	e9 aa fd ff ff       	jmp    7356 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x156>
+    75ac:	4c 8b 46 f0          	mov    -0x10(%rsi),%r8
+    75b0:	e9 7b ff ff ff       	jmp    7530 <ShaderRD::_compile_version_end(ShaderRD::Version*, int)+0x330>

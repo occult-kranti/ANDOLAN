@@ -1,0 +1,128 @@
+{
+  "source_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+  "engine_binary": "/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-unmodified",
+  "engine_sha256": "dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f",
+  "target": "template_debug, not installed official editor",
+  "native_log_sha256": "5ac899fa85d1db7fd2126d6573e9dbe53a99d92a1ab729e1b56c8fd4251fe2ed",
+  "pie_load_bias": "0x5653122d7000",
+  "source_pins": {
+    "servers/rendering/renderer_rd/shader_rd.h": "012864496d13c39796025ad87b2f531536aacd2154e27a0d5c4a7a580d5ebb56",
+    "servers/rendering/renderer_rd/shader_rd.cpp": "a8968ac041a7fe5d84fc5fa681479dfbae1f44425df76dc4cec90a9c6aebf4ab",
+    "servers/rendering/renderer_rd/pipeline_hash_map_rd.h": "c4234010f9270c5c55c1d09ca752f82dbdd9bbbabe2ca7d54011ffacb29ac831",
+    "servers/rendering/renderer_rd/pipeline_deferred_rd.h": "b065ebbea1c7559a7767f8d80ef275d9b9ba59ba0dc8db1d534c36c0ac7d8071",
+    "servers/rendering/renderer_rd/forward_clustered/scene_shader_forward_clustered.cpp": "6707006f172dff099be5e2381a07926eb67415b902b29dade6eea699a09b870b",
+    "servers/rendering/renderer_rd/forward_clustered/render_forward_clustered.cpp": "bf8b24a243c8e9fa0d0104189eb5304ae709e380d0f6ac83344393ed6f8072b1",
+    "core/object/worker_thread_pool.cpp": "9bd57c773fd8d13b084594721bb8216a337891819efe31cf68ffd5e0f14db993",
+    "core/os/mutex.h": "28645ec5d6186cbfb685002562f3d1aa1bd39beeb0b6f319a09409abf03c8e4d"
+  },
+  "object_binary_function_matches": [
+    {
+      "function": "variant",
+      "object": "/tmp/yuga-engine-template-baseline-r1/godot-35e80b3a8822a9df9be390814b62f44c0a9c69e8/bin/obj/servers/rendering/renderer_rd/forward_clustered/scene_shader_forward_clustered.linuxbsd.template_debug.x86_64.o",
+      "object_sha256": "abb6cd0699c8922a118c3b64655fa3a88f18037317440bd723d0c72bf67eeccc",
+      "object_text_offset": "0x930",
+      "binary_virtual_start": "0x30dc5b0",
+      "function_size": 890,
+      "relocation_masked_bytes": 168,
+      "compared_bytes": 722,
+      "relocation_types": {
+        "2": 29,
+        "4": 13
+      },
+      "unmasked_mismatches": [],
+      "matched": true
+    },
+    {
+      "function": "pipeline",
+      "object": "/tmp/yuga-engine-template-baseline-r1/godot-35e80b3a8822a9df9be390814b62f44c0a9c69e8/bin/obj/servers/rendering/renderer_rd/forward_clustered/scene_shader_forward_clustered.linuxbsd.template_debug.x86_64.o",
+      "object_sha256": "abb6cd0699c8922a118c3b64655fa3a88f18037317440bd723d0c72bf67eeccc",
+      "object_text_offset": "0x1e00",
+      "binary_virtual_start": "0x30dda80",
+      "function_size": 3315,
+      "relocation_masked_bytes": 380,
+      "compared_bytes": 2935,
+      "relocation_types": {
+        "4": 48,
+        "2": 47
+      },
+      "unmasked_mismatches": [],
+      "matched": true
+    },
+    {
+      "function": "compile_end",
+      "object": "/tmp/yuga-engine-template-baseline-r1/godot-35e80b3a8822a9df9be390814b62f44c0a9c69e8/bin/obj/servers/rendering/renderer_rd/shader_rd.linuxbsd.template_debug.x86_64.o",
+      "object_sha256": "a784a93d7ddc29b46765523092c8f39256cf514344186e32d04df10dcf55ba74",
+      "object_text_offset": "0x7200",
+      "binary_virtual_start": "0x3013480",
+      "function_size": 949,
+      "relocation_masked_bytes": 160,
+      "compared_bytes": 789,
+      "relocation_types": {
+        "2": 24,
+        "4": 16
+      },
+      "unmasked_mismatches": [],
+      "matched": true
+    },
+    {
+      "function": "group_wait",
+      "object": "/tmp/yuga-engine-template-baseline-r1/godot-35e80b3a8822a9df9be390814b62f44c0a9c69e8/bin/obj/core/object/worker_thread_pool.linuxbsd.template_debug.x86_64.o",
+      "object_sha256": "f693f1bef257d6a11332a5742698db9670e5fce98d2a885f438195a00ab8ba36",
+      "object_text_offset": "0xc70",
+      "binary_virtual_start": "0x3c17e70",
+      "function_size": 1516,
+      "relocation_masked_bytes": 148,
+      "compared_bytes": 1368,
+      "relocation_types": {
+        "4": 18,
+        "2": 19
+      },
+      "unmasked_mismatches": [],
+      "matched": true
+    }
+  ],
+  "frames": [
+    {
+      "role": "all five worker threads",
+      "absolute": "0x5653153b3675",
+      "relative": "0x30dc675",
+      "function": "SceneShaderForwardClustered::ShaderData::_get_shader_variant +0xc5; inlined ShaderRD::version_get_shader",
+      "object_return": "0x9f5",
+      "relocation": "0x9f1 pthread_mutex_lock"
+    },
+    {
+      "role": "worker caller",
+      "absolute": "0x5653153b50b4",
+      "relative": "0x30de0b4",
+      "function": "SceneShaderForwardClustered::ShaderData::_create_pipeline +0x634",
+      "object_return": "0x2434",
+      "relocation": "0x2430 _get_shader_variant"
+    },
+    {
+      "role": "main",
+      "absolute": "0x5653152ea4e7",
+      "relative": "0x30134e7",
+      "function": "ShaderRD::_compile_version_end +0x67",
+      "object_return": "0x7267",
+      "relocation": "0x7263 WorkerThreadPool::wait_for_group_task_completion"
+    },
+    {
+      "role": "main caller",
+      "absolute": "0x5653153b38eb",
+      "relative": "0x30dc8eb",
+      "function": "SceneShaderForwardClustered::ShaderData::_get_shader_variant +0x33b",
+      "object_return": "0xc6b",
+      "relocation": "0xc67 ShaderRD::_compile_version_end"
+    },
+    {
+      "role": "main semaphore wait",
+      "absolute": "0x565315eef03b",
+      "relative": "0x3c1803b",
+      "function": "WorkerThreadPool::wait_for_group_task_completion +0x1cb",
+      "object_return": "0xe3b"
+    }
+  ],
+  "decision": "Source-supported bounded diagnostic: pipeline_hash_map_rd.h line143 pass false instead of p_high_priority. W1 owns any patch/build/test; no patch applied or engine run by W4.",
+  "proposed_patch_sha256": "df9032765f5fd348f3e1ef7f35c6de9148a74734172f94efe562e1753db8b4d7",
+  "inference_limit": "Fresh GDB log has no lock arguments, mutex owner read or queue snapshot. Function/wait identity is exact; same-Version mutex ownership and queued compilation starvation are supported by code plus prior capture, not independently directly measured in this new process. No universal deadlock-freedom claim."
+}

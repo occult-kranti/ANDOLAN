@@ -1,0 +1,35 @@
+diff --git a/games/yuga-native/scripts/confluence_world.gd b/games/yuga-native/scripts/confluence_world.gd
+index 2fef9c0..fd14189 100644
+--- a/games/yuga-native/scripts/confluence_world.gd
++++ b/games/yuga-native/scripts/confluence_world.gd
+@@ -926,7 +926,7 @@ func _layout_world_hud() -> void:
+ 	# At the smallest logical canvas, prioritize location, cores and the live
+ 	# objective. Phase and population remain available in the expanded layout.
+ 	status_label.visible = not compact
+-	lane_label.visible = not compact
++	_refresh_lane_visibility()
+ 	var title: Control = hud.get_node("TitleCard")
+ 	var relay: Control = hud.get_node("RelayStatus")
+ 	var controls: Control = hud.get_node("ControlsCard")
+@@ -949,6 +949,12 @@ func _layout_world_hud() -> void:
+ 	traversal.position = Vector2(screen.x-margin-traversal.size.x,combat_top-HeroUI.SPACE_MD-traversal.size.y)
+ 	_layout_atlas()
+ 
++func _refresh_lane_visibility(battle: Dictionary={}) -> void:
++	# Native resize callbacks and periodic HUD refresh share this rule; a
++	# compact title must not grow again when the next army report arrives.
++	if battle.is_empty() and army: battle=army.report()
++	lane_label.visible=get_viewport().get_visible_rect().size.x>=1100 and not bool(battle.get("siege_drill",false)) and String(battle.get("winner","")).is_empty()
++
+ func _atlas_key_text() -> String:
+ 	var key:=Bindings.label("world_overview")
+ 	return "%s Map & key" % key if _constrained_world else "● You · □ Relay\n%s Map & key" % key
+@@ -1240,7 +1246,7 @@ func _update_practice_hud() -> void:
+ 		outcome_summary.present(battle)
+ 		var cores: Dictionary=battle.get("cores",{})
+ 		siege_drill=battle.get("siege_drill",false)
+-		lane_label.visible=not siege_drill and String(battle.get("winner","")).is_empty()
++		_refresh_lane_visibility(battle)
+ 		if army.has_method("minimap_units"): map_control.units=army.minimap_units()
+ 		for unit in map_control.units:
+ 			if unit.get("team","")=="moon" and unit.get("role","") in ["cannon_cart","royal_chariot"]: enemy_siege+=1

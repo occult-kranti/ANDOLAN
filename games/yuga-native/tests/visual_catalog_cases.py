@@ -33,11 +33,12 @@ def main():
     check('Catalog identifiers are unique and every entry exists',
           len({s[0] for s in suites}) == len(suites) and all((PROJECT/s[2]).is_file() for s in suites))
     for kind, expected in [('visual', {'desktop-release-continuity','desktop-motion-scene-entry',
-                                     'desktop-motion-transition-guard'}),
+                                     'desktop-motion-transition-guard','desktop-world-route-parity'}),
                            ('screens', {'ui-boot-recovery','ui-title-portrait','ui-launch-composition',
                             'ui-world-atlas','ui-action-hud','ui-action-hud-fit',
                             'ui-host-replacement','ui-loading-presentation',
-                            'ui-loading-readiness','ui-hud-readability','ui-atlas-layout','ui-cancel-focus'})]:
+                            'ui-loading-readiness','ui-hud-readability','ui-atlas-layout','ui-cancel-focus',
+                            'ui-preferences-relaunch','ui-compact-navigation-routes','ui-world-compact-title'})]:
         result = subprocess.run([sys.executable,str(RUNNER),'--catalog',kind,'--list'],capture_output=True,text=True)
         listed = json.loads(result.stdout)
         check(kind+' CLI exposes new contracts with bounded acceptance scope',
@@ -49,8 +50,21 @@ def main():
         'ui-boot-recovery': {'tests/ui_s1_loading_cases.gd'},
         'ui-host-replacement': {'tests/ui_s2_transition_cases.gd'},
         'ui-cancel-focus': {'tests/ui_s3_cancel_focus_cases.gd'},
+        'ui-preferences-relaunch': {'tests/desktop_d05_preferences_fixture.py',
+                                    'tests/desktop_d05_preferences_cases.gd',
+                                    'scripts/input_bindings.gd','scripts/rama_hero_panel.gd'},
+        'ui-compact-navigation-routes': {'tests/desktop_d03_d05_navigation_audit_cases.gd',
+                                        'scenes/courtyard.tscn','scenes/combat_film.tscn',
+                                        'scripts/controls_overlay.gd','scripts/launch_shell.gd'},
+        'ui-world-compact-title': {'tests/desktop_world_compact_title_cases.gd',
+                                   'scenes/confluence_world.tscn','scripts/confluence_world.gd',
+                                   'scripts/rama_hero_hud.gd','scripts/lane_army.gd'},
         'ui-action-hud-fit': {'tests/desktop_s1_hud_cases.gd','tests/ui_i1_action_hud_cases.gd'},
         'ui-hud-readability': {'tests/ui_i1_action_hud_cases.gd'},
+        'desktop-world-route-parity': {'tests/desktop_world_route_parity_cases.gd',
+                                       'scenes/confluence_world.tscn','assets/world/confluence-map.json',
+                                       'scripts/confluence_world.gd','scripts/world_atlas.gd',
+                                       'scripts/player.gd','scripts/player_traversal.gd'},
         'desktop-release-continuity': {'tests/graphics_g1_motion_cases.gd',
                                      'docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd'},
         'desktop-motion-scene-entry': {'tests/graphics_g2_support_cases.gd',

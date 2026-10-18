@@ -1,0 +1,26 @@
+{
+  "matched_conditions_passed": true,
+  "checks": {
+    "snapshot_sha256": true,
+    "source_files": true,
+    "helper_sha256": true,
+    "runner_sha256": true,
+    "affinity": true,
+    "thread_limits": true,
+    "godot_worker_pool_limit": true,
+    "render_thread_override": true,
+    "watchdog": true,
+    "shader_cache_seed": true,
+    "godot_shader_cache_seed": true,
+    "preflight": true,
+    "command_equal_except_engine_output": true,
+    "postfailure_snapshot_and_store_unchanged": true
+  },
+  "baseline_run_sha256": "9fcd8c55e64ac2fe9648d23017a1c3ccae5a5e9fc68f78d7c7e56eb181e8c915",
+  "candidate_run_sha256": "020315bca6824d038cdd1f271d993ce3c7cd46948fd1ee23095208b6d4d4b5be",
+  "baseline_images": 0,
+  "candidate_images": 0,
+  "baseline_elapsed_s": 128.70392661899996,
+  "candidate_elapsed_s": 143.316060311,
+  "interpretation": "Both fail identical output watchdog. The candidate native capture shows main waiting in software Vulkan and another thread in LLVM MCJIT, unlike the exact-object-mapped baseline shader-version mutex/group wait. This demonstrates changed observed blocking path, not rendered acceptance or universal scheduling correctness."
+}

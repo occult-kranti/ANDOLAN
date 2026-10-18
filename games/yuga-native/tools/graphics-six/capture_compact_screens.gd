@@ -9,7 +9,7 @@ var shots: Array[Dictionary] = []
 var checks: Array[Dictionary] = []
 var checkpoints: Array[Dictionary] = []
 var done := false
-const SCALES := [1.0,1.5,2.0]
+const SCALES := [1.0,1.25,1.5,2.0]
 const SETTLE_FRAMES := 12
 const TIMEOUT_MS := 120000
 
@@ -76,6 +76,8 @@ func snapshot(id: String) -> Dictionary:
 		state.hud={"visible":hud.is_visible_in_tree(),"rect":str(hud.get_global_rect()),"notice":hud.note.text,"health":hud.life_text.text,"slots":hud.slots.map(func(item):return {"text":item.text,"rect":str(item.get_global_rect())})}
 	if "world_ready" in scene:
 		state.world_ready=scene.world_ready
+		state.lane_label_visible=scene.lane_label.visible
+		state.lane_label_effectively_visible=scene.lane_label.is_visible_in_tree()
 		state.overview=scene.overview
 		state.army_elapsed=scene.army.elapsed
 		state.kit_elapsed=scene.rama_runtime.kit.elapsed
@@ -159,21 +161,24 @@ func run() -> void:
 		root.content_scale_factor=SCALES[index]
 		await frames(SETTLE_FRAMES)
 		check("world ordinary live camera "+str(SCALES[index]),world.is_processing() and world.is_physics_processing() and world.player.active and not world.overview and not paused and root.get_camera_3d()==world.player.camera)
-		if not take("0%d-world-%d" % [index+3,int(SCALES[index]*100)]):return
-	check("actual world clocks progress across live observations",shots[4].army_elapsed>shots[3].army_elapsed and shots[5].army_elapsed>shots[4].army_elapsed)
+		if not take("0%d-world-%d" % [index+SCALES.size(),int(SCALES[index]*100)]):return
+	var clocks_progress := true
+	for index in range(SCALES.size()+1,SCALES.size()*2):
+		clocks_progress = clocks_progress and shots[index].army_elapsed>shots[index-1].army_elapsed
+	check("actual world clocks progress across live observations",clocks_progress)
 	await key(KEY_F1)
 	var held_army: float=world.army.elapsed
 	var held_kit: float=world.rama_runtime.kit.elapsed
 	await frames(SETTLE_FRAMES)
 	check("overview is suspended product view with keyboard owner",world.overview and not paused and world.atlas_guide.visible and root.gui_get_focus_owner()==world.atlas_guide_scroll and world.army.elapsed==held_army and world.rama_runtime.kit.elapsed==held_kit)
-	if not take("06-overview-200"):return
+	if not take("08-overview-200"):return
 	await key(KEY_F1)
 	await key(KEY_ESCAPE)
 	var opener := root.gui_get_focus_owner()
 	await key(KEY_F3)
 	await frames(SETTLE_FRAMES)
 	check("guide opens through real pause shortcut",paused and world.paused and world.rama_panel.visible and not world.player.active and world.rama_runtime.suspended and is_instance_valid(opener))
-	if not take("07-guide-200"):return
+	if not take("09-guide-200"):return
 	await key(KEY_ESCAPE)
 	await frames(SETTLE_FRAMES)
 	check("guide returns exact usable pause opener",paused and world.pause_panel.visible and not world.rama_panel.visible and root.gui_get_focus_owner()==opener)
@@ -183,10 +188,10 @@ func finish(failure: String) -> void:
 	if done:return
 	done=true
 	var after := hashes() if not source_start.is_empty() else {}
-	check("eight actual ordinary screen observations",shots.size()==8)
+	check("ten actual ordinary screen observations",shots.size()==10)
 	check("source unchanged",not source_start.is_empty() and source_start==after)
 	var passed := failure.is_empty() and checks.all(func(item):return item.passed)
-	var report := {"schema":1,"case":"compact-screens","complete":passed,"failure":failure,"preflight":preflight,"manifest":manifest,"manifest_sha256":FileAccess.get_sha256(manifest) if FileAccess.file_exists(manifest) else "","source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"shots":shots,"checks":checks,"checkpoints":checkpoints,"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"Actual boot→title→native viewport Enter primary→world; normal running100/150/200% content scale, native F1 overview and F3 guide from pause. No manual layout/camera/light/pose/health/clock override, no matched-tint comparison, no OS-input or perceptual/hardware quality claim. Fresh XDG settings/cache conditions belong to invocation receipt. Preflight produces no images."}
+	var report := {"schema":1,"case":"compact-screens-125","complete":passed,"failure":failure,"preflight":preflight,"manifest":manifest,"manifest_sha256":FileAccess.get_sha256(manifest) if FileAccess.file_exists(manifest) else "","source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"shots":shots,"checks":checks,"checkpoints":checkpoints,"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"Actual boot→title→native viewport Enter primary→world; normal running100/125/150/200% content scale, native F1 overview and F3 guide from pause. No manual layout/camera/light/pose/health/clock override, no matched-tint comparison, no OS-input or perceptual/hardware quality claim. Fresh XDG settings/cache conditions belong to invocation receipt. Preflight produces no images."}
 	if not output.is_empty() and DirAccess.dir_exists_absolute(output):write_json(output.path_join("preflight.json" if preflight else "capture.json"),report)
 	print("COMPACT_SCREEN_COMPLETE ",passed," ",failure)
 	paused=false

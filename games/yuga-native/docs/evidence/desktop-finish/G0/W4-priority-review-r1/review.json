@@ -1,0 +1,69 @@
+{
+  "references": {
+    "template-priority-build-r1": {
+      "receipt_sha256": "2ff2289520bd43e74d55810b40d47c64b61197bf956f14c4a09140b7b0d4bfc8",
+      "verified_artifact_count": 17
+    },
+    "template-priority-cold-r1": {
+      "receipt_sha256": "ffa9474652bdea3ef20305573958c486cc2672e363d7f10d5f69126d46c7e692",
+      "verified_artifact_count": 9
+    },
+    "template-cold-baseline-r1": {
+      "receipt_sha256": "037858c5a72c6966be393af464b326e90d047876a6c1f59f7478130b82a5356b",
+      "verified_artifact_count": 7
+    },
+    "W4-public463-native-review-r1": {
+      "receipt_sha256": "1000584200ae487385bf737a7e248e65b7bfc556ec809c68d036f76c9b2d9ce4",
+      "verified_artifact_count": 13
+    }
+  },
+  "matched_run_conditions": {
+    "snapshot_sha256": true,
+    "source_files": true,
+    "helper_sha256": true,
+    "runner_sha256": true,
+    "affinity": true,
+    "thread_limits": true,
+    "godot_worker_pool_limit": true,
+    "render_thread_override": true,
+    "watchdog": true,
+    "shader_cache_seed": true,
+    "godot_shader_cache_seed": true,
+    "preflight": true,
+    "command_except_engine_output": true
+  },
+  "single_priority_replacement": true,
+  "source_inventory_files": 13847,
+  "source_inventory_deltas": [
+    "servers/rendering/renderer_rd/pipeline_hash_map_rd.h"
+  ],
+  "full_source_tree_rehash_by_reviewer": false,
+  "source_guard_scope": "Compared exact13847-entry inventories, original/proposed header and same build flags. W1 full-tree post-build checks and verifier reviewed; not rerun.",
+  "sampled_build_guards_clear": {
+    "disk_floor": true,
+    "cgroup_memory": true,
+    "deadline": true
+  },
+  "candidate_binary_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+  "executed_outer_runner": "docs/evidence/desktop-finish/G0/workspace-recovery-r1/tools/run_focus.py",
+  "runner_sha256": "6cfcc86a3efb7ed1abb52f3df88a91b39027a88c7759fc70de4657302cfdc34c",
+  "runner_provenance_limit": "Initial lookup of embedded project runner found different31f5 historical artifact; W1 identified absolute external executed6c runner, independently rehashed here. Embedded runner was unused, not evidence of run mutation.",
+  "native_stack_sha256": "2802575774d8a49364ce54c3dd780777b4a814ff77e45986e0cca5a2595e85a8",
+  "observed_stack": "Four Godot workers wait on condition variables, one in Vulkan. Main waits in libvulkan_lvp. Separate thread executes LLVM LegalizeTypes and MCJIT compilation, unlike baseline five workers in shader Version lock accessor. Instantaneous stack, not universal scheduling proof.",
+  "late_cpu_delta": {
+    "seconds": 15.006345908000185,
+    "user_ticks": 1703,
+    "system_ticks": 30,
+    "log_bytes_unchanged": true
+  },
+  "images": {
+    "baseline": 0,
+    "candidate": 0
+  },
+  "candidate_exit": -15,
+  "candidate_elapsed_s": 143.316060311,
+  "acceptance": "Both fail unchanged120-second output-progress watchdog. No images or engine fix accepted.",
+  "cache_scope": "Exact external runner rejects existing log directory, creates distinct XDG data/config/cache and Mesa cache directory. Both seed maps empty. Not an OS page-cache/global-driver-state cold claim.",
+  "next_if_600s_candidate_renders": "Require all intended images/checks and exit0 with source/import identity intact. Next causal control: unmodified baseline with same600s guard and fresh caches, since120s baseline versus600s candidate confounds timeout. Follow with independent cold candidate repeat before promotion/current125% child. Proposed, not executed.",
+  "no_engine_run_attach_or_source_patch_by_reviewer": true
+}

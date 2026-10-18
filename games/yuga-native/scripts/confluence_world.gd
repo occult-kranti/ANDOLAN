@@ -426,7 +426,7 @@ func _gold_changed(value: int) -> void:
 	last_gold=value
 
 func _army_outcome(team: String) -> void:
-	if goal_label: goal_label.text=("Draw · both cores destroyed" if team=="draw" else "%s core victory" % team.to_upper())+" · Restart from pause"
+	if goal_label: goal_label.text=WorldOutcome.headline(team)+" · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
 	set_paused(true)
 
 func _start_siege_practice() -> bool:
@@ -857,8 +857,8 @@ func _refresh_control_labels() -> void:
 	var mode: String=String(player.traversal_report().get("mode","grounded")) if player and player.has_method("traversal_report") else "grounded"
 	if mode=="flight": help_labels[0].text="%s rise · %s descend" % [Bindings.label("jump"),Bindings.label("descend")]
 	elif mode=="grapple": help_labels[0].text="%s release tether" % Bindings.label("grapple")
-	else: help_labels[0].text="%s reload  ·  F3 abilities" % Bindings.label("reload")
-	help_labels[1].text="F2 controls  ·  Esc pause"
+	else: help_labels[0].text="%s reload  ·  %s abilities" % [Bindings.label("reload"),Bindings.label("open_invocations")]
+	help_labels[1].text="%s controls  ·  %s pause" % [Bindings.label("help_controls"),Bindings.label("pause_game")]
 
 func _open_controls() -> void:
 	controls_return_to_pause=paused
@@ -926,7 +926,7 @@ func _layout_world_hud() -> void:
 	# At the smallest logical canvas, prioritize location, cores and the live
 	# objective. Phase and population remain available in the expanded layout.
 	status_label.visible = not compact
-	lane_label.visible = not compact
+	_refresh_lane_visibility()
 	var title: Control = hud.get_node("TitleCard")
 	var relay: Control = hud.get_node("RelayStatus")
 	var controls: Control = hud.get_node("ControlsCard")
@@ -948,6 +948,12 @@ func _layout_world_hud() -> void:
 	traversal.size = traversal.custom_minimum_size
 	traversal.position = Vector2(screen.x-margin-traversal.size.x,combat_top-HeroUI.SPACE_MD-traversal.size.y)
 	_layout_atlas()
+
+func _refresh_lane_visibility(battle: Dictionary={}) -> void:
+	# Native resize callbacks and periodic HUD refresh share this rule; a
+	# compact title must not grow again when the next army report arrives.
+	if battle.is_empty() and army: battle=army.report()
+	lane_label.visible=get_viewport().get_visible_rect().size.x>=1100 and not bool(battle.get("siege_drill",false)) and String(battle.get("winner","")).is_empty()
 
 func _atlas_key_text() -> String:
 	var key:=Bindings.label("world_overview")
@@ -1088,7 +1094,7 @@ func _refresh_compact_world(battle: Dictionary={}) -> void:
 	var mode:=String(report.get("mode","ground"))
 	compact_world_labels[0].text="%s · %s" % [district_at(player.position),score_label.text.trim_prefix("Cores · ")]
 	var objective:="Escort Sun troops to the Moon core."
-	if not String(battle.get("winner","")).is_empty(): objective=WorldOutcome.headline(battle.winner)+" · Esc to restart"
+	if not String(battle.get("winner","")).is_empty(): objective=WorldOutcome.headline(battle.winner)+" · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
 	elif battle.get("siege_drill",false): objective="Siege drill: step outside enemy blast rings."
 	elif relays:
 		var rules=RelaySession.ControlRules
@@ -1216,7 +1222,7 @@ func _update_relay_hud() -> void:
 		var distance: float=Vector2(player.position.x-site.position.x,player.position.z-site.position.z).length()
 		if distance<nearest: nearest=distance;close_site=site
 	if army.siege_drill:
-		relay_hint.text="Relays inactive during siege drill · %s restarts lane practice" % Bindings.label("reset_training")
+		relay_hint.text="Relays inactive during siege drill · %s restarts lane practice" % Bindings.label("world_respawn")
 		for label in relay_labels: label.text="—"
 	elif not army.winner.is_empty(): relay_hint.text="Round ended · Relay capture and supplies stopped"
 	elif nearest<=rules.SUPPLY_RADIUS and not close_site.is_empty():
@@ -1240,7 +1246,7 @@ func _update_practice_hud() -> void:
 		outcome_summary.present(battle)
 		var cores: Dictionary=battle.get("cores",{})
 		siege_drill=battle.get("siege_drill",false)
-		lane_label.visible=not siege_drill and String(battle.get("winner","")).is_empty()
+		_refresh_lane_visibility(battle)
 		if army.has_method("minimap_units"): map_control.units=army.minimap_units()
 		for unit in map_control.units:
 			if unit.get("team","")=="moon" and unit.get("role","") in ["cannon_cart","royal_chariot"]: enemy_siege+=1
@@ -1272,7 +1278,7 @@ func _update_practice_hud() -> void:
 			practice_hint_label.text=practice_error if not practice_error.is_empty() else ("Break enemy engines before impact to protect Sun troops. Enemy siege blasts damage Rama; step out of the warning ring. Restart lane practice exits this drill." if siege_drill else "Try cannon carts and royal chariots in the central court. Blasts damage troops; enemy siege blasts damage Rama.")
 		if not String(battle.get("winner","")).is_empty():
 			objective_label.text=WorldOutcome.headline(battle.winner)+"\nRestart lane practice from the pause menu."
-			goal_label.text="Round ended · Open pause to restart."
+			goal_label.text="Round ended · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
 			_refresh_compact_world(battle)
 			return
 	if not player.has_method("traversal_report"): return
@@ -1292,7 +1298,7 @@ func _update_practice_hud() -> void:
 		traversal_seen=true
 		goal_label.text="%s rise · %s descend · %s land\nEnergy refills on the ground" % [Bindings.label("jump"),Bindings.label("descend"),Bindings.label("fly")]
 	elif siege_drill:
-		goal_label.text="Break enemy engines to cancel shots.\nEnemy blast marks also hurt Rama." if enemy_siege>0 else "Enemy engines cleared.\nEsc: restart drill or lane practice."
+		goal_label.text="Break enemy engines to cancel shots.\nEnemy blast marks also hurt Rama." if enemy_siege>0 else "Enemy engines cleared.\n%s opens pause for drill or lane restart." % Bindings.label("pause_game")
 	elif not candidate.is_empty():
 		var distance: float=player.global_position.distance_to(candidate.position)
 		var availability:="Tether ready" if grapple_cd<=0 else "Tether cooling %.1fs" % grapple_cd

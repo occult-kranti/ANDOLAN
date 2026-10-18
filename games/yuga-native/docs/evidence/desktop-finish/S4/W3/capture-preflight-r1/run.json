@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "preparation_sha256": "1d62170cfdccafd215f8b1a9d97262a3dac51e761f88ef0713ac630200c3261f",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "scope": "Headless actual scene/cast/final-pose projection only; no pixels, import, art or general motion acceptance.",
+  "runs": [
+    {
+      "branch": "baseline",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "timeout",
+        "60s",
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        "/tmp/yuga-s4-diadem-review-r1/baseline",
+        "--audio-driver",
+        "Dummy",
+        "--fixed-fps",
+        "30",
+        "--script",
+        "res://tools/graphics-six/s4_diadem_capture.gd",
+        "--",
+        "--mode=groom-stills",
+        "--preflight",
+        "--output=/tmp/yuga-s4-diadem-preflight-r1/baseline"
+      ],
+      "exit": 0,
+      "elapsed_s": 3.522975238000072,
+      "log_sha256": "6b5436c0bc686611c358243387cc4c9fb331ab1b2eda3fa7677f81f8673a4cab",
+      "PNG_count": 0,
+      "sealed_project_unchanged": true,
+      "complete": true,
+      "report_sha256": "a557a9b861cb0a6b4232c8e3d5e0966664f0f2aacfd48349889964d6c133ab91"
+    },
+    {
+      "branch": "candidate",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "timeout",
+        "60s",
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        "/tmp/yuga-s4-diadem-review-r1/candidate",
+        "--audio-driver",
+        "Dummy",
+        "--fixed-fps",
+        "30",
+        "--script",
+        "res://tools/graphics-six/s4_diadem_capture.gd",
+        "--",
+        "--mode=groom-stills",
+        "--preflight",
+        "--output=/tmp/yuga-s4-diadem-preflight-r1/candidate"
+      ],
+      "exit": 0,
+      "elapsed_s": 3.7982752110001456,
+      "log_sha256": "6b5436c0bc686611c358243387cc4c9fb331ab1b2eda3fa7677f81f8673a4cab",
+      "PNG_count": 0,
+      "sealed_project_unchanged": true,
+      "complete": true,
+      "report_sha256": "7a8689759510b35b3c018130617d109ef9828521352e7fc4131c642c0bb0f076"
+    }
+  ],
+  "passed": true,
+  "base_and_shared_store_unchanged": true
+}

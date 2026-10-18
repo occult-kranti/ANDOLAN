@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "source_head": "c96255ac575916cb8c3a300589051b5e2a94d4d4",
+  "command_template": "timeout 60s taskset -c 4 env LP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /workspace/tooling/yuga-native-python/bin/python docs/evidence/desktop-finish/S4/W5/rail_source_review.py > docs/evidence/desktop-finish/S4/W5/rail-source-review-rN.log 2>&1",
+  "runs": [
+    {
+      "revision": 1,
+      "exit": 1,
+      "source": "rail_source_review-r1-invalid.py",
+      "log": "rail-source-review-r1.log",
+      "disposition": "Invalid fixture: sparse accessor lacked bufferView; no candidate conclusion."
+    },
+    {
+      "revision": 2,
+      "exit": 1,
+      "source": "rail_source_review-r2-invalid.py",
+      "log": "rail-source-review-r2.log",
+      "disposition": "Invalid fixture: required nondegenerate UV on every inherited cap triangle; no candidate mutation."
+    },
+    {
+      "revision": 3,
+      "exit": 0,
+      "source": "rail_source_review.py",
+      "log": "rail-source-review-r3.log",
+      "report": "rail-source-review-r3.json",
+      "passed": 22,
+      "count": 22,
+      "elapsed_seconds": 5.992125651999913
+    }
+  ],
+  "engine_import_or_render_executed": false,
+  "production_or_candidate_bytes_changed": false,
+  "bone_order_mapping": "Closed by a separate6/6 exact-resource/index-order review of the retained R4 original capture; no motion behavior or new candidate import acceptance transferred.",
+  "mapping_command": "timeout 10s taskset -c 4 python docs/evidence/desktop-finish/S4/W5/rail_mapping_review.py > docs/evidence/desktop-finish/S4/W5/rail-mapping-review.log 2>&1",
+  "mapping_exit": 0,
+  "mapping_report": "rail-mapping-review.json",
+  "mapping_checks": 6
+}

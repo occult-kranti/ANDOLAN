@@ -1,0 +1,36 @@
+[
+  {
+    "command": [
+      "taskset",
+      "-c",
+      "4",
+      "python3",
+      "tests/visual_catalog_cases.py",
+      "--report",
+      "/workspace/scratch/desktop-finish/D05-W6-r1/catalog-selftest.json"
+    ],
+    "exit_code": 0,
+    "seconds": 2.6996071739999934
+  },
+  {
+    "command": [
+      "taskset",
+      "-c",
+      "4",
+      "python3",
+      "tools/run-visual-checks.py",
+      "--catalog",
+      "visual",
+      "--suite",
+      "desktop-world-route-parity",
+      "--engine",
+      "godot",
+      "--output",
+      "/workspace/scratch/desktop-finish/D05-W6-r1/route-parity",
+      "--max-cpus",
+      "1"
+    ],
+    "exit_code": 0,
+    "seconds": 3.402963559
+  }
+]

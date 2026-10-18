@@ -1,0 +1,248 @@
+{
+  "schema": 1,
+  "scope": "Independent source-only byte/frame/tape audit; no new import, native execution, render or whole-body/continuous motion acceptance. Bone order provenance requires separate retained indexed-name receipt.",
+  "author_receipt_sha256": "e1199cf16f4e7da2e1eb060356658a3f558348c1df95140e8e9d161ca8e08cf4",
+  "reviewer_script_sha256": "176470b6633257b8f84c4f37dfd7df8cbfe4f6a050da16206fe03f51cccafcf0",
+  "levels": {
+    "near": {
+      "rail_vertices": 729,
+      "rail_triangles": 1130,
+      "source_sha256": "8b6cf0f4c5520696d1d843e5bdebb2454c1dbd4341e17171c5b6d20353384d5c",
+      "candidate_sha256": "bda22a046d44079769ac60ca15db2b82be1a34eea72efc962547cfc7bd4b40f0",
+      "stored_frame_reference_method": "Solve two-dimensional UV Jacobian per triangle, accumulate U/V per vertex, orthogonalize U against stored normal, compare cross(N,U) handedness to accumulated V."
+    },
+    "mid": {
+      "rail_vertices": 491,
+      "rail_triangles": 764,
+      "source_sha256": "d95a061e2243477afc0227bf52564252fbcb20cb039d303ad10292ea5d85beed",
+      "candidate_sha256": "ab2e0bacd9804c4af05f0ecfcbdfedfdeec6b3c40d8a7d86f2271613a94ddc82",
+      "stored_frame_reference_method": "Solve two-dimensional UV Jacobian per triangle, accumulate U/V per vertex, orthogonalize U against stored normal, compare cross(N,U) handedness to accumulated V."
+    },
+    "far": {
+      "rail_vertices": 249,
+      "rail_triangles": 380,
+      "source_sha256": "ee2e35278ce49efdda6751850fddbb8f1b4de99ad019e6992c10e7702dc6317c",
+      "candidate_sha256": "33019438b13e895181ef0d010e3abfef116f4048ebc0b3b19ad5d0201839d9d7",
+      "stored_frame_reference_method": "Solve two-dimensional UV Jacobian per triangle, accumulate U/V per vertex, orthogonalize U against stored normal, compare cross(N,U) handedness to accumulated V."
+    }
+  },
+  "native_archive_sha256": "e314cab303b8d887f0520f99d13255ae86a7259c24c97cec0fc37944a25ce3bd",
+  "native_raw_sha256": "ed5aa15f6eb065b02992ce8ea695f4d15520a57c0d842b7e236571599b486b01",
+  "native_producer_sha256": "cd2ca73cfd125f16f4c903f485e2ba01c0b53cfab022a6a662eedd6e2e1485e6",
+  "checks": [
+    {
+      "name": "All author receipt input and output pins still exact",
+      "passed": true,
+      "details": {
+        "files": 25,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "near exact JSON, other accessors and nonselected bytes",
+      "passed": true,
+      "details": {
+        "unchanged_accessors": 4612,
+        "changed_bytes": 18669,
+        "allowed_bytes": 29160
+      }
+    },
+    {
+      "name": "near normal agrees with stored triangle area orientation",
+      "passed": true,
+      "details": {
+        "minimum_geometric_N_dot": 0.9999999568072799
+      }
+    },
+    {
+      "name": "near stored TBN agrees with UV derivatives",
+      "passed": true,
+      "details": {
+        "minimum_U_direction_dot": 0.9999999608972117,
+        "handedness_mismatches": 0,
+        "UV_degenerate_triangles": 10,
+        "UV_defined_vertices": 729,
+        "fallback_vertices": 0,
+        "max_unit_error": 4.3184818387942414e-08,
+        "max_N_dot_T": 6.01704591707275e-08
+      }
+    },
+    {
+      "name": "near tangent handedness negative control rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "near source rail rigidly belongs to named head and alpha0",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "mid exact JSON, other accessors and nonselected bytes",
+      "passed": true,
+      "details": {
+        "unchanged_accessors": 4612,
+        "changed_bytes": 12925,
+        "allowed_bytes": 19640
+      }
+    },
+    {
+      "name": "mid normal agrees with stored triangle area orientation",
+      "passed": true,
+      "details": {
+        "minimum_geometric_N_dot": 0.9999999594146136
+      }
+    },
+    {
+      "name": "mid stored TBN agrees with UV derivatives",
+      "passed": true,
+      "details": {
+        "minimum_U_direction_dot": 0.9999999640953714,
+        "handedness_mismatches": 0,
+        "UV_degenerate_triangles": 11,
+        "UV_defined_vertices": 491,
+        "fallback_vertices": 0,
+        "max_unit_error": 4.05848429307909e-08,
+        "max_N_dot_T": 6.032474697548196e-08
+      }
+    },
+    {
+      "name": "mid tangent handedness negative control rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "mid source rail rigidly belongs to named head and alpha0",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "far exact JSON, other accessors and nonselected bytes",
+      "passed": true,
+      "details": {
+        "unchanged_accessors": 4612,
+        "changed_bytes": 6669,
+        "allowed_bytes": 9960
+      }
+    },
+    {
+      "name": "far normal agrees with stored triangle area orientation",
+      "passed": true,
+      "details": {
+        "minimum_geometric_N_dot": 0.9999999611047086
+      }
+    },
+    {
+      "name": "far stored TBN agrees with UV derivatives",
+      "passed": true,
+      "details": {
+        "minimum_U_direction_dot": 0.9999999643097736,
+        "handedness_mismatches": 0,
+        "UV_degenerate_triangles": 9,
+        "UV_defined_vertices": 249,
+        "fallback_vertices": 0,
+        "max_unit_error": 4.098061578972079e-08,
+        "max_N_dot_T": 4.64481742512568e-08
+      }
+    },
+    {
+      "name": "far tangent handedness negative control rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "far source rail rigidly belongs to named head and alpha0",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Retained engine archive and lossless raw hash exact",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Recorded producer and imported source pins stable",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "348 unique actual recorded poses across nine declared API series",
+      "passed": true,
+      "details": {
+        "groups": {
+          "kodanda-pitch-0.3": {
+            "samples": 13,
+            "last_elapsed_s": 0.189,
+            "expected_steps_exact": true
+          },
+          "kodanda-pitch0.0": {
+            "samples": 13,
+            "last_elapsed_s": 0.189,
+            "expected_steps_exact": true
+          },
+          "kodanda-pitch0.3": {
+            "samples": 13,
+            "last_elapsed_s": 0.189,
+            "expected_steps_exact": true
+          },
+          "piercing_dawn-pitch-0.3": {
+            "samples": 42,
+            "last_elapsed_s": 0.6825,
+            "expected_steps_exact": true
+          },
+          "piercing_dawn-pitch0.0": {
+            "samples": 42,
+            "last_elapsed_s": 0.6825,
+            "expected_steps_exact": true
+          },
+          "piercing_dawn-pitch0.3": {
+            "samples": 42,
+            "last_elapsed_s": 0.6825,
+            "expected_steps_exact": true
+          },
+          "dawn_volley-pitch-0.3": {
+            "samples": 61,
+            "last_elapsed_s": 0.9975,
+            "expected_steps_exact": true
+          },
+          "dawn_volley-pitch0.0": {
+            "samples": 61,
+            "last_elapsed_s": 0.9975,
+            "expected_steps_exact": true
+          },
+          "dawn_volley-pitch0.3": {
+            "samples": 61,
+            "last_elapsed_s": 0.9975,
+            "expected_steps_exact": true
+          }
+        }
+      }
+    },
+    {
+      "name": "Every retained sample contains 164 finite affine bone matrices",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Imported hand influences recover source rest points without raw vertex-index mapping",
+      "passed": true,
+      "details": {
+        "max_nearest_source_error_m": 1.6227689421455628e-07,
+        "max_influence_spread_m": 2.537920342491191e-07,
+        "vertices": 13374,
+        "triangles": 24644
+      }
+    },
+    {
+      "name": "Independent conservative box bounds separate rail from selected hands in every pose",
+      "passed": true,
+      "details": {
+        "minimum_lower_bound_m": 0.06195841399277624,
+        "samples": 348,
+        "method": "Whole rail AABB versus each actual posed hand triangle AABB; no pair inside the minimum bound can intersect."
+      }
+    }
+  ],
+  "passed": true,
+  "elapsed_seconds": 5.992125651999913
+}

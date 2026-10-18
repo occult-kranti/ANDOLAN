@@ -1,0 +1,58 @@
+--- b03-before/confluence_world.gd
++++ 7570-after/confluence_world.gd
+@@ -426,7 +426,7 @@
+ 	last_gold=value
+ 
+ func _army_outcome(team: String) -> void:
+-	if goal_label: goal_label.text=("Draw · both cores destroyed" if team=="draw" else "%s core victory" % team.to_upper())+" · Restart from pause"
++	if goal_label: goal_label.text=WorldOutcome.headline(team)+" · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
+ 	set_paused(true)
+ 
+ func _start_siege_practice() -> bool:
+@@ -857,8 +857,8 @@
+ 	var mode: String=String(player.traversal_report().get("mode","grounded")) if player and player.has_method("traversal_report") else "grounded"
+ 	if mode=="flight": help_labels[0].text="%s rise · %s descend" % [Bindings.label("jump"),Bindings.label("descend")]
+ 	elif mode=="grapple": help_labels[0].text="%s release tether" % Bindings.label("grapple")
+-	else: help_labels[0].text="%s reload  ·  F3 abilities" % Bindings.label("reload")
+-	help_labels[1].text="F2 controls  ·  Esc pause"
++	else: help_labels[0].text="%s reload  ·  %s abilities" % [Bindings.label("reload"),Bindings.label("open_invocations")]
++	help_labels[1].text="%s controls  ·  %s pause" % [Bindings.label("help_controls"),Bindings.label("pause_game")]
+ 
+ func _open_controls() -> void:
+ 	controls_return_to_pause=paused
+@@ -1094,7 +1094,7 @@
+ 	var mode:=String(report.get("mode","ground"))
+ 	compact_world_labels[0].text="%s · %s" % [district_at(player.position),score_label.text.trim_prefix("Cores · ")]
+ 	var objective:="Escort Sun troops to the Moon core."
+-	if not String(battle.get("winner","")).is_empty(): objective=WorldOutcome.headline(battle.winner)+" · Esc to restart"
++	if not String(battle.get("winner","")).is_empty(): objective=WorldOutcome.headline(battle.winner)+" · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
+ 	elif battle.get("siege_drill",false): objective="Siege drill: step outside enemy blast rings."
+ 	elif relays:
+ 		var rules=RelaySession.ControlRules
+@@ -1222,7 +1222,7 @@
+ 		var distance: float=Vector2(player.position.x-site.position.x,player.position.z-site.position.z).length()
+ 		if distance<nearest: nearest=distance;close_site=site
+ 	if army.siege_drill:
+-		relay_hint.text="Relays inactive during siege drill · %s restarts lane practice" % Bindings.label("reset_training")
++		relay_hint.text="Relays inactive during siege drill · %s restarts lane practice" % Bindings.label("world_respawn")
+ 		for label in relay_labels: label.text="—"
+ 	elif not army.winner.is_empty(): relay_hint.text="Round ended · Relay capture and supplies stopped"
+ 	elif nearest<=rules.SUPPLY_RADIUS and not close_site.is_empty():
+@@ -1278,7 +1278,7 @@
+ 			practice_hint_label.text=practice_error if not practice_error.is_empty() else ("Break enemy engines before impact to protect Sun troops. Enemy siege blasts damage Rama; step out of the warning ring. Restart lane practice exits this drill." if siege_drill else "Try cannon carts and royal chariots in the central court. Blasts damage troops; enemy siege blasts damage Rama.")
+ 		if not String(battle.get("winner","")).is_empty():
+ 			objective_label.text=WorldOutcome.headline(battle.winner)+"\nRestart lane practice from the pause menu."
+-			goal_label.text="Round ended · Open pause to restart."
++			goal_label.text="Round ended · %s pause · %s restart" % [Bindings.label("pause_game"),Bindings.label("world_respawn")]
+ 			_refresh_compact_world(battle)
+ 			return
+ 	if not player.has_method("traversal_report"): return
+@@ -1298,7 +1298,7 @@
+ 		traversal_seen=true
+ 		goal_label.text="%s rise · %s descend · %s land\nEnergy refills on the ground" % [Bindings.label("jump"),Bindings.label("descend"),Bindings.label("fly")]
+ 	elif siege_drill:
+-		goal_label.text="Break enemy engines to cancel shots.\nEnemy blast marks also hurt Rama." if enemy_siege>0 else "Enemy engines cleared.\nEsc: restart drill or lane practice."
++		goal_label.text="Break enemy engines to cancel shots.\nEnemy blast marks also hurt Rama." if enemy_siege>0 else "Enemy engines cleared.\n%s opens pause for drill or lane restart." % Bindings.label("pause_game")
+ 	elif not candidate.is_empty():
+ 		var distance: float=player.global_position.distance_to(candidate.position)
+ 		var availability:="Tether ready" if grapple_cd<=0 else "Tether cooling %.1fs" % grapple_cd
