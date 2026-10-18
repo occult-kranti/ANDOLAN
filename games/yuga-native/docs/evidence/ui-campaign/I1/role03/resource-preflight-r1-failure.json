@@ -1,0 +1,8 @@
+{
+  "task": "I1-03",
+  "status": "audit-boundary-error-preserved",
+  "attempt": "Full66-source authoring validator applied directly to runtime-only U5 freeze",
+  "observed_error": "Missing art/hero-rama/history/r7-runtime/rama-hero.glb",
+  "cause": "U5 snapshot intentionally carries runtime resources and existing cache, not the authoring ancestry tree or package tools.",
+  "correction": "Validate full ancestry on canonical source, then bind exact runtime subset and accepted NOTICE to U5 freeze. No files added to the freeze and no import executed."
+}

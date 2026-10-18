@@ -1,0 +1,13 @@
+# I2-05 — malformed preferences across modal and scene sequences
+
+Status: **31/31 passed**, exit 0, clean engine log. No runtime changes. This new I2 sequence contract combines malformed preference files, repeated focus loss, remap interruption, training pause, actual asynchronous mode changes and later valid-backup reentry.
+
+[Final report](preferences-sequences-r2.json), [execution](execution-preferences-sequences-r2.json), [exact source copies](source-preferences-sequences-r2/) and [source pins](source-pins-final.json) identify the immutable runtime `/tmp/yuga-i1-final-r1/ANDOLAN/games/yuga-native`, manifest SHA-256 `9919dccbd3fd18446abf2ff435be55696e913ad8d5cb7874e7e641f9fd13f088`. All **755 source and 350 imported-cache hashes** match before/after. The final test is an external script, separate from the 23-suite standard catalog. Godot 4.6.3, CPU3, one LP/BLAS/OMP thread, isolated XDG; 11.66 seconds.
+
+Three explicitly staged files cover a conflicting typed key map with invalid option types, unsupported object-like data, and an oversized file. In each sequence, a native GUI remap conflict followed by the actual focus-loss callback cancels capture without saving; controls close restores the exact Settings opener. Training guide rejects invalid effect data atomically; failed writes preserve the original bytes and prior receiver values. Guide close after focus loss stays paused.
+
+Actual courtyard→world mode change while a remap is pending frees the old controls owner, preserves the rejected file, and loads bounded defaults instead of stale valid values. Repeated world controls/guide interruptions restore pause with unavailable HUD. A declared external valid-backup replacement then loads correctly on the actual world→courtyard return, including J binding, .2 volume, sensitivity 1.4, invert and the validated effect pair. All six asynchronous scene transitions preserve the tested ownership and ordering.
+
+The [initial 28/31 run](preferences-sequences-r1.json) is retained. Its three failed assertions assumed the courtyard fallback volume .7 also applied to Confluence. The actual world audio class declares .35; the final test checks this documented world default, keeps the no-stale-value/atomic-pair/key-default assertions, and adds actual values to the report. This was a fixture correction; no runtime edit was made.
+
+The malformed bytes and valid-backup replacements are declared test inputs. Focus loss is the actual callback and key dispatch is native engine GUI input, not an OS window experiment. No renderer, OS fullscreen, audible-quality, package persistence, physical-GPU or indefinite endurance claim. Packaged persistence is a separate I3 assignment.

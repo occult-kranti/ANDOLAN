@@ -1,0 +1,51 @@
+YUGA — RAMA HERO PRACTICE
+Original Rama combat, Confluence exploration and animated film / linux x86_64
+
+Extract the ENTIRE ZIP to one folder, then run ./launch.sh.
+No Godot editor installation is required. The bundled official Godot 4.6.3
+engine opens yuga-native.pck directly using --main-pack. This portable package
+contains the full engine binary and is larger than a release-template export.
+
+Default controls (keyboard actions are remappable)
+WASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;
+Shift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;
+C: Guardian Circle; X: Dawn Volley; F: flight; G: tether;
+Ctrl: descend in flight; Esc: pause/release cursor; F2: help/remap;
+F3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.
+Settings include aim sensitivity, sound, fullscreen, shadows and night.
+
+Compatibility fallback
+Run ./launch.sh --rendering-method gl_compatibility
+The default Forward+ renderer needs Vulkan-capable graphics. The compatibility
+renderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.
+
+Scope
+The courtyard uses Rama's actual five-action kit against five 90-health
+practice targets. Cleared targets stay down until F5. Primary attacks use a
+short timed draw; hold-to-charge is not implemented. Four distinct abilities
+provide a piercing arrow, collision-limited step, a protective healing circle
+and a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible
+friendly troops. Hero damage/death/respawn uses explicit offline receivers.
+
+Confluence is an offline 140 x 260 m arena with paired army waves, five troop
+roles including cannon carts and chariots, last-hit gold, core outcomes, and
+three capture/contest/supply relays. Flight and grappling use finite energy,
+collision limits and landing platforms. Escape opens practice and travel
+actions; F5 restores ordinary waves and neutral relays. The retained fourteen
+invocation catalogue is a legacy study system, separate from Rama's main kit.
+
+Watch duel opens a separate 24-second scripted Rama-versus-Ravana
+Sentinel film with its own animation, camera, effects and synthesized soundtrack.
+Native online matches and the full production hero roster remain unfinished.
+This package does not establish commercial-game visual parity, human balance
+acceptance, or physical-GPU performance. Windows is packaged and archive-validated
+from Linux; native Windows execution has not been verified here.
+
+Licenses and provenance
+See NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:
+https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native
+
+Linux desktop runtime dependencies
+A desktop X11/Wayland session, graphics/audio drivers and standard system
+libraries are required. The ZIP does not bundle an operating system. On Linux,
+if your unzip tool drops executable bits, run: chmod +x launch.sh godot

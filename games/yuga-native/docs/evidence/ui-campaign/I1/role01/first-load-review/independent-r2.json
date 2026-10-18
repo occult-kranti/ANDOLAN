@@ -1,0 +1,263 @@
+{
+  "passed": true,
+  "count": 22,
+  "checks": [
+    {
+      "name": "exact canonical source fixture",
+      "passed": true,
+      "expected_accept": true,
+      "accepted": true,
+      "detail": {
+        "scenes/boot.tscn": {
+          "path": "res://scenes/boot.tscn",
+          "bytes": 24,
+          "sha256": "8cc4474f7411b9f077eeb1c17ba4cd0d5b527c0bcce5b71929ba7d2a2f2a47d6"
+        },
+        "scripts/boot.gd": {
+          "path": "res://scripts/boot.gd",
+          "bytes": 23,
+          "sha256": "335ca5f8e0e87daf897db9a2efaf33d3e01baa50b0a673e032e0f3994d7886d1"
+        },
+        "scripts/scene_transition.gd": {
+          "path": "res://scripts/scene_transition.gd",
+          "bytes": 35,
+          "sha256": "84fe0d6d7357999ad358d235061ea0d88c230fd77dca832b76a3400347c32196"
+        },
+        "scripts/launch_shell.gd": {
+          "path": "res://scripts/launch_shell.gd",
+          "bytes": 31,
+          "sha256": "ce78e6f3c2b2e2a95dcf9a8b7e2e18c3fb01fa7afb674f489d17d93da745332a"
+        },
+        "scripts/hero_ui_theme.gd": {
+          "path": "res://scripts/hero_ui_theme.gd",
+          "bytes": 32,
+          "sha256": "741becdc19e2aaf9e8d68062acdacb171c9876273b58f1bb144684e7ff30b12e"
+        }
+      },
+      "fixture_sha256": "4a2a815f73ca5daa849fec6ebb4e52cecc09d0789c3ce84343ceff6a685998b5"
+    },
+    {
+      "name": "single canonical bare spelling remains valid",
+      "passed": true,
+      "expected_accept": true,
+      "accepted": true,
+      "detail": {
+        "scenes/boot.tscn": {
+          "path": "res://scenes/boot.tscn",
+          "bytes": 24,
+          "sha256": "8cc4474f7411b9f077eeb1c17ba4cd0d5b527c0bcce5b71929ba7d2a2f2a47d6"
+        },
+        "scripts/boot.gd": {
+          "path": "res://scripts/boot.gd",
+          "bytes": 23,
+          "sha256": "335ca5f8e0e87daf897db9a2efaf33d3e01baa50b0a673e032e0f3994d7886d1"
+        },
+        "scripts/scene_transition.gd": {
+          "path": "res://scripts/scene_transition.gd",
+          "bytes": 35,
+          "sha256": "84fe0d6d7357999ad358d235061ea0d88c230fd77dca832b76a3400347c32196"
+        },
+        "scripts/launch_shell.gd": {
+          "path": "res://scripts/launch_shell.gd",
+          "bytes": 31,
+          "sha256": "ce78e6f3c2b2e2a95dcf9a8b7e2e18c3fb01fa7afb674f489d17d93da745332a"
+        },
+        "scripts/hero_ui_theme.gd": {
+          "path": "res://scripts/hero_ui_theme.gd",
+          "bytes": 32,
+          "sha256": "741becdc19e2aaf9e8d68062acdacb171c9876273b58f1bb144684e7ff30b12e"
+        }
+      },
+      "fixture_sha256": "583f2274d30d610a25cb2d856b26fdc1052196469b11c5bd6bd5d8a39f13629a"
+    },
+    {
+      "name": "reject mixed-prefix duplicate member identity",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Unsafe or duplicate pack path: scripts/relay_art.gd",
+      "fixture_sha256": "93c58a7057a271a3bf3133abb5e244e4481385c6f074ed5f6b29974ed7d4d1d6"
+    },
+    {
+      "name": "reject mixed-prefix duplicate first-load identity",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Unsafe or duplicate pack path: scripts/boot.gd",
+      "fixture_sha256": "7430d5011355adcf9afeb9fda273d1a32c9c4784cc8e7e21651122a4d55c3b81"
+    },
+    {
+      "name": "reject shadow spelling dot source",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Unsafe or duplicate pack path: res://scripts/./boot.gd",
+      "fixture_sha256": "b0d1bc00eb720f73e47c3a111607df208ee5375e3375acbd27515226a7e6c824"
+    },
+    {
+      "name": "reject shadow spelling double slash source",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Unsafe or duplicate pack path: res://scripts//boot.gd",
+      "fixture_sha256": "ff42e8a190ce76be4700600b8774b9d722397e261f51ac365df8bba7cd756052"
+    },
+    {
+      "name": "reject shadow spelling trailing slash source",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Unsafe or duplicate pack path: res://scripts/boot.gd/",
+      "fixture_sha256": "ecaf682e4b012f5c1710f9016d57425b1fa88f526773ea32d3ebf81d5dd0ba65"
+    },
+    {
+      "name": "reject shadow spelling dot remap",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Unsafe or duplicate pack path: res://scripts/./boot.gd.remap",
+      "fixture_sha256": "82d6a9fe2b108a5020139c5ff47af52d073783edd09aa05d35e82eae23cb048a"
+    },
+    {
+      "name": "exact compiled first-load binding",
+      "passed": true,
+      "expected_accept": true,
+      "accepted": true,
+      "detail": {
+        "scenes/boot.tscn": {
+          "path": "res://scenes/boot.tscn",
+          "bytes": 24,
+          "sha256": "8cc4474f7411b9f077eeb1c17ba4cd0d5b527c0bcce5b71929ba7d2a2f2a47d6"
+        },
+        "scripts/boot.gd": {
+          "path": "res://scripts/boot.gdc",
+          "bytes": 16,
+          "sha256": "3b472d65bfeae12a6804af4c621accd4a268d76bd39a025805c294e3f34584ba"
+        },
+        "scripts/scene_transition.gd": {
+          "path": "res://scripts/scene_transition.gd",
+          "bytes": 35,
+          "sha256": "84fe0d6d7357999ad358d235061ea0d88c230fd77dca832b76a3400347c32196"
+        },
+        "scripts/launch_shell.gd": {
+          "path": "res://scripts/launch_shell.gd",
+          "bytes": 31,
+          "sha256": "ce78e6f3c2b2e2a95dcf9a8b7e2e18c3fb01fa7afb674f489d17d93da745332a"
+        },
+        "scripts/hero_ui_theme.gd": {
+          "path": "res://scripts/hero_ui_theme.gd",
+          "bytes": 32,
+          "sha256": "741becdc19e2aaf9e8d68062acdacb171c9876273b58f1bb144684e7ff30b12e"
+        }
+      },
+      "fixture_sha256": "97cd16ae5faadfbf39b9f0bca5a2eceb1ba53a608f3a90569eac211de2ab8ede"
+    },
+    {
+      "name": "reject raw and remap source ambiguity",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Required first-load resource missing or ambiguous: scripts/boot.gd",
+      "fixture_sha256": "4bc3ae68207b51bbcf275d639fcbac7251fee35fa06f47cc74878baaafac7fd2"
+    },
+    {
+      "name": "reject required target missing",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "First-load remap destination missing or ambiguous: scripts/boot.gd",
+      "fixture_sha256": "e802c1364836b9cf171571f3de1bdde664bd542b81cd749d29224a78b8426544"
+    },
+    {
+      "name": "reject wrong section",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "First-load resource requires one explicit remap path: scripts/boot.gd",
+      "fixture_sha256": "f14cd398675bf27f95780056be62ef123d5b48db315cbddb977ea24e04145659"
+    },
+    {
+      "name": "reject default fallback",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "First-load resource requires one explicit remap path: scripts/boot.gd",
+      "fixture_sha256": "e8bb4cd7cbe10bb96aeb18a39746f69f534ac3a30e49f540eaf28d34cbf6b690"
+    },
+    {
+      "name": "reject duplicate section",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "First-load resource remap is malformed: scripts/boot.gd",
+      "fixture_sha256": "823a99a8a2ee2e09dcf4e826b85ee80c8d4a6cf9e2fee508a4cf201eea78fbad"
+    },
+    {
+      "name": "reject duplicate key",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "First-load resource remap is malformed: scripts/boot.gd",
+      "fixture_sha256": "15346ef8df196fa51ef347f3d41bcd3f414b87a42817f431e2054d6ae1e52b07"
+    },
+    {
+      "name": "reject target dot alias",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "First-load resource remaps to an unexpected target: scripts/boot.gd",
+      "fixture_sha256": "b32457133dd62f864156e05f61eb26a5b209c7747d72ba80cdb7b54a3e27a3c1"
+    },
+    {
+      "name": "reject target wrong script",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "First-load resource remaps to an unexpected target: scripts/boot.gd",
+      "fixture_sha256": "cbad1266e55e52a119d92386f9d454bb4adb188a9790f89dbfd5771771024b99"
+    },
+    {
+      "name": "reject exact required source missing scenes/boot.tscn",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Required first-load resource missing or ambiguous: scenes/boot.tscn",
+      "fixture_sha256": "5970baf8b04ebb9df283dd4e7e321d893aa08acd491a1bcae9558b6ec6c320aa"
+    },
+    {
+      "name": "reject exact required source missing scripts/boot.gd",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Required first-load resource missing or ambiguous: scripts/boot.gd",
+      "fixture_sha256": "86ccc2dec47aa069326a7e64e5aebef707799aef05864898963d221b4da8de1d"
+    },
+    {
+      "name": "reject exact required source missing scripts/scene_transition.gd",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Required first-load resource missing or ambiguous: scripts/scene_transition.gd",
+      "fixture_sha256": "3ba10e08c47dbabed5e9508c154b6dacbdf1873fc3b4068c4eb17b4484d6a2c3"
+    },
+    {
+      "name": "reject exact required source missing scripts/launch_shell.gd",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Required first-load resource missing or ambiguous: scripts/launch_shell.gd",
+      "fixture_sha256": "428fd8d8b8cf3548bc9ab45cc8c745ea248adeabe554801dabbc4c12feb189ec"
+    },
+    {
+      "name": "reject exact required source missing scripts/hero_ui_theme.gd",
+      "passed": true,
+      "expected_accept": false,
+      "accepted": false,
+      "detail": "Required runtime resource missing: scripts/hero_ui_theme.gd",
+      "fixture_sha256": "f4c9588d370a8d831300c4a5038939c850322def27fdfc89abb16d7f5960ddc3"
+    }
+  ],
+  "package_sha256": "2b004dfc7eb4f169c09c6f8058bc4b8edb19499ffb002dcdcdc346dcdc7a171d",
+  "test_sha256": "5bb3139896dc4ce85cc52184d5677e127dde9fcc9705caedc96017dffbfc8012",
+  "scope": "Independent mutations and expectations using the existing binary fixture encoder. No Godot import/export, fixture execution, source-PCK equality or full dependency closure claim."
+}

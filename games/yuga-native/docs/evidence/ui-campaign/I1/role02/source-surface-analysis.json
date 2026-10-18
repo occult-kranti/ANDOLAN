@@ -1,0 +1,200 @@
+{
+  "scope": "Source sRGB contrast and layout semantics for exact r1 sources. Ratios do not measure rendered glyph edges, minimum readable size, color vision, or full accessibility. Background opacity is separate from contrast.",
+  "project": "/tmp/yuga-u5-source-r1/ANDOLAN/games/yuga-native",
+  "source_sha256": {
+    "scripts/hero_ui_theme.gd": "b1d630e9087f939ba6a68a5bbfac6f126064d417393786380c324317ac5d39a6",
+    "scripts/launch_shell.gd": "6ee0c9a6d5abae28745d9e064ee127959fdf3b2bcc459138b5aacb9b14e09de2",
+    "scripts/rama_hero_hud.gd": "4531ec0cb22f6aaa5ef1466f2a98b88967b077df6af1039f90450dd3ab24b760",
+    "scripts/confluence_world.gd": "1ab344c5d5532184ccd22c014c4e7b0186853302c6c111b7952e2c3633bf10df",
+    "scripts/world_atlas.gd": "95ea8fb7a14dbe89638a77d32b6cdfe1b3f7f6d32e86e858cd2ac602e042800c"
+  },
+  "pairs": [
+    {
+      "use": "default panel text",
+      "foreground": "CREAM",
+      "background": "INK",
+      "source_srgb_hex": [
+        "f6eddc",
+        "172039"
+      ],
+      "ratio": 13.874
+    },
+    {
+      "use": "caption panel text",
+      "foreground": "MIST",
+      "background": "INK",
+      "source_srgb_hex": [
+        "ccd3e1",
+        "172039"
+      ],
+      "ratio": 10.731
+    },
+    {
+      "use": "eyebrow / secondary focus",
+      "foreground": "GOLD",
+      "background": "DEEP",
+      "source_srgb_hex": [
+        "e2bb70",
+        "0c1222"
+      ],
+      "ratio": 10.287
+    },
+    {
+      "use": "secondary normal",
+      "foreground": "CREAM",
+      "background": "SURFACE",
+      "source_srgb_hex": [
+        "f6eddc",
+        "202c49"
+      ],
+      "ratio": 11.902
+    },
+    {
+      "use": "secondary hover / selected normal",
+      "foreground": "CREAM",
+      "background": "HOVER",
+      "source_srgb_hex": [
+        "f6eddc",
+        "2b3a5b"
+      ],
+      "ratio": 9.718
+    },
+    {
+      "use": "secondary pressed",
+      "foreground": "CREAM",
+      "background": "PRESSED",
+      "source_srgb_hex": [
+        "f6eddc",
+        "354562"
+      ],
+      "ratio": 8.291
+    },
+    {
+      "use": "disabled secondary text",
+      "foreground": "MUTED",
+      "background": "INK",
+      "source_srgb_hex": [
+        "adb8d0",
+        "172039"
+      ],
+      "ratio": 8.097
+    },
+    {
+      "use": "primary normal / inset focus",
+      "foreground": "DEEP",
+      "background": "GOLD",
+      "source_srgb_hex": [
+        "0c1222",
+        "e2bb70"
+      ],
+      "ratio": 10.287
+    },
+    {
+      "use": "primary hover",
+      "foreground": "DEEP",
+      "background": "GOLD_HOVER",
+      "source_srgb_hex": [
+        "0c1222",
+        "f5d69b"
+      ],
+      "ratio": 13.308
+    },
+    {
+      "use": "primary pressed",
+      "foreground": "DEEP",
+      "background": "GOLD_PRESSED",
+      "source_srgb_hex": [
+        "0c1222",
+        "cba45f"
+      ],
+      "ratio": 8.011
+    },
+    {
+      "use": "disabled primary text",
+      "foreground": "DEEP",
+      "background": "GOLD_DISABLED",
+      "source_srgb_hex": [
+        "0c1222",
+        "b4aa94"
+      ],
+      "ratio": 8.103
+    },
+    {
+      "use": "secondary focus over pressed",
+      "foreground": "GOLD",
+      "background": "PRESSED",
+      "source_srgb_hex": [
+        "e2bb70",
+        "354562"
+      ],
+      "ratio": 5.312
+    },
+    {
+      "use": "panel border",
+      "foreground": "LINE",
+      "background": "INK",
+      "source_srgb_hex": [
+        "7280a3",
+        "172039"
+      ],
+      "ratio": 4.095
+    },
+    {
+      "use": "button border",
+      "foreground": "LINE",
+      "background": "SURFACE",
+      "source_srgb_hex": [
+        "7280a3",
+        "202c49"
+      ],
+      "ratio": 3.513
+    }
+  ],
+  "native_presentation": {
+    "logical_canvas": [
+      1280,
+      720
+    ],
+    "framebuffer": [
+      960,
+      540
+    ],
+    "scale": 0.75,
+    "body_logical": 17,
+    "body_framebuffer": 12.75,
+    "caption_logical": 14,
+    "caption_framebuffer": 10.5,
+    "compact_hud_logical": [
+      11,
+      12
+    ],
+    "compact_hud_framebuffer": [
+      8.25,
+      9
+    ],
+    "minimum_button_logical": 44,
+    "minimum_button_framebuffer": 33,
+    "focus_width_logical": 2,
+    "focus_width_framebuffer": 1.5
+  },
+  "surface_semantics": {
+    "panel_color_alpha": 1.0,
+    "panel_background": "INK; DEEP for strong panels, hero status and atlas",
+    "button_background": "opaque role/state colors",
+    "launch_background": "Transparent card over a gradient scrim; evaluate separately from opaque panels",
+    "hero_status_background": "Opaque DEEP behind health and notice; opaque INK slots",
+    "map_shape_coding": "Sun triangles, Moon squares, relay outline plus owner shape and crossed contested marker"
+  },
+  "launch_scrim_bound": {
+    "logical_right_x": 490,
+    "normalized_x": 0.3828125,
+    "estimated_minimum_alpha_over_text_column": 0.82437,
+    "white_background_source_srgb_blend": [
+      0.19623437500000002,
+      0.20447812500000004,
+      0.24981875000000003
+    ],
+    "mist_text_ratio": 8.205,
+    "scope": "Analytical worst-white source-color bound at original-run column edge using sRGB alpha interpolation; not measured pixel contrast or a claim covering resized layouts."
+  }
+}

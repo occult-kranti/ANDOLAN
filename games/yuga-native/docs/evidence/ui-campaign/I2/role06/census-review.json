@@ -1,0 +1,182 @@
+{
+  "passed": true,
+  "scope": "Independent source/receipt/sample review of root-executed ten-cycle actual scene test. This reviewer did not rerun those cycles or add their 43 checks to the independent final catalog.",
+  "source_report": "/workspace/ANDOLAN/games/yuga-native/docs/evidence/ui-campaign/I2/role01/report.json",
+  "report_sha256": "dca583d8cffbbdafcea7634fd83e7386a373cc38416ae85fe0978b8a342b4c39",
+  "receipt_sha256": "1a8389ab130f92807ed2fdae1d6bc3a1350f1aad67a75a6ec32de896c2827a2d",
+  "log_sha256": "eef8e3e1d808954bcad3252eeb8d863c2cd1ec5434c015a2a39d189d22eb8186",
+  "final_freeze_manifest_sha256": "9919dccbd3fd18446abf2ff435be55696e913ad8d5cb7874e7e641f9fd13f088",
+  "reported_checks": 43,
+  "samples": 20,
+  "compared_source_pins": [
+    {
+      "file": "res://assets/world/confluence-map.json",
+      "reported_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+      "frozen_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+      "matches": true
+    },
+    {
+      "file": "res://scenes/confluence_world.tscn",
+      "reported_sha256": "06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3",
+      "frozen_sha256": "06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3",
+      "matches": true
+    },
+    {
+      "file": "res://scenes/courtyard.tscn",
+      "reported_sha256": "8a901cbe8bd5a44d50b6d2f46fc728e7430810bf5b794bdedb6839e7722be0f5",
+      "frozen_sha256": "8a901cbe8bd5a44d50b6d2f46fc728e7430810bf5b794bdedb6839e7722be0f5",
+      "matches": true
+    },
+    {
+      "file": "res://scripts/confluence_world.gd",
+      "reported_sha256": "1fc6869f6a6b96f5142de4cf41402f78cead76008dcfbba836e539f3ed3ecf99",
+      "frozen_sha256": "1fc6869f6a6b96f5142de4cf41402f78cead76008dcfbba836e539f3ed3ecf99",
+      "matches": true
+    },
+    {
+      "file": "res://scripts/courtyard.gd",
+      "reported_sha256": "197a2349cebdf26d195bcec64c9380f74c76537970def2ea9bea3193086b5a30",
+      "frozen_sha256": "197a2349cebdf26d195bcec64c9380f74c76537970def2ea9bea3193086b5a30",
+      "matches": true
+    },
+    {
+      "file": "res://scripts/player.gd",
+      "reported_sha256": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+      "frozen_sha256": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+      "matches": true
+    },
+    {
+      "file": "res://tests/world_flow_cases.gd",
+      "reported_sha256": "de55c89852b08e3c00311e5b66dcdbf850b389fcfee89b81b61bba82cac627c9",
+      "frozen_sha256": "de55c89852b08e3c00311e5b66dcdbf850b389fcfee89b81b61bba82cac627c9",
+      "matches": true
+    }
+  ],
+  "scenes": {
+    "courtyard": {
+      "cold_first_sample": {
+        "cycle": 0,
+        "focus_callbacks": 3,
+        "loader_layers": 0,
+        "loader_phase": "none",
+        "nodes": 406,
+        "objects": 3505,
+        "orphan_nodes": 1,
+        "resources": 208,
+        "scene": "courtyard"
+      },
+      "warmed_sample_count": 8,
+      "warmed_ranges": {
+        "nodes": [
+          420,
+          420
+        ],
+        "focus_callbacks": [
+          4,
+          4
+        ],
+        "objects": [
+          3759,
+          3760
+        ],
+        "resources": [
+          225,
+          225
+        ],
+        "orphan_nodes": [
+          1,
+          1
+        ],
+        "loader_layers": [
+          1,
+          1
+        ]
+      },
+      "warmed_loader_phases": [
+        "done"
+      ],
+      "cycle_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "world": {
+      "cold_first_sample": {
+        "cycle": 0,
+        "focus_callbacks": 5,
+        "loader_layers": 1,
+        "loader_phase": "done",
+        "nodes": 2715,
+        "objects": 6663,
+        "orphan_nodes": 0,
+        "resources": 245,
+        "scene": "world"
+      },
+      "warmed_sample_count": 8,
+      "warmed_ranges": {
+        "nodes": [
+          2715,
+          2715
+        ],
+        "focus_callbacks": [
+          5,
+          5
+        ],
+        "objects": [
+          6667,
+          6669
+        ],
+        "resources": [
+          245,
+          245
+        ],
+        "orphan_nodes": [
+          0,
+          0
+        ],
+        "loader_layers": [
+          1,
+          1
+        ]
+      },
+      "warmed_loader_phases": [
+        "done"
+      ],
+      "cycle_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  },
+  "diagnostics": [],
+  "classification": [
+    "Warm scene-specific tree-node counts, focus listeners and loader ownership are stable across eight retained samples per scene.",
+    "Resource counts are stable within each warmed scene. Cold courtyard 208 versus warm225 resources is a one-time initialization/cache difference; aggregate counts alone do not identify each retained resource.",
+    "Object counts vary by one in warm courtyard and two in warm world and are diagnostic, not a leak threshold.",
+    "Courtyard has one orphan node in both its first and warmed samples; world has zero. The orphan identity was not captured. This establishes no accumulating orphan count over these cycles, not zero orphans or a proof of no leaks.",
+    "Old scene WeakRef disposal and old collision-group removal are asserted in the root route test; global heap and GPU allocations are not measured."
+  ],
+  "integrity": {
+    "receipt_artifacts_match": true,
+    "receipt_exit_zero": true,
+    "receipt_freeze_matches": true,
+    "samples_complete": true,
+    "warm_ownership_stable": true
+  }
+}
