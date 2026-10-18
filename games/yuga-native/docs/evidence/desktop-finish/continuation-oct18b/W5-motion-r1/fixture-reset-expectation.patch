@@ -1,0 +1,18 @@
+--- first-reset-expectation
++++ existing-transition-contract
+@@ -114,9 +114,13 @@
+ 	var held:=locals(item.motion);var clocks:=[item.motion.phase,item.motion.locomotion_age,item.motion.transition_age]
+ 	for tick in 8:item.motion.evaluate_pose()
+ 	check("paused pose evaluation adds no elapsed motion",held==locals(item.motion) and clocks==[item.motion.phase,item.motion.locomotion_age,item.motion.transition_age])
+-	item.motion.cancel("reset in fall");item.actor.position.y=.0008394047617912292
++	item.motion.cancel("reset in fall")
++	var reset_idle:bool=item.motion.locomotion=="idle" and item.motion.descent_support_y.is_empty() and item.motion.action_stage=="none"
++	item.actor.position.y=.0008394047617912292
+ 	item.motion.update_motion(1.0/60,{"grounded":true,"floor_y":item.actor.position.y});item.motion.evaluate_pose()
+-	check("reset returns to idle and clears air support",item.motion.locomotion=="idle" and item.motion.descent_support_y.is_empty() and item.motion.action_stage=="none")
++	var next_land:bool=item.motion.locomotion=="land" and item.motion.descent_support_y.is_empty() and not item.motion.foot_locks.L and not item.motion.foot_locks.R
++	for tick in 16:item.motion.update_motion(1.0/60,{"grounded":true,"floor_y":item.actor.position.y});item.motion.evaluate_pose()
++	check("reset clears support then existing ground transition lands before idle",reset_idle and next_land and item.motion.locomotion=="idle",{"immediate_reset_idle":reset_idle,"next_grounded_land":next_land,"settled_locomotion":item.motion.locomotion})
+ 	release(item);await process_frame
+ 	for kind in ["kodanda","hit"]:
+ 		var a:Array=await action_case(OWNER+"canonical-rama_motion.gd",kind)

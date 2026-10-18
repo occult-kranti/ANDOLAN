@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""Bounded exact-PCK world fixture transport; no project, import or asset copy."""
+from pathlib import Path
+import argparse,hashlib,json,os,shutil,subprocess,time,signal
+W=Path('/workspace/scratch/yuga-next-W1-r1');OLD=Path('/workspace/scratch/yuga-continuation-W1-r1')
+ENGINE=OLD/'package-r2-extracted/godot';PCK=ENGINE.with_name('yuga-native.pck');ARCHIVE=Path('/workspace/scratch/yuga-continuation-W3-public-audit-r1/yuga-native-linux-x86_64.zip');EXTRACTION=OLD/'package-r2-extraction-report.json'
+SEED=OLD/'package-r2-warm-r1/user'
+FLOOR=500*1024**2
+EXPECTED={'runtime':'e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e','pck':'f2be4e20a0f3ea3915c5ab94e3896278ab4778991e80c6c8abaadc5209511a59','archive':'781d904d2f6986f423274cf23ecdc16a35df65df755db5171a97a152a3c88aa8','extraction':'40c42d5bc098992b2587938aa1a2aabb89db874814647ef94491afb86aedf77a'}
+def sha(p):
+ with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+def inventory(p):return {str(x.relative_to(p)):sha(x) for x in p.rglob('*') if x.is_file()}
+def save(p,d):p.write_text(json.dumps(d,indent=2)+'\n')
+def main():
+ a=argparse.ArgumentParser();a.add_argument('--helper',type=Path,required=True);a.add_argument('--output',type=Path,required=True);a.add_argument('--display',type=int,default=178);a.add_argument('--dry-run',action='store_true');args=a.parse_args();out=args.output;logs=out.with_name(out.name+'-logs')
+ assert out.is_absolute() and not out.exists() and not logs.exists()
+ inputs={k:sha(p) for k,p in [('runtime',ENGINE),('pck',PCK),('archive',ARCHIVE),('extraction',EXTRACTION)]};assert inputs==EXPECTED
+ extraction=json.loads(EXTRACTION.read_text());members=extraction['members'];assert all(sha(ENGINE.parent/n)==v['sha256'] for n,v in members.items())
+ controls=json.loads((args.helper.parent/'controls.json').read_text());assert all(sha(Path(p))==h for p,h in controls['files'].items())
+ command=[str(ENGINE),'--main-pack',str(PCK),'--display-driver','x11','--rendering-method','forward_plus','--audio-driver','Dummy','--disable-vsync','--fixed-fps','30','--script',str(args.helper),'--','--output='+str(out)]
+ record={'inputs':inputs,'extraction_archive_alias':'Retained independently downloaded byte-identical public Linux ZIP; original extraction receipt unchanged.','command':command,'minimum_free_bytes':FLOOR,'source':'79e5c15d8a3657e16fda67acb277b2406120dcd1','docs_head':'37ed400e53c215585aa6f40bb9534390f1047273','fixture':str(args.helper),'helper_sha256':sha(args.helper),'controls':controls,'affinity':[0,1],'LP_NUM_THREADS':'2','scope':'Exact shipped PCK with external bounded review helper. Declared camera/phase/waterfreeze fixture, no ordinary playthrough or temporal acceptance.'}
+ if args.dry_run:print(json.dumps(record,indent=2));return
+ assert shutil.disk_usage(W).free>=FLOOR
+ os.sched_setaffinity(0,{0,1});logs.mkdir(parents=True)
+ env=os.environ.copy();env.update(LP_NUM_THREADS='2',OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1',DISPLAY=':'+str(args.display))
+ for key,name in [('XDG_DATA_HOME','data'),('XDG_CONFIG_HOME','config'),('XDG_CACHE_HOME','cache')]:
+  p=logs/'user'/name;p.mkdir(parents=True);env[key]=str(p)
+ env['MESA_SHADER_CACHE_DIR']=str(logs/'user/cache/mesa')
+ seedpins={};mesaseed=SEED/'cache/mesa';seedpins['mesa']=inventory(mesaseed);shutil.copytree(mesaseed,env['MESA_SHADER_CACHE_DIR'])
+ godotseed=SEED/'data/godot/app_userdata/YUGA • Confluence/shader_cache';target=logs/'user/data/godot/app_userdata/YUGA • Confluence/shader_cache';seedpins['godot']=inventory(godotseed);shutil.copytree(godotseed,target)
+ assert seedpins['mesa'] and seedpins['godot'];record['seed_files']=seedpins;record['preferences_copied']=False
+ game=server=None;began=time.monotonic();record['started_unix']=time.time();record['free_before_bytes']=shutil.disk_usage(W).free
+ try:
+  assert not Path('/tmp/.X11-unix/X'+str(args.display)).exists()
+  with (logs/'xvfb.log').open('w') as xf,(logs/'godot.log').open('w') as gf:
+   server=subprocess.Popen(['Xvfb',':'+str(args.display),'-screen','0','960x540x24','-nolisten','tcp'],stdout=xf,stderr=subprocess.STDOUT)
+   until=time.monotonic()+5
+   while not Path('/tmp/.X11-unix/X'+str(args.display)).exists():
+    assert time.monotonic()<until;time.sleep(.05)
+   game=subprocess.Popen(command,env=env,stdout=gf,stderr=subprocess.STDOUT);record['engine_pid']=game.pid
+   floor_min=record['free_before_bytes']
+   while game.poll() is None:
+    free=shutil.disk_usage(W).free;floor_min=min(floor_min,free)
+    if free<FLOOR:raise RuntimeError('500MiB actual floor crossed')
+    if time.monotonic()-began>600:raise TimeoutError('Bounded600s capture deadline')
+    time.sleep(.25)
+   record['engine_exit']=game.returncode;record['minimum_observed_free_bytes']=floor_min
+  report=json.loads((out/'capture.json').read_text());record['capture_complete']=report['complete'];record['capture_sha256']=sha(out/'capture.json')
+  record['inputs_unchanged']=all(sha(p)==EXPECTED[k] for k,p in [('runtime',ENGINE),('pck',PCK),('archive',ARCHIVE),('extraction',EXTRACTION)])
+  record['extracted_members_unchanged']=all(sha(ENGINE.parent/n)==v['sha256'] for n,v in members.items())
+  record['seeds_unchanged']=seedpins=={'mesa':inventory(mesaseed),'godot':inventory(godotseed)}
+  text=(logs/'godot.log').read_text();record['diagnostics']={s:text.count(s) for s in ['SCRIPT ERROR:','ERROR:','WARNING:']}
+  record['complete']=game.returncode==0 and report['complete'] and record['inputs_unchanged'] and record['extracted_members_unchanged'] and record['seeds_unchanged'] and not any(record['diagnostics'].values())
+ except BaseException as e:record['complete']=False;record['failure']=str(e)
+ finally:
+  if game and game.poll() is None:
+   game.terminate()
+   try:game.wait(timeout=5)
+   except subprocess.TimeoutExpired:game.kill();game.wait()
+  if server:
+   server.terminate();server.wait(timeout=5)
+  record['elapsed_seconds']=time.monotonic()-began;record['free_after_bytes']=shutil.disk_usage(W).free;save(logs/'receipt.json',record)
+ print(json.dumps({'complete':record['complete'],'elapsed_seconds':record['elapsed_seconds'],'failure':record.get('failure')}));raise SystemExit(0 if record['complete'] else 1)
+if __name__=='__main__':main()

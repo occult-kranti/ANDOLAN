@@ -1,0 +1,32 @@
+{
+  "status": "NARROW_OWNER_FIX_PASS_AWAITING_ROOT_INDEPENDENT_REVIEW",
+  "previous_helper_sha256": "4a86fbe273133722c07a5ab3594932054cdbe6e4f341a19ec58775ba4fbdb442",
+  "source": {
+    "tools/package-native.py": {
+      "bytes": 138386,
+      "sha256": "94fa83fb4c586e665a6fb10348fb6100bd2ea9d12022c76119c33210dc337246",
+      "mode": "0o755"
+    },
+    "tests/streamed_package_cases.py": {
+      "bytes": 16160,
+      "sha256": "efca7fc9e96e36f8870836da8356fee1982e748f01055157c026053b54389227",
+      "mode": "0o600"
+    }
+  },
+  "repairs": [
+    "Executable mode restored only after current4a86 source inode526300 was verified regular/nlink1; content SHA remained4a86 at chmod. Subsequent atomic source replacement explicitly preserves0755. No historical shared inode chmod.",
+    "Before opening ZIP in write mode, reject existing nonregular output or any output(dev,ino) matching any merged virtual/staged source, including exact paths and hardlinks.",
+    "Six alias negatives (engine,PCK,staged notice \u00d7exactpath/hardlink) assert the specific alias guard is reached and original byte/hash/inode/mode snapshot remains unchanged; input snapshots are recaptured after creating synthetic hardlinks so ctime drift cannot mask the guard.",
+    "Nonregular output rejects without opening or input mutation."
+  ],
+  "checks": 64,
+  "cases": {
+    "bytes": 10596,
+    "sha256": "001652ce037e69772fd1ad9cfe79acdf13f23c4e6da483d97aca3e3764169b0b",
+    "mode": "0o600"
+  },
+  "prior_sealed_receipts_preserved": true,
+  "engines": 0,
+  "real_package_mutations": 0,
+  "review_scope": "Only executable-bit restoration and pre-write output/source-alias guard plus bounded preserved-source negatives; legacy copied mode unchanged."
+}

@@ -1,0 +1,163 @@
+{
+  "status": "SOURCE_CLOCK_CHAIN_VERIFIED_MATCHED_ABSOLUTE_TIME_REQUIRES_RUNTIME_CONTROLS",
+  "source_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+  "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+  "source_archive": {
+    "path": "/workspace/tooling/godot-public-4.6.3/downloads/godot-35e80b3a.tar.gz",
+    "sha256": "fe5b661d0e7b062201ebffc8740cb309ff96c4f1edca79cdb0ecda50ff2af8d5",
+    "bytes": 66095747
+  },
+  "proofs": {
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/G0/template-build-preparation-r1/source-recovery.json": "33c58d013b84143be96e29f968fe26553a07e26e067fa61496506df79d1b5b20",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/G0/template-priority-build-r1/finished-build-verification.json": "67d485da0bd2d78cbb2cd304723f0bd10774626c44c47de814483d396826a134",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/G0/template-priority-build-r1/build-result.json": "1dea70d4cdcc7bb182d02fba20271d4d8e2796c111d79e7c3b768485df479e4a"
+  },
+  "source_files": {
+    "main/main_timer_sync.cpp": {
+      "sha256": "207e51669e989566b9a7a5bf8bfa7b7c9ab1c1fa55ef2c6d986d7de3aa7d8f94",
+      "bytes": 19036,
+      "excerpts": [
+        {
+          "start_line": 414,
+          "end_line": 427,
+          "text": "MainFrameTime MainTimerSync::advance_checked(double p_physics_step, int p_physics_ticks_per_second, double p_process_step) {\n\tif (fixed_fps != -1) {\n\t\tp_process_step = 1.0 / fixed_fps;\n\t}\n\n\tfloat min_output_step = p_process_step / 8;\n\tmin_output_step = MAX(min_output_step, 1E-6);\n\n\t// compensate for last deficit\n\tp_process_step += time_deficit;\n\n\tMainFrameTime ret = advance_core(p_physics_step, p_physics_ticks_per_second, p_process_step);\n\n\t// we will do some clamping on ret.process_step and need to sync those changes to time_accum,"
+        },
+        {
+          "start_line": 431,
+          "end_line": 448,
+          "text": "\t// first, least important clamping: keep ret.process_step consistent with typical_physics_steps.\n\t// this smoothes out the process steps and culls small but quick variations.\n\t{\n\t\tdouble min_average_physics_steps, max_average_physics_steps;\n\t\tint consistent_steps = get_average_physics_steps(min_average_physics_steps, max_average_physics_steps);\n\t\tif (consistent_steps > 3) {\n\t\t\tret.clamp_process_step(min_average_physics_steps * p_physics_step, max_average_physics_steps * p_physics_step);\n\t\t}\n\t}\n\n\t// second clamping: keep abs(time_deficit) < jitter_fix * frame_slise\n\tdouble max_clock_deviation = get_physics_jitter_fix() * p_physics_step;\n\tret.clamp_process_step(p_process_step - max_clock_deviation, p_process_step + max_clock_deviation);\n\n\t// last clamping: make sure time_accum is between 0 and p_physics_step for consistency between physics and process\n\tret.clamp_process_step(process_minus_accum, process_minus_accum + p_physics_step);\n\n\t// all the operations above may have turned ret.p_process_step negative or zero, keep a minimal value"
+        },
+        {
+          "start_line": 478,
+          "end_line": 486,
+          "text": "\n\t// track deficit\n\ttime_deficit = p_process_step - ret.process_step;\n\n\t// p_physics_step is 1.0 / iterations_per_sec\n\t// i.e. the time in seconds taken by a physics tick\n\tret.interpolation_fraction = time_accum / p_physics_step;\n\n\treturn ret;"
+        }
+      ]
+    },
+    "main/main.cpp": {
+      "sha256": "a286542613447670ac3a8b409ae8af0a2dea3bb63b9a8829dfb4d4a3f7879c6a",
+      "bytes": 206150,
+      "excerpts": [
+        {
+          "start_line": 4823,
+          "end_line": 4845,
+          "text": "\tGodotProfileZone(\"Main::iteration\");\n\tGodotProfileZoneGroupedFirst(_profile_zone, \"prepare\");\n\titerating++;\n\n\tconst uint64_t ticks = OS::get_singleton()->get_ticks_usec();\n\tEngine::get_singleton()->_frame_ticks = ticks;\n\tmain_timer_sync.set_cpu_ticks_usec(ticks);\n\tmain_timer_sync.set_fixed_fps(fixed_fps);\n\n\tconst uint64_t ticks_elapsed = ticks - last_ticks;\n\n\tconst int physics_ticks_per_second = Engine::get_singleton()->get_user_physics_ticks_per_second();\n\tconst double physics_step = 1.0 / physics_ticks_per_second;\n\n\tconst double time_scale = Engine::get_singleton()->get_effective_time_scale();\n\n\tMainFrameTime advance = main_timer_sync.advance(physics_step, physics_ticks_per_second);\n\tdouble process_step = advance.process_step;\n\tdouble scaled_step = process_step * time_scale;\n\n\tEngine::get_singleton()->_process_step = process_step;\n\tEngine::get_singleton()->_physics_interpolation_fraction = advance.interpolation_fraction;\n"
+        },
+        {
+          "start_line": 4978,
+          "end_line": 4999,
+          "text": "\tRenderingServer::get_singleton()->sync(); //sync if still drawing from previous frames.\n\n\tGodotProfileZoneGrouped(_profile_zone, \"RenderingServer::draw\");\n\tconst bool has_pending_resources_for_processing = RD::get_singleton() && RD::get_singleton()->has_pending_resources_for_processing();\n\tbool wants_present = (DisplayServer::get_singleton()->can_any_window_draw() ||\n\t\t\t\t\t\t\t\t DisplayServer::get_singleton()->has_additional_outputs()) &&\n\t\t\tRenderingServer::get_singleton()->is_render_loop_enabled();\n\n\tif (wants_present || has_pending_resources_for_processing) {\n\t\twants_present |= force_redraw_requested;\n\t\tif ((!force_redraw_requested) && OS::get_singleton()->is_in_low_processor_usage_mode()) {\n\t\t\tif (RenderingServer::get_singleton()->has_changed()) {\n\t\t\t\tRenderingServer::get_singleton()->draw(wants_present, scaled_step); // flush visual commands\n\t\t\t\tEngine::get_singleton()->increment_frames_drawn();\n\t\t\t}\n\t\t} else {\n\t\t\tRenderingServer::get_singleton()->draw(wants_present, scaled_step); // flush visual commands\n\t\t\tEngine::get_singleton()->increment_frames_drawn();\n\t\t\tforce_redraw_requested = false;\n\t\t}\n\t}\n"
+        }
+      ]
+    },
+    "servers/rendering/rendering_server_default.cpp": {
+      "sha256": "3312d05886bf607066eb6bddbe9fa81fb48f899267c960e10ccb2b34cadd93b7",
+      "bytes": 16457,
+      "excerpts": [
+        {
+          "start_line": 69,
+          "end_line": 74,
+          "text": "void RenderingServerDefault::_draw(bool p_swap_buffers, double frame_step) {\n\tGodotProfileZoneGroupedFirst(_profile_zone, \"rasterizer->begin_frame\");\n\tRSG::rasterizer->begin_frame(frame_step);\n\n\tTIMESTAMP_BEGIN()\n"
+        },
+        {
+          "start_line": 436,
+          "end_line": 446,
+          "text": "void RenderingServerDefault::draw(bool p_present, double frame_step) {\n\tERR_FAIL_COND_MSG(!Thread::is_main_thread(), \"Manually triggering the draw function from the RenderingServer can only be done on the main thread. Call this function from the main thread or use call_deferred().\");\n\t// Needs to be done before changes is reset to 0, to not force the editor to redraw.\n\tRS::get_singleton()->emit_signal(SNAME(\"frame_pre_draw\"));\n\tchanges = 0;\n\tif (create_thread) {\n\t\tcommand_queue.push(this, &RenderingServerDefault::_draw, p_present, frame_step);\n\t} else {\n\t\t_draw(p_present, frame_step);\n\t}\n}"
+        }
+      ]
+    },
+    "servers/rendering/renderer_rd/renderer_compositor_rd.h": {
+      "sha256": "fcc6659b768c599ef12536be2afc76e7f914cc3bb6ab77ddbdc705dc21c12f2a",
+      "bytes": 6338,
+      "excerpts": [
+        {
+          "start_line": 98,
+          "end_line": 104,
+          "text": "\n\tHashMap<RID, RID> render_target_descriptors;\n\n\tdouble time = 0.0;\n\tdouble delta = 0.0;\n\n\tstatic uint64_t frame;"
+        }
+      ]
+    },
+    "servers/rendering/renderer_rd/renderer_compositor_rd.cpp": {
+      "sha256": "cdb79646bc6cecd01a49e928f35fcca35fd7dd97f473d7b8e44f1033258569a0",
+      "bytes": 16478,
+      "excerpts": [
+        {
+          "start_line": 108,
+          "end_line": 118,
+          "text": "void RendererCompositorRD::begin_frame(double frame_step) {\n\tframe++;\n\tdelta = frame_step;\n\ttime += frame_step;\n\n\tdouble time_roll_over = GLOBAL_GET_CACHED(double, \"rendering/limits/time/time_rollover_secs\");\n\ttime = Math::fmod(time, time_roll_over);\n\n\tcanvas->set_time(time);\n\tscene->set_time(time, frame_step);\n}"
+        }
+      ]
+    },
+    "servers/rendering/renderer_rd/renderer_scene_render_rd.cpp": {
+      "sha256": "e6c5b8ecaa7c2ed6c773281edd9c3280b2c4444db6d3e24db7502e8cee5e18c4",
+      "bytes": 80824,
+      "excerpts": [
+        {
+          "start_line": 1529,
+          "end_line": 1534,
+          "text": "void RendererSceneRenderRD::set_time(double p_time, double p_step) {\n\ttime = p_time;\n\ttime_step = p_step;\n}\n\nvoid RendererSceneRenderRD::screen_space_roughness_limiter_set_active(bool p_enable, float p_amount, float p_limit) {"
+        }
+      ]
+    },
+    "servers/rendering/renderer_rd/forward_clustered/render_forward_clustered.cpp": {
+      "sha256": "bf8b24a243c8e9fa0d0104189eb5304ae709e380d0f6ac83344393ed6f8072b1",
+      "bytes": 233438,
+      "excerpts": [
+        {
+          "start_line": 2915,
+          "end_line": 2925,
+          "text": "\tscene_data.view_projection[0] = p_cam_projection;\n\tscene_data.dual_paraboloid_side = 0;\n\tscene_data.material_uv2_mode = false;\n\tscene_data.opaque_prepass_threshold = 0.0f;\n\tscene_data.emissive_exposure_normalization = p_exposure_normalization;\n\tscene_data.time = time;\n\tscene_data.time_step = time_step;\n\tscene_data.main_cam_transform = p_cam_transform;\n\n\tRenderDataRD render_data;\n\trender_data.scene_data = &scene_data;"
+        }
+      ]
+    },
+    "servers/rendering/renderer_rd/storage_rd/render_scene_data_rd.cpp": {
+      "sha256": "e918c10b026faf66e665139478d7133fd980148d3faf91bf6d3cc4d1ea853b76",
+      "bytes": 15538,
+      "excerpts": [
+        {
+          "start_line": 145,
+          "end_line": 152,
+          "text": "\n\tubo.reflection_atlas_border_size[0] = reflection_atlas_border_size.x;\n\tubo.reflection_atlas_border_size[1] = reflection_atlas_border_size.y;\n\n\tubo.time = time;\n\n\tubo.directional_light_count = directional_light_count;\n\tubo.dual_paraboloid_side = dual_paraboloid_side;"
+        }
+      ]
+    },
+    "servers/rendering/renderer_rd/forward_clustered/scene_shader_forward_clustered.cpp": {
+      "sha256": "6707006f172dff099be5e2381a07926eb67415b902b29dade6eea699a09b870b",
+      "bytes": 48089,
+      "excerpts": [
+        {
+          "start_line": 729,
+          "end_line": 735,
+          "text": "\n\t\t//builtins\n\n\t\tactions.renames[\"TIME\"] = \"global_time\";\n\t\tactions.renames[\"EXPOSURE\"] = \"(1.0 / scene_data_block.data.emissive_exposure_normalization)\";\n\t\tactions.renames[\"PI\"] = String::num(Math::PI);\n\t\tactions.renames[\"TAU\"] = String::num(Math::TAU);"
+        }
+      ]
+    },
+    "servers/rendering/renderer_rd/shaders/forward_clustered/scene_forward_clustered.glsl": {
+      "sha256": "444bff95b71d7109ec32e009edd25cb3e0eb61612133aba1a2ba38e041102600",
+      "bytes": 105847,
+      "excerpts": [
+        {
+          "start_line": 840,
+          "end_line": 850,
+          "text": "\t\t\ttangent,\n\t\t\tbinormal,\n#endif\n\t\t\tvertex);\n\n\t// Current vertex.\n\tglobal_time = scene_data_block.data.time;\n\tvertex_shader(vertex,\n#ifdef NORMAL_USED\n\t\t\tnormal,\n#endif"
+        }
+      ]
+    }
+  },
+  "conclusion": [
+    "Forward+ shader TIME is renderer accumulated draw-step time, not directly wall-clock elapsed time.",
+    "--fixed-fps30 replaces timer CPU-process input with1/30 before timer accumulator/jitter consistency correction; scaled process step uses Engine effective time_scale.",
+    "Main passes scaled_step to RenderingServer draw; compositor starts time0, adds passed step on each actual draw and applies rollover; scene/time uniform flows to global_time, compiler TIME rename.",
+    "The sole declared e69 patch concerns pipeline task priority, not any time-chain file."
+  ],
+  "matching_conditions": [
+    "Same fresh renderer initial clock/rollover and engine/time_scale/physics-timer configuration.",
+    "Same accumulated prior draw-step sequence at first paired endpoint, including startup/readiness; same scene-relative frame count alone is insufficient.",
+    "Matching actual rendered-frame counts/one-draw increments and process-step/time_scale values throughout the32-frame pair; unchanged animation_speed.",
+    "No extra forced draws with independent step or draw suppression/low-usage gating. Main draw gate is present in the source excerpts."
+  ],
+  "not_established": "This source review alone does not prove that two actual runs have equal absolute shader TIME. Nondeterministic readiness may shift global rendered-frame index despite identical scene-relative waits. If runtime evidence cannot close these conditions, temporal comparison must remain blocked or use a separately reviewed exact-clock mechanism; wall-clock similarity is not evidence.",
+  "engine_runs": 0,
+  "raster_runs": 0,
+  "new_shader_uniforms": 0
+}

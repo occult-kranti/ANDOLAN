@@ -1,0 +1,52 @@
+{
+  "scope": "Independent bounded source/API/math review only; no shader compilation, actual pixels, performance or art acceptance",
+  "status": "SOURCE_REVIEW_WITH_EXPLICIT_INCLUDE_AND_WATER_INTEGRATION_DEPENDENCIES",
+  "manifest_baseline_matches_runtime": true,
+  "manifest_candidate_matches_private_files": true,
+  "inputs": [
+    {
+      "path": "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/prepare.py",
+      "bytes": 4264,
+      "sha256": "862c0199ec1badfffaf64511d91a2c1524d70f26b61c2ba8adb8ce4d6fede032"
+    },
+    {
+      "path": "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/world_ground.gdshader",
+      "bytes": 556,
+      "sha256": "91bbf49f6ad55b487cf7aa58fc1d8592bf0a6f894253efe3ec276abe1e275490"
+    },
+    {
+      "path": "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/world_ground_common.gdshaderinc",
+      "bytes": 5877,
+      "sha256": "70f931bd465b4879aa55cfb3e09955d90bb1d2c975b1be4d53caa3c7793efe66"
+    },
+    {
+      "path": "/workspace/scratch/yuga-next-root-r1/ground-relief-r1/manifest.json",
+      "bytes": 801,
+      "sha256": "0e58e6318a35ef268cf348873ac6fade40eef02b488cf7e610965a34539de6f3"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "actual-harness dependency",
+      "finding": "Private ground include points to canonical old common, which lacks the two new functions. Private shader alone cannot resolve its new calls.",
+      "root_response": "Root will create flattened render-ground.gdshader by replacing exactly the include line with candidate common bytes and bind both input hashes and derived shader hash. This review has not yet inspected that new derivation."
+    },
+    {
+      "severity": "integration hold",
+      "finding": "Current water dry pool0 normal is original base_world_normal; ground candidate adds bevel slope. Matching color/roughness alone leaves a dry-border lighting discontinuity.",
+      "required": "Use exact shared candidate slope in dry water border, matched baseline/candidate actual near/distant/wet-border views before promotion."
+    }
+  ],
+  "source_facts": [
+    "Vertex position function and world coordinates unchanged; no collision/source/geometry edits.",
+    "Color expressions preserve original paving, avenue, court and ring mixing; extracted avenue_mix is the same previous max expression.",
+    "Roughness, metallic and specular assignments are unchanged.",
+    "Fragment NORMAL is viewed-space in the existing shader contract; inverse-view/world/view roundtrip mirrors existing water implementation. Godot shader out-parameters/mat4 arguments/fwidth syntax look valid by source inspection only.",
+    "Hermite face gradient 6*t*(1-t)/width matches derivative of t*t*(3-2*t); face.yx product implements two-axis corner derivative.",
+    "3mm is the conceptual lighting height amplitude, not physical relief. At minimum38mm bevel width the per-axis slope upper bound is0.003*1.5/0.038=0.118421; no singular division because width>=0.038.",
+    "Upper-facing gate suppresses relief below world-normalY0.65; footprint fade spans0.025\u20130.10world metres per pixel. This source argument does not establish temporal anti-aliasing quality."
+  ],
+  "engine_runs": 0,
+  "runtime_edits": 0,
+  "git_mutations": 0
+}

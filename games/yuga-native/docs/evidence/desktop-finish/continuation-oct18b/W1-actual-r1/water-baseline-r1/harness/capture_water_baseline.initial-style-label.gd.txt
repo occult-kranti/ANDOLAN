@@ -1,0 +1,99 @@
+extends "/workspace/scratch/yuga-next-W1-r1/harness/full_world_collector.gd"
+## External exact-PCK production-world fixture. Fixed review cameras and phase,
+## water animation_speed=0 for still comparison. No asset, rig, rule or collision edits.
+const CONTROL_MANIFEST := "/workspace/scratch/yuga-next-W1-r1/harness/controls.json"
+var water_projection: Array = []
+var water_freeze: Array = []
+
+func hashes() -> Dictionary:
+	var controls: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTROL_MANIFEST))
+	var result: Dictionary={}
+	for path in controls.files: result[path]=FileAccess.get_sha256(path)
+	return result
+
+func water_contract(scene: Node3D) -> Array:
+	var rows: Array=[]
+	for description in scene.manifest.waters:
+		var node: MeshInstance3D=scene.world.get_node_or_null(String(description.id))
+		if node==null:continue
+		var material: ShaderMaterial=node.get_active_material(0)
+		var visible: Array=[]
+		var box: AABB=node.mesh.get_aabb()
+		for x in range(17):
+			for z in range(17):
+				var world_point: Vector3=node.global_transform*(box.position+Vector3(box.size.x*x/16.0,0.0,box.size.z*z/16.0))
+				if not review_camera.is_position_behind(world_point):
+					var pixel: Vector2=review_camera.unproject_position(world_point)
+					if root.get_visible_rect().has_point(pixel):visible.append(pixel)
+		var rect:=Rect2()
+		if not visible.is_empty():
+			rect=Rect2(visible[0],Vector2.ZERO)
+			for point in visible:rect=rect.expand(point)
+		rows.append({"id":String(description.id),"style":description.depth_appearance,"samples_in_frame":visible.size(),"sample_grid":289,"projected_sample_rect":encode_value(rect),"sample_rect_frame_fraction":rect.get_area()/root.get_visible_rect().get_area(),"mesh_transform":transform_values(node.global_transform),"mesh_aabb":encode_value(box),"shader_path":material.shader.resource_path,"animation_speed":material.get_shader_parameter("animation_speed")})
+	return rows
+
+func snapshot(id: String) -> Dictionary:
+	var result:=super.snapshot(id)
+	result.water_projection=water_projection.duplicate(true)
+	result.water_animation_freeze=water_freeze.duplicate(true)
+	result.review_fixture={"scene_entry":"direct production Confluence scene; no menu-playthrough claim","camera":"declared locked review camera","phase":current_scene.phase,"ui_hidden":false,"animation":"only water animation_speed frozen0; shader source unchanged","simulation":"original full world keeps fixed30Hz callbacks; no outcome/control staging"}
+	return result
+
+func run() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--output="):output=arg.trim_prefix("--output=")
+		elif arg=="--preflight":preflight=true
+		else:finish("Unknown argument:"+arg);return
+	if not output.is_absolute_path() or DirAccess.dir_exists_absolute(output):finish("Fresh output required");return
+	DirAccess.make_dir_recursive_absolute(output)
+	if not preflight and (DisplayServer.get_name()!="X11" or RenderingServer.get_current_rendering_method()!="forward_plus"):finish("X11 Forward+ required");return
+	source_start=hashes();branch="baseline-exact79e5"
+	root.size=Vector2i(960,540);root.content_scale_size=Vector2i(1280,720);root.content_scale_factor=1.0
+	if not preflight:root.show()
+	if change_scene_to_file("res://scenes/confluence_world.tscn")!=OK:finish("World load failed");return
+	if not await wait_scene("res://scenes/confluence_world.tscn"):finish("World readiness failed");return
+	await frames(12)
+	var scene: Node3D=current_scene
+	check("full live world/hero",scene.world_ready and scene.player.model_ready and scene.player.active and not paused and not scene.overview)
+	scene.player.rama_motion.modification_processed.connect(observe_final_pose);final_observer_connected=true
+	review_camera=Camera3D.new();review_camera.name="ReviewWaterCamera";review_camera.fov=65.0;review_camera.near=.1;review_camera.far=400.0;scene.world.add_child(review_camera)
+	var views: Array=[{"id":"00-night-swamp","position":Vector3(-48,2.8,8),"target":Vector3(-61,1,0),"phase":1.0,"water":"swamp"},{"id":"01-coast-day","position":Vector3(-67,4.6,20),"target":Vector3(-83,-.15,-12),"phase":0.0,"water":"coastal"}]
+	for view in views:
+		scene.set_phase(view.phase)
+		water_freeze.clear()
+		for description in scene.manifest.waters:
+			var node: MeshInstance3D=scene.world.get_node_or_null(String(description.id))
+			if node!=null:
+				var material: ShaderMaterial=node.get_active_material(0)
+				water_freeze.append({"id":String(description.id),"original_speed":material.get_shader_parameter("animation_speed"),"fixture_speed":0.0})
+				material.set_shader_parameter("animation_speed",0.0)
+		review_camera.global_position=view.position;review_camera.look_at(view.target,Vector3.UP);review_camera.make_current()
+		await frames(12)
+		water_projection=water_contract(scene)
+		check("requested water projects in frame "+view.id,water_projection.any(func(row):return row.style==view.water and row.samples_in_frame>=5 and row.sample_rect_frame_fraction>=.01))
+		if checks.any(func(row):return not row.passed):finish("Projection/control gate failed");return
+		if not take_frontage(view.id):return
+	finish("")
+
+func finish(failure: String) -> void:
+	if done:return
+	done=true
+	var after:=hashes() if not source_start.is_empty() else {}
+	check("two declared full-world water stills",shots.size()==2)
+	check("external inputs unchanged",not source_start.is_empty() and source_start==after)
+	var passed:=failure.is_empty() and checks.all(func(row):return row.passed)
+	var report:={"complete":passed,"failure":failure,"preflight":preflight,"shots":shots,"checks":checks,"checkpoints":checkpoints,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"Exact79e5 PCK full production world, fixed fixture camera/night phase and water animation_speed0 only; UI retained, original full hero/material/light/collision/clock collector. No temporal/HW FPS/finished-art acceptance."}
+	paused=false
+	if is_instance_valid(current_scene):current_scene.queue_free()
+	for unused in 8:await process_frame
+	var started:=Time.get_ticks_usec();var previous:=AudioServer.get_time_since_last_mix();var observed:=0
+	while observed<2 and Time.get_ticks_usec()-started<250000:
+		OS.delay_msec(1)
+		var now:=AudioServer.get_time_since_last_mix()
+		if now+.0002<previous:observed+=1
+		previous=now
+	for unused in 8:await process_frame
+	report.audio_cleanup={"observed_real_mixer_ticks":observed,"budget_usec":250000}
+	if not output.is_empty() and DirAccess.dir_exists_absolute(output):write_json(output.path_join("preflight.json" if preflight else "capture.json"),report)
+	print("WATER_BASELINE_COMPLETE ",passed," ",failure)
+	quit(0 if passed else 1)

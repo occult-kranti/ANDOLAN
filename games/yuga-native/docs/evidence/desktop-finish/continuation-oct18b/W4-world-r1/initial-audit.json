@@ -1,0 +1,110 @@
+{
+  "scope": "source audit before current-source night/water baseline; no runtime changes",
+  "public_baseline_source": "79e5c15d8a3657e16fda67acb277b2406120dcd1",
+  "pins": {
+    "scripts/world_water.gdshader": {
+      "sha256": "add24973aab0d30ebeae2f2db7d096f74fd304bf22868afc4470e22506f86283",
+      "bytes": 3433
+    },
+    "scripts/world_lighting.gd": {
+      "sha256": "d81f11df8766df89ef662bc3757ac087bd940963678db4a2622a0279f5b7022f",
+      "bytes": 9613
+    },
+    "scripts/world_ground_common.gdshaderinc": {
+      "sha256": "2e84ddd1afe67c70db6d8bdc700adaa0e34bee644a20825d4ecde0a7a0f88641",
+      "bytes": 4054
+    },
+    "scripts/confluence_world.gd": {
+      "sha256": "5fde1f003fa9f9d08309c4db656a078b2a028412dcad97d84e101bf7ee3ed6a8",
+      "bytes": 86450
+    },
+    "scripts/world_render_resources.gd": {
+      "sha256": "9c05d06cd78fd8e9326ac55f89939038ffd08fa69d1f5cdac00dc8a5a1b93472",
+      "bytes": 2140
+    },
+    "scripts/traversal_landmarks.gd": {
+      "sha256": "9d2af384370560e805fdab965b04a30638c9632a36fa0a71cac7b53a7ccea887",
+      "bytes": 4397
+    },
+    "scripts/lane_army.gd": {
+      "sha256": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+      "bytes": 30837
+    },
+    "scripts/lane_minion.gd": {
+      "sha256": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387",
+      "bytes": 10489
+    },
+    "scripts/player.gd": {
+      "sha256": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+      "bytes": 20337
+    },
+    "scripts/world_lane_frontage.gd": {
+      "sha256": "dcd0c73d8a12fc32e2fc32fa69ccc3466c3835ab0f4c15b8f18b72e8990dda72",
+      "bytes": 5929
+    },
+    "assets/world/confluence-map.json": {
+      "sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+      "bytes": 53971
+    },
+    "assets/contracts/native-contracts-v1.json": {
+      "sha256": "2e90bbb45d9faa46ce9ede3ad2bdab15233d3ffd18f363dd28c4c3efa4372824",
+      "bytes": 6380
+    },
+    "scripts/player_traversal.gd": {
+      "sha256": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+      "bytes": 10637
+    }
+  },
+  "active_water_shader": "scripts/world_water.gdshader",
+  "unused_for_Confluence": "scripts/coastal_water.gdshader",
+  "protected": {
+    "geometry_and_routes": true,
+    "authority_and_content_contract": true,
+    "accepted_resource_pools": true
+  },
+  "requested_baseline_views": [
+    {
+      "id": "00-night-swamp",
+      "camera": [
+        -48,
+        2.8,
+        8
+      ],
+      "target": [
+        -61,
+        1,
+        0
+      ],
+      "phase": 1.0
+    },
+    {
+      "id": "01-coast-day",
+      "camera": [
+        -67,
+        4.6,
+        20
+      ],
+      "target": [
+        -83,
+        -0.15,
+        -12
+      ],
+      "phase": 0.0
+    }
+  ],
+  "camera_common": {
+    "fov": 65,
+    "near": 0.1,
+    "far": 400,
+    "framebuffer": [
+      960,
+      540
+    ]
+  },
+  "temporal_gate": "After selecting a demonstrated correction, matched32consecutive fixed30Hz frames; narrow temporal stability only, no hardwareFPS/longcycle claim. W1 controls native capture; still water animation may be identically frozen if explicitly recorded.",
+  "candidate_status": "not authored; awaiting current originals",
+  "root_owned_unchanged_in_W4": [
+    "scripts/world_ground.gdshader",
+    "scripts/world_ground_common.gdshaderinc"
+  ]
+}

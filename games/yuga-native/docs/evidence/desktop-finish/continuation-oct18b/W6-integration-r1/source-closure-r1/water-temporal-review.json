@@ -1,0 +1,50 @@
+{
+  "status": "BOUNDED_SOURCE_API_CLOCK_REVIEW_PASS_NATIVE_PARSE_AND_PAIRED_CLOCK_ADMISSION_PENDING",
+  "helper_sha256": "8f029b69cef3b5c7c3cb5bacf43c1dadacbd15199e9deee83d4a358f707dd5b8",
+  "parent_sha256": "53dc475383089529c73a3766268acc28b3a58fe8a5e2cb5045e09ad41d03797c",
+  "time_proof_sha256": "db8f560fe9b66e8f9c75d2e13736485bcd9a07a81bd5c4cce462230c4d1eba5e",
+  "api_source": {
+    "servers/display/display_server.cpp": {
+      "sha256": "8e4663103d3384ee2c972e2bce79ca5840d78427db713920f2408bbcc677e4ab",
+      "line": 1479,
+      "excerpt": "\tClassDB::bind_method(D_METHOD(\"window_is_focused\", \"window_id\"), &DisplayServer::window_is_focused, DEFVAL(MAIN_WINDOW_ID));\n\tClassDB::bind_method(D_METHOD(\"window_can_draw\", \"window_id\"), &DisplayServer::window_can_draw, DEFVAL(MAIN_WINDOW_ID));\n\n\tClassDB::bind_method(D_METHOD(\"window_set_transient\", \"window_id\", \"parent_window_id\"), &DisplayServer::window_set_transient);\n\tClassDB::bind_method(D_METHOD(\"window_set_exclusive\", \"window_id\", \"exclusive\"), &DisplayServer::window_set_exclusive);\n\n\tClassDB::bind_method(D_METHOD(\"window_set_ime_active\", \"active\", \"window_id\"), &DisplayServer::window_set_ime_active, DEFVAL(MAIN_WINDOW_ID));\n\tClassDB::bind_method(D_METHOD(\"window_set_ime_position\", \"position\", \"window_id\"), &DisplayServer::window_set_ime_position, DEFVAL(MAIN_WINDOW_ID));\n\n\tClassDB::bind_method(D_METHOD(\"window_set_vsync_mode\", \"vsync_mode\", \"window_id\"), &DisplayServer::window_set_vsync_mode, DEFVAL(MAIN_WINDOW_ID));"
+    },
+    "servers/rendering/rendering_server.cpp": {
+      "sha256": "3ad47a2d1f7fd8221ceb30fecc5f0f9501ca46ed43dbc55d2f21c5e50af01f17",
+      "line": 3567,
+      "excerpt": "\n\tClassDB::bind_method(D_METHOD(\"is_render_loop_enabled\"), &RenderingServer::is_render_loop_enabled);\n\tClassDB::bind_method(D_METHOD(\"set_render_loop_enabled\", \"enabled\"), &RenderingServer::set_render_loop_enabled);\n\n\tClassDB::bind_method(D_METHOD(\"get_frame_setup_time_cpu\"), &RenderingServer::get_frame_setup_time_cpu);\n\n\tADD_PROPERTY(PropertyInfo(Variant::BOOL, \"render_loop_enabled\"), \"set_render_loop_enabled\", \"is_render_loop_enabled\");\n\n\tBIND_ENUM_CONSTANT(RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME);\n\tBIND_ENUM_CONSTANT(RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME);"
+    },
+    "core/core_bind.cpp": {
+      "sha256": "ccf75037011effaa9f49b18906d232b0aac718b47348ae9b540258774e7d6c56",
+      "line": 854,
+      "excerpt": "\n\tADD_PROPERTY(PropertyInfo(Variant::BOOL, \"low_processor_usage_mode\"), \"set_low_processor_usage_mode\", \"is_in_low_processor_usage_mode\");\n\tADD_PROPERTY(PropertyInfo(Variant::INT, \"low_processor_usage_mode_sleep_usec\"), \"set_low_processor_usage_mode_sleep_usec\", \"get_low_processor_usage_mode_sleep_usec\");\n\tADD_PROPERTY(PropertyInfo(Variant::BOOL, \"delta_smoothing\"), \"set_delta_smoothing\", \"is_delta_smoothing_enabled\");\n\n\t// Those default values need to be specified for the docs generator,\n\t// to avoid using values from the documentation writer's own OS instance.\n\tADD_PROPERTY_DEFAULT(\"low_processor_usage_mode\", false);\n\tADD_PROPERTY_DEFAULT(\"low_processor_usage_mode_sleep_usec\", 6900);\n"
+    },
+    "scene/main/node.cpp": {
+      "sha256": "8dab5a0fa28d1194c890585e2a361388a3a9cfff1a59822f74868a4e2b0c7ce0",
+      "line": 1008,
+      "excerpt": "\ndouble Node::get_process_delta_time() const {\n\tif (data.tree) {\n\t\treturn data.tree->get_process_time();\n\t} else {\n\t\treturn 0;\n\t}\n}\n\nvoid Node::set_process(bool p_process) {"
+    },
+    "scene/main/scene_tree.cpp": {
+      "sha256": "ff390847c015422bfdb1f4401bc393ddedb1d04f327cc320e298ba700bbd8394",
+      "line": 693,
+      "excerpt": "\n\tprocess_time = p_time;\n\n\tif (multiplayer_poll) {\n\t\tmultiplayer->poll();\n\t\tfor (KeyValue<NodePath, Ref<MultiplayerAPI>> &E : custom_multiplayers) {\n\t\t\tE.value->poll();\n\t\t}\n\t}\n"
+    }
+  },
+  "facts": [
+    "All four questioned APIs are present/bound in exact35e source; Node process delta reads SceneTree process_time set from actual scaled Main process input.",
+    "No forced RenderingServer.draw or alternate shader clock introduced; frame wrapper observes existing inherited process/post_draw cadence once.",
+    "Animation restoration reads pre-override materialproof, restores exact .8/.28 original values and recordsactual values; both roles use identical camera with ZERO travel.",
+    "Firstdraw24 is a recorded Engine counter, not asserted walltime seconds.32samples check expected24..55, per-draw/process increments, current actual scaled delta,time_scale1, drawable/render-loop/lowusage flags and correlated164poses.",
+    "Fullfirst/last compressed and decoded hash/length records emitted; independent validator must actually decompress and verify them.",
+    "Whole original shader/parent/source/control custody must remain pinned before/after via W1 wrapper; inherited controlmap should include this new childhelper itself."
+  ],
+  "paired_admission_conditions": [
+    "Compare complete startup draw_history from fresh draw0 through firstdraw24 across roles, including recorded scaledstep/time_scale and gating state; endpointdraw24 alone does not establish identical accumulated prior TIME.",
+    "Compare all32compact clocks/poses/worldstate trace values exactly across roles after only previously explicit pinned shader-identity normalizations.",
+    "Require same render-thread mode/backend: frame_post_draw occurs inside draw in nonthreaded mode but is deferred when renderer thread enabled. Engine.increment_frames_drawn follows Main draw return, so recorded framecounter should not be converted blindly to TIME=counter/30; paired identical scheduling/control comparison governs.",
+    "Native syntax/resource preflight and actual PNG readback remain W1 gates; headlesspreflight bypasses only the explicitly draw-dependent conditions and cannot establish temporal pixels."
+  ],
+  "no_concrete_compile_or_source_clock_blocker_by_inspection": true,
+  "engine_runs": 0,
+  "runtime_edits": 0
+}

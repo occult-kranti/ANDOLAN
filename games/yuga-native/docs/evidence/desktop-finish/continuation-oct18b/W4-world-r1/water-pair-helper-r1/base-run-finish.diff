@@ -1,0 +1,44 @@
+--- /workspace/scratch/yuga-next-W1-r1/harness/capture_water_baseline.gd#run-finish
++++ /workspace/scratch/yuga-next-W4-r1/water-pair-helper-r1/capture_water_pair.gd#run-finish
+@@ -2,7 +2,9 @@
+ 	for arg in OS.get_cmdline_user_args():
+ 		if arg.begins_with("--output="):output=arg.trim_prefix("--output=")
+ 		elif arg=="--preflight":preflight=true
++		elif arg.begins_with("--water-role="):water_role=arg.trim_prefix("--water-role=")
+ 		else:finish("Unknown argument:"+arg);return
++	if water_role not in ["baseline","candidate"]:finish("Explicit water role required");return
+ 	if not output.is_absolute_path() or DirAccess.dir_exists_absolute(output):finish("Fresh output required");return
+ 	DirAccess.make_dir_recursive_absolute(output)
+ 	if not preflight and (DisplayServer.get_name()!="X11" or RenderingServer.get_current_rendering_method()!="forward_plus"):finish("X11 Forward+ required");return
+@@ -14,9 +16,10 @@
+ 	await frames(12)
+ 	var scene: Node3D=current_scene
+ 	check("full live world/hero",scene.world_ready and scene.player.model_ready and scene.player.active and not paused and not scene.overview)
++	if not install_water_shader(scene):finish("Exact water shader/uniform installation failed");return
+ 	scene.player.rama_motion.modification_processed.connect(observe_final_pose);final_observer_connected=true
+ 	review_camera=Camera3D.new();review_camera.name="ReviewWaterCamera";review_camera.fov=65.0;review_camera.near=.1;review_camera.far=400.0;scene.world.add_child(review_camera)
+-	var views: Array=[{"id":"00-night-swamp","position":Vector3(-48,2.8,8),"target":Vector3(-61,1,0),"phase":1.0,"water":"shallow"},{"id":"01-coast-day","position":Vector3(-67,4.6,20),"target":Vector3(-83,-.15,-12),"phase":0.0,"water":"coastal"}]
++	var views: Array=[{"id":"00-night-swamp","position":Vector3(-48,2.8,8),"target":Vector3(-61,1,0),"phase":1.0,"water":"shallow"},{"id":"01-coast-day","position":Vector3(-94,4.6,-38),"target":Vector3(-80,-.15,-38),"phase":0.0,"water":"coastal"},{"id":"02-day-swamp","position":Vector3(-48,2.8,8),"target":Vector3(-61,1,0),"phase":0.0,"water":"shallow"}]
+ 	for view in views:
+ 		scene.set_phase(view.phase)
+ 		water_freeze.clear()
+@@ -38,10 +41,10 @@
+ 	if done:return
+ 	done=true
+ 	var after:=hashes() if not source_start.is_empty() else {}
+-	check("two declared full-world water stills",shots.size()==2)
++	check("three declared full-world water observations",shots.size()==3)
+ 	check("external inputs unchanged",not source_start.is_empty() and source_start==after)
+ 	var passed:=failure.is_empty() and checks.all(func(row):return row.passed)
+-	var report:={"complete":passed,"failure":failure,"preflight":preflight,"shots":shots,"projection_at_exit":water_projection,"checks":checks,"checkpoints":checkpoints,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"Exact79e5 PCK full production world, fixed fixture camera/night phase and water animation_speed0 only; UI retained, original full hero/material/light/collision/clock collector. No temporal/HW FPS/finished-art acceptance."}
++	var report:={"water_role":water_role,"candidate_path":CANDIDATE_PATH,"candidate_source_sha256":FileAccess.get_sha256(CANDIDATE_PATH),"override_proof":water_override_proof,"complete":passed,"failure":failure,"preflight":preflight,"shots":shots,"projection_at_exit":water_projection,"checks":checks,"checkpoints":checkpoints,"source_sha256":source_start,"source_after_sha256":after,"source_unchanged":source_start==after,"renderer":RenderingServer.get_current_rendering_method(),"adapter":RenderingServer.get_video_adapter_name(),"scope":"Exact79e5 PCK full production world; common fixed cameras/phases and water animation0. Candidate changes only the external exact thin-film shader on3water materials, with all original uniforms copied. Baseline night is a JSON observation for strict original-image reuse. No temporal/HW FPS/finished-art acceptance."}
+ 	paused=false
+ 	if is_instance_valid(current_scene):current_scene.queue_free()
+ 	for unused in 8:await process_frame
+@@ -54,5 +57,5 @@
+ 	for unused in 8:await process_frame
+ 	report.audio_cleanup={"observed_real_mixer_ticks":observed,"budget_usec":250000}
+ 	if not output.is_empty() and DirAccess.dir_exists_absolute(output):write_json(output.path_join("preflight.json" if preflight else "capture.json"),report)
+-	print("WATER_BASELINE_COMPLETE ",passed," ",failure)
++	print("WATER_PAIR_COMPLETE ",passed," ",failure)
+ 	quit(0 if passed else 1)

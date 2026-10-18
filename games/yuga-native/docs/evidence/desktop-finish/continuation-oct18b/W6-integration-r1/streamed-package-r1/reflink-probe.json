@@ -1,0 +1,59 @@
+{
+  "probe_root": "/workspace/scratch/yuga-next-W6-r1/reflink-probe-r1",
+  "files": [
+    {
+      "command": [
+        "cp",
+        "--reflink=always",
+        "--preserve=mode",
+        "--",
+        "/workspace/scratch/yuga-next-W6-r1/reflink-probe-r1/first.source",
+        "/workspace/scratch/yuga-next-W6-r1/reflink-probe-r1/first.destination"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "cp: failed to clone '/workspace/scratch/yuga-next-W6-r1/reflink-probe-r1/first.destination' from '/workspace/scratch/yuga-next-W6-r1/reflink-probe-r1/first.source': Operation not supported\n",
+      "source": {
+        "bytes": 2097152,
+        "sha256": "e0952408881477f1f2650b8fcb30275c281a23dbb00738b966181fc092d1d151",
+        "device": 27,
+        "inode": 686380,
+        "mode": "0o640",
+        "allocated_bytes": 2097152
+      },
+      "free_before_copy": 887472128,
+      "free_after_copy": 887472128
+    },
+    {
+      "command": [
+        "cp",
+        "--reflink=always",
+        "--preserve=mode",
+        "--",
+        "/workspace/scratch/yuga-next-W6-r1/reflink-probe-r1/second.source",
+        "/workspace/scratch/yuga-next-W6-r1/reflink-probe-r1/second.destination"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "cp: failed to clone '/workspace/scratch/yuga-next-W6-r1/reflink-probe-r1/second.destination' from '/workspace/scratch/yuga-next-W6-r1/reflink-probe-r1/second.source': Operation not supported\n",
+      "source": {
+        "bytes": 1179648,
+        "sha256": "c7feba4448d6e264c33ff3fe8fb7b6b51abb9c58bcb3577c3c7d5785062828b5",
+        "device": 27,
+        "inode": 686381,
+        "mode": "0o755",
+        "allocated_bytes": 1179648
+      },
+      "free_before_copy": 886292480,
+      "free_after_copy": 886292480
+    }
+  ],
+  "writes_only_fresh_probe_files": true,
+  "engines": 0,
+  "git_calls": 0,
+  "network_calls": 0,
+  "free_initial": 889569280,
+  "all_reflink_supported": false,
+  "free_final": 886292480,
+  "space_measurement_limit": "Concurrent workers may allocate/free blocks; statvfs deltas are observations, not exclusive physical-allocation proof. FICLONE success plus distinct inodes and independent destination byte/mode mutations establishes filesystem CoW support for these exact files."
+}

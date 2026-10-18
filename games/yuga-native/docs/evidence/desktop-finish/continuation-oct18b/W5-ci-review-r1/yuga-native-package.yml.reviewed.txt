@@ -1,0 +1,105 @@
+name: YUGA native build candidate
+
+on:
+  push:
+    branches: [game/yuga-native-production]
+    paths:
+      - 'games/yuga-native/scripts/**'
+      - 'games/yuga-native/shaders/**'
+      - 'games/yuga-native/scenes/**'
+      - 'games/yuga-native/assets/**'
+      - 'games/yuga-native/project.godot'
+      - 'games/yuga-native/export_presets.cfg'
+      - 'games/yuga-native/tools/package-native.py'
+      - 'games/yuga-native/tools/ci-native-package.py'
+      - 'games/yuga-native/tests/streamed_package_cases.py'
+      - 'games/yuga-native/tests/ci_native_package_cases.py'
+      - '.github/workflows/yuga-native-package.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: yuga-native-package-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.14.0'
+          cache: npm
+      - name: Install locked authority dependencies
+        run: npm ci
+      - name: Check package helper boundaries
+        run: |
+          set -euo pipefail
+          python3 -B games/yuga-native/tests/streamed_package_cases.py --report "$RUNNER_TEMP/streamed-package-cases.json"
+          python3 -B games/yuga-native/tests/ci_native_package_cases.py
+          python3 -B games/yuga-native/tests/package_linux_runtime_cases.py --report "$RUNNER_TEMP/runtime-cases.json"
+      - name: Prepare verified exporter and runtimes
+        run: |
+          set -euo pipefail
+          python3 games/yuga-native/tools/release-native.py install-engines --destination "$RUNNER_TEMP/engines"
+          python3 -B games/yuga-native/tools/ci-native-package.py prepare-runtime --destination "$RUNNER_TEMP/reviewed-runtime"
+      - name: Bind source before import
+        run: python3 -B games/yuga-native/tools/ci-native-package.py snapshot --commit "$GITHUB_SHA" --output "$RUNNER_TEMP/source-before.json"
+      - name: Import exact source
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/engines/Godot_v4.6.3-stable_linux.x86_64" --headless --path games/yuga-native --editor --import --quit 2>&1 | tee "$RUNNER_TEMP/import.log"
+      - name: Export and stream both packages
+        run: |
+          set -euo pipefail
+          python3 -B games/yuga-native/tools/package-native.py \
+            --linux-engine "$RUNNER_TEMP/engines/Godot_v4.6.3-stable_linux.x86_64" \
+            --windows-engine "$RUNNER_TEMP/engines/Godot_v4.6.3-stable_win64.exe" \
+            --linux-runtime "$RUNNER_TEMP/reviewed-runtime/godot" \
+            --linux-runtime-provenance games/yuga-native/docs/evidence/desktop-finish/G0/template-priority-build-r1/finished-build-verification.json \
+            --linux-runtime-variant pipeline-low-priority \
+            --stream-large-payloads --build-dir "$RUNNER_TEMP/packages"
+          python3 -B games/yuga-native/tools/ci-native-package.py finalize \
+            --commit "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --before "$RUNNER_TEMP/source-before.json" --build "$RUNNER_TEMP/packages"
+      - name: Retain Linux candidate
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: yuga-linux-${{ github.sha }}
+          path: ${{ runner.temp }}/packages/yuga-native-linux-x86_64.zip
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 30
+      - name: Retain Windows candidate
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: yuga-windows-${{ github.sha }}
+          path: ${{ runner.temp }}/packages/yuga-native-windows-x86_64.zip
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 30
+      - name: Retain exact manifests and diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: yuga-package-evidence-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/packages/*.json
+            ${{ runner.temp }}/packages/*.log
+            ${{ runner.temp }}/packages/SHA256SUMS.txt
+            ${{ runner.temp }}/reviewed-runtime/runtime-preparation.json
+            ${{ runner.temp }}/engines/*provenance.json
+            ${{ runner.temp }}/engines/engine-downloads.json
+            ${{ runner.temp }}/source-before.json
+            ${{ runner.temp }}/import.log
+            ${{ runner.temp }}/*-cases.json
+          compression-level: 6
+          if-no-files-found: warn
+          retention-days: 30

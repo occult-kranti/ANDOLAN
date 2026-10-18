@@ -1,0 +1,48 @@
+--- 5023/rama_motion.gd
++++ private/rama_motion.gd
+@@ -95,6 +95,9 @@
+ var descent_support_owner_transform := {}
+ var descent_support_shape := {}
+ var support_chains := {}
++# Existing authored landing entry is the neutral descent leg pose. Cache only
++# its leg channels; it owns no support plane, target, or elapsed-time state.
++var descent_leg_channels: Array[Dictionary] = []
+ var idle_support_ready := true
+ var idle_support_pending := {"L":false,"R":false}
+ var idle_support_age := {"L":IDLE_SUPPORT_SETTLE_S,"R":IDLE_SUPPORT_SETTLE_S}
+@@ -132,7 +135,7 @@
+ 		var expected: Transform3D=expected_rest[index]
+ 		if actual.origin.distance_to(expected.origin)>.0001: return false
+ 		if actual.basis.x.distance_to(expected.basis.x)>.0001 or actual.basis.y.distance_to(expected.basis.y)>.0001 or actual.basis.z.distance_to(expected.basis.z)>.0001: return false
+-	for clip in ["idle","walk","run","sprint","draw","release","flight","grapple","aim"]:
++	for clip in ["idle","walk","run","sprint","draw","release","flight","grapple","aim","land"]:
+ 		if not candidate.has_animation(clip): return false
+ 	rig=skeleton
+ 	library=candidate
+@@ -160,6 +163,11 @@
+ 			var index:=rig.find_bone(String(path.get_subname(0)))
+ 			if index>=0: rows.append({"bone":index,"track":track,"type":anim.track_get_type(track)})
+ 		track_maps[String(clip)]=rows
++	var landing_entry := _sample("land",0.0)
++	for index in rig.get_bone_count():
++		var bone_name := String(rig.get_bone_name(index))
++		if bone_name.begins_with("upperleg") or bone_name.begins_with("lowerleg") or bone_name.begins_with("foot") or bone_name.begins_with("toe"):
++			descent_leg_channels.append({"bone":index,"position":landing_entry.positions[index],"rotation":landing_entry.rotations[index]})
+ 	last_positions=rest_positions.duplicate()
+ 	last_rotations=rest_rotations.duplicate()
+ 	last_globals=rest_globals.duplicate()
+@@ -585,6 +593,14 @@
+ 	var normalized:=phase
+ 	if locomotion in ["jump","land","dash"]: normalized=clampf(locomotion_age/library.get_animation(locomotion).length,0,1)
+ 	var pose:=_sample(locomotion,normalized)
++	# Remove the permanent fall tuck at authored-pose selection, not at impact.
++	# The existing fall-entry crossfade begins near the apex and interpolates
++	# from the actual outgoing pose. Existing action overlays still run later.
++	# No distance/TTC threshold, support query, world target or air lock is added.
++	if locomotion=="fall":
++		for channel in descent_leg_channels:
++			pose.positions[channel.bone]=channel.position
++			pose.rotations[channel.bone]=channel.rotation
+ 	# Sidestep/backpedal trajectories preserve facing while moving feet along
+ 	# local velocity. Contact correction below retains planted world positions.
+ 	var direction_angle:=atan2(local_velocity.x,local_velocity.z) if movement_speed>.12 else 0.0

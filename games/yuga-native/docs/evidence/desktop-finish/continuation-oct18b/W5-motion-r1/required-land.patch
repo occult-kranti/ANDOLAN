@@ -1,0 +1,11 @@
+--- 8b06/rama_motion.gd
++++ private-required-land/rama_motion.gd
+@@ -135,7 +135,7 @@
+ 		var expected: Transform3D=expected_rest[index]
+ 		if actual.origin.distance_to(expected.origin)>.0001: return false
+ 		if actual.basis.x.distance_to(expected.basis.x)>.0001 or actual.basis.y.distance_to(expected.basis.y)>.0001 or actual.basis.z.distance_to(expected.basis.z)>.0001: return false
+-	for clip in ["idle","walk","run","sprint","draw","release","flight","grapple","aim"]:
++	for clip in ["idle","walk","run","sprint","draw","release","flight","grapple","aim","land"]:
+ 		if not candidate.has_animation(clip): return false
+ 	rig=skeleton
+ 	library=candidate

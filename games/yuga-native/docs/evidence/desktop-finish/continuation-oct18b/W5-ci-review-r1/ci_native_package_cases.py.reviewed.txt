@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+"""Counterexamples for the CI engine acquisition boundary; no network or engines."""
+import hashlib
+import importlib.util
+from pathlib import Path
+import stat
+import tempfile
+import unittest
+import warnings
+import zipfile
+
+SPEC = importlib.util.spec_from_file_location('candidate', Path(__file__).resolve().parents[1] / 'tools/ci-native-package.py')
+CI = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(CI)
+DATA = b'finite fixture runtime\n'
+BINARY = {'bytes': len(DATA), 'sha256': hashlib.sha256(DATA).hexdigest()}
+
+
+class RuntimeAcquisitionCases(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(prefix='yuga-ci-runtime-')
+        self.root = Path(self.temporary.name)
+
+    def tearDown(self):
+        self.temporary.cleanup()
+
+    def archive(self, rows):
+        path = self.root / 'input.zip'
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', UserWarning)  # Intentional duplicate-name counterexample.
+            with zipfile.ZipFile(path, 'w') as output:
+                for name, data, mode in rows:
+                    info = zipfile.ZipInfo(name)
+                    info.create_system = 3
+                    info.external_attr = mode << 16
+                    output.writestr(info, data)
+        return path, CI.record(path)
+
+    def valid_rows(self):
+        return [(CI.RUNTIME_MEMBER, DATA, stat.S_IFREG | 0o755),
+                ('yuga-native-linux-x86_64/START-HERE.txt', b'fixture', stat.S_IFREG | 0o644)]
+
+    def test_exact_member_only_and_input_unchanged(self):
+        archive, pinned = self.archive(self.valid_rows())
+        before = archive.stat()
+        destination = self.root / 'runtime'
+        CI.extract_runtime(archive, destination, pinned, BINARY)
+        self.assertEqual({p.name for p in destination.iterdir()}, {'godot', 'runtime-preparation.json'})
+        self.assertEqual((destination / 'godot').read_bytes(), DATA)
+        self.assertEqual(stat.S_IMODE((destination / 'godot').stat().st_mode), 0o755)
+        self.assertEqual(CI.record(archive), pinned)
+        self.assertEqual((before.st_ino, before.st_mtime_ns), (archive.stat().st_ino, archive.stat().st_mtime_ns))
+
+    def test_changed_outer_archive_rejected_before_write(self):
+        archive, pinned = self.archive(self.valid_rows())
+        with archive.open('ab') as stream:
+            stream.write(b'changed')
+        with self.assertRaisesRegex(ValueError, 'ZIP identity'):
+            CI.extract_runtime(archive, self.root / 'runtime', pinned, BINARY)
+        self.assertFalse((self.root / 'runtime').exists())
+
+    def test_duplicate_runtime_rejected(self):
+        archive, pinned = self.archive(self.valid_rows() + self.valid_rows()[:1])
+        with self.assertRaisesRegex(ValueError, 'duplicate'):
+            CI.extract_runtime(archive, self.root / 'runtime', pinned, BINARY)
+
+    def test_unsafe_names_and_nonregular_members_rejected(self):
+        for name, mode in [('yuga-native-linux-x86_64/../other', stat.S_IFREG | 0o644),
+                           ('/outside', stat.S_IFREG | 0o644),
+                           ('yuga-native-linux-x86_64\\other', stat.S_IFREG | 0o644),
+                           ('yuga-native-linux-x86_64/link', stat.S_IFLNK | 0o777),
+                           ('yuga-native-linux-x86_64/fifo', stat.S_IFIFO | 0o644)]:
+            with self.subTest(name=name):
+                archive, pinned = self.archive(self.valid_rows() + [(name, b'x', mode)])
+                with self.assertRaises(ValueError):
+                    CI.extract_runtime(archive, self.root / 'runtime', pinned, BINARY)
+                self.assertFalse((self.root / 'runtime').exists())
+
+    def test_missing_runtime_rejected(self):
+        archive, pinned = self.archive(self.valid_rows()[1:])
+        with self.assertRaisesRegex(ValueError, 'member missing'):
+            CI.extract_runtime(archive, self.root / 'runtime', pinned, BINARY)
+
+    def test_inner_hash_mismatch_is_never_made_executable(self):
+        archive, pinned = self.archive(self.valid_rows())
+        wrong = {**BINARY, 'sha256': '0' * 64}
+        with self.assertRaisesRegex(ValueError, 'Extracted runtime identity'):
+            CI.extract_runtime(archive, self.root / 'runtime', pinned, wrong)
+        self.assertEqual((self.root / 'runtime/godot').stat().st_mode & 0o111, 0)
+
+    def test_existing_destination_and_symlink_input_rejected(self):
+        archive, pinned = self.archive(self.valid_rows())
+        destination = self.root / 'occupied'
+        destination.mkdir()
+        (destination / 'keep').write_bytes(b'keep')
+        with self.assertRaisesRegex(ValueError, 'Fresh runtime destination'):
+            CI.extract_runtime(archive, destination, pinned, BINARY)
+        self.assertEqual((destination / 'keep').read_bytes(), b'keep')
+        link = self.root / 'alias.zip'
+        link.symlink_to(archive)
+        with self.assertRaisesRegex(ValueError, 'Regular file'):
+            CI.extract_runtime(link, self.root / 'runtime', pinned, BINARY)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)
