@@ -2,7 +2,7 @@
 """Owned X11 UI input capture. Adapted from visual-rounds/run.py and native-window-review.py.
 Only native XTest events drive controls; observer writes readiness/focus and raw PNGs.
 """
-import argparse, ctypes as C, ctypes.util, hashlib, json, os, pathlib, shutil, subprocess, time
+import argparse, ctypes as C, ctypes.util, hashlib, json, os, pathlib, re, shutil, subprocess, time
 P=pathlib.Path
 PROJECT=P(__file__).resolve().parents[2]
 def sha(p): return hashlib.sha256(P(p).read_bytes()).hexdigest()
@@ -10,6 +10,28 @@ def save(p,v): P(p).write_text(json.dumps(v,indent=2)+'\n')
 def read(p):
     try: return json.loads(P(p).read_text())
     except (FileNotFoundError,json.JSONDecodeError): return {}
+def copy_godot_cache(seed, project, data_home):
+    seed=P(seed).resolve()
+    members=list(seed.rglob('*'))
+    if any(f.is_symlink() for f in members): raise ValueError('Godot seed must not contain symlinks')
+    pins={str(f.relative_to(seed)):sha(f) for f in members if f.is_file()}
+    if not pins or any(not name.endswith('.cache') for name in pins): raise ValueError('Godot seed must contain only shader-cache files')
+    config=(P(project)/'project.godot').read_text()
+    names=re.findall(r'^config/name="([^"\n]+)"$',config,re.M)
+    if len(names)!=1 or names[0] in ['.','..'] or '/' in names[0] or re.search(r'^config/use_custom_user_dir=true$',config,re.M): raise ValueError('Godot cache seed requires the standard named user directory')
+    target=P(data_home)/'godot/app_userdata'/names[0]/'shader_cache'
+    shutil.copytree(seed,target)
+    if any(sha(target/f)!=h for f,h in pins.items()): raise RuntimeError('Godot shader cache copy differs')
+    return seed,target,pins
+def imported_files(project):
+    project=P(project)
+    return {str(f.relative_to(project)):sha(f) for f in (project/'.godot/imported').rglob('*') if f.is_file()}
+def qualify_imports(project):
+    project=P(project); pins=imported_files(project)
+    receipt=project/'ui-source-freeze.json'
+    frozen=read(receipt) if receipt.is_file() else {}
+    if frozen and frozen.get('existing_import_sha256')!=pins: raise ValueError('Imported resources differ from frozen input receipt')
+    return pins,sha(receipt) if receipt.is_file() else None
 def wait_for(test, seconds=30):
     deadline=time.monotonic()+seconds
     while time.monotonic()<deadline:
@@ -96,9 +118,11 @@ def main():
     p.add_argument('--display',type=int,default=176); p.add_argument('--width',type=int,default=1280); p.add_argument('--height',type=int,default=720)
     p.add_argument('--renderer',default='gl_compatibility',choices=['gl_compatibility','forward_plus']); p.add_argument('--dry-run',action='store_true')
     p.add_argument('--runtime',type=P,default=P('/workspace/tooling/native-render/runtime'))
+    p.add_argument('--engine',type=P,help='Exact engine for project/fixture captures; package mode uses its executable')
     p.add_argument('--timeout',type=float,default=120,help='Maximum seconds for each observed readiness/capture condition')
     p.add_argument('--render-threads',type=int,choices=[1,2],default=1)
     p.add_argument('--shader-cache-seed',type=P,help='Copy an existing Mesa cache into this run; never mutate the seed')
+    p.add_argument('--godot-shader-cache-seed',type=P,help='Copy only Godot shader .cache files, never preferences')
     p.add_argument('--executable',type=P,help='Exact extracted package executable; required in package mode')
     p.add_argument('--export-manifest',type=P,help='Authoritative exported runtime source file pins')
     p.add_argument('--package-archive',type=P,help='Original ZIP identity retained alongside extracted payload pins')
@@ -110,6 +134,7 @@ def main():
     if not 90<=a.display<=199 or P(f'/tmp/.X11-unix/X{a.display}').exists(): p.error('Choose unused display90–199')
     if a.mode in ['integrated','transition_fixture','package'] and not a.plan: p.error('This mode requires an explicit readiness/action plan')
     if a.mode=='package' and (not a.executable or not a.package or not a.executable.is_file() or not a.package.is_file()): p.error('Package mode requires existing executable and PCK')
+    if a.mode=='package' and a.engine: p.error('Package mode executes its own binary; omit --engine')
     if a.user_state and (a.mode!='package' or not a.user_state.is_absolute()): p.error('Shared isolated user state requires package mode and absolute path')
     if a.shader_cache_seed and not a.shader_cache_seed.is_dir(): p.error('Shader cache seed must be an existing directory')
     plan=read(a.plan) if a.plan else [
@@ -122,10 +147,12 @@ def main():
     ]
     if any('stage' in step for step in plan) and (a.mode not in ['integrated','package'] or not a.allow_authority_staging): p.error('Stage steps require integrated mode and explicit --allow-authority-staging')
     if a.allow_authority_staging and a.mode not in ['integrated','package']: p.error('Authority staging is only available in integrated or package mode')
-    if a.dry_run: print(json.dumps({'mode':a.mode,'plan':plan,'render_threads':a.render_threads,'shader_cache_seed':str(a.shader_cache_seed) if a.shader_cache_seed else None,'starts_processes':False},indent=2)); return
+    engine=a.executable.resolve() if a.mode=='package' else (a.engine.resolve() if a.engine else P(shutil.which('godot') or ''))
+    if not engine.is_file() or not os.access(engine,os.X_OK): p.error('Use an existing executable engine')
+    if a.dry_run: print(json.dumps({'mode':a.mode,'plan':plan,'engine':str(engine),'engine_sha256':sha(engine),'render_threads':a.render_threads,'shader_cache_seed':str(a.shader_cache_seed) if a.shader_cache_seed else None,'godot_shader_cache_seed':str(a.godot_shader_cache_seed) if a.godot_shader_cache_seed else None,'starts_processes':False},indent=2)); return
     out.mkdir(parents=True); project=source
     pins={}
-    files=['scripts/launch_shell.gd','scripts/hero_ui_theme.gd','scripts/scene_transition.gd','tools/ui-campaign/board.gd','tools/ui-campaign/observer.gd','tools/ui-campaign/run.py','tests/ui_campaign_flow_cases.gd']
+    files=['scripts/launch_shell.gd','scripts/hero_ui_theme.gd','scripts/scene_transition.gd','scripts/loading_presentation.gd','tools/ui-campaign/board.gd','tools/ui-campaign/observer.gd','tools/ui-campaign/run.py','tests/ui_campaign_flow_cases.gd']
     if a.allow_authority_staging: files += ['tools/ui-campaign/integrated_capture.gd','tools/ui-campaign/authority_stage.gd']
     if a.mode in ['component','boot_recovery','transition_fixture']:
         project=out/'fixture'; project.mkdir()
@@ -154,6 +181,7 @@ def main():
             pins['art/world/confluence-map.json']=sha(source/'art/world/confluence-map.json')
         for file in files:
             if a.mode!='package': pins[file]=sha(source/file)
+    import_pins,import_freeze_sha=qualify_imports(project) if a.mode=='integrated' else ({},None)
     export_record=read(a.export_manifest) if a.export_manifest else {}
     if a.mode=='package':
         if not export_record.get('source',{}).get('files'): raise ValueError('Package execution requires authoritative export manifest')
@@ -172,6 +200,9 @@ def main():
         if not seed_pins: raise ValueError('Shader cache seed contains no files')
         shutil.copytree(a.shader_cache_seed,env['MESA_SHADER_CACHE_DIR'])
         if any(sha(P(env['MESA_SHADER_CACHE_DIR'])/f)!=h for f,h in seed_pins.items()): raise RuntimeError('Shader cache copy differs')
+    godot_seed_pins={}; godot_cache_target=None
+    if a.godot_shader_cache_seed:
+        a.godot_shader_cache_seed,godot_cache_target,godot_seed_pins=copy_godot_cache(a.godot_shader_cache_seed,project,env['XDG_DATA_HOME'])
     package_pins={}
     instrumentation={}
     if a.mode=='package':
@@ -186,13 +217,15 @@ def main():
             instrumentation.update({str(authority):sha(authority),str(bridge):sha(bridge),str(bridge_source):sha(bridge_source)})
             external=bridge
     driver='res://tools/ui-campaign/integrated_capture.gd' if a.allow_authority_staging else 'res://tools/ui-campaign/observer.gd'
-    prefix=[str(a.executable.resolve()),'--main-pack',str(a.package.resolve())] if a.mode=='package' else [shutil.which('godot'),'--path',str(project)]
+    prefix=[str(engine),'--main-pack',str(a.package.resolve())] if a.mode=='package' else [str(engine),'--path',str(project)]
     if a.mode=='package': driver=str(external)
-    command=prefix+['--display-driver','x11','--rendering-method',a.renderer,'--audio-driver','Dummy','--resolution',f'{a.width}x{a.height}','--position','0,0','--max-fps','20','--max-threads',str(a.render_threads),'--script',driver,'--','--mode='+a.mode,'--output='+str(out)]
+    command=prefix+['--display-driver','x11','--rendering-method',a.renderer,'--audio-driver','Dummy','--resolution',f'{a.width}x{a.height}','--position','0,0','--max-fps','20','--disable-vsync','--script',driver,'--','--mode='+a.mode,'--output='+str(out)]
     record={'complete':False,'scope':('Actual extracted Linux package, external observer, native XTest and raw framebuffer.' if a.mode=='package' else 'Actual XTest input and raw framebuffer; component fixture is not integrated gameplay.'),'mode':a.mode,'command':command,'source_sha256':pins,'plan':plan,'plan_sha256':sha(a.plan) if a.plan else None,'events':[],'shots':[],'started_unix':time.time(),'renderer_requested':a.renderer,'engine_sha256':sha(command[0])}
     def config_receipt():
         return {str(file.relative_to(a.user_state or out/'user')):{'sha256':sha(file),'text':file.read_text()} for file in (a.user_state or out/'user').rglob('courtyard-settings.cfg')}
     record['package_sha256']=package_pins
+    record['import_cache_sha256']=import_pins
+    record['import_freeze_manifest_sha256']=import_freeze_sha
     record['export_manifest']={'path':str(a.export_manifest),'sha256':sha(a.export_manifest),'source':export_record.get('source'),'git':export_record.get('git')} if a.export_manifest else None
     record['package_archive']={'path':str(a.package_archive),'sha256':sha(a.package_archive)} if a.package_archive else None
     record['instrumentation_sha256']=instrumentation
@@ -200,6 +233,7 @@ def main():
     record['scheduling']={'cpu_affinity':sorted(os.sched_getaffinity(0)),'render_threads':a.render_threads,'LP_NUM_THREADS':env['LP_NUM_THREADS'],'OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1','MKL_NUM_THREADS':'1'}
     record['authority_staging']={'enabled':a.allow_authority_staging,'stages':[],'scope':'Only explicit stage steps use authority fixtures. Navigation remains native XTest. Staged outcomes are not native-playthrough claims.'}
     record['shader_cache_seed']={'path':str(a.shader_cache_seed) if a.shader_cache_seed else None,'copied_to':env['MESA_SHADER_CACHE_DIR'],'files_sha256':seed_pins,'reused_isolated_cache_sha256':prior_cache_pins,'scope':'Copied warm Mesa cache; no cold-start or hardware-performance claim.' if seed_pins else ('Reused isolated cache from an earlier package process; warm-cache capture.' if prior_cache_pins else 'No Mesa cache seed supplied.')}
+    record['godot_shader_cache_seed']={'path':str(a.godot_shader_cache_seed) if a.godot_shader_cache_seed else None,'copied_to':str(godot_cache_target) if godot_cache_target else None,'files_sha256':godot_seed_pins,'scope':'Copied shader cache only; preferences are excluded. Warm-cache capture, no cold-start claim.' if godot_seed_pins else 'No Godot shader cache seed supplied.'}
     def resolve_event(step,state):
         event=dict(step)
         if 'wheel' in step:
@@ -261,7 +295,7 @@ def main():
                     else: raise RuntimeError('Tab chain did not reach '+target)
                 if any(key in step for key in ['key','key_down','key_up']) or 'click_name' in step or 'click_text' in step or 'wheel' in step:
                     settlement=[]
-                    if a.mode=='package' and ('click_name' in step or 'click_text' in step): state,settlement=settle_pointer(step,state)
+                    if 'click_name' in step or 'click_text' in step: state,settlement=settle_pointer(step,state)
                     event=resolve_event(step,state)
                     if settlement: event['pointer_settlement']=settlement
                     repeat=int(step.get('repeat',1))
@@ -296,8 +330,13 @@ def main():
             if not record['archive_unchanged'] or not record['export_manifest_unchanged']: raise RuntimeError('Archive/provenance manifest changed')
             record['source_unchanged']=all(sha(project/f)==h for f,h in pins.items())
             if not record['source_unchanged']: raise RuntimeError('Source changed during capture')
+            record['import_cache_unchanged']=a.mode!='integrated' or import_pins==imported_files(project)
+            record['import_freeze_manifest_unchanged']=not import_freeze_sha or sha(project/'ui-source-freeze.json')==import_freeze_sha
+            if not record['import_cache_unchanged'] or not record['import_freeze_manifest_unchanged']: raise RuntimeError('Imported capture resources or their frozen receipt changed')
             record['shader_cache_seed_unchanged']=not seed_pins or seed_pins=={str(f.relative_to(a.shader_cache_seed)):sha(f) for f in a.shader_cache_seed.rglob('*') if f.is_file()}
             if not record['shader_cache_seed_unchanged']: raise RuntimeError('Source shader cache changed during capture')
+            record['godot_shader_cache_seed_unchanged']=not godot_seed_pins or godot_seed_pins=={str(f.relative_to(a.godot_shader_cache_seed)):sha(f) for f in a.godot_shader_cache_seed.rglob('*') if f.is_file()}
+            if not record['godot_shader_cache_seed_unchanged']: raise RuntimeError('Source Godot shader cache changed during capture')
             record['complete']=True
     except Exception as error:
         record['failure']=repr(error)

@@ -1,0 +1,5 @@
+The isolated boot recovery completed five manual and three automatic original frames, actual Quit and cleanup exit 0 in 3.639 seconds. Native Return retries the missing destination; Escape dismisses the failed loader into a usable boot menu; pointer Retry reopens the error and pointer Quit exits. The complete tiny fixture deliberately omits the target courtyard.
+
+W1 directly inspected initial error, usable recovery and return-to-boot originals. Error copy, Retry/Back and the boot Retry/Quit controls are contained and readable; the visible focus ring remains contained. The full log retains one unsupported V-Sync-mode warning and no errors. Source/import checks remained unchanged.
+
+This is installed-editor Compatibility llvmpipe, 960×600, CPU0 with one rendering thread. It proves recovery after a failed load and native Quit; it does not prove cancellation while loading, 3D rendering, physical-device performance or listening quality. Exact source/import closure is archived in source/fixture.tar.gz.

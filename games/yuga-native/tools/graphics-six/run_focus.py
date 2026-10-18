@@ -74,7 +74,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--project', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair', 'scene-anchors', 'compact-screens', 'compact-screens-125'], required=True)
+    parser.add_argument('--case', choices=['support', 'entry-cancel', 'gold-pair', 'scene-anchors', 'compact-screens', 'compact-screens-125', 'diadem-review'], required=True)
+    parser.add_argument('--review-branch', choices=['baseline', 'candidate'],
+                        help='Required only for the source-pinned diadem comparison')
     parser.add_argument('--display', type=int, default=192)
     parser.add_argument('--engine', type=Path,
                         help='Explicit isolated diagnostic engine; default uses installed godot')
@@ -89,6 +91,8 @@ def main():
     parser.add_argument('--timeout', type=float, default=300)
     parser.add_argument('--no-progress-timeout', type=float, default=120)
     args = parser.parse_args()
+    if (args.case == 'diadem-review') != (args.review_branch is not None):
+        parser.error('--review-branch is required only with --case diadem-review')
     if not 0 < args.timeout <= 900 or not 0 < args.no_progress_timeout <= args.timeout:
         parser.error('Require 0 < no-progress-timeout <= timeout <= 900 seconds')
     project, output = args.project.resolve(), args.output.resolve()
@@ -102,7 +106,8 @@ def main():
     seal = snapshot.verify(project)
     helper_name = {'gold-pair': 'capture_gold.gd', 'scene-anchors': 'capture_scene_anchors.gd',
                    'compact-screens': 'capture_compact_screens.gd',
-                   'compact-screens-125': 'capture_compact_screens.gd'}.get(args.case, 'capture_focus.gd')
+                   'compact-screens-125': 'capture_compact_screens.gd',
+                   'diadem-review': 's4_diadem_capture.gd'}.get(args.case, 'capture_focus.gd')
     helper = project / 'tools/graphics-six' / helper_name
     if not helper.is_file():
         parser.error('Refresh the snapshot with the new capture helper first')
@@ -114,7 +119,9 @@ def main():
                '--disable-vsync', '--fixed-fps', '30',
                '--script', 'res://tools/graphics-six/' + helper_name, '--',
                '--output=' + str(output)]
-    if args.case not in ('compact-screens', 'compact-screens-125'):
+    if args.case == 'diadem-review':
+        command.append('--mode=groom-stills')
+    elif args.case not in ('compact-screens', 'compact-screens-125'):
         command.append('--case=' + args.case)
     if args.verbose:
         command.insert(1, '--verbose')
@@ -129,6 +136,7 @@ def main():
         print(json.dumps({'command': command, 'snapshot_round': seal['round'], 'starts_engine': False,
                           'timeout_s': args.timeout, 'no_progress_timeout_s': args.no_progress_timeout,
                           'render_thread_override': args.render_thread,
+                          'review_branch': args.review_branch,
                           'godot_shader_cache_seed': str(args.godot_shader_cache_seed) if args.godot_shader_cache_seed else None,
                           'godot_worker_pool_limit': None}, indent=2))
         return
@@ -138,6 +146,8 @@ def main():
     logs.mkdir(parents=True)
     env = os.environ.copy()
     env.update(LP_NUM_THREADS='2', OPENBLAS_NUM_THREADS='1', OMP_NUM_THREADS='1', MKL_NUM_THREADS='1')
+    if args.review_branch:
+        env['YUGA_DIADEM_REVIEW'] = args.review_branch
     for key, suffix in [('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')]:
         folder = logs / 'user' / suffix
         folder.mkdir(parents=True)
@@ -162,6 +172,7 @@ def main():
         godot_cache_target = Path(env['XDG_DATA_HOME']) / 'godot/app_userdata' / names[0] / 'shader_cache'
         shutil.copytree(args.godot_shader_cache_seed, godot_cache_target)
     record = {'complete': False, 'command': command, 'case': args.case,
+              'review_branch': args.review_branch,
               'snapshot_sha256': sha(project / snapshot.MARKER), 'source_files': seal['files'],
               'helper_sha256': sha(helper), 'runner_sha256': sha(__file__),
               'engine_sha256': sha(command[0]), 'affinity': sorted(os.sched_getaffinity(0)),
@@ -196,9 +207,14 @@ def main():
         report_path = output / ('preflight.json' if args.preflight else 'capture.json')
         report = json.loads(report_path.read_text())
         shots = report['shots']
-        expected_shots = {'entry-cancel': 60, 'compact-screens': 8, 'compact-screens-125': 10}.get(args.case, 2)
+        expected_shots = {'entry-cancel': 60, 'compact-screens': 8, 'compact-screens-125': 10, 'diadem-review': 4}.get(args.case, 2)
         if report['complete'] is not True or len(shots) != expected_shots:
             raise RuntimeError('Capture did not satisfy declared checks/count')
+        if args.case == 'diadem-review':
+            if [s['id'] for s in shots] != ['rest-front', 'rest-profile', 'rest-rear', 'cast-three-quarter']:
+                raise RuntimeError('Unexpected diadem view sequence')
+            if any(s.get('diadem_branch') != args.review_branch for s in shots):
+                raise RuntimeError('Diadem report branch differs from declared source branch')
         if args.case == 'entry-cancel':
             if not all(b['physics_frame'] - a['physics_frame'] == 2 for a, b in zip(shots, shots[1:])):
                 raise RuntimeError('Missing physics sampling interval')

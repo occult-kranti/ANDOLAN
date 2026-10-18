@@ -1,6 +1,6 @@
 # ANDOLAN — City of Consequences
 
-**Active desktop work:** [resume handoff](games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. Current G1/G2 source candidates are undergoing renderer, visual and package qualification; the public UI preview remains a separate pinned release.
+**Active desktop work:** [resume handoff](games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.
 
 **Deferred mobile YUGA production plan:** [5v5 mobile roadmap](games/yuga-native/docs/MOBILE_PRODUCTION_ROADMAP.md) documents the Godot/Blender adaptation, touch controls, original map/hero art, authoritative services, open-source research and device gates. Six research packets feed [18 planned rounds of six workers](games/yuga-native/docs/MOBILE_PRODUCTION_BACKLOG.json). This is a researched implementation plan; no Android/iOS build or mobile quality parity is claimed.
 

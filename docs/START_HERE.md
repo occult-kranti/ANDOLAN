@@ -1,6 +1,6 @@
 # Start here: project and agent handoff
 
-**Active desktop work:** [resume handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. Current G1/G2 source candidates are undergoing renderer, visual and package qualification; the public UI preview remains a separate pinned release.
+**Active desktop work:** [resume handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.
 
 Updated 18 October 2026. Start here, then open only the subsystem assigned to your task. This repository contains separate native, browser and protest games.
 

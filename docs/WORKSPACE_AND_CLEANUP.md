@@ -1,3 +1,5 @@
+On18October2026, two inactive historical public Linux extractions were removed after37files matched retained public ZIP members and committed download hashes. This reclaimed **330,764,288 allocated bytes**; both ZIPs, all evidence, current UI/Rama packages, source and active caches remain. [Exact receipt](evidence/desktop-finish-historical-public-cleanup.json), [independent ownership review](evidence/desktop-finish-historical-public-cleanup-W6.json).
+
 # Cloud workspace and cleanup
 
 Desktop S2 evidence cleanup: [receipt](evidence/desktop-finish-s2-raw-cleanup.json) records15 raw trace duplicates removed after their lossless gzip versions were pushed and remote-verified at `31ca18948c691c31719c92afd3245e75cea8c8d1`. Every uncompressed byte/hash was checked against the committed gzip. This freed another106,905,600 allocated workspace bytes; all samples, failed controls and source remain recoverable. The former scratch path is no longer required by the trace reader.

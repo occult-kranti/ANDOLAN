@@ -1,0 +1,77 @@
+--- e6553343/launch_shell.gd
++++ candidate/launch_shell.gd
+@@ -36,6 +36,8 @@
+ var _compact := false
+ var _identity_gap: Control
+ var _footer_gap: Control
++var _identity: VBoxContainer
++var _practice_prompt: Label
+ 
+ func _ready() -> void:
+ 	# The native window must keep menu controls usable at the supported base size.
+@@ -80,16 +82,16 @@
+ 	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
+ 	content.add_theme_constant_override("separation", 0)
+ 	scroll.add_child(content)
+-	var identity := VBoxContainer.new()
+-	identity.name = "Identity"
+-	identity.add_theme_constant_override("separation", 0)
+-	content.add_child(identity)
++	_identity = VBoxContainer.new()
++	_identity.name = "Identity"
++	_identity.add_theme_constant_override("separation", 0)
++	content.add_child(_identity)
+ 	title_wordmark = HeroUITheme.label("YUGA", HeroUITheme.TYPE_LAUNCH_WORDMARK)
+ 	title_wordmark.name = "Wordmark"
+ 	title_wordmark.add_theme_font_override("font", HeroUITheme.display_font())
+-	identity.add_child(title_wordmark)
++	_identity.add_child(title_wordmark)
+ 	_subtitle = HeroUITheme.label("RAMA  /  THE SOLAR ARCHER", HeroUITheme.TYPE_CAPTION, HeroUITheme.GOLD)
+-	identity.add_child(_subtitle)
++	_identity.add_child(_subtitle)
+ 	_identity_gap = Control.new()
+ 	_identity_gap.name = "IdentityBreathingRoom"
+ 	_identity_gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+@@ -102,7 +104,8 @@
+ 	choices.name = "ModeChoice"
+ 	choices.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
+ 	decision.add_child(choices)
+-	choices.add_child(HeroUITheme.label("CHOOSE A PRACTICE", HeroUITheme.TYPE_CAPTION, HeroUITheme.MIST))
++	_practice_prompt = HeroUITheme.label("CHOOSE A PRACTICE", HeroUITheme.TYPE_CAPTION, HeroUITheme.MIST)
++	choices.add_child(_practice_prompt)
+ 	var modes := HBoxContainer.new()
+ 	modes.name = "PracticeModes"
+ 	modes.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
+@@ -185,11 +188,29 @@
+ 	_compact = size.y < 680 or size.x < 1100
+ 	var inset := 28.0 if _compact else 52.0
+ 	var column_width := clampf(size.x * .35, 364, 438)
+-	# Reflow the column rather than scaling text; shorter windows can scroll.
+-	card.position = Vector2(inset, 24 if _compact else 42)
+-	card.size = Vector2(minf(column_width, size.x - inset * 2), maxf(100, size.y - card.position.y * 2))
++	var width := minf(column_width, size.x - inset * 2)
++	var top := 24.0 if _compact else 42.0
++	var bottom := top
++	var short_canvas := size.y < 420
+ 	title_wordmark.add_theme_font_size_override("font_size", HeroUITheme.TYPE_LAUNCH_WORDMARK_COMPACT if _compact else HeroUITheme.TYPE_LAUNCH_WORDMARK)
+ 	mode_title.add_theme_font_size_override("font_size", HeroUITheme.TYPE_LAUNCH_PRACTICE_COMPACT if _compact else HeroUITheme.TYPE_LAUNCH_PRACTICE)
++	# At200% the identity must not be scrolled out by initial primary focus.
++	# Named mode buttons and the named action already identify the selection;
++	# remove only their repeated headings, retaining readable type and copy.
++	_practice_prompt.visible = not short_canvas
++	mode_title.visible = not short_canvas
++	_identity_gap.visible = not short_canvas
++	if short_canvas:
++		if _identity.get_parent() != self: _identity.reparent(self)
++		_identity.position = Vector2(inset, top)
++		_identity.size = Vector2(width, _identity.get_combined_minimum_size().y)
++		top += _identity.size.y + HeroUITheme.SPACE_MD
++	else:
++		if _identity.get_parent() != content:
++			_identity.reparent(content)
++			content.move_child(_identity, 0)
++	card.position = Vector2(inset, top)
++	card.size = Vector2(width, maxf(100, size.y - top - bottom))
+ 	_identity_gap.custom_minimum_size.y = HeroUITheme.SPACE_MD if _compact else HeroUITheme.SPACE_LG
+ 	_footer_gap.custom_minimum_size.y = HeroUITheme.SPACE_MD if _compact else HeroUITheme.SPACE_LG
+ 	queue_redraw()

@@ -1,0 +1,20 @@
+--- 7570/scripts/confluence_world.gd
++++ 6e9d/scripts/confluence_world.gd
+@@ -1024,6 +1024,9 @@
+ 	var guide_width:=minf(360,gap) if gap>=260 else minf(360,screen.x-margin*2)
+ 	atlas_guide.size=Vector2(guide_width,minf(344,maxf(1,screen.y-margin*2)))
+ 	atlas_guide.position=Vector2(left if gap>=260 else (screen.x-guide_width)*.5,margin)
++	# First constrained entry must measure populated rows, not the empty labels
++	# retained while the expanded title/relay cards were in use.
++	_refresh_compact_world()
+ 	if _constrained_world:
+ 		var summary_width:=maxf(1,map_control.position.x-margin*2)
+ 		compact_world_card.position=Vector2(margin,margin)
+@@ -1038,7 +1041,6 @@
+ 		atlas_guide.size=Vector2(summary_width,map_height)
+ 	compact_world_card.visible=_constrained_world and not overview and not paused
+ 	atlas_guide.visible=overview and not paused
+-	_refresh_compact_world()
+ 
+ func _atlas_guide_input(event: InputEvent) -> void:
+ 	# ScrollContainer has mouse-wheel support but does not read focused arrow

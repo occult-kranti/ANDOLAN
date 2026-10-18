@@ -1,0 +1,7 @@
+The native journey completed 23 manual and 15 automatic original frames, 98 XTest events, actual Quit and cleanup exit 0 in 212.330 seconds. Full engine logs contain no warnings or errors; runtime source, imported payloads, frozen cache inventory and copied seed source hashes remained unchanged.
+
+W1 directly inspected title, staged Sun outcome and returned settings originals. The title/action remains legible with the whole hero; the outcome has the focused Restart action and truthful final cores; returned settings retain 2.50× sensitivity and 0% volume with a visible Done footer. W6 independently inspected all 38 originals and completed a 69-check raw-capture audit plus ten import/owner checks; its separate report owns that broader review.
+
+Six explicit authority fixture actions produced three outcomes and resets. Four manual names mark STAGED outcomes/terminal state. These are not victories played from a full match. Auto filenames are trigger names: auto-loading-2, -4 and -5 actually record constructing, as their pixels and sidecars show.
+
+This is warm-cache Forward+ llvmpipe using the unmodified public 4.6.3 template-debug engine, not a shipped engine or GPU performance qualification. Native window is 960×600; scene framebuffer originals are 960×540. The raw artifacts and exact observer/plan/runner are preserved here; source code and complete source/import hashes allow reproduction with retained repository assets. Do not treat this as a self-contained packaged game.

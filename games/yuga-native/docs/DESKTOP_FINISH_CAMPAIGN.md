@@ -4,6 +4,8 @@ Updated18 October2026 for the latest user request. **Desktop first; mobile defer
 
 This revises the pending five-screen/ten-integration sequence. Its [exact old ledger](campaign-history/desktop-finish-v1/DESKTOP_FINISH_CAMPAIGN.json) and [plan](campaign-history/desktop-finish-v1/DESKTOP_FINISH_CAMPAIGN.md) remain historical. Existing S1–S5/X reports and implemented fixes keep their original identities. They provide inputs to the new rounds; they do not count as newly completed assignments. The separate previously published48-assignment UI campaign remains unchanged.
 
+Current bounded acceptance: **9/78 packets,0/13 rounds**. Title composition, controls and seven explicitly scoped native-journey/recovery goals passed review; hero art and world/motion corrections remain open. The machine-readable ledger owns later counts.
+
 ## Round gates
 
 | Round | Focus | Required evidence |
@@ -34,6 +36,6 @@ Each completed packet requires exact changed sources, executed commands/results,
 
 ## Carryover and next commands
 
-The preserved baseline includes reviewed daylight gold/paving, compact HUD/atlas and guide focus, cancellation repair, and a provisional grounded-contact change whose strict comparison is25/27. Full source/evidence links are in the active handoff. The first native draw can deadlock on cold shader compilation; seeded captures remain explicitly warm. The reconnect preserved the repository but removed temporary source-build and render trees, so reconstruct verified inputs before restarting any build. Do not assume old `/tmp` paths still exist.
+The preserved baseline includes reviewed daylight gold/paving, compact HUD/atlas and guide focus, cancellation repair, and a provisional grounded-contact change whose strict comparison is25/27. Full source/evidence links are in the active handoff. The installed first native draw exhibited a shader-lock cycle; the public unmodified runtime subsequently completed the600-second cold control in301.121seconds. Shorter failed runs remain preserved, and the scheduler patch stays inactive. Later seeded captures remain explicitly warm. The reconnect preserved the repository but removed temporary source-build and render trees, so reconstruct verified inputs before restarting any build. Do not assume old `/tmp` paths still exist.
 
 Prior X1–X10 goals remain covered: lifecycle in D09/I02; architecture in D07/I01; hero/equipment in D01/D04/D06/I01; armies and counters in D08/I02; traversal/audio in D05/D07/I01/I02; lighting/water in D10/I01; stress in D09/I02; package/persistence/publication in D10/I03. Native multiplayer/full roster, hardware profiling, Windows execution and human feel/listening remain explicit production work; this schedule does not silently replace them with the offline slice.

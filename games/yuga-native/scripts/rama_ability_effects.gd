@@ -353,6 +353,14 @@ func _animate(cast: Dictionary) -> void:
 	var after:=maxf(0,age-float(cast.release_age_s)) if cast.released else 0.0
 	var fade:=clampf((cast.duration-age)/.30,0,1)
 	var authority_after:=maxf(0,float(cast.authority_age)-float(cast.release_age_s)) if cast.released else 0.0
+	var launched_arrows:=0
+	for projectile in cast.geometry.get("projectiles",[]):
+		if _projectile_eligible(cast,projectile):launched_arrows+=1
+	if cast.id=="dawn_volley" and launched_arrows!=int(cast.get("launched_arrows",0)):
+		# Authority can cross a pulse boundary while interpolated age is already
+		# waiting in this geometry frame. Retire its notch on that same event.
+		cast.last_geometry_frame=-1
+	cast.launched_arrows=launched_arrows
 	var field_active: bool=not cast.released or authority_after+.000001<float(cast.timing.active_s)
 	if cast.id=="guardian_circle" and cast.warning.visible!=field_active:
 		# An authoritative expiry must clear recipients even when interpolation
@@ -393,7 +401,7 @@ func _animate(cast: Dictionary) -> void:
 		var arrow: Dictionary=cast.arrows[index]
 		var p: Dictionary=cast.geometry.projectiles[index]
 		var travel:=after-float(p.delay_s)
-		arrow.root.visible=cast.released and travel>=0 and not cast.contacts.has(index)
+		arrow.root.visible=_projectile_eligible(cast,p) and not cast.contacts.has(index)
 		var distance:=minf(float(cast.geometry.range_m),maxf(0,travel)*float(cast.geometry.speed_mps))
 		var point: Vector3=p.origin+p.forward*distance
 		arrow.root.global_transform=Transform3D(_basis(p.forward),point)
@@ -500,7 +508,7 @@ func _shapes(cast: Dictionary, prepare: float, after: float) -> Dictionary:
 					if not _reduced_effects:
 						# Three small notches count the actual unreleased arrows;
 						# their removal uses the accepted projectile delay.
-						if not cast.released or after<float(cast.geometry.projectiles[index].delay_s):
+						if not _projectile_eligible(cast,cast.geometry.projectiles[index]):
 							var notch:=Vector3(cos(a+.72),sin(a+.72),0)*growth*collapse
 							detail.append(_solar_arc(.075,Vector3(0,1.35,.60)+notch*.95,a+.1,a+2.2,12))
 					var out:=Vector3(cos(a+.7),sin(a+.7),0)
@@ -511,6 +519,12 @@ func _shapes(cast: Dictionary, prepare: float, after: float) -> Dictionary:
 							var center:=Vector3(0,1.35,.62)+out*(.94+ray*.13)*growth*collapse
 							detail.append([center-out*.045,center+out*.045])
 	return {"main":main,"detail":detail}
+
+func _projectile_eligible(cast: Dictionary, projectile: Dictionary) -> bool:
+	# Interpolation smooths launched travel; only accepted authority age may
+	# start a delayed arrow, using the same boundary tolerance as kit/audio.
+	return cast.released and float(cast.authority_age)-float(cast.release_age_s)+1e-8>=float(projectile.delay_s)
+
 func _impact(point: Vector3, color: Color, hit: bool, forward := Vector3.BACK) -> void:
 	var recycled: Dictionary={}
 	if not _impact_pool.is_empty():recycled=_impact_pool.pop_back()

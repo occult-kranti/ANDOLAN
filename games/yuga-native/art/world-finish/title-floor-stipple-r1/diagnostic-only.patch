@@ -1,0 +1,11 @@
+--- a/scripts/environment_surface_finish.gd
++++ b/scripts/environment_surface_finish.gd
+@@ -75,7 +75,7 @@
+ 				material.set_shader_parameter("albedo_texture", original.albedo_texture)
+ 				material.set_shader_parameter("has_normal", original.normal_enabled and original.normal_texture != null)
+ 				material.set_shader_parameter("normal_texture", original.normal_texture)
+-				material.set_shader_parameter("normal_depth", original.normal_scale)
++				material.set_shader_parameter("normal_depth", 0.0 if courtyard and original.resource_name in ["Courtyard_stone_0", "Courtyard_stone_1", "Courtyard_stone_2", "Courtyard_stone_3"] else original.normal_scale)
+ 				material.set_shader_parameter("has_roughness", original.roughness_texture != null)
+ 				material.set_shader_parameter("roughness_texture", original.roughness_texture)
+ 				material.set_shader_parameter("roughness_channel", _channel(original.roughness_texture_channel))

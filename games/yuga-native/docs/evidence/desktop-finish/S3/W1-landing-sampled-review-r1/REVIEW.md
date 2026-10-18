@@ -1,0 +1,11 @@
+# Landing close-up: better penetration, retained upward correction
+
+I directly inspected eight original images: baseline and candidate frames007,008,009 and039 from W5's 40-frame120Hz landing tapes. All eighty PNG hashes and both losslessly archived reports were independently verified. The camera, player transform, physics counters and draw counters match between branches. These are sampled-image findings, not a claim that I watched or accepted normal-speed playback.
+
+Frames007→008 span the same first grounded physics step46→47, or8.333 milliseconds. In the candidate, the screen-left/anatomical-right foot visibly lifts relative to the adjacent floor rim; the baseline toe becomes more obscured as it sinks. The observed lowest-sole projection corroborates that direction: candidate screen y663.953→657.156 (−6.797pixels), baseline y663.953→668.305 (+4.352pixels). These numbers come from the actual skinned-vertex projection in the sidecar, not image-edge tracking. The close camera magnifies the difference; this does not establish its salience at the ordinary gameplay distance.
+
+The candidate's following frame009 holds a more plausible sole height, while the baseline retains deeper toe/rim overlap. By039 the two views are much closer. The decorative visible rim and the measured `CourtyardFloor` collision plane are distinct references: neither the visible shadow nor the lowest vertex alone certifies full rendered contact. The owner retains the measured larger one-step candidate correction and the original25/27 comparative failures.
+
+Disposition: **limited**. Reduced penetration is supported, but the first-grounded upward correction remains visible in adjacent close stills; smoothness is not accepted. The ordinary full-body walk/run/reset/jump/land comparison remains a separate pending take at this review time. No runtime, camera, clocks or source assets were changed by this review; no commercial-quality or hardware-FPS claim follows.
+
+`receipt.json` pins the exact baseline119db and candidate8c377 reports, all directly viewed original hashes and the selected counters/coordinates. `verify_samples.py` reproduces the bounded provenance and correspondence checks from the owner's archived originals. The owner's normal-speed MP4s are separate derived viewing aids, not substitutes for those PNGs.

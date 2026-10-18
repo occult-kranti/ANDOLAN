@@ -1,6 +1,6 @@
 # YUGA native production track
 
-**Active desktop work:** [resume handoff](docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. Current G1/G2 source candidates are undergoing renderer, visual and package qualification; the public UI preview remains a separate pinned release.
+**Active desktop work:** [resume handoff](docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.
 
 **Deferred mobile adaptation:** start with the [original 5v5 mobile roadmap](docs/MOBILE_PRODUCTION_ROADMAP.md), [code/stack decisions](docs/mobile/CODE_AND_STACK_DECISIONS.md) and [18-round / 108-packet queue](docs/MOBILE_PRODUCTION_BACKLOG.json). Six specialist research reports cover touch, rendering, characters, networking, open-source reuse and physical-device release gates. This proposed mobile profile is separate from the existing offline/native and browser rules; mobile exports and device qualification remain unimplemented.
 

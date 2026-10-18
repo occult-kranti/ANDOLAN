@@ -1,0 +1,147 @@
+{
+  "runs": [
+    {
+      "name": "baseline-r4",
+      "command": [
+        "timeout",
+        "60s",
+        "taskset",
+        "-c",
+        "4",
+        "godot",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://tests/desktop_i02_volley_feedback_cases.gd",
+        "--",
+        "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/D04-I02/W5/baseline-r4.json"
+      ],
+      "cwd": "/workspace/ANDOLAN/games/yuga-native",
+      "environment": {
+        "LP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "XDG_DATA_HOME": "/tmp/yuga-i02-baseline-r4/data",
+        "XDG_CONFIG_HOME": "/tmp/yuga-i02-baseline-r4/config",
+        "XDG_CACHE_HOME": "/tmp/yuga-i02-baseline-r4/cache"
+      },
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 3.071612861000176,
+      "effects_before": "b77f68aeeb57ab5e7be8b84385505d1f7078cb90ef1cedc33c7e4d894ec9d8be",
+      "effects_after": "b77f68aeeb57ab5e7be8b84385505d1f7078cb90ef1cedc33c7e4d894ec9d8be",
+      "report_sha256": "cf40c7d5f99ce2229e89c3b75cfcca1feca4aebff06c76968c0efb09cef21fe6",
+      "log_sha256": "b5dfea7ed612270dff6aa791946683ec3e5f351fa99eceef82d8f91ad43dca58"
+    },
+    {
+      "name": "candidate-r2",
+      "command": [
+        "timeout",
+        "60s",
+        "taskset",
+        "-c",
+        "4",
+        "godot",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://tests/desktop_i02_volley_feedback_cases.gd",
+        "--",
+        "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/D04-I02/W5/candidate-r2.json"
+      ],
+      "cwd": "/workspace/ANDOLAN/games/yuga-native",
+      "environment": {
+        "LP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "XDG_DATA_HOME": "/tmp/yuga-i02-candidate-r2/data",
+        "XDG_CONFIG_HOME": "/tmp/yuga-i02-candidate-r2/config",
+        "XDG_CACHE_HOME": "/tmp/yuga-i02-candidate-r2/cache"
+      },
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 2.9748290409997935,
+      "effects_before": "119353e71e5ad1eee61360d52db036075a6be60ec30c4c2ee228b5656243db66",
+      "effects_after": "119353e71e5ad1eee61360d52db036075a6be60ec30c4c2ee228b5656243db66",
+      "report_sha256": "4acba912613950bc592feedadfeb03aab35e43b5d0552d14faa4a06d272b24b4",
+      "log_sha256": "8d63b41ba522cf96ad7b921d8d7ce8dc57b6b4bf5079bb4539bee413121292e0"
+    },
+    {
+      "name": "candidate-zero-r2",
+      "command": [
+        "timeout",
+        "60s",
+        "taskset",
+        "-c",
+        "4",
+        "godot",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://tests/desktop_i02_volley_feedback_cases.gd",
+        "--",
+        "--warmup-ticks=0",
+        "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/D04-I02/W5/candidate-zero-r2.json"
+      ],
+      "cwd": "/workspace/ANDOLAN/games/yuga-native",
+      "environment": {
+        "LP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "XDG_DATA_HOME": "/tmp/yuga-i02-candidate-zero-r2/data",
+        "XDG_CONFIG_HOME": "/tmp/yuga-i02-candidate-zero-r2/config",
+        "XDG_CACHE_HOME": "/tmp/yuga-i02-candidate-zero-r2/cache"
+      },
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 2.98311528899967,
+      "effects_before": "119353e71e5ad1eee61360d52db036075a6be60ec30c4c2ee228b5656243db66",
+      "effects_after": "119353e71e5ad1eee61360d52db036075a6be60ec30c4c2ee228b5656243db66",
+      "report_sha256": "009b602ddcb6e98f7c8e35c437ccc5a5e463ff5c85418aab2a5ceeb331fb804d",
+      "log_sha256": "8d63b41ba522cf96ad7b921d8d7ce8dc57b6b4bf5079bb4539bee413121292e0"
+    },
+    {
+      "name": "effects-adversarial-r1",
+      "command": [
+        "timeout",
+        "60s",
+        "taskset",
+        "-c",
+        "4",
+        "godot",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://tests/rama_effect_adversarial_cases.gd",
+        "--",
+        "--report=/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/D04-I02/W5/effects-adversarial-r1.json"
+      ],
+      "cwd": "/workspace/ANDOLAN/games/yuga-native",
+      "environment": {
+        "LP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "XDG_DATA_HOME": "/tmp/yuga-i02-effects-adversarial-r1/data",
+        "XDG_CONFIG_HOME": "/tmp/yuga-i02-effects-adversarial-r1/config",
+        "XDG_CACHE_HOME": "/tmp/yuga-i02-effects-adversarial-r1/cache"
+      },
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 1.7526345699998274,
+      "effects_before": "119353e71e5ad1eee61360d52db036075a6be60ec30c4c2ee228b5656243db66",
+      "effects_after": "119353e71e5ad1eee61360d52db036075a6be60ec30c4c2ee228b5656243db66",
+      "report_sha256": "c9cdd7292d745ba1accb0205325a5f93a8d69dab09f7fd8e6378a7c83b36b45d",
+      "log_sha256": "9f95ebc221d142e94ba0534377e0757b59616826e5f84832d48a9ec15966311a"
+    }
+  ],
+  "restored_candidate_sha256": "119353e71e5ad1eee61360d52db036075a6be60ec30c4c2ee228b5656243db66",
+  "scope": "CPU4 affinity; LP/OMP/BLAS/MKL1; engine worker pool not capped. No raster/import/listening."
+}

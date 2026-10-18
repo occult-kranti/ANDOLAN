@@ -85,6 +85,8 @@ func snapshot() -> Dictionary:
 	var result := {"mode":mode,"frame":Engine.get_process_frames(),"physics_frame":Engine.get_physics_frames(),"paused":paused,"mouse_mode":Input.mouse_mode,"window_focused":DisplayServer.window_is_focused(),"size":[root.size.x,root.size.y],"scene":str(current_scene.name) if current_scene else "", "scene_path":current_scene.scene_file_path if current_scene else "", "scene_process_mode":current_scene.process_mode if current_scene else -1,"scene_can_process":current_scene.can_process() if current_scene else false,"loader_count":0,"transition_layer_count":root.find_children("YugaSceneTransitionLayer","CanvasLayer",false,false).size(),"transition_event_count":transition_events.size(),"transition_owner_present":root.has_meta("yuga_scene_transition_owner"),"controls":[],"panels":{},"state":{}}
 	var focus := root.gui_get_focus_owner()
 	result.focus_name = str(focus.name) if focus else ""
+	result.logical_viewport_size = [root.get_visible_rect().size.x,root.get_visible_rect().size.y]
+	result.content_scale_factor = root.content_scale_factor
 	result.focus = str(focus.get_path()) if focus else ""
 	result.focus_text = str(focus.get("text")) if focus and "text" in focus else ""
 	_walk(root, result)
@@ -115,6 +117,9 @@ func snapshot() -> Dictionary:
 			result.world = {}
 			for key in ["lane_label","objective_label","goal_label","relay_hint","score_label"]:
 				if key in current_scene: result.world[key] = current_scene.get(key).text
+			if "compact_world_card" in current_scene and is_instance_valid(current_scene.compact_world_card):
+				result.world.compact_visible = current_scene.compact_world_card.is_visible_in_tree()
+				result.world.compact_lines = current_scene.compact_world_labels.map(func(label):return label.text)
 			if "outcome_summary" in current_scene:
 				result.world.outcome_visible = current_scene.outcome_summary.is_visible_in_tree()
 				result.world.outcome_heading = current_scene.outcome_summary.heading.text

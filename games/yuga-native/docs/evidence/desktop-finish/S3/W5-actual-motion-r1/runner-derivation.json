@@ -1,0 +1,14 @@
+{
+  "parent": "docs/evidence/desktop-finish/S3/W5-capture-preparation/run_capture.py",
+  "parent_sha256": "771eae5d6287f611523274f1bc9f7907000cc497ccecdd16b5b78a6f0ac18d8e",
+  "successor_sha256": "f8613a61c449d145b8e6822cb87c6afa31bbbfdf871284b38c5e6fcab449c508",
+  "render_inputs_sha256": "1034e86dbcc699d8920ce461338f7b91dad3e356121a273326c7a5bc5464d061",
+  "changes": [
+    "Explicit approved unmodified engine identity",
+    "Exact warm Godot and Mesa seed inventories; fresh copy per run, original seeds reverified",
+    "LP2 while BLAS/OMP/MKL1; explicit unmodified engine worker pool remains uncapped",
+    "Explicit bounded no-progress interval within overall600/900s; no capture, physics, render quality or staged source changes",
+    "Explicit source-pinned W1 isolated Xvfb/llvmpipe runtime and same Vulkan/library environment; original PATH-only Xvfb is unavailable, discovered before any render",
+    "Outer CPU0,1 runner affinity also bounds owned Xvfb; actual runner mask recorded"
+  ]
+}

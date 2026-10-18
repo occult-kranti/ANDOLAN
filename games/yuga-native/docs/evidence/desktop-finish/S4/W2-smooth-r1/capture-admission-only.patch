@@ -1,0 +1,22 @@
+--- sealed-first/capture_review.gd
++++ smooth/capture_review.gd
+@@ -1,5 +1,5 @@
+ extends "res://tools/visual-rounds/capture_groom.gd"
+-## Review-only matched source comparison. No runtime geometry or material writes.
++## Review-only smooth-arc revision; matched source comparison. No runtime geometry or material writes.
+ ## Both branches use this exact helper; admission differs only in three GLBs.
+ const SOURCE_PINS := {
+ 	"baseline": [
+@@ -7,9 +7,9 @@
+ 		"d95a061e2243477afc0227bf52564252fbcb20cb039d303ad10292ea5d85beed",
+ 		"ee2e35278ce49efdda6751850fddbb8f1b4de99ad019e6992c10e7702dc6317c"],
+ 	"candidate": [
+-		"bda22a046d44079769ac60ca15db2b82be1a34eea72efc962547cfc7bd4b40f0",
+-		"ab2e0bacd9804c4af05f0ecfcbdfedfdeec6b3c40d8a7d86f2271613a94ddc82",
+-		"33019438b13e895181ef0d010e3abfef116f4048ebc0b3b19ad5d0201839d9d7"]}
++		"e98c9110161e49b653e98b6f4ca1dda997ad891cf73b737abd18f319bb3c2b82",
++		"dfa9a41adab7cfd5c60416a66d2b95c4d1ab06d081b64ee7a9f5ff5c7744474b",
++		"8b74504c07d38416032ea22e37061d69061baaf0b86e78dec27417c8927e39f9"]}
+ const RAW_PATHS := ["res://assets/heroes/rama-hero.glb", "res://assets/heroes/rama-hero-mid.glb", "res://assets/heroes/rama-hero-far.glb"]
+ const REQUIRED_MOTION := "8c3771a343a0538d749147393d0c407b1fb377d774a91b4cf99734e4852520f8"
+ const REQUIRED_FINISH := "6eb51ce8f34a3d5a33deb142ca92aaa20505516b0ee8fff3ca445bcab603078a"

@@ -33,12 +33,14 @@ def main():
     check('Catalog identifiers are unique and every entry exists',
           len({s[0] for s in suites}) == len(suites) and all((PROJECT/s[2]).is_file() for s in suites))
     for kind, expected in [('visual', {'desktop-release-continuity','desktop-motion-scene-entry',
-                                     'desktop-motion-transition-guard','desktop-world-route-parity'}),
+                                     'desktop-motion-transition-guard','desktop-world-route-parity',
+                                     'desktop-volley-feedback'}),
                            ('screens', {'ui-boot-recovery','ui-title-portrait','ui-launch-composition',
                             'ui-world-atlas','ui-action-hud','ui-action-hud-fit',
                             'ui-host-replacement','ui-loading-presentation',
                             'ui-loading-readiness','ui-hud-readability','ui-atlas-layout','ui-cancel-focus',
-                            'ui-preferences-relaunch','ui-compact-navigation-routes','ui-world-compact-title'})]:
+                            'ui-preferences-relaunch','ui-compact-navigation-routes','ui-world-compact-title',
+                            'ui-title-identity','ui-outcome-shortcuts','ui-world-compact-first-entry'})]:
         result = subprocess.run([sys.executable,str(RUNNER),'--catalog',kind,'--list'],capture_output=True,text=True)
         listed = json.loads(result.stdout)
         check(kind+' CLI exposes new contracts with bounded acceptance scope',
@@ -46,6 +48,8 @@ def main():
               and 'no ' in listed['scope'] and 'release acceptance' in listed['scope'])
     result = subprocess.run([sys.executable,str(RUNNER),'--catalog','visual','--suite','ui-boot-recovery','--list'],capture_output=True,text=True)
     check('A screen suite cannot silently run under visual acceptance',result.returncode == 2 and 'selected --catalog' in result.stderr)
+    result = subprocess.run([sys.executable,str(RUNNER),'--catalog','screens','--suite','desktop-volley-feedback','--list'],capture_output=True,text=True)
+    check('A combat presentation suite cannot silently run under screen acceptance',result.returncode == 2 and 'selected --catalog' in result.stderr)
     for name, expected in {
         'ui-boot-recovery': {'tests/ui_s1_loading_cases.gd'},
         'ui-host-replacement': {'tests/ui_s2_transition_cases.gd'},
@@ -59,12 +63,26 @@ def main():
         'ui-world-compact-title': {'tests/desktop_world_compact_title_cases.gd',
                                    'scenes/confluence_world.tscn','scripts/confluence_world.gd',
                                    'scripts/rama_hero_hud.gd','scripts/lane_army.gd'},
+        'ui-title-identity': {'tests/desktop_d01_title_identity_cases.gd',
+                              'scripts/launch_shell.gd','scripts/hero_ui_theme.gd'},
+        'ui-outcome-shortcuts': {'tests/desktop_d08_outcome_shortcut_cases.gd',
+                                 'scenes/confluence_world.tscn','scripts/confluence_world.gd',
+                                 'scripts/input_bindings.gd','scripts/world_outcome_summary.gd'},
+        'ui-world-compact-first-entry': {'tests/desktop_world_compact_first_entry_cases.gd',
+                                        'scenes/confluence_world.tscn','scripts/confluence_world.gd',
+                                        'scripts/rama_hero_hud.gd','scripts/hero_ui_theme.gd',
+                                        'scripts/lane_army.gd'},
         'ui-action-hud-fit': {'tests/desktop_s1_hud_cases.gd','tests/ui_i1_action_hud_cases.gd'},
         'ui-hud-readability': {'tests/ui_i1_action_hud_cases.gd'},
         'desktop-world-route-parity': {'tests/desktop_world_route_parity_cases.gd',
                                        'scenes/confluence_world.tscn','assets/world/confluence-map.json',
                                        'scripts/confluence_world.gd','scripts/world_atlas.gd',
                                        'scripts/player.gd','scripts/player_traversal.gd'},
+        'desktop-volley-feedback': {'tests/desktop_i02_volley_feedback_cases.gd',
+                                    'scenes/confluence_world.tscn','scripts/rama_ability_effects.gd',
+                                    'scripts/rama_ability_kit.gd','scripts/rama_action_audio.gd',
+                                    'scripts/rama_vitals.gd','scripts/rama_action_buffer.gd',
+                                    'scripts/rama_hero_hud.gd','assets/heroes/rama-hero.glb.import'},
         'desktop-release-continuity': {'tests/graphics_g1_motion_cases.gd',
                                      'docs/evidence/desktop-finish/S1/W5/baseline/rama_motion.gd'},
         'desktop-motion-scene-entry': {'tests/graphics_g2_support_cases.gd',
@@ -83,6 +101,9 @@ def main():
     scene_entry = next(s for s in suites if s[0] == 'desktop-motion-scene-entry')
     check('Native scene-entry CLI requests a bounded summary and explicit rate',
           '--summary-report' in scene_entry[3] and '--hz=60' in scene_entry[3])
+    volley = next(s for s in suites if s[0] == 'desktop-volley-feedback')
+    check('Volley combined-boundary CLI retains the nonzero authority warmup',
+          volley[3] == ('--warmup-ticks=200',))
 
     with tempfile.TemporaryDirectory(prefix='yuga-motion-trace-cases-') as temporary:
         report = Path(temporary)/'result.json'

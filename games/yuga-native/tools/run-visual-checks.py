@@ -44,6 +44,7 @@ SUITES = (
      ("--hz=60", "--summary-report")),
     ("desktop-motion-transition-guard", "godot", "tests/desktop_s3_transition_guard_cases.gd", ()),
     ("desktop-world-route-parity", "godot", "tests/desktop_world_route_parity_cases.gd", ()),
+    ("desktop-volley-feedback", "godot", "tests/desktop_i02_volley_feedback_cases.gd", ("--warmup-ticks=200",)),
 )
 SCREEN_SUITES = (
     ("ui-launch", "godot", "tests/launch_shell_cases.gd", ()),
@@ -84,6 +85,9 @@ SCREEN_SUITES = (
     ("ui-preferences-relaunch", "fixture", "tests/desktop_d05_preferences_fixture.py", ()),
     ("ui-compact-navigation-routes", "godot", "tests/desktop_d03_d05_navigation_audit_cases.gd", ()),
     ("ui-world-compact-title", "godot", "tests/desktop_world_compact_title_cases.gd", ()),
+    ("ui-title-identity", "godot", "tests/desktop_d01_title_identity_cases.gd", ()),
+    ("ui-outcome-shortcuts", "godot", "tests/desktop_d08_outcome_shortcut_cases.gd", ()),
+    ("ui-world-compact-first-entry", "godot", "tests/desktop_world_compact_first_entry_cases.gd", ()),
 )
 SCREEN_LIMITS = "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance."
 # Tests inherited by selected scripts and tests invoked by fixture runners are
