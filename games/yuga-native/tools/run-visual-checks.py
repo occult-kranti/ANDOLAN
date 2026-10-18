@@ -57,6 +57,7 @@ SCREEN_SUITES = (
     ("ui-controls-state", "godot", "tests/ui_controls_state_cases.gd", ()),
     ("ui-controls-lifecycle", "godot", "tests/ui_controls_lifecycle_cases.gd", ()),
     ("ui-guide-capabilities", "godot", "tests/ui_guide_capability_cases.gd", ()),
+    ("ui-focus-recovery", "godot", "tests/ui_focus_recovery_cases.gd", ()),
     ("ui-launch-integration", "godot", "tests/ui_launch_integration_cases.gd", ()),
     ("ui-end-to-end", "godot", "tests/ui_end_to_end_cases.gd", ()),
     ("ui-transition-lifecycle", "godot", "tests/ui_transition_lifecycle_cases.gd", ()),

@@ -1,0 +1,42 @@
+{
+  "measurement_source": "recovery-map.json",
+  "known_exact_committed_delta": {
+    "from": "f8dec5fa4f9bbd2d20c58f6102fb984d0b19a9f1",
+    "to": "d1bfbe28850899aba12226227bc5d567a50a3bcb",
+    "added_paths": 473,
+    "logical_bytes": 879987341,
+    "ceil4k_bytes": 881139712,
+    "added_paths_already_present_in_owned_clone": 0
+  },
+  "historical_restore": {
+    "mapped_paths": 2732,
+    "still_missing": 2732,
+    "allocated_bytes": 3112771584
+  },
+  "pending_source_budget": {
+    "allowlist_files": 577,
+    "logical_bytes": 83568925,
+    "ceil4k_conservative_bytes": 84791296,
+    "net_ceil4k_bytes": 84484096,
+    "additional_small_packet_allowance": 4194304,
+    "not_yet_committed": true,
+    "snapshot_drift_paths": []
+  },
+  "bytes": {
+    "tmp_free": 2926358528,
+    "workspace_free": 2805833728,
+    "separate_r2_proposed_reclaim": 662401024,
+    "new_r3_expansions_plus_two_windows_pcks": 695898112,
+    "reserve_per_filesystem": 134217728,
+    "observed_r3_build_for_successor": 784232448
+  },
+  "split_filesystem_projection": {
+    "tmp_after_both_cleanups": 4284657664,
+    "tmp_after_restore_d1_pending_and_packet": 201760768,
+    "tmp_margin_above_reserve": 67543040,
+    "workspace_after_observed_build": 2021601280,
+    "workspace_margin_above_reserve": 1887383552
+  },
+  "execution_gate": "After maps are pushed and root authorizes cleanup, remeasure available bytes and final source checkpoint actualdelta. Before restoration require available_tmp >= restoration + actual finalcheckout ceil4K delta +128MiB +remaining packet/growth budget. Use/workspace only fornewbuild. Halt rather than broaden cleanup if insufficient.",
+  "limits": "No deletion,restoration,checkout,export or engine. Captures/source inputs can grow; projection is not a reservation. Oldr2capacity-plan remains immutable historical preliminary estimate."
+}

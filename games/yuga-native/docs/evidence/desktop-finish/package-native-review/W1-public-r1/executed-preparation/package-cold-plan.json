@@ -1,0 +1,175 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done",
+      "loader_count": 1
+    },
+    "capture": "01-package-title"
+  },
+  {
+    "tab_to_name": "TrainingMode"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "launch.selected_mode": "train"
+    }
+  },
+  {
+    "tab_to_name": "ExploreConfluence"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "state.started": true,
+      "state.player_active": true,
+      "hero_hud.visible": true
+    },
+    "capture": "02-package-training"
+  },
+  {
+    "key_down": "d",
+    "immediate": true,
+    "wait_physics": 24,
+    "expect": {
+      "state.player_active": true
+    }
+  },
+  {
+    "key_up": "d",
+    "immediate": true,
+    "wait_physics": 8,
+    "expect": {
+      "state.player_active": true
+    },
+    "capture": "03-package-training-rotated"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    },
+    "capture": "04-package-training-pause"
+  },
+  {
+    "tab_to_text": "RETURN TO TITLE"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "panels.main_panel": true,
+      "state.started": false,
+      "paused": false
+    }
+  },
+  {
+    "tab_to_name": "ConfluenceMode"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "launch.selected_mode": "world"
+    }
+  },
+  {
+    "tab_to_name": "ExploreConfluence"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/confluence_world.tscn",
+      "state.world_ready": true,
+      "transition.phase": "done",
+      "state.player_grounded": true
+    },
+    "capture": "05-package-world-live"
+  },
+  {
+    "key_down": "d",
+    "immediate": true,
+    "wait_physics": 24,
+    "expect": {
+      "state.player_active": true,
+      "state.overview": false
+    }
+  },
+  {
+    "key_up": "d",
+    "immediate": true,
+    "wait_physics": 8,
+    "expect": {
+      "state.player_active": true,
+      "presentation.visual_not_north": true,
+      "presentation.atlas_heading_agrees": true
+    },
+    "capture": "06-package-world-rotated"
+  },
+  {
+    "key": "F1",
+    "expect": {
+      "state.overview": true,
+      "presentation.suspended": true,
+      "presentation.visual_not_north": true,
+      "presentation.atlas_heading_agrees": true
+    },
+    "capture": "07-package-overview-rotated-a"
+  },
+  {
+    "wait_physics": 15,
+    "expect": {
+      "state.overview": true,
+      "presentation.suspended": true,
+      "presentation.visual_not_north": true,
+      "presentation.atlas_heading_agrees": true
+    },
+    "capture": "08-package-overview-rotated-b"
+  },
+  {
+    "key": "F1",
+    "wait_physics": 8,
+    "expect": {
+      "state.overview": false,
+      "presentation.suspended": false,
+      "presentation.visual_not_north": true,
+      "presentation.atlas_heading_agrees": true
+    },
+    "capture": "09-package-world-overview-return"
+  },
+  {
+    "key": "n",
+    "expect": {
+      "state.night": true,
+      "state.phase": 1.0
+    }
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    },
+    "capture": "10-package-night-pause"
+  },
+  {
+    "tab_to_text": "Return to courtyard"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "transition.phase": "done"
+    }
+  },
+  {
+    "tab_to_name": "Quit"
+  },
+  {
+    "key": "Return",
+    "expect_exit": 0
+  }
+]

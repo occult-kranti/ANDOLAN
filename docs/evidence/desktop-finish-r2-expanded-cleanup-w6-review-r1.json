@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "utc": "2026-10-18T10:26:37.621912+00:00",
+  "status": "bounded_source_review_accepted_no_execution",
+  "inputs": {
+    "docs/evidence/desktop-finish-r2-expanded-cleanup-r1/receipt.json": {
+      "bytes": 2539,
+      "sha256": "637d71057078efef182de1d0fa7eb66af771791f5d29beaf34df3933165b926b"
+    },
+    "docs/evidence/desktop-finish-r2-expanded-cleanup-r1/guard.py": {
+      "bytes": 4856,
+      "sha256": "5931689f04ec84773937094ef54809c2c283dba785c677beacc53c9fa740eeaa"
+    },
+    "docs/evidence/desktop-finish-r2-expanded-cleanup-r1/audit.py": {
+      "bytes": 7206,
+      "sha256": "c596bf727935d8bc7f3e26509e6287507627bdef8c1571a69be8d6a8ba127c79"
+    },
+    "docs/evidence/desktop-finish-r2-expanded-cleanup-r1/recovery-map.json": {
+      "bytes": 75526,
+      "sha256": "8621839c42dcfe00f469912c702bcbefd72397a18753824dc0726c56239188b2"
+    },
+    "docs/evidence/desktop-finish-r2-expanded-cleanup-r1/ownership.json": {
+      "bytes": 1216,
+      "sha256": "92a684a32282cd5c73bebb0d1227365f80f370a019a27c28c4f0128612017f58"
+    },
+    "docs/evidence/desktop-finish-r2-expanded-cleanup-r1/verify-only.json": {
+      "bytes": 1016,
+      "sha256": "19de01487067fbace337e3bc8ebdf09a2864e09daf13304909bce8c66302d5b5"
+    }
+  },
+  "checks": {
+    "owner_receipt_ten_artifact_hashes": true,
+    "exact_three_r2_roots_and_102_unique_files": true,
+    "retained_zip_recovery_and_disk_modes_explicit": true,
+    "guard_default_no_deletion": true,
+    "remove_requires_published_map_audit_guard_ownership_and_remote_ancestry": true,
+    "fresh_complete_file_metadata_zip_hash_and_same_uid_process_checks_before_removal": true,
+    "per_file_regular_no_symlink_single_link_identity_recheck": true,
+    "only_allowlisted_file_unlink_no_directory_or_archive_removal": true
+  },
+  "owner_verification": {
+    "verified_files": 102,
+    "removed_files": 0,
+    "source": "verify-only.json; independently rehashed, not rerun"
+  },
+  "w6_dependency_release": "No live dependency on the three exact r2 expansions; retained ZIP/PCK/log/manifest sources and all r3/clone/current diagnostics remain required. Root separately authorizes removal after push.",
+  "limits": [
+    "Read source and rehashed small evidence files only; no removal, restore, engine, or second full payload audit.",
+    "Same-UID process evidence and immutable metadata checks are bounded observations, not global concurrency locking."
+  ]
+}

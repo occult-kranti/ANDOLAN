@@ -60,6 +60,22 @@ PUBLIC_RUNTIME_EVIDENCE = {
     'NOTICE/GODOT-LICENSE.txt': 'b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80',
     'NOTICE/GODOT-COPYRIGHT.txt': 'b3330849267d56ddd3d62a513817506606c2195034411fe05859f0140bff9d8a',
 }
+PATCHED_LINUX_RUNTIME = {
+    'bytes': 85447128,
+    'sha256': 'e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e',
+    'version': '4.6.3.stable.custom_build',
+}
+PATCHED_RUNTIME_BASE = 'docs/evidence/desktop-finish/G0/template-priority-build-r1'
+PATCHED_RUNTIME_PROOF = PATCHED_RUNTIME_BASE + '/finished-build-verification.json'
+PATCHED_RUNTIME_EVIDENCE = {
+    **PUBLIC_RUNTIME_EVIDENCE,
+    PATCHED_RUNTIME_PROOF: '67d485da0bd2d78cbb2cd304723f0bd10774626c44c47de814483d396826a134',
+    PATCHED_RUNTIME_BASE + '/receipt.json': '2ff2289520bd43e74d55810b40d47c64b61197bf956f14c4a09140b7b0d4bfc8',
+    PATCHED_RUNTIME_BASE + '/build-result.json': '1dea70d4cdcc7bb182d02fba20271d4d8e2796c111d79e7c3b768485df479e4a',
+    PATCHED_RUNTIME_BASE + '/proposed.patch': 'df9032765f5fd348f3e1ef7f35c6de9148a74734172f94efe562e1753db8b4d7',
+    PATCHED_RUNTIME_BASE + '/pipeline_hash_map_rd.original.h': '095dc91ce6ebb23f84912981c90d84caac83be3cd7765f00e7d696cb7c03e6c5',
+    PATCHED_RUNTIME_BASE + '/pipeline_hash_map_rd.proposed.h': 'c4234010f9270c5c55c1d09ca752f82dbdd9bbbabe2ca7d54011ffacb29ac831',
+}
 
 
 def public_runtime_provenance(proof_path: Path) -> dict:
@@ -88,6 +104,45 @@ def public_runtime_provenance(proof_path: Path) -> dict:
     }
 
 
+def patched_runtime_provenance(proof_path: Path) -> dict:
+    """Bind the one reviewed pipeline-priority patch; no execution claim."""
+    if not proof_path.is_file() or digest(proof_path) != PATCHED_RUNTIME_EVIDENCE[PATCHED_RUNTIME_PROOF]:
+        raise ValueError('Linux runtime provenance is not the reviewed pipeline-priority build proof')
+    evidence = {}
+    for relative, sha in PATCHED_RUNTIME_EVIDENCE.items():
+        path = PROJECT / relative
+        if not path.is_file() or digest(path) != sha:
+            raise ValueError('Patched runtime evidence changed or is missing: ' + relative)
+        evidence[relative] = record(path)
+    proof = json.loads(proof_path.read_text())
+    build = json.loads((PROJECT / PATCHED_RUNTIME_BASE / 'build-result.json').read_text())
+    recovery = json.loads((PROJECT / 'docs/evidence/desktop-finish/G0/template-build-preparation-r1/source-recovery.json').read_text())
+    patch_path = PATCHED_RUNTIME_BASE + '/proposed.patch'
+    return {
+        'kind': 'patched-public-source-template-debug',
+        'variant': 'pipeline-low-priority-v1',
+        'source_commit': proof['source_commit'], 'source_patches': proof['source_patches'],
+        'source_url': 'https://github.com/godotengine/godot/tree/' + proof['source_commit'],
+        'source_archive': recovery['downloads']['godot-35e80b3a.tar.gz'],
+        'source_archive_url': 'https://github.com/godotengine/godot/archive/' + proof['source_commit'] + '.tar.gz',
+        'build_command': build['command'], 'target': 'template_debug',
+        'patches': [{
+            'source_path': 'servers/rendering/renderer_rd/pipeline_hash_map_rd.h',
+            'change': 'Pipeline native-task submission uses low priority (p_high_priority becomes false); shader compilation remains high priority.',
+            'evidence_path': patch_path, 'sha256': PATCHED_RUNTIME_EVIDENCE[patch_path],
+            'before_sha256': PATCHED_RUNTIME_EVIDENCE[PATCHED_RUNTIME_BASE + '/pipeline_hash_map_rd.original.h'],
+            'after_sha256': PATCHED_RUNTIME_EVIDENCE[PATCHED_RUNTIME_BASE + '/pipeline_hash_map_rd.proposed.h'],
+        }],
+        'evidence': evidence,
+        # Preserve both baseline and patched build receipts with identical basenames.
+        'bundled_evidence': {relative: (relative if relative.startswith('NOTICE/') else
+                                      'NOTICE/godot-public-runtime/' + relative)
+                             for relative in evidence},
+        'license': 'MIT; bundled GODOT-LICENSE.txt and GODOT-COPYRIGHT.txt include third-party attributions.',
+        'scope': 'Patched build identity only. A diagnostic or archive check does not qualify a newly packaged runtime or establish a universal cold-start repair.',
+    }
+
+
 def linux_engine_selection(args: argparse.Namespace, expected: dict | None = None, *, probe_versions: bool = False) -> dict:
     """Bind exporter/font probe and Linux runtime independently across phases.
 
@@ -96,17 +151,25 @@ def linux_engine_selection(args: argparse.Namespace, expected: dict | None = Non
     """
     runtime = getattr(args, 'linux_runtime', None)
     proof = getattr(args, 'linux_runtime_provenance', None)
+    variant = getattr(args, 'linux_runtime_variant', 'unmodified-public')
+    if variant not in ('unmodified-public', 'pipeline-low-priority'):
+        raise ValueError('Unknown Linux runtime variant')
     if bool(runtime) != bool(proof):
         raise ValueError('--linux-runtime and --linux-runtime-provenance must be supplied together')
+    if variant != 'unmodified-public' and not runtime:
+        raise ValueError('Explicit patched variant requires --linux-runtime and --linux-runtime-provenance')
+    runtime_spec = PATCHED_LINUX_RUNTIME if variant == 'pipeline-low-priority' else PUBLIC_LINUX_RUNTIME
     exporter_record = record(args.linux_engine)
     runtime_record = record(runtime) if runtime else exporter_record
     provenance = None
     if runtime:
         if exporter_record['sha256'] != PUBLIC_RUNTIME_EXPORTER_SHA:
             raise ValueError('Public Linux runtime requires the reviewed official exporter')
-        if runtime_record != {key: PUBLIC_LINUX_RUNTIME[key] for key in ('bytes', 'sha256')}:
-            raise ValueError('Linux runtime is not the reviewed unmodified public binary')
-        provenance = public_runtime_provenance(proof)
+        if runtime_record != {key: runtime_spec[key] for key in ('bytes', 'sha256')}:
+            raise ValueError('Linux runtime is not the reviewed ' + ('pipeline-priority patched binary'
+                             if variant == 'pipeline-low-priority' else 'unmodified public binary'))
+        provenance = (patched_runtime_provenance(proof) if variant == 'pipeline-low-priority'
+                      else public_runtime_provenance(proof))
     if expected is not None:
         for key, actual in [('exporter', exporter_record), ('linux_runtime', runtime_record)]:
             if actual != {field: expected.get(key, {}).get(field) for field in ('bytes', 'sha256')}:
@@ -121,12 +184,12 @@ def linux_engine_selection(args: argparse.Namespace, expected: dict | None = Non
         raise ValueError(f'Expected Godot {EXPECTED_VERSION}; found {version}')
     if runtime and version != PUBLIC_RUNTIME_EXPORTER_VERSION:
         raise ValueError('Official exporter version differs from reviewed build')
-    if runtime and runtime_version != PUBLIC_LINUX_RUNTIME['version']:
+    if runtime and runtime_version != runtime_spec['version']:
         raise ValueError('Public Linux runtime version differs from reviewed build')
     selected = {
         'exporter': {**exporter_record, 'version': version, 'role': 'PCK export and imported-font proof'},
         'linux_runtime': {**runtime_record, 'version': runtime_version,
-                          'kind': 'unmodified-public-source-template-debug' if runtime else 'exporter-binary',
+                          'kind': provenance['kind'] if runtime else 'exporter-binary',
                           'provenance': provenance},
     }
     if record(args.linux_engine) != exporter_record or (runtime and record(runtime) != runtime_record):
@@ -149,19 +212,30 @@ def copy_public_runtime_notice(destination: Path, selection: dict) -> None:
             if record(notice / Path(relative).name) != pinned:
                 raise ValueError('Bundled public runtime attribution differs from reviewed source')
         else:
-            target = notice / 'godot-public-runtime' / Path(relative).name
+            target = (destination / provenance['bundled_evidence'][relative]
+                      if 'bundled_evidence' in provenance else
+                      notice / 'godot-public-runtime' / Path(relative).name)
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, target)
             if record(target) != pinned:
                 raise ValueError('Public runtime proof copy differs from reviewed source')
+    # Recheck the complete mapped closure after all copies, including earlier
+    # receipts sharing basenames with the patched build's receipts.
+    if 'bundled_evidence' in provenance:
+        for relative, bundled in provenance['bundled_evidence'].items():
+            if record(destination / bundled) != provenance['evidence'][relative]:
+                raise ValueError('Bundled patched runtime proof closure differs: ' + relative)
     json_write(notice / 'GODOT-RUNTIME-PROVENANCE.json', selection)
+    patched = provenance['kind'] == 'patched-public-source-template-debug'
     (notice / 'GODOT-RUNTIME.txt').write_text(
-        'Linux runtime: community-built, unmodified Godot public-source template_debug.\n'
+        ('Linux runtime: community-built Godot public-source template_debug with one pipeline-priority patch.\n'
+         if patched else 'Linux runtime: community-built, unmodified Godot public-source template_debug.\n') +
         'It is not the official editor binary used to export and qualify fonts.\n'
         f"Runtime SHA-256: {selection['linux_runtime']['sha256']}\n"
         f"Exporter SHA-256: {selection['exporter']['sha256']}\n"
         f"Public source: {provenance['source_url']}\n"
-        'Source patches: 0. Build command and archive hash: GODOT-RUNTIME-PROVENANCE.json.\n'
+        + ('Source patches: 1 (pipeline native-task priority only). Exact patch, original/changed header and build records are mapped in GODOT-RUNTIME-PROVENANCE.json.\n'
+           if patched else 'Source patches: 0. Build command and archive hash: GODOT-RUNTIME-PROVENANCE.json.\n') +
         'Original build/source verification records: godot-public-runtime/.\n'
         'License and third-party notices: GODOT-LICENSE.txt and GODOT-COPYRIGHT.txt.\n'
         'Package execution and visual qualification are separate from this build proof.\n', encoding='utf-8')
@@ -1663,6 +1737,15 @@ def start_readme(platform: str, engines: dict | None = None) -> str:
                         'The official Linux editor binary performed PCK export and font qualification;\n'
                         'it is not the bundled Linux runtime. See NOTICE/GODOT-RUNTIME.txt for exact\n'
                         'runtime/source/build/license identities. Archive checks do not prove execution.')
+        if engines['linux_runtime']['kind'] == 'patched-public-source-template-debug':
+            runtime_text = ('This Linux package uses a community-built Godot 4.6.3 public-source\n'
+                            'template-debug runtime with one pipeline native-task priority patch.\n'
+                            'The patch changes pipeline task submission to low priority; shader\n'
+                            'compilation stays high priority. This is a modified runtime, not the\n'
+                            'official Linux editor used for PCK export and font qualification.\n'
+                            'See NOTICE/GODOT-RUNTIME.txt and GODOT-RUNTIME-PROVENANCE.json for\n'
+                            'exact runtime, original source, patch, build and license records.\n'
+                            'Archive checks do not prove execution or a universal cold-start repair.')
     return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. {runtime_text}\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. Flight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWatch duel opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
 
 
@@ -1789,7 +1872,9 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
             copy_public_runtime_notice(staging, engines)
         payloads = {str(p.relative_to(staging)): record(p) for p in sorted(staging.rglob('*')) if p.is_file()}
         manifest = {'schema': 1, 'platform': f'{platform}-x86_64', 'godot_version': exported['godot_version'],
-                    'packaging': ('unmodified-public-template-debug-with-official-exported-pck'
+                    'packaging': (('patched-public-template-debug-with-official-exported-pck'
+                                   if engines['linux_runtime']['kind'] == 'patched-public-source-template-debug'
+                                   else 'unmodified-public-template-debug-with-official-exported-pck')
                                   if platform == 'linux' and engines['linux_runtime']['provenance'] is not None
                                   else 'official-full-engine-with-exported-pck'), 'git': exported['git'],
                     'exporter': engines['exporter'],
@@ -1821,7 +1906,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--linux-engine', type=Path, default=DEFAULT_LINUX)
     parser.add_argument('--linux-runtime', type=Path, help='Optional exact reviewed public-source Linux runtime; exporter remains --linux-engine')
-    parser.add_argument('--linux-runtime-provenance', type=Path, help='Required with --linux-runtime: reviewed unmodified finished-build-verification.json')
+    parser.add_argument('--linux-runtime-provenance', type=Path, help='Required with --linux-runtime: exact reviewed finished-build-verification.json for the selected variant')
+    parser.add_argument('--linux-runtime-variant', choices=['unmodified-public', 'pipeline-low-priority'], default='unmodified-public',
+                        help='Explicit reviewed runtime variant; the patched variant requires both runtime arguments')
     parser.add_argument('--windows-engine', type=Path, default=DEFAULT_WINDOWS)
     parser.add_argument('--build-dir', type=Path, default=PROJECT / 'build')
     modes = parser.add_mutually_exclusive_group()

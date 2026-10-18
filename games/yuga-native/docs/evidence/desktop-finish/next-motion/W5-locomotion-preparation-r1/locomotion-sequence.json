@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "case": "locomotion",
+  "frames": 270,
+  "physics_hz": 60,
+  "capture_hz": 30,
+  "seed": 741031,
+  "size": [
+    1280,
+    960
+  ],
+  "title_preroll_draws": 14,
+  "training_settle_draws": 30,
+  "walk_normalized_input": 0.4,
+  "expected_walk_speed_mps": 2.4,
+  "camera": {
+    "offset_m": [
+      -4.5,
+      2.8,
+      -5.9
+    ],
+    "target_m": [
+      0,
+      1.5,
+      0
+    ],
+    "fov_degrees": 48
+  },
+  "inputs": [
+    "move_forward",
+    "move_back",
+    "move_left",
+    "move_right",
+    "jump",
+    "sprint",
+    "fire"
+  ],
+  "events": [
+    {
+      "frame": 15,
+      "kind": "press",
+      "action": "move_forward",
+      "strength": "walk"
+    },
+    {
+      "frame": 75,
+      "kind": "release",
+      "action": "move_forward"
+    },
+    {
+      "frame": 90,
+      "kind": "press",
+      "action": "move_forward",
+      "strength": 1.0
+    },
+    {
+      "frame": 120,
+      "kind": "release",
+      "action": "move_forward"
+    },
+    {
+      "frame": 150,
+      "kind": "press",
+      "action": "move_left",
+      "strength": 1.0
+    },
+    {
+      "frame": 180,
+      "kind": "release",
+      "action": "move_left"
+    },
+    {
+      "frame": 180,
+      "kind": "press",
+      "action": "move_right",
+      "strength": 1.0
+    },
+    {
+      "frame": 210,
+      "kind": "release",
+      "action": "move_right"
+    },
+    {
+      "frame": 225,
+      "kind": "press",
+      "action": "jump",
+      "strength": 1.0
+    },
+    {
+      "frame": 226,
+      "kind": "release",
+      "action": "jump"
+    }
+  ],
+  "windows": [
+    {
+      "name": "settled",
+      "first": 0,
+      "last": 14
+    },
+    {
+      "name": "walk",
+      "first": 15,
+      "last": 74
+    },
+    {
+      "name": "walk_stop",
+      "first": 75,
+      "last": 89
+    },
+    {
+      "name": "run",
+      "first": 90,
+      "last": 119
+    },
+    {
+      "name": "natural_run_stop",
+      "first": 120,
+      "last": 149
+    },
+    {
+      "name": "left_input",
+      "first": 150,
+      "last": 179
+    },
+    {
+      "name": "right_input",
+      "first": 180,
+      "last": 209
+    },
+    {
+      "name": "lateral_stop",
+      "first": 210,
+      "last": 224
+    },
+    {
+      "name": "jump_land_settle",
+      "first": 225,
+      "last": 269
+    }
+  ],
+  "scope": "Public start+fixed settle before measurement; declared Input presses/releases only during uninterrupted take. Left/right names are controller-relative input, not proof of sustained anatomical strafe. No runtime, root, velocity, pose, clock or anchor assignment."
+}

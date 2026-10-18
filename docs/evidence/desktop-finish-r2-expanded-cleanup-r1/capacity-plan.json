@@ -1,0 +1,26 @@
+{
+  "measurement_source": "recovery-map.json",
+  "bytes": {
+    "tmp_free": 3300028416,
+    "workspace_free": 2829111296,
+    "proposed_reclaimed_tmp": 662401024,
+    "restore_historical_files": 3112771584,
+    "observed_r3_build": 784232448,
+    "reserve_per_filesystem": 134217728
+  },
+  "same_tmp": {
+    "required": 4031221760,
+    "available_after_proposed_cleanup": 3962429440,
+    "shortfall": 68792320
+  },
+  "split_filesystems": {
+    "tmp_required": 3246989312,
+    "tmp_after_cleanup_and_restoration": 849657856,
+    "tmp_margin_after_reserve": 715440128,
+    "workspace_required": 918450176,
+    "workspace_after_export": 2044878848,
+    "workspace_margin_after_reserve": 1910661120
+  },
+  "recommendation": "After root-approved cleanup and W1 source release, restore existing owned /tmp clone; use a new /workspace/scratch/yuga-desktop-integrated-package-r4/build through existing --build-dir. No duplicate source clone. Runtime identity selection and actual export remain separately authorized.",
+  "limits": "Allocated totals are estimates for planning; rerun statvfs at execution because concurrent captures/art write to both pools. No export/extraction/resume performed."
+}

@@ -42,23 +42,51 @@ def main():
           and len(provenance['evidence']) == 5)
     check('diagnostic_patch_hash_not_admitted', PACKAGE.PUBLIC_LINUX_RUNTIME['sha256'] ==
           'dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f')
+    patched_proof = PROJECT / PACKAGE.PATCHED_RUNTIME_PROOF
+    patched_provenance = PACKAGE.patched_runtime_provenance(patched_proof)
+    check('explicit_patched_build_source_and_license_closure',
+          patched_provenance['source_patches'] == 1
+          and patched_provenance['source_commit'] == provenance['source_commit']
+          and patched_provenance['source_archive'] == provenance['source_archive']
+          and patched_provenance['variant'] == 'pipeline-low-priority-v1'
+          and len(patched_provenance['evidence']) == 11
+          and PACKAGE.PATCHED_LINUX_RUNTIME['sha256'] == 'e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e')
+    patch_base = PROJECT / PACKAGE.PATCHED_RUNTIME_BASE
+    check('one_priority_substitution_reproduces_exact_patched_header',
+          (patch_base / 'pipeline_hash_map_rd.original.h').read_bytes().replace(
+              b', p_high_priority, "PipelineCompilation")', b', false, "PipelineCompilation")')
+          == (patch_base / 'pipeline_hash_map_rd.proposed.h').read_bytes()
+          and patched_provenance['patches'][0]['sha256'] == PACKAGE.digest(patch_base / 'proposed.patch'))
+    mapping = patched_provenance['bundled_evidence']
+    check('baseline_and_patched_proofs_have_unique_bundled_paths',
+          len(set(mapping.values())) == len(mapping)
+          and mapping[PACKAGE.PUBLIC_RUNTIME_PROOF] != mapping[PACKAGE.PATCHED_RUNTIME_PROOF]
+          and all(not Path(path).is_absolute() and '..' not in Path(path).parts for path in mapping.values()))
 
     with tempfile.TemporaryDirectory(prefix='yuga-linux-runtime-') as folder, ExitStack() as stack:
         root = Path(folder)
         exporter = root / 'official-exporter'
         runtime = root / 'public-runtime'
+        patched_runtime = root / 'patched-runtime'
         windows = root / 'godot.exe'
         exporter.write_bytes(b'official fixture bytes')
         runtime.write_bytes(b'public unmodified fixture bytes')
+        patched_runtime.write_bytes(b'public pipeline-priority fixture bytes')
         windows.write_bytes(b'windows fixture bytes')
         public = {**PACKAGE.record(runtime), 'version': PACKAGE.PUBLIC_LINUX_RUNTIME['version']}
         stack.enter_context(patch.object(PACKAGE, 'PUBLIC_LINUX_RUNTIME', public))
+        patched_public = {**PACKAGE.record(patched_runtime), 'version': PACKAGE.PATCHED_LINUX_RUNTIME['version']}
+        stack.enter_context(patch.object(PACKAGE, 'PATCHED_LINUX_RUNTIME', patched_public))
         stack.enter_context(patch.object(PACKAGE, 'PUBLIC_RUNTIME_EXPORTER_SHA', PACKAGE.digest(exporter)))
-        versions = {str(exporter): PACKAGE.PUBLIC_RUNTIME_EXPORTER_VERSION, str(runtime): public['version']}
+        versions = {str(exporter): PACKAGE.PUBLIC_RUNTIME_EXPORTER_VERSION, str(runtime): public['version'],
+                    str(patched_runtime): patched_public['version']}
         probe = stack.enter_context(patch.object(PACKAGE.subprocess, 'check_output', side_effect=lambda command, **kw: versions[command[0]] + '\n'))
         selected_args = argparse.Namespace(linux_engine=exporter, linux_runtime=runtime,
                                           linux_runtime_provenance=proof, windows_engine=windows)
         default_args = argparse.Namespace(linux_engine=exporter, windows_engine=windows)
+        patched_args = argparse.Namespace(linux_engine=exporter, linux_runtime=patched_runtime,
+                                         linux_runtime_provenance=patched_proof, windows_engine=windows,
+                                         linux_runtime_variant='pipeline-low-priority')
         default = PACKAGE.linux_engine_selection(default_args)
         check('no_override_keeps_exporter_as_runtime',
               default['linux_runtime']['sha256'] == default['exporter']['sha256']
@@ -122,6 +150,39 @@ def main():
         check('default_and_windows_readme_unchanged_by_override',
               PACKAGE.start_readme('windows', selection) == PACKAGE.start_readme('windows')
               and PACKAGE.start_readme('linux', default) == PACKAGE.start_readme('linux'))
+        patched_selection = PACKAGE.linux_engine_selection(patched_args)
+        check('explicit_patched_selection_separates_exporter_and_declared_variant',
+              patched_selection['exporter'] == selection['exporter']
+              and patched_selection['linux_runtime']['provenance'] == patched_provenance
+              and patched_selection['linux_runtime']['kind'] == 'patched-public-source-template-debug')
+        before = probe.call_count
+        for label, fields, fragment in [
+            ('patched_runtime_with_unmodified_variant', {'linux_runtime_variant': 'unmodified-public'}, 'unmodified public binary'),
+            ('patched_runtime_with_baseline_proof', {'linux_runtime_provenance': proof}, 'pipeline-priority build proof'),
+            ('unmodified_runtime_with_patched_variant', {'linux_runtime': runtime}, 'pipeline-priority patched binary'),
+            ('unknown_variant', {'linux_runtime_variant': 'arbitrary'}, 'Unknown Linux runtime variant'),
+            ('patched_variant_without_override', {'linux_runtime': None, 'linux_runtime_provenance': None}, 'requires'),
+        ]:
+            broken = copy.copy(patched_args)
+            for field, value in fields.items():
+                setattr(broken, field, value)
+            rejects(label, lambda: PACKAGE.linux_engine_selection(broken), fragment)
+        for label, field, value in [('changed_expected_variant', 'variant', 'unmodified-public'),
+                                    ('changed_expected_patch', 'source_patches', 0)]:
+            changed = copy.deepcopy(patched_selection)
+            changed['linux_runtime']['provenance'][field] = value
+            rejects(label, lambda: PACKAGE.linux_engine_selection(patched_args, changed), 'selection or provenance changed')
+        changed = copy.deepcopy(patched_selection)
+        changed['linux_runtime']['provenance']['bundled_evidence'][PACKAGE.PATCHED_RUNTIME_PROOF] = mapping[PACKAGE.PUBLIC_RUNTIME_PROOF]
+        rejects('changed_expected_proof_mapping', lambda: PACKAGE.linux_engine_selection(patched_args, changed), 'selection or provenance changed')
+        with patch.object(PACKAGE, 'PATCHED_RUNTIME_EVIDENCE', {**PACKAGE.PATCHED_RUNTIME_EVIDENCE,
+                                                             'NOTICE/absent-patch.txt': '0' * 64}):
+            rejects('missing_patched_evidence', lambda: PACKAGE.linux_engine_selection(patched_args), 'evidence changed or is missing')
+        check('cross_variant_and_proof_mutations_reject_before_execution', probe.call_count == before)
+        check('patched_readme_is_explicit_without_changing_windows',
+              'one pipeline native-task priority patch' in PACKAGE.start_readme('linux', patched_selection)
+              and 'This is a modified runtime' in PACKAGE.start_readme('linux', patched_selection)
+              and PACKAGE.start_readme('windows', patched_selection) == PACKAGE.start_readme('windows'))
 
         # Exercise actual package assembly/ZIP copying with tiny PCKs and mocked
         # unrelated source/font/asset proofs. No engine/export is invoked.
@@ -177,6 +238,42 @@ def main():
         no_identity = copy.deepcopy(exported)
         del no_identity['engine_selection']
         rejects('old_manifest_requires_fresh_export', lambda: PACKAGE.package_all(default_args, build, no_identity), 'lacks exporter/runtime identity')
+
+        patched_build = root / 'patched-build'
+        patched_build.mkdir()
+        patched_export = copy.deepcopy(exported)
+        patched_export['engine_selection'] = patched_selection
+        for platform in ['linux', 'windows']:
+            shutil.copyfile(build / ('yuga-native-' + platform + '.pck'), patched_build / ('yuga-native-' + platform + '.pck'))
+        patched_result = PACKAGE.package_all(patched_args, patched_build, patched_export)
+        patched_linux = patched_build / 'yuga-native-linux-x86_64'
+        patched_manifest = json.loads((patched_linux / 'PACKAGE-MANIFEST.json').read_text())
+        check('patched_package_copies_exact_runtime_and_declares_unexecuted_variant',
+              (patched_linux / 'godot').read_bytes() == patched_runtime.read_bytes()
+              and patched_manifest['packaging'] == 'patched-public-template-debug-with-official-exported-pck'
+              and patched_manifest['runtime'] == patched_selection['linux_runtime']
+              and patched_manifest['execution_status'] == 'not_executed_by_packager'
+              and patched_result['engine_selection'] == patched_selection)
+        check('every_mapped_patch_build_and_license_proof_survives_copy', all(
+            PACKAGE.record(patched_linux / target) == patched_provenance['evidence'][source]
+            for source, target in mapping.items()))
+        check('patched_notice_and_zip_distinguish_exporter_and_patch',
+              'Source patches: 1' in (patched_linux / 'NOTICE/GODOT-RUNTIME.txt').read_text()
+              and 'not the official editor binary' in (patched_linux / 'NOTICE/GODOT-RUNTIME.txt').read_text()
+              and all(patched_result['packages'][p]['all_crc_and_payload_sha256_verified'] for p in ['linux', 'windows'])
+              and font_probe.call_args.args[0] == exporter)
+        check('patched_selection_does_not_change_windows_archive_payloads',
+              json.loads((patched_build / 'yuga-native-windows-x86_64/PACKAGE-MANIFEST.json').read_text())['payloads']
+              == json.loads((win / 'PACKAGE-MANIFEST.json').read_text())['payloads'])
+        final_source = next(reversed(patched_provenance['evidence']))
+        def corrupt_prior_proof(source, target, *a, **kw):
+            result = original_copy(source, target, *a, **kw)
+            if Path(source) == PROJECT / final_source:
+                (patched_linux / mapping[PACKAGE.PUBLIC_RUNTIME_PROOF]).write_bytes(b'overwritten proof')
+            return result
+        with patch.object(PACKAGE.shutil, 'copyfile', side_effect=corrupt_prior_proof):
+            rejects('earlier_proof_changed_by_later_copy_rejected',
+                    lambda: PACKAGE.copy_public_runtime_notice(patched_linux, patched_selection), 'proof closure differs')
 
     result = {'passed': all(c['passed'] for c in checks), 'count': len(checks),
               'passed_count': sum(c['passed'] for c in checks), 'checks': checks,

@@ -1,0 +1,7 @@
+# Public-runtime cold stack: independent bounded review
+
+The fresh one-shot raw log SHA7fc7934f86e4705bcaa06bd9889be11bc35781b8a9f9a9dd3e9d02ba5bd67088 belongs to PID52926/start1632306, owner-recorded engine dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f. W4 independently checked the raw log and recomputed relative addresses using PIE56519924a000 from the owned identity/maps receipt. Five WorkerThreads wait in pthread_mutex_lock at relative30dc675. Main waits in pthread_cond_wait with relative3c1803b→30134e7→30dc8eb. No active LLVM/JIT stack appears in this snapshot.
+
+These exact dce relative PCs match G0/W4-public463-native-review-r1's retained-object/relocation-aware correspondence to public35e80b3: SceneShaderForwardClustered::ShaderData::_get_shader_variant at the inlined ShaderRD Version lock; WorkerThreadPool group completion; ShaderRD::_compile_version_end; return to shader accessor. This is the prior waiting shape on the same public runtime binary, rather than evidence that the warm-seeded package qualifies cold startup.
+
+Fresh lock addresses and mutex-owner arguments were not collected. Therefore this snapshot does not establish five waits on one lock instance, a freshly proven main-owner cycle, or a universal scheduling cause. The stronger older installed-f64 ownership observation must not be transferred to this process. Final cold-run timing/outcome is W1/root's separate record. This finite read-only review performs no attach, engine run, signal, configuration change, source edit or shader reduction.

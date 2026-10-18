@@ -1,0 +1,3 @@
+The validator-only correction is accepted. The inner runner intentionally records the export manifest path, SHA-256, Git and source subset; it does not copy engine_selection. The corrected validator requires the exact authoritative c472 manifest and agreement with the run-record SHA before comparing the complete fixed exporter/runtime selection and watchdog selection. The original 19/20 result remains retained; the same warm execution passes 20/20 after correction. No behavioral assertion, plan, capture, run receipt or product source changed.
+
+This review inspected the exact diff and recorded schema; it did not launch an engine or repeat the capture. Cold execution remains a separate acceptance gate.

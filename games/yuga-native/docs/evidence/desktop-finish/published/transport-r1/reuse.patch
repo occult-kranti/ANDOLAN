@@ -1,0 +1,370 @@
+--- historical-I3/generate.py
++++ desktop-r3/generate.py
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env python3
+ """Build an orphan transport using a private index and streaming binary Git blobs."""
++import argparse
+ import contextlib
+ import hashlib
+ import importlib.util
+@@ -10,15 +11,17 @@
+ 
+ HERE = Path(__file__).resolve().parent
+ REPO = Path('/workspace/ANDOLAN')
+-SOURCE = Path('/workspace/scratch/ui-campaign/I3/package-r3')
+-BRANCH = 'release/yuga-native-ui-2026-10-18-assets'
+-TARGET = '9e81a7c849837dea477ddb5a8c93f43665774573'
++SOURCE = Path('/tmp/yuga-desktop-integrated-package-r3/build')
++BRANCH = 'transport/yuga-desktop-finish-2026-10-18-r1'
++TARGET = 'f8dec5fa4f9bbd2d20c58f6102fb984d0b19a9f1'
+ EXPECTED = [
+-    ('yuga-native-linux-x86_64.zip', 137812335, '56a435f909b05a9674a693dc3c5b50c45aefc5d0aaca8455b73571af9ea340b5'),
+-    ('yuga-native-windows-x86_64.zip', 145813678, '16f6e210fef90f26c1c725e503805fb5e9c4ee76d64e86cb2ff7b0788ea186c5'),
+-    ('native-export-manifest.json', 397267, '9b181f1c67e32de6481cd9256c61b38eb54de6ce2afe54e05f2a68ae2931d75b'),
+-    ('native-package-manifest.json', 12765, '12010a4eae0b6645d946e5aaa8b52daba5f8f233425356aa942891ab0b87c1b2'),
++    ('yuga-native-linux-x86_64.zip', 97821471, '913e2b82b9a71977bf361349e225ae0295a9dd08f1e0a0a68d7b3b7d3df4426c'),
++    ('yuga-native-windows-x86_64.zip', 146132379, 'ee8026ca24b47a4f43b875a8aeea39aa680fb3161eaad4327f970a404ccad722'),
++    ('native-export-manifest.json', 452532, 'c472ef5278b4c35b8226d654bbaf5c0061b98c00a4be20c7a3a1dbe8600adb54'),
++    ('native-package-manifest.json', 10563, '6df86cc23505cbe6fc1a22d00e86cb9afc03c7733b69e0b068c40889d9c0ff36'),
+ ]
++MATERIALIZE = False
++
+ LIMIT = 48 * 1024 * 1024
+ 
+ 
+@@ -45,13 +48,17 @@
+ 
+ 
+ def put(data):
+-    return git('hash-object', '-w', '--stdin', data=data).decode().strip()
++    expected = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
++    if MATERIALIZE:
++        assert git('hash-object', '-w', '--stdin', data=data).decode().strip() == expected
++    return expected
+ 
+ 
+ def put_stream(source, length):
+-    proc = subprocess.Popen(['git', 'hash-object', '-w', '--stdin'], cwd=REPO,
+-                            stdin=subprocess.PIPE, stdout=subprocess.PIPE)
++    proc = (subprocess.Popen(['git', 'hash-object', '-w', '--stdin'], cwd=REPO,
++                            stdin=subprocess.PIPE, stdout=subprocess.PIPE) if MATERIALIZE else None)
+     digest = hashlib.sha256()
++    blob = hashlib.sha1(b'blob ' + str(length).encode() + b'\0')
+     remaining = length
+     while remaining:
+         block = source.read(min(remaining, 1024 * 1024))
+@@ -59,11 +66,15 @@
+             raise ValueError('source became shorter')
+         remaining -= len(block)
+         digest.update(block)
+-        proc.stdin.write(block)
+-    proc.stdin.close()
+-    oid = proc.stdout.read().decode().strip()
+-    if proc.wait() != 0:
+-        raise ValueError('hash-object failed')
++        blob.update(block)
++        if proc:
++            proc.stdin.write(block)
++    oid = blob.hexdigest()
++    if proc:
++        proc.stdin.close()
++        actual = proc.stdout.read().decode().strip()
++        if proc.wait() != 0 or actual != oid:
++            raise ValueError('hash-object failed or mismatched')
+     return oid, digest.hexdigest()
+ 
+ 
+@@ -80,15 +91,21 @@
+ 
+ 
+ def main():
++    global MATERIALIZE
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--materialize', action='store_true', help='Explicitly create Git objects/private index/orphan commit after root review; never push')
++    args = parser.parse_args()
++    MATERIALIZE = args.materialize
+     before = snapshot()
+     assert before['head'] == TARGET
+     assert before['branch'] == 'refs/heads/game/yuga-native-production'
+-    checksums = HERE.parent / 'SHA256SUMS.txt'
++    checksums = SOURCE / 'SHA256SUMS.txt'
+     expected_sums = ''.join(f'{h}  {n}\n' for n, _, h in EXPECTED).encode()
+     assert checksums.read_bytes() == expected_sums
++    assert sha(checksums) == '3b437f1a194bbad2ab01337b5b813155c30b836088c15f47ffa6c768b251b2d7'
+     expected = EXPECTED + [('SHA256SUMS.txt', len(expected_sums), sha(checksums))]
+     manifest = {'schema': 1, 'repository': 'occult-kranti/ANDOLAN',
+-                'release_id': 416177473, 'tag': 'yuga-native-ui-2026-10-18',
++                'release_id': 416367666, 'tag': 'yuga-desktop-finish-2026-10-18',
+                 'target': TARGET, 'transport_branch': BRANCH,
+                 'chunk_limit': LIMIT, 'assets': []}
+     entries = {}
+@@ -120,22 +137,22 @@
+     script = (HERE / 'upload_template.py').read_text().replace('@@MANIFEST_SHA256@@', manifest_sha).encode()
+     (HERE / 'reconstruct_upload.py').write_bytes(script)
+     script_sha = hashlib.sha256(script).hexdigest()
+-    workflow = '''name: Upload exact reviewed YUGA UI draft assets
++    workflow = '''name: Upload exact reviewed YUGA desktop draft assets
+ 
+ on:
+   push:
+     branches:
+-      - release/yuga-native-ui-2026-10-18-assets
++      - transport/yuga-desktop-finish-2026-10-18-r1
+ 
+ permissions: {}
+ 
+ concurrency:
+-  group: yuga-exact-draft-assets-416177473
++  group: yuga-exact-draft-assets-416367666
+   cancel-in-progress: false
+ 
+ jobs:
+   upload:
+-    if: github.repository == 'occult-kranti/ANDOLAN' && github.ref == 'refs/heads/release/yuga-native-ui-2026-10-18-assets' && github.event.created == true && github.event.deleted == false
++    if: github.repository == 'occult-kranti/ANDOLAN' && github.ref == 'refs/heads/transport/yuga-desktop-finish-2026-10-18-r1' && github.event.created == true && github.event.deleted == false
+     runs-on: ubuntu-24.04
+     timeout-minutes: 15
+     permissions:
+@@ -170,6 +187,22 @@
+     module = importlib.util.module_from_spec(spec)
+     spec.loader.exec_module(module)
+     parsed = module.read_manifest(HERE / 'manifest.json')
++    if not MATERIALIZE:
++        after = snapshot()
++        assert before == after, 'normal checkout/index changed'
++        receipt = {'schema': 1, 'mode': 'prepare-only', 'source_commit': TARGET,
++                   'transport_branch': BRANCH, 'release_id': 416367666,
++                   'manifest_sha256': manifest_sha, 'uploader_sha256': script_sha,
++                   'workflow_sha256': hashlib.sha256(workflow).hexdigest(),
++                   'generator_sha256': sha(Path(__file__)), 'checkout_before': before,
++                   'checkout_after': after, 'entries': entries,
++                   'verified_assets': [{k:a[k] for k in ('name','size','sha256')} for a in parsed['assets']],
++                   'retained_chunk_files': 0, 'binary_chunk_count': 5,
++                   'git_objects_written': False, 'git_refs_changed': False,
++                   'network_calls': 0, 'uploaded': False, 'pushed': False}
++        (HERE / 'preparation-receipt.json').write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n')
++        print(json.dumps({'prepared': len(entries), 'source_assets': 5, 'git_objects_written': False}))
++        return
+     verification = module.verify_streams(parsed, blob_reader)
+     private_index = HERE / 'private.index'
+     assert not private_index.exists(), 'use a fresh private index'
+@@ -180,8 +213,8 @@
+     tree = git('write-tree', env=env).decode().strip()
+     actual = git('ls-tree', '-r', tree).decode().splitlines()
+     expected_tree = [f'100644 blob {oid}\t{name}' for name, oid in sorted(entries.items())]
+-    assert actual == expected_tree and len(actual) == 13
+-    commit = git('commit-tree', tree, '-m', 'Transport exact reviewed UI release assets to draft 416177473').decode().strip()
++    assert actual == expected_tree and len(actual) == 12
++    commit = git('commit-tree', tree, '-m', 'Transport exact reviewed desktop release assets to draft 416367666').decode().strip()
+     raw_commit = git('cat-file', '-p', commit).decode()
+     assert not any(x.startswith('parent ') for x in raw_commit.splitlines())
+     after = snapshot()
+@@ -192,7 +225,7 @@
+                'workflow_sha256': hashlib.sha256(workflow).hexdigest(),
+                'generator_sha256': sha(Path(__file__)), 'checkout_before': before,
+                'checkout_after': after, 'entries': entries, 'verified_assets': verification,
+-               'retained_chunk_files': 0, 'binary_chunk_count': 6,
++               'retained_chunk_files': 0, 'binary_chunk_count': 5,
+                'uploaded': False, 'pushed': False}
+     (HERE / 'prepush-receipt.json').write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n')
+     print(json.dumps({'commit': commit, 'tree': tree, 'assets': len(verification),
+--- historical-I3/upload_template.py
++++ desktop-r3/upload_template.py
+@@ -10,9 +10,9 @@
+ import urllib.parse
+ 
+ REPO = "occult-kranti/ANDOLAN"
+-RELEASE_ID = 416177473
+-TAG = "yuga-native-ui-2026-10-18"
+-TARGET = "9e81a7c849837dea477ddb5a8c93f43665774573"
++RELEASE_ID = 416367666
++TAG = "yuga-desktop-finish-2026-10-18"
++TARGET = "f8dec5fa4f9bbd2d20c58f6102fb984d0b19a9f1"
+ MANIFEST_SHA256 = "@@MANIFEST_SHA256@@"
+ NAMES = (
+     "yuga-native-linux-x86_64.zip", "yuga-native-windows-x86_64.zip",
+@@ -33,11 +33,13 @@
+     require(manifest["schema"] == 1 and manifest["repository"] == REPO, "manifest identity")
+     require(manifest["release_id"] == RELEASE_ID and manifest["tag"] == TAG
+             and manifest["target"] == TARGET, "manifest release identity")
++    require(manifest["transport_branch"] == "transport/yuga-desktop-finish-2026-10-18-r1"
++            and manifest["chunk_limit"] == CHUNK_LIMIT, "transport identity")
+     require(tuple(a["name"] for a in manifest["assets"]) == NAMES, "exact asset allowlist")
+     paths = [p["path"] for a in manifest["assets"] for p in a["parts"]]
+-    require(len(paths) == 9 and len(set(paths)) == 9, "exact six chunks plus three files")
++    require(len(paths) == 8 and len(set(paths)) == 8, "exact five chunks plus three files")
+     for i, asset in enumerate(manifest["assets"]):
+-        require(len(asset["parts"]) == (3 if i < 2 else 1), "part count")
++        require(len(asset["parts"]) == ((2, 3, 1, 1, 1)[i]), "part count")
+         require(sum(p["size"] for p in asset["parts"]) == asset["size"], "part lengths")
+         for part in asset["parts"]:
+             path = PurePosixPath(part["path"])
+@@ -166,7 +168,7 @@
+         print(json.dumps({"verified": receipt}, indent=2, sort_keys=True))
+     else:
+         require(os.environ.get("GITHUB_REPOSITORY") == REPO, "runner repository")
+-        require(os.environ.get("GITHUB_REF") == "refs/heads/release/yuga-native-ui-2026-10-18-assets",
++        require(os.environ.get("GITHUB_REF") == "refs/heads/transport/yuga-desktop-finish-2026-10-18-r1",
+                 "runner branch")
+         require(os.environ.get("GITHUB_EVENT_NAME") == "push", "runner event")
+         upload(manifest, args.output)
+--- historical-I3/test_guards.py
++++ desktop-r3/test_guards.py
+@@ -29,6 +29,8 @@
+ 
+ 
+ real = u.read_manifest(ROOT / 'manifest.json')
++record('new 2/3 ZIP part counts and eight payload entries', lambda: u.require([len(a['parts']) for a in real['assets']] == [2,3,1,1,1] and len({p['path'] for a in real['assets'] for p in a['parts']}) == 8, 'part layout'))
++record('fixed current draft/source/branch', lambda: u.require(real['release_id'] == 416367666 and real['target'] == 'f8dec5fa4f9bbd2d20c58f6102fb984d0b19a9f1' and real['transport_branch'] == 'transport/yuga-desktop-finish-2026-10-18-r1', 'identity'))
+ record('exact pinned manifest', lambda: u.read_manifest(ROOT / 'manifest.json'))
+ with tempfile.TemporaryDirectory(prefix='transport-guards-') as tmp:
+     folder = Path(tmp)
+--- historical-I3/push.py
++++ desktop-r3/push.py
+@@ -1,45 +1,110 @@
+ #!/usr/bin/env python3
++"""Explicit fixed-draft transport push, after local identity checks and root approval."""
++import argparse
+ import hashlib
+ import importlib.util
+ import json
+ from pathlib import Path
++import re
+ import subprocess
+ import time
+ 
+ ROOT = Path(__file__).resolve().parent
+-spec = importlib.util.spec_from_file_location('generator', ROOT / 'generate.py')
+-g = importlib.util.module_from_spec(spec)
+-spec.loader.exec_module(g)
+-receipt = json.loads((ROOT / 'prepush-receipt.json').read_text())
+-tests = json.loads((ROOT / 'guard-tests.json').read_text())
+-assert tests['passed'] == 20 and tests['failed'] == 0
+-assert tests['uploader_sha256'] == receipt['uploader_sha256']
+-assert g.snapshot() == receipt['checkout_before']
+-branch_ref = 'refs/heads/' + receipt['transport_branch']
+-assert not g.git('ls-remote', '--heads', 'origin', branch_ref).strip()
+-assert subprocess.run(['git', 'show-ref', '--verify', '--quiet', branch_ref], cwd=g.REPO).returncode == 1
+-release = json.loads(subprocess.check_output(['gh', 'api', 'repos/occult-kranti/ANDOLAN/releases/416177473'], cwd=g.REPO))
+-assert release['id'] == 416177473 and release['draft'] is True and release['prerelease'] is True
+-assert release['target_commitish'] == g.TARGET and release['tag_name'] == 'yuga-native-ui-2026-10-18'
+-assert release['assets'] == []
+-(ROOT / 'release-before.json').write_text(json.dumps(release, indent=2, sort_keys=True) + '\n')
+-g.git('update-ref', branch_ref, receipt['transport_commit'], '0' * 40)
+-start = time.time()
+-with (ROOT / 'push.log').open('wb') as log:
+-    proc = subprocess.run(['git', '-c', 'pack.threads=1', '-c', 'pack.window=0', 'push',
+-                           'origin', receipt['transport_commit'] + ':' + branch_ref],
+-                          cwd=g.REPO, stdout=log, stderr=subprocess.STDOUT)
+-after = g.snapshot()
+-result = {'transport_commit': receipt['transport_commit'], 'transport_tree': receipt['transport_tree'],
+-          'branch': receipt['transport_branch'], 'push_exit_code': proc.returncode,
+-          'duration_seconds': round(time.time() - start, 3), 'checkout_before': receipt['checkout_before'],
+-          'checkout_after': after, 'head_and_index_unchanged': after == receipt['checkout_before'],
+-          'push_log_sha256': hashlib.sha256((ROOT / 'push.log').read_bytes()).hexdigest()}
+-if proc.returncode == 0:
+-    remote = g.git('ls-remote', '--heads', 'origin', branch_ref).decode().strip()
+-    assert remote == receipt['transport_commit'] + '\t' + branch_ref
+-    result['verified_remote_ref'] = remote
+-(ROOT / 'push-receipt.json').write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
+-print(json.dumps(result, indent=2, sort_keys=True))
+-print((ROOT / 'push.log').read_text())
+-assert proc.returncode == 0 and result['head_and_index_unchanged']
++
++def load(name, filename):
++    spec = importlib.util.spec_from_file_location(name, ROOT / filename)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++g = load('generator', 'generate.py')
++u = load('uploader', 'reconstruct_upload.py')
++
++def require(value, message):
++    if not value:
++        raise ValueError(message)
++
++def blob(data):
++    return hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
++
++def expected_entries():
++    manifest = u.read_manifest(ROOT / 'manifest.json')
++    entries = {part['path']:part['git_blob'] for a in manifest['assets'] for part in a['parts']}
++    entries.update({
++        'transport/manifest.json': blob((ROOT / 'manifest.json').read_bytes()),
++        'transport/reconstruct_upload.py': blob((ROOT / 'reconstruct_upload.py').read_bytes()),
++        '.github/workflows/upload-ui-release-assets.yml': blob((ROOT / 'upload-ui-release-assets.yml').read_bytes()),
++        '.gitattributes': blob(b'* -text -filter\n'),
++    })
++    require(len(entries) == 12, 'exact reviewed transport entries')
++    return entries
++
++def validate_local(receipt, tests, git=g.git, snapshot=g.snapshot):
++    """No remote/API/ref operation; reject receipt drift before inspecting Git objects."""
++    require(receipt.get('source_commit') == g.TARGET == u.TARGET, 'fixed source')
++    require(receipt.get('transport_branch') == g.BRANCH == 'transport/yuga-desktop-finish-2026-10-18-r1', 'fixed transport branch')
++    require(receipt.get('orphan') is True, 'orphan declaration')
++    files = {'manifest_sha256':'manifest.json', 'uploader_sha256':'reconstruct_upload.py',
++             'workflow_sha256':'upload-ui-release-assets.yml', 'generator_sha256':'generate.py'}
++    for key, name in files.items():
++        require(receipt.get(key) == g.sha(ROOT / name), 'current source identity: ' + name)
++    require(tests.get('passed') == 22 and tests.get('failed') == 0, 'uploader guard result')
++    require(tests.get('uploader_sha256') == receipt['uploader_sha256']
++            and tests.get('manifest_sha256') == receipt['manifest_sha256']
++            and tests.get('test_sha256') == g.sha(ROOT / 'test_guards.py'), 'tested uploader identity')
++    entries = expected_entries()
++    require(receipt.get('entries') == entries, 'exact current transport entries')
++    for key in ['transport_commit','transport_tree']:
++        require(isinstance(receipt.get(key), str) and re.fullmatch(r'[0-9a-f]{40}', receipt[key]), 'Git object format')
++    require(git('cat-file', '-t', receipt['transport_commit']).decode().strip() == 'commit', 'transport commit object')
++    commit = git('cat-file', '-p', receipt['transport_commit']).decode()
++    headers = commit.split('\n\n', 1)[0].splitlines()
++    require(headers[0] == 'tree ' + receipt['transport_tree'] and not any(x.startswith('parent ') for x in headers), 'exact parentless commit')
++    actual = git('ls-tree', '-r', receipt['transport_tree']).decode().splitlines()
++    expected = [f'100644 blob {oid}\t{name}' for name,oid in sorted(entries.items())]
++    require(actual == expected, 'exact reviewed orphan tree')
++    current = snapshot()
++    require(current == receipt.get('checkout_before') == receipt.get('checkout_after'), 'normal checkout/index unchanged')
++    require(current.get('head') == g.TARGET and current.get('branch') == 'refs/heads/game/yuga-native-production', 'normal source branch')
++    return 'refs/heads/' + g.BRANCH
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--push-fixed-draft', action='store_true', required=True)
++    parser.parse_args()
++    receipt = json.loads((ROOT / 'prepush-receipt.json').read_text())
++    tests = json.loads((ROOT / 'guard-tests.json').read_text())
++    branch_ref = validate_local(receipt, tests)
++    push_tests = json.loads((ROOT / 'push-guard-tests.json').read_text())
++    require(push_tests.get('passed') == 10 and push_tests.get('failed') == 0
++            and push_tests.get('push_sha256') == g.sha(Path(__file__))
++            and push_tests.get('test_sha256') == g.sha(ROOT / 'test_push_guards.py'), 'tested local push guard')
++    require(not g.git('ls-remote', '--heads', 'origin', branch_ref).strip(), 'new remote branch required')
++    require(subprocess.run(['git', 'show-ref', '--verify', '--quiet', branch_ref], cwd=g.REPO).returncode == 1, 'new local branch required')
++    release = json.loads(subprocess.check_output(['gh', 'api', 'repos/occult-kranti/ANDOLAN/releases/416367666'], cwd=g.REPO))
++    u.check_release(release, u.read_manifest(ROOT / 'manifest.json'))
++    require(release.get('assets') == [], 'fixed draft must still be empty before first transport push')
++    (ROOT / 'release-before.json').write_text(json.dumps(release, indent=2, sort_keys=True) + '\n')
++    g.git('update-ref', branch_ref, receipt['transport_commit'], '0' * 40)
++    start = time.time()
++    with (ROOT / 'push.log').open('wb') as log:
++        proc = subprocess.run(['git', '-c', 'pack.threads=1', '-c', 'pack.window=0', 'push',
++                               'origin', receipt['transport_commit'] + ':' + branch_ref],
++                              cwd=g.REPO, stdout=log, stderr=subprocess.STDOUT)
++    after = g.snapshot()
++    result = {'transport_commit':receipt['transport_commit'], 'transport_tree':receipt['transport_tree'],
++              'branch':g.BRANCH, 'push_exit_code':proc.returncode,
++              'duration_seconds':round(time.time()-start, 3), 'checkout_before':receipt['checkout_before'],
++              'checkout_after':after, 'head_and_index_unchanged':after == receipt['checkout_before'],
++              'push_log_sha256':g.sha(ROOT / 'push.log')}
++    if proc.returncode == 0:
++        remote = g.git('ls-remote', '--heads', 'origin', branch_ref).decode().strip()
++        require(remote == receipt['transport_commit'] + '\t' + branch_ref, 'remote transport commit')
++        result['verified_remote_ref'] = remote
++    (ROOT / 'push-receipt.json').write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
++    print(json.dumps(result, indent=2, sort_keys=True))
++    print((ROOT / 'push.log').read_text())
++    require(proc.returncode == 0 and result['head_and_index_unchanged'], 'push and normal checkout invariants')
++
++if __name__ == '__main__':
++    main()

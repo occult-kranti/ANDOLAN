@@ -1,0 +1,24 @@
+--- sealed-prep/verify_package_review.py
++++ validation-successor/verify_package_review.py
+@@ -45,9 +45,12 @@
+     parser.add_argument('--run', type=Path, required=True)
+     parser.add_argument('--phase', choices=['warm', 'cold'], required=True)
+     parser.add_argument('--report', type=Path, required=True)
++    parser.add_argument('--export-manifest', type=Path, required=True)
+     args = parser.parse_args()
+     if args.report.exists():
+         parser.error('Fresh report required')
++    exported = read(args.export_manifest)
++    export_exact = args.export_manifest.is_file() and sha(args.export_manifest) == EXPORT_MANIFEST
+     record = read(args.run/'run.json')
+     watchdog = read(args.run.with_name(args.run.name+'-watchdog')/'receipt.json')
+     plan = read(HERE/('package-'+args.phase+'-plan.json'))
+@@ -58,7 +61,7 @@
+         'outer_bound_completed': watchdog.get('complete') is True and watchdog.get('overall_timeout') is False,
+         'exact_final_export_commit': record.get('export_manifest',{}).get('git',{}).get('head') == EXPECTED_SOURCE == watchdog.get('expected_source_commit'),
+         'exact_selected_public_runtime': record.get('engine_sha256') == RUNTIME == watchdog.get('engine_sha256'),
+-        'exact_distinct_exporter_and_runtime_proof': exact_selection(record.get('export_manifest', {}).get('engine_selection', {})) and exact_selection(watchdog.get('engine_selection', {})),
++        'exact_distinct_exporter_and_runtime_proof': export_exact and record.get('export_manifest', {}).get('sha256') == EXPORT_MANIFEST and exact_selection(exported.get('engine_selection', {})) and exact_selection(watchdog.get('engine_selection', {})),
+         'exact_qualified_archive_pck_manifest': watchdog.get('package_sha256') == PCK and watchdog.get('archive_sha256') == ARCHIVE and watchdog.get('export_manifest_sha256') == EXPORT_MANIFEST,
+         'package_archive_source_tools_unchanged': all(record.get(k) is True for k in [
+             'package_unchanged','archive_unchanged','export_manifest_unchanged','instrumentation_unchanged','source_unchanged']),

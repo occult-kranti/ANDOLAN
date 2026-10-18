@@ -1,0 +1,70 @@
+{
+  "status": "finite read-only stack review; cold-run final outcome owned by W1/root",
+  "raw_stack_path": "/tmp/yuga-desktop-package-public-cold-r1-watchdog/native-gdb.log",
+  "raw_stack_sha256": "7fc7934f86e4705bcaa06bd9889be11bc35781b8a9f9a9dd3e9d02ba5bd67088",
+  "raw_stack_bytes": 20515,
+  "owned_identity": {
+    "pid": 52926,
+    "start_ticks": 1632306,
+    "time_unix": 1792317360.8834746,
+    "pie_base": "0x56519924a000",
+    "engine_sha256": "dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f",
+    "native_stack_sha256": "7fc7934f86e4705bcaa06bd9889be11bc35781b8a9f9a9dd3e9d02ba5bd67088",
+    "relative_frames": {
+      "0x56519c326675": "0x30dc675",
+      "0x56519ce6203b": "0x3c1803b",
+      "0x56519c25d4e7": "0x30134e7",
+      "0x56519c3268eb": "0x30dc8eb"
+    },
+    "scope": "Read-only exact ownedPID maps after one completed stack; no fresh mutex owner or address args.",
+    "task_wait_channels": {
+      "52926": "__futex_wait",
+      "52930": "__futex_wait",
+      "52931": "__futex_wait",
+      "52932": "__futex_wait",
+      "52933": "__futex_wait",
+      "52934": "__futex_wait",
+      "52936": "__futex_wait",
+      "52943": "__futex_wait",
+      "52944": "__futex_wait",
+      "52945": "__futex_wait",
+      "52946": "__futex_wait",
+      "52947": "__futex_wait",
+      "52948": "__futex_wait",
+      "52949": "do_select",
+      "52951": "hrtimer_nanosleep",
+      "52952": "hrtimer_nanosleep",
+      "52960": "__futex_wait",
+      "52961": "__futex_wait",
+      "52962": "__futex_wait",
+      "52963": "hrtimer_nanosleep",
+      "52964": "__futex_wait",
+      "52965": "__futex_wait",
+      "52966": "__futex_wait"
+    }
+  },
+  "independent_recomputed_relative_frames": {
+    "0x56519c326675": "0x30dc675",
+    "0x56519ce6203b": "0x3c1803b",
+    "0x56519c25d4e7": "0x30134e7",
+    "0x56519c3268eb": "0x30dc8eb"
+  },
+  "worker_mutex_frame_occurrences": 5,
+  "fresh_mutex_address_or_owner_arguments": false,
+  "active_LLVM_JIT_frames_observed": false,
+  "binary_to_source_correspondence": "Exact owner-recorded dce binary matches prior retained-object/relocation/disassembly evidence at public35e80b3; no symbol names invented from this stripped fresh log.",
+  "historical_mapping_paths": {
+    "games/yuga-native/docs/evidence/desktop-finish/G0/W4-public463-native-review-r1/README.md": "945f9dbfc423dbc8fa2850278b61376916000bb4eecace0d15e171ecb2949895",
+    "games/yuga-native/docs/evidence/desktop-finish/G0/W4-public463-native-review-r1/compile_end-binary-disassembly.txt": "4b1d675589228a2d4944f6cf560c55fc35543c6cf367024a966f35661d5b80f9",
+    "games/yuga-native/docs/evidence/desktop-finish/G0/W4-public463-native-review-r1/group_wait-binary-disassembly.txt": "e39ad69e0a1c1eaaf87ef14ba51371e3633f1ac4a44d1e378a3a7b35cd9eb5e2",
+    "games/yuga-native/docs/evidence/desktop-finish/G0/W4-public463-native-review-r1/review.json": "c8c9fcb42b2bdbb88cd5318fc4ea440b15e5370f48a9a4bc2097f2f053c59c60",
+    "games/yuga-native/docs/evidence/desktop-finish/G0/W4-public463-native-review-r1/variant-binary-disassembly.txt": "eafdd3c7aa8f0f77eddf6bceca1797610c1b81d43946c871c3c0124ef4d95b78"
+  },
+  "limitations": [
+    "One stack snapshot, not repeated progress sampling.",
+    "Five worker waits have the same function PC, not newly collected lock-instance equality.",
+    "Main waiting function matches history; fresh main-owner identity not captured.",
+    "No final cold-launch outcome or universal deadlock/fix claim from this review."
+  ],
+  "observer_actions": "Read existing owner artifacts only; no attach, engine/build/source edit or process signal."
+}

@@ -1,0 +1,33 @@
+--- games/yuga-native/docs/evidence/desktop-finish/S3/W5-actual-motion-r1/run_capture.py
++++ planned/run_capture.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Bounded exact-pair preflight/render. Never imports or changes runtime inputs."""
++"""Unexecuted locomotion derivative of the sealed bounded pair runner. Never imports or changes runtime inputs."""
+ import argparse
+ import hashlib
+ import importlib.util
+@@ -21,8 +21,8 @@
+     ap.add_argument('--pair',type=Path,required=True)
+     ap.add_argument('--render-inputs',type=Path,required=True)
+     ap.add_argument('--progress-timeout',type=int,required=True)
+-    ap.add_argument('--role',choices=['baseline','candidate'],required=True)
+-    ap.add_argument('--case',choices=['full','landing120'],required=True)
++    ap.add_argument('--role',choices=['current'],required=True)
++    ap.add_argument('--case',choices=['locomotion'],required=True)
+     ap.add_argument('--output',type=Path,required=True)
+     ap.add_argument('--cpu',choices=['2','3','2,3','0,1'],default='3')
+     ap.add_argument('--preflight',action='store_true')
+@@ -50,10 +50,10 @@
+     if not engine.is_file() or sha(engine)!=inputs['engine']['sha256']:ap.error('Approved unmodified engine identity differs')
+     for runtime_file in inputs['render_runtime']['files'].values():
+         if sha(runtime_file['path'])!=runtime_file['sha256']:ap.error('Render runtime identity differs')
+-    hz=120 if args.case=='landing120' else 30
++    hz=30
+     cmd=['taskset','-c',args.cpu,str(engine),'--path',str(project),'--audio-driver','Dummy','--disable-vsync','--fixed-fps',str(hz)]
+     cmd+=['--headless'] if args.preflight else ['--display-driver','x11','--rendering-method','forward_plus']
+-    cmd+=['--script','res://tools/graphics-six/capture_transition.gd','--',f'--output={output}',f'--case={args.case}']
++    cmd+=['--script','res://tools/graphics-six/capture_locomotion.gd','--',f'--output={output}',f'--case={args.case}']
+     if args.preflight:cmd.append('--preflight')
+     if args.dry_run:
+         print(json.dumps({'command':cmd,'starts_engine':False,'render_inputs_sha256':sha(args.render_inputs),'private_godot_seed':inputs['godot_seed']['path'],'mesa_seed':inputs['mesa_seed']['path'],'timeout':args.timeout,'progress_timeout':args.progress_timeout},indent=2));return

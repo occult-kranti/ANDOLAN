@@ -41,7 +41,8 @@ def main():
                             'ui-host-replacement','ui-loading-presentation',
                             'ui-loading-readiness','ui-hud-readability','ui-atlas-layout','ui-cancel-focus',
                             'ui-preferences-relaunch','ui-compact-navigation-routes','ui-world-compact-title',
-                            'ui-title-identity','ui-outcome-shortcuts','ui-world-compact-first-entry'})]:
+                            'ui-title-identity','ui-outcome-shortcuts','ui-world-compact-first-entry',
+                            'ui-focus-recovery'})]:
         result = subprocess.run([sys.executable,str(RUNNER),'--catalog',kind,'--list'],capture_output=True,text=True)
         listed = json.loads(result.stdout)
         check(kind+' CLI exposes new contracts with bounded acceptance scope',
@@ -53,6 +54,10 @@ def main():
     check('A combat presentation suite cannot silently run under screen acceptance',result.returncode == 2 and 'selected --catalog' in result.stderr)
     for name, expected in {
         'ui-boot-recovery': {'tests/ui_s1_loading_cases.gd'},
+        'ui-focus-recovery': {'tests/ui_focus_recovery_cases.gd',
+                              'scripts/rama_hero_panel.gd','scripts/controls_overlay.gd',
+                              'scripts/input_bindings.gd','scripts/rama_ability_effects.gd',
+                              'scripts/hero_ui_theme.gd'},
         'ui-host-replacement': {'tests/ui_s2_transition_cases.gd'},
         'ui-cancel-focus': {'tests/ui_s3_cancel_focus_cases.gd'},
         'ui-preferences-relaunch': {'tests/desktop_d05_preferences_fixture.py',

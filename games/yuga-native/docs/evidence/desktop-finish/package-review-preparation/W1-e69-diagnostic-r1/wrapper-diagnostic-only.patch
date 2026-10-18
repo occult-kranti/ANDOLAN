@@ -1,0 +1,50 @@
+--- strict-r3/run_package_review.py
++++ e69-diagnostic/run_package_review.py
+@@ -11,7 +11,7 @@
+ import time
+ 
+ HERE = Path(__file__).resolve().parent
+-from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, EXPORTER, ARCHIVE, PCK, EXPORT_MANIFEST, SELECTION, exact_selection
++from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, EXPORTER, ARCHIVE, PCK, EXPORT_MANIFEST, SELECTION, exact_selection, diagnostic_proof
+ GDB = Path('/workspace/tooling/native-debug/gdb-local')
+ 
+ 
+@@ -66,7 +66,11 @@
+     parser.add_argument('--shader-cache-seed', type=Path)
+     parser.add_argument('--godot-shader-cache-seed', type=Path)
+     parser.add_argument('--dry-run', action='store_true')
++    parser.add_argument('--diagnostic-runtime-override', action='store_true', required=True)
+     args = parser.parse_args()
++    if args.phase != 'cold':
++        parser.error('This single diagnostic is cold only')
++    proof = diagnostic_proof()
+     if args.output.exists() or args.output.with_name(args.output.name + '-watchdog').exists():
+         parser.error('Fresh output and watchdog directories are required')
+     if args.phase == 'cold' and (args.shader_cache_seed or args.godot_shader_cache_seed):
+@@ -77,7 +81,7 @@
+         if not getattr(args, name).is_file():
+             parser.error('Missing actual package input: ' + name)
+     if sha(args.executable) != RUNTIME:
+-        parser.error('This attempt is bound to the exact separately declared unmodified public dce packaged binary')
++        parser.error('This attempt is bound to the exact separately declared e69 diagnostic binary; it is not the archived dce payload')
+     exported = json.loads(args.export_manifest.read_text())
+     if exported.get('git', {}).get('head') != EXPECTED_SOURCE or exported.get('git', {}).get('native_worktree_status') != '':
+         parser.error('Export must identify the exact clean approved f8dec5fa source checkpoint')
+@@ -103,13 +107,15 @@
+               'inner_timeout_scope': '600 seconds per readiness condition; outer bound is separate',
+               'first_native_observer_after_seconds': 120, 'sample_interval_seconds': 15,
+               'engine_selection': exported['engine_selection'],
++              'diagnostic_runtime_override': proof,
++              'archive_runtime_executed': False,
+               'engine_sha256': sha(args.executable), 'package_sha256': sha(args.package),
+               'archive_sha256': sha(args.package_archive), 'export_manifest_sha256': sha(args.export_manifest),
+-              'tool_sha256': {str(p.relative_to(HERE)): sha(p) for p in [Path(__file__), HERE / 'package_identity.py', SELECTION,
++              'tool_sha256': {str(p.relative_to(HERE)): sha(p) for p in [Path(__file__), HERE / 'package_identity.py', SELECTION, HERE / 'diagnostic-runtime-proof.json',
+                   HERE / 'tools/ui-campaign/run.py', HERE / 'tools/ui-campaign/observer.gd',
+                   HERE / 'tools/ui-campaign/integrated_capture.gd', HERE / 'tools/ui-campaign/authority_stage.gd',
+                   HERE / ('package-' + args.phase + '-plan.json')]},
+-              'scope': 'Actual extracted explicitly selected unmodified public dce Linux executable; official f64 exporter remains distinct; fresh isolated XDG; native XTest. Warm journey includes explicitly labeled actual-rule outcome stages; cold has none. No pose or asset writes.'}
++              'scope': 'Diagnostic e69 external runtime with the exact unchanged package PCK; archived dce payload is not being executed or qualified; official f64 exporter remains distinct; fresh isolated XDG; native XTest. Warm journey includes explicitly labeled actual-rule outcome stages; cold has none. No pose or asset writes.'}
+     if args.dry_run:
+         print(json.dumps(record, indent=2))
+         return 0

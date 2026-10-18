@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "status": "source_only_reviewed_no_export",
+  "utc": "2026-10-18T10:29:15.346389+00:00",
+  "sources": {
+    "tools/package-native.py": {
+      "bytes": 128970,
+      "sha256": "37e4408bfd04cec7b7a2cb3c32005e32f0198c065c1efe07611fbdf439664583"
+    },
+    "tests/package_linux_runtime_cases.py": {
+      "bytes": 20483,
+      "sha256": "ae905cc0ef7289b1bae870b0ba2779bfbdff142736ea5ae4fdd367444b37ee35"
+    }
+  },
+  "artifact_manifest": {
+    "bytes": 1320,
+    "sha256": "e20af095208f0c1d91346eb894f89ca5b2b45a371af0ef55216356ee7c5eee71"
+  },
+  "artifacts": 9,
+  "focused_checks": {
+    "passed": 50,
+    "total": 50,
+    "command": "python tests/package_linux_runtime_cases.py --report docs/evidence/desktop-finish/package-runtime-priority/W6-r1/focused-r1.json",
+    "exit_code": 0,
+    "elapsed_s": 0.079993116
+  },
+  "compatibility_checks": {
+    "passed": 5,
+    "total": 5
+  },
+  "references": {
+    "docs/evidence/desktop-finish/package-native-review/W3-patched-runtime-r1/receipt.json": {
+      "bytes": 2967,
+      "sha256": "e13b1248ea7881dc1edd803d8e0b061399861b75e63023bab322e63f32d0d3bb"
+    },
+    "docs/evidence/desktop-finish/package-native-review/W4-e69-independent-r1/receipt.json": {
+      "bytes": 914,
+      "sha256": "faf86d9c87a23bef75ad95e23ad56c59f0688f75ace74b1d8d0dbb5aa2dc9e24"
+    },
+    "docs/evidence/desktop-finish/next-focus/W6-integrated-review-r1/receipt.json": {
+      "bytes": 1684,
+      "sha256": "46e2acd14c484e30486ba04d38471dc4c0a861245fb3e65e946ae9642477e85b"
+    }
+  },
+  "scope": "Explicit patched variant and necessary mapped-proof copy closure only; no game/runtime asset changes, engine/build/export/archive/publication execution. Diagnostic success does not qualify a future package.",
+  "ready_paths": [
+    "games/yuga-native/tools/package-native.py",
+    "games/yuga-native/tests/package_linux_runtime_cases.py",
+    "games/yuga-native/docs/evidence/desktop-finish/package-runtime-priority/W6-r1/"
+  ],
+  "exclusions": [
+    "__pycache__",
+    "all preexisting archives/outputs",
+    "unrelated working tree files"
+  ]
+}

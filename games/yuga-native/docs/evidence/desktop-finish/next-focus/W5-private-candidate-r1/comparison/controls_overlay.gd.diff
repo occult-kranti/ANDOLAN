@@ -1,0 +1,17 @@
+--- baseline/controls_overlay.gd
++++ candidate/controls_overlay.gd
+@@ -218,11 +218,12 @@
+ func _move_focus(backward: bool) -> void:
+ 	var available: Array[Control] = []
+ 	for control in focus_order:
+-		if control.is_visible_in_tree() and not control.disabled: available.append(control)
++		if is_instance_valid(control) and control.is_visible_in_tree() and not control.disabled: available.append(control)
+ 	if available.is_empty(): return
+ 	var index := available.find(get_viewport().gui_get_focus_owner())
+ 	if index < 0:
+-		available.back().grab_focus() if backward else available.front().grab_focus()
++		if backward: available.back().grab_focus()
++		else: available.front().grab_focus()
+ 	else:
+ 		available[posmod(index + (-1 if backward else 1),available.size())].grab_focus()
+ 

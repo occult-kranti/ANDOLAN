@@ -1,0 +1,53 @@
+{
+  "source_sha256": "499fbf58d81aa24a3f5237cda4e4aa6cccb72fc2887bc90db9b1ecd3b8efdb9e",
+  "unexpected_branch": "transport/unapproved-receipt-branch",
+  "expected_branch": "transport/yuga-desktop-finish-2026-10-18-r1",
+  "mock_calls": [
+    [
+      "git",
+      "ls-remote",
+      "--heads",
+      "origin",
+      "refs/heads/transport/unapproved-receipt-branch"
+    ],
+    [
+      "git",
+      "show-ref",
+      "--verify",
+      "--quiet",
+      "refs/heads/transport/unapproved-receipt-branch"
+    ],
+    [
+      "gh",
+      "api",
+      "repos/occult-kranti/ANDOLAN/releases/416367666"
+    ],
+    [
+      "git",
+      "update-ref",
+      "refs/heads/transport/unapproved-receipt-branch",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "0000000000000000000000000000000000000000"
+    ],
+    [
+      "git",
+      "-c",
+      "pack.threads=1",
+      "-c",
+      "pack.window=0",
+      "push",
+      "origin",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:refs/heads/transport/unapproved-receipt-branch"
+    ],
+    [
+      "git",
+      "ls-remote",
+      "--heads",
+      "origin",
+      "refs/heads/transport/unapproved-receipt-branch"
+    ]
+  ],
+  "wrong_branch_reached_update_ref": true,
+  "wrong_branch_reached_push": true,
+  "scope": "Unchanged push body executed with mocked generator snapshot/Git/API/subprocess and temporary receipt/output. No network, Git object/ref/index change, engine or release action."
+}

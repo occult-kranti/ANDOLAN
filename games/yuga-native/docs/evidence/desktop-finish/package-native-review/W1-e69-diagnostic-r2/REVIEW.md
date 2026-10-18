@@ -1,0 +1,15 @@
+# Second independently fresh e69 cold diagnostic: completed
+
+The repeated cold process completed the same native route and Quit with exit 0 in **306.083174 seconds**, within the unchanged 600-second whole-attempt bound. Ten manual and nine automatic originals are retained. Final validation passes **21/21**, raw-original audit **37/37**, and final identity/process audit **10/10**.
+
+This is the second diagnostic execution of retained external e69, not execution of the archived dce runtime. Source f8dec5fa, PCK f55b5417, ZIP913e2b82, export c472ef52, plan237d1a47, observer5315e122 and the separately sealed diagnostic wrapper remain unchanged. Only fresh output/user/cache paths, display191 and new process identities differ operationally. Preferences and both shader caches started empty; no seed, reused cache or authority stage was supplied. Engine PID56139/start1779917 differs from the first take55198/start1736215. All552 runtime sources and the sealed preparation were rehashed after completion, with no mismatch. No owned live process remains.
+
+The first saved title timestamp is **110.400823 seconds**, measured by raw image mtime relative to wrapper start. The title is byte-identical to both the first diagnostic and accepted warm title. A title existed by the optional120-second no-title check, so no debugger observation was taken. This is not an exact first-visible-frame or hardware-performance measurement.
+
+Actual native input moved the world hero **2.400000572m** and rotated visual+Z by **1.570551991 radians**. Raw atlas direction agrees exactly; maximum independently projected error is **2.98498869e-08**. Overview holds simulation clocks while physics advances and returns with facing retained; night pause is reached. W1 directly opened all ten manual originals. Title/HUD/pause/overview remain contained and readable. Input scheduling produces some different positions and clocks from the first run; this packet does not claim full-route pixel or pose equality.
+
+One validator invocation was premature: inner run.json existed, but the outer watchdog had not finalized. Its correct outer_bound_completed failure is preserved in validation-before-wrapper-finalization.json. After the owned wrapper exited0 and recorded complete=true, the unchanged validator passed21/21 against the same execution. No runtime, tool or plan change and no extra engine run repaired that instrumentation timing mistake.
+
+Exact raw take and watchdog files are archived;217 isolated user/cache files are losslessly stored and independently decompressed/rehashed. The log contains no errors, warnings or object-leak report. Referenced first diagnostic and strict dce failure remain immutable.
+
+Two successful fresh processes support this bounded scheduling candidate for this PCK/route/environment. They do **not** qualify the existing dce archive, prove a universal engine fix, or establish hardware FPS, Windows execution, audio listening, online play or finished art. A new package/runtime successor must carry its own explicit provenance and actual qualification. Known floor/seam appearance, small auxiliary text and broader art/contact limits remain.

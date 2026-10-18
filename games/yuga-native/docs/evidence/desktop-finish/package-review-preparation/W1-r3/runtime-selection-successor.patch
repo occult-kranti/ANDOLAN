@@ -1,0 +1,72 @@
+--- W1-r2/run_package_review.py
++++ W1-r3/run_package_review.py
+@@ -11,8 +11,7 @@
+ import time
+ 
+ HERE = Path(__file__).resolve().parent
+-OFFICIAL = 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3'
+-EXPECTED_SOURCE = '5542e61610d20e591effbed9dec15fd10398e31d'
++from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, EXPORTER, ARCHIVE, PCK, EXPORT_MANIFEST, SELECTION, exact_selection
+ GDB = Path('/workspace/tooling/native-debug/gdb-local')
+ 
+ 
+@@ -77,11 +76,16 @@
+     for name in ['executable', 'package', 'package_archive', 'export_manifest']:
+         if not getattr(args, name).is_file():
+             parser.error('Missing actual package input: ' + name)
+-    if sha(args.executable) != OFFICIAL:
+-        parser.error('This attempt is bound to the exact official f64 packaged binary')
++    if sha(args.executable) != RUNTIME:
++        parser.error('This attempt is bound to the exact separately declared unmodified public dce packaged binary')
+     exported = json.loads(args.export_manifest.read_text())
+     if exported.get('git', {}).get('head') != EXPECTED_SOURCE or exported.get('git', {}).get('native_worktree_status') != '':
+-        parser.error('Export must identify the exact clean approved 5542e61 source checkpoint')
++        parser.error('Export must identify the exact clean approved f8dec5fa source checkpoint')
++    if not exact_selection(exported.get('engine_selection', {})):
++        parser.error('Exporter/runtime/source-build proof selection differs from approved r3')
++    if (sha(args.package) != PCK or sha(args.package_archive) != ARCHIVE or
++            sha(args.export_manifest) != EXPORT_MANIFEST):
++        parser.error('Package/archive/export manifest differs from approved r3')
+     command = [sys.executable, str(HERE / 'tools/ui-campaign/run.py'),
+                '--mode', 'package', '--project', str(args.project.resolve()),
+                '--executable', str(args.executable.resolve()), '--package', str(args.package.resolve()),
+@@ -98,13 +102,14 @@
+               'shutdown_grace_seconds': 12,
+               'inner_timeout_scope': '600 seconds per readiness condition; outer bound is separate',
+               'first_native_observer_after_seconds': 120, 'sample_interval_seconds': 15,
++              'engine_selection': exported['engine_selection'],
+               'engine_sha256': sha(args.executable), 'package_sha256': sha(args.package),
+               'archive_sha256': sha(args.package_archive), 'export_manifest_sha256': sha(args.export_manifest),
+-              'tool_sha256': {str(p.relative_to(HERE)): sha(p) for p in [Path(__file__),
++              'tool_sha256': {str(p.relative_to(HERE)): sha(p) for p in [Path(__file__), HERE / 'package_identity.py', SELECTION,
+                   HERE / 'tools/ui-campaign/run.py', HERE / 'tools/ui-campaign/observer.gd',
+                   HERE / 'tools/ui-campaign/integrated_capture.gd', HERE / 'tools/ui-campaign/authority_stage.gd',
+                   HERE / ('package-' + args.phase + '-plan.json')]},
+-              'scope': 'Actual extracted official Linux executable; fresh isolated XDG; native XTest. Warm journey includes explicitly labeled actual-rule outcome stages; cold has none. No pose or asset writes.'}
++              'scope': 'Actual extracted explicitly selected unmodified public dce Linux executable; official f64 exporter remains distinct; fresh isolated XDG; native XTest. Warm journey includes explicitly labeled actual-rule outcome stages; cold has none. No pose or asset writes.'}
+     if args.dry_run:
+         print(json.dumps(record, indent=2))
+         return 0
+--- W1-r2/verify_package_review.py
++++ W1-r3/verify_package_review.py
+@@ -7,8 +7,7 @@
+ from pathlib import Path
+ 
+ HERE = Path(__file__).resolve().parent
+-EXPECTED_SOURCE = '5542e61610d20e591effbed9dec15fd10398e31d'
+-OFFICIAL = 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3'
++from package_identity import SOURCE as EXPECTED_SOURCE, RUNTIME, ARCHIVE, PCK, EXPORT_MANIFEST, exact_selection
+ 
+ 
+ def sha(path):
+@@ -58,7 +57,9 @@
+         'native_route_complete_and_quit_zero': record.get('complete') is True and record.get('verified_exit_code') == 0,
+         'outer_bound_completed': watchdog.get('complete') is True and watchdog.get('overall_timeout') is False,
+         'exact_final_export_commit': record.get('export_manifest',{}).get('git',{}).get('head') == EXPECTED_SOURCE == watchdog.get('expected_source_commit'),
+-        'exact_official_bundled_engine': record.get('engine_sha256') == OFFICIAL == watchdog.get('engine_sha256'),
++        'exact_selected_public_runtime': record.get('engine_sha256') == RUNTIME == watchdog.get('engine_sha256'),
++        'exact_distinct_exporter_and_runtime_proof': exact_selection(record.get('export_manifest', {}).get('engine_selection', {})) and exact_selection(watchdog.get('engine_selection', {})),
++        'exact_qualified_archive_pck_manifest': watchdog.get('package_sha256') == PCK and watchdog.get('archive_sha256') == ARCHIVE and watchdog.get('export_manifest_sha256') == EXPORT_MANIFEST,
+         'package_archive_source_tools_unchanged': all(record.get(k) is True for k in [
+             'package_unchanged','archive_unchanged','export_manifest_unchanged','instrumentation_unchanged','source_unchanged']),
+         'expected_manual_count': len(record.get('shots',[])) == len(names),

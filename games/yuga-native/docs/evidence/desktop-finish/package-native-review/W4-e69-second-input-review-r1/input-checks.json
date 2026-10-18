@@ -1,0 +1,109 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "same expected_source_commit",
+      "passed": true,
+      "value": "f8dec5fa4f9bbd2d20c58f6102fb984d0b19a9f1"
+    },
+    {
+      "name": "same engine_sha256",
+      "passed": true,
+      "value": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e"
+    },
+    {
+      "name": "same package_sha256",
+      "passed": true,
+      "value": "f55b5417e38b6a5b46ff2b12ec22890509287f84ad1fe2fb62c87190c76a7197"
+    },
+    {
+      "name": "same archive_sha256",
+      "passed": true,
+      "value": "913e2b82b9a71977bf361349e225ae0295a9dd08f1e0a0a68d7b3b7d3df4426c"
+    },
+    {
+      "name": "same export_manifest_sha256",
+      "passed": true,
+      "value": "c472ef5278b4c35b8226d654bbaf5c0061b98c00a4be20c7a3a1dbe8600adb54"
+    },
+    {
+      "name": "same overall_limit_seconds",
+      "passed": true,
+      "value": 600
+    },
+    {
+      "name": "same affinity",
+      "passed": true,
+      "value": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "same raw plan_sha256",
+      "passed": true
+    },
+    {
+      "name": "same raw scheduling",
+      "passed": true
+    },
+    {
+      "name": "same raw authority_staging",
+      "passed": true
+    },
+    {
+      "name": "same raw source_sha256",
+      "passed": true
+    },
+    {
+      "name": "same raw package_sha256",
+      "passed": true
+    },
+    {
+      "name": "same instrumentation after declared exact output-root normalization",
+      "passed": true,
+      "first": {
+        "@OUTPUT/observer.gd": "5315e1224d2f2fb7a62e038dd4f219489d0670c1f8cedcd22f159a90105ec902",
+        "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/package-review-preparation/W1-e69-diagnostic-r1/tools/ui-campaign/run.py": "322e919185825c5b6bd49911fbe2b64b70a2149ffbb0199958e98c45ce22763d"
+      },
+      "second": {
+        "@OUTPUT/observer.gd": "5315e1224d2f2fb7a62e038dd4f219489d0670c1f8cedcd22f159a90105ec902",
+        "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/package-review-preparation/W1-e69-diagnostic-r1/tools/ui-campaign/run.py": "322e919185825c5b6bd49911fbe2b64b70a2149ffbb0199958e98c45ce22763d"
+      }
+    },
+    {
+      "name": "observer-byte negative control rejected after output-root normalization",
+      "passed": true
+    },
+    {
+      "name": "first isolated empty preferences and no cache seed/reuse",
+      "passed": true
+    },
+    {
+      "name": "second isolated empty preferences and no cache seed/reuse",
+      "passed": true
+    },
+    {
+      "name": "distinct isolated XDG roots",
+      "passed": true,
+      "first": "/tmp/yuga-desktop-package-e69-cold-diagnostic-r1/user",
+      "second": "/tmp/yuga-desktop-package-e69-cold-diagnostic-r2/user"
+    },
+    {
+      "name": "second bounded native exit and wrapper complete",
+      "passed": true,
+      "elapsed_seconds": 306.083174170999
+    },
+    {
+      "name": "unchanged final validation and raw audit pass",
+      "passed": true
+    }
+  ],
+  "second_timing_note": {
+    "scope": "Premature validator invocation retained; no runtime or validator changes.",
+    "cause": "Inner run.json had completed, but outer watchdog receipt had not yet finalized; outer_bound_completed correctly failed.",
+    "action": "Waited for owned wrapper exit0 and complete=true, then reran only unchanged validator against unchanged execution.",
+    "original_failed_check": "outer_bound_completed",
+    "utc": "2026-10-18T10:23:15.213811+00:00"
+  }
+}

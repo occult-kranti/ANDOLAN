@@ -1,0 +1,456 @@
+
+FILE core/object/worker_thread_pool.cpp
+ARCHIVE SHA256 9bd57c773fd8d13b084594721bb8216a337891819efe31cf68ffd5e0f14db993
+
+55: void WorkerThreadPool::_process_task(Task *p_task) {
+56: #ifdef THREADS_ENABLED
+57: 	int pool_thread_index = thread_ids[Thread::get_caller_id()];
+58: 	ThreadData &curr_thread = threads[pool_thread_index];
+59: 	Task *prev_task = nullptr; // In case this is recursively called.
+60: 
+61: 	bool safe_for_nodes_backup = is_current_thread_safe_for_nodes();
+62: 	CallQueue *call_queue_backup = MessageQueue::get_singleton() != MessageQueue::get_main_singleton() ? MessageQueue::get_singleton() : nullptr;
+63: 
+64: 	{
+65: 		// Tasks must start with these at default values. They are free to set-and-forget otherwise.
+66: 		set_current_thread_safe_for_nodes(false);
+67: 		MessageQueue::set_thread_singleton_override(nullptr);
+68: 
+69: 		// Since the WorkerThreadPool is started before the script server,
+70: 		// its pre-created threads can't have ScriptServer::thread_enter() called on them early.
+71: 		// Therefore, we do it late at the first opportunity, so in case the task
+72: 		// about to be run uses scripting, guarantees are held.
+73: 		ScriptServer::thread_enter();
+74: 
+75: 		task_mutex.lock();
+76: 		p_task->pool_thread_index = pool_thread_index;
+77: 		prev_task = curr_thread.current_task;
+78: 		curr_thread.current_task = p_task;
+79: 		curr_thread.has_pump_task = p_task->is_pump_task;
+80: 		if (p_task->pending_notify_yield_over) {
+81: 			curr_thread.yield_is_over = true;
+82: 		}
+83: 		task_mutex.unlock();
+84: 	}
+85: #endif
+184: void WorkerThreadPool::_thread_function(void *p_user) {
+185: 	ThreadData *thread_data = (ThreadData *)p_user;
+186: 	Thread::set_name(vformat("WorkerThread %d", thread_data->index));
+187: 
+188: 	while (true) {
+189: 		Task *task_to_process = nullptr;
+190: 		{
+191: 			// Create the lock outside the inner loop so it isn't needlessly unlocked and relocked
+192: 			//  when no task was found to process, and the loop is re-entered.
+193: 			MutexLock lock(thread_data->pool->task_mutex);
+194: 
+195: 			while (true) {
+196: 				bool exit = thread_data->pool->_handle_runlevel(thread_data, lock);
+197: 				if (unlikely(exit)) {
+198: 					return;
+199: 				}
+200: 
+201: 				thread_data->signaled = false;
+202: 
+203: 				if (!thread_data->pool->task_queue.first()) {
+204: 					// There wasn't a task available yet.
+205: 					// Let's wait for the next notification, then recheck.
+206: 					thread_data->cond_var.wait(lock);
+207: 					continue;
+208: 				}
+209: 
+210: 				// Got a task to process! Remove it from the queue, then break into the task handling section.
+211: 				task_to_process = thread_data->pool->task_queue.first()->self();
+212: 				thread_data->pool->task_queue.remove(thread_data->pool->task_queue.first());
+213: 				break;
+214: 			}
+215: 		}
+216: 
+217: 		DEV_ASSERT(task_to_process);
+218: 		thread_data->pool->_process_task(task_to_process);
+222: void WorkerThreadPool::_post_tasks(Task **p_tasks, uint32_t p_count, bool p_high_priority, MutexLock<BinaryMutex> &p_lock, bool p_pump_task) {
+223: 	// Fall back to processing on the calling thread if there are no worker threads.
+224: 	// Separated into its own variable to make it easier to extend this logic
+225: 	// in custom builds.
+226: 
+227: 	// Avoid calling pump tasks or low priority tasks from the calling thread.
+228: 	bool process_on_calling_thread = threads.is_empty() && !p_pump_task;
+229: 	if (process_on_calling_thread) {
+230: 		p_lock.temp_unlock();
+231: 		for (uint32_t i = 0; i < p_count; i++) {
+232: 			_process_task(p_tasks[i]);
+233: 		}
+234: 		p_lock.temp_relock();
+235: 		return;
+236: 	}
+237: 
+238: 	while (runlevel == RUNLEVEL_EXIT_LANGUAGES) {
+239: 		control_cond_var.wait(p_lock);
+240: 	}
+241: 
+242: 	uint32_t to_process = 0;
+243: 	uint32_t to_promote = 0;
+244: 
+245: 	ThreadData *caller_pool_thread = thread_ids.has(Thread::get_caller_id()) ? &threads[thread_ids[Thread::get_caller_id()]] : nullptr;
+246: 
+247: 	for (uint32_t i = 0; i < p_count; i++) {
+248: 		p_tasks[i]->low_priority = !p_high_priority;
+249: 		if (p_high_priority || low_priority_threads_used < max_low_priority_threads) {
+250: 			task_queue.add_last(&p_tasks[i]->task_elem);
+251: 			if (!p_high_priority) {
+252: 				low_priority_threads_used++;
+253: 			}
+254: 			to_process++;
+255: 		} else {
+256: 			// Too many threads using low priority, must go to queue.
+257: 			low_priority_task_queue.add_last(&p_tasks[i]->task_elem);
+258: 			to_promote++;
+259: 		}
+260: 	}
+329: bool WorkerThreadPool::_try_promote_low_priority_task() {
+330: 	if (low_priority_task_queue.first()) {
+331: 		Task *low_prio_task = low_priority_task_queue.first()->self();
+332: 		low_priority_task_queue.remove(low_priority_task_queue.first());
+333: 		task_queue.add_last(&low_prio_task->task_elem);
+334: 		low_priority_threads_used++;
+335: 		return true;
+336: 	} else {
+337: 		return false;
+338: 	}
+339: }
+360: #ifdef THREADS_ENABLED
+361: 	if (p_pump_task) {
+362: 		pump_task_count++;
+363: 		int thread_count = get_thread_count();
+364: 		if (pump_task_count >= thread_count) {
+365: 			print_verbose(vformat("A greater number of dedicated threads were requested (%d) than threads available (%d). Please increase the number of available worker task threads. Recovering this session by spawning more worker task threads.", pump_task_count + 1, thread_count)); // +1 because we want to keep a Thread without any pump tasks free.
+366: 
+367: 			// Re-sizing implies relocation, which is not supported for this array.
+368: 			CRASH_COND_MSG(thread_count + 1 > (int)threads.get_capacity(), "Reserve trick for worker thread pool failed. Crashing.");
+369: 			threads.resize_initialized(thread_count + 1);
+370: 			threads[thread_count].index = thread_count;
+371: 			threads[thread_count].pool = this;
+372: 			threads[thread_count].thread.start(&WorkerThreadPool::_thread_function, &threads[thread_count]);
+373: 			thread_ids.insert(threads[thread_count].thread.get_id(), thread_count);
+374: 		}
+375: 	}
+653: WorkerThreadPool::GroupID WorkerThreadPool::_add_group_task(const Callable &p_callable, void (*p_func)(void *, uint32_t), void *p_userdata, BaseTemplateUserdata *p_template_userdata, int p_elements, int p_tasks, bool p_high_priority, const String &p_description) {
+654: 	ERR_FAIL_COND_V(p_elements < 0, INVALID_TASK_ID);
+655: 	if (p_tasks < 0) {
+656: 		p_tasks = MAX(1u, threads.size());
+657: 	}
+658: 
+659: 	MutexLock<BinaryMutex> lock(task_mutex);
+660: 
+661: 	Group *group = group_allocator.alloc();
+662: 	GroupID id = last_task++;
+663: 	group->max = p_elements;
+664: 	group->self = id;
+665: 
+666: 	Task **tasks_posted = nullptr;
+667: 	if (p_elements == 0) {
+668: 		// Should really not call it with zero Elements, but at least it should work.
+669: 		group->completed.set_to(true);
+670: 		group->done_semaphore.post();
+671: 		group->tasks_used = 0;
+672: 		p_tasks = 0;
+673: 		if (p_template_userdata) {
+674: 			memdelete(p_template_userdata);
+675: 		}
+676: 
+677: 	} else {
+678: 		group->tasks_used = p_tasks;
+679: 		tasks_posted = (Task **)alloca(sizeof(Task *) * p_tasks);
+680: 		for (int i = 0; i < p_tasks; i++) {
+681: 			Task *task = task_allocator.alloc();
+682: 			task->native_group_func = p_func;
+683: 			task->native_func_userdata = p_userdata;
+684: 			task->description = p_description;
+685: 			task->group = group;
+686: 			task->callable = p_callable;
+687: 			task->template_userdata = p_template_userdata;
+688: 			tasks_posted[i] = task;
+689: 			// No task ID is used.
+690: 		}
+691: 	}
+692: 
+693: 	groups[id] = group;
+694: 
+695: 	_post_tasks(tasks_posted, p_tasks, p_high_priority, lock, false);
+696: 
+697: 	return id;
+725: void WorkerThreadPool::wait_for_group_task_completion(GroupID p_group) {
+726: #ifdef THREADS_ENABLED
+727: 	task_mutex.lock();
+728: 	Group **groupp = groups.getptr(p_group);
+729: 	task_mutex.unlock();
+730: 	if (!groupp) {
+731: 		ERR_FAIL_MSG("Invalid Group ID.");
+732: 	}
+733: 
+734: 	{
+735: 		Group *group = *groupp;
+736: 
+737: 		if (this == singleton) {
+738: 			_unlock_unlockable_mutexes();
+739: 		}
+740: 		group->done_semaphore.wait();
+741: 		if (this == singleton) {
+742: 			_lock_unlockable_mutexes();
+743: 		}
+744: 
+745: 		uint32_t max_users = group->tasks_used + 1; // Add 1 because the thread waiting for it is also user. Read before to avoid another thread freeing task after increment.
+746: 		uint32_t finished_users = group->finished.increment(); // fetch happens before inc, so increment later.
+747: 
+748: 		if (finished_users == max_users) {
+749: 			// All tasks using this group are gone (finished before the group), so clear the group too.
+750: 			MutexLock task_lock(task_mutex);
+751: 			group_allocator.free(group);
+752: 		}
+753: 	}
+754: 
+755: 	MutexLock task_lock(task_mutex); // This mutex is needed when Physics 2D and/or 3D is selected to run on a separate thread.
+756: 	groups.erase(p_group);
+757: #endif
+809: void WorkerThreadPool::init(int p_thread_count, float p_low_priority_task_ratio) {
+810: 	ERR_FAIL_COND(threads.size() > 0);
+811: 
+812: 	runlevel = RUNLEVEL_NORMAL;
+813: 
+814: 	if (p_thread_count < 0) {
+815: 		p_thread_count = OS::get_singleton()->get_default_thread_pool_size();
+816: 	}
+817: 
+818: 	max_low_priority_threads = CLAMP(p_thread_count * p_low_priority_task_ratio, 1, p_thread_count - 1);
+819: 
+820: 	print_verbose(vformat("WorkerThreadPool: %d threads, %d max low-priority.", p_thread_count, max_low_priority_threads));
+821: 
+822: #ifdef THREADS_ENABLED
+823: 	// Reserve 5 threads in case we need separate threads for 1) 2D physics 2) 3D physics 3) rendering 4) GPU texture compression, 5) all other tasks.
+824: 	// We cannot safely increase the Vector size at runtime, so reserve enough up front, but only launch those needed.
+825: 	threads.reserve(5);
+826: #endif
+827: 	threads.resize(p_thread_count);
+828: 
+829: 	for (uint32_t i = 0; i < threads.size(); i++) {
+830: 		threads[i].index = i;
+831: 		threads[i].pool = this;
+832: 		threads[i].thread.start(&WorkerThreadPool::_thread_function, &threads[i]);
+833: 		thread_ids.insert(threads[i].thread.get_id(), i);
+834: 	}
+
+FILE servers/rendering/renderer_rd/shader_rd.h
+ARCHIVE SHA256 012864496d13c39796025ad87b2f531536aacd2154e27a0d5c4a7a580d5ebb56
+
+179: 	_FORCE_INLINE_ RID version_get_shader(RID p_version, int p_variant) {
+180: 		ERR_FAIL_INDEX_V(p_variant, variant_defines.size(), RID());
+181: 		ERR_FAIL_COND_V(!variants_enabled[p_variant], RID());
+182: 
+183: 		Version *version = version_owner.get_or_null(p_version);
+184: 		ERR_FAIL_NULL_V(version, RID());
+185: 
+186: 		MutexLock lock(*version->mutex);
+187: 
+188: 		if (version->dirty) {
+189: 			_initialize_version(version);
+190: 			for (int i = 0; i < group_enabled.size(); i++) {
+191: 				if (!group_enabled[i]) {
+192: 					_allocate_placeholders(version, i);
+193: 					continue;
+194: 				}
+195: 				_compile_version_start(version, i);
+196: 			}
+197: 		}
+198: 
+199: 		uint32_t group = variant_to_group[p_variant];
+200: 		if (version->group_compilation_tasks[group] != 0) {
+201: 			_compile_version_end(version, group);
+202: 		}
+203: 
+204: 		if (!version->valid) {
+205: 			return RID();
+206: 		}
+207: 
+208: 		return version->variants[p_variant];
+209: 	}
+
+FILE servers/rendering/renderer_rd/shader_rd.cpp
+ARCHIVE SHA256 a8968ac041a7fe5d84fc5fa681479dfbae1f44425df76dc4cec90a9c6aebf4ab
+
+534: // Try to compile all variants for a given group.
+535: // Will skip variants that are disabled.
+536: void ShaderRD::_compile_version_start(Version *p_version, int p_group) {
+537: 	if (!group_enabled[p_group]) {
+538: 		return;
+539: 	}
+540: 
+541: 	p_version->dirty = false;
+542: 
+543: #if ENABLE_SHADER_CACHE
+544: 	if (shader_cache_user_dir_valid || shader_cache_res_dir_valid) {
+545: 		if (_load_from_cache(p_version, p_group)) {
+546: 			return;
+547: 		}
+548: 	}
+549: #endif
+550: 
+551: 	CompileData compile_data;
+552: 	compile_data.version = p_version;
+553: 	compile_data.group = p_group;
+554: 
+555: 	WorkerThreadPool::GroupID group_task = WorkerThreadPool::get_singleton()->add_template_group_task(this, &ShaderRD::_compile_variant, compile_data, group_to_variant_map[p_group].size(), -1, true, SNAME("ShaderCompilation"));
+556: 	p_version->group_compilation_tasks.write[p_group] = group_task;
+557: }
+558: 
+559: void ShaderRD::_compile_version_end(Version *p_version, int p_group) {
+560: 	if (p_version->group_compilation_tasks.size() <= p_group || p_version->group_compilation_tasks[p_group] == 0) {
+561: 		return;
+562: 	}
+563: 	WorkerThreadPool::GroupID group_task = p_version->group_compilation_tasks[p_group];
+564: 	WorkerThreadPool::get_singleton()->wait_for_group_task_completion(group_task);
+565: 	p_version->group_compilation_tasks.write[p_group] = 0;
+611: void ShaderRD::version_set_code(RID p_version, const HashMap<String, String> &p_code, const String &p_uniforms, const String &p_vertex_globals, const String &p_fragment_globals, const Vector<String> &p_custom_defines) {
+612: 	ERR_FAIL_COND(is_compute);
+613: 
+614: 	Version *version = version_owner.get_or_null(p_version);
+615: 	ERR_FAIL_NULL(version);
+616: 
+617: 	MutexLock lock(*version->mutex);
+618: 
+619: 	_compile_ensure_finished(version);
+632: 	}
+633: 
+634: 	version->dirty = true;
+635: 	if (version->initialize_needed) {
+636: 		_initialize_version(version);
+637: 		for (int i = 0; i < group_enabled.size(); i++) {
+638: 			if (!group_enabled[i]) {
+639: 				_allocate_placeholders(version, i);
+640: 				continue;
+641: 			}
+642: 			_compile_version_start(version, i);
+643: 		}
+644: 		version->initialize_needed = false;
+645: 	}
+685: bool ShaderRD::version_is_valid(RID p_version) {
+686: 	Version *version = version_owner.get_or_null(p_version);
+687: 	ERR_FAIL_NULL_V(version, false);
+688: 
+689: 	MutexLock lock(*version->mutex);
+690: 
+691: 	if (version->dirty) {
+692: 		_initialize_version(version);
+693: 		for (int i = 0; i < group_enabled.size(); i++) {
+694: 			if (!group_enabled[i]) {
+695: 				_allocate_placeholders(version, i);
+696: 				continue;
+697: 			}
+698: 			_compile_version_start(version, i);
+699: 		}
+700: 	}
+701: 
+702: 	_compile_ensure_finished(version);
+703: 
+704: 	return version->valid;
+
+FILE servers/rendering/renderer_rd/pipeline_hash_map_rd.h
+ARCHIVE SHA256 095dc91ce6ebb23f84912981c90d84caac83be3cd7765f00e7d696cb7c03e6c5
+
+102: 	void compile_pipeline(const Key &p_key, uint32_t p_key_hash, RS::PipelineSource p_source, bool p_high_priority) {
+103: 		DEV_ASSERT((creation_object != nullptr) && (creation_function != nullptr) && "Creation object and function was not set before attempting to compile a pipeline.");
+104: 
+105: 		MutexLock local_lock(local_mutex);
+106: 		if (compilation_set.has(p_key_hash)) {
+107: 			// Check if the pipeline was already submitted.
+108: 			return;
+109: 		}
+110: 
+111: 		// Record the pipeline as submitted, a task can't be started for it again.
+112: 		compilation_set.insert(p_key_hash);
+113: 
+114: 		if (compilations_mutex != nullptr) {
+115: 			MutexLock compilations_lock(*compilations_mutex);
+116: 			compilations[p_source]++;
+117: 		}
+139: 		print_line("HASH:", p_key_hash, "SOURCE:", source_name);
+140: #endif
+141: 
+142: 		// Queue a background compilation task.
+143: 		WorkerThreadPool::TaskID task_id = WorkerThreadPool::get_singleton()->add_template_task(creation_object, creation_function, p_key, p_high_priority, "PipelineCompilation");
+144: 		compilation_tasks.insert(p_key_hash, task_id);
+145: 	}
+147: 	void wait_for_pipeline(uint32_t p_key_hash) {
+148: 		WorkerThreadPool::TaskID task_id_to_wait = WorkerThreadPool::INVALID_TASK_ID;
+149: 
+150: 		{
+151: 			MutexLock local_lock(local_mutex);
+152: 			if (!compilation_set.has(p_key_hash)) {
+153: 				// The pipeline was never submitted, we can't wait for it.
+154: 				return;
+155: 			}
+156: 
+157: 			HashMap<uint32_t, WorkerThreadPool::TaskID>::Iterator task_it = compilation_tasks.find(p_key_hash);
+158: 			if (task_it != compilation_tasks.end()) {
+159: 				// Wait for and remove the compilation task if it exists.
+160: 				task_id_to_wait = task_it->value;
+161: 				compilation_tasks.remove(task_it);
+162: 			}
+163: 		}
+164: 
+165: 		if (task_id_to_wait != WorkerThreadPool::INVALID_TASK_ID) {
+166: 			WorkerThreadPool::get_singleton()->wait_for_task_completion(task_id_to_wait);
+167: 		}
+
+FILE servers/rendering/renderer_rd/forward_clustered/render_forward_clustered.cpp
+ARCHIVE SHA256 bf8b24a243c8e9fa0d0104189eb5304ae709e380d0f6ac83344393ed6f8072b1
+
+4545: void RenderForwardClustered::_mesh_compile_pipeline_for_surface(SceneShaderForwardClustered::ShaderData *p_shader, void *p_mesh_surface, bool p_ubershader, bool p_instanced_surface, RS::PipelineSource p_source, SceneShaderForwardClustered::ShaderData::PipelineKey &r_pipeline_key, Vector<ShaderPipelinePair> *r_pipeline_pairs) {
+4546: 	RendererRD::MeshStorage *mesh_storage = RendererRD::MeshStorage::get_singleton();
+4547: 	uint64_t input_mask = p_shader->get_vertex_input_mask(r_pipeline_key.version, r_pipeline_key.color_pass_flags, p_ubershader);
+4548: 	bool pipeline_motion_vectors = r_pipeline_key.color_pass_flags & SceneShaderForwardClustered::PIPELINE_COLOR_PASS_FLAG_MOTION_VECTORS;
+4549: 	bool emulate_point_size = p_shader->uses_point_size && scene_shader.emulate_point_size;
+4550: 	r_pipeline_key.vertex_format_id = mesh_storage->mesh_surface_get_vertex_format(p_mesh_surface, input_mask, p_instanced_surface, pipeline_motion_vectors, emulate_point_size);
+4551: 	r_pipeline_key.ubershader = p_ubershader;
+4552: 
+4553: 	p_shader->pipeline_hash_map.compile_pipeline(r_pipeline_key, r_pipeline_key.hash(), p_source, p_ubershader);
+4554: 
+4555: 	if (r_pipeline_pairs != nullptr) {
+4556: 		r_pipeline_pairs->push_back({ p_shader, r_pipeline_key });
+
+FILE main/main.cpp
+ARCHIVE SHA256 a286542613447670ac3a8b409ae8af0a2dea3bb63b9a8829dfb4d4a3f7879c6a
+
+2087: 	// Initialize WorkerThreadPool.
+2088: 	{
+2089: #ifdef THREADS_ENABLED
+2090: 		if (editor || project_manager) {
+2091: 			WorkerThreadPool::get_singleton()->init(-1, 0.75);
+2092: 		} else {
+2093: 			int worker_threads = GLOBAL_GET("threading/worker_pool/max_threads");
+2094: 			float low_priority_ratio = GLOBAL_GET("threading/worker_pool/low_priority_thread_ratio");
+2095: 			WorkerThreadPool::get_singleton()->init(worker_threads, low_priority_ratio);
+2096: 		}
+2097: #else
+2098: 		WorkerThreadPool::get_singleton()->init(0, 0);
+2099: #endif
+
+FILE doc/classes/ProjectSettings.xml
+ARCHIVE SHA256 bab5f959ff9e3f351e2a7dfc9ebe5298af0dd009e88fe616a09aeca51150458b
+
+3393: 		<member name="rendering/shader_compiler/shader_cache/compress" type="bool" setter="" getter="" default="true">
+3394: 		</member>
+3395: 		<member name="rendering/shader_compiler/shader_cache/enabled" type="bool" setter="" getter="" default="true">
+3396: 			Enable the shader cache, which stores compiled shaders to disk to prevent stuttering from shader compilation the next time the shader is needed.
+3397: 		</member>
+3398: 		<member name="rendering/shader_compiler/shader_cache/strip_debug" type="bool" setter="" getter="" default="false">
+3399: 		</member>
+3400: 		<member name="rendering/shader_compiler/shader_cache/strip_debug.release" type="bool" setter="" getter="" default="true">
+3401: 		</member>
+3402: 		<member name="rendering/shader_compiler/shader_cache/use_zstd_compression" type="bool" setter="" getter="" default="true">
+3403: 		</member>
+3506: 		<member name="threading/worker_pool/low_priority_thread_ratio" type="float" setter="" getter="" default="0.3">
+3507: 			The ratio of [WorkerThreadPool]'s threads that will be reserved for low-priority tasks. For example, if 10 threads are available and this value is set to [code]0.3[/code], 3 of the worker threads will be reserved for low-priority tasks. The actual value won't exceed the number of CPU cores minus one, and if possible, at least one worker thread will be dedicated to low-priority tasks.
+3508: 		</member>
+3509: 		<member name="threading/worker_pool/max_threads" type="int" setter="" getter="" default="-1">
+3510: 			Maximum number of threads to be used by [WorkerThreadPool]. On Web, a value of [code]-1[/code] means [code]1[/code]. On other platforms, it means all [i]logical[/i] CPU cores available (see [method OS.get_processor_count]).
+3511: 		</member>

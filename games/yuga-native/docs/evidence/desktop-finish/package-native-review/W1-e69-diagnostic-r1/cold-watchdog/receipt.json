@@ -1,0 +1,162 @@
+{
+  "expected_source_commit": "f8dec5fa4f9bbd2d20c58f6102fb984d0b19a9f1",
+  "phase": "cold",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/package-review-preparation/W1-e69-diagnostic-r1/tools/ui-campaign/run.py",
+    "--mode",
+    "package",
+    "--project",
+    "/tmp/yuga-desktop-integrated-package-r1/ANDOLAN/games/yuga-native",
+    "--executable",
+    "/workspace/tooling/godot-public-4.6.3/binaries/godot-4.6.3-public-template-debug-pipeline-low-priority",
+    "--package",
+    "/tmp/yuga-desktop-integrated-package-r3/extracted/yuga-native-linux-x86_64/yuga-native.pck",
+    "--package-archive",
+    "/tmp/yuga-desktop-integrated-package-r3/build/yuga-native-linux-x86_64.zip",
+    "--export-manifest",
+    "/tmp/yuga-desktop-integrated-package-r3/build/native-export-manifest.json",
+    "--output",
+    "/tmp/yuga-desktop-package-e69-cold-diagnostic-r1",
+    "--plan",
+    "/workspace/ANDOLAN/games/yuga-native/docs/evidence/desktop-finish/package-review-preparation/W1-e69-diagnostic-r1/package-cold-plan.json",
+    "--renderer",
+    "forward_plus",
+    "--render-threads",
+    "2",
+    "--width",
+    "960",
+    "--height",
+    "600",
+    "--display",
+    "190",
+    "--timeout",
+    "600"
+  ],
+  "overall_limit_seconds": 600,
+  "shutdown_grace_seconds": 12,
+  "inner_timeout_scope": "600 seconds per readiness condition; outer bound is separate",
+  "first_native_observer_after_seconds": 120,
+  "sample_interval_seconds": 15,
+  "engine_selection": {
+    "exporter": {
+      "bytes": 138981968,
+      "role": "PCK export and imported-font proof",
+      "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+      "version": "4.6.3.stable.official.7d41c59c4"
+    },
+    "linux_runtime": {
+      "bytes": 85447128,
+      "kind": "unmodified-public-source-template-debug",
+      "provenance": {
+        "build_command": [
+          "python3",
+          "-m",
+          "SCons",
+          "-j4",
+          "platform=linuxbsd",
+          "target=template_debug",
+          "dev_build=no",
+          "debug_symbols=no",
+          "lto=none",
+          "use_sowrap=yes",
+          "disable_path_overrides=no"
+        ],
+        "evidence": {
+          "NOTICE/GODOT-COPYRIGHT.txt": {
+            "bytes": 99790,
+            "sha256": "b3330849267d56ddd3d62a513817506606c2195034411fe05859f0140bff9d8a"
+          },
+          "NOTICE/GODOT-LICENSE.txt": {
+            "bytes": 1149,
+            "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80"
+          },
+          "docs/evidence/desktop-finish/G0/template-baseline-r1/build-result.json": {
+            "bytes": 127070,
+            "sha256": "ef3611ef2f428dc36b1fc46b5784b8ec10ea1600fce0dce65d39aeb720def32c"
+          },
+          "docs/evidence/desktop-finish/G0/template-baseline-r1/finished-build-verification.json": {
+            "bytes": 1029,
+            "sha256": "70fc1633d8f29fed62a9d0db37103cc442bc7c066acda21ab78f2db560a16abd"
+          },
+          "docs/evidence/desktop-finish/G0/template-build-preparation-r1/source-recovery.json": {
+            "bytes": 883,
+            "sha256": "33c58d013b84143be96e29f968fe26553a07e26e067fa61496506df79d1b5b20"
+          }
+        },
+        "kind": "unmodified-public-source-template-debug",
+        "license": "MIT; bundled GODOT-LICENSE.txt and GODOT-COPYRIGHT.txt include third-party attributions.",
+        "scope": "Build identity only. Archive validation does not establish execution or visual acceptance.",
+        "source_archive": {
+          "bytes": 66095747,
+          "sha256": "fe5b661d0e7b062201ebffc8740cb309ff96c4f1edca79cdb0ecda50ff2af8d5"
+        },
+        "source_archive_url": "https://github.com/godotengine/godot/archive/35e80b3a8822a9df9be390814b62f44c0a9c69e8.tar.gz",
+        "source_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+        "source_patches": 0,
+        "source_url": "https://github.com/godotengine/godot/tree/35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+        "target": "template_debug"
+      },
+      "sha256": "dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f",
+      "version": "4.6.3.stable.custom_build"
+    }
+  },
+  "diagnostic_runtime_override": {
+    "kind": "single-runtime-override-diagnostic-not-package-qualification",
+    "runtime_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+    "runtime_bytes": 85447128,
+    "packaged_runtime_sha256": "dce0422d5a2ef2e00494a9b7689613d14bd1fcc4c07eac21c7e91721adcf730f",
+    "public_source_commit": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+    "source_patch_count": 1,
+    "patch": "pipeline_hash_map_rd.h pipeline native-task high-priority argument p_high_priority becomes false; shader compilation remains HIGH.",
+    "source_build_evidence": {
+      "G0/template-priority-build-r1/receipt.json": {
+        "sha256": "2ff2289520bd43e74d55810b40d47c64b61197bf956f14c4a09140b7b0d4bfc8",
+        "bytes": 3022
+      },
+      "G0/template-priority-build-r1/proposed.patch": {
+        "sha256": "df9032765f5fd348f3e1ef7f35c6de9148a74734172f94efe562e1753db8b4d7",
+        "bytes": 587
+      },
+      "G0/template-priority-build-r1/build-result.json": {
+        "sha256": "1dea70d4cdcc7bb182d02fba20271d4d8e2796c111d79e7c3b768485df479e4a",
+        "bytes": 5964
+      },
+      "G0/template-priority-build-r1/finished-build-verification.json": {
+        "sha256": "67d485da0bd2d78cbb2cd304723f0bd10774626c44c47de814483d396826a134",
+        "bytes": 1175
+      }
+    },
+    "package_source_commit": "f8dec5fa4f9bbd2d20c58f6102fb984d0b19a9f1",
+    "scope": "Exact existing one-line diagnostic binary against unchanged package PCK. This is not execution of the archived dce payload, not a package qualification, and not evidence of universal fix."
+  },
+  "archive_runtime_executed": false,
+  "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+  "package_sha256": "f55b5417e38b6a5b46ff2b12ec22890509287f84ad1fe2fb62c87190c76a7197",
+  "archive_sha256": "913e2b82b9a71977bf361349e225ae0295a9dd08f1e0a0a68d7b3b7d3df4426c",
+  "export_manifest_sha256": "c472ef5278b4c35b8226d654bbaf5c0061b98c00a4be20c7a3a1dbe8600adb54",
+  "tool_sha256": {
+    "run_package_review.py": "4131d33e4b84cc6725c2373ee1c967ed2076213a45038445e736ebc75c62b231",
+    "package_identity.py": "e218a3ddd8f9b644e06b41201d7ddfb0c6e8a442f9326de7c5e665feab33204c",
+    "expected-engine-selection.json": "ea1ad72422b657241150b1ae525536712c03dbec478dab659a6a41627376bb7a",
+    "diagnostic-runtime-proof.json": "2da228054fba5554cbc9c78fc70b1ab3b55ca874ffa86b42c47d085c173593cb",
+    "tools/ui-campaign/run.py": "322e919185825c5b6bd49911fbe2b64b70a2149ffbb0199958e98c45ce22763d",
+    "tools/ui-campaign/observer.gd": "5315e1224d2f2fb7a62e038dd4f219489d0670c1f8cedcd22f159a90105ec902",
+    "tools/ui-campaign/integrated_capture.gd": "70a72792f202b9e9f1ccece7a2d79b18c3094c451c7681f219ba8a7db8e2306b",
+    "tools/ui-campaign/authority_stage.gd": "0ad1f073701fd2815253e68eebfa1478f06432660717dc8659baf5479cc891e7",
+    "package-cold-plan.json": "237d1a47a2059af057534e408b286e49cae61c7b7b98d2d4dde5b8297649f1db"
+  },
+  "scope": "Diagnostic e69 external runtime with the exact unchanged package PCK; archived dce payload is not being executed or qualified; official f64 exporter remains distinct; fresh isolated XDG; native XTest. Warm journey includes explicitly labeled actual-rule outcome stages; cold has none. No pose or asset writes.",
+  "started_unix": 1792318231.2719648,
+  "affinity": [
+    0,
+    1
+  ],
+  "owned_runner_pid": 55196,
+  "remaining_owned_group_cleanup": true,
+  "driver_exit": 0,
+  "overall_timeout": false,
+  "elapsed_seconds": 312.06639119399915,
+  "png_count": 19,
+  "complete": true
+}

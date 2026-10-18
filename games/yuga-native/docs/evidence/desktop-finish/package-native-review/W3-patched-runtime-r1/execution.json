@@ -1,0 +1,55 @@
+{
+  "cwd": "/workspace/ANDOLAN/games/yuga-native",
+  "engine_runs": 0,
+  "runs": [
+    {
+      "command": [
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "taskset",
+        "-c",
+        "2",
+        "timeout",
+        "20s",
+        "python",
+        "docs/evidence/desktop-finish/package-native-review/W3-patched-runtime-r1/probe.py",
+        "--packager-sha",
+        "37e4408bfd04cec7b7a2cb3c32005e32f0198c065c1efe07611fbdf439664583",
+        "--output",
+        "docs/evidence/desktop-finish/package-native-review/W3-patched-runtime-r1/independent-checks-r1.json"
+      ],
+      "exit_code": 1,
+      "checks_passed": 21,
+      "total": 22,
+      "retained_script": "probe-r1.py"
+    },
+    {
+      "command": [
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "taskset",
+        "-c",
+        "2",
+        "timeout",
+        "20s",
+        "python",
+        "docs/evidence/desktop-finish/package-native-review/W3-patched-runtime-r1/probe.py",
+        "--packager-sha",
+        "37e4408bfd04cec7b7a2cb3c32005e32f0198c065c1efe07611fbdf439664583",
+        "--output",
+        "docs/evidence/desktop-finish/package-native-review/W3-patched-runtime-r1/independent-checks-r2.json"
+      ],
+      "exit_code": 0,
+      "checks_passed": 23,
+      "total": 23,
+      "retained_script": "probe.py"
+    }
+  ],
+  "fixture_correction": "Old exact README wording expectation replaced with actual patched wording; added late earlier-proof overwrite challenge. Production source unchanged."
+}

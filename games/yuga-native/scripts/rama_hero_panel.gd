@@ -354,11 +354,15 @@ func _input(event: InputEvent) -> void:
 		elif key in [KEY_TAB, KEY_UP, KEY_DOWN]:
 			var available: Array[Control] = []
 			for control in focus_order:
-				if control.is_visible_in_tree() and (not control is BaseButton or not control.disabled): available.append(control)
+				if is_instance_valid(control) and control.is_visible_in_tree() and (not control is BaseButton or not control.disabled): available.append(control)
 			if available.is_empty(): return
 			var direction := -1 if (key == KEY_UP or (key == KEY_TAB and event.shift_pressed)) else 1
 			var current := available.find(get_viewport().gui_get_focus_owner())
-			available[posmod(current + direction, available.size())].grab_focus()
+			if current < 0:
+				if direction < 0: available.back().grab_focus()
+				else: available.front().grab_focus()
+			else:
+				available[posmod(current + direction, available.size())].grab_focus()
 			get_viewport().set_input_as_handled()
 
 func _accepts_input() -> bool:

@@ -1,0 +1,40 @@
+name: Upload exact reviewed YUGA desktop draft assets
+
+on:
+  push:
+    branches:
+      - transport/yuga-desktop-finish-2026-10-18-r1
+
+permissions: {}
+
+concurrency:
+  group: yuga-exact-draft-assets-416367666
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    if: github.repository == 'occult-kranti/ANDOLAN' && github.ref == 'refs/heads/transport/yuga-desktop-finish-2026-10-18-r1' && github.event.created == true && github.event.deleted == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2, existing repo pin
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          lfs: false
+          submodules: false
+      - name: Verify transport and reconstruct exact reviewed files
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "42b6bd80e1eb50df92a58586e275c1575f8304506fdf3d95ce955ee7fefdb025  transport/reconstruct_upload.py" | sha256sum --check --strict
+          python3 transport/reconstruct_upload.py verify --manifest transport/manifest.json --output "$RUNNER_TEMP/exact-assets"
+      - name: Upload only to the fixed existing draft; never publish or clobber
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 transport/reconstruct_upload.py upload --manifest transport/manifest.json --output "$RUNNER_TEMP/exact-assets" | tee "$RUNNER_TEMP/exact-upload-receipt.json"
