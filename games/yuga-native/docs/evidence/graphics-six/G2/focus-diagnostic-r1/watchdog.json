@@ -1,0 +1,109 @@
+{
+  "passed": true,
+  "count": 5,
+  "checks": [
+    {
+      "name": "successful_ready",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-u",
+        "-c",
+        "import time\nprint('YUGA_NATIVE_READY ok',flush=True); time.sleep(.4)"
+      ],
+      "passed": true,
+      "child_alive_after_return": false,
+      "record": {
+        "engine_pid": 213196,
+        "native_ready_elapsed_s": 0.25033962800807785,
+        "engine_exit": 0,
+        "engine_elapsed_s": 0.5007775539997965,
+        "observed_png_count": 0,
+        "final_log_bytes": 21
+      },
+      "failure": null
+    },
+    {
+      "name": "ready_then_stall",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-u",
+        "-c",
+        "import time\nprint('YUGA_NATIVE_READY ok',flush=True); time.sleep(10)"
+      ],
+      "passed": true,
+      "child_alive_after_return": false,
+      "record": {
+        "engine_pid": 213197,
+        "native_ready_elapsed_s": 0.2501865879894467,
+        "watchdog_failure": "No new engine log bytes or PNG count after native-ready (0.3s)",
+        "engine_exit": -15,
+        "engine_elapsed_s": 0.752290478994837,
+        "observed_png_count": 0,
+        "final_log_bytes": 21
+      },
+      "failure": "No new engine log bytes or PNG count after native-ready (0.3s)"
+    },
+    {
+      "name": "never_ready",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-u",
+        "-c",
+        "import time\ntime.sleep(10)"
+      ],
+      "passed": true,
+      "child_alive_after_return": false,
+      "record": {
+        "engine_pid": 213198,
+        "watchdog_failure": "Overall engine deadline exceeded (0.6s)",
+        "engine_exit": -15,
+        "engine_elapsed_s": 0.752024542001891,
+        "observed_png_count": 0,
+        "final_log_bytes": 0
+      },
+      "failure": "Overall engine deadline exceeded (0.6s)"
+    },
+    {
+      "name": "split_ready",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-u",
+        "-c",
+        "import time\nprint('YUGA_NATIVE_',end='',flush=True); time.sleep(.3); print('READY ok',flush=True); time.sleep(10)"
+      ],
+      "passed": true,
+      "child_alive_after_return": false,
+      "record": {
+        "engine_pid": 213199,
+        "native_ready_elapsed_s": 0.5006084359920351,
+        "watchdog_failure": "No new engine log bytes or PNG count after native-ready (0.3s)",
+        "engine_exit": -15,
+        "engine_elapsed_s": 1.0025602159876144,
+        "observed_png_count": 0,
+        "final_log_bytes": 21
+      },
+      "failure": "No new engine log bytes or PNG count after native-ready (0.3s)"
+    },
+    {
+      "name": "progress_extends_liveness",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-u",
+        "-c",
+        "import time\nprint('YUGA_NATIVE_READY ok',flush=True)\nfor i in range(4):\n time.sleep(.3)\n print(i,flush=True)"
+      ],
+      "passed": true,
+      "child_alive_after_return": false,
+      "record": {
+        "engine_pid": 213200,
+        "native_ready_elapsed_s": 0.25018557099974714,
+        "engine_exit": 0,
+        "engine_elapsed_s": 1.2518549609958427,
+        "observed_png_count": 0,
+        "final_log_bytes": 29
+      },
+      "failure": null
+    }
+  ],
+  "runner_sha256": "dc2ea827978d56ec88f161dd45d0e38a0c68f88c06ff666134302c135f70d896"
+}

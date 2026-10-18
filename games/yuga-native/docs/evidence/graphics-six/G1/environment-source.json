@@ -1,0 +1,101 @@
+{
+  "task": "graphics-six/G1/worker02-environment",
+  "source_commit": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "baseline_original": {
+    "path": "docs/evidence/ui-campaign/I3/role03/native-r1/08-package-world-live.png",
+    "sha256": "8d11439ab5e3a224d9a4283a78d17ef34043752d4885a061ae98618a2fc1bab2",
+    "review": "Original directly opened; pale near-uniform paving, repeated facade values and weak distance separation."
+  },
+  "source_files": [
+    {
+      "path": "scripts/world_lighting.gd",
+      "sha256": "d81f11df8766df89ef662bc3757ac087bd940963678db4a2622a0279f5b7022f",
+      "baseline_sha256": "2020458f8e8174f1906a0b5b23a78f56a2408f5a8dd604cf5db4c7382e7a0d51",
+      "bytes": 9613
+    },
+    {
+      "path": "scripts/world_ground.gdshader",
+      "sha256": "7f687dbde3fe62bbcc38317d87229b4857c7340e1c7bfbb895c4c6911d765213",
+      "baseline_sha256": "5757ee4636fc3a9776d103aee2514340e745b6d7241496e29943094e19cf5d42",
+      "bytes": 391
+    },
+    {
+      "path": "scripts/world_ground_common.gdshaderinc",
+      "sha256": "b4657976ebc3f41379b05d00048bedb68269579de3956f1e25d88e841b795611",
+      "baseline_sha256": "35c6be19eb8e40785f5d3c3b4c6975aae1a7ff3dc2eeb4c2bd5fe6c6cb473557",
+      "bytes": 3543
+    },
+    {
+      "path": "scripts/world_water.gdshader",
+      "sha256": "add24973aab0d30ebeae2f2db7d096f74fd304bf22868afc4470e22506f86283",
+      "baseline_sha256": "a679dfbd560294b873d66af47d768ae1ccdade223da078c3465e3f5b989ce3be",
+      "bytes": 3433
+    },
+    {
+      "path": "scripts/environment_surface_finish.gd",
+      "sha256": "2277180f5b31c7c863a652475bec36efc0c36193a3f002202783a18e2c0205f9",
+      "baseline_sha256": null,
+      "bytes": 5002
+    },
+    {
+      "path": "assets/environment-finish/masonry.gdshader",
+      "sha256": "b921df6860347ccf508daa37da6a4d60d520574a60beaa1f9a1c9b2b8d30edfe",
+      "baseline_sha256": null,
+      "bytes": 2310
+    },
+    {
+      "path": "assets/environment-finish/NOTICE.md",
+      "sha256": "2aa03c192747e96756d62e36e3fac4679987af5111561d4acc8d1511303b1353",
+      "baseline_sha256": null,
+      "bytes": 1019
+    }
+  ],
+  "checks": {
+    "world_lighting": {
+      "passed": true,
+      "checks": 30,
+      "clean_log": true
+    },
+    "imported_surfaces": {
+      "passed": true,
+      "checks": 17,
+      "clean_log": true,
+      "kit_surfaces": 28,
+      "materials": 7,
+      "cached_window_materials": 1
+    },
+    "broader_production_lighting": {
+      "assertions_passed": 146,
+      "reported_passed": true,
+      "clean_log": false,
+      "disposition": "Blocked clean integration gate:8 engine errors loading pending parallel hero forged-gold-roughness import; do not treat as clean suite pass.",
+      "actual_confluence_binding": {
+        "surfaces": 84,
+        "materials": 7,
+        "windows": 1
+      }
+    }
+  },
+  "preserved_failure": "imported-surface initial test used exact equality for engine float32 shadow properties; corrected fixture comparison to is_equal_approx, runtime unchanged. Initial JSON/log retained.",
+  "render_import_status": "No import or render executed by this worker. GPU shader compilation, actual day/night depth/color, and gameplay readability remain pending centralized root lane.",
+  "protected_scope": [
+    "collision and lane geometry",
+    "hero",
+    "army",
+    "UI",
+    "confluence_world.gd",
+    "courtyard.gd",
+    "production_lighting.gd",
+    "runtime contracts"
+  ],
+  "diagnostic_sha256": {
+    "environment-checks/imported-surface-r2.json": "4d017975bfa804be4d8e9eadcc7479716d7391c5717ddd922ca4c4c4c6edb8d8",
+    "environment-checks/imported-surface-r2.log": "52c8ea87bb73943038aaf076dc1ad9ab46a2647dc08f6ad9f0c4ba22bf086e7a",
+    "environment-checks/imported-surface.json": "4b86becb667c7c91c7523c8990c44f6a325d5562504a8c9ea75e20592038c4fd",
+    "environment-checks/imported-surface.log": "7f2ca97313e07ea8ebe40be78e299189661ae3d2a70aac5b27325735a26e03bc",
+    "environment-checks/lighting-quality.json": "52b11c973ceb588d649dbcba94667a1eaffe8af5e215bfc4c7f5c8ab34f3df1f",
+    "environment-checks/lighting-quality.log": "69aedacd68d1e201c1159ef2d5cb30b337da449ed45553e34712a895df911fa2",
+    "environment-checks/world-lighting.json": "c3bde479ef0592249c7c2b75910603160b114f3dd86d462999f5fceebe5c82d7",
+    "environment-checks/world-lighting.log": "e539c8834dfd6b1a802f009853dfded7569b39e55a9fe9f7e44ef9f05cd6ed8b"
+  }
+}

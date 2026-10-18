@@ -1,0 +1,24 @@
+# G2 — Courtyard/world environment coherence
+
+Implemented the G2 material/lighting candidate after directly opening all four G1 originals: `/tmp/yuga-g1-native-r1/01-title-day.png`, `02-title-night.png`, `03-world-day.png` and `04-world-night.png`. G1 makes paving/routes and day/night separation clearer, while the title still has a broad pale floor and flat architectural values. The sparse G1 world snapshots do not establish long-range combat readability. G2 pixels and GPU shader compilation remain pending the root capture lane.
+
+The finish helper now accepts only exact named stone/floor/indigo materials under `AuthoredLankaCourtyard`, in addition to its existing exact Confluence subtree. Nine courtyard materials bind 15 existing surfaces, within a twelve-material per-world cap. Floor variants gain restrained warm/cool mineral separation and darker mortar; sandstone and pale limestone retain distinct values. Original albedo and normal maps, UV transforms, linear packed scalar maps and declared roughness/metallic channels are transported. The actual courtyard roughness channel is GREEN. Imported/shared materials, mesh buffers, transforms and collision are unchanged. Brass, plants, flames, water, skyline, recesses, hero and generated district ornaments are excluded.
+
+Selected vertical stone now has an original filtered double-line/frieze treatment. It adds bounded shallow relief to the retained tangent normal and small color/roughness variation, fading before subpixel detail dominates. The procedural height input is at most 1.2 mm and tangent slope is clamped to ±0.12; no vertex moves, silhouette, hole or collider is introduced. This remains a rendered-art gate, not a claim of carved mesh geometry.
+
+Courtyard production lighting and its final `hero_atmosphere` writer now share the world's blue day / indigo night sky and neutral-warm key spectrum. The production court uses clear-near-field depth haze from 35 m to 180 m by day / 150 m by night. Day opposing fill changes .42→.32 to recover form; the accepted ambient visibility floor, exposure, key energy, shadow offsets and light budget remain. The initial lower-night draft was rejected by the existing visibility-floor check: final night opposing fill remains .36 and portrait remains 1.8. Lifecycle capture/neutral/rebind/foreign-owner restoration logic was not changed.
+
+Final executed checks, CPU 2 with existing imports and no rendering:
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Actual imported courtyard maps, channel masks, ownership, settings and foreign-owner teardown | 20/20; clean log | [courtyard-surfaces-r2.json](environment-checks/courtyard-surfaces-r2.json) |
+| Atmosphere lifecycle, invalid inputs, finite settings and restore semantics | 52/52; clean log | [atmosphere-final.json](environment-checks/atmosphere-final.json) |
+| Production lighting and actual courtyard/world receiver properties | 146/146; clean log | [lighting-quality-final.json](environment-checks/lighting-quality-final.json) |
+| Tracked source whitespace | `git diff --check` clean | Production lighting, atmosphere and approved test change |
+
+The only existing test edit changes the exact daytime fill expectation from .42 to .32, with parent approval and an explanatory comment. All lifecycle/restore/nonfinite checks remain. Earlier candidate and failed legacy-test receipts are preserved in [environment-checks](environment-checks/). Unlike the G1 broader run, the final G2 run has no missing hero-map errors. Test commands are the standard headless `--script` invocations for `docs/evidence/graphics-six/G2/environment_cases.gd`, `tests/hero_atmosphere_cases.gd` and `tests/production_lighting_quality_cases.gd`, with fresh reports under `/workspace/scratch/graphics-six/G2/environment/`.
+
+Exact source and G1 image hashes are in [environment-source.json](environment-source.json). Changed runtime paths are `scripts/production_lighting.gd`, `scripts/hero_atmosphere.gd`, `scripts/environment_surface_finish.gd`, and `assets/environment-finish/masonry.gdshader`; the original-work notice is updated. No scene, camera, hero, army, UI, geometry or collision edit was made. World ground and water keep their G1 source.
+
+Next review: use the exact G1 title/world cameras and matching settings for day/night comparisons. Verify darker stone does not hide Rama's face, bow or blue cloth; authored normal/roughness detail still reads; shallow frieze stays subordinate to modeled arches/windows; floor joints and bands do not shimmer during motion; the horizon remains continuous; and actual populated near/mid/far enemies remain readable. Retain the fresh-default versus published saved-settings distinction. No broad tint, bloom or gloss increase substitutes for this review. G2 source is frozen; no heavy render/import is running from this worker.

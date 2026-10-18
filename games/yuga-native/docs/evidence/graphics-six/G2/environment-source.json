@@ -1,0 +1,68 @@
+{
+  "task": "graphics-six/G2/worker02-environment",
+  "base_commit": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "source_sha256": {
+    "scripts/production_lighting.gd": "2199305bdd8c2d0a897a112e072009547cc475d24960de6abaaef4b2380a5fb7",
+    "scripts/hero_atmosphere.gd": "40739a23b74149cebda62acd6af8a7ca54ac1a39aab2538adbc5211d309a1373",
+    "scripts/environment_surface_finish.gd": "0eea1b70b677705d39e7eb4dfc37f92e46429f2b9ebea5b3f45f0bf91a166eaf",
+    "assets/environment-finish/masonry.gdshader": "6e532916f3313c197408710a6a7fa3f786ebf09a770c67b60ed8fd4b1598509e",
+    "assets/environment-finish/NOTICE.md": "2c5b9c9df01262f1c8efba35f7e752ecef9bc04e939d9504fc32766a4e9531aa",
+    "tests/hero_atmosphere_cases.gd": "59a891c18ef50ed69e0e6a8bd4edc27505cc96e6d0f701dd724756d06fa50ad8",
+    "docs/evidence/graphics-six/G2/environment_cases.gd": "d6c368f317fbbca4526e248f3613c1c1b294b94d9a4a15d2af1ae07d523970e9"
+  },
+  "reviewed_G1_originals": {
+    "01-title-day": {
+      "png_sha256": "2be1303891e9feb231d7903bd3f86c6811a425d7e6c1c281b026046c63ba73a4",
+      "state_sha256": "d22f26783c93ac24c792be784db91e52fc429d527f985490b93574a2681348a8"
+    },
+    "02-title-night": {
+      "png_sha256": "f3e33d674f5e3c3b64d15f6dcabc5eeba0547978c6ebf9dfc026896868ff88c1",
+      "state_sha256": "59f028a10fdbe1dced8b35a0a13a43141032c8fe7c6f5f13ec564f55796ec4b5"
+    },
+    "03-world-day": {
+      "png_sha256": "2cdc03c98387e01e506c0239a8a491ca6beee45fcb4de70c4472415955e922f8",
+      "state_sha256": "85b5e68f6bc046a76396f104210ebbdb877f25dfabc99f62c8f1adff75091c58"
+    },
+    "04-world-night": {
+      "png_sha256": "6be91153c6a8e7a53f956b296f74ec120432c78b7f51fc33df17cdc1c2fd10fc",
+      "state_sha256": "4603fce650cd0cc442441a8f911f382372e8452374d0bf374be992ce17fd79c6"
+    }
+  },
+  "final_checks": {
+    "courtyard-surfaces-r2": {
+      "passed": true,
+      "checks": 20,
+      "clean_log": true,
+      "receipt_sha256": "6d0027a59a53676912197ff2266b4cba4967e2b96f029c779711c7f5942b6a35",
+      "log_sha256": "89470de62efa35907832d8424826cae145c020ba4161a15b964cb7b43fc80a82"
+    },
+    "atmosphere-final": {
+      "passed": true,
+      "checks": 52,
+      "clean_log": true,
+      "receipt_sha256": "58af382fd3406a0e14634692ad9ad39be74959121f95d0709e762ed28937a46a",
+      "log_sha256": "db5ab3defe2fd546764f58645fc0ea588626241def698c5d6b185704ab6f4683"
+    },
+    "lighting-quality-final": {
+      "passed": true,
+      "checks": 146,
+      "clean_log": true,
+      "receipt_sha256": "53211560631b11e7956a325799a984a009ce576e00339f3e587e64fcf28af5f6",
+      "log_sha256": "afc9cad595d921f4195b672092f4b9e8ec0099fa58e441b8ea4ae1576191bf74"
+    }
+  },
+  "courtyard_bindings": {
+    "collision_writes": 0,
+    "extra_lights": 0,
+    "extra_meshes": 0,
+    "material_budget": 12,
+    "materials": 9,
+    "surfaces": 15,
+    "windows": 0
+  },
+  "scalar_maps": "Original linear packed roughness/metallic textures and declared channels transported; actual courtyard roughness uses GREEN.",
+  "rejected_candidate": "First G2 draft lowered night opposing fill to .30 and portrait to1.7; old night visibility assertion rejected it. Final restores .36 and1.8. Day .42\u2192.32 intentionally migrated with root approval. Initial checks/logs preserved.",
+  "changes": "Exact courtyard stone/floor material finish, original filtered shallow vertical frieze shading, coherent courtyard/world sky and key spectra, reduced day opposing fill, court depth haze35\u2013180m day/35\u2013150m night.",
+  "geometry_collision_hero_camera_writes": false,
+  "gpu_compile_and_G2_visual_review": "Pending root serialized capture. No heavy import/render executed by this worker."
+}

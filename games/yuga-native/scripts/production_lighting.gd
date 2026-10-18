@@ -3,6 +3,7 @@ extends RefCounted
 ## Call after the world and its lantern lights exist, and again when settings change.
 ## This configures existing resources; it does not own the scene or gameplay.
 const GroundShadows = preload("res://scripts/ground_shadow_policy.gd")
+const SurfaceFinish = preload("res://scripts/environment_surface_finish.gd")
 
 static func apply(environment: Environment, sun: DirectionalLight3D, world: Node3D,
 		night: bool = false, shadows: bool = true) -> void:
@@ -10,6 +11,7 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 		return
 	# Exact flat receivers only; keep hero/building shadows and all colliders.
 	GroundShadows.apply_courtyard(world)
+	SurfaceFinish.configure(world)
 	var forward_plus := RenderingServer.get_current_rendering_method() == "forward_plus"
 	environment.background_mode = Environment.BG_SKY
 	if environment.sky == null:
@@ -19,20 +21,20 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 		sky_material = ProceduralSkyMaterial.new()
 		environment.sky.sky_material = sky_material
 	# Separate a warm horizon from a cool vault; a 16-degree sun bleaches both.
-	sky_material.sky_top_color = Color("172640") if night else Color("3c5879")
-	sky_material.sky_horizon_color = Color("526781") if night else Color("d4ba9e")
+	sky_material.sky_top_color = Color("101d39") if night else Color("245e85")
+	sky_material.sky_horizon_color = Color("435b82") if night else Color("9eb9c7")
 	sky_material.ground_bottom_color = Color("080e18") if night else Color("15212b")
 	sky_material.ground_horizon_color = sky_material.sky_horizon_color
 	sky_material.sky_energy_multiplier = 0.68 if night else 0.90
 	sky_material.ground_energy_multiplier = 0.5
-	sky_material.sky_curve = 0.20
+	sky_material.sky_curve = 0.42
 	sky_material.ground_curve = 0.12
 	sky_material.sun_angle_max = 0.9
 	sky_material.sun_curve = 0.08
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	# A restrained, near-neutral ambient preserves local skin/cloth colour. Shape
 	# comes from the directional key/fill rather than an orange ambient wash.
-	environment.ambient_light_color = Color("a6b9d7") if night else Color("c3c9d2")
+	environment.ambient_light_color = Color("9fb8df") if night else Color("c1cddb")
 	environment.ambient_light_energy = 0.32 if night else 0.30
 	environment.ambient_light_sky_contribution = 0.0
 	environment.reflected_light_source = Environment.REFLECTION_SOURCE_SKY
@@ -41,8 +43,12 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	environment.tonemap_white = 1.0
 	# Light depth haze, not a coloured veil over nearby stone and hero materials.
 	environment.fog_enabled = true
-	environment.fog_light_color = Color("405777") if night else Color("96a8b6")
+	environment.fog_light_color = Color("3e5d88") if night else Color("8daab9")
 	environment.fog_light_energy = 0.5
+	environment.fog_mode = Environment.FOG_MODE_DEPTH
+	environment.fog_depth_begin = 35.0
+	environment.fog_depth_end = 150.0 if night else 180.0
+	environment.fog_depth_curve = 1.55
 	environment.fog_density = 0.0016 if night else 0.0013
 	environment.fog_sky_affect = 0.12
 	environment.fog_sun_scatter = 0.08
@@ -64,7 +70,7 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	environment.ssao_light_affect = 0.15
 	sun.name = "SettingSun"
 	sun.rotation_degrees = Vector3(-32, -47, 0) if night else Vector3(-26, -47, 0)
-	sun.light_color = Color("b7cbed") if night else Color("ffe2bd")
+	sun.light_color = Color("acc9f5") if night else Color("fff0d7")
 	sun.light_energy = 0.50 if night else 1.35
 	sun.light_angular_distance = 0.0
 	sun.shadow_enabled = shadows

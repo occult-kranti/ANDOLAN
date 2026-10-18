@@ -1,0 +1,45 @@
+{
+  "retrieved_utc": "2026-10-18T02:47:02.269988+00:00",
+  "method": "curl --fail --location --silent --show-error --max-time 30; existing HTTPS route, normal TLS",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/BaseMaterial3D.xml",
+      "path": "games/yuga-native/docs/evidence/graphics-six/G1/research/BaseMaterial3D.xml",
+      "sha256": "b32f372bccfe1b3db276ac7f3cb39ba13fc87c8fe65e7cc331bd9b2a6119b251",
+      "bytes": 79364,
+      "http_success": true,
+      "selected_sections_read": {
+        "normal_texture": "Texture used to specify the normal at a given pixel. The [member normal_texture] only uses the red and green channels; the blue and alpha channels are ignored. The normal read from [member normal_texture] is oriented around the surface normal provided by the [Mesh]. [b]Note:[/b] The mesh must have both normals and tangents defined in its vertex data. Otherwise, the normal map won't render correctly and will only appear to darken the whole surface. If creating geometry with [SurfaceTool], you can use [method SurfaceTool.generate_normals] and [method SurfaceTool.generate_tangents] to automatically generate normals and tangents respectively. [b]Note:[/b] Godot expects the normal map to use X+, Y+, and Z+ coordinates. See [url=http://wiki.polycount.com/wiki/Normal_Map_Technical_Details#Common_Swizzle_Coordinates]this page[/url] for a comparison of normal map coordinates expected by popular engines. [b]Note:[/b] If [member detail_enabled] is [code]true[/code], the [member detail_albedo] texture is drawn [i]below[/i] the [member normal_texture]. To display a normal map [i]above[/i] the [member detail_albedo] texture, use [member detail_normal] instead.",
+        "roughness": "Surface reflection. A value of [code]0[/code] represents a perfect mirror while a value of [code]1[/code] completely blurs the reflection. See also [member metallic].",
+        "roughness_texture": "Texture used to control the roughness per-pixel. Multiplied by [member roughness].",
+        "texture_filter": "Filter flags for the texture. [b]Note:[/b] [member heightmap_texture] is always sampled with linear filtering, even if nearest-neighbor filtering is selected here. This is to ensure the heightmap effect looks as intended. If you need sharper height transitions between pixels, resize the heightmap texture in an image editor with nearest-neighbor filtering.",
+        "TEXTURE_FILTER_NEAREST": "The texture filter reads from the nearest pixel only. This makes the texture look pixelated from up close, and grainy from a distance (due to mipmaps not being sampled).",
+        "TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC": "The texture filter blends between the nearest 4 pixels and blends between 2 mipmaps (or uses the nearest mipmap if [member ProjectSettings.rendering/textures/default_filters/use_nearest_mipmap_filter] is [code]true[/code]) based on the angle between the surface and the camera view. This makes the texture look smooth from up close, and smooth from a distance. Anisotropic filtering improves texture quality on surfaces that are almost in line with the camera, but is slightly slower. The anisotropic filtering level can be changed by adjusting [member ProjectSettings.rendering/textures/default_filters/anisotropic_filtering_level]."
+      }
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/GeometryInstance3D.xml",
+      "path": "games/yuga-native/docs/evidence/graphics-six/G1/research/GeometryInstance3D.xml",
+      "sha256": "9178119e1617b504d64515c12ee167dbf6bb7bc584808037b3c255dc2d552900",
+      "bytes": 15815,
+      "http_success": true,
+      "selected_sections_read": {
+        "visibility_range_end": "Distance from which the GeometryInstance3D will be hidden, taking [member visibility_range_end_margin] into account as well. The default value of 0 is used to disable the range check.",
+        "visibility_range_end_margin": "Margin for the [member visibility_range_end] threshold. The GeometryInstance3D will only change its visibility state when it goes over or under the [member visibility_range_end] threshold by this amount. If [member visibility_range_fade_mode] is [constant VISIBILITY_RANGE_FADE_DISABLED], this acts as a hysteresis distance. If [member visibility_range_fade_mode] is [constant VISIBILITY_RANGE_FADE_SELF] or [constant VISIBILITY_RANGE_FADE_DEPENDENCIES], this acts as a fade transition distance and must be set to a value greater than [code]0.0[/code] for the effect to be noticeable.",
+        "visibility_range_fade_mode": "Controls which instances will be faded when approaching the limits of the visibility range."
+      }
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/SkeletonModifier3D.xml",
+      "path": "games/yuga-native/docs/evidence/graphics-six/G1/research/SkeletonModifier3D.xml",
+      "sha256": "66fe7a680393b455741053175e30d140db131aa4a16b4f5e69b99bb0eba83565",
+      "bytes": 7254,
+      "http_success": true,
+      "selected_sections_read": {
+        "influence": "Sets the influence of the modification. [b]Note:[/b] This value is used by [Skeleton3D] to blend, so the [SkeletonModifier3D] should always apply only 100% of the result without interpolation.",
+        "modification_processed": "Notifies when the modification have been finished. [b]Note:[/b] If you want to get the modified bone pose by the modifier, you must use [method Skeleton3D.get_bone_pose] or [method Skeleton3D.get_bone_global_pose] at the moment this signal is fired."
+      }
+    }
+  ],
+  "scope": "Three pinned official Godot XML references; selected members/constants/signals only. No Blender document or commercial game art was downloaded or newly reviewed."
+}

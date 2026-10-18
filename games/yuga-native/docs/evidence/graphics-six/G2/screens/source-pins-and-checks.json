@@ -1,0 +1,146 @@
+{
+  "campaign": "graphics-six",
+  "round": "G2",
+  "role": "screens",
+  "base_commit": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "engine": "Godot 4.6.3.stable.official.7d41c59c4",
+  "runtime_frozen": true,
+  "sources": {
+    "scripts/rama_ability_glyph.gd": {
+      "sha256": "682e2d423b0824e5fb3c1ad82f56d26154014f91be0f0cba0af45aa89045850a",
+      "copy": "source/rama_ability_glyph.gd.txt",
+      "edited_this_round": true
+    },
+    "scripts/hero_ui_theme.gd": {
+      "sha256": "beb4845d10dd40e01b5896c2677264ec4f046c99b2af933e1116d43bb07b45bd",
+      "copy": "source/hero_ui_theme.gd.txt",
+      "edited_this_round": true
+    },
+    "scripts/rama_hero_hud.gd": {
+      "sha256": "4ea25f796ed3c3ac5a1ca6d25edd177d06490632e3c43039912929a744c3f064",
+      "copy": "source/rama_hero_hud.gd.txt",
+      "edited_this_round": true
+    },
+    "scripts/rama_hero_panel.gd": {
+      "sha256": "48a962e1c81afd20d19c76ddfae283feba83e0e5547c92e9d44098e306560f03",
+      "copy": "source/rama_hero_panel.gd.txt",
+      "edited_this_round": true
+    },
+    "scripts/confluence_world.gd": {
+      "sha256": "20f809f9ead1d98f3b018c1f38d699d072fa81f3439d44c3369a5b4d249e7450",
+      "copy": "source/confluence_world.gd.txt",
+      "edited_this_round": false
+    },
+    "tests/graphics_g2_glyph_cases.gd": {
+      "sha256": "32f9197b5585b33592e9a176e0a6d181a89e0692265012c9c5b4e9bc5df2e598",
+      "copy": "source/graphics_g2_glyph_cases.gd.txt",
+      "edited_this_round": true
+    }
+  },
+  "checks": [
+    {
+      "suite": "graphics_g2_glyph_cases",
+      "checks": 13,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/graphics_g2_glyph_cases-r2.json",
+      "report_sha256": "bb03748620fb73d3e76358b06206f0a82c75f78737e78ed66667e5428cae4565",
+      "output": "accepted/graphics_g2_glyph_cases-r2-output.txt",
+      "output_sha256": "3455894e905a3523d1e22e82e00ab76c222e73c1b5371a36fcf6de72a621277e",
+      "command": "timeout 40s env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/graphics_g2_glyph_cases.gd -- --report=/workspace/scratch/graphics-six/G2/screens/graphics_g2_glyph_cases-r2.json"
+    },
+    {
+      "suite": "graphics_g1_screen_cases",
+      "checks": 18,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/graphics_g1_screen_cases-r2.json",
+      "report_sha256": "ec1185645219522c29973c13b890f795635de26f0286ee71dea4419f15d80591",
+      "output": "accepted/graphics_g1_screen_cases-r2-output.txt",
+      "output_sha256": "be43be3b971ec694418f0056a8786a9573e3ec77c5a3f2fa83ffa871be033643",
+      "command": "timeout 40s env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/graphics_g1_screen_cases.gd -- --report=/workspace/scratch/graphics-six/G2/screens/graphics_g1_screen_cases-r2.json"
+    },
+    {
+      "suite": "ui_guide_capability_cases",
+      "checks": 18,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_guide_capability_cases-r2.json",
+      "report_sha256": "3d180d84e87610fa0603040c9f38fac17ad1026251747b854e39859484612bcd",
+      "output": "accepted/ui_guide_capability_cases-r2-output.txt",
+      "output_sha256": "6b5358cc168406b5687e56fa414bf3a2594a3b0bc934d02ec97a6126685888a3",
+      "command": "timeout 40s env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_guide_capability_cases.gd -- --report=/workspace/scratch/graphics-six/G2/screens/ui_guide_capability_cases-r2.json"
+    },
+    {
+      "suite": "ui_hud_edge_cases",
+      "checks": 12,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_hud_edge_cases-r2.json",
+      "report_sha256": "30e2d3ee91f60e88d2662d27869c81c26673ad14e65b6f06121c260c87b26334",
+      "output": "accepted/ui_hud_edge_cases-r2-output.txt",
+      "output_sha256": "37fcc175f716f8c864e654c580df365db7f82bbcc372656f87bea93b5c6fd5d9",
+      "command": "timeout 40s env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_hud_edge_cases.gd -- --report=/workspace/scratch/graphics-six/G2/screens/ui_hud_edge_cases-r2.json"
+    },
+    {
+      "suite": "ui_theme_cases",
+      "checks": 88,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_theme_cases-final.json",
+      "report_sha256": "c0feb5911926fd19a5de7de8c873c46e1d330f96a8245b0fc0aad8defbf86e70",
+      "output": "accepted/ui_theme_cases-final-output.txt",
+      "output_sha256": "a251f6588735f7a6ede0bdab7c3bc95c262b9994f9133e5ac70398656245ebb8",
+      "command": "timeout 45s env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_theme_cases.gd -- --report=/workspace/scratch/graphics-six/G2/screens/ui_theme_cases-final.json"
+    },
+    {
+      "suite": "rama_hud_layout_cases",
+      "checks": 9,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/rama_hud_layout_cases-final.json",
+      "report_sha256": "42a7ed9d164526b0416beac2dbed40c794a858bef3fa7464daeb139aa5bf26ab",
+      "output": "accepted/rama_hud_layout_cases-final-output.txt",
+      "output_sha256": "a2cc4fa97f4cd013a0029bdd23ca6d8844e47b3a9f254a6ef492896b93a1218c",
+      "command": "timeout 45s env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/rama_hud_layout_cases.gd -- --report=/workspace/scratch/graphics-six/G2/screens/rama_hud_layout_cases-final.json"
+    },
+    {
+      "suite": "ui_independent_modal_cases",
+      "checks": 36,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_independent_modal_cases-final.json",
+      "report_sha256": "58711291274442115259a9722e1c1d2bd32c1280b9faa850d36cad7857e95c6a",
+      "output": "accepted/ui_independent_modal_cases-final-output.txt",
+      "output_sha256": "8568decdac48beac7117ebdb0c8134f4a78c336ee04d33815224b535199dfef6",
+      "command": "timeout 45s env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_independent_modal_cases.gd -- --report=/workspace/scratch/graphics-six/G2/screens/ui_independent_modal_cases-final.json"
+    },
+    {
+      "suite": "ui_u5_effect_feedback_cases",
+      "checks": 8,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_u5_effect_feedback_cases-final.json",
+      "report_sha256": "a7c58f39de47ae0a32d8f6ccfef52235cacfd6dce7d6b156e13505fdc6a0b0fb",
+      "output": "accepted/ui_u5_effect_feedback_cases-final-output.txt",
+      "output_sha256": "047396e99b07172e19b335c24911ce49975feb43492e691530e8314587c97ce5",
+      "command": "timeout 45s env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_u5_effect_feedback_cases.gd -- --report=/workspace/scratch/graphics-six/G2/screens/ui_u5_effect_feedback_cases-final.json"
+    }
+  ],
+  "total_checks": 202,
+  "all_passed": true,
+  "ownership": "Only glyph, theme, HUD, guide and new test changed for G2. Confluence is a read-only integration pin, unchanged since G1.",
+  "limitations": [
+    "Headless raster content, cache identity, state, contrast and geometry; G2 actual rendered appearance awaits central capture.",
+    "Generated static glyphs have no animation or gameplay authority; reduced effects remain actual receiver preferences.",
+    "No heavy rendering, imports, hardware FPS or Windows execution in this role."
+  ]
+}

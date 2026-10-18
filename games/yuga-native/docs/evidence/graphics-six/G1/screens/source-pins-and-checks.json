@@ -1,0 +1,140 @@
+{
+  "campaign": "graphics-six",
+  "round": "G1",
+  "role": "screens",
+  "base_commit": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "engine": "Godot 4.6.3.stable.official.7d41c59c4",
+  "runtime_frozen": true,
+  "sources": {
+    "scripts/hero_ui_theme.gd": {
+      "sha256": "468716d4527be400ea52b2aad4aa1788e72e8883d29acd382ec16f05b640fedb",
+      "copy": "source/hero_ui_theme.gd.txt"
+    },
+    "scripts/launch_shell.gd": {
+      "sha256": "3a393f9c18d24dbe96f73fdcb5548fc5c15533c97f1de2c21b2a1e35da621c56",
+      "copy": "source/launch_shell.gd.txt"
+    },
+    "scripts/rama_hero_hud.gd": {
+      "sha256": "aec81900b421e7a3ceda9db1f1d46c83920eb9b037e57eef3f1d81f740ea0b39",
+      "copy": "source/rama_hero_hud.gd.txt"
+    },
+    "scripts/world_atlas.gd": {
+      "sha256": "f6a0d8eaf8baebd2267439438d7536ddb88812890f915b1f23b24a69e3c416de",
+      "copy": "source/world_atlas.gd.txt"
+    },
+    "scripts/confluence_world.gd": {
+      "sha256": "20f809f9ead1d98f3b018c1f38d699d072fa81f3439d44c3369a5b4d249e7450",
+      "copy": "source/confluence_world.gd.txt"
+    },
+    "tests/graphics_g1_screen_cases.gd": {
+      "sha256": "51bb6d7745f922fb6c64e0b09a97b4909863eb73d5c947349c56ddfd6f24b7f5",
+      "copy": "source/graphics_g1_screen_cases.gd.txt"
+    }
+  },
+  "checks": [
+    {
+      "suite": "ui_theme_cases",
+      "checks": 88,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_theme_cases.json",
+      "report_sha256": "888e3ebec1ad0ff8ee42a07ca9c6835e44dacf0f600d5c122139b216b9cc197d",
+      "output": "accepted/ui_theme_cases-output.txt",
+      "output_sha256": "a251f6588735f7a6ede0bdab7c3bc95c262b9994f9133e5ac70398656245ebb8",
+      "command": "env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_theme_cases.gd -- --report=/workspace/scratch/graphics-six/G1/screens/ui_theme_cases.json"
+    },
+    {
+      "suite": "launch_shell_cases",
+      "checks": 35,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/launch_shell_cases.json",
+      "report_sha256": "68661d7d1797d5286c9b4f36b04398b79cb5d8e8e27d3b46e13635e893c5bf38",
+      "output": "accepted/launch_shell_cases-output.txt",
+      "output_sha256": "48fa01498623a8667ce75f309a57fe7ebd96e110d232253f56d2aa5984a3b459",
+      "command": "env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/launch_shell_cases.gd -- --report=/workspace/scratch/graphics-six/G1/screens/launch_shell_cases.json"
+    },
+    {
+      "suite": "graphics_g1_screen_cases",
+      "checks": 18,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/graphics_g1_screen_cases-final.json",
+      "report_sha256": "ad15d27197ae628cf319bd4a37297f05f7660e241c7488c30fe0eb20952304fe",
+      "output": "accepted/graphics_g1_screen_cases-final-output.txt",
+      "output_sha256": "8cae440782dfa56cadfea37f62d734563638b560a624928827189575a053f688",
+      "command": "env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/graphics_g1_screen_cases.gd -- --report=/workspace/scratch/graphics-six/G1/screens/graphics_g1_screen_cases-final.json"
+    },
+    {
+      "suite": "rama_hud_layout_cases",
+      "checks": 9,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/rama_hud_layout_cases-final.json",
+      "report_sha256": "376113445ef07cf964647534aa60cbb33470f4051dd59e745a05a7359bb73aad",
+      "output": "accepted/rama_hud_layout_cases-final-output.txt",
+      "output_sha256": "cac0b1392ef91cc41f7b23c794e41f6a480bf3fa091851be23962b1d24d6bb3a",
+      "command": "env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/rama_hud_layout_cases.gd -- --report=/workspace/scratch/graphics-six/G1/screens/rama_hud_layout_cases-final.json"
+    },
+    {
+      "suite": "ui_hud_edge_cases",
+      "checks": 12,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_hud_edge_cases-final.json",
+      "report_sha256": "25b3131faef7538f2d036087578022d3fec45f9d3b1fbad627bf66b0ee87e674",
+      "output": "accepted/ui_hud_edge_cases-final-output.txt",
+      "output_sha256": "4b32e31788e0683ed7c84fa2245ea845952fc1e412dcc89e9684dda79dd91cba",
+      "command": "env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_hud_edge_cases.gd -- --report=/workspace/scratch/graphics-six/G1/screens/ui_hud_edge_cases-final.json"
+    },
+    {
+      "suite": "ui_theme_map_consistency_cases",
+      "checks": 17,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_theme_map_consistency_cases-final.json",
+      "report_sha256": "725dcc760369037d3c5da6fbdf38c2d8fc70df0f1be7c69be768835adfa2fefe",
+      "output": "accepted/ui_theme_map_consistency_cases-final-output.txt",
+      "output_sha256": "1c199ea06dc4d83fdce1f4e7bc9ae21454956087e0d35b4510c17d3ee9f23b92",
+      "command": "env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_theme_map_consistency_cases.gd -- --report=/workspace/scratch/graphics-six/G1/screens/ui_theme_map_consistency_cases-final.json"
+    },
+    {
+      "suite": "ui_guide_capability_cases",
+      "checks": 18,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_guide_capability_cases-final.json",
+      "report_sha256": "0b0f91944f8c00ac1cb97f2b726c37e737ad0edb508bb14fbf71e4a512998eb0",
+      "output": "accepted/ui_guide_capability_cases-final-output.txt",
+      "output_sha256": "6b5358cc168406b5687e56fa414bf3a2594a3b0bc934d02ec97a6126685888a3",
+      "command": "env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_guide_capability_cases.gd -- --report=/workspace/scratch/graphics-six/G1/screens/ui_guide_capability_cases-final.json"
+    },
+    {
+      "suite": "ui_controls_state_cases",
+      "checks": 19,
+      "passed": true,
+      "engine_exit": 0,
+      "engine_diagnostics": [],
+      "report": "accepted/ui_controls_state_cases-final.json",
+      "report_sha256": "7b35c64060e7a7e16a2c8bfe0c129ab774f78f34faf1171b1b00a17e9f941627",
+      "output": "accepted/ui_controls_state_cases-final-output.txt",
+      "output_sha256": "929c692cf976eec17bb637a446418cb16106c2c69568f46ec2b3bb5bb4f710e1",
+      "command": "env LP_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --path /workspace/ANDOLAN/games/yuga-native --max-threads 1 --script res://tests/ui_controls_state_cases.gd -- --report=/workspace/scratch/graphics-six/G1/screens/ui_controls_state_cases-final.json"
+    }
+  ],
+  "total_checks": 216,
+  "all_passed": true,
+  "ownership": "Screen worker owns theme, launch, HUD, atlas and new focused test. Confluence source includes root-adopted semantic font tokens in _build_ui; screen worker changes only _layout_world_hud and _card. Full source copy pins the integrated caller.",
+  "limitations": [
+    "Headless geometry, source ownership, state and contrast checks; no G1 rendered visual acceptance yet.",
+    "Nominal 0.75 font scaling is a calculation, not a rasterized glyph measurement.",
+    "No import, hardware FPS, Windows execution or new native OS-input test in this screen check set."
+  ]
+}

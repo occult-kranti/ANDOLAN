@@ -40,7 +40,19 @@ RAMA_NAMES = [
 FIRST_LOAD_NAMES = ['scenes/boot.tscn', 'scripts/boot.gd',
                     'scripts/scene_transition.gd', 'scripts/launch_shell.gd',
                     'scripts/hero_ui_theme.gd']
+GRAPHICS_NAMES = [
+    'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
+    'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
+    'assets/environment-finish/masonry.gdshader', 'assets/hero-finish/g1-manifest.json',
+]
+GRAPHICS_TEXTURE_FIXTURES = {
+    'assets/hero-finish/hair-bundle-roughness.png':
+        '.godot/imported/hair-bundle-roughness.png-72ae2ebe2b8005e106f441ea2c4cfa15.ctex',
+    'assets/hero-finish/forged-gold-roughness.png':
+        '.godot/imported/forged-gold-roughness.png-80aebbe05d54ced6709fe5d72aaa378a.ctex',
+}
 NAMES = [
+    *GRAPHICS_NAMES,
     *INVOCATION_NAMES,
     *RAMA_NAMES,
     *[name for name in FIRST_LOAD_NAMES if name not in RAMA_NAMES],
@@ -101,6 +113,9 @@ def main() -> int:
     assert spec.loader
     spec.loader.exec_module(module)
     entries = [(name, ("benign fixture for " + name).encode()) for name in NAMES]
+    for source, target in GRAPHICS_TEXTURE_FIXTURES.items():
+        entries.extend([(source + '.import', f'[remap]\npath="res://{target}"\n'.encode()),
+                        (target, b'benign structural texture fixture; not engine-decodable')])
     baseline, directory_positions = pack(entries)
     checks = []
     with tempfile.TemporaryDirectory(prefix="yuga-pack-security-") as temporary:

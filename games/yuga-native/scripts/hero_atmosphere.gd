@@ -156,10 +156,10 @@ func _apply(mode: String) -> void:
 		_write("environment", {
 			# Preserve the established night visibility floor. Key/fill separation,
 			# not a lower ambient floor, gives the face and costume their shape.
-			"ambient_light_color": Color("b6c6dc") if night else Color("c7cbd1"),
+			"ambient_light_color": Color("9fb8df") if night else Color("c1cddb"),
 			"ambient_light_energy": 0.32 if night else 0.30,
 			"tonemap_exposure": 1.0,
-			"fog_light_color": Color("4b6585") if night else Color("a3b0ba"),
+			"fog_light_color": Color("3e5d88") if night else Color("8daab9"),
 			"fog_light_energy": 0.40 if night else 0.32,
 			"fog_density": 0.00135 if night else 0.0009,
 			"fog_sky_affect": 0.08, "fog_sun_scatter": 0.04,
@@ -176,12 +176,12 @@ func _apply(mode: String) -> void:
 		var angles := Vector3(-34, -52, 0) if night else Vector3(-30, -52, 0)
 		var sun_transform := Transform3D(Basis.from_euler(angles * (PI / 180.0)), _sun.position)
 		_write("sun", {"transform": sun_transform,
-			"light_color": Color("bbceeb") if night else Color("ffe5c8"),
+			"light_color": Color("acc9f5") if night else Color("fff0d7"),
 			"light_energy": 0.50 if night else 1.30, "light_specular": 0.82})
-		_write("sky", {"sky_top_color": Color("1c2c46") if night else Color("415c78"),
-			"sky_horizon_color": Color("63768e") if night else Color("a4afb7"),
+		_write("sky", {"sky_top_color": Color("101d39") if night else Color("245e85"),
+			"sky_horizon_color": Color("435b82") if night else Color("9eb9c7"),
 			"ground_bottom_color": Color("142131") if night else Color("263641"),
-			"ground_horizon_color": Color("63768e") if night else Color("a4afb7"),
+			"ground_horizon_color": Color("435b82") if night else Color("9eb9c7"),
 			# ProceduralSky multiplies upper/lower hemispheres separately. Equal
 			# horizon colors still leave a hard seam when their energy differs.
 			# Match radiance at the join; retain the darker lower pole gradient.
@@ -189,12 +189,12 @@ func _apply(mode: String) -> void:
 			"ground_energy_multiplier": 0.68 if night else 0.86})
 		# Training hides the portrait light. The existing opposing sky fill must
 		# therefore carry facial readability in gameplay as well as the title.
-		_write("fill", {"light_color": Color("bacbe0"),
-			"light_energy": 0.36 if night else 0.42, "light_specular": 0.30})
+		_write("fill", {"light_color": Color("b0c5df"),
+			"light_energy": 0.36 if night else 0.32, "light_specular": 0.30})
 		# Existing production fill was brighter than every practical and could
 		# flatten the nose/cheek. Keep its reach/transform and shadow policy.
 		_write("portrait", {"light_color": Color("dce6f1"),
-			"light_energy": 1.8 if night else 1.65, "light_specular": 0.30})
+			"light_energy": 1.8 if night else 1.6, "light_specular": 0.30})
 	_mode = mode
 	_last_error = ""
 

@@ -58,7 +58,7 @@ func _build() -> void:
 	texture.fill_to = Vector2.RIGHT
 	texture.gradient = Gradient.new()
 	texture.gradient.offsets = PackedFloat32Array([0, .32, .47, .66, 1])
-	texture.gradient.colors = PackedColorArray([Color(.025,.035,.09,.98), Color(.025,.035,.09,.95), Color(.025,.035,.09,.65), Color(.025,.035,.09,0), Color(.025,.035,.09,0)])
+	texture.gradient.colors = PackedColorArray([Color(HeroUITheme.DEEP,.98), Color(HeroUITheme.DEEP,.95), Color(HeroUITheme.DEEP,.65), Color(HeroUITheme.DEEP,0), Color(HeroUITheme.DEEP,0)])
 	wash.texture = texture
 	wash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	wash.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -81,21 +81,21 @@ func _build() -> void:
 	identity.name = "Identity"
 	identity.add_theme_constant_override("separation", 0)
 	content.add_child(identity)
-	title_wordmark = HeroUITheme.label("YUGA", 64)
+	title_wordmark = HeroUITheme.label("YUGA", HeroUITheme.TYPE_DISPLAY)
 	title_wordmark.name = "Wordmark"
 	title_wordmark.add_theme_font_override("font", HeroUITheme.display_font())
 	identity.add_child(title_wordmark)
-	_subtitle = HeroUITheme.label("RAMA  /  THE SOLAR ARCHER", 14, HeroUITheme.GOLD)
+	_subtitle = HeroUITheme.label("RAMA  /  THE SOLAR ARCHER", HeroUITheme.TYPE_CAPTION, HeroUITheme.GOLD)
 	identity.add_child(_subtitle)
 	content.add_child(HSeparator.new())
 	var choices := VBoxContainer.new()
 	choices.name = "ModeChoice"
-	choices.add_theme_constant_override("separation", 8)
+	choices.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
 	content.add_child(choices)
-	choices.add_child(HeroUITheme.label("CHOOSE YOUR PRACTICE", 14, HeroUITheme.MIST))
+	choices.add_child(HeroUITheme.label("CHOOSE YOUR PRACTICE", HeroUITheme.TYPE_CAPTION, HeroUITheme.MIST))
 	var modes := HBoxContainer.new()
 	modes.name = "PracticeModes"
-	modes.add_theme_constant_override("separation", 8)
+	modes.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
 	choices.add_child(modes)
 	world_mode_button = _button("Confluence", "ConfluenceMode", func(): set_mode(MODE_WORLD))
 	train_mode_button = _button("Bow training", "TrainingMode", func(): set_mode(MODE_TRAIN))
@@ -110,7 +110,7 @@ func _build() -> void:
 	mode_title = HeroUITheme.label("", 30)
 	mode_title.name = "ModeTitle"
 	description.add_child(mode_title)
-	mode_description = HeroUITheme.label("", 17, HeroUITheme.MIST)
+	mode_description = HeroUITheme.label("", HeroUITheme.TYPE_BODY, HeroUITheme.MIST)
 	mode_description.name = "ModeDescriptionText"
 	mode_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	description.add_child(mode_description)
@@ -121,7 +121,7 @@ func _build() -> void:
 	content.add_child(primary_button)
 	var secondary := HBoxContainer.new()
 	secondary.name = "LearnAndWatch"
-	secondary.add_theme_constant_override("separation", 8)
+	secondary.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
 	content.add_child(secondary)
 	guide_button = _button("Rama’s abilities", "RamaAbilities", func(): _emit_utility("guide"))
 	film_button = _button("Watch duel", "WatchConfluenceDuel", func(): _emit_utility("film"))
@@ -132,14 +132,14 @@ func _build() -> void:
 	content.add_child(HSeparator.new())
 	var utilities := HBoxContainer.new()
 	utilities.name = "TitleUtilities"
-	utilities.add_theme_constant_override("separation", 8)
+	utilities.add_theme_constant_override("separation", HeroUITheme.SPACE_SM)
 	content.add_child(utilities)
 	for entry in [{"text":"Help", "action":"help"}, {"text":"Settings", "action":"settings"}, {"text":"Quit", "action":"quit"}]:
 		var utility := _button(entry.text, entry.text, _emit_utility.bind(entry.action))
 		utility.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		HeroUITheme.button(utility, false, true)
 		utilities.add_child(utility)
-	menu_hint = HeroUITheme.label("Offline practice  ·  F2 help  ·  F3 abilities", 14, HeroUITheme.MIST)
+	menu_hint = HeroUITheme.label("Offline practice  ·  F2 help  ·  F3 abilities", HeroUITheme.TYPE_CAPTION, HeroUITheme.MIST)
 	menu_hint.name = "LaunchStatus"
 	menu_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(menu_hint)
@@ -168,9 +168,9 @@ func _layout() -> void:
 	# Reflow the column rather than scaling text; shorter windows can scroll.
 	card.position = Vector2(inset, 24 if _compact else 42)
 	card.size = Vector2(minf(column_width, size.x - inset * 2), maxf(100, size.y - card.position.y * 2))
-	title_wordmark.add_theme_font_size_override("font_size", 44 if _compact else 64)
+	title_wordmark.add_theme_font_size_override("font_size", 44 if _compact else HeroUITheme.TYPE_DISPLAY)
 	mode_title.add_theme_font_size_override("font_size", 24 if _compact else 30)
-	content.add_theme_constant_override("separation", 8 if _compact else 12)
+	content.add_theme_constant_override("separation", HeroUITheme.SPACE_SM if _compact else HeroUITheme.SPACE_MD)
 	queue_redraw()
 	call_deferred("_reveal_resized_focus")
 

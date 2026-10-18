@@ -68,19 +68,19 @@ static func _wheel(radius: float) -> Mesh:
 	if mesh_cache.has(key):return mesh_cache[key]
 	var surface := SurfaceTool.new()
 	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
-	# Four concentric strips form a solid annular wood rim, axle along local X.
-	for i in range(16):
-		var a := float(i)*TAU/16
-		var b := float(i+1)*TAU/16
+	# Beveled outer edges and eight spokes retain the exact wheel/contact radius.
+	for i in range(24):
+		var a := float(i)*TAU/24
+		var b := float(i+1)*TAU/24
 		var rings: Array = []
-		for spec in [Vector2(-.045,radius),Vector2(.045,radius),Vector2(.045,radius*.78),Vector2(-.045,radius*.78)]:
+		for spec in [Vector2(-.045,radius*.96),Vector2(-.03,radius),Vector2(.03,radius),Vector2(.045,radius*.96),Vector2(.045,radius*.78),Vector2(-.045,radius*.78)]:
 			rings.append([Vector3(spec.x,cos(a)*spec.y,sin(a)*spec.y),Vector3(spec.x,cos(b)*spec.y,sin(b)*spec.y)])
-		for side in range(4):
-			var next := (side+1)%4
+		for side in range(rings.size()):
+			var next := (side+1)%rings.size()
 			for point in [rings[side][0],rings[side][1],rings[next][0],rings[side][1],rings[next][1],rings[next][0]]:surface.add_vertex(point)
-	# Six broad wooden spokes belong to the same mesh, not extra scene nodes.
-	for i in range(6):
-		var angle := float(i)*TAU/6
+	# Spokes belong to the shared mesh, not extra scene nodes.
+	for i in range(8):
+		var angle := float(i)*TAU/8
 		var spoke := BoxMesh.new()
 		spoke.size = Vector3(.07,radius*.82,.035)
 		var basis := Basis(Vector3.RIGHT,angle)
@@ -90,6 +90,59 @@ static func _wheel(radius: float) -> Mesh:
 	var result := surface.commit()
 	mesh_cache[key] = result
 	return result
+
+static func _deck() -> Mesh:
+	if mesh_cache.has("joined_deck"):return mesh_cache.joined_deck
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for index in range(7):
+		var board := _mesh("box",Vector3(.137,.13,.94))
+		surface.append_from(board,0,Transform3D(Basis.IDENTITY,Vector3((index-3)*.142,0,0)))
+	var mesh := surface.commit()
+	mesh_cache.joined_deck = mesh
+	return mesh
+
+static func _barrel() -> Mesh:
+	if mesh_cache.has("turned_barrel"):return mesh_cache.turned_barrel
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	# Turned reinforce bands are part of one shared cast-bronze barrel mesh.
+	var rings := [Vector2(-.54,.16),Vector2(-.44,.16),Vector2(-.42,.145),Vector2(-.23,.14),Vector2(-.21,.158),Vector2(-.16,.158),Vector2(-.14,.138),Vector2(.27,.128),Vector2(.29,.148),Vector2(.34,.148),Vector2(.36,.127),Vector2(.54,.13)]
+	for ring in range(rings.size()-1):
+		for index in range(20):
+			var points: Array = []
+			for corner in [Vector2i(ring,index),Vector2i(ring,index+1),Vector2i(ring+1,index),Vector2i(ring+1,index+1)]:
+				var spec: Vector2 = rings[corner.x]
+				var angle := float(corner.y)*TAU/20
+				points.append(Vector3(cos(angle)*spec.y,sin(angle)*spec.y,spec.x))
+			for vertex in [0,1,2,1,3,2]:surface.add_vertex(points[vertex])
+	surface.generate_normals()
+	var mesh := surface.commit()
+	mesh_cache.turned_barrel = mesh
+	return mesh
+
+static func _joinery(role: String) -> Mesh:
+	var key := "joinery_"+role
+	if mesh_cache.has(key):return mesh_cache[key]
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for side in [-1,1]:
+		for z in [-.36,0,.36]:
+			var bolt := _mesh("cylinder",Vector3(.023,.014,.023))
+			surface.append_from(bolt,0,Transform3D(Basis(Vector3.FORWARD,PI/2),Vector3(side*.513,.49,z)))
+		# Diagonal corner straps make the rail construction legible at close range.
+		for end in [-1,1]:
+			var strap := _mesh("box",Vector3(.016,.055,.23))
+			surface.append_from(strap,0,Transform3D(Basis(Vector3.RIGHT,end*.35),Vector3(side*.511,.49,end*.29)))
+	if role == "royal_chariot":
+		for index in range(8):
+			var angle := float(index)*TAU/8
+			var petal := _mesh("sphere",Vector3(.038,.15,.038))
+			var basis := Basis(Vector3.FORWARD,angle).scaled(Vector3(1,1,.35))
+			surface.append_from(petal,0,Transform3D(basis,Vector3(sin(-angle)*.12,.9+cos(angle)*.12,-.295)))
+	var mesh := surface.commit()
+	mesh_cache[key] = mesh
+	return mesh
 
 static func _tube(points: Array, radius: float, key: String) -> Mesh:
 	if mesh_cache.has(key):return mesh_cache[key]
@@ -156,16 +209,19 @@ static func build(team: String, role: String) -> Dictionary:
 			wheel_rest.append(wheel.position)
 	for end in [-1,1]:
 		_primitive(chassis,"CrossAxle%d"%end,"cylinder",Vector3(.045,wheel_x*2,.045),Vector3(0,radius,end*wheel_z),dark).rotation.z = PI/2
-	_primitive(chassis,"PlankedDeck","box",Vector3(1.0,.13,.94),Vector3(0,.42,0),wood)
+	_part(chassis,"JoinedDeckPlanks",_deck(),wood,Vector3(0,.42,0))
 	for side in [-1,1]:
 		_primitive(chassis,"CarvedRail%d"%side,"box",Vector3(.09,.16,1.02),Vector3(side*.46,.49,0),light_wood)
+	var fittings := _part(chassis,"RailJoineryAndRoyalRosette",_joinery(role),brass,Vector3.ZERO)
+	fittings.visibility_range_end = 42
+	fittings.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var weapon := _joint(chassis,"WeaponCradle",Vector3(0,.99,0))
 	joints.weapon = weapon
 	if role == "cannon_cart":
 		for side in [-1,1]:
 			_primitive(chassis,"TrunnionStand%d"%side,"box",Vector3(.12,.38,.30),Vector3(side*.23,.70,0),wood)
 			_primitive(weapon,"Trunnion%d"%side,"cylinder",Vector3(.10,.14,.10),Vector3(side*.19,0,0),brass).rotation.z = PI/2
-		_primitive(weapon,"BrassBarrel","cylinder",Vector3(.13,1.08,.16),Vector3(0,0,.025),brass).rotation.x = PI/2
+		_part(weapon,"TurnedBronzeBarrel",_barrel(),brass,Vector3(0,0,.025))
 		_primitive(weapon,"MuzzleRing","cylinder",Vector3(.17,.075,.17),Vector3(0,0,.59),brass).rotation.x = PI/2
 		_primitive(weapon,"DarkBore","cylinder",Vector3(.119,.008,.119),Vector3(0,0,.632),dark).rotation.x = PI/2
 		_primitive(weapon,"Breech","sphere",Vector3(.15,.28,.15),Vector3(0,0,-.53),dark)

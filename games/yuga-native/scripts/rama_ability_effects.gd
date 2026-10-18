@@ -12,6 +12,11 @@ const MAX_LIFETIME := 8.0
 var _casts: Dictionary = {}
 var _impacts: Array = []
 var _impact_pool: Array = []
+# These shapes have no per-cast state. Retain a bounded set across resets so
+# repeated contacts and arrows reuse geometry while keeping independent clocks,
+# colours and materials. Dynamic ribbons continue to follow their accepted cast.
+var _impact_meshes: Dictionary = {}
+var _arrow_meshes: Dictionary = {}
 var _generation := -1
 var _sequence := -1
 var _high_cast := -1
@@ -260,9 +265,9 @@ func _ribbon(paths: Array, width: float, vertical := false, taper := false, plan
 	arrays[Mesh.ARRAY_VERTEX]=vertices;arrays[Mesh.ARRAY_TEX_UV]=uv;arrays[Mesh.ARRAY_COLOR]=colors;arrays[Mesh.ARRAY_INDEX]=indices
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
 	return mesh
-func _part(parent: Node3D, label: String, paths: Array, width: float, material: Material, vertical:=false, taper:=false) -> MeshInstance3D:
+func _part(parent: Node3D, label: String, paths: Array, width: float, material: Material, vertical:=false, taper:=false, shared_mesh: Mesh=null) -> MeshInstance3D:
 	var node:=MeshInstance3D.new()
-	node.name=label;node.mesh=_ribbon(paths,width,vertical,taper);node.material_override=material
+	node.name=label;node.mesh=shared_mesh if shared_mesh!=null else _ribbon(paths,width,vertical,taper);node.material_override=material
 	node.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	parent.add_child(node)
 	return node
@@ -332,7 +337,10 @@ func _build(event: Dictionary) -> Dictionary:
 	var arrows: Array=[]
 	for p in event.geometry.get("projectiles",[]):
 		var group:=Node3D.new();root_.add_child(group)
-		var shaft_node:=_part(group,"ArrowShaft",_quill_paths(1.10 if event.ability_id=="piercing_dawn" else .85,.17),.055,main,false)
+		var long_arrow: bool=event.ability_id=="piercing_dawn"
+		if not _arrow_meshes.has(long_arrow):
+			_arrow_meshes[long_arrow]=_ribbon(_quill_paths(1.10 if long_arrow else .85,.17),.055)
+		var shaft_node:=_part(group,"ArrowShaft",[],.055,main,false,false,_arrow_meshes[long_arrow])
 		var feather:=_part(group,"SplitFeatherWake",[],.08,detail,true,true)
 		arrows.append({"root":group,"shaft":shaft_node,"feather":feather})
 	var cast:={"root":root_,"id":event.ability_id,"cast_id":event.cast_id,"geometry":event.geometry.duplicate(true),"timing":event.timing.duplicate(true),"duration":float(event.duration_s),"age":float(event.age_s),"authority_age":float(event.age_s),"released":false,"release_age_s":float(event.timing.windup_s),"contacts":{},"main":main,"detail":detail,"warning_material":warning_material,"warning":warning,"motif":motif,"accent":accent,"recipients":recipients,"attachments":[],"arrows":arrows,"last":event.duplicate(true),"last_geometry_frame":-1,"since_event":0.0}
@@ -522,14 +530,23 @@ func _impact(point: Vector3, color: Color, hit: bool, forward := Vector3.BACK) -
 	_impacts.append(impact)
 
 func _refresh_impact(impact: Dictionary) -> void:
+	var mesh:=_contact_geometry(impact.hit)
+	var root_: Node3D=impact.root
+	if root_.get_child_count()==0:_part(root_,"AcceptedContactBloom",[],.055,impact.material,true,true,mesh)
+	else:root_.get_child(0).mesh=mesh
+
+func _contact_geometry(hit: bool) -> ArrayMesh:
+	var key: int=(2 if hit else 0)+(1 if _reduced_effects else 0)
+	if _impact_meshes.has(key):
+		return _impact_meshes[key]
 	var paths: Array=[]
-	var spokes:=8 if impact.hit and not _reduced_effects else 4
+	var spokes:=8 if hit and not _reduced_effects else 4
 	for i in range(spokes):
 		var angle:=TAU*i/float(spokes)
 		var direction:=Vector3(cos(angle),sin(angle),.20*sin(angle*2))
 		var reach:=.88 if i%2==0 else .62
 		paths.append(_curve(direction*.20,direction*.36+Vector3(0,.07,0),direction*reach, direction*(reach+.08),10))
-		if impact.hit and not _reduced_effects and i%2==0:
+		if hit and not _reduced_effects and i%2==0:
 			var right:=Vector3(-sin(angle),cos(angle),0)
 			# Tiny open feather barbs echo the bow's swept quills, with no
 			# opaque contact disk or screen-filling additive flash.
@@ -537,9 +554,9 @@ func _refresh_impact(impact: Dictionary) -> void:
 	if not _reduced_effects:
 		paths.append(_solar_arc(.24,Vector3.ZERO,-.35,2.1,18))
 		paths.append(_solar_arc(.24,Vector3.ZERO,2.8,5.25,18))
-	var root_: Node3D=impact.root
-	if root_.get_child_count()==0:_part(root_,"AcceptedContactBloom",[],.055,impact.material,true,true)
-	root_.get_child(0).mesh=_ribbon(paths,.045,true,true,Vector3.BACK)
+	var mesh:=_ribbon(paths,.045,true,true,Vector3.BACK)
+	_impact_meshes[key]=mesh
+	return mesh
 func report() -> Dictionary:
 	var meshes:=0
 	var triangles:=0

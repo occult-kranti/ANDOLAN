@@ -12,6 +12,6 @@ void vertex() {
 void fragment() {
 	ALBEDO = world_paving(world_position.xz);
 	METALLIC = 0.0;
-	ROUGHNESS = 0.88;
+	ROUGHNESS = world_paving_roughness(world_position.xz);
 	SPECULAR = 0.30;
 }

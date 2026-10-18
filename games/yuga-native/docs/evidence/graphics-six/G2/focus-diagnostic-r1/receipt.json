@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "task": "G2 bounded focused-render diagnosis",
+  "capture_passed": false,
+  "diagnostic_complete": true,
+  "runtime_edited": false,
+  "actual_retry_count": 1,
+  "canonical_head": "0fb96d108b1d886a4ebf84d3b5140abca3905465",
+  "changed_snapshot_paths": [
+    "tools/graphics-six/capture_focus.gd",
+    "tools/graphics-six/run_focus.py"
+  ],
+  "snapshot_sha256": "5d94a7b64b2387f9f8899e82b6a499fb28a93a3ac0a4ace921496af5b589a8ca",
+  "runtime_and_imports_unchanged": true,
+  "after_snapshot_verification": true,
+  "seed_unchanged": true,
+  "engine_process_alive": false,
+  "x_display_socket_exists": false,
+  "command": "taskset -c 0,1 python3 /tmp/yuga-graphics-six-project/tools/graphics-six/run_focus.py --project /tmp/yuga-graphics-six-project --case support --output /tmp/yuga-g2-focus-support-diagnostic-r1 --display 192 --shader-cache-seed /tmp/yuga-g1-native-r1/user/cache/mesa --verbose --timeout 300 --no-progress-timeout 120",
+  "parse_command": "env LP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 XDG_DATA_HOME=/tmp/yuga-g2-focus-harness-diagnosis-r1/data taskset -c 3 godot --headless --check-only --path /workspace/ANDOLAN/games/yuga-native --script res://tools/graphics-six/capture_focus.gd",
+  "parse_exit": 0,
+  "python_syntax_exit": 0,
+  "synthetic_watchdog_checks": 5,
+  "synthetic_watchdog_passed": true,
+  "engine_exit": -15,
+  "runner_exit": 1,
+  "elapsed_s": 130.50487247199635,
+  "native_ready_elapsed_s": 10.056868478000979,
+  "png_count": 0,
+  "checkpoints": [
+    {
+      "final_pose_callbacks": 0,
+      "physics_frame": 1,
+      "preflight": false,
+      "process_frame": 0,
+      "render_frame": 0,
+      "stage": "before_initial_draw6",
+      "tree_paused": false,
+      "wall_ms": 9893
+    }
+  ],
+  "watchdog_failure": "No new engine log bytes or PNG count after native-ready (120.0s)",
+  "warning_count": 63,
+  "warnings_scope": "Verbose software-renderer RGB8 to RGBA8 conversion warnings retained in full raw log.",
+  "diagnosis": "Blocked within initial draw6 before after_initial_draw6; geometry cache, final observer connection and frame_pre_draw camera hook not reached. SceneTree paused=false at last checkpoint. Native ShaderRD synchronization remains a hypothesis from the earlier process inspection, not a proven symbolic stack.",
+  "limits": [
+    "No rendered support or motion acceptance",
+    "No second native retry",
+    "No hardware FPS, mobile-device or store readiness claim"
+  ],
+  "artifacts": {
+    "godot.log": {
+      "sha256": "a66109d3c38c41d4cff90c9ff488650bbb0a9e27dfa512b2ed47365425ddf9d7",
+      "bytes": 78648
+    },
+    "xvfb.log": {
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+      "bytes": 64
+    },
+    "run.json": {
+      "sha256": "66600ee77afa2a99daa99c0c764b48d9f4d8566c8681f22d310ac4e9594131f3",
+      "bytes": 194295
+    },
+    "runner.log": {
+      "sha256": "8c33a9c539304d551ae6e3a5f87ad648eb531cbc97e1c2d3ab88bccec5f4e96c",
+      "bytes": 588
+    },
+    "parse.log": {
+      "sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da",
+      "bytes": 73
+    },
+    "watchdog.json": {
+      "sha256": "04f68e83506a02074e75f7519441250018f9201107eac3877e73331f1a08bb22",
+      "bytes": 3552
+    },
+    "check_watchdog.py": {
+      "sha256": "2f62b95f77d16f49a183396b7241952137664e315955b9fce599070663818c30",
+      "bytes": 2052
+    },
+    "prior-verify.json": {
+      "sha256": "621613a41182afeea247916434029fc0c6d984fe7305839ab9164c58e8041371",
+      "bytes": 963
+    },
+    "after-verify.json": {
+      "sha256": "415544b89c8b616717a64ccf2cc6639105255019c55cc809e7f4bb8732285a4b",
+      "bytes": 279
+    },
+    "refresh-preview.json": {
+      "sha256": "29b9ae83828cde283073aaf25e1c34d8ddb3b5a8c6cc7e99d439c8b9b298cf2f",
+      "bytes": 278
+    },
+    "snapshot.json": {
+      "sha256": "5d94a7b64b2387f9f8899e82b6a499fb28a93a3ac0a4ace921496af5b589a8ca",
+      "bytes": 407642
+    },
+    "capture_focus.gd": {
+      "sha256": "d0b3a2a28a161dbb977792ba5de5393be27537f0e5a15ba0c85b6e114451e0c8",
+      "bytes": 10597
+    },
+    "run_focus.py": {
+      "sha256": "dc2ea827978d56ec88f161dd45d0e38a0c68f88c06ff666134302c135f70d896",
+      "bytes": 10542
+    },
+    "before-capture_focus.gd": {
+      "sha256": "8bac18839404bafd46c4deeb5d1e7ba8b6a17444166b7ee6b513510d8bb7241f",
+      "bytes": 9610
+    },
+    "before-run_focus.py": {
+      "sha256": "54daa94abffff80d19e649b0304173a1f56f75239aafd628a8417a7681e05dba",
+      "bytes": 7287
+    }
+  }
+}

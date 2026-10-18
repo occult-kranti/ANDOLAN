@@ -1,0 +1,105 @@
+{
+	"checks": [
+		{
+			"details": {
+				"failures": [],
+				"relay": "[P: (20.0, 176.0), S: (320.0, 116.0)]",
+				"title": "[P: (20.0, 20.0), S: (320.0, 144.0)]"
+			},
+			"name": "Long route and all contested relay captions retain HUD geometry (960, 540)",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Every contested state stays in its own readable row (960, 540)",
+			"passed": true
+		},
+		{
+			"details": {
+				"hud": "[P: (70.0, 410.0), S: (820.0, 112.0)]",
+				"notice": "[P: (78.0, 410.0), S: (804.0, 20.0)]",
+				"status": "[P: (70.0, 410.0), S: (820.0, 47.0)]"
+			},
+			"name": "Dense multiline notices cannot displace health or ability slots (960, 540)",
+			"passed": true
+		},
+		{
+			"details": {
+				"failures": [],
+				"relay": "[P: (20.0, 211.0), S: (370.0, 116.0)]",
+				"title": "[P: (20.0, 20.0), S: (370.0, 179.0)]"
+			},
+			"name": "Long route and all contested relay captions retain HUD geometry (1280, 720)",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Every contested state stays in its own readable row (1280, 720)",
+			"passed": true
+		},
+		{
+			"details": {
+				"hud": "[P: (230.0, 590.0), S: (820.0, 112.0)]",
+				"notice": "[P: (238.0, 590.0), S: (804.0, 20.0)]",
+				"status": "[P: (230.0, 590.0), S: (820.0, 47.0)]"
+			},
+			"name": "Dense multiline notices cannot displace health or ability slots (1280, 720)",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Maximum valid health and shield retain exact live values",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Zero health uses actual defeat state and clears readiness",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Paused defeat readout preserves return clock",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Normal army ticks restore full life and retire defeat text",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Maximum initial cores stay explicit after reset",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Zero cores show the real draw and stopped relay state",
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Headless existing runtime and actual vitals/army ticks. Long route/relay labels and contested states are explicit presentation fixtures. No rendering, OS input, 2x scale or hardware claim.",
+	"sources": {
+		"res://scripts/confluence_world.gd": "20f809f9ead1d98f3b018c1f38d699d072fa81f3439d44c3369a5b4d249e7450",
+		"res://scripts/hero_ui_theme.gd": "beb4845d10dd40e01b5896c2677264ec4f046c99b2af933e1116d43bb07b45bd",
+		"res://scripts/rama_hero_hud.gd": "4ea25f796ed3c3ac5a1ca6d25edd177d06490632e3c43039912929a744c3f064",
+		"res://scripts/world_outcome_summary.gd": "0aba7d727ea09fcdef4c43566ad3a8850f3a7ac42bbe7be1a6f8223bfdbf5a69",
+		"res://tests/ui_hud_edge_cases.gd": "26c7e3ca89c83266cdb8b1ec294e67cbbd3c941f95f82e5a36faa685edb6b33a"
+	}
+}

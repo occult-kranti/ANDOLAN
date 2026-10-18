@@ -2,13 +2,14 @@ extends Node
 ## Reversible material finish after the LOD/calibration/secondary owners bind.
 ## Authored albedo, normals, UVs and geometry remain intact. No frame callback.
 const SECONDARY_SHADER := preload("res://shaders/rama_secondary_cloth.gdshader")
-const VERSION := 1
+const VERSION := 2
 const OWNER_META := &"yuga_surface_finish_owner"
-const SUFFIX := " · Rama finish v1"
+const SUFFIX := " · Rama finish v2"
 const ROOT := "res://assets/materials/rama-finish/"
+const DETAIL_ROOT := "res://assets/hero-finish/"
 const MAP_PATHS := {
-	"skin":ROOT+"skin-roughness.png", "gold":ROOT+"gold-roughness.png",
-	"ivory":ROOT+"ivory-roughness.png", "hair":ROOT+"hair-roughness.png",
+	"skin":ROOT+"skin-roughness.png", "gold":DETAIL_ROOT+"forged-gold-roughness.png",
+	"ivory":ROOT+"ivory-roughness.png", "hair":DETAIL_ROOT+"hair-bundle-roughness.png",
 	"woven":ROOT+"woven-roughness.png",
 }
 const STANDARD_PROFILES := {

@@ -18,6 +18,9 @@ const RUN_SPRINT_EXIT_MPS := 6.75
 # feet remain planted. Keep a bounded allowance instead of stretching the leg
 # or silently moving its locked world-space target to satisfy the solver.
 const MAX_PELVIS_COMPRESSION_M := .14
+# An inactive title actor can sit slightly above its real collision floor.
+# Resolve only a nearby flat support plane; never move the actor or its capsule.
+const IDLE_SUPPORT_PROBE_M := .08
 const ACTIONS := {
 	"kodanda":["draw","release",false],
 	"piercing_dawn":["piercing_draw","piercing_release",false],
@@ -69,6 +72,8 @@ var cancel_positions: Array[Vector3] = []
 var cancel_rotations: Array[Quaternion] = []
 var action_from_positions: Array[Vector3] = []
 var action_from_rotations: Array[Quaternion] = []
+var action_aim_entry_weight := 0.0
+var action_aim_cancel_weight := 0.0
 var nocked := false
 var warm_bow := false
 var release_count := 0
@@ -77,6 +82,9 @@ var rejected_states := 0
 var modified_samples := 0
 var finite := true
 var floor_y := 0.0
+var idle_support_y := {"L":0.0,"R":0.0}
+var support_exclude: Array[RID] = []
+var idle_support_ready := true
 var foot_locks := {"L":false,"R":false}
 var foot_targets := {"L":Vector3.ZERO,"R":Vector3.ZERO}
 var max_contact_error := 0.0
@@ -137,10 +145,18 @@ func configure(visual: Node, animator: AnimationPlayer = null) -> bool:
 	blend_rotations=rest_rotations.duplicate()
 	if animator: animator.pause()
 	rig.add_child(self)
+	var ancestor: Node=rig
+	while ancestor:
+		if ancestor is CollisionObject3D:support_exclude.append(ancestor.get_rid())
+		ancestor=ancestor.get_parent()
+	# An actor's first modifier can precede its first physics update. Wait for
+	# that one safe plane attempt rather than locking a known fallback forever.
+	idle_support_ready=support_exclude.is_empty()
 	name="RamaMotion"
 	configured=true
 	_make_arrow()
 	floor_y=rig.global_position.y
+	idle_support_y={"L":floor_y,"R":floor_y}
 	return true
 
 func _smooth(value: float) -> float:
@@ -230,12 +246,35 @@ func update_motion(delta: float, state: Dictionary) -> bool:
 		if action_fade>=.16:
 			action=""; action_stage="none"; action_blend=0
 	pending_delta=delta
+	_update_idle_support()
 	return true
+
+func _update_idle_support() -> void:
+	idle_support_y={"L":floor_y,"R":floor_y}
+	# Player updates run during physics. Manual/off-tree pose evaluations keep
+	# the supplied plane and must not query a potentially locked physics space.
+	if not Engine.is_in_physics_frame() or not rig.is_inside_tree():return
+	if not grounded or traversal!="ground" or locomotion!="idle":return
+	idle_support_ready=true # A miss or rejected slope still admits the fallback.
+	var world:=rig.get_world_3d()
+	if not is_instance_valid(world):return
+	for side in ["L","R"]:
+		if foot_locks[side]:continue
+		var foot:=rig.find_bone("foot."+side)
+		var point: Vector3=rig.global_transform*last_globals[foot].origin
+		var from:=Vector3(point.x,floor_y+IDLE_SUPPORT_PROBE_M,point.z)
+		var to:=Vector3(point.x,floor_y-IDLE_SUPPORT_PROBE_M,point.z)
+		var hit:=world.direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from,to,1,support_exclude))
+		if not hit.is_empty() and Vector3(hit.normal).dot(Vector3.UP)>.9999 and absf(float(hit.position.y)-floor_y)<=IDLE_SUPPORT_PROBE_M:
+			idle_support_y[side]=float(hit.position.y)
 
 func request_action(ability_id: String, duration := .18, recovery_seconds := .22) -> bool:
 	if not configured or not ACTIONS.has(ability_id) or not is_finite(duration) or not is_finite(recovery_seconds) or duration<=0 or recovery_seconds<=0 or duration>5 or recovery_seconds>5: return false
 	if action=="death" and ability_id!="respawn": return false
 	if action_stage in ["windup","hold"] and ability_id not in ["hit","death","respawn"]: return false
+	# Pose entry already starts at the previous evaluated pose. Shoulder aim
+	# must start at its previous weight too, before action_blend becomes one.
+	action_aim_entry_weight=maxf(aim_weight,_action_aim_weight())
 	warm_bow=ability_id=="kodanda" and (aim_weight>.5 or (action in ["kodanda","piercing_dawn","dawn_volley"] and action_stage!="none"))
 	action_from_positions=blend_positions.duplicate()
 	action_from_rotations=blend_rotations.duplicate()
@@ -260,6 +299,7 @@ func release_action(ability_id: String) -> bool:
 
 func cancel_action(reason := "cancelled") -> void:
 	if action_stage!="none":
+		action_aim_cancel_weight=_action_aim_weight()
 		action_stage="fade"; action_fade=0; cancel_count+=1
 		cancelled_pose=true
 		cancel_positions=blend_positions.duplicate(); cancel_rotations=blend_rotations.duplicate()
@@ -272,6 +312,7 @@ func cancel(reason := "reset") -> void:
 	action=""; action_stage="none"; action_blend=0
 	phase=0; locomotion="idle"; locomotion_age=0
 	aim_weight=0; aim_target=0; aim_pitch=0; aim_yaw=0
+	action_aim_entry_weight=0; action_aim_cancel_weight=0
 	foot_locks={"L":false,"R":false}
 	if configured: _transition(.16)
 
@@ -321,8 +362,18 @@ func _solve_leg(side: String, target: Vector3) -> void:
 	for index in [n3,n4]: _aim_bone(index,origin+direction*d-joint)
 	_global_rotate(end,rest_globals[end].basis.get_rotation_quaternion().normalized())
 
+func _action_aim_weight() -> float:
+	if action not in ["kodanda","piercing_dawn","dawn_volley"]: return 0.0
+	if action_stage=="windup":
+		return lerpf(action_aim_entry_weight,action_blend,_smooth(action_elapsed/minf(.10,windup)))
+	if action_stage=="fade" and cancelled_pose:
+		# A repeated cancel restarts the existing fade age while action_blend
+		# still holds its prior value until update_motion. Do not scale twice.
+		return action_aim_cancel_weight*(1-_smooth(action_fade/.16))
+	return action_blend
+
 func _apply_aim() -> void:
-	var weight:=maxf(aim_weight,action_blend if action in ["kodanda","piercing_dawn","dawn_volley"] else 0)
+	var weight:=maxf(aim_weight,_action_aim_weight())
 	if weight<.001: return
 	# Rotate the complete shoulder frame, preserving arm/string relationship.
 	var index:=rig.find_bone("spine03")
@@ -345,8 +396,11 @@ func _apply_contact() -> void:
 		var support:=contact_allowed and (locomotion in ["idle","land"] or gait_phase<duty)
 		if support:
 			if not foot_locks[side]:
-				foot_targets[side]=Vector3(current.x,floor_y+rest_globals[foot].origin.y,current.z)
-				foot_locks[side]=true
+				var support_y: float=idle_support_y[side] if locomotion=="idle" else floor_y
+				foot_targets[side]=Vector3(current.x,support_y+rest_globals[foot].origin.y,current.z)
+				# Keep the original fallback pose before the first physics update,
+				# but do not call that provisional target a fixed ground anchor.
+				foot_locks[side]=locomotion!="idle" or idle_support_ready
 			var target: Vector3=foot_targets[side]
 			# A teleport or very sharp turn replants; presentation cannot drag the
 			# controller root or stretch a leg beyond its physical segment lengths.

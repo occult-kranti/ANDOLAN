@@ -8,6 +8,7 @@ const SHADOW_DISTANCE := 72.0
 const WATER_SHADER := preload("res://scripts/world_water.gdshader")
 const MythicEnvironment = preload("res://scripts/mythic_environment.gd")
 const GroundShadows = preload("res://scripts/ground_shadow_policy.gd")
+const SurfaceFinish = preload("res://scripts/environment_surface_finish.gd")
 
 var _environment: Environment
 var _sun: DirectionalLight3D
@@ -23,6 +24,7 @@ func configure(environment: Environment, sun: DirectionalLight3D, world: Node3D,
 	_shadows = shadows
 	# Once per configure, never a traversal/mutation in the per-phase apply path.
 	GroundShadows.apply_world(world)
+	SurfaceFinish.configure(world)
 	configure_practicals(world, placements)
 	set_phase(_phase)
 
@@ -39,6 +41,8 @@ func diagnostics() -> Dictionary:
 		"directional_budget": 2, "shadow_distance_m": SHADOW_DISTANCE,
 		"volumetric_fog": false, "screen_space_reflections": false,
 		"water_geometry_displacement": false,
+		"atmosphere": "bounded_depth_haze_clear_near_field",
+		"surface_finish": SurfaceFinish.diagnostics(_world),
 	}
 
 static func apply(environment: Environment, sun: DirectionalLight3D, world: Node3D,
@@ -57,20 +61,22 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 		environment.sky.sky_material = sky
 	# Keep clear silhouettes at both endpoints. Blue night is a lighting mood,
 	# never a vision or combat advantage. Constant ambient avoids black alleys.
-	sky.sky_top_color = Color("3c6083").lerp(Color("1c2d49"), phase)
-	sky.sky_horizon_color = Color("d1bca8").lerp(Color("647d9b"), phase).lerp(Color("b88e91"), dusk * 0.28)
-	sky.ground_bottom_color = Color("354553").lerp(Color("1b2a40"), phase)
-	sky.ground_horizon_color = sky.sky_horizon_color
+	# Warm masonry against a cool, open sky. The former beige horizon washed
+	# the skyline and pale streets into one value; depth haze now owns distance.
+	sky.sky_top_color = Color("245e85").lerp(Color("101d39"), phase)
+	sky.sky_horizon_color = Color("9eb9c7").lerp(Color("435b82"), phase).lerp(Color("c39183"), dusk * 0.22)
+	sky.ground_bottom_color = Color("293e47").lerp(Color("142136"), phase)
+	sky.ground_horizon_color = Color("82989d").lerp(Color("344966"), phase)
 	sky.sky_energy_multiplier = lerpf(0.92, 0.64, phase)
 	sky.ground_energy_multiplier = 0.52
-	sky.sky_curve = 0.22
+	sky.sky_curve = 0.42
 	sky.ground_curve = 0.18
 	sky.sun_angle_max = 0.8
 	sky.sun_curve = 0.08
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	# Preserve a visibility floor through night, while key/fill direction defines
 	# the forms. Neutral daylight avoids tinting every stone and skin surface tan.
-	environment.ambient_light_color = Color("c5cbd4").lerp(Color("aec2e0"), phase)
+	environment.ambient_light_color = Color("c1cddb").lerp(Color("9fb8df"), phase)
 	environment.ambient_light_energy = lerpf(0.30, 0.32, phase)
 	environment.ambient_light_sky_contribution = 0.0
 	environment.reflected_light_source = Environment.REFLECTION_SOURCE_SKY
@@ -78,8 +84,14 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	environment.tonemap_exposure = 1.0
 	environment.tonemap_white = 1.0
 	environment.fog_enabled = true
-	environment.fog_light_color = Color("91a8bc").lerp(Color("536f94"), phase)
+	environment.fog_light_color = Color("8daab9").lerp(Color("3e5d88"), phase)
 	environment.fog_light_energy = 0.4
+	# Screen-depth atmosphere, not volume or weather. The first 42 m stays
+	# clear, while distant 140-260 m facade rows separate into cool silhouettes.
+	environment.fog_mode = Environment.FOG_MODE_DEPTH
+	environment.fog_depth_begin = 42.0
+	environment.fog_depth_end = lerpf(235.0, 205.0, phase)
+	environment.fog_depth_curve = 1.55
 	environment.fog_density = lerpf(0.0008, 0.0013, phase)
 	environment.fog_sky_affect = 0.08
 	environment.fog_sun_scatter = 0.05
@@ -99,7 +111,7 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	environment.ssao_detail = 0.4
 	environment.ssao_light_affect = 0.1
 	sun.rotation_degrees = Vector3(-42.0, -38.0, 0.0).lerp(Vector3(-34.0, -55.0, 0.0), phase)
-	sun.light_color = Color("ffe4c2").lerp(Color("b7cbed"), phase).lerp(Color("ffd0a7"), dusk * 0.25)
+	sun.light_color = Color("fff0d7").lerp(Color("acc9f5"), phase).lerp(Color("ffd0a7"), dusk * 0.25)
 	sun.light_energy = lerpf(1.25, 0.48, phase)
 	sun.light_angular_distance = 0.0
 	sun.shadow_enabled = shadows
@@ -123,6 +135,7 @@ static func apply(environment: Environment, sun: DirectionalLight3D, world: Node
 	fill.shadow_enabled = false
 	fill.sky_mode = DirectionalLight3D.SKY_MODE_LIGHT_ONLY
 	MythicEnvironment.set_phase(world, phase)
+	SurfaceFinish.set_phase(world, phase)
 	var practicals := world.get_node_or_null("WorldPracticals")
 	if practicals != null:
 		for child in practicals.get_children():
@@ -173,8 +186,8 @@ static func water_material(style: String = "coast", reduced_motion: bool = false
 	var material := ShaderMaterial.new()
 	material.shader = WATER_SHADER
 	var swamp := style == "swamp"
-	material.set_shader_parameter("deep_color", Color("244e42") if swamp else Color("134b60"))
-	material.set_shader_parameter("shallow_color", Color("54705a") if swamp else Color("3c8c93"))
+	material.set_shader_parameter("deep_color", Color("1e3931") if swamp else Color("123c50"))
+	material.set_shader_parameter("shallow_color", Color("4d6450") if swamp else Color("408d91"))
 	material.set_shader_parameter("ripple_strength", 0.025 if swamp else 0.055)
 	material.set_shader_parameter("base_roughness", 0.38 if swamp else 0.23)
 	material.set_shader_parameter("animation_speed", 0.0 if reduced_motion else (0.28 if swamp else 0.8))

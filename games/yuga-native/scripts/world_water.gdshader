@@ -50,7 +50,10 @@ void fragment() {
 		upper_surface * clamp(ripple_strength / 0.055, 0.0, 1.8) * pool));
 	NORMAL = normalize((VIEW_MATRIX * vec4(blended_normal, 0.0)).xyz);
 	float current = sin(a * 0.38 + sin(b * 0.16)) * 0.5 + 0.5;
-	ALBEDO = mix(deep_color.rgb, shallow_color.rgb, 0.15 + current * 0.35);
+	// Long mineral-green currents break the single-color water sheet. They are
+	// reflectance only: no false foam obstacle, shoreline depth or collision.
+	float stream = sin(dot(p, vec2(0.09, 0.14)) + sin(dot(p, vec2(0.17, -0.08)))) * 0.5 + 0.5;
+	ALBEDO = mix(deep_color.rgb, shallow_color.rgb, 0.10 + current * 0.27 + stream * 0.16);
 	METALLIC = 0.0;
 	SPECULAR = 0.25;
 	ROUGHNESS = clamp(base_roughness + current * 0.05, 0.1, 0.8);
@@ -62,6 +65,6 @@ void fragment() {
 		vec3 pool_color = mix(wet_stone, ALBEDO * 0.78, smoothstep(0.18, 0.85, pool));
 		ALBEDO = mix(paving, pool_color, pool);
 		SPECULAR = mix(0.30, 0.25, pool);
-		ROUGHNESS = mix(0.88, ROUGHNESS, pool);
+		ROUGHNESS = mix(world_paving_roughness(p), ROUGHNESS, pool);
 	}
 }

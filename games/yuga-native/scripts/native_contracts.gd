@@ -3,7 +3,7 @@ extends RefCounted
 const CATALOG_PATH := "res://assets/contracts/native-contracts-v1.json"
 const MAX_SAFE := 9007199254740991
 const PROFILE_IDS := ["browser-p2-3v3", "native-offline-triad", "production-6v6"]
-const CONTENT_REVISIONS := {"browser-p2-3v3":1,"native-offline-triad":6,"production-6v6":1}
+const CONTENT_REVISIONS := {"browser-p2-3v3":1,"native-offline-triad":7,"production-6v6":1}
 const ENTITY_CAPS := {"actor":12,"minion":96,"neutral":32,"structure":32,"projectile":192,"zone":128,"pickup":32,"gold_shard":96}
 const EVENT_KINDS := ["spawn","despawn","shot","hit","defeat","objective","reward","match_end"]
 const DESCRIPTOR_KEYS := ["contract_id","profile_id","versions","protocol","rules_sha256","map_id","map_sha256","content_sha256"]

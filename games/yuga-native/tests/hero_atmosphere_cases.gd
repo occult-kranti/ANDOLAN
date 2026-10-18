@@ -64,7 +64,8 @@ func _run() -> void:
 	check(day != original, "day applies actual owned properties")
 	check(f.world.get_child_count() == original_count, "day adds no nodes")
 	check(f.sun.get_instance_id() == original_sun_id and f.env.sky.get_instance_id() == original_sky_id, "existing light and sky resources retained")
-	check(is_equal_approx(f.fill.light_energy, 0.42), "training gets opposing diffuse fill without portrait")
+	# G2 reduces only the day opposing fill to recover form; night keeps .36.
+	check(is_equal_approx(f.fill.light_energy, 0.32), "training gets opposing diffuse fill without portrait")
 	check(f.env.ambient_light_energy >= 0.30 and f.env.ambient_light_energy <= 0.32001, "day visibility floor retained")
 	check(f.env.fog_density <= 0.00135, "day near silhouette haze restrained")
 	check(f.env.sky.sky_material.sky_horizon_color == f.env.sky.sky_material.ground_horizon_color,

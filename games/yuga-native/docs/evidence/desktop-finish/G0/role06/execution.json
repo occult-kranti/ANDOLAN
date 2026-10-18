@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "task": "G0 desktop W6 package/provenance integration",
+  "passed": true,
+  "checks": 504,
+  "source_commit": "0fb96d108b1d886a4ebf84d3b5140abca3905465",
+  "working_tree_sources": {
+    "tools/package-native.py": "0192b2d6888d3fad9bc782042f7a69710cf9516c29ee0cb43f7b1ec6d115708e",
+    "tests/rama_package_cases.py": "4fcd6b18f29edff2f264c0185a2e7891287d615b5f0ade6186517258546d0219",
+    "tests/traversal_security_cases.py": "74fa273b7133a1e67538c007216e8eb422640be0aabd997a6f48b2aa83e311c9",
+    "tests/graphics_package_cases.py": "ab6a08daba98f916de0c1f01d6497bda24def1c56543a45074c1f6c312ff694d"
+  },
+  "historical_pins": {
+    "art/hero-finish/history/schema4-notice.json": "5026675c7af8b83412eb375b9883ffe52efd883e20c7fd9594bdf3fdd9c8f5d8",
+    "art/hero-finish/history/schema4-surface-finish.gd": "7936f28f29c4b96cb49742bb3309c96df962f95e3cec99d5a7b514ea03c369e1"
+  },
+  "active_notice_sha256": "e7178d4af339d92fe1a12519f72251ba09fa5a8c273d8ea5a5b7ee0674ba3c03",
+  "commands": [
+    {
+      "command": "python3 tests/rama_package_cases.py --groom-review /workspace/ANDOLAN/games/yuga-native --report /tmp/yuga-g0-rama-history-r2.json",
+      "exit_code": 0,
+      "checks": 287,
+      "report": "rama-history.json"
+    },
+    {
+      "command": "python3 tests/graphics_package_cases.py --report /tmp/yuga-g0-graphics-package-r2.json",
+      "exit_code": 0,
+      "checks": 109,
+      "report": "graphics-package.json"
+    },
+    {
+      "command": "python3 tests/traversal_security_cases.py --report /tmp/yuga-g0-pck-security-r2.json",
+      "exit_code": 0,
+      "checks": 108,
+      "report": "pck-security.json"
+    },
+    {
+      "command": "python3 -m py_compile tools/package-native.py tests/rama_package_cases.py tests/traversal_security_cases.py tests/graphics_package_cases.py",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check -- tools/package-native.py tests/rama_package_cases.py tests/traversal_security_cases.py",
+      "exit_code": 0
+    }
+  ],
+  "evidence_sha256": {
+    "baseline-rama-package.json": "47af1007cefc76c9f1f9e73fabc3e195cff389bdce6c1a79c9863c19967894f3",
+    "rama-history.json": "40ccd46ce5b31847f26557ed730ca9a217eca4b6e496bf942c5f60152dd45854",
+    "initial-source-rejection.json": "9999ef488981a62ae4b52dc988e9ef7ff1fc031fee69ccb6918fa80e433b31ce",
+    "pck-security.json": "66b52bd9edcff87d0576fc69171abcad94682a91068ca920b8444377b03994db",
+    "graphics-package.json": "b51bb28b56a05b6e812ee8363538fa65ae8590ddd11505ec7b585dcda335c15f"
+  },
+  "limits": [
+    "No engine, asset import, export, texture decoding or actual PCK execution.",
+    "Tiny synthetic PCKs establish finite path/remap/payload-presence checks, not valid renderable scene content.",
+    "Optional upper-hair helper remains inactive; no hair acceptance or release claim."
+  ]
+}

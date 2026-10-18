@@ -29,23 +29,23 @@ func _draw() -> void:
 		for i in range(lane.points.size()-1):
 			var a: Array=lane.points[i]
 			var b: Array=lane.points[i+1]
-			draw_line(project(Vector3(a[0],0,a[2])),project(Vector3(b[0],0,b[2])),Color("cfa964"),2,true)
+			draw_line(project(Vector3(a[0],0,a[2])),project(Vector3(b[0],0,b[2])),HeroUI.GOLD,2,true)
 	for camp in data.camps:
-		draw_circle(project(Vector3(camp.position[0],0,camp.position[2])),3,Color("7ac6bd"))
+		draw_circle(project(Vector3(camp.position[0],0,camp.position[2])),3,HeroUI.MARSH)
 	for objective in data.objectives:
-		draw_circle(project(Vector3(objective.position[0],0,objective.position[2])),3,Color("efba70") if objective.team=="sun" else Color("88bded"))
+		draw_circle(project(Vector3(objective.position[0],0,objective.position[2])),3,HeroUI.SUN if objective.team=="sun" else HeroUI.MOON)
 	for anchor in data.get("traversal",{}).get("anchors",[]):
 		var p:=project(Vector3(anchor.position[0],0,anchor.position[2]))
-		draw_polyline(PackedVector2Array([p+Vector2(0,-3),p+Vector2(3,0),p+Vector2(0,3),p+Vector2(-3,0),p+Vector2(0,-3)]),Color("e9c877"),1,true)
+		draw_polyline(PackedVector2Array([p+Vector2(0,-3),p+Vector2(3,0),p+Vector2(0,3),p+Vector2(-3,0),p+Vector2(0,-3)]),HeroUI.GOLD,1,true)
 	for unit in units:
 		var p:=project(unit.position)
 		if unit.get("role","") in ["cannon_cart","royal_chariot"]:
-			draw_circle(p,5.5,Color("efba70") if unit.team=="sun" else Color("88bded"),false,1.5,true)
-		if unit.team=="sun": draw_colored_polygon(PackedVector2Array([p+Vector2(0,-2.5),p+Vector2(2,2),p+Vector2(-2,2)]),Color("efba70"))
-		else: draw_rect(Rect2(p-Vector2(1.7,1.7),Vector2(3.4,3.4)),Color("88bded"))
+			draw_circle(p,5.5,HeroUI.SUN if unit.team=="sun" else HeroUI.MOON,false,1.5,true)
+		if unit.team=="sun": draw_colored_polygon(PackedVector2Array([p+Vector2(0,-2.5),p+Vector2(2,2),p+Vector2(-2,2)]),HeroUI.SUN)
+		else: draw_rect(Rect2(p-Vector2(1.7,1.7),Vector2(3.4,3.4)),HeroUI.MOON)
 	for relay in relays:
 		var p:=project(relay.position)
-		var color:=Color("efba70") if relay.owner=="sun" else (Color("88bded") if relay.owner=="moon" else Color("c3bfae"))
+		var color:=HeroUI.SUN if relay.owner=="sun" else (HeroUI.MOON if relay.owner=="moon" else HeroUI.MIST)
 		draw_rect(Rect2(p-Vector2(5,5),Vector2(10,10)),Color("14242d"))
 		draw_rect(Rect2(p-Vector2(5,5),Vector2(10,10)),color,false,2)
 		if relay.owner=="sun": draw_colored_polygon(PackedVector2Array([p+Vector2(0,-3),p+Vector2(3,2),p+Vector2(-3,2)]),color)
@@ -59,9 +59,9 @@ func _draw() -> void:
 		if objective.kind != "core": continue
 		var position_ := project(Vector3(objective.position[0],0,objective.position[2]))
 		var caption: String = String(objective.team).capitalize()
-		var text_width := _map_font.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+		var text_width := _map_font.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, HeroUI.TYPE_HUD_DETAIL).x
 		var baseline := position_.y - 8 if objective.team == "sun" else position_.y + 19
-		draw_string(_map_font, Vector2(clampf(position_.x - text_width/2, 6, size.x-text_width-6),baseline),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12,HeroUI.CREAM)
+		draw_string(_map_font, Vector2(clampf(position_.x - text_width/2, 6, size.x-text_width-6),baseline),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,HeroUI.TYPE_HUD_DETAIL,HeroUI.CREAM)
 	var here := project(hero_position)
 	var heading := project_heading(hero_forward)
 	if heading.is_finite() and not heading.is_zero_approx():
@@ -70,4 +70,4 @@ func _draw() -> void:
 	draw_circle(project(hero_position),5,Color.WHITE)
 	draw_circle(project(hero_position),8,Color(1,1,1,.4),false,1,true)
 func _background() -> StyleBoxFlat:
-	return HeroUI.panel_style(true, 0)
+	return HeroUI.hud_panel_style(&"quiet", 0)

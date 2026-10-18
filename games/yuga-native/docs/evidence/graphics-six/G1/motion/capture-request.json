@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "task": "G1 worker03 motion",
+  "status": "capture requested; no rendered acceptance",
+  "baseline_motion_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+  "candidate_motion_sha256": "e64c3752b79b2a27faced459becbdc04170cd6ba487ee6bf3c404eeba31c0f34",
+  "baseline_script": "/workspace/ANDOLAN/scratch/graphics-six/G1/motion/rama_motion.baseline.gd",
+  "candidate_script": "res://scripts/rama_motion.gd",
+  "actual_hero_sha256": "8b6cf0f4c5520696d1d843e5bdebb2454c1dbd4341e17171c5b6d20353384d5c",
+  "library_sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+  "comparison_controls": [
+    "Freeze the full source and actual imported cache separately for baseline/candidate; swap only rama_motion.gd for causal comparison. Later combined hero changes require distinct source pins.",
+    "Actual imported rig; one existing SkeletonModifier3D writer. Observe final global transforms inside modification_processed, associate with draw and physics counters.",
+    "Match camera, ground, light, action events, body transform, face and secondary state. Record complete adjacent frames at30Hz with60Hz physics; no sparse-still temporal claim.",
+    "Body/hands/head framing plus floor visible. Judge normal speed, then inspect adjacent frames. Keep cast root-yaw separately recorded."
+  ],
+  "controlled_component_fixture": {
+    "scope": "Optional diagnostic isolates the shoulder layer; direct component input is not a native gameplay interaction or authority proof.",
+    "state": {
+      "velocity": [
+        0,
+        0,
+        0
+      ],
+      "local_velocity": [
+        0,
+        0,
+        0
+      ],
+      "grounded": true,
+      "floor_y": 0,
+      "aiming": false,
+      "aim_pitch": -0.45,
+      "aim_yaw": 0.6
+    },
+    "pre_roll_s": 1,
+    "cold_cast": {
+      "request": "piercing_dawn",
+      "windup_s": 0.65,
+      "recovery_s": 0.22,
+      "record_s": 1.3,
+      "release_at_s": 0.9,
+      "same_time_observation_before_first_update": true
+    },
+    "additional_windows": [
+      {
+        "id": "early_cancel",
+        "cancel_after_physics_ticks": 2,
+        "record_fade_s": 0.3
+      },
+      {
+        "id": "repeated_cancel",
+        "first_cancel_after_physics_ticks": 2,
+        "second_cancel_after_fade_physics_ticks": 2
+      },
+      {
+        "id": "warm_kodanda",
+        "first_request_windup_s": 0.18,
+        "request_after_first_release_physics_ticks": 1
+      },
+      {
+        "id": "negative_aim",
+        "aim_pitch": 0.45,
+        "aim_yaw": -0.6,
+        "request": "dawn_volley",
+        "windup_s": 0.65,
+        "scope": "same diagnostic duration as CPU fixture; real Volley duration remains authoritative in native route"
+      }
+    ]
+  },
+  "native_required_windows": [
+    {
+      "id": "cold_native_piercing",
+      "conditions": "Actual courtyard training, settled feet, no fire held, camera pitched downward and visual/camera yaw offset retained from a preceding short strafe. Request Piercing through runtime cast_ability or actual key. Record0.5s pre-roll and full windup/release/recovery; report actual kit/presentation clocks and root yaw.",
+      "limitation": "Player-owned root yaw may still turn abruptly. This change only smooths shoulder aim-layer entry."
+    },
+    {
+      "id": "cancel_native_piercing",
+      "conditions": "Repeat same cold setup; cancel through public kit.cancel_windup while still in first100ms, record fade and next cast. Accepted and release counts must match baseline."
+    },
+    {
+      "id": "overview_freeze_resume",
+      "conditions": "Actual world Piercing windup, F1 overview, at least45native physics ticks, then resume. Require exact kit/presentation hold and exactly one eventual release; inactive courtyard title idle must continue."
+    },
+    {
+      "id": "locomotion_control",
+      "conditions": "Retain existing start/stop/turn/jump/land/cast/contact tape scope. This G1 change has no numerical foot improvement claim; compare unchanged anchors/foot endpoints in component test and inspect actual support windows separately."
+    }
+  ],
+  "acceptance_limits": [
+    "CPU same-time entry improvement is not proof of smooth rendered motion.",
+    "Unchanged later authored upper-body maxima up to523.256mm remain reported.",
+    "Existing R4 stop/landing gaps, penetration and player-root42.7degree cast turn remain open; no reuse of rejected foot/IK candidates.",
+    "Do not claim current source equals historical7087R4 tape or historicalde61dc contact reports."
+  ]
+}

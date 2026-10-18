@@ -3,6 +3,7 @@ extends Control
 
 const UI = preload("res://scripts/hero_ui_theme.gd")
 const Bindings = preload("res://scripts/input_bindings.gd")
+const Glyph = preload("res://scripts/rama_ability_glyph.gd")
 const KIT_PATH := "res://assets/design/rama-ability-kit.json"
 
 signal closed
@@ -11,6 +12,7 @@ var card: PanelContainer
 var close_button: Button
 var ability_buttons: Dictionary = {}
 var detail_title: Label
+var detail_glyph: TextureRect
 var detail_description: Label
 var detail_timing: Label
 var detail_range: Label
@@ -102,11 +104,23 @@ func _build() -> void:
 	detail.add_theme_constant_override("separation", UI.SPACE_MD)
 	detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	details_scroll.add_child(detail)
-	key_label = UI.label("LMB  /  PRIMARY", 13, UI.GOLD)
-	detail.add_child(key_label)
+	var ability_heading := HBoxContainer.new()
+	ability_heading.add_theme_constant_override("separation", UI.SPACE_MD)
+	detail.add_child(ability_heading)
+	detail_glyph = Glyph.new()
+	detail_glyph.name = "SelectedAbilityGlyph"
+	detail_glyph.custom_minimum_size = Vector2(48, 48)
+	detail_glyph.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	ability_heading.add_child(detail_glyph)
+	var title_stack := VBoxContainer.new()
+	title_stack.add_theme_constant_override("separation", UI.SPACE_XS)
+	title_stack.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	ability_heading.add_child(title_stack)
+	key_label = UI.label("LMB  /  PRIMARY", UI.TYPE_CAPTION, UI.GOLD)
+	title_stack.add_child(key_label)
 	detail_title = UI.label("Kodanda", 29)
 	detail_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	detail.add_child(detail_title)
+	title_stack.add_child(detail_title)
 	detail_description = _wrapped("", 18, UI.CREAM)
 	detail.add_child(detail_description)
 	detail.add_child(HSeparator.new())
@@ -163,6 +177,10 @@ func _load_kit() -> void:
 		button.custom_minimum_size.y = UI.TARGET_MIN
 		UI.button(button)
 		button.add_theme_font_size_override("font_size", 16)
+		button.icon = Glyph.texture_for(ability.id)
+		button.expand_icon = true
+		button.add_theme_constant_override("icon_max_width", Glyph.GUIDE_SIZE)
+		button.add_theme_constant_override("h_separation", UI.SPACE_SM)
 		button.pressed.connect(func(): select_ability(ability.id))
 		_list.add_child(button)
 		ability_buttons[ability.id] = button
@@ -191,6 +209,7 @@ func select_ability(id: String) -> void:
 	_feedback_revision += 1
 	if not _rules.has(id): return
 	selected_id = id
+	detail_glyph.present(id, &"selected")
 	var rule: Dictionary = _rules[id]
 	key_label.text = "%s  /  %s" % [_binding(id), "PRIMARY" if id == "kodanda" else ("ULTIMATE" if id == "dawn_volley" else "ABILITY")]
 	detail_title.text = rule.label
@@ -203,6 +222,8 @@ func select_ability(id: String) -> void:
 	for ability_id in ability_buttons:
 		var button: Button = ability_buttons[ability_id]
 		UI.button_variant(button,&"selected" if ability_id == id else &"secondary")
+		for color_name in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
+			button.add_theme_color_override(color_name, Glyph.color_for(&"selected" if ability_id == id else &"unavailable"))
 	details_scroll.scroll_vertical = 0
 
 func configure_effects(receiver: Node) -> void:

@@ -1,0 +1,39 @@
+{
+  "task": "G2 worker03 motion",
+  "status": "source frozen; actual capture pending",
+  "baseline_motion": "e64c3752b79b2a27faced459becbdc04170cd6ba487ee6bf3c404eeba31c0f34",
+  "candidate_motion": "35a9e58e6c720c67cd6e77fb812900bc05dec9d2fbd255b7bd8aa40b39e20fb3",
+  "baseline_path": "docs/evidence/graphics-six/G2/motion/baseline-g1.gd",
+  "candidate_path": "scripts/rama_motion.gd",
+  "anchors": [
+    {
+      "name": "title",
+      "conditions": "Native courtyard title after at least8physics ticks and stable idle. Keep original rooty.05, no body/rig teleport or floor correction in capture. Read actualclock rather than forcephase."
+    },
+    {
+      "name": "settled_training",
+      "conditions": "Start actual training, permit body to settle on actualcollisionfloor, wait stableidle and record originalbodyroot/capsule."
+    }
+  ],
+  "required_receipts": [
+    "source/imports plus originalPNG hashes",
+    "body/rig/camera transforms; physics and modifier/draw counters",
+    "actual ray plane/normal and visible skinned sole min/witness per side in final modifier observer",
+    "foot targets in world space, lock flags, idle_support_ready and idle_support_y",
+    "root/capsule geometry, actualonfloor and suppliedfloor_y",
+    "phase/age and activeLOD"
+  ],
+  "continuous": "Acceptance worker provides one60-frame actual Piercing early-cancel\u2192Kodanda release tape, retaining G1 aim-entry review. It remains separate from two support stills.",
+  "questions": [
+    "Does actual sole/floor attachment improve without visible knee collapse or foot penetration?",
+    "Does first acquisition produce an objectionable pop? The pose-space probe is bounded80mm and is not a C1 release treatment.",
+    "Do actual fixed anchors remain stable through heldsupport and actual pauses?",
+    "Does G1 cast shoulder entry improve without delayed/disconnected bow hand or altered release?"
+  ],
+  "limits": [
+    "G1 reference screenshot alone is not an exactpose numerical skin replay. FinalCPU pairs use exactsame states and current importedrig.",
+    "No general fix for moving stop/landing gaps, unreachable support, slopes, per-triangle skin collision, or player-owned root turn.",
+    "A missing/distant/nonflat plane intentionally uses suppliedfloor_y. No anchors are relocated after lock.",
+    "Combined G2hero/environment renders need their own sourcefreeze; do not attribute allpixelchanges to motion."
+  ]
+}

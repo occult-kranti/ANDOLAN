@@ -143,6 +143,24 @@ func run() -> void:
 	fx._impact(Vector3(-2,1,4),Color("77b8df"),false,Vector3.BACK)
 	var recycled: Dictionary=fx._impacts[0]
 	check("pooled_impact_resets_age_hit_tint_orientation",recycled.root==impact.root and recycled.age==0.0 and not recycled.hit and recycled.material.get_shader_parameter("tint")==Color("77b8df") and recycled.root.global_basis.z.normalized().is_equal_approx(Vector3.BACK))
+	# A crowded fight should reuse the finite contact shapes, while materials
+	# and transforms remain per-receiver. Exercise reuse across live options and
+	# saturated impact recycling, rather than only checking a cache constant.
+	var shape_ids: Dictionary={}
+	var shared_geometry:=true
+	for index in range(240):
+		var reduced: bool=index%2==0
+		var hit: bool=index%4<2
+		fx.set_options({"reduced_effects":reduced})
+		fx._impact(Vector3(index%9,1,0),Color("e8c373") if index%2 else Color("77b8df"),hit)
+		var newest: Dictionary=fx._impacts.back()
+		var key:=str(hit)+":"+str(reduced)
+		var id: int=newest.root.get_child(0).mesh.get_instance_id()
+		if shape_ids.has(key):shared_geometry=shared_geometry and shape_ids[key]==id
+		else:shape_ids[key]=id
+	check("contact_shapes_reused_across240_hits_and_live_option_changes",shared_geometry and shape_ids.size()==4)
+	check("saturated_contact_pool_remains_bounded",fx.report().allocated_impacts<=Effects.MAX_IMPACTS and fx._impact_meshes.size()==4)
+	fx.set_options({"reduced_motion":false,"reduced_effects":true})
 	fx.reset()
 	for index in range(200):fx._impact(Vector3(index%8,1,index%6),Color("e8c373"),true)
 	check("contact_saturation_has_eighteen_nodes_and_5616_triangles",fx.report().allocated_impacts==18 and fx.get_child_count()==18 and fx.report().impact_triangles<=5616 and geometry_finite(fx),fx.report())

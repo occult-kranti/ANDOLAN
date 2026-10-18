@@ -15,6 +15,10 @@ const CREAM := Color("f6eddc")
 const MIST := Color("ccd3e1")
 const MUTED := Color("adb8d0")
 const LINE := Color("7280a3")
+const MARSH := Color("98c4a5")
+const SUN := GOLD
+const MOON := Color("a5c9e8")
+const HUD_EDGE := Color("536079")
 const SPACE_XS := 4
 const SPACE_SM := 8
 const SPACE_MD := 12
@@ -25,6 +29,10 @@ const TYPE_TITLE := 32
 const TYPE_SECTION := 22
 const TYPE_BODY := 17
 const TYPE_CAPTION := 14
+const TYPE_ACTION := 18
+const TYPE_HUD := 16
+const TYPE_HUD_DETAIL := TYPE_CAPTION
+const TYPE_HUD_TITLE := 18
 const TARGET_MIN := 44
 const FOCUS_WIDTH := 2
 const CORNER := 3
@@ -44,6 +52,7 @@ static func create() -> Theme:
 		var type: StringName = BUTTON_TYPES[variant]
 		result.set_type_variation(type, &"Button")
 		_set_button_theme(result, type, variant)
+	result.set_font_size("font_size", BUTTON_TYPES[&"primary"], TYPE_ACTION)
 	for role in LABEL_SIZES:
 		result.set_type_variation(role, "Label")
 		result.set_font_size("font_size", role, LABEL_SIZES[role])
@@ -73,6 +82,20 @@ static func panel_style(strong: bool = false, padding: int = SPACE_LG) -> StyleB
 	var style := _surface(DEEP if strong else INK, LINE, padding, padding)
 	return style
 
+## Opaque combat surfaces keep live text stable against sun, shadow and effects.
+## The top rule carries emphasis without framing every HUD item like a button.
+static func hud_panel_style(role: StringName = &"quiet", padding: int = SPACE_SM) -> StyleBoxFlat:
+	var style := _surface(DEEP if role in [&"status", &"unavailable"] else INK, HUD_EDGE, padding, padding)
+	style.set_border_width_all(0)
+	style.border_width_top = 2 if role in [&"status", &"ready", &"cooling"] else 1
+	style.border_width_bottom = 1
+	if role in [&"status", &"ready"]: style.border_color = GOLD
+	elif role == &"cooling": style.border_color = MOON
+	style.shadow_color = Color(0, 0, 0, .28)
+	style.shadow_size = SPACE_XS
+	style.shadow_offset = Vector2(0, 2)
+	return style
+
 static func button(control: Button, primary: bool = false, quiet: bool = false) -> void:
 	button_variant(control, &"primary" if primary else (&"utility" if quiet else &"secondary"))
 
@@ -83,6 +106,7 @@ static func button_variant(control: Button, variant: StringName = &"secondary") 
 	control.custom_minimum_size.y = maxf(control.custom_minimum_size.y, TARGET_MIN)
 	control.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	control.focus_mode = Control.FOCUS_ALL
+	control.add_theme_font_size_override("font_size", TYPE_ACTION if variant == &"primary" else TYPE_BODY)
 	for state in BUTTON_STATES:
 		control.add_theme_stylebox_override(state, _button_style(variant, state))
 	control.add_theme_stylebox_override("focus", _focus(variant))

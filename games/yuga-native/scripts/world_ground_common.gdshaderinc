@@ -27,12 +27,20 @@ vec3 paving_stones(vec2 p, vec2 slab_size, vec3 tint) {
 	float grout = 1.0 - smoothstep(0.008 - aa, 0.018 + aa, min(edge.x, edge.y));
 	// The narrow joints disappear gradually in the distance instead of aliasing.
 	grout *= 1.0 - smoothstep(0.18, 0.55, screen_step);
-	float variation = (stone_random(cell) - 0.5) * 0.045;
-	float weathering = sin(p.x * 0.16 + p.y * 0.11) * sin(p.y * 0.21) * 0.035;
+	float variation = (stone_random(cell) - 0.5) * 0.18;
+	float weathering = sin(p.x * 0.16 + p.y * 0.11) * sin(p.y * 0.21) * 0.065;
 	// Broad mineral layers add age without a noisy repeating high-frequency texture.
-	weathering += sin(p.x * 0.43 - p.y * 0.27 + sin(p.y * 0.12)) * 0.012;
-	vec3 stone = tint * (1.0 + variation + weathering);
-	return mix(stone, stone * 0.78, grout);
+	weathering += sin(p.x * 0.43 - p.y * 0.27 + sin(p.y * 0.12)) * 0.028;
+	vec3 mineral = mix(vec3(0.88, 0.96, 1.0), vec3(1.05, 0.99, 0.88), stone_random(cell + vec2(19.0, 7.0)));
+	vec3 stone = tint * mineral * (1.0 + variation + weathering);
+	// Shallow, darker joints describe slab scale without drawing a distant grid.
+	return mix(stone, stone * 0.55, grout);
+}
+
+float world_paving_roughness(vec2 p) {
+	// Broad dry wear, not wet mirror lanes. Shared by opaque pool borders.
+	float wear = sin(p.x * 0.23 + sin(p.y * 0.09)) * sin(p.y * 0.31);
+	return 0.84 + wear * 0.055;
 }
 
 vec3 world_paving(vec2 p) {
@@ -49,14 +57,14 @@ vec3 world_paving(vec2 p) {
 	float aa = max(max(fwidth(p.x), fwidth(p.y)), 0.01);
 	float lane = 1.0 - smoothstep(3.80 - aa, 3.90 + aa, lane_distance);
 	float rotation = 1.0 - smoothstep(1.33 - aa, 1.45 + aa, rotation_distance);
-	vec3 paving = paving_stones(p, vec2(1.65, 1.10), vec3(0.265, 0.280, 0.266));
-	vec3 avenue = paving_stones(p, vec2(2.40, 1.20), vec3(0.194, 0.214, 0.207));
+	vec3 paving = paving_stones(p, vec2(1.65, 1.10), vec3(0.205, 0.221, 0.207));
+	vec3 avenue = paving_stones(p, vec2(2.40, 1.20), vec3(0.133, 0.165, 0.166));
 	// A single union mask resolves intersections without overlapping geometry.
 	paving = mix(paving, avenue, max(lane, rotation * 0.55));
 	// Quiet arrival-court inlays are descriptive scenery, never combat markers.
 	float court_radius = min(length(p - vec2(0.0, arrival_court_z)), length(p - vec2(0.0, -arrival_court_z)));
 	float court = 1.0 - smoothstep(7.0, 7.15, court_radius);
-	vec3 court_stone = paving_stones(p, vec2(2.2, 2.2), vec3(0.285, 0.282, 0.252));
+	vec3 court_stone = paving_stones(p, vec2(2.2, 2.2), vec3(0.265, 0.239, 0.185));
 	paving = mix(paving, court_stone, court * 0.75);
 	float ring_distance = min(abs(court_radius - 6.35), abs(court_radius - 4.8));
 	float ring = 1.0 - smoothstep(0.018 - aa, 0.047 + aa, ring_distance);

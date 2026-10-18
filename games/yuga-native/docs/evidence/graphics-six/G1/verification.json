@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "task": "G1-06",
+  "sealed_utc": "2026-10-18T02:48:36.174388+00:00",
+  "passed": true,
+  "scope": "Independent published baseline review and source/capture tooling; not candidate runtime or pixel acceptance.",
+  "direct_originals_opened": 8,
+  "filesystem_tests": {
+    "passed": true,
+    "count": 18,
+    "command": "taskset -c 3 python3 games/yuga-native/tests/graphics-six/test_snapshot.py",
+    "exit_code": 0
+  },
+  "native_plan_dry_run": {
+    "passed": true,
+    "command": "python3 games/yuga-native/tools/ui-campaign/run.py --dry-run --mode integrated --project /workspace/ANDOLAN/games/yuga-native --plan /workspace/ANDOLAN/games/yuga-native/tools/graphics-six/native-plan.json --renderer forward_plus --render-threads 2 --width 960 --height 600 --display 199 --output /tmp/yuga-g1-dry-only",
+    "exit_code": 0
+  },
+  "snapshot_dry_run": {
+    "passed": true,
+    "command": "python3 games/yuga-native/tools/graphics-six/snapshot.py refresh --source /tmp/yuga-i1-final-r1/ANDOLAN/games/yuga-native --project /tmp/yuga-graphics-six-reviewed-runtime --store /tmp/yuga-graphics-six-content --round G1 --receipt /tmp/yuga-graphics-six-G1-dry.json --dry-run",
+    "exit_code": 0,
+    "files": 910,
+    "validated_import_descriptors": 173,
+    "no_project_or_store_written": true
+  },
+  "engine_runs": 0,
+  "new_renders": 0,
+  "files": {
+    "games/yuga-native/tools/graphics-six/README.md": {
+      "sha256": "1e30f18a941968058642f0b46a00b9085a80226231e6db198a90e38af3b67918",
+      "bytes": 5732
+    },
+    "games/yuga-native/tools/graphics-six/hero-camera-contract.json": {
+      "sha256": "ec8fda81b7b67ccb5680b660a40d1504b232e55305db03433aeb8f273e25e1a1",
+      "bytes": 7891
+    },
+    "games/yuga-native/tools/graphics-six/native-plan.json": {
+      "sha256": "42f639ef91fb4080d547c5ab26e2d10dc90509ebadd0145d946dee895e4fbddf",
+      "bytes": 1621
+    },
+    "games/yuga-native/tools/graphics-six/snapshot.py": {
+      "sha256": "ab40dc59d9fae265d2b52e583e9b43ac7002d0eb959aaa9c7ddf4674a3ac3556",
+      "bytes": 10822
+    },
+    "games/yuga-native/tests/graphics-six/test_snapshot.py": {
+      "sha256": "3a191bf46b4c709db36772cb3444f1e7abefae82b92563a2d5522b29093c38f7",
+      "bytes": 7500
+    },
+    "games/yuga-native/docs/evidence/graphics-six/G1/acceptance.md": {
+      "sha256": "f970045e7f994ee1f4dc4b276462578fb68c8aa16e2b58b2eb5ad7e2c0387b2c",
+      "bytes": 11378
+    },
+    "games/yuga-native/docs/evidence/graphics-six/G1/baseline.json": {
+      "sha256": "f3fe7bfbe411ba7ae0a00039706ba3cc4dcb1993dfdef7eb7637c16b4cb25019",
+      "bytes": 9141
+    },
+    "games/yuga-native/docs/evidence/graphics-six/G1/snapshot-tests.log": {
+      "sha256": "1cee776f33f3e04b2fb7e7d99ed3eee79724cd997484813a63c2ed85dabbada5",
+      "bytes": 2083
+    },
+    "games/yuga-native/docs/evidence/graphics-six/G1/snapshot-dry-run.json": {
+      "sha256": "94f20e186faf082bef6e018d33fbe1d1651f85b7b4ee0b3bb32c7c0db5e48c10",
+      "bytes": 63299
+    },
+    "games/yuga-native/docs/evidence/graphics-six/G1/native-plan-dry-run.json": {
+      "sha256": "1ae3aad8ac645e2a82e5878572ca85d91a13d6453f7ec9c3c20f4f231db79108",
+      "bytes": 2609
+    },
+    "games/yuga-native/docs/evidence/graphics-six/G1/research/BaseMaterial3D.xml": {
+      "sha256": "b32f372bccfe1b3db276ac7f3cb39ba13fc87c8fe65e7cc331bd9b2a6119b251",
+      "bytes": 79364
+    },
+    "games/yuga-native/docs/evidence/graphics-six/G1/research/GeometryInstance3D.xml": {
+      "sha256": "9178119e1617b504d64515c12ee167dbf6bb7bc584808037b3c255dc2d552900",
+      "bytes": 15815
+    },
+    "games/yuga-native/docs/evidence/graphics-six/G1/research/SkeletonModifier3D.xml": {
+      "sha256": "66fe7a680393b455741053175e30d140db131aa4a16b4f5e69b99bb0eba83565",
+      "bytes": 7254
+    },
+    "games/yuga-native/docs/evidence/graphics-six/G1/research/sources.json": {
+      "sha256": "fa4e86107d09674aaa9c1870ce96f694bcef66a6ebc279699cd7435f34c12104",
+      "bytes": 5911
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "scope": "G1 worker05 units/props frozen implementation, headless geometry/rules verification, baseline-only image review. G1 rendered candidate acceptance pending central lane.",
+  "source_commit_at_start": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "source_sha256": {
+    "scripts/lane_infantry_art.gd": "80ae046d364a737cf2c33fd43b325d4fd189573eccd795358eb9d589e7868edb",
+    "scripts/lane_minion.gd": "823903af51605272e73b7ec9a5d3b1aea6fa7a55243b3937bed7004aa79ff665",
+    "scripts/lane_vehicle_art.gd": "ac78ef11354adecb60fabf0b7e9b060585be42168eac184cc67c09b9b36e0fb1",
+    "tests/graphics_infantry_cases.gd": "3a06707bd8b90b487f58a81480fe74fb961b9943ca29a48fcd826fdbe8d60666",
+    "tests/lane_army_cases.gd": "5de0f698251726e9e9faced7d7f5f0b8f816a35901cfaa5ef00c74b6d7b0af16",
+    "tests/lane_vehicle_art_cases.gd": "1166614c6ffab347ec9fa8a53241d5e21eabecf2ee6dcdfefa249c5f68c81df5"
+  },
+  "actual_baseline_images_opened": {
+    "docs/evidence/ui-campaign/I3/role03/native-r1/08-package-world-live.png": "8d11439ab5e3a224d9a4283a78d17ef34043752d4885a061ae98618a2fc1bab2",
+    "docs/evidence/traversal-armies-render-r2/still-army-engagement.png": "3b8d47d69798440096c8d8f267ecbb4267e724dc5b565f5d982ea07f101389db",
+    "docs/evidence/siege-render-r2/siege-frame-00090.png": "e21a8d076dd514e75d84f7539d766764bd141e2f6dce7ff2cb735f59d4e768a0"
+  },
+  "test_receipts": {
+    "rule-source-invariance.json": "65cb64769fc95f232c7389d05798776d4a658cb44611466ccc9c9f1bef1d4073",
+    "vehicles-r1-output.txt": "2e86ea5712f3e6ffc531478e889b7d91d79cd4a12db8fc3a94eb8d11393e84b0",
+    "infantry-r2-output.txt": "c13c1cf3771bb1bb1a47355b53f8712c63e9392cbaef928552bc9274273aaf20",
+    "infantry-r1-output.txt": "20521f9b880eb81e7c700227686914aa31bd22b7358fc3ddef71e91d4b3392cf",
+    "infantry-r2.log": "c13c1cf3771bb1bb1a47355b53f8712c63e9392cbaef928552bc9274273aaf20",
+    "army-r1.log": "b471a96b3d2e1007173aaa64f46d4eebbba7d16da8c14c6a438a9033f733b59a",
+    "infantry-r1.json": "ce31568587d73082744bc4f0b51174e5559fa2eddf1c8fd18d3a1229cd1bf01e",
+    "army-r1.json": "faff32c95f8a0d214b07615813b206044001e3abfe6b0ce0497ecd77664a27b0",
+    "infantry-r2.json": "6922a90de081155a1f4e1336f2326516384ef359536f896e57dd278b91a998f0",
+    "vehicles-r1.json": "e21e533a1ce0536894a4832597dff456a938f13899dc5e57b526cb30f42067ee",
+    "army-r1-output.txt": "b471a96b3d2e1007173aaa64f46d4eebbba7d16da8c14c6a438a9033f733b59a",
+    "vehicles-r1.log": "2e86ea5712f3e6ffc531478e889b7d91d79cd4a12db8fc3a94eb8d11393e84b0",
+    "infantry-r1.log": "20521f9b880eb81e7c700227686914aa31bd22b7358fc3ddef71e91d4b3392cf"
+  },
+  "tests": {
+    "infantry": {
+      "passed": true,
+      "count": 53,
+      "report": "units-checks/infantry-r2.json"
+    },
+    "vehicles": {
+      "passed": true,
+      "count": 48,
+      "report": "units-checks/vehicles-r1.json"
+    },
+    "army": {
+      "passed": true,
+      "count": 21,
+      "report": "units-checks/army-r1.json"
+    }
+  },
+  "first_failure_retained": "infantry-r1.json has50/53 because new receiver test used exact comparison of a float32 CapsuleShape radius against0.39. Test uses is_equal_approx now; runtime bytes unchanged between runs.",
+  "known_visual_risk": "Inherited minion tracer is visible during bow windup while new nock draws. Root explicitly retains G1 frozen and assigns bounded timing correction to G2 after first pictures.",
+  "native_contract": "lane_minion is whole-file content-pinned. Root migrated content7 against frozen823903af...; parent owns contract/package lists.",
+  "render_lane": "No import or rendering used by this worker; CPU2 headless only. All owned Godot processes complete."
+}

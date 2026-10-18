@@ -3,7 +3,7 @@ extends StaticBody3D
 
 signal defeated(unit: Node3D, by_player: bool)
 
-const Art = preload("res://scripts/lane_unit_art.gd")
+const Art = preload("res://scripts/lane_infantry_art.gd")
 const VehicleArt = preload("res://scripts/lane_vehicle_art.gd")
 const VEHICLE_ROLES := ["cannon_cart", "royal_chariot"]
 const STATS := {
@@ -45,6 +45,7 @@ var reward_emitted := false
 var render_art := true
 var radius := .39
 var vehicle_art: Dictionary = {}
+var infantry_art: Dictionary = {}
 # Invocation practice statuses use the army clock, never render time.
 var shield := 0.0
 var shield_until := 0.0
@@ -83,6 +84,8 @@ func _ready() -> void:
 		var result: Dictionary = VehicleArt.build(team,role) if role in VEHICLE_ROLES else Art.build(team,role)
 		if role in VEHICLE_ROLES:
 			vehicle_art = result
+		else:
+			infantry_art = result
 		visual = result.root
 		joints = result.joints
 		add_child(visual)
@@ -248,38 +251,13 @@ func update_pose(time: float, alpha := 1.0) -> void:
 		VehicleArt.pose(vehicle_art,role,time,moved,attack_time,hit_time,alive,dead_age)
 		_update_health_bar()
 		return
-	var walk := sin(time*8.8+float(unit_id%5)*.12)*clampf(moved/.14,0,1)
-	for side in ["left","right"]:
-		var sign_value := 1.0 if side == "left" else -1.0
-		joints[side+"_hip"].rotation.x = walk*.46*sign_value
-		joints[side+"_knee"].rotation.x = maxf(0,-walk*sign_value)*.48
-		joints[side+"_shoulder"].rotation = Vector3(-walk*.28*sign_value,0,-sign_value*.08)
-		joints[side+"_elbow"].rotation.x = -.18
-	joints.torso.rotation = Vector3(-hit_time*1.1,0,0)
-	if role == "bow_guard":
-		joints.left_shoulder.rotation.x = -1.30
-		joints.right_shoulder.rotation = Vector3(-1.0,-.4,0)
-		joints.right_elbow.rotation.x = -1.4 if attack_time > .18 else -.7
-		joints.weapon.rotation.x = 1.30
-	else:
-		var swing := sin(clampf((.52-attack_time)/.52,0,1)*PI) if attack_time > 0 else 0.0
-		joints.right_shoulder.rotation.x -= swing*1.30
-		joints.right_elbow.rotation.x -= swing*.5
-		joints.weapon.rotation.x = .38+swing*1.2
-	if joints.has("banner"):
-		joints.banner.rotation.y = sin(time*3.0)*.10
+	Art.pose(infantry_art,time,moved,attack_time,hit_time,alive,unit_id)
 	if not alive:
 		visual.position.y -= minf(dead_age,1.0)*.22
 		visual.rotation.z = minf(dead_age/.65,1.0)*1.48
 	_update_health_bar()
 	if arrow:
-		var flight := (.52-attack_time)/.26
-		arrow.visible = alive and attack_time > .26
-		if arrow.visible:
-			arrow.global_position = (global_position+Vector3.UP*1.4).lerp(attack_target+Vector3.UP,clampf(flight,0,1))
-			var direction := attack_target+Vector3.UP-arrow.global_position
-			if direction.length_squared() > .0001:
-				arrow.quaternion = Quaternion(Vector3.UP,direction.normalized())
+		Art.pose_arrow(infantry_art,arrow,attack_time,alive,attack_target)
 
 func _update_health_bar() -> void:
 	if is_instance_valid(shield_fill):

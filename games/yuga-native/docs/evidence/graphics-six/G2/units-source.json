@@ -1,0 +1,62 @@
+{
+  "scope": "G2 worker05 frozen source and headless checks; actual G1 originals directly reviewed, G2 rendered acceptance pending central capture.",
+  "source_sha256": {
+    "scripts/lane_infantry_art.gd": "a64b4cc283dc7b5c4eb28391ec362928a9fb3126e2a1d41ae5cc27e0a67ae6f2",
+    "scripts/lane_minion.gd": "90fe2d84f5c408b4b99779b00c11e59e850c1bb4f88dafb42a8a5aba74cc119c",
+    "scripts/lane_vehicle_art.gd": "ac78ef11354adecb60fabf0b7e9b060585be42168eac184cc67c09b9b36e0fb1",
+    "tests/graphics_infantry_cases.gd": "8b2ce106f943ba9212b785381fb406f899ab166d6c464293f5a77ec87a327347",
+    "tests/graphics_infantry_timing_cases.gd": "bd6743c54e1aa27929f2a944584943176a1e879ab4c33c474163a285b25d86f2"
+  },
+  "g1_originals_opened": {
+    "/tmp/yuga-g1-native-r1/03-world-day.png": "2cdc03c98387e01e506c0239a8a491ca6beee45fcb4de70c4472415955e922f8",
+    "/tmp/yuga-g1-native-r1/04-world-night.png": "6be91153c6a8e7a53f956b296f74ec120432c78b7f51fc33df17cdc1c2fd10fc"
+  },
+  "tests": {
+    "geometry_resource_receiver": {
+      "passed": true,
+      "count": 53,
+      "report": "units-checks/infantry-r1.json"
+    },
+    "timing_material": {
+      "passed": true,
+      "count": 11,
+      "report": "units-checks/timing-r1.json"
+    }
+  },
+  "evidence_sha256": {
+    "rule-source-invariance.json": "2e5c653cad22a8d54147186cf6052fe4c9d528ed7bfa5df7ada3bc597e4a7ddd",
+    "timing-r1-output.txt": "5d9d6d8248d2e064901c7a557d8800774c9715449828553c65447deb0b167b53",
+    "infantry-r1-output.txt": "bd4c523f18172591b347e26bd3c90768e3200691999c3297fbe3f21a17e409e1",
+    "infantry-r1.json": "babbf28a9c1d4879c8956f30d903ca7b1a7a257f893d0af032bc3aa14814fe09",
+    "timing-r1.log": "5d9d6d8248d2e064901c7a557d8800774c9715449828553c65447deb0b167b53",
+    "timing-r1.json": "cff2b5a134368824c1b9f8cbb84d2d4e7a64fd11d7adc8641e3634f6501fd543",
+    "infantry-r1.log": "bd4c523f18172591b347e26bd3c90768e3200691999c3297fbe3f21a17e409e1"
+  },
+  "timing_seconds": {
+    "draw": 0.12,
+    "cosmetic_travel": 0.14,
+    "committed_impact_unchanged": 0.26
+  },
+  "resources": {
+    "assembled_meshes": 44,
+    "materials": 12,
+    "primitive_meshes": 58,
+    "per_unit_mesh_instances": [
+      19,
+      20,
+      22
+    ],
+    "per_unit_triangles": [
+      10704,
+      8560,
+      11316
+    ]
+  },
+  "authority": "No damage, movement, collider, wave cap, attack commitment or army-clock changes. Source comparator supplements real-unit sampling.",
+  "scope_limits": [
+    "G1 day/night unit positions differ; no matched-distance comparison claimed.",
+    "No G2 renderer or motion-tape acceptance from headless timing checks.",
+    "No physical GPU performance claim."
+  ],
+  "native_contract_integration": "Root notified final lane_minion90fe2d84...; only root updates unreleased content7."
+}

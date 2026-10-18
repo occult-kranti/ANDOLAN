@@ -1,0 +1,1021 @@
+{
+	"checks": [
+		{
+			"case": "valid_three_lane_config_spawns30",
+			"evidence": {
+				"alive": 30,
+				"alive_by_lane": [
+					10,
+					10,
+					10
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					0,
+					0
+				],
+				"cores": {
+					"moon": 100.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 0.0,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					0,
+					0,
+					0
+				],
+				"max_alive_seen": 30,
+				"max_attacks_seen": 0,
+				"max_corpses_seen": 0,
+				"max_nodes_seen": 30,
+				"next_wave_seconds": 30.0,
+				"pending_cleanup": 0,
+				"queued_attacks": 0,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 0,
+				"roles_alive": {
+					"bow_guard": 12,
+					"cannon_cart": 0,
+					"commander": 6,
+					"royal_chariot": 0,
+					"spearman": 12
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 0,
+				"siege": {
+					"cancelled": 0,
+					"hits": 0,
+					"impacts": 0,
+					"next_attack_id": 1,
+					"pending": 0,
+					"pending_cap": 32,
+					"rejected_pairs": 0,
+					"spawned_pairs": 0,
+					"windups": 0
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"total_cap": 96,
+				"unit_nodes": 30,
+				"wave_events": 1,
+				"waves": 1,
+				"winner": ""
+			},
+			"passed": true
+		},
+		{
+			"case": "mirrored_composition_three_roles",
+			"evidence": {
+				"moonbow_guard": 6,
+				"mooncommander": 3,
+				"moonspearman": 6,
+				"sunbow_guard": 6,
+				"suncommander": 3,
+				"sunspearman": 6
+			},
+			"passed": true
+		},
+		{
+			"case": "invalid_damage_never_heals_kills_or_awards",
+			"evidence": {
+				"rejections": 7
+			},
+			"passed": true
+		},
+		{
+			"case": "projectile_compatible_player_last_hit_gold_once",
+			"evidence": {
+				"alive": 29,
+				"alive_by_lane": [
+					9,
+					10,
+					10
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					0,
+					0
+				],
+				"cores": {
+					"moon": 100.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 0.0,
+				"finite": true,
+				"gold": 18,
+				"invalid_damage": 7,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 1,
+				"kills_by_lane": [
+					1,
+					0,
+					0
+				],
+				"max_alive_seen": 30,
+				"max_attacks_seen": 0,
+				"max_corpses_seen": 1,
+				"max_nodes_seen": 30,
+				"next_wave_seconds": 30.0,
+				"pending_cleanup": 1,
+				"queued_attacks": 0,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 0,
+				"roles_alive": {
+					"bow_guard": 12,
+					"cannon_cart": 0,
+					"commander": 6,
+					"royal_chariot": 0,
+					"spearman": 11
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 0,
+				"siege": {
+					"cancelled": 0,
+					"hits": 0,
+					"impacts": 0,
+					"next_attack_id": 1,
+					"pending": 0,
+					"pending_cap": 32,
+					"rejected_pairs": 0,
+					"spawned_pairs": 0,
+					"windups": 0
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"total_cap": 96,
+				"unit_nodes": 30,
+				"wave_events": 1,
+				"waves": 1,
+				"winner": ""
+			},
+			"passed": true
+		},
+		{
+			"case": "friendly_projectile_damage_ignored",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "assist_does_not_fake_confirmed_gold",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "malformed_config_rejected_atomically",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "nonfinite_or_unbounded_step_rejected",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "wall_occludes_pulse_and_target_line",
+			"evidence": {
+
+			},
+			"passed": true
+		},
+		{
+			"case": "same_frame_reset_has_no_queued_node_accumulation",
+			"evidence": {
+				"alive": 30,
+				"alive_by_lane": [
+					10,
+					10,
+					10
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					0,
+					0
+				],
+				"cores": {
+					"moon": 100.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 0.0,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					0,
+					0,
+					0
+				],
+				"max_alive_seen": 30,
+				"max_attacks_seen": 0,
+				"max_corpses_seen": 0,
+				"max_nodes_seen": 30,
+				"next_wave_seconds": 30.0,
+				"pending_cleanup": 0,
+				"queued_attacks": 0,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 0,
+				"roles_alive": {
+					"bow_guard": 12,
+					"cannon_cart": 0,
+					"commander": 6,
+					"royal_chariot": 0,
+					"spearman": 12
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 0,
+				"siege": {
+					"cancelled": 0,
+					"hits": 0,
+					"impacts": 0,
+					"next_attack_id": 1,
+					"pending": 0,
+					"pending_cap": 32,
+					"rejected_pairs": 0,
+					"spawned_pairs": 0,
+					"windups": 0
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"total_cap": 96,
+				"unit_nodes": 30,
+				"wave_events": 1,
+				"waves": 1,
+				"winner": ""
+			},
+			"passed": true
+		},
+		{
+			"case": "same_frame_death_burst_corpses_bounded",
+			"evidence": {
+				"alive": 0,
+				"alive_by_lane": [
+					0,
+					0,
+					0
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					0,
+					0
+				],
+				"cores": {
+					"moon": 100.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 0.0,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					10,
+					10,
+					10
+				],
+				"max_alive_seen": 30,
+				"max_attacks_seen": 0,
+				"max_corpses_seen": 24,
+				"max_nodes_seen": 30,
+				"next_wave_seconds": 30.0,
+				"pending_cleanup": 24,
+				"queued_attacks": 0,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 0,
+				"roles_alive": {
+					"bow_guard": 0,
+					"cannon_cart": 0,
+					"commander": 0,
+					"royal_chariot": 0,
+					"spearman": 0
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 0,
+				"siege": {
+					"cancelled": 0,
+					"hits": 0,
+					"impacts": 0,
+					"next_attack_id": 1,
+					"pending": 0,
+					"pending_cap": 32,
+					"rejected_pairs": 0,
+					"spawned_pairs": 0,
+					"windups": 0
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"total_cap": 96,
+				"unit_nodes": 24,
+				"wave_events": 1,
+				"waves": 1,
+				"winner": ""
+			},
+			"passed": true
+		},
+		{
+			"case": "dead_units_cleaned_after_fall",
+			"evidence": {
+				"alive": 0,
+				"alive_by_lane": [
+					0,
+					0,
+					0
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					0,
+					0
+				],
+				"cores": {
+					"moon": 100.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 1.25,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					10,
+					10,
+					10
+				],
+				"max_alive_seen": 30,
+				"max_attacks_seen": 0,
+				"max_corpses_seen": 24,
+				"max_nodes_seen": 30,
+				"next_wave_seconds": 28.75,
+				"pending_cleanup": 0,
+				"queued_attacks": 0,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 0,
+				"roles_alive": {
+					"bow_guard": 0,
+					"cannon_cart": 0,
+					"commander": 0,
+					"royal_chariot": 0,
+					"spearman": 0
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 0,
+				"siege": {
+					"cancelled": 0,
+					"hits": 0,
+					"impacts": 0,
+					"next_attack_id": 1,
+					"pending": 0,
+					"pending_cap": 32,
+					"rejected_pairs": 0,
+					"spawned_pairs": 0,
+					"windups": 0
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"total_cap": 96,
+				"unit_nodes": 0,
+				"wave_events": 1,
+				"waves": 1,
+				"winner": ""
+			},
+			"passed": true
+		},
+		{
+			"case": "wave_not_early",
+			"evidence": {
+				"elapsed": 29.9500000000003,
+				"waves": 1
+			},
+			"passed": true
+		},
+		{
+			"case": "paired_wave_on30_seconds",
+			"evidence": {
+				"alive": 60,
+				"alive_by_lane": [
+					20,
+					20,
+					20
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					0,
+					0
+				],
+				"cores": {
+					"moon": 100.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 30.0000000000003,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					0,
+					0,
+					0
+				],
+				"max_alive_seen": 60,
+				"max_attacks_seen": 8,
+				"max_corpses_seen": 0,
+				"max_nodes_seen": 60,
+				"next_wave_seconds": 29.9999999999997,
+				"pending_cleanup": 0,
+				"queued_attacks": 2,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 0,
+				"roles_alive": {
+					"bow_guard": 24,
+					"cannon_cart": 0,
+					"commander": 12,
+					"royal_chariot": 0,
+					"spearman": 24
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 0,
+				"siege": {
+					"cancelled": 0,
+					"hits": 0,
+					"impacts": 0,
+					"next_attack_id": 1,
+					"pending": 0,
+					"pending_cap": 32,
+					"rejected_pairs": 0,
+					"spawned_pairs": 0,
+					"windups": 0
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"total_cap": 96,
+				"unit_nodes": 60,
+				"wave_events": 2,
+				"waves": 2,
+				"winner": ""
+			},
+			"passed": true
+		},
+		{
+			"case": "exact72_capacity_and_paired_overflow_policy",
+			"evidence": {
+				"composition": {
+					"0/bow_guard": {
+						"moon": 4,
+						"sun": 4
+					},
+					"0/commander": {
+						"moon": 2,
+						"sun": 2
+					},
+					"0/spearman": {
+						"moon": 4,
+						"sun": 4
+					},
+					"1/bow_guard": {
+						"moon": 4,
+						"sun": 4
+					},
+					"1/commander": {
+						"moon": 2,
+						"sun": 2
+					},
+					"1/spearman": {
+						"moon": 4,
+						"sun": 4
+					},
+					"2/bow_guard": {
+						"moon": 6,
+						"sun": 6
+					},
+					"2/cannon_cart": {
+						"moon": 1,
+						"sun": 1
+					},
+					"2/commander": {
+						"moon": 3,
+						"sun": 3
+					},
+					"2/spearman": {
+						"moon": 6,
+						"sun": 6
+					}
+				},
+				"report": {
+					"alive": 72,
+					"alive_by_lane": [
+						20,
+						20,
+						32
+					],
+					"cap": 72,
+					"configured": true,
+					"core_arrivals": [
+						0,
+						0,
+						0
+					],
+					"cores": {
+						"moon": 100.0,
+						"sun": 100.0
+					},
+					"corpse_cap": 24,
+					"elapsed": 0.0,
+					"finite": true,
+					"gold": 0,
+					"invalid_damage": 0,
+					"invalid_pulses": 0,
+					"invalid_steps": 0,
+					"kills": 0,
+					"kills_by_lane": [
+						0,
+						0,
+						0
+					],
+					"max_alive_seen": 72,
+					"max_attacks_seen": 0,
+					"max_corpses_seen": 0,
+					"max_nodes_seen": 72,
+					"next_wave_seconds": 30.0,
+					"pending_cleanup": 0,
+					"queued_attacks": 0,
+					"queued_for_deletion": 0,
+					"rejected_wave_pairs": 5,
+					"roles_alive": {
+						"bow_guard": 28,
+						"cannon_cart": 2,
+						"commander": 14,
+						"royal_chariot": 0,
+						"spearman": 28
+					},
+					"route_blocked_moves": 0,
+					"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+					"separation_waits": 0,
+					"siege": {
+						"cancelled": 0,
+						"hits": 0,
+						"impacts": 0,
+						"next_attack_id": 1,
+						"pending": 0,
+						"pending_cap": 32,
+						"rejected_pairs": 2,
+						"spawned_pairs": 1,
+						"windups": 0
+					},
+					"siege_drill": false,
+					"temporary_units": 0,
+					"total_cap": 96,
+					"unit_nodes": 72,
+					"wave_events": 4,
+					"waves": 3,
+					"winner": ""
+				}
+			},
+			"passed": true
+		},
+		{
+			"case": "all_three_lane_ends_damage_enemy_core",
+			"evidence": {
+				"lanes": [
+					{
+						"alive": 0,
+						"alive_by_lane": [
+							0,
+							0,
+							0
+						],
+						"cap": 72,
+						"configured": true,
+						"core_arrivals": [
+							1,
+							0,
+							0
+						],
+						"cores": {
+							"moon": 93.0,
+							"sun": 100.0
+						},
+						"corpse_cap": 24,
+						"elapsed": 0.05,
+						"finite": true,
+						"gold": 0,
+						"invalid_damage": 0,
+						"invalid_pulses": 0,
+						"invalid_steps": 0,
+						"kills": 0,
+						"kills_by_lane": [
+							0,
+							0,
+							0
+						],
+						"max_alive_seen": 30,
+						"max_attacks_seen": 0,
+						"max_corpses_seen": 0,
+						"max_nodes_seen": 30,
+						"next_wave_seconds": 29.95,
+						"pending_cleanup": 0,
+						"queued_attacks": 0,
+						"queued_for_deletion": 0,
+						"rejected_wave_pairs": 0,
+						"roles_alive": {
+							"bow_guard": 0,
+							"cannon_cart": 0,
+							"commander": 0,
+							"royal_chariot": 0,
+							"spearman": 0
+						},
+						"route_blocked_moves": 0,
+						"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+						"separation_waits": 0,
+						"siege": {
+							"cancelled": 0,
+							"hits": 0,
+							"impacts": 0,
+							"next_attack_id": 1,
+							"pending": 0,
+							"pending_cap": 32,
+							"rejected_pairs": 0,
+							"spawned_pairs": 0,
+							"windups": 0
+						},
+						"siege_drill": false,
+						"temporary_units": 0,
+						"total_cap": 96,
+						"unit_nodes": 0,
+						"wave_events": 1,
+						"waves": 1,
+						"winner": ""
+					},
+					{
+						"alive": 0,
+						"alive_by_lane": [
+							0,
+							0,
+							0
+						],
+						"cap": 72,
+						"configured": true,
+						"core_arrivals": [
+							0,
+							1,
+							0
+						],
+						"cores": {
+							"moon": 93.0,
+							"sun": 100.0
+						},
+						"corpse_cap": 24,
+						"elapsed": 0.05,
+						"finite": true,
+						"gold": 0,
+						"invalid_damage": 0,
+						"invalid_pulses": 0,
+						"invalid_steps": 0,
+						"kills": 0,
+						"kills_by_lane": [
+							0,
+							0,
+							0
+						],
+						"max_alive_seen": 30,
+						"max_attacks_seen": 0,
+						"max_corpses_seen": 0,
+						"max_nodes_seen": 30,
+						"next_wave_seconds": 29.95,
+						"pending_cleanup": 0,
+						"queued_attacks": 0,
+						"queued_for_deletion": 0,
+						"rejected_wave_pairs": 0,
+						"roles_alive": {
+							"bow_guard": 0,
+							"cannon_cart": 0,
+							"commander": 0,
+							"royal_chariot": 0,
+							"spearman": 0
+						},
+						"route_blocked_moves": 0,
+						"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+						"separation_waits": 0,
+						"siege": {
+							"cancelled": 0,
+							"hits": 0,
+							"impacts": 0,
+							"next_attack_id": 1,
+							"pending": 0,
+							"pending_cap": 32,
+							"rejected_pairs": 0,
+							"spawned_pairs": 0,
+							"windups": 0
+						},
+						"siege_drill": false,
+						"temporary_units": 0,
+						"total_cap": 96,
+						"unit_nodes": 0,
+						"wave_events": 1,
+						"waves": 1,
+						"winner": ""
+					},
+					{
+						"alive": 0,
+						"alive_by_lane": [
+							0,
+							0,
+							0
+						],
+						"cap": 72,
+						"configured": true,
+						"core_arrivals": [
+							0,
+							0,
+							1
+						],
+						"cores": {
+							"moon": 93.0,
+							"sun": 100.0
+						},
+						"corpse_cap": 24,
+						"elapsed": 0.05,
+						"finite": true,
+						"gold": 0,
+						"invalid_damage": 0,
+						"invalid_pulses": 0,
+						"invalid_steps": 0,
+						"kills": 0,
+						"kills_by_lane": [
+							0,
+							0,
+							0
+						],
+						"max_alive_seen": 30,
+						"max_attacks_seen": 0,
+						"max_corpses_seen": 0,
+						"max_nodes_seen": 30,
+						"next_wave_seconds": 29.95,
+						"pending_cleanup": 0,
+						"queued_attacks": 0,
+						"queued_for_deletion": 0,
+						"rejected_wave_pairs": 0,
+						"roles_alive": {
+							"bow_guard": 0,
+							"cannon_cart": 0,
+							"commander": 0,
+							"royal_chariot": 0,
+							"spearman": 0
+						},
+						"route_blocked_moves": 0,
+						"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+						"separation_waits": 0,
+						"siege": {
+							"cancelled": 0,
+							"hits": 0,
+							"impacts": 0,
+							"next_attack_id": 1,
+							"pending": 0,
+							"pending_cap": 32,
+							"rejected_pairs": 0,
+							"spawned_pairs": 0,
+							"windups": 0
+						},
+						"siege_drill": false,
+						"temporary_units": 0,
+						"total_cap": 96,
+						"unit_nodes": 0,
+						"wave_events": 1,
+						"waves": 1,
+						"winner": ""
+					}
+				]
+			},
+			"passed": true
+		},
+		{
+			"case": "20_minute_fixed_step_soak_bounded_finite",
+			"evidence": {
+				"alive": 64,
+				"alive_by_lane": [
+					16,
+					25,
+					23
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					8,
+					0
+				],
+				"cores": {
+					"moon": 44.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 1199.99999999946,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					400,
+					395,
+					413
+				],
+				"max_alive_seen": 72,
+				"max_attacks_seen": 20,
+				"max_corpses_seen": 9,
+				"max_nodes_seen": 76,
+				"next_wave_seconds": 30.0000000005437,
+				"pending_cleanup": 0,
+				"queued_attacks": 3,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 3,
+				"roles_alive": {
+					"bow_guard": 24,
+					"cannon_cart": 4,
+					"commander": 16,
+					"royal_chariot": 2,
+					"spearman": 18
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 106699,
+				"siege": {
+					"cancelled": 16,
+					"hits": 1293,
+					"impacts": 537,
+					"next_attack_id": 557,
+					"pending": 3,
+					"pending_cap": 32,
+					"rejected_pairs": 7,
+					"spawned_pairs": 40,
+					"windups": 556
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"ticks": 24000,
+				"total_cap": 96,
+				"unit_nodes": 64,
+				"wall_ms": 62453,
+				"wave_events": 41,
+				"waves": 41,
+				"winner": ""
+			},
+			"passed": true
+		},
+		{
+			"case": "all_three_lanes_meet_and_fight",
+			"evidence": {
+				"alive": 64,
+				"alive_by_lane": [
+					16,
+					25,
+					23
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					8,
+					0
+				],
+				"cores": {
+					"moon": 44.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 1199.99999999946,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					400,
+					395,
+					413
+				],
+				"max_alive_seen": 72,
+				"max_attacks_seen": 20,
+				"max_corpses_seen": 9,
+				"max_nodes_seen": 76,
+				"next_wave_seconds": 30.0000000005437,
+				"pending_cleanup": 0,
+				"queued_attacks": 3,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 3,
+				"roles_alive": {
+					"bow_guard": 24,
+					"cannon_cart": 4,
+					"commander": 16,
+					"royal_chariot": 2,
+					"spearman": 18
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 106699,
+				"siege": {
+					"cancelled": 16,
+					"hits": 1293,
+					"impacts": 537,
+					"next_attack_id": 557,
+					"pending": 3,
+					"pending_cap": 32,
+					"rejected_pairs": 7,
+					"spawned_pairs": 40,
+					"windups": 556
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"ticks": 24000,
+				"total_cap": 96,
+				"unit_nodes": 64,
+				"wall_ms": 62453,
+				"wave_events": 41,
+				"waves": 41,
+				"winner": ""
+			},
+			"passed": true
+		},
+		{
+			"case": "no_route_enters_static_blockers",
+			"evidence": {
+				"blocked_moves": 0
+			},
+			"passed": true
+		},
+		{
+			"case": "all_original_role_articulations_finite",
+			"evidence": {
+				"bow_guard": 15,
+				"commander": 15,
+				"spearman": 14
+			},
+			"passed": true
+		},
+		{
+			"case": "tested_source_unchanged",
+			"evidence": {
+				"res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+				"res://scripts/lane_army.gd": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+				"res://scripts/lane_minion.gd": "823903af51605272e73b7ec9a5d3b1aea6fa7a55243b3937bed7004aa79ff665",
+				"res://scripts/lane_unit_art.gd": "5861731faf1fc4dc77be7d99861a8c8eb885dba95c82cd074fe2b260e805482d"
+			},
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": true,
+	"scope": "Headless deterministic offline behavior, actual Node lifecycle and original procedural articulation; no renderer, hardware-FPS, online match or production art claim.",
+	"source_sha256": {
+		"res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+		"res://scripts/lane_army.gd": "f6a56f3e7b4144a26caaed31eb3e64cfd1594de2847627de43af09961a37fb0c",
+		"res://scripts/lane_minion.gd": "823903af51605272e73b7ec9a5d3b1aea6fa7a55243b3937bed7004aa79ff665",
+		"res://scripts/lane_unit_art.gd": "5861731faf1fc4dc77be7d99861a8c8eb885dba95c82cd074fe2b260e805482d"
+	}
+}

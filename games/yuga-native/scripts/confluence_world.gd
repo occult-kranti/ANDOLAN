@@ -649,21 +649,21 @@ func _build_ui() -> void:
 	var copy:=VBoxContainer.new()
 	copy.add_theme_constant_override("separation",HeroUI.SPACE_XS)
 	title.add_child(copy)
-	copy.add_child(_label("YUGA  /  CONFLUENCE",17,GOLD))
-	location_label=_label("Surya arrival court",15,CREAM)
+	copy.add_child(_label("YUGA  /  CONFLUENCE",HeroUI.TYPE_HUD_TITLE,GOLD))
+	location_label=_label("Surya arrival court",HeroUI.TYPE_HUD,CREAM)
 	copy.add_child(location_label)
-	status_label=_label("OFFLINE LANE PRACTICE",11,HeroUI.MIST)
+	status_label=_label("OFFLINE LANE PRACTICE",HeroUI.TYPE_HUD_DETAIL,HeroUI.MIST)
 	copy.add_child(status_label)
-	score_label=_label("Lane status unavailable",12,HeroUI.CREAM)
+	score_label=_label("Lane status unavailable",HeroUI.TYPE_HUD,HeroUI.CREAM)
 	score_label.clip_text=true
 	score_label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	copy.add_child(score_label)
-	lane_label=_label("",12,HeroUI.MIST)
+	lane_label=_label("",HeroUI.TYPE_HUD_DETAIL,HeroUI.MIST)
 	lane_label.name="LanePopulation"
 	lane_label.clip_text=true
 	lane_label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	copy.add_child(lane_label)
-	objective_label=_label("",12,HeroUI.CREAM)
+	objective_label=_label("",HeroUI.TYPE_HUD,HeroUI.CREAM)
 	objective_label.name="LaneObjective"
 	objective_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	objective_label.max_lines_visible=2
@@ -679,7 +679,7 @@ func _build_ui() -> void:
 	map_control.offset_right=-20
 	map_control.offset_top=20
 	map_control.offset_bottom=356
-	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You\n◎ Siege  ·  □ Relay\n%s overview" % Bindings.label("world_overview"),11,HeroUI.CREAM)
+	var legend:=_label("▲ Sun  ·  ■ Moon\n◇ Tether  ·  ● You\n◎ Siege  ·  □ Relay\n%s overview" % Bindings.label("world_overview"),HeroUI.TYPE_HUD_DETAIL,HeroUI.CREAM)
 	legend.name="AtlasLegend"
 	map_control.add_child(legend)
 	legend.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
@@ -696,14 +696,14 @@ func _build_ui() -> void:
 	relay_row.add_theme_constant_override("separation",10)
 	relay_column.add_child(relay_row)
 	for index in 3:
-		var label:=_label("",12,CREAM)
+		var label:=_label("",HeroUI.TYPE_HUD_DETAIL,CREAM)
 		label.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		label.clip_text=true
 		label.max_lines_visible=2
 		label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 		relay_row.add_child(label)
 		relay_labels.append(label)
-	relay_hint=_label("Hold a relay: supplies every 5s · Contest stops supply",11,HeroUI.MIST)
+	relay_hint=_label("Hold a relay: supplies every 5s · Contest stops supply",HeroUI.TYPE_HUD_DETAIL,HeroUI.MIST)
 	relay_hint.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	relay_hint.max_lines_visible=3
 	relay_hint.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -716,7 +716,7 @@ func _build_ui() -> void:
 	bottom.add_theme_constant_override("separation",6)
 	help.add_child(bottom)
 	for index in range(2):
-		var row:=_label("",12,CREAM if index==0 else HeroUI.MIST)
+		var row:=_label("",HeroUI.TYPE_HUD_DETAIL,CREAM if index==0 else HeroUI.MIST)
 		row.clip_text=true
 		row.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 		bottom.add_child(row)
@@ -730,16 +730,16 @@ func _build_ui() -> void:
 	var energy_column:=VBoxContainer.new()
 	energy_column.add_theme_constant_override("separation",5)
 	ability.add_child(energy_column)
-	ability_label=_label("VAYU LIFT · GROUNDED",12,GOLD)
+	ability_label=_label("VAYU LIFT · GROUNDED",HeroUI.TYPE_HUD_DETAIL,GOLD)
 	energy_column.add_child(ability_label)
 	energy_bar=ProgressBar.new()
 	energy_bar.custom_minimum_size=Vector2(200,14)
 	energy_bar.show_percentage=true
 	energy_bar.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	energy_column.add_child(energy_bar)
-	goal_label=_label("Aim at a gold ring · G to tether",11,CREAM)
+	goal_label=_label("Aim at a gold ring · G to tether",HeroUI.TYPE_HUD_DETAIL,CREAM)
 	goal_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	goal_label.custom_minimum_size=Vector2(200,36)
+	goal_label.custom_minimum_size=Vector2(200,42)
 	energy_column.add_child(goal_label)
 	var invocation_card := _card(hud, Vector2(20,-206), Vector2(330,100))
 	invocation_card.name = "InvocationStatus"
@@ -879,7 +879,7 @@ func _card(parent: Control, position_: Vector2, size_: Vector2) -> PanelContaine
 	panel.position=position_
 	panel.custom_minimum_size=size_
 	panel.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	panel.add_theme_stylebox_override("panel",HeroUI.panel_style(false,12))
+	panel.add_theme_stylebox_override("panel",HeroUI.hud_panel_style(&"quiet",HeroUI.SPACE_MD))
 	parent.add_child(panel)
 	return panel
 
@@ -910,13 +910,17 @@ func _layout_world_hud() -> void:
 	var compact := screen.x < 1100
 	var margin := float(HeroUI.SPACE_LG)
 	var column_width := 320 if compact else 370
+	# At the smallest logical canvas, prioritize location, cores and the live
+	# objective. Phase and population remain available in the expanded layout.
+	status_label.visible = not compact
+	lane_label.visible = not compact
 	var title: Control = hud.get_node("TitleCard")
 	var relay: Control = hud.get_node("RelayStatus")
 	var controls: Control = hud.get_node("ControlsCard")
 	var traversal: Control = hud.get_node("TraversalStatus")
 	for control in [title, relay, controls, traversal, map_control]:
 		control.set_anchors_preset(Control.PRESET_TOP_LEFT)
-	title.custom_minimum_size = Vector2(column_width,154)
+	title.custom_minimum_size = Vector2(column_width,144 if compact else 154)
 	title.size = title.custom_minimum_size
 	title.position = Vector2(margin,margin)
 	relay.custom_minimum_size = Vector2(column_width,82)

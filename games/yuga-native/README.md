@@ -1,12 +1,14 @@
 # YUGA native production track
 
-**Mobile adaptation:** start with the [original 5v5 mobile roadmap](docs/MOBILE_PRODUCTION_ROADMAP.md), [code/stack decisions](docs/mobile/CODE_AND_STACK_DECISIONS.md) and [18-round / 108-packet queue](docs/MOBILE_PRODUCTION_BACKLOG.json). Six specialist research reports cover touch, rendering, characters, networking, open-source reuse and physical-device release gates. This proposed mobile profile is separate from the existing offline/native and browser rules; mobile exports and device qualification remain unimplemented.
+**Active desktop work:** [resume handoff](docs/ACTIVE_DESKTOP_HANDOFF.md) → [five screen rounds + ten integration rounds](docs/DESKTOP_FINISH_CAMPAIGN.md) → [90-packet execution ledger](docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. Current G1/G2 source candidates are undergoing renderer, visual and package qualification; the public UI preview remains a separate pinned release.
+
+**Deferred mobile adaptation:** start with the [original 5v5 mobile roadmap](docs/MOBILE_PRODUCTION_ROADMAP.md), [code/stack decisions](docs/mobile/CODE_AND_STACK_DECISIONS.md) and [18-round / 108-packet queue](docs/MOBILE_PRODUCTION_BACKLOG.json). Six specialist research reports cover touch, rendering, characters, networking, open-source reuse and physical-device release gates. This proposed mobile profile is separate from the existing offline/native and browser rules; mobile exports and device qualification remain unimplemented.
 
 **Download the current Rama preview:** [Linux / Windows](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-rama-hero-2026-10-17). Extract the entire ZIP and run `launch.sh` or `launch.bat`. [Watch the actual five-action capture](https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-rama-hero-2026-10-17/rama-five-abilities.mp4). Linux input and all public download bytes were verified; Windows execution remains untested. This is offline practice, with production art quality still open.
 
 **Active production:** [fifteen specialist roles](docs/PRODUCTION_SQUADS.md) are working through the [hero-quality and full-game gates](docs/DEADLOCK_QUALITY_TARGET.md). Use the [current source handoff](docs/VISUAL_CAMPAIGN_HANDOFF.md) for ownership, files, component results and remaining acceptance work. Staged art and rejected candidates are distinct from the published preview.
 
-**Current graphics campaign:** [ten-round plan](docs/VISUAL_CAMPAIGN.md) and
+**Earlier graphics campaign:** [ten-round plan](docs/VISUAL_CAMPAIGN.md) and
 [actual work ledger](docs/VISUAL_CAMPAIGN.json). Fifteen specialists rotate
 through six worker slots. The native source now integrates hero material
 finishing, courtyard detail/lighting, ability ornament, locomotion corrections

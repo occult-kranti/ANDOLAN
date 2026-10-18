@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "task": "G2-06",
+  "passed": true,
+  "checks": [
+    {
+      "name": "twelve previously opened original hashes and four native metadata hashes match archive",
+      "passed": true,
+      "originals": 12,
+      "native_metadata": 4
+    },
+    {
+      "name": "native run hero capture and G1 snapshot hashes match review receipt",
+      "passed": true,
+      "receipts": 3
+    },
+    {
+      "name": "Python launcher syntax",
+      "passed": true
+    },
+    {
+      "name": "Godot helper parse log clean",
+      "passed": true
+    }
+  ],
+  "count": 4,
+  "head_at_seal": "f81ee18c90547b60fdcc26fb4b1a185ac9ad2b9c",
+  "files": [
+    {
+      "path": "games/yuga-native/docs/evidence/graphics-six/G2/acceptance.md",
+      "sha256": "dd4a028ed3629f77d3e15e775fa14cb6b9e8b188fd06aa5fe6d27195f2545b5c",
+      "bytes": 8084
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/graphics-six/G2/original-review.json",
+      "sha256": "fe38892d00cae017baa68e763d2dfbe230f3ee121b2fb55f7410c0acf9c7ebc9",
+      "bytes": 12669
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/graphics-six/G2/capture-parse.log",
+      "sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da",
+      "bytes": 73
+    },
+    {
+      "path": "games/yuga-native/tools/graphics-six/capture_focus.gd",
+      "sha256": "8bac18839404bafd46c4deeb5d1e7ba8b6a17444166b7ee6b513510d8bb7241f",
+      "bytes": 9610
+    },
+    {
+      "path": "games/yuga-native/tools/graphics-six/run_focus.py",
+      "sha256": "54daa94abffff80d19e649b0304173a1f56f75239aafd628a8417a7681e05dba",
+      "bytes": 7287
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_motion.gd",
+      "sha256": "35a9e58e6c720c67cd6e77fb812900bc05dec9d2fbd255b7bd8aa40b39e20fb3",
+      "bytes": 28799
+    },
+    {
+      "path": "games/yuga-native/scripts/rama_ability_effects.gd",
+      "sha256": "b77f68aeeb57ab5e7be8b84385505d1f7078cb90ef1cedc33c7e4d894ec9d8be",
+      "bytes": 31814
+    },
+    {
+      "path": "games/yuga-native/scripts/native_contracts.gd",
+      "sha256": "5f60a6949b4e683dba2b2ff1e949069ab4f4d1c60890ae891b9817fae8ca1d6e",
+      "bytes": 19903
+    },
+    {
+      "path": "games/yuga-native/tests/native_contract_cases.gd",
+      "sha256": "ee83b1ca87343095d5caecc254a1554ca81bde3f79e1b5b5236d8e543f99ec2f",
+      "bytes": 33500
+    }
+  ],
+  "parse_command": "env LP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 taskset -c 3 godot --headless --max-threads 1 --path /workspace/ANDOLAN/games/yuga-native --script res://tools/graphics-six/capture_focus.gd --check-only",
+  "scene_execution": false,
+  "heavy_render": false,
+  "runtime_writes": false,
+  "motion_owner_test_counts_not_reexecuted": [
+    12,
+    2,
+    39
+  ],
+  "open_gates": [
+    "Actual focused scene preflight and render",
+    "G2 candidate art image review",
+    "Continuous cast/cancel tape review",
+    "Initial support acquisition pop",
+    "Physical GPU and hardware performance"
+  ],
+  "scope": "Independent G1 original review, source audit and minimal G2 capture handoff. Grouped receipt checks do not replace actual render/behavior acceptance."
+}

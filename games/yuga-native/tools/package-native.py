@@ -101,7 +101,9 @@ def _rama_source(project: Path, relative: str, expected_hash: str) -> dict:
             or '..' in PurePosixPath(relative).parts or not PurePosixPath(relative).parts):
         raise ValueError('Rama hero source path is unsafe')
     path = project / relative
-    if path.is_symlink() or not path.resolve().is_relative_to(project) or not path.is_file():
+    components = [project.joinpath(*PurePosixPath(relative).parts[:i])
+                  for i in range(1, len(PurePosixPath(relative).parts) + 1)]
+    if any(part.is_symlink() for part in components) or not path.resolve().is_relative_to(project) or not path.is_file():
         raise ValueError(f'Rama hero source is missing or unsafe: {relative}')
     actual = record(path)
     if actual['sha256'] != expected_hash:
@@ -286,11 +288,59 @@ RAMA_CLOTH_DEPENDENCIES = {
 }
 
 
-def _rama_fixed_dependencies(project, declared, expected, sources):
+# Schema 5 preserves the exact schema 4 asset ancestry and adds one bounded
+# original roughness stage. The old runtime binding stays in history; no prior
+# receipt is rewritten to describe the new material profile.
+RAMA_SURFACE_PARENT = 'art/hero-finish/history/schema4-notice.json'
+RAMA_SURFACE_PARENT_SHA = '5026675c7af8b83412eb375b9883ffe52efd883e20c7fd9594bdf3fdd9c8f5d8'
+RAMA_SURFACE_OLD_BINDING = 'art/hero-finish/history/schema4-surface-finish.gd'
+RAMA_SURFACE_DEPENDENCIES = {
+    'scripts/rama_surface_finish.gd':
+        '67c1168ccc9dd2cd957197f361b28e6920dff7b9567b5801fc069ae60c92cb9a',
+    'art/hero-finish/build_g1_maps.py':
+        '7082d83da791f1af16e61c082c40a0809321a57cfd024ec39ba34116ecfe0fbe',
+    'assets/hero-finish/g1-manifest.json':
+        '6e91c36db8fb785d5d8899adf3ad0d6d528b8d05189638269955121afec88134',
+    'assets/hero-finish/NOTICE.md':
+        '88ca7f172ae063f41514a4612db74a9b218bcdf64803239dc07e7e5688f2d127',
+    'assets/hero-finish/hair-bundle-roughness.png':
+        '93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4',
+    'assets/hero-finish/hair-bundle-roughness.png.import':
+        'f3386d36213c439b2128376097ff508fe73aab04d3d9c131455fb753d73a427c',
+    'assets/hero-finish/forged-gold-roughness.png':
+        'd2a3314a54bf1fe46bc8bfb9b9adbf3dadce42298221163b4b3c2865c5c36155',
+    'assets/hero-finish/forged-gold-roughness.png.import':
+        'fdb67effe9126ebac95782e31475af5e6bfb66381ece0aea5fc79a7d86553ed4',
+}
+
+
+def _validate_rama_surface_stage(project, notice):
+    stage = notice.get('surfaceStage')
+    expected = {'id': 'original-hair-gold-roughness-v1', 'parentNotice': RAMA_SURFACE_PARENT,
+                'parentNoticeSha256': RAMA_SURFACE_PARENT_SHA,
+                'historicalBinding': RAMA_SURFACE_OLD_BINDING,
+                'historicalBindingSha256': RAMA_CLOTH_DEPENDENCIES['scripts/rama_surface_finish.gd'],
+                'generatedDependencies': [{'path': p, 'sha256': h} for p, h in RAMA_SURFACE_DEPENDENCIES.items()]}
+    if stage != expected:
+        raise ValueError('Rama schema5 surface stage differs from fixed reviewed sources')
+    sources = {RAMA_SURFACE_PARENT: _rama_source(project, RAMA_SURFACE_PARENT, RAMA_SURFACE_PARENT_SHA),
+               RAMA_SURFACE_OLD_BINDING: _rama_source(project, RAMA_SURFACE_OLD_BINDING, expected['historicalBindingSha256'])}
+    parent = json.loads((project / RAMA_SURFACE_PARENT).read_text())
+    base = copy.deepcopy(notice)
+    base.pop('surfaceStage', None)
+    base['schema'] = 4
+    if base != parent:
+        raise ValueError('Rama schema5 rewrites the preserved geometry/cloth ancestry')
+    _rama_fixed_dependencies(project, stage['generatedDependencies'], RAMA_SURFACE_DEPENDENCIES, sources)
+    return parent, sources, stage
+
+
+def _rama_fixed_dependencies(project, declared, expected, sources, relocations=None):
     if declared != [{'path': p, 'sha256': h} for p, h in expected.items()]:
-        raise ValueError('Rama schema4 dependencies differ from the frozen ordered source pins')
+        raise ValueError('Rama dependencies differ from the frozen ordered source pins')
     for path, sha in expected.items():
-        sources[path] = _rama_source(project, path, sha)
+        resolved = (relocations or {}).get(path, path)
+        sources[resolved] = _rama_source(project, resolved, sha)
 
 
 def _rama_glb(path):
@@ -406,7 +456,7 @@ def _validate_rama_groom_stage(project, stage, historical, sources):
                                        'editableSha256', 'editableOrigin', 'runtimeLods', 'runtimeSources')} | {'costs': costs}
 
 
-def _validate_rama_cloth_stage(project, stage, sources):
+def _validate_rama_cloth_stage(project, stage, sources, historical_binding=False):
     required = {'id', 'parentNoticeSha256', 'asset', 'sha256', 'importConfig', 'importConfigSha256',
                 'generatedDependencies'}
     if not isinstance(stage, dict) or set(stage) != required:
@@ -416,7 +466,8 @@ def _validate_rama_cloth_stage(project, stage, sources):
                 'importConfig': RAMA_CLOTH_ASSET + '.import', 'importConfigSha256': RAMA_CLOTH_IMPORT_SHA256}
     if any(stage[k] != v for k, v in expected.items()):
         raise ValueError('Rama cloth stage differs from the reviewed texture/import binding')
-    _rama_fixed_dependencies(project, stage['generatedDependencies'], RAMA_CLOTH_DEPENDENCIES, sources)
+    _rama_fixed_dependencies(project, stage['generatedDependencies'], RAMA_CLOTH_DEPENDENCIES, sources,
+                             {'scripts/rama_surface_finish.gd': RAMA_SURFACE_OLD_BINDING} if historical_binding else None)
     for path, sha in ((RAMA_CLOTH_ASSET, RAMA_CLOTH_SHA256), (RAMA_CLOTH_ASSET + '.import', RAMA_CLOTH_IMPORT_SHA256)):
         sources[path] = _rama_source(project, path, sha)
     old = (project / f'{RAMA_CLOTH_BASE}/input/woven-roughness.png.import').read_bytes()
@@ -433,6 +484,8 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
     preserving the schema2 notice and all three historical stages exactly.
     Schema 4 appends the exact original groom-r7 and a separate cloth texture
     receipt; the optional secondary shader is expressly outside this contract.
+    Schema 5 adds the fixed original roughness stage, retaining the exact schema 4
+    notice and its own historical surface binding.
     Historical rama.glb/rama-production.glb retain their separate checks.
     """
     project = (project or PROJECT).resolve()
@@ -442,6 +495,9 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
     notice = json.loads(notice_path.read_text())
     if not isinstance(notice, dict) or type(notice.get('schema')) is not int:
         raise ValueError('Rama hero provenance must declare an integer schema')
+    surface_sources, surface_stage = {}, None
+    if notice['schema'] == 5:
+        notice, surface_sources, surface_stage = _validate_rama_surface_stage(project, notice)
     if notice['schema'] == 1:
         return {'notice': record(notice_path), 'sources': _validate_rama_schema1(project, notice)}
     if notice['schema'] not in (2, 3, 4):
@@ -458,6 +514,7 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
     if notice.get('asset') != 'assets/heroes/rama-hero.glb':
         raise ValueError('Rama hero provenance has unexpected asset')
     sources = {notice['asset']: _rama_source(project, notice['asset'], notice.get('sha256'))}
+    sources.update(surface_sources)
     if type(notice.get('bytes')) is not int or notice['bytes'] != sources[notice['asset']]['bytes']:
         raise ValueError('Rama hero provenance byte count differs from active asset')
     stages = notice.get('authoringStages')
@@ -572,7 +629,7 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
         previous = stages[3]
     if notice['schema'] == 4:
         reviewed_stages.append(_validate_rama_groom_stage(project, stages[4], stages[:4], sources))
-        _validate_rama_cloth_stage(project, notice.get('clothStage'), sources)
+        _validate_rama_cloth_stage(project, notice.get('clothStage'), sources, historical_binding=surface_stage is not None)
         previous = stages[4]
     elif 'clothStage' in notice:
         raise ValueError('Rama cloth stage requires the exact schema4 groom/cloth proposal')
@@ -580,7 +637,10 @@ def validate_rama_hero_notice(project: Path | None = None) -> dict:
             or notice.get('editableSource') != previous['editableSource']
             or notice.get('editableSha256') != previous['editableSha256']):
         raise ValueError('Rama hero active asset/editable differs from terminal authoring stage')
-    return {'notice': record(notice_path), 'sources': sources, 'authoringStages': reviewed_stages}
+    result = {'notice': record(notice_path), 'sources': sources, 'authoringStages': reviewed_stages}
+    if surface_stage is not None:
+        result['surfaceStage'] = surface_stage
+    return result
 
 
 def json_write(path: Path, value: dict) -> None:
@@ -783,6 +843,39 @@ def git_context() -> dict:
 FIRST_LOAD_RESOURCES = ('scenes/boot.tscn', 'scripts/boot.gd',
                         'scripts/scene_transition.gd', 'scripts/launch_shell.gd',
                         'scripts/hero_ui_theme.gd')
+GRAPHICS_SCRIPT_RESOURCES = (
+    'scripts/lane_infantry_art.gd', 'scripts/environment_surface_finish.gd',
+    'scripts/rama_ability_glyph.gd', 'scripts/rama_surface_finish.gd',
+)
+GRAPHICS_DIRECT_RESOURCES = ('assets/environment-finish/masonry.gdshader',
+                             'assets/hero-finish/g1-manifest.json')
+GRAPHICS_TEXTURE_RESOURCES = {
+    'assets/hero-finish/hair-bundle-roughness.png':
+        '.godot/imported/hair-bundle-roughness.png-72ae2ebe2b8005e106f441ea2c4cfa15.ctex',
+    'assets/hero-finish/forged-gold-roughness.png':
+        '.godot/imported/forged-gold-roughness.png-80aebbe05d54ced6709fe5d72aaa378a.ctex',
+}
+# The optional upper-hair helper is not activated by this package contract.
+
+
+def _graphics_texture_target(payload: bytes, source: str) -> str:
+    """Read the single exported texture remap; fixed source descriptors are pinned above."""
+    section = None
+    targets = []
+    remap_sections = 0
+    for raw in payload.rstrip(b'\x00').decode('utf-8').splitlines():
+        line = raw.strip()
+        if line.startswith('[') and line.endswith(']'):
+            section = line[1:-1]
+            remap_sections += section == 'remap'
+        if re.match(r'path\s*=', line):
+            match = re.fullmatch(r'path\s*=\s*"(res://[^"\r\n]+)"', line)
+            if section != 'remap' or match is None:
+                raise ValueError('Graphics texture remap is malformed: ' + source)
+            targets.append(match[1].removeprefix('res://'))
+    if remap_sections != 1 or targets != [GRAPHICS_TEXTURE_RESOURCES[source]]:
+        raise ValueError('Graphics texture remaps to an unexpected target: ' + source)
+    return targets[0]
 
 
 def _first_load_remap(payload: bytes, source: str) -> str:
@@ -808,9 +901,9 @@ def _first_load_remap(payload: bytes, source: str) -> str:
     return target
 
 
-def _qualify_first_load_resources(entries: list) -> dict:
+def _qualify_first_load_resources(entries: list, resources=FIRST_LOAD_RESOURCES) -> dict:
     result = {}
-    for source in FIRST_LOAD_RESOURCES:
+    for source in resources:
         matches = [entry for entry in entries
                    if entry['path'].removeprefix('res://') in (source, source + '.remap')]
         if len(matches) != 1:
@@ -823,6 +916,21 @@ def _qualify_first_load_resources(entries: list) -> dict:
                 raise ValueError('First-load remap destination missing or ambiguous: ' + source)
             binding = targets[0]
         result[source] = {key: binding[key] for key in ('path', 'bytes', 'sha256')}
+    return result
+
+
+def _qualify_graphics_resources(entries: list) -> dict:
+    result = _qualify_first_load_resources(entries, GRAPHICS_SCRIPT_RESOURCES)
+    by_path = {entry['path'].removeprefix('res://'): entry for entry in entries}
+    for source in GRAPHICS_DIRECT_RESOURCES:
+        if source not in by_path:
+            raise ValueError('Required graphics resource missing: ' + source)
+        result[source] = by_path[source]
+    for source, target in GRAPHICS_TEXTURE_RESOURCES.items():
+        descriptor = by_path.get(source + '.import', {})
+        if descriptor.get('graphics_texture_target') != target or target not in by_path:
+            raise ValueError('Required graphics texture import/payload missing: ' + source)
+        result[source] = by_path[target]
     return result
 
 
@@ -891,8 +999,10 @@ def inspect_pack(path: Path) -> dict:
                  'stored_md5_verified': True}
         if relative.endswith('.ttf.import') and relative[:-7] in BUNDLED_FONT_FILES:
             entry['font_import_target'] = _font_import_target(payload, relative[:-7])
-        if relative.endswith('.remap') and relative[:-6] in FIRST_LOAD_RESOURCES:
+        if relative.endswith('.remap') and relative[:-6] in FIRST_LOAD_RESOURCES + GRAPHICS_SCRIPT_RESOURCES:
             entry['first_load_remap_target'] = _first_load_remap(payload, relative[:-6])
+        if relative.endswith('.import') and relative[:-7] in GRAPHICS_TEXTURE_RESOURCES:
+            entry['graphics_texture_target'] = _graphics_texture_target(payload, relative[:-7])
         entries.append(entry)
     required = ('rama.glb-', 'rama-production.glb-', 'rama-hero.glb-', 'lanka_courtyard.glb-',
                 'architecture.glb-', 'nature.glb-', 'assets/world/confluence-map.json',
@@ -932,6 +1042,7 @@ def inspect_pack(path: Path) -> dict:
     return {'format': version, 'engine': f'{major}.{minor}.{patch}', 'entries': entries,
             'entry_count': count, 'all_entry_md5_verified': True,
             'first_load_resources': _qualify_first_load_resources(entries),
+            'graphics_resources': _qualify_graphics_resources(entries),
             'no_tools_tests_documents_or_credential_markers': True, **record(path)}
 
 

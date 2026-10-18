@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "task": "G1 worker03 motion",
+  "disposition": "bounded candidate frozen for actual continuous capture; visual acceptance pending",
+  "runtime_sha256": "e64c3752b79b2a27faced459becbdc04170cd6ba487ee6bf3c404eeba31c0f34",
+  "baseline_sha256": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+  "source_pins": {
+    "/workspace/ANDOLAN/scratch/graphics-six/G1/motion/rama_motion.baseline.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+    "res://.godot/imported/rama-hero.glb-e90b8f8a0719fdd1ab2b89459efcbdac.scn": "af7d25ff9df29624b9557501772b9739a9fb21c399078a25fa13139a4d3af705",
+    "res://assets/animations/rama_hero_motion.tres": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8",
+    "res://assets/heroes/rama-hero.glb": "8b6cf0f4c5520696d1d843e5bdebb2454c1dbd4341e17171c5b6d20353384d5c",
+    "res://assets/heroes/rama-hero.glb.import": "c9480cdb1c83f72a5b3479d91402aa81a50ff7d8e62c2775405108784639151a",
+    "res://scripts/rama_motion.gd": "e64c3752b79b2a27faced459becbdc04170cd6ba487ee6bf3c404eeba31c0f34",
+    "res://tests/graphics_g1_motion_cases.gd": "64a9060c16eb8fe5a97da2e7d628521a91ed5eb67de9f1d06db3dd96b1172c4f"
+  },
+  "runs": [
+    {
+      "fixture": "graphics_g1_motion_cases.gd",
+      "report": "differential-r4.json",
+      "checks": 9,
+      "exit_code": 0
+    },
+    {
+      "fixture": "graphics_g1_repeated_cancel_cases.gd",
+      "report": "repeated-cancel-r2.json",
+      "checks": 3,
+      "exit_code": 0
+    },
+    {
+      "fixture": "rama_motion_cases.gd",
+      "report": "existing-motion-r1.json",
+      "checks": 39,
+      "exit_code": 0
+    }
+  ],
+  "negative_evidence": [
+    "differential-r1.log",
+    "fixture-r1-parse-failure.gd",
+    "differential-r2.json",
+    "fixture-r2-broad-assertions.gd",
+    "repeated-cancel-r1.json",
+    "fixture-repeated-cancel-r1.gd",
+    "candidate-r2.gd"
+  ],
+  "files": {
+    "baseline.gd": "4c72fd247704896bbf8b720658efff1388d850912f7aed6a916950538aa458c1",
+    "candidate-r2.gd": "935c12c7ec6aa94e971751da344ed112c53f21ed007d730d06aaa5144d3bdad9",
+    "candidate-r4.gd": "e64c3752b79b2a27faced459becbdc04170cd6ba487ee6bf3c404eeba31c0f34",
+    "capture-request.json": "811899407d091818021f70b104b7423d137695969845da0b0b774864d49108a4",
+    "differential-r1.log": "2a4ca97b4ba9283d720657c754c95ab0e80f839950a1769cc72fee86799e146a",
+    "differential-r2.json": "7ab1c008a4c0c79dc1b5d08af79911b388389bc2858be97bdac03ab36d8f11df",
+    "differential-r2.log": "51799a13c3610ea23079311156ebf2c30ca61deca8d977ff63d09e3b2072cddd",
+    "differential-r3.json": "bb30f383684ed0ace8b7ee55816fc6dae3ba26f54e6ddd4f074fe886f7286b34",
+    "differential-r3.log": "034bf96b18bed2a7d76e17f1ad478f15e329804c36a7cd52473c817066d0de66",
+    "differential-r4.json": "94f529729d70c501f9c994cbe8e783e2047c08c58ac629fc8f30a61e2c2fd947",
+    "differential-r4.log": "034bf96b18bed2a7d76e17f1ad478f15e329804c36a7cd52473c817066d0de66",
+    "existing-motion-r1.json": "725c67d2f381cbbaa16e5483e20d93446ccd826081bdf89413b5086efb92aa88",
+    "existing-motion-r1.log": "2c8467a6e0c82673b8d7f47a3d4fa1a5b776990de6549de2ec7729c238ad0833",
+    "final-graphics_g1_motion_cases.gd": "64a9060c16eb8fe5a97da2e7d628521a91ed5eb67de9f1d06db3dd96b1172c4f",
+    "final-graphics_g1_repeated_cancel_cases.gd": "f267c26c69e88079895084bd1cc85c2b1f7069c2197e362a83565220627f65dc",
+    "final-rama_motion_cases.gd": "ca4e9e270677317eecece9699a26a44bfce0ec84c4209b464e3f2ec379ec328d",
+    "fixture-r1-parse-failure.gd": "ead0f1ecd3976181a26875b9a21a2b8f0e32e02d694f3aa393befebf000c3e32",
+    "fixture-r2-broad-assertions.gd": "ea12b38dadba8807c68658d15f11c7f5d12231e5d27a839d0bc30741ee46df5d",
+    "fixture-r3.gd": "64a9060c16eb8fe5a97da2e7d628521a91ed5eb67de9f1d06db3dd96b1172c4f",
+    "fixture-repeated-cancel-r1.gd": "f267c26c69e88079895084bd1cc85c2b1f7069c2197e362a83565220627f65dc",
+    "repeated-cancel-r1.json": "301386d955abf2d58526cc332316d62e42364ffdf716600f4b8af20d3643d3f1",
+    "repeated-cancel-r1.log": "2464b46e596d9215124b5bc24acbbaa89e8c410f7eb50f8ab5f77f89edc97345",
+    "repeated-cancel-r2.json": "70318b7023de634328391df06e2e14dcf6555902432c00ba561f882a5ab86cc9",
+    "repeated-cancel-r2.log": "388a1f0d9e33e57bf98d287cf2fc67b237704b3d2a7bfef9da70750b7a341361"
+  }
+}
