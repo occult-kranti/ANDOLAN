@@ -1,8 +1,16 @@
 # YUGA full game production roadmap
 
-Updated 17 October 2026. This is the execution guide for the original native YUGA game. The target is the visual coherence, animation quality, combat readability and complete competitive experience requested through Deadlock, Dota 2 and Overwatch references. Those games are reference points, not an assertion that their source, artwork or server implementation has been recovered. The target remains open until the integrated game passes the gates below.
+Updated 21 October 2026. This is the execution guide for the original native YUGA game. The target is the visual coherence, animation quality, combat readability and complete competitive experience requested through Deadlock, Dota 2 and Overwatch references. Those games are reference points, not an assertion that their source, artwork or server implementation has been recovered. The target remains open until the integrated game passes the gates below.
 
 The companion [game design master](GAME_DESIGN_MASTER.md) owns detailed rules, hero kits and player journeys. [ROADMAP_BACKLOG.json](ROADMAP_BACKLOG.json) owns stable task IDs, dependencies, statuses, acceptance conditions and evidence. This roadmap owns sequencing, production standards and release decisions. Change all affected records when a design decision changes; a new document alone does not complete its implementation tasks.
+
+## AI-assisted production amendment — 21 October
+
+The [model, reconstruction and laptop study](research/ai-pipeline-oct21/README.md) adds a six-owner pilot within the existing hero/arena, native-authority and packaging gates. The requested YouTube video is **unread/untranscribed** because its destinations returned proxy CONNECT 403. The independently verified GitHub candidates must not be described as its contents. Source documentation was downloaded; model weights and inference were not. Current cloud GPU, disk and network conditions block that execution.
+
+Keep Godot/Blender/glTF. After access and hardware qualification, compare TripoSR with a suitable TRELLIS variant on original small props, then a hero candidate. Measure accepted artist time saved, not merely generation speed. Pin weight/code revisions, input rights and dependency terms; require topology/UV/material, skin/rig, continuous motion/contact, collision/LOD and actual-engine acceptance before adoption. A generated scene or a reverse-engineered viewer does not close the playable-game gate. REA model-header inspection is separate from inference.
+
+The user's target machine is a **USA laptop, US$7,000 maximum**. Plan for a 24 GB RTX 5090 Laptop GPU with at least 64 GB system RAM and 4 TB SSD, subject to exact-SKU verification. Serialize heavy GPU inference/rendering, share coding inference across agents and use larger-memory GPU capacity for models that do not fit. No speedup or remaining-round reduction is assumed before measured production results. The active desktop ledger remains **17/78 accepted packets, 0/13 complete rounds**; the complete competitive target remains open. The detailed pilot owns six roles, evidence and next actions without creating new completion credit.
 
 ## Intended finished game
 

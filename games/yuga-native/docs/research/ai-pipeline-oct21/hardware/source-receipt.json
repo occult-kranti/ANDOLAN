@@ -1,0 +1,143 @@
+{
+  "checked_at": "2026-10-21T18:33:47.733557+00:00",
+  "sources": [
+    {
+      "id": "Hunyuan3D-2.1",
+      "url": "https://raw.githubusercontent.com/Tencent-Hunyuan/Hunyuan3D-2.1/82920d643c0dc2f7bfd7255f45f62d386edfe60c/README.md",
+      "revision": "82920d643c0dc2f7bfd7255f45f62d386edfe60c",
+      "bytes": 10203,
+      "sha256": "35479a9741c38cf6ebc7693bb0c58a6fa447659b3b9f1d60ba01e21098d0af20",
+      "local_file": "Hunyuan3D-2.1-README.md",
+      "relevant_lines": [
+        {
+          "line": 47,
+          "text": "Tencent Hunyuan3D-2.1 is a scalable 3D asset creation system that advances state-of-the-art 3D generation through two pivotal innovations: Fully Open-Source Framework and  Physically-Based Rendering (PBR) Texture Synthesis. For the first time, the system releases full model weights and training code, enabling community developers to directly fine-tune and extend the model for diverse downstream applications. This transparency accelerates academic research and industrial deployment. Moreover, replacing the prior RGB-based texture model, the upgraded PBR pipeline leverages  physics-grounded material simulation  to generate textures with photorealistic light interaction (e.g., metallic reflections, subsurface scattering)."
+        },
+        {
+          "line": 81,
+          "text": "It takes 10 GB VRAM for shape generation, 21GB for texture generation and 29GB for shape and texture generation in total."
+        },
+        {
+          "line": 92,
+          "text": "Hunyuan3D 2.1 supports Macos, Windows, Linux. You may follow the next steps to use Hunyuan3D 2.1 via:"
+        },
+        {
+          "line": 142,
+          "text": "  --low_vram_mode"
+        }
+      ]
+    },
+    {
+      "id": "TRELLIS",
+      "url": "https://raw.githubusercontent.com/microsoft/TRELLIS/442aa1e1afb9014e80681d3bf604e8d728a86ee7/README.md",
+      "revision": "442aa1e1afb9014e80681d3bf604e8d728a86ee7",
+      "bytes": 22007,
+      "sha256": "675a1bab7837d22972a776dec8e2a2eb01f9211bd40b4c57112a8335ccb9ec3e",
+      "local_file": "TRELLIS-README.md",
+      "relevant_lines": [
+        {
+          "line": 40,
+          "text": "- **System**: The code is currently tested only on **Linux**.  For windows setup, you may refer to [#3](https://github.com/microsoft/TRELLIS/issues/3) (not fully tested)."
+        },
+        {
+          "line": 41,
+          "text": "- **Hardware**: An NVIDIA GPU with at least 16GB of memory is necessary. The code has been verified on NVIDIA A100 and A6000 GPUs.  "
+        },
+        {
+          "line": 43,
+          "text": "  - The [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit-archive) is needed to compile certain submodules. The code has been tested with CUDA versions 11.8 and 12.2.  "
+        },
+        {
+          "line": 58,
+          "text": "    - By default the `trellis` environment will use pytorch 2.4.0 with CUDA 11.8. If you want to use a different version of CUDA (e.g., if you have CUDA Toolkit 12.2 installed and do not want to install another 11.8 version for submodule compilation), you can remove the `--new-env` flag and manually install the required dependencies. Refer to [PyTorch](https://pytorch.org/get-started/previous-versions/) for the installation command."
+        },
+        {
+          "line": 59,
+          "text": "    - If you have multiple CUDA Toolkit versions installed, `PATH` should be set to the correct version before running the command. For example, if you have CUDA Toolkit 11.8 and 12.2 installed, you should run `export PATH=/usr/local/cuda-11.8/bin:$PATH` before running the command."
+        },
+        {
+          "line": 60,
+          "text": "    - By default, the code uses the `flash-attn` backend for attention. For GPUs do not support `flash-attn` (e.g., NVIDIA V100), you can remove the `--flash-attn` flag to install `xformers` only and set the `ATTN_BACKEND` environment variable to `xformers` before running the code. See the [Minimal Example](#minimal-example) for more details."
+        },
+        {
+          "line": 133,
+          "text": "pipeline.cuda()"
+        },
+        {
+          "line": 229,
+          "text": "   - Use a Linux system with an NVIDIA GPU (The models are trained on NVIDIA A100 GPUs)."
+        },
+        {
+          "line": 258,
+          "text": "usage: train.py [-h] --config CONFIG --output_dir OUTPUT_DIR [--load_dir LOAD_DIR] [--ckpt CKPT] [--data_dir DATA_DIR] [--auto_retry AUTO_RETRY] [--tryrun] [--profile] [--num_nodes NUM_NODES] [--node_rank NODE_RANK] [--num_gpus NUM_GPUS] [--master_addr MASTER_ADDR] [--master_port MASTER_PORT]"
+        },
+        {
+          "line": 272,
+          "text": "  --num_gpus NUM_GPUS           Number of GPUs per node, default to all"
+        },
+        {
+          "line": 288,
+          "text": "The script will automatically distribute the training across all available GPUs. Specify the number of GPUs with the `--num_gpus` flag if you want to limit the number of GPUs used."
+        },
+        {
+          "line": 292,
+          "text": "To train a image-to-3D stage 2 model with multiple GPUs across nodes (e.g., 2 nodes):"
+        },
+        {
+          "line": 330,
+          "text": "- [**diffoctreerast**](https://github.com/JeffreyXiang/diffoctreerast): We developed a CUDA-based real-time differentiable octree renderer for rendering radiance fields as part of this project. This renderer is derived from the [diff-gaussian-rasterization](https://github.com/graphdeco-inria/diff-gaussian-rasterization) project and is available under the [LICENSE](https://github.com/JeffreyXiang/diffoctreerast/blob/master/LICENSE)."
+        }
+      ]
+    },
+    {
+      "id": "pytorch-2.7",
+      "url": "https://github.com/pytorch/pytorch/releases/tag/v2.7.0",
+      "reference": "v2.7.0 release page, mutable commentary",
+      "bytes_downloaded": 466645,
+      "download_sha256": "1e411028514a5cd1fbd627e068ef1fdc19c5d271b52070113ad834ad9aaad05d",
+      "retention": "selected plain text excerpts only",
+      "local_file": "pytorch-2.7-excerpts.txt"
+    }
+  ],
+  "blocked_sources": [
+    {
+      "url": "https://www.nvidia.com/en-us/geforce/laptops/50-series/",
+      "error": "Tunnel connection failed:403 Forbidden"
+    },
+    {
+      "url": "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5090/",
+      "error": "Tunnel connection failed:403 Forbidden"
+    }
+  ],
+  "gpu_tests_executed": false,
+  "failed_guessed_document_paths": [
+    {
+      "url": "https://raw.githubusercontent.com/pytorch/pytorch.github.io/main/_posts/2025-04-23-pytorch-2.7.md",
+      "http_status": 404
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ggml-org/llama.cpp/master/docs/backend/CUDA.md",
+      "http_status": 404
+    }
+  ],
+  "laptop_vendor_checks": [
+    {
+      "url": "https://rog.asus.com/us/laptops/rog-strix/rog-strix-scar-18-2025/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://us.msi.com/Laptop/Titan-18-HX-AI-A2XWX",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://www.razer.com/gaming-laptops/razer-blade-16",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+  ],
+  "purchase_constraints": {
+    "form_factor": "laptop_required",
+    "country": "USA",
+    "maximum_budget_usd": 7000,
+    "source": "user answer relayed by lead"
+  }
+}

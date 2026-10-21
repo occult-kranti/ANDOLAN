@@ -1,0 +1,63 @@
+{
+  "recorded_at_utc": "2026-10-21T18:41:46.111341+00:00",
+  "source": "Observed root and hardware-worker HTTPS tool results on 2026-10-21",
+  "video_url": "https://youtu.be/tDWtcyeNNew",
+  "video_title": null,
+  "transcript_obtained": false,
+  "video_frames_viewed": false,
+  "video_tool_inventory_verified": false,
+  "root_attempts": [
+    {
+      "url": "https://www.youtube.com/watch?v=tDWtcyeNNew",
+      "result": "proxy_connect_403",
+      "error": "Tunnel connection failed: 403 Forbidden"
+    },
+    {
+      "url": "https://youtu.be/tDWtcyeNNew",
+      "result": "proxy_connect_403",
+      "error": "Tunnel connection failed: 403 Forbidden"
+    },
+    {
+      "url": "https://huggingface.co/api/models/Tencent/Hunyuan3D-2",
+      "result": "proxy_connect_403",
+      "error": "Tunnel connection failed: 403 Forbidden"
+    },
+    {
+      "url": "https://www.nvidia.com/en-us/geforce/laptops/50-series/",
+      "result": "proxy_connect_403",
+      "error": "Tunnel connection failed: 403 Forbidden"
+    }
+  ],
+  "manufacturer_attempt_evidence": "hardware/source-receipt.json",
+  "network_draft": {
+    "saved": true,
+    "verified_revision": 34,
+    "requires_publish": true,
+    "runtime_activation_verified": false,
+    "existing_destinations_preserved": true,
+    "added_hosts": [
+      "www.youtube.com",
+      "youtube.com",
+      "youtu.be",
+      "i.ytimg.com",
+      "*.googlevideo.com",
+      "huggingface.co",
+      "cdn-lfs.huggingface.co",
+      "cdn-lfs-us-1.hf.co",
+      "cas-bridge.xethub.hf.co",
+      "www.nvidia.com",
+      "docs.nvidia.com",
+      "pytorch.org",
+      "rog.asus.com",
+      "us.msi.com",
+      "www.razer.com"
+    ]
+  },
+  "local_browser": {
+    "chromium_path": "/usr/bin/chromium",
+    "playwright_available": true,
+    "video_navigation_attempted": false,
+    "reason": "Known destination-policy denial also applies to local browser; no alternate route attempted."
+  },
+  "next_action": "Environment Settings -> Save -> Publish; verify access, inspect captions/audio/frames, then identify every named tool with timestamps. Uploading/pasting a transcript or providing accessible source material is an alternative if network cannot be activated."
+}

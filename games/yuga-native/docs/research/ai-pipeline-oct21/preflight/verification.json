@@ -1,0 +1,57 @@
+{
+  "checked_at": "2026-10-21T18:35:00.511424+00:00",
+  "baseline_commit": "ec4d7bb2b8d5a14fce7cab68fef6efc9dc50bf72",
+  "test_command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "games/yuga-native/tools/ai-assets",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "test_exit_code": 0,
+  "tests_run": 9,
+  "tests_passed": 9,
+  "cloud_probe_exit_code": 2,
+  "cloud_probe_result": "capacity_blocked_expected",
+  "files": [
+    {
+      "path": "games/yuga-native/tools/ai-assets/preflight.py",
+      "sha256": "7f3abb230b2f8cfe74d55834a0eeee8f6995578fd9f07f392567260cc699af2d"
+    },
+    {
+      "path": "games/yuga-native/tools/ai-assets/test_preflight.py",
+      "sha256": "a478f3f6c823b0e6ac5406a88b9e8321e960bc73ff7aaa4bb39fe18d7901cdf9"
+    },
+    {
+      "path": "games/yuga-native/tools/ai-assets/README.md",
+      "sha256": "6ad83981040a1a298085f49ef19ca2a199f14272c1e8b3a7d6de39ea5bca5d93"
+    },
+    {
+      "path": "games/yuga-native/docs/research/ai-pipeline-oct21/preflight/cloud-capacity-r2.json",
+      "sha256": "ff0be9f2f79fcb7a330b2242a726e107cf90791058eb661cfa51ab586b5f9ca0"
+    }
+  ],
+  "limitations": [
+    "No model downloaded or executed",
+    "Cloud probe is a hardware observation using illustrative budget, not a model benchmark",
+    "Capacity check does not reserve resources or qualify CUDA kernels, model permissions, RAM peaks or art quality"
+  ],
+  "cloud_probe_command": [
+    "python3",
+    "games/yuga-native/tools/ai-assets/preflight.py",
+    "--required-vram-gib",
+    "8",
+    "--required-free-disk-gib",
+    "20",
+    "--reserve-disk-gib",
+    "1",
+    "--path",
+    "/workspace",
+    "--output",
+    "games/yuga-native/docs/research/ai-pipeline-oct21/preflight/cloud-capacity-r2.json"
+  ]
+}

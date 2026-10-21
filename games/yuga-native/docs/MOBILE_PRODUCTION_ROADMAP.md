@@ -10,6 +10,20 @@ The intended visual result is detailed, animated 3D characters with readable sil
 
 **Recommended starting stack:** retain Godot 4.6.3 standard/GDScript, Blender and glTF. Qualify Godot's Mobile renderer on actual devices, with a separately tested Compatibility fallback. Trial a stripped headless Godot match server to preserve native rules, plus Nakama OSS/PostgreSQL for identity, parties and matchmaking. Final transport and authority choices require the M1 comparison; no online integration is claimed today. Android is the first qualification target; iOS follows with a macOS/Xcode build/signing lane. GitHub Pages can host the site, documentation and download links; it cannot run authoritative match servers.
 
+## AI-assisted authoring amendment — 21 October 2026
+
+The [shared model/reconstruction study](research/ai-pipeline-oct21/README.md) updates both platforms. Its candidates come from pinned GitHub sources; the requested video is not yet accessible or transcribed. No model weights, GPU inference or Android binary were produced. The user's proposed workstation is a USA RTX 5090 laptop within US$7,000; qualify exact hardware and run heavy generation/render jobs serially. Desktop remains first.
+
+Keep inference in the offline authoring pipeline. Adopt only accepted original source assets, then produce mobile-specific geometry, material, texture and animation variants. Do not include generation weights in the APK or make authoritative matches depend on a video world model. Model-license conditions, including output restrictions where applicable, follow the resulting asset workflow.
+
+- **M1:** qualify workstation/model dependencies separately from physical Android renderer/device budgets; record exact source and weight versions, memory and disk needs.
+- **M3:** one generated-assisted hero still needs artist retopology, rig/skin, complete action transitions, mobile readability and real-device play. A desktop GLB or generated turntable is insufficient.
+- **M5/M6:** apply source-studied snapshot replay/correction and transport-compatibility tests to our original authority; require rendered clients and real 5v5 evidence.
+- **M9/M10/M15:** evaluate shared content dependencies and camera bookmarks; create bounded hero/map bundles with original assets, LOD/collision truth and missing/offline/update checks. Study port architecture without importing unreviewed third-party packers or asset rights.
+- **M11–M13/M16/M18:** roster, sustained hardware performance and release gates remain unchanged; measure accepted asset-production and rework time before forecasting fewer rounds.
+
+The [18-round / 108-packet implementation plan](MOBILE_PRODUCTION_BACKLOG.json) remains **0 implemented**. The new research and capacity utility are supporting work, separate from its six earlier research packets. No APK, physical-device result or model-generated asset is claimed.
+
 ## Read only what your packet needs
 
 | Owner | Document | Main output |
