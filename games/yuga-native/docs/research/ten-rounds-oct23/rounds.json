@@ -139,15 +139,18 @@
     {
       "id": "R10",
       "title": "Publish source, dashboard and next gates",
-      "status": "running",
+      "status": "complete",
       "acceptance": [
         "Exact-source CI and public byte verification.",
         "No unsupported game-quality, hardware or whole-game completion claims."
       ],
       "outputs": [
-        "root/local-validation.json"
+        "publication/native-foundation-source-c.json",
+        "publication/public-audit-source-c.json",
+        "root/browser-final.json",
+        "REUSE_FIRST_NEXT_TEN.md"
       ],
-      "review": "Source/CI/publication checkpoint in progress; public byte verification is not yet complete."
+      "review": "Source C db1e3291 passed all 38 foundation steps; 39 public HTTP checks, 33 exact static matches and 10 local Chromium checks pass. Publication of this bounded checkpoint is complete. Rejected hero candidates and the strict VFX framing gate remain open."
     }
   ],
   "additional_study": {
@@ -161,14 +164,14 @@
   },
   "continuation": {
     "next_ten_plan": "REUSE_FIRST_NEXT_TEN.md",
-    "scope": "Conditional six-owner execution queue; not10completed game rounds or60executed assignments.",
+    "scope": "Conditional execution queue with six owners per stage; not ten completed game rounds or sixty executed assignments.",
     "new_roster_heroes_completed": 0,
     "canonical_hero_assets_changed": false,
     "canonical_map_assets_changed": false,
     "hero_family": {
       "status": "complete-authoring-infrastructure-only",
       "reference": "../hero-family-reuse-oct23/README.md",
-      "appearance": "unchangedRama",
+      "appearance": "unchanged Rama",
       "regression_tests": 20,
       "independent_adverse_cases": 24,
       "pin_drift_cases": 19,

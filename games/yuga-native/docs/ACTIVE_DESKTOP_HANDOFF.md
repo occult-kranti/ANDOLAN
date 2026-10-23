@@ -1,6 +1,27 @@
 # Active desktop work — resume here
 
-Updated 18 October 2026. **Desktop first; mobile deferred.** Work in `/workspace/ANDOLAN`, branch `game/yuga-native-production`. Read this handoff → [13-round plan](DESKTOP_FINISH_CAMPAIGN.md) → [78-packet ledger](DESKTOP_FINISH_CAMPAIGN.json), then only the assigned subsystem. Earlier campaigns and rejected experiments retain their own evidence.
+Updated 23 October 2026. **Desktop first; mobile deferred.** Work in `/workspace/ANDOLAN`, branch `game/yuga-native-production`. Read the latest checkpoint below → [13-round plan](DESKTOP_FINISH_CAMPAIGN.md) → [78-packet ledger](DESKTOP_FINISH_CAMPAIGN.json), then only the assigned subsystem. Earlier campaigns and rejected experiments retain their own evidence.
+
+## Latest reuse-first production checkpoint — 23 October
+
+Start at [the bounded ten-stage checkpoint](research/ten-rounds-oct23/README.md)
+and [next ten conditional stages with six owners](research/ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md).
+Authoring source `db1e3291abd78ec3fb8bf8496e3d098dd597150c` shares existing
+Rama resources through a verified Arjuna authoring template, loads an existing
+CC0 map module through a tested adapter, and retains an unfitted donor scaffold.
+The template still looks like Rama; the generated hair omission mask remains
+rejected. One reviewed court geometry pilot is integrated; its optional PBR
+material study stays isolated. Follow [exact-source CI and public evidence](research/ten-rounds-oct23/publication/README.md)
+for this checkpoint, separately from the historical executable below.
+
+The [public production dashboard](https://occult-kranti.github.io/ANDOLAN/production/)
+is a dated saved snapshot. Local observation uses port 8767 and explicit state
+directory `.local-swarm/observatory-ten-rounds/`; it does not attach a GPU or run
+local inference. The new intake and source-sharing infrastructure grants no
+finished-hero/full-map credit. Desktop remains **17/78 accepted packets, 0/13
+complete rounds**; Android remains deferred at **0/108**. Current source, public
+static previews and the older native executable have distinct identities.
+Historical capacity/network observations below must be remeasured before use.
 
 ## Laptop, PS4 and cloud control expansion — 23 October
 

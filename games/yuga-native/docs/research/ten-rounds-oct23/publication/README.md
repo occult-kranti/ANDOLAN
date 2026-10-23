@@ -22,14 +22,26 @@ five preserved game/lab entry responses. The browser baseline remains pinned
 at `176b6f8e71fcffd3d570d96e66643d8cb9893603`; the additive publisher preserves
 90 baseline files. No new native downloadable release is claimed.
 
-The next source checkpoint adds the independently reviewed Rama-family
-authoring template, existing CC0 map intake, rejected-mask donor scaffold,
-ten-stage/six-owner continuation and dated twelve-job dashboard snapshot.
-Its new CI step reruns committed-manifest validation, 20 hero regressions,
-13 native template checks and 23 real-source map checks without regenerating
-canonical assets. [Root executed those commands locally](../root/continuation-ci-local.json).
-The final exact-source CI and public-byte results will be recorded here after
-they exist; source A/B receipts do not claim to verify future source bytes.
+The independently reviewed authoring checkpoint is now source C
+`db1e3291abd78ec3fb8bf8496e3d098dd597150c`. Its [full native foundation run](native-foundation-source-c.json)
+passed **all 38 steps**, including the new committed-manifest validation,
+20 hero regressions, 13 native template checks and 23 real-source map checks.
+Canonical hero/map assets were not regenerated. [Root also executed the new commands locally](../root/continuation-ci-local.json).
+
+[Pages C](pages-source-c.json) succeeded. [The public audit](public-audit-source-c.json)
+records **39 successful HTTP checks and 33 exact source matches**, covering
+every approved static file and the exact deployed source identity. The
+[first unfiltered audit](public-audit-source-c-r1-unfiltered.json) mistakenly
+requested local `DESIGN.md` and `verify_ui.py`; both are intentionally excluded
+by the publisher and returned 404. The corrected audit uses the source-pinned
+approved file policy, explicitly lists those exclusions, and checks the full
+published census. It changed no website bytes. [The twelve-job/five-image local Chromium check](../root/browser-final.json)
+passes ten checks, including mobile overflow and actual video playback.
+
+These checks publish authoring infrastructure and isolated evidence, not a
+finished second hero, complete map, native online release or commercial visual
+parity. The final dashboard status refresh has its own publication identity;
+source C receipts do not claim to verify later bytes.
 
 The dashboard exposes actual court comparisons, a labeled optional PBR study,
 an isolated effects clip and existing structural-module preview. Public Pages
