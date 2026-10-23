@@ -1,0 +1,56 @@
+{
+  "status": "fixture-correction-required-pending-independent-check",
+  "scope": "Independent source/predicate review and inspection of the actual retained local reproduction of CI23-case failure. No product edit or expectation relaxation accepted.",
+  "failed_report_sha256": "c4ad13be1835849b637a337c3b24a1f755d2378c92ec9864b013014f7d74a507",
+  "failed_receipt_sha256": "626c5fa4d9e4da0c75f7e9f52c601bc5558c82b6ac9b228bbd70f8bf6a0a176b",
+  "test_before_sha256": "71d1c639ccc61f0b8eca015c78bd04905e360bd7439fe36c6055fc32de3d2294",
+  "source_before": {
+    "res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "res://docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-traversal_landmarks.gd.txt": "ee070b0a4b1c0bb07ac645681e6ef3dcf0311adb88afe07ece3ecc75b4ab971b",
+    "res://scripts/traversal_landmarks.gd": "455d377c4f206df7ee20fec23ddeaf3803eb58bdb80ba5179f3d8b7c8b3599a5",
+    "res://scripts/world_render_resources.gd": "9c05d06cd78fd8e9326ac55f89939038ffd08fa69d1f5cdac00dc8a5a1b93472",
+    "res://tests/desktop_world_render_resources_cases.gd": "71d1c639ccc61f0b8eca015c78bd04905e360bd7439fe36c6055fc32de3d2294"
+  },
+  "source_after": {
+    "res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "res://docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-traversal_landmarks.gd.txt": "ee070b0a4b1c0bb07ac645681e6ef3dcf0311adb88afe07ece3ecc75b4ab971b",
+    "res://scripts/traversal_landmarks.gd": "455d377c4f206df7ee20fec23ddeaf3803eb58bdb80ba5179f3d8b7c8b3599a5",
+    "res://scripts/world_render_resources.gd": "9c05d06cd78fd8e9326ac55f89939038ffd08fa69d1f5cdac00dc8a5a1b93472",
+    "res://tests/desktop_world_render_resources_cases.gd": "71d1c639ccc61f0b8eca015c78bd04905e360bd7439fe36c6055fc32de3d2294"
+  },
+  "cases": 23,
+  "passed_cases": 21,
+  "failed_cases": [
+    {
+      "details": {
+        "report": {
+          "anchors": 10,
+          "landmarks": 8,
+          "materials": 7,
+          "mesh_budget": 300,
+          "mesh_instances": 238,
+          "scope": "Original procedural stone decks, chhatri facade relief, lotus courts and luminous fictional traversal relics. No historical reconstruction.",
+          "wind_court_pilot": {
+            "enabled": false
+          }
+        }
+      },
+      "name": "public build report retains original counts and scope",
+      "passed": false
+    },
+    {
+      "details": {},
+      "name": "reusing a builder starts a fresh per-build mesh and material pool",
+      "passed": false
+    }
+  ],
+  "finding": "Default builder preserves oracle scene, counts, geometry and per-build resources, but adds explicit wind_court_pilot:{enabled:false} report field. Two predicates incorrectly require old report dictionary equality, including the combined builder-reuse predicate.",
+  "required_correction": [
+    "Require explicit boolfalse pilot field with exact supported shape; remove ONLY that documented field before full legacy-report equality.",
+    "Preserve238instance/13resource budgets and complete retained-oracle scene equality.",
+    "Preserve all parameter-key distinctions, mutation/corruption controls, isolation and resource-release checks.",
+    "Add report-schema negative controls and explicit3surface embedded-palette tests for opt-in pilot; do not globally relax no-embedded-material legacy rule."
+  ],
+  "worker_edit_scope": "tests/desktop_world_render_resources_cases.gd only",
+  "product_frozen": true
+}

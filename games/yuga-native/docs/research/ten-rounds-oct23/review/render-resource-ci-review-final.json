@@ -1,0 +1,30 @@
+{
+  "status": "accepted-test-only-fixture-correction",
+  "scope": "Independent final static review, actual40-case rerun, original-builder negative rerun and separate14-case pilot probe. No product edit, artwork, hardware or fullCI acceptance.",
+  "passed": true,
+  "checks": {
+    "corrected40cases_pass": true,
+    "exact_retained_oracle_and238_13_resource_gates_preserved": true,
+    "actual_new3surface_pilot_resource_cases_pass": true,
+    "source_identity_constant_during_run": true,
+    "original_baseline_still_fails_exact_same_three_predicates": true,
+    "product_builder_pool_manifest_hashes_unchanged": true
+  },
+  "test_sha256": "03969264d5cdaf0ab85c90cee590075bae985db187b72cd0e070cc7cb48f3ca0",
+  "source_before": {
+    "res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "res://docs/evidence/desktop-finish/continuation-oct18/W4-world-r1/baseline-traversal_landmarks.gd.txt": "ee070b0a4b1c0bb07ac645681e6ef3dcf0311adb88afe07ece3ecc75b4ab971b",
+    "res://scripts/traversal_landmarks.gd": "455d377c4f206df7ee20fec23ddeaf3803eb58bdb80ba5179f3d8b7c8b3599a5",
+    "res://scripts/world_render_resources.gd": "9c05d06cd78fd8e9326ac55f89939038ffd08fa69d1f5cdac00dc8a5a1b93472",
+    "res://tests/desktop_world_render_resources_cases.gd": "03969264d5cdaf0ab85c90cee590075bae985db187b72cd0e070cc7cb48f3ca0"
+  },
+  "final_baseline_expected_failure_cases": [
+    "238 formerly distinct primitive resources become exactly 13 shared resources",
+    "reusing a builder starts a fresh per-build mesh and material pool",
+    "freed first world releases its resources without global retention"
+  ],
+  "prior_actual_failure": "render-resource-ci-review-r1.json",
+  "independent_pilot_probe": "pilot-resource-r2.json",
+  "result": "Known additive disabled-pilot report schema is checked exactly, including booltype and solekey; every legacyfield remains compared. Existing budgets/scene/corruption/teardown predicates remain. New pilot merged-mesh embedded palettes have separate positive, mutation, alias, duplication, reuse and release coverage.",
+  "recommendation": "Rerun full CI on corrected source; this focused pass does not establish remote CI completion."
+}
