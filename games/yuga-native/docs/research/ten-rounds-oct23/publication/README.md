@@ -43,6 +43,18 @@ finished second hero, complete map, native online release or commercial visual
 parity. The final dashboard status refresh has its own publication identity;
 source C receipts do not claim to verify later bytes.
 
+The final status-only refresh is source
+`7eeebf4fe4696224ab8f60af78d20db101f00c92`. Its [17-step Pages workflow](pages-final-snapshot.json)
+passed, and [the independent public audit](public-audit-final-snapshot.json)
+again passed **39 HTTP checks / 33 exact committed static-file matches**.
+The snapshot records 12 jobs and ten bounded stages, with R10 complete and
+the rejected hero / held VFX gates still visible. It was collected from clean
+documentation source `793ff933`, before committing the snapshot itself.
+[Actual local Chromium checks of this refresh](../root/browser-published-snapshot.json)
+pass 10/10, including five image decodes, mobile layout and video playback.
+The native product and authoring tools remain byte-identical to source C;
+later commits contain receipts, documentation and the explicit snapshot only.
+
 The dashboard exposes actual court comparisons, a labeled optional PBR study,
 an isolated effects clip and existing structural-module preview. Public Pages
 serves a dated saved snapshot. Loopback port 8767 is a separate local observer;
