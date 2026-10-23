@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171c19">
+  <meta name="description" content="YUGA production observatory: actual build jobs, source assets, machine availability and the next production gate.">
+  <title>YUGA — Production observatory</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#work">Skip to production work</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="YUGA production observatory home">YUGA<span>Production observatory</span></a>
+    <nav aria-label="Page sections"><a href="#work">Work queue</a><a href="#artifacts">Artifacts</a><a href="#roadmap">Next gates</a></nav>
+    <a class="repository-link" href="https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production" target="_blank" rel="noopener noreferrer">Source repository</a>
+  </header>
+
+  <main id="top">
+    <section class="connection-band" aria-label="Data connection">
+      <div class="connection-main"><span class="connection-dot" aria-hidden="true"></span><strong id="connection-label">Connecting to build worker</strong><span id="connection-age">Waiting for the first observation</span></div>
+      <div class="connection-actions"><button id="pause-button" type="button" aria-pressed="false">Pause updates</button><button id="refresh-button" type="button">Refresh now</button></div>
+      <p id="connection-note">Checking this worker for live telemetry. A saved export will be clearly marked.</p>
+    </section>
+    <div id="announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div id="error-panel" class="error-panel" hidden><h1>Build observations are unavailable</h1><p id="error-message">The live worker and saved export could not be read. Check the worker connection, then refresh.</p><button id="retry-button" type="button">Retry connection</button></div>
+
+    <div id="dashboard" aria-busy="true">
+      <section class="production-intro" aria-labelledby="run-title">
+        <div class="run-copy"><h1 id="run-title">The next piece of YUGA</h1><p id="run-summary">Reading actual jobs and their outputs.</p><div class="source-line"><span>Source</span><code id="source-commit">Not observed</code><span id="source-branch"></span><span id="source-dirty"></span></div></div>
+        <figure class="current-art"><div class="art-placeholder" id="lead-placeholder">Actual output previews appear here after an artifact is recorded.</div><img id="lead-image" alt="" hidden><figcaption><span id="lead-caption">No preview selected</span><span id="lead-status">Pending observation</span></figcaption></figure>
+      </section>
+
+      <section class="machine-strip" aria-labelledby="machines-title"><h2 id="machines-title">Where work runs</h2><dl><div><dt>Cloud CPU</dt><dd id="cpu-observation">Awaiting observation</dd></div><div><dt>System memory</dt><dd id="memory-observation">Awaiting observation</dd></div><div><dt>Attached GPU</dt><dd id="gpu-observation">Awaiting observation</dd></div></dl><p id="gpu-note">Public GPU jobs are recorded individually; they do not imply an attached GPU.</p></section>
+
+      <section id="work" class="work-section" aria-labelledby="work-title">
+        <div class="section-heading"><div><h2 id="work-title">Production work</h2><p id="queue-summary">Loading the work queue.</p></div><a href="#roadmap">See next gates</a></div>
+        <div class="work-layout">
+          <div class="queue-area">
+            <div class="filters"><div><label for="status-filter">Status</label><select id="status-filter"><option value="all">All statuses</option><option value="running">Running</option><option value="queued">Queued</option><option value="review">In review</option><option value="complete">Complete</option><option value="blocked">Blocked</option><option value="failed">Failed</option><option value="stale">Stale</option></select></div><div><label for="device-filter">Compute</label><select id="device-filter"><option value="all">All compute</option></select></div><button id="clear-filters" type="button" class="quiet-button">Clear filters</button></div>
+            <div class="queue-column-heads" aria-hidden="true"><span>Work / owner</span><span>Compute</span><span>Status</span></div>
+            <div id="job-list" class="job-list"><div class="loading-rows" aria-label="Loading production jobs"><div></div><div></div><div></div></div></div>
+            <div id="empty-queue" class="empty-state" hidden><h3>No jobs match these filters</h3><p>Choose another status or compute type to inspect the recorded work.</p><button id="empty-clear" type="button">Show all work</button></div>
+          </div>
+          <aside class="job-inspector" aria-labelledby="inspector-title"><div class="inspector-heading"><h3 id="inspector-title">Select a job</h3><span id="inspector-status" class="status-label">Not selected</span></div><div id="job-detail"><p>Choose a job to see the exact model, latest observation, outputs and next step.</p></div></aside>
+        </div>
+      </section>
+
+      <section id="artifacts" class="artifact-section" aria-labelledby="artifacts-title"><div class="section-heading"><div><h2 id="artifacts-title">Built, then inspected</h2><p>Source candidates and actual outputs keep their acceptance status.</p></div></div><div id="artifact-list" class="artifact-list"></div><p id="empty-artifacts" class="empty-state" hidden>No artifacts are recorded yet. An output appears here after its source and review state are saved.</p></section>
+
+      <section id="roadmap" class="roadmap-section" aria-labelledby="roadmap-title"><div class="section-heading"><div><h2 id="roadmap-title">What happens next</h2><p>Stage gates describe the work ahead. Tool setup does not finish game production.</p></div></div><ol id="milestone-list" class="milestone-list"></ol><p id="empty-roadmap" class="empty-state" hidden>No stage gates have been recorded in this export.</p></section>
+
+      <section class="sources-section" aria-labelledby="sources-title"><div class="section-heading"><div><h2 id="sources-title">Reuse with provenance</h2><p>Existing tools and assets are tracked before adoption.</p></div></div><div class="source-table-wrap"><table><thead><tr><th scope="col">Resource</th><th scope="col">Terms</th><th scope="col">Adoption state</th></tr></thead><tbody id="source-list"></tbody></table></div><p id="empty-sources" class="empty-state" hidden>No external resources are recorded in this export.</p></section>
+    </div>
+  </main>
+  <footer><span>YUGA · Original mythology-inspired game</span><p>This observatory reports evidence. It does not certify finished commercial art, native online play or physical-GPU performance.</p><span id="footer-time">No observation yet</span></footer>
+</body>
+</html>

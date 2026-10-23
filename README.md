@@ -21,6 +21,7 @@ Choose **Confluence** or **Bow training**, then the primary action. LMB draws/sh
 | Native build, tests and art pipeline | [Build handbook](games/yuga-native/docs/BUILD_HANDBOOK.md) |
 | Production game, features and milestones | [Production roadmap](games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md) |
 | Mythology, game design and open-source reuse | [Research brief](games/yuga-native/docs/research/RESEARCH_BRIEF.md) |
+| Live worker progress, saved public snapshots and actual 3D source viewer | [Production observatory](games/yuga-native/docs/PRODUCTION_OBSERVATORY.md) · [reuse-first source/art stage](games/yuga-native/docs/research/production-reuse-oct23/README.md) |
 | Laptop + original PS4 Linux + cloud build workflow | [Game-build setup](games/yuga-native/docs/GAME_BUILD_FARM.md) · [research and CPU pilot](games/yuga-native/docs/research/ps4-swarm-oct23/README.md); device execution and GPU-demo output have separate evidence |
 | RTX 4070 8 GB local models, Codex/Claude/Kimi and six project skills | [Laptop/squad setup](games/yuga-native/docs/LOCAL_MODEL_SWARM.md) · [skill index](.agents/skills/README.md); laptop inference and the three videos remain unverified |
 | AI asset models, reconstruction tools and USA laptop plan | [Historical 21 October study and adoption gates](games/yuga-native/docs/research/ai-pipeline-oct21/README.md); use the newer setup above for current execution evidence |

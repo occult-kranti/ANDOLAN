@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "scope": "Focused root integration; no changed game runtime or full-game qualification.",
+  "unit_tests": {
+    "command": "python3 -m unittest discover -s games/yuga-native/tools/build-observatory -p 'test_*.py' -v",
+    "exit_code": 0,
+    "count": 32
+  },
+  "browser_baseline_build": {
+    "source": "176b6f8e71fcffd3d570d96e66643d8cb9893603",
+    "commands": [
+      "npm run build:standalone",
+      "npm run yuga:build",
+      "npm run yuga:lab:build:tracks",
+      "node games/yuga/tools/assemble-site.mjs"
+    ],
+    "exit_code": 0,
+    "lockfiles_equal_to_current": true,
+    "scope": "Actual pinned-source build using installed matching dependencies; no historical public-byte equality claim."
+  },
+  "current_local_live_service": {
+    "bind": "127.0.0.1",
+    "port": 8765,
+    "actual_api_status": 200,
+    "mode": "live",
+    "publicly_forwarded": false
+  },
+  "actual_static_publisher": {
+    "exit_code": 0,
+    "baseline_files_preserved": 90,
+    "data_mode": "snapshot",
+    "scope": "Initial additive real-baseline integration; final source identity/public deployment separate."
+  },
+  "logs": {
+    "observatory-tests-final.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observatory-tests-final.stderr.log": {
+      "sha256": "caa55cd3f55b1220e2baf91b10c6bedb5ec072b170d49f6105dd4a0de9936160",
+      "bytes": 5369
+    },
+    "baseline-build.log": {
+      "sha256": "355313e933e81105caf83007252da4821aae4f74b874b0ce90ba2650c11fe233",
+      "bytes": 14558
+    }
+  }
+}

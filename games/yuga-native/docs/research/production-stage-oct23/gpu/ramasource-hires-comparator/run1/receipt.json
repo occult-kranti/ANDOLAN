@@ -1,0 +1,101 @@
+{
+  "started_at_utc": "2026-10-23T20:52:51.821516+00:00",
+  "status": "FAILED_OR_BLOCKED",
+  "session_hash": "8db0de6972d343b282ebe38fbc0e4643",
+  "client_pid": 123192,
+  "script_sha256": "2e5201aec45b07c1e430dcc7e11345ca5a361dfd64fd45717ed0a94fa5d2436b",
+  "input": {
+    "path": "/workspace/ANDOLAN/games/yuga-native/art/production-stage-oct23/images/hero-concept.png",
+    "sha256": "674077b910106cc718748530a1fa3fd4400ef959c2461b06060e41ff759c6872",
+    "bytes": 2407184,
+    "png_color_type": 6
+  },
+  "transport": "Anonymous plain HTTPX; inherited HTTPS proxy/CA, no HF SDK or token.",
+  "max_paid_cost": 0,
+  "max_gpu_submissions": 2,
+  "gpu_submission_attempts": 1,
+  "gpu_generation_verified": false,
+  "glb_produced": false,
+  "calls": [
+    {
+      "api_name": "start_session",
+      "gpu_function": false,
+      "started_at_utc": "2026-10-23T20:52:51.844860+00:00",
+      "status": "COMPLETED",
+      "events": [
+        {
+          "at_utc": "2026-10-23T20:52:53.203658+00:00",
+          "event": "complete"
+        }
+      ],
+      "post_http_status": 200,
+      "event_id": "6dab87b557ce4d67b6097d28d7b55dfb",
+      "get_http_status": 200,
+      "wall_seconds": 1.3589569649775513
+    },
+    {
+      "api_name": "preprocess_image",
+      "gpu_function": false,
+      "started_at_utc": "2026-10-23T20:52:54.737657+00:00",
+      "status": "COMPLETED",
+      "events": [
+        {
+          "at_utc": "2026-10-23T20:52:55.570613+00:00",
+          "event": "complete"
+        }
+      ],
+      "post_http_status": 200,
+      "event_id": "80c2f5c638ea4b1c85144dd368f10fda",
+      "get_http_status": 200,
+      "wall_seconds": 0.8330981659819372
+    },
+    {
+      "api_name": "image_to_3d",
+      "gpu_function": true,
+      "started_at_utc": "2026-10-23T20:52:55.571598+00:00",
+      "status": "SERVER_REJECTED_OR_FAILED",
+      "events": [
+        {
+          "at_utc": "2026-10-23T20:52:56.448207+00:00",
+          "msg": "estimation",
+          "event_id": "ad111c290baa4eb7ba81c2b802da76fb"
+        },
+        {
+          "at_utc": "2026-10-23T20:52:56.448603+00:00",
+          "msg": "process_starts",
+          "event_id": "ad111c290baa4eb7ba81c2b802da76fb"
+        },
+        {
+          "at_utc": "2026-10-23T20:52:56.448782+00:00",
+          "msg": "process_completed",
+          "event_id": "ad111c290baa4eb7ba81c2b802da76fb"
+        }
+      ],
+      "post_http_status": 200,
+      "event_id": "ad111c290baa4eb7ba81c2b802da76fb",
+      "get_http_status": 200,
+      "wall_seconds": 0.8771843799913768,
+      "server_error": {
+        "error": "You have exceeded your ZeroGPU quota (120s requested vs. 166s left). Try again in 23:51:35. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens",
+        "duration": 10,
+        "visible": true,
+        "title": "ZeroGPU quota exceeded"
+      }
+    }
+  ],
+  "source_reuse": "Based on prior verified trellis2_direct_once.py and trellis2_export_once.py, source SHA ebf60b20fc5a4607f90a1c11c0aab0ceeda5429d.",
+  "anonymous_headers_verified": true,
+  "upload_http_status": 200,
+  "upload_result": [
+    "/tmp/gradio/e6b32f889394b4649f2426d9a513e1a9a61b4ecb8d64d80ad83d35b53a774276/original-asset.png"
+  ],
+  "generation_settings": {
+    "seed": 71,
+    "resolution": "1024",
+    "steps_per_stage": 8,
+    "guidance": "Pinned source defaults"
+  },
+  "error_type": "RuntimeError",
+  "error": "Provider rejected or failed this event; no GPU retry",
+  "finished_at_utc": "2026-10-23T20:52:56.449380+00:00"
+}

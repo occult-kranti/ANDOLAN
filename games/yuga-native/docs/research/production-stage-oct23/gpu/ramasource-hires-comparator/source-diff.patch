@@ -1,0 +1,14 @@
+--- 512-pipeline
++++ 1024-pipeline
+@@ -112,9 +112,9 @@
+         prepared=call(client,'preprocess_image',[filedata],60)
+         assert isinstance(prepared,list) and len(prepared)==1
+         (args.output/'preprocess-response.json').write_text(json.dumps(safe(prepared),indent=2)+'\n')
+-        receipt['generation_settings']={'seed':71,'resolution':'512','steps_per_stage':8,'guidance':'Pinned source defaults'}
++        receipt['generation_settings']={'seed':71,'resolution':'1024','steps_per_stage':8,'guidance':'Pinned source defaults'}
+         receipt['status']='GENERATION_SUBMITTING';save()
+-        parameters=[prepared[0],71,'512',7.5,0.7,8,5.0,7.5,0.5,8,3.0,1.0,0.0,8,3.0]
++        parameters=[prepared[0],71,'1024',7.5,0.7,8,5.0,7.5,0.5,8,3.0,1.0,0.0,8,3.0]
+         result=call(client,'image_to_3d',parameters,180,True)
+         previews=[v for v in result if isinstance(v,str) and 'data:image/jpeg;base64,' in v]
+         assert len(previews)==1,'Successful event has no expected preview'

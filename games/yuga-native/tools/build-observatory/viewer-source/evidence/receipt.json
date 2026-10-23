@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "scope": "Versioned viewer visual and type-correction evidence; no additional screenshot cycle.",
+  "visual_run": "receipt-pre-type-correction.json",
+  "visual_main_snapshot": "main-pre-type-correction.ts",
+  "final_source_confirmation": "type-correction-confirmation.json",
+  "visual_checks_passed": 12,
+  "post_type_correction_load_checks_passed": 3,
+  "screenshots": [
+    "desktop-front.png",
+    "desktop-orbit.png",
+    "mobile.png"
+  ],
+  "historical_path_resolution": {
+    "games/yuga-native/tools/build-observatory/viewer-source/main.ts": "main-pre-type-correction.ts",
+    "games/yuga-native/tools/build-observatory/web/viewer/assets/index-Bnv3pldH.js": "pretype-assets/index-Bnv3pldH.js"
+  },
+  "historical_bundle_preservation": {
+    "method": "Reconstructed outside canonical output using the unchanged original Vite settings and preserved pre-type-fix TypeScript. Its exact SHA-256 matched the already-recorded browser-run bundle hash; no canonical source swap or additional render was performed.",
+    "sha256": "1d12980ca87ebb1ccedbc4f4cd2534d9858675a2df2b79b1acff13247d66d3a3",
+    "bytes": 2005636
+  },
+  "changes": [
+    "Skip null PlayCanvas mesh references before adding to the Mesh set.",
+    "Add nonnull material references only.",
+    "Declare light angle/color arrays as numeric tuples."
+  ],
+  "typecheck_command": "node_modules/.bin/tsc --noEmit --strict --target ES2022 --module ESNext --moduleResolution bundler --lib ES2022,DOM,DOM.Iterable --skipLibCheck games/yuga-native/tools/build-observatory/viewer-source/main.ts",
+  "typecheck_exit_code": 0,
+  "visual_scope": "The original reviewed screenshots show the pre-type-fix bundle. The final bundle separately loaded and rendered the same GLB with identical mesh/material/triangle/skin/animation counts and functioning keyboard orbit. No fresh final-bundle screenshot or physical-GPU measurement is claimed."
+}

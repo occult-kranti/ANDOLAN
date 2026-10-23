@@ -1,0 +1,76 @@
+name: Add YUGA production observatory to the public site
+on:
+  push:
+    branches: [game/yuga-native-production]
+    paths:
+      - '.github/workflows/yuga-observatory.yml'
+      - 'games/yuga-native/tools/build-observatory/**'
+      - 'games/yuga-native/tools/production-art-stage/**'
+      - 'games/yuga-native/art/production-stage-oct23/**'
+      - 'games/yuga-native/art/source-kits/production-reuse-oct23/**'
+      - 'games/yuga-native/docs/research/production-stage-oct23/**'
+      - 'games/yuga-native/docs/research/production-reuse-oct23/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+env:
+  NPM_CONFIG_CACHE: /tmp/yuga-npm
+  # Observed public browser source; update deliberately after a new browser release.
+  SITE_BASELINE_REF: 176b6f8e71fcffd3d570d96e66643d8cb9893603
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the observatory source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Check out the exact preserved browser baseline
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ env.SITE_BASELINE_REF }}
+          path: .site-baseline
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: .site-baseline/package-lock.json
+      - name: Verify the read-only observatory and additive publisher
+        run: python3 -m unittest discover -s games/yuga-native/tools/build-observatory -p 'test_*.py' -v
+      - name: Restore the baseline's locked browser dependencies
+        working-directory: .site-baseline
+        run: npm ci
+      - name: Build the existing games and mechanics labs from that exact source
+        working-directory: .site-baseline
+        run: |
+          test "$(git rev-parse HEAD)" = "$SITE_BASELINE_REF"
+          npm run build:standalone
+          npm run yuga:build
+          npm run yuga:lab:build:tracks
+          node games/yuga/tools/assemble-site.mjs
+      - name: Add the reviewed static production dashboard
+        run: |
+          python3 games/yuga-native/tools/build-observatory/publish_site.py \
+            --site .site-baseline/dist/site \
+            --web games/yuga-native/tools/build-observatory/web \
+            --baseline-ref "$SITE_BASELINE_REF" \
+            --source-ref "$GITHUB_SHA"
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: .site-baseline/dist/site
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}production/
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build
+    steps:
+      - name: Publish the preserved games and production snapshot
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

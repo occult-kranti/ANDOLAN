@@ -1,0 +1,47 @@
+import { chromium } from '/workspace/ANDOLAN/node_modules/@playwright/test/index.mjs';
+import fs from 'node:fs';
+const out='/workspace/scratch/production-stage-oct23/viewer';
+const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-dev-shm-usage']});
+const result={started_at:new Date().toISOString(),url:'http://127.0.0.1:8766/viewer/',renderer:'Chromium headless with requested ANGLE/SwiftShader; no hardware FPS measurement',checks:[],errors:[],console:[],requests:[]};
+const page=await browser.newPage({viewport:{width:1440,height:1050},deviceScaleFactor:1});
+page.on('pageerror',e=>result.errors.push(e.message));
+page.on('console',m=>{if(m.type()==='error'||m.type()==='warning')result.console.push({type:m.type(),text:m.text().slice(0,500)});});
+page.on('response',r=>{if(r.status()>=400)result.requests.push({url:r.url(),status:r.status()});});
+try{
+ await page.goto(result.url,{waitUntil:'networkidle',timeout:120000});
+ await page.waitForFunction(()=>window.__YUGA_ASSET_VIEWER__?.status==='ready'||window.__YUGA_ASSET_VIEWER__?.status==='failed',{timeout:120000});
+ result.desktop=await page.evaluate(()=>window.__YUGA_ASSET_VIEWER__);
+ if(result.desktop.status!=='ready')throw Error('Viewer failed: '+JSON.stringify(result.desktop));
+ await page.waitForFunction(()=>window.__YUGA_ASSET_VIEWER__.renderedFrames>0);
+ await page.screenshot({path:out+'/desktop-front.png',fullPage:true});
+ result.checks.push({name:'actual GLB container and textures loaded',passed:true});
+ const before=await page.evaluate(()=>window.__YUGA_ASSET_VIEWER__.camera.yaw);
+ await page.locator('#viewer').focus();await page.keyboard.press('ArrowRight');
+ result.checks.push({name:'keyboard orbit changes actual camera',passed:await page.evaluate(v=>window.__YUGA_ASSET_VIEWER__.camera.yaw!==v,before)});
+ const distance=await page.evaluate(()=>window.__YUGA_ASSET_VIEWER__.camera.distance);
+ await page.locator('#zoom-in').click();
+ result.checks.push({name:'zoom button changes actual camera distance',passed:await page.evaluate(v=>window.__YUGA_ASSET_VIEWER__.camera.distance<v,distance)});
+ await page.locator('#reset').click();
+ result.checks.push({name:'reset restores initial camera',passed:await page.evaluate(v=>window.__YUGA_ASSET_VIEWER__.camera.yaw===v,before)});
+ const box=await page.locator('#viewer').boundingBox();await page.mouse.move(box.x+box.width*.5,box.y+box.height*.5);await page.mouse.down();await page.mouse.move(box.x+box.width*.7,box.y+box.height*.52,{steps:5});await page.mouse.up();
+ result.checks.push({name:'pointer orbit changes actual camera',passed:await page.evaluate(v=>window.__YUGA_ASSET_VIEWER__.camera.yaw!==v,before)});
+ await page.screenshot({path:out+'/desktop-orbit.png',fullPage:true});
+ const loaded=await page.evaluate(()=>window.__YUGA_ASSET_VIEWER__.camera.yaw);await page.waitForTimeout(350);
+ result.checks.push({name:'no automatic rotation',passed:await page.evaluate(v=>window.__YUGA_ASSET_VIEWER__.camera.yaw===v,loaded)});
+ result.checks.push({name:'source-only label remains visible',passed:await page.getByText('Source model · unrigged · no animations',{exact:true}).isVisible()});
+ result.checks.push({name:'no horizontal desktop overflow',passed:await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)});
+ const mobile=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1,reducedMotion:'reduce'});
+ mobile.on('pageerror',e=>result.errors.push('mobile:'+e.message));
+ await mobile.goto(result.url,{waitUntil:'networkidle',timeout:120000});await mobile.waitForFunction(()=>window.__YUGA_ASSET_VIEWER__?.status==='ready',{timeout:120000});
+ result.mobile=await mobile.evaluate(()=>window.__YUGA_ASSET_VIEWER__);await mobile.screenshot({path:out+'/mobile.png',fullPage:true});
+ result.checks.push({name:'mobile/reduced-motion actual mesh loaded',passed:result.mobile.status==='ready'});
+ result.checks.push({name:'no horizontal mobile overflow',passed:await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)});
+ const fail=await browser.newPage({viewport:{width:900,height:800}});await fail.route('**/rama-generated.glb',r=>r.fulfill({status:404,body:'not found'}));
+ await fail.goto(result.url,{waitUntil:'networkidle',timeout:120000});await fail.waitForFunction(()=>window.__YUGA_ASSET_VIEWER__?.status==='failed',{timeout:30000});
+ result.checks.push({name:'missing model shows useful error and retry',passed:await fail.locator('#retry').isVisible()});
+ await fail.unroute('**/rama-generated.glb');await fail.locator('#retry').click();await fail.waitForFunction(()=>window.__YUGA_ASSET_VIEWER__?.status==='ready',{timeout:120000});
+ result.checks.push({name:'retry recovers actual model',passed:true});await fail.close();await mobile.close();
+ result.finished_at=new Date().toISOString();result.passed=result.checks.every(x=>x.passed)&&result.errors.length===0;
+}catch(e){result.failure=e.stack;result.passed=false;}
+finally{fs.writeFileSync(out+'/receipt.json',JSON.stringify(result,null,2)+'\n');await browser.close();}
+console.log(JSON.stringify(result,null,2));process.exitCode=result.passed?0:1;

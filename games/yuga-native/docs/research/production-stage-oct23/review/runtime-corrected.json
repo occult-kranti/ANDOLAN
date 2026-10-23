@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-23T20:50:05.013621+00:00",
+  "source": "games/yuga-native/tools/build-observatory/observatory.py",
+  "source_sha256": "b2d36408da1af7639ff0488ea266f382473d461551251c4a135dc0b77f085876",
+  "scope": "Independent real localhost server/CLI routes, process liveness, concurrent writes and snapshot semantics. Synthetic jobs only; no model or GPU execution.",
+  "checks": [
+    {
+      "name": "live_api_owned_process_is_running",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "api_redacts_process_identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "read_only_health_and_no_cors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "host_rebinding_rejected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "post_has_no_execution_route",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unknown_api_rejected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "path_boundary_/../.git/config",
+      "passed": true,
+      "detail": {
+        "status": 422
+      }
+    },
+    {
+      "name": "path_boundary_/%2e%2e/.git/config",
+      "passed": true,
+      "detail": {
+        "status": 422
+      }
+    },
+    {
+      "name": "path_boundary_/%252e%252e/.git/config",
+      "passed": true,
+      "detail": {
+        "status": 422
+      }
+    },
+    {
+      "name": "path_boundary_/outside-link.txt",
+      "passed": true,
+      "detail": {
+        "status": 422
+      }
+    },
+    {
+      "name": "ttf_served_with_font_mime",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "mime": "font/ttf"
+      }
+    },
+    {
+      "name": "ended_process_becomes_stale_not_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "expired_heartbeat_stale_in_snapshot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "eight_real_concurrent_cli_emits_preserved",
+      "passed": true,
+      "detail": {
+        "exit_codes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "actual_cli_export_is_dated_snapshot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "completion_without_evidence",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "running_without_liveness",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "javascript_artifact",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": true,
+  "fixture_root": "/workspace/scratch/production-stage-oct23/review/runtime-205004",
+  "server_stopped": true,
+  "owned_child_stopped": true
+}

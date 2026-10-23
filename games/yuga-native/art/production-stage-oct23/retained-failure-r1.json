@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "status": "retained_failed_presentation",
+  "scratch_directory": "/workspace/scratch/production-stage-oct23/art/render-r1",
+  "failure": "Existing courtyard authoring uses (x,-game_z,height); an extra180degree rotation put architecture behind the camera. R1 context image therefore lacked intended backdrop.",
+  "bound_manifest_sha256": "9ece9047e76676528ab6dca97cbf7f09dfc6658bf38965a25d20fb72dd936647",
+  "bound_script_sha256": "613a5e6b33591de2cde2ccefd8fc9b4016b6f2ddcbddeec027f36ba0fb745b65",
+  "reconstructed_script": "render-r1/build_stage.py (reconstructed after the run by reversing the sole rotation fix; exact hash matches the execution manifest)",
+  "renders": [
+    {
+      "path": "hero-front.png",
+      "sha256": "6855716f0356992f4bbb08c0ae8966d3537473acc9edc2084a1df0e57348b0b1",
+      "bytes": 996317,
+      "width": 640,
+      "height": 800,
+      "seconds": 7.180571813019924,
+      "camera": {
+        "position": [
+          2,
+          -6,
+          2.05
+        ],
+        "target": [
+          0,
+          0,
+          1.02
+        ],
+        "ortho_scale": 2.32,
+        "pose": "embedded idle, frame 1; fixed for all four"
+      }
+    },
+    {
+      "path": "hero-face.png",
+      "sha256": "a4c53b2323b006ff4040c8b1c58a25bfb2315412a6bfee2d5f6d9ca13e2ab1a2",
+      "bytes": 1030511,
+      "width": 640,
+      "height": 800,
+      "seconds": 8.28250358600053,
+      "camera": {
+        "position": [
+          0.36,
+          -3,
+          1.83
+        ],
+        "target": [
+          0,
+          -0.025,
+          1.735
+        ],
+        "ortho_scale": 0.48,
+        "pose": "embedded idle, frame 1; fixed for all four"
+      }
+    },
+    {
+      "path": "hero-profile.png",
+      "sha256": "604a467db999d1749165c81c4e81d25375d0e3785793a89e3d1c8bce7e296ac1",
+      "bytes": 1022235,
+      "width": 640,
+      "height": 800,
+      "seconds": 6.660290261002956,
+      "camera": {
+        "position": [
+          5,
+          -0.1,
+          2.05
+        ],
+        "target": [
+          0,
+          0,
+          1
+        ],
+        "ortho_scale": 2.32,
+        "pose": "embedded idle, frame 1; fixed for all four"
+      }
+    },
+    {
+      "path": "hero-rear.png",
+      "sha256": "d74450d12456ee0f8acf46706ac6035fae23ccec3d84c60065f9ebef1349526e",
+      "bytes": 1025234,
+      "width": 640,
+      "height": 800,
+      "seconds": 7.023349525989033,
+      "camera": {
+        "position": [
+          -2.6,
+          5.5,
+          2.2
+        ],
+        "target": [
+          0,
+          0.05,
+          1
+        ],
+        "ortho_scale": 2.3,
+        "pose": "embedded idle, frame 1; fixed for all four"
+      }
+    },
+    {
+      "path": "lanka-water-court.png",
+      "sha256": "9720091901f72aa764d5b808ea732a9d79b9d30ba51bdb3fc92b213a7c911259",
+      "bytes": 1247162,
+      "width": 960,
+      "height": 640,
+      "seconds": 8.428922260005493,
+      "camera": {
+        "position": [
+          3.299999952316284,
+          -6.0,
+          2.3499999046325684
+        ],
+        "target": [
+          0.25,
+          0.3,
+          1.04
+        ],
+        "lens_mm": 52,
+        "fstop": 6.3
+      }
+    }
+  ],
+  "scene": {
+    "path": "lanka-water-stage.blend",
+    "sha256": "6743e5d29d1ebbd0e10c569e156f8291fc9566ed3406710dfe3024a9445f8eed",
+    "bytes": 43787828
+  },
+  "verification": {
+    "receipt": "render-r1/reopened-verification.json",
+    "passed": 9,
+    "failed": 1,
+    "cause": "Verifier invoked Blender -t1, overriding saved render threads2; exact-thread check correctly failed. Use documented -t2 and --python-exit-code1."
+  },
+  "correction": "R2 removes the spurious rotation and uses32samples; all10reopened checks pass. No canonical asset or hero geometry changed.",
+  "runtime_promoted": false,
+  "game_completion_credit": 0
+}

@@ -1,0 +1,90 @@
+{
+  "scope": "One shared batched visual review plus one correction confirmation. Synthetic UI fixtures, Chromium only. No screen reader or actual browser200percent zoom execution.",
+  "images": [
+    {
+      "run": "observatory-ui-r1",
+      "file": "observatory-ui-r1/desktop.png",
+      "sha256": "e590aebb2734bac7079de54f867f7abe581b7fb41386e8bd641512539ee8c91f",
+      "bytes": 481482,
+      "independently_viewed": true,
+      "original_scratch_path": "/workspace/scratch/observatory-ui-r1/desktop.png"
+    },
+    {
+      "run": "observatory-ui-r1",
+      "file": "observatory-ui-r1/narrow.png",
+      "sha256": "739c656abe0c9f6f8a422e7f20aa594adf68c3a6c4b8934cbe05d00bdc88112b",
+      "bytes": 518340,
+      "independently_viewed": true,
+      "original_scratch_path": "/workspace/scratch/observatory-ui-r1/narrow.png"
+    },
+    {
+      "run": "observatory-ui-r1",
+      "file": "observatory-ui-r1/zoom-equivalent-720css.png",
+      "sha256": "b4a0a6f6567a8b3653b3e520acb79397a277f55feffc1889fe1aee6337981b88",
+      "bytes": 452427,
+      "independently_viewed": true,
+      "original_scratch_path": "/workspace/scratch/observatory-ui-r1/zoom-equivalent-720css.png"
+    },
+    {
+      "run": "observatory-ui-r1",
+      "file": "observatory-ui-r1/minimum-320css.png",
+      "sha256": "4ac090cd2e5f91c518c4280fb1157e8dfb56472b1ffe5cce4dec41b051acda9d",
+      "bytes": 510237,
+      "independently_viewed": true,
+      "original_scratch_path": "/workspace/scratch/observatory-ui-r1/minimum-320css.png"
+    },
+    {
+      "run": "observatory-ui-r1",
+      "file": "observatory-ui-r1/saved-snapshot.png",
+      "sha256": "7caebb20bfb06f4f95cae6cf3cef3ff5fd7cb9012b606d866b813d5e8a1a0c4f",
+      "bytes": 481996,
+      "independently_viewed": true,
+      "original_scratch_path": "/workspace/scratch/observatory-ui-r1/saved-snapshot.png"
+    },
+    {
+      "run": "observatory-ui-r1",
+      "file": "observatory-ui-r1/unavailable.png",
+      "sha256": "e2d429fab5521613db05af7dbf9919374396cd8eece4d74ec0577f99dafe0bcd",
+      "bytes": 49836,
+      "independently_viewed": true,
+      "original_scratch_path": "/workspace/scratch/observatory-ui-r1/unavailable.png"
+    },
+    {
+      "run": "observatory-ui-r2",
+      "file": "observatory-ui-r2/desktop.png",
+      "sha256": "283f9487130c54c9e45881d5e7c1331dd318d084d3883b1c513a9daf02ccd00b",
+      "bytes": 480966,
+      "independently_viewed": true,
+      "original_scratch_path": "/workspace/scratch/observatory-ui-r2/desktop.png"
+    },
+    {
+      "run": "observatory-ui-r2",
+      "file": "observatory-ui-r2/narrow.png",
+      "sha256": "67118253f74556e96ef9d435dc88ff45c0dc7c3648bfb0856ef08b6af1a12b5a",
+      "bytes": 518005,
+      "independently_viewed": true,
+      "original_scratch_path": "/workspace/scratch/observatory-ui-r2/narrow.png"
+    }
+  ],
+  "findings": [
+    {
+      "id": "UI1",
+      "status": "resolved",
+      "finding": "Filtered-out selected job remained in inspector.",
+      "verification": "Corrected fixture tests and actual backend/frontend integration."
+    },
+    {
+      "id": "UI2",
+      "status": "resolved",
+      "finding": "Malformed/null static rows could reach render functions.",
+      "verification": "Final fixture negative cases reject with recoverable error."
+    },
+    {
+      "id": "UI3",
+      "status": "resolved",
+      "finding": "Decorative directional glyphs rendered as fallback squares.",
+      "verification": "Removed; desktop/narrow confirmation viewed."
+    }
+  ],
+  "visual_verdict": "PASS within stated observatory scope; no claim of finished game art."
+}

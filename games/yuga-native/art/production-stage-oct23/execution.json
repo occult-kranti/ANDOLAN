@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "7c7259260782c181b29276c4429353f9445f2a22",
+  "scope": "Actual isolated Blender imports, static CPU renders and reopened-data checks only. No canonical runtime change, online match, human playtest or hardware-FPS acceptance.",
+  "runs": [
+    {
+      "id": "existing-avatar-r1",
+      "command": [
+        "blender",
+        "-b",
+        "-t",
+        "2",
+        "--python",
+        "games/yuga-native/tools/production-art-stage/build_stage.py",
+        "--",
+        "--output",
+        "/workspace/scratch/production-stage-oct23/art/render-r1",
+        "--samples",
+        "16",
+        "--render"
+      ],
+      "process_exit": 0,
+      "acceptance": "failed presentation; backdrop outside intended camera",
+      "log": "/workspace/scratch/production-stage-oct23/art/render-r1.log",
+      "log_sha256": "032cc4ea727ba497b0ca0951ce6ca514d50eb2432148b88b449d353458dbede0"
+    },
+    {
+      "id": "existing-avatar-r2",
+      "command": [
+        "blender",
+        "-b",
+        "-t",
+        "2",
+        "--python",
+        "games/yuga-native/tools/production-art-stage/build_stage.py",
+        "--",
+        "--output",
+        "/workspace/scratch/production-stage-oct23/art/render-r2",
+        "--samples",
+        "32",
+        "--render"
+      ],
+      "process_exit": 0,
+      "acceptance": "five actual presentation views produced; no game-art acceptance",
+      "manifest": "existing-avatar/stage-manifest.json",
+      "manifest_sha256": "0d22983e3dbf7e21bcb984338f07cf2b62b0ffceb5d10cf7ad9f2cae9f198807",
+      "log": "/workspace/scratch/production-stage-oct23/art/render-r2.log",
+      "log_sha256": "d5ba518005a8c540ff45b885d54a5f964e365d6187f6c937d401ff5c2fd54887"
+    },
+    {
+      "id": "reopen-final",
+      "command": [
+        "blender",
+        "-b",
+        "-t",
+        "2",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "games/yuga-native/tools/production-art-stage/verify_scene.py",
+        "--",
+        "/workspace/scratch/production-stage-oct23/art/render-r2/lanka-water-stage.blend",
+        "/workspace/scratch/production-stage-oct23/art/render-r2/reopened-verification-final.json"
+      ],
+      "process_exit": 0,
+      "all_passed": true,
+      "checks": 10,
+      "receipt": "existing-avatar/reopened-verification-final.json",
+      "receipt_sha256": "6382eccd2b9e2000b6e5f48fb958deb69e15311e4f60b4866717f32ecf87267d",
+      "log": "/workspace/scratch/production-stage-oct23/art/reopened-verification-final.log",
+      "log_sha256": "bd6af4f21160445d20b17089bc982cf97a828d1e9da0797e763bc187ec860ec8"
+    },
+    {
+      "id": "generated-source-intake-r1",
+      "command": [
+        "blender",
+        "-b",
+        "-t",
+        "2",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "games/yuga-native/tools/production-art-stage/inspect_generated_hero.py",
+        "--",
+        "--source",
+        "games/yuga-native/art/production-stage-oct23/hero-source/rama-generated.glb",
+        "--output",
+        "/workspace/scratch/production-stage-oct23/art/generated-intake-r1"
+      ],
+      "process_exit": 0,
+      "acceptance": "two actual source views produced; zero armatures/zero actions",
+      "manifest": "hero-source/intake/source-intake.json",
+      "manifest_sha256": "adc9d7dd8e22b2e309a773dc6fc4d62a2f75d8486f176289224af9bd6eb2e8a4",
+      "log": "/workspace/scratch/production-stage-oct23/art/generated-intake-r1.log",
+      "log_sha256": "adcba9a2ddb762b73d5cb88fcf63aa491d7a9be4548e023d32a43172f39fcb3d"
+    }
+  ],
+  "renderer": "Blender4.3.2 CyclesCPU; final views32samples,2threads,no denoising",
+  "source_frozen": {
+    "build_stage.py": "604d601e020d7bad995bfe510da04be5b6b0355eb1acabc385648d497139f338",
+    "verify_scene.py": "0e1c75282fffb083e122961fae1a4d72132c5e15ed5dd1928ba4b5507b93c8d6",
+    "inspect_generated_hero.py": "609cab5d71739630cb798e72f9cbe1139306a509d4f0d57989a232b9f5f70ba6"
+  },
+  "proof_limit": "Blender without --python-exit-code can return0after a Python exception. Actual manifest/all_passed assertions are retained; all future documented commands use --python-exit-code1.",
+  "runtime_promoted": false,
+  "game_completion_credit": 0
+}

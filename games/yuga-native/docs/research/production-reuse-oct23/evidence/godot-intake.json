@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-23T20:43:50.738101+00:00",
+  "scope": "Actual Godot4.6.3 isolated texture import and StandardMaterial3D resource binding only; no rendered visual acceptance or runtimepromotion.",
+  "checks": [
+    {
+      "name": "godot-import",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/workspace/scratch/production-reuse-oct23/godot-fixture",
+        "--editor",
+        "--import",
+        "--quit"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 2.756,
+      "stdout_file": "evidence/godot-import.stdout.txt",
+      "stderr_file": "evidence/godot-import.stderr.txt"
+    },
+    {
+      "name": "godot-material",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/workspace/scratch/production-reuse-oct23/godot-fixture",
+        "--script",
+        "check_godot.gd"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.229,
+      "stdout_file": "evidence/godot-material.stdout.txt",
+      "stderr_file": "evidence/godot-material.stderr.txt"
+    }
+  ],
+  "fixture_hashes": {
+    "project.godot": "e256ad8f340a08a2552fe2de890737ba4f2457153d8a52d76f94709ef97a7583",
+    "sandstone.tres": "ad5d821c37ed58a59cfdb50ae9181c12cfcbb29106eaddca7e1d4e533d814989",
+    "check_godot.gd": "834b9b6252499ce48ed58fb304f45abebf271eedd1629dd8d7d1aa0311bdfb74"
+  },
+  "texture_manifest_sha256": "0ea28b23200bd87a2c4077673c8cb39f4f79217bb3b16c7186fb84d4f322d5d9"
+}

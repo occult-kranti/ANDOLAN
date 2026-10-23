@@ -1,0 +1,330 @@
+{
+  "source": {
+    "branch": "game/yuga-native-production",
+    "commit": "7c7259260782c181b29276c4429353f9445f2a22",
+    "dirty": true
+  },
+  "host": {
+    "logical_cpus": 5,
+    "quota_cpus": 4.0,
+    "memory_total_bytes": 34359738368,
+    "memory_available_bytes": 23111323648,
+    "gpu": {
+      "available": false,
+      "devices": [],
+      "reason": "No NVIDIA telemetry executable; other GPU backends are unmeasured."
+    }
+  },
+  "schema_version": 1,
+  "mode": "snapshot",
+  "collected_at": "2026-10-23T20:59:35+00:00",
+  "run": {
+    "id": "production-stage-001",
+    "title": "YUGA production atelier",
+    "updated_at": "2026-10-23T20:59:35+00:00"
+  },
+  "jobs": [
+    {
+      "id": "dashboard-ui",
+      "title": "Production dashboard interface",
+      "owner": "UI / design",
+      "stage": "Interface",
+      "status": "complete",
+      "device": "cloud_agent",
+      "model": "Hosted Codex agent",
+      "summary": "Responsive operational UI implemented. 29 Chromium fixture checks passed, plus independent real backend/frontend review.",
+      "next_step": "Keep source/live/saved distinctions and reuse existing controls for the next stage.",
+      "outputs": [
+        {
+          "label": "Source and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/tools/build-observatory/web/DESIGN.md",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/tools/build-observatory/web/DESIGN.md"
+        }
+      ],
+      "updated_at": "2026-10-23T20:59:34+00:00",
+      "started_at": "2026-10-23T20:43:39+00:00",
+      "finished_at": "2026-10-23T20:57:06+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "dashboard-runtime",
+      "title": "Live telemetry and event recorder",
+      "owner": "Runtime / telemetry",
+      "stage": "Infrastructure",
+      "status": "complete",
+      "device": "cloud_cpu",
+      "model": "Hosted Codex agent",
+      "summary": "Read-only telemetry and atomic record/export workflow tested. Actual-model viewer renders 96,660 triangles with orbit/zoom/reset; 12 browser checks passed.",
+      "next_step": "Start the local service on a connected worker for live observations; public Pages data is a dated snapshot.",
+      "outputs": [
+        {
+          "label": "Source and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/tools/build-observatory/README.md",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/tools/build-observatory/README.md"
+        }
+      ],
+      "updated_at": "2026-10-23T20:59:34+00:00",
+      "started_at": "2026-10-23T20:43:39+00:00",
+      "finished_at": "2026-10-23T20:57:06+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "reuse-intake",
+      "title": "Licensed source-kit intake",
+      "owner": "Reuse researcher",
+      "stage": "Source intake",
+      "status": "complete",
+      "device": "cloud_agent",
+      "model": "Hosted Codex agent",
+      "summary": "Verified three CC0 sandstone maps, 6.22 MB, and actual Godot material bindings. Existing optimizer correctly refused unsupported WebP extension; no derivative produced.",
+      "next_step": "Apply one accepted material family to the existing court task after actual day/night/collision review.",
+      "outputs": [
+        {
+          "label": "Source and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/production-reuse-oct23/README.md",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/production-reuse-oct23/README.md"
+        }
+      ],
+      "updated_at": "2026-10-23T20:59:34+00:00",
+      "started_at": "2026-10-23T20:43:39+00:00",
+      "finished_at": "2026-10-23T20:57:07+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "hero-art",
+      "title": "Rama and water-court art stage",
+      "owner": "Artist / technical art",
+      "stage": "Art production",
+      "status": "complete",
+      "device": "cloud_cpu",
+      "model": "Blender 4.3.2 / Cycles CPU",
+      "summary": "Seven actual Blender renders and 10 reopened scene checks completed. Existing animated avatar and new unrigged source have distinct evidence; artist defects remain explicit.",
+      "next_step": "Repair generated hair/face/cape topology, then rig/deform/animate and inspect in-game; current-avatar contact gates remain open.",
+      "outputs": [
+        {
+          "label": "Source and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/art/production-stage-oct23/README.md",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/art/production-stage-oct23/README.md"
+        }
+      ],
+      "updated_at": "2026-10-23T20:59:34+00:00",
+      "started_at": "2026-10-23T20:43:39+00:00",
+      "finished_at": "2026-10-23T20:57:07+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "gpu-model",
+      "title": "Original hero image-to-3D",
+      "owner": "GPU pipeline",
+      "stage": "Model intake",
+      "status": "complete",
+      "device": "public_gpu",
+      "model": "Microsoft TRELLIS.2 / 512",
+      "summary": "One supported anonymous 512 generation and one export succeeded, producing 4,480,716-byte Rama source. No skeleton or animations; actual front/rear and WebGL viewer inspected.",
+      "next_step": "Artist cleanup and retopology before rigging. This source is outside accepted runtime.",
+      "outputs": [
+        {
+          "label": "Source and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/production-stage-oct23/gpu/README.md",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/production-stage-oct23/gpu/README.md"
+        }
+      ],
+      "updated_at": "2026-10-23T20:59:34+00:00",
+      "started_at": "2026-10-23T20:45:18+00:00",
+      "finished_at": "2026-10-23T20:57:07+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "independent-review",
+      "title": "Independent acceptance and dashboard review",
+      "owner": "Reviewer",
+      "stage": "Verification",
+      "status": "review",
+      "device": "cloud_agent",
+      "model": "Hosted Codex agent",
+      "summary": "Runtime/UI integration, sources, original renders and actual GLB/viewer reviewed. Final snapshot/publisher/source consistency is in review.",
+      "next_step": "Finish exact-snapshot publication review and verify public bytes after deployment.",
+      "outputs": [
+        {
+          "label": "Source and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/production-stage-oct23/review/browser-integration.json",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/production-stage-oct23/review/browser-integration.json"
+        }
+      ],
+      "updated_at": "2026-10-23T20:59:35+00:00",
+      "started_at": "2026-10-23T20:43:39+00:00",
+      "finished_at": null,
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "gpu-1024",
+      "status": "blocked",
+      "summary": "Officially advertised 1024 comparator was denied by provider quota. Exactly one generation submission, zero exports and no 1024 model. 512 source remains unchanged.",
+      "next_step": "Use artist cleanup of the available source. A future supported comparator requires actual available provider quota.",
+      "outputs": [
+        {
+          "label": "Source and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/production-stage-oct23/gpu/ramasource-hires-comparator/README.md",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/production-stage-oct23/gpu/ramasource-hires-comparator/README.md"
+        }
+      ],
+      "title": "Rama 1024 resolution comparator",
+      "owner": "GPU pipeline",
+      "stage": "Source comparison",
+      "device": "public_gpu",
+      "model": "Microsoft TRELLIS.2 / 1024 requested",
+      "updated_at": "2026-10-23T20:59:35+00:00",
+      "started_at": null,
+      "finished_at": null,
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "cpu-model-quality",
+      "status": "blocked",
+      "summary": "Earlier real cloud Qwen 0.5B CPU generations ran, but both failed the bounded content check. The model service is stopped; no CPU LLM work is claimed running now.",
+      "next_step": "Qualify useful task output and tool protocol before assigning autonomous code. Hosted agents remain the lead in this stage.",
+      "outputs": [
+        {
+          "label": "Source and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/ps4-swarm-oct23/cpu/README.md",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ps4-swarm-oct23/cpu/README.md"
+        }
+      ],
+      "title": "CPU LLM task-quality gate",
+      "owner": "Model qualification",
+      "stage": "Model readiness",
+      "device": "cloud_cpu",
+      "model": "Qwen2.5-Coder-0.5B Q4_K_M",
+      "updated_at": "2026-10-23T20:59:35+00:00",
+      "started_at": null,
+      "finished_at": null,
+      "verification": {
+        "kind": "explicit_record"
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "id": "intake",
+      "title": "Pinned source and material intake",
+      "status": "complete",
+      "evidence": "Existing engine, rig, map and lighting reused; CC0 material hashes and Godot bindings verified."
+    },
+    {
+      "id": "source",
+      "title": "Original Rama 3D source intake",
+      "status": "complete",
+      "evidence": "Actual 512 GLB, Blender views and browser model preview. This completes source intake only; 1024 comparison quota denied."
+    },
+    {
+      "id": "lookdev",
+      "title": "Composed look development",
+      "status": "review",
+      "evidence": "Five current-avatar/court views retained. Actual day/night and remaining artistic gates are not closed."
+    },
+    {
+      "id": "topology",
+      "title": "Artist cleanup, topology and rig",
+      "status": "queued",
+      "evidence": "Repair rear hair, face, hands, cape/ornaments and seams before skinning, deformation, LODs and animation."
+    },
+    {
+      "id": "map-action",
+      "title": "Playable court and continuous action",
+      "status": "queued",
+      "evidence": "Existing Vayu 8 m footprint/routes/collision task and continuous root/feet/hand/bow contact review."
+    },
+    {
+      "id": "game",
+      "title": "Native integration and game acceptance",
+      "status": "queued",
+      "evidence": "Two-client authority and FG06 full 3v3 precede 6v6 / full roster. Desktop 17/78 accepted packets; mobile deferred."
+    }
+  ],
+  "assets": [
+    {
+      "id": "rama-source",
+      "title": "Rama — actual generated 3D",
+      "status": "unrigged source candidate",
+      "image_url": "media/rama-generated-front.png",
+      "model_url": "viewer/",
+      "summary": "Actual Blender render and interactive GLB. 96,660 triangles; no skin or animation. Hair/cape/face cleanup remains open."
+    },
+    {
+      "id": "rama-direction",
+      "title": "Rama — original concept target",
+      "status": "image direction",
+      "image_url": "media/hero-concept.png",
+      "summary": "Generated reference image. This visual target is separate from the actual mesh and playable hero."
+    },
+    {
+      "id": "court-stage",
+      "title": "Lanka water court — existing rig",
+      "status": "look-development evidence",
+      "image_url": "media/lanka-water-court.png",
+      "summary": "Actual Blender composition reusing the current rigged Rama, courtyard, water, diya and CC0 sandstone. Night comparator and playable collision gate remain open."
+    },
+    {
+      "id": "rama-rear",
+      "title": "Source rear — cleanup defects",
+      "status": "artist repair required",
+      "image_url": "media/rama-generated-rear.png",
+      "summary": "Actual rear geometry exposes pitted hair and smeared cape/ornament detail. Retained as a useful adverse view, not hidden by the concept image."
+    },
+    {
+      "id": "diya-source",
+      "title": "Lotus diya — earlier GPU source",
+      "status": "source intake",
+      "image_url": "media/diya-front.png",
+      "summary": "Previously generated source reused in the composition. Scale, topology, flame effect and collision remain separate gates."
+    }
+  ],
+  "sources": [
+    {
+      "name": "Godot 4.6.3",
+      "url": "https://github.com/godotengine/godot",
+      "license": "MIT engine",
+      "status": "Existing game engine reused"
+    },
+    {
+      "name": "Blender 4.3.2",
+      "url": "https://github.com/blender/blender",
+      "license": "GPL software; asset rights separate",
+      "status": "Actual CPU renderer"
+    },
+    {
+      "name": "Microsoft TRELLIS.2",
+      "url": "https://huggingface.co/spaces/microsoft/TRELLIS.2",
+      "license": "Pinned upstream/model metadata MIT; serving revision unverified",
+      "status": "Supported public GPU demo, quota enforced"
+    },
+    {
+      "name": "Poly Haven Sandstone Blocks 05",
+      "url": "https://polyhaven.com/a/sandstone_blocks_05",
+      "license": "CC0 asset",
+      "status": "Source intake under review"
+    }
+  ]
+}

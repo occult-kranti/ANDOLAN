@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-10-23T20:57:25.921610+00:00",
+  "tool_result_chunk": "f039d3",
+  "source_sha256_from_matching_browser_receipt": "c7fa96248d8614b23edcf232d4d4c4d889deef621ca181e38f81dda44957d848",
+  "command": [
+    "node_modules/.bin/tsc",
+    "--noEmit",
+    "--skipLibCheck",
+    "--strict",
+    "--target",
+    "ES2022",
+    "--module",
+    "ESNext",
+    "--moduleResolution",
+    "Bundler",
+    "--lib",
+    "ES2022,DOM",
+    "games/yuga-native/tools/build-observatory/viewer-source/main.ts"
+  ],
+  "exit_code": 2,
+  "source_findings": [
+    "Mesh | null passed to Set<Mesh> at line57",
+    "Material | null passed to Set<Material> at line57",
+    "Non-tuple array spread into setEulerAngles at line125"
+  ],
+  "harness_limit": "Initial invocation omitted DOM.Iterable, causing an additional NodeList iterator error. Corrected invocation must include ES2022,DOM,DOM.Iterable; that harness-only error is not a source finding.",
+  "scope": "Strict source typecheck only. Earlier actual browser execution had passed; this does not erase its narrower result."
+}
