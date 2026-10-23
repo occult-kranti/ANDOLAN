@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "scope": "Source-authoring infrastructure and one unchanged-donor template. No newhero art, quality tier or canonical promotion.",
+  "milestones": [
+    {
+      "id": 1,
+      "task": "accepted-source audit and14hero reuse boundaries",
+      "status": "verified",
+      "evidence": "rama-family-manifest.json"
+    },
+    {
+      "id": 2,
+      "task": "isolated shared-resource Arjuna template and rig-only Blender scaffold",
+      "status": "verified",
+      "evidence": "pilot/ and blender-save-reopen.json"
+    },
+    {
+      "id": 3,
+      "task": "strict incompatible intake, tests and10round roadmap",
+      "status": "verified_authoring_scope_only",
+      "evidence": "intake-tests.log and roadmap.json"
+    }
+  ],
+  "unittest": {
+    "command": "python3 -m unittest discover -s games/yuga-native/tools/hero-family-reuse -p test_intake.py -v",
+    "tests": 20,
+    "seconds": 33.514,
+    "failures": 0,
+    "passed": true,
+    "log_sha256": "8387940d39e04b3a3793d4eda5e8e6c3cde9e7c08a6d71273589c429125a8249"
+  },
+  "blender": {
+    "checks": 8,
+    "passed": true,
+    "report": "blender-save-reopen.json",
+    "geometry_link_claim": "No live Blender geometry link: rig-only scaffold records canonical source path/hash for verified reimport."
+  },
+  "pins": {
+    "direct_files": 19,
+    "runtime_clips": 23,
+    "embedded_actions": 9,
+    "roster_profiles": 14
+  },
+  "files": [
+    {
+      "path": "tools/hero-family-reuse/intake.py",
+      "bytes": 18145,
+      "sha256": "d7c0741e4bf3d84f973618eddc201abbdb78928bd36835e607c2da85dfdeb579"
+    },
+    {
+      "path": "tools/hero-family-reuse/test_intake.py",
+      "bytes": 8727,
+      "sha256": "1829d4ea211b8bd6c7359eb3e1d388dc5c0aa4c1d1f872b3e63a5e40af226ed6"
+    },
+    {
+      "path": "tools/hero-family-reuse/family_template.gd",
+      "bytes": 4260,
+      "sha256": "c09fb7f8d3347f885b91b50364e7a6de194a88a7c57cdd35c4ccaa3524962a8a"
+    },
+    {
+      "path": "tools/hero-family-reuse/probe_template.gd",
+      "bytes": 4761,
+      "sha256": "0cecf56f6759b15e6422e145deb515025a8a7a0d5629b65cbe9c0ac748628266"
+    },
+    {
+      "path": "tools/hero-family-reuse/build_armature_template.py",
+      "bytes": 4743,
+      "sha256": "c59cc64b74327a677842d4e26c89e5f0b9a06f0142b52f7fad2e971e8b6ecbd5"
+    },
+    {
+      "path": "docs/research/hero-family-reuse-oct23/rama-family-manifest.json",
+      "bytes": 195365,
+      "sha256": "33b3b93522849761204fd9b68c57e0a311f487969089dce61bd4b9c3077116b1"
+    },
+    {
+      "path": "docs/research/hero-family-reuse-oct23/pilot/arjuna-template.json",
+      "bytes": 6547,
+      "sha256": "f456301901c26d42f519df6849d3722e459fcec3a489f85e5f33d8b9ab586a72"
+    },
+    {
+      "path": "docs/research/hero-family-reuse-oct23/pilot/arjuna-template.tscn",
+      "bytes": 469,
+      "sha256": "f6104c4c7afe8c0645e1ac6a9d17f34952724deb2a269879894bdeeccb60b04c"
+    },
+    {
+      "path": "docs/research/hero-family-reuse-oct23/pilot/arjuna-rig-authoring-template.blend",
+      "bytes": 1047787,
+      "sha256": "8e277ace274e577470edb0dc7d7b020ce11d32849ed45d2f5da837ad74be700b"
+    },
+    {
+      "path": "docs/research/hero-family-reuse-oct23/roadmap.json",
+      "bytes": 16829,
+      "sha256": "3b13a4b07a19363d6ab99f2a839f23788de3b6df1f2ac23aba0aac4c0f205fb0"
+    }
+  ],
+  "runtime_promoted": false,
+  "new_heroes_completed": 0,
+  "heavy_render_used": false,
+  "remaining_artist_gates": [
+    "original face and readable silhouette",
+    "authored outfit/materials and LODs",
+    "weapon/hand/string contacts",
+    "unique abilities and counters",
+    "continuous motions and physical appendages",
+    "independent matched-view art review",
+    "real hardware frame/VRAM profiles"
+  ],
+  "independent_review": {
+    "receipt": "independent-review/receipt.json",
+    "receipt_sha256": "a06c411849a432a6fdf71619d02017a5f6f5912b37fdc276b22a4ab9c1221293",
+    "candidate_request_cases_passed": 24,
+    "individual_pin_drift_cases_passed": 19,
+    "owner_regressions_passed": 20,
+    "native_template_checks_passed": 13,
+    "sharing_lifecycle_checks_passed": 10,
+    "blender_reopen_checks_passed": 6,
+    "scope": "Authoring infrastructure/unchanged donor template only; no finishedhero or rosterpromotion."
+  }
+}

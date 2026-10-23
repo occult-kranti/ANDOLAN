@@ -1,0 +1,105 @@
+{
+  "cases": 11,
+  "checks": [
+    {
+      "name": "minimal embedded static preflight reaches declared positive contract",
+      "passed": true,
+      "result": {
+        "document": {
+          "asset": {
+            "version": "2.0"
+          },
+          "buffers": [
+            {
+              "byteLength": 4.0
+            }
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "name": "asset:null",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "gltf_version"
+      }
+    },
+    {
+      "name": "asset:boolean",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "gltf_version"
+      }
+    },
+    {
+      "name": "skins:null",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "array_contract"
+      }
+    },
+    {
+      "name": "skins:emptydictionary",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "array_contract"
+      }
+    },
+    {
+      "name": "skins:emptystring",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "array_contract"
+      }
+    },
+    {
+      "name": "animations:null",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "array_contract"
+      }
+    },
+    {
+      "name": "animations:emptydictionary",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "array_contract"
+      }
+    },
+    {
+      "name": "extensionsUsed:null",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "array_contract"
+      }
+    },
+    {
+      "name": "extensionsUsed:dictionary",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "array_contract"
+      }
+    },
+    {
+      "name": "required-only unsupported extension",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "reason": "unsupported_extension"
+      }
+    }
+  ],
+  "loader_sha256": "dbafadd938cc7cf04e1bbf1b002abd086c6ebed1e002c66c0c0d0fb87ec67a2a",
+  "passed": true,
+  "scope": "Independent pure preflight field-type counterexamples only; no native parser, renderer or canonical integration. A structured rejection is required, not a Godot script error or untyped acceptance."
+}

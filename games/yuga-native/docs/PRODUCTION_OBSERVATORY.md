@@ -12,6 +12,15 @@ remaining artistic and gameplay gates. Current cloud observations use
 describe the earlier run. Private state is ignored by Git and must be
 initialized afresh if absent; never restore another process's liveness.
 
+The [next ten gated stages](research/ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md)
+assign six owners around existing production sources. Separate dashboard jobs
+track the [Rama-family template](research/hero-family-reuse-oct23/README.md),
+[CC0 map intake](research/map-code-reuse-oct23/README.md) and protected donor-hair
+study. Shared resources, isolated previews and rejected masks do not count as
+new finished heroes or a finished map. There is no active local inference
+server or attached production GPU in this checkpoint; hosted agents and
+bounded CPU authoring/render jobs are recorded separately.
+
 ## View the work
 
 The [public dashboard](https://occult-kranti.github.io/ANDOLAN/production/) and [interactive source viewer](https://occult-kranti.github.io/ANDOLAN/production/viewer/) were first deployed from source `069ab775`. Latest checkpoint publication is recorded in [the new publication packet](research/ten-rounds-oct23/publication/README.md). [The independent public-byte audit](research/production-stage-oct23/publication/README.md) verifies 19 successful HTTP observations, 13 exact source-file matches and five preserved game/lab entry points. GitHub Pages serves a **saved snapshot**. Its collection timestamp and recorded-running labels remain visible; polling that file does not make the cloud's hardware live. The browser renders the actual self-hosted GLB using the project's existing PlayCanvas engine, with orbit/zoom/reset controls. It does not turn the source mesh into an animated game hero.

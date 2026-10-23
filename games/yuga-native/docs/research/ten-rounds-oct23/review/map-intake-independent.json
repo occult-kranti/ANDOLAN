@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "decision": "accept-hardened-pinned-source-intake-only",
+  "source": {
+    "path": "games/yuga-native/assets/environment/lanka_courtyard.glb",
+    "sha256": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+    "element": "COL_BEVEL_Warm_carved_sandstone",
+    "triangles": 1296,
+    "units": "metres; native GLB Y-up; rigid right-handed placement only"
+  },
+  "current_tool_hashes": {
+    "map_loader.gd": "dbafadd938cc7cf04e1bbf1b002abd086c6ebed1e002c66c0c0d0fb87ec67a2a",
+    "test_intake.gd": "7b356bf451fa572902e480610690854cba30b04c7ab781a3e5a3dc2cde4a98db"
+  },
+  "fresh_stage": {
+    "path": "/workspace/scratch/ten-rounds-oct23/review/map-quality-hardened",
+    "source_manifest_sha256": "43ecc6a4332ce69660abffa0ca9615b72b5858eb609f78520455e24fc87a05fb",
+    "native_report": "map-intake-native23.json",
+    "checks": 23,
+    "passed": true,
+    "exit_code": 0,
+    "clean_log": "map-intake-native23.log"
+  },
+  "independent_counterexamples": {
+    "probe": "map-inspect-adversarial.gd",
+    "probe_sha256": "7f4f0df2eab8b6b24ef943182111523f51ea11d875970cc5f97638568600c495",
+    "before": {
+      "report": "map-inspect-r1.json",
+      "passed": false,
+      "cases": 11,
+      "passed_cases": 1,
+      "loader_sha256": "c640253a39ef1029ad90681fedfe281da000d1e018b94cdae3ef70d14fc9d6ab",
+      "exit_code": 1,
+      "observation": "Five runtime script errors and five malformed inputs incorrectly accepted; only the positive contract passed."
+    },
+    "after": {
+      "report": "map-inspect-r2.json",
+      "passed": true,
+      "cases": 11,
+      "exit_code": 0,
+      "log": "map-inspect-r2.log",
+      "observation": "Same ten malformed input variants now return structured rejection; positive contract still passes. This is pure preflight coverage, not a generic glTF parser claim."
+    }
+  },
+  "actual_preview": {
+    "path": "/workspace/scratch/map-code-reuse-oct23/preview-final/existing-courtyard-element.png",
+    "sha256": "3c5b6e5c0cfe8f69366bc1da41a376962581fa884c06289395b58f0319f35682",
+    "runner_report_sha256": "37db76c9901b5c9fc77cbd710a081b970cc84a234f75bc0689de2ba49474e87d",
+    "renderer": "gl_compatibility",
+    "adapter": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "independently_viewed": true,
+    "observed": "Two separated wall planes and two capped piers with a readable sandstone material on a dark background. This is a functional structural-element/material reference, not an assembled environment.",
+    "source_relation": "Earlier source-pinned preview remains from the original intake-final helper. The corrected guards do not change approved source geometry/material; this report does not relabel the old render as a capture of the hardened helper."
+  },
+  "scope_limits": [
+    "Hash pin rejects any source other than the exact existing approved courtyard before GLTFDocument; malformed pure inspect failures were still real callable-contract defects.",
+    "No canonical Confluence placement, navigation or assembled full-map acceptance.",
+    "Triangle-concave collision and the stated 36 rays do not prove all player capsule/camera/army routes.",
+    "No finished artistic/commercial quality, temporal, online authority or physical-GPU performance claim.",
+    "Code repository licenses do not grant unrelated game asset rights."
+  ],
+  "next_gate": "One explicitly named rigid placement fixture, preserving source provenance/units and exact collision, followed by real capsule/camera/army-route and ordinary-distance moving day/night inspection before root integration.",
+  "runtime_promoted": false,
+  "finished_map": false,
+  "game_completion_credit": 0
+}

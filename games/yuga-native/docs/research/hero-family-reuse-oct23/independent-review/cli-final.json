@@ -1,0 +1,46 @@
+{
+  "intake_sha256": "d7c0741e4bf3d84f973618eddc201abbdb78928bd36835e607c2da85dfdeb579",
+  "cases": [
+    {
+      "name": "mesh-unskinned",
+      "command": [
+        "python3",
+        "games/yuga-native/tools/hero-family-reuse/intake.py",
+        "validate",
+        "--manifest",
+        "games/yuga-native/docs/research/hero-family-reuse-oct23/rama-family-manifest.json",
+        "--hero",
+        "arjuna",
+        "--source",
+        "/workspace/scratch/hero-family-independent-oct23/r1/mesh-unskinned.glb",
+        "--source-sha256",
+        "527149af85b48785727e11bbc6d0f2ffa2ca1d590a76870e5698ad6e2051ff6e"
+      ],
+      "exit_code": 2,
+      "stdout": "{\"ok\": false, \"errors\": [\"INVALID_SKIN_WEIGHTS\", \"INCOMPATIBLE_MESH_SKIN_BINDING\"], \"hero_id\": \"arjuna\", \"status\": \"blocked\", \"finished_hero\": false, \"runtime_promoted\": false}\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "mesh-nonfinite-transform",
+      "command": [
+        "python3",
+        "games/yuga-native/tools/hero-family-reuse/intake.py",
+        "validate",
+        "--manifest",
+        "games/yuga-native/docs/research/hero-family-reuse-oct23/rama-family-manifest.json",
+        "--hero",
+        "arjuna",
+        "--source",
+        "/workspace/scratch/hero-family-independent-oct23/r1/mesh-nonfinite-transform.glb",
+        "--source-sha256",
+        "301d2a97b462ac02270b38e4caa6d31b4e8618d367278667858fef302b9c803f"
+      ],
+      "exit_code": 2,
+      "stdout": "{\"ok\": false, \"errors\": [\"INVALID_SOURCE_DATA:AssertionError\"], \"hero_id\": \"arjuna\", \"status\": \"blocked\", \"finished_hero\": false, \"runtime_promoted\": false}\n",
+      "stderr": "",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

@@ -116,3 +116,21 @@ swap. The later canonical caller has separate headless integration evidence;
 those art images are not presented as captures of the later source. Acceptance
 of the isolated VFX study does not promote it into gameplay. No commercial game
 client or assets were analyzed in this review.
+
+
+Followup reviews retain their own exact source versions:
+
+| Followup | Decision and evidence |
+| --- | --- |
+| Render-resource CI fixture | [Accepted test-only correction](render-resource-ci-review-final.json): strict metadata guards plus separate three-surface pilot resource checks pass 40/40. The unchanged legacy baseline still produces its same three expected failures. No product predicate was loosened. Remote CI remains the lead's responsibility. |
+| Donor-groom omission mask | [Rejected](groom-mask-independent.json): three actual diagnostic views and decoded original-image witnesses show fragmented hair/cape boundaries. Full covered-texel followup finds 1,226 unsafe faces; the remaining 1,116 form 103 components. No deletion, fitting or export approval. |
+| Reused courtyard element | [Accepted hardened known-source intake](map-intake-independent.json): fresh native 23/23 checks and unchanged independent 11/11 malformed-field counterexamples pass. Original failures and the earlier Compatibility/llvmpipe preview remain separately identified. No whole-map or visual-quality acceptance. |
+| Next ten-round queue | [No critical planning contradiction found](next-ten-plan-review.json). This is a conditional execution plan; it grants no execution or completion credit. |
+
+The [additive CI-step review](authoring-ci-workflow-review.json) confirms that
+canonical assets are not regenerated, direct failures propagate and temporary
+JSON evidence has explicit archive paths. This is a static workflow review,
+not a remote CI success claim. The [curated groom checkpoint review](groom-checkpoint-scope-review.json)
+verifies all 30 manifest/tool hashes and the saved master hash; it preserves
+the rejected omission gate and distinguishes the owner's 18-check cold reopen
+from independently replayed checks.

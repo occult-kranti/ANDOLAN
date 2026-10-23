@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "task": "YUGA ten-round continuation: independent publication-source review",
+  "reviewed_at": "2026-10-23T22:24:53.738549+00:00",
+  "reviewer": "publication_source_review (delegated independent read-only source check)",
+  "baseline_commit": "067ad5d5e12b4de71d75b658aa511beb8f175fc9",
+  "observed_head": "506a7a887b7594fbb490e589ba940c072ec1850d",
+  "snapshot": {
+    "mode": "snapshot",
+    "collected_at": "2026-10-23T22:21:30+00:00",
+    "source_commit": "067ad5d5e12b4de71d75b658aa511beb8f175fc9",
+    "source_dirty": true
+  },
+  "verdict": "accepted_for_local_source_and_prepared_media_contract_with_nonblocking_link_followup",
+  "claims": [
+    {
+      "claim": "MP4 is selected and copied exactly without changing assembled baseline bytes",
+      "decision": "accepted",
+      "evidence": "publish_site.MEDIA_TYPES adds .mp4; existing staging/census/no-existing-production controls stay intact; focused linked-video fixture passes; all six prepared local media entries match manifest and source bytes."
+    },
+    {
+      "claim": "Local MP4 GET has correct media type and exact payload",
+      "decision": "accepted",
+      "evidence": "test_real_http_is_read_only_local_and_returns_bounded_errors passes, checking 200, video/mp4, and exact fixture bytes; actual prepared MP4 probes as H.264 in MP4, 960x640, 72 frames, 12/1 fps, 6.000000 s."
+    },
+    {
+      "claim": "Path and traversal boundaries remain enforced",
+      "decision": "accepted",
+      "evidence": "Existing static traversal, encoded slash/double encoding, symlink, artifact path, credential URL, source mutation, and source/baseline census adverse tests pass; new suffix shares those guards."
+    },
+    {
+      "claim": "Snapshot inflates completed art/game or stale live activity",
+      "decision": "rejected",
+      "evidence": "Snapshot is explicitly saved; frontend labels running as Recorded running outside live mode. Milestones are 6 complete, 2 blocked, 1 review, 1 running. Hero cleanup/rig blocked, VFX review with strict conservative framing failure retained, stone study isolated, full-game gates open. Retained older Rama viewer is explicitly original unrigged source; rejected binders are outside runtime."
+    },
+    {
+      "claim": "Current source commit or deployed bytes verified by this review",
+      "decision": "unrun",
+      "evidence": "The snapshot is a dated dirty-baseline observation. Observed HEAD advanced during review; hashes below pin reviewed files. No CI, renderer, native input, external network, online fetch, deployment, or live-site verification was run."
+    }
+  ],
+  "checks": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest -v test_observatory test_publish_site",
+      "cwd": "games/yuga-native/tools/build-observatory",
+      "exit_code": 0,
+      "tests": 33,
+      "result": "all passed",
+      "reported_duration_seconds": 0.983
+    },
+    {
+      "command": "ffprobe -v error -select_streams v:0 -show_entries format=format_name,duration:stream=codec_name,codec_type,width,height,nb_frames,r_frame_rate -of json games/yuga-native/tools/build-observatory/web/media/reused-effects.mp4",
+      "exit_code": 0,
+      "result": "H.264 MP4; 960x640; 72 frames; 12/1 fps; 6.000000 seconds"
+    },
+    {
+      "command": "In-memory publisher.validate_snapshot using approved non-viewer paths plus existing viewer/index.html marker; exact six-file source/manifest byte/hash comparison",
+      "result": "passed; no bundle contents searched and no local publication installed"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "low",
+      "blocking": false,
+      "file": "games/yuga-native/tools/build-observatory/web/status.json",
+      "job_id": "publication",
+      "output_label": "Local executed checks",
+      "issue": "Output has a path but no url; web/app.js line 147 passes output.url to link(), so this evidence is rendered as plain text.",
+      "action": "Root may add the repository HTTPS evidence URL when preparing its final snapshot."
+    }
+  ],
+  "source_hashes": {
+    "games/yuga-native/tools/build-observatory/observatory.py": {
+      "bytes": 28004,
+      "sha256": "bd7c13ffbccf7a53430571310003a2d012231ba4b4c57f18c10503aa6dae36ef"
+    },
+    "games/yuga-native/tools/build-observatory/publish_site.py": {
+      "bytes": 11389,
+      "sha256": "6aa94e44223865b28c34a7494c60a13d79cf5a3f0b746342588649c1412b75e7"
+    },
+    "games/yuga-native/tools/build-observatory/test_observatory.py": {
+      "bytes": 13432,
+      "sha256": "70079364b82d7be2765e37c772719ac4a707076116f0ee692a5b692ab6010e56"
+    },
+    "games/yuga-native/tools/build-observatory/test_publish_site.py": {
+      "bytes": 11403,
+      "sha256": "37deb27741c9822fd9844b3496e4f4dbbe265b0cd84ed3b3578f554a63e534de"
+    },
+    "games/yuga-native/tools/build-observatory/web/status.json": {
+      "bytes": 15447,
+      "sha256": "e5479032a87a498c0685003d361223367d6cacc38426002e5e13ac3766203a0e"
+    },
+    "games/yuga-native/tools/build-observatory/web/app.js": {
+      "bytes": 19502,
+      "sha256": "69d25072959b82e5aa9e8b1f143b13c2bab957a1b17aa48e8c3b56efaaea14ba"
+    },
+    "games/yuga-native/docs/research/ten-rounds-oct23/root/public-media.json": {
+      "bytes": 1667,
+      "sha256": "3f0b3d34da15f6862a7653069745041c34b6a161f4a991ee5fff63643d12dd1f"
+    },
+    "games/yuga-native/docs/research/ten-rounds-oct23/root/local-validation.json": {
+      "bytes": 1151,
+      "sha256": "23110303c30d828ec6e8774de1d1c341fd94985c1caf1e164ec6b6312e35e7c3"
+    },
+    "games/yuga-native/art/ten-rounds-oct23/vfx/README.md": {
+      "bytes": 5237,
+      "sha256": "7db15c5f7f72d1879ac75ec2e7b21872a166043695363b655c00ec3f0848ca66"
+    }
+  },
+  "prepared_local_media": [
+    {
+      "prepared_local_path": "games/yuga-native/tools/build-observatory/web/media/wind-court-before.png",
+      "source": "games/yuga-native/art/ten-rounds-oct23/world/r4/baseline-close-day.png",
+      "exact_source_copy": true,
+      "bytes": 238554,
+      "sha256": "45568a596c4a86bc6392600ac877376dc929d3a7ef9d04c21940d67158218947"
+    },
+    {
+      "prepared_local_path": "games/yuga-native/tools/build-observatory/web/media/wind-court-after.png",
+      "source": "games/yuga-native/art/ten-rounds-oct23/world/r4/pilot-close-day.png",
+      "exact_source_copy": true,
+      "bytes": 238923,
+      "sha256": "7e38917523da977100a05c4103028a87d51201f7968824b9d7aadc4d29072719"
+    },
+    {
+      "prepared_local_path": "games/yuga-native/tools/build-observatory/web/media/wind-court-night.png",
+      "source": "games/yuga-native/art/ten-rounds-oct23/world/r4/pilot-close-night.png",
+      "exact_source_copy": true,
+      "bytes": 240730,
+      "sha256": "6325a374e0c5f7afe8d3578c794b62fc6d58d0a41ac76dbf2776aa4ce47c7b98"
+    },
+    {
+      "prepared_local_path": "games/yuga-native/tools/build-observatory/web/media/reused-effects.png",
+      "source": "games/yuga-native/art/ten-rounds-oct23/vfx/night.png",
+      "exact_source_copy": true,
+      "bytes": 69095,
+      "sha256": "7b45b75b54232732cd3605f6c5052e3494eece4733e82c1fdcd4e001cbb30a59"
+    },
+    {
+      "prepared_local_path": "games/yuga-native/tools/build-observatory/web/media/reused-effects.mp4",
+      "source": "games/yuga-native/art/ten-rounds-oct23/vfx/sequence.mp4",
+      "exact_source_copy": true,
+      "bytes": 140669,
+      "sha256": "2f0c9e81e50deb9ecf30b771e041b53c6feed4b20635f29f07b3053a39673453"
+    },
+    {
+      "prepared_local_path": "games/yuga-native/tools/build-observatory/web/media/wind-court-pbr-candidate.png",
+      "source": "games/yuga-native/art/ten-rounds-oct23/world/pbr-r1/optional-cc0-pbr-close-day.png",
+      "exact_source_copy": true,
+      "bytes": 415577,
+      "sha256": "ef7bf9d1ff9de5e71e348b9728f318a548fb101b17e6a182fb29a3fb4d5f740e"
+    }
+  ],
+  "limits": [
+    "All media observations are prepared local dashboard files, never online/public/live fetches.",
+    "Unit fixtures exercise byte copying and MIME response; actual codec/container evidence comes from the separate local ffprobe.",
+    "Source review does not independently re-award native art/game acceptance, GPU performance, or online qualification.",
+    "Root owns any snapshot refresh, Git changes, CI interpretation, publication, and actual public-byte verification."
+  ]
+}

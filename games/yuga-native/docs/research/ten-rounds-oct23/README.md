@@ -6,6 +6,15 @@ six concurrent specialists, followed by integration and publication. The
 [machine-readable ledger](rounds.json) records each stage's actual outcome.
 It is not ten completed game-development rounds or sixty separate assignments.
 
+The [next ten conditional rounds](REUSE_FIRST_NEXT_TEN.md) assign six owners
+per stage around concrete existing sources. New outputs include a
+[shared Rama-family authoring template](../hero-family-reuse-oct23/README.md),
+[tested CC0 map intake and upstream license matrix](../map-code-reuse-oct23/README.md),
+and [unfitted clean-donor editing scaffold](../../../art/hero-donor-groom-oct23/README.md).
+Arjuna's template retains Rama's appearance. The generated hair omission mask
+is rejected after full-texel and fragmentation checks; no source faces were
+deleted and no new hero is promoted.
+
 ## Reuse contracts
 
 Keep the existing Godot game, player, army, authority, traversal, UI and input
@@ -42,8 +51,10 @@ The conservative rear-hair micro-edit is rejected: source preservation passed,
 but matched images still show the pitted/melted form. The initial nearest-surface
 rig transfer is rejected: normalized weights still connect forearm vertices to
 leg/cloth regions and create severe triangular stretching. Neither candidate
-replaces the generated source or current playable hero. A corrected anatomical
-transfer must earn its own outcome.
+replaces the generated source or current playable hero. The anatomy-gated R2
+correction also failed: it damaged REST edges before animation and worsened
+absolute action damage. The next task is measured asymmetric correspondence
+and explicit garment/body regions, rather than another blind transfer sweep.
 
 The WebP adapter is compatibility tooling. Actual Rama and diya outputs save
 only 292 and 336 bytes; triangle/vertex counts are unchanged. These results
@@ -53,7 +64,10 @@ The world pilot replaces only `sun-lift-west`, keeping its 8 m envelope and
 roof height, other seven courts and the existing signals. Its author fixture
 and independent triangle/physics probes precede native visual review. Any
 runtime promotion must remove the old full-box collider, then verify the
-actual integrated scene.
+actual integrated scene. That geometry integration now passes 106 local
+world/route/stress/counterexample checks. A separate six-image native PBR study
+reuses the existing CC0 sandstone kit and is accepted as a material direction;
+it does not change the canonical material.
 
 ## Quality and continuation
 

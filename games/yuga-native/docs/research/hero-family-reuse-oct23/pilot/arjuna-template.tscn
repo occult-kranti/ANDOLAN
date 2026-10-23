@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/heroes/rama-hero.glb" id="1_donor"]
+[ext_resource type="Script" path="res://tools/hero-family-reuse/family_template.gd" id="2_setup"]
+
+[node name="ArjunaAuthoringTemplate" type="Node3D"]
+script = ExtResource("2_setup")
+hero_id = "arjuna"
+metadata/authoring_template_only = true
+metadata/finished_hero = false
+
+[node name="SharedRamaDonor" parent="." instance=ExtResource("1_donor")]

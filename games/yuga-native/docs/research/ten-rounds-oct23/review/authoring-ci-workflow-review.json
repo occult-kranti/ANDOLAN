@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "decision": "accept-additive-authoring-only-ci-step-static-review",
+  "workflow_sha256": "f19d44cdcd8a242b0d568bf43a95128c2d2de4082e1c75dcaad0d3835a96ee60",
+  "scope": "Static read-only workflow/entry-point review; no remote CI success claim, no repeat render and no duplicated family parser review.",
+  "source_pins": {
+    "tools/hero-family-reuse/intake.py": "d7c0741e4bf3d84f973618eddc201abbdb78928bd36835e607c2da85dfdeb579",
+    "tools/hero-family-reuse/test_intake.py": "1829d4ea211b8bd6c7359eb3e1d388dc5c0aa4c1d1f872b3e63a5e40af226ed6",
+    "tools/hero-family-reuse/probe_template.gd": "0cecf56f6759b15e6422e145deb515025a8a7a0d5629b65cbe9c0ac748628266",
+    "docs/research/hero-family-reuse-oct23/rama-family-manifest.json": "33b3b93522849761204fd9b68c57e0a311f487969089dce61bd4b9c3077116b1",
+    "tools/map-reuse-intake/prepare.py": "594fe998e60a2d5df5a36056aeebe1d99442f52ffc0974213a18c91ba07f40ae",
+    "tools/map-reuse-intake/map_loader.gd": "dbafadd938cc7cf04e1bbf1b002abd086c6ebed1e002c66c0c0d0fb87ec67a2a",
+    "tools/map-reuse-intake/test_intake.gd": "7b356bf451fa572902e480610690854cba30b04c7ab781a3e5a3dc2cde4a98db"
+  },
+  "python_test_methods_current": 20,
+  "checks": [
+    {
+      "name": "after required Godot editor import",
+      "passed": true
+    },
+    {
+      "name": "uses committed manifest validate, not manifest audit or template create",
+      "passed": true
+    },
+    {
+      "name": "Python fixtures only write within TemporaryDirectory; manifest build in unit setup is in memory",
+      "passed": true
+    },
+    {
+      "name": "native probe only writes supplied temporary JSON and sibling reopened reference scene",
+      "passed": true
+    },
+    {
+      "name": "map prepare requires a fresh outside-checkout output; source GLB symlink remains read-only to tests",
+      "passed": true
+    },
+    {
+      "name": "canonical asset regeneration absent",
+      "passed": true
+    },
+    {
+      "name": "Unit and validation failures return nonzero; native probe exits 1 on failed checks and 2 on setup/output errors; map exits 1 on failures; the 45-second timeout returns nonzero.",
+      "passed": true
+    },
+    {
+      "name": "GitHub default bash fail-fast propagates direct command exits, without masking or continue-on-error",
+      "passed": true
+    },
+    {
+      "name": "if always artifact archive includes hero probe JSON, map report JSON and map source manifest JSON",
+      "passed": true
+    }
+  ],
+  "explicit_archive_paths": [
+    "${{ runner.temp }}/hero-family-probe.json",
+    "${{ runner.temp }}/map-intake/intake-report.json",
+    "${{ runner.temp }}/map-intake/source-manifest.json"
+  ],
+  "limits": [
+    "Commands write temporary evidence and Godot import caches; canonical assets are not regenerated.",
+    "No standalone CPU/GPU render, animation aesthetic, whole hero/map or game completion credit.",
+    "Python test count is 20 in current source; discover runs all matching tests, so no workflow change is needed if an earlier narrative says 17.",
+    "Family adverse-source findings are reviewed independently by the root family reviewer; this static workflow review does not replace that gate."
+  ]
+}

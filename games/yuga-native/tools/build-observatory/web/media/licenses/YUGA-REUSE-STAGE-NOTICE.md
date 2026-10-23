@@ -18,3 +18,11 @@ tools. Their source/build/runtime notices remain in the repository and native
 release. The browser viewer continues to ship its PlayCanvas MIT notice and
 the local Noto font notices. Existing source/model/material notices remain
 beside this file. The desktop quality target is not yet achieved.
+
+`existing-courtyard-element.png` is an actual isolated Godot/Mesa capture of
+the project's original CC0-1.0 courtyard structural group, sourced from
+`assets/environment/lanka_courtyard.glb` and its metadata. It uses the existing
+CC0 Poly Haven `sandstone_blocks_05` maps by Rob Tuytel, whose manifest and
+notices remain under `art/source-kits/production-reuse-oct23/`. It depicts two
+walls and two piers for loader/material review, without a full-map or finished
+art claim. No FuncGodot, OpenArena or TPS-demo art is present in this preview.

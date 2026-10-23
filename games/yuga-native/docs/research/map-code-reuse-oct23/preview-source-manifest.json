@@ -1,0 +1,223 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "source": "games/yuga-native/assets/environment/lanka_courtyard.glb",
+      "sha256": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+      "role": "readonly source symlink; original CC0 map geometry"
+    },
+    {
+      "source": "games/yuga-native/tools/map-reuse-intake/project.godot",
+      "sha256": "8ea4e5205d9c1e269ef2c9b86563c47c245e8f3bf2a0673a8fb5cdf1788523b2",
+      "role": "bounded integration harness"
+    },
+    {
+      "source": "games/yuga-native/tools/map-reuse-intake/map_loader.gd",
+      "sha256": "c640253a39ef1029ad90681fedfe281da000d1e018b94cdae3ef70d14fc9d6ab",
+      "role": "bounded integration harness"
+    },
+    {
+      "source": "games/yuga-native/tools/map-reuse-intake/test_intake.gd",
+      "sha256": "67fc49a25c1fd0083bb0aff145102a32c78c760f7511b67d3eb07a177685d7c0",
+      "role": "bounded integration harness"
+    },
+    {
+      "source": "games/yuga-native/tools/map-reuse-intake/preview.gd",
+      "sha256": "f27b1959c754089ad81391cea9667dd284ee32f8345c3c20d10e307c736dcf63",
+      "role": "bounded integration harness"
+    },
+    {
+      "source": "games/yuga-native/tools/wind-court-pilot/pbr_material.gd",
+      "sha256": "192d2169b62c34f78cb0f654fbc425a5816a76fecb806c25fddbd362b25cd6b4",
+      "role": "exact existing verified CC0 material adapter"
+    }
+  ],
+  "source_metadata": {
+    "name": "Original Lanka-inspired coastal training courtyard",
+    "revision": "courtyard-material-refinement-v2",
+    "supersedes_glb_sha256": "d1f7346aad37cecf3a8202022daea0d37cc773ba980a1a582b100540babe13da",
+    "refinement_basis": "Actual native game frame build/visual-initial/frame-3.png at git 3f1b782; software-agent art review, not a concept image",
+    "refinements": {
+      "paving_joint_metres": {
+        "before": 0.035,
+        "after": 0.01
+      },
+      "mortar_recess_metres": {
+        "before": 0.02,
+        "after": 0.002
+      },
+      "paving_chamfer_metres": {
+        "before": 0.018,
+        "after": 0.004
+      },
+      "spawn_lotus_radius_metres": {
+        "before": 2.1,
+        "after": 0.62
+      },
+      "central_lotus_radius_metres": {
+        "before": 2.1,
+        "after": 1.0
+      },
+      "arch_depth_metres": {
+        "before": 3.9,
+        "after": 7.5
+      },
+      "materials": "Pale mortar, matte stone floor inlay, quieter sandstone/gallery trim, burnished selective brass, recessed dark soffit"
+    },
+    "generator": "art/build_courtyard.py",
+    "blender_version": "4.3.2",
+    "seed": 241016,
+    "coordinate_system": "metres; GLB Y-up; XZ ground, y=0 walking surface",
+    "authorship": "Original procedurally authored meshes and PBR texture maps; no commercial game data or third-party assets",
+    "license": "CC0-1.0 for this generated courtyard geometry and textures; generator uses repository license",
+    "visual_scope": "Native training environment foundation, not a commercial-game reconstruction or parity claim",
+    "play_bounds": {
+      "x": [
+        -22,
+        22
+      ],
+      "z": [
+        -25,
+        25
+      ]
+    },
+    "clear_central_plaza": {
+      "x": [
+        -12,
+        12
+      ],
+      "z": [
+        -14,
+        14
+      ],
+      "floor_y": 0
+    },
+    "spawn_feet": [
+      0,
+      0.05,
+      12
+    ],
+    "target_positions": [
+      [
+        -8,
+        0,
+        -8
+      ],
+      [
+        -4,
+        0,
+        -8
+      ],
+      [
+        0,
+        0,
+        -8
+      ],
+      [
+        4,
+        0,
+        -8
+      ],
+      [
+        8,
+        0,
+        -8
+      ]
+    ],
+    "collision": "Nodes prefixed COL_ contain structural geometry suitable for static trimesh collision. FLOOR_ paving is visual; runtime provides y=0 floor. DECOR_, WATER_ and SKYLINE_ require no collision.",
+    "lantern_emission_centres": [
+      [
+        -14.7,
+        1.875,
+        -12
+      ],
+      [
+        -14.7,
+        1.875,
+        0
+      ],
+      [
+        -14.7,
+        1.875,
+        12
+      ],
+      [
+        14.7,
+        1.875,
+        -12
+      ],
+      [
+        14.7,
+        1.875,
+        0
+      ],
+      [
+        14.7,
+        1.875,
+        12
+      ],
+      [
+        -12.7,
+        1.5,
+        20
+      ],
+      [
+        -9.4,
+        1.925,
+        -20.0
+      ],
+      [
+        12.7,
+        1.5,
+        20
+      ],
+      [
+        9.4,
+        1.925,
+        -20.0
+      ]
+    ],
+    "lights": "No embedded point lights. Runtime may pool a small subset of lantern lights.",
+    "mesh_objects": 22,
+    "authoring_vertices": 71940,
+    "triangles": 135654,
+    "exported_vertices": 266311,
+    "materials": [
+      "Aged_brass",
+      "Coastal_water",
+      "Courtyard_stone_0",
+      "Courtyard_stone_1",
+      "Courtyard_stone_2",
+      "Courtyard_stone_3",
+      "Distant_indigo_silhouettes",
+      "Diyas_warm_emission",
+      "Indigo_glazed_stone",
+      "Limestone_mortar",
+      "Lotus_petal",
+      "Marsh_reeds",
+      "Pale_limestone",
+      "Quiet_stone_inlay",
+      "Recessed_gate_soffit",
+      "Warm_carved_sandstone"
+    ],
+    "embedded_textures": 12,
+    "all_primitives_have_normals_uvs_tangents": true,
+    "glb_bytes": 17036264,
+    "glb_sha256": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+    "generator_sha256": "f223b5e406e12402244b9679f41dfcd49f5ed54ddbc2cb921132c851fb42136e",
+    "build_seconds": 188.24
+  },
+  "element_accessor_bounds": {
+    "min": [
+      -21.549999237060547,
+      -1.4901161193847656e-08,
+      -29.099998474121094
+    ],
+    "max": [
+      21.549999237060547,
+      10.119999885559082,
+      17.5
+    ]
+  },
+  "scope": "isolated source intake; no canonical mutation or runtime promotion"
+}

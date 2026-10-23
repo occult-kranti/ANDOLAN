@@ -1,0 +1,462 @@
+{
+  "schema_version": 1,
+  "task": "independent hero-family reuse authoring QA",
+  "backlog_support": [
+    "FG02-T03",
+    "FG02-T04"
+  ],
+  "product": "native YUGA",
+  "date_utc": "2026-10-23",
+  "branch": "game/yuga-native-production",
+  "baseline_commit": "8501c28dca3fae43d9fb89ed153d04943fe193eb",
+  "exclusive_paths": [
+    "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review",
+    "/workspace/scratch/hero-family-independent-oct23"
+  ],
+  "decision": "accepted_tested_authoring_template_only_after_one_correction_pass",
+  "scope": "Canonical Rama resource reuse and isolated unchanged-appearance Arjuna authoring template; not a new finished hero, art acceptance, gameplay or roster promotion.",
+  "source_freeze": [
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tools/hero-family-reuse/intake.py",
+      "bytes": 18145,
+      "sha256": "d7c0741e4bf3d84f973618eddc201abbdb78928bd36835e607c2da85dfdeb579"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tools/hero-family-reuse/family_template.gd",
+      "bytes": 4260,
+      "sha256": "c09fb7f8d3347f885b91b50364e7a6de194a88a7c57cdd35c4ccaa3524962a8a"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tools/hero-family-reuse/probe_template.gd",
+      "bytes": 4761,
+      "sha256": "0cecf56f6759b15e6422e145deb515025a8a7a0d5629b65cbe9c0ac748628266"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tools/hero-family-reuse/build_armature_template.py",
+      "bytes": 4743,
+      "sha256": "c59cc64b74327a677842d4e26c89e5f0b9a06f0142b52f7fad2e971e8b6ecbd5"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tools/hero-family-reuse/test_intake.py",
+      "bytes": 8727,
+      "sha256": "1829d4ea211b8bd6c7359eb3e1d388dc5c0aa4c1d1f872b3e63a5e40af226ed6"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/rama-family-manifest.json",
+      "bytes": 195365,
+      "sha256": "33b3b93522849761204fd9b68c57e0a311f487969089dce61bd4b9c3077116b1"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/pilot/arjuna-template.json",
+      "bytes": 6547,
+      "sha256": "f456301901c26d42f519df6849d3722e459fcec3a489f85e5f33d8b9ab586a72"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/pilot/arjuna-template.tscn",
+      "bytes": 469,
+      "sha256": "f6104c4c7afe8c0645e1ac6a9d17f34952724deb2a269879894bdeeccb60b04c"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/pilot/arjuna-rig-authoring-template.blend",
+      "bytes": 1047787,
+      "sha256": "8e277ace274e577470edb0dc7d7b020ce11d32849ed45d2f5da837ad74be700b"
+    }
+  ],
+  "manifest_resource_pins": [
+    {
+      "path": "assets/heroes/rama-hero.glb",
+      "res_path": "res://assets/heroes/rama-hero.glb",
+      "bytes": 36049948,
+      "sha256": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e"
+    },
+    {
+      "path": "assets/heroes/rama-hero-mid.glb",
+      "res_path": "res://assets/heroes/rama-hero-mid.glb",
+      "bytes": 25847144,
+      "sha256": "b5949c9d427e9684a13fa525212eedc87dfa207d2c70fba5ebe6a4b1eda61005"
+    },
+    {
+      "path": "assets/heroes/rama-hero-far.glb",
+      "res_path": "res://assets/heroes/rama-hero-far.glb",
+      "bytes": 20901820,
+      "sha256": "aef8ae5837c0bf0a9ed5850ae649d6368ec1e87c0728d501f1780bba325a9d6a"
+    },
+    {
+      "path": "assets/animations/rama_hero_motion.tres",
+      "res_path": "res://assets/animations/rama_hero_motion.tres",
+      "bytes": 1619178,
+      "sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8"
+    },
+    {
+      "path": "assets/design/hero-codex.json",
+      "res_path": "res://assets/design/hero-codex.json",
+      "bytes": 197337,
+      "sha256": "b83e0f06f25f3978a16479f97e7bf76c349f651040b2253bedf5d1c1879ff72c"
+    },
+    {
+      "path": "scripts/player.gd",
+      "res_path": "res://scripts/player.gd",
+      "bytes": 20337,
+      "sha256": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86"
+    },
+    {
+      "path": "scripts/rama_motion.gd",
+      "res_path": "res://scripts/rama_motion.gd",
+      "bytes": 38778,
+      "sha256": "d5550b25044ea97c9ce482a130ac73f012c313e96f2029a555abb590e1375b0e"
+    },
+    {
+      "path": "scripts/rama_lod_binding.gd",
+      "res_path": "res://scripts/rama_lod_binding.gd",
+      "bytes": 15703,
+      "sha256": "266e29dfa72cac407d3750eefcb296ec0b9cf82dc7665afb30b2eaa658956bfc"
+    },
+    {
+      "path": "scripts/rama_visual_lod.gd",
+      "res_path": "res://scripts/rama_visual_lod.gd",
+      "bytes": 2690,
+      "sha256": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5"
+    },
+    {
+      "path": "scripts/rama_surface_materials.gd",
+      "res_path": "res://scripts/rama_surface_materials.gd",
+      "bytes": 3779,
+      "sha256": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a"
+    },
+    {
+      "path": "scripts/rama_secondary_motion.gd",
+      "res_path": "res://scripts/rama_secondary_motion.gd",
+      "bytes": 12636,
+      "sha256": "2b8e467df254dcda175694ab988071f24b41ddaa93275f5cbb9768abcb143f34"
+    },
+    {
+      "path": "scripts/rama_surface_finish.gd",
+      "res_path": "res://scripts/rama_surface_finish.gd",
+      "bytes": 11492,
+      "sha256": "6eb51ce8f34a3d5a33deb142ca92aaa20505516b0ee8fff3ca445bcab603078a"
+    },
+    {
+      "path": "scripts/rama_facial_performance.gd",
+      "res_path": "res://scripts/rama_facial_performance.gd",
+      "bytes": 6708,
+      "sha256": "c525d720eab133c66be18e9d49a14ddc2dd20fd0616ec4a5e4f96ee5d2947128"
+    },
+    {
+      "path": "shaders/rama_secondary_cloth.gdshader",
+      "res_path": "res://shaders/rama_secondary_cloth.gdshader",
+      "bytes": 2247,
+      "sha256": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7"
+    },
+    {
+      "path": "assets/materials/rama-finish/skin-roughness.png",
+      "res_path": "res://assets/materials/rama-finish/skin-roughness.png",
+      "bytes": 87740,
+      "sha256": "d89c377097a342a5f60cc5bf2abf03405aaa5415267b2ce371ef8772079c5611"
+    },
+    {
+      "path": "assets/materials/rama-finish/ivory-roughness.png",
+      "res_path": "res://assets/materials/rama-finish/ivory-roughness.png",
+      "bytes": 333858,
+      "sha256": "664777583b2560b5beb9c8dc2fb0c03e64cbcf62cde95dfc453445a7c66ab72e"
+    },
+    {
+      "path": "assets/materials/rama-finish/woven-roughness.png",
+      "res_path": "res://assets/materials/rama-finish/woven-roughness.png",
+      "bytes": 5823,
+      "sha256": "eec110e598ac1a2fa95fb5899fac5fc314a191bff8e670547d79dfaf1468e500"
+    },
+    {
+      "path": "assets/hero-finish/s1-hammered-gold-roughness.png",
+      "res_path": "res://assets/hero-finish/s1-hammered-gold-roughness.png",
+      "bytes": 58666,
+      "sha256": "f258ee24d260018ee3d566a428d9986efea557759bea4b907e083cb6912c942d"
+    },
+    {
+      "path": "assets/hero-finish/hair-bundle-roughness.png",
+      "res_path": "res://assets/hero-finish/hair-bundle-roughness.png",
+      "bytes": 26910,
+      "sha256": "93c4d9655ee1309c5e427fa39d5ef4785422d5646ff7b1a8421c6a7803654fd4"
+    }
+  ],
+  "original_findings": {
+    "r1_false_accepts": 8,
+    "normalized_joint_accessor_false_accept_during_same_correction_pass": 1,
+    "missing_direct_resource_pins": 6,
+    "corrected_in_final_replay": true
+  },
+  "results": {
+    "initial_independent_regression": {
+      "passed": 17,
+      "exit_code": 0,
+      "seconds": 9.472
+    },
+    "final_independent_regression": {
+      "passed": 20,
+      "exit_code": 0,
+      "seconds": 28.082
+    },
+    "actual_glb_and_request_replay": {
+      "passed": true,
+      "cases": 24,
+      "source_stable": true
+    },
+    "each_resource_pin_drift": {
+      "passed": true,
+      "cases": 19
+    },
+    "headless_runtime": {
+      "passed": true,
+      "checks": 13,
+      "exit_code": 0,
+      "stderr_empty": true
+    },
+    "independent_source_sharing_lifecycle": {
+      "passed": true,
+      "checks": 10,
+      "exit_code": 0,
+      "stderr_empty": true
+    },
+    "independent_blender_reopen": {
+      "passed": true,
+      "checks": 6,
+      "exit_code": 0,
+      "rig_signature_sha256": "b38179eb3d1a4fbf6219ca868863eeadda93854cac6060b16bc0d5e2ad248625",
+      "nine_action_hashes_match_owner": true
+    },
+    "cli_negatives": {
+      "passed": true,
+      "cases": 2,
+      "expected_exit_code": 2
+    }
+  },
+  "actual_contract": {
+    "raw_glb_skins": 1,
+    "bones": 164,
+    "runtime_clips": 23,
+    "embedded_glb_actions": 9,
+    "mesh_attribute_vertices": {
+      "RamaBow": 13000,
+      "RamaFace": 5564,
+      "RamaHero": 191730
+    },
+    "sockets": {
+      "bow_grip": {
+        "bone": "wrist.R",
+        "offset": [
+          0,
+          0.105,
+          0.025
+        ]
+      },
+      "string_nock": {
+        "bone": "bowstring",
+        "offset": [
+          0,
+          0,
+          0
+        ]
+      },
+      "draw_hand": {
+        "bone": "wrist.L",
+        "offset": [
+          0.012613,
+          0.114969,
+          -0.042728
+        ]
+      },
+      "arrow_muzzle": {
+        "bone": "wrist.R",
+        "offset": [
+          0,
+          0.16,
+          0.025
+        ]
+      },
+      "head": {
+        "bone": "head",
+        "offset": [
+          0,
+          0.1,
+          0
+        ]
+      }
+    },
+    "lod": {
+      "paths": [
+        "assets/heroes/rama-hero-mid.glb",
+        "assets/heroes/rama-hero-far.glb"
+      ],
+      "live_skeletons": 1,
+      "mesh_names": [
+        "RamaHero",
+        "RamaBow"
+      ],
+      "face_owner": "near RamaFace only",
+      "threshold_pixels": [
+        420,
+        160
+      ],
+      "hysteresis": 0.15,
+      "minimum_hold_seconds": 0.15,
+      "must_preserve": [
+        "bone order/parents/rest",
+        "skin bind order/poses",
+        "material surface names",
+        "semantic vertex alpha masks",
+        "mesh transforms"
+      ]
+    },
+    "shared_near_mesh_resources": true,
+    "shared_external_animation_library": true,
+    "separate_actor_skeleton_state": true,
+    "blender_mesh_datablocks": 0,
+    "blender_image_datablocks": 0,
+    "blender_geometry_reference": "metadata path/hash for reimport, not a live geometry link"
+  },
+  "claim_decisions": {
+    "implementation": "accepted_bounded_source_contracts",
+    "functional_tests": "accepted_named_executed_cases",
+    "visual_art": "unrun",
+    "physical_gpu_performance": "unrun",
+    "human_art_and_feel": "unrun",
+    "networked_gameplay": "unrun",
+    "publication": "unrun",
+    "finished_arjuna_or_roster_promotion": "rejected"
+  },
+  "runtime_promoted": false,
+  "new_roster_heroes_completed": 0,
+  "next_owner": "Lead integrates bounded authoring tool; hero art/motion owners supply unique assets and independent production evidence.",
+  "environment": "Existing Godot 4.6.3, Blender 4.3.2 and Python used; no installation/configuration changes. Headless probes used at most two CPUs; no raster/render or physical GPU execution.",
+  "evidence": [
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/README.md",
+      "bytes": 9044,
+      "sha256": "0fc755f9c88c140114a4e6146ac3dcc308933e89d1c11ad34352b59cfb97c560"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/all-pin-drift.json",
+      "bytes": 5204,
+      "sha256": "9cbaafdaa544fe4cb6354e11352ce479b75882283e509c550649fcec6b1d6a0d"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/blender-reopen.json",
+      "bytes": 3181,
+      "sha256": "17451e54683476b99f7fe30d76b4d6f1c9afca42de27dc712af8da099476a8cb"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/blender-reopen.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/blender-reopen.stdout.txt",
+      "bytes": 342,
+      "sha256": "21af94401b0e6935673a8d666fa1466d48c0ce8ad521265a88d0fb0cdaaad41d"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/cli-final.json",
+      "bytes": 1745,
+      "sha256": "495ec8c37fce9521734d6a2f82c2d74fcab56c0277c6d4f9759acd6bda46043e"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/cli-minimal-r2-in-progress.json",
+      "bytes": 772,
+      "sha256": "044db2f83a709bc2fc28f40dbbc8e4b42982dde895ff6dc23effabd9a7acb16f"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/counterexamples-r1.json",
+      "bytes": 10194,
+      "sha256": "e19c62092496486b5e459977204752d8963cd782ac54ce262c255c95e74190bd"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/counterexamples-r2.json",
+      "bytes": 19362,
+      "sha256": "8936577e7b27dffaac0b8c865670fd58c898e241f650cd6bbc8aadf9f8ce60db"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/intake-r1-frozen.py",
+      "bytes": 15184,
+      "sha256": "d2aae0793fb2c78bdc60cdf4a089a035f04fbb1e6ed9280400849983fd47cf31"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/manifest-r1-frozen.json",
+      "bytes": 191857,
+      "sha256": "9db96dcf622a3f963a7b9469d5347731b2863ce0e958cc98acf7cab0a73feef0"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/normalized-joints-r2-in-progress.json",
+      "bytes": 523,
+      "sha256": "a74e4f02f2054538f9bb072c7c3338ffe105c88ec373fa2073bb1ba5be76f250"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/owner-tests-final.txt",
+      "bytes": 2946,
+      "sha256": "dcaaa9c1644edfe90f74b46f789c59940ad7991608e62a407f2cc8cdc2db1ad9"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/owner-tests-r1.txt",
+      "bytes": 2500,
+      "sha256": "8bdf5525c45d618e8e45a138f7f09bdf3e6c45da83c8c81ca81e6d1b7de9b102"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/probe_blender_reopen.py",
+      "bytes": 2039,
+      "sha256": "e221c047e231359c0b2e309adbb9149fedd32c413f6494239207ecce0017ff18"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/probe_resource_sharing.gd",
+      "bytes": 3572,
+      "sha256": "e5be416e4919f66f2150d1f0b9173eeca5c18a5865c0bd50f4e2fd3593afac8a"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/recheck_counterexamples.py",
+      "bytes": 4265,
+      "sha256": "4cb2e829db179c505c3a0a6790db275085254ad475d354acfff1a41cc92fdfdb"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/resource-sharing-final.json",
+      "bytes": 10655,
+      "sha256": "90b17d1697fa9532eeb9c00034627c32777449258ffec2ac77b0cc738c6a0fd1"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/resource-sharing-final.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/resource-sharing-final.stdout.txt",
+      "bytes": 453,
+      "sha256": "2aab7222c3a589dac7eca2500c8023e8b34171f75989ec722a5d5be13c010c9b"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/resource-sharing.json",
+      "bytes": 10655,
+      "sha256": "ea1701407fc22c9b0fb3f956a201bb24c88aad86a565b4ac2909f26b9cd6cd80"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/run_counterexamples.py",
+      "bytes": 7905,
+      "sha256": "7a2862318eacca12ae35fb9f7e47b6d7f4788a7af58faddedcd4bb4f909b656d"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/runtime-final.json",
+      "bytes": 12009,
+      "sha256": "a5ab5d1b5f80253b22adace3151d451821a072f1475212ee15bdc852839b7ba6"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/runtime-final.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/runtime-final.stdout.txt",
+      "bytes": 469,
+      "sha256": "22d69a56705d80cc162ab887738623ababb9e9e41ad0d609006fa708a5959e5c"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/runtime-r1.json",
+      "bytes": 12009,
+      "sha256": "6295b7902073d3b5590b5f757e9e7424a19abbf9ad39f0158fccd107602a83fb"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "status": "rejected-omission-mask-no-fitting-or-export",
+  "scope": "Independent actual3-view mask inspection, source-face/UV mapping and decoded original-image witness checks. All source geometry remains present. No semantic label, omission, donor fit or production-art pass.",
+  "source_sha256": "0c9fe46baa0a2f6e5f9cdb9386aad1405f9f22470a729c2538142576981f5c0b",
+  "mask_sha256": "cb9ee343045fd7d73c26d116c08cd8a389c8c9b202a5f977d727f6278931fdc2",
+  "receipt_sha256": "4e1ed49b98dcac92e5799ab7676225630b78e4e38861e39cd044dcf2127eadd4",
+  "source_positions_unchanged": true,
+  "source_triangles_retained": 96660,
+  "selected_faces": 2342,
+  "protected_faces": 94318,
+  "mixed_corner_faces_protected": 1812,
+  "interior_adverse": {
+    "samples": 114758,
+    "selected_faces_failing_rule": 188,
+    "independent_witness_report": "groom-mask-raw-witness.json"
+  },
+  "originals_independently_viewed": [
+    {
+      "path": "/workspace/scratch/hero-donor-groom-oct23/mask-views-r1/rear.png",
+      "sha256": "8ee5c80816ba7caf6cc69b8831d36579250361f9e4c30f4103eddb5ea24f3a46"
+    },
+    {
+      "path": "/workspace/scratch/hero-donor-groom-oct23/mask-views-r1/rear-left.png",
+      "sha256": "7abc47d21310908782d536bf46f9bb9fe9d21ea164cede9b4e024a6edce19c85"
+    },
+    {
+      "path": "/workspace/scratch/hero-donor-groom-oct23/mask-views-r1/rear-right.png",
+      "sha256": "f2041ebfe27b9995d4792fc733a8b5e870efae2ed449c69534cde35210857368"
+    }
+  ],
+  "observations": [
+    "Proposed red omission and protected amber triangles interleave across the pitted rear region and transition into the cape.",
+    "The selection is a fragmented set, not an artist-validated closed or semantically separable rear-hair region.",
+    "Texture-corner thresholds fail on188selected triangle interiors/edges; independently decoded source witnesses reproduce the counterexample."
+  ],
+  "decision": "Stop the current deletion/fitting route with the witness. The later full-covered-texel diagnostic finds 1,226 unsafe faces; the remaining 1,116 are fragmented into 103 edge components. Passing a texture rule cannot supply missing hair/cape semantics or a safe seam.",
+  "defensible_next_subgoal": "Create artist-labelled face regions for hair,cape/garment,neck/skin and uncertainty, with a deliberate continuous boundary and protected seam. Keep uncertain/mixed faces. Re-review actual source views before any omission; geometric retopology needs its own protected-body proof.",
+  "diagnostic_refinement_limit": "An interior-safe color-mask refinement may be diagnostic-only; additional passing samples cannot supply semantic labels or approve deletion.",
+  "donor_fitted": false,
+  "faces_omitted": 0,
+  "runtime_promoted": false,
+  "full_covered_texel_followup": {
+    "report_path": "/workspace/scratch/hero-donor-groom-oct23/mask-r1/full-texel-raster.json",
+    "sha256": "869af3b9b69e852271e41bbeca5b5c4d98861498ae56f833f4cb92a6625765f5",
+    "scope": "Reviewed source-pinned diagnostic report only; independent raw witness checks remain those recorded separately. No separate full raster implementation was run by reviewer.",
+    "covered_texel_tests": 23933,
+    "filter_guard_tests": 69023,
+    "unsafe_faces": 1226,
+    "remaining_color_eligible_faces": 1116,
+    "exact_position_edge_components": 103,
+    "largest_component_faces": 259,
+    "boundary_edges": 1067,
+    "semantic_mask_validated": false,
+    "omission_allowed": false
+  }
+}

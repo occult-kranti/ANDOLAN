@@ -5,6 +5,8 @@
 
 **Latest working source, 23 October:** [reuse-first ten-stage checkpoint](../games/yuga-native/docs/research/ten-rounds-oct23/README.md) → [current six-owner continuation](../games/yuga-native/docs/research/ten-rounds-oct23/NEXT_SIX_TASKS.md). One reviewed court is integrated with detailed collision; the existing sandstone material is a separate rendered candidate. Actual effects motion, source-preserving WebP intake and rejected hero cleanup/binding evidence are retained. The generated hero and full commercial graphics target remain open. This source checkpoint does not relabel the older downloadable executable.
 
+**Next reuse-first execution:** [ten conditional stages with six owners](../games/yuga-native/docs/research/ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md) → [Rama-family source-sharing intake and Arjuna authoring template](../games/yuga-native/docs/research/hero-family-reuse-oct23/README.md) → [existing CC0 map intake and upstream code/license matrix](../games/yuga-native/docs/research/map-code-reuse-oct23/README.md). These tools reuse current production sources and preserve canonical hero/map assets. Template appearance is unchanged Rama; unique art, animation/contact, online and physical-GPU gates remain open.
+
 For native UI work, read [YUGA PRODUCT](../games/yuga-native/PRODUCT.md), [DESIGN](../games/yuga-native/DESIGN.md) and the [pinned Impeccable application contract](../games/yuga-native/docs/research/impeccable/README.md). The root product/design files belong to the separate browser game.
 
 Updated 23 October 2026. Start here, then open only the subsystem assigned to your task. This repository contains separate native, browser and protest games.

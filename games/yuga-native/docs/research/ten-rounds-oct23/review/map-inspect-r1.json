@@ -1,0 +1,160 @@
+{
+  "cases": 11,
+  "checks": [
+    {
+      "name": "minimal embedded static preflight reaches declared positive contract",
+      "passed": true,
+      "result": {
+        "document": {
+          "asset": {
+            "version": "2.0"
+          },
+          "buffers": [
+            {
+              "byteLength": 4.0
+            }
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "name": "asset:null",
+      "passed": false,
+      "result": {
+
+      }
+    },
+    {
+      "name": "asset:boolean",
+      "passed": false,
+      "result": {
+
+      }
+    },
+    {
+      "name": "skins:null",
+      "passed": false,
+      "result": {
+
+      }
+    },
+    {
+      "name": "skins:emptydictionary",
+      "passed": false,
+      "result": {
+        "document": {
+          "asset": {
+            "version": "2.0"
+          },
+          "buffers": [
+            {
+              "byteLength": 4.0
+            }
+          ],
+          "skins": {
+
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "name": "skins:emptystring",
+      "passed": false,
+      "result": {
+        "document": {
+          "asset": {
+            "version": "2.0"
+          },
+          "buffers": [
+            {
+              "byteLength": 4.0
+            }
+          ],
+          "skins": ""
+        },
+        "ok": true
+      }
+    },
+    {
+      "name": "animations:null",
+      "passed": false,
+      "result": {
+
+      }
+    },
+    {
+      "name": "animations:emptydictionary",
+      "passed": false,
+      "result": {
+        "document": {
+          "animations": {
+
+          },
+          "asset": {
+            "version": "2.0"
+          },
+          "buffers": [
+            {
+              "byteLength": 4.0
+            }
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "name": "extensionsUsed:null",
+      "passed": false,
+      "result": {
+
+      }
+    },
+    {
+      "name": "extensionsUsed:dictionary",
+      "passed": false,
+      "result": {
+        "document": {
+          "asset": {
+            "version": "2.0"
+          },
+          "buffers": [
+            {
+              "byteLength": 4.0
+            }
+          ],
+          "extensionsUsed": {
+            "KHR_materials_emissive_strength": {
+
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "name": "required-only unsupported extension",
+      "passed": false,
+      "result": {
+        "document": {
+          "asset": {
+            "version": "2.0"
+          },
+          "buffers": [
+            {
+              "byteLength": 4.0
+            }
+          ],
+          "extensionsRequired": [
+            "EXT_meshopt_compression"
+          ]
+        },
+        "ok": true
+      }
+    }
+  ],
+  "loader_sha256": "c640253a39ef1029ad90681fedfe281da000d1e018b94cdae3ef70d14fc9d6ab",
+  "passed": false,
+  "scope": "Independent pure preflight field-type counterexamples only; no native parser, renderer or canonical integration. A structured rejection is required, not a Godot script error or untyped acceptance."
+}

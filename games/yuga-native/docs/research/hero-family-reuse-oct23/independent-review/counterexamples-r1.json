@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "scope": "Independent actual-GLB authoring intake counterexamples; no renderer, new hero art or roster acceptance.",
+  "intake_path": "/workspace/ANDOLAN/games/yuga-native/tools/hero-family-reuse/intake.py",
+  "intake_sha256": "d2aae0793fb2c78bdc60cdf4a089a035f04fbb1e6ed9280400849983fd47cf31",
+  "manifest_sha256": "9db96dcf622a3f963a7b9469d5347731b2863ce0e958cc98acf7cab0a73feef0",
+  "donor_sha256": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e",
+  "generator_sha256": "7a2862318eacca12ae35fb9f7e47b6d7f4788a7af58faddedcd4bb4f909b656d",
+  "case_count": 23,
+  "false_accept_count": 8,
+  "cases": [
+    {
+      "name": "bone-order",
+      "expected": "reject",
+      "mutation": "swap skin.joints[1:3]",
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/bone-order.glb",
+      "fixture_sha256": "49d6421fe193c1aa275f4c489d09cb7bb7c6279e0701360b2e329d0a7665ec05",
+      "elapsed_seconds": 1.6242595630001233,
+      "ok": false,
+      "errors": [
+        "INCOMPATIBLE_BONE_ORDER"
+      ],
+      "exception": null,
+      "false_accept": false
+    },
+    {
+      "name": "bone-parent",
+      "expected": "reject",
+      "mutation": {
+        "joint_detached": 19
+      },
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/bone-parent.glb",
+      "fixture_sha256": "e3dcbaa8c45bd2f597800e2febd71c9376d081a2633186127b6e802dc25887df",
+      "elapsed_seconds": 1.6776176540006418,
+      "ok": false,
+      "errors": [
+        "INCOMPATIBLE_BONE_PARENTS"
+      ],
+      "exception": null,
+      "false_accept": false
+    },
+    {
+      "name": "bone-rest",
+      "expected": "reject",
+      "mutation": "root translation.x += 0.02",
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/bone-rest.glb",
+      "fixture_sha256": "b6bc8cbed67ebd5b46dc9c8700eda87f3b653ff3e2df9c93f79eb5620ad4c966",
+      "elapsed_seconds": 1.6107051620001585,
+      "ok": false,
+      "errors": [
+        "INCOMPATIBLE_REST_TRANSFORMS"
+      ],
+      "exception": null,
+      "false_accept": false
+    },
+    {
+      "name": "skin-bind",
+      "expected": "reject",
+      "mutation": {
+        "accessor": 32,
+        "component": 0,
+        "value": "2.0"
+      },
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/skin-bind.glb",
+      "fixture_sha256": "32b51672bb80f67ab4ed6ccac02b9092611cdbeea0090f80e509a8d01fba2dc7",
+      "elapsed_seconds": 1.002503269999579,
+      "ok": false,
+      "errors": [
+        "INCOMPATIBLE_SKIN_BINDS"
+      ],
+      "exception": null,
+      "false_accept": false
+    },
+    {
+      "name": "material-name",
+      "expected": "reject",
+      "mutation": "materials[4].name changed",
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/material-name.glb",
+      "fixture_sha256": "ade4c1eadac873762e6ee8fda98ab2f0c0cf8c1452905aefe9e64b9cf88c2109",
+      "elapsed_seconds": 1.0476035860001502,
+      "ok": false,
+      "errors": [
+        "MATERIAL_ROLE_MAPPING_REQUIRED"
+      ],
+      "exception": null,
+      "false_accept": false
+    },
+    {
+      "name": "mesh-unskinned",
+      "expected": "reject",
+      "mutation": {
+        "removed_skin": 0
+      },
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/mesh-unskinned.glb",
+      "fixture_sha256": "527149af85b48785727e11bbc6d0f2ffa2ca1d590a76870e5698ad6e2051ff6e",
+      "elapsed_seconds": 1.3510934059995634,
+      "ok": true,
+      "errors": [],
+      "exception": null,
+      "false_accept": true
+    },
+    {
+      "name": "mesh-missing-joints",
+      "expected": "reject",
+      "mutation": {
+        "removed_JOINTS_0": 4612
+      },
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/mesh-missing-joints.glb",
+      "fixture_sha256": "0a45a692baff69038853d8298ede1d1598a8d6fee2c257883f4cff725e56126d",
+      "elapsed_seconds": 0.9980473160003385,
+      "ok": true,
+      "errors": [],
+      "exception": null,
+      "false_accept": true
+    },
+    {
+      "name": "mesh-missing-weights",
+      "expected": "reject",
+      "mutation": {
+        "removed_WEIGHTS_0": 4613
+      },
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/mesh-missing-weights.glb",
+      "fixture_sha256": "6b242f46629def7ae2ece9e2ad7330f892825d410351fc9fa5d599f15e7cbb8a",
+      "elapsed_seconds": 0.977975183000126,
+      "ok": true,
+      "errors": [],
+      "exception": null,
+      "false_accept": true
+    },
+    {
+      "name": "mesh-invalid-joint-index",
+      "expected": "reject",
+      "mutation": {
+        "JOINTS_0_accessor": 4612,
+        "first_index": 255,
+        "skin_joint_count": 164
+      },
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/mesh-invalid-joint-index.glb",
+      "fixture_sha256": "bd600defc77516cd1471b01705e2c0da51280358f16fb7c5cc580f58e43d55a3",
+      "elapsed_seconds": 1.1446894580003573,
+      "ok": true,
+      "errors": [],
+      "exception": null,
+      "false_accept": true
+    },
+    {
+      "name": "mesh-displaced",
+      "expected": "reject",
+      "mutation": "RamaHero translation = [50,0,0]",
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/mesh-displaced.glb",
+      "fixture_sha256": "d6d47dc30eef8f26e4e2df04c6a18eac35e961de18b021d21e1e23a50df17d34",
+      "elapsed_seconds": 1.0878401869995287,
+      "ok": true,
+      "errors": [],
+      "exception": null,
+      "false_accept": true
+    },
+    {
+      "name": "mesh-material-role",
+      "expected": "reject",
+      "mutation": {
+        "surface_material_before": 5,
+        "surface_material_after": 6
+      },
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/mesh-material-role.glb",
+      "fixture_sha256": "5ef3d0e2aeba5445c43340d60d26c8ca04426db052c26da075a506038a3b4813",
+      "elapsed_seconds": 1.1356230230003348,
+      "ok": true,
+      "errors": [],
+      "exception": null,
+      "false_accept": true
+    },
+    {
+      "name": "mesh-extra-anatomy",
+      "expected": "reject",
+      "mutation": {
+        "new_mesh_node": 168,
+        "name": "HanumanTailUnreviewed",
+        "extra_anatomy_argument": false
+      },
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/mesh-extra-anatomy.glb",
+      "fixture_sha256": "5befa3ffae866b62038c21ac84d103c71d8dc5ff2a97019ae86014e1b27fe82b",
+      "elapsed_seconds": 1.5250461139994513,
+      "ok": true,
+      "errors": [],
+      "exception": null,
+      "false_accept": true
+    },
+    {
+      "name": "mesh-nonfinite-transform",
+      "expected": "reject",
+      "mutation": "RamaHero matrix[0] = Infinity",
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/mesh-nonfinite-transform.glb",
+      "fixture_sha256": "301d2a97b462ac02270b38e4caa6d31b4e8618d367278667858fef302b9c803f",
+      "elapsed_seconds": 1.0107479219996094,
+      "ok": true,
+      "errors": [],
+      "exception": null,
+      "false_accept": true
+    },
+    {
+      "name": "rest-nonfinite",
+      "expected": "reject",
+      "mutation": "root translation.x = Infinity",
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/rest-nonfinite.glb",
+      "fixture_sha256": "cf9df04fb2fd1746a115fbfa105d528287df91035a78835063ac5cde9e626ecc",
+      "elapsed_seconds": 0.29690284000025713,
+      "ok": false,
+      "errors": [],
+      "exception": "AssertionError: ",
+      "false_accept": false
+    },
+    {
+      "name": "bind-nonfinite",
+      "expected": "reject",
+      "mutation": {
+        "accessor": 32,
+        "component": 0,
+        "value": "nan"
+      },
+      "fixture_path": "/workspace/scratch/hero-family-independent-oct23/r1/bind-nonfinite.glb",
+      "fixture_sha256": "05a7981e6ef4bc8a3a104fa45758cd68e4893414bda2b644c50cbfe494f5ad2b",
+      "elapsed_seconds": 0.2932238379999035,
+      "ok": false,
+      "errors": [],
+      "exception": "AssertionError: ",
+      "false_accept": false
+    },
+    {
+      "name": "accepted-canonical",
+      "expected": "accept-authoring-only",
+      "ok": true,
+      "errors": [],
+      "hero_id": "arjuna",
+      "status": "authoring_template_only",
+      "finished_hero": false,
+      "runtime_promoted": false
+    },
+    {
+      "name": "unknown-socket",
+      "expected": "reject",
+      "ok": false,
+      "errors": [
+        "UNKNOWN_SOCKET:mace_grip"
+      ],
+      "hero_id": "arjuna",
+      "status": "blocked",
+      "finished_hero": false,
+      "runtime_promoted": false
+    },
+    {
+      "name": "unknown-motion",
+      "expected": "reject",
+      "ok": false,
+      "errors": [
+        "UNSUPPORTED_MOTION:mace_slam"
+      ],
+      "hero_id": "arjuna",
+      "status": "blocked",
+      "finished_hero": false,
+      "runtime_promoted": false
+    },
+    {
+      "name": "weapon",
+      "expected": "reject",
+      "ok": false,
+      "errors": [
+        "INCOMPATIBLE_WEAPON_FAMILY"
+      ],
+      "hero_id": "arjuna",
+      "status": "blocked",
+      "finished_hero": false,
+      "runtime_promoted": false
+    },
+    {
+      "name": "extra-anatomy-declared",
+      "expected": "reject",
+      "ok": false,
+      "errors": [
+        "EXTRA_ANATOMY_REQUIRES_NEW_RIG_REVIEW"
+      ],
+      "hero_id": "arjuna",
+      "status": "blocked",
+      "finished_hero": false,
+      "runtime_promoted": false
+    },
+    {
+      "name": "finished-claim",
+      "expected": "reject",
+      "ok": false,
+      "errors": [
+        "TEMPLATE_CANNOT_BE_FINISHED_HERO"
+      ],
+      "hero_id": "arjuna",
+      "status": "blocked",
+      "finished_hero": false,
+      "runtime_promoted": false
+    },
+    {
+      "name": "wrong-source-sha",
+      "expected": "reject",
+      "ok": false,
+      "errors": [
+        "SOURCE_HASH_MISMATCH"
+      ],
+      "hero_id": "arjuna",
+      "status": "blocked",
+      "finished_hero": false,
+      "runtime_promoted": false
+    },
+    {
+      "name": "source-pin-drift",
+      "expected": "reject",
+      "ok": false,
+      "errors": [
+        "SOURCE_PIN_MISMATCH:assets/heroes/rama-hero.glb"
+      ],
+      "hero_id": "arjuna",
+      "status": "blocked",
+      "finished_hero": false,
+      "runtime_promoted": false
+    }
+  ]
+}

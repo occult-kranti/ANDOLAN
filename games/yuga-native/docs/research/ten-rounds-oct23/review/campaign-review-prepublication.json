@@ -1,0 +1,170 @@
+{
+  "scope": "Independent checkpoint review of the ten bounded stage ledger. Status is a snapshot, not future CI/publication or whole-game credit.",
+  "ledger_sha256": "195fee3b3444469b6cd4058289d7242ab9850a5738e21c22eb69f3e49bf70f2a",
+  "checks": {
+    "exactly10distinct_stageIDs": true,
+    "all_stages_have_observable_output_files": false,
+    "zero_game_completion_credit": true,
+    "rejected_hero_stages_blocked": true,
+    "strict_VFX_not_silently_full_pass": true
+  },
+  "passed": false,
+  "status_counts": {
+    "complete": 6,
+    "blocked": 2,
+    "review": 1,
+    "running": 1
+  },
+  "rounds": [
+    {
+      "id": "R01",
+      "status": "complete",
+      "outputs": [
+        {
+          "relative_path": "review/acceptance-contract.json",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "complete",
+      "outputs": [
+        {
+          "relative_path": "review/source-glb-audit.json",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "complete",
+      "outputs": [
+        {
+          "relative_path": "reuse/README.md",
+          "exists": true
+        },
+        {
+          "relative_path": "reuse/execution.json",
+          "exists": true
+        },
+        {
+          "relative_path": "reuse/rama-raw-audit.json",
+          "exists": true
+        },
+        {
+          "relative_path": "reuse/diya-raw-audit.json",
+          "exists": true
+        },
+        {
+          "relative_path": "review/adapter-adversarial-r1.json",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "blocked",
+      "outputs": [
+        {
+          "relative_path": "../../../art/ten-rounds-oct23/cleanup/README.md",
+          "exists": true
+        },
+        {
+          "relative_path": "review/cleanup-independent.json",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "blocked",
+      "outputs": [
+        {
+          "relative_path": "reuse/RIG_R2_REVIEW.md",
+          "exists": true
+        },
+        {
+          "relative_path": "review/rig-independent.json",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "complete",
+      "outputs": [
+        {
+          "relative_path": "../../../art/ten-rounds-oct23/world/README.md",
+          "exists": false
+        },
+        {
+          "relative_path": "review/world-integrated-r4.json",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "review",
+      "outputs": [
+        {
+          "relative_path": "../../../art/ten-rounds-oct23/vfx/README.md",
+          "exists": true
+        },
+        {
+          "relative_path": "review/vfx-visual-r2.json",
+          "exists": true
+        },
+        {
+          "relative_path": "review/vfx-exact-geometry-review.json",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "complete",
+      "outputs": [
+        {
+          "relative_path": "root/world-scene-integrated.json",
+          "exists": true
+        },
+        {
+          "relative_path": "root/route-parity.json",
+          "exists": true
+        },
+        {
+          "relative_path": "root/army-stress.json",
+          "exists": true
+        },
+        {
+          "relative_path": "root/wind-court-integration-final.json",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "complete",
+      "outputs": [
+        {
+          "relative_path": "review/README.md",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "R10",
+      "status": "running",
+      "outputs": [
+        {
+          "relative_path": "root/local-validation.json",
+          "exists": true
+        }
+      ]
+    }
+  ],
+  "public_byte_verification": "unrun at this checkpoint; R10 correctly remains running",
+  "full_game_quality": "target open;0credit"
+}

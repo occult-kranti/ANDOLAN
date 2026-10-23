@@ -1,14 +1,14 @@
 {
   "source": {
     "branch": "game/yuga-native-production",
-    "commit": "067ad5d5e12b4de71d75b658aa511beb8f175fc9",
+    "commit": "8501c28dca3fae43d9fb89ed153d04943fe193eb",
     "dirty": true
   },
   "host": {
     "logical_cpus": 5,
     "quota_cpus": 4.0,
     "memory_total_bytes": 34359738368,
-    "memory_available_bytes": 33411051520,
+    "memory_available_bytes": 30106935296,
     "gpu": {
       "available": false,
       "devices": [],
@@ -17,11 +17,11 @@
   },
   "schema_version": 1,
   "mode": "snapshot",
-  "collected_at": "2026-10-23T22:21:30+00:00",
+  "collected_at": "2026-10-23T22:59:34+00:00",
   "run": {
     "id": "reuse-ten-rounds-001",
     "title": "YUGA — ten reuse-first production rounds",
-    "updated_at": "2026-10-23T22:21:30+00:00"
+    "updated_at": "2026-10-23T22:59:34+00:00"
   },
   "jobs": [
     {
@@ -259,22 +259,113 @@
       "stage": "R10 publication",
       "device": "CPU / GitHub Actions",
       "model": null,
-      "status": "running",
-      "summary": "106 local native checks and 33 observatory/publisher tests pass. Preparing exact source CI and the dated public snapshot.",
+      "status": "review",
+      "summary": "Source A Pages and native candidate passed; its foundation report-schema failure is retained. The reviewed 40-case correction and new hero/map authoring checks pass locally. Exact-source CI and publication are in progress.",
       "outputs": [
         {
-          "label": "Local executed checks",
+          "label": "SourceA public byte audit",
           "kind": "report",
-          "path": "games/yuga-native/docs/research/ten-rounds-oct23/root/local-validation.json"
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ten-rounds-oct23/publication/public-audit-source-a.json"
+        },
+        {
+          "label": "New authoring CI commands executed locally",
+          "kind": "report",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ten-rounds-oct23/root/continuation-ci-local.json"
+        },
+        {
+          "label": "Next ten gated stages with six owners",
+          "kind": "report",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md"
         }
       ],
-      "next_step": "Push the source, inspect CI terminal results, then verify public bytes.",
-      "updated_at": "2026-10-23T22:21:30+00:00",
+      "next_step": "Inspect full CI and verify the dated public snapshot. The next ten gated stages assign six owners; full hero/map quality remains open.",
+      "updated_at": "2026-10-23T22:59:34+00:00",
       "started_at": "2026-10-23T22:21:30+00:00",
       "finished_at": null,
       "verification": {
-        "kind": "heartbeat",
-        "heartbeat_age_seconds": 0
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "hero-family",
+      "title": "Rama-family authoring template",
+      "owner": "R3 hero rig + source audit child",
+      "stage": "Reuse-first continuation",
+      "device": "CPU / Godot / Blender",
+      "model": "Existing164bone Rama,23runtimeclips,3LOD",
+      "status": "complete",
+      "summary": "Authoring reuse verified: 20 regression tests, 24 independent adverse cases, 19 pin-drift negatives, 13 native checks and 10 sharing checks pass. Arjuna shares Rama sources and retains Rama’s appearance; no finished hero is claimed.",
+      "outputs": [
+        {
+          "label": "SharedRama pipeline and14hero reuse matrix",
+          "kind": "report",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/hero-family-reuse-oct23/README.md"
+        },
+        {
+          "label": "Independent adversarial review",
+          "kind": "report",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/README.md"
+        }
+      ],
+      "next_step": "Author a distinct Arjuna face, silhouette, outfit and weapon; review deformation, contacts, continuous motion and LODs.",
+      "updated_at": "2026-10-23T22:59:34+00:00",
+      "started_at": "2026-10-23T22:46:24+00:00",
+      "finished_at": "2026-10-23T22:58:05+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "map-intake",
+      "title": "Existing CC0 map intake",
+      "owner": "R6 reuse tools",
+      "stage": "Reuse-first continuation",
+      "device": "CPU / Godot software renderer",
+      "model": "Existing courtyardGLB and sandstone adapter",
+      "status": "complete",
+      "summary": "An existing CC0 courtyard group with 1,296 triangles uses the existing glTF loader and sandstone material. All 23 native checks and 11 independent malformed-input cases pass. The canonical map is unchanged.",
+      "outputs": [
+        {
+          "label": "Existing structural group: intake preview only",
+          "kind": "image",
+          "url": "media/existing-courtyard-element.png"
+        },
+        {
+          "label": "Source, license and adaptation roadmap",
+          "kind": "report",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/map-code-reuse-oct23/README.md"
+        }
+      ],
+      "next_step": "Place one module in context; verify capsule traversal, collision replacement, ordinary cameras and routes before promotion.",
+      "updated_at": "2026-10-23T22:59:34+00:00",
+      "started_at": "2026-10-23T22:46:24+00:00",
+      "finished_at": "2026-10-23T22:54:23+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "hero-donor-groom",
+      "title": "Artist-controlled donor hair selection",
+      "owner": "R3 hero cleanup artist",
+      "stage": "Reuse-first continuation",
+      "device": "Blender CPU,2threads",
+      "model": "Existing project-owned clean Rama donor",
+      "status": "blocked",
+      "summary": "Three actual views and full texel checks reject the omission mask: 1,226 unsafe faces; the remaining 1,116 form 103 fragments. A clean donor scaffold saved and reopened with 18 passing checks. No source faces were deleted or replacement fitted.",
+      "outputs": [
+        {
+          "label": "Actual views, donor scaffold and next artist task",
+          "kind": "report",
+          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/art/hero-donor-groom-oct23/README.md"
+        }
+      ],
+      "next_step": "Label original hair, cape, skin and uncertain faces; review the protected seam before fitting and four clay views.",
+      "updated_at": "2026-10-23T22:59:34+00:00",
+      "started_at": null,
+      "finished_at": null,
+      "verification": {
+        "kind": "explicit_record"
       }
     }
   ],
@@ -369,6 +460,13 @@
       "image_url": "media/rama-generated-front.png",
       "model_url": "viewer/",
       "summary": "The actual original source mesh. This viewer has no skin or animations; two rejected reuse binders remain outside runtime."
+    },
+    {
+      "id": "existing-courtyard-module",
+      "title": "Existing CC0 structural module",
+      "status": "Isolated intake; no map promotion",
+      "image_url": "media/existing-courtyard-element.png",
+      "summary": "Original1296triangles and existingCC0sandstone. Actual software-render preview; placement, capsule routes and contextual art gates remain open."
     }
   ],
   "sources": [

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "scope": "Fresh Linux CI-shaped scratch runs; no canonical import or raster. Forced negative changes only scratch test copy.",
+  "results": [
+    {
+      "project": "/workspace/scratch/map-code-reuse-oct23/ci-fresh-positive",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/workspace/scratch/map-code-reuse-oct23/ci-fresh-positive",
+        "--script",
+        "res://test_intake.gd"
+      ],
+      "startedWithoutGodotCache": true,
+      "canonicalEditorImportRun": false,
+      "negativeControl": false,
+      "exitCode": 0,
+      "checks": 23,
+      "failedChecks": [],
+      "report": "/workspace/scratch/map-code-reuse-oct23/ci-fresh-positive/intake-report.json",
+      "reportSha256": "2da0315fe3cea6286237c659dcc39882adecab2eb796f410080aaf1c5abad290"
+    },
+    {
+      "project": "/workspace/scratch/map-code-reuse-oct23/ci-fresh-negative",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/workspace/scratch/map-code-reuse-oct23/ci-fresh-negative",
+        "--script",
+        "res://test_intake.gd"
+      ],
+      "startedWithoutGodotCache": true,
+      "canonicalEditorImportRun": false,
+      "negativeControl": true,
+      "exitCode": 1,
+      "checks": 24,
+      "failedChecks": [
+        "deliberate CI negative control"
+      ],
+      "report": "/workspace/scratch/map-code-reuse-oct23/ci-fresh-negative/intake-report.json",
+      "reportSha256": "94013706923b4b9443ebe5f74c4c3e8de2f952e6e152a0eed079feea4ad54c14"
+    }
+  ]
+}

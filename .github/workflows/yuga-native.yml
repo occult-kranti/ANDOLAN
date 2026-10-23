@@ -95,6 +95,13 @@ jobs:
         run: python3 games/yuga-native/tests/package_linux_runtime_cases.py --report="$RUNNER_TEMP/package-linux-runtime.json"
       - name: Import native project
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --editor --import --quit
+      - name: Verify shared hero template and existing CC0 map intake (authoring only)
+        run: |
+          python3 -m unittest discover -s games/yuga-native/tools/hero-family-reuse -p 'test_*.py' -v
+          python3 games/yuga-native/tools/hero-family-reuse/intake.py validate --manifest games/yuga-native/docs/research/hero-family-reuse-oct23/rama-family-manifest.json --hero arjuna --source games/yuga-native/assets/heroes/rama-hero.glb --motion draw
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/hero-family-reuse/probe_template.gd -- --output="$RUNNER_TEMP/hero-family-probe.json"
+          python3 games/yuga-native/tools/map-reuse-intake/prepare.py --output "$RUNNER_TEMP/map-intake"
+          GODOT_SILENCE_ROOT_WARNING=1 OMP_NUM_THREADS=1 timeout 45s Godot_v4.6.3-stable_linux.x86_64 --headless --path "$RUNNER_TEMP/map-intake" --script res://test_intake.gd
       - name: Audit actual animation library without runtime replacement
         run: |
           set -euo pipefail
@@ -223,6 +230,9 @@ jobs:
             ${{ runner.temp }}/graphics-package.json
             ${{ runner.temp }}/rama-crown-package.json
             ${{ runner.temp }}/rama-quality/summary.json
+            ${{ runner.temp }}/hero-family-probe.json
+            ${{ runner.temp }}/map-intake/intake-report.json
+            ${{ runner.temp }}/map-intake/source-manifest.json
             ${{ runner.temp }}/rama-quality/source-before.json
             ${{ runner.temp }}/rama-quality/source-after.json
             ${{ runner.temp }}/rama-quality/reports/
