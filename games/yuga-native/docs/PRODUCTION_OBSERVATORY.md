@@ -4,7 +4,7 @@ The [observatory source](../tools/build-observatory/README.md) is a read-only pr
 
 ## View the work
 
-The public deployment is designed for `https://occult-kranti.github.io/ANDOLAN/production/`, with an interactive source viewer at `production/viewer/`. Publication is a separate verified action; consult the current execution report before calling either address deployed. GitHub Pages serves a **saved snapshot**. Its collection timestamp and recorded-running labels remain visible; polling that file does not make the cloud's hardware live. The browser renders the actual self-hosted GLB using the project's existing PlayCanvas engine, with orbit/zoom/reset controls. It does not turn the source mesh into an animated game hero.
+The [public dashboard](https://occult-kranti.github.io/ANDOLAN/production/) and [interactive source viewer](https://occult-kranti.github.io/ANDOLAN/production/viewer/) are deployed from source `069ab775`. [The independent public-byte audit](research/production-stage-oct23/publication/README.md) verifies 19 successful HTTP observations, 13 exact source-file matches and five preserved game/lab entry points. GitHub Pages serves a **saved snapshot**. Its collection timestamp and recorded-running labels remain visible; polling that file does not make the cloud's hardware live. The browser renders the actual self-hosted GLB using the project's existing PlayCanvas engine, with orbit/zoom/reset controls. It does not turn the source mesh into an animated game hero.
 
 The live worker view runs while its ordinary local service is running:
 

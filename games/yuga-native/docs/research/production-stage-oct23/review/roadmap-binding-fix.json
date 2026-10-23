@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-23T21:08:08.100466+00:00",
+  "status": "PASS",
+  "trigger": {
+    "workflow": "native foundation",
+    "run_id": 40023890588,
+    "step": 6,
+    "observed_failure": "FG00-T02: evidence hash mismatch: games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md"
+  },
+  "reviewed_source_head": "069ab775c66fff838c4aed149912dd483df4d564",
+  "scope": "Narrow evidence SHA refresh for an already-complete roadmap/design documentation task. No task, campaign or game completion credit. Initial frozen final-review.json is unchanged.",
+  "patch": {
+    "file": "games/yuga-native/docs/ROADMAP_BACKLOG.json",
+    "json_path": [
+      "tasks",
+      1,
+      "evidence",
+      1,
+      "sha256"
+    ],
+    "task_id": "FG00-T02",
+    "task_title": "Approve full design and validate executable backlog",
+    "task_status_before": "complete",
+    "task_status_after": "complete",
+    "old_sha256": "f886c42e17a9a0caefd56d0ea5baaa7af19077e20f125e66d5bf6646181cc2c7",
+    "new_sha256": "455edc1115befbb629b8870da139460370ffb89e9c04066c53346e7a44aaab8a",
+    "actual_document_sha256": "455edc1115befbb629b8870da139460370ffb89e9c04066c53346e7a44aaab8a",
+    "only_this_semantic_field_changed": true,
+    "task_scope_unchanged": true,
+    "document_bytes_unchanged_by_repair": true
+  },
+  "semantic_review": {
+    "task_is_documentation_design_approval": true,
+    "planned_rules_explicit": "6v6, eighteen-minute production game; fourteen heroes with owned work.",
+    "current_rules_explicit": "Existing browser authority3v3,480seconds; native online and full integration retain separate gates.",
+    "fg06_gate_retained": "Full native3v3 before6v6 expansion.",
+    "prior_document_amendments": "Dated AI-assisted/local-model/distributed-worker guidance adds source/tool qualification and preserves art, hardware, network and gameplay acceptance boundaries.",
+    "dependencies_acceptance_statuses_owners_queue_and_counts_unchanged": true,
+    "milestones": 16,
+    "tasks": 70,
+    "task_status_counts": {
+      "complete": 7,
+      "in_progress": 14,
+      "blocked": 1,
+      "planned": 48
+    }
+  },
+  "independent_checks": [
+    {
+      "command": "check-roadmap.validate(unpatched HEAD JSON, current repository)",
+      "result": "Exactly the single stale FG00-T02 document hash mismatch",
+      "tool_chunk": "f9ff92"
+    },
+    {
+      "command": "python3 games/yuga-native/tools/check-roadmap.py",
+      "passed": true,
+      "milestones": 16,
+      "tasks": 70,
+      "evidence_files": 30,
+      "errors": [],
+      "tool_chunk": "c0b7c6"
+    },
+    {
+      "command": "python3 games/yuga-native/tests/roadmap_cases.py",
+      "passed": true,
+      "checks": 12,
+      "stale_hash_negative_case_retained": true,
+      "tool_chunk": "c0b7c6"
+    },
+    {
+      "command": "python3 games/yuga-native/tools/check-evidence.py --git-ref HEAD",
+      "passed": true,
+      "revision": "069ab775c66fff838c4aed149912dd483df4d564",
+      "files_checked": 6244,
+      "errors": [],
+      "tool_chunk": "aad7a3"
+    }
+  ],
+  "remaining": "Root must commit/push this repair and observe the fresh foundation run; local narrow checks do not establish remote CI success.",
+  "reviewer_changed_files": [
+    "games/yuga-native/docs/research/production-stage-oct23/review/roadmap-binding-fix.json",
+    "games/yuga-native/docs/research/production-stage-oct23/review/roadmap-binding-fix.md"
+  ]
+}
