@@ -1,0 +1,23 @@
+warning: no usable GPU found, --gpu-layers option will be ignored
+warning: one possible reason is that llama.cpp was compiled without GPU support
+warning: consult docs/build.md for compilation instructions
+0.00.001.398 I srv  llama_server: initializing ...
+0.00.001.421 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.001.490 I srv  init_listene: The UI is disabled
+0.00.001.499 I srv  init_listene: Use --ui/--no-ui (or deprecated --webui/--no-webui) to enable/disable
+0.00.002.824 I srv    load_model: loading model '/workspace/scratch/ps4-swarm-oct23/cpu/models/qwen2.5-coder-0.5b-instruct-q4_k_m.gguf'
+0.00.148.722 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.00.279.855 I cmn          init: llama threadpool init, n_threads = 2
+0.00.335.377 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 2048, kv_unified = 'false'
+0.00.335.492 W srv          init: --cache-idle-slots requires --cache-ram, disabling
+0.00.338.544 I srv  llama_server: model loaded
+0.00.338.564 I srv  llama_server: listening on http://127.0.0.1:8093
+0.00.436.233 I slot get_availabl: id  0 | task -1 | selected slot by LRU, n_tokens = 0, t_last = -1
+0.00.436.280 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.02.155.754 I slot print_timing: id  0 | task 0 | prompt eval time =     253.40 ms /    87 tokens (    2.91 ms per token,   343.33 tokens per second)
+0.02.155.766 I slot print_timing: id  0 | task 0 |        eval time =    1466.02 ms /   102 tokens (   14.52 ms per token,    68.89 tokens per second)
+0.02.155.767 I slot print_timing: id  0 | task 0 |       total time =    1719.42 ms /   189 tokens
+0.02.155.774 I slot print_timing: id  0 | task 0 |    graphs reused =        101
+0.02.155.775 I slot print_timing: id  0 | task 0 |   graph reallocs =          0    /     0        (same size) / (changed size)
+0.02.155.817 I slot      release: id  0 | task 0 | stop processing: n_tokens = 188, truncated = 0
+0.02.156.722 I srv    operator(): operator(): cleaning up before exit...

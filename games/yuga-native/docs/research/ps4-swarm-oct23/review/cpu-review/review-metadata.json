@@ -1,0 +1,48 @@
+{
+  "reviewed_at_utc": "2026-10-23T20:09:36.147089+00:00",
+  "method": "read-only source/evidence review; local mock-only negative reproductions",
+  "network_requests": 0,
+  "downloads": 0,
+  "builds": 0,
+  "inference": 0,
+  "device_connections": 0,
+  "files": {
+    "cpu/reusable/cpu_llama.py": "e0bbfff5c7e6913f3bdc7e93f2be636b9575c1e38e05039ab597854c9d5cfc1b",
+    "cpu/reusable/manifest.json": "aab657bcde0128dcb01369ffd3458a1aa01e7556225352e44b49b2272efb8dea",
+    "cpu/evidence/build-receipt.json": "325abce379415e5a6a167c44b093322921388289f9a23d569b3397474cee6666",
+    "cpu/evidence/qualification.json": "1df27f04d042258386a8407ce5f3a0ce988cdf41bd1a05d0bc04ed71607d6233",
+    "cpu/evidence/model-download.json": "2bda157a4b8d4bbd73c52e9ad5a0ed95a1dda91b3711dc304da791927817bb8b",
+    "cpu/evidence/model-README.md": "28e162897e674f7f8771f14da516c1349acb9c557db1a2d55749766717fda607",
+    "cpu/evidence/model-LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+  },
+  "model_docs_match_manifest": true,
+  "finding_count": 4,
+  "updated_at_utc": "2026-10-23T20:10:33.310540+00:00",
+  "initial_receipt_observation": {
+    "status": "BLOCKED_NO_VERIFIED_WEIGHTS",
+    "real_inference_performed": false,
+    "receipt_hash_captured_at_initial_read": false,
+    "note": "Earlier read before CPU worker replaced the file; the subsequently captured hash belongs to the later receipt."
+  },
+  "latest_receipt_observation": {
+    "status": "REAL_INFERENCE_VERIFIED",
+    "finished_at_utc": "2026-10-23T20:07:59.004156+00:00",
+    "real_inference_performed": true,
+    "token_counts": {
+      "completion_tokens": 102,
+      "prompt_tokens": 87,
+      "total_tokens": 189,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "model": "qwen2.5-coder-0.5b-q4-k-m-cpu",
+    "expected_alias_present_in_inventory": true,
+    "bounded_content_check_passed": false,
+    "server_stopped": true,
+    "receipt_sha256": "1df27f04d042258386a8407ce5f3a0ce988cdf41bd1a05d0bc04ed71607d6233",
+    "model_file_bytes": 491400064,
+    "large_weights_rehashed_by_reviewer": false
+  },
+  "findings_status": "Pending owner correction; negative mocked reproductions do not allege defects occurred during the recorded real run."
+}

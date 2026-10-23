@@ -1,0 +1,53 @@
+{
+  "operation": "jobs",
+  "ownership_enforcement": "declaration_only_not_a_sandbox",
+  "gpu_jobs": "cooperative_wrapper_only",
+  "status": "passed",
+  "results": [
+    {
+      "id": "w1-control-tests",
+      "worker": "W1",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "games/yuga-native/tools/local-swarm",
+        "-p",
+        "test_control.py",
+        "-v"
+      ],
+      "cwd": ".",
+      "target": "local",
+      "allowed_paths": [
+        "scratch/local-swarm/W1"
+      ],
+      "writes": [],
+      "status": "passed",
+      "exit_code": 0,
+      "child_returncode": 0,
+      "elapsed_seconds": 0.4147433390025981,
+      "output": {
+        "stdout": {
+          "text": "",
+          "bytes_seen": 0,
+          "truncated": false
+        },
+        "stderr": {
+          "text": "test_actual_submodule_gitlink_and_gitfile_protect_inner_binary (test_control.CleanupTests.test_actual_submodule_gitlink_and_gitfile_protect_inner_binary) ... ok\ntest_case_variant_of_gitlink_ancestry_is_protected (test_control.CleanupTests.test_case_variant_of_gitlink_ancestry_is_protected) ... ok\ntest_case_variant_of_tracked_binary_is_never_quarantined (test_control.CleanupTests.test_case_variant_of_tracked_binary_is_never_quarantined) ... ok\ntest_cleanup_rejects_symlink_file_and_receipt_parent (test_control.CleanupTests.test_cleanup_rejects_symlink_file_and_receipt_parent) ... ok\ntest_cleanup_requires_git_root_and_valid_record_types (test_control.CleanupTests.test_cleanup_requires_git_root_and_valid_record_types) ... ok\ntest_control_state_protected_and_no_broad_roots (test_control.CleanupTests.test_control_state_protected_and_no_broad_roots) ... ok\ntest_dry_run_preserves_files_then_quarantine_receipt_restores_identity (test_control.CleanupTests.test_dry_run_preserves_files_then_quarantine_receipt_restores_identity) ... ok\ntest_identity_change_blocks_all_moves (test_control.CleanupTests.test_identity_change_blocks_all_moves) ... ok\ntest_nested_git_tracked_binary_is_protected (test_control.CleanupTests.test_nested_git_tracked_binary_is_protected) ... ok\ntest_outside_inventory_duplicate_directory_and_unclassified_rejected (test_control.CleanupTests.test_outside_inventory_duplicate_directory_and_unclassified_rejected) ... ok\ntest_source_trees_protected_even_for_untracked_binary (test_control.CleanupTests.test_source_trees_protected_even_for_untracked_binary) ... ok\ntest_tracked_and_untracked_source_files_are_protected (test_control.CleanupTests.test_tracked_and_untracked_source_files_are_protected) ... ok\ntest_dry_run_has_no_mutation_and_execution_requires_receipt (test_control.ExecutionTests.test_dry_run_has_no_mutation_and_execution_requires_receipt) ... ok\ntest_execute_receipt_binds_manifest_and_is_not_overwritten (test_control.ExecutionTests.test_execute_receipt_binds_manifest_and_is_not_overwritten) ... ok\ntest_execution_requires_explicit_unique_job_selection (test_control.ExecutionTests.test_execution_requires_explicit_unique_job_selection) ... ok\ntest_failure_stops_batch_and_keeps_exit_status (test_control.ExecutionTests.test_failure_stops_batch_and_keeps_exit_status) ... ok\ntest_gpu_wrapper_only_when_explicit (test_control.ExecutionTests.test_gpu_wrapper_only_when_explicit) ... ok\ntest_installed_remote_bootstrap_with_simulated_normal_user (test_control.ExecutionTests.test_installed_remote_bootstrap_with_simulated_normal_user) ... ok\ntest_literal_argv_never_executes_shell_metacharacters (test_control.ExecutionTests.test_literal_argv_never_executes_shell_metacharacters) ... ok\ntest_missing_executable_and_bounded_output (test_control.ExecutionTests.test_missing_executable_and_bounded_output) ... ok\ntest_real_cli_process_dry_run_and_execution_receipt (test_control.ExecutionTests.test_real_cli_process_dry_run_and_execution_receipt) ... ok\ntest_remote_bootstrap_rejects_root_and_parent_symlink (test_control.ExecutionTests.test_remote_bootstrap_rejects_root_and_parent_symlink) ... ok\ntest_remote_permission_blocks_entire_batch_before_execution (test_control.ExecutionTests.test_remote_permission_blocks_entire_batch_before_execution) ... ok\ntest_ssh_failure_missing_client_and_malformed_response (test_control.ExecutionTests.test_ssh_failure_missing_client_and_malformed_response) ... ok\ntest_ssh_json_transport_and_host_verification (test_control.ExecutionTests.test_ssh_json_transport_and_host_verification) ... ok\ntest_timeout_is_bounded_and_records_timeout (test_control.ExecutionTests.test_timeout_is_bounded_and_records_timeout) ... ok\ntest_absolute_traversal_glob_and_protected_paths (test_control.ManifestTests.test_absolute_traversal_glob_and_protected_paths) ... ok\ntest_boolean_schema_is_not_integer_version (test_control.ManifestTests.test_boolean_schema_is_not_integer_version) ... ok\ntest_case_only_ownership_aliases_rejected_on_all_platforms (test_control.ManifestTests.test_case_only_ownership_aliases_rejected_on_all_platforms) ... ok\ntest_malformed_records_return_blocked (test_control.ManifestTests.test_malformed_records_return_blocked) ... ok\ntest_missing_cwd_and_invalid_timeouts (test_control.ManifestTests.test_missing_cwd_and_invalid_timeouts) ... ok\ntest_no_fallback_or_unbounded_argv (test_control.ManifestTests.test_no_fallback_or_unbounded_argv) ... ok\ntest_no_implicit_ssh_target (test_control.ManifestTests.test_no_implicit_ssh_target) ... ok\ntest_ownership_overlap_and_missing_role (test_control.ManifestTests.test_ownership_overlap_and_missing_role) ... ok\ntest_six_role_manifest_and_write_binding (test_control.ManifestTests.test_six_role_manifest_and_write_binding) ... ok\ntest_symlink_escape_and_internal_symlink_rejected (test_control.ManifestTests.test_symlink_escape_and_internal_symlink_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 36 tests in 0.331s\n\nOK\n",
+          "bytes_seen": 4997,
+          "truncated": false
+        }
+      }
+    }
+  ],
+  "not_started": [],
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-23T20:18:49.362212+00:00",
+  "workspace": "/workspace/ANDOLAN",
+  "executed": true,
+  "manifest_sha256": "a0e2fae03884641893653e71bc5c4b91db266a1b9791896794e3837c482137a2",
+  "runner_sha256": "87c5aff99896eaf6f2198aa36891fe0cff78f2ffa82fbfecbac26fa229a0e0be"
+}

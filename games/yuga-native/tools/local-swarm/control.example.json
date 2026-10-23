@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "fallback": null,
+  "workers": [
+    {"id": "W1", "role": "QA", "allowed_paths": ["scratch/local-swarm/W1"]},
+    {"id": "W2", "role": "UI", "allowed_paths": ["scratch/local-swarm/W2"]},
+    {"id": "W3", "role": "hero", "allowed_paths": ["scratch/local-swarm/W3"]},
+    {"id": "W4", "role": "world", "allowed_paths": ["scratch/local-swarm/W4"]},
+    {"id": "W5", "role": "motion", "allowed_paths": ["scratch/local-swarm/W5"]},
+    {"id": "W6", "role": "models", "allowed_paths": ["scratch/local-swarm/W6"]}
+  ],
+  "ssh_targets": {},
+  "jobs": [
+    {
+      "id": "w1-control-tests", "worker": "W1", "cwd": ".", "writes": [],
+      "argv": ["python3", "-B", "-m", "unittest", "discover", "-s", "games/yuga-native/tools/local-swarm", "-p", "test_control.py", "-v"],
+      "timeout_seconds": 30, "gpu": false
+    },
+    {
+      "id": "w2-ui-status", "worker": "W2", "cwd": ".", "writes": [],
+      "argv": ["git", "status", "--short", "--", "games/yuga-native/scenes", "games/yuga-native/scripts/player.gd"],
+      "timeout_seconds": 10, "gpu": false
+    },
+    {
+      "id": "w3-art-status", "worker": "W3", "cwd": ".", "writes": [],
+      "argv": ["git", "status", "--short", "--", "games/yuga-native/art"],
+      "timeout_seconds": 10, "gpu": false
+    },
+    {
+      "id": "w4-world-status", "worker": "W4", "cwd": ".", "writes": [],
+      "argv": ["git", "status", "--short", "--", "games/yuga-native/scripts"],
+      "timeout_seconds": 10, "gpu": false
+    },
+    {
+      "id": "w5-motion-status", "worker": "W5", "cwd": ".", "writes": [],
+      "argv": ["git", "status", "--short", "--", "games/yuga-native/scripts/rama_motion.gd", "games/yuga-native/scripts/rama_ability_kit.gd"],
+      "timeout_seconds": 10, "gpu": false
+    },
+    {
+      "id": "w6-local-model-list", "worker": "W6", "cwd": ".", "writes": [],
+      "argv": ["python3", "-B", "games/yuga-native/tools/local-swarm/local_swarm.py", "probe", "--timeout", "3"],
+      "timeout_seconds": 10, "gpu": false
+    }
+  ]
+}

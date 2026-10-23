@@ -1,0 +1,80 @@
+A.I. on ps4linux - PS4Linux Forums | PS4 Linux Distros, Windows Gaming, and more
+Loading...
+This site is best viewed in a modern browser with JavaScript enabled.
+Something went wrong while trying to load the full version of this site. Try hard-refreshing this page to fix the error.
+A.I. on ps4linux
+misfit-mischief
+So a.i. seems to be the new buzz word around the tech world and non-tech world alike. I'm sure most of us have at least heard about ChatGPT. There have also been a number of open source alternatives released thanks to the leak of llama source from Meta. After playing around with ChatGPT for a few hours, I  became curious if these things (llm or large language models) could be run locally on a home pc. I don't like the idea of feeding my data to for-profit companies.
+The short answer is: Yes these things can be run locally. The open source alternatives that have come about since the llama leak are numerous and growing every day!
+Unfortunately, it seems for the majority of them someone would need a mid range gaming pc at minimum.
+I wasn't (and am still not) sure what PC equivalent would/could best be compared to ps4linux in terms of performance and capabilties. But I thought if I can play gta online on ps4linux surely I can get some kind of open source llm to run on ps4linux. I had already accepted that if I got anything like this to run on ps4linux it would very likely be pretty sub-par. So after some googling I was cloning gits left and right and following install instructions I barely understand lol. Admittedly what I know about ai, llm, etc. could be compared to what I knew about running linux on ps4 a year ago when I first started. I know its possible but don't know any of the inner workings yet.
+Enough of the preamble tho, lets get down to it. Almost all my attempts to run any kind of ai, llm etc. on ps4linux have not been fruitful. I'm sure it is possible, I just lack the know how at the moment. Notice I said "almost all", yes friends thats right I have succeeded in getting one of these new fangled ai thingies running on ps4linux.
+If you havent heard about stable diffusion it's a text to image generator. You type a description and it outputs an image based on your text. It does indeed run on ps4linux. Now I won't pretend that it runs well, but it does run and generate an image.
+Here is the link that I followed to install. But before you rush there to learn how to install/run this for yourself, I should warn you all my attempts to install directly on ps4linux resulted in timeout errors and drive space (even tho I know the drive has enough free space) errors.
+I posted the link primarily to be a guide on what to do once it is installed. In the end I used the linux side of my highly outdated dual-boot desktop pc (intel core 2 duo with no gpu lol) to install. Once it was successfully installed on desktop (no errors) it tried to run on desktop but it more or less just locked up the pc, which was more than expected on a potatoe posing as a pc lol.
+My next step was to copy the file folder from potatoe to ps4linux, on first attempt I copied it to my main (daily driver/gaming) install, the same install I'm typing this on now. The result was less than I had hoped as it still would not run. After that I thought that maybe my prior attempts at various other ai installations was the problem.
+I noticed when I tried running some of those prior installations that it was trying to install oudated versions of required libraries and such. So my next thought was to try it on a fresh install. I did a fresh install and attempted to install directly on ps4linux using the above link, and much to my dismay it returned the same timeout, drive space errors. I then copied the file folder from the desktop to the fresh install and it flipping ran.
+I have uploaded the file folder here for anyone else who wants to attempt this. This does run on ps4linux but not as well as I initially hoped, but it does run.  It took around 2-3 hours to output an image from my text input. It also used the 4gb of ram and 6gb of my 8gb swap. I only did the one test and didnt mess with any settings whatsoever.  After about a week of trial and error (git cloning,following install instructions, etc.) with something I barely understand I'm counting this as a win.
+This got a lot more long winded than I had Intended, I just tried to include as much info as I could think of.
+tastebin
+I did some ai powered wardriving (WiFi Hacking) with pwnagotchi in past.
+https://pwnagotchi.ai/
+Intersting but very complex stuff. But train an ai with ps4 GPU power sounds good.
+misfit-mischief
+tastebin I agree that does sound good. Training an ai running linux on ps4 hardware was my initial goal but I quickly figured out I had a vast amount of learning to do to get there.
+I also need to change the link to the "pre-installed" folder, I had a brain fart and uploaded the folder instead of the tar.xz, once it is uploaded I will change the link to point to the tar.xz
+The link now points to the tar.xz
+kevinF
+misfit-mischief this "A.I." is for generating images did you find any that are the same as chatgpt but open source that works on ps4 linux?
+misfit-mischief
+kevinF I have tried a few but I havent yet had any success. It should definitely be possible tho as they have versions that run only on a cpu.
+Update:  gpt4all runs on ps4linux, I downloaded a 7b model that uses 8gb ram and it ran , again it runs pretty slow.
+GPT4All-Installer Once installed a gpt4all folder will be in the home folder. Inside is a maintenance tool that should be run. Once complete open the bin folder and run chat.
+It should prompt a model download.  The gui is pretty simple to figure out.
+For anyone interested, I've been testing different models and settings. So far the q8 version of this model has the fastest response.
+As for settings I've set cpu threads to 6. Response generation is much quicker than any other I've tested
+Each cpu thread ups the cpu usage when generating a response. 6 cpu threads uses between 75% -85% of cpu according to conky.
+misfit-mischief
+Update: for those that want to run a local stable diffusion (text to image generator) setup, I highly recommend fastsd_cpu.
+There are some requirements, but chances are you already have them installed.
+git installed
+pip installed
+qt5-qtbase-gui
+Use git clone to get the repo here   https://github.com/rupeshs/fastsdcpu
+Open a terminal in the fastsdcpu folder you just cloned
+Type pip install -r requirements.txt this part takes a little while
+Once thats done go to fastsdcpu folder and right click install.sh, click permissions and make sure its executable. Then double click and a small window should pop up giving a choice to execute/execute in terminal, choose "in terminal", this part also take a little while
+Once thats done you can double click start.sh, again it will give the same options as before again choose "in terminal"
+Soon after a gui should pop up. If not and the terminal shows an error, it is most likely a qt issue ( figuring out the fix) in this case try using the start-webui.sh
+If a browser doesnt auto open with the web ui you can open a browser and plug in the ip shown in terminal
+On the first run its going to take awhile since it first has to download the chosen model.
+I recommend the lcm-lora option its default lykon/dreamshaperv8 is pretty decent
+Ive been using this for awhile and it works pretty well for what is  and what it is running on.
+For best results use the 1gb payload when booting linux, we want the most ram possible, also I would recommend an 8gb swap.
+On 1gb payload a 512x512 image takes just under 20 seconds per step and I use a bare minimum of 4 steps per image
+Here is a few Ive generated on ps4linux using fastsdcpu
+If you have any questions, or any issues let me know and ill do my best to help.
+noob404
+This is cool.
+Naxil
+What distro do you use? What is fastdcpu?
+noob404
+Naxil Program to enable faster AI-related work on CPU.
+Naxil
+noob404 is possible know how ps4 distro.works? Because some part isnt regular like normal distro (kernel and other part). Proc folder dont exist ecc ecc (lsmod not works at all).
+And probably some people had make the distro without know in deep what do (on fedora38 i have find a strange subdirectory with 6.* kernel files)
+Distro makers lot of time say = update mesa,kernel,distro when mesa without pc never works and kernel cant be updated at all.
+And i want know how payload works. Why not load a tool for launch linux like grub,lilo or other?
+noob404
+Naxil Truth be said, I don't claim to know 100% of what happens under the hood. But, here's my preliminary understanding.
+PS4 uses kexec bootloader which lets you switch kernel and initram without an actual reboot (you might have noticed that the PS4 doesn't actually shut down before booting into Linux). So, kexec is being used to switch from the FreeBSD kernel of Orbis to the other Linux kernel. With that being the basic way to boot into Linux for the time being, Grub will just be an additional unnecessary step. Instead of that though, if you are just looking to multi-boot, I already have the multi-boot initram.
+Correct me if I am wrong.
+Don't understand the rest of your questions.
+Naxil
+Ok you are right. But after that some module functionality cant be used. Or probably iam not able to do it. Because my wifi/bt sometimes work sometimes not (you know i have torus2 i give to you my sys file on discord), i want find a way to reload/restart the wifi/bt module. Or what we can do for have good bzimage/initramfs.cpio.gz for torus2?
+noob404
+Naxil PS4 Linux currently runs off of a monolithic kernel, that is everything is built into the kernel as drivers, not modules. As for the WiFi issue itself, Torus 2 has been a buggy chipset, working of which is mostly very arbitrary. This will need a much closer look and a lot of time and expertise.
+noob404
+@misfit-mischief Mind if I write an article on this, with noob-friendly instructions maybe. And obviously, you will be credited.
+misfit-mischief
+noob404 Yea man, go for it. Dont worry about giving me credit, All im here for is the sharing of knowedge.

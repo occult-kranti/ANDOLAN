@@ -1,0 +1,36 @@
+{
+  "dangling_partial_symlink": {
+    "status": "VERIFIED",
+    "file_written_outside_cache": true,
+    "promoted_model_is_symlink": true,
+    "checked_file_accepts_symlink": true,
+    "transport": "mocked subprocess; zero network requests"
+  },
+  "wrong_model_qualification": {
+    "status": "REAL_INFERENCE_VERIFIED",
+    "real_inference_performed": true,
+    "returned_models": {
+      "data": [
+        {
+          "id": "unrelated-model"
+        }
+      ]
+    },
+    "completion_model": "unrelated-model",
+    "expected_model": "qwen2.5-coder-0.5b-q4-k-m-cpu",
+    "bounded_content_check_passed": false,
+    "transport": "mocked process/socket/HTTP; zero network requests or inference"
+  },
+  "ambient_curl_config": {
+    "normal_invocation_reads_config": true,
+    "leading_disable_ignores_config": true,
+    "transport": "curl --version only; zero network requests"
+  },
+  "timeout_receipt": {
+    "error": "mock-build exceeded its time budget",
+    "previous_success_receipt_preserved": true,
+    "child_stopped": true,
+    "transport": "mocked process and clock; no real process launch"
+  },
+  "reviewed_source_sha256": "e0bbfff5c7e6913f3bdc7e93f2be636b9575c1e38e05039ab597854c9d5cfc1b"
+}

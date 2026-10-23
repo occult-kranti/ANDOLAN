@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repo": "https://github.com/ggml-org/llama.cpp.git",
+    "commit": "1a24df163920a4744a95373d178d790b72a9bb2f"
+  },
+  "cmake": {
+    "metadata_url": "https://pypi.org/pypi/cmake/3.31.10/json",
+    "metadata_sha256": "35d9f3757a6fcb2fbe054d6140217b6ba9f8f2c9ae0d69f44e3bd3c971e371e9",
+    "version": "3.31.10",
+    "filename": "cmake-3.31.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "url": "https://files.pythonhosted.org/packages/f4/2e/cefc60143950ca1a8dda26d4c8484e6fc406db16e7ca098ebae549de35f9/cmake-3.31.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "bytes": 27808794,
+    "sha256": "2f766bb46367e5e0559fa33184653754bce044583a06014dcaebf8e6dff8a1f1",
+    "machine": "x86_64"
+  },
+  "model": {
+    "repo": "Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF",
+    "revision": "ebb2015119c907b064c512bf053e945850b5875f",
+    "filename": "qwen2.5-coder-0.5b-instruct-q4_k_m.gguf",
+    "url": "https://huggingface.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF/resolve/ebb2015119c907b064c512bf053e945850b5875f/qwen2.5-coder-0.5b-instruct-q4_k_m.gguf",
+    "bytes": 491400064,
+    "sha256": "1d9614638d18024d0fbb36575a15f1302a3adf044df10345688ec4f6e1c4ff32",
+    "license": "Apache-2.0",
+    "license_and_card_git_blobs_verified": true,
+    "quantization": "Q4_K_M",
+    "parameter_count_from_card": "0.49B"
+  },
+  "model_documents": [
+    {
+      "name": "README.md",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF/resolve/ebb2015119c907b064c512bf053e945850b5875f/README.md",
+      "curl_exit": 0,
+      "stderr": "",
+      "bytes": 4992,
+      "sha256": "28e162897e674f7f8771f14da516c1349acb9c557db1a2d55749766717fda607"
+    },
+    {
+      "name": "LICENSE",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF/resolve/ebb2015119c907b064c512bf053e945850b5875f/LICENSE",
+      "curl_exit": 0,
+      "stderr": "",
+      "bytes": 11343,
+      "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+    }
+  ],
+  "cmake_flags": [
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DGGML_CPU=ON",
+    "-DGGML_NATIVE=ON",
+    "-DGGML_CUDA=OFF",
+    "-DGGML_HIP=OFF",
+    "-DGGML_VULKAN=OFF",
+    "-DGGML_METAL=OFF",
+    "-DGGML_SYCL=OFF",
+    "-DGGML_OPENCL=OFF",
+    "-DGGML_WEBGPU=OFF",
+    "-DGGML_RPC=OFF",
+    "-DGGML_BLAS=OFF",
+    "-DLLAMA_OPENSSL=OFF",
+    "-DLLAMA_SUBPROCESS=OFF",
+    "-DLLAMA_BUILD_TESTS=OFF",
+    "-DLLAMA_BUILD_EXAMPLES=OFF",
+    "-DLLAMA_BUILD_APP=OFF",
+    "-DLLAMA_BUILD_TOOLS=ON",
+    "-DLLAMA_BUILD_SERVER=ON",
+    "-DLLAMA_BUILD_UI=OFF",
+    "-DLLAMA_USE_PREBUILT_UI=OFF",
+    "-DLLAMA_CONNECT=OFF"
+  ],
+  "limits": {
+    "weight_bytes": 1073741824,
+    "cache_bytes": 3221225472,
+    "build_jobs": 2,
+    "inference_threads": 2,
+    "context_tokens": 2048,
+    "completion_tokens": 128,
+    "parallel_requests": 1
+  },
+  "server_alias": "qwen2.5-coder-0.5b-q4-k-m-cpu"
+}

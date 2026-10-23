@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-23T20:13:32.880236+00:00",
+  "task": "local-ps4-control-helper",
+  "source_commit": "46e196d5d40687f1f83cb31c7233e556e74d99c2",
+  "source_scope": "scratch case-folding correction; parent owns repository re-promotion",
+  "files": [
+    {
+      "path": "control.py",
+      "bytes": 23517,
+      "sha256": "87c5aff99896eaf6f2198aa36891fe0cff78f2ffa82fbfecbac26fa229a0e0be"
+    },
+    {
+      "path": "test_control.py",
+      "bytes": 27395,
+      "sha256": "b8130f07321628a3587569f9ff7abb2e0faa00a5e6d238fdfa7f78eac6e80241"
+    },
+    {
+      "path": "control.example.json",
+      "bytes": 2013,
+      "sha256": "a0e2fae03884641893653e71bc5c4b91db266a1b9791896794e3837c482137a2"
+    },
+    {
+      "path": "cleanup.example.json",
+      "bytes": 367,
+      "sha256": "34be0daccd52cc9ea44d8a94f37774fbfbd7198778176ff28ec20b569b7a47cd"
+    },
+    {
+      "path": "CONTROL.md",
+      "bytes": 10741,
+      "sha256": "d1282aac7b303112a70742cafa7498a09b5ad1a18aca3c65cdc5ddfe35131477"
+    }
+  ],
+  "tests": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "-v",
+      "test_control.py"
+    ],
+    "exit_code": 0,
+    "count": 36,
+    "cpu_affinity": [
+      0
+    ],
+    "log": "test-output.txt"
+  },
+  "example_dry_run": {
+    "exit_code": 0,
+    "status": "dry_run",
+    "selected_jobs": 6,
+    "log": "example-dry-run.json"
+  },
+  "syntax_checked": [
+    "control.py",
+    "test_control.py"
+  ],
+  "documentation_links": [
+    {
+      "target": "README.md",
+      "exists_now": true,
+      "integration_dependency": null
+    },
+    {
+      "target": "../../docs/GAME_BUILD_FARM.md",
+      "exists_now": true,
+      "integration_dependency": null
+    },
+    {
+      "target": "../../../../.agents/skills/README.md",
+      "exists_now": true,
+      "integration_dependency": null
+    },
+    {
+      "target": "../../../../docs/WORKSPACE_AND_CLEANUP.md",
+      "exists_now": true,
+      "integration_dependency": null
+    }
+  ],
+  "scope_limits": [
+    "No real PS4 or SSH host connected",
+    "SSH transport mocked; bootstrap executed locally with simulated normal-user identity",
+    "No models, GPU workloads, game rendering or production cleanup executed",
+    "Arbitrary job commands are not OS sandboxed",
+    "Quarantine frees zero bytes and has no purge",
+    "Root independent review of casefold correction and repository re-promotion pending",
+    "No physical Windows execution; conservative alias behavior tested on Linux"
+  ],
+  "correction": {
+    "finding": "case-insensitive cleanup/ownership aliases",
+    "implementation": "casefold on every platform, including Linux",
+    "new_tests": [
+      "case-only worker ownership collision",
+      "actual tracked binary and case-variant candidate preserved",
+      "case-variant gitlink ancestry preserved"
+    ],
+    "additional_guard_check": "mixed-case source root denied; protected components already casefolded",
+    "physical_windows_run": false
+  }
+}

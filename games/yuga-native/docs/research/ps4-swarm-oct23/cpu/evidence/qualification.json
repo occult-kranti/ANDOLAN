@@ -1,0 +1,175 @@
+{
+  "status": "REAL_INFERENCE_VERIFIED",
+  "command": [
+    "/workspace/scratch/ps4-swarm-oct23/cpu/build/bin/llama-server",
+    "--model",
+    "/workspace/scratch/ps4-swarm-oct23/cpu/models/qwen2.5-coder-0.5b-instruct-q4_k_m.gguf",
+    "--alias",
+    "qwen2.5-coder-0.5b-q4-k-m-cpu",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8093",
+    "--ctx-size",
+    "2048",
+    "--threads",
+    "2",
+    "--threads-batch",
+    "2",
+    "--parallel",
+    "1",
+    "--threads-http",
+    "2",
+    "--n-gpu-layers",
+    "0",
+    "--no-webui",
+    "--offline",
+    "--cache-ram",
+    "0",
+    "--n-predict",
+    "128",
+    "--no-context-shift"
+  ],
+  "model_sha256": "1d9614638d18024d0fbb36575a15f1302a3adf044df10345688ec4f6e1c4ff32",
+  "source_commit": "1a24df163920a4744a95373d178d790b72a9bb2f",
+  "started_at_utc": "2026-10-23T20:17:23.659875+00:00",
+  "real_inference_performed": true,
+  "request": {
+    "model": "qwen2.5-coder-0.5b-q4-k-m-cpu",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You write precise tests for a grid-based game. Return only the requested JSON, without markdown."
+      },
+      {
+        "role": "user",
+        "content": "Write only a JSON object with keys case, steps, expected for one regression test: a player standing at tile (2,2) attempts to move into blocked tile (3,2). Keep every value a short string. The player must remain at (2,2)."
+      }
+    ],
+    "temperature": 0,
+    "seed": 42,
+    "max_tokens": 128,
+    "stream": false,
+    "timings_per_token": true
+  },
+  "tested_script_sha256": "7f4884b49b81ee5985a139c6862be919aa250e91f38b4d15e5ceba65591bb38a",
+  "manifest_sha256": "aab657bcde0128dcb01369ffd3458a1aa01e7556225352e44b49b2272efb8dea",
+  "per_launch_authentication": true,
+  "health": {
+    "status": "ok"
+  },
+  "startup_wall_seconds": 0.4296018210006878,
+  "models": {
+    "models": [
+      {
+        "name": "qwen2.5-coder-0.5b-q4-k-m-cpu",
+        "model": "qwen2.5-coder-0.5b-q4-k-m-cpu",
+        "modified_at": "",
+        "size": "",
+        "digest": "",
+        "type": "model",
+        "description": "",
+        "tags": [
+          ""
+        ],
+        "capabilities": [
+          "completion"
+        ],
+        "parameters": "",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "",
+          "families": [
+            ""
+          ],
+          "parameter_size": "",
+          "quantization_level": ""
+        }
+      }
+    ],
+    "object": "list",
+    "data": [
+      {
+        "id": "qwen2.5-coder-0.5b-q4-k-m-cpu",
+        "aliases": [
+          "qwen2.5-coder-0.5b-q4-k-m-cpu"
+        ],
+        "tags": [],
+        "object": "model",
+        "architecture": {
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ]
+        },
+        "created": 1792786644,
+        "owned_by": "llamacpp",
+        "meta": {
+          "vocab_type": 2,
+          "n_vocab": 151936,
+          "n_ctx": 2048,
+          "n_ctx_train": 32768,
+          "n_embd": 896,
+          "n_params": 630167424,
+          "size": 485452288,
+          "ftype": "Q4_K - Medium"
+        }
+      }
+    ]
+  },
+  "completion_wall_seconds": 1.7266245710197836,
+  "completion": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```json\n{\n  \"case\": \"Player standing at tile (2,2) attempts to move into blocked tile (3,2)\",\n  \"steps\": [\n    \"Player moves to tile (2,2)\",\n    \"Player checks if tile (3,2) is blocked\",\n    \"Player confirms that tile (3,2) is blocked\",\n    \"Player moves to tile (3,2)\"\n  ],\n  \"expected\": \"Player remains at (2,2)\"\n}\n```"
+        }
+      }
+    ],
+    "created": 1792786645,
+    "model": "qwen2.5-coder-0.5b-q4-k-m-cpu",
+    "system_fingerprint": "b1-1a24df1",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 102,
+      "prompt_tokens": 87,
+      "total_tokens": 189,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "id": "chatcmpl-CqoPGaH2VLwUyMM5FIauPLXt1AWmANnq",
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 87,
+      "prompt_ms": 253.397,
+      "prompt_per_token_ms": 2.9126091954022986,
+      "prompt_per_second": 343.33476718351045,
+      "predicted_n": 102,
+      "predicted_ms": 1466.024,
+      "predicted_per_token_ms": 14.51508910891089,
+      "predicted_per_second": 68.89382438486683
+    }
+  },
+  "token_counts": {
+    "completion_tokens": 102,
+    "prompt_tokens": 87,
+    "total_tokens": 189,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "bounded_content_check_passed": false,
+  "server_stopped": true,
+  "server_exit": 0,
+  "peak_child_rss_kib": 601784,
+  "total_wall_seconds": 2.225350694003282,
+  "finished_at_utc": "2026-10-23T20:17:25.885392+00:00",
+  "cache_bytes": 890015706
+}

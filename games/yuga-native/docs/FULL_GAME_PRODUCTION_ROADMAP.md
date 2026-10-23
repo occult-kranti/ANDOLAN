@@ -4,6 +4,10 @@ Updated 23 October 2026. This is the execution guide for the original native YUG
 
 The companion [game design master](GAME_DESIGN_MASTER.md) owns detailed rules, hero kits and player journeys. [ROADMAP_BACKLOG.json](ROADMAP_BACKLOG.json) owns stable task IDs, dependencies, statuses, acceptance conditions and evidence. This roadmap owns sequencing, production standards and release decisions. Change all affected records when a design decision changes; a new document alone does not complete its implementation tasks.
 
+## Distributed worker process — 23 October 2026
+
+The [game-build setup](GAME_BUILD_FARM.md) makes the laptop the control machine, with an optional original-PS4 Linux CPU worker and this cloud for source/build/tests. A pinned small cloud CPU model performed actual generation; it failed the bounded game-regression content check and is not accepted as autonomous QA. The supplied PS4 thread is now retrieved/read, with historical CPU reports separated from measured results. PS4 GPU acceleration, actual console execution and client subscription entitlements still need their own qualification. The tested command/quarantine helper and exact download/readiness receipts support existing tasks; they do not change production statuses or the complete FG06 3v3 gate before 6v6. External public-demo results belong to the new source/evidence index, not a promise of unrestricted GPU compute.
+
 ## Local model squad amendment — 23 October 2026
 
 [The local-model guide](LOCAL_MODEL_SWARM.md) and [six specialist skills](../../../.agents/skills/README.md) adapt the existing roadmap to the confirmed **RTX 4070 Laptop GPU: 8 GB dedicated VRAM, 16 GB shared memory**. Shared memory is not additional local VRAM. The earlier RTX 5090/US$7,000 plan remains an optional upgrade comparison. Qualify one small Q4 model with a bounded context and reliable tool calls, then share it across six roles; serialize inference and unload weights for heavy Blender/3D jobs. The pinned research includes Qwen3.5-4B as a newer candidate, historical coding baselines, current Codex/Claude/Kimi client routes and exact untested boundaries.

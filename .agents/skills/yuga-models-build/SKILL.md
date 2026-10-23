@@ -15,6 +15,7 @@ Read [AGENTS.md](../../../AGENTS.md), [start here](../../../docs/START_HERE.md),
 [active handoff](../../../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md),
 [build handbook](../../../games/yuga-native/docs/BUILD_HANDBOOK.md) and the
 [AI study](../../../games/yuga-native/docs/research/ai-pipeline-oct21/README.md).
+For the actual laptop/PS4/cloud process, use [GAME_BUILD_FARM.md](../../../games/yuga-native/docs/GAME_BUILD_FARM.md) and its exact CPU/job evidence.
 The user now confirms 8 GB dedicated VRAM plus 16 GB shared system memory;
 this replaces the earlier proposed 5090 laptop as the current setup budget.
 

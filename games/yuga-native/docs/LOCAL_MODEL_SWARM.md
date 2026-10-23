@@ -4,6 +4,8 @@ Updated 23 October 2026. The user confirmed a **Lenovo Legion 7i, RTX 4070 Lapto
 
 This is the execution guide for six project skills and a local setup kit. It does not claim that six agent processes, local model inference or the complete game have been demonstrated on that laptop. The user will download model weights. Current source research is linked below; actual installed model revisions, sizes, terms and client compatibility must be recorded on the laptop.
 
+**Follow-on implementation:** [GAME_BUILD_FARM.md](GAME_BUILD_FARM.md) and [the new research index](research/ps4-swarm-oct23/README.md) add actual cloud CPU generation, an executable job/quarantine runner, the retrieved PS4 thread and fresh GPU-service checks. The earlier study below retains its own scope; it does not override the newer exact receipts.
+
 ## Recommended stack and what each layer does
 
 | Layer | First choice | Purpose and boundary |

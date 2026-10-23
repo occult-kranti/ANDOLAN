@@ -10,6 +10,10 @@ The intended visual result is detailed, animated 3D characters with readable sil
 
 **Recommended starting stack:** retain Godot 4.6.3 standard/GDScript, Blender and glTF. Qualify Godot's Mobile renderer on actual devices, with a separately tested Compatibility fallback. Trial a stripped headless Godot match server to preserve native rules, plus Nakama OSS/PostgreSQL for identity, parties and matchmaking. Final transport and authority choices require the M1 comparison; no online integration is claimed today. Android is the first qualification target; iOS follows with a macOS/Xcode build/signing lane. GitHub Pages can host the site, documentation and download links; it cannot run authoritative match servers.
 
+## Shared worker process — 23 October 2026
+
+[The laptop/PS4/cloud setup](GAME_BUILD_FARM.md) adds a real cloud CPU-model pilot and guarded job/cleanup tools. Keep them in offline authoring and verification; neither a PS4 worker nor a tiny model replaces actual Android renderer/touch/device or authoritative 5v5 qualification. Mobile remains deferred and **0/108** implemented. Reuse accepted source assets only after their desktop gates; no new mobile build, phone result or production completion credit is added.
+
 ## Local model squad amendment — 23 October 2026
 
 [The shared laptop/squad guide](LOCAL_MODEL_SWARM.md) now targets the user's confirmed **8 GB dedicated RTX 4070 Laptop GPU**, with 16 GB shared memory kept separate. Six project skills cover QA, UI, hero, world, motion and models/builds; one qualified local model serves queued work. Exact Codex/Claude/Kimi compatibility and actual inference must pass a laptop pilot. Heavy generation/rendering is a separate session; published TRELLIS/TRELLIS.2/Hunyuan3D 2.1 configurations exceed this GPU's dedicated memory. No model is included in a game build.

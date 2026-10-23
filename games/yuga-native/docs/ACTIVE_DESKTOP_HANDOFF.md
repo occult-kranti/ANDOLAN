@@ -2,6 +2,12 @@
 
 Updated 18 October 2026. **Desktop first; mobile deferred.** Work in `/workspace/ANDOLAN`, branch `game/yuga-native-production`. Read this handoff → [13-round plan](DESKTOP_FINISH_CAMPAIGN.md) → [78-packet ledger](DESKTOP_FINISH_CAMPAIGN.json), then only the assigned subsystem. Earlier campaigns and rejected experiments retain their own evidence.
 
+## Laptop, PS4 and cloud control expansion — 23 October
+
+[GAME_BUILD_FARM.md](GAME_BUILD_FARM.md) is the current setup process. It maps six project skills to a laptop control machine, an original-PS4 Linux CPU worker and this CPU cloud. The [new evidence index](research/ps4-swarm-oct23/README.md) records successful CPU build and real generation, the selected tiny model's failed content check, all 15 retrieved PS4 forum posts, subscription-auth distinctions and the external GPU/video experiment. No user PS4/laptop was contacted. Firmware/distro/driver/SSH remain unqualified; source/native cloud binaries cannot be treated as console-compatible builds.
+
+The [control helper](../tools/local-swarm/CONTROL.md) now executes explicit local or optional SSH jobs and quarantines exact inactive generated files. Its guards include source/credential/symlink, nested Git/gitlink and case-alias protection; declarations are not an OS sandbox. Model/service identity and downloader/receipt boundaries have independent review. Keep the first model failure and any corrected-tool requalification distinct. Model weights, tool environments and build cache remain outside Git. No runtime asset or public executable is promoted by this setup work. Desktop **17/78**, **0/13**; deferred Android **0/108** remain unchanged.
+
 ## 23 October local-model setup and restoration
 
 Use [LOCAL_MODEL_SWARM.md](LOCAL_MODEL_SWARM.md), [the six canonical skills](../../../.agents/skills/README.md) and [source evidence](research/local-swarm-oct23/README.md) for this task. Confirmed laptop: **8 GB dedicated VRAM plus 16 GB shared system memory**. The USA/US$7,000 RTX 5090 study is an upgrade comparison. Prefer one qualified small local model shared by six roles, one inference request at a time, and separate heavy render/generation sessions. The tested helper validates ownership/routing, probes the local inventory and locks cooperating commands; it does not launch agents or reserve VRAM. Actual laptop/client inference is still unrun. The three new videos are unread after fresh proxy CONNECT 403 responses.
