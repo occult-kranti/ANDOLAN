@@ -44,6 +44,8 @@ var floor_body: StaticBody3D
 var authority_bodies: Array[StaticBody3D] = []
 var native_platform_bodies: Array[StaticBody3D] = []
 var landmark_report: Dictionary = {}
+# Non-UI review opt-out; the playable scene uses the reviewed pilot by default.
+var wind_court_pilot_enabled := true
 var army: Node3D
 var audio: Node
 var siege_effects: Node3D
@@ -144,6 +146,8 @@ func _ready() -> void:
 	_build_floor()
 	_build_collisions()
 	_build_traversal_landmarks()
+	var pilot: Dictionary=landmark_report.get("wind_court_pilot",{})
+	if pilot.get("enabled",false) and not pilot.get("integrated_collision",false): return
 	_load_kits()
 	_build_props()
 	_build_objectives()
@@ -388,7 +392,24 @@ func _build_traversal_landmarks() -> void:
 	var specification: Dictionary=manifest.get("traversal",{})
 	for entry in specification.get("native_collision_boxes",[]):
 		native_platform_bodies.append(_collision(entry.id,_v(entry.position),_v(entry.size),false,true))
-	landmark_report=Landmarks.new().build(world,specification)
+	landmark_report=Landmarks.new().build(world,specification,{"wind_court_pilot":wind_court_pilot_enabled,"pilot_collision":true})
+	var pilot: Dictionary=landmark_report.get("wind_court_pilot",{})
+	# Construct the legacy body first: a future nonqualifying manifest must keep
+	# its collider. Replace only after the exact detailed body has been built.
+	if pilot.get("enabled",false):
+		var detailed:=world.get_node_or_null("TraversalRelics/"+Landmarks.WIND_COURT_ID+"/WindCourtDetailedCollision") as StaticBody3D
+		var legacy:=world.get_node_or_null(Landmarks.WIND_COURT_COLLISION_ID) as StaticBody3D
+		var index:=native_platform_bodies.find(legacy)
+		if detailed==null or legacy==null or index<0 or detailed.get_child_count()!=36:
+			push_error("Wind court requires the exact reviewed collision replacement")
+			pilot["integrated_collision"]=false
+			return
+		detailed.set_meta("native_only",true)
+		detailed.add_to_group("confluence_native_platform")
+		native_platform_bodies[index]=detailed
+		world.remove_child(legacy)
+		legacy.free()
+		pilot["integrated_collision"]=true
 	# Quiet signs on the ground explain lane identity without resembling pickups.
 	for lane in manifest.lanes:
 		for z in [-96.0,-48.0,48.0,96.0]:

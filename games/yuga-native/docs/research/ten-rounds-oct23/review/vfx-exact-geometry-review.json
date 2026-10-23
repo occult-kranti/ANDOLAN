@@ -1,0 +1,32 @@
+{
+  "scope": "Independent code review and rerun of the worker exact-indexed-triangle replay, plus separately recalculated rectangle inequalities. This is not a second independent deformation implementation or real-time playback.",
+  "passed": true,
+  "checks": {
+    "72_replayed_frames": true,
+    "same_fixture_source_effect_hash": true,
+    "reported_state_counts_match_capture": true,
+    "full_actual_indexed_vertex_bounds_fit_independently_recalculated": true,
+    "floor_clipped_bounds_fit_independently_recalculated": true,
+    "strict_original_failure_preserved": true
+  },
+  "analysis_sha256": "a41ff406753cb928b0039412067f4b81edc56201cb6fb9ec7a26b14ff9ca4039",
+  "helper_sha256": "5da14dc88fea0eab6de9d50302ab0c0552213740a090875eca4da551b7b899df",
+  "sources": {
+    "analysis": "5da14dc88fea0eab6de9d50302ab0c0552213740a090875eca4da551b7b899df",
+    "capture": "780c8c064c9067211023053f3ed727d378c3c502850435e4bc34813520c7461a",
+    "effects": "119353e71e5ad1eee61360d52db036075a6be60ec30c4c2ee228b5656243db66",
+    "fixture": "16048afb81ea6fe6ccceb9779063526cfb7da7b7f1bacd84b39c85e64713c17e"
+  },
+  "conservative_aabb_failures": 8,
+  "maximum_full_actual_vertex_bottom": 545.90771484375,
+  "maximum_floor_clipped_bottom": 522.596557617187,
+  "reviewed_algorithm": [
+    "Actual indexed vertex positions are transformed to world space before projection.",
+    "Above-floor clipping uses ordered triangle edges and exact y0 intersections; opposite sign guarantees a nonzero denominator.",
+    "The stage floor is opaque at y0 and200m wide, covering this bounded fixture.",
+    "Reused effect shaders alter fragments, not vertex positions; no hidden GPU displacement invalidates these bounds."
+  ],
+  "interpretation": "Empty projected corners of enclosing AABBs overestimate actual geometry. All full actual indexed geometry already fits575px; clipping at the opaque floor further tightens bounds. Floor occlusion is not the sole or necessary explanation of conservative failure.",
+  "strict_gate_rewritten": false,
+  "original_visual_review": "vfx-visual-r2.json"
+}

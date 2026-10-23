@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "scope": "Read-only code review and owner-reported data metrics; no independent Blender evaluation, render, export or reimport",
+  "status": "failed deformation; continuation requires correspondence diagnosis",
+  "inputs": [
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tools/hero-reuse-rig/build_transfer.py",
+      "sha256": "ade1878dbcb30a850952e6a7c8322ac8cfb95ac69d44802dcbc705cb7d78fdfb"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tools/hero-reuse-rig/anatomy_gate.py",
+      "sha256": "37919bf4d035ab461854598b6ff9e6e41ab47a87c97e0a7ef27ce7a162a42b15"
+    },
+    {
+      "path": "/workspace/ANDOLAN/games/yuga-native/tools/hero-reuse-rig/analyze_deformation.py",
+      "sha256": "096ba472d1d2a6e7ad793c9db12eafdc57e460240f245f562687de320a3793b8"
+    },
+    {
+      "path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r2-fixed2/transfer.json",
+      "sha256": "b3489718f348395f4b2e6c7051850237836a2e79c2a9674bc39a1d24cf13a99b"
+    },
+    {
+      "path": "/usr/share/blender/scripts/addons_core/io_scene_gltf2/__init__.py",
+      "sha256": "ef5e163399d294be0960dfbdcbaef80ac97b855bf098b0a62a5b90cfa7cf1c50"
+    },
+    {
+      "path": "/usr/share/blender/scripts/addons_core/io_scene_gltf2/blender/exp/tree.py",
+      "sha256": "0643b385595e45f8404877244446878b8273f6b26645a975907d474a4e6fc8c0"
+    },
+    {
+      "path": "/usr/share/blender/scripts/addons_core/io_scene_gltf2/blender/exp/skins.py",
+      "sha256": "4db9c3f346464b1638fc4f5cd2abe3733409bc2dc302670c116baa60e5b197e0"
+    }
+  ],
+  "runScriptSha256": "ade1878dbcb30a850952e6a7c8322ac8cfb95ac69d44802dcbc705cb7d78fdfb",
+  "runAnatomyModuleSha256": "37919bf4d035ab461854598b6ff9e6e41ab47a87c97e0a7ef27ce7a162a42b15",
+  "ownerReportedMetrics": {
+    "vertices": 93214,
+    "bones": 164,
+    "geometryExactAfterFit": false,
+    "maximumDroppedWeight": 0.17584483977407217,
+    "repose": {
+      "max": 0.39085763977495946,
+      "p95": 5.016184158490271e-05,
+      "moved_vertices": 4915
+    },
+    "leftSourceLandmarkSurfaceResidualsM": [
+      0.00905187574677345,
+      0.07226604303677249,
+      0.12044490133471314,
+      0.11938791329382509
+    ],
+    "rightSourceLandmarkSurfaceResidualsM": [
+      0.004889533990136466,
+      0.022366822025680116,
+      0.005912523110221255,
+      0.007308753651604579
+    ],
+    "sourceLabels": {
+      "nonarm.R": 31861,
+      "core": 29119,
+      "arm_core_boundary.R": 1872,
+      "arm.R": 956,
+      "nonarm.L": 27274,
+      "arm_core_boundary.L": 1961,
+      "arm.L": 171
+    },
+    "coreBoundaryDistanceM": {
+      "median": 0.051329247653484344,
+      "p95": 0.32192128896713257,
+      "max": 0.45262229442596436
+    },
+    "idle0Edges": {
+      "min": 0.042315469692752045,
+      "p95": 1.1979936345246833,
+      "p99": 4.043662507855094,
+      "max": 35.857866914394016
+    },
+    "run10Edges": {
+      "min": 0.04231223591241222,
+      "p95": 1.34847950359931,
+      "p99": 4.7125959593092706,
+      "max": 93.18957158388602
+    },
+    "export": null
+  },
+  "findings": [
+    {
+      "id": "RIG-1",
+      "severity": "blocking",
+      "finding": "Owner-reported normalized finite rows coexist with idle p99 4.04x edge stretch and run max93.19x; candidate remains failed."
+    },
+    {
+      "id": "RIG-2",
+      "severity": "blocking",
+      "finding": "family() treats clavicle/shoulder/pelvis and other sided bones as core; zero opposite-arm/leg prefix metrics do not prove zero cross-side shoulder or pelvis correspondence."
+    },
+    {
+      "id": "RIG-3",
+      "severity": "high",
+      "finding": "Mirrored provisional source landmarks have large left/right residual asymmetry; capsule labels and arm-only count asymmetry are not authored anatomy."
+    },
+    {
+      "id": "RIG-4",
+      "severity": "high",
+      "finding": "Pose edge baselines use already-reposed REST; source-fit to repose boundary damage must be measured separately, including neighboring edges across capsule and core/leg labels."
+    },
+    {
+      "id": "RIG-5",
+      "severity": "medium",
+      "finding": "Capsule radius depends on nearest segment; changing best segment can change radius abruptly. Hard z cutoffs and side/core split also need boundary-local checks."
+    },
+    {
+      "id": "RIG-6",
+      "severity": "medium",
+      "finding": "anatomy_gate donor surface vertices and skeleton landmarks share local coordinates by assumption. Actual inspected inputs are identity transforms, but asserting this protects future donors."
+    },
+    {
+      "id": "RIG-7",
+      "severity": "unverified",
+      "finding": "Installed Blender addon defaults to rest-position joints, using bone.matrix_local for joint nodes and inverse binds. Set export_rest_position_armature explicitly and verify raw/export/reimport REST plus action poses before promotion; this R2 has no export."
+    }
+  ],
+  "ownerResponse": "Rig owner agreed R2 remains failed, with no new render/export request; plans read-only original-fit/repose/boundary audit. Classifier and REST/export findings delivered separately.",
+  "runtimePromotion": false,
+  "qualityAccepted": false,
+  "editsToRigOwnerFiles": false
+}

@@ -1,0 +1,682 @@
+{
+	"accelerated_army_ticks": 24000,
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "world owns configured traversal army audio and controls",
+			"passed": true
+		},
+		{
+			"details": {
+				"alive": 30,
+				"alive_by_lane": [
+					10,
+					10,
+					10
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					0,
+					0
+				],
+				"cores": {
+					"moon": 100.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 0.05,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					0,
+					0,
+					0
+				],
+				"max_alive_seen": 30,
+				"max_attacks_seen": 0,
+				"max_corpses_seen": 0,
+				"max_nodes_seen": 30,
+				"next_wave_seconds": 29.95,
+				"pending_cleanup": 0,
+				"queued_attacks": 0,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 0,
+				"roles_alive": {
+					"bow_guard": 12,
+					"cannon_cart": 0,
+					"commander": 6,
+					"royal_chariot": 0,
+					"spearman": 12
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 0,
+				"siege": {
+					"cancelled": 0,
+					"hits": 0,
+					"impacts": 0,
+					"next_attack_id": 1,
+					"pending": 0,
+					"pending_cap": 32,
+					"rejected_pairs": 0,
+					"spawned_pairs": 0,
+					"windups": 0
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"total_cap": 96,
+				"unit_nodes": 30,
+				"wave_events": 1,
+				"waves": 1,
+				"winner": ""
+			},
+			"name": "six lane-team formations are live on actual scene entry",
+			"passed": true
+		},
+		{
+			"details": {
+				"browser_boxes": 8,
+				"native_platforms": 8
+			},
+			"name": "native bounds and separate collision domains present",
+			"passed": true
+		},
+		{
+			"details": {
+				"landings": [
+					{
+						"floor_error_m": 0.000623703002929688,
+						"grounded": true,
+						"id": "sun-lift-west-deck"
+					},
+					{
+						"floor_error_m": 0.000623703002929688,
+						"grounded": true,
+						"id": "sun-shrine-west-deck"
+					},
+					{
+						"floor_error_m": 0.000623703002929688,
+						"grounded": true,
+						"id": "sun-lift-east-deck"
+					},
+					{
+						"floor_error_m": 0.000623703002929688,
+						"grounded": true,
+						"id": "sun-shrine-east-deck"
+					},
+					{
+						"floor_error_m": 0.000623703002929688,
+						"grounded": true,
+						"id": "moon-lift-west-deck"
+					},
+					{
+						"floor_error_m": 0.000623703002929688,
+						"grounded": true,
+						"id": "moon-shrine-west-deck"
+					},
+					{
+						"floor_error_m": 0.000623703002929688,
+						"grounded": true,
+						"id": "moon-lift-east-deck"
+					},
+					{
+						"floor_error_m": 0.000623703002929688,
+						"grounded": true,
+						"id": "moon-shrine-east-deck"
+					}
+				],
+				"tolerance_m": 0.02
+			},
+			"name": "actual capsule lands on all eight native decks",
+			"passed": true
+		},
+		{
+			"details": {
+				"energy": 70.5000000000002,
+				"feet_y": 12.5008630752563
+			},
+			"name": "platform takeoff spends stamina and never grounded-recharges in flight",
+			"passed": true
+		},
+		{
+			"details": {
+				"closest_chest_distance_m": 1.70915913581848,
+				"final_mode": "ground",
+				"max_speed": 18.0,
+				"start_chest_distance_m": 33.0649185180664
+			},
+			"name": "visible native ring pulls player from sun-lift-west-ring",
+			"passed": true
+		},
+		{
+			"details": {
+				"closest_chest_distance_m": 1.69876968860626,
+				"final_mode": "grapple",
+				"max_speed": 18.0,
+				"start_chest_distance_m": 33.0649185180664
+			},
+			"name": "visible native ring pulls player from moon-lift-east-ring",
+			"passed": true
+		},
+		{
+			"details": {
+				"edges": [
+					{
+						"input": "move_right",
+						"position": [
+							67.3499984741211,
+							2.73615694046021,
+							0.000000857047780300491
+						],
+						"speed": 0.0783788338303566
+					},
+					{
+						"input": "move_left",
+						"position": [
+							-67.3499984741211,
+							2.73615694046021,
+							-0.000000857047780300491
+						],
+						"speed": 0.0783788338303566
+					},
+					{
+						"input": "move_forward",
+						"position": [
+							0.000000857047780300491,
+							2.73615694046021,
+							-127.349998474121
+						],
+						"speed": 0.0783788338303566
+					},
+					{
+						"input": "move_back",
+						"position": [
+							-0.000000857047780300491,
+							2.73615694046021,
+							127.349998474121
+						],
+						"speed": 0.0783788338303566
+					}
+				]
+			},
+			"name": "all four expanded edges retain the full capsule",
+			"passed": true
+		},
+		{
+			"details": {
+				"feet_y": 24.0,
+				"speed": 0.0
+			},
+			"name": "world ceiling and flight dash exclusion hold together",
+			"passed": true
+		},
+		{
+			"details": {
+				"active_music": false,
+				"dropped_events": 3,
+				"duck_db": -8.0,
+				"focused": true,
+				"music_enabled": true,
+				"music_paused": true,
+				"muted": false,
+				"played_events": 8,
+				"playing_cues": 0,
+				"pool_size": 6,
+				"suspended": true,
+				"volume": 0.35
+			},
+			"name": "pause freezes army and movement while cancelling traversal and audio",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "resume releases held horizontal movement",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "atlas freezes army and suppresses traversal input and sound",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "atlas exit resumes army with neutral movement",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Escape cancels remap capture without unpausing world",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "focus loss cancels pending capture and retains visible paused controls",
+			"passed": true
+		},
+		{
+			"details": {
+				"actions": [
+					"dash",
+					"descend",
+					"fly",
+					"grapple",
+					"guardian_circle",
+					"jump",
+					"move_back",
+					"move_forward",
+					"move_left",
+					"move_right",
+					"pulse",
+					"reload",
+					"sprint",
+					"ultimate"
+				],
+				"binding_buttons": 14,
+				"card": "[P: (300.0, 16.0), S: (680.0, 688.0)]",
+				"expected_binding_buttons": 14,
+				"viewport": "[P: (0.0, 0.0), S: (1280.0, 720.0)]"
+			},
+			"name": "controls card remains inside viewport with every remappable binding 1280x720",
+			"passed": true
+		},
+		{
+			"details": {
+				"actions": [
+					"dash",
+					"descend",
+					"fly",
+					"grapple",
+					"guardian_circle",
+					"jump",
+					"move_back",
+					"move_forward",
+					"move_left",
+					"move_right",
+					"pulse",
+					"reload",
+					"sprint",
+					"ultimate"
+				],
+				"binding_buttons": 14,
+				"card": "[P: (140.0, 16.0), S: (680.0, 568.0)]",
+				"expected_binding_buttons": 14,
+				"viewport": "[P: (0.0, 0.0), S: (960.0, 600.0)]"
+			},
+			"name": "controls card remains inside viewport with every remappable binding 960x600",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "closing controls after focus loss returns to pause",
+			"passed": true
+		},
+		{
+			"details": {
+				"health_after": 50.0,
+				"health_before": 75.0
+			},
+			"name": "world projectile damages opposing unit through actual collision",
+			"passed": true
+		},
+		{
+			"details": {
+				"after": {
+					"active_music": true,
+					"dropped_events": 3,
+					"duck_db": -8.0,
+					"focused": true,
+					"music_enabled": true,
+					"music_paused": false,
+					"muted": false,
+					"played_events": 9,
+					"playing_cues": 1,
+					"pool_size": 6,
+					"suspended": false,
+					"volume": 0.6
+				},
+				"before": {
+					"active_music": true,
+					"dropped_events": 3,
+					"duck_db": 0.0,
+					"focused": true,
+					"music_enabled": true,
+					"music_paused": false,
+					"muted": false,
+					"played_events": 8,
+					"playing_cues": 0,
+					"pool_size": 6,
+					"suspended": false,
+					"volume": 0.6
+				}
+			},
+			"name": "projectile impact reaches bounded world audio pool",
+			"passed": true
+		},
+		{
+			"details": {
+				"gold": 87,
+				"kills": 3
+			},
+			"name": "all roles award exact last-hit gold once through world wallet",
+			"passed": true
+		},
+		{
+			"details": {
+				"health": 30.0
+			},
+			"name": "player pulse signal damages nearby enemy through integrated army",
+			"passed": true
+		},
+		{
+			"details": {
+				"active_music": false,
+				"dropped_events": 106,
+				"duck_db": -8.0,
+				"focused": true,
+				"music_enabled": true,
+				"music_paused": false,
+				"muted": true,
+				"played_events": 10,
+				"playing_cues": 0,
+				"pool_size": 6,
+				"suspended": false,
+				"volume": 0.0
+			},
+			"name": "muted event burst stays silent with fixed audio allocation",
+			"passed": true
+		},
+		{
+			"details": {
+				"effects": 24,
+				"projectiles": 32
+			},
+			"name": "same-frame projectile and impact bursts obey world caps",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "world teleport clears queued projectiles and active traversal",
+			"passed": true
+		},
+		{
+			"details": {
+				"highest_unit_nodes": 30
+			},
+			"name": "fifty same-frame resets never retain old army nodes or attacks",
+			"passed": true
+		},
+		{
+			"details": {
+				"alive": 0,
+				"alive_by_lane": [
+					0,
+					0,
+					0
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					0,
+					0,
+					0
+				],
+				"cores": {
+					"moon": 100.0,
+					"sun": 100.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 0.0,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					10,
+					10,
+					10
+				],
+				"max_alive_seen": 30,
+				"max_attacks_seen": 0,
+				"max_corpses_seen": 24,
+				"max_nodes_seen": 30,
+				"next_wave_seconds": 30.0,
+				"pending_cleanup": 24,
+				"queued_attacks": 0,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 0,
+				"roles_alive": {
+					"bow_guard": 0,
+					"cannon_cart": 0,
+					"commander": 0,
+					"royal_chariot": 0,
+					"spearman": 0
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 0,
+				"siege": {
+					"cancelled": 0,
+					"hits": 0,
+					"impacts": 0,
+					"next_attack_id": 1,
+					"pending": 0,
+					"pending_cap": 32,
+					"rejected_pairs": 0,
+					"spawned_pairs": 0,
+					"windups": 0
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"total_cap": 96,
+				"unit_nodes": 24,
+				"wave_events": 1,
+				"waves": 1,
+				"winner": ""
+			},
+			"name": "same-frame army death burst retains at most24 corpses and96 nodes",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "independent accelerated army uses the actual manifest",
+			"passed": true
+		},
+		{
+			"details": {
+				"earliest_end": -1.0,
+				"elapsed": 1199.99999999946,
+				"max_alive": 72,
+				"max_attacks": 20,
+				"max_corpses": 9,
+				"max_unit_nodes": 76,
+				"ticks": 24000,
+				"wall_ms": 73278
+			},
+			"name": "independent20-minute army sweep has bounded finite live state",
+			"passed": true
+		},
+		{
+			"details": {
+				"blocked_moves": 0,
+				"kills_by_lane": [
+					400,
+					395,
+					413
+				],
+				"waves": 41
+			},
+			"name": "independent soak includes combat in every lane without static obstruction",
+			"passed": true
+		},
+		{
+			"details": {
+				"alive": 0,
+				"alive_by_lane": [
+					0,
+					0,
+					0
+				],
+				"cap": 72,
+				"configured": true,
+				"core_arrivals": [
+					2,
+					0,
+					0
+				],
+				"cores": {
+					"moon": 0.0,
+					"sun": 0.0
+				},
+				"corpse_cap": 24,
+				"elapsed": 0.05,
+				"finite": true,
+				"gold": 0,
+				"invalid_damage": 0,
+				"invalid_pulses": 0,
+				"invalid_steps": 0,
+				"kills": 0,
+				"kills_by_lane": [
+					0,
+					0,
+					0
+				],
+				"max_alive_seen": 30,
+				"max_attacks_seen": 0,
+				"max_corpses_seen": 0,
+				"max_nodes_seen": 30,
+				"next_wave_seconds": 29.95,
+				"pending_cleanup": 0,
+				"queued_attacks": 0,
+				"queued_for_deletion": 0,
+				"rejected_wave_pairs": 0,
+				"roles_alive": {
+					"bow_guard": 0,
+					"cannon_cart": 0,
+					"commander": 0,
+					"royal_chariot": 0,
+					"spearman": 0
+				},
+				"route_blocked_moves": 0,
+				"scope": "Offline deterministic original lane armies; no live network or commercial-game reconstruction.",
+				"separation_waits": 0,
+				"siege": {
+					"cancelled": 0,
+					"hits": 0,
+					"impacts": 0,
+					"next_attack_id": 1,
+					"pending": 0,
+					"pending_cap": 32,
+					"rejected_pairs": 0,
+					"spawned_pairs": 0,
+					"windups": 0
+				},
+				"siege_drill": false,
+				"temporary_units": 0,
+				"total_cap": 96,
+				"unit_nodes": 0,
+				"wave_events": 1,
+				"waves": 1,
+				"winner": "draw"
+			},
+			"name": "simultaneous opposing core arrivals settle as draw once",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "finished army cannot continue scoring or scheduling",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "post-outcome reset restores two cores and no previous attacks",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "restart restores world spawn and clean wallet",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "return disposes world army and audio ownership",
+			"passed": true
+		},
+		{
+			"details": {
+				"res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+				"res://scripts/confluence_world.gd": "f300b0627fcf2b68468992bcacc775a6c65a610a3d42127d045149a7b1b19e33",
+				"res://scripts/controls_overlay.gd": "e2a3ee57a2d0d320b52d09758a9ad25331f85c38e6a063f98efec88d0bc5fb3f",
+				"res://scripts/courtyard.gd": "43f512dc6509aba77c1d7055f0fd8404054df07fc700d6261f05a725c4e80a57",
+				"res://scripts/input_bindings.gd": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+				"res://scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+				"res://scripts/lane_minion.gd": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387",
+				"res://scripts/lane_unit_art.gd": "5861731faf1fc4dc77be7d99861a8c8eb885dba95c82cd074fe2b260e805482d",
+				"res://scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+				"res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+				"res://scripts/traversal_audio.gd": "067ff9f82cb73305418330de32fa7d59b4c492b16985d64e58bd09c1df77fd2a",
+				"res://scripts/traversal_landmarks.gd": "455d377c4f206df7ee20fec23ddeaf3803eb58bdb80ba5179f3d8b7c8b3599a5",
+				"res://scripts/traversal_pose.gd": "92502267f318fef5ce822f698457a7fc07f8129cebd20c17a6b187ef333e2cdf",
+				"res://scripts/traversal_stone.gdshader": "711a5cc8bbdeff0d7456379c7a921ec26f2019c59695363ec0b3e59a3327f548",
+				"res://tests/traversal_army_stress.gd": "b47163519e6396d862b0dedf6de14c8033718f0e4e5b85f404c45c71103042a4"
+			},
+			"name": "integrated sources remain unchanged during test",
+			"passed": true
+		}
+	],
+	"engine": "4.6.3-stable (official)",
+	"passed": true,
+	"physics_frames_observed": 1187,
+	"physics_ticks_per_second": 60,
+	"scope": "Actual native scene, Godot physics, injected InputEvents/signals and lifecycle; separate accelerated army simulation at20Hz. No OS-input, renderer, audible-quality, consumer-GPU performance, multiplayer authority or comprehensive security certification.",
+	"sources": {
+		"res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+		"res://scripts/confluence_world.gd": "f300b0627fcf2b68468992bcacc775a6c65a610a3d42127d045149a7b1b19e33",
+		"res://scripts/controls_overlay.gd": "e2a3ee57a2d0d320b52d09758a9ad25331f85c38e6a063f98efec88d0bc5fb3f",
+		"res://scripts/courtyard.gd": "43f512dc6509aba77c1d7055f0fd8404054df07fc700d6261f05a725c4e80a57",
+		"res://scripts/input_bindings.gd": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+		"res://scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+		"res://scripts/lane_minion.gd": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387",
+		"res://scripts/lane_unit_art.gd": "5861731faf1fc4dc77be7d99861a8c8eb885dba95c82cd074fe2b260e805482d",
+		"res://scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+		"res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+		"res://scripts/traversal_audio.gd": "067ff9f82cb73305418330de32fa7d59b4c492b16985d64e58bd09c1df77fd2a",
+		"res://scripts/traversal_landmarks.gd": "455d377c4f206df7ee20fec23ddeaf3803eb58bdb80ba5179f3d8b7c8b3599a5",
+		"res://scripts/traversal_pose.gd": "92502267f318fef5ce822f698457a7fc07f8129cebd20c17a6b187ef333e2cdf",
+		"res://scripts/traversal_stone.gdshader": "711a5cc8bbdeff0d7456379c7a921ec26f2019c59695363ec0b3e59a3327f548",
+		"res://tests/traversal_army_stress.gd": "b47163519e6396d862b0dedf6de14c8033718f0e4e5b85f404c45c71103042a4"
+	}
+}

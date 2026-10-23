@@ -2,9 +2,19 @@
 
 The [observatory source](../tools/build-observatory/README.md) is a read-only progress dashboard for actual jobs, model/tool identities, outputs and next steps. The [reuse stage](research/production-reuse-oct23/README.md) owns source decisions and the next five dependent production gates. The [art packet](../art/production-stage-oct23/README.md) distinguishes the existing animated Rama from the new, unrigged GPU-generated source. Neither a concept image nor a clean dashboard closes the commercial graphics target.
 
+The [latest ten-stage checkpoint](research/ten-rounds-oct23/README.md) continues
+those sources with six specialists. It records accepted compatibility/world
+work, actual effects motion and rejected hero cleanup/binding candidates.
+Its [next-owner queue](research/ten-rounds-oct23/NEXT_SIX_TASKS.md) names the
+remaining artistic and gameplay gates. Current cloud observations use
+`.local-swarm/observatory-ten-rounds/` on loopback port **8767**; pass that
+`--state-dir` explicitly when resuming this run. The default port/state below
+describe the earlier run. Private state is ignored by Git and must be
+initialized afresh if absent; never restore another process's liveness.
+
 ## View the work
 
-The [public dashboard](https://occult-kranti.github.io/ANDOLAN/production/) and [interactive source viewer](https://occult-kranti.github.io/ANDOLAN/production/viewer/) are deployed from source `069ab775`. [The independent public-byte audit](research/production-stage-oct23/publication/README.md) verifies 19 successful HTTP observations, 13 exact source-file matches and five preserved game/lab entry points. GitHub Pages serves a **saved snapshot**. Its collection timestamp and recorded-running labels remain visible; polling that file does not make the cloud's hardware live. The browser renders the actual self-hosted GLB using the project's existing PlayCanvas engine, with orbit/zoom/reset controls. It does not turn the source mesh into an animated game hero.
+The [public dashboard](https://occult-kranti.github.io/ANDOLAN/production/) and [interactive source viewer](https://occult-kranti.github.io/ANDOLAN/production/viewer/) were first deployed from source `069ab775`. Latest checkpoint publication is recorded in [the new publication packet](research/ten-rounds-oct23/publication/README.md). [The independent public-byte audit](research/production-stage-oct23/publication/README.md) verifies 19 successful HTTP observations, 13 exact source-file matches and five preserved game/lab entry points. GitHub Pages serves a **saved snapshot**. Its collection timestamp and recorded-running labels remain visible; polling that file does not make the cloud's hardware live. The browser renders the actual self-hosted GLB using the project's existing PlayCanvas engine, with orbit/zoom/reset controls. It does not turn the source mesh into an animated game hero.
 
 The live worker view runs while its ordinary local service is running:
 

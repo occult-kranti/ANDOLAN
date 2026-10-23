@@ -1,0 +1,76 @@
+{
+  "status": "rejected",
+  "scope": "Independent actual locked image inspection and arithmetic check of owner-reported localized edges. This is not an independent full-model skin evaluation or native reimport test.",
+  "inputs": {
+    "donor": {
+      "path": "games/yuga-native/assets/heroes/rama-hero.glb",
+      "sha256": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e"
+    },
+    "generated": {
+      "path": "/workspace/ANDOLAN/games/yuga-native/art/production-stage-oct23/hero-source/rama-generated.glb",
+      "sha256": "0c9fe46baa0a2f6e5f9cdb9386aad1405f9f22470a729c2538142576981f5c0b"
+    }
+  },
+  "candidate": {
+    "path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r1/rama-skin-transfer.glb",
+    "sha256": "d7a31ec9324c8ebd04466f5e9afa8e71d32e65d0f22e432d72c9ce4393729bbe"
+  },
+  "reports": [
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r1/transfer.json",
+      "sha256": "b060451522fa576e9db6776c88aabef26b3398b1544bd9913ce8ba8532c60746",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r1/transfer.json"
+    },
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r1/deformation-localization.json",
+      "sha256": "904a3b875a32e363e8e01cc404bac7c477398de3d17668fd1c98e73e70d79262",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r1/deformation-localization.json"
+    }
+  ],
+  "images_independently_viewed": [
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r1/views/fire-wrist.png",
+      "sha256": "c1482091c11d687b034065e630e422a47427693775162f4490cf21739348bb70",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r1/views/fire-wrist.png"
+    },
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r1/views/fire.png",
+      "sha256": "6e93132fd2c0ae7a7d0e253c8128e781beb3e682e5e2d44f5d1b49bca04ac79b",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r1/views/fire.png"
+    },
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r1/views/idle.png",
+      "sha256": "a05ce2be6b583a074b9582b148cc822eab0d3351b0765f4e40c09c6f06555394",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r1/views/idle.png"
+    },
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r1/views/rest.png",
+      "sha256": "f5a49f392d270d90be9aea5703258c97075d3cfeee850565c8af4fc7a04a297f",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r1/views/rest.png"
+    },
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r1/views/run-cloth.png",
+      "sha256": "e3c03e6ed682c48611301e24610ed648ff8c44def9a13e9cd6d512aa4affe0b0",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r1/views/run-cloth.png"
+    }
+  ],
+  "localized_arithmetic_check": {
+    "edges": 48,
+    "passed": true,
+    "errors": []
+  },
+  "visual_findings": [
+    "Rest is recognizable and alone hides the transfer failure.",
+    "Idle and fire stretch forearm/shoulder regions into long triangular sheets toward torso and drape.",
+    "Close wrist and running-cloth views confirm the same severe discontinuity."
+  ],
+  "mechanism_supported_by_localized_owner_data": "Adjacent source wrist vertices receive distant lower-arm and upper-leg donor influences. Pose transforms move one endpoint about 0.8m while its neighbor remains at the hip. Normalized finite weights alone cannot establish anatomical correctness.",
+  "next_gate": "Measured source/donor arm repose plus semantic donor masks, then fresh deforming-source/export/reimport verification and actual action/contact views. Do not smooth away discontinuity or relax stretch bounds.",
+  "promotion": false,
+  "unrun": [
+    "Native candidate import/pose rendering",
+    "Continuous motion/contact/interruptions",
+    "Full roster or game quality",
+    "Physical GPU performance"
+  ]
+}

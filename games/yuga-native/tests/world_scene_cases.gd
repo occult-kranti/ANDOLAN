@@ -245,8 +245,17 @@ func _landing_errors() -> Array:
 	for item in manifest.traversal.native_collision_boxes:
 		var base:=_v(item.position)
 		var dimensions:=_v(item.size)
-		var visual: MeshInstance3D=scene.world.get_node("TraversalRelics/"+String(item.landmark_id)+"/SolidLandingDeck")
-		var material: Material=visual.material_override
+		var court: Node3D=scene.world.get_node("TraversalRelics/"+String(item.landmark_id))
+		var is_pilot: bool=item.landmark_id==scene.Landmarks.WIND_COURT_ID and scene.landmark_report.get("wind_court_pilot",{}).get("enabled",false)
+		var visual:=court.get_node_or_null("WindCourtNear" if is_pilot else "SolidLandingDeck") as MeshInstance3D
+		if visual==null:
+			errors.append(item.id+" visible architecture missing")
+			continue
+		if is_pilot:
+			var detailed:=court.get_node_or_null("WindCourtDetailedCollision") as StaticBody3D
+			if scene.world.has_node(scene.Landmarks.WIND_COURT_COLLISION_ID) or court.has_node("SolidLandingDeck") or visual.mesh.get_surface_count()!=3 or detailed==null or detailed.get_child_count()!=36 or not detailed.is_in_group("confluence_native_platform"):
+				errors.append(item.id+" reviewed detailed collision replacement")
+		var material: Material=visual.get_active_material(0)
 		if not material is ShaderMaterial or material.shader.resource_path!="res://scripts/traversal_stone.gdshader" or not is_equal_approx(float(material.get_shader_parameter("deck_height")),dimensions.y) or not is_equal_approx(float(material.get_shader_parameter("deck_width")),dimensions.x):
 			errors.append(item.id+" facade material contract")
 		for offset in [Vector3.ZERO,Vector3(1.5,0,1.5),Vector3(-1.5,0,-1.5)]:

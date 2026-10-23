@@ -1,0 +1,43 @@
+{
+  "status": "rejected-before-render",
+  "scope": "Independent arithmetic challenge of frozen owner-reported source-fit to reposed-rest coordinates, plus read-only pose statistics. No independent full-model deformation evaluation or actual R2 rendering.",
+  "reports": [
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r2/transfer.json",
+      "sha256": "b3489718f348395f4b2e6c7051850237836a2e79c2a9674bc39a1d24cf13a99b",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r2-fixed2/transfer.json"
+    },
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r2/repose-audit-v2.json",
+      "sha256": "660820816301c2323f4af56e825a2e0eb59bdddbe2559c4b6c5482cb6df41a71",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r2-fixed2/repose-audit-v2.json"
+    },
+    {
+      "path": "games/yuga-native/art/ten-rounds-oct23/rig/r2/deformation-localization.json",
+      "sha256": "b5ea8428728d81b84f3939356a48575bdc971f9d267f169cf275329577474162",
+      "original_reviewed_path": "/workspace/scratch/ten-rounds-oct23/rig/transfer-r2-fixed2/deformation-localization.json"
+    }
+  ],
+  "repose_edge_arithmetic": {
+    "edges": 12,
+    "passed": true,
+    "errors": []
+  },
+  "measured_owner_stats": {
+    "repose_ratio": {
+      "min": 0.3045334499103932,
+      "p95": 1.0,
+      "p99": 1.372287492152189,
+      "max": 12.67234418792127
+    },
+    "repose_edges_changed_more_than_2cm": 846,
+    "worst_delta_m": 0.3206266330681588,
+    "max_idle_p99": 4.043993785454786,
+    "max_run_p99": 5.342246502563501,
+    "max_run_ratio": 93.18957158388602
+  },
+  "finding": "The correction introduces severe arm/core rest-space strain before animation; lower headline maxima do not qualify it. Initial source-fit pose and corrected rest pose must remain distinct in strain denominators.",
+  "runtime_promoted": false,
+  "render_requested": false,
+  "next_gate": "Artist-confirmed source shoulder/elbow/wrist/fingertip landmarks and continuous protected-region masks; bounded source-fit to reposed-rest strain and absolute edge deltas before another export or shared render."
+}

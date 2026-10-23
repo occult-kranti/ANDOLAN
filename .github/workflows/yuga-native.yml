@@ -5,6 +5,8 @@ on:
     branches: [game/yuga-native-production]
     paths:
       - 'games/yuga-native/**'
+      # The additive observatory workflow validates and deploys this browser-only tool.
+      - '!games/yuga-native/tools/build-observatory/**'
       - 'games/yuga/shared/**'
       - 'games/yuga/server/**'
       - 'games/yuga/tests/projectile-lifetime.test.ts'
@@ -14,6 +16,8 @@ on:
   pull_request:
     paths:
       - 'games/yuga-native/**'
+      # The additive observatory workflow validates and deploys this browser-only tool.
+      - '!games/yuga-native/tools/build-observatory/**'
       - 'games/yuga/shared/**'
       - 'games/yuga/server/**'
       - 'games/yuga/tests/projectile-lifetime.test.ts'
@@ -45,6 +49,7 @@ jobs:
         run: |
           npm ci --prefix games/yuga-native/tools/reuse-art --ignore-scripts
           npm test --prefix games/yuga-native/tools/reuse-art
+          node --test games/yuga-native/tools/reuse-art-next/test.mjs
           python3 -m unittest discover -s games/yuga-native/tools/reuse-animation -p 'test_*.py' -v
       - name: Validate production dependency ledger and its counterexamples
         run: |
@@ -144,6 +149,9 @@ jobs:
         run: Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/combat_motion_continuity.gd -- --report=${{ runner.temp }}/combat-motion-continuity.json
       - name: Confluence native traversal and rendering resource checks
         run: |
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/reuse-vfx-stage/test_stage.gd -- --report=${{ runner.temp }}/reused-vfx-lifecycle.json
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tools/wind-court-pilot/test_pilot.gd -- --report=${{ runner.temp }}/wind-court-pilot.json
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/wind_court_integration_cases.gd -- --report=${{ runner.temp }}/wind-court-integration.json
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/world_scene_cases.gd -- --report=${{ runner.temp }}/world-scene-cases.json
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --fixed-fps 60 --script res://tests/desktop_world_frontage_cases.gd -- --report=${{ runner.temp }}/world-frontage-cases.json
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tests/world_lighting_cases.gd -- --report=${{ runner.temp }}/world-lighting-cases.json

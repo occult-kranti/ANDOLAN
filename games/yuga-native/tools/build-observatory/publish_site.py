@@ -32,7 +32,7 @@ REQUIRED_BASELINE = ("index.html", "yuga/index.html", "yuga/lab/index.html",
                      "yuga/lane-lab/index.html", "yuga/control-lab/index.html")
 REQUIRED_WEB = {"index.html", "styles.css", "app.js", "status.json"}
 ROOT_FILES = REQUIRED_WEB | {"viewer.html", "viewer.js", "viewer.css"}
-MEDIA_TYPES = {".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif", ".svg",
+MEDIA_TYPES = {".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif", ".svg", ".mp4",
                ".glb", ".gltf", ".bin", ".ttf", ".otf", ".woff", ".woff2"}
 NOTICE_TYPES = {".txt", ".md", ".json"}
 VIEWER_TYPES = {".js", ".css", ".wasm", ".bin", ".woff", ".woff2", ".png", ".svg"}

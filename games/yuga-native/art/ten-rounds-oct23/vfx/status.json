@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "scope": "Isolated reused-source effects study; no accepted game change",
+  "runtime_promoted": false,
+  "gameplay_authority": false,
+  "hero_body_animation": false,
+  "physical_gpu": false,
+  "native_game_packets_closed": 0,
+  "source_lifecycle": {
+    "passed": true,
+    "cases": 27,
+    "report": "lifecycle.json"
+  },
+  "actual_render": {
+    "frames": 72,
+    "held_controls": 3,
+    "width": 960,
+    "height": 640,
+    "simulation_fps": 12,
+    "simulation_seconds": 6,
+    "real_time_fps_measured": false,
+    "renderer": "forward_plus",
+    "adapter": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "observed_godot_exit_code": 5,
+    "observed_wrapper_exit_code": 1,
+    "capture_passed": false,
+    "strict_conservative_aabb_gate": false,
+    "success_runner_report_exists": false,
+    "receipt": "observed-failure-receipt.json"
+  },
+  "automated_actual_checks": {
+    "passed": false,
+    "cases": 98,
+    "passed_cases": 97,
+    "failed_case": "unoccluded conservative mesh AABBs fit below caption",
+    "report": "verification.json"
+  },
+  "separate_geometry_diagnosis": {
+    "passed": true,
+    "report": "floor-occlusion-analysis.json",
+    "conservative_gate_remains_failed": true,
+    "maximum_conservative_aabb_bottom_px": 641.438,
+    "maximum_actual_triangle_vertex_bottom_px": 545.908,
+    "maximum_floor_clipped_triangle_bottom_px": 522.597,
+    "diagnosis": "Enclosing AABB corners include empty volume. Actual indexed vertices already fit unchanged content margins; the existing opaque floor further occludes a small part of the contact bloom."
+  },
+  "pixel_evidence": {
+    "normal_flame_distinct_crops": 36,
+    "reduced_motion_distinct_crops": 1,
+    "source_mask_changed_pixels_over3": 1356,
+    "outside_mask_and_subtitle_changed_pixels_over3": 0
+  },
+  "selected_source_frames": {
+    "frame_003.png": "windup.png",
+    "frame_008.png": "night.png",
+    "frame_020.png": "expired.png",
+    "frame_036.png": "day.png",
+    "frame_060.png": "reduced.png",
+    "source-mask-off.png": "control-mask-off.png",
+    "source-mask-on-no-flame.png": "control-mask-on.png",
+    "source-mask-on-replacement.png": "control-replacement.png"
+  },
+  "preserved_original": {
+    "source_manifest": "source-manifest-original.json",
+    "video": "sequence-original.mp4",
+    "capture": "capture-original.json",
+    "verification": "verification-original.json",
+    "verification_passed": false,
+    "passed_cases": 94,
+    "cases": 95,
+    "known_findings": [
+      "windup clipped at top",
+      "day captions low contrast",
+      "523 outside-mask pixels change with opaque-flame shadow"
+    ]
+  },
+  "prepared_only": {
+    "project": "project-06-controls",
+    "rendered": false,
+    "manifest": "prepared-only-controls-manifest.json"
+  },
+  "remaining": [
+    "Unoccluded conservative AABB framing gate remains open",
+    "Exact model is still 96,190 triangles; author LOD and physical scale before game promotion",
+    "Connect existing game clock/settings/camera; test actual level and lamp-light count",
+    "Hero body animation, authoritative gameplay and multiplayer remain outside this stage"
+  ],
+  "independent_review": {
+    "visual": "../../../docs/research/ten-rounds-oct23/review/vfx-visual-r2.json",
+    "geometry": "../../../docs/research/ten-rounds-oct23/review/vfx-exact-geometry-review.json",
+    "bounded_visible_study_reviewed": true,
+    "strict_conservative_gate_remains_failed": true,
+    "independent_pixel_method": "Any nonzero RGB channel difference; content band y100..580",
+    "independent_mask_pixels": 1360,
+    "independent_outside_mask_pixels": 0
+  }
+}

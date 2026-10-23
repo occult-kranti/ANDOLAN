@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "task": "Generated Rama surgical rear-hair cleanup",
+  "source_commit": "067ad5d5e12b4de71d75b658aa511beb8f175fc9",
+  "source_path": "games/yuga-native/art/production-stage-oct23/hero-source/rama-generated.glb",
+  "source_sha256": "0c9fe46baa0a2f6e5f9cdb9386aad1405f9f22470a729c2538142576981f5c0b",
+  "observed_defect": "Broad pitted/melted rear hair and uncontrolled hair/cape transition in actual source front/rear; source has no boundary edges under exact-position retained-face union, so generic hole fill is not justified.",
+  "permitted_scope": "Same-topology local position/normal edit in rear dark-hair intersection; preserve all indices, UVs, image bytes, metadata, source file and all vertices outside this mask.",
+  "spatial_mask_blender": {
+    "x": [
+      -0.115,
+      0.095
+    ],
+    "y": [
+      0.045,
+      0.13
+    ],
+    "z": [
+      0.25,
+      0.415
+    ]
+  },
+  "mask_further_restricted_by": "Every loop at a coincident position must sample dark, low-chroma nonblue original albedo. Soft spatial and luminance ramps; see pinned candidate script.",
+  "operation": "Three local Taubin lambda=.28/mu=-.29 pairs; normal blend .7; no delete/remesh/voxel union/topology change.",
+  "delta_budgets": {
+    "max_displacement_source_units": 0.0025,
+    "max_affected_imported_vertices": 2000,
+    "all_other_bytes_exact": true
+  },
+  "actual": {
+    "position_groups_selected": 484,
+    "position_groups_moved": 479,
+    "vertices_moved": 785,
+    "max_displacement_source_units": 0.001296605175729,
+    "max_normal_angle_degrees": 2.4844346,
+    "changed_bytes": 10564
+  },
+  "acceptance_gates": [
+    "Independent byte, finite, mask and displacement checks",
+    "Matched original/candidate front/rear images with exact light/camera/source pins",
+    "Meaningful visible improvement in coherent rear form with front/costume unchanged",
+    "Only then rig substitution or LOD/export"
+  ],
+  "prohibited": [
+    "Whole-body remesh/smoothing",
+    "Delete all small islands without visible semantic mask",
+    "Fill all source hair pits as if they were open boundary holes",
+    "Revisit C1-C8 parameter-loop generator",
+    "Claim lower local Laplacian residual is visual acceptance"
+  ],
+  "runtime_promoted": false
+}

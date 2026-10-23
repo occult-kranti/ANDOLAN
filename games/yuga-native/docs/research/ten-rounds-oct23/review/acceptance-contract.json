@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-23T21:43:18.806307+00:00",
+  "baseline": "067ad5d5e12b4de71d75b658aa511beb8f175fc9",
+  "scope": "Independent acceptance contract; three existing originals viewed. No new render, GPU call, game run or acceptance performed.",
+  "control": "Evidence identity and finite completion gates",
+  "baseline_bindings": [
+    {
+      "path": "games/yuga-native/art/production-stage-oct23/hero-source/rama-generated.glb",
+      "sha256": "0c9fe46baa0a2f6e5f9cdb9386aad1405f9f22470a729c2538142576981f5c0b",
+      "bytes": 4480716,
+      "viewed": false
+    },
+    {
+      "path": "games/yuga-native/art/production-stage-oct23/hero-source/intake/generated-front-three-quarter.png",
+      "sha256": "9dc7a7c262ec014af7e5cd99a0c6c302a5d788ea07ae5ec5e2d4fbaeaf80698e",
+      "bytes": 968510,
+      "viewed": true
+    },
+    {
+      "path": "games/yuga-native/art/production-stage-oct23/hero-source/intake/generated-rear-three-quarter.png",
+      "sha256": "ad10694900d550e54cf42a1710528223b1244ce7662f53790efbfd05a7d24010",
+      "bytes": 987438,
+      "viewed": true
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18b/W1-actual-r1/composed-source-smoke-r1/actual/00-current-source-land-100.png",
+      "sha256": "05ca9efdacbcb7ce2e3ac29b77338d168ed683207c685455b0f419aaf6bfd875",
+      "bytes": 288907,
+      "viewed": true
+    },
+    {
+      "path": "games/yuga-native/scripts/traversal_landmarks.gd",
+      "sha256": "9d2af384370560e805fdab965b04a30638c9632a36fa0a71cac7b53a7ccea887",
+      "bytes": 4397,
+      "viewed": false
+    },
+    {
+      "path": "games/yuga-native/art/hero-finish/hair-sculpt-design/clay-grouped-r1/NEXT_ARTIST_TASK.md",
+      "sha256": "0922eac3a4fc1a357558a122f606bf7815b24b29a488f78c151f5fb1b6292dfc",
+      "bytes": 3966,
+      "viewed": false
+    },
+    {
+      "path": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18b/W4-world-r1/NEXT_VISIBLE_MAP_TASK.md",
+      "sha256": "ae16016e32e5c2ae5f2160c99e4dbe155c1af2da59a3816a592f1a21051b2cab",
+      "bytes": 5050,
+      "viewed": false
+    }
+  ],
+  "observed_defects": [
+    "Generated rear hair contains visible voids/pitted forms; cape/ornament textures smear.",
+    "Generated face/hands remain soft and unqualified for deformation.",
+    "World baseline wind court reads as an8mcube with manifest collision separate from visual mesh builder."
+  ],
+  "gates": {
+    "hero_cleanup": {
+      "required": [
+        "Exact original source and selected mask/regions",
+        "Original/candidate UV and embedded image byte invariance where claimed",
+        "Finite positions/normals and bounded geometry deltas",
+        "Matched actual front/profile/rear/oblique views; deliberate gaps and silhouette retained"
+      ],
+      "reject": [
+        "Whole textured model remesh/smoothing without material/UV proof",
+        "Lower boundary count alone as artistic acceptance",
+        "Repeating rejected C1-C8 scalp generation as a new accepted groom"
+      ]
+    },
+    "hero_rig": {
+      "required": [
+        "Explicit source-to-donor rest-space mapping and source/rig/motion hashes",
+        "Finite normalized vertex weights and bounded influences with unweighted counts",
+        "Actual rest/idle/bow/action pose comparison and continuous skinning/contact checks",
+        "Exported candidate reimport with skin/motion identities retained"
+      ],
+      "reject": [
+        "Bone count alone as successful animation",
+        "Unknown pose-space fit hidden by global scale",
+        "Vertex explosions, collapsing hands/garment, orphaned or omitted geometry"
+      ]
+    },
+    "world_pilot": {
+      "required": [
+        "Only sun-lift-west opt-in until review; default and7otherdecks preserved",
+        "Exact8x8footprint, roofy8, anchor/ring/routes/army/economy preserved",
+        "Near<=2500tri;mid<=1000tri;<=3mergedopaque surfaces each; no newtextures/shaders/lights",
+        "Manifest collision explicitly replaced or solidvisualtruth preserved; real ray/capsule/roof counterexamples",
+        "Matched player/close/elevated daynight originals and short lateral evidence;4side readablebase/piers/crown"
+      ],
+      "reject": [
+        "Decorative recess hidden behind old manifest collider",
+        "Apparent traversable door/crawlthrough gap without truthful collision",
+        "Wide duplication of one unaccepted pilot",
+        "FPS claim derived from triangle count"
+      ]
+    },
+    "vfx": {
+      "required": [
+        "Existing effect/shader/model reuse mapping and input hashes",
+        "Bounded lifetime,pool reuse,expiry/reset/pause/reducedintensity checks",
+        "Continuous actual time samples with deterministic clocks and daynight legibility",
+        "No lingering or leaked particles/lights after reset/expiry"
+      ],
+      "reject": [
+        "Opaque baked flame renamed animated flame",
+        "Single still presented as continuous animation",
+        "PhysicalGPU/music/feel acceptance inferred from software capture"
+      ]
+    },
+    "reuse_adapter": {
+      "required": [
+        "Keep existing canonical adapter guard unchanged",
+        "Exact sourceimmutability and embeddedWebP image/UV/material semantics",
+        "Actual claimed output on selectedinputs, plus malformed/unknownextension counterexamples",
+        "No external fetch for embedded asset; original output terms/notices retained"
+      ],
+      "reject": [
+        "Weakening extensionguard to return success",
+        "Lossy simplification called lossless without numeric proof",
+        "Claimed memory/FPS savings without actual measurements"
+      ]
+    },
+    "integration_publication": {
+      "required": [
+        "Exact selected source hashes and explicit opt-ins/promotion decisions",
+        "Meaningful native/adversecases plus actual original views",
+        "Live worker vs saved public snapshot distinct and dated",
+        "Retain failed attempts and blocked results; public bytes verified if published"
+      ],
+      "reject": [
+        "Iteration count treated as complete game",
+        "Concept or viewer counted as finished rigged hero",
+        "Status changes merely to make progress appear higher"
+      ]
+    }
+  },
+  "round_contract": "Root owns the ten-round ledger. Each numbered round needs actual observable output/outcome; failed or held rounds can be reported but are not accepted game-campaign rounds. Desktop17/78and0/13,Android0/108remain separate unless a specifically owned acceptance packet actually passes."
+}

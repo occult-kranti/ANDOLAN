@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "scope": "Mechanical eligibility counterexamples only.",
+  "source_sha256": "0c9fe46baa0a2f6e5f9cdb9386aad1405f9f22470a729c2538142576981f5c0b",
+  "candidate_sha256": "83c636066216b5612304fa19d82aecf6d2d91bbba6354c652bb54713061d2018",
+  "script_sha256": "0310401f7de5a0aede986061336a6058a95888e5d292ee2a8a93828345d2fe93",
+  "cases": [
+    {
+      "case": "actual bounded candidate",
+      "expected": "accept",
+      "passed": true
+    },
+    {
+      "case": "unchanged source is not a cleanup",
+      "expected": "reject",
+      "passed": true,
+      "reason": "Candidate has no position change"
+    },
+    {
+      "case": "truncated container",
+      "expected": "reject",
+      "passed": true,
+      "reason": "Container size changed"
+    },
+    {
+      "case": "embedded image mutation",
+      "expected": "reject",
+      "passed": true,
+      "reason": "UV/index/image/material/nonpermitted bytes changed"
+    },
+    {
+      "case": "UV mutation",
+      "expected": "reject",
+      "passed": true,
+      "reason": "UV/index/image/material/nonpermitted bytes changed"
+    },
+    {
+      "case": "protected nonhair position mutation",
+      "expected": "reject",
+      "passed": true,
+      "reason": "Changed vertex outside protected rear-hair envelope"
+    },
+    {
+      "case": "hair displacement beyond cap",
+      "expected": "reject",
+      "passed": true,
+      "reason": "Displacement exceeds cap"
+    },
+    {
+      "case": "nonunit hair normal",
+      "expected": "reject",
+      "passed": true,
+      "reason": "Candidate normal is not unit length"
+    },
+    {
+      "case": "nonfinite hair position",
+      "expected": "reject",
+      "passed": true,
+      "reason": "Nonfinite candidate attribute"
+    }
+  ],
+  "passed": true,
+  "test_count": 9,
+  "files_mutated": false
+}

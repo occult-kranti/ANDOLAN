@@ -532,7 +532,7 @@ def make_server(observatory, port):
                     p = static_path(observatory.web, self.path)
                     kinds = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",
                              ".json": "application/json; charset=utf-8", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
-                             ".webp": "image/webp", ".svg": "image/svg+xml", ".glb": "model/gltf-binary", ".woff2": "font/woff2", ".ttf": "font/ttf", ".txt": "text/plain; charset=utf-8"}
+                             ".webp": "image/webp", ".svg": "image/svg+xml", ".glb": "model/gltf-binary", ".mp4": "video/mp4", ".woff2": "font/woff2", ".ttf": "font/ttf", ".txt": "text/plain; charset=utf-8"}
                     if p.suffix not in kinds:
                         raise ValueError("Static type not allowed")
                     self.send_body(200, p.read_bytes(), kinds[p.suffix])

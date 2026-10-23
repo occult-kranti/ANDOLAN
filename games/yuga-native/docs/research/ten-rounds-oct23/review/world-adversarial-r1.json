@@ -1,0 +1,70 @@
+{
+  "builder_sha256": "eb03d9cf56f3bb15e6d69adf6b17eb0f998b689804390252f091211700ec5d25",
+  "checks": [
+    {
+      "detail": null,
+      "name": "builder reuse does not leak opt-in into next default call",
+      "passed": false
+    },
+    {
+      "detail": {
+        "mismatches": [
+          {
+            "from": "(-26.0, 6.34, -84.09)",
+            "physics_distance": "inf",
+            "to": "(-20.0, 6.34, -84.09)",
+            "visual_distance": "3.52499961853027"
+          },
+          {
+            "from": "(-14.0, 6.34, -84.09)",
+            "physics_distance": "inf",
+            "to": "(-20.0, 6.34, -84.09)",
+            "visual_distance": "3.52499961853027"
+          }
+        ],
+        "rays": 818,
+        "solid_triangles": 432
+      },
+      "name": "solid visual triangle rays agree with actual detailed collider on four sides and roof",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "input manifest stays byte-equivalent as JSON",
+      "passed": true
+    },
+    {
+      "detail": [
+        {
+          "from": "(-18.95, 3.7, -94.0)",
+          "physics_distance": "2.0",
+          "to": "(-18.95, 3.7, -88.0)",
+          "visual_distance": "2.68000030517578"
+        }
+      ],
+      "name": "negative control detects invisible obsolete manifest full box",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "removing obsolete full box restores visible recession",
+      "passed": true
+    }
+  ],
+  "manifest_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+  "passed": false,
+  "pilot": {
+    "architecture_surfaces_per_lod": 3,
+    "collision_shapes": 36,
+    "enabled": true,
+    "envelope": "(8.0, 8.0, 8.0)",
+    "id": "sun-lift-west",
+    "landing_height": 8.0,
+    "mid_triangles": 444,
+    "near_triangles": 588,
+    "replacement_requires_old_collider_removed": true,
+    "roof_signals": "Existing medallion and six embers unchanged; outside merged opaque architecture count."
+  },
+  "review_probe_sha256": "5ceb959bd7632e6d76810b02970aa73fa2ba3e7271e6022c652749a71e6c43f9",
+  "scope": "Independent native opt-in fixture. Solid visual triangles compared to real physics, plus an obsolete-AABB negative control. Warm collars/band are deliberately non-solid decoration. No actual-image, full-world integration, traversal route, hardware or production-art acceptance."
+}

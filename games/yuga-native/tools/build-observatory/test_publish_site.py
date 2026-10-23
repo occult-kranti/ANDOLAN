@@ -62,6 +62,16 @@ class AdditivePublicationTests(unittest.TestCase):
         self.assertEqual(result["dashboard_files"]["app.js"]["sha256"], hashlib.sha256((self.web / "app.js").read_bytes()).hexdigest())
         self.assertIn("historical deployed byte equality unverified", result["scope"])
 
+    def test_linked_temporal_witness_is_copied_without_altering_existing_games(self):
+        witness = b"\x1a\x45\xdf\xa3 bounded temporal witness fixture"
+        (self.web / "media/effects.mp4").write_bytes(witness)
+        self.data["jobs"][0]["outputs"].append({"kind": "video", "url": "media/effects.mp4"})
+        self.write_snapshot()
+        result = self.publish()
+        self.assertEqual(self.baseline_bytes(), self.before)
+        self.assertEqual((self.site / "production/media/effects.mp4").read_bytes(), witness)
+        self.assertEqual(result["dashboard_files"]["media/effects.mp4"]["sha256"], hashlib.sha256(witness).hexdigest())
+
     def test_never_copies_python_design_documents_source_maps_or_extra_root_js(self):
         for name in ("verify_ui.py", "DESIGN.md", "source.js.map", "arbitrary.js", "package.json"):
             (self.web / name).write_text("not a deployment artifact")

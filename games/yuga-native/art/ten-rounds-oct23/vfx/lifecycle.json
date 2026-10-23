@@ -1,0 +1,556 @@
+{
+  "cases": 27,
+  "checks": [
+    {
+      "case": "incompatible source rolls back all children",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "exact imported source configures",
+      "evidence": {
+        "culled": false,
+        "flame_surfaces": 2,
+        "flame_triangles": 4,
+        "global_time_shader": false,
+        "light_energy": 0.676800012588501,
+        "lights": 1,
+        "mask_triangle_centers": 1878,
+        "phase": 0.0,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "source_meshes": 1,
+        "source_triangles": 96190,
+        "visible": true
+      },
+      "passed": true
+    },
+    {
+      "case": "repeated configure does not duplicate mesh",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "invalid delta cannot advance flame",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "pause freezes flame and light clock",
+      "evidence": {
+        "culled": false,
+        "flame_surfaces": 2,
+        "flame_triangles": 4,
+        "global_time_shader": false,
+        "light_energy": 0.713723659515381,
+        "lights": 1,
+        "mask_triangle_centers": 1878,
+        "phase": 0.125,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "source_meshes": 1,
+        "source_triangles": 96190,
+        "visible": true
+      },
+      "passed": true
+    },
+    {
+      "case": "unpause continues bounded clock",
+      "evidence": {
+        "culled": false,
+        "flame_surfaces": 2,
+        "flame_triangles": 4,
+        "global_time_shader": false,
+        "light_energy": 0.715134024620056,
+        "lights": 1,
+        "mask_triangle_centers": 1878,
+        "phase": 0.25,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "source_meshes": 1,
+        "source_triangles": 96190,
+        "visible": true
+      },
+      "passed": true
+    },
+    {
+      "case": "tree pause also freezes clock",
+      "evidence": {
+        "culled": false,
+        "flame_surfaces": 2,
+        "flame_triangles": 4,
+        "global_time_shader": false,
+        "light_energy": 0.715134024620056,
+        "lights": 1,
+        "mask_triangle_centers": 1878,
+        "phase": 0.25,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "source_meshes": 1,
+        "source_triangles": 96190,
+        "visible": true
+      },
+      "passed": true
+    },
+    {
+      "case": "reduced intensity preserves cue with less light",
+      "evidence": {
+        "culled": false,
+        "flame_surfaces": 2,
+        "flame_triangles": 4,
+        "global_time_shader": false,
+        "light_energy": 0.259999990463257,
+        "lights": 1,
+        "mask_triangle_centers": 1878,
+        "phase": 0.25,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "source_meshes": 1,
+        "source_triangles": 96190,
+        "visible": true
+      },
+      "passed": true
+    },
+    {
+      "case": "motion toggle reaches both materials",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "distance culling hides surfaces and zeroes light",
+      "evidence": {
+        "culled": true,
+        "flame_surfaces": 2,
+        "flame_triangles": 4,
+        "global_time_shader": false,
+        "light_energy": 0.0,
+        "lights": 1,
+        "mask_triangle_centers": 1878,
+        "phase": 0.25,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "source_meshes": 1,
+        "source_triangles": 96190,
+        "visible": false
+      },
+      "passed": true
+    },
+    {
+      "case": "bad distance cannot restore culled cue",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "distance recovery restores bounded surfaces",
+      "evidence": {
+        "culled": false,
+        "flame_surfaces": 2,
+        "flame_triangles": 4,
+        "global_time_shader": false,
+        "light_energy": 0.259999990463257,
+        "lights": 1,
+        "mask_triangle_centers": 1878,
+        "phase": 0.25,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "source_meshes": 1,
+        "source_triangles": 96190,
+        "visible": true
+      },
+      "passed": true
+    },
+    {
+      "case": "staged begin accepted",
+      "evidence": {
+        "active": 1,
+        "allocated_impacts": 0,
+        "casts": [
+          {
+            "ability_id": "kodanda",
+            "age_s": 0.0,
+            "cast_id": 1,
+            "released": false,
+            "warning_visible": false
+          }
+        ],
+        "counts": {
+          "accepted": 1,
+          "capacity": 0,
+          "expired": 0,
+          "invalid": 0,
+          "stale": 0
+        },
+        "finite": true,
+        "generation": 1,
+        "impact_triangles": 0,
+        "impacts": 0,
+        "lights": 0,
+        "live_arrows": 0,
+        "max_casts": 12,
+        "max_impacts": 18,
+        "meshes": 6,
+        "particles": 0,
+        "peak_active": 1,
+        "pooled_impacts": 0,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "scope": "Original event-driven Rama presentation; no gameplay authority",
+        "total_triangles": 226,
+        "triangles": 226
+      },
+      "passed": true
+    },
+    {
+      "case": "no projectile before release",
+      "evidence": {
+        "active": 1,
+        "allocated_impacts": 0,
+        "casts": [
+          {
+            "ability_id": "kodanda",
+            "age_s": 0.05,
+            "cast_id": 1,
+            "released": false,
+            "warning_visible": false
+          }
+        ],
+        "counts": {
+          "accepted": 1,
+          "capacity": 0,
+          "expired": 0,
+          "invalid": 0,
+          "stale": 0
+        },
+        "finite": true,
+        "generation": 1,
+        "impact_triangles": 0,
+        "impacts": 0,
+        "lights": 0,
+        "live_arrows": 0,
+        "max_casts": 12,
+        "max_impacts": 18,
+        "meshes": 6,
+        "particles": 0,
+        "peak_active": 1,
+        "pooled_impacts": 0,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "scope": "Original event-driven Rama presentation; no gameplay authority",
+        "total_triangles": 226,
+        "triangles": 226
+      },
+      "passed": true
+    },
+    {
+      "case": "staged release accepted",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "duplicate release rejected",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "pause freezes cast",
+      "evidence": {
+        "active": 1,
+        "allocated_impacts": 0,
+        "casts": [
+          {
+            "ability_id": "kodanda",
+            "age_s": 0.25,
+            "cast_id": 1,
+            "released": true,
+            "warning_visible": false
+          }
+        ],
+        "counts": {
+          "accepted": 2,
+          "capacity": 0,
+          "expired": 0,
+          "invalid": 0,
+          "stale": 1
+        },
+        "finite": true,
+        "generation": 1,
+        "impact_triangles": 0,
+        "impacts": 0,
+        "lights": 0,
+        "live_arrows": 1,
+        "max_casts": 12,
+        "max_impacts": 18,
+        "meshes": 6,
+        "particles": 0,
+        "peak_active": 1,
+        "pooled_impacts": 0,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "scope": "Original event-driven Rama presentation; no gameplay authority",
+        "total_triangles": 130,
+        "triangles": 130
+      },
+      "passed": true
+    },
+    {
+      "case": "impact accepted",
+      "evidence": {
+        "active": 1,
+        "allocated_impacts": 1,
+        "casts": [
+          {
+            "ability_id": "kodanda",
+            "age_s": 0.75,
+            "cast_id": 1,
+            "released": true,
+            "warning_visible": false
+          }
+        ],
+        "counts": {
+          "accepted": 3,
+          "capacity": 0,
+          "expired": 0,
+          "invalid": 0,
+          "stale": 1
+        },
+        "finite": true,
+        "generation": 1,
+        "impact_triangles": 152,
+        "impacts": 1,
+        "lights": 0,
+        "live_arrows": 0,
+        "max_casts": 12,
+        "max_impacts": 18,
+        "meshes": 6,
+        "particles": 0,
+        "peak_active": 1,
+        "pooled_impacts": 0,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "scope": "Original event-driven Rama presentation; no gameplay authority",
+        "total_triangles": 282,
+        "triangles": 130
+      },
+      "passed": true
+    },
+    {
+      "case": "pooled contact created once",
+      "evidence": {
+        "active": 1,
+        "allocated_impacts": 1,
+        "casts": [
+          {
+            "ability_id": "kodanda",
+            "age_s": 0.75,
+            "cast_id": 1,
+            "released": true,
+            "warning_visible": false
+          }
+        ],
+        "counts": {
+          "accepted": 3,
+          "capacity": 0,
+          "expired": 0,
+          "invalid": 0,
+          "stale": 1
+        },
+        "finite": true,
+        "generation": 1,
+        "impact_triangles": 152,
+        "impacts": 1,
+        "lights": 0,
+        "live_arrows": 0,
+        "max_casts": 12,
+        "max_impacts": 18,
+        "meshes": 6,
+        "particles": 0,
+        "peak_active": 1,
+        "pooled_impacts": 0,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "scope": "Original event-driven Rama presentation; no gameplay authority",
+        "total_triangles": 282,
+        "triangles": 130
+      },
+      "passed": true
+    },
+    {
+      "case": "contact expires into hidden pool",
+      "evidence": {
+        "active": 1,
+        "allocated_impacts": 1,
+        "casts": [
+          {
+            "ability_id": "kodanda",
+            "age_s": 0.8,
+            "cast_id": 1,
+            "released": true,
+            "warning_visible": false
+          }
+        ],
+        "counts": {
+          "accepted": 3,
+          "capacity": 0,
+          "expired": 0,
+          "invalid": 0,
+          "stale": 1
+        },
+        "finite": true,
+        "generation": 1,
+        "impact_triangles": 0,
+        "impacts": 0,
+        "lights": 0,
+        "live_arrows": 0,
+        "max_casts": 12,
+        "max_impacts": 18,
+        "meshes": 6,
+        "particles": 0,
+        "peak_active": 1,
+        "pooled_impacts": 1,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "scope": "Original event-driven Rama presentation; no gameplay authority",
+        "total_triangles": 130,
+        "triangles": 130
+      },
+      "passed": true
+    },
+    {
+      "case": "end accepted",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "second cast starts",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "second release accepted",
+      "evidence": null,
+      "passed": true
+    },
+    {
+      "case": "contact pool reused",
+      "evidence": {
+        "active": 1,
+        "allocated_impacts": 1,
+        "casts": [
+          {
+            "ability_id": "kodanda",
+            "age_s": 0.75,
+            "cast_id": 2,
+            "released": true,
+            "warning_visible": false
+          }
+        ],
+        "counts": {
+          "accepted": 7,
+          "capacity": 0,
+          "expired": 0,
+          "invalid": 0,
+          "stale": 1
+        },
+        "finite": true,
+        "generation": 1,
+        "impact_triangles": 152,
+        "impacts": 1,
+        "lights": 0,
+        "live_arrows": 0,
+        "max_casts": 12,
+        "max_impacts": 18,
+        "meshes": 6,
+        "particles": 0,
+        "peak_active": 1,
+        "pooled_impacts": 0,
+        "reduced_effects": false,
+        "reduced_motion": false,
+        "scope": "Original event-driven Rama presentation; no gameplay authority",
+        "total_triangles": 282,
+        "triangles": 130
+      },
+      "passed": true
+    },
+    {
+      "case": "reused effects retain reduced options",
+      "evidence": {
+        "active": 1,
+        "allocated_impacts": 1,
+        "casts": [
+          {
+            "ability_id": "kodanda",
+            "age_s": 0.75,
+            "cast_id": 2,
+            "released": true,
+            "warning_visible": false
+          }
+        ],
+        "counts": {
+          "accepted": 7,
+          "capacity": 0,
+          "expired": 0,
+          "invalid": 0,
+          "stale": 1
+        },
+        "finite": true,
+        "generation": 1,
+        "impact_triangles": 80,
+        "impacts": 1,
+        "lights": 0,
+        "live_arrows": 0,
+        "max_casts": 12,
+        "max_impacts": 18,
+        "meshes": 6,
+        "particles": 0,
+        "peak_active": 1,
+        "pooled_impacts": 0,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "scope": "Original event-driven Rama presentation; no gameplay authority",
+        "total_triangles": 146,
+        "triangles": 66
+      },
+      "passed": true
+    },
+    {
+      "case": "reset destroys active and pooled presentation",
+      "evidence": {
+        "active": 0,
+        "allocated_impacts": 0,
+        "casts": [],
+        "counts": {
+          "accepted": 7,
+          "capacity": 0,
+          "expired": 0,
+          "invalid": 0,
+          "stale": 1
+        },
+        "finite": true,
+        "generation": 1,
+        "impact_triangles": 0,
+        "impacts": 0,
+        "lights": 0,
+        "live_arrows": 0,
+        "max_casts": 12,
+        "max_impacts": 18,
+        "meshes": 0,
+        "particles": 0,
+        "peak_active": 1,
+        "pooled_impacts": 0,
+        "reduced_effects": true,
+        "reduced_motion": true,
+        "scope": "Original event-driven Rama presentation; no gameplay authority",
+        "total_triangles": 0,
+        "triangles": 0
+      },
+      "passed": true
+    },
+    {
+      "case": "bad forward rejected after reset",
+      "evidence": null,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "scope": "Headless lifecycle and source-import data checks; not render performance or gameplay authority"
+}
