@@ -1,0 +1,179 @@
+{
+  "started_at_utc": "2026-10-23T19:39:06.888405+00:00",
+  "finished_at_utc": "2026-10-23T19:39:07.578522+00:00",
+  "python": "3.12.14",
+  "platform": "linux",
+  "working_directory": "/workspace/scratch/local-swarm-restore/harness",
+  "tests": {
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "-v",
+      "test_local_swarm.py",
+      "test_gpu_job.py"
+    ],
+    "exit": 0,
+    "count": 30,
+    "stdout": "tests.stdout.txt",
+    "stderr": "tests.stderr.txt"
+  },
+  "example_validation": {
+    "command": [
+      "python",
+      "local_swarm.py",
+      "validate",
+      "plan.example.json"
+    ],
+    "expected_exit": 2,
+    "exit": 2,
+    "result": {
+      "status": "UNRESOLVED",
+      "valid": true,
+      "runnable": false,
+      "runtime_qualified": false,
+      "errors": [],
+      "unresolved": [
+        "route local: model_id is null"
+      ],
+      "note": "runnable describes plan bindings only; no client, model, or hardware was qualified"
+    }
+  },
+  "current_instance_probe": {
+    "command": [
+      "python",
+      "local_swarm.py",
+      "probe",
+      "--timeout",
+      "1"
+    ],
+    "exit": 1,
+    "result": {
+      "status": "ERROR",
+      "url": "http://127.0.0.1:11434/v1/models",
+      "error": "request failed: ConnectionRefusedError",
+      "generation_performed": false
+    },
+    "qualification": "Read-only model listing only; no inference or GPU qualification."
+  },
+  "cleanup_review": {
+    "status": "verified_no_new_zombies",
+    "before": [
+      {
+        "pid": 104676,
+        "ppid": 1,
+        "pgid": 104665,
+        "state": "Z"
+      },
+      {
+        "pid": 104681,
+        "ppid": 1,
+        "pgid": 104680,
+        "state": "Z"
+      },
+      {
+        "pid": 104763,
+        "ppid": 1,
+        "pgid": 104748,
+        "state": "Z"
+      },
+      {
+        "pid": 104768,
+        "ppid": 1,
+        "pgid": 104767,
+        "state": "Z"
+      },
+      {
+        "pid": 104842,
+        "ppid": 1,
+        "pgid": 104827,
+        "state": "Z"
+      },
+      {
+        "pid": 104847,
+        "ppid": 1,
+        "pgid": 104846,
+        "state": "Z"
+      },
+      {
+        "pid": 105243,
+        "ppid": 1,
+        "pgid": 105241,
+        "state": "Z"
+      },
+      {
+        "pid": 105248,
+        "ppid": 1,
+        "pgid": 105247,
+        "state": "Z"
+      }
+    ],
+    "after": [
+      {
+        "pid": 104676,
+        "ppid": 1,
+        "pgid": 104665,
+        "state": "Z"
+      },
+      {
+        "pid": 104681,
+        "ppid": 1,
+        "pgid": 104680,
+        "state": "Z"
+      },
+      {
+        "pid": 104763,
+        "ppid": 1,
+        "pgid": 104748,
+        "state": "Z"
+      },
+      {
+        "pid": 104768,
+        "ppid": 1,
+        "pgid": 104767,
+        "state": "Z"
+      },
+      {
+        "pid": 104842,
+        "ppid": 1,
+        "pgid": 104827,
+        "state": "Z"
+      },
+      {
+        "pid": 104847,
+        "ppid": 1,
+        "pgid": 104846,
+        "state": "Z"
+      },
+      {
+        "pid": 105243,
+        "ppid": 1,
+        "pgid": 105241,
+        "state": "Z"
+      },
+      {
+        "pid": 105248,
+        "ppid": 1,
+        "pgid": 105247,
+        "state": "Z"
+      }
+    ],
+    "new_zombies": [],
+    "note": "Earlier test versions left eight exited children adopted by PID 1. These are historical zombies, not live workers or lock holders; this process cannot reap PID 1 children. Final tests preserve/restore Linux subreaper state and use bounded cleanup of only test-owned process groups."
+  },
+  "scope": {
+    "software_installed": false,
+    "models_downloaded": false,
+    "generation_performed": false,
+    "repository_files_changed": false,
+    "environment_configuration_changed": false
+  },
+  "source_hashes": {
+    "local_swarm.py": "1b820ebe8d7c354f63b00c48e956f510ecb9416aca256a2c83f7d5ddf7f1cbfa",
+    "gpu_job.py": "7d40bef6b1609c2769838321516ff9ba26dd6ab7205947e86ad5e3d1adda3d31",
+    "test_local_swarm.py": "8cee67e76bcf9a43e30859aef59ad97f6754da6503c3085ab8ec96dc1b06913a",
+    "test_gpu_job.py": "21a931bf254676b426aa5ad685de4242d145cdb608b0314e458a8ec8725eb3b3",
+    "plan.example.json": "a8fa4c5794df88622efd275a327f1fdec337059c24020c7d1608fe4613fe594c",
+    "README.md": "80da42c24a6c12ba5cb8d8614035a403a94f4c4fc00466484760c6ba006fb3ad"
+  }
+}

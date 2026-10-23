@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "gpu_parallelism": 1,
+  "routing": {
+    "default": "local",
+    "fallback": null,
+    "routes": {
+      "local": {
+        "endpoint": "http://127.0.0.1:11434/v1",
+        "model_id": null
+      },
+      "cloud": {
+        "endpoint": null,
+        "model_id": null
+      }
+    }
+  },
+  "workers": [
+    {"id": "W1", "role": "QA", "route": "local", "paths": ["qualification"]},
+    {"id": "W2", "role": "UI", "route": "local", "paths": ["ui"]},
+    {"id": "W3", "role": "hero", "route": "local", "paths": ["hero"]},
+    {"id": "W4", "role": "world", "route": "local", "paths": ["world"]},
+    {"id": "W5", "role": "motion", "route": "local", "paths": ["motion"]},
+    {"id": "W6", "role": "models", "route": "local", "paths": ["models"]}
+  ]
+}

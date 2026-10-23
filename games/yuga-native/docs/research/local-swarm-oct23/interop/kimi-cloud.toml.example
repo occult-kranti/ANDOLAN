@@ -1,0 +1,21 @@
+# OPTIONAL CLOUD PROFILE: never merge into the local profile.
+# No fallback from local to cloud. Not installed, authenticated, or invoked.
+# Set CLOUD_MODEL_ID / context from the provider's current model catalog.
+default_model = "cloud"
+default_permission_mode = "manual"
+telemetry = false
+
+[providers.moonshot]
+type = "kimi"
+base_url = "https://api.moonshot.ai/v1"
+api_key_env = "MOONSHOT_API_KEY"
+
+[models.cloud]
+provider = "moonshot"
+model = "__EXPLICIT_HOSTED_MODEL_ID__"
+# Conservative request budget; verify actual model limits before use.
+max_context_size = 4096
+
+[secondary_model]
+default_model = "cloud"
+force = true

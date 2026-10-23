@@ -1,0 +1,40 @@
+# Documentation-verified modern MoonshotAI/kimi-code schema, not CLI-tested.
+# Save as $KIMI_CODE_HOME/config.toml in a NEW dedicated local profile.
+# Replace the model placeholder with an exact already-installed Ollama ID.
+default_model = "local"
+default_permission_mode = "manual"
+telemetry = false
+auto_session_title = false
+builtin_product_skills = false
+
+[providers.ollama]
+type = "openai"
+base_url = "http://127.0.0.1:11434/v1"
+api_key = "ollama" # Local protocol placeholder; not a real credential.
+
+[models.local]
+provider = "ollama"
+model = "__RESOLVED_LOCAL_MODEL_ID__"
+max_context_size = 4096
+# Use only after the selected model passes a tool-call / tool-result test.
+capabilities = ["tool_use"]
+
+[secondary_model]
+default_model = "local"
+force = true
+
+[thinking]
+enabled = false
+
+[loop_control]
+max_steps_per_turn = 6
+max_attempts_per_step = 2
+compaction_max_attempts = 2
+reserved_context_size = 1024
+
+[task]
+max_running_tasks = 6 # Logical workers; Ollama still admits one inference at a time.
+keep_alive_on_exit = false
+
+[tools]
+disabled = ["WebSearch", "FetchURL"]

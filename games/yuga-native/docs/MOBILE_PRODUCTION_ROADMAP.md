@@ -10,6 +10,12 @@ The intended visual result is detailed, animated 3D characters with readable sil
 
 **Recommended starting stack:** retain Godot 4.6.3 standard/GDScript, Blender and glTF. Qualify Godot's Mobile renderer on actual devices, with a separately tested Compatibility fallback. Trial a stripped headless Godot match server to preserve native rules, plus Nakama OSS/PostgreSQL for identity, parties and matchmaking. Final transport and authority choices require the M1 comparison; no online integration is claimed today. Android is the first qualification target; iOS follows with a macOS/Xcode build/signing lane. GitHub Pages can host the site, documentation and download links; it cannot run authoritative match servers.
 
+## Local model squad amendment — 23 October 2026
+
+[The shared laptop/squad guide](LOCAL_MODEL_SWARM.md) now targets the user's confirmed **8 GB dedicated RTX 4070 Laptop GPU**, with 16 GB shared memory kept separate. Six project skills cover QA, UI, hero, world, motion and models/builds; one qualified local model serves queued work. Exact Codex/Claude/Kimi compatibility and actual inference must pass a laptop pilot. Heavy generation/rendering is a separate session; published TRELLIS/TRELLIS.2/Hunyuan3D 2.1 configurations exceed this GPU's dedicated memory. No model is included in a game build.
+
+Mobile remains deferred until desktop work is accepted. When it resumes, apply the same source/asset intake evidence to M1/M3 and separately qualify mobile LODs, touch screens, real 5v5 authority and physical devices. Neither laptop model tests nor desktop art acceptance closes those gates. The implementation ledger remains **0/108 across 18 planned rounds**; no Android package, device run or video analysis is claimed. The earlier US$7,000 RTX 5090 study below is an upgrade option, not this laptop's specification.
+
 ## AI-assisted authoring amendment — 21 October 2026
 
 The [shared model/reconstruction study](research/ai-pipeline-oct21/README.md) updates both platforms. Its candidates come from pinned GitHub sources; the requested video is not yet accessible or transcribed. No model weights, GPU inference or Android binary were produced. The user's proposed workstation is a USA RTX 5090 laptop within US$7,000; qualify exact hardware and run heavy generation/render jobs serially. Desktop remains first.

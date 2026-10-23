@@ -1,8 +1,14 @@
 # YUGA full game production roadmap
 
-Updated 21 October 2026. This is the execution guide for the original native YUGA game. The target is the visual coherence, animation quality, combat readability and complete competitive experience requested through Deadlock, Dota 2 and Overwatch references. Those games are reference points, not an assertion that their source, artwork or server implementation has been recovered. The target remains open until the integrated game passes the gates below.
+Updated 23 October 2026. This is the execution guide for the original native YUGA game. The target is the visual coherence, animation quality, combat readability and complete competitive experience requested through Deadlock, Dota 2 and Overwatch references. Those games are reference points, not an assertion that their source, artwork or server implementation has been recovered. The target remains open until the integrated game passes the gates below.
 
 The companion [game design master](GAME_DESIGN_MASTER.md) owns detailed rules, hero kits and player journeys. [ROADMAP_BACKLOG.json](ROADMAP_BACKLOG.json) owns stable task IDs, dependencies, statuses, acceptance conditions and evidence. This roadmap owns sequencing, production standards and release decisions. Change all affected records when a design decision changes; a new document alone does not complete its implementation tasks.
+
+## Local model squad amendment — 23 October 2026
+
+[The local-model guide](LOCAL_MODEL_SWARM.md) and [six specialist skills](../../../.agents/skills/README.md) adapt the existing roadmap to the confirmed **RTX 4070 Laptop GPU: 8 GB dedicated VRAM, 16 GB shared memory**. Shared memory is not additional local VRAM. The earlier RTX 5090/US$7,000 plan remains an optional upgrade comparison. Qualify one small Q4 model with a bounded context and reliable tool calls, then share it across six roles; serialize inference and unload weights for heavy Blender/3D jobs. The pinned research includes Qwen3.5-4B as a newer candidate, historical coding baselines, current Codex/Claude/Kimi client routes and exact untested boundaries.
+
+The skills map W1 evidence/QA, W2 UI, W3 hero, W4 world, W5 motion/combat and W6 models/builds onto the existing gates. First qualify hardware/model/client on a bounded fixture; then assign exclusive files from the existing ready queue. Retain FG06's complete native 3v3 match before six-hero/6v6 expansion. Artist, continuous-motion, rendered-network, hardware and human-review gates are unchanged. The local helper is a tested planning/probe/cooperative-lock tool, not a running autonomous swarm or an inference benchmark. All three new videos are unread after CONNECT 403. **17/78 accepted desktop packets and 0/13 complete rounds remain unchanged.**
 
 ## AI-assisted production amendment — 21 October
 

@@ -21,6 +21,7 @@ Choose **Confluence** or **Bow training**, then the primary action. LMB draws/sh
 | Native build, tests and art pipeline | [Build handbook](games/yuga-native/docs/BUILD_HANDBOOK.md) |
 | Production game, features and milestones | [Production roadmap](games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md) |
 | Mythology, game design and open-source reuse | [Research brief](games/yuga-native/docs/research/RESEARCH_BRIEF.md) |
+| RTX 4070 8 GB local models, Codex/Claude/Kimi and six project skills | [Laptop/squad setup](games/yuga-native/docs/LOCAL_MODEL_SWARM.md) · [skill index](.agents/skills/README.md); laptop inference and the three videos remain unverified |
 | AI asset models, reconstruction tools and USA laptop plan | [21 October study and adoption gates](games/yuga-native/docs/research/ai-pipeline-oct21/README.md); video access and model execution still blocked |
 | Cloud setup, storage and exact recovery | [Workspace guide](docs/WORKSPACE_AND_CLEANUP.md) |
 
