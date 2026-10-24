@@ -12,6 +12,11 @@ for actual accepted/rejected scope and [next ten exits](NEXT_TEN.md) for the
 next assignments. The bank features and friendly-camera fix are integrated;
 three native hair appearances are rejected and the full graphics target remains open.
 
+The [published dashboard and browser evidence](root/publication/README.md)
+now record these exact outputs: 54 matching static files and 72 browser checks.
+The public page is a saved snapshot, with six completed scoped jobs and one
+blocked hero-art job.
+
 The hair-card pipeline produced textured, skinned native candidates; all
 three appearances failed visual review and remain outside the playable hero. The existing MPFB high-density curves are an authoring source, not
 an accepted game mesh. Four reused bank features are integrated into the existing wet-area crossing.

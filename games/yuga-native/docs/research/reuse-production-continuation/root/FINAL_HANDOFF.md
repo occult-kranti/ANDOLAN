@@ -8,6 +8,12 @@ passed all **42 steps**; native candidate
 passed all **15 steps**. [Exact remote metadata and package-evidence review](remote-ci/)
 separate those results from actual platform execution.
 
+The [public dashboard](https://occult-kranti.github.io/ANDOLAN/production/) is
+published from `4de88232`, with a dated snapshot of clean source `2fbc88fa`.
+All 54 approved static files match that publication; 72 actual Chromium checks
+pass. [Publication receipts and original screenshots](publication/README.md)
+preserve the separate source identities and verification limits.
+
 ## Implemented and accepted within scope
 
 - **World:** four whole source-derived bank features are integrated alongside
