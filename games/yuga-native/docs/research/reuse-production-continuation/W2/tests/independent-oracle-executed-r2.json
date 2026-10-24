@@ -1,0 +1,175 @@
+{
+  "target": "/workspace/ANDOLAN/games/yuga-native/tools/reuse-gate-input/run.py",
+  "sha256": "81f2f3e0ff4896503b20b4863bb7a7dd49628464c0ee4607fc07e0bf775c8680",
+  "scope": "Synthetic challenge of acceptance oracle only; no actual game/input result.",
+  "checks": [
+    {
+      "name": "full-grounded-crossing-control",
+      "expected_acceptance": true,
+      "actual_acceptance": true,
+      "pass": true,
+      "oracle_result": {
+        "physics_samples": 382,
+        "active_samples": 382,
+        "near_gate_samples": 382,
+        "crossings": [
+          {
+            "direction": "north",
+            "previous": 100,
+            "current": 101
+          },
+          {
+            "direction": "south",
+            "previous": 281,
+            "current": 282
+          }
+        ],
+        "approach_exit_spans": [
+          {
+            "direction": "north",
+            "exit_physics_frame": 161
+          },
+          {
+            "direction": "south",
+            "exit_physics_frame": 342
+          }
+        ],
+        "span_planes_z_m": [
+          -60,
+          -48
+        ],
+        "moving_near_gate_samples": 380,
+        "moving_with_ordinary_intent_samples": 380,
+        "max_adjacent_physics_displacement_m": 0.10000000000000853,
+        "near_gate_max_height_m": 0,
+        "near_gate_grounded_samples": 382,
+        "near_gate_clear_static_rays": 382,
+        "passed": true
+      }
+    },
+    {
+      "name": "center-jitter-does-not-traverse-gate",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "pass": true,
+      "oracle_result": {
+        "physics_samples": 6,
+        "active_samples": 6,
+        "near_gate_samples": 6,
+        "crossings": [
+          {
+            "direction": "north",
+            "previous": 2,
+            "current": 3
+          },
+          {
+            "direction": "south",
+            "previous": 5,
+            "current": 6
+          }
+        ],
+        "approach_exit_spans": [],
+        "span_planes_z_m": [
+          -60,
+          -48
+        ],
+        "moving_near_gate_samples": 5,
+        "moving_with_ordinary_intent_samples": 5,
+        "max_adjacent_physics_displacement_m": 0.20000000000000284,
+        "near_gate_max_height_m": 0,
+        "near_gate_grounded_samples": 6,
+        "near_gate_clear_static_rays": 6,
+        "passed": false
+      }
+    },
+    {
+      "name": "grounded-above-roof-does-not-traverse-opening",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "pass": true,
+      "oracle_result": {
+        "physics_samples": 382,
+        "active_samples": 382,
+        "near_gate_samples": 382,
+        "crossings": [
+          {
+            "direction": "north",
+            "previous": 100,
+            "current": 101
+          },
+          {
+            "direction": "south",
+            "previous": 281,
+            "current": 282
+          }
+        ],
+        "approach_exit_spans": [
+          {
+            "direction": "north",
+            "exit_physics_frame": 161
+          },
+          {
+            "direction": "south",
+            "exit_physics_frame": 342
+          }
+        ],
+        "span_planes_z_m": [
+          -60,
+          -48
+        ],
+        "moving_near_gate_samples": 380,
+        "moving_with_ordinary_intent_samples": 380,
+        "max_adjacent_physics_displacement_m": 0.10000000000000853,
+        "near_gate_max_height_m": 12,
+        "near_gate_grounded_samples": 382,
+        "near_gate_clear_static_rays": 382,
+        "passed": false
+      }
+    },
+    {
+      "name": "no-ordinary-movement-intent-is-not-input-qualification",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "pass": true,
+      "oracle_result": {
+        "physics_samples": 382,
+        "active_samples": 382,
+        "near_gate_samples": 382,
+        "crossings": [
+          {
+            "direction": "north",
+            "previous": 100,
+            "current": 101
+          },
+          {
+            "direction": "south",
+            "previous": 281,
+            "current": 282
+          }
+        ],
+        "approach_exit_spans": [
+          {
+            "direction": "north",
+            "exit_physics_frame": 161
+          },
+          {
+            "direction": "south",
+            "exit_physics_frame": 342
+          }
+        ],
+        "span_planes_z_m": [
+          -60,
+          -48
+        ],
+        "moving_near_gate_samples": 380,
+        "moving_with_ordinary_intent_samples": 0,
+        "max_adjacent_physics_displacement_m": 0.10000000000000853,
+        "near_gate_max_height_m": 0,
+        "near_gate_grounded_samples": 382,
+        "near_gate_clear_static_rays": 382,
+        "passed": false
+      }
+    }
+  ],
+  "passed": true
+}

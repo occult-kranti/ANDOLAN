@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "passed": false,
+  "source": "0290ec090a0c2a2bbec1f51d0747e9c67e6bd403",
+  "baseline_source": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "observed_at": "2026-10-24T02:46:45.310862+00:00",
+  "checks": [
+    {
+      "name": "Every requested static, receipt and browser entry returned HTTP200",
+      "passed": true
+    },
+    {
+      "name": "Every approved static file exactly matches committed bytes",
+      "passed": true
+    },
+    {
+      "name": "Publication pins exact dashboard and separate browser source",
+      "passed": false
+    },
+    {
+      "name": "Publication inventory matches the complete committed approved census",
+      "passed": true
+    },
+    {
+      "name": "Snapshot is exact saved data with clean observed source",
+      "passed": true
+    },
+    {
+      "name": "Observation time remains the original saved observation",
+      "passed": true
+    }
+  ],
+  "responses": [
+    {
+      "route": "production/app.js",
+      "url": "http://127.0.0.1:37497/production/app.js",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/production/app.js",
+      "content_type": "text/javascript",
+      "bytes": 38,
+      "sha256": "502b561067ffb5a72ca1b94866eaacd8885cf08fab91180b4c1013758819f21a",
+      "matches_expected": true
+    },
+    {
+      "route": "production/index.html",
+      "url": "http://127.0.0.1:37497/production/index.html",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/production/index.html",
+      "content_type": "text/html",
+      "bytes": 42,
+      "sha256": "3acd7e106cefba9be4c2a9031994b48256d6fb17810c7c00a1206c13e7af5c3f",
+      "matches_expected": true
+    },
+    {
+      "route": "production/status.json",
+      "url": "http://127.0.0.1:37497/production/status.json",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/production/status.json",
+      "content_type": "application/json",
+      "bytes": 227,
+      "sha256": "c77afc731d3df503f940c17cf12dbd11d7a83bc7fdace41eaf6df84bc758db7c",
+      "matches_expected": true
+    },
+    {
+      "route": "production/styles.css",
+      "url": "http://127.0.0.1:37497/production/styles.css",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/production/styles.css",
+      "content_type": "text/css",
+      "bytes": 42,
+      "sha256": "49f99dbb14c05786334e5672f4da7733f2d0f879ab1ce4cf15861330e13b96a7",
+      "matches_expected": true
+    },
+    {
+      "route": "production/publication.json",
+      "url": "http://127.0.0.1:37497/production/publication.json",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/production/publication.json",
+      "content_type": "application/json",
+      "bytes": 828,
+      "sha256": "7f784de907c523d19e135143d84d1aab9243ddeff3e2a0040a8235867337ce51"
+    },
+    {
+      "route": "index.html",
+      "url": "http://127.0.0.1:37497/index.html",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/index.html",
+      "content_type": "text/html",
+      "bytes": 26,
+      "sha256": "d895357728b2b45553ccbd4aeaf62f47a6457fd232bd31b04e84ee50c914682e"
+    },
+    {
+      "route": "yuga/index.html",
+      "url": "http://127.0.0.1:37497/yuga/index.html",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/yuga/index.html",
+      "content_type": "text/html",
+      "bytes": 31,
+      "sha256": "4e8ddcffa70cb16f41c55a9fd66386b3f295750d80b7fa0e4cf1bc417b21074e"
+    },
+    {
+      "route": "yuga/lab/index.html",
+      "url": "http://127.0.0.1:37497/yuga/lab/index.html",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/yuga/lab/index.html",
+      "content_type": "text/html",
+      "bytes": 35,
+      "sha256": "aacae03d4222a3bd64607c03d6c8ca2cb7c58df1b84cd2a0a2cab2dc5d6407ee"
+    },
+    {
+      "route": "yuga/lane-lab/index.html",
+      "url": "http://127.0.0.1:37497/yuga/lane-lab/index.html",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/yuga/lane-lab/index.html",
+      "content_type": "text/html",
+      "bytes": 40,
+      "sha256": "fdc4a8b4f68d5e1667f095894ec71fa71c3c0a9296d1c522817f5922089a67fd"
+    },
+    {
+      "route": "yuga/control-lab/index.html",
+      "url": "http://127.0.0.1:37497/yuga/control-lab/index.html",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:37497/yuga/control-lab/index.html",
+      "content_type": "text/html",
+      "bytes": 43,
+      "sha256": "e2dc9e7afdb2fc96fc3b6360e6d0786339ed2075da8712dcf6099cd0ef73ed10"
+    }
+  ],
+  "expected_files": {
+    "app.js": {
+      "bytes": 38,
+      "sha256": "502b561067ffb5a72ca1b94866eaacd8885cf08fab91180b4c1013758819f21a"
+    },
+    "index.html": {
+      "bytes": 42,
+      "sha256": "3acd7e106cefba9be4c2a9031994b48256d6fb17810c7c00a1206c13e7af5c3f"
+    },
+    "status.json": {
+      "bytes": 227,
+      "sha256": "c77afc731d3df503f940c17cf12dbd11d7a83bc7fdace41eaf6df84bc758db7c"
+    },
+    "styles.css": {
+      "bytes": 42,
+      "sha256": "49f99dbb14c05786334e5672f4da7733f2d0f879ab1ce4cf15861330e13b96a7"
+    }
+  },
+  "snapshot_source": {
+    "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "dirty": false
+  },
+  "auditor_sha256": "4c74d7b1f65eef62523a34e147b219bfe364711d48462eee4734ade27fddffab",
+  "limits": [
+    "Browser entry availability is checked; full baseline census preservation belongs to the publisher receipt.",
+    "This is saved snapshot delivery, not live worker activity, game execution or art acceptance."
+  ]
+}

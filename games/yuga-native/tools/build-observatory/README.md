@@ -111,6 +111,15 @@ Export performs one real local sample, writes `mode: "snapshot"` and retains its
 
 Export strips private PID/birth tracking fields. Inspect the public JSON and copy only reviewed artifacts into `web/media/` before publication. No raw receipts, model weights, environment files, credentials or machine-specific absolute paths belong there. Local model/source caches remain outside Git.
 
+After deployment, reuse `audit_public.py` with the full publication commit,
+browser baseline commit, site URL and a fresh output directory. It reads the
+approved file census from that Git revision and verifies the delivered bytes
+and snapshot identities. This replaces copying a hard-coded audit per release;
+historical audit scripts and receipts stay intact. Its real loopback test also
+rejects altered deployed JavaScript even when HTTP still returns 200. Browser
+entry availability is checked separately from the publisher's complete baseline
+preservation receipt. Actual browser interaction remains a separate check.
+
 ## Verification
 
 ```sh

@@ -1,0 +1,129 @@
+{
+  "kind": "independent-event-sync-review",
+  "trace_file_sha256": "045965d2dd4a4323c48aa0e4a412ee5043ecab59b4b87dc161e7252998e644e0",
+  "trace_json_sha256": "045965d2dd4a4323c48aa0e4a412ee5043ecab59b4b87dc161e7252998e644e0",
+  "implementation": {
+    "path": "/workspace/ANDOLAN/games/yuga-native/tools/reuse-event-sync/inspect_sidecar.py",
+    "sha256": "42e5dbd1a4618f73ed92f96aa615f769339dfffe379ebadbcbbf60ba18ac9f59"
+  },
+  "scope": "Actual capture inspection and synthetic corruption controls; no new raster or listening result.",
+  "checks": [
+    {
+      "name": "exact-retained-capture-positive",
+      "passed": true,
+      "expected_acceptance": true,
+      "actual_acceptance": true,
+      "findings": []
+    },
+    {
+      "name": "missing-effect-observation-stays-null",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "EFFECT_ACK_MISSING",
+          "timeline": 0,
+          "record_ordinal": 2,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "missing-audio-observation-stays-null",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "AUDIO_ACK_MISSING",
+          "timeline": 0,
+          "record_ordinal": 2,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "wrong-event-socket-identity-rejected",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "SOCKET_IDENTITY_MISMATCH",
+          "timeline": 0,
+          "record_ordinal": 2,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "duplicated-receiver-event-rejected",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "DUPLICATE_EVENT_IDENTITY",
+          "timeline": 0,
+          "record_ordinal": 3,
+          "detail": null
+        },
+        {
+          "code": "STALE_EVENT_IDENTITY",
+          "timeline": 0,
+          "record_ordinal": 3,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "receiver-return-failure-rejected",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "AUDIO_REJECTED",
+          "timeline": 0,
+          "record_ordinal": 2,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "ten-second-presentation-delay-not-synchronous",
+      "passed": false,
+      "expected_acceptance": false,
+      "actual_acceptance": true,
+      "findings": []
+    },
+    {
+      "name": "missing-middle-presentation-frame-is-visible",
+      "passed": false,
+      "expected_acceptance": false,
+      "actual_acceptance": true,
+      "findings": []
+    },
+    {
+      "name": "timeline-rate-label-cannot-be-forged",
+      "passed": false,
+      "expected_acceptance": false,
+      "actual_acceptance": true,
+      "findings": []
+    },
+    {
+      "name": "backwards-event-capture-clock-rejected",
+      "passed": false,
+      "expected_acceptance": false,
+      "actual_acceptance": true,
+      "findings": []
+    },
+    {
+      "name": "missing-presentation-motion-state-is-a-finding",
+      "passed": false,
+      "exception": "AttributeError(\"'NoneType' object has no attribute 'get'\")"
+    }
+  ],
+  "passed": false
+}

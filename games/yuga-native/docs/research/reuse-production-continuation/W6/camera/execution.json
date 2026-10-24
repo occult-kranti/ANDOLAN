@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "baseCommit": "02031d2c0132131a43ce55b2180527585f3306a7",
+  "scope": "Offline Sun-friendly camera occlusion repair; existing Forward+ per-instance transparency and actual existing units; no gameplay, map or hero-asset changes",
+  "sourceSha256": {
+    "games/yuga-native/scripts/confluence_world.gd": "178e73e34ec538180709e358824c45b71edd56a4484f86d118e828b7763d0f60",
+    "games/yuga-native/scripts/friendly_camera_visibility.gd": "4bf8e41a03b115d3bf5f9f79c238bc15d592975c500a29817db3481083aca787",
+    "games/yuga-native/scripts/friendly_camera_visibility.gd.uid": "3e463bd13cffced1380d58c71c898b064f6a2498d47c5e1a108f4392c2466d0c",
+    "games/yuga-native/scripts/lane_minion.gd": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387",
+    "games/yuga-native/scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+    "games/yuga-native/scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+    "games/yuga-native/tools/reuse-camera-readability/capture.py": "bac0a298e777f379245934637be70b4b54f642c5625ae2432d2b99fe769947a3",
+    "games/yuga-native/tools/reuse-camera-readability/cases.gd": "06873120a5081640ae4dac3704901ca3a348c634ac8b03f3a36dce6b8f4e7604",
+    "games/yuga-native/tools/reuse-camera-readability/integration_cases.gd": "f2347370e2c138abffe11448d0264c2b8550aa5bfe9834639b4ff5980a35df94",
+    "games/yuga-native/tools/reuse-camera-readability/capture_pair.gd": "fc734a0e8b5d9bea93f7dec89830623414594f8dfa2dd45539961432b8b8b03b"
+  },
+  "results": {
+    "actualUnitChecks": 17,
+    "actualWorldLifecycleChecks": 12,
+    "pairedViews": 3,
+    "pairedUnitCount": 30,
+    "pairedFadedUnits": 1,
+    "pairedFadedMeshes": 22,
+    "maximumFade": 0.82,
+    "matchedCameraBonesUnitsAuthority": true,
+    "rootVisualReview": "accepted bounded readability repair; ordinary W2 input retry remains separate"
+  },
+  "assetPostrunVerification": {
+    "path": "games/yuga-native/assets/heroes/rama-hero.glb",
+    "sha256": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e",
+    "headSha256": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e",
+    "matchesHead": true,
+    "scope": "Postrun current/HEAD source equivalence; original R1 wrapper did not pin the hero GLB due a missing-path typo, corrected in future runner"
+  },
+  "remaining": [
+    "W2 ordinary input retry on composed source",
+    "Physical GPU, continuous rendered motion and human feel/performance review",
+    "Mobile/Compatibility renderer qualification",
+    "Team-agnostic multiplayer adaptation; current ally rule is offline Sun only"
+  ],
+  "evidence": [
+    {
+      "path": "cases-canonical-r1.json",
+      "bytes": 2230,
+      "sha256": "2910a70052427000f37138269372d2988b0cccd61cd53f6d2285ac47ebfc9ab4"
+    },
+    {
+      "path": "cases-r1.json",
+      "bytes": 2211,
+      "sha256": "946c32d6ec1f8298f09cbf05324761e6ef95d21d665e669c3019f8b436ac5fe5"
+    },
+    {
+      "path": "integration-r1.json",
+      "bytes": 7357,
+      "sha256": "12ab1e3c81f788b6e61d9309cd74dc0b7c6c705afbcb592eaa2e4cd7d8a3ca85"
+    },
+    {
+      "path": "integration-r1.log",
+      "bytes": 16499,
+      "sha256": "01ec13643cbc3a92e3c72a8c5c9aced062d2ea2e49dc78783270185526e72328"
+    },
+    {
+      "path": "paired-r1/01-baseline.json",
+      "bytes": 35385,
+      "sha256": "504cd5083256df3f56155fff6c0f89e498e0836eb3112185ec572bb81a23b3fd"
+    },
+    {
+      "path": "paired-r1/01-baseline.png",
+      "bytes": 299293,
+      "sha256": "d2236ddf38333012469f44e12ebdce77f418142eb2f0dc216bbcec7408a376e8"
+    },
+    {
+      "path": "paired-r1/02-friendly-fade.json",
+      "bytes": 35748,
+      "sha256": "0176fb98729e54fdcb0499fadf0c14e707bd8c80e2f9b5e303f0895ae8b57174"
+    },
+    {
+      "path": "paired-r1/02-friendly-fade.png",
+      "bytes": 315431,
+      "sha256": "4a2d8de0ec739c5f5f27a9e61c895b2cf45aed6a2d3eb272b42c8886a87bdd1c"
+    },
+    {
+      "path": "paired-r1/03-restored.json",
+      "bytes": 35385,
+      "sha256": "998997e5691ad302f8780a4853a964f1ca17a7731e7741af2d2b3262cd1c62e1"
+    },
+    {
+      "path": "paired-r1/03-restored.png",
+      "bytes": 299293,
+      "sha256": "d2236ddf38333012469f44e12ebdce77f418142eb2f0dc216bbcec7408a376e8"
+    },
+    {
+      "path": "paired-r1/godot.log",
+      "bytes": 16539,
+      "sha256": "cc631d9e387825fc14ec6ef4ca0ea1e91517b5921e43b8bb7de68ba187dfb4bd"
+    },
+    {
+      "path": "paired-r1/progress.json",
+      "bytes": 91,
+      "sha256": "55fe686f3ac5cf357caffd3ff4ac9065fcca066f84781485adf12ff64eb0c4c4"
+    },
+    {
+      "path": "paired-r1/report.json",
+      "bytes": 110951,
+      "sha256": "d4017ead1dd6bd29cf29a22694bd07707cf6188e0a2689a2b5c7acfd10160665"
+    },
+    {
+      "path": "paired-r1/wrapper.json",
+      "bytes": 20588,
+      "sha256": "bcc4212f56ded0f5c73f9ddd477c971c46bf511ca58e8d95c91bf63e35586004"
+    },
+    {
+      "path": "paired-r1/xvfb.log",
+      "bytes": 64,
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+    },
+    {
+      "path": "source/paired-r1-capture.py.txt",
+      "bytes": 4678,
+      "sha256": "dff6a6b363a7b927127475baf6bf6969c72d63e9b1a76fea4fa9f229bf2f878e"
+    },
+    {
+      "path": "source/paired-r1-capture_pair.gd.txt",
+      "bytes": 5471,
+      "sha256": "334865ed838b6ec3fe66fb8665adc502f61f3f3f095eeee88441bcda4fdc8ea0"
+    },
+    {
+      "path": "source/paired-r1-friendly_camera_visibility.gd.txt",
+      "bytes": 5465,
+      "sha256": "4bf8e41a03b115d3bf5f9f79c238bc15d592975c500a29817db3481083aca787"
+    }
+  ]
+}

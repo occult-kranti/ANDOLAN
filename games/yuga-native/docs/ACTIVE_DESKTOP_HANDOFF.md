@@ -1,10 +1,12 @@
 # Active desktop work — resume here
 
+**Current continuation:** [reuse into playable integration](research/reuse-production-continuation/README.md) owns the latest implementation, review and source pins. Read its next-owner handoff before the historical checkpoints below. Complete hero art and rendered native multiplayer remain open.
+
 **24 October continuation:** [current six-worker packet](research/reuse-next-ten/README.md) owns the latest source changes, verification, integration decisions and next steps. The earlier published executable and 17/78 campaign count below remain separate from this bounded checkpoint. Start with this packet before following a historical owner queue.
 
 Updated 23 October 2026. **Desktop first; mobile deferred.** Work in `/workspace/ANDOLAN`, branch `game/yuga-native-production`. Read the latest checkpoint below → [13-round plan](DESKTOP_FINISH_CAMPAIGN.md) → [78-packet ledger](DESKTOP_FINISH_CAMPAIGN.json), then only the assigned subsystem. Earlier campaigns and rejected experiments retain their own evidence.
 
-## Latest reuse-first production checkpoint — 23 October
+## Earlier reuse-first production checkpoint — 23 October
 
 Start at [the bounded ten-stage checkpoint](research/ten-rounds-oct23/README.md)
 and [next ten conditional stages with six owners](research/ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md).

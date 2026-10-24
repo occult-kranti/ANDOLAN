@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""Adapt map-reuse-placement runner; six source-pinned matched water-garden views."""
+import argparse,hashlib,json,os,struct,subprocess,time
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+PROJECT=HERE.parents[1]
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def main():
+ ap=argparse.ArgumentParser();ap.add_argument('--runtime',type=Path,required=True);ap.add_argument('--godot',type=Path,required=True);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--display',type=int,default=178);ap.add_argument('--timeout',type=int,default=180);args=ap.parse_args();out=args.output.resolve();rt=args.runtime.resolve()
+ if out.exists() or not 90<=args.display<=199 or Path(f'/tmp/.X11-unix/X{args.display}').exists():raise ValueError('fresh output/owned display required')
+ out.parent.mkdir(parents=True,exist_ok=True)
+ env=os.environ.copy();env.update(DISPLAY=f':{args.display}',LD_LIBRARY_PATH=str(rt/'usr/lib/x86_64-linux-gnu'),VK_ICD_FILENAMES=str(rt/'usr/share/vulkan/icd.d/lvp_icd.json'),LP_NUM_THREADS='2',OMP_NUM_THREADS='2')
+ cmd=[str(args.godot),'--path',str(PROJECT),'--rendering-method','forward_plus','--rendering-driver','vulkan','--audio-driver','Dummy','--fixed-fps','30','--disable-vsync','--script','tools/lanka-water-garden/capture.gd','--','--output='+str(out)]
+ receipt={'schema':1,'command':cmd,'started_unix':time.time(),'engine_sha256':sha(args.godot),'asset_sha256':sha(PROJECT/'assets/world/lanka-water-garden-candidate.scn'),'runtime_setup_sha256':sha(rt.parent/'setup-report.json'),'lp_num_threads':2,'scope':'Actual software Vulkan full-world staged source reuse; no hardwareFPS'};rp=out.with_suffix('.wrapper.json');log=out.with_suffix('.log')
+ with log.open('x') as stream,out.with_suffix('.xvfb.log').open('x') as xs:
+  xvfb=subprocess.Popen([str(rt/'usr/bin/Xvfb'),env['DISPLAY'],'-screen','0','960x540x24','-nolisten','tcp'],env=env,stdout=xs,stderr=subprocess.STDOUT);receipt['xvfb_pid']=xvfb.pid
+  try:
+   deadline=time.monotonic()+10
+   while not Path(f'/tmp/.X11-unix/X{args.display}').exists():
+    if xvfb.poll()!=None or time.monotonic()>deadline:raise RuntimeError('owned display failed')
+    time.sleep(.05)
+   engine=subprocess.Popen(cmd,cwd=PROJECT,env=env,stdout=stream,stderr=subprocess.STDOUT);receipt['engine_pid']=engine.pid;rp.write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps({'engine_pid':engine.pid,'receipt':str(rp)}),flush=True)
+   try:receipt['exit_code']=engine.wait(timeout=args.timeout)
+   except subprocess.TimeoutExpired:
+    engine.terminate()
+    try:engine.wait(timeout=10)
+    except subprocess.TimeoutExpired:engine.kill();engine.wait()
+    raise RuntimeError('bounded render timeout; preserve partials')
+   stream.flush();raw=log.read_text()
+   if receipt['exit_code']!=0 or 'SCRIPT ERROR:' in raw or '\nERROR:' in raw:raise RuntimeError('native failure, inspect preserved log')
+   r=json.loads((out/'capture.json').read_text())
+   if not r['complete'] or r['renderer']!='forward_plus' or r['display']=='headless' or len(r['shots'])!=6 or len(r['route_frames'])!=0:raise RuntimeError('actual complete capture contract failed')
+   for row in r['shots']+r['route_frames']:
+    p=out/row['file'];b=p.read_bytes()
+    if b[:8]!=b'\x89PNG\r\n\x1a\n' or struct.unpack('>II',b[16:24])!=(960,540) or sha(p)!=row['sha256']:raise RuntimeError('imagebytes/hash/dimensions')
+   receipt.update(passed=True,capture_sha256=sha(out/'capture.json'))
+  except Exception as exc:receipt.update(passed=False,error=str(exc))
+  finally:
+   xvfb.terminate()
+   try:xvfb.wait(timeout=10)
+   except subprocess.TimeoutExpired:xvfb.kill();xvfb.wait()
+   receipt.update(finished_unix=time.time(),images=len(list(out.glob('*.png'))) if out.exists() else 0);receipt['elapsed_seconds']=round(receipt['finished_unix']-receipt['started_unix'],3);rp.write_text(json.dumps(receipt,indent=2)+'\n')
+ print(json.dumps(receipt));return 0 if receipt['passed'] else 1
+if __name__=='__main__':raise SystemExit(main())

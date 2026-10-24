@@ -1,0 +1,361 @@
+{
+  "kind": "independent-event-sync-review",
+  "trace_file_sha256": "045965d2dd4a4323c48aa0e4a412ee5043ecab59b4b87dc161e7252998e644e0",
+  "trace_json_sha256": "045965d2dd4a4323c48aa0e4a412ee5043ecab59b4b87dc161e7252998e644e0",
+  "implementation": {
+    "path": "/workspace/ANDOLAN/games/yuga-native/tools/reuse-event-sync/inspect_sidecar.py",
+    "sha256": "135444f3c66136e1e662e89bb4cccad9cc1ba3cde901a5d66b79be477cabb0b7"
+  },
+  "scope": "Actual capture inspection and synthetic corruption controls; no new raster or listening result.",
+  "checks": [
+    {
+      "name": "exact-retained-capture-positive",
+      "passed": true,
+      "expected_acceptance": true,
+      "actual_acceptance": true,
+      "findings": []
+    },
+    {
+      "name": "missing-effect-observation-stays-null",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "EFFECT_ACK_MISSING",
+          "timeline": 0,
+          "record_ordinal": 2,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "missing-audio-observation-stays-null",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "AUDIO_ACK_MISSING",
+          "timeline": 0,
+          "record_ordinal": 2,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "wrong-event-socket-identity-rejected",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "SOCKET_IDENTITY_MISMATCH",
+          "timeline": 0,
+          "record_ordinal": 2,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "duplicated-receiver-event-rejected",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "DUPLICATE_EVENT_IDENTITY",
+          "timeline": 0,
+          "record_ordinal": 3,
+          "detail": null
+        },
+        {
+          "code": "STALE_EVENT_IDENTITY",
+          "timeline": 0,
+          "record_ordinal": 3,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "receiver-return-failure-rejected",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "AUDIO_REJECTED",
+          "timeline": 0,
+          "record_ordinal": 2,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "ten-second-presentation-delay-not-synchronous",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "FRAME_COVERAGE_BOUNDS_MISMATCH",
+          "timeline": 0,
+          "record_ordinal": null,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 0,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 1,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 2,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 3,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 4,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 5,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 6,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 7,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 8,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 9,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 10,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 11,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 12,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 13,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 14,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 15,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 16,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 17,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 18,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 19,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 20,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 21,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 22,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 23,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 24,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 25,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 26,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 27,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 28,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "missing-middle-presentation-frame-is-visible",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "FRAME_COVERAGE_COUNT_MISMATCH",
+          "timeline": 0,
+          "record_ordinal": null,
+          "detail": {
+            "expected": 45.0,
+            "observed": 44
+          }
+        },
+        {
+          "code": "FRAME_CADENCE_GAP_OR_MISMATCH",
+          "timeline": 0,
+          "record_ordinal": null,
+          "detail": null
+        },
+        {
+          "code": "NEXT_PRESENTATION_SAMPLE_TOO_LATE",
+          "timeline": 0,
+          "record_ordinal": 18,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "timeline-rate-label-cannot-be-forged",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "SOURCE_PRESENTATION_CADENCE_INVALID",
+          "timeline": 0,
+          "record_ordinal": null,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "backwards-event-capture-clock-rejected",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "CAPTURE_CLOCK_REVERSED",
+          "timeline": 0,
+          "record_ordinal": 5,
+          "detail": null
+        },
+        {
+          "code": "CAPTURE_AND_OWNER_CLOCK_MISMATCH",
+          "timeline": 0,
+          "record_ordinal": 5,
+          "detail": null
+        }
+      ]
+    },
+    {
+      "name": "missing-presentation-motion-state-is-a-finding",
+      "passed": true,
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "findings": [
+        {
+          "code": "FRAME_PRESENTATION_STATE_MISSING_OR_MALFORMED",
+          "timeline": 0,
+          "record_ordinal": null,
+          "detail": 0
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

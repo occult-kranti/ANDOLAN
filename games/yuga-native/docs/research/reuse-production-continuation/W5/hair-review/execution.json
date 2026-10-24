@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "reviewer_task": "Independent W5 mechanicaleligibility; did notauthoradaptercorrection",
+  "failed_r2": {
+    "exit_code": 1,
+    "checks_passed": 31,
+    "checks_total": 32,
+    "source_sha256": "cf26063a09d5f013cb853ac45c526addb025dc08d6e0a2d849eaf3f2d03c0346"
+  },
+  "accepted_r3": {
+    "exit_code": 0,
+    "checks_passed": 32,
+    "checks_total": 32,
+    "source_sha256": "d97dd34341194f6bcb778cd1d138e4afa55552de6c906db1175cf3938c384efc"
+  },
+  "argv": [
+    "timeout",
+    "90s",
+    "taskset",
+    "-c",
+    "0",
+    "godot",
+    "--headless",
+    "--path",
+    "games/yuga-native",
+    "--script",
+    "res://tools/reuse-event-sync/hair_review.gd",
+    "--",
+    "--base=/workspace/scratch/reuse-hero-native/rama-nape-masked.glb",
+    "--hair=/workspace/scratch/reuse-hero-native/cards-r3/mpfb-nape-cards-near.glb",
+    "--wrong-hair=/workspace/scratch/reuse-production-continuation/W5/hair-review-r1/wrong-head.glb",
+    "--output=/workspace/scratch/reuse-production-continuation/W5/hair-review-r3/review.json"
+  ],
+  "source_before_after_equal": true,
+  "negative_reproducer_executed": true,
+  "negative_reproducer_exact": true,
+  "negative_compressed_sha256": "abeca792ae9afb497549eb70bb5a71187256c165ef1c3579967ee1b066ff4ec3",
+  "no_raster_launch": true
+}

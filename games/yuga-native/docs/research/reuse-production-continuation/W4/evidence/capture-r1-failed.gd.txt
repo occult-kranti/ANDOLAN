@@ -1,0 +1,215 @@
+extends "res://tools/map-reuse-placement/capture.gd"
+## Reuse the existing held-state/image machinery. This is not normal-input play.
+const Garden = preload("res://tools/lanka-water-garden/mount.gd")
+var identity_before: Dictionary = {}
+var context_before: Dictionary = {}
+
+func hashes() -> Dictionary:
+	var result := super.hashes()
+	for path in [Garden.ASSET, "res://tools/lanka-water-garden/mount.gd", "res://tools/lanka-water-garden/capture.gd", "res://tools/lanka-water-garden/bake.gd", "res://tools/lanka-water-garden/prepare.py", "res://assets/world/nature.glb", "res://art/world/nature-manifest.json", "res://scripts/lanka_lane_gate.gd"]:
+		result[path] = FileAccess.get_sha256(path)
+	return result
+
+func identities() -> Dictionary:
+	var result: Dictionary = {}
+	for body in scene.authority_bodies + scene.native_platform_bodies:
+		result[str(body.get_path())] = body.get_instance_id()
+	for anchor in scene.manifest.traversal.anchors:
+		var node: Node = scene.world.get_node("TraversalRelics").get_node(NodePath(anchor.id))
+		result[anchor.id] = node.get_instance_id()
+	result.floor = scene.floor_body.get_instance_id()
+	result.water = scene.world.get_node("west-reed-water").get_instance_id()
+	for prop: Dictionary in scene.manifest.props:
+		if String(prop.id).begins_with("swamp-"):
+			var node: Node = scene.props_root.get_node_or_null(NodePath(prop.id))
+			if node != null: result[prop.id] = node.get_instance_id()
+	return result
+
+func views() -> Array[Dictionary]:
+	return [{"id": "ordinary-west-day", "phase": 0.0, "ordinary": true},
+		{"id": "ordinary-west-night", "phase": 1.0, "ordinary": true},
+		{"id": "north-bank-detail", "phase": 0.0, "at": Vector3(-57.9, 2.25, -.6), "target": Vector3(-62, 1.7, 5)}]
+
+func all_routes() -> Array:
+	var space: PhysicsDirectSpaceState3D = scene.world.get_world_3d().direct_space_state
+	var failures: Array = []
+	var routes: Array = scene.manifest.lanes.duplicate(true)
+	routes.append_array(scene.manifest.rotations)
+	for route: Dictionary in routes:
+		var points: Array = route.points.duplicate(true)
+		if route.get("closed", false): points.append(points[0])
+		for i in range(points.size() - 1):
+			var start := Vector3(points[i][0], .95, points[i][2])
+			var end := Vector3(points[i + 1][0], .95, points[i + 1][2])
+			var q := PhysicsShapeQueryParameters3D.new()
+			q.shape = actual_capsule
+			q.transform = Transform3D(Basis.IDENTITY, start)
+			q.motion = end - start
+			q.margin = .001
+			q.collision_mask = 1
+			var cast := space.cast_motion(q)
+			if cast.size() != 2 or cast[0] < .9999: failures.append({"route": route.id, "segment": i, "cast": cast})
+	return failures
+
+func water_context() -> Dictionary:
+	var water: MeshInstance3D = scene.world.get_node("west-reed-water")
+	var material: ShaderMaterial = water.get_active_material(0)
+	return {"position": vector(water.position), "size": [water.mesh.size.x, water.mesh.size.y], "shader_sha256": FileAccess.get_sha256("res://scripts/world_water.gdshader"), "swamp_overlay": material.get_shader_parameter("swamp_overlay"), "overlay_center": str(material.get_shader_parameter("overlay_center")), "overlay_size": str(material.get_shader_parameter("overlay_size")), "army_boxes": scene.army.boxes.duplicate(true), "manifest": scene.manifest.duplicate(true)}
+
+func context_probe() -> void:
+	var space: PhysicsDirectSpaceState3D = scene.world.get_world_3d().direct_space_state
+	for child in scene.player.get_children():
+		if child is CollisionShape3D and child.shape is CapsuleShape3D: actual_capsule = child.shape
+	check("actual hero capsule0.65m radius/1.8m height", actual_capsule != null and is_equal_approx(actual_capsule.radius, .65) and is_equal_approx(actual_capsule.height, 1.8))
+	var blocked: Array = []
+	var samples := 0
+	for z in [-2.0, -1.0, 0.0, 1.0, 2.0]:
+		for index in 45:
+			var x := -66 + index * .5
+			samples += 1
+			if not capsule_hits(space, x, z, .65).is_empty(): blocked.append([x, z])
+	check("225actual capsule positions preserve four metre cross-mid corridor", blocked.is_empty(), {"samples": samples, "blocked": blocked})
+	var camp_hits: Array = []
+	for index in 73:
+		var angle: float = index * TAU / 72
+		var point := Vector3(-54, 0, 0) + Vector3(cos(angle), 0, sin(angle)) * 4
+		if not capsule_hits(space, point.x, point.z, .65).is_empty(): camp_hits.append(vector(point))
+	check("camp four-metre ring remains clear for actual hero radius", camp_hits.is_empty(), {"samples": 73, "failures": camp_hits})
+	var ground_errors: Array = []
+	for x in [-65.0, -63.0, -61.0, -59.0, -57.0, -55.0]:
+		for z in [-2.0, 0.0, 2.0]:
+			var hit: Dictionary = space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(x, .4, z), Vector3(x, -.4, z), 1))
+			if hit.is_empty() or absf(hit.position.y) > .0001 or hit.collider != scene.floor_body: ground_errors.append([x, z, str(hit)])
+	check("water is unchanged1.2cm film over actual flat floor;18ground rays", ground_errors.is_empty() and water_context() == context_before, ground_errors)
+	var camera_errors: Array = []
+	var camera_shape: Shape3D = scene.player.spring.shape
+	for direction in [-1, 1]:
+		for i in 45:
+			var q := PhysicsShapeQueryParameters3D.new()
+			q.shape = camera_shape
+			q.transform = Transform3D(Basis.IDENTITY, Vector3(-66 + i * .5, 1.54, direction * .65))
+			q.motion = Vector3(direction * 3.482513, .349416, 0)
+			q.collision_mask = 1
+			var cast := space.cast_motion(q)
+			if cast[0] < .999: camera_errors.append([direction, i, cast[0]])
+	check("90actual shoulder camera sphere sweeps keep wet crossing clear", camera_errors.is_empty(), camera_errors)
+	var route_errors := all_routes()
+	check("all three lanes and every rotation preserve actual capsule sweeps", route_errors.is_empty(), route_errors)
+	var hit: Dictionary = space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-64, 1.6, 5), Vector3(-61, 1.6, 5), 1))
+	check("column shaft provides actual eye-level cover", not hit.is_empty() and String(hit.collider.get_path()).contains("garden-north-column"), {"hit": str(hit)})
+	hit = space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-61, .7, -5.2), Vector3(-59, .7, -5.2), 1))
+	check("diya base has actual matching low collision", not hit.is_empty() and String(hit.collider.get_path()).contains("garden-south-diya"), {"hit": str(hit)})
+	hit = space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-61, 1.6, -5.2), Vector3(-59, 1.6, -5.2), 1))
+	check("decorative diya crown does not become solid eye-height cover", hit.is_empty())
+	var ids: Array = []
+	gather_bodies(scene.world, ids)
+	var expected := original_body_ids.duplicate()
+	for body: StaticBody3D in placement_result.bodies: expected.append(body.get_instance_id())
+	ids.sort(); expected.sort()
+	check("only foursource bodies added; all original body identities retained", ids == expected and identity_before == identities(), {"before": original_body_ids.size(), "after": ids.size()})
+	check("existing8authority8decks10anchors remain in canonical arrays", scene.authority_bodies.size() == 8 and scene.native_platform_bodies.size() == 8 and scene.manifest.traversal.anchors.size() == 10)
+	var seed: Dictionary = scene.manifest.duplicate(true)
+	seed.traversal.native_collision_boxes = []
+	# Preserve all actual existing private gate/relay boxes without converting any into authority.
+	for box: Dictionary in scene.army.boxes.slice(8):
+		seed.traversal.native_collision_boxes.append({"position": vector(box.position), "size": vector(box.size)})
+	var derived := Garden.prepare_army_manifest(seed, candidate)
+	check("derived army copy retains all35existingboxes plus4candidate footprints", derived.get("ok", false) and derived.manifest.traversal.native_collision_boxes.size() == 31 and seed.traversal.native_collision_boxes.size() == 27)
+	var army: Node3D = load("res://scripts/lane_army.gd").new()
+	root.add_child(army)
+	check("existing unchanged army accepts candidate copy", army.configure(derived.manifest, scene.player))
+	hold_callbacks(army)
+	check("army cover blocks pillar while cross-mid stays clear", not army.line_clear(Vector3(-64, 0, 5), Vector3(-61, 0, 5)) and army.line_clear(Vector3(-66, 0, 0), Vector3(-44, 0, 0)))
+	check("duplicate candidate army augmentation rejected", not Garden.prepare_army_manifest(derived.manifest, candidate).ok)
+	var mutated: Dictionary = derived.manifest
+	mutated.traversal.native_collision_boxes[0].position[0] = 9999
+	check("copy mutation cannot corrupt seed or canonical manifest", seed.traversal.native_collision_boxes[0].position[0] != 9999 and scene.manifest == context_before.manifest)
+	army.queue_free()
+	var old := StaticBody3D.new()
+	var holder := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(12, 3, 12)
+	holder.shape = box
+	old.position = Vector3(-60, 1.5, 0)
+	old.add_child(holder)
+	scene.world.add_child(old)
+	await physics_frame; await physics_frame
+	check("negative broad garden AABB is caught on actual route", not capsule_hits(space, -60, 0, .65).is_empty() and not all_routes().is_empty())
+	old.free()
+	await physics_frame; await physics_frame
+	check("negative removal restores route and exact canonical state", capsule_hits(space, -60, 0, .65).is_empty() and all_routes().is_empty() and context_before == water_context())
+
+func install_candidate() -> void:
+	check("default opt-out leaves existing world unchanged", not Garden.build(scene.world).enabled and not scene.world.has_node(Garden.ROOT_NAME))
+	check("wrong source path fails closed", not Garden.build(scene.world, true, "res://assets/world/lanka-lane-gate.scn").enabled)
+	placement_result = Garden.build(scene.world, true)
+	check("source-pinned native water-garden candidate mounts", placement_result.get("enabled", false), placement_result.get("reason"))
+	if not placement_result.get("enabled", false): return
+	candidate = placement_result.root
+	check("duplicate placement refused", Garden.build(scene.world, true).get("reason") == "duplicate_placement")
+	await physics_frame; await physics_frame
+	await context_probe()
+
+func run() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--output="): output = arg.trim_prefix("--output=")
+		elif arg == "--preflight": preflight = true
+	if not output.is_absolute_path() or DirAccess.dir_exists_absolute(output): push_error("fresh absolute output required"); quit(1); return
+	DirAccess.make_dir_recursive_absolute(output)
+	if not preflight and (DisplayServer.get_name() == "headless" or RenderingServer.get_current_rendering_method() != "forward_plus"):
+		push_error("actual Forward+ renderer required"); quit(1); return
+	source_hashes = hashes()
+	root.size = Vector2i(960, 540)
+	root.content_scale_size = Vector2i(1280, 720)
+	root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	root.msaa_3d = Viewport.MSAA_2X
+	if not preflight: root.show()
+	scene = load("res://scenes/confluence_world.tscn").instantiate()
+	root.add_child(scene); current_scene = scene
+	await draw_frames(8)
+	check("actual default canonical world and accepted Rama load", scene.world_ready and scene.player.model_ready)
+	if not checks[-1].passed: await finish(); return
+	scene.set_overview(false); scene.set_paused(false); scene.set_review_phase(0)
+	scene.set_process(false); scene.set_physics_process(false); hold_callbacks(scene.world)
+	for water: Dictionary in scene.manifest.waters:
+		var material: ShaderMaterial = scene.world.get_node(water.id).get_active_material(0)
+		material.set_shader_parameter("animation_speed", 0.0)
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	scene.player.global_position = Vector3(-50, .04, 0)
+	scene.player.velocity = Vector3.ZERO
+	scene.player.yaw = PI / 2
+	scene.player.pitch = -.10
+	scene.player._update_camera()
+	scene.player.visual.rotation.y = -PI / 2
+	scene.player._update_rama_motion(1.0 / 60)
+	scene.player.rama_motion.evaluate_pose()
+	await physics_frame; await physics_frame; await draw_frames(2)
+	ordinary_camera = scene.player.camera.global_transform
+	camera = Camera3D.new()
+	camera.fov = scene.player.camera.fov; camera.near = scene.player.camera.near; camera.far = scene.player.camera.far
+	scene.add_child(camera); camera.current = true
+	held = freeze_state(); identity_before = identities(); context_before = water_context()
+	gather_bodies(scene.world, original_body_ids)
+	for view in views(): await capture("baseline", view)
+	await install_candidate()
+	if placement_result.get("enabled", false):
+		for view in views(): await capture("candidate", view)
+		for i in 3:
+			check("matched camera/phase " + String(views()[i].id), shots[i].camera == shots[i + 3].camera and shots[i].phase == shots[i + 3].phase)
+	await finish()
+
+func finish() -> void:
+	check("six matched held-state views", shots.size() == 6)
+	var after := hashes()
+	check("protected sources unchanged through capture", after == source_hashes)
+	var passed := checks.all(func(row): return row.passed)
+	var report := {"schema": 1, "complete": passed, "preflight": preflight, "checks": checks, "shots": shots,
+		"actual_image_count": 0 if preflight else shots.size(), "route_frames": [], "composition": placement_result.get("report", {}),
+		"held_state": held, "ordinary_camera": transform(ordinary_camera), "source_sha256": source_hashes, "source_after_sha256": after,
+		"renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "display": DisplayServer.get_name(),
+		"canonical_enabled": false, "scope": "Actual default world with opt-in four-piece water-garden candidate. Three baseline/candidate camera/phase pairs use unchanged existing floor/water/nature/hero/army. Full world physics, live collision-body identity and meaningful blocker/copy negatives. Staged view and physics probes, not ordinary input/network/hardware performance or whole-map acceptance."}
+	FileAccess.open(output.path_join("preflight.json" if preflight else "capture.json"), FileAccess.WRITE).store_string(JSON.stringify(report, "  ") + "\n")
+	if is_instance_valid(scene): scene.queue_free()
+	for unused in 8: await process_frame
+	print("WATER_GARDEN_COMPLETE ", passed, " checks=", checks.size())
+	quit(0 if passed else 1)

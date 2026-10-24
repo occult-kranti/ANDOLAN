@@ -1,6 +1,6 @@
 # YUGA production observatory and reuse-first art stages
 
-**Current run, 24 October:** [reuse continuation](research/reuse-next-ten/README.md), ignored state `.local-swarm/observatory-reuse-next-ten`, loopback port **8768**. This supersedes the older run/port references below. Actual gateway, motion, HUD and hair studies have separate source-bound receipts. The published view remains a dated snapshot; it does not claim active inference, remote GPU use or complete game quality.
+**Current run:** [reuse into playable integration](research/reuse-production-continuation/README.md), ignored state `.local-swarm/observatory-reuse-production-continuation`, loopback port **8768**. The jobs separate integrated banks/camera, the typed authority factory, diagnostics and rejected hair appearances. Public data is a deliberately exported snapshot; hosted workers and CPU authoring do not imply active local inference or an attached production GPU.
 
 The [observatory source](../tools/build-observatory/README.md) is a read-only progress dashboard for actual jobs, model/tool identities, outputs and next steps. The [reuse stage](research/production-reuse-oct23/README.md) owns source decisions and the next five dependent production gates. The [art packet](../art/production-stage-oct23/README.md) distinguishes the existing animated Rama from the new, unrigged GPU-generated source. Neither a concept image nor a clean dashboard closes the commercial graphics target.
 

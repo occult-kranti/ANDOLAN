@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+"""Thin reuse of qualified UI/Xvfb helpers for the frozen readability pair."""
+import argparse
+import importlib.util
+import json
+import os
+from pathlib import Path
+import struct
+import subprocess
+import time
+
+PROJECT = Path(__file__).resolve().parents[2]
+spec = importlib.util.spec_from_file_location('existing_ui', PROJECT / 'tools/ui-campaign/run.py')
+ui = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(ui)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--runtime', type=Path, required=True)
+    parser.add_argument('--engine', type=Path, required=True)
+    parser.add_argument('--display', type=int, default=179)
+    args = parser.parse_args()
+    out = args.output.resolve()
+    if out.exists() or not args.output.is_absolute() or Path(f'/tmp/.X11-unix/X{args.display}').exists():
+        raise ValueError('Fresh absolute output and unused display required')
+    out.mkdir(parents=True)
+    paths = [p for folder in ['scripts', 'scenes', 'shaders', 'tools/reuse-camera-readability'] for p in (PROJECT / folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]
+    paths += [PROJECT / 'project.godot', PROJECT / 'assets/heroes/rama/rama.glb']
+    paths = [p for p in paths if p.is_file()]
+    pins = {str(p.relative_to(PROJECT)): ui.sha(p) for p in paths}
+    env = os.environ.copy()
+    env.update(DISPLAY=f':{args.display}', LD_LIBRARY_PATH=str(args.runtime / 'usr/lib/x86_64-linux-gnu'),
+               VK_ICD_FILENAMES=str(args.runtime / 'usr/share/vulkan/icd.d/lvp_icd.json'),
+               LP_NUM_THREADS='2', OMP_NUM_THREADS='2', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1')
+    command = [str(args.engine), '--path', str(PROJECT), '--display-driver', 'x11', '--rendering-method', 'forward_plus',
+               '--audio-driver', 'Dummy', '--fixed-fps', '30', '--disable-vsync', '--resolution', '960x540',
+               '--script', str(Path(__file__).with_name('capture_pair.gd')), '--', '--capture', '--output='+str(out)]
+    record = {'passed': False, 'scope': 'Matched staged readability comparison; no ordinary-input or exact old scene replay claim',
+              'command': command, 'source_sha256': pins, 'engine_sha256': ui.sha(args.engine), 'render_threads': 2,
+              'cache_policy': 'Inherited qualified warm caches; no new XDG/Mesa or affinity overrides', 'started_unix': time.time()}
+    server = engine = None
+    try:
+        with (out / 'xvfb.log').open('w') as xlog, (out / 'godot.log').open('w') as log:
+            server = subprocess.Popen([str(args.runtime / 'usr/bin/Xvfb'), env['DISPLAY'], '-screen', '0', '960x540x24', '-nolisten', 'tcp', '-ac'], env=env, stdout=xlog, stderr=subprocess.STDOUT)
+            ui.wait_for(lambda: Path(f'/tmp/.X11-unix/X{args.display}').exists(), 10)
+            engine = subprocess.Popen(command, env=env, stdout=log, stderr=subprocess.STDOUT)
+            record['engine_pid'] = engine.pid; ui.save(out / 'wrapper.json', record)
+            print(json.dumps({'engine_pid': engine.pid, 'output': str(out)}), flush=True)
+            record['exit_code'] = engine.wait(timeout=240)
+        text = (out / 'godot.log').read_text()
+        if record['exit_code'] or 'SCRIPT ERROR:' in text or '\nERROR:' in text: raise RuntimeError('Native capture failed; retained log')
+        report = ui.read(out / 'report.json')
+        if not report.get('passed'): raise RuntimeError('Matched pose/source/fade check failed')
+        for view in report['views']:
+            image = Path(view['png']); raw = image.read_bytes()
+            if raw[:8] != b'\x89PNG\r\n\x1a\n' or struct.unpack('>II', raw[16:24]) != (960,540) or ui.sha(image) != view['sha256']:
+                raise RuntimeError('Original image dimensions/hash failed')
+        record['sources_unchanged'] = all(ui.sha(PROJECT / p) == value for p, value in pins.items())
+        record['passed'] = record['sources_unchanged']
+    except Exception as exc:
+        record['error'] = type(exc).__name__ + ': ' + str(exc)
+    finally:
+        for process in [engine,server]:
+            if process and process.poll() is None:
+                process.terminate()
+                try: process.wait(timeout=8)
+                except subprocess.TimeoutExpired: process.kill(); process.wait()
+        record['elapsed_seconds'] = time.time()-record['started_unix']; ui.save(out / 'wrapper.json', record)
+    print(json.dumps({'passed': record['passed'], 'error': record.get('error'), 'output': str(out)}))
+    return 0 if record['passed'] else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

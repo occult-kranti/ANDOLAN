@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "source_commit": "8e0f7ca21638cd39198606a3301b6c90afd1bdcb",
+  "scope": "Headless real-runtime observation and numerical offline inspection; no continuous raster/listening/player input acceptance",
+  "engine": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "implementation_sha256": {
+    "observed_audio.gd": "a83e417155c1c764a941fccce816a10bc2f0121b86946d92922ac9bb993cbb5e",
+    "run.py": "02a57241575912c62b265b687a1029559d88e70d322fb1da7335e0a98d427295",
+    "observed_effects.gd": "73cdc1b74d2640df2c4abfb287d5d69b62d8c8e146cdbcff7f4ca794a6563a1a",
+    "inspect_sidecar.py": "42e5dbd1a4618f73ed92f96aa615f769339dfffe379ebadbcbbf60ba18ac9f59",
+    "check_sidecar.py": "649e5650177955485d4e49fde6b27cd064fb77223b8c6cc8302492dfa601f8db",
+    "capture.gd": "b07aea0ecb0626dee358f80c8426e0f3b0b439fa0df92de0722edc4d92f57b28"
+  },
+  "commands": [
+    {
+      "name": "capture",
+      "argv": [
+        "taskset",
+        "-c",
+        "0",
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--script",
+        "res://tools/reuse-event-sync/capture.gd",
+        "--",
+        "--output=/workspace/scratch/reuse-event-sync/r3/actual.json"
+      ],
+      "exit_code": 0,
+      "engine_errors": false,
+      "seconds": 4.837862851999944,
+      "log_sha256": "27c6a77c13393f35b79b9f73f36defe098146ea012435740d30fba3c99ca580a"
+    },
+    {
+      "name": "checks",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/tools/reuse-event-sync/check_sidecar.py",
+        "--trace",
+        "/workspace/scratch/reuse-event-sync/r3/actual.json",
+        "--output",
+        "/workspace/scratch/reuse-event-sync/r3/checks.json"
+      ],
+      "exit_code": 0,
+      "engine_errors": false,
+      "seconds": 1.4002263029997266,
+      "log_sha256": "08320f5dce4b0f653c4ff7dcec38095da47a0c625e3e056e75cf81712ca0de69"
+    },
+    {
+      "name": "inspect-30",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/tools/reuse-event-sync/inspect_sidecar.py",
+        "--trace",
+        "/workspace/scratch/reuse-event-sync/r3/actual.json",
+        "--hz",
+        "30",
+        "--output",
+        "/workspace/scratch/reuse-event-sync/r3/inspection-30.json"
+      ],
+      "exit_code": 0,
+      "engine_errors": false,
+      "seconds": 0.3455299950001063,
+      "log_sha256": "52762b0290b6ba4636c1fc19e835bfe106bdcc1a18f2de3747c0ad127def5ec1"
+    },
+    {
+      "name": "inspect-60",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/tools/reuse-event-sync/inspect_sidecar.py",
+        "--trace",
+        "/workspace/scratch/reuse-event-sync/r3/actual.json",
+        "--hz",
+        "60",
+        "--output",
+        "/workspace/scratch/reuse-event-sync/r3/inspection-60.json"
+      ],
+      "exit_code": 0,
+      "engine_errors": false,
+      "seconds": 0.36210442299989154,
+      "log_sha256": "1592fdbd923acbecfae8a8610a74e9127f61ab098ea972596df67c9cec5bfbcd"
+    },
+    {
+      "name": "inspect-120",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/tools/reuse-event-sync/inspect_sidecar.py",
+        "--trace",
+        "/workspace/scratch/reuse-event-sync/r3/actual.json",
+        "--hz",
+        "120",
+        "--output",
+        "/workspace/scratch/reuse-event-sync/r3/inspection-120.json"
+      ],
+      "exit_code": 0,
+      "engine_errors": false,
+      "seconds": 0.46348752699987017,
+      "log_sha256": "2d14a13b59ded4ac037a59e5da53ba52f9530f70c3184cee6359ce106a672e02"
+    }
+  ],
+  "capture_cpu_affinity": [
+    0
+  ],
+  "passed": true,
+  "compressed": {
+    "actual.json.gz": {
+      "bytes": 908200,
+      "sha256": "7aecddbb66f145bb3b7a039d835fe68aaa09534cf72d7fb7f558acef5586c2af",
+      "raw_bytes": 10563549,
+      "raw_sha256": "045965d2dd4a4323c48aa0e4a412ee5043ecab59b4b87dc161e7252998e644e0"
+    },
+    "checks.json.gz": {
+      "bytes": 971,
+      "sha256": "011fcd1080f2cda5f10c10f1dbb74097583d4fb1ecf977cf0b2727a66549a40d",
+      "raw_bytes": 4335,
+      "raw_sha256": "aa14901c77f62514c793519c632d163cacbcad63cb7378c9d871118c5096d9a6"
+    },
+    "inspection-120.json.gz": {
+      "bytes": 191726,
+      "sha256": "c068722329a1cb5e7abe1abf26d36082cbc5c7345d9fc291f0afb2ec464ab806",
+      "raw_bytes": 1798553,
+      "raw_sha256": "1135950cab53741184351891f40851e69cc00c16acea7d07cad9221f8e38bfef"
+    },
+    "inspection-30.json.gz": {
+      "bytes": 175114,
+      "sha256": "61baa5deaafbe88c59e45e85e43efff2d167108d0cf9e72b4103c9ce87fe7b27",
+      "raw_bytes": 1646248,
+      "raw_sha256": "c5f70a36e16a25bfc9905ff951feab9e77a4833409eaa9323a8ff2e04a532bce"
+    },
+    "inspection-60.json.gz": {
+      "bytes": 180311,
+      "sha256": "6283d521fd32a13244ef488ccdf841dea0a110ff064f568146b78947e0ed12bf",
+      "raw_bytes": 1696768,
+      "raw_sha256": "04ef3444bb26c1903639c5eeedc342140e1a39fcc4b923f46900d0549bdd0585"
+    }
+  },
+  "artifact_sha256": {
+    "inspection-120.json": "1135950cab53741184351891f40851e69cc00c16acea7d07cad9221f8e38bfef",
+    "inspect-60.log": "1592fdbd923acbecfae8a8610a74e9127f61ab098ea972596df67c9cec5bfbcd",
+    "capture.log": "27c6a77c13393f35b79b9f73f36defe098146ea012435740d30fba3c99ca580a",
+    "inspect-30.log": "52762b0290b6ba4636c1fc19e835bfe106bdcc1a18f2de3747c0ad127def5ec1",
+    "inspection-60.json.gz": "6283d521fd32a13244ef488ccdf841dea0a110ff064f568146b78947e0ed12bf",
+    "actual.json": "045965d2dd4a4323c48aa0e4a412ee5043ecab59b4b87dc161e7252998e644e0",
+    "checks.json.gz": "011fcd1080f2cda5f10c10f1dbb74097583d4fb1ecf977cf0b2727a66549a40d",
+    "inspection-120.json.gz": "c068722329a1cb5e7abe1abf26d36082cbc5c7345d9fc291f0afb2ec464ab806",
+    "inspection-30.json": "c5f70a36e16a25bfc9905ff951feab9e77a4833409eaa9323a8ff2e04a532bce",
+    "inspection-30.json.gz": "61baa5deaafbe88c59e45e85e43efff2d167108d0cf9e72b4103c9ce87fe7b27",
+    "checks.log": "08320f5dce4b0f653c4ff7dcec38095da47a0c625e3e056e75cf81712ca0de69",
+    "actual.json.gz": "7aecddbb66f145bb3b7a039d835fe68aaa09534cf72d7fb7f558acef5586c2af",
+    "inspect-120.log": "2d14a13b59ded4ac037a59e5da53ba52f9530f70c3184cee6359ce106a672e02",
+    "checks.json": "aa14901c77f62514c793519c632d163cacbcad63cb7378c9d871118c5096d9a6",
+    "inspection-60.json": "04ef3444bb26c1903639c5eeedc342140e1a39fcc4b923f46900d0549bdd0585"
+  }
+}

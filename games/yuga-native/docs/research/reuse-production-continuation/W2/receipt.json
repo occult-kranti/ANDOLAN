@@ -1,0 +1,239 @@
+{
+  "schema": 1,
+  "status": "Bounded ordinary gate, camera and UI journey completed; one supplementary ordinary Return release was required at final native Quit.",
+  "scope": "Offline native input validation on the integrated source; no full-game, new package, hardware-performance, listening or human-feel acceptance.",
+  "source_commit": "02031d2c0132131a43ce55b2180527585f3306a7",
+  "world_sha256": "178e73e34ec538180709e358824c45b71edd56a4484f86d118e828b7763d0f60",
+  "camera_helper_sha256": "4bf8e41a03b115d3bf5f9f79c238bc15d592975c500a29817db3481083aca787",
+  "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+  "renderer": "Forward+ software Vulkan llvmpipe; Dummy audio",
+  "viewport": {
+    "physical": [
+      960,
+      540
+    ],
+    "logical": [
+      1280,
+      720
+    ],
+    "content_scale_factor": 1
+  },
+  "actual": {
+    "directory": "actual-r2",
+    "run_sha256": "b0867c1e66215107f9503af64e992b704f3dcf4c572a65492a4b8bf8a4832d2d",
+    "manual_originals": 14,
+    "automatic_originals": 10,
+    "recorded_driver_events": 54,
+    "supplementary_events": 1,
+    "native_exit": 0,
+    "cleanup_exit": 0,
+    "runtime_source_unchanged": true,
+    "imported_resources_unchanged": true,
+    "elapsed_wall_seconds": 421.9585864543915,
+    "time_limit": "Includes deliberate waiting while the final Return key was held; not a performance measure.",
+    "route": {
+      "physics_samples": 1856,
+      "active_samples": 1584,
+      "near_gate_samples": 645,
+      "crossings": [
+        {
+          "direction": "north",
+          "previous": 1303,
+          "current": 1304
+        },
+        {
+          "direction": "south",
+          "previous": 1623,
+          "current": 1624
+        }
+      ],
+      "approach_exit_spans": [
+        {
+          "direction": "north",
+          "exit_physics_frame": 1364
+        },
+        {
+          "direction": "south",
+          "exit_physics_frame": 1684
+        }
+      ],
+      "span_planes_z_m": [
+        -60,
+        -48
+      ],
+      "moving_near_gate_samples": 425,
+      "moving_with_ordinary_intent_samples": 395,
+      "max_adjacent_physics_displacement_m": 0.10000038146980117,
+      "near_gate_max_height_m": 0.000107422471046448,
+      "near_gate_grounded_samples": 645,
+      "near_gate_clear_static_rays": 645,
+      "passed": true
+    },
+    "friendly_camera": {
+      "reports": 1856,
+      "fading_physics_samples": 456,
+      "maximum_fade": 0.82,
+      "frames_with_actor_details": [
+        {
+          "file": "04-north-approach.png",
+          "details": [
+            {
+              "fade": 0.82,
+              "mesh_count": 22,
+              "mesh_transparency_max": 0.819999992847443,
+              "mesh_transparency_min": 0.819999992847443,
+              "path": "/root/ConfluenceWorld/World/LaneArmy/sun_spearman_1",
+              "position": [
+                -41.2000007629395,
+                0.0,
+                -64.8976135253906
+              ],
+              "team": "sun",
+              "unit_id": 1
+            }
+          ]
+        },
+        {
+          "file": "05-ordinary-bow-release.png",
+          "details": [
+            {
+              "fade": 0.42,
+              "mesh_count": 22,
+              "mesh_transparency_max": 0.419999986886978,
+              "mesh_transparency_min": 0.419999986886978,
+              "path": "/root/ConfluenceWorld/World/LaneArmy/sun_spearman_1",
+              "position": [
+                -41.2000007629395,
+                0.0,
+                -62.8076133728027
+              ],
+              "team": "sun",
+              "unit_id": 1
+            }
+          ]
+        },
+        {
+          "file": "auto-friendly-occlusion.png",
+          "details": [
+            {
+              "fade": 0.82,
+              "mesh_count": 24,
+              "mesh_transparency_max": 0.819999992847443,
+              "mesh_transparency_min": 0.819999992847443,
+              "path": "/root/ConfluenceWorld/World/LaneArmy/sun_bow_guard_3",
+              "position": [
+                -41.2000007629395,
+                0.0,
+                -83.7076110839844
+              ],
+              "team": "sun",
+              "unit_id": 3
+            }
+          ]
+        }
+      ],
+      "actual_live_fade_observed": true,
+      "friendly_only": true,
+      "bounded_visible_fade": true
+    }
+  },
+  "final_quit_correction": {
+    "record": "actual-r2/quit-keyup-correction.json",
+    "sha256": "62fb278d3bc0b4a110312c6787e38b1335c4883394573786b7235cba3f4179fb",
+    "semantics": "Native title Button needed a release edge. The driver had sent only key_down and was waiting while frames advanced. An ownership-checked XTest Return key_up activated the focused Quit button; engine exited0 without a forced quit.",
+    "executed_driver": "source/executed-r2-run.py.txt",
+    "executed_driver_sha256": "81f2f3e0ff4896503b20b4863bb7a7dd49628464c0ee4607fc07e0bf775c8680",
+    "future_driver_sha256": "9dcbdbc5fb027bc82f4f84ebbf104a047b00795c3afb910355a2d44bf73b16f9",
+    "future_change": "Final Quit now uses the same complete short press/release helper already exercised for menu taps. No second full native journey is claimed for this future tool correction."
+  },
+  "tests": {
+    "owner_oracle_cases": 8,
+    "independent_oracle_cases": 4,
+    "actual_evidence_checks": 32,
+    "actual_evidence_report": "tests/actual-r2-review.json",
+    "actual_evidence_report_sha256": "64cdbb2e9192ffea7c6c5247d28f29f5c1b3a3a74091bd7ca00b7a858ec0cb44",
+    "source_parse": "Godot4.6.3 --headless --script tools/reuse-gate-input/observer.gd --check-only passed; Python compilation passed.",
+    "independent_final_evidence_checks": 27
+  },
+  "visual_review": {
+    "reviewed_originals": [
+      {
+        "file": "actual-r2/01-title.png",
+        "sha256": "2b3fa5903324e2e8bf3c6d35a33a05a188ce702f8894ec234920628d6be5f701"
+      },
+      {
+        "file": "actual-r2/02-world-spawn.png",
+        "sha256": "71099325b0fe859e93b957a0ebd2da23239fe9b6f14c42b4afb057ef9a7888a2"
+      },
+      {
+        "file": "actual-r2/03-ghat-entry.png",
+        "sha256": "f0572ecdcd99b6ee77815d0de966b367c3070cab6137f9b557a0e255fe892279"
+      },
+      {
+        "file": "actual-r2/04-north-approach.png",
+        "sha256": "5d21c2201fcb078239b1b52a345958567d9cbc7a18181b1d36d935f04c470b66"
+      },
+      {
+        "file": "actual-r2/05-ordinary-bow-release.png",
+        "sha256": "5e3c6842e8b18cf0b4635f030aa2e9f7179bfe12d3120dbb4bea6fca83f2233a"
+      },
+      {
+        "file": "actual-r2/06-north-exit.png",
+        "sha256": "ef9e8e2bba4ba9a6ef3f7c85387875797492a838155b1f96c389c95a16f1c268"
+      },
+      {
+        "file": "actual-r2/07-south-facing-carved-gate.png",
+        "sha256": "662c08d495bb21b2ffc1d07f40b937f1e132779a71951dcd730f55d97f826bf4"
+      },
+      {
+        "file": "actual-r2/08-south-exit.png",
+        "sha256": "ee6fa4aa9ff7a81411e8fc0cea6e0fd5a79150f2320364d06a00d04daef7f31e"
+      },
+      {
+        "file": "actual-r2/09-tactical-map.png",
+        "sha256": "b9c177ea62c5a7f2a295dab33a911f92f8f31507cb4b563128404e8e5d3666e1"
+      },
+      {
+        "file": "actual-r2/10-world-pause.png",
+        "sha256": "1440a0d04c617435390ba564e3bffd4425838860837ed87bbf12677c4a68dfce"
+      },
+      {
+        "file": "actual-r2/11-return-title.png",
+        "sha256": "2b3fa5903324e2e8bf3c6d35a33a05a188ce702f8894ec234920628d6be5f701"
+      },
+      {
+        "file": "actual-r2/12-settings.png",
+        "sha256": "464fda8530171870d9c25dbd598a79e005ee47ba58050acc9c58024f366b3036"
+      },
+      {
+        "file": "actual-r2/13-keyboard-controls.png",
+        "sha256": "4f2eab92c02aa9f00cdc5618ac5cd45e8c447a01fd6bea1e9b0a3a16b22bb8b4"
+      },
+      {
+        "file": "actual-r2/14-final-title.png",
+        "sha256": "ac49d01687b706048f8bb405123437ea66885513b97b00f91c07f8dfc3951f53"
+      },
+      {
+        "file": "actual-r2/auto-friendly-occlusion.png",
+        "sha256": "b106081ac59bdee84643ded3c1de679b41671f7f93d49ce95de5a67bc30b3e4c"
+      }
+    ],
+    "outcome": "All14 requested originals and the naturally triggered camera frame inspected. Main controls/map/settings are contained and legible at this profile. The nearer friendly body becomes translucent while Rama stays visible. Other allies outside the hero sightline remain opaque. Existing broad empty streets, material repetition and coarse hero/soldier detail remain quality limits."
+  },
+  "preserved_failures": [
+    {
+      "path": "failures/run-before-oracle-repair.py.txt",
+      "issue": "Initial center-line oracle wrongly accepted jitter, elevated and no-input traces; exact source matches independent failure SHA."
+    },
+    {
+      "path": "failures/actual-r1",
+      "issue": "Both actual gate directions passed, but Tab held through slow frames caused autorepeat and wrong Quit focus. Original run remains failed."
+    }
+  ],
+  "next_steps": [
+    "W1 independently accepted27/27 source-bound evidence checks, with assisted completion and the future driver correction kept distinct.",
+    "Retain the focused friendly-only camera behavior; enemy visibility and higher combat loads need separate actual-play review.",
+    "A future normal automated journey should exercise the corrected final short tap.",
+    "Broader animation/art, physical-GPU performance, native online matches and whole-game quality remain open."
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "all stored originals and decompressed physics bytes match",
+      "passed": true,
+      "evidence": []
+    },
+    {
+      "name": "executed R2 run.py exact source retained",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "executed R2 observer.gd exact source retained",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "runtime source unchanged during observed journey",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "imported runtime resources unchanged during journey",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "actual native Quit and cleanup exit zero",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "native renderer reported no script or engine errors",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "supplementary Return release explicitly retained",
+      "passed": true,
+      "evidence": "R2 was completed with this one ordinary input correction, not an unassisted automation pass."
+    },
+    {
+      "name": "original runner completion is interpreted with correction",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "14 manual and 10 automatic originals retained",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "all 24 originals have exact hashes and 960x540 dimensions",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "actual framebuffer state 01-title",
+      "passed": true,
+      "evidence": {
+        "panels.main_panel": true,
+        "state.hero_ready": true,
+        "transition.phase": "done"
+      }
+    },
+    {
+      "name": "actual framebuffer state 02-world-spawn",
+      "passed": true,
+      "evidence": {
+        "scene_path": "res://scenes/confluence_world.tscn",
+        "state.world_ready": true,
+        "gate_input.active": true
+      }
+    },
+    {
+      "name": "actual framebuffer state 03-ghat-entry",
+      "passed": true,
+      "evidence": {
+        "gate_input.active": true,
+        "gate_input.grounded": true
+      }
+    },
+    {
+      "name": "actual framebuffer state 04-north-approach",
+      "passed": true,
+      "evidence": {
+        "gate_input.active": true,
+        "gate_input.grounded": true,
+        "gate_input.gate_ray.clear": true
+      }
+    },
+    {
+      "name": "actual framebuffer state 05-ordinary-bow-release",
+      "passed": true,
+      "evidence": {
+        "gate_input.ammo": 11,
+        "kit.release_count": 1
+      }
+    },
+    {
+      "name": "actual framebuffer state 06-north-exit",
+      "passed": true,
+      "evidence": {
+        "gate_input.active": true,
+        "gate_input.grounded": true
+      }
+    },
+    {
+      "name": "actual framebuffer state 07-south-facing-carved-gate",
+      "passed": true,
+      "evidence": {
+        "gate_input.active": true,
+        "gate_input.grounded": true
+      }
+    },
+    {
+      "name": "actual framebuffer state 08-south-exit",
+      "passed": true,
+      "evidence": {
+        "gate_input.active": true,
+        "gate_input.grounded": true
+      }
+    },
+    {
+      "name": "actual framebuffer state 09-tactical-map",
+      "passed": true,
+      "evidence": {
+        "state.overview": true,
+        "gate_input.active": false,
+        "friendly_camera.faded_units": 0
+      }
+    },
+    {
+      "name": "actual framebuffer state 10-world-pause",
+      "passed": true,
+      "evidence": {
+        "paused": true,
+        "panels.pause_panel": true,
+        "gate_input.active": false,
+        "friendly_camera.faded_units": 0
+      }
+    },
+    {
+      "name": "actual framebuffer state 11-return-title",
+      "passed": true,
+      "evidence": {
+        "scene_path": "res://scenes/courtyard.tscn",
+        "panels.main_panel": true,
+        "transition.phase": "done"
+      }
+    },
+    {
+      "name": "actual framebuffer state 12-settings",
+      "passed": true,
+      "evidence": {
+        "panels.settings_panel": true,
+        "paused": true
+      }
+    },
+    {
+      "name": "actual framebuffer state 13-keyboard-controls",
+      "passed": true,
+      "evidence": {
+        "panels.controls_overlay": true,
+        "paused": true
+      }
+    },
+    {
+      "name": "actual framebuffer state 14-final-title",
+      "passed": true,
+      "evidence": {
+        "panels.main_panel": true,
+        "paused": false,
+        "state.started": false
+      }
+    },
+    {
+      "name": "raw physics reproduces recorded bidirectional route acceptance",
+      "passed": true,
+      "evidence": {
+        "physics_samples": 1856,
+        "active_samples": 1584,
+        "near_gate_samples": 645,
+        "crossings": [
+          {
+            "direction": "north",
+            "previous": 1303,
+            "current": 1304
+          },
+          {
+            "direction": "south",
+            "previous": 1623,
+            "current": 1624
+          }
+        ],
+        "approach_exit_spans": [
+          {
+            "direction": "north",
+            "exit_physics_frame": 1364
+          },
+          {
+            "direction": "south",
+            "exit_physics_frame": 1684
+          }
+        ],
+        "span_planes_z_m": [
+          -60,
+          -48
+        ],
+        "moving_near_gate_samples": 425,
+        "moving_with_ordinary_intent_samples": 395,
+        "max_adjacent_physics_displacement_m": 0.10000038146980117,
+        "near_gate_max_height_m": 0.000107422471046448,
+        "near_gate_grounded_samples": 645,
+        "near_gate_clear_static_rays": 645,
+        "passed": true
+      }
+    },
+    {
+      "name": "every near-gate static sightline is clear",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "normal input triggered bounded friendly fade",
+      "passed": true,
+      "evidence": {
+        "fading_physics_samples": 456,
+        "maximum_fade": 0.82
+      }
+    },
+    {
+      "name": "natural obstruction frame carries live actor mesh details",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "one actual Kodanda release observed",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "air shot does not claim enemy damage",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "menu taps use complete short input edges",
+      "passed": true,
+      "evidence": {
+        "count": 33,
+        "maximum_seconds": 0.30987456499951804
+      }
+    }
+  ],
+  "scope": "Bounded actual route, camera and UI evidence with one explicit supplementary native key release. Not a human playtest, hardware benchmark, new executable-release proof or whole-game acceptance.",
+  "git_head": "02031d2c0132131a43ce55b2180527585f3306a7",
+  "run_sha256": "b0867c1e66215107f9503af64e992b704f3dcf4c572a65492a4b8bf8a4832d2d",
+  "reviewer_source_sha256": "061de44c8b280847ef343b68f4878b6827da5e5b3c98ed9153d29084855e1dcb",
+  "route_oracle_source_sha256": "9dcbdbc5fb027bc82f4f84ebbf104a047b00795c3afb910355a2d44bf73b16f9"
+}

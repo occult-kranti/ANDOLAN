@@ -1,0 +1,137 @@
+{
+  "passed": true,
+  "sourcePins": {
+    "auditor": "b3f52784bdbd2d2f9a76cc10253ed68f559c8fef1079b3afc1cf1b32ce222cdb",
+    "publisher": "6aa94e44223865b28c34a7494c60a13d79cf5a3f0b746342588649c1412b75e7",
+    "probe": "2ec6e845b95d1efaca435e3935167593ec47a5373765942cb463517b23854c21"
+  },
+  "checks": [
+    {
+      "name": "positive",
+      "expectedAcceptance": true,
+      "acceptance": true,
+      "receiptWritten": true,
+      "failedChecks": [],
+      "passed": true
+    },
+    {
+      "name": "missing_dashboard_source",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Publication pins exact dashboard and separate browser source"
+      ],
+      "passed": true
+    },
+    {
+      "name": "wrong_baseline_pin",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Publication pins exact dashboard and separate browser source"
+      ],
+      "passed": true
+    },
+    {
+      "name": "missing_inventory_file",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Publication inventory matches the complete committed approved census"
+      ],
+      "passed": true
+    },
+    {
+      "name": "malformed_json_syntax",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Publication pins exact dashboard and separate browser source",
+        "Publication inventory matches the complete committed approved census",
+        "Snapshot is exact saved data with clean observed source",
+        "Observation time remains the original saved observation"
+      ],
+      "passed": true
+    },
+    {
+      "name": "publication_array",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Publication and snapshot have object envelopes",
+        "Publication pins exact dashboard and separate browser source",
+        "Publication inventory matches the complete committed approved census",
+        "Observation time remains the original saved observation"
+      ],
+      "passed": true
+    },
+    {
+      "name": "publication_null",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Publication and snapshot have object envelopes",
+        "Publication pins exact dashboard and separate browser source",
+        "Publication inventory matches the complete committed approved census",
+        "Observation time remains the original saved observation"
+      ],
+      "passed": true
+    },
+    {
+      "name": "publication_string",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Publication and snapshot have object envelopes",
+        "Publication pins exact dashboard and separate browser source",
+        "Publication inventory matches the complete committed approved census",
+        "Observation time remains the original saved observation"
+      ],
+      "passed": true
+    },
+    {
+      "name": "snapshot_array",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Every approved static file exactly matches committed bytes",
+        "Publication and snapshot have object envelopes",
+        "Snapshot is exact saved data with clean observed source",
+        "Observation time remains the original saved observation"
+      ],
+      "passed": true
+    },
+    {
+      "name": "snapshot_null",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Every approved static file exactly matches committed bytes",
+        "Publication and snapshot have object envelopes",
+        "Snapshot is exact saved data with clean observed source",
+        "Observation time remains the original saved observation"
+      ],
+      "passed": true
+    },
+    {
+      "name": "delivered_app_changed",
+      "expectedAcceptance": false,
+      "acceptance": false,
+      "receiptWritten": true,
+      "failedChecks": [
+        "Every approved static file exactly matches committed bytes"
+      ],
+      "passed": true
+    }
+  ],
+  "scope": "Independent actual Git/HTTP fixture. Tests exact bytes/pins/inventory and failed-receipt behavior for malformed public JSON; not production delivery."
+}

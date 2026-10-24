@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+"""Independently inspect the retained R2 journey; never launches or changes it."""
+import argparse
+import gzip
+import hashlib
+import json
+import math
+from pathlib import Path
+
+PROJECT = Path(__file__).resolve().parents[2]
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--trace", type=Path, required=True)
+    p.add_argument("--report", type=Path, required=True)
+    args = p.parse_args()
+    out = args.report.resolve()
+    if not args.report.is_absolute() or out.exists():
+        p.error("Use a fresh absolute report path")
+    trace = args.trace.resolve()
+    durable = PROJECT / "docs/research/reuse-production-continuation/W2/actual-r2"
+    run = json.loads((trace / "run.json").read_text())
+    assist = json.loads((trace / "quit-keyup-correction.json").read_text())
+    samples = [json.loads(line) for line in (trace / "physics.jsonl").read_text().splitlines()]
+    active = [s for s in samples if s["active"] and not s["paused"] and not s["overview"]]
+    near = [s for s in active if abs(s["position"][0] + 40) < 2 and -65 < s["position"][2] < -44]
+    shots = run["shots"] + run["automatic_shots"]
+    by_file = {s["file"]: s for s in shots}
+    checks = []
+
+    def check(name, result, detail=None):
+        checks.append({"name": name, "passed": bool(result), "detail": detail})
+
+    check("retained native normal exit with assist", run["complete"] and run["native_exit"] == 0 and run["cleanup_exit"] == 0 and "failure" not in run)
+    check("no authority staging", run["authority_staging"] is False)
+    check("run records frozen sources and imports", run["source_unchanged"] and run["imports_unchanged"])
+    drift = [name for name, digest in run["source_sha256"].items()
+             if not (PROJECT / name).is_file() or sha((PROJECT / name).read_bytes()) != digest]
+    check("only later final-tap driver changed", drift == ["tools/reuse-gate-input/run.py"], drift)
+    archive_source = PROJECT / "docs/research/reuse-production-continuation/W2/source"
+    check("exact executed driver retained", sha((archive_source / "executed-r2-run.py.txt").read_bytes()) == run["source_sha256"]["tools/reuse-gate-input/run.py"])
+    check("exact executed observer retained", sha((archive_source / "executed-r2-observer.gd.txt").read_bytes()) == run["source_sha256"]["tools/reuse-gate-input/observer.gd"])
+    check("all current imported resource pins match", all(sha((PROJECT / n).read_bytes()) == h for n, h in run["imported_files_sha256"].items()))
+    check("every retained output matches run hash", all(sha((trace / n).read_bytes()) == h for n, h in run["output_sha256"].items()))
+    check("all 24 PNG hashes match metadata", len(shots) == 24 and len(by_file) == 24 and all(sha((trace / s["file"]).read_bytes()) == s["sha256"] for s in shots))
+    archive = json.loads((durable / "archive.json").read_text())
+    archive_bad = []
+    for item in archive["files"]:
+        data = (durable / item["file"]).read_bytes()
+        raw = gzip.decompress(data) if item["file"].endswith(".gz") else data
+        if sha(data) != item["stored_sha256"] or sha(raw) != item["original_sha256"] or raw != (trace / item["source_file"]).read_bytes():
+            archive_bad.append(item["file"])
+    check("durable originals decompress exactly", not archive_bad, {"files": len(archive["files"]), "bad": archive_bad})
+    check("engine log has no script or engine errors", not any(line.startswith(("SCRIPT ERROR:", "ERROR:")) for line in (trace / "godot.log").read_text().splitlines()))
+    check("physical trace begins at ordinary spawn", math.dist(samples[0]["position"], [0, .05, -112]) < .001)
+    check("all physical state vectors finite", all(math.isfinite(v) for s in samples for key in ["position", "velocity", "camera_position", "camera_forward"] for v in s[key]))
+    check("complete physics trace has no frame gaps", all(b["physics_frame"] == a["physics_frame"] + 1 for a, b in zip(samples, samples[1:])))
+    max_step = max(math.dist(a["position"], b["position"]) for a, b in zip(active, active[1:]))
+    check("no route teleport", max_step < .5, {"max_adjacent_displacement_m": max_step})
+    # Independent complete-span reconstruction; a side is lost on route/ground gaps.
+    side, spans = None, []
+    for sample in active:
+        x, y, z = sample["position"]
+        if abs(x + 40) >= 2 or not sample["grounded"] or not -.1 <= y <= .3:
+            side = None
+            continue
+        here = "south" if z <= -60 else "north" if z >= -48 else None
+        if here is not None:
+            if side is not None and here != side:
+                spans.append({"direction": here, "exit_physics_frame": sample["physics_frame"]})
+            side = here
+    check("both full grounded gate traversals", [s["direction"] for s in spans] == ["north", "south"], spans)
+    moving = [(a, b) for a, b in zip(active, active[1:]) if abs(b["position"][0] + 40) < 2 and -65 < b["position"][2] < -44 and math.dist(a["position"], b["position"]) > .001]
+    intent = sum(any(b["input"].get(k) for k in ["forward", "back", "left", "right"]) for _, b in moving)
+    check("movement has ordinary input intent", bool(moving) and intent / len(moving) > .9, {"moving": len(moving), "intent": intent})
+    check("near-gate static line and grounded height", bool(near) and all(s["grounded"] and -.1 <= s["position"][1] <= .3 and s["gate_ray"]["clear"] for s in near))
+    events = [json.loads(line)["event"] for line in (trace / "ability-events.jsonl").read_text().splitlines()]
+    check("one actual Kodanda air-shot lifecycle", [(e["kind"], e["event_seq"]) for e in events] == [("begin", 2), ("release", 6), ("recovery", 11), ("impact", 22), ("end", 29)] and all(e["generation"] == 1 and e["ability_id"] == "kodanda" and not e["receipts"] for e in events))
+    check("ammo decremented once", by_file["04-north-approach.png"]["gate_input"]["ammo"] == 12 and by_file["05-ordinary-bow-release.png"]["gate_input"]["ammo"] == 11)
+    witness = by_file["auto-friendly-occlusion.png"]
+    gate = witness["gate_input"]
+    details = witness["friendly_camera"]["details"]
+    check("natural friendly fade with genuine moving hero", gate["active"] and not gate["paused"] and not gate["overview"] and gate["input"]["forward"] and math.dist(gate["velocity"], [0, 0, 0]) > 5.9 and bool(details))
+    check("actual observed friendly geometry remains visible", all(d["team"] == "sun" and d["mesh_count"] > 0 and 0 < d["fade"] <= .820001 and abs(d["mesh_transparency_min"] - d["fade"]) < 1e-6 and abs(d["mesh_transparency_max"] - d["fade"]) < 1e-6 for d in details), details)
+    check("map and pause clear the fade", all(by_file[n]["friendly_camera"]["faded_units"] == 0 for n in ["09-tactical-map.png", "10-world-pause.png"]))
+    check("actual settings then keyboard controls", by_file["12-settings.png"]["panels"]["settings_panel"] and by_file["13-keyboard-controls.png"]["panels"]["controls_overlay"])
+    check("actual courtyard title return twice", all(by_file[n]["scene"] == "LankaCourtyard" and by_file[n]["panels"]["main_panel"] and not by_file[n]["paused"] for n in ["11-return-title.png", "14-final-title.png"]))
+    before = assist["before"]
+    check("assist is only recorded Return release at native Quit", assist["sent"] and assist["event"] == {"key_up": "Return"} and before["scene"] == "LankaCourtyard" and before["panels"]["main_panel"] and before["focus_name"] == "Quit" and before["navigation_keys_pressed"]["Return"])
+    check("assist code pin and reused input helper match", sha((PROJECT / "tools/reuse-gate-input/release_pending_quit.py").read_bytes()) == assist["source_sha256"] and run["source_sha256"]["tools/ui-campaign/run.py"] == assist["reused_driver_sha256"])
+    result = {
+        "scope": "Independent retained-data review of actual R2 ordinary native journey, with one supplementary XTest Return release. No unassisted automation, enemy-hit, audio listening, hardware performance or full-game qualification.",
+        "accepted": all(c["passed"] for c in checks), "checks": checks,
+        "trace": str(trace), "git_head_at_capture": run["git_head"],
+        "source_sha256": {"reviewer": sha(Path(__file__).read_bytes()), "run_receipt": sha((trace / "run.json").read_bytes()), "physics_trace": sha((trace / "physics.jsonl").read_bytes()), "archive": sha((durable / "archive.json").read_bytes())},
+        "summary": {"physics_samples": len(samples), "active_samples": len(active), "near_gate_samples": len(near), "source_files": len(run["source_sha256"]), "import_files": len(run["imported_files_sha256"]), "manual_images": len(run["shots"]), "automatic_images": len(run["automatic_shots"]), "wall_seconds_not_performance": run["elapsed_seconds"]},
+        "assisted_completion": "Executed driver omitted its last Return key-up. A separately recorded XTest key-up activated the already focused native Quit; no mouse click, quit API, or forced process signal was used. Future driver tap correction has not been rerun here.",
+        "visual_review": {"viewed_originals": ["auto-friendly-occlusion.png", "04-north-approach.png", "06-north-exit.png", "08-south-exit.png", "09-tactical-map.png", "10-world-pause.png", "11-return-title.png", "12-settings.png", "13-keyboard-controls.png", "14-final-title.png"], "decision": "Accept bounded ordinary journey and friendly-camera readability. Settings and control pages are readable with scroll affordances; actual map remains flat/sparse with unfinished hero/environment rendering. No target-quality acceptance."},
+    }
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(result, indent=2) + "\n")
+    print(json.dumps({"accepted": result["accepted"], "checks": len(checks), "failed": [c for c in checks if not c["passed"]], "report": str(out)}))
+    return 0 if result["accepted"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

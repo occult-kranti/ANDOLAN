@@ -1,0 +1,303 @@
+#!/usr/bin/env python3
+"""Exercise the normal launch and Lanka gate using existing XTest helpers.
+
+The extra Godot observer only reads native state. This driver closes the loop
+through OS keyboard/mouse input; it never calls a gameplay method or writes poses.
+"""
+import argparse
+import ctypes as C
+import importlib.util
+import json
+import math
+import os
+from pathlib import Path
+import subprocess
+import time
+
+PROJECT = Path(__file__).resolve().parents[2]
+spec = importlib.util.spec_from_file_location("existing_ui", PROJECT / "tools/ui-campaign/run.py")
+ui = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(ui)
+
+
+def wrap(angle):
+    return (angle + math.pi) % (2 * math.pi) - math.pi
+
+
+def local_key(delta_x, delta_z, yaw):
+    """Choose one actual WASD axis; axis-aligned waypoints avoid corner cutting."""
+    x = math.cos(yaw) * delta_x - math.sin(yaw) * delta_z
+    z = math.sin(yaw) * delta_x + math.cos(yaw) * delta_z
+    if abs(x) > abs(z):
+        return "d" if x > 0 else "a"
+    return "s" if z > 0 else "w"
+
+
+def audit_route(samples):
+    active = [s for s in samples if s["active"] and not s["paused"] and not s["overview"]]
+    near = [s for s in active if abs(s["position"][0] + 40) < 2 and -65 < s["position"][2] < -44]
+    crossings = []
+    for previous, current in zip(active, active[1:]):
+        if current["physics_frame"] != previous["physics_frame"] + 1:
+            continue
+        p, q = previous["position"], current["position"]
+        if abs(p[0] + 40) >= 2 or abs(q[0] + 40) >= 2:
+            continue
+        if p[2] < -54 <= q[2]:
+            crossings.append({"direction": "north", "previous": previous["physics_frame"], "current": current["physics_frame"]})
+        if p[2] > -54 >= q[2]:
+            crossings.append({"direction": "south", "previous": previous["physics_frame"], "current": current["physics_frame"]})
+    largest_step = max((math.dist(a["position"], b["position"]) for a, b in zip(active, active[1:]) if b["physics_frame"] == a["physics_frame"] + 1), default=0)
+    grounded = [s for s in near if s["grounded"]]
+    return {"physics_samples": len(samples), "active_samples": len(active), "near_gate_samples": len(near),
+            "crossings": crossings, "max_adjacent_physics_displacement_m": largest_step,
+            "near_gate_max_height_m": max((s["position"][1] for s in near), default=None),
+            "near_gate_grounded_samples": len(grounded),
+            "near_gate_clear_static_rays": sum(s["gate_ray"]["clear"] for s in near),
+            "passed": bool(near) and {s["direction"] for s in crossings} == {"north", "south"}
+            and largest_step < .5 and len(grounded) / len(near) > .98}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--engine", type=Path, required=True)
+    parser.add_argument("--runtime", type=Path, required=True)
+    parser.add_argument("--display", type=int, default=177)
+    parser.add_argument("--timeout", type=float, default=300)
+    args = parser.parse_args()
+    out = args.output.resolve()
+    if not args.output.is_absolute() or out.exists():
+        parser.error("Use a fresh absolute output directory")
+    if not 90 <= args.display <= 199 or Path(f"/tmp/.X11-unix/X{args.display}").exists():
+        parser.error("Choose an unused display 90–199")
+    out.mkdir(parents=True)
+    pins = {str(p.relative_to(PROJECT)): ui.sha(p) for folder in ["scripts", "scenes", "assets", "shaders"]
+            for p in (PROJECT / folder).rglob("*") if p.is_file()}
+    for name in ["project.godot", "art/world/confluence-map.json", "tools/ui-campaign/run.py", "tools/ui-campaign/observer.gd", "tools/reuse-gate-input/run.py", "tools/reuse-gate-input/observer.gd"]:
+        pins[name] = ui.sha(PROJECT / name)
+    env = os.environ.copy()
+    env.update(DISPLAY=f":{args.display}", LP_NUM_THREADS="2", OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1",
+               LD_LIBRARY_PATH=str(args.runtime / "usr/lib/x86_64-linux-gnu"),
+               VK_ICD_FILENAMES=str(args.runtime / "usr/share/vulkan/icd.d/lvp_icd.json"))
+    command = [str(args.engine), "--path", str(PROJECT), "--display-driver", "x11", "--rendering-method", "forward_plus", "--audio-driver", "Dummy", "--resolution", "960x540", "--position", "0,0", "--max-fps", "30", "--disable-vsync", "--script", str(Path(__file__).with_name("observer.gd")), "--", "--mode=integrated", "--output=" + str(out)]
+    record = {"complete": False, "scope": "Actual ordinary XTest through normal launch and live offline gate; read-only observer. Software rendering, Dummy audio; not hardware or human feel qualification.",
+              "started_unix": time.time(), "command": command, "source_sha256": pins,
+              "engine_sha256": ui.sha(args.engine), "git_head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=PROJECT, text=True).strip(),
+              "authority_staging": False, "cache_policy": "Inherited qualified warm environment; no XDG, Mesa cache or affinity override", "events": [], "checkpoints": [], "shots": []}
+    server = game = native = None
+    held = set()
+
+    def state():
+        if game is not None and game.poll() is not None:
+            raise RuntimeError(f"Native process exited {game.returncode}")
+        return ui.read(out / "state.json")
+
+    def wait(test, seconds=None):
+        return ui.wait_for(lambda: (s if test(s) else None) if (s := state()) else None, seconds or args.timeout)
+
+    def fresh(old):
+        return wait(lambda s: s.get("frame", -1) > old.get("frame", -1) + 1)
+
+    def event(step):
+        before = state()
+        window = native.event(dict(step, immediate=True))
+        record["events"].append({"event": step, "window": window, "before_frame": before.get("frame"), "before_gate": before.get("gate_input"), "time_unix": time.time()})
+        return before
+
+    def keys(wanted):
+        for key in sorted(held - wanted):
+            event({"key_up": key})
+        for key in sorted(wanted - held):
+            event({"key_down": key})
+        held.clear()
+        held.update(wanted)
+
+    def tap(key):
+        before = event({"key_down": key})
+        fresh(before)
+        event({"key_up": key})
+        return fresh(before)
+
+    def capture(name):
+        ui.save(out / "capture-request.json", {"name": name})
+        shot = ui.wait_for(lambda: ui.read(out / (name + ".json")), args.timeout)
+        if ui.sha(out / shot["file"]) != shot["sha256"]:
+            raise RuntimeError("PNG changed")
+        record["shots"].append(shot)
+        ui.save(out / "run.json", record)
+        print(json.dumps({"capture": name, "position": shot.get("gate_input", {}).get("position")}), flush=True)
+
+    def click(name):
+        s = wait(lambda s: len([c for c in s.get("controls", []) if c["name"] == name and c["interactive"]]) == 1)
+        s = fresh(s)
+        controls = [c for c in s["controls"] if c["name"] == name and c["interactive"]]
+        if len(controls) != 1:
+            raise RuntimeError("Control changed before click")
+        x, y, width, height = controls[0]["input_rect"]
+        return event({"point": [x + width / 2, y + height / 2]})
+
+    def tab_to(text=None, name=None):
+        for _ in range(40):
+            s = state()
+            if (text is not None and s.get("focus_text") == text) or (name is not None and s.get("focus_name") == name):
+                return s
+            tap("Tab")
+        raise RuntimeError("Tab did not find " + str(text or name))
+
+    def walk(target, name):
+        started = time.monotonic()
+        start = state()["gate_input"]
+        last_progress, last_distance = started, float("inf")
+        while time.monotonic() - started < args.timeout:
+            s = wait(lambda s: bool(s.get("gate_input")))
+            actor = s["gate_input"]
+            x, _, z = actor["position"]
+            dx, dz = target[0] - x, target[1] - z
+            distance = math.hypot(dx, dz)
+            if distance < 1.0:
+                keys(set())
+                s = fresh(s)
+                record["checkpoints"].append({"name": name, "target": target, "start": start, "end": s["gate_input"], "wall_seconds": time.monotonic() - started})
+                capture(name)
+                return
+            if not actor["active"] or actor["paused"] or actor["overview"]:
+                raise RuntimeError("Movement became inactive")
+            if distance < last_distance - .2:
+                last_progress, last_distance = time.monotonic(), distance
+            if time.monotonic() - last_progress > 30:
+                raise RuntimeError("No movement progress for 30 wall seconds")
+            keys({local_key(dx, dz, actor["yaw"])})
+            fresh(s)
+        raise TimeoutError("Waypoint " + name + " timed out")
+
+    def aim(yaw):
+        keys(set())
+        for _ in range(18):
+            s = state()
+            actor = s["gate_input"]
+            error = wrap(yaw - actor["yaw"])
+            if abs(error) < .012:
+                return
+            dx = max(-400, min(400, round(-error / actor["sensitivity"])))
+            native.focus()
+            native.xt.XTestFakeRelativeMotionEvent(native.d, dx, 0, 0)
+            native.x.XFlush(native.d)
+            record["events"].append({"event": {"relative_motion": [dx, 0]}, "before_gate": actor, "time_unix": time.time()})
+            fresh(s)
+        raise RuntimeError("Mouse aiming did not settle")
+
+    try:
+        with (out / "xvfb.log").open("x") as xlog, (out / "godot.log").open("x") as glog:
+            server = subprocess.Popen([str(args.runtime / "usr/bin/Xvfb"), env["DISPLAY"], "-screen", "0", "960x540x24", "-nolisten", "tcp", "-ac"], env=env, stdout=xlog, stderr=subprocess.STDOUT)
+            ui.wait_for(lambda: Path(f"/tmp/.X11-unix/X{args.display}").exists(), 10)
+            game = subprocess.Popen(command, env=env, stdout=glog, stderr=subprocess.STDOUT)
+            native = ui.NativeInput(env["DISPLAY"])
+            native.xt.XTestFakeRelativeMotionEvent.argtypes = [C.c_void_p, C.c_int, C.c_int, C.c_ulong]
+            native.focus()
+            wait(lambda s: s.get("panels", {}).get("main_panel") and s.get("state", {}).get("hero_ready") and s.get("transition", {}).get("phase") == "done")
+            capture("01-title")
+            click("ExploreConfluence")
+            wait(lambda s: s.get("state", {}).get("world_ready") and s.get("transition", {}).get("phase") == "done" and s.get("gate_input", {}).get("active"))
+            capture("02-world-spawn")
+            spawn = state()["gate_input"]["position"]
+            if math.dist(spawn, [0, .05, -112]) > 1:
+                raise RuntimeError("Unexpected ordinary spawn")
+            walk([-40, -112], "03-ghat-entry")
+            walk([-40, -64], "04-north-approach")
+            aim(math.pi)
+            before = state()
+            native.focus()
+            native.xt.XTestFakeButtonEvent(native.d, 1, 1, 0)
+            native.x.XFlush(native.d)
+            record["events"].append({"event": {"button_down": 1}, "before_gate": before["gate_input"], "time_unix": time.time()})
+            wait(lambda s: s.get("kit", {}).get("release_count", 0) > before.get("kit", {}).get("release_count", 0))
+            native.xt.XTestFakeButtonEvent(native.d, 1, 0, 0)
+            native.x.XFlush(native.d)
+            record["events"].append({"event": {"button_up": 1}, "time_unix": time.time()})
+            capture("05-ordinary-bow-release")
+            walk([-40, -45], "06-north-exit")
+            aim(0)
+            capture("07-south-facing-carved-gate")
+            walk([-40, -64], "08-south-exit")
+            tap("F1")
+            wait(lambda s: s.get("state", {}).get("overview"))
+            capture("09-tactical-map")
+            tap("F1")
+            wait(lambda s: not s.get("state", {}).get("overview", True))
+            tap("Escape")
+            wait(lambda s: s.get("paused") and s.get("panels", {}).get("pause_panel"))
+            capture("10-world-pause")
+            tab_to(text="Return to courtyard")
+            tap("Return")
+            wait(lambda s: s.get("scene_path") == "res://scenes/courtyard.tscn" and s.get("panels", {}).get("main_panel") and s.get("transition", {}).get("phase") == "done")
+            capture("11-return-title")
+            click("TrainingMode")
+            wait(lambda s: s.get("launch", {}).get("selected_mode") == "train")
+            click("ExploreConfluence")
+            wait(lambda s: s.get("state", {}).get("started") and s.get("state", {}).get("player_active"))
+            tap("Escape")
+            wait(lambda s: s.get("panels", {}).get("pause_panel"))
+            click("Settings")
+            wait(lambda s: s.get("panels", {}).get("settings_panel"))
+            capture("12-settings")
+            tab_to(text="CUSTOMIZE KEYBOARD CONTROLS")
+            tap("Return")
+            wait(lambda s: s.get("panels", {}).get("controls_overlay"))
+            capture("13-keyboard-controls")
+            tap("Escape")
+            wait(lambda s: not s.get("panels", {}).get("controls_overlay", True) and s.get("panels", {}).get("settings_panel"))
+            tap("Escape")
+            wait(lambda s: not s.get("panels", {}).get("settings_panel", True) and s.get("panels", {}).get("pause_panel"))
+            tab_to(text="RETURN TO TITLE")
+            tap("Return")
+            wait(lambda s: s.get("panels", {}).get("main_panel") and not s.get("paused"))
+            capture("14-final-title")
+            tab_to(name="Quit")
+            event({"key_down": "Return"})
+            ui.wait_for(lambda: game.poll() is not None, args.timeout)
+            record["native_exit"] = game.returncode
+            if game.returncode != 0:
+                raise RuntimeError("Native Quit failed")
+        samples = [json.loads(line) for line in (out / "physics.jsonl").read_text().splitlines()]
+        record["route_audit"] = audit_route(samples)
+        if not record["route_audit"]["passed"]:
+            raise RuntimeError("Route audit failed")
+        record["source_unchanged"] = all(ui.sha(PROJECT / name) == value for name, value in pins.items())
+        if not record["source_unchanged"]:
+            raise RuntimeError("Pinned source changed during journey")
+        log = (out / "godot.log").read_text()
+        if "SCRIPT ERROR:" in log or "\nERROR:" in log:
+            raise RuntimeError("Engine errors in retained log")
+        record["complete"] = True
+    except Exception as error:
+        record["failure"] = repr(error)
+        print(json.dumps({"failure": repr(error)}), flush=True)
+    finally:
+        if native and game and game.poll() is None:
+            for key in held:
+                native.event({"key_up": key, "immediate": True})
+            native.xt.XTestFakeButtonEvent(native.d, 1, 0, 0)
+            native.x.XFlush(native.d)
+        if game and game.poll() is None:
+            game.terminate()
+            try:
+                game.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                game.kill()
+                game.wait()
+        if native:
+            native.x.XCloseDisplay(native.d)
+        if server:
+            server.terminate()
+            server.wait(timeout=5)
+        record["cleanup_exit"] = game.returncode if game else None
+        record["elapsed_seconds"] = time.time() - record["started_unix"]
+        record["output_sha256"] = {p.name: ui.sha(p) for p in out.iterdir() if p.is_file() and p.name != "run.json"}
+        ui.save(out / "run.json", record)
+    print(json.dumps({"complete": record["complete"], "shots": len(record["shots"]), "output": str(out)}), flush=True)
+    return 0 if record["complete"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,120 @@
+{
+  "target": "/workspace/ANDOLAN/games/yuga-native/tools/reuse-gate-input/run.py",
+  "sha256": "a0518ad298bae17ae842cb9ad6dfe678ed6f581e055b1f6cd28a5f359ecdf083",
+  "scope": "Synthetic challenge of acceptance oracle only; no actual game/input result.",
+  "checks": [
+    {
+      "name": "full-grounded-crossing-control",
+      "expected_acceptance": true,
+      "actual_acceptance": true,
+      "pass": true,
+      "oracle_result": {
+        "physics_samples": 382,
+        "active_samples": 382,
+        "near_gate_samples": 382,
+        "crossings": [
+          {
+            "direction": "north",
+            "previous": 100,
+            "current": 101
+          },
+          {
+            "direction": "south",
+            "previous": 281,
+            "current": 282
+          }
+        ],
+        "max_adjacent_physics_displacement_m": 0.10000000000000853,
+        "near_gate_max_height_m": 0,
+        "near_gate_grounded_samples": 382,
+        "near_gate_clear_static_rays": 382,
+        "passed": true
+      }
+    },
+    {
+      "name": "center-jitter-does-not-traverse-gate",
+      "expected_acceptance": false,
+      "actual_acceptance": true,
+      "pass": false,
+      "oracle_result": {
+        "physics_samples": 6,
+        "active_samples": 6,
+        "near_gate_samples": 6,
+        "crossings": [
+          {
+            "direction": "north",
+            "previous": 2,
+            "current": 3
+          },
+          {
+            "direction": "south",
+            "previous": 5,
+            "current": 6
+          }
+        ],
+        "max_adjacent_physics_displacement_m": 0.20000000000000284,
+        "near_gate_max_height_m": 0,
+        "near_gate_grounded_samples": 6,
+        "near_gate_clear_static_rays": 6,
+        "passed": true
+      }
+    },
+    {
+      "name": "grounded-above-roof-does-not-traverse-opening",
+      "expected_acceptance": false,
+      "actual_acceptance": true,
+      "pass": false,
+      "oracle_result": {
+        "physics_samples": 382,
+        "active_samples": 382,
+        "near_gate_samples": 382,
+        "crossings": [
+          {
+            "direction": "north",
+            "previous": 100,
+            "current": 101
+          },
+          {
+            "direction": "south",
+            "previous": 281,
+            "current": 282
+          }
+        ],
+        "max_adjacent_physics_displacement_m": 0.10000000000000853,
+        "near_gate_max_height_m": 12,
+        "near_gate_grounded_samples": 382,
+        "near_gate_clear_static_rays": 382,
+        "passed": true
+      }
+    },
+    {
+      "name": "no-ordinary-movement-intent-is-not-input-qualification",
+      "expected_acceptance": false,
+      "actual_acceptance": true,
+      "pass": false,
+      "oracle_result": {
+        "physics_samples": 382,
+        "active_samples": 382,
+        "near_gate_samples": 382,
+        "crossings": [
+          {
+            "direction": "north",
+            "previous": 100,
+            "current": 101
+          },
+          {
+            "direction": "south",
+            "previous": 281,
+            "current": 282
+          }
+        ],
+        "max_adjacent_physics_displacement_m": 0.10000000000000853,
+        "near_gate_max_height_m": 0,
+        "near_gate_grounded_samples": 382,
+        "near_gate_clear_static_rays": 382,
+        "passed": true
+      }
+    }
+  ],
+  "passed": false
+}

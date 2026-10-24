@@ -1,0 +1,113 @@
+extends RefCounted
+## Opt-in candidate only. Reuses the lane-gate cache/copy-isolation contract.
+const ASSET := "res://assets/world/lanka-water-garden-candidate.scn"
+const ASSET_SHA := "69cebe64d18b6acadc16c5b43c2d4fd4ae069793590a909f2b636ba81cc64dd0"
+const SOURCE_SHA := "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33"
+const SELECTION_SHA := "6a9376f1cec2806f467a43ff4ceed5554a989c0fa9d02870077a77e220779151"
+const ROOT_NAME := "LankaWaterGarden"
+const INSTANCE_SPEC := [
+	{"id": "garden-north-column", "position": Vector3(-62.5, 0, 5), "size": Vector3(1.2, 3.31, 1.2)},
+	{"id": "garden-south-column", "position": Vector3(-62.5, 0, -5), "size": Vector3(1.2, 3.31, 1.2)},
+	{"id": "garden-north-diya", "position": Vector3(-59.8, 0, 5.2), "size": Vector3(.48, 1.075, .48)},
+	{"id": "garden-south-diya", "position": Vector3(-59.8, 0, -5.2), "size": Vector3(.48, 1.075, .48)}]
+static var _cache: Dictionary = {}
+
+static func _local_placement_valid(node: Node3D) -> bool:
+	if not node.transform.is_equal_approx(Transform3D.IDENTITY) or node.get_child_count() != 4: return false
+	for spec: Dictionary in INSTANCE_SPEC:
+		var cluster := node.get_node_or_null(NodePath(spec.id)) as Node3D
+		if cluster == null or not cluster.position.is_equal_approx(spec.position) or not cluster.basis.is_equal_approx(Basis.IDENTITY): return false
+		var body := cluster.get_node_or_null("SourceCollision") as StaticBody3D
+		if body == null or not body.transform.is_equal_approx(Transform3D.IDENTITY): return false
+		var holder := body.get_node_or_null("WholeSourceFaces") as CollisionShape3D
+		if holder == null or not holder.transform.is_equal_approx(Transform3D.IDENTITY): return false
+	return true
+
+static func _expected_footprints() -> Array:
+	var boxes: Array = []
+	for spec: Dictionary in INSTANCE_SPEC:
+		boxes.append({"id": spec.id + "-army", "position": [spec.position.x, spec.position.y, spec.position.z],
+			"size": [spec.size.x, spec.size.y, spec.size.z], "native_only": true,
+			"scope": "Conservative source base extent; native offline army candidate only"})
+	return boxes
+
+static func build(parent: Node3D, enabled: bool = false, path: String = ASSET) -> Dictionary:
+	if not enabled: return {"enabled": false, "reason": "opt_in_required"}
+	if not is_instance_valid(parent): return {"enabled": false, "reason": "parent_required"}
+	if not parent.is_inside_tree() or not parent.global_transform.is_equal_approx(Transform3D.IDENTITY): return {"enabled": false, "reason": "identity_world_required"}
+	if parent.has_node(ROOT_NAME): return {"enabled": false, "reason": "duplicate_placement"}
+	if not FileAccess.file_exists(path) or FileAccess.get_sha256(path) != ASSET_SHA:
+		return {"enabled": false, "reason": "asset_hash"}
+	if not _cache.has(path):
+		var loaded := ResourceLoader.load(path, "PackedScene", ResourceLoader.CACHE_MODE_REUSE)
+		if not loaded is PackedScene: return {"enabled": false, "reason": "native_scene_required"}
+		_cache[path] = loaded
+	var node: Node3D = _cache[path].instantiate()
+	if node.get_meta("source_sha256", "") != SOURCE_SHA or node.get_meta("selection_sha256", "") != SELECTION_SHA:
+		node.free(); return {"enabled": false, "reason": "source_metadata"}
+	if not _local_placement_valid(node):
+		node.free(); return {"enabled": false, "reason": "source_placement"}
+	var meshes: Dictionary = {}
+	var materials: Dictionary = {}
+	var shapes: Dictionary = {}
+	var triangles := 0
+	var collision_triangles := 0
+	var instances := 0
+	var bodies: Array = []
+	for cluster in node.get_children():
+		if not cluster is Node3D or not cluster.has_meta("source_collision_faces"):
+			node.free(); return {"enabled": false, "reason": "source_cluster"}
+		var faces: PackedVector3Array = cluster.get_meta("source_collision_faces")
+		for point in faces:
+			if not point.is_finite(): node.free(); return {"enabled": false, "reason": "finite_collision"}
+		for child in cluster.get_children():
+			if child is MeshInstance3D:
+				instances += 1
+				meshes[child.mesh.get_instance_id()] = true
+				triangles += child.mesh.get_faces().size() / 3
+				for surface in child.mesh.get_surface_count():
+					materials[child.mesh.surface_get_material(surface).get_instance_id()] = true
+			elif child is StaticBody3D:
+				bodies.append(child)
+				var holder := child.get_node_or_null("WholeSourceFaces") as CollisionShape3D
+				if holder == null or not holder.shape is ConcavePolygonShape3D or holder.shape.get_faces() != faces:
+					node.free(); return {"enabled": false, "reason": "exact_source_collision"}
+				shapes[holder.shape.get_instance_id()] = true
+				collision_triangles += faces.size() / 3
+	if meshes.size() != 7 or instances != 14 or triangles != 2688 or collision_triangles != 760 or bodies.size() != 4 or shapes.size() != 2:
+		node.free(); return {"enabled": false, "reason": "source_budget"}
+	parent.add_child(node)
+	return {"enabled": true, "root": node, "bodies": bodies, "report": {"candidate_only": true, "asset_sha256": ASSET_SHA,
+		"source_sha256": SOURCE_SHA, "selection_sha256": SELECTION_SHA, "visual_triangles": triangles, "collision_triangles": collision_triangles,
+		"mesh_instances": instances, "mesh_resources": meshes.size(), "material_resources": materials.size(), "shape_resources": shapes.size(),
+		"body_instances": bodies.size(), "added_lights": 0, "added_water": 0, "added_foliage": 0,
+		"scope": "Four source-derived bank features; existing water film/nature/flat floor unchanged; no canonical integration"}}
+
+static func prepare_army_manifest(original: Dictionary, candidate: Node3D) -> Dictionary:
+	if not is_instance_valid(candidate) or not original.get("traversal") is Dictionary or not original.traversal.get("native_collision_boxes") is Array:
+		return {"ok": false, "reason": "manifest_contract"}
+	if not candidate.is_inside_tree() or not candidate.global_transform.is_equal_approx(Transform3D.IDENTITY) or not _local_placement_valid(candidate):
+		return {"ok": false, "reason": "source_world_placement"}
+	var boxes: Variant = candidate.get_meta("army_ground_footprints", null)
+	if not boxes is Array or boxes.size() != 4: return {"ok": false, "reason": "four_footprints_required"}
+	var expected := _expected_footprints()
+	var ids: Array = []
+	for box in boxes:
+		if not box is Dictionary or not box.get("id") is String or box.id in ids or not box.get("position") is Array or box.position.size() != 3 or not box.get("size") is Array or box.size.size() != 3:
+			return {"ok": false, "reason": "footprint_contract"}
+		var index := ids.size()
+		if box.id != expected[index].id: return {"ok": false, "reason": "source_footprint_identity"}
+		ids.append(box.id)
+		for value in box.position + box.size:
+			if not (value is int or value is float) or not is_finite(value): return {"ok": false, "reason": "finite_footprint"}
+		for axis in 3:
+			if absf(box.position[axis] - expected[index].position[axis]) > .00001 or absf(box.size[axis] - expected[index].size[axis]) > .00001:
+				return {"ok": false, "reason": "source_footprint_value"}
+		if box.size.any(func(value): return value <= 0): return {"ok": false, "reason": "positive_footprint"}
+		if absf(box.position[2]) - box.size[2] * .5 < 4.3: return {"ok": false, "reason": "crossing_clearance"}
+	for box in original.traversal.native_collision_boxes:
+		if not box is Dictionary: return {"ok": false, "reason": "manifest_box"}
+		if box.get("id") in ids: return {"ok": false, "reason": "duplicate_army_footprint"}
+	var copy := original.duplicate(true)
+	copy.traversal.native_collision_boxes.append_array(expected.duplicate(true))
+	return {"ok": true, "manifest": copy, "boxes": expected.duplicate(true), "scope": "Candidate offline native-only ground footprints; callers preserve any earlier gate/relay private additions"}

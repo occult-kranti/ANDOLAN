@@ -1,0 +1,82 @@
+{
+  "kind": "independent-ordinary-gate-partial-review",
+  "decision": "accept-traversal-prefix-only-full-journey-failed",
+  "actual_run_complete": false,
+  "actual_run_failure": "RuntimeError('Native process exited 0')",
+  "actual_run_sha256": "f322b46d7c226a4748d7dcdb397753f987ea9404ad9b3491ceb8177d293a53a3",
+  "physics_sha256": "4bf2c8a7b714e7d90e8a9b1e944d1859b76ff3bf3d50ab3d1e68e8acd2781817",
+  "route_audit": {
+    "physics_samples": 1689,
+    "active_samples": 1584,
+    "near_gate_samples": 645,
+    "crossings": [
+      {
+        "direction": "north",
+        "previous": 1304,
+        "current": 1305
+      },
+      {
+        "direction": "south",
+        "previous": 1624,
+        "current": 1625
+      }
+    ],
+    "approach_exit_spans": [
+      {
+        "direction": "north",
+        "exit_physics_frame": 1365
+      },
+      {
+        "direction": "south",
+        "exit_physics_frame": 1685
+      }
+    ],
+    "span_planes_z_m": [
+      -60,
+      -48
+    ],
+    "moving_near_gate_samples": 425,
+    "moving_with_ordinary_intent_samples": 395,
+    "max_adjacent_physics_displacement_m": 0.10000038146980117,
+    "near_gate_max_height_m": 0.000107422471046448,
+    "near_gate_grounded_samples": 645,
+    "near_gate_clear_static_rays": 645,
+    "passed": true
+  },
+  "current_runtime_pin_count": 563,
+  "current_runtime_pin_mismatches": [],
+  "original_hashes_all_match": true,
+  "actual_originals_viewed": [
+    {
+      "file": "01-title.png",
+      "sha256": "2b3fa5903324e2e8bf3c6d35a33a05a188ce702f8894ec234920628d6be5f701"
+    },
+    {
+      "file": "04-north-approach.png",
+      "sha256": "d406ac3ff3a71b9652f826263401bf2c9a33ec05c1cade791ad69d86870121b7"
+    },
+    {
+      "file": "05-ordinary-bow-release.png",
+      "sha256": "3ca2ab6340f70027c20aa6aadbedb0baadf57395562b0e44d4d18106d2b3a1ee"
+    },
+    {
+      "file": "07-south-facing-carved-gate.png",
+      "sha256": "662c08d495bb21b2ffc1d07f40b937f1e132779a71951dcd730f55d97f826bf4"
+    },
+    {
+      "file": "09-tactical-map.png",
+      "sha256": "cbf4c167aac67458dd59e6e6cc9355c149e042ee02ca8d5f0b891bb48f188889"
+    },
+    {
+      "file": "10-world-pause.png",
+      "sha256": "bec11853a811e5c6f9bbd2b13f87c85220db05ddb32a7ae7af85c7ae2694e3ac"
+    }
+  ],
+  "findings": [
+    "Real ground movement crossed both approach/exit spans; 645 near-gate samples all grounded and all static rays clear.",
+    "One ordinary bow release expended ammo; F1 tactical map and pause opened.",
+    "An allied spearman completely obscures Rama at the actual north approach; live ally camera readability remains an issue.",
+    "Driver held Tab across slow frames and native Quit occurred before courtyard/settings return; full journey remains failed."
+  ],
+  "limits": "Prefix only, no staged position. Software-rendered DummyAudio execution is not human gameplay feel, listening, physical-GPU performance or complete N3 acceptance."
+}

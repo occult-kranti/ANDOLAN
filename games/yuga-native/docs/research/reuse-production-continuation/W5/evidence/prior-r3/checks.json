@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "trace_file_sha256": "045965d2dd4a4323c48aa0e4a412ee5043ecab59b4b87dc161e7252998e644e0",
+  "trace_json_sha256": "045965d2dd4a4323c48aa0e4a412ee5043ecab59b4b87dc161e7252998e644e0",
+  "checks": [
+    {
+      "name": "actual receiver/socket capture passes at inspection 30 Hz",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "30 Hz keeps every selected source ordinal once",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "actual receiver/socket capture passes at inspection 60 Hz",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "60 Hz keeps every selected source ordinal once",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "actual receiver/socket capture passes at inspection 120 Hz",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "120 Hz keeps every selected source ordinal once",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "missing effect ack stays null and fails",
+      "passed": true,
+      "details": [
+        "EFFECT_ACK_MISSING"
+      ]
+    },
+    {
+      "name": "missing audio ack stays null and fails",
+      "passed": true,
+      "details": [
+        "AUDIO_ACK_MISSING"
+      ]
+    },
+    {
+      "name": "missing muzzle is never substituted with identity",
+      "passed": true,
+      "details": [
+        "SOCKET_MISSING"
+      ]
+    },
+    {
+      "name": "missing socket sample remains null",
+      "passed": true,
+      "details": [
+        "SOCKET_SAMPLE_MISSING"
+      ]
+    },
+    {
+      "name": "nonfinite socket rejected",
+      "passed": true,
+      "details": [
+        "SOCKET_NONFINITE_OR_MALFORMED"
+      ]
+    },
+    {
+      "name": "duplicate actual event rejected",
+      "passed": true,
+      "details": [
+        "DUPLICATE_EVENT_IDENTITY",
+        "STALE_EVENT_IDENTITY"
+      ]
+    },
+    {
+      "name": "removed actual event produces visible sequence gap",
+      "passed": true,
+      "details": [
+        "MISSING_EVENT_SEQUENCE"
+      ]
+    },
+    {
+      "name": "missing generation boundary rejected",
+      "passed": true,
+      "details": [
+        "GENERATION_FIRST_EVENT_MISSING"
+      ]
+    },
+    {
+      "name": "effect ack from different event rejected",
+      "passed": true,
+      "details": [
+        "EFFECT_ACK_IDENTITY_MISMATCH"
+      ]
+    },
+    {
+      "name": "audio stale receiver generation rejected",
+      "passed": true,
+      "details": [
+        "AUDIO_ACK_IDENTITY_MISMATCH"
+      ]
+    },
+    {
+      "name": "receiver false acknowledgement preserved",
+      "passed": true,
+      "details": [
+        "AUDIO_REJECTED"
+      ]
+    },
+    {
+      "name": "effect unincremented state rejected",
+      "passed": true,
+      "details": [
+        "EFFECT_COUNTER_MISMATCH"
+      ]
+    },
+    {
+      "name": "event reversed clock rejected",
+      "passed": true,
+      "details": [
+        "EVENT_CLOCK_REVERSED_OR_INVALID",
+        "PLAYBACK_SEGMENT_INCOMPLETE"
+      ]
+    },
+    {
+      "name": "event bool identity rejected",
+      "passed": true,
+      "details": [
+        "IDENTITY_INVALID",
+        "MISSING_EVENT_SEQUENCE"
+      ]
+    },
+    {
+      "name": "socket from different event rejected",
+      "passed": true,
+      "details": [
+        "SOCKET_IDENTITY_MISMATCH"
+      ]
+    },
+    {
+      "name": "missing continuous samples rejected",
+      "passed": true,
+      "details": [
+        "FRAME_CLOCK_INVALID_OR_MISSING"
+      ]
+    },
+    {
+      "name": "mutated canonical pin rejected",
+      "passed": true,
+      "details": [
+        "SOURCE_CHANGED_OR_UNPINNED"
+      ]
+    },
+    {
+      "name": "capture failed check cannot be hidden",
+      "passed": true,
+      "details": [
+        "CAPTURE_CHECK_FAILED_OR_MISSING"
+      ]
+    },
+    {
+      "name": "stale actual pre-reset record rejected after boundary",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "actual capture covers all requested presentation cadences",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "actual capture covers cancellation and reset for every cadence",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "actual receiver duplicate/stale negatives all passed",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "passed": true
+}

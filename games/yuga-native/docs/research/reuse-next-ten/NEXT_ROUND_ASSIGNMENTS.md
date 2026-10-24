@@ -1,5 +1,7 @@
 # Next assignments — six roles, ten conditional stages
 
+**Successor queue:** [reuse production continuation and next ten exits](../reuse-production-continuation/NEXT_TEN.md) supersedes these immediate assignments. Native MPFB card appearances were rejected; the new source-advisor packet provides a direct CC0 mesh donor for the next trial. Keep this historical queue and its original evidence scope.
+
 Prepared 24 October 2026 from the [current index](README.md) and frozen W1–W6 packets. This is the next work queue, not ten accomplished game rounds. The owning [desktop ledger](../../DESKTOP_FINISH_CAMPAIGN.md) remains **17/78 accepted scoped packets, 0/13 complete rounds**. Android remains deferred, **0/108 implementation packets** in its [separate plan](../../MOBILE_PRODUCTION_ROADMAP.md). Only root updates those ledgers after their actual gates pass.
 
 Continue the [detailed ten-stage guide](../ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md) with the revised priorities below. A failed stage receives a specific repair assignment; its dependent stages stay blocked. Independent work may proceed in parallel. No fixed number of worker conversations predicts finished Deadlock-quality art or a delivery date.

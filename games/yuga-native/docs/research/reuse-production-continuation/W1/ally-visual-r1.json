@@ -1,0 +1,47 @@
+{
+  "kind": "independent-actual-friendly-occlusion-review",
+  "decision": "accept-staged-bounded-readability-delta",
+  "capture_sha256": "d4017ead1dd6bd29cf29a22694bd07707cf6188e0a2689a2b5c7acfd10160665",
+  "source_pins": {
+    "res://scripts/confluence_world.gd": "6869d536495760ad1b97e2ecde22547be31255aeace0e09e6adbc5943c368b77",
+    "res://scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+    "res://scripts/lane_minion.gd": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387",
+    "res://scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+    "res://tools/reuse-camera-readability/capture_pair.gd": "334865ed838b6ec3fe66fb8665adc502f61f3f3f095eeee88441bcda4fdc8ea0",
+    "res://tools/reuse-camera-readability/friendly_camera_visibility.gd": "4bf8e41a03b115d3bf5f9f79c238bc15d592975c500a29817db3481083aca787"
+  },
+  "original_hashes_match": true,
+  "all_matched_pose_signatures_equal": true,
+  "actual_originals_viewed": [
+    {
+      "id": "01-baseline",
+      "sha256": "d2236ddf38333012469f44e12ebdce77f418142eb2f0dc216bbcec7408a376e8",
+      "faded_units": 0,
+      "maximum_fade": 0.0
+    },
+    {
+      "id": "02-friendly-fade",
+      "sha256": "4a2d8de0ec739c5f5f27a9e61c895b2cf45aed6a2d3eb272b42c8886a87bdd1c",
+      "faded_units": 1,
+      "maximum_fade": 0.82
+    },
+    {
+      "id": "03-restored",
+      "sha256": "d2236ddf38333012469f44e12ebdce77f418142eb2f0dc216bbcec7408a376e8",
+      "faded_units": 0,
+      "maximum_fade": 0.0
+    }
+  ],
+  "restore_image_pixel_identical": true,
+  "findings": [
+    "Baseline nearby friendly spearman obscures most of Rama.",
+    "Per-instance fade restores visible Rama body and aiming context while the ally remains recognisable.",
+    "Restoration returns the opaque ally."
+  ],
+  "limits": [
+    "Arranged actual Confluence/Rama/spearman and recorded earlier camera; not exact reconstruction of the R1 unit placement or ordinary input.",
+    "Location HUD label is stale in the staged fixture; final ordinary run is separate.",
+    "Numeric interpolation tests do not establish rendered transition smoothness or physical-GPU cost."
+  ],
+  "next_action": "Review canonical pause/overview/reset/exit hooks, then exact ordinary-input journey with observed live actor transparency."
+}
