@@ -1,0 +1,21 @@
+"""One approved density/material control adjustment. No guide geometry synthesis or export."""
+import argparse,hashlib,json,sys,time
+from pathlib import Path
+import bpy
+ROOT=Path('/workspace/ANDOLAN')
+sys.path.insert(0,str(ROOT/'games/yuga-native/tools/hero-donor-groom/artist_r1'))
+from sculpt_existing import sha,positions,uv_digest
+
+def digest(rows):return hashlib.sha256(json.dumps(rows,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+def main():
+ p=argparse.ArgumentParser();p.add_argument('--receipt',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args(sys.argv[sys.argv.index('--')+1:]);parent=json.loads(a.receipt.read_text());master=Path(parent['scene']['path']);assert sha(master)==parent['scene']['sha256'];a.output.mkdir(parents=True,exist_ok=False);start=time.monotonic();bpy.ops.wm.open_mainfile(filepath=str(master));donor=bpy.data.objects['MPFB CC0 fitted rear guides'];baseline=bpy.data.objects['APPROVED BASELINE Rama'];candidate=bpy.data.objects['MPFB nape preview Rama'];ids=list(range(len(baseline.data.vertices)));before=positions(baseline.data,ids);uv=uv_digest(baseline.data);guide_before=[tuple(v.vector) for v in donor.data.attributes['position'].data];assert digest(guide_before)==parent['guide_points_digest'];profile=donor.modifiers['Set Hair Curve Profile'];socket=next(s for s in profile.node_group.interface.items_tree if s.item_type=='SOCKET' and s.in_out=='INPUT' and s.name=='Density');old_density=float(profile[socket.identifier]);assert abs(old_density-.2)<1e-6;profile[socket.identifier]=.6
+ material=donor.active_material.copy();material.name='MPFB CC0 warm-black rear hair study';donor.data.materials[0]=material;group=next(n for n in material.node_tree.nodes if n.type=='GROUP');group.node_tree=group.node_tree.copy();group.node_tree.name='MPFB existing hair shader warm-black parameter copy';deltas=[]
+ def set_input(node,name,value):
+  inp=node.inputs[name];old=inp.default_value;old=list(old) if hasattr(old,'__len__') else old;inp.default_value=value;deltas.append({'node':node.name,'input':name,'before':old,'after':list(value) if isinstance(value,tuple) else value})
+ set_input(group,'Color 1',(.010,.006,.004,1.));set_input(group,'Color 2',(.004,.003,.002,1.))
+ for node in group.node_tree.nodes:
+  if node.type=='BSDF_PRINCIPLED':set_input(node,'Metallic',0.);set_input(node,'Roughness',.54);set_input(node,'Specular IOR Level',.065)
+  elif node.type=='BSDF_HAIR_PRINCIPLED':set_input(node,'Roughness',.45);set_input(node,'Coat',.2)
+ assert positions(baseline.data,ids)==before and positions(candidate.data,ids)==before;assert uv_digest(baseline.data)==uv and uv_digest(candidate.data)==uv;assert [tuple(v.vector) for v in donor.data.attributes['position'].data]==guide_before
+ bpy.context.scene.cycles.samples=64;path=a.output/'rama-mpfb-density-material-study.blend';bpy.ops.wm.save_as_mainfile(filepath=str(path));report=dict(parent);report.update({'stage':'single-existing-parameter-refinement-render-pending','scope':'One density/material parameter adjustment only; no guide positions/body/crown/rig/actions changed; no native hair adoption','ancestor_fit_master_sha256':parent['scene']['sha256'],'ancestor_source_receipt_sha256':sha(a.receipt),'script_sha256':sha(__file__),'density_change':{'modifier':profile.name,'socket':socket.identifier,'before':old_density,'after':float(profile[socket.identifier])},'material_parameter_changes':deltas,'material_copy_only':True,'source_guide_points_unchanged':True,'body_crown_source_mesh_positions_exact':True,'body_crown_uv_exact':True,'scene':{'path':str(path),'bytes':path.stat().st_size,'sha256':sha(path)},'render':{**parent['render'],'samples':64,'variants':['candidate'],'comparison_baselines':'Retain first take profile/rear baseline at32 samples; identical cameras/lights/exposure, higher sample count disclosed'},'elapsed_seconds':time.monotonic()-start});(a.output/'source-receipt.json').write_text(json.dumps(report,indent=2)+'\n');print('MPFB_PARAMETER_PASS='+json.dumps({k:report[k] for k in ['stage','density_change','source_guide_points_unchanged','body_crown_source_mesh_positions_exact','body_crown_uv_exact','scene','elapsed_seconds']},separators=(',',':')))
+if __name__=='__main__':main()

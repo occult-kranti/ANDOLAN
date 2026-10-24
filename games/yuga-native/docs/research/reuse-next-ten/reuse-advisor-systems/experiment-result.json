@@ -1,0 +1,42 @@
+{
+  "checks": [
+    {
+      "detail": "(1.0, 4.0, 2.0)",
+      "name": "exact upstream Vector3 interpolation retains elevation",
+      "passed": true
+    },
+    {
+      "detail": "(0, 1, 0, 0)",
+      "name": "upstream quaternion takes short angular path",
+      "passed": true
+    },
+    {
+      "detail": 0.0,
+      "name": "counterexample generic float interpolation loses yaw wrap",
+      "passed": true
+    },
+    {
+      "detail": {
+        "callable_valid": false
+      },
+      "name": "counterexample unsupported dictionary fallback is invalid on this engine",
+      "passed": true
+    },
+    {
+      "detail": "(2.0, 2.0, 2.0)",
+      "name": "counterexample upstream fraction is not bounded",
+      "passed": true
+    },
+    {
+      "detail": {
+        "existing": "teleport",
+        "unguarded_midpoint": "(10.0, 0.0, 0.0)"
+      },
+      "name": "existing guard must precede upstream helper",
+      "passed": true
+    }
+  ],
+  "engine": "4.6.3-stable (official)",
+  "passed": true,
+  "scope": "Exact small MIT upstream helper executed on synthetic poses; current local guard queried; no plugin installation, networking, animation asset or visual acceptance."
+}

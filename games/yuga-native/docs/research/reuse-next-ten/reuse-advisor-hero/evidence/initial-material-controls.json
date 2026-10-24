@@ -1,0 +1,790 @@
+[
+  {
+    "material": "straight_hair_to_shoulder",
+    "nodes": [
+      {
+        "name": "Material Output",
+        "type": "ShaderNodeOutputMaterial",
+        "inputs": [
+          {
+            "name": "Surface",
+            "value": null,
+            "linked": true
+          },
+          {
+            "name": "Volume",
+            "value": null,
+            "linked": false
+          },
+          {
+            "name": "Displacement",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Thickness",
+            "value": 0.0,
+            "linked": false
+          }
+        ]
+      },
+      {
+        "name": "Reroute.001",
+        "type": "NodeReroute",
+        "inputs": [
+          {
+            "name": "Input",
+            "value": null,
+            "linked": true
+          }
+        ]
+      },
+      {
+        "name": "Group",
+        "type": "ShaderNodeGroup",
+        "inputs": [
+          {
+            "name": "Color 1",
+            "value": [
+              0.11692436784505844,
+              0.09404333680868149,
+              0.04665105789899826,
+              1.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Color 2",
+            "value": [
+              0.031247558072209358,
+              0.016391107812523842,
+              0.004286494106054306,
+              1.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Darken root",
+            "value": 0.6313559412956238,
+            "linked": false
+          },
+          {
+            "name": "Root color length",
+            "value": 0.3220338821411133,
+            "linked": false
+          },
+          {
+            "name": "Random color",
+            "value": 1.0,
+            "linked": false
+          },
+          {
+            "name": "Noise Scale",
+            "value": 18.799999237060547,
+            "linked": false
+          }
+        ],
+        "group": "Hair shader EEVEE",
+        "child_shader_nodes": [
+          {
+            "name": "Principled BSDF",
+            "type": "ShaderNodeBsdfPrincipled",
+            "parametrization": null,
+            "inputs": [
+              {
+                "name": "Base Color",
+                "value": [
+                  0.788477897644043,
+                  0.787351667881012,
+                  0.786427915096283,
+                  1.0
+                ],
+                "linked": true
+              },
+              {
+                "name": "Metallic",
+                "value": 0.7863636612892151,
+                "linked": false
+              },
+              {
+                "name": "Roughness",
+                "value": 0.5,
+                "linked": false
+              },
+              {
+                "name": "IOR",
+                "value": 1.4500000476837158,
+                "linked": false
+              },
+              {
+                "name": "Alpha",
+                "value": 1.0,
+                "linked": true
+              },
+              {
+                "name": "Normal",
+                "value": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "linked": false
+              },
+              {
+                "name": "Weight",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Diffuse Roughness",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Subsurface Weight",
+                "value": 1.0,
+                "linked": false
+              },
+              {
+                "name": "Subsurface Radius",
+                "value": [
+                  1.0,
+                  0.8500000238418579,
+                  0.699999988079071
+                ],
+                "linked": false
+              },
+              {
+                "name": "Subsurface Scale",
+                "value": 0.9818182587623596,
+                "linked": false
+              },
+              {
+                "name": "Subsurface IOR",
+                "value": 1.399999976158142,
+                "linked": false
+              },
+              {
+                "name": "Subsurface Anisotropy",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Specular IOR Level",
+                "value": 0.5,
+                "linked": false
+              },
+              {
+                "name": "Specular Tint",
+                "value": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "linked": false
+              },
+              {
+                "name": "Anisotropic",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Anisotropic Rotation",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Tangent",
+                "value": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "linked": false
+              },
+              {
+                "name": "Transmission Weight",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Coat Weight",
+                "value": 0.0886363610625267,
+                "linked": true
+              },
+              {
+                "name": "Coat Roughness",
+                "value": 0.029999999329447746,
+                "linked": true
+              },
+              {
+                "name": "Coat IOR",
+                "value": 1.2000000476837158,
+                "linked": false
+              },
+              {
+                "name": "Coat Tint",
+                "value": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "linked": false
+              },
+              {
+                "name": "Coat Normal",
+                "value": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "linked": false
+              },
+              {
+                "name": "Sheen Weight",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Sheen Roughness",
+                "value": 0.5,
+                "linked": false
+              },
+              {
+                "name": "Sheen Tint",
+                "value": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "linked": false
+              },
+              {
+                "name": "Emission Color",
+                "value": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "linked": false
+              },
+              {
+                "name": "Emission Strength",
+                "value": 1.0,
+                "linked": false
+              },
+              {
+                "name": "Thin Film Thickness",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Thin Film IOR",
+                "value": 1.3300000429153442,
+                "linked": false
+              }
+            ]
+          },
+          {
+            "name": "Principled Hair BSDF.001",
+            "type": "ShaderNodeBsdfHairPrincipled",
+            "parametrization": "COLOR",
+            "inputs": [
+              {
+                "name": "Color",
+                "value": [
+                  0.01751299947500229,
+                  0.005762999877333641,
+                  0.002059000078588724,
+                  1.0
+                ],
+                "linked": true
+              },
+              {
+                "name": "Melanin",
+                "value": 0.20454543828964233,
+                "linked": false
+              },
+              {
+                "name": "Melanin Redness",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Tint",
+                "value": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "linked": false
+              },
+              {
+                "name": "Absorption Coefficient",
+                "value": [
+                  0.24553099274635315,
+                  0.5199999809265137,
+                  1.3650000095367432
+                ],
+                "linked": false
+              },
+              {
+                "name": "Aspect Ratio",
+                "value": 0.8500000238418579,
+                "linked": false
+              },
+              {
+                "name": "Roughness",
+                "value": 0.30000001192092896,
+                "linked": false
+              },
+              {
+                "name": "Radial Roughness",
+                "value": 0.5,
+                "linked": false
+              },
+              {
+                "name": "Coat",
+                "value": 0.4000000059604645,
+                "linked": false
+              },
+              {
+                "name": "IOR",
+                "value": 1.5499999523162842,
+                "linked": false
+              },
+              {
+                "name": "Offset",
+                "value": 0.03490658476948738,
+                "linked": false
+              },
+              {
+                "name": "Random Color",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Random Roughness",
+                "value": 0.30000001192092896,
+                "linked": false
+              },
+              {
+                "name": "Random",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Weight",
+                "value": 0.0,
+                "linked": false
+              },
+              {
+                "name": "Reflection",
+                "value": 1.0,
+                "linked": false
+              },
+              {
+                "name": "Transmission",
+                "value": 1.0,
+                "linked": false
+              },
+              {
+                "name": "Secondary Reflection",
+                "value": 1.0,
+                "linked": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "material": "Swept black hair",
+    "nodes": [
+      {
+        "name": "Principled BSDF",
+        "type": "ShaderNodeBsdfPrincipled",
+        "inputs": [
+          {
+            "name": "Base Color",
+            "value": [
+              0.800000011920929,
+              0.800000011920929,
+              0.800000011920929,
+              1.0
+            ],
+            "linked": true
+          },
+          {
+            "name": "Metallic",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Roughness",
+            "value": 0.5400000214576721,
+            "linked": false
+          },
+          {
+            "name": "IOR",
+            "value": 1.5,
+            "linked": false
+          },
+          {
+            "name": "Alpha",
+            "value": 1.0,
+            "linked": false
+          },
+          {
+            "name": "Normal",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": true
+          },
+          {
+            "name": "Weight",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Diffuse Roughness",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Subsurface Weight",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Subsurface Radius",
+            "value": [
+              1.0,
+              0.20000000298023224,
+              0.10000000149011612
+            ],
+            "linked": false
+          },
+          {
+            "name": "Subsurface Scale",
+            "value": 0.05000000074505806,
+            "linked": false
+          },
+          {
+            "name": "Subsurface IOR",
+            "value": 1.399999976158142,
+            "linked": false
+          },
+          {
+            "name": "Subsurface Anisotropy",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Specular IOR Level",
+            "value": 0.06499999761581421,
+            "linked": false
+          },
+          {
+            "name": "Specular Tint",
+            "value": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Anisotropic",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Anisotropic Rotation",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Tangent",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Transmission Weight",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Coat Weight",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Coat Roughness",
+            "value": 0.029999999329447746,
+            "linked": false
+          },
+          {
+            "name": "Coat IOR",
+            "value": 1.5,
+            "linked": false
+          },
+          {
+            "name": "Coat Tint",
+            "value": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Coat Normal",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Sheen Weight",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Sheen Roughness",
+            "value": 0.5,
+            "linked": false
+          },
+          {
+            "name": "Sheen Tint",
+            "value": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Emission Color",
+            "value": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Emission Strength",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Thin Film Thickness",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "Thin Film IOR",
+            "value": 1.3300000429153442,
+            "linked": false
+          }
+        ]
+      },
+      {
+        "name": "Material Output",
+        "type": "ShaderNodeOutputMaterial",
+        "inputs": [
+          {
+            "name": "Surface",
+            "value": null,
+            "linked": true
+          },
+          {
+            "name": "Volume",
+            "value": null,
+            "linked": false
+          },
+          {
+            "name": "Displacement",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "Thickness",
+            "value": 0.0,
+            "linked": false
+          }
+        ]
+      },
+      {
+        "name": "Mix",
+        "type": "ShaderNodeMix",
+        "inputs": [
+          {
+            "name": "Factor",
+            "value": 1.0,
+            "linked": false
+          },
+          {
+            "name": "Factor",
+            "value": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "linked": false
+          },
+          {
+            "name": "A",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "B",
+            "value": 0.0,
+            "linked": false
+          },
+          {
+            "name": "A",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "B",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "A",
+            "value": [
+              0.5,
+              0.5,
+              0.5,
+              1.0
+            ],
+            "linked": true
+          },
+          {
+            "name": "B",
+            "value": [
+              0.5,
+              0.5,
+              0.5,
+              1.0
+            ],
+            "linked": true
+          },
+          {
+            "name": "A",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          },
+          {
+            "name": "B",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          }
+        ]
+      },
+      {
+        "name": "Color Attribute",
+        "type": "ShaderNodeVertexColor",
+        "inputs": []
+      },
+      {
+        "name": "Image Texture",
+        "type": "ShaderNodeTexImage",
+        "inputs": [
+          {
+            "name": "Vector",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          }
+        ]
+      },
+      {
+        "name": "Normal Map",
+        "type": "ShaderNodeNormalMap",
+        "inputs": [
+          {
+            "name": "Strength",
+            "value": 0.23999999463558197,
+            "linked": false
+          },
+          {
+            "name": "Color",
+            "value": [
+              0.5,
+              0.5,
+              1.0,
+              1.0
+            ],
+            "linked": true
+          }
+        ]
+      },
+      {
+        "name": "Image Texture.001",
+        "type": "ShaderNodeTexImage",
+        "inputs": [
+          {
+            "name": "Vector",
+            "value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linked": false
+          }
+        ]
+      }
+    ]
+  }
+]

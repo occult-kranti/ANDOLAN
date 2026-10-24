@@ -4,6 +4,17 @@ Prepared 24 October 2026 from the [current index](README.md) and frozen W1–W6 
 
 Continue the [detailed ten-stage guide](../ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md) with the revised priorities below. A failed stage receives a specific repair assignment; its dependent stages stay blocked. Independent work may proceed in parallel. No fixed number of worker conversations predicts finished Deadlock-quality art or a delivery date.
 
+**Updated source choice:** the [CC0 MPFB donor study](reuse-advisor-hero/README.md)
+now provides a reviewed editable direction for coherent black nape hair. Use its
+existing guide/card/bake pipeline for N1–N2; retain the rejected initial veil and
+the older ribbon studies as counterexamples. Do not promote its high-density
+authoring curves directly into gameplay. Distinct hero source inventories and
+silhouette briefs may proceed in parallel; full roster adoption still depends
+on a qualified first-hero pipeline. The [Source 2 event inspector](reuse-advisor-world/README.md)
+can support motion diagnostics without changing combat scheduling. The
+[typed-pose/damping study](reuse-advisor-systems/README.md) defines bounded
+experiments rather than a replacement network or animation framework.
+
 ## Reuse the actual checkpoint
 
 | Lane | Established result | Immediate boundary |

@@ -5,6 +5,20 @@ This packet continues source `f09953428767ddbdd7ede27fe53ca72bb3483d15` on
 production. The [ten-stage execution guide](../ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md)
 defines their dependencies; a scheduled stage is not a completed game round.
 
+**Latest runtime repair:** `c97bb67e5947f2bd5257af48f1257a93d0a50469` restores
+readable minimap bounds after the full CI run on `34971977` exposed a failure
+outside the earlier narrow checks. The original 42 atlas assertions pass without
+relaxation; the strengthened 41 adaptive checks and four new actual captures also
+pass. See [repair evidence](root/ci-repair/README.md) and
+[exact remote run status](root/remote-ci.json). The 19-step input journey below
+belongs to the preceding source; the follow-up changes only map layout and has
+its own four rendered comparisons.
+
+The exact repaired source passed [all 39 foundation CI steps](https://github.com/occult-kranti/ANDOLAN/actions/runs/40048661708)
+and [all 15 candidate-build steps](https://github.com/occult-kranti/ANDOLAN/actions/runs/40048661697).
+That candidate run contains Linux/Windows test-build artifacts; packaging success
+does not establish native Windows execution or full-match acceptance.
+
 ## Active ownership
 
 | Worker | Reused foundation | Concrete output and boundary |
@@ -94,6 +108,30 @@ The next six-owner assignments and ten dependency-ordered stages are in
 [NEXT_ROUND_ASSIGNMENTS.md](NEXT_ROUND_ASSIGNMENTS.md). The full-game ledger stays
 at **17/78 accepted packets and 0/13 complete production rounds**; Android is
 **0/108 and deferred**. These counts are acceptance gates, not a time estimate.
+
+## Additional reuse requested during publication
+
+The [Source 2 / Overwatch tooling packet](reuse-advisor-world/README.md) retains
+19 licensed primary files and adapts Source 2 Viewer's event-window algorithm
+into an executable offline inspector. It passed 24 actual Godot-fixture checks
+and 67 inspection checks on existing Rama ability events. Overwatch's timed
+effect/attachment schema is a reference for the next diagnostic sidecar; its
+parser and commercial assets are not imported.
+
+The [systems packet](reuse-advisor-systems/README.md) inspects netfox, Godot motion
+matching and authentic Valorant endpoint documentation at exact MIT source pins.
+Six executed component checks expose both valid typed interpolation and concrete
+counterexamples. These tools do not provide Valorant's gameplay source or art.
+Whole-framework replacement is rejected; proposed narrow adapters retain the
+existing ownership, motion-contact and discontinuity checks.
+
+The [hero reuse packet](reuse-advisor-hero/README.md) retrieves the verified CC0
+MPFB hair-authoring asset and fits its existing guide curves to Rama. Six actual
+textured images record the initial rejected thin/gold appearance and a denser
+black refinement using existing density/material controls. The final 14,744-curve
+study is an **editable source candidate**, with exact donor and master archives;
+it is not a new canonical game model. The next work reuses card/texture baking,
+then qualifies binding, contact, animation and LODs before native promotion.
 
 ## Live observer and public snapshot
 

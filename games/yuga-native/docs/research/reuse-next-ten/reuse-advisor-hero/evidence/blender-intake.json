@@ -1,0 +1,5643 @@
+{
+  "schema_version": 1,
+  "scope": "Actual read-only donor datablock inspection, no evaluation, addon installation, render, fit or adoption",
+  "reader": "4.3.2",
+  "source_header": "BLENDER-v404",
+  "source_sha256": "93aedaef061dc14618a0fcfad33c3df816fa755e8093381cbdfd0fd4c34527f5",
+  "source_version_newer_than_reader": true,
+  "script_sha256": "448e3c8e852bcbfd4c6238e7003fc8225b34458a1abf85c49b7b369b5ef12bfe",
+  "available": {
+    "objects": [
+      "wild_thick_eyebrow",
+      "wild_moustache",
+      "wild_eyebrow",
+      "wild_beard",
+      "TODO",
+      "straight_hair_to_shoulder",
+      "Light",
+      "Human",
+      "hedgehog",
+      "Camera",
+      "basic_short_hair",
+      "basic_lashes_upper",
+      "basic_lashes_lower",
+      "back_pigtail"
+    ],
+    "materials": [
+      "wild_thick_eyebrow",
+      "wild_moustache",
+      "wild_eyebrow",
+      "wild_beard",
+      "straight_hair_to_shoulder",
+      "Material",
+      "hedgehog",
+      "Dots Stroke",
+      "basic_short_hair",
+      "basic_lashes_upper",
+      "basic_lashes_lower",
+      "back_pigtail"
+    ],
+    "node_groups": [
+      "Trim Hair Curves",
+      "Surface Deform",
+      "Smooth Hair Curves",
+      "shape_range.001",
+      "shape_range",
+      "Set Hair Curve Profile",
+      "Roll Hair Curves",
+      "Restore Curve Segment Length",
+      "Redistribute Curve Points",
+      "Hair shader EEVEE",
+      "Hair Curves Noise",
+      "Geometry Nodes.007",
+      "Geometry Nodes.006",
+      "Geometry Nodes.005",
+      "Geometry Nodes.004",
+      "Geometry Nodes.003",
+      "Geometry Nodes.002",
+      "Geometry Nodes.001",
+      "Geometry Nodes eyebrow",
+      "Frizz Hair Curves",
+      "Duplicate Hair Curves",
+      "Curve Tip.001",
+      "Curve Tip",
+      "Curve Segment.001",
+      "Curve Segment",
+      "Curve Root.001",
+      "Curve Root",
+      "Curve Info.001",
+      "Curve Info",
+      "Curl Hair Curves",
+      "Create Guide Index Map.001",
+      "Create Guide Index Map",
+      "Clump Hair Curves",
+      "Braid Hair Curves"
+    ],
+    "meshes": [
+      "base"
+    ],
+    "hair_curves": [
+      "Curves.010",
+      "Curves.009",
+      "Curves.008",
+      "Curves.007",
+      "Curves.006",
+      "Curves.005",
+      "Curves.004",
+      "Curves.003",
+      "Curves.002",
+      "Curves.001",
+      "Curves"
+    ],
+    "texts": []
+  },
+  "objects": [
+    {
+      "name": "wild_thick_eyebrow",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes.001",
+          "type": "NODES",
+          "node_group": "Geometry Nodes.005",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "0.00019999999494757503",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.1900000274181366",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "0.5",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "False",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.009999999776482582",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.5",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.03669723868370056",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.059999994933605194",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.004999999888241291",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "False",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 79,
+      "point_count": 632,
+      "local_bounds": {
+        "min": [
+          -0.06510872393846512,
+          -0.15362374484539032,
+          1.5514038801193237
+        ],
+        "max": [
+          0.06309004873037338,
+          -0.11725403368473053,
+          1.570157766342163
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 632
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 79
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "wild_thick_eyebrow"
+      ]
+    },
+    {
+      "name": "wild_moustache",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes",
+          "type": "NODES",
+          "node_group": "Geometry Nodes.006",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "0.00019999999494757503",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.20000000298023224",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "0.6699999570846558",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "False",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.009999999776482582",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.03669723868370056",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.059999994933605194",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.004999999888241291",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "False",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 37,
+      "point_count": 296,
+      "local_bounds": {
+        "min": [
+          -0.043601468205451965,
+          -0.16145853698253632,
+          1.4750792980194092
+        ],
+        "max": [
+          0.040989555418491364,
+          -0.13943852484226227,
+          1.5011814832687378
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 296
+        },
+        {
+          "name": ".selection",
+          "domain": "POINT",
+          "data_type": "BOOLEAN",
+          "count": 296
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 37
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "wild_moustache"
+      ]
+    },
+    {
+      "name": "wild_eyebrow",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes",
+          "type": "NODES",
+          "node_group": "Geometry Nodes.004",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "0.00019999999494757503",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.1900000274181366",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "0.5",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "False",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.009999999776482582",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.03669723868370056",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.059999994933605194",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.004999999888241291",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "False",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 44,
+      "point_count": 352,
+      "local_bounds": {
+        "min": [
+          -0.06280843913555145,
+          -0.1513945311307907,
+          1.553816318511963
+        ],
+        "max": [
+          0.06268113851547241,
+          -0.12367316335439682,
+          1.5692412853240967
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 352
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 44
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "wild_eyebrow"
+      ]
+    },
+    {
+      "name": "wild_beard",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes.001",
+          "type": "NODES",
+          "node_group": "Geometry Nodes.007",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "0.00019999999494757503",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.20000000298023224",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "0.800000011920929",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "False",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.009999999776482582",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "1.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "1.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "5.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.11009171605110168",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.059999994933605194",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.004999999888241291",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "False",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 210,
+      "point_count": 1680,
+      "local_bounds": {
+        "min": [
+          -0.07875929027795792,
+          -0.16006335616111755,
+          1.4027715921401978
+        ],
+        "max": [
+          0.07665784657001495,
+          -0.0642232894897461,
+          1.5273258686065674
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 1680
+        },
+        {
+          "name": ".selection",
+          "domain": "POINT",
+          "data_type": "BOOLEAN",
+          "count": 1680
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 210
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "wild_beard"
+      ]
+    },
+    {
+      "name": "TODO",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes",
+          "type": "NODES",
+          "node_group": "Geometry Nodes.003",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "9.999999747378752e-05",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.20000000298023224",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "1.0",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "True",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.009999999776482582",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.0020000000949949026",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.03669723868370056",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.004999999888241291",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.0005000000237487257",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "True",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 102,
+      "point_count": 1632,
+      "local_bounds": {
+        "min": [
+          -0.12287679314613342,
+          -0.1432817131280899,
+          1.291877031326294
+        ],
+        "max": [
+          0.15880060195922852,
+          0.07408842444419861,
+          1.646163821220398
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 1632
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 102
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "hedgehog"
+      ]
+    },
+    {
+      "name": "straight_hair_to_shoulder",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes",
+          "type": "NODES",
+          "node_group": "Geometry Nodes.003",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "9.999999747378752e-05",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.20000000298023224",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "1.0",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "True",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.009999999776482582",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.0020000000949949026",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.03669723868370056",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.004999999888241291",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.0005000000237487257",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "True",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 252,
+      "point_count": 4032,
+      "local_bounds": {
+        "min": [
+          -0.09305836260318756,
+          -0.1432473510503769,
+          1.2927889823913574
+        ],
+        "max": [
+          0.09739413112401962,
+          0.07040474563837051,
+          1.6749826669692993
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 4032
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 252
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "straight_hair_to_shoulder"
+      ]
+    },
+    {
+      "name": "Light",
+      "type": "LIGHT",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": null,
+      "custom_properties": {},
+      "modifiers": []
+    },
+    {
+      "name": "Human",
+      "type": "MESH",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": null,
+      "custom_properties": {
+        "MPFB_GEN_object_type": "Basemesh",
+        "MhObjectType": "Basemesh",
+        "MPFB_GEN_scale_factor": "0.10000000149011612",
+        "MhScaleFactor": "0.10000000149011612",
+        "MPFB_HUM_gender": "0.5",
+        "MPFB_HUM_age": "0.5",
+        "MPFB_HUM_muscle": "0.5",
+        "MPFB_HUM_weight": "0.5",
+        "MPFB_HUM_proportions": "0.5",
+        "MPFB_HUM_height": "0.5",
+        "MPFB_HUM_cupsize": "0.550000011920929",
+        "MPFB_HUM_firmness": "0.550000011920929",
+        "MPFB_HUM_asian": "0.33000001311302185",
+        "MPFB_HUM_caucasian": "0.33000001311302185",
+        "MPFB_HUM_african": "0.33000001311302185",
+        "MPFB_HUM_is_human_project": "1"
+      },
+      "modifiers": [
+        {
+          "name": "Hide helpers",
+          "type": "MASK",
+          "node_group": null,
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.10000000149011612",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.05000000074505806",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        }
+      ],
+      "vertices": 19158,
+      "polygons": 18486,
+      "local_bounds": {
+        "min": [
+          -0.49732011556625366,
+          -0.3256400525569916,
+          -0.02713751792907715
+        ],
+        "max": [
+          0.49732011556625366,
+          0.11034002900123596,
+          1.6674129962921143
+        ]
+      },
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "Material"
+      ]
+    },
+    {
+      "name": "hedgehog",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes",
+          "type": "NODES",
+          "node_group": "Geometry Nodes.003",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "9.999999747378752e-05",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.20000000298023224",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "1.0",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "True",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.009999999776482582",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.0020000000949949026",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.5",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.03669723868370056",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.004999999888241291",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.0005000000237487257",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "True",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 354,
+      "point_count": 1770,
+      "local_bounds": {
+        "min": [
+          -0.10490095615386963,
+          -0.17177440226078033,
+          1.4856663942337036
+        ],
+        "max": [
+          0.10401317477226257,
+          0.069893978536129,
+          1.6964493989944458
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 1770
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 354
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "hedgehog"
+      ]
+    },
+    {
+      "name": "Camera",
+      "type": "CAMERA",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": null,
+      "custom_properties": {},
+      "modifiers": []
+    },
+    {
+      "name": "basic_short_hair",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes_basic_short",
+          "type": "NODES",
+          "node_group": "Geometry Nodes eyebrow",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "9.999999747378752e-05",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.30000001192092896",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "0.800000011920929",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "False",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.009999999776482582",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.5",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.03669723868370056",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.059999994933605194",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.004999999888241291",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "False",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 418,
+      "point_count": 3506,
+      "local_bounds": {
+        "min": [
+          -0.08722534030675888,
+          -0.16318781673908234,
+          1.4647477865219116
+        ],
+        "max": [
+          0.08597484976053238,
+          0.05969196557998657,
+          1.6756601333618164
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 3506
+        },
+        {
+          "name": ".selection",
+          "domain": "POINT",
+          "data_type": "BOOLEAN",
+          "count": 3506
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 418
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "basic_short_hair"
+      ]
+    },
+    {
+      "name": "basic_lashes_upper",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes",
+          "type": "NODES",
+          "node_group": "Geometry Nodes.002",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "9.999999747378752e-05",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.10000000149011612",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "0.800000011920929",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "False",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.009999999776482582",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.059999994933605194",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.004999999888241291",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "False",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 97,
+      "point_count": 485,
+      "local_bounds": {
+        "min": [
+          -0.04471253976225853,
+          -0.1447090059518814,
+          1.5446490049362183
+        ],
+        "max": [
+          0.046785373240709305,
+          -0.1352723091840744,
+          1.5532658100128174
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 485
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 97
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "basic_lashes_upper"
+      ]
+    },
+    {
+      "name": "basic_lashes_lower",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "lashes_interpolation",
+          "type": "NODES",
+          "node_group": "Geometry Nodes.001",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "9.999999747378752e-05",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.10000000149011612",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "0.6000000238418579",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "False",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.009999999776482582",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.059999994933605194",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.004999999888241291",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "False",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 66,
+      "point_count": 330,
+      "local_bounds": {
+        "min": [
+          -0.04604104533791542,
+          -0.1427420675754547,
+          1.541775107383728
+        ],
+        "max": [
+          0.04464508593082428,
+          -0.133950874209404,
+          1.5474894046783447
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 330
+        },
+        {
+          "name": ".selection",
+          "domain": "POINT",
+          "data_type": "BOOLEAN",
+          "count": 330
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 66
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "basic_lashes_lower"
+      ]
+    },
+    {
+      "name": "back_pigtail",
+      "type": "CURVES",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": "Human",
+      "custom_properties": {},
+      "modifiers": [
+        {
+          "name": "Surface Deform",
+          "type": "NODES",
+          "node_group": "Surface Deform",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "GeometryNodes_basic_short",
+          "type": "NODES",
+          "node_group": "Geometry Nodes eyebrow",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {}
+        },
+        {
+          "name": "Set Hair Curve Profile",
+          "type": "NODES",
+          "node_group": "Set Hair Curve Profile",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_6": "True",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_3": "9.999999747378752e-05",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.4999999403953552",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "1.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Socket_0": "0.5",
+            "Socket_0_use_attribute": "0",
+            "Socket_0_attribute_name": "",
+            "Socket_1": "0.800000011920929",
+            "Socket_1_use_attribute": "0",
+            "Socket_1_attribute_name": ""
+          }
+        },
+        {
+          "name": "Curl Hair Curves",
+          "type": "NODES",
+          "node_group": "Curl Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_19": "-987654",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_4": "0.009999999776482582",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_18": "1.0",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Input_3": "False",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "0.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "1",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.009999999776482582",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_9": "1.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "2.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_16": "0.25",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_15": "0",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_20_attribute_name": ""
+          }
+        },
+        {
+          "name": "Hair Curves Noise",
+          "type": "NODES",
+          "node_group": "Hair Curves Noise",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.0",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_14": "0.0010000000474974513",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_11": "20.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_12": "1.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_16_attribute_name": ""
+          }
+        },
+        {
+          "name": "Frizz Hair Curves",
+          "type": "NODES",
+          "node_group": "Frizz Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "True",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_3": "0.03669723868370056",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_11": "0.009999999776482582",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.5",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_6": "False",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Output_13_attribute_name": ""
+          }
+        },
+        {
+          "name": "Roll Hair Curves",
+          "type": "NODES",
+          "node_group": "Roll Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "1",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_11": "10",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_2": "0.059999994933605194",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_3": "0.004999999888241291",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_9": "0.0",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_4": "0.0",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_5": "0.0",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_7": "<bpy id property array [3]>",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_8": "0",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_12": "False",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": ""
+          }
+        },
+        {
+          "name": "Clump Hair Curves",
+          "type": "NODES",
+          "node_group": "Clump Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_16": "-987654",
+            "Input_16_use_attribute": "0",
+            "Input_16_attribute_name": "",
+            "Input_9": "0.010999999940395355",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_19": "1.0",
+            "Input_19_use_attribute": "0",
+            "Input_19_attribute_name": "",
+            "Input_8": "False",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_7": "0.0",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_6": "0.5",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_10": "0.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_13": "0.0",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_11": "0.0",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_15": "False",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Output_17_attribute_name": ""
+          }
+        },
+        {
+          "name": "Braid Hair Curves",
+          "type": "NODES",
+          "node_group": "Braid Hair Curves",
+          "show_viewport": true,
+          "show_render": true,
+          "inputs": {
+            "Input_25": "-987654",
+            "Input_25_use_attribute": "0",
+            "Input_25_attribute_name": "",
+            "Input_4": "0.6700000166893005",
+            "Input_4_use_attribute": "0",
+            "Input_4_attribute_name": "",
+            "Input_22": "1.0",
+            "Input_22_use_attribute": "0",
+            "Input_22_attribute_name": "",
+            "Input_3": "False",
+            "Input_3_use_attribute": "0",
+            "Input_3_attribute_name": "",
+            "Input_2": "1.0",
+            "Input_2_use_attribute": "0",
+            "Input_2_attribute_name": "",
+            "Input_5": "5",
+            "Input_5_use_attribute": "0",
+            "Input_5_attribute_name": "",
+            "Input_6": "0.10000000149011612",
+            "Input_6_use_attribute": "0",
+            "Input_6_attribute_name": "",
+            "Input_7": "0.01600000075995922",
+            "Input_7_use_attribute": "0",
+            "Input_7_attribute_name": "",
+            "Input_8": "0.2099999487400055",
+            "Input_8_use_attribute": "0",
+            "Input_8_attribute_name": "",
+            "Input_9": "0.4099999964237213",
+            "Input_9_use_attribute": "0",
+            "Input_9_attribute_name": "",
+            "Input_10": "1.0",
+            "Input_10_use_attribute": "0",
+            "Input_10_attribute_name": "",
+            "Input_11": "3.370000123977661",
+            "Input_11_use_attribute": "0",
+            "Input_11_attribute_name": "",
+            "Input_14": "0.5600000023841858",
+            "Input_14_use_attribute": "0",
+            "Input_14_attribute_name": "",
+            "Input_13": "0.46000003814697266",
+            "Input_13_use_attribute": "0",
+            "Input_13_attribute_name": "",
+            "Input_12": "0.0",
+            "Input_12_use_attribute": "0",
+            "Input_12_attribute_name": "",
+            "Input_15": "0.009999999776482582",
+            "Input_15_use_attribute": "0",
+            "Input_15_attribute_name": "",
+            "Input_21": "0.009999999776482582",
+            "Input_21_use_attribute": "0",
+            "Input_21_attribute_name": "",
+            "Input_16": "None",
+            "Input_18": "1.0499999523162842",
+            "Input_18_use_attribute": "0",
+            "Input_18_attribute_name": "",
+            "Output_26_attribute_name": "",
+            "Output_19_attribute_name": "",
+            "Output_24_attribute_name": ""
+          }
+        }
+      ],
+      "curve_count": 6,
+      "point_count": 96,
+      "local_bounds": {
+        "min": [
+          -0.04777012765407562,
+          0.025295551866292953,
+          1.1476411819458008
+        ],
+        "max": [
+          0.041316788643598557,
+          0.1124054491519928,
+          1.6274622678756714
+        ]
+      },
+      "surface": "Human",
+      "surface_uv_map": "UVMap",
+      "attributes": [
+        {
+          "name": "position",
+          "domain": "POINT",
+          "data_type": "FLOAT_VECTOR",
+          "count": 96
+        },
+        {
+          "name": "surface_uv_coordinate",
+          "domain": "CURVE",
+          "data_type": "FLOAT2",
+          "count": 6
+        }
+      ],
+      "first_curve_properties": [
+        "rna_type",
+        "points",
+        "first_point_index",
+        "points_length",
+        "index"
+      ],
+      "finite_points": true,
+      "materials": [
+        "back_pigtail"
+      ]
+    }
+  ],
+  "node_groups": [
+    {
+      "name": "Braid Hair Curves",
+      "node_count": 261,
+      "node_types": [
+        "FunctionNodeAlignEulerToVector",
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "FunctionNodeInputInt",
+        "FunctionNodeRandomValue",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeAttributeDomainSize",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveOfPoint",
+        "GeometryNodeCurveSplineType",
+        "GeometryNodeCurveToPoints",
+        "GeometryNodeDeleteGeometry",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeGeometryToInstance",
+        "GeometryNodeGroup",
+        "GeometryNodeInputIndex",
+        "GeometryNodeInputNamedAttribute",
+        "GeometryNodeInputNormal",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputSplineResolution",
+        "GeometryNodeInputTangent",
+        "GeometryNodeInstanceOnPoints",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeObjectInfo",
+        "GeometryNodePointsOfCurve",
+        "GeometryNodeSampleCurve",
+        "GeometryNodeSampleIndex",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSetSplineResolution",
+        "GeometryNodeSplineParameter",
+        "GeometryNodeSubdivideCurve",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeCombineXYZ",
+        "ShaderNodeFloatCurve",
+        "ShaderNodeMapRange",
+        "ShaderNodeMath",
+        "ShaderNodeSeparateXYZ",
+        "ShaderNodeValue",
+        "ShaderNodeVectorMath",
+        "ShaderNodeVectorRotate"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Guide Index",
+          "identifier": "Input_25",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Guide Distance",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Guide Mask",
+          "identifier": "Input_22",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Existing Guide Map",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Factor",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Subdivision",
+          "identifier": "Input_5",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Braid Start",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Radius",
+          "identifier": "Input_7",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Shape",
+          "identifier": "Input_8",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Factor Min",
+          "identifier": "Input_9",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Factor Max",
+          "identifier": "Input_10",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Frequency",
+          "identifier": "Input_11",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Thickness",
+          "identifier": "Input_14",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Thickness Shape",
+          "identifier": "Input_13",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Shape Asymmetry",
+          "identifier": "Input_12",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Flare Length",
+          "identifier": "Input_15",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Flare Opening",
+          "identifier": "Input_21",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Hair Tie",
+          "identifier": "Input_17",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Hair Tie",
+          "identifier": "Input_16",
+          "socket_type": "NodeSocketObject"
+        },
+        {
+          "name": "Hair Tie Scale",
+          "identifier": "Input_18",
+          "socket_type": "NodeSocketFloat"
+        }
+      ]
+    },
+    {
+      "name": "Clump Hair Curves",
+      "node_count": 142,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "FunctionNodeRandomValue",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveSplineType",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeGroup",
+        "GeometryNodeInputNamedAttribute",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputSplineResolution",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeSampleCurve",
+        "GeometryNodeSampleIndex",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSetSplineResolution",
+        "GeometryNodeSplineParameter",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeCombineXYZ",
+        "ShaderNodeMapRange",
+        "ShaderNodeMath",
+        "ShaderNodeMix",
+        "ShaderNodeSeparateXYZ",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Guide Index",
+          "identifier": "Input_16",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Guide Distance",
+          "identifier": "Input_9",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Guide Mask",
+          "identifier": "Input_19",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Existing Guide Map",
+          "identifier": "Input_8",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Factor",
+          "identifier": "Input_7",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Shape",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Tip Spread",
+          "identifier": "Input_10",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Clump Offset",
+          "identifier": "Input_13",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Distance Falloff",
+          "identifier": "Input_12",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Distance Threshold",
+          "identifier": "Input_11",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Seed",
+          "identifier": "Input_14",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Preserve Length",
+          "identifier": "Input_15",
+          "socket_type": "NodeSocketBool"
+        }
+      ]
+    },
+    {
+      "name": "Create Guide Index Map",
+      "node_count": 100,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "FunctionNodeRandomValue",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeAttributeDomainSize",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveToPoints",
+        "GeometryNodeDeleteGeometry",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeInputIndex",
+        "GeometryNodeInputPosition",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeMergeByDistance",
+        "GeometryNodeMeshToPoints",
+        "GeometryNodeSampleIndex",
+        "GeometryNodeSampleNearest",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSeparateGeometry",
+        "GeometryNodeSetPosition",
+        "GeometryNodeStoreNamedAttribute",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMath",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Guides",
+          "identifier": "Input_10",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Guide Distance",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Guide Mask",
+          "identifier": "Input_11",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Group ID",
+          "identifier": "Input_12",
+          "socket_type": "NodeSocketInt"
+        }
+      ]
+    },
+    {
+      "name": "Create Guide Index Map.001",
+      "node_count": 100,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "FunctionNodeRandomValue",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeAttributeDomainSize",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveToPoints",
+        "GeometryNodeDeleteGeometry",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeInputIndex",
+        "GeometryNodeInputPosition",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeMergeByDistance",
+        "GeometryNodeMeshToPoints",
+        "GeometryNodeSampleIndex",
+        "GeometryNodeSampleNearest",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSeparateGeometry",
+        "GeometryNodeSetPosition",
+        "GeometryNodeStoreNamedAttribute",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMath",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Guides",
+          "identifier": "Input_10",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Guide Distance",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Guide Mask",
+          "identifier": "Input_11",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Group ID",
+          "identifier": "Input_12",
+          "socket_type": "NodeSocketInt"
+        }
+      ]
+    },
+    {
+      "name": "Curl Hair Curves",
+      "node_count": 121,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "FunctionNodeRandomValue",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveOfPoint",
+        "GeometryNodeCurveSplineType",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeGroup",
+        "GeometryNodeInputNamedAttribute",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputSplineResolution",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeSampleCurve",
+        "GeometryNodeSampleIndex",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSetSplineResolution",
+        "GeometryNodeSplineParameter",
+        "GeometryNodeSubdivideCurve",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeCombineXYZ",
+        "ShaderNodeMapRange",
+        "ShaderNodeMath",
+        "ShaderNodeSeparateXYZ",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Guide Index",
+          "identifier": "Input_19",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Guide Distance",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Guide Mask",
+          "identifier": "Input_18",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Existing Guide Map",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Factor",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Subdivision",
+          "identifier": "Input_5",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Curl Start",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Radius",
+          "identifier": "Input_7",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Factor Start",
+          "identifier": "Input_9",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Factor End",
+          "identifier": "Input_10",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Frequency",
+          "identifier": "Input_11",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Random Offset",
+          "identifier": "Input_16",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Seed",
+          "identifier": "Input_15",
+          "socket_type": "NodeSocketInt"
+        }
+      ]
+    },
+    {
+      "name": "Curve Info",
+      "node_count": 19,
+      "node_types": [
+        "FunctionNodeRandomValue",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeGroup",
+        "GeometryNodeInputID",
+        "GeometryNodeInputIndex",
+        "GeometryNodeInputNamedAttribute",
+        "GeometryNodeSplineLength",
+        "NodeFrame",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": []
+    },
+    {
+      "name": "Curve Info.001",
+      "node_count": 19,
+      "node_types": [
+        "FunctionNodeRandomValue",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeGroup",
+        "GeometryNodeInputID",
+        "GeometryNodeInputIndex",
+        "GeometryNodeInputNamedAttribute",
+        "GeometryNodeSplineLength",
+        "NodeFrame",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": []
+    },
+    {
+      "name": "Curve Root",
+      "node_count": 10,
+      "node_types": [
+        "GeometryNodeCurveEndpointSelection",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputTangent",
+        "GeometryNodePointsOfCurve",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": []
+    },
+    {
+      "name": "Curve Root.001",
+      "node_count": 10,
+      "node_types": [
+        "GeometryNodeCurveEndpointSelection",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputTangent",
+        "GeometryNodePointsOfCurve",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": []
+    },
+    {
+      "name": "Curve Segment",
+      "node_count": 20,
+      "node_types": [
+        "FunctionNodeInputBool",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeInputIndex",
+        "GeometryNodeInputPosition",
+        "GeometryNodeOffsetPointInCurve",
+        "GeometryNodeSwitch",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": []
+    },
+    {
+      "name": "Curve Segment.001",
+      "node_count": 20,
+      "node_types": [
+        "FunctionNodeInputBool",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeInputIndex",
+        "GeometryNodeInputPosition",
+        "GeometryNodeOffsetPointInCurve",
+        "GeometryNodeSwitch",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": []
+    },
+    {
+      "name": "Curve Tip",
+      "node_count": 10,
+      "node_types": [
+        "GeometryNodeCurveEndpointSelection",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputTangent",
+        "GeometryNodePointsOfCurve",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": []
+    },
+    {
+      "name": "Curve Tip.001",
+      "node_count": 10,
+      "node_types": [
+        "GeometryNodeCurveEndpointSelection",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputTangent",
+        "GeometryNodePointsOfCurve",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": []
+    },
+    {
+      "name": "Duplicate Hair Curves",
+      "node_count": 85,
+      "node_types": [
+        "FunctionNodeRandomValue",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeDuplicateElements",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeGroup",
+        "GeometryNodeInputID",
+        "GeometryNodeInputIndex",
+        "GeometryNodeInputNormal",
+        "GeometryNodeInputTangent",
+        "GeometryNodeIsViewport",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSetID",
+        "GeometryNodeSetPosition",
+        "GeometryNodeStoreNamedAttribute",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeCombineXYZ",
+        "ShaderNodeMath",
+        "ShaderNodeSeparateXYZ",
+        "ShaderNodeVectorMath",
+        "ShaderNodeVectorRotate"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Amount",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Viewport Amount",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Radius",
+          "identifier": "Input_5",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Distribution Shape",
+          "identifier": "Input_7",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Tip Roundness",
+          "identifier": "Input_8",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Even Thickness",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Seed",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketInt"
+        }
+      ]
+    },
+    {
+      "name": "Frizz Hair Curves",
+      "node_count": 76,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "FunctionNodeRandomValue",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveOfPoint",
+        "GeometryNodeCurveSplineType",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeGroup",
+        "GeometryNodeInputNormal",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputSplineResolution",
+        "GeometryNodeInputTangent",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeSampleIndex",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSetSplineResolution",
+        "GeometryNodeSplineParameter",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMath",
+        "ShaderNodeSeparateXYZ",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Cumulative Offset",
+          "identifier": "Input_10",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Factor",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Distance",
+          "identifier": "Input_11",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Shape",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Seed",
+          "identifier": "Input_8",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Preserve Length",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketBool"
+        }
+      ]
+    },
+    {
+      "name": "Geometry Nodes eyebrow",
+      "node_count": 3,
+      "node_types": [
+        "GeometryNodeGroup",
+        "NodeGroupInput",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Socket_0",
+          "socket_type": "NodeSocketGeometry"
+        }
+      ]
+    },
+    {
+      "name": "Geometry Nodes.001",
+      "node_count": 3,
+      "node_types": [
+        "GeometryNodeGroup",
+        "NodeGroupInput",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Socket_0",
+          "socket_type": "NodeSocketGeometry"
+        }
+      ]
+    },
+    {
+      "name": "Geometry Nodes.002",
+      "node_count": 3,
+      "node_types": [
+        "GeometryNodeGroup",
+        "NodeGroupInput",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Socket_0",
+          "socket_type": "NodeSocketGeometry"
+        }
+      ]
+    },
+    {
+      "name": "Geometry Nodes.003",
+      "node_count": 3,
+      "node_types": [
+        "GeometryNodeGroup",
+        "NodeGroupInput",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Socket_0",
+          "socket_type": "NodeSocketGeometry"
+        }
+      ]
+    },
+    {
+      "name": "Geometry Nodes.004",
+      "node_count": 3,
+      "node_types": [
+        "GeometryNodeGroup",
+        "NodeGroupInput",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Socket_0",
+          "socket_type": "NodeSocketGeometry"
+        }
+      ]
+    },
+    {
+      "name": "Geometry Nodes.005",
+      "node_count": 3,
+      "node_types": [
+        "GeometryNodeGroup",
+        "NodeGroupInput",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Socket_0",
+          "socket_type": "NodeSocketGeometry"
+        }
+      ]
+    },
+    {
+      "name": "Geometry Nodes.006",
+      "node_count": 3,
+      "node_types": [
+        "GeometryNodeGroup",
+        "NodeGroupInput",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Socket_0",
+          "socket_type": "NodeSocketGeometry"
+        }
+      ]
+    },
+    {
+      "name": "Geometry Nodes.007",
+      "node_count": 3,
+      "node_types": [
+        "GeometryNodeGroup",
+        "NodeGroupInput",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Socket_0",
+          "socket_type": "NodeSocketGeometry"
+        }
+      ]
+    },
+    {
+      "name": "Hair Curves Noise",
+      "node_count": 97,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "FunctionNodeRandomValue",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveOfPoint",
+        "GeometryNodeCurveSplineType",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeGroup",
+        "GeometryNodeInputNormal",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputSplineResolution",
+        "GeometryNodeInputTangent",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeSampleIndex",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSetSplineResolution",
+        "GeometryNodeSplineParameter",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMath",
+        "ShaderNodeSeparateXYZ",
+        "ShaderNodeTexNoise",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Cumulative Offset",
+          "identifier": "Input_10",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Factor",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Distance",
+          "identifier": "Input_14",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Shape",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Scale",
+          "identifier": "Input_11",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Scale along Curve",
+          "identifier": "Input_12",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Offset per Curve",
+          "identifier": "Input_13",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Seed",
+          "identifier": "Input_8",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Preserve Length",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketBool"
+        }
+      ]
+    },
+    {
+      "name": "Hair shader EEVEE",
+      "node_count": 59,
+      "node_types": [
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeAddShader",
+        "ShaderNodeAttribute",
+        "ShaderNodeBsdfHairPrincipled",
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeBsdfTranslucent",
+        "ShaderNodeHairInfo",
+        "ShaderNodeHueSaturation",
+        "ShaderNodeMapRange",
+        "ShaderNodeMath",
+        "ShaderNodeMix",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Color 1",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketColor"
+        },
+        {
+          "name": "Color 2",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketColor"
+        },
+        {
+          "name": "Darken root",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Root color length",
+          "identifier": "Input_8",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Random color",
+          "identifier": "Input_5",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Noise Scale",
+          "identifier": "Input_9",
+          "socket_type": "NodeSocketFloat"
+        }
+      ]
+    },
+    {
+      "name": "Redistribute Curve Points",
+      "node_count": 36,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "GeometryNodeBlurAttribute",
+        "GeometryNodeCurveEndpointSelection",
+        "GeometryNodeGroup",
+        "GeometryNodeInputTangent",
+        "GeometryNodePointsOfCurve",
+        "GeometryNodeSampleCurve",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSplineParameter",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMapRange",
+        "ShaderNodeMath",
+        "ShaderNodeMix",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Curves",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Factor",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Feature Awareness",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketBool"
+        }
+      ]
+    },
+    {
+      "name": "Restore Curve Segment Length",
+      "node_count": 53,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeAttributeStatistic",
+        "GeometryNodeCurveOfPoint",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeGroup",
+        "GeometryNodeInputIndex",
+        "GeometryNodeInputNamedAttribute",
+        "GeometryNodeInputPosition",
+        "GeometryNodeSampleCurve",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMath",
+        "ShaderNodeMix",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Curves",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Selection",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Factor",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Reference Position",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketVector"
+        },
+        {
+          "name": "Pin at Parameter",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketFloat"
+        }
+      ]
+    },
+    {
+      "name": "Roll Hair Curves",
+      "node_count": 157,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "FunctionNodeRandomValue",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveSplineType",
+        "GeometryNodeFieldOnDomain",
+        "GeometryNodeGroup",
+        "GeometryNodeInputNormal",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputSplineResolution",
+        "GeometryNodeInputTangent",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeSampleCurve",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSetSplineResolution",
+        "GeometryNodeSplineParameter",
+        "GeometryNodeSubdivideCurve",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeCombineXYZ",
+        "ShaderNodeMath",
+        "ShaderNodeMix",
+        "ShaderNodeSeparateXYZ",
+        "ShaderNodeVectorMath",
+        "ShaderNodeVectorRotate"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Factor",
+          "identifier": "Input_10",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Subdivision",
+          "identifier": "Input_13",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Variation Level",
+          "identifier": "Input_11",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Roll Length",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Roll Radius",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Roll Depth",
+          "identifier": "Input_9",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Roll Taper",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Retain Overall Shape",
+          "identifier": "Input_5",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Roll Direction",
+          "identifier": "Input_7",
+          "socket_type": "NodeSocketVector"
+        },
+        {
+          "name": "Random Orientation",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Seed",
+          "identifier": "Input_8",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Preserve Length",
+          "identifier": "Input_12",
+          "socket_type": "NodeSocketBool"
+        }
+      ]
+    },
+    {
+      "name": "Set Hair Curve Profile",
+      "node_count": 18,
+      "node_types": [
+        "FunctionNodeCompare",
+        "FunctionNodeRandomValue",
+        "GeometryNodeDeleteGeometry",
+        "GeometryNodeGroup",
+        "GeometryNodeInputRadius",
+        "GeometryNodeSetCurveRadius",
+        "GeometryNodeSplineParameter",
+        "GeometryNodeSwitch",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMath",
+        "ShaderNodeMix"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Replace Radius",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Radius",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Shape",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Factor Min",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Factor Max",
+          "identifier": "Input_5",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Density",
+          "identifier": "Socket_0",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Length",
+          "identifier": "Socket_1",
+          "socket_type": "NodeSocketFloat"
+        }
+      ]
+    },
+    {
+      "name": "shape_range",
+      "node_count": 30,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "GeometryNodeSwitch",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMapRange",
+        "ShaderNodeMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Value",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Min",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Max",
+          "identifier": "Input_5",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Shape",
+          "identifier": "Input_1",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Base",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        }
+      ]
+    },
+    {
+      "name": "shape_range.001",
+      "node_count": 30,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "GeometryNodeSwitch",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMapRange",
+        "ShaderNodeMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Value",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Min",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Max",
+          "identifier": "Input_5",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Shape",
+          "identifier": "Input_1",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Base",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        }
+      ]
+    },
+    {
+      "name": "Smooth Hair Curves",
+      "node_count": 88,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "GeometryNodeAccumulateField",
+        "GeometryNodeBlurAttribute",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveSplineType",
+        "GeometryNodeFieldAtIndex",
+        "GeometryNodeGroup",
+        "GeometryNodeInputPosition",
+        "GeometryNodeInputSplineResolution",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeSampleIndex",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSetSplineResolution",
+        "GeometryNodeSplineParameter",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMath",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Amount",
+          "identifier": "Input_10",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Shape",
+          "identifier": "Input_13",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Iterations",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketInt"
+        },
+        {
+          "name": "Weight",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Lock Tips",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Preserve Length",
+          "identifier": "Input_8",
+          "socket_type": "NodeSocketBool"
+        }
+      ]
+    },
+    {
+      "name": "Surface Deform",
+      "node_count": 3,
+      "node_types": [
+        "GeometryNodeDeformCurvesOnSurface",
+        "NodeGroupInput",
+        "NodeGroupOutput"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Socket_1",
+          "socket_type": "NodeSocketGeometry"
+        }
+      ]
+    },
+    {
+      "name": "Trim Hair Curves",
+      "node_count": 102,
+      "node_types": [
+        "FunctionNodeBooleanMath",
+        "FunctionNodeCompare",
+        "FunctionNodeRandomValue",
+        "GeometryNodeCaptureAttribute",
+        "GeometryNodeCurveOfPoint",
+        "GeometryNodeGroup",
+        "GeometryNodeInputPosition",
+        "GeometryNodeJoinGeometry",
+        "GeometryNodeSampleCurve",
+        "GeometryNodeSeparateComponents",
+        "GeometryNodeSetPosition",
+        "GeometryNodeSplineLength",
+        "GeometryNodeSwitch",
+        "NodeFrame",
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "NodeReroute",
+        "ShaderNodeMath",
+        "ShaderNodeMix",
+        "ShaderNodeVectorMath"
+      ],
+      "undefined_nodes": [],
+      "inputs": [
+        {
+          "name": "Geometry",
+          "identifier": "Input_0",
+          "socket_type": "NodeSocketGeometry"
+        },
+        {
+          "name": "Scale Uniform",
+          "identifier": "Input_9",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Length Factor",
+          "identifier": "Input_5",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Replace Length",
+          "identifier": "Input_6",
+          "socket_type": "NodeSocketBool"
+        },
+        {
+          "name": "Length",
+          "identifier": "Input_2",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Mask",
+          "identifier": "Input_7",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Random Offset",
+          "identifier": "Input_4",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Pin at Parameter",
+          "identifier": "Input_3",
+          "socket_type": "NodeSocketFloat"
+        },
+        {
+          "name": "Seed",
+          "identifier": "Input_8",
+          "socket_type": "NodeSocketInt"
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "back_pigtail",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "basic_lashes_lower",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "basic_lashes_upper",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "basic_short_hair",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "hedgehog",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "Material",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexImage"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "straight_hair_to_shoulder",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "wild_beard",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "wild_eyebrow",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "wild_moustache",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    },
+    {
+      "name": "wild_thick_eyebrow",
+      "nodes": [
+        "NodeReroute",
+        "ShaderNodeGroup",
+        "ShaderNodeOutputMaterial"
+      ],
+      "custom_properties": {}
+    }
+  ],
+  "images": [
+    {
+      "name": "hair_hedgehog",
+      "size": [
+        1024,
+        1024
+      ],
+      "packed_sha256": null
+    }
+  ],
+  "texts_loaded": [],
+  "autoexec_enabled": false,
+  "undefined_node_count": 0,
+  "source_unchanged": true,
+  "canonical_adopted": false
+}

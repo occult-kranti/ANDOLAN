@@ -1,0 +1,37 @@
+{
+  "source_commit": "3497197745beb8e0fd22a9b67efe505700dec469",
+  "engine_path": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "commands": [
+    {
+      "name": "capture",
+      "argv": [
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--script",
+        "res://docs/research/reuse-next-ten/reuse-advisor-world/experiment/capture_owned_events.gd",
+        "--",
+        "--output=/workspace/scratch/reuse-advisor-world-resume-r2/actual-events.json"
+      ],
+      "exit_code": 0,
+      "seconds": 2.5021382229988376,
+      "log_sha256": "15a646e1e3046f14eb18a5d1f093759e5350fd5942c19fd96a79abaa4c2dfb8b"
+    },
+    {
+      "name": "check",
+      "argv": [
+        "python3",
+        "/workspace/ANDOLAN/games/yuga-native/docs/research/reuse-next-ten/reuse-advisor-world/experiment/check_event_window.py",
+        "--trace",
+        "/workspace/scratch/reuse-advisor-world-resume-r2/actual-events.json",
+        "--output",
+        "/workspace/scratch/reuse-advisor-world-resume-r2/checks.json"
+      ],
+      "exit_code": 1,
+      "seconds": 0.10712072199930844,
+      "log_sha256": "c010c2f38554788ad5bf0fb90e4f2a72bdd09cdd9b54eda48216026dcfdb8ec6"
+    }
+  ]
+}

@@ -13,3 +13,5 @@ Exact source paths and SHA256 copies: `games/yuga-native/docs/research/reuse-nex
 Detailed source/licence/capture records: `games/yuga-native/docs/research/reuse-next-ten/` and `games/yuga-native/art/map-reuse-placement/` in the same repository.
 
 `yuga-current-title.png` and `yuga-current-world.png`: actual final combined-source XTest journey originals, software-Vulkan warm-cache run. Native offline practice, not a complete online match or finished visual target.
+
+`hud-readable-atlas.png`: actual successor atlas repair from native source c97bb67e; restores readable map plotting while retaining compact combat. Prior HUD image is preserved as history.

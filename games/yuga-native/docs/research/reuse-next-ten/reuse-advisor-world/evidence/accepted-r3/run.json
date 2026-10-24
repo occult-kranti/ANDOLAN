@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "source_commit": "3497197745beb8e0fd22a9b67efe505700dec469",
+  "scope": "Headless original Kit/Army event capture and offline playback inspection only",
+  "engine_path": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "implementation_sha256": {
+    "run_experiment.py": "27789a4ec2955c7e0b4376fe6328684ecd0c2b7676018ebc5369962733a476e3",
+    "capture_owned_events.gd": "d542d2a47990bf7f569780f9fcb7c49c797e9e9be58877f2d36e022b49fa3979",
+    "event_window.py": "58d93da38e40374df1bf531b76215053943210788c7e2479febc9922c7704369",
+    "inspect_trace.py": "c0bd247ebe8f2d7c5e9f79ffc5a6298cd08753cf7fafe6a4b47bab30de45503f",
+    "check_event_window.py": "f88d8b8f4f8c2c2824ed84736478a800f2af3dbb7eab8feb3ee445394786bb8b"
+  },
+  "commands": [
+    {
+      "name": "capture",
+      "argv": [
+        "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--script",
+        "res://docs/research/reuse-next-ten/reuse-advisor-world/experiment/capture_owned_events.gd",
+        "--",
+        "--output=/workspace/scratch/reuse-advisor-world-resume-r3/actual-events.json"
+      ],
+      "exit_code": 0,
+      "seconds": 1.9996733060015686,
+      "log_sha256": "15a646e1e3046f14eb18a5d1f093759e5350fd5942c19fd96a79abaa4c2dfb8b"
+    },
+    {
+      "name": "check",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/docs/research/reuse-next-ten/reuse-advisor-world/experiment/check_event_window.py",
+        "--trace",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/actual-events.json",
+        "--output",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/checks.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.10036540600049193,
+      "log_sha256": "469af778a6ee1bd21285716576fac2546cd024928715994e6a602b7615f58651"
+    },
+    {
+      "name": "inspect-30hz",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/docs/research/reuse-next-ten/reuse-advisor-world/experiment/inspect_trace.py",
+        "--trace",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/actual-events.json",
+        "--hz",
+        "30",
+        "--output",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/inspection-30hz.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.0536870510004519,
+      "log_sha256": "b26c33757a8ce0c6cbe58ce06b612204ebdd9d18e093ebcdeae40c20da4f822c"
+    },
+    {
+      "name": "inspect-60hz",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/docs/research/reuse-next-ten/reuse-advisor-world/experiment/inspect_trace.py",
+        "--trace",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/actual-events.json",
+        "--hz",
+        "60",
+        "--output",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/inspection-60hz.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.061453160999008105,
+      "log_sha256": "b26c33757a8ce0c6cbe58ce06b612204ebdd9d18e093ebcdeae40c20da4f822c"
+    },
+    {
+      "name": "inspect-120hz",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/docs/research/reuse-next-ten/reuse-advisor-world/experiment/inspect_trace.py",
+        "--trace",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/actual-events.json",
+        "--hz",
+        "120",
+        "--output",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/inspection-120hz.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.06649167399882572,
+      "log_sha256": "b26c33757a8ce0c6cbe58ce06b612204ebdd9d18e093ebcdeae40c20da4f822c"
+    },
+    {
+      "name": "inspect-hitch",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/ANDOLAN/games/yuga-native/docs/research/reuse-next-ten/reuse-advisor-world/experiment/inspect_trace.py",
+        "--trace",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/actual-events.json",
+        "--hz",
+        "60",
+        "--mixed-hitch",
+        "--output",
+        "/workspace/scratch/reuse-advisor-world-resume-r3/inspection-hitch.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.06143810100002156,
+      "log_sha256": "b26c33757a8ce0c6cbe58ce06b612204ebdd9d18e093ebcdeae40c20da4f822c"
+    }
+  ],
+  "passed": true,
+  "artifact_sha256": {
+    "actual-events.json": "6aaa418c4ec5c0bd913ff14d05b1be51c83e609131dccaabb346e1960a7b60ea",
+    "capture.log": "15a646e1e3046f14eb18a5d1f093759e5350fd5942c19fd96a79abaa4c2dfb8b",
+    "check.log": "469af778a6ee1bd21285716576fac2546cd024928715994e6a602b7615f58651",
+    "checks.json": "0f9949fbe0c094699b2c710eafd6bd58d7b390a4a5716445b39e51d564aae451",
+    "inspect-120hz.log": "b26c33757a8ce0c6cbe58ce06b612204ebdd9d18e093ebcdeae40c20da4f822c",
+    "inspect-30hz.log": "b26c33757a8ce0c6cbe58ce06b612204ebdd9d18e093ebcdeae40c20da4f822c",
+    "inspect-60hz.log": "b26c33757a8ce0c6cbe58ce06b612204ebdd9d18e093ebcdeae40c20da4f822c",
+    "inspect-hitch.log": "b26c33757a8ce0c6cbe58ce06b612204ebdd9d18e093ebcdeae40c20da4f822c",
+    "inspection-120hz.json": "0e422704655f58804c61986a49fce2900b2b80d48231bf2fb46e7200d60d0dde",
+    "inspection-30hz.json": "3d94ae2163f80ae11931492acede60a308dae77ae4137f8d6897d660af5857a5",
+    "inspection-60hz.json": "11f1ff27edd97693e44fdafa8bbc6bd387f14b75b08e09227d2dcaf738e02103",
+    "inspection-hitch.json": "bcf00c44298d6cc6eb629e5e457edaeaae2e82363f0ad76ad4141311996708ad"
+  }
+}
