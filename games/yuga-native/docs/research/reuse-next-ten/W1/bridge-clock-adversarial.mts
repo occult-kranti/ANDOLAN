@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {pathToFileURL} from 'node:url';
+const source=process.argv[2],output=process.argv[3];
+const sha=()=>createHash('sha256').update(fs.readFileSync(source)).digest('hex');
+const before=sha();
+const {validNativeState}=await import(pathToFileURL(source).href);
+const ids=new Map([['a'.repeat(16),0],['b'.repeat(16),1]]),fixture='f'.repeat(64),contract='c'.repeat(64);
+const make=()=>({schema:1,nativeTick:60,nativeTime:1,stage:'stacked',stageTime:1,epoch:0,done:false,fixtureHash:fixture,contractHash:contract,revision:1,rejectedPackets:0,actors:[...ids].map(([id,slot])=>({id,x:12,y:3.2,z:1,yaw:0,pitch:0,bridgeAckSeq:1,bridgeInputTick:58,bridgeSlot:slot,bridgeEpoch:0,nativeTick:60,grounded:true,support:'fixture',shot:{},velocity:[0,0,0]}))});
+const edits:Array<[string,boolean,(p:any)=>void]>=[['positive ordinary clock',true,()=>{}],['future stage at first-stage time',false,p=>{p.epoch=1;p.stage='ramp-stairs';p.actors.forEach((a:any)=>a.bridgeEpoch=1)}],['stage time differs from global time',false,p=>{p.stageTime=1.9}],['done before final stage',false,p=>{p.done=true}]];
+const checks=edits.map(([label,expected,edit])=>{const state=make();edit(state);const accepted=validNativeState(state,undefined,ids,fixture,contract);return {label,expected_accepted:expected,accepted,passed:accepted===expected}});
+const report={schema:1,scope:'Pure additional stage/global clock coherence counterexamples; no network or physics replay.',source_sha256:before,source_unchanged:before===sha(),checks,passed:checks.every(c=>c.passed)};
+fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');process.exitCode=report.passed?0:1;

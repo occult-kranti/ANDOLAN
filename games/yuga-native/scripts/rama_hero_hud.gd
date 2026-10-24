@@ -11,7 +11,8 @@ const HUD_HEIGHT := 112.0
 const SLOT_REFRESH_SECONDS := .08
 const SLOT_WIDTH := 156.0
 const SLOT_HEIGHT := 56.0
-const COMPACT_HEIGHT := 100.0
+const COMPACT_HEIGHT := 80.0
+const COMPACT_SLOT_HEIGHT := 48.0
 var runtime: Node3D
 var life: ProgressBar
 var life_text: Label
@@ -29,6 +30,7 @@ var _compact_slots := false
 var _status_heading: HBoxContainer
 var _health_row: HBoxContainer
 var _names_hint: Label
+var _status_column: VBoxContainer
 func _ready() -> void:
 	name = "RamaHeroHUD"
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -50,23 +52,23 @@ func _ready() -> void:
 	status_surface.content_margin_bottom = 0
 	status_panel.add_theme_stylebox_override("panel", status_surface)
 	column.add_child(status_panel)
-	var status_column := VBoxContainer.new()
-	status_column.add_theme_constant_override("separation", UI.SPACE_XS)
-	status_panel.add_child(status_column)
+	_status_column = VBoxContainer.new()
+	_status_column.add_theme_constant_override("separation", UI.SPACE_XS)
+	status_panel.add_child(_status_column)
 	note = UI.label("Practice unavailable", UI.TYPE_HUD_DETAIL)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	note.clip_text = true
 	note.max_lines_visible = 1
 	note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_status_heading = HBoxContainer.new()
-	status_column.add_child(_status_heading)
+	_status_column.add_child(_status_heading)
 	note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_status_heading.add_child(note)
 	_names_hint = UI.label("F3 names", UI.TYPE_HUD_DETAIL, UI.MIST)
 	_names_hint.visible = false
 	_status_heading.add_child(_names_hint)
 	_health_row = HBoxContainer.new()
-	status_column.add_child(_health_row)
+	_status_column.add_child(_health_row)
 	life = ProgressBar.new(); life.show_percentage = false
 	life.max_value = 1; life.value = 0
 	life.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -113,21 +115,57 @@ func _layout_slots() -> void:
 	_compact_slots = compact
 	_slot_grid.columns = IDS.size()
 	for card in slot_cards:
-		card.custom_minimum_size.x = (width - UI.SPACE_XS * (IDS.size()-1)) / IDS.size() if compact else SLOT_WIDTH
+		# Let the real key/state minima allocate each compact column. Equal
+		# forced widths waste space beside short keys and overflow a long key.
+		card.custom_minimum_size.x = 0 if compact else SLOT_WIDTH
+		card.custom_minimum_size.y = COMPACT_SLOT_HEIGHT if compact else SLOT_HEIGHT
+	# Retain the same two lines of 16-unit text and 20-unit glyphs. The short
+	# canvas gives space back through padding/bar thickness, never smaller type.
+	_status_column.add_theme_constant_override("separation", 0 if compact else UI.SPACE_XS)
+	life.custom_minimum_size.y = 4 if compact else 10
+	_names_hint.text = "%s names" % Bindings.label("open_invocations")
 	if changed:
 		life_text.reparent(_status_heading if compact else _health_row)
 		_names_hint.visible = compact
+		for index in slot_cards.size():
+			slot_cards[index].add_theme_stylebox_override("panel", _slot_surface(_slot_states[index]))
 	var height := COMPACT_HEIGHT if compact else HUD_HEIGHT
+	var bottom := float(UI.SPACE_SM if compact else 18)
 	offset_left = -width * .5
 	offset_right = width * .5
-	offset_top = -height - 18
-	offset_bottom = -18
+	offset_top = -height - bottom
+	offset_bottom = -bottom
+	_layout_status_notice()
 	if changed: _refresh()
+
+func _layout_status_notice() -> void:
+	if not is_instance_valid(note): return
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if _compact_slots else TextServer.AUTOWRAP_OFF
+	note.max_lines_visible = -1 if _compact_slots else 1
+	if not _compact_slots:
+		note.custom_minimum_size.y=0
+		return
+	var width := offset_right-offset_left
+	var available := width-UI.SPACE_SM*2-_status_heading.get_theme_constant("separation")*2
+	for label in [life_text,_names_hint]:
+		available-=label.get_theme_font("font").get_string_size(label.text,HORIZONTAL_ALIGNMENT_LEFT,-1,label.get_theme_font_size("font_size")).x
+	var notice_height := note.get_theme_font("font").get_multiline_string_size(note.text,HORIZONTAL_ALIGNMENT_LEFT,maxf(1,floorf(available)),note.get_theme_font_size("font_size")).y
+	var line_height := note.get_theme_font("font").get_string_size("M",HORIZONTAL_ALIGNMENT_LEFT,-1,note.get_theme_font_size("font_size")).y
+	var line_count := maxi(1,roundi(notice_height/maxf(1,line_height)))
+	notice_height+=(line_count-1)*note.get_theme_constant("line_spacing")
+	note.custom_minimum_size.y=notice_height
+	var heading_height := life_text.get_theme_font("font").get_height(HUD_TEXT_SIZE)
+	# Long queued-action feedback earns another readable line only while that
+	# feedback is present; it must not push the health or key row off screen.
+	var height := COMPACT_HEIGHT+maxf(0,notice_height-heading_height)
+	offset_top = -height-UI.SPACE_SM
 
 func _slot_surface(state: StringName) -> StyleBoxFlat:
 	var surface := UI.hud_panel_style(state)
-	surface.content_margin_top = UI.SPACE_XS
-	surface.content_margin_bottom = UI.SPACE_XS
+	surface.content_margin_top = 0 if _compact_slots else UI.SPACE_XS
+	surface.content_margin_bottom = 0 if _compact_slots else UI.SPACE_XS
+	surface.content_margin_left = UI.SPACE_XS if _compact_slots else UI.SPACE_SM
+	surface.content_margin_right = UI.SPACE_XS if _compact_slots else UI.SPACE_SM
 	return surface
 
 func _glyph_indent(label: Label) -> String:
@@ -234,6 +272,7 @@ func _refresh_vitals(availability: StringName = &"", feedback: Dictionary = {}) 
 				if not String(feedback.queued_id).is_empty(): note.text += " · " + _ability_title(feedback.queued_id) + " QUEUED"
 			elif feedback.reloading: note.text = "Reloading bow"
 			else: note.text = runtime.notice
+	_layout_status_notice()
 func _refresh_slots(availability: StringName = &"", feedback: Dictionary = {}) -> void:
 	if not life: return
 	if availability.is_empty(): availability = _availability()

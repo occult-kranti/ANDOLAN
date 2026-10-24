@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**Latest implementation, 24 October:** [six-worker reuse continuation](../games/yuga-native/docs/research/reuse-next-ten/README.md). Start there for the current Rama motion/HUD repair, source-derived Lanka gateway, protected hair candidates and isolated native 3D authority experiment. Its exact worker/root receipts take precedence over older source-status summaries below. The ten-stage guide remains dependency-gated; complete hero art, full matches and physical-GPU qualification remain open.
+
 **Active desktop work:** [resume handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.
 
 

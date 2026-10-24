@@ -1,0 +1,509 @@
+{
+  "schema": 1,
+  "task": "W2 adaptive native HUD and native navigation continuation",
+  "source_commit": "f09953428767ddbdd7ede27fe53ca72bb3483d15",
+  "status": "complete: bounded HUD correction accepted; actual native navigation journey passed",
+  "scope": "Bounded native HUD footprint/readability correction; staged actual HUD images and native input journey tracked separately.",
+  "final_source_sha256": {
+    "scripts/confluence_world.gd": "4f81cbbe3d0fba76e39daae76bee7c312b1feec9e87c283bcb0e116e419eb8ea",
+    "scripts/rama_hero_hud.gd": "3ced572737b23b1a58b32e1ae3c94ef217f7561b028f38ea1255bbfb5bde143f",
+    "scripts/rama_motion.gd": "6261a692308e84863dbac4ff049fb7855cc8c5ebf70d8ec844b1dfb2225e53c1",
+    "scripts/lanka_lane_gate.gd": "aba897af4f5683df031841c7e8c10d1b8a8e81e1e359f62ce491318630865238",
+    "assets/world/lanka-lane-gate.scn": "e895e0aaef172901e445aa1e782b7ecbfbdf6b021cf13f1c311db3c60cae7d25"
+  },
+  "headless": {
+    "report": "tests/adaptive-corrected-r2.json",
+    "sha256": "e8b51529e204c8492a5f6c691afe07c4874d72ef547213257885b3488fa42727",
+    "count": 41,
+    "passed": true,
+    "command": "XDG_DATA_HOME=<isolated>/data XDG_CONFIG_HOME=<isolated>/config XDG_CACHE_HOME=<isolated>/cache OMP_NUM_THREADS=2 godot --headless --path games/yuga-native --script tools/reuse-next-screens/adaptive_hud_cases.gd -- --report=<fresh-absolute-report.json>",
+    "cwd": "/workspace/ANDOLAN/games/yuga-native",
+    "actual_command": "XDG_DATA_HOME=/workspace/scratch/reuse-next-ten/W2/headless-r2-user/data XDG_CONFIG_HOME=/workspace/scratch/reuse-next-ten/W2/headless-r2-user/config XDG_CACHE_HOME=/workspace/scratch/reuse-next-ten/W2/headless-r2-user/cache OMP_NUM_THREADS=2 godot --headless --path . --script tools/reuse-next-screens/adaptive_hud_cases.gd -- --report=/workspace/scratch/reuse-next-ten/W2/adaptive-corrected-r2-run2.json"
+  },
+  "actual_takes": [
+    {
+      "path": "actual/before",
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 112.22512149810791,
+      "source_unchanged": true,
+      "imports_unchanged": true,
+      "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+      "command": [
+        "/workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot",
+        "--path",
+        "/workspace/scratch/reuse-next-ten/W2/matched-baseline-project",
+        "--display-driver",
+        "x11",
+        "--rendering-method",
+        "forward_plus",
+        "--rendering-driver",
+        "vulkan",
+        "--audio-driver",
+        "Dummy",
+        "--fixed-fps",
+        "30",
+        "--disable-vsync",
+        "--resolution",
+        "960x540",
+        "--script",
+        "/workspace/ANDOLAN/games/yuga-native/tools/reuse-next-screens/measure_hud.gd",
+        "--",
+        "--capture",
+        "--output=/workspace/scratch/reuse-next-ten/W2/actual-before-qualified"
+      ],
+      "sample_count": 10,
+      "pngs": [
+        {
+          "sha256": "6f9139d7dcfd6d5b601c26956d648180e40fb89309887a0c8c4dda3c4e3a4787",
+          "frame": 17,
+          "file": "idle-base1280-scale100.png",
+          "id": "idle-base1280-scale100"
+        },
+        {
+          "sha256": "c43a204fde85cfb2ed1f05479d8cebf4abe1fe378e71d30111a54c515956c0d5",
+          "frame": 24,
+          "file": "idle-base1280-scale150.png",
+          "id": "idle-base1280-scale150"
+        },
+        {
+          "sha256": "bfa2715e29d52cd2cd9deeb4e041b926bfe5473cfe62e0cf8296db68e8ca3019",
+          "frame": 31,
+          "file": "idle-base1280-scale200.png",
+          "id": "idle-base1280-scale200"
+        },
+        {
+          "sha256": "a8c9c3ffd70b0f1be4dc98be4541091c39d4bbed5a34ee15659fa0ee48d3a2ff",
+          "frame": 38,
+          "file": "idle-base960-scale100.png",
+          "id": "idle-base960-scale100"
+        },
+        {
+          "sha256": "bfa2715e29d52cd2cd9deeb4e041b926bfe5473cfe62e0cf8296db68e8ca3019",
+          "frame": 45,
+          "file": "idle-base960-scale150.png",
+          "id": "idle-base960-scale150"
+        },
+        {
+          "sha256": "58644728ffabc3c930ec5d6e5956f961845f33e094d4a17c18dadf578da6c953",
+          "frame": 52,
+          "file": "idle-base960-scale200.png",
+          "id": "idle-base960-scale200"
+        },
+        {
+          "sha256": "5a9a56acdb9acec10595a9f9547623634010b30e921761d2c4ba906f3570058b",
+          "frame": 59,
+          "file": "reload-base1280-scale200.png",
+          "id": "reload-base1280-scale200"
+        },
+        {
+          "sha256": "3df6c41a076f4d59bba9072c3e50f6977cf628d0e207e57ee5007577a1330989",
+          "frame": 66,
+          "file": "reload-base960-scale200.png",
+          "id": "reload-base960-scale200"
+        },
+        {
+          "sha256": "b061f0e1a39ec4db6e2daaacfccb784a9a193a04fec288b1dd1ee4dff7583918",
+          "frame": 73,
+          "file": "returning-base1280-scale200.png",
+          "id": "returning-base1280-scale200"
+        },
+        {
+          "sha256": "88653e9fe15b26e4ffd57ff8d25455a95fc7e3d29e73fb253c5e2ae5e2878c9d",
+          "frame": 80,
+          "file": "returning-base960-scale200.png",
+          "id": "returning-base960-scale200"
+        }
+      ],
+      "cwd": "/workspace/ANDOLAN/games/yuga-native",
+      "wrapper_command": "python3 tools/reuse-next-screens/capture_hud.py --project /workspace/scratch/reuse-next-ten/W2/matched-baseline-project --output /workspace/scratch/reuse-next-ten/W2/actual-before-qualified --runtime /workspace/scratch/ten-rounds-oct23/runtime/runtime --engine /workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot --display 174 --timeout 300 --qualified-inherited-cache"
+    },
+    {
+      "path": "actual/candidate-r1",
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 123.97499227523804,
+      "source_unchanged": true,
+      "imports_unchanged": true,
+      "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+      "command": [
+        "/workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot",
+        "--path",
+        "/workspace/scratch/reuse-next-ten/W2/final-project",
+        "--display-driver",
+        "x11",
+        "--rendering-method",
+        "forward_plus",
+        "--rendering-driver",
+        "vulkan",
+        "--audio-driver",
+        "Dummy",
+        "--fixed-fps",
+        "30",
+        "--disable-vsync",
+        "--resolution",
+        "960x540",
+        "--script",
+        "/workspace/ANDOLAN/games/yuga-native/tools/reuse-next-screens/measure_hud.gd",
+        "--",
+        "--capture",
+        "--output=/workspace/scratch/reuse-next-ten/W2/actual-after-qualified"
+      ],
+      "sample_count": 10,
+      "pngs": [
+        {
+          "sha256": "5bdf784e6430568d3d97988494888af0b37fa959193a2a4e9513405fab72f8e0",
+          "frame": 17,
+          "file": "idle-base1280-scale100.png",
+          "id": "idle-base1280-scale100"
+        },
+        {
+          "sha256": "df4317ae322c9f5cd70da5a27ba662b71a3e317bd617dcd1c46b1d505d42deb1",
+          "frame": 24,
+          "file": "idle-base1280-scale150.png",
+          "id": "idle-base1280-scale150"
+        },
+        {
+          "sha256": "a355e2f4df939c5731dda3686839a70ba0e251ba0805bf48d0b1f89bb8d16b2c",
+          "frame": 31,
+          "file": "idle-base1280-scale200.png",
+          "id": "idle-base1280-scale200"
+        },
+        {
+          "sha256": "292d3b26c1fe003d105d55d10e66c6a5ff0e08e64cfce889c563715befd5e506",
+          "frame": 38,
+          "file": "idle-base960-scale100.png",
+          "id": "idle-base960-scale100"
+        },
+        {
+          "sha256": "a355e2f4df939c5731dda3686839a70ba0e251ba0805bf48d0b1f89bb8d16b2c",
+          "frame": 45,
+          "file": "idle-base960-scale150.png",
+          "id": "idle-base960-scale150"
+        },
+        {
+          "sha256": "77b99566ea28a2c1b6b575ceb2b0a13fdf24bbe6b7ffebae433876fae9b2c92d",
+          "frame": 52,
+          "file": "idle-base960-scale200.png",
+          "id": "idle-base960-scale200"
+        },
+        {
+          "sha256": "37e6ab24b8b8a7ac2741eef342c5c37311f25c9651c6f343efb753a0af666df4",
+          "frame": 59,
+          "file": "reload-base1280-scale200.png",
+          "id": "reload-base1280-scale200"
+        },
+        {
+          "sha256": "1dfb7c535ea293a71c38b9efef2dda05cf3efb6c8dadb30d5290da5dfd1e1439",
+          "frame": 66,
+          "file": "reload-base960-scale200.png",
+          "id": "reload-base960-scale200"
+        },
+        {
+          "sha256": "8ce106c848c4d0c5a65cc187683f7db8d1b6b99a76057431c423642d21da7339",
+          "frame": 73,
+          "file": "returning-base1280-scale200.png",
+          "id": "returning-base1280-scale200"
+        },
+        {
+          "sha256": "80f33560f8b6fac485fe2b74c2a8b86d8f237484ccc2612682a409745a8f5580",
+          "frame": 80,
+          "file": "returning-base960-scale200.png",
+          "id": "returning-base960-scale200"
+        }
+      ],
+      "cwd": "/workspace/ANDOLAN/games/yuga-native",
+      "wrapper_command": "python3 tools/reuse-next-screens/capture_hud.py --project /workspace/scratch/reuse-next-ten/W2/final-project --output /workspace/scratch/reuse-next-ten/W2/actual-after-qualified --runtime /workspace/scratch/ten-rounds-oct23/runtime/runtime --engine /workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot --display 174 --timeout 300 --qualified-inherited-cache"
+    },
+    {
+      "path": "actual/corrected-r2",
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 51.43884587287903,
+      "source_unchanged": true,
+      "imports_unchanged": true,
+      "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+      "command": [
+        "/workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot",
+        "--path",
+        "/workspace/scratch/reuse-next-ten/W2/combined-corrected-project",
+        "--display-driver",
+        "x11",
+        "--rendering-method",
+        "forward_plus",
+        "--rendering-driver",
+        "vulkan",
+        "--audio-driver",
+        "Dummy",
+        "--fixed-fps",
+        "30",
+        "--disable-vsync",
+        "--resolution",
+        "960x540",
+        "--script",
+        "/workspace/ANDOLAN/games/yuga-native/tools/reuse-next-screens/confirm_hud.gd",
+        "--",
+        "--capture",
+        "--output=/workspace/scratch/reuse-next-ten/W2/actual-corrected-r2"
+      ],
+      "sample_count": 2,
+      "pngs": [
+        {
+          "sha256": "a45ebac022027dc25956d4eab9cd5e4b76acc918034f06da44405b878c0e0698",
+          "frame": 17,
+          "file": "idle-base960-scale200.png",
+          "id": "idle-base960-scale200"
+        },
+        {
+          "sha256": "de8fa0a2a22c44e62b41863b996f7cfdd3cdd872829dacf95a67cee49bf958a0",
+          "frame": 24,
+          "file": "returning-base960-scale200.png",
+          "id": "returning-base960-scale200"
+        }
+      ],
+      "cwd": "/workspace/ANDOLAN/games/yuga-native",
+      "wrapper_command": "python3 tools/reuse-next-screens/capture_confirm.py --project /workspace/scratch/reuse-next-ten/W2/combined-corrected-project --output /workspace/scratch/reuse-next-ten/W2/actual-corrected-r2 --runtime /workspace/scratch/ten-rounds-oct23/runtime/runtime --engine /workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot --display 174 --timeout 300 --qualified-inherited-cache"
+    }
+  ],
+  "native_journey": {
+    "status": "complete",
+    "report": "actual/native-journey/run.json",
+    "report_sha256": "ac0b2dc066360cbc1183510a66d8acb0d8dab88c61e617728a44b521a4b5f8be",
+    "plan_steps": 19,
+    "resolved_native_events": 38,
+    "manual_originals": 14,
+    "automatic_loading_originals": 9,
+    "verified_exit_code": 0,
+    "cleanup_exit": 0,
+    "source_unchanged": true,
+    "import_cache_unchanged": true,
+    "import_freeze_manifest_unchanged": true,
+    "mesa_seed_unchanged": true,
+    "godot_seed_unchanged": true,
+    "authority_staging": {
+      "enabled": false,
+      "stages": [],
+      "scope": "Only explicit stage steps use authority fixtures. Navigation remains native XTest. Staged outcomes are not native-playthrough claims."
+    },
+    "seconds_warm_software": 213.23046207427979,
+    "physical": [
+      960,
+      540
+    ],
+    "base_canvas": [
+      1280,
+      720
+    ],
+    "ui_scale": 1.0,
+    "script_errors": false,
+    "manual_screens_visually_inspected": 14,
+    "route": [
+      "actual boot/loading/title",
+      "Confluence native load",
+      "F1 overview and return",
+      "world pause",
+      "return courtyard",
+      "choose bow practice",
+      "start practice",
+      "pause",
+      "settings",
+      "keyboard controls",
+      "controls Back",
+      "settings Back",
+      "return title",
+      "native Quit"
+    ],
+    "originals": [
+      {
+        "file": "01-boot-to-title.png",
+        "sha256": "2b3fa5903324e2e8bf3c6d35a33a05a188ce702f8894ec234920628d6be5f701",
+        "frame": 17
+      },
+      {
+        "file": "02-world.png",
+        "sha256": "51caee88174bab397a616b8936cff20c3e47d345288d62a36d9e4e0dd9561343",
+        "frame": 35
+      },
+      {
+        "file": "02b-world-map-and-key.png",
+        "sha256": "aa72bc38ea95a8a3272a03fbffb46424b925a72d550a8fbe6bde923743c139d8",
+        "frame": 38
+      },
+      {
+        "file": "03-world-pause.png",
+        "sha256": "b9aac5b34bbe4d9ccb2ca5c45447b087e1bd09b560c8aa601726b18c98d5037c",
+        "frame": 42
+      },
+      {
+        "file": "04-world-return-focus.png",
+        "sha256": "8269b559c13fb72d885544075a583fa6e429d997bff518cd9ea90da77a87c6f8",
+        "frame": 55
+      },
+      {
+        "file": "05-world-to-title.png",
+        "sha256": "2b3fa5903324e2e8bf3c6d35a33a05a188ce702f8894ec234920628d6be5f701",
+        "frame": 62
+      },
+      {
+        "file": "06-training-selected.png",
+        "sha256": "d7f19f7d8e9d63fec9bfe7d3164f6a46c99ede195948c3f8f3fcf7c621fdbc9c",
+        "frame": 67
+      },
+      {
+        "file": "07-training.png",
+        "sha256": "3b5f7eb8845132e65cf86a2cac5581314951109810c63a53297988735d8e4c69",
+        "frame": 72
+      },
+      {
+        "file": "08-training-pause.png",
+        "sha256": "a5da31f5ca43d5ae820a2956b72f2ac92969e5cc3e467a24a8c18f48b6e68955",
+        "frame": 75
+      },
+      {
+        "file": "09-settings.png",
+        "sha256": "647ae84e901fe1c2ac4d0760f3cbe0ec90c984d14040ddf4b82db95528bc7480",
+        "frame": 80
+      },
+      {
+        "file": "10-controls.png",
+        "sha256": "cc89b69d30602df7bf6bd2658a5e5130b47b73d76d47398a1aa6c8502ed35d51",
+        "frame": 89
+      },
+      {
+        "file": "11-controls-back.png",
+        "sha256": "006f90104333f8151ec963e86b5491efda09107cf817c422fd14417990321e19",
+        "frame": 92
+      },
+      {
+        "file": "12-settings-back.png",
+        "sha256": "932be047bc983e4b8bb23c596cf0f7bb6e27431cb1faaed7f40e29067911043c",
+        "frame": 95
+      },
+      {
+        "file": "13-final-title.png",
+        "sha256": "8aca908244d96e02954ff7ffebfc4ccb35aacb3f98b726757077ba7a6644d016",
+        "frame": 100
+      },
+      {
+        "file": "auto-constructing-1.png",
+        "sha256": "068df03a52b7473f2d0c79841a07625e4a086772750e090269a06d9d43a517be",
+        "frame": 15
+      },
+      {
+        "file": "auto-constructing-2.png",
+        "sha256": "d5b1c31398f2f7c1baaa707be67df506dd05621c153083f64145538ec1ed440f",
+        "frame": 33
+      },
+      {
+        "file": "auto-constructing-3.png",
+        "sha256": "8e42485c38d2e92ee3e9d72eddecd108d509e11403dcdd1b9919869638f20836",
+        "frame": 60
+      },
+      {
+        "file": "auto-loading-1.png",
+        "sha256": "79227754ea8dd6176a7d48919dcd639d4f5604a9b27be9a09c9c55b52e46d449",
+        "frame": 3
+      },
+      {
+        "file": "auto-loading-2.png",
+        "sha256": "b9483570cad65a69bfae5c1acc1ee42c176266216408e4ce169d21128560f3c5",
+        "frame": 23
+      },
+      {
+        "file": "auto-loading-3.png",
+        "sha256": "8e42485c38d2e92ee3e9d72eddecd108d509e11403dcdd1b9919869638f20836",
+        "frame": 59
+      },
+      {
+        "file": "auto-queued-1.png",
+        "sha256": "4aeeba755b93e68ac3e2183b3b1c79cc01aba3fca53aba395f1c47760ef65821",
+        "frame": 1
+      },
+      {
+        "file": "auto-queued-2.png",
+        "sha256": "c726cfaa64a28c9a17f33be71146fc4c9dfdc59b3e561e53e4d9dd2d9745e687",
+        "frame": 21
+      },
+      {
+        "file": "auto-queued-3.png",
+        "sha256": "74e1876b6ba554c7c921fb61b5b6bdc6c84ebb8bef5a0b33f1c90ba248f5d12a",
+        "frame": 57
+      }
+    ],
+    "command": [
+      "/workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot",
+      "--path",
+      "/workspace/scratch/reuse-next-ten/W2/combined-corrected-project",
+      "--display-driver",
+      "x11",
+      "--rendering-method",
+      "forward_plus",
+      "--audio-driver",
+      "Dummy",
+      "--resolution",
+      "960x540",
+      "--position",
+      "0,0",
+      "--max-fps",
+      "20",
+      "--disable-vsync",
+      "--script",
+      "res://tools/ui-campaign/observer.gd",
+      "--",
+      "--mode=integrated",
+      "--output=/workspace/scratch/reuse-next-ten/W2/actual-native-journey"
+    ],
+    "wrapper_command": "LD_LIBRARY_PATH=/workspace/scratch/ten-rounds-oct23/runtime/runtime/usr/lib/x86_64-linux-gnu python3 tools/ui-campaign/run.py --mode integrated --project /workspace/scratch/reuse-next-ten/W2/combined-corrected-project --plan /workspace/ANDOLAN/games/yuga-native/tools/reuse-next-screens/journey-plan.json --renderer forward_plus --width 960 --height 540 --display 174 --render-threads 2 --runtime /workspace/scratch/ten-rounds-oct23/runtime/runtime --engine /workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot --timeout 300 --output /workspace/scratch/reuse-next-ten/W2/actual-native-journey --shader-cache-seed /workspace/scratch/reuse-next-ten/W2/journey-cache-seeds/mesa --godot-shader-cache-seed /workspace/scratch/reuse-next-ten/W2/journey-cache-seeds/godot"
+  },
+  "remaining_limits": [
+    "Base960x540 at200% remains crowded despite preserving complete readable text; default canvas is1280x720.",
+    "Live map core captions are readable but remain near route/anchor marks at the smallest canvas; F1 provides full map/key.",
+    "Arranged HUD captures hold authority after actual reset/cast/reload/damage and are not native playthroughs.",
+    "Actual twenty-image A/B predates separate W4 gate integration; two final confirmation frames and final journey use combined source.",
+    "Software renderer warm-cache evidence establishes no cold-start, hardware performance, online integration or art completion."
+  ],
+  "independent_visual_review": {
+    "path": "../W1/hud-visual-independent.json",
+    "sha256": "c5a66fa70ac216630c668ef7f2801750fea531e5b4d4f49f815593bfeb9447a3",
+    "reviewed_originals": 22,
+    "decision": "Accepted bounded bottom-HUD/layout fit, with smallest-canvas density and corecaption limits."
+  },
+  "tool_sha256": {
+    "tools/reuse-next-screens/adaptive_hud_cases.gd": "5aae5a467d023f975dd04eb230a671e303d9d799f271ff9b82d4cb0e44e00e88",
+    "tools/reuse-next-screens/confirm_hud.gd": "b7ae3504c08c1ddc1f2d182456f8221c573f4c01e3d0d44c32841f588c518a83",
+    "tools/reuse-next-screens/measure_hud.gd": "e6fec893ca3f41640936caa71a3aa42693d4d86bc67d65f9e73040a894dfb9bb",
+    "tools/reuse-next-screens/capture_confirm.py": "36c2167edea92717de1682fb0fb28cba2589939cd95f3606f4094f7481b5b2dd",
+    "tools/reuse-next-screens/capture_hud.py": "1b4275537e5e67b60500a3471065a07e8199a65f149b729aea0a59d060557965",
+    "tools/reuse-next-screens/journey-plan.json": "81dd0fcf9ac6e15c084558c4a5ab03cfb2bfff351831e57822b08f70fc42dfae"
+  },
+  "original_png_count": 45,
+  "accepted_scope": "Readable bounded native HUD footprint correction and tested source navigation route. No full-game/all-screen/art/online/performance promotion.",
+  "centerline_default_200_metrics_logical": {
+    "before": {
+      "summary_height": 102,
+      "summary_end": 114,
+      "combat_start": 242,
+      "drawn_bottom_height": 98,
+      "map_height": 218,
+      "clear_centerline_band": 128
+    },
+    "candidate": {
+      "summary_height": 80,
+      "summary_end": 92,
+      "combat_start": 272,
+      "drawn_bottom_height": 80,
+      "map_height": 151.2,
+      "clear_centerline_band": 180
+    },
+    "clear_band_increase_percent": 40.625,
+    "physical_window": [
+      960,
+      540
+    ],
+    "base_canvas": [
+      1280,
+      720
+    ],
+    "scale": 2.0
+  }
+}

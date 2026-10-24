@@ -39,6 +39,9 @@ func _run() -> void:
 		_finish()
 		return
 	scene = packed.instantiate()
+	# Retained pre-gate floor-envelope regression. The mandatory W4 integrated
+	# suite exercises the default gate, its occupied piers and full-map routes.
+	scene.set("lanka_lane_gate_enabled",false)
 	root.add_child(scene)
 	driver = StepDriver.new()
 	driver.process_mode = Node.PROCESS_MODE_ALWAYS

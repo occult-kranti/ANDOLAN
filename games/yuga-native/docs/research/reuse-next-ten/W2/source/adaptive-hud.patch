@@ -1,0 +1,205 @@
+diff --git a/games/yuga-native/scripts/confluence_world.gd b/games/yuga-native/scripts/confluence_world.gd
+index 70c0fc89..ac09cff4 100644
+--- a/games/yuga-native/scripts/confluence_world.gd
++++ b/games/yuga-native/scripts/confluence_world.gd
+@@ -1048,14 +1048,19 @@ func _layout_atlas() -> void:
+ 	var key_width:=0.0
+ 	for line in legend.text.split("\n"):
+ 		key_width=maxf(key_width,legend.get_theme_font("font").get_string_size(line,HORIZONTAL_ALIGNMENT_LEFT,-1,legend.get_theme_font_size("font_size")).x)
+-	var width:=152.0 if _constrained_world else maxf(152 if compact else 166,key_width+24)
++	var width:=132.0 if _constrained_world else maxf(152 if compact else 166,key_width+24)
+ 	width=minf(width,maxf(1,screen.x-margin*2))
+ 	var available:=screen.y+rama_hud.offset_top-margin*2 if _constrained_world else traversal.position.y-margin-HeroUI.SPACE_MD
+ 	var map_height:=maxf(1,minf(300 if compact else 316,available))
++	# Keep a live locator on short canvases; the existing bound overview opens
++	# the full tactical plot. It must not consume the height freed for play.
++	if _constrained_world: map_height=minf(map_height,maxf(112,screen.y*.42))
+ 	map_control.size=Vector2(width,map_height)
+ 	map_control.position=Vector2(screen.x-margin-width,margin)
+ 	legend.visible=true
+-	map_control.footer_height=legend.get_combined_minimum_size().y+HeroUI.SPACE_MD
++	legend.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART if _constrained_world else TextServer.AUTOWRAP_OFF
++	var legend_height:=legend.get_theme_font("font").get_multiline_string_size(legend.text,HORIZONTAL_ALIGNMENT_LEFT,maxf(1,width-24),legend.get_theme_font_size("font_size")).y
++	map_control.footer_height=legend_height+HeroUI.SPACE_MD
+ 	legend.offset_top=-map_control.footer_height
+ 	legend.offset_bottom=-HeroUI.SPACE_SM
+ 	map_control.queue_redraw()
+@@ -1076,15 +1081,33 @@ func _layout_atlas() -> void:
+ 		# A plain Panel keeps wrapped child minima from inflating the background
+ 		# during a live resize. Measure text at the target width, not its stale
+ 		# container minimum from the previous viewport.
+-		var summary_height:=float(HeroUI.SPACE_SM*2+2*(compact_world_labels.size()-1))
+-		for row in compact_world_labels:
+-			summary_height+=row.get_theme_font("font").get_multiline_string_size(row.text,HORIZONTAL_ALIGNMENT_LEFT,summary_width-HeroUI.SPACE_SM*2,row.get_theme_font_size("font_size")).y
++		var inner_width:=maxf(1,summary_width-HeroUI.SPACE_SM*2)
++		var summary_height:=float(HeroUI.SPACE_SM*2+4)
++		for index in 2:
++			var row:Label=compact_world_labels[index]
++			summary_height+=_compact_text_height(row,inner_width)
++		var traversal_height:=0.0
++		var half_width:=floorf(maxf(1,(inner_width-HeroUI.SPACE_SM)*.5))
++		for index in [2,3]:
++			var row:Label=compact_world_labels[index]
++			var row_width:=half_width if index==2 else maxf(1,inner_width-HeroUI.SPACE_SM-half_width)
++			row.custom_minimum_size.x=row_width
++			traversal_height=maxf(traversal_height,_compact_text_height(row,row_width))
++		summary_height+=traversal_height
+ 		compact_world_card.size=Vector2(summary_width,summary_height)
+ 		atlas_guide.position=compact_world_card.position
+ 		atlas_guide.size=Vector2(summary_width,map_height)
+ 	compact_world_card.visible=_constrained_world and not overview and not paused
+ 	atlas_guide.visible=overview and not paused
+ 
++func _compact_text_height(row:Label,width:float)->float:
++	var font:=row.get_theme_font("font")
++	var font_size:=row.get_theme_font_size("font_size")
++	var height:=font.get_multiline_string_size(row.text,HORIZONTAL_ALIGNMENT_LEFT,width,font_size).y
++	var line_height:=font.get_string_size("M",HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).y
++	var lines:=maxi(1,roundi(height/maxf(1,line_height)))
++	return height+(lines-1)*row.get_theme_constant("line_spacing")
++
+ func _atlas_guide_input(event: InputEvent) -> void:
+ 	# ScrollContainer has mouse-wheel support but does not read focused arrow
+ 	# keys here. Handle navigation only in this visible suspended overview.
+@@ -1121,11 +1144,18 @@ func _build_compact_world() -> void:
+ 	rows.offset_right=-HeroUI.SPACE_SM
+ 	rows.offset_top=HeroUI.SPACE_SM
+ 	rows.offset_bottom=-HeroUI.SPACE_SM
++	var traversal_row:=HBoxContainer.new()
++	traversal_row.add_theme_constant_override("separation",HeroUI.SPACE_SM)
+ 	for index in 4:
+ 		var row:=_label("",HeroUI.TYPE_HUD_DETAIL,HeroUI.GOLD if index==2 else HeroUI.CREAM)
+ 		row.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+-		rows.add_child(row)
++		row.size_flags_horizontal=Control.SIZE_EXPAND_FILL
++		if index<2: rows.add_child(row)
++		else:
++			row.size_flags_horizontal=Control.SIZE_FILL
++			traversal_row.add_child(row)
+ 		compact_world_labels.append(row)
++	rows.add_child(traversal_row)
+ 	compact_world_card.hide()
+ 
+ func _refresh_compact_world(battle: Dictionary={}) -> void:
+diff --git a/games/yuga-native/scripts/rama_hero_hud.gd b/games/yuga-native/scripts/rama_hero_hud.gd
+index 9cd1d718..fa232517 100644
+--- a/games/yuga-native/scripts/rama_hero_hud.gd
++++ b/games/yuga-native/scripts/rama_hero_hud.gd
+@@ -11,7 +11,8 @@ const HUD_HEIGHT := 112.0
+ const SLOT_REFRESH_SECONDS := .08
+ const SLOT_WIDTH := 156.0
+ const SLOT_HEIGHT := 56.0
+-const COMPACT_HEIGHT := 100.0
++const COMPACT_HEIGHT := 80.0
++const COMPACT_SLOT_HEIGHT := 48.0
+ var runtime: Node3D
+ var life: ProgressBar
+ var life_text: Label
+@@ -29,6 +30,7 @@ var _compact_slots := false
+ var _status_heading: HBoxContainer
+ var _health_row: HBoxContainer
+ var _names_hint: Label
++var _status_column: VBoxContainer
+ func _ready() -> void:
+ 	name = "RamaHeroHUD"
+ 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+@@ -50,23 +52,23 @@ func _ready() -> void:
+ 	status_surface.content_margin_bottom = 0
+ 	status_panel.add_theme_stylebox_override("panel", status_surface)
+ 	column.add_child(status_panel)
+-	var status_column := VBoxContainer.new()
+-	status_column.add_theme_constant_override("separation", UI.SPACE_XS)
+-	status_panel.add_child(status_column)
++	_status_column = VBoxContainer.new()
++	_status_column.add_theme_constant_override("separation", UI.SPACE_XS)
++	status_panel.add_child(_status_column)
+ 	note = UI.label("Practice unavailable", UI.TYPE_HUD_DETAIL)
+ 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+ 	note.clip_text = true
+ 	note.max_lines_visible = 1
+ 	note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+ 	_status_heading = HBoxContainer.new()
+-	status_column.add_child(_status_heading)
++	_status_column.add_child(_status_heading)
+ 	note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+ 	_status_heading.add_child(note)
+ 	_names_hint = UI.label("F3 names", UI.TYPE_HUD_DETAIL, UI.MIST)
+ 	_names_hint.visible = false
+ 	_status_heading.add_child(_names_hint)
+ 	_health_row = HBoxContainer.new()
+-	status_column.add_child(_health_row)
++	_status_column.add_child(_health_row)
+ 	life = ProgressBar.new(); life.show_percentage = false
+ 	life.max_value = 1; life.value = 0
+ 	life.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+@@ -113,21 +115,57 @@ func _layout_slots() -> void:
+ 	_compact_slots = compact
+ 	_slot_grid.columns = IDS.size()
+ 	for card in slot_cards:
+-		card.custom_minimum_size.x = (width - UI.SPACE_XS * (IDS.size()-1)) / IDS.size() if compact else SLOT_WIDTH
++		# Let the real key/state minima allocate each compact column. Equal
++		# forced widths waste space beside short keys and overflow a long key.
++		card.custom_minimum_size.x = 0 if compact else SLOT_WIDTH
++		card.custom_minimum_size.y = COMPACT_SLOT_HEIGHT if compact else SLOT_HEIGHT
++	# Retain the same two lines of 16-unit text and 20-unit glyphs. The short
++	# canvas gives space back through padding/bar thickness, never smaller type.
++	_status_column.add_theme_constant_override("separation", 0 if compact else UI.SPACE_XS)
++	life.custom_minimum_size.y = 4 if compact else 10
++	_names_hint.text = "%s names" % Bindings.label("open_invocations")
+ 	if changed:
+ 		life_text.reparent(_status_heading if compact else _health_row)
+ 		_names_hint.visible = compact
++		for index in slot_cards.size():
++			slot_cards[index].add_theme_stylebox_override("panel", _slot_surface(_slot_states[index]))
+ 	var height := COMPACT_HEIGHT if compact else HUD_HEIGHT
++	var bottom := float(UI.SPACE_SM if compact else 18)
+ 	offset_left = -width * .5
+ 	offset_right = width * .5
+-	offset_top = -height - 18
+-	offset_bottom = -18
++	offset_top = -height - bottom
++	offset_bottom = -bottom
++	_layout_status_notice()
+ 	if changed: _refresh()
+ 
++func _layout_status_notice() -> void:
++	if not is_instance_valid(note): return
++	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if _compact_slots else TextServer.AUTOWRAP_OFF
++	note.max_lines_visible = -1 if _compact_slots else 1
++	if not _compact_slots:
++		note.custom_minimum_size.y=0
++		return
++	var width := offset_right-offset_left
++	var available := width-UI.SPACE_SM*2-_status_heading.get_theme_constant("separation")*2
++	for label in [life_text,_names_hint]:
++		available-=label.get_theme_font("font").get_string_size(label.text,HORIZONTAL_ALIGNMENT_LEFT,-1,label.get_theme_font_size("font_size")).x
++	var notice_height := note.get_theme_font("font").get_multiline_string_size(note.text,HORIZONTAL_ALIGNMENT_LEFT,maxf(1,floorf(available)),note.get_theme_font_size("font_size")).y
++	var line_height := note.get_theme_font("font").get_string_size("M",HORIZONTAL_ALIGNMENT_LEFT,-1,note.get_theme_font_size("font_size")).y
++	var line_count := maxi(1,roundi(notice_height/maxf(1,line_height)))
++	notice_height+=(line_count-1)*note.get_theme_constant("line_spacing")
++	note.custom_minimum_size.y=notice_height
++	var heading_height := life_text.get_theme_font("font").get_height(HUD_TEXT_SIZE)
++	# Long queued-action feedback earns another readable line only while that
++	# feedback is present; it must not push the health or key row off screen.
++	var height := COMPACT_HEIGHT+maxf(0,notice_height-heading_height)
++	offset_top = -height-UI.SPACE_SM
++
+ func _slot_surface(state: StringName) -> StyleBoxFlat:
+ 	var surface := UI.hud_panel_style(state)
+-	surface.content_margin_top = UI.SPACE_XS
+-	surface.content_margin_bottom = UI.SPACE_XS
++	surface.content_margin_top = 0 if _compact_slots else UI.SPACE_XS
++	surface.content_margin_bottom = 0 if _compact_slots else UI.SPACE_XS
++	surface.content_margin_left = UI.SPACE_XS if _compact_slots else UI.SPACE_SM
++	surface.content_margin_right = UI.SPACE_XS if _compact_slots else UI.SPACE_SM
+ 	return surface
+ 
+ func _glyph_indent(label: Label) -> String:
+@@ -234,6 +272,7 @@ func _refresh_vitals(availability: StringName = &"", feedback: Dictionary = {})
+ 				if not String(feedback.queued_id).is_empty(): note.text += " · " + _ability_title(feedback.queued_id) + " QUEUED"
+ 			elif feedback.reloading: note.text = "Reloading bow"
+ 			else: note.text = runtime.notice
++	_layout_status_notice()
+ func _refresh_slots(availability: StringName = &"", feedback: Dictionary = {}) -> void:
+ 	if not life: return
+ 	if availability.is_empty(): availability = _availability()

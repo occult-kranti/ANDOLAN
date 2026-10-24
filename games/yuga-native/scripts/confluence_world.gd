@@ -46,6 +46,9 @@ var native_platform_bodies: Array[StaticBody3D] = []
 var landmark_report: Dictionary = {}
 # Non-UI review opt-out; the playable scene uses the reviewed pilot by default.
 var wind_court_pilot_enabled := true
+# One reviewed reuse-first gate; false retains the exact prior world envelope.
+var lanka_lane_gate_enabled := true
+var lanka_lane_gate_report: Dictionary = {"enabled":false}
 var army: Node3D
 var audio: Node
 var siege_effects: Node3D
@@ -159,6 +162,7 @@ func _ready() -> void:
 	if not frontage_install.get("ok",false):
 		push_error("Confluence frontage could not configure: "+String(frontage_install.get("reason","unknown")))
 		return
+	if not _build_lanka_lane_gate(): return
 	_build_player()
 	if not _build_army_audio() or not player.traversal_report().get("enabled",false):
 		push_error("Confluence requires a configured army and traversal controller.")
@@ -184,6 +188,16 @@ func _ready() -> void:
 	world_ready=true
 	Input.mouse_mode=Input.MOUSE_MODE_CAPTURED
 	print("YUGA_CONFLUENCE_READY ",JSON.stringify(build_report()))
+
+func _build_lanka_lane_gate() -> bool:
+	lanka_lane_gate_report={"enabled":false}
+	if not lanka_lane_gate_enabled: return true
+	var result: Dictionary=load("res://scripts/lanka_lane_gate.gd").build(world)
+	if not result.get("enabled",false):
+		push_error("Confluence Lanka gate could not configure: "+String(result.get("reason","unknown")))
+		return false
+	lanka_lane_gate_report=result.report
+	return true
 
 func _build_invocations() -> bool:
 	invocations = UltimateSession.new()
@@ -450,7 +464,14 @@ func _build_army_audio() -> bool:
 		army.gold_changed.connect(_gold_changed)
 		army.outcome.connect(_army_outcome)
 		army.siege_event.connect(siege_effects.handle_event)
-		return army.configure(manifest,player)
+		var army_manifest: Dictionary=manifest
+		if lanka_lane_gate_report.get("enabled",false):
+			var prepared: Dictionary=load("res://scripts/lanka_lane_gate.gd").prepare_army_manifest(manifest,world.get_node("LankaLaneGate"))
+			if not prepared.get("ok",false):
+				push_error("Confluence Lanka army footprints could not configure: "+String(prepared.get("reason","unknown")))
+				return false
+			army_manifest=prepared.manifest
+		return army.configure(army_manifest,player)
 	return false
 
 func _gold_changed(value: int) -> void:
@@ -1048,14 +1069,22 @@ func _layout_atlas() -> void:
 	var key_width:=0.0
 	for line in legend.text.split("\n"):
 		key_width=maxf(key_width,legend.get_theme_font("font").get_string_size(line,HORIZONTAL_ALIGNMENT_LEFT,-1,legend.get_theme_font_size("font_size")).x)
-	var width:=152.0 if _constrained_world else maxf(152 if compact else 166,key_width+24)
+	var width:=132.0 if _constrained_world else maxf(152 if compact else 166,key_width+24)
 	width=minf(width,maxf(1,screen.x-margin*2))
 	var available:=screen.y+rama_hud.offset_top-margin*2 if _constrained_world else traversal.position.y-margin-HeroUI.SPACE_MD
 	var map_height:=maxf(1,minf(300 if compact else 316,available))
+	# Keep a live locator on short canvases; the existing bound overview opens
+	# the full tactical plot. It must not consume the height freed for play.
+	if _constrained_world: map_height=minf(map_height,maxf(112,screen.y*.42))
+	legend.visible=true
+	legend.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART if _constrained_world else TextServer.AUTOWRAP_OFF
+	var legend_height:=legend.get_theme_font("font").get_multiline_string_size(legend.text,HORIZONTAL_ALIGNMENT_LEFT,maxf(1,width-24),legend.get_theme_font_size("font_size")).y
+	map_control.footer_height=legend_height+HeroUI.SPACE_MD
+	# A shorter locator must still separate the live core captions and marks.
+	# Preserve the previous smallest readable plot rather than compressing it.
+	if _constrained_world: map_height=minf(available,maxf(map_height,64+32+map_control.footer_height))
 	map_control.size=Vector2(width,map_height)
 	map_control.position=Vector2(screen.x-margin-width,margin)
-	legend.visible=true
-	map_control.footer_height=legend.get_combined_minimum_size().y+HeroUI.SPACE_MD
 	legend.offset_top=-map_control.footer_height
 	legend.offset_bottom=-HeroUI.SPACE_SM
 	map_control.queue_redraw()
@@ -1076,14 +1105,35 @@ func _layout_atlas() -> void:
 		# A plain Panel keeps wrapped child minima from inflating the background
 		# during a live resize. Measure text at the target width, not its stale
 		# container minimum from the previous viewport.
-		var summary_height:=float(HeroUI.SPACE_SM*2+2*(compact_world_labels.size()-1))
-		for row in compact_world_labels:
-			summary_height+=row.get_theme_font("font").get_multiline_string_size(row.text,HORIZONTAL_ALIGNMENT_LEFT,summary_width-HeroUI.SPACE_SM*2,row.get_theme_font_size("font_size")).y
+		var inner_width:=maxf(1,summary_width-HeroUI.SPACE_SM*2)
+		var summary_height:=float(HeroUI.SPACE_SM*2+4)
+		for index in 2:
+			var row:Label=compact_world_labels[index]
+			summary_height+=_compact_text_height(row,inner_width)
+		var half_width:=floorf(maxf(1,(inner_width-HeroUI.SPACE_SM)*.5))
+		var split_height:=maxf(_compact_text_height(compact_world_labels[2],half_width),_compact_text_height(compact_world_labels[3],maxf(1,inner_width-HeroUI.SPACE_SM-half_width)))
+		var stacked_height:=_compact_text_height(compact_world_labels[2],inner_width)+_compact_text_height(compact_world_labels[3],inner_width)+2
+		var split:=split_height<stacked_height
+		var traversal_row:BoxContainer=compact_world_labels[2].get_parent()
+		traversal_row.vertical=not split
+		traversal_row.add_theme_constant_override("separation",HeroUI.SPACE_SM if split else 2)
+		for index in [2,3]:
+			var row:Label=compact_world_labels[index]
+			row.custom_minimum_size.x=(half_width if index==2 else maxf(1,inner_width-HeroUI.SPACE_SM-half_width)) if split else inner_width
+		summary_height+=split_height if split else stacked_height
 		compact_world_card.size=Vector2(summary_width,summary_height)
 		atlas_guide.position=compact_world_card.position
 		atlas_guide.size=Vector2(summary_width,map_height)
 	compact_world_card.visible=_constrained_world and not overview and not paused
 	atlas_guide.visible=overview and not paused
+
+func _compact_text_height(row:Label,width:float)->float:
+	var font:=row.get_theme_font("font")
+	var font_size:=row.get_theme_font_size("font_size")
+	var height:=font.get_multiline_string_size(row.text,HORIZONTAL_ALIGNMENT_LEFT,width,font_size).y
+	var line_height:=font.get_string_size("M",HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).y
+	var lines:=maxi(1,roundi(height/maxf(1,line_height)))
+	return height+(lines-1)*row.get_theme_constant("line_spacing")
 
 func _atlas_guide_input(event: InputEvent) -> void:
 	# ScrollContainer has mouse-wheel support but does not read focused arrow
@@ -1121,11 +1171,18 @@ func _build_compact_world() -> void:
 	rows.offset_right=-HeroUI.SPACE_SM
 	rows.offset_top=HeroUI.SPACE_SM
 	rows.offset_bottom=-HeroUI.SPACE_SM
+	var traversal_row:=BoxContainer.new()
+	traversal_row.add_theme_constant_override("separation",HeroUI.SPACE_SM)
 	for index in 4:
 		var row:=_label("",HeroUI.TYPE_HUD_DETAIL,HeroUI.GOLD if index==2 else HeroUI.CREAM)
 		row.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-		rows.add_child(row)
+		row.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		if index<2: rows.add_child(row)
+		else:
+			row.size_flags_horizontal=Control.SIZE_FILL
+			traversal_row.add_child(row)
 		compact_world_labels.append(row)
+	rows.add_child(traversal_row)
 	compact_world_card.hide()
 
 func _refresh_compact_world(battle: Dictionary={}) -> void:
@@ -1635,7 +1692,7 @@ func _pulse(origin: Vector3) -> void:
 	tween.tween_callback(ring.queue_free)
 
 func build_report() -> Dictionary:
-	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"relays":relays.report() if relays else {},"invocations":invocations.report() if invocations else {},"ultimate_effects":ultimate_fx.report() if ultimate_fx else {},"invocation_ui":invocation_panel.report() if invocation_panel else {},"invocation_audio":invocation_audio.report() if invocation_audio else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","rama_hero":rama_runtime.report() if rama_runtime else {},"hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
+	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"lanka_lane_gate":lanka_lane_gate_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"relays":relays.report() if relays else {},"invocations":invocations.report() if invocations else {},"ultimate_effects":ultimate_fx.report() if ultimate_fx else {},"invocation_ui":invocation_panel.report() if invocation_panel else {},"invocation_audio":invocation_audio.report() if invocation_audio else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","rama_hero":rama_runtime.report() if rama_runtime else {},"hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
 
 func get_build_report() -> Dictionary:
 	return build_report()

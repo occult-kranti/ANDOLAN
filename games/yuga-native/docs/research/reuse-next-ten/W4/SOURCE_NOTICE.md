@@ -1,0 +1,13 @@
+# Source and runtime resource notice
+
+`assets/world/lanka-lane-gate.scn` is a selected, gate-centred native-resource reuse of **original project-authored CC0-1.0 geometry and textures** from `assets/environment/lanka_courtyard.glb`. Existing `assets/environment/lanka_courtyard.metadata.json` is the source licence declaration; original generator `art/build_courtyard.py` remains under repository licensing. It is an invented Lanka-inspired coastal court, not a surveyed archaeological reconstruction or a commercial game's extracted art.
+
+Source SHA256: `1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33`.
+
+Qualified native scene SHA256: `e895e0aaef172901e445aa1e782b7ecbfbdf6b021cf13f1c311db3c60cae7d25`, 3,793,793 bytes. It is self-contained with no external dependencies and retains 11 selected surfaces, 17,862 triangles, 23,305 compacted vertices, six shared original materials and twelve original 512×512 image resources. It embeds the original 6,706 structural collision triangles separately from the renderer's compressed mesh representation. No new image/texture, shader, light or commercial model is introduced.
+
+`tools/map-reuse-placement/prepare.py` selects 241 complete connected source pieces; `placement.gd` adapts the existing intake's checked native GLTF loading. `bake.gd` writes the selected resources once. Standard Godot `ResourceLoader`/`PackedScene` caching then shares mesh/material resources between instances, while each placement owns its own physics body and collision shape. No absolute scratch path is required at runtime. The source selected triangle IDs are stored in `art/map-reuse-placement/r1/selection.json`.
+
+A fresh independent rebuild retains all source mesh arrays, stored native material values, embedded image bytes and original collision coordinates. Godot assigns different internal resource IDs, so whole-file byte reproducibility is not claimed; the exact qualified runtime scene above is pinned separately. The packaged-PCK path/hash proof is a required downstream release check, not inferred from source-only resource tests.
+
+The final scene also contains ten derived conservative ground footprints: two existing main pier plinths, six column feet and two collidable lantern pedestals. Existing offline army configuration consumes them through a deep copy of the map manifest. The original map, native detailed collider, and eight original authority/deck arrays remain unchanged. An actual shooting-through-pier mismatch was reproduced first, then corrected and independently tested; the overhead arch is never represented by a filled planar gate box.

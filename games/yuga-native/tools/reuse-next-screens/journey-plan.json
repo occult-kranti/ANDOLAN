@@ -1,0 +1,134 @@
+[
+  {
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "state.hero_ready": true,
+      "transition.phase": "done"
+    },
+    "capture": "01-boot-to-title"
+  },
+  {
+    "click_name": "ExploreConfluence",
+    "expect": {
+      "scene_path": "res://scenes/confluence_world.tscn",
+      "state.world_ready": true,
+      "transition.phase": "done"
+    },
+    "capture": "02-world"
+  },
+  {
+    "key": "F1",
+    "expect": {
+      "state.overview": true
+    },
+    "capture": "02b-world-map-and-key"
+  },
+  {
+    "key": "F1",
+    "expect": {
+      "state.overview": false
+    }
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    },
+    "capture": "03-world-pause"
+  },
+  {
+    "tab_to_text": "Return to courtyard",
+    "capture": "04-world-return-focus"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "scene_path": "res://scenes/courtyard.tscn",
+      "panels.main_panel": true,
+      "transition.phase": "done"
+    },
+    "capture": "05-world-to-title"
+  },
+  {
+    "click_name": "TrainingMode",
+    "expect": {
+      "launch.selected_mode": "train"
+    },
+    "capture": "06-training-selected"
+  },
+  {
+    "click_name": "ExploreConfluence",
+    "expect": {
+      "state.started": true,
+      "state.player_active": true,
+      "panels.main_panel": false
+    },
+    "capture": "07-training"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "paused": true,
+      "panels.pause_panel": true
+    },
+    "capture": "08-training-pause"
+  },
+  {
+    "click_name": "Settings",
+    "expect": {
+      "panels.settings_panel": true,
+      "paused": true
+    },
+    "capture": "09-settings"
+  },
+  {
+    "tab_to_text": "CUSTOMIZE KEYBOARD CONTROLS"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "panels.controls_overlay": true,
+      "paused": true
+    },
+    "capture": "10-controls"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.controls_overlay": false,
+      "panels.settings_panel": true,
+      "paused": true
+    },
+    "capture": "11-controls-back"
+  },
+  {
+    "key": "Escape",
+    "expect": {
+      "panels.settings_panel": false,
+      "panels.pause_panel": true,
+      "paused": true
+    },
+    "capture": "12-settings-back"
+  },
+  {
+    "tab_to_text": "RETURN TO TITLE"
+  },
+  {
+    "key": "Return",
+    "expect": {
+      "panels.main_panel": true,
+      "state.started": false,
+      "paused": false
+    },
+    "capture": "13-final-title"
+  },
+  {
+    "tab_to_name": "Quit"
+  },
+  {
+    "key": "Return",
+    "expect_exit": 0
+  }
+]

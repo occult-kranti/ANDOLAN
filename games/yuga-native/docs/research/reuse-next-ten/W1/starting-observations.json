@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "task_id": "REUSE_NEXT_TEN_W1_BASELINE",
+  "product": "YUGA native",
+  "baseline_commit": "f09953428767ddbdd7ede27fe53ca72bb3483d15",
+  "exclusive_scope": "games/yuga-native/docs/research/reuse-next-ten/W1 and matching scratch only",
+  "skill": "yuga-evidence-review",
+  "scope": "Independent starting observations and current headless layout measurements; no current rendered acceptance, newly introduced regression claim or full-round credit.",
+  "concrete_priority": {
+    "issue": "The 200% HUD leaves a small central gameplay window, with persistent top objective/map and bottom status/ability panels occupying most layout area.",
+    "actual_starting_original": "games/yuga-native/docs/evidence/desktop-finish/continuation-oct18b/W1-actual-r1/composed-source-smoke-r1/actual/01-current-source-reload-200.png",
+    "sha256": "50eddf7642a49761f0e52f08f6eb95ae85b2678c39d62c2698ea2c9360031148",
+    "source_commit": "1236db5036b558be3e90c1e11b816f2a12e384dc",
+    "independently_viewed": true,
+    "limitations": "Historical original is a priority witness only. Its render/base-canvas configuration must not be equated with the new headless measurement. W2/root will capture actual current/candidate scenes."
+  },
+  "current_layout": {
+    "report": "hud-footprint-baseline.json",
+    "probe": "hud-footprint-probe.gd",
+    "probe_sha256": "016fc6ef00cdc52c033659851d027372086870085a84527206e79ec18d115ba7",
+    "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+    "exit_code": 0,
+    "log_path": "/workspace/scratch/reuse-next-ten/W1/hud-footprint-r1.log",
+    "measures": [
+      {
+        "scale": 1.0,
+        "physical_window": [
+          960,
+          540
+        ],
+        "base_canvas": [
+          1280,
+          720
+        ],
+        "logical_canvas": [
+          1280.0,
+          720.0
+        ],
+        "visible_panel_rectangle_union": 283526.0,
+        "visible_panel_fraction": 0.30764539930555557,
+        "bottom_panel_union": 84368.0,
+        "bottom_fraction": 0.09154513888888889
+      },
+      {
+        "scale": 2.0,
+        "physical_window": [
+          960,
+          540
+        ],
+        "base_canvas": [
+          1280,
+          720
+        ],
+        "logical_canvas": [
+          640.0,
+          360.0
+        ],
+        "visible_panel_rectangle_union": 136232.0,
+        "visible_panel_fraction": 0.5912847222222222,
+        "bottom_panel_union": 56992.0,
+        "bottom_fraction": 0.24736111111111111
+      }
+    ],
+    "interpretation": "Union uses visible panel rectangles, not opaque pixel counting. At 200%, logical640\u00d7360 summary ends114 and combat begins242, leaving128 logical pixels between them; minimap extends to230 at the right."
+  },
+  "secondary_motion_finding": {
+    "owner": "W5",
+    "accepted_source_only": true,
+    "source": "scripts/rama_motion.gd",
+    "sha256": "d5550b25044ea97c9ce482a130ac73f012c313e96f2029a555abb590e1375b0e",
+    "claim": "Warm aim-to-draw first ordinary frame resets nock toward rest-string position despite outgoing pose continuity.",
+    "code_supported": true,
+    "measured_by_owner_cm": [
+      21.7,
+      22.4,
+      22.6
+    ],
+    "independently_reproduced": false,
+    "review_next": "Fresh exact-source small black-box cache/reset/cancel/respawn/re-aim counterexamples and actual advancing motion witness. Preserve intentional release return and full hold contact."
+  },
+  "cross_lane_gates": {
+    "W2": "Actual current and candidate journey; saved keys, health/shield/ammo/cooldown/blocked/reload state and font readability remain exact.",
+    "W3": "Accepted runtime hair cage route is separate from rejected generated-source omission. Protect nonhair/UV/masks/skin/binds and review actual locked pairs before promotion.",
+    "W4": "One placement, real player capsule/camera/route plus negative duplicate blocker and source-bound actual ordinary views before root integration.",
+    "W5": "One entry-continuity fix with fresh local-space cache on accepted events; cancellation/reset/respawn/aim and duplicate/rejected events challenged.",
+    "W6": "Versioned 3D authority experiment must compare native capsule movement on ramps/stairs/ceilings/stacked decks and reject malformed/reordered state."
+  },
+  "game_completion_credit": 0,
+  "complete_round_credit": 0
+}

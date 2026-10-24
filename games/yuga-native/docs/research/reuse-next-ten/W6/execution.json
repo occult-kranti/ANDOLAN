@@ -1,0 +1,233 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-24",
+  "source_base": "f09953428767ddbdd7ede27fe53ca72bb3483d15",
+  "branch": "game/yuga-native-production",
+  "scope": "Isolated real loopback native 3D authority feasibility; no complete match, rendered game, physical GPU, WAN capacity or production protocol acceptance.",
+  "canonical_sources_edited": [],
+  "final_execution": "/workspace/scratch/reuse-next-ten/W6/pilot-r10",
+  "runtime_versions": {
+    "godot": "4.6.3.stable.official.7d41c59c4",
+    "godot_executable_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+    "physics_engine_ready_field": "DEFAULT",
+    "node": "v24.19.0",
+    "ci_node_requirement": ">=22.12; root CI Node22",
+    "npm": {
+      "ws": "8.22.0",
+      "tsx": "4.23.15"
+    }
+  },
+  "tested_source_sha256": {
+    "games/yuga-native/scripts/arena_client.gd": "b0482d783a9e9bf9b64be8f07c8878259cd417f39bb90ae7b4752d1b7e34cbb0",
+    "games/yuga-native/scripts/arena_interpolator.gd": "563b2097e5180cbba285e57bdebc3dafe07c919cabeec1d89d5a8d4b021e0619",
+    "games/yuga-native/scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+    "games/yuga-native/tests/physics_authority_cases.gd": "744bc9531a7e4b67be0542278e234ebbd93425fa573a94bbc14c876612c976b5",
+    "games/yuga-native/assets/contracts/physics-fixture-v1.json": "aeeea1a0b105b4015a79bee3289809aeba585abdc00b5d4b3e6c92faf061ee9e",
+    "games/yuga/server/server.ts": "b54a4cd7bdb1d5181b57de92b6c6ba01c7e7d9076cb1dcc17b3c6b865f78ac86",
+    "games/yuga/server/clock.ts": "d85c0bab1f93082e82d0446853f1d2d6488e0032cbb8c6719de0e78ea874957a",
+    "games/yuga/shared/simulation.ts": "e3fa766b06333eb00b5b9b8b03d938b22d5595bdef98b0ae07c0733d0e41a260",
+    "games/yuga/shared/types.ts": "ba50968277b687b5e64dd92f56500cbf8edb613f4574630ba761995e6092af7a",
+    "games/yuga/shared/map.ts": "8de16e1ebedfbe3ddfb42f683c6d0e1947cb2ca9d9ed70ca8218adcb4209ca7d",
+    "package-lock.json": "36ebb90635f0c72b56219ee374f10a772f1142d4c92ce391837ffabe522b92b1",
+    "games/yuga-native/tools/arena-bridge-pilot/README.md": "62e0b81d7fd4b9067431c1dd2091767273eaa87647e542c0a68ee37c02a27a58",
+    "games/yuga-native/tools/arena-bridge-pilot/bridge-contract.json": "0debaf62bba2e7cae1504884dee1b762d97fe256463a6f7a43bf01f7b19440a0",
+    "games/yuga-native/tools/arena-bridge-pilot/native_authority.gd": "2284f78f444733ce8e1a03150c7bff7c36ec45d91e38bd4553cf1a0fb9c58089",
+    "games/yuga-native/tools/arena-bridge-pilot/NOTICE.md": "5dc3289350dcdf0c1dd5d2f77fdf600d84828e15fb035997e7b8a3a07b639b48",
+    "games/yuga-native/tools/arena-bridge-pilot/contract_cases.gd": "b309e549327d3566b2e30a48970ef8e95ad079c94f763689eef58757eb193179",
+    "games/yuga-native/tools/arena-bridge-pilot/native_state.test.ts": "b3a5738f066a64da577469e1e3c52ce48aefb26c7941299b124d9c4c63b63905",
+    "games/yuga-native/tools/arena-bridge-pilot/vertical_simulation.ts": "647aa7fc3572bf89cb51f32748951af277cce6f42358597c774675f87c96388c",
+    "games/yuga-native/tools/arena-bridge-pilot/client_cases.gd": "391f98b561f63d32d3c6efd95cacc5b36bd5d4f747f3bca9150a9921dcf450d5",
+    "games/yuga-native/tools/arena-bridge-pilot/authority_actor.gd": "731e2beac27eb72bd3865d1d553621423577c3d8cc73dcc9a22fbca957cbe29a",
+    "games/yuga-native/tools/arena-bridge-pilot/.gdignore": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "games/yuga-native/tools/arena-bridge-pilot/run.py": "39303e7baea78ff695c267b7d906d0e0d0ec47ecd096279efb43bd4b7eb98b26"
+  },
+  "tests": {
+    "baseline": {
+      "passed": true,
+      "negative_controls_detected": 6,
+      "artifact": "baseline-report.json"
+    },
+    "final_live": {
+      "passed": true,
+      "native_contract_checks": 21,
+      "typescript_contract_checks": 23,
+      "native_client_checks": 17,
+      "physics_transport_checks": 13,
+      "artifact": "positive-report.json"
+    },
+    "flatten_negative": {
+      "expected_exit": 1,
+      "passed_as_positive": false,
+      "mutation": "scratch copied authority_actor.gd only: \"y\":position.y -> \"y\":0.0",
+      "failed_checks": [
+        "distinct_same_xz_stacked_supports",
+        "native_capsule_climbs_ramp",
+        "walk_off_ledge_falls_to_road",
+        "low_ceiling_bounds_server_jump",
+        "underpass_and_bridge_keep_elevation"
+      ],
+      "all_sources_unchanged": true,
+      "artifact": "negative-flatten-report.json"
+    },
+    "snapshot_parity": "snapshot-parity.json",
+    "typescript_strict_typecheck_exit": 0
+  },
+  "local_fixture_profile": {
+    "scope": "Only this headless 2-client fixture on the current cloud CPU; not a capacity, WAN, frame time or GPU benchmark.",
+    "native_step_microseconds": {
+      "max": 24958,
+      "p50": 483,
+      "p95": 1448
+    },
+    "native_packets": 206,
+    "rejected_native_packets": 0,
+    "accepted_inputs": 362,
+    "stale_inputs": 2,
+    "host_snapshots": 102,
+    "guest_snapshots": 102
+  },
+  "prior_attempts_retained_scratch": [
+    {
+      "run": "pilot-r1",
+      "path": "/workspace/scratch/reuse-next-ten/W6/pilot-r1/integration-report.json",
+      "sha256": "c38429bce3490d3ecc371e31339da40de5364d6fa293d60035775e1fd5ee3840",
+      "passed": false,
+      "failure": "RuntimeError: compile failed: native_authority.gd",
+      "failed_physics_checks": []
+    },
+    {
+      "run": "pilot-r2",
+      "path": "/workspace/scratch/reuse-next-ten/W6/pilot-r2/integration-report.json",
+      "sha256": "b38fde22724637e2937e3ba2bbae5e9cb9bfa6f075ea77f300608dfe089297d5",
+      "passed": false,
+      "failure": "FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/reuse-next-ten/W6/pilot-r2/native-report.json'",
+      "failed_physics_checks": []
+    },
+    {
+      "run": "pilot-r3",
+      "path": "/workspace/scratch/reuse-next-ten/W6/pilot-r3/integration-report.json",
+      "sha256": "719c26cad8d41f27de7b37faecbeb1688166648a444f69efa3d0a2f4f92f603d",
+      "passed": false,
+      "failure": "FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/reuse-next-ten/W6/pilot-r3/native-report.json'",
+      "failed_physics_checks": []
+    },
+    {
+      "run": "pilot-r4",
+      "path": "/workspace/scratch/reuse-next-ten/W6/pilot-r4/integration-report.json",
+      "sha256": "d67db904c3b8dc8aed2c001aaf70bdfa9b01447adfbf3774ce50dd8c9867aaff",
+      "passed": false,
+      "failure": "FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/reuse-next-ten/W6/pilot-r4/native-report.json'",
+      "failed_physics_checks": []
+    },
+    {
+      "run": "pilot-r5",
+      "path": "/workspace/scratch/reuse-next-ten/W6/pilot-r5/integration-report.json",
+      "sha256": "8fafaabb9fe090fd6cddba5e0c783f8a4adb1cbaa7fd1f13390938cc14f2cde9",
+      "passed": false,
+      "failure": "FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/reuse-next-ten/W6/pilot-r5/native-report.json'",
+      "failed_physics_checks": []
+    },
+    {
+      "run": "pilot-r6",
+      "path": "/workspace/scratch/reuse-next-ten/W6/pilot-r6/integration-report.json",
+      "sha256": "9662b245e125cda1cc5c4801391bb56879fccbc0d654fc8800d04c00a41897fe",
+      "passed": false,
+      "failure": null,
+      "failed_physics_checks": [
+        "underpass_and_bridge_keep_elevation",
+        "stale_intent_expires_without_client_position"
+      ]
+    },
+    {
+      "run": "pilot-r7",
+      "path": "/workspace/scratch/reuse-next-ten/W6/pilot-r7/integration-report.json",
+      "sha256": "49065c5ae41deb9f5c22ad5296323b0c9d4792897b33a802bc62ba017d08e5f0",
+      "passed": true,
+      "failure": null,
+      "failed_physics_checks": []
+    },
+    {
+      "run": "pilot-r8",
+      "path": "/workspace/scratch/reuse-next-ten/W6/pilot-r8/integration-report.json",
+      "sha256": "a9f79305cac7b8d09d01e47fa3fbbb254cee2794a6c4579d7236f25c93f64035",
+      "passed": true,
+      "failure": null,
+      "failed_physics_checks": []
+    },
+    {
+      "run": "pilot-r9",
+      "path": "/workspace/scratch/reuse-next-ten/W6/pilot-r9/integration-report.json",
+      "sha256": "81a2eeafb3a496b9192502c198fbc95e5cb7e830d284b902ca807c2e49ec7730",
+      "passed": true,
+      "scope": "before persistent native-slot ownership guard; W1 found that residual gap using direct native control"
+    }
+  ],
+  "artifact_sha256": {
+    "baseline-report.json": "ae23697c1574ed52613943bd2d879bd91bf09eea2551d8763ffb0c3dd9492332",
+    "positive-report.json": "c5d95f3b1b067f4c06aa35e4d58df157e6e91bfcba807ff6bce54b32dfe19401",
+    "negative-flatten-report.json": "088129695f71dd9cee0b1625abe7df521cc1d8101482d52076cf2ab49646b707",
+    "host-report.json": "bf7c0f7f20dca8986d07744fec246f234a4c111eccea903ecd03acbcad0978cc",
+    "guest-report.json": "9bc0a597ddff8701051f07fa97103231edfd0b1916b47a2e508531126d2051ee",
+    "adaptation.json": "a322110cc0d47e100bf65c2f19b2dcd63411143cc99648af113b8008f16766ea",
+    "native-ready.json": "1ff292fdf68af4da626ba654ff92e8cf7c9127073f994e39fe31db9d63e5b639",
+    "typescript-contract.log": "e090d83a871980eaab9bd6a62d9ff0dfc18f1ab637ba89b278195b8bc4d9dd2f"
+  },
+  "ci": {
+    "prerequisites": [
+      "Existing npm ci with locked package-lock",
+      "Godot4.6.3 available as godot",
+      "Python3",
+      "Fresh output outside checkout"
+    ],
+    "command": "OMP_NUM_THREADS=1 python3 games/yuga-native/tools/arena-bridge-pilot/run.py --output \"$RUNNER_TEMP/arena-bridge\" --godot godot",
+    "report": "$RUNNER_TEMP/arena-bridge/integration-report.json",
+    "step_timeout_minutes": 2,
+    "external_shell_timeout": "none; tested runner stage deadlines + owned process-group cleanup"
+  },
+  "independent_review": "../W1/: actual fake-native TCP8/8; pure stage/global-clock4/4; persistent native slot2/2. Reviewer owns exact source-bound reports.",
+  "additional_dependency_source_sha256": {
+    "games/yuga/shared/heroes.ts": {
+      "sha256": "2d22552cc2b700e4728317a66a29ca6357b35408f00fe8ede6093bc17d7db6d0",
+      "equal_source_base": true,
+      "scope": "additional dependency checked from source base and current bytes; not included by the runner direct-source manifest"
+    }
+  },
+  "receipt_files_sha256": {
+    "positive-report.json": "c5d95f3b1b067f4c06aa35e4d58df157e6e91bfcba807ff6bce54b32dfe19401",
+    "README.md": "dd7f1989f2e87816bc859bd450d68af0ca07f14c353d9fa987ec58d7d22f6ec1",
+    "typescript-contract.log": "e090d83a871980eaab9bd6a62d9ff0dfc18f1ab637ba89b278195b8bc4d9dd2f",
+    "host-report.json": "bf7c0f7f20dca8986d07744fec246f234a4c111eccea903ecd03acbcad0978cc",
+    "negative-flatten-report.json": "088129695f71dd9cee0b1625abe7df521cc1d8101482d52076cf2ab49646b707",
+    "baseline-report.json": "ae23697c1574ed52613943bd2d879bd91bf09eea2551d8763ffb0c3dd9492332",
+    "serialization-exact-comparison.json": "a8475b721d3ce261009f10a21d9c882d365e62719e089228622c5b264143663d",
+    "snapshot-parity.json": "9ccd70a7f8ee131b4f828d5d44e271d7d3da5192ec8b17b7858d21be38c24b4f",
+    "guest-report.json": "9bc0a597ddff8701051f07fa97103231edfd0b1916b47a2e508531126d2051ee",
+    ".gdignore": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "verify_saved_snapshots.py": "7471127b66db06db02ca0a5643e391804bf5a2ad1c9539df5c31a2d1271566c7",
+    "native-ready.json": "1ff292fdf68af4da626ba654ff92e8cf7c9127073f994e39fe31db9d63e5b639",
+    "adaptation.json": "a322110cc0d47e100bf65c2f19b2dcd63411143cc99648af113b8008f16766ea"
+  },
+  "owned_process_cleanup": {
+    "time_utc": "2026-10-24",
+    "inspection": "ps -eo pid,ppid,args; no active pilot-r9, server-adapted.mts, native_authority.gd child remained. Report server roomsAfterClose=0.",
+    "only_owned_child_groups_stopped": true
+  },
+  "capsule_parity_note": {
+    "pilot_radius_m": 0.65,
+    "pilot_height_m": 1.8,
+    "base_player_constructor_radius_m": 0.29,
+    "Confluence_override": "scripts/confluence_world.gd assigns CapsuleShape3D.radius=manifest.bounds.hero_radius; current assets/world/confluence-map.json hero_radius0.65",
+    "full_movement_parity_accepted": false
+  },
+  "nonruntime_documentation_updated_after_execution": {
+    "games/yuga-native/tools/arena-bridge-pilot/README.md": {
+      "tested_sha256": "62e0b81d7fd4b9067431c1dd2091767273eaa87647e542c0a68ee37c02a27a58",
+      "current_sha256": "16ad2dbd1c3276c53b30a48fe2e22195381a924394168873522d9cee83c4ddc8",
+      "reason": "Final README count/capsule clarification after successful execution; executable bytes unchanged"
+    }
+  },
+  "capsule_parity_inspected_source_sha256": {
+    "games/yuga-native/scripts/confluence_world.gd": "b007464c60c3f982e1b3b8e63ed36287a61def92c4e7195bf049618adfd3d105",
+    "games/yuga-native/assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c"
+  }
+}

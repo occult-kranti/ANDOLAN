@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "scope": "Pure additional stage/global clock coherence counterexamples; no network or physics replay.",
+  "source_sha256": "647aa7fc3572bf89cb51f32748951af277cce6f42358597c774675f87c96388c",
+  "source_unchanged": true,
+  "checks": [
+    {
+      "label": "positive ordinary clock",
+      "expected_accepted": true,
+      "accepted": true,
+      "passed": true
+    },
+    {
+      "label": "future stage at first-stage time",
+      "expected_accepted": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "stage time differs from global time",
+      "expected_accepted": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "done before final stage",
+      "expected_accepted": false,
+      "accepted": false,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

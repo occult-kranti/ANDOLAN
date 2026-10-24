@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+"""Reuse the UI campaign runtime/cache helpers for one bounded native HUD fixture."""
+import argparse
+import importlib.util
+import json
+import os
+from pathlib import Path
+import shutil
+import struct
+import subprocess
+import time
+
+PROJECT = Path(__file__).resolve().parents[2]
+spec = importlib.util.spec_from_file_location("existing_ui_runner", PROJECT / "tools/ui-campaign/run.py")
+ui = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(ui)
+
+
+def main(driver_name="measure_hud.gd", expected_samples=10, required_stages=("cast", "reload_started", "damage")):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--project", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--runtime", type=Path, required=True)
+    parser.add_argument("--engine", type=Path, required=True)
+    parser.add_argument("--display", type=int, default=174)
+    parser.add_argument("--timeout", type=int, default=180)
+    parser.add_argument("--mesa-seed", type=Path)
+    parser.add_argument("--godot-seed", type=Path)
+    parser.add_argument("--qualified-inherited-cache", action="store_true")
+    args = parser.parse_args()
+    project, out, runtime = args.project.resolve(), args.output.resolve(), args.runtime.resolve()
+    if out.exists() or Path(f"/tmp/.X11-unix/X{args.display}").exists():
+        raise ValueError("fresh output and unowned display required")
+    out.mkdir(parents=True)
+    frozen = ui.read(project / "ui-source-freeze.json")
+    pins = frozen["source_sha256"]
+    if any(ui.sha(project / p) != h for p, h in pins.items()):
+        raise ValueError("source differs from frozen input")
+    imports, freeze_hash = ui.qualify_imports(project)
+    driver = Path(__file__).with_name(driver_name)
+    driver_hash = ui.sha(driver)
+    env = os.environ.copy()
+    env.update(DISPLAY=f":{args.display}", LD_LIBRARY_PATH=str(runtime / "usr/lib/x86_64-linux-gnu"),
+               VK_ICD_FILENAMES=str(runtime / "usr/share/vulkan/icd.d/lvp_icd.json"),
+               LP_NUM_THREADS="2", OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
+    if not args.qualified_inherited_cache:
+        for key, tail in [("XDG_DATA_HOME", "data"), ("XDG_CONFIG_HOME", "config"), ("XDG_CACHE_HOME", "cache")]:
+            env[key] = str(out / "user" / tail)
+            Path(env[key]).mkdir(parents=True)
+        env["MESA_SHADER_CACHE_DIR"] = str(out / "user/cache/mesa")
+    elif args.mesa_seed or args.godot_seed:
+        raise ValueError("inherited qualified cache and seed overrides cannot be combined")
+    seeds = {}
+    if args.mesa_seed:
+        seed = args.mesa_seed.resolve()
+        seeds["mesa"] = {"path": str(seed), "pins": {str(p.relative_to(seed)): ui.sha(p) for p in seed.rglob("*") if p.is_file()}}
+        shutil.copytree(seed, Path(env["MESA_SHADER_CACHE_DIR"]) / seed.name)
+    if args.godot_seed:
+        seed, target, cache_pins = ui.copy_godot_cache(args.godot_seed, project, env["XDG_DATA_HOME"])
+        seeds["godot"] = {"path": str(seed), "pins": cache_pins}
+    command = [str(args.engine), "--path", str(project), "--display-driver", "x11", "--rendering-method", "forward_plus",
+               "--rendering-driver", "vulkan", "--audio-driver", "Dummy", "--fixed-fps", "30", "--disable-vsync",
+               "--resolution", "960x540", "--script", str(driver), "--", "--capture", "--output=" + str(out)]
+    record = {"scope": "Actual matched X11 Forward+ software frames; arranged authority states, separate from native journey and hardware performance.",
+              "command": command, "source_sha256": pins, "engine_sha256": ui.sha(args.engine), "driver_sha256": driver_hash, "wrapper_sha256": ui.sha(Path(__file__)),
+              "import_freeze_sha256": freeze_hash, "import_cache_sha256": imports, "seeds": seeds,
+              "cpu_affinity": sorted(os.sched_getaffinity(0)), "render_threads": 2, "started_unix": time.time(), "passed": False}
+    record["cache_policy"] = "Inherited qualified W4 environment/cache; warm software capture" if args.qualified_inherited_cache else "Private copied cache seeds"
+    server = engine = None
+    try:
+        with (out / "xvfb.log").open("x") as xlog, (out / "godot.log").open("x") as log:
+            server = subprocess.Popen([str(runtime / "usr/bin/Xvfb"), env["DISPLAY"], "-screen", "0", "960x540x24", "-nolisten", "tcp", "-ac"], env=env, stdout=xlog, stderr=subprocess.STDOUT)
+            ui.wait_for(lambda: Path(f"/tmp/.X11-unix/X{args.display}").exists(), 10)
+            engine = subprocess.Popen(command, env=env, stdout=log, stderr=subprocess.STDOUT)
+            record["engine_pid"] = engine.pid
+            ui.save(out / "wrapper.json", record)
+            print(json.dumps({"engine_pid": engine.pid, "output": str(out)}), flush=True)
+            record["exit_code"] = engine.wait(timeout=args.timeout)
+        text = (out / "godot.log").read_text()
+        if record["exit_code"] != 0 or "SCRIPT ERROR:" in text or "\nERROR:" in text:
+            raise RuntimeError("native process failed; inspect retained log")
+        measurement = ui.read(out / "measurement.json")
+        if not measurement.get("source_stable") or measurement.get("renderer") != "forward_plus" or measurement.get("display") != "X11" or len(measurement.get("samples", [])) != expected_samples:
+            raise RuntimeError("actual fixture contract failed")
+        for sample in measurement["samples"]:
+            image = Path(sample["png"]["path"])
+            raw = image.read_bytes()
+            if raw[:8] != b"\x89PNG\r\n\x1a\n" or struct.unpack(">II", raw[16:24]) != (960, 540) or ui.sha(image) != sample["png"]["sha256"]:
+                raise RuntimeError("original image dimensions/hash mismatch")
+        if not all((measurement["staging"][key].get("accepted", False) if isinstance(measurement["staging"][key], dict) else measurement["staging"][key]) for key in required_stages):
+            raise RuntimeError("requested actual authority state was not reached")
+        record["source_unchanged"] = all(ui.sha(project / p) == h for p, h in pins.items()) and ui.sha(driver) == driver_hash
+        record["imports_unchanged"] = imports == ui.imported_files(project)
+        record["seed_unchanged"] = all(s["pins"] == {str(p.relative_to(Path(s["path"]))): ui.sha(p) for p in Path(s["path"]).rglob("*") if p.is_file()} for s in seeds.values())
+        record["passed"] = record["source_unchanged"] and record["imports_unchanged"] and record["seed_unchanged"]
+    except Exception as exc:
+        record["error"] = repr(exc)
+    finally:
+        for process in [engine, server]:
+            if process and process.poll() is None:
+                process.terminate()
+                try:
+                    process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    process.kill(); process.wait()
+        record["elapsed_seconds"] = time.time() - record["started_unix"]
+        ui.save(out / "wrapper.json", record)
+    print(json.dumps({"passed": record["passed"], "output": str(out), "error": record.get("error")}))
+    return 0 if record["passed"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

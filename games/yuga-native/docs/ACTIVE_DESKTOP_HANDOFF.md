@@ -1,5 +1,7 @@
 # Active desktop work — resume here
 
+**24 October continuation:** [current six-worker packet](research/reuse-next-ten/README.md) owns the latest source changes, verification, integration decisions and next steps. The earlier published executable and 17/78 campaign count below remain separate from this bounded checkpoint. Start with this packet before following a historical owner queue.
+
 Updated 23 October 2026. **Desktop first; mobile deferred.** Work in `/workspace/ANDOLAN`, branch `game/yuga-native-production`. Read the latest checkpoint below → [13-round plan](DESKTOP_FINISH_CAMPAIGN.md) → [78-packet ledger](DESKTOP_FINISH_CAMPAIGN.json), then only the assigned subsystem. Earlier campaigns and rejected experiments retain their own evidence.
 
 ## Latest reuse-first production checkpoint — 23 October

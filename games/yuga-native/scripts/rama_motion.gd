@@ -681,7 +681,12 @@ func evaluate_pose() -> void:
 		var tension:=_smooth(clampf((action_elapsed/windup-.18)/.82,0,1))*action_blend
 		var wrist:=rig.get_bone_global_pose(rig.find_bone("wrist.R"))
 		var hand:=rig.get_bone_global_pose(rig.find_bone("wrist.L"))
-		var target:=(wrist*rest_positions[rig.find_bone("bowstring")]).lerp(hand*STRING_CONTACT,tension)
+		var entry_local: Vector3=rest_positions[rig.find_bone("bowstring")]
+		# Warm draws begin at the outgoing local nock, preserving an already
+		# raised/partly returning string instead of resetting it to rest.
+		if warm_bow and action_from_positions.size()==rest_positions.size():
+			entry_local=action_from_positions[rig.find_bone("bowstring")]
+		var target:=(wrist*entry_local).lerp(hand*STRING_CONTACT,tension)
 		rig.set_bone_pose_position(rig.find_bone("bowstring"),wrist.affine_inverse()*target)
 		if tension>.999: max_string_error=maxf(max_string_error,rig.get_bone_global_pose(rig.find_bone("bowstring")).origin.distance_to(hand*STRING_CONTACT))
 	for index in rest_positions.size():

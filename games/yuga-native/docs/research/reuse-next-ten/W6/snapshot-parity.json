@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "scope": "Read-only saved snapshots. Numeric absolute tolerance 1e-9 covers Godot JSON re-encoding; metadata/types remain exact. Last client tick 603 lies after saved native report tick 600 and is explicitly uncovered by sample parity.",
+  "fixture_sha256": "aeeea1a0b105b4015a79bee3289809aeba585abdc00b5d4b3e6c92faf061ee9e",
+  "contract_sha256": "0debaf62bba2e7cae1504884dee1b762d97fe256463a6f7a43bf01f7b19440a0",
+  "source_reports": {
+    "positive-report.json": "c5d95f3b1b067f4c06aa35e4d58df157e6e91bfcba807ff6bce54b32dfe19401",
+    "host-report.json": "bf7c0f7f20dca8986d07744fec246f234a4c111eccea903ecd03acbcad0978cc",
+    "guest-report.json": "9bc0a597ddff8701051f07fa97103231edfd0b1916b47a2e508531126d2051ee"
+  },
+  "numeric_tolerance_absolute": 1e-09,
+  "maximum_observed_numeric_delta": 6.938893903907228e-18,
+  "coverage": {
+    "host": {
+      "all_snapshots": 102,
+      "nonwaiting_snapshots": 100,
+      "native_saved_sample_matches": 99,
+      "tail_native_ticks_after_saved_report": [
+        603
+      ],
+      "failures": []
+    },
+    "guest": {
+      "all_snapshots": 102,
+      "nonwaiting_snapshots": 100,
+      "native_saved_sample_matches": 99,
+      "tail_native_ticks_after_saved_report": [
+        603
+      ],
+      "failures": []
+    }
+  },
+  "checks": [
+    {
+      "name": "host every received snapshot contract identity and native saved-sample parity",
+      "passed": true
+    },
+    {
+      "name": "guest every received snapshot contract identity and native saved-sample parity",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

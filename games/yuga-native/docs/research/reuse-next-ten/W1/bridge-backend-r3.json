@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "scope": "Fake private native backend sends actual JSON over real loopback TCP into unchanged bridge module. This challenges its stated two-actor/versioned-state boundary; it is not a public client exploit or full match.",
+  "source_sha256": "647aa7fc3572bf89cb51f32748951af277cce6f42358597c774675f87c96388c",
+  "source_unchanged": true,
+  "checks": [
+    {
+      "label": "valid ordinary backend state",
+      "expected_accepted": true,
+      "accepted": true,
+      "passed": true
+    },
+    {
+      "label": "duplicate actor slots",
+      "expected_accepted": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "grounded string",
+      "expected_accepted": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "empty velocity vector",
+      "expected_accepted": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "actor tick differs from envelope",
+      "expected_accepted": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "actor epoch differs from envelope",
+      "expected_accepted": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "fractional negative acknowledgement",
+      "expected_accepted": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "positive after rejected controls",
+      "expected_accepted": true,
+      "accepted": true,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

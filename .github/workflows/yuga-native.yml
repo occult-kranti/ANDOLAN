@@ -102,6 +102,27 @@ jobs:
           Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/hero-family-reuse/probe_template.gd -- --output="$RUNNER_TEMP/hero-family-probe.json"
           python3 games/yuga-native/tools/map-reuse-intake/prepare.py --output "$RUNNER_TEMP/map-intake"
           GODOT_SILENCE_ROOT_WARNING=1 OMP_NUM_THREADS=1 timeout 45s Godot_v4.6.3-stable_linux.x86_64 --headless --path "$RUNNER_TEMP/map-intake" --script res://test_intake.gd
+      - name: Reuse continuation HUD lane motion and native 3D authority contracts
+        timeout-minutes: 3
+        env:
+          GODOT_SILENCE_ROOT_WARNING: '1'
+          OMP_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          continuation_out="$RUNNER_TEMP/reuse-next-ten"
+          mkdir "$continuation_out"
+          mkdir -p "$continuation_out/W2" "$continuation_out/W5"
+          XDG_DATA_HOME="$continuation_out/W2/data" XDG_CONFIG_HOME="$continuation_out/W2/config" XDG_CACHE_HOME="$continuation_out/W2/cache" timeout 45s Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/reuse-next-screens/adaptive_hud_cases.gd -- --report="$continuation_out/W2/adaptive-hud.json" > "$continuation_out/W2/adaptive-hud.log" 2>&1
+          python3 games/yuga-native/tools/map-reuse-placement/prepare.py --output "$continuation_out/W4-fixture" > "$continuation_out/W4-prepare.log" 2>&1
+          timeout 45s Godot_v4.6.3-stable_linux.x86_64 --headless --path "$continuation_out/W4-fixture" --script res://tools/map-reuse-placement/test_placement.gd > "$continuation_out/W4-placement.log" 2>&1
+          timeout 45s Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/map-reuse-placement/test_integrated.gd -- --output="$continuation_out/W4-integrated.json" > "$continuation_out/W4-integrated.log" 2>&1
+          timeout 45s Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/map-reuse-placement/probe_army_footprints.gd -- --asset=res://assets/world/lanka-lane-gate.scn --output="$continuation_out/W4-army-footprints.json" > "$continuation_out/W4-army-footprints.log" 2>&1
+          timeout 60s Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/hero-family-reuse/warm_draw_contact_probe.gd -- --output="$continuation_out/W5/baseline-contact.json" --motion-source=res://docs/research/reuse-next-ten/W5/source/rama_motion.baseline.gd > "$continuation_out/W5/baseline-contact.log" 2>&1
+          timeout 60s Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/hero-family-reuse/warm_draw_contact_probe.gd -- --output="$continuation_out/W5/fixed-contact.json" --motion-source=res://scripts/rama_motion.gd > "$continuation_out/W5/fixed-contact.log" 2>&1
+          timeout 60s Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/hero-family-reuse/motion_continuity_probe.gd -- --output="$continuation_out/W5/baseline-motion.json" --motion-source=res://docs/research/reuse-next-ten/W5/source/rama_motion.baseline.gd > "$continuation_out/W5/baseline-motion.log" 2>&1
+          timeout 60s Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/hero-family-reuse/motion_continuity_probe.gd -- --output="$continuation_out/W5/fixed-motion.json" --motion-source=res://scripts/rama_motion.gd > "$continuation_out/W5/fixed-motion.log" 2>&1
+          python3 games/yuga-native/tools/hero-family-reuse/verify_motion_repair.py --baseline-contact "$continuation_out/W5/baseline-contact.json" --candidate-contact "$continuation_out/W5/fixed-contact.json" --baseline-motion "$continuation_out/W5/baseline-motion.json" --candidate-motion "$continuation_out/W5/fixed-motion.json" --output "$continuation_out/W5/comparison.json" > "$continuation_out/W5/comparison.log" 2>&1
+          python3 games/yuga-native/tools/arena-bridge-pilot/run.py --output "$continuation_out/W6" --godot Godot_v4.6.3-stable_linux.x86_64 > "$continuation_out/W6-run.log" 2>&1
       - name: Audit actual animation library without runtime replacement
         run: |
           set -euo pipefail
@@ -233,6 +254,20 @@ jobs:
             ${{ runner.temp }}/hero-family-probe.json
             ${{ runner.temp }}/map-intake/intake-report.json
             ${{ runner.temp }}/map-intake/source-manifest.json
+            ${{ runner.temp }}/reuse-next-ten/*.json
+            ${{ runner.temp }}/reuse-next-ten/*.log
+            ${{ runner.temp }}/reuse-next-ten/W2/*.json
+            ${{ runner.temp }}/reuse-next-ten/W2/*.log
+            ${{ runner.temp }}/reuse-next-ten/W4-fixture/physics-report.json
+            ${{ runner.temp }}/reuse-next-ten/W4-fixture/source-manifest.json
+            ${{ runner.temp }}/reuse-next-ten/W4-fixture/selection.json
+            ${{ runner.temp }}/reuse-next-ten/W5/*.json
+            ${{ runner.temp }}/reuse-next-ten/W5/*.log
+            ${{ runner.temp }}/reuse-next-ten/W6/*-report.json
+            ${{ runner.temp }}/reuse-next-ten/W6/*-ready.json
+            ${{ runner.temp }}/reuse-next-ten/W6/native-contract.json
+            ${{ runner.temp }}/reuse-next-ten/W6/adaptation.json
+            ${{ runner.temp }}/reuse-next-ten/W6/*.log
             ${{ runner.temp }}/rama-quality/source-before.json
             ${{ runner.temp }}/rama-quality/source-after.json
             ${{ runner.temp }}/rama-quality/reports/
