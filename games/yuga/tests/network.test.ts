@@ -3,6 +3,7 @@ import { WebSocket } from 'ws';
 import { createArenaServer, parseArenaMessage } from '../server/server.js';
 import type { ArenaJoin, ServerMessage } from '../shared/types.js';
 import { YUGA_PROTOCOL } from '../shared/types.js';
+import { ArenaSimulation } from '../shared/simulation.js';
 
 type Server = Awaited<ReturnType<typeof createArenaServer>>;
 type Welcome = Extract<ServerMessage, { type: 'welcome' }>;
@@ -39,6 +40,7 @@ describe('real arena WebSocket authority', () => {
     const guest = await client(url); guest.send({ ...join, name: 'Noor', room: welcome.room }); const peer = await guest.welcome();
     expect(peer.snapshot.neutrals).toHaveLength(4); expect(peer.snapshot.goldShards).toEqual([]); expect(peer.protocol).toBe(YUGA_PROTOCOL);
     const sim = server.rooms.get(welcome.room)!.sim, actor = sim.actors.get(welcome.id)!; Object.assign(actor, { x: 0, z: -6 });
+    if (!(sim instanceof ArenaSimulation)) throw new Error('Default arena authority must remain the planar simulation');
     sim.goldShards.push({ id: 'gold-network', sourceId: 'fixture-lane', x: 0, z: 0, y: 1.2, value: 8, originTeam: actor.team, createdAt: sim.time, expiresAt: sim.time + 12 });
     host.send({ ...intent, moveX: 0, yaw: 0, fire: true });
     const claimed = await guest.next((message): message is Extract<ServerMessage, { type: 'snapshot' }> => message.type === 'snapshot' && message.snapshot.events.some(event => event.type === 'gold' && event.targetId === 'gold-network'));

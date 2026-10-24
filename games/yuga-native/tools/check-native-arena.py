@@ -176,12 +176,12 @@ def main() -> None:
     output.mkdir(parents=True, exist_ok=False)
     project = output / "project"
     relative = ["scripts/arena_client.gd", "scripts/arena_interpolator.gd", "tests/arena_client_cases.gd", "tests/arena_interpolator_cases.gd"]
-    source_paths = [*(native / path for path in relative), Path(__file__).resolve(), *(repo / path for path in ["games/yuga/server/server.ts", "games/yuga/server/clock.ts", "games/yuga/shared/types.ts", "games/yuga/shared/simulation.ts", "games/yuga/shared/map.ts", "games/yuga/shared/heroes.ts", "package-lock.json"])]
+    source_paths = [*(native / path for path in relative), Path(__file__).resolve(), *(repo / path for path in ["games/yuga/server/server.ts", "games/yuga/server/authority-factory.ts", "games/yuga/server/clock.ts", "games/yuga/shared/types.ts", "games/yuga/shared/simulation.ts", "games/yuga/shared/map.ts", "games/yuga/shared/heroes.ts", "package-lock.json"])]
     before = {str(path.relative_to(repo)): sha(path) for path in source_paths}
     for path in relative:
         (project / path).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(native / path, project / path)
-    (project / "project.godot").write_text('config_version=5\n[application]\nconfig/name="Native network verification"\n[threading]\nworker_pool/max_threads=2\n')
+    (project / "project.godot").write_text('config_version=5\n[application]\nconfig/name="Native network verification"\n[threading]\nworker_pool/max_threads=1\n')
     result: dict = {"passed": False, "source_sha256": before, "engine_sha256": sha(args.engine), "scope": "Fresh execution after workspace replacement. Actual two-client loopback authority, live headless actor sampling, recorded-data synthetic impairment and deliberately defective copies. Prior lost files are not used as evidence."}
     try:
         for script in ["arena_client_cases.gd", "arena_interpolator_cases.gd"]:

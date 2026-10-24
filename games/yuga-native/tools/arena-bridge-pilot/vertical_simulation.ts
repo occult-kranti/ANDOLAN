@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import { performance } from 'node:perf_hooks';
 import { ArenaSimulation as ExistingSimulation } from '../../../yuga/shared/simulation.js';
 import type { ArenaInput, Actor, ArenaSnapshot, ArenaCommand, CommandResult, Team } from '../../../yuga/shared/types.js';
+import type { ArenaAuthorityFactory } from '../../../yuga/server/authority-factory.js';
 
 type Pose = { id: string; x: number; y: number; z: number; yaw: number; pitch: number; bridgeAckSeq: number; bridgeInputTick: number; bridgeSlot: number; bridgeEpoch: number; nativeTick: number; grounded: boolean; support: string; shot: object; velocity: number[] };
 type NativeState = { schema: number; nativeTick: number; nativeTime: number; stage: string; stageTime: number; epoch: number; done: boolean; fixtureHash: string; contractHash: string; revision: number; actors: Pose[]; rejectedPackets: number };
@@ -69,6 +70,15 @@ export async function connectNative(port: number, fixture: string, contract: str
   });
 }
 export function closeNative() { socket?.destroy(); }
+
+/** Explicit trusted server opt-in. The fixture is one native two-slot room,
+ * not a general multi-room backend. No adapter is selected from client input. */
+export const createNativePilotAuthority: ArenaAuthorityFactory = options => {
+  if (!socket?.writable || socket.destroyed || bridgeStats.nativeClosed) throw Error('Native pilot authority must connect before creating a room');
+  if (activeRoom && activeRoom !== options.room) throw Error('Native pilot authority supports one room');
+  if (options.botsPerTeam !== undefined && options.botsPerTeam !== 0) throw Error('Native pilot authority does not simulate bots');
+  return new ArenaSimulation(options);
+};
 
 export class ArenaSimulation extends ExistingSimulation {
   private readonly nativeInputs = new Map<string, ArenaInput>();

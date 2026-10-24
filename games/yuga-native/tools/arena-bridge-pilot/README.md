@@ -1,10 +1,12 @@
 # Isolated native 3D authority pilot
 
 This prototype sends two actual unchanged native arena clients through the existing
-Node WebSocket server to a private Godot `CharacterBody3D` authority. The final
-local run passes 13 physics/transport checks, 21 native intake controls, 23
-TypeScript backend-state controls and 17 client checks. The old browser server
-continues to run its planar simulation. This tool does not change that server.
+Node WebSocket server to a private Godot `CharacterBody3D` authority. The new
+explicit factory path passes 13 physics/transport checks, 21 native intake
+controls, 23 TypeScript backend-state controls, 23 factory tests, 17 client
+checks and two connected native-factory guards. The public server now accepts
+a typed, server-selected authority factory; its default remains the existing
+planar simulation. Public clients cannot choose an authority or module.
 
 Run from the repository root after the existing locked `npm ci`, with Python 3
 and Godot **4.6.3** installed:
@@ -21,16 +23,21 @@ contract and client waits and stops its own child process groups in `finally`.
 It links existing `node_modules` and creates a small scratch project; it installs
 nothing, imports no canonical art and performs no rendering.
 
-The [execution packet](../../docs/research/reuse-next-ten/W6/README.md) retains
-source hashes, actual baseline and final reports, the meaningful flattened-Y
-negative control and failed development attempts.
+The [factory continuation](../../docs/research/reuse-production-continuation/W6/README.md)
+owns the direct-import execution and browser regression evidence. The
+[earlier execution packet](../../docs/research/reuse-next-ten/W6/README.md)
+retains the earlier scratch import-rebinding reports, meaningful flattened-Y
+negative control and failed development attempts; those reports are historical.
 
 ## Reused implementation
 
-- `games/yuga/server/server.ts` remains the public server implementation. The
-  scratch `.mts` copy changes four import bindings only; `adaptation.json` records
-  each replacement and both source hashes. Its WebSocket parser, session identity,
-  room lifecycle, rate/size limits, clock scheduling and broadcast code are reused.
+- `games/yuga/server/server.ts` is imported directly. `authority-factory.ts`
+  defines the typed synchronous authority boundary, defaults to the unchanged
+  planar simulation, and checks the adapter before publishing a room. The pilot
+  explicitly passes `createNativePilotAuthority`; no source copying or import
+  rewriting remains. `adaptation.json` records the contract/source hashes and an
+  empty replacement list. Parser, identity, room lifecycle, rate/size limits,
+  clock scheduling and broadcasts are shared with the browser server.
 - `games/yuga/shared/simulation.ts` supplies actor creation, the existing input
   sequence/normalization logic and snapshot schema. The thin subclass disables
   its planar `step`, combat, structures, waves, economy and outcome. The pilot is
@@ -85,8 +92,16 @@ here. Existing baseline reconnect tests remain a separate planar-server result.
 The engine reports the physics backend setting as `DEFAULT`; no specific backend
 is inferred from that string.
 
-The next small runtime change should add an authority/simulation factory to the
-existing server, replacing the scratch import-copy binding. Then negotiate the
-native map hash and authority version, commit one native match clock and input
-reset epochs, and mount one accepted lane in a rendered two-client scene. Keep
-the old planar tests as regression coverage while qualifying that explicit path.
+The factory is trusted server integration code, not a sandbox for arbitrary
+plugins. It must return synchronously; thrown, asynchronous, malformed or
+wrong-room output returns a safe join error without publishing an empty room.
+Factory options are a frozen copy with transport-generated room and seed. A
+failed first-player creation also leaves no published room. The native pilot
+requires its private connection first and refuses nonzero bots or a second
+room; it is not a restartable multi-room service.
+
+Next negotiate the native map hash and authority version, commit one native
+match clock and input reset epochs, and mount one accepted lane in a rendered
+two-client scene. Keep the unchanged planar rules and their browser regression
+suite while qualifying that explicit path. Adapter reconnect, service restart,
+room disposal, and full online gameplay remain open.

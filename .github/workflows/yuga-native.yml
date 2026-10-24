@@ -123,6 +123,36 @@ jobs:
           timeout 60s Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native --script res://tools/hero-family-reuse/motion_continuity_probe.gd -- --output="$continuation_out/W5/fixed-motion.json" --motion-source=res://scripts/rama_motion.gd > "$continuation_out/W5/fixed-motion.log" 2>&1
           python3 games/yuga-native/tools/hero-family-reuse/verify_motion_repair.py --baseline-contact "$continuation_out/W5/baseline-contact.json" --candidate-contact "$continuation_out/W5/fixed-contact.json" --baseline-motion "$continuation_out/W5/baseline-motion.json" --candidate-motion "$continuation_out/W5/fixed-motion.json" --output "$continuation_out/W5/comparison.json" > "$continuation_out/W5/comparison.log" 2>&1
           python3 games/yuga-native/tools/arena-bridge-pilot/run.py --output "$continuation_out/W6" --godot Godot_v4.6.3-stable_linux.x86_64 > "$continuation_out/W6-run.log" 2>&1
+      - name: Verify integrated source-derived water garden and army cover
+        timeout-minutes: 2
+        env:
+          GODOT_SILENCE_ROOT_WARNING: '1'
+          OMP_NUM_THREADS: '1'
+        run: |
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native \
+            --script res://tools/lanka-water-garden/test_integrated.gd \
+            -- --output="$RUNNER_TEMP/lanka-water-garden-integrated.json"
+      - name: Observe actual ability sockets and effect/audio acknowledgements
+        timeout-minutes: 3
+        env:
+          GODOT_SILENCE_ROOT_WARNING: '1'
+          OMP_NUM_THREADS: '1'
+        run: |
+          python3 games/yuga-native/tools/reuse-event-sync/run.py \
+            --engine Godot_v4.6.3-stable_linux.x86_64 \
+            --output "$RUNNER_TEMP/reuse-production-event-sync"
+      - name: Verify friendly camera readability without changing authority
+        timeout-minutes: 2
+        env:
+          GODOT_SILENCE_ROOT_WARNING: '1'
+          OMP_NUM_THREADS: '1'
+        run: |
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native \
+            --script res://tools/reuse-camera-readability/cases.gd \
+            -- --report="$RUNNER_TEMP/friendly-camera-readability.json"
+          Godot_v4.6.3-stable_linux.x86_64 --headless --path games/yuga-native \
+            --script res://tools/reuse-camera-readability/integration_cases.gd \
+            -- --report="$RUNNER_TEMP/friendly-camera-integration.json"
       - name: Audit actual animation library without runtime replacement
         run: |
           set -euo pipefail
@@ -268,6 +298,12 @@ jobs:
             ${{ runner.temp }}/reuse-next-ten/W6/native-contract.json
             ${{ runner.temp }}/reuse-next-ten/W6/adaptation.json
             ${{ runner.temp }}/reuse-next-ten/W6/*.log
+            ${{ runner.temp }}/reuse-production-event-sync/run.json
+            ${{ runner.temp }}/reuse-production-event-sync/*.json.gz
+            ${{ runner.temp }}/reuse-production-event-sync/*.log
+            ${{ runner.temp }}/lanka-water-garden-integrated.json
+            ${{ runner.temp }}/friendly-camera-readability.json
+            ${{ runner.temp }}/friendly-camera-integration.json
             ${{ runner.temp }}/rama-quality/source-before.json
             ${{ runner.temp }}/rama-quality/source-after.json
             ${{ runner.temp }}/rama-quality/reports/

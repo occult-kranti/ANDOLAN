@@ -27,7 +27,7 @@ func run()->void:
 	if not output.is_absolute_path() or FileAccess.file_exists(output):push_error("Fresh absolute integration report required");quit(1);return
 	var Helper:Script=load("res://scripts/lanka_lane_gate.gd")
 	if Helper==null:push_error("Canonical helper not yet integrated");quit(1);return
-	scene=load("res://scenes/confluence_world.tscn").instantiate();scene.set("lanka_lane_gate_enabled",false);root.add_child(scene);current_scene=scene
+	scene=load("res://scenes/confluence_world.tscn").instantiate();scene.set("lanka_lane_gate_enabled",false);scene.set("lanka_water_garden_enabled",false);root.add_child(scene);current_scene=scene
 	await physics_frame;await physics_frame
 	check("explicit legacy opt-out retains ready original world",scene.world_ready and not scene.world.has_node("LankaLaneGate") and not scene.lanka_lane_gate_report.enabled)
 	scene.set_paused(false);scene.set_process(false);scene.set_physics_process(false);hold_callbacks(scene.world)
@@ -71,7 +71,7 @@ func run()->void:
 	scene=load("res://scenes/confluence_world.tscn").instantiate();root.add_child(scene);current_scene=scene;await physics_frame;await physics_frame
 	check("fresh default canonical caller enables exact one gate and report",scene.world_ready and scene.lanka_lane_gate_enabled and scene.lanka_lane_gate_report==report and scene.world.has_node("LankaLaneGate") and scene.world.get_node("LankaLaneGate").find_children("*","StaticBody3D",true,false).size()==1)
 	check("default canonical construction retains original authority and deck arrays",scene.authority_bodies.size()==8 and scene.native_platform_bodies.size()==8)
-	check("default caller configures one private army footprint set without mutating manifest",scene.army.boxes.size()==scene.manifest.authority_collision_boxes.size()+scene.manifest.traversal.native_collision_boxes.size()+10+scene.relays.art.collision_boxes().size() and scene.manifest.traversal.native_collision_boxes.size()==8 and not scene.army.line_clear(Vector3(-49,0,-70),Vector3(-49,0,-38)) and scene.army.line_clear(Vector3(-40,0,-70),Vector3(-40,0,-38)),{"army_boxes":scene.army.boxes.size(),"source_native_boxes":scene.manifest.traversal.native_collision_boxes.size(),"pier_clear":scene.army.line_clear(Vector3(-49,0,-70),Vector3(-49,0,-38)),"opening_clear":scene.army.line_clear(Vector3(-40,0,-70),Vector3(-40,0,-38))})
+	check("default caller retains gate10/garden4/relay9 private footprints without mutating manifest",scene.army.boxes.size()==scene.manifest.authority_collision_boxes.size()+scene.manifest.traversal.native_collision_boxes.size()+10+4+scene.relays.art.collision_boxes().size() and scene.manifest.traversal.native_collision_boxes.size()==8 and not scene.army.line_clear(Vector3(-49,0,-70),Vector3(-49,0,-38)) and scene.army.line_clear(Vector3(-40,0,-70),Vector3(-40,0,-38)),{"army_boxes":scene.army.boxes.size(),"source_native_boxes":scene.manifest.traversal.native_collision_boxes.size(),"pier_clear":scene.army.line_clear(Vector3(-49,0,-70),Vector3(-49,0,-38)),"opening_clear":scene.army.line_clear(Vector3(-40,0,-70),Vector3(-40,0,-38))})
 	check("duplicate canonical configure cannot add another body",not Helper.build(scene.world).enabled and scene.world.get_node("LankaLaneGate").get_child_count()==12)
 	scene.set_paused(false);scene.set_process(false);scene.set_physics_process(false);hold_callbacks(scene.world);await physics_frame
 	check("fresh default integration preserves all full-map routes",route_sweeps().is_empty())

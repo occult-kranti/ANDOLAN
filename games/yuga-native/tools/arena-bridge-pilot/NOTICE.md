@@ -6,7 +6,7 @@ actual sources reused; no new upstream game source or assets were downloaded.
 
 | Existing source | Actual reuse | Rights/source boundary |
 | --- | --- | --- |
-| `games/yuga/server/server.ts` and `clock.ts` | Public parser, transport, identities, sessions, room lifecycle and snapshot scheduling; scratch copy replaces four import bindings | Existing project source; no new blanket license inferred |
+| `games/yuga/server/server.ts`, `authority-factory.ts` and `clock.ts` | Direct imports reuse parser, transport, identities, sessions, room lifecycle and snapshot scheduling; explicit typed authority factory replaces the earlier scratch import rewriting | Existing project source; no new blanket license inferred |
 | `games/yuga/shared/simulation.ts`, `types.ts`, `heroes.ts`, `map.ts` | Existing actor/input/schema dependencies; superclass planar match step disabled | Existing project source; old browser map remains planar |
 | `games/yuga-native/scripts/arena_client.gd` and `arena_interpolator.gd` | Exact scratch copies used by both real native clients | Existing project source; no geometry or art copied |
 | `games/yuga-native/scripts/player.gd` | Bounded capsule movement core adapted to explicit server inputs | Existing project source; other player/hero/traversal/render logic is not reproduced |

@@ -5,14 +5,15 @@ import path from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { WebSocket, WebSocketServer } from 'ws';
 import { HEROES } from '../shared/heroes.js';
-import { ArenaSimulation } from '../shared/simulation.js';
 import { YUGA_PROTOCOL } from '../shared/types.js';
 import type { ArenaCommand, ArenaInput, ArenaJoin, ServerMessage, Team } from '../shared/types.js';
 import { ArenaStepClock } from './clock.js';
+import { instantiateAuthority, resolveAuthorityFactory } from './authority-factory.js';
+import type { ArenaAuthority, ArenaAuthorityFactory } from './authority-factory.js';
 
 interface Identity { id: string; heroId: string; team: Team; lastSeen: number }
-export interface ArenaRoom { sim: ArenaSimulation; identities: Map<string, Identity>; clients: Map<string, WebSocket>; lastActive: number; finishedAt: number | null }
-export interface ArenaServerOptions { port?: number; host?: string; tickMs?: number; idleRoomMs?: number; staticDir?: string; simulation?: { duration?: number; botsPerTeam?: number } }
+export interface ArenaRoom { sim: ArenaAuthority; identities: Map<string, Identity>; clients: Map<string, WebSocket>; lastActive: number; finishedAt: number | null }
+export interface ArenaServerOptions { port?: number; host?: string; tickMs?: number; idleRoomMs?: number; staticDir?: string; simulation?: { duration?: number; botsPerTeam?: number }; authorityFactory?: ArenaAuthorityFactory }
 type ClientMessage = ArenaJoin | ArenaInput | ArenaCommand;
 const hash = (token: string) => createHash('sha256').update(token).digest('hex');
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
@@ -32,6 +33,7 @@ export function parseArenaMessage(raw: unknown): ClientMessage | null {
 }
 
 export async function createArenaServer(options: ArenaServerOptions = {}) {
+  const authorityFactory = resolveAuthorityFactory(options.authorityFactory);
   const rooms = new Map<string, ArenaRoom>();
   const contexts = new Map<WebSocket, { room?: ArenaRoom; id?: string; alive: boolean; windowAt: number; count: number; invalid: number }>();
   const inputTimes = new Map<string, number>();
@@ -100,17 +102,21 @@ export async function createArenaServer(options: ArenaServerOptions = {}) {
         const existing = message.token && room ? room.identities.get(hash(message.token)) : undefined;
         if (message.token && !existing) { fail(socket, 'Reconnect token does not belong to this room'); return; }
         if (room?.sim.phase === 'finished' && !existing) { fail(socket, 'This match has ended. Create a new match.'); return; }
+        const creatingRoom = !room;
         if (!room) {
           if (rooms.size >= 32) { fail(socket, 'Arena room limit reached'); return; }
           const code = randomBytes(4).toString('hex').toUpperCase();
-          room = { sim: new ArenaSimulation({ room: code, seed: randomBytes(4).readUInt32LE(0), ...options.simulation }), identities: new Map(), clients: new Map(), lastActive: now, finishedAt: null };
-          rooms.set(code, room);
+          let sim: ArenaAuthority;
+          try { sim = instantiateAuthority(authorityFactory, { ...options.simulation, room: code, seed: randomBytes(4).readUInt32LE(0) }); }
+          catch { fail(socket, 'Arena authority unavailable. Create a new match.'); return; }
+          room = { sim, identities: new Map(), clients: new Map(), lastActive: now, finishedAt: null };
         }
         let token = message.token;
         const playerId = existing?.id ?? randomBytes(8).toString('hex');
         let actor;
         try { actor = room.sim.addPlayer(playerId, message.name, existing?.heroId ?? message.heroId, existing?.team); }
         catch (error) { fail(socket, error instanceof Error && ['ROOM_FULL', 'TEAM_FULL'].includes(error.message) ? 'All six player slots are occupied or reserved for reconnecting players' : 'Could not join this match'); return; }
+        if (creatingRoom) rooms.set(room.sim.room, room);
         if (existing) { const previous = room.clients.get(playerId); if (previous) previous.close(4001, 'Reconnected elsewhere'); existing.lastSeen = now; }
         else { token = randomBytes(24).toString('hex'); room.identities.set(hash(token), { id: playerId, heroId: actor.heroId, team: actor.team, lastSeen: now }); }
         room.clients.set(playerId, socket); room.lastActive = now;

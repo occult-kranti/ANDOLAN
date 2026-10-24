@@ -22,6 +22,7 @@ const RamaHUD = preload("res://scripts/rama_hero_hud.gd")
 const HeroUI = preload("res://scripts/hero_ui_theme.gd")
 const Atlas = preload("res://scripts/world_atlas.gd")
 const WorldOutcome = preload("res://scripts/world_outcome_summary.gd")
+const FriendlyCameraVisibility = preload("res://scripts/friendly_camera_visibility.gd")
 const RUNTIME_MANIFEST := "res://assets/world/confluence-map.json"
 const SOURCE_MANIFEST := "res://art/world/confluence-map.json"
 const CREAM := Color("f0e5d0")
@@ -49,7 +50,11 @@ var wind_court_pilot_enabled := true
 # One reviewed reuse-first gate; false retains the exact prior world envelope.
 var lanka_lane_gate_enabled := true
 var lanka_lane_gate_report: Dictionary = {"enabled":false}
+# Four reviewed source-derived markers on the existing shallow reed-court banks.
+var lanka_water_garden_enabled := true
+var lanka_water_garden_report: Dictionary = {"enabled":false}
 var army: Node3D
+var friendly_camera_visibility = FriendlyCameraVisibility.new()
 var audio: Node
 var siege_effects: Node3D
 var relays: Node3D
@@ -162,7 +167,7 @@ func _ready() -> void:
 	if not frontage_install.get("ok",false):
 		push_error("Confluence frontage could not configure: "+String(frontage_install.get("reason","unknown")))
 		return
-	if not _build_lanka_lane_gate(): return
+	if not _build_lanka_lane_gate() or not _build_lanka_water_garden(): return
 	_build_player()
 	if not _build_army_audio() or not player.traversal_report().get("enabled",false):
 		push_error("Confluence requires a configured army and traversal controller.")
@@ -197,6 +202,16 @@ func _build_lanka_lane_gate() -> bool:
 		push_error("Confluence Lanka gate could not configure: "+String(result.get("reason","unknown")))
 		return false
 	lanka_lane_gate_report=result.report
+	return true
+
+func _build_lanka_water_garden() -> bool:
+	lanka_water_garden_report={"enabled":false}
+	if not lanka_water_garden_enabled: return true
+	var result: Dictionary=load("res://scripts/lanka_water_garden.gd").build(world,true)
+	if not result.get("enabled",false):
+		push_error("Confluence reed-court features could not configure: "+String(result.get("reason","unknown")))
+		return false
+	lanka_water_garden_report=result.report
 	return true
 
 func _build_invocations() -> bool:
@@ -464,11 +479,18 @@ func _build_army_audio() -> bool:
 		army.gold_changed.connect(_gold_changed)
 		army.outcome.connect(_army_outcome)
 		army.siege_event.connect(siege_effects.handle_event)
+		army.simulation_reset.connect(func(_reason: String): friendly_camera_visibility.reset())
 		var army_manifest: Dictionary=manifest
 		if lanka_lane_gate_report.get("enabled",false):
 			var prepared: Dictionary=load("res://scripts/lanka_lane_gate.gd").prepare_army_manifest(manifest,world.get_node("LankaLaneGate"))
 			if not prepared.get("ok",false):
 				push_error("Confluence Lanka army footprints could not configure: "+String(prepared.get("reason","unknown")))
+				return false
+			army_manifest=prepared.manifest
+		if lanka_water_garden_report.get("enabled",false):
+			var prepared: Dictionary=load("res://scripts/lanka_water_garden.gd").prepare_army_manifest(army_manifest,world.get_node("LankaWaterGarden"))
+			if not prepared.get("ok",false):
+				push_error("Confluence reed-court army footprints could not configure: "+String(prepared.get("reason","unknown")))
 				return false
 			army_manifest=prepared.manifest
 		return army.configure(army_manifest,player)
@@ -508,6 +530,7 @@ func _clear_combat_presentation() -> void:
 		for child in parent.get_children(): child.queue_free()
 
 func _restart_army() -> void:
+	friendly_camera_visibility.reset()
 	practice_error=""
 	last_gold=0
 	_clear_combat_presentation()
@@ -1269,6 +1292,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	if not world_ready: return
+	if is_instance_valid(player) and is_instance_valid(army):
+		friendly_camera_visibility.update(player.camera,player,army.units,delta,not paused and not overview and player.active)
 	if paused: _layout_pause_panel()
 	if not paused and not is_equal_approx(phase,target_phase):
 		phase=move_toward(phase,target_phase,delta*.45)
@@ -1289,6 +1314,9 @@ func _process(delta: float) -> void:
 		# The authored hero faces +Z; the CharacterBody root only translates.
 		map_control.hero_forward=player.visual.global_basis.z
 		map_control.queue_redraw()
+
+func friendly_camera_visibility_report(detailed := false) -> Dictionary:
+	return friendly_camera_visibility.report(detailed)
 
 func _physics_process(_delta: float) -> void:
 	if not world_ready or paused: return
@@ -1503,6 +1531,7 @@ func release_actions(cancel_movement := true) -> void:
 			player.dash_direction=Vector3.ZERO
 
 func set_paused(value: bool) -> void:
+	if value: friendly_camera_visibility.reset()
 	paused=value
 	if is_instance_valid(atlas_guide): atlas_guide.visible=overview and not value
 	if is_instance_valid(compact_world_card): compact_world_card.visible=_constrained_world and not overview and not value
@@ -1594,6 +1623,7 @@ func _focus_lost() -> void:
 
 func teleport_to(position_: Vector3, yaw_degrees: float=180.0) -> void:
 	if not position_.is_finite() or not is_finite(yaw_degrees): return
+	friendly_camera_visibility.reset()
 	if invocations: invocations.cancel_active("Travel cancelled the invocation.")
 	if overview: set_overview(false)
 	release_actions()
@@ -1616,6 +1646,7 @@ func visit_anchor(id: String) -> bool:
 	return false
 
 func set_overview(value: bool) -> void:
+	if value: friendly_camera_visibility.reset()
 	overview=value
 	_layout_atlas()
 	if value and not paused and is_instance_valid(atlas_guide_scroll): atlas_guide_scroll.grab_focus()
@@ -1694,7 +1725,7 @@ func _pulse(origin: Vector3) -> void:
 	tween.tween_callback(ring.queue_free)
 
 func build_report() -> Dictionary:
-	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"lanka_lane_gate":lanka_lane_gate_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"relays":relays.report() if relays else {},"invocations":invocations.report() if invocations else {},"ultimate_effects":ultimate_fx.report() if ultimate_fx else {},"invocation_ui":invocation_panel.report() if invocation_panel else {},"invocation_audio":invocation_audio.report() if invocation_audio else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","rama_hero":rama_runtime.report() if rama_runtime else {},"hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
+	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"lanka_lane_gate":lanka_lane_gate_report,"lanka_water_garden":lanka_water_garden_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"relays":relays.report() if relays else {},"invocations":invocations.report() if invocations else {},"ultimate_effects":ultimate_fx.report() if ultimate_fx else {},"invocation_ui":invocation_panel.report() if invocation_panel else {},"invocation_audio":invocation_audio.report() if invocation_audio else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","rama_hero":rama_runtime.report() if rama_runtime else {},"hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
 
 func get_build_report() -> Dictionary:
 	return build_report()
@@ -1706,6 +1737,7 @@ func return_to_courtyard() -> void:
 	if not loader.cancelled.is_connected(_on_return_cancelled):
 		loader.cancelled.connect(_on_return_cancelled)
 	if not loader.begin(&"courtyard", self, opener): return
+	friendly_camera_visibility.reset()
 	_return_transition = loader
 	_return_process_modes.clear()
 	_isolate_return_children(self)
@@ -1729,6 +1761,7 @@ func _on_return_cancelled(_destination: StringName) -> void:
 	_return_transition = null
 
 func _exit_tree() -> void:
+	friendly_camera_visibility.reset()
 	if get_tree(): get_tree().paused=false
 	Input.mouse_mode=Input.MOUSE_MODE_VISIBLE
 

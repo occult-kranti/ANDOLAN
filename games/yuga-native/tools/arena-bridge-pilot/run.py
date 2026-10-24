@@ -59,7 +59,7 @@ def main():
     output.mkdir(parents=True)
     project = output / 'project'
     (project / 'scripts').mkdir(parents=True)
-    source_paths = [NATIVE / 'scripts/arena_client.gd', NATIVE / 'scripts/arena_interpolator.gd', NATIVE / 'scripts/player.gd', NATIVE / 'tests/physics_authority_cases.gd', NATIVE / 'assets/contracts/physics-fixture-v1.json', ROOT / 'games/yuga/server/server.ts', ROOT / 'games/yuga/server/clock.ts', ROOT / 'games/yuga/shared/simulation.ts', ROOT / 'games/yuga/shared/types.ts', ROOT / 'games/yuga/shared/map.ts', ROOT / 'package-lock.json']
+    source_paths = [NATIVE / 'scripts/arena_client.gd', NATIVE / 'scripts/arena_interpolator.gd', NATIVE / 'scripts/player.gd', NATIVE / 'tests/physics_authority_cases.gd', NATIVE / 'assets/contracts/physics-fixture-v1.json', ROOT / 'games/yuga/server/server.ts', ROOT / 'games/yuga/server/authority-factory.ts', ROOT / 'games/yuga/server/clock.ts', ROOT / 'games/yuga/shared/simulation.ts', ROOT / 'games/yuga/shared/types.ts', ROOT / 'games/yuga/shared/map.ts', ROOT / 'package-lock.json']
     source_paths += [p for p in HERE.iterdir() if p.is_file()]
     before = {str(path.relative_to(ROOT)): sha(path) for path in source_paths}
     for name in ['authority_actor.gd', 'native_authority.gd', 'client_cases.gd', 'contract_cases.gd', 'bridge-contract.json']:
@@ -74,20 +74,11 @@ def main():
         shutil.copyfile(NATIVE / 'scripts' / name, project / 'scripts' / name)
     shutil.copyfile(NATIVE / 'assets/contracts/physics-fixture-v1.json', project / 'physics-fixture-v1.json')
     (project / 'project.godot').write_text('config_version=5\n[application]\nconfig/name="Isolated native authority pilot"\n[threading]\nworker_pool/max_threads=1\n[physics]\ncommon/physics_ticks_per_second=60\n')
-    # The current server implementation is reused intact except four import bindings.
-    server = (ROOT / 'games/yuga/server/server.ts').read_text()
-    bindings = {'../shared/heroes.js': ROOT / 'games/yuga/shared/heroes.ts', '../shared/simulation.js': HERE / 'vertical_simulation.ts', '../shared/types.js': ROOT / 'games/yuga/shared/types.ts', './clock.js': ROOT / 'games/yuga/server/clock.ts'}
-    changes = []
-    for old, path in bindings.items():
-        count = server.count("'" + old + "'")
-        if count != (2 if old == '../shared/types.js' else 1):
-            raise RuntimeError('server import binding changed: ' + old)
-        server = server.replace("'" + old + "'", json.dumps(path.as_uri()))
-        changes.append({'from': old, 'to': path.as_uri(), 'count': count})
+    # Directly import the production server; inject the typed native factory.
+    # No server source copy, import substitution or dynamic module selector.
     (output / 'package.json').write_text('{"private":true,"type":"module"}\n')
-    (output / 'server-adapted.mts').write_text(server)
     (output / 'node_modules').symlink_to(ROOT / 'node_modules', target_is_directory=True)
-    (output / 'adaptation.json').write_text(json.dumps({'sourceSha256': before['games/yuga/server/server.ts'], 'adaptedSha256': sha(output / 'server-adapted.mts'), 'onlyChanges': changes}, indent=2) + '\n')
+    (output / 'adaptation.json').write_text(json.dumps({'mode': 'direct-server-import-with-typed-authority-factory', 'sourceSha256': before['games/yuga/server/server.ts'], 'authorityContractSha256': before['games/yuga/server/authority-factory.ts'], 'factory': 'createNativePilotAuthority', 'onlyChanges': []}, indent=2) + '\n')
     env = os.environ.copy()
     env.update({'GODOT_SILENCE_ROOT_WARNING': '1', 'OMP_NUM_THREADS': '1'})
     processes = []
@@ -105,7 +96,7 @@ def main():
             native_contract = subprocess.run([args.godot, '--headless', '--path', str(project), '--script', 'res://contract_cases.gd', '--', '--report=' + str(output / 'native-contract.json')], env=env, stdout=log, stderr=subprocess.STDOUT, timeout=10)
         result['nativeContract'] = json.loads((output / 'native-contract.json').read_text())
         with (output / 'typescript-contract.log').open('w') as log:
-            ts_contract = subprocess.run([str(ROOT / 'node_modules/.bin/tsx'), '--test', str(HERE / 'native_state.test.ts')], cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=10)
+            ts_contract = subprocess.run([str(ROOT / 'node_modules/.bin/tsx'), '--test', str(HERE / 'native_state.test.ts'), str(HERE / 'authority_factory.test.ts')], cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=15)
         result['typescriptContractExitCode'] = ts_contract.returncode
         if native_contract.returncode or not result['nativeContract']['passed'] or ts_contract.returncode:
             raise RuntimeError('cheap contract counterexample failed')
@@ -116,15 +107,20 @@ def main():
         native = subprocess.Popen([args.godot, '--headless', '--path', str(project), '--script', 'res://native_authority.gd', '--', '--port=' + str(native_port), '--ready=' + str(output / 'native-ready.json'), '--report=' + str(output / 'native-report.json')], env=env, stdout=native_log, stderr=subprocess.STDOUT, start_new_session=True)
         processes.append(native)
         ready = wait_json(output / 'native-ready.json', native)
-        harness = f'''import {{createArenaServer}} from {json.dumps((output / 'server-adapted.mts').as_uri())};
-import {{connectNative,closeNative,bridgeStats}} from {json.dumps((HERE / 'vertical_simulation.ts').as_uri())};
+        harness = f'''import {{createArenaServer}} from {json.dumps((ROOT / 'games/yuga/server/server.ts').as_uri())};
+import {{connectNative,closeNative,bridgeStats,createNativePilotAuthority}} from {json.dumps((HERE / 'vertical_simulation.ts').as_uri())};
 import {{writeFile}} from 'node:fs/promises';
 await connectNative({native_port},{json.dumps(ready['fixtureHash'])},{json.dumps(ready['contractHash'])});
-const server=await createArenaServer({{port:0,host:'127.0.0.1',simulation:{{duration:30,botsPerTeam:0}}}});
+const factoryChecks={{nonzeroBotsRejected:false,secondRoomRejected:false}};
+try{{createNativePilotAuthority({{room:'INVALID-BOTS',seed:1,botsPerTeam:1}});}}
+catch(error){{factoryChecks.nonzeroBotsRejected=error instanceof Error&&error.message==='Native pilot authority does not simulate bots';}}
+const server=await createArenaServer({{port:0,host:'127.0.0.1',simulation:{{duration:30,botsPerTeam:0}},authorityFactory:createNativePilotAuthority}});
 const address=server.address;if(!address||typeof address==='string')throw Error('listener missing');
 await writeFile({json.dumps(str(output / 'server-ready.json'))},JSON.stringify({{url:`ws://127.0.0.1:${{address.port}}/ws`}}));
 let closing=false;process.on('SIGTERM',async()=>{{if(closing)return;closing=true;
-await server.close();closeNative();await writeFile({json.dumps(str(output / 'server-report.json'))},JSON.stringify({{bridgeStats,roomsAfterClose:server.rooms.size}}));process.exit(0);}});
+try{{createNativePilotAuthority({{room:'SECOND-ROOM',seed:2,botsPerTeam:0}});}}
+catch(error){{factoryChecks.secondRoomRejected=error instanceof Error&&error.message==='Native pilot authority supports one room';}}
+await server.close();closeNative();await writeFile({json.dumps(str(output / 'server-report.json'))},JSON.stringify({{bridgeStats,factoryChecks,roomsAfterClose:server.rooms.size}}));process.exit(0);}});
 '''
         (output / 'harness.mts').write_text(harness)
         server_log = (output / 'server.log').open('w'); handles.append(server_log)
@@ -172,7 +168,7 @@ await server.close();closeNative();await writeFile({json.dumps(str(output / 'ser
             'native_packets_versioned_and_valid': result['server']['bridgeStats']['nativePackets']>100 and result['server']['bridgeStats']['rejectedNativePackets']==0,
             'server_cleanup': result['server']['roomsAfterClose']==0,
         }
-        result['passed'] = all(row['passed'] and row['exitCode']==0 for row in result['clients'].values()) and all(result['physicsChecks'].values())
+        result['passed'] = all(row['passed'] and row['exitCode']==0 for row in result['clients'].values()) and all(result['physicsChecks'].values()) and all(result['server']['factoryChecks'].values())
     except Exception as error:
         result['failure'] = type(error).__name__ + ': ' + str(error)
     finally:
