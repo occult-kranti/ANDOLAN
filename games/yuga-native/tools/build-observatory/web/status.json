@@ -1,14 +1,14 @@
 {
   "source": {
     "branch": "game/yuga-native-production",
-    "commit": "793ff9331ea575bf23633058666e65ccbfe86cf2",
+    "commit": "ef5609846d88fae247d220610f6343dee557a0c6",
     "dirty": false
   },
   "host": {
     "logical_cpus": 5,
     "quota_cpus": 4.0,
     "memory_total_bytes": 34359738368,
-    "memory_available_bytes": 30647001088,
+    "memory_available_bytes": 28176384000,
     "gpu": {
       "available": false,
       "devices": [],
@@ -17,353 +17,178 @@
   },
   "schema_version": 1,
   "mode": "snapshot",
-  "collected_at": "2026-10-23T23:12:29+00:00",
+  "collected_at": "2026-10-24T00:51:08+00:00",
   "run": {
-    "id": "reuse-ten-rounds-001",
-    "title": "YUGA — ten reuse-first production rounds",
-    "updated_at": "2026-10-23T23:12:29+00:00"
+    "id": "reuse-next-ten",
+    "title": "YUGA — Rama, Lanka and native play continuation",
+    "updated_at": "2026-10-24T00:51:08+00:00"
   },
   "jobs": [
     {
-      "id": "hero-rig",
-      "title": "Reused Rama rig and actions",
-      "owner": "R3 hero/rig",
-      "device": "Blender CPU",
-      "stage": "Ten-round production",
-      "status": "blocked",
-      "model": "Existing 164-bone Rama rig and nine actions",
-      "summary": "Both reused-rig bindings failed real deformation checks. R2 also damages REST edges; no candidate entered runtime.",
-      "outputs": [
-        {
-          "label": "Actual evidence and next gate",
-          "kind": "report",
-          "path": "games/yuga-native/art/ten-rounds-oct23/rig/README.md",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/art/ten-rounds-oct23/rig/README.md"
-        }
-      ],
-      "next_step": "Measure asymmetric semantic body/garment correspondence before another bind.",
-      "updated_at": "2026-10-23T22:21:29+00:00",
-      "started_at": "2026-10-23T21:45:44+00:00",
-      "finished_at": null,
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "hero-cleanup",
-      "title": "Generated source cleanup",
-      "owner": "R3 source cleanup",
-      "device": "Blender CPU",
-      "stage": "Ten-round production",
-      "status": "blocked",
-      "model": "Existing512RamaGLB",
-      "summary": "The bounded rear-hair edit was rendered and rejected: pitted/melted hair remains. Original generated source preserved.",
-      "outputs": [
-        {
-          "label": "Actual evidence and next gate",
-          "kind": "report",
-          "path": "games/yuga-native/art/ten-rounds-oct23/cleanup/README.md",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/art/ten-rounds-oct23/cleanup/README.md"
-        }
-      ],
-      "next_step": "Use the clean project-owned donor and explicit protected-body retopology contract.",
-      "updated_at": "2026-10-23T22:21:29+00:00",
-      "started_at": "2026-10-23T21:45:45+00:00",
-      "finished_at": null,
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "world",
-      "title": "One Vayu court pilot",
-      "owner": "R4 world/physics",
-      "device": "Godot CPU",
-      "stage": "Ten-round production",
+      "id": "w1",
+      "title": "Independent review",
+      "owner": "W1",
+      "stage": "Source inspection and implementation",
       "status": "complete",
-      "model": "Existing architecture/material/collision builders",
-      "summary": "One court integrated after 65 matched-capture checks, 16 actual views and independent collision review. Other seven courts and routes retained.",
-      "outputs": [
-        {
-          "label": "Actual evidence and next gate",
-          "kind": "report",
-          "path": "games/yuga-native/art/ten-rounds-oct23/world/README.md",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/art/ten-rounds-oct23/world/README.md"
-        },
-        {
-          "label": "Court before",
-          "kind": "image",
-          "url": "media/wind-court-before.png"
-        },
-        {
-          "label": "Court after",
-          "kind": "image",
-          "url": "media/wind-court-after.png"
-        },
-        {
-          "label": "Night review",
-          "kind": "image",
-          "url": "media/wind-court-night.png"
-        }
-      ],
-      "next_step": "Qualify ordinary input and LOD transitions before repeating this pilot.",
-      "updated_at": "2026-10-23T22:21:29+00:00",
-      "started_at": "2026-10-23T21:45:45+00:00",
-      "finished_at": "2026-10-23T22:21:29+00:00",
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "vfx",
-      "title": "Original temporal effects",
-      "owner": "R5 effects",
-      "device": "Godot software renderer",
-      "stage": "Ten-round production",
-      "status": "review",
-      "model": "Existing Rama effects/diya",
-      "summary": "Actual 72-frame isolated study and three controls retained. 27 lifecycle checks pass; strict conservative framing failure remains open and separately diagnosed.",
-      "outputs": [
-        {
-          "label": "Actual evidence and next gate",
-          "kind": "report",
-          "path": "games/yuga-native/art/ten-rounds-oct23/vfx/README.md",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/art/ten-rounds-oct23/vfx/README.md"
-        },
-        {
-          "label": "Watch actual effects study (6 seconds)",
-          "kind": "video",
-          "url": "media/reused-effects.mp4"
-        },
-        {
-          "label": "Actual rendered frame",
-          "kind": "image",
-          "url": "media/reused-effects.png"
-        }
-      ],
-      "next_step": "Qualify world clock/settings/LOD and real gameplay integration.",
-      "updated_at": "2026-10-23T22:21:29+00:00",
-      "started_at": "2026-10-23T21:45:45+00:00",
-      "finished_at": null,
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "reuse",
-      "title": "WebP source adapter",
-      "owner": "R6 reuse/tools",
       "device": "CPU",
-      "stage": "Ten-round production",
-      "status": "complete",
-      "model": "glTF-Transform4.3.0/meshopt0.24.0",
-      "summary": "15 tests, two actual raw-pair audits and 12 independent adverse checks pass. Geometry/images retained; only 292/336 bytes saved.",
-      "outputs": [
-        {
-          "label": "Actual evidence and next gate",
-          "kind": "report",
-          "path": "games/yuga-native/docs/research/ten-rounds-oct23/reuse/README.md",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ten-rounds-oct23/reuse/README.md"
-        }
-      ],
-      "next_step": "Use for supported static intake; no performance gain or runtime asset replacement.",
-      "updated_at": "2026-10-23T22:21:29+00:00",
-      "started_at": "2026-10-23T21:45:45+00:00",
-      "finished_at": "2026-10-23T21:58:25+00:00",
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "review",
-      "title": "Independent stage review",
-      "owner": "R1 acceptance",
-      "device": "CPU / hosted agent",
-      "stage": "Ten-round production",
-      "status": "complete",
-      "model": "Codex review",
-      "summary": "Independent actual-image, deformation, geometry, lifecycle and negative-control review completed; failed candidates retained.",
-      "outputs": [
-        {
-          "label": "Actual evidence and next gate",
-          "kind": "report",
-          "path": "games/yuga-native/docs/research/ten-rounds-oct23/review/README.md",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ten-rounds-oct23/review/README.md"
-        }
-      ],
-      "next_step": "Review public source/bytes and keep full-game quality gates open.",
-      "updated_at": "2026-10-23T22:21:29+00:00",
-      "started_at": "2026-10-23T21:45:45+00:00",
-      "finished_at": "2026-10-23T22:21:29+00:00",
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "world-material",
-      "title": "Reused CC0 stone material study",
-      "owner": "R4 world artist",
-      "stage": "Additional isolated art study",
-      "device": "Software Vulkan / CPU",
-      "model": "Native PBR; existing Poly Haven 1K maps",
-      "status": "complete",
-      "summary": "Six actual matched views, 31 capture checks and 19 headless checks pass. Accepted material direction; canonical material unchanged.",
-      "outputs": [
-        {
-          "label": "PBR direction candidate",
-          "kind": "image",
-          "url": "media/wind-court-pbr-candidate.png"
-        },
-        {
-          "label": "Material study review",
-          "kind": "report",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ten-rounds-oct23/review/world-pbr-study.json"
-        }
-      ],
-      "next_step": "Test ordinary/mid/far readability, motion and actual device performance.",
-      "updated_at": "2026-10-23T22:21:30+00:00",
-      "started_at": null,
-      "finished_at": "2026-10-23T22:21:30+00:00",
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "runtime-reuse",
-      "title": "Restore the already qualified renderer",
-      "owner": "R3 source reuse",
-      "stage": "Rendering support",
-      "device": "CPU",
-      "model": "Existing public Godot 4.6.3 priority runtime",
-      "status": "complete",
-      "summary": "Verified public archive/runtime provenance, restored the exact executable and passed 41 current-source headless cases; actual court captures used it.",
-      "outputs": [
-        {
-          "label": "Restoration and compatibility",
-          "kind": "report",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ten-rounds-oct23/runtime/README.md"
-        }
-      ],
-      "next_step": "Reuse the verified executable; keep software rendering distinct from hardware profiling.",
-      "updated_at": "2026-10-23T22:21:30+00:00",
-      "started_at": null,
-      "finished_at": "2026-10-23T22:21:30+00:00",
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "publication",
-      "title": "Verify and publish this source checkpoint",
-      "owner": "Root integration",
-      "stage": "R10 publication",
-      "device": "CPU / GitHub Actions",
       "model": null,
-      "status": "complete",
-      "summary": "Authoring source db1e3291 passed all 38 native CI steps. Its public deployment passed 39 HTTP checks and 33 exact static-file matches. Twelve-job dashboard and actual video playback passed local browser checks. This accepts the checkpoint, with art gates still open.",
+      "summary": "Independent originals and negative controls reviewed: accepted narrow HUD/motion/gateway plus native screen journey and isolated authority; rejected hairR2 runtime promotion.",
       "outputs": [
         {
-          "label": "Verified native CI",
+          "label": "Independent source-bound decisions",
           "kind": "report",
-          "url": "https://github.com/occult-kranti/ANDOLAN/actions/runs/40037133726"
-        },
-        {
-          "label": "Source and public-byte evidence",
-          "kind": "report",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ten-rounds-oct23/publication/README.md"
-        },
-        {
-          "label": "Next ten gated stages with six owners",
-          "kind": "report",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md"
+          "path": "games/yuga-native/docs/research/reuse-next-ten/W1/README.md"
         }
       ],
-      "next_step": "Approve the semantic hair boundary and distinct hero art, place a module in context, and qualify continuous motion and native 3D authority. No finished second hero or complete game is claimed.",
-      "updated_at": "2026-10-23T23:12:28+00:00",
-      "started_at": "2026-10-23T22:21:30+00:00",
-      "finished_at": "2026-10-23T23:12:28+00:00",
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "hero-family",
-      "title": "Rama-family authoring template",
-      "owner": "R3 hero rig + source audit child",
-      "stage": "Reuse-first continuation",
-      "device": "CPU / Godot / Blender",
-      "model": "Existing164bone Rama,23runtimeclips,3LOD",
-      "status": "complete",
-      "summary": "Authoring reuse verified: 20 regression tests, 24 independent adverse cases, 19 pin-drift negatives, 13 native checks and 10 sharing checks pass. Arjuna shares Rama sources and retains Rama’s appearance; no finished hero is claimed.",
-      "outputs": [
-        {
-          "label": "SharedRama pipeline and14hero reuse matrix",
-          "kind": "report",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/hero-family-reuse-oct23/README.md"
-        },
-        {
-          "label": "Independent adversarial review",
-          "kind": "report",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/hero-family-reuse-oct23/independent-review/README.md"
-        }
-      ],
-      "next_step": "Author a distinct Arjuna face, silhouette, outfit and weapon; review deformation, contacts, continuous motion and LODs.",
-      "updated_at": "2026-10-23T22:59:34+00:00",
-      "started_at": "2026-10-23T22:46:24+00:00",
-      "finished_at": "2026-10-23T22:58:05+00:00",
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "map-intake",
-      "title": "Existing CC0 map intake",
-      "owner": "R6 reuse tools",
-      "stage": "Reuse-first continuation",
-      "device": "CPU / Godot software renderer",
-      "model": "Existing courtyardGLB and sandstone adapter",
-      "status": "complete",
-      "summary": "An existing CC0 courtyard group with 1,296 triangles uses the existing glTF loader and sandstone material. All 23 native checks and 11 independent malformed-input cases pass. The canonical map is unchanged.",
-      "outputs": [
-        {
-          "label": "Existing structural group: intake preview only",
-          "kind": "image",
-          "url": "media/existing-courtyard-element.png"
-        },
-        {
-          "label": "Source, license and adaptation roadmap",
-          "kind": "report",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/docs/research/map-code-reuse-oct23/README.md"
-        }
-      ],
-      "next_step": "Place one module in context; verify capsule traversal, collision replacement, ordinary cameras and routes before promotion.",
-      "updated_at": "2026-10-23T22:59:34+00:00",
-      "started_at": "2026-10-23T22:46:24+00:00",
-      "finished_at": "2026-10-23T22:54:23+00:00",
-      "verification": {
-        "kind": "explicit_record"
-      }
-    },
-    {
-      "id": "hero-donor-groom",
-      "title": "Artist-controlled donor hair selection",
-      "owner": "R3 hero cleanup artist",
-      "stage": "Reuse-first continuation",
-      "device": "Blender CPU,2threads",
-      "model": "Existing project-owned clean Rama donor",
-      "status": "blocked",
-      "summary": "Three actual views and full texel checks reject the omission mask: 1,226 unsafe faces; the remaining 1,116 form 103 fragments. A clean donor scaffold saved and reopened with 18 passing checks. No source faces were deleted or replacement fitted.",
-      "outputs": [
-        {
-          "label": "Actual views, donor scaffold and next artist task",
-          "kind": "report",
-          "url": "https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-native-production/games/yuga-native/art/hero-donor-groom-oct23/README.md"
-        }
-      ],
-      "next_step": "Label original hair, cape, skin and uncertain faces; review the protected seam before fitting and four clay views.",
-      "updated_at": "2026-10-23T22:59:34+00:00",
+      "next_step": "Keep full first-hero art, ordinary gate gameplay, rendered native match and physical-GPU acceptance open.",
+      "updated_at": "2026-10-24T00:48:41+00:00",
       "started_at": null,
-      "finished_at": null,
+      "finished_at": "2026-10-24T00:48:41+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "w2",
+      "title": "Native screens and controls",
+      "owner": "W2",
+      "stage": "Review current high-scale HUD",
+      "status": "complete",
+      "device": "CPU",
+      "model": null,
+      "summary": "41 layout checks, 22 arranged actuals and final 19-step native XTest input journey passed; 23 journey originals, clean Quit. Smallest 200% stress layout remains dense.",
+      "outputs": [
+        {
+          "label": "Actual title",
+          "kind": "image",
+          "url": "media/yuga-current-title.png"
+        },
+        {
+          "label": "Actual world",
+          "kind": "image",
+          "url": "media/yuga-current-world.png"
+        },
+        {
+          "label": "Journey and limits",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/reuse-next-ten/W2/README.md"
+        }
+      ],
+      "next_step": "Continuous gameplay, ordinary gate traversal and final screen art acceptance.",
+      "updated_at": "2026-10-24T00:46:57+00:00",
+      "started_at": null,
+      "finished_at": "2026-10-24T00:46:57+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "w3",
+      "title": "Rama artist",
+      "owner": "W3",
+      "stage": "Clay candidate review",
+      "status": "complete",
+      "device": "CPU",
+      "model": "Blender 4.3.2 / existing Rama mesh",
+      "summary": "Two existing-hair clay studies rendered; first isolated raw GLB preserves protected mesh/rig data. Second study rejected for large gaps and broad lobes.",
+      "outputs": [
+        {
+          "label": "Scope and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/reuse-next-ten/W3/README.md"
+        }
+      ],
+      "next_step": "Refine coherent hair mass and textured pose/LOD quality before any runtime replacement.",
+      "updated_at": "2026-10-24T00:42:13+00:00",
+      "started_at": "2026-10-24T00:02:28+00:00",
+      "finished_at": "2026-10-24T00:42:13+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "w4",
+      "title": "Lanka map",
+      "owner": "W4",
+      "stage": "Actual gateway route capture",
+      "status": "complete",
+      "device": "CPU",
+      "model": null,
+      "summary": "One existing CC0 gate integrated with source-exact collision and 10 army cover footprints; route/cover/cache checks passed.",
+      "outputs": [
+        {
+          "label": "Gateway route — 2.4 seconds",
+          "kind": "video",
+          "url": "media/lanka-gate-route.mp4"
+        },
+        {
+          "label": "Ordinary night view",
+          "kind": "image",
+          "url": "media/lanka-gate-night.png"
+        },
+        {
+          "label": "Source and package checks",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/reuse-next-ten/W4/FINAL_HANDOFF.md"
+        }
+      ],
+      "next_step": "Ordinary input/combat through the gate, distance/LOD/hardware checks, then next distinct district module.",
+      "updated_at": "2026-10-24T00:51:08+00:00",
+      "started_at": "2026-10-24T00:06:58+00:00",
+      "finished_at": "2026-10-24T00:42:13+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "w5",
+      "title": "Motion and contact",
+      "owner": "W5",
+      "stage": "Repair warm-draw continuity",
+      "status": "complete",
+      "device": "CPU",
+      "model": null,
+      "summary": "Warm-draw snap repaired using outgoing existing nock state; 113 comparison checks, legacy regressions and actual 1.2-second matched video passed.",
+      "outputs": [
+        {
+          "label": "Matched bowstring repair — 1.2 seconds",
+          "kind": "video",
+          "url": "media/rama-warm-draw.mp4"
+        },
+        {
+          "label": "Motion evidence",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/reuse-next-ten/W5/README.md"
+        }
+      ],
+      "next_step": "Keep full continuous hero art/pose acceptance open.",
+      "updated_at": "2026-10-24T00:51:08+00:00",
+      "started_at": null,
+      "finished_at": "2026-10-24T00:42:13+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "w6",
+      "title": "Native authority",
+      "owner": "W6",
+      "stage": "Exercise native 3D authority",
+      "status": "complete",
+      "device": "CPU",
+      "model": null,
+      "summary": "Isolated native 3D authority experiment passed real physics, malformed messages, two-client reconnect and persistent slot checks. CI continuation sequence passed locally.",
+      "outputs": [
+        {
+          "label": "Scope and evidence",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/reuse-next-ten/W6/README.md"
+        }
+      ],
+      "next_step": "Integrate rendered native clients and full authoritative match lifecycle.",
+      "updated_at": "2026-10-24T00:42:13+00:00",
+      "started_at": null,
+      "finished_at": "2026-10-24T00:42:13+00:00",
       "verification": {
         "kind": "explicit_record"
       }
@@ -371,67 +196,116 @@
   ],
   "milestones": [
     {
-      "id": "R01",
-      "title": "Freeze reuse contracts and current defects",
+      "id": "N01",
+      "title": "Freeze current sources and reproduce defects",
       "status": "complete",
-      "evidence": "Reviewed exact baseline bindings, exclusive scopes and rejection gates. This accepts the contract only."
+      "evidence": "Source pins and actual defect reproductions retained."
     },
     {
-      "id": "R02",
-      "title": "Audit mesh, rest spaces and source compatibility",
+      "id": "N02",
+      "title": "Reuse source modules and editable hero geometry",
       "status": "complete",
-      "evidence": "Raw glTF and Blender-welded metrics are distinct. Raw exact-position incidence finds no open boundary edges, so UV seams are not called holes. Rig leak measured in actual poses."
+      "evidence": "Six scoped reuse candidates delivered; existing engine/assets/transport retained."
     },
     {
-      "id": "R03",
-      "title": "Implement source-preserving reuse adapters",
+      "id": "N03",
+      "title": "Inspect actual art and physics witnesses",
       "status": "complete",
-      "evidence": "15 tests, two actual raw-pair audits and 12 independent adverse cases passed. Compatibility tool accepted; no runtime promotion or performance claim."
+      "evidence": "Actual originals and negative controls reviewed; hair R2 rejected, narrow HUD/gate/motion accepted."
     },
     {
-      "id": "R04",
-      "title": "Author a conservative hero cleanup candidate",
-      "status": "blocked",
-      "evidence": "Executed and reviewed, rejected for promotion. Exact source preservation passed; actual rear hair defect remains."
-    },
-    {
-      "id": "R05",
-      "title": "Bind and sample a reused hero rig",
-      "status": "blocked",
-      "evidence": "Both R1 and R2 rejected. R2 still deforms REST geometry and stretches action edges; filtered family zeros do not prove anatomical correctness. No new rig export promoted."
-    },
-    {
-      "id": "R06",
-      "title": "Implement one wind-court pilot",
+      "id": "N04",
+      "title": "Integrate accepted candidates",
       "status": "complete",
-      "evidence": "Single geometry pilot accepted after 65 strict actual capture checks / 16 images, 41 author checks, 818 independent rays and 14 canonical integration counterexamples. Full-game quality credit stays zero."
+      "evidence": "Accepted motion/HUD/gateway integrated; canonical hero mesh unchanged."
     },
     {
-      "id": "R07",
-      "title": "Build reusable temporal effects",
+      "id": "N05",
+      "title": "Qualify complete hero motion and lane play",
       "status": "review",
-      "evidence": "27 lifecycle and 12 independent adverse cases pass. Corrected 72 actual frames plus 3 controls retained; 97/98 automated render checks. Strict conservative AABB gate remains false. Indexed geometry and visible study reviewed separately; no runtime promotion."
+      "evidence": "Actual 19-step screen input journey passed. Complete hero art, continuous combat and ordinary gate traversal remain open."
     },
     {
-      "id": "R08",
-      "title": "Integrate isolated art/runtime previews",
-      "status": "complete",
-      "evidence": "One accepted court integrated with old body removed and eight native array slots/groups preserved. 29 world, 27 route, 36 stress and 14 independent integration cases pass. Hero candidates stay isolated."
+      "id": "N06",
+      "title": "Expand distinct hero and district designs",
+      "status": "blocked",
+      "evidence": "Distinct hero art and district expansion depend on first accepted hero; a shared template earns no hero credit."
     },
     {
-      "id": "R09",
-      "title": "Run independent adversarial and visual review",
-      "status": "complete",
-      "evidence": "Independent original-image and counterexample review completed. Rejected hero results and the VFX strict failure retained. Optional PBR direction accepted separately."
+      "id": "N07",
+      "title": "Rehearse three lanes and online lifecycle",
+      "status": "blocked",
+      "evidence": "Isolated native 3D authority passed; rendered production match integration remains open."
     },
     {
-      "id": "R10",
-      "title": "Publish source, dashboard and next gates",
-      "status": "complete",
-      "evidence": "Source C db1e3291 passed all 38 foundation steps; 39 public HTTP checks, 33 exact static matches and 10 local Chromium checks pass. Publication of this bounded checkpoint is complete. Rejected hero candidates and the strict VFX framing gate remain open."
+      "id": "N08",
+      "title": "Review competitive slice prerequisites",
+      "status": "blocked",
+      "evidence": "Accepted Rama/Hanuman/Sita and uninterrupted 3v3 required."
+    },
+    {
+      "id": "N09",
+      "title": "Measure supported hardware and package behavior",
+      "status": "review",
+      "evidence": "Both platform PCKs exported; 13 actual Linux PCK resource/physics checks passed. Windows execution and physical-GPU performance remain open."
+    },
+    {
+      "id": "N10",
+      "title": "Publish exact checkpoint and next repair queue",
+      "status": "review",
+      "evidence": "Source/media and next assignments prepared; exact remote CI and publication receipts follow export."
     }
   ],
   "assets": [
+    {
+      "id": "current-screen",
+      "title": "YUGA — current native screen",
+      "status": "Actual combined input journey",
+      "image_url": "media/yuga-current-title.png",
+      "summary": "19-step keyboard/mouse journey, 23 original frames and clean Quit. Warm software renderer; full commercial visual target remains open."
+    },
+    {
+      "id": "current-world",
+      "title": "Confluence — current offline play",
+      "status": "Actual combined input journey",
+      "image_url": "media/yuga-current-world.png",
+      "summary": "Existing Rama, three lanes and armies. Native online match integration remains open."
+    },
+    {
+      "id": "lanka-gate",
+      "title": "Carved Lanka gateway",
+      "status": "Reused and integrated",
+      "image_url": "media/lanka-gate-day.png",
+      "summary": "241 complete existing CC0 pieces, 17,862 triangles, source-derived collision and army cover. Earlier staged camera source; not full-map acceptance."
+    },
+    {
+      "id": "lanka-night",
+      "title": "Lanka gateway — night",
+      "status": "Actual native render",
+      "image_url": "media/lanka-gate-night.png",
+      "summary": "Same source geometry under existing night lights. Software rendering does not measure physical-GPU performance."
+    },
+    {
+      "id": "hud-scale",
+      "title": "Compact enlarged HUD",
+      "status": "22 actual comparison frames reviewed",
+      "image_url": "media/hud-returning-scale200.png",
+      "summary": "Retains essential text at 200% scale with smaller bottom HUD. The smallest stress viewport remains dense."
+    },
+    {
+      "id": "hair-r1",
+      "title": "Rama — bounded hair study",
+      "status": "Isolated only",
+      "image_url": "media/rama-hair-r1-profile.png",
+      "summary": "Existing sculpt/rig reused; 23-clip compatibility verified. Textured seams, coherent locks and LOD review still open."
+    },
+    {
+      "id": "hair-r2",
+      "title": "Rama — rejected flow study",
+      "status": "Rejected for runtime",
+      "image_url": "media/rama-hair-r2-rejected.png",
+      "summary": "Eight actual views expose broad lobes and large voids. Editable source preserved; no canonical replacement."
+    },
     {
       "id": "wind-court",
       "title": "One wind-court geometry pilot",
@@ -447,26 +321,12 @@
       "summary": "Same court geometry with existing Poly Haven maps. Six actual views reviewed; canonical material remains unchanged."
     },
     {
-      "id": "effects",
-      "title": "Animated diya and cast effects",
-      "status": "Isolated temporal study",
-      "image_url": "media/reused-effects.png",
-      "summary": "Actual six-second sequence in job outputs. Staged cast events; strict conservative framing check remains open."
-    },
-    {
       "id": "rama-source",
       "title": "Generated Rama source",
       "status": "Unrigged source; cleanup/binding rejected",
       "image_url": "media/rama-generated-front.png",
       "model_url": "viewer/",
       "summary": "The actual original source mesh. This viewer has no skin or animations; two rejected reuse binders remain outside runtime."
-    },
-    {
-      "id": "existing-courtyard-module",
-      "title": "Existing CC0 structural module",
-      "status": "Isolated intake; no map promotion",
-      "image_url": "media/existing-courtyard-element.png",
-      "summary": "Original group with 1,296 triangles and existing CC0 sandstone. Actual software-render preview; placement, capsule routes and contextual art gates remain open."
     }
   ],
   "sources": [
