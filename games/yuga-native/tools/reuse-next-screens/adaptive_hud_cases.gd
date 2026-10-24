@@ -50,9 +50,19 @@ func inspect_layout(state_name: String) -> void:
 				for row in summary_rows: stacked_budget+=scene._compact_text_height(row,inner_width)
 				if scene.compact_world_card.size.y>stacked_budget+.5: issues.append("split summary taller than full-width stack")
 				if scene.map_control._plot_rect().size.y<63.9: issues.append("live map plot compressed below readable minimum")
+				var plot:Rect2=scene.map_control._plot_rect()
+				if plot.size.x<119.9: issues.append("live map plot below readable width")
+				# Measure the actual visible combat edge, independently of the
+				# world's anchor offsets. Keep the 64px tiny-canvas fallback, but
+				# demand the full 100px plot when its padding/footer fit above it.
+				var available_plot_height:float=hud.get_global_rect().position.y-scene.map_control.get_global_rect().position.y-12-32-scene.map_control.footer_height
+				if available_plot_height>=100 and plot.size.y<99.9: issues.append("live map plot wastes available readable height")
 				var core_rects := []
 				for objective in scene.manifest.objectives:
-					if objective.kind=="core": core_rects.append(scene.map_control._core_caption_rect(objective))
+					if objective.kind=="core":
+						var caption:Rect2=scene.map_control._core_caption_rect(objective)
+						core_rects.append(caption)
+						if not Rect2(Vector2.ZERO,scene.map_control.size).encloses(caption): issues.append("core caption outside live map")
 				if core_rects.size()!=2 or core_rects[0].intersects(core_rects[1]): issues.append("Sun/Moon captions collide")
 			var detail := {"issues":issues,"base":[base.x,base.y],"physical":[960,540],"scale":scale_,"logical":str(viewport.size),"drawn_slab":str(drawn),"drawn_slab_physical_height":drawn.size.y*540/viewport.size.y,"note":hud.note.text,"health":hud.life_text.text,"slots":hud.slots.map(func(s):return s.text),"summary":str(scene.compact_world_card.get_global_rect()),"summary_rows":scene.compact_world_labels.map(func(row):return row.text),"map":str(scene.map_control.get_global_rect())}
 			check(state_name+" base "+str(base)+" scale "+str(scale_)+" preserves readable live cues and measured footprint",issues.is_empty(),detail)

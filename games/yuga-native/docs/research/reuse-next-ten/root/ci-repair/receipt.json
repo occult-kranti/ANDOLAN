@@ -1,0 +1,391 @@
+{
+  "schema": 1,
+  "updated_at_utc": "2026-10-24T01:10:39.659379+00:00",
+  "task": "Repair exact native foundation atlas-layout failure after reuse continuation",
+  "source_head": "3497197745beb8e0fd22a9b67efe505700dec469",
+  "status": "repaired_focused_checks_and_four_actual_frames_passed",
+  "runtime_changed": true,
+  "remote": {
+    "run_id": 40047130748,
+    "job_id": 120731326446,
+    "url": "https://github.com/occult-kranti/ANDOLAN/actions/runs/40047130748/job/120731326446",
+    "conclusion": "failure",
+    "first_failed_step": {
+      "name": "Native screen and recovery contracts (rendered acceptance separate)",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 31,
+      "started_at": "2026-10-24T01:02:04Z",
+      "completed_at": "2026-10-24T01:03:15Z"
+    },
+    "first_failed_suite": "ui-atlas-layout",
+    "first_failed_check": {
+      "detail": {
+        "combat": "[P: (12.0, 272.0), S: (616.0, 80.0)]",
+        "map": "[P: (496.0, 12.0), S: (132.0, 151.2)]",
+        "plot": "[P: (12.0, 16.0), S: (108.0, 87.2)]",
+        "summary": "[P: (12.0, 12.0), S: (472.0, 102.0)]",
+        "summary_lines": [
+          "Surya arrival court \u00b7 Sun 100 / Moon 100 \u00b7 Gold 0",
+          "Escort Sun troops to the Moon core.",
+          "Ground 0m \u00b7 Energy 100/100 \u00b7 Flight 0.0s \u00b7 Tether 0.0s",
+          "G tether \u226436m \u00b7 F flight"
+        ]
+      },
+      "name": "actual constrained composite contains all visible peers: (640, 360)",
+      "passed": false
+    },
+    "failed_checks": [
+      "actual constrained composite contains all visible peers: (640, 360)",
+      "actual constrained composite contains all visible peers: (768, 432)",
+      "actual constrained composite contains all visible peers: (853, 480)"
+    ],
+    "continuation_step_passed": true
+  },
+  "diagnosis": {
+    "legacy_assertion": "Constrained logical 640x360/768x432/853x480 requires plot >=120x100.",
+    "observed": "Accepted W2 locator card is132 wide, giving108 plot width; at640x360 its151.2 height gives87.2 plot height.",
+    "accepted_design_source": "games/yuga-native/docs/research/reuse-next-ten/W2/README.md",
+    "accepted_design": "Reviewed compact locator deliberately uses64px minimum plot height and F1 full tactical overview. Existing adaptive suite enforces readable complete labels, bounds and budgets.",
+    "resolution": "Root selected the runtime repair: preserve the unchanged legacy120x100 readable plot where available and keep tiny-canvas/F1 fallback. Existing W1 caption/icon crowding justified additional plot space. No acceptance thresholds or control budgets reduced."
+  },
+  "commands": [
+    {
+      "command": "gh api repos/occult-kranti/ANDOLAN/actions/jobs/120731326446",
+      "exit_code": 0,
+      "output": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/native-job.json"
+    },
+    {
+      "command": "gh api repos/occult-kranti/ANDOLAN/actions/jobs/120731326446/logs",
+      "exit_code": 0,
+      "output": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/native-job.log"
+    },
+    {
+      "command": "gh api repos/occult-kranti/ANDOLAN/actions/runs/40047130748/artifacts",
+      "exit_code": 0,
+      "artifact_id": 12541044900,
+      "artifact_bytes": 11438978
+    },
+    {
+      "command": "gh api repos/occult-kranti/ANDOLAN/actions/artifacts/12541044900/zip",
+      "exit_code": 0,
+      "output": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/native-acceptance.zip",
+      "sha256": "b418576eef7afdde959fbcf72dde0b78b259404d87400e8bc9e5d90235d968ea",
+      "matches_github_api_digest": true
+    },
+    {
+      "command": "python3 games/yuga-native/tools/run-visual-checks.py --catalog screens --suite ui-atlas-layout --engine godot --output /workspace/scratch/reuse-next-ten/ci-recovery-34971977/baseline",
+      "exit_code": 1,
+      "checks": 42,
+      "failed_checks": 3,
+      "same_failures_as_remote": true,
+      "checked_sources_unchanged": true
+    },
+    {
+      "command": "python3 games/yuga-native/tools/run-visual-checks.py --catalog screens --suite ui-atlas-layout --engine godot --output /workspace/scratch/reuse-next-ten/ci-recovery-34971977/repaired-atlas",
+      "exit_code": 0,
+      "checks": 42,
+      "passed": true,
+      "output": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/repaired-atlas/summary.json",
+      "sha256": "873aec527f3c8f2111f4f0fa3eebc03b927fc68fa78e3808cd426290aa728bbe"
+    },
+    {
+      "command": "XDG_DATA_HOME=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-user/data XDG_CONFIG_HOME=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-user/config XDG_CACHE_HOME=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-user/cache GODOT_SILENCE_ROOT_WARNING=1 OMP_NUM_THREADS=2 timeout 45s godot --headless --path games/yuga-native --script res://tools/reuse-next-screens/adaptive_hud_cases.gd -- --report=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-repaired.json",
+      "exit_code": 0,
+      "checks": 41,
+      "passed": true,
+      "output": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-repaired.json",
+      "sha256": "b16db18c2034630e049dbc1cc21b04c3d45ebfb86f881fb9fdd4bd05062420f5"
+    },
+    {
+      "command": "XDG_DATA_HOME=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-final-user/data XDG_CONFIG_HOME=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-final-user/config XDG_CACHE_HOME=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-final-user/cache GODOT_SILENCE_ROOT_WARNING=1 OMP_NUM_THREADS=2 timeout 45s godot --headless --path games/yuga-native --script res://tools/reuse-next-screens/adaptive_hud_cases.gd -- --report=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-final.json",
+      "exit_code": 0,
+      "checks": 41,
+      "passed": true,
+      "output": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/adaptive-final.json",
+      "sha256": "e54c4223fb2947ff90e4bdcfd6f2b22160191f9044acb506e822ba49f6a7a38f"
+    },
+    {
+      "command": "python3 games/yuga-native/tools/ui-campaign/freeze.py --output /workspace/scratch/reuse-next-ten/ci-recovery-34971977/capture-project",
+      "exit_code": 0,
+      "source_files_before_fixture_augmentation": 887,
+      "import_cache_files": 386,
+      "fixture_augmentation": "Copied tools/reuse-next-screens immediate files and appended their exact hashes to source_sha256; no engine import or asset modification.",
+      "freeze_sha256": "06b93cbbed2a0b219213eebdd0e5260d432bd1ce88d5e1fcc1918622612fe099"
+    },
+    {
+      "command": "python3 games/yuga-native/tools/reuse-next-screens/capture_atlas_repair.py --project /workspace/scratch/reuse-next-ten/ci-recovery-34971977/capture-project --output /workspace/scratch/reuse-next-ten/ci-recovery-34971977/actual-atlas-repair --runtime /workspace/scratch/ten-rounds-oct23/runtime/runtime --engine /workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot --display 174 --timeout 300 --qualified-inherited-cache",
+      "exit_code": 0,
+      "passed": true,
+      "elapsed_seconds": 64.44405388832092,
+      "output": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/actual-atlas-repair",
+      "exact_child_command": [
+        "/workspace/scratch/ten-rounds-oct23/runtime-release/restored/godot",
+        "--path",
+        "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/capture-project",
+        "--display-driver",
+        "x11",
+        "--rendering-method",
+        "forward_plus",
+        "--rendering-driver",
+        "vulkan",
+        "--audio-driver",
+        "Dummy",
+        "--fixed-fps",
+        "30",
+        "--disable-vsync",
+        "--resolution",
+        "960x540",
+        "--script",
+        "/workspace/ANDOLAN/games/yuga-native/tools/reuse-next-screens/confirm_atlas_repair.gd",
+        "--",
+        "--capture",
+        "--output=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/actual-atlas-repair"
+      ]
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "source_pins": {
+    "games/yuga-native/tests/desktop_s3_atlas_layout_cases.gd": {
+      "bytes": 14860,
+      "sha256": "f7d9b00c6d7ffa8db508bbd3495418dec8bbfda3c5a8d25ec9d5fe31331cfa1c"
+    },
+    "games/yuga-native/scripts/confluence_world.gd": {
+      "bytes": 92595,
+      "sha256": "4f81cbbe3d0fba76e39daae76bee7c312b1feec9e87c283bcb0e116e419eb8ea"
+    },
+    "games/yuga-native/scripts/world_atlas.gd": {
+      "bytes": 6341,
+      "sha256": "138c54e86adc4f41ee0ee915619efd58ec8fd6ed6c0d53179f9b770d64b7fdc7"
+    },
+    "games/yuga-native/tools/reuse-next-screens/adaptive_hud_cases.gd": {
+      "bytes": 4638,
+      "sha256": "5aae5a467d023f975dd04eb230a671e303d9d799f271ff9b82d4cb0e44e00e88"
+    },
+    "games/yuga-native/docs/research/reuse-next-ten/W2/README.md": {
+      "bytes": 4131,
+      "sha256": "18c6e07f9329e0f745480632554b68031e55f36a5f46bf676221b3eb5571e984"
+    }
+  },
+  "retained_observations": [
+    {
+      "path": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/native-job.json",
+      "sha256": "6ba8dfe72e01dea205efdd568db96010ca66cb50ade2bc9d0c8ce04454c374a7"
+    },
+    {
+      "path": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/native-job.log",
+      "sha256": "cca77b5f5dc3b45a299183dfee5a3a6759011a3d9b225fe5a5dbbfc2ff0dd73c"
+    },
+    {
+      "path": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/artifact/_temp/screen-checks/reports/ui-atlas-layout.json",
+      "sha256": "1e1cc03f8e143c58db86537d8a4b86361e990cf85240d329ee6aa53761f7e906"
+    },
+    {
+      "path": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/baseline/summary.json",
+      "sha256": "0868e2c06a3cdc9cba2f9e8c15a335e1617ed5a4323c7d50a482b05e11af705f"
+    }
+  ],
+  "limits": [
+    "Original remote34971977 foundation CI failure is preserved. The root must verify a successor run after commit/push.",
+    "No full suite rerun; only affected42-check atlas and41-case adaptive suites.",
+    "Four actual frames are arranged idle/returning states on a frozen source copy, not a repeated19-step native-input journey or packaged build.",
+    "Tiny480x270 logical view is dense; no whole-game art, Windows execution, online or hardware-performance qualification.",
+    "No commit or push performed by this worker.",
+    "Original remote atlas stderr retains ObjectDB leak warning; repaired atlas, adaptive and actual-render logs contain no warnings/errors."
+  ],
+  "repair": {
+    "file": "games/yuga-native/scripts/confluence_world.gd",
+    "change": "Constrained atlas width132\u2192144 leaves120px plot; height floor64\u2192100 is clamped by actual available space above combat. Existing80px combat HUD and fonts unchanged.",
+    "controls_preserved": [
+      "Legacy42-check atlas test unchanged.",
+      "All41 adaptive HUD cases retain previous label, status, glyph, remap, authority-clock and footprint assertions.",
+      "Adaptive suite additionally requires120px plot width,100px height when visible available space permits, and contained core captions."
+    ]
+  },
+  "final_source_pins": {
+    "games/yuga-native/scripts/confluence_world.gd": {
+      "bytes": 92727,
+      "sha256": "d8632c0e34a406de6bb71ee5ee9e315deb765b471d2ec32badb23a22d0f0d2f0"
+    },
+    "games/yuga-native/scripts/rama_hero_hud.gd": {
+      "bytes": 15518,
+      "sha256": "3ced572737b23b1a58b32e1ae3c94ef217f7561b028f38ea1255bbfb5bde143f"
+    },
+    "games/yuga-native/tools/reuse-next-screens/adaptive_hud_cases.gd": {
+      "bytes": 5408,
+      "sha256": "6407427c5915caed94a0d8890ab286e288ab5a48952ab1f51bda146d0d6d2880"
+    },
+    "games/yuga-native/tools/reuse-next-screens/confirm_atlas_repair.gd": {
+      "bytes": 2768,
+      "sha256": "0e9f1fdecc55da493f573cd2aeeffb52666d7587eafee0f269c5bcb3daf62bf1"
+    },
+    "games/yuga-native/tools/reuse-next-screens/capture_atlas_repair.py": {
+      "bytes": 280,
+      "sha256": "43ebc7fd90d79d3c673f83b6ec9058e7d2e0dc2dc87f987f89a76cab9913085a"
+    },
+    "games/yuga-native/tools/reuse-next-screens/capture_hud.py": {
+      "bytes": 7227,
+      "sha256": "1b4275537e5e67b60500a3471065a07e8199a65f149b729aea0a59d060557965"
+    }
+  },
+  "actual": {
+    "status": "passed",
+    "project": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/capture-project",
+    "freeze_sha256": "06b93cbbed2a0b219213eebdd0e5260d432bd1ce88d5e1fcc1918622612fe099",
+    "output": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/actual-atlas-repair",
+    "durable_output": "actual/",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_seconds": 64.44405388832092,
+    "engine_sha256": "e69af4f6f07876a83e49a02a86928db00993f88594c05ae589e4021d6916d54e",
+    "source_unchanged": true,
+    "imports_unchanged": true,
+    "seed_unchanged": true,
+    "rendering": "X11 Forward+ llvmpipe software rendering; MSAA2 before root.show; fixedfps30; LP_NUM_THREADS2; OMP_NUM_THREADS2; inherited warm cache; no CPU affinity change.",
+    "runtime_warnings_errors": [],
+    "samples": [
+      {
+        "id": "idle-base1280-scale200",
+        "logical": "(640.0, 360.0)",
+        "hud": {
+          "h": 80.0,
+          "w": 616.0,
+          "x": 12.0,
+          "y": 272.0
+        },
+        "summary": {
+          "h": 80.0,
+          "w": 460.0,
+          "x": 12.0,
+          "y": 12.0
+        },
+        "map": {
+          "h": 164.0,
+          "w": 144.0,
+          "x": 484.0,
+          "y": 12.0
+        },
+        "map_plot": "[P: (12.0, 16.0), S: (120.0, 100.0)]",
+        "png": {
+          "frame": 17,
+          "path": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/actual-atlas-repair/idle-base1280-scale200.png",
+          "save_error": 0,
+          "sha256": "566cfe4e56c240621136e8e382cb26446758e2acaf5a7241df2f02bcf464f259"
+        }
+      },
+      {
+        "id": "idle-base960-scale200",
+        "logical": "(480.0, 270.0)",
+        "hud": {
+          "h": 80.0,
+          "w": 456.0,
+          "x": 12.0,
+          "y": 182.0
+        },
+        "summary": {
+          "h": 125.0,
+          "w": 300.0,
+          "x": 12.0,
+          "y": 12.0
+        },
+        "map": {
+          "h": 158.0,
+          "w": 144.0,
+          "x": 324.0,
+          "y": 12.0
+        },
+        "map_plot": "[P: (12.0, 16.0), S: (120.0, 94.0)]",
+        "png": {
+          "frame": 24,
+          "path": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/actual-atlas-repair/idle-base960-scale200.png",
+          "save_error": 0,
+          "sha256": "2e64d7f192fc281f8d9d9df2b0367d439c912ca593953adadb5c903b06dc7931"
+        }
+      },
+      {
+        "id": "returning-base1280-scale200",
+        "logical": "(640.0, 360.0)",
+        "hud": {
+          "h": 80.0,
+          "w": 616.0,
+          "x": 12.0,
+          "y": 272.0
+        },
+        "summary": {
+          "h": 102.0,
+          "w": 460.0,
+          "x": 12.0,
+          "y": 12.0
+        },
+        "map": {
+          "h": 164.0,
+          "w": 144.0,
+          "x": 484.0,
+          "y": 12.0
+        },
+        "map_plot": "[P: (12.0, 16.0), S: (120.0, 100.0)]",
+        "png": {
+          "frame": 31,
+          "path": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/actual-atlas-repair/returning-base1280-scale200.png",
+          "save_error": 0,
+          "sha256": "85d73cfcdcc85e0761e797162d7eaa20e70e6a1f3a1fd43ddf3013a1c051f0d1"
+        }
+      },
+      {
+        "id": "returning-base960-scale200",
+        "logical": "(480.0, 270.0)",
+        "hud": {
+          "h": 80.0,
+          "w": 456.0,
+          "x": 12.0,
+          "y": 182.0
+        },
+        "summary": {
+          "h": 148.0,
+          "w": 300.0,
+          "x": 12.0,
+          "y": 12.0
+        },
+        "map": {
+          "h": 158.0,
+          "w": 144.0,
+          "x": 324.0,
+          "y": 12.0
+        },
+        "map_plot": "[P: (12.0, 16.0), S: (120.0, 94.0)]",
+        "png": {
+          "frame": 38,
+          "path": "/workspace/scratch/reuse-next-ten/ci-recovery-34971977/actual-atlas-repair/returning-base960-scale200.png",
+          "save_error": 0,
+          "sha256": "67c5da02ed97d99d1947d78a539b11f1031ebacb4fb653f6b6c78be9a024deb9"
+        }
+      }
+    ]
+  },
+  "passed": true,
+  "visual_review": {
+    "self_review": "All four original PNGs opened and inspected. Default200 plot separates captions/marks; tiny200 retains complete summary text and positive peer gaps. The stress layout remains dense with hero upper-body occlusion. Core/player spawn overlap remains a truthful shared map position.",
+    "independent_root_review": "Root independently opened all four originals and accepted the bounded readable-map fix: default200 clearly separates marks; tiny200 is dense but contained with positive gaps and improved caption separation.",
+    "scope": "Bounded layout acceptance only; not a new native-input journey or hardware performance result."
+  },
+  "changed_files": [
+    "games/yuga-native/scripts/confluence_world.gd",
+    "games/yuga-native/tools/reuse-next-screens/adaptive_hud_cases.gd",
+    "games/yuga-native/tools/reuse-next-screens/confirm_atlas_repair.gd",
+    "games/yuga-native/tools/reuse-next-screens/capture_atlas_repair.py",
+    "games/yuga-native/docs/research/reuse-next-ten/root/ci-repair/"
+  ],
+  "completion": {
+    "first_actual_failure_identified": true,
+    "narrow_runtime_fix": true,
+    "legacy_thresholds_preserved": true,
+    "focused_checks_passed": true,
+    "four_actual_frames_reviewed": true,
+    "root_independently_reviewed": true,
+    "receipt_written": true,
+    "next_owner": "Root: commit/push and verify successor CI/package candidate."
+  }
+}

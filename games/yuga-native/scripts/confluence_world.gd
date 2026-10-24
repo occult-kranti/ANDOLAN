@@ -1069,7 +1069,9 @@ func _layout_atlas() -> void:
 	var key_width:=0.0
 	for line in legend.text.split("\n"):
 		key_width=maxf(key_width,legend.get_theme_font("font").get_string_size(line,HORIZONTAL_ALIGNMENT_LEFT,-1,legend.get_theme_font_size("font_size")).x)
-	var width:=132.0 if _constrained_world else maxf(152 if compact else 166,key_width+24)
+	# Retain a 120px plot after the atlas' horizontal padding even when the
+	# summary and combat cards use their constrained layout.
+	var width:=144.0 if _constrained_world else maxf(152 if compact else 166,key_width+24)
 	width=minf(width,maxf(1,screen.x-margin*2))
 	var available:=screen.y+rama_hud.offset_top-margin*2 if _constrained_world else traversal.position.y-margin-HeroUI.SPACE_MD
 	var map_height:=maxf(1,minf(300 if compact else 316,available))
@@ -1080,9 +1082,9 @@ func _layout_atlas() -> void:
 	legend.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART if _constrained_world else TextServer.AUTOWRAP_OFF
 	var legend_height:=legend.get_theme_font("font").get_multiline_string_size(legend.text,HORIZONTAL_ALIGNMENT_LEFT,maxf(1,width-24),legend.get_theme_font_size("font_size")).y
 	map_control.footer_height=legend_height+HeroUI.SPACE_MD
-	# A shorter locator must still separate the live core captions and marks.
-	# Preserve the previous smallest readable plot rather than compressing it.
-	if _constrained_world: map_height=minf(available,maxf(map_height,64+32+map_control.footer_height))
+	# Leave room for the live core captions and marks whenever the space above
+	# combat permits. Shorter canvases keep the available locator and F1 map.
+	if _constrained_world: map_height=minf(available,maxf(map_height,100+32+map_control.footer_height))
 	map_control.size=Vector2(width,map_height)
 	map_control.position=Vector2(screen.x-margin-width,margin)
 	legend.offset_top=-map_control.footer_height

@@ -1,0 +1,67 @@
+{
+  "catalog": "screens",
+  "checked_sources_unchanged": true,
+  "checks": 42,
+  "engine_probe": {
+    "command": [
+      "/usr/local/bin/godot",
+      "--version"
+    ],
+    "exit_code": 0,
+    "log_limit_exceeded": false,
+    "logged_errors": [],
+    "passed": true,
+    "process_error": null,
+    "stderr": "logs/engine-version.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "logs/engine-version.stdout",
+    "stdout_sha256": "1e07780c365549219ffd8e6bd120a818c80424e8295d4ee7451c10d0ed0fa84f",
+    "timed_out": false,
+    "wall_seconds": 0.064
+  },
+  "engine_version": "4.6.3.stable.official.7d41c59c4",
+  "passed": true,
+  "schema": 1,
+  "scope": "Headless native screen, glyph, input-state and scene-lifecycle checks only; no OS-input, rendered-layout, art, GPU performance, online or packaged-release acceptance.",
+  "selected_suites": [
+    "ui-atlas-layout"
+  ],
+  "sources_after_sha256": "e20aa7a2638a14717bacd4abf55b7d7d39b7f7b46778e263d4e77935b3a5e31b",
+  "sources_before_sha256": "e20aa7a2638a14717bacd4abf55b7d7d39b7f7b46778e263d4e77935b3a5e31b",
+  "suites": [
+    {
+      "checks": 42,
+      "command": [
+        "/usr/local/bin/godot",
+        "--headless",
+        "--single-threaded-scene",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "/workspace/ANDOLAN/games/yuga-native",
+        "--fixed-fps",
+        "60",
+        "--script",
+        "res://tests/desktop_s3_atlas_layout_cases.gd",
+        "--",
+        "--report=/workspace/scratch/reuse-next-ten/ci-recovery-34971977/repaired-atlas/reports/ui-atlas-layout.json"
+      ],
+      "executed": true,
+      "exit_code": 0,
+      "id": "ui-atlas-layout",
+      "log_limit_exceeded": false,
+      "logged_errors": [],
+      "passed": true,
+      "problems": [],
+      "process_error": null,
+      "report": "reports/ui-atlas-layout.json",
+      "report_sha256": "b81a4ceb599a9a6f23ffcc84006ff6a93d83acc24f53845ac0d0c713cf568654",
+      "stderr": "logs/ui-atlas-layout.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "logs/ui-atlas-layout.stdout",
+      "stdout_sha256": "85f9f623a6ae5934abb9f6bc6c78aaa2b3d706f38e62b68d127b5b895a4ff173",
+      "timed_out": false,
+      "wall_seconds": 4.595
+    }
+  ]
+}
