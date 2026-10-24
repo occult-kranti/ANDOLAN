@@ -5,6 +5,9 @@ This packet continues source `f09953428767ddbdd7ede27fe53ca72bb3483d15` on
 production. The [ten-stage execution guide](../ten-rounds-oct23/REUSE_FIRST_NEXT_TEN.md)
 defines their dependencies; a scheduled stage is not a completed game round.
 
+[Final source, publication and next-owner handoff](root/FINAL_HANDOFF.md) is the
+shortest entry point after this continuation.
+
 **Latest runtime repair:** `c97bb67e5947f2bd5257af48f1257a93d0a50469` restores
 readable minimap bounds after the full CI run on `34971977` exposed a failure
 outside the earlier narrow checks. The original 42 atlas assertions pass without
