@@ -1,14 +1,14 @@
 {
   "source": {
     "branch": "game/yuga-native-production",
-    "commit": "ef5609846d88fae247d220610f6343dee557a0c6",
+    "commit": "1ad9641e1f08e251c0605ed06bdf31775172bdbf",
     "dirty": false
   },
   "host": {
     "logical_cpus": 5,
     "quota_cpus": 4.0,
     "memory_total_bytes": 34359738368,
-    "memory_available_bytes": 28176384000,
+    "memory_available_bytes": 27399077888,
     "gpu": {
       "available": false,
       "devices": [],
@@ -17,11 +17,11 @@
   },
   "schema_version": 1,
   "mode": "snapshot",
-  "collected_at": "2026-10-24T00:51:08+00:00",
+  "collected_at": "2026-10-24T01:37:11+00:00",
   "run": {
     "id": "reuse-next-ten",
     "title": "YUGA — Rama, Lanka and native play continuation",
-    "updated_at": "2026-10-24T00:51:08+00:00"
+    "updated_at": "2026-10-24T01:35:11+00:00"
   },
   "jobs": [
     {
@@ -192,6 +192,88 @@
       "verification": {
         "kind": "explicit_record"
       }
+    },
+    {
+      "id": "advisor-world",
+      "title": "Source 2 and Overwatch tooling audit",
+      "owner": "W4",
+      "stage": "Source and adoption audit",
+      "status": "complete",
+      "device": "CPU",
+      "model": null,
+      "summary": "Source 2 event-window algorithm adapted for offline inspection:24 actual Godot fixture checks and67 inspector checks. OWLib schema reviewed; production scheduling unchanged.",
+      "outputs": [
+        {
+          "label": "Source and adoption decisions",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/reuse-next-ten/reuse-advisor-world/README.md"
+        }
+      ],
+      "next_step": "Implement the explicitly scoped next experiment only after its required input/pose evidence; no whole-game source or art acceptance.",
+      "updated_at": "2026-10-24T01:13:24+00:00",
+      "started_at": "2026-10-24T00:57:34+00:00",
+      "finished_at": "2026-10-24T01:13:24+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "advisor-hero",
+      "title": "Reusable character and hair sources",
+      "owner": "W3",
+      "stage": "Source and adoption audit",
+      "status": "complete",
+      "device": "CPU",
+      "model": null,
+      "summary": "CC0 donor guides and existing density/material controls reused for actual textured Rama fit.14,744 curves/899,384 points; protected body/crown unchanged. Editable direction accepted; canonical hero unchanged.",
+      "outputs": [
+        {
+          "label": "Actual profile study",
+          "kind": "image",
+          "url": "media/rama-mpfb-profile.png"
+        },
+        {
+          "label": "Actual rear study",
+          "kind": "image",
+          "url": "media/rama-mpfb-rear.png"
+        },
+        {
+          "label": "Source/license/recovery",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/reuse-next-ten/reuse-advisor-hero/README.md"
+        }
+      ],
+      "next_step": "Reuse card/texture baking, bind to current rig and qualify LOD/contact/motion/native views before promotion.",
+      "updated_at": "2026-10-24T01:34:01+00:00",
+      "started_at": "2026-10-24T00:57:34+00:00",
+      "finished_at": "2026-10-24T01:34:01+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "advisor-systems",
+      "title": "Reusable game-system implementations",
+      "owner": "W5",
+      "stage": "Source and adoption audit",
+      "status": "complete",
+      "device": "CPU",
+      "model": null,
+      "summary": "Thirteen pinned MIT source files inspected;6 exact-source Godot checks and retained counterexamples. Narrow quaternion/damping candidates proposed; full framework replacement rejected.",
+      "outputs": [
+        {
+          "label": "Source and adoption decisions",
+          "kind": "report",
+          "path": "games/yuga-native/docs/research/reuse-next-ten/reuse-advisor-systems/README.md"
+        }
+      ],
+      "next_step": "Implement the explicitly scoped next experiment only after its required input/pose evidence; no whole-game source or art acceptance.",
+      "updated_at": "2026-10-24T01:13:24+00:00",
+      "started_at": "2026-10-24T00:57:34+00:00",
+      "finished_at": "2026-10-24T01:13:24+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
     }
   ],
   "milestones": [
@@ -252,11 +334,18 @@
     {
       "id": "N10",
       "title": "Publish exact checkpoint and next repair queue",
-      "status": "review",
-      "evidence": "Source/media and next assignments prepared; exact remote CI and publication receipts follow export."
+      "status": "complete",
+      "evidence": "Verified published checkpoint and repair queue; repairedruntimec97 passed39 foundation and15 candidate steps. This export records bounded work, not completion of stages5–9."
     }
   ],
   "assets": [
+    {
+      "id": "mpfb-hair",
+      "title": "Rama — reused hair authoring study",
+      "status": "Editable candidate; not yet in game",
+      "image_url": "media/rama-mpfb-profile.png",
+      "summary": "Actual CC0 donor-based fit, using14,744 curves and existing material controls. Protected body/crown unchanged. Native cards, binding and LODs remain open."
+    },
     {
       "id": "current-screen",
       "title": "YUGA — current native screen",
@@ -288,9 +377,9 @@
     {
       "id": "hud-scale",
       "title": "Compact enlarged HUD",
-      "status": "22 actual comparison frames reviewed",
-      "image_url": "media/hud-returning-scale200.png",
-      "summary": "Retains essential text at 200% scale with smaller bottom HUD. The smallest stress viewport remains dense."
+      "status": "CI repair and four actuals accepted",
+      "image_url": "media/hud-readable-atlas.png",
+      "summary": "Readable120×100 map plot when room permits; compact80px combat retained. Tiny stress view remains dense.39/39 nativeCI passed."
     },
     {
       "id": "hair-r1",
@@ -377,6 +466,36 @@
       "url": "https://github.com/godotengine/tps-demo",
       "license": "MIT code; CC-BY-3.0 art",
       "status": "Pinned lifecycle source reviewed; no demo art or scene imported"
+    },
+    {
+      "name": "Source 2 Viewer / ValveResourceFormat",
+      "url": "https://github.com/ValveResourceFormat/ValveResourceFormat",
+      "license": "MIT tooling; game data separate",
+      "status": "Event-window algorithm adapted into tested offline inspector"
+    },
+    {
+      "name": "Overwatch DataTool / OWLib",
+      "url": "https://github.com/overtools/OWLib",
+      "license": "MIT tooling; game data separate",
+      "status": "Timed effect/attachment and map schemas inspected; no game assets imported"
+    },
+    {
+      "name": "MPFB / MakeHuman hair assets",
+      "url": "https://github.com/makehumancommunity/makehuman-static-website",
+      "license": "CC0 functional-pack assets; GPL tool code separate",
+      "status": "Existing guide curves and materials fitted/rendered; native promotion remains open"
+    },
+    {
+      "name": "netfox",
+      "url": "https://github.com/foxssake/netfox",
+      "license": "MIT code; bundled asset terms separate",
+      "status": "Typed helper tested; wholesale network replacement rejected"
+    },
+    {
+      "name": "Valorant client endpoint documentation",
+      "url": "https://github.com/techchrism/valorant-api-docs",
+      "license": "MIT tooling/docs; Riot game data separate",
+      "status": "Source types inspected; no client or gameplay engine code adopted"
     }
   ]
 }
