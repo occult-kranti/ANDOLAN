@@ -1,0 +1,118 @@
+[
+  {
+    "name": "validate",
+    "command": [
+      "python3",
+      "games/yuga-native/tools/hero-family-reuse/intake.py",
+      "validate",
+      "--manifest",
+      "games/yuga-native/docs/research/hero-family-reuse-oct23/rama-family-manifest.json",
+      "--hero",
+      "arjuna",
+      "--source",
+      "games/yuga-native/assets/heroes/rama-hero.glb",
+      "--motion",
+      "draw"
+    ],
+    "returncode": 0,
+    "diagnostics": [],
+    "elapsed": 1.417
+  },
+  {
+    "name": "intake-tests",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "games/yuga-native/tools/hero-family-reuse",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "returncode": 0,
+    "diagnostics": [],
+    "elapsed": 27.629
+  },
+  {
+    "name": "template",
+    "command": [
+      "timeout",
+      "120s",
+      "godot",
+      "--headless",
+      "--audio-driver",
+      "Dummy",
+      "--path",
+      "games/yuga-native",
+      "--script",
+      "res://tools/hero-family-reuse/probe_template.gd",
+      "--",
+      "--output=/tmp/yuga-family-pin-refresh-8h2o56du/template.json"
+    ],
+    "returncode": 0,
+    "diagnostics": [],
+    "elapsed": 2.708
+  },
+  {
+    "name": "motion",
+    "command": [
+      "timeout",
+      "120s",
+      "godot",
+      "--headless",
+      "--audio-driver",
+      "Dummy",
+      "--path",
+      "games/yuga-native",
+      "--script",
+      "res://tests/rama_motion_cases.gd",
+      "--",
+      "--report=/tmp/yuga-family-pin-refresh-8h2o56du/motion.json"
+    ],
+    "returncode": 0,
+    "diagnostics": [],
+    "elapsed": 6.043
+  },
+  {
+    "name": "power-entry",
+    "command": [
+      "timeout",
+      "120s",
+      "godot",
+      "--headless",
+      "--audio-driver",
+      "Dummy",
+      "--path",
+      "games/yuga-native",
+      "--script",
+      "res://tests/rama_power_entry_cases.gd",
+      "--",
+      "--report=/tmp/yuga-family-pin-refresh-8h2o56du/power-entry.json"
+    ],
+    "returncode": 0,
+    "diagnostics": [],
+    "elapsed": 8.276
+  },
+  {
+    "name": "completion-motion",
+    "command": [
+      "timeout",
+      "120s",
+      "godot",
+      "--headless",
+      "--audio-driver",
+      "Dummy",
+      "--path",
+      "games/yuga-native",
+      "--script",
+      "res://tests/rama_completion_motion_cases.gd",
+      "--",
+      "--report=/tmp/yuga-family-pin-refresh-8h2o56du/completion-motion.json"
+    ],
+    "returncode": 0,
+    "diagnostics": [],
+    "elapsed": 4.648
+  }
+]

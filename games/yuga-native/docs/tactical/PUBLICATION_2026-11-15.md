@@ -2,6 +2,8 @@
 
 Task `YUGA-TACTICAL-CASUAL-13`, product YUGA native desktop. This publication checkpoint preserves the studio/Rama/Sangam work and the original first-person, local 5v5 Casual mode. First team to 13 wins; sides swap after round 12. Source checkpoint: `789dd1268bbac63208d0d49ec77635dff9ce7567` on `work/yuga-studio`, destined for `game/yuga-native-production`.
 
+**Published and independently checked:** `d541dbcff7273fffa464660f7e46f674ed1600b5` is pushed to `game/yuga-native-production`. [Deployment succeeded](https://github.com/occult-kranti/ANDOLAN/actions/runs/43788072967); all 65 public HTTP observations, seven exact-byte/source checks and 21 actual public Chromium checks passed. Desktop/mobile originals were reviewed. [Publication receipt](evidence/publication-r1/publication-result.json).
+
 The [production dashboard](https://occult-kranti.github.io/ANDOLAN/production/) is a dated saved snapshot. Deployment and public-byte verification are recorded in [the publication packet](evidence/publication-r1/README.md). Current development continues independently in the shared checkout; those later edits are preserved separately.
 
 ## Verified evidence
@@ -27,3 +29,7 @@ The first package export generated three missing Godot metadata sidecars and was
 The source commit contains tactical runtime/scenes/assets/tests/notices, original studio and Sangam authoring sources, prior source-bound evidence, the new startup and legacy-screen CI routing, and dashboard data/media. Supplied commercial-reference videos, bulk extracted reference images/audio/transcripts and disposable user/cache state remain local; their analytical reports and receipts are retained. No local files were deleted.
 
 A newer SURYA weapon-art pass is actively changing the shared checkout. It remains outside this publication's verified runtime. The native art/integration owner should finish and qualify that successor before promotion. Root/release owns publication receipts. Final art/contact/motion, human balance/listening, Windows execution, physical-GPU performance, online Casual and Ranked remain open. Historical campaign counts stay 17/78 scoped packets and 0/13 complete rounds; mobile remains deferred.
+
+## Foundation CI correction
+
+The [native package candidate workflow](https://github.com/occult-kranti/ANDOLAN/actions/runs/43788073047) succeeded for the publication source. The [first foundation run](https://github.com/occult-kranti/ANDOLAN/actions/runs/43788073049) passed tactical Casual, then rejected a stale Rama-motion source pin in the historical Arjuna authoring manifest. The validator was preserved. A deliberate intake requalification changed only the motion byte count/hash; all other 18 source pins and rig/library/socket fields stayed identical. The exact rejected command now passes, along with 345 existing authoring, native-template and motion checks. [Correction evidence](evidence/publication-r1/authoring-pin-refresh/). The successor foundation result is recorded separately; no runtime bytes changed in this correction.

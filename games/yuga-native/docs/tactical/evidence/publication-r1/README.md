@@ -77,3 +77,9 @@ Additional packaging guards: 22 snapshot provenance cases and 45 native contract
 Verified runtime source commit: `789dd1268bbac63208d0d49ec77635dff9ce7567`. The package source set in `packaged-source.json` matches 700 of that commit's 704 runtime files; four later map/minimap/objective-hint source changes are explicitly separated in `source-commit-match.json`; three generated Godot sidecars were added after the visual/source checks without changing code or asset bytes. Package successor `package-r2` passed complete ZIP CRC/payload and PCK resource checks for Linux and Windows. The current extracted Linux ordinary-input route is recorded separately. New concurrent weapon-art changes in the live checkout are preserved outside this verified commit. The final dashboard export samples a clean copy of the committed checkpoint, never relabeling the active dirty checkout as clean.
 
 Use [the publication handoff](../../PUBLICATION_2026-11-15.md) for the source/package distinction and actual bounded Linux input. The active development DELIVERY.md may describe a later concurrent weapon-art pass.
+
+## Published result
+
+Source publication `d541dbcff7273fffa464660f7e46f674ed1600b5` is verified on the remote production branch. Observatory workflow 43788072967 succeeded. `public-bytes/receipt.json` passes all 7 checks across 65 HTTP responses, including every approved byte and preserved browser entry. `public-browser/browser-check.json` passes 21 real public desktop/mobile checks; root reviewed both originals. `publication-result.json` owns the final publication scope. Later working weapon-art edits remain local and untouched.
+
+The original foundation CI source-pin rejection and successful local correction are preserved in `ci-d541/` and `authoring-pin-refresh/`. Only the historical authoring dependency manifest changed; the validator and all runtime source files stayed unchanged. 345 existing requalification checks passed before the successor push.
