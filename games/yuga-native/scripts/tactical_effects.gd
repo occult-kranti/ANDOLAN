@@ -2,6 +2,7 @@ extends Node3D
 ## Effects have bounded lifetimes on the same paused match clock as the authority.
 const VeilShader=preload("res://shaders/tactical_veil.gdshader")
 const WardShader=preload("res://shaders/tactical_ward.gdshader")
+const PulseShader=preload("res://shaders/tactical_pulse.gdshader")
 var effects:Array[Dictionary]=[]
 var smoke:Array[Dictionary]=[]
 var materials:Dictionary={}
@@ -21,8 +22,10 @@ func trace(from:Vector3,to:Vector3,solar:=false,enemy:=false)->void:
 	if distance<.01:return
 	var geometry:=CylinderMesh.new();geometry.top_radius=.025 if solar else .008;geometry.bottom_radius=geometry.top_radius;geometry.height=distance;geometry.radial_segments=6
 	var color:=Color("ffb3a1") if enemy else Color("ffe1a0")
-	var node:=mesh(self,geometry,mat("solar" if solar else ("hostile" if enemy else "trace"),color,3),(from+to)*.5)
-	node.quaternion=Quaternion(Vector3.UP,(to-from).normalized());effects.append({"node":node,"life":.22 if solar else .10,"duration":.22 if solar else .10,"kind":"trace"})
+	var node:=mesh(self,geometry,mat("solar" if solar else ("hostile" if enemy else "trace"),color,2.1),(from+to)*.5)
+	node.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	# Distinct solar releases remain visible but do not join into one persistent beam.
+	node.quaternion=Quaternion(Vector3.UP,(to-from).normalized());effects.append({"node":node,"life":.16 if solar else .10,"duration":.16 if solar else .10,"kind":"trace"})
 	var impact:=SphereMesh.new();impact.radius=.07 if solar else .025;impact.height=impact.radius*2;impact.radial_segments=8;impact.rings=4
 	var spark:=mesh(self,impact,mat("spark",Color("ffe7b2"),3),to);effects.append({"node":spark,"life":.15,"duration":.15,"kind":"spark"})
 
@@ -53,8 +56,10 @@ func ward(at:Vector3,yaw:float)->void:
 	effects.append({"node":body,"life":10.0,"duration":10.0,"kind":"ward","material":material})
 
 func burst(at:Vector3,color:=Color("edc27d"))->void:
-	var ring:=TorusMesh.new();ring.inner_radius=.35;ring.outer_radius=.40;ring.rings=24;ring.ring_segments=6
-	var n:=mesh(self,ring,mat("burst",color,2),at+Vector3(0,.04,0));effects.append({"node":n,"life":.65,"duration":.65,"kind":"burst"})
+	var ring:=TorusMesh.new();ring.inner_radius=.36;ring.outer_radius=.368;ring.rings=64;ring.ring_segments=8
+	var material:=ShaderMaterial.new();material.shader=PulseShader;material.set_shader_parameter("tint",color)
+	var n:=mesh(self,ring,material,at+Vector3(0,.045,0));n.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	effects.append({"node":n,"life":.65,"duration":.65,"kind":"burst","material":material})
 
 func step(delta:float)->void:
 	var blooms:Array[Vector3]=[]
@@ -63,7 +68,9 @@ func step(delta:float)->void:
 		if not is_instance_valid(entry.node):continue
 		if entry.has("material"):entry.material.set_shader_parameter("age",entry.duration-entry.life)
 		if entry.kind=="ward" and float(entry.node.get_meta("ward_health",0))<=0:entry.life=0
-		if entry.kind=="burst":entry.node.scale=Vector3.ONE*(1.0+(1.0-entry.life/entry.duration)*10)
+		if entry.kind=="burst":
+			var progress:float=clampf(1.0-entry.life/entry.duration,0.0,1.0)
+			entry.node.scale=Vector3.ONE*(1.0+sqrt(progress)*7.0)
 		if entry.kind=="veil_seed":
 			var progress:=clampf(1.0-entry.life/entry.duration,0,1)
 			entry.node.position=entry.from.lerp(entry.to,progress)+Vector3(0,sin(progress*PI)*1.7,0)

@@ -1,0 +1,43 @@
+{
+  "task_id": "YUGA-TACTICAL-CASUAL-13",
+  "pass": "independent map R2 originals + minimap footprint freeze",
+  "observed_head": "789dd1268bbac63208d0d49ec77635dff9ce7567",
+  "baseline_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "actual_render": {
+    "renderer": "forward_plus",
+    "adapter": "llvmpipe (LLVM 20.1.2, 256 bits)",
+    "complete": true,
+    "scope": "Actual native rendered screens and geometry. Fixture authority states stage plant/results for art review; not natural gameplay/input or hardware performance proof.",
+    "review_sha256": "775fb51f8d02003846362865ff954555c72c9986c3dac3ae1fe8366d30eb0df9"
+  },
+  "personally_viewed_originals": {
+    "05-a-approach.png": "d8d840311a1db92138dbbf01fe75431641ba19fabf7de1b2d6ee5c0bd2f465fa",
+    "09-map-overview.png": "734bed0d14b218f99544e251c2faf044657625eeb75ca9acd298a1fc29cd70ed",
+    "10-b-site-architecture.png": "f8d7752b2b048b5fb19aa50d513077ef454ca30fe93c23df197cb41d9d6f7eef",
+    "07-ward-and-veil.png": "fffc13553f860b2caba63c4f2936e85fcafdbc97e0d7a052bf1c6faccc0bdcad"
+  },
+  "findings": [
+    "05: slab paving reads at player scale; canopy, lantern and counter frame approach; cast shadows anchor these props.",
+    "09: galleries connect inner blocks, boundary facades establish continuous enclosure, and planters/landmarks add distinct forms. Repeated modular architecture and large open spaces remain evident.",
+    "10: B is readable from the approach after billboard change; orange plant outline remains distinct from quiet paving.",
+    "07: cyan ward silhouette stays readable against restrained floor and walls. No natural input or temporal effect acceptance from this still."
+  ],
+  "decision": "Focused correction improves the rejected R1 appearance; accepted as the next original tactical art checkpoint, not a finished AAA city or hardware performance result.",
+  "post_capture_data_only_presentation_change": {
+    "static_details": 36,
+    "description": "8 counter,16 post and12 planter physics boxes now consume exact shared JSON base positions/sizes for minimap. Ground visual meshes and geometry stay unchanged; overhead galleries excluded.",
+    "preflight": "minimap-footprints-preflight.json",
+    "preflight_sha256": "952ae32e96285187b09ba5d8df4bae9e379e1a683dfbf09de129c4a1ecebe4f5",
+    "actual_runtime_matches": 36
+  },
+  "frozen_sources": {
+    "games/yuga-native/scripts/tactical_map.gd": "558396c827017acfc8510a984f99ebd181113fd9cbb50318d284aa74b2a52145",
+    "games/yuga-native/assets/tactical/map.json": "29be60f2a0db7d971cb579240d82fea80f3a0d8d6f1ad6400b91a51ea2338750"
+  },
+  "limits": [
+    "Only the four named R2 originals personally reviewed by this worker.",
+    "No new broad335 navigation test run during art correction.",
+    "Blender gun authoring is a separate next artifact; R2 gun remains procedural."
+  ],
+  "next_owner": "UI draws partitions/static_details; root integrates SURYA and captures narrow native successor."
+}

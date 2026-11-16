@@ -4,6 +4,8 @@ const PROFILES := {
 	"pistol": {"name":"ARKA / solar sidearm", "magazine":12, "reserve":36, "damage":28.0, "interval":.28, "reload":1.55, "spread":.009},
 	"carbine": {"name":"SURYA / mythic carbine", "magazine":24, "reserve":72, "damage":34.0, "interval":.12, "reload":2.1, "spread":.013}
 }
+const CARBINE_ASSET:="res://assets/tactical/surya-carbine.glb"
+const CastMotion = preload("res://scripts/tactical_cast_motion.gd")
 var weapon_id := "pistol"
 var ammo := 12
 var reserve := 36
@@ -18,11 +20,33 @@ var model: Node3D
 var magazine: Node3D
 var muzzle: MeshInstance3D
 var support_hand:Node3D
+var cast_motion: Node3D
 var base_position := Vector3(.24,-.22,-.58)
 var _materials := {}
 
 func _ready() -> void:
+	_ensure_cast_motion()
 	_build()
+	reset_presentation()
+
+## Called only after the world accepts an ability. This never spends a charge,
+## delays a shot, starts a timer, or changes firearm/reload authority.
+func present_ability(slot: String) -> bool:
+	_ensure_cast_motion()
+	return cast_motion.begin(slot, reduced_motion)
+
+## Immediate visual lifecycle reset for round restart, equipment changes/death.
+## Ammunition, recovery and reload timers retain their own existing ownership.
+func reset_presentation() -> void:
+	if is_instance_valid(cast_motion): cast_motion.reset()
+	if is_instance_valid(model): _apply_model_pose()
+
+func _ensure_cast_motion() -> void:
+	if is_instance_valid(cast_motion): return
+	cast_motion = CastMotion.new()
+	cast_motion.name = "RamaArticulatedCastingHand"
+	# Sibling of model: lowering the rifle must not lower the casting arm with it.
+	add_child(cast_motion)
 
 func equip(id: String, refill := true) -> void:
 	if id not in PROFILES: return
@@ -31,9 +55,11 @@ func equip(id: String, refill := true) -> void:
 	if refill:
 		ammo = int(PROFILES[id].magazine); reserve = int(PROFILES[id].reserve)
 		reload_remaining = 0.0; recovery = 0.0
+	if changed or refill: reset_presentation()
 	if changed and is_inside_tree(): _build()
 
 func step(delta: float) -> void:
+	if not is_finite(delta) or delta <= 0.0: return
 	clock += delta
 	recovery = maxf(0, recovery-delta)
 	recoil = move_toward(recoil, 0, delta*4)
@@ -42,10 +68,14 @@ func step(delta: float) -> void:
 		if reload_remaining == 0:
 			var amount := mini(int(PROFILES[weapon_id].magazine)-ammo,reserve)
 			ammo += amount; reserve -= amount
+	if is_instance_valid(cast_motion): cast_motion.step(delta, reduced_motion)
 	if not is_instance_valid(model): return
 	var amount := 0.0 if reduced_motion else minf(moving/6.0,1.0)
-	var target := Vector3(0,-.112,-.40) if ads else base_position
+	var target := Vector3(0,-.104,-.70) if ads else base_position
 	position = position.lerp(target + Vector3(sin(clock*10)*.008,absf(cos(clock*10))*.008,0)*amount, minf(1,delta*14))
+	_apply_model_pose()
+
+func _apply_model_pose() -> void:
 	var progress := reload_progress()
 	model.rotation = Vector3(recoil*.10,0,recoil*-.04)
 	model.position = Vector3(0,0,recoil*.045)
@@ -58,16 +88,23 @@ func step(delta: float) -> void:
 		support_hand.position=Vector3(-.02,-.075,-.30).lerp(Vector3(-.04,-.20,-.14),reach)
 		support_hand.position.y-=reach*.18
 		support_hand.rotation.z=-.7+reach*.45
+	var cast: Dictionary = cast_motion.sample() if is_instance_valid(cast_motion) else {}
+	model.position += cast.get("weapon_position", Vector3.ZERO)
+	model.rotation += cast.get("weapon_rotation", Vector3.ZERO)
+	if is_instance_valid(support_hand): support_hand.visible = not bool(cast.get("active", false))
 	if is_instance_valid(muzzle): muzzle.visible = recovery > float(PROFILES[weapon_id].interval)-.045
 
 func fire() -> bool:
 	if ammo <= 0 or recovery>0 or reload_remaining>0: return false
 	ammo -= 1; recovery = float(PROFILES[weapon_id].interval); recoil = minf(1.8,recoil+.8)
+	# Successful firearm input retains priority; presentation returns smoothly.
+	if is_instance_valid(cast_motion): cast_motion.cancel()
 	return true
 
 func reload() -> bool:
 	if reload_remaining>0 or ammo>=int(PROFILES[weapon_id].magazine) or reserve<=0: return false
 	reload_remaining = float(PROFILES[weapon_id].reload)
+	if is_instance_valid(cast_motion): cast_motion.cancel()
 	return true
 
 func reload_progress() -> float:
@@ -126,8 +163,9 @@ func _cylinder(parent:Node3D, radius:float, length:float, at:Vector3, material:M
 	parent.add_child(n); return n
 
 func _build() -> void:
+	reset_presentation()
 	if is_instance_valid(model): remove_child(model); model.queue_free()
-	support_hand=null
+	support_hand=null; magazine=null; muzzle=null
 	model=Node3D.new(); model.name="SuryaOriginalWeapon"; add_child(model)
 	var brass:=_mat("brass",Color("b89750"),.8)
 	var edge:=_mat("edge",Color("eed198"),.7)
@@ -137,6 +175,17 @@ func _build() -> void:
 	var skin:=_mat("skin",Color("965e3d"))
 	var cloth:=_mat("cloth",Color("25365d"))
 	var long_gun:=weapon_id=="carbine"
+	if long_gun and ResourceLoader.exists(CARBINE_ASSET):
+		var packed=load(CARBINE_ASSET)
+		if packed is PackedScene:
+			var authored:Node3D=packed.instantiate();model.add_child(authored)
+			magazine=authored.find_child("Magazine",true,false) as Node3D
+			if is_instance_valid(magazine):
+				_hand(model,Vector3(.028,-.105,.025),skin,cloth,brass,false)
+				support_hand=_hand(model,Vector3(-.02,-.075,-.30),skin,cloth,brass,true)
+				muzzle=_cylinder(model,.045,.13,Vector3(0,.018,-.715),_mat("flash",Color("ffe5a3"),0,4),true)
+				muzzle.visible=false;position=base_position;return
+			model.remove_child(authored);authored.queue_free()
 	_box(model,Vector3(.105,.13,.29 if long_gun else .20),Vector3(0,0,-.12),indigo)
 	_box(model,Vector3(.115,.012,.25),Vector3(0,.073,-.11),brass)
 	_box(model,Vector3(.065,.11,.17),Vector3(0,-.075,.02),dark).rotation.x=-.28

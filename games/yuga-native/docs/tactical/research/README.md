@@ -1,11 +1,14 @@
-**Current visible-art correction:** root rejected the R1 actual map appearance.
-The R2 source in `visual-r2-change-receipt.json` now adds metre-scale paving,
+**Current visible-art checkpoint:** root rejected the R1 actual map appearance.
+The R2 source in `visual-r2-change-receipt.json` adds metre-scale paving,
 procedural sky/reflections/haze, contact SSAO, continuous facades, two overhead
 galleries, eight awning stalls, twelve planted edges and four background
-landmarks. It fixes reversed site labels and reduces barrier tint. Counts and
-335 physics checks below describe the earlier layout checkpoint. The R2 pass
-preserves site/route data and uses a focused actual-scene preflight only, per the
-user’s priority for visible art. Root owns the next actual rendered decision.
+landmarks. It fixes reversed site labels and reduces barrier tint. The completed
+[map review](map-final-review-r2.json) binds the four actual R2 originals reviewed
+by this owner and the final map source. The earlier 335 physics checks remain
+layout evidence; the art successor instead has a focused scene preflight and
+36/36 exact shared ground-footprint checks. Current map and SURYA sources are
+frozen in `sanctum-art-r1`; [ART_DELIVERY](../ART_DELIVERY.md) owns final package
+identities and ordinary desktop input status.
 
 # Sangam Crossing: original tactical map
 
@@ -35,11 +38,13 @@ flight routes. Round rules, weapons, abilities and bots belong to their owners.
   objective relic. Low cover at1.1 m and full-height cover have distinct shot
   behavior. Collision triangles are transformed into map space, so physics
   bodies do not inherit unsupported nonuniform scaling.
--17 immutable imported meshes use existing Sangam geometry/material inputs;
- 287,076 reused triangles plus procedural boxes. Four central buildings are
- collision-bearing; six taller facade instances outside the walls provide
- skyline depth. No old asset bytes are changed. Source ledger lives in
- `assets/tactical/map.json`.
+- The final art source uses 59 immutable imported mesh instances with 438,744
+  reused triangles, plus procedural boxes and leaf batches. There are 62 physics
+  bodies. The earlier layout checkpoint had 17 imported instances and 287,076
+  reused triangles; its counts are preserved in the earlier receipts. These
+  counts are not GPU performance measurements. No reused asset bytes changed;
+  source pins and the 36 shared ground-detail footprints are in
+  `assets/tactical/map.json`.
 
 Public methods match `../CONTRACT.md`: spawn, route, callout, is_buy_zone,
 set_buy_barriers and report. `route` includes the spawn as its first point and
@@ -96,10 +101,13 @@ VFX crowding the aim region. Our FPS adaptation uses grounded main/flank paths,
 actual line-of-sight cover and a quiet target floor. The earlier world’s flying
 and elevated bow limitations are not inherited as tactical FPS mechanics.
 
-## Actual checks and remaining gates
+## Actual checks and completed native reviews
 
 First implementation: `map-cases-r1.json` passed329 headless checks.
 After the center sightline/divider correction, `map-cases-r2.json` passed335.
+Those runs precede the visible-art correction and are not relabeled as checks
+of its final source. The current source passed its focused scene preflight and
+[36 exact ground-solid footprint checks](minimap-footprints-preflight.json).
 All40 team/attack-side/site route variants were checked with actual Godot
 capsule sweeps: radius0.4 m, height1.8 m, margin0.01 m. Tests include spawn/site
 clearance, floor contact, buy-barrier ray/body rejection and reopening, low/high
@@ -117,7 +125,17 @@ and bot movement speeds belong to root/combat and must be measured in play.
 No human balance claim follows from route clearance. Current paths deliberately
 trade longer outer flanks for fewer direct angles.
 
-Unrun by this owner: new imports, actual FPS map renders, OS input, firearm/VFX
-occlusion in this arena, target hardware profiling, online matches and human
-balance/feel. Root serializes those next gates. No map is accepted visually from
-this document or a top-down schematic alone.
+Root performed the native imports and renders. This owner personally reviewed
+four map R2 originals and all six [final SURYA native views](../../../art/tactical/surya-carbine/native-review-r4.json),
+with source/image bindings checked. The separate [combat motion review](../combat/motion-r1-review/review.json)
+covers all 180 consecutive originals of the final 12-second scripted rehearsal
+and its 17/17 behavior checks, including firearm recoil, reload, ADS and utilities
+in the map. It does not establish ordinary OS input, synchronized audio or a
+natural match. [ART_DELIVERY](../ART_DELIVERY.md) tracks packaged input and delivery.
+
+Repeated modular facades and broad open spaces remain visible environment
+limits. SURYA's material wear is simpler than its concept and its 79,804-triangle
+asset exceeds the initial approximate target. Reload contact remains coarse,
+and dedicated utility hand casts are absent. Target hardware profiling, online
+matches and human balance/feel remain outside these art and scripted-motion
+receipts; no AAA-quality or hardware-performance claim follows from them.

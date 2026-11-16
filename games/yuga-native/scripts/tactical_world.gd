@@ -112,6 +112,7 @@ func _physics_process(delta:float)->void:
 		if not rules.actors[id].alive and actor_nodes[id].alive:actor_nodes[id].die()
 		actor_nodes[id].step(delta)
 	if not rules.actors[0].alive:
+		player.weapon.reset_presentation()
 		player.weapon.visible=false;player.collision_layer=0;_ultimate.clear();_spectate(delta)
 	_step_ultimate(delta);effects.step(delta);_step_relic(delta);_consume_events()
 	_hint_life=maxf(0,_hint_life-delta);_hit_marker=maxf(0,_hit_marker-delta);_damage_flash=maxf(0,_damage_flash-delta)
@@ -133,6 +134,7 @@ func _positions()->Dictionary:
 
 func _sync_round()->void:
 	_generation=rules.generation;_ultimate.clear();effects.clear();feed.clear();_spectate_id=-1;_last_objective_beep=-1
+	player.weapon.reset_presentation()
 	_release_actions()
 	for id in range(10):
 		var actor:Dictionary=rules.actors[id];var at:Vector3=map.spawn(actor.team,id%5,rules.attack_team)
@@ -250,7 +252,7 @@ func _fire_ray(id:int,origin:Vector3,direction:Vector3,damage:float,solar:bool)-
 		if not solar:break
 		excluded.append(collider.get_rid());from=hit.position+direction*.02
 	var muzzle:=origin+direction*.5
-	if id==0:muzzle=player.camera.global_transform*Vector3(.22,-.18,-.55)
+	if id==0 and is_instance_valid(player.weapon.muzzle):muzzle=player.weapon.muzzle.global_position
 	effects.trace(muzzle,final,solar,rules.actors[id].team!="sun")
 
 func _ability(slot:String)->void:
@@ -263,6 +265,7 @@ func _ability(slot:String)->void:
 		if not get_world_3d().direct_space_state.intersect_shape(query,1).is_empty():_message("Ward needs a clear placement ahead.");return
 		if not get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(player.camera.global_position,query.transform.origin,1)).is_empty():_message("Ward cannot pass through cover.");return
 	if not rules.use_ability(0,slot):_message("Utility unavailable · buy charges or earn your ultimate.");return
+	player.weapon.present_ability(slot)
 	rules.cancel_interaction(0)
 	var origin:Vector3=player.camera.global_position;var direction:Vector3=-player.camera.global_basis.z
 	var hit:=get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(origin,origin+direction*18,1))

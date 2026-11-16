@@ -1,6 +1,6 @@
 # YUGA native build handbook
 
-**Active tactical build:** `godot --path games/yuga-native` opens the new [YUGA · Sanctum frontend](tactical/README.md). See [tactical delivery](tactical/DELIVERY.md) for actual current artifacts and focused checks. The first-to13 mythic-firearm Casual direction supersedes older long-match design; historical packages and classic native contract profiles retain their own identities.
+**Active tactical build:** `godot --path games/yuga-native` opens the new [YUGA · Sanctum frontend](tactical/README.md). See [current hero/map delivery](tactical/finish2/DELIVERY.md) for actual current artifacts and focused checks. The first-to13 mythic-firearm Casual direction supersedes older long-match design; historical packages and classic native contract profiles retain their own identities.
 
 For the current Rama/Sangam and field-shop integration, start at the [six-round handoff](research/hero-six-rounds/README.md). Its exact source, content revision and current package receipts supersede historical source identities below; earlier public releases retain their own qualification.
 

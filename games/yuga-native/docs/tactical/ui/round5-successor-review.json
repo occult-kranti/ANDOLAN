@@ -1,0 +1,44 @@
+{
+  "task": "YUGA-TACTICAL-CASUAL-13",
+  "reviewer": "hero_ui",
+  "revision": "R2 focused native UI art correction",
+  "images_personally_viewed": {
+    "games/yuga-native/docs/tactical/evidence/visual-r2/01-first-person-buy.png": "537c7409728d4f92cc6b1da7bc18462b7a27b110a5af1c369e8fd553be917dec",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/02-equipment-shop.png": "b229829b577da11529ce646898f2698f6b3889ad346c446f15093ff34ebe2cfb",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/03-kit-guide.png": "934fc198f0cb0f2b617da61a25578970493b09d6422e9ee512201a150c215cf3",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/04-pause.png": "599e314c8ebb430a1e5422907300b79be8569fae8549c7d4e865e47374bb7459",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/05-a-approach.png": "d8d840311a1db92138dbbf01fe75431641ba19fabf7de1b2d6ee5c0bd2f465fa",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/06-aim-down-sights.png": "a5e497c96c7c086fd9f72630ecb1c05675943c54296fa4c8eec5720ff84f1158",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/06b-reload.png": "addd1ba108ade12d3e4d80a1730fb00704e3834949fda5d7b9efcc18e41fd0b6",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/07-ward-and-veil.png": "fffc13553f860b2caba63c4f2936e85fcafdbc97e0d7a052bf1c6faccc0bdcad",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/08-astra-planted.png": "0acae3ea73330faac478d0d0b10bc284710d3bbe88f4475deef9fdd1b0b00fb9",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/09-map-overview.png": "734bed0d14b218f99544e251c2faf044657625eeb75ca9acd298a1fc29cd70ed",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/10-b-site-architecture.png": "f8d7752b2b048b5fb19aa50d513077ef454ca30fe93c23df197cb41d9d6f7eef",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/11-scoreboard.png": "a4882f9c596b3f0d149b2e92b959dce9c66eea83929009edfd67990c07b6c5c8",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/12-round-result.png": "36d6178da28d3686bd8ae2dc0c6398932f7e7918ccaebfa85966d99ef98cf746",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/13-match-result.png": "1b89506c0cbaccd101e5f2a17739aa8bf1fbbbcc3ba776c1b826826d46311237",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/menu-casual.png": "8b3fe3cc617abf39d7b9feec28b6e937730d4998bea0a0167b56e161a39e1bd9",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/menu-help.png": "07cb7c59f569628571a0a1e2f92eb7389fe13325ba7cd73b5571a7a1886f178e",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/menu-hero.png": "37e854ad06d690ed3ecadcafe93771ccd707d275e51458883f8fa8b282745848",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/menu-home.png": "08f2df8f6ff05aaadb8d5072a16c1102263417acf144b77836752efa163ef6b4",
+    "games/yuga-native/docs/tactical/evidence/visual-r2/menu-settings.png": "7a909e2c3790f0ea764c253c4d26eefe402653da386f767377019df47092f224"
+  },
+  "capture_receipt_sha256": "775fb51f8d02003846362865ff954555c72c9986c3dac3ae1fe8366d30eb0df9",
+  "source_state": "R2 captures bind the frozen focusedlookpass UI8d09707f; final minimap-only successor7395fe40 adds actualpartitions/static_details without changing other screens.",
+  "verified_repairs": [
+    "Primary buttons have dark ink text on gold, including focused states.",
+    "Header text tabs and selected underline are quieter; menuactions are compact and do not cover the hero illustration.",
+    "Allfour kit descriptions and pinnedsettingsSave/Discard are visible at1280x720.",
+    "Shopfocus lands on the first affordable utility; owned/unaffordable states and prices remain clear.",
+    "Pause andmatchdialogs use deliberate smaller dimensions; no new clipping seen.",
+    "Scoreboard has actual alignedcolumns/teamgroups, allyHP and hiddenenemyhealth/economy/equipment.",
+    "Roundresult has stablecontrast overlitstone; abilityavailability usesdimmedicons plusnumericcharges."
+  ],
+  "remaining_items": [
+    "Final minmap-only successor needs one native image to confirm2flank partitions+36smallgroundprops; dedicated6-case data/visibility suite passes.",
+    "Root owns objectivehint phase correction and dedicated weaponart iteration; R2gun still intersects the lowercenter HUD area in ADS but UI text remains readable.",
+    "Actual960x540 enlarged-scale pixels and ordinarymousekeyboard journey are separate from the passed headlesslayout/control tests.",
+    "Stagedscreens do not establish gameplaytiming, multiplayer, physicalGPU FPS or commercialartparity."
+  ],
+  "decision": "Accept the focused UI look corrections shown in all19R2originals; no further menu/overlay lookchange requested."
+}

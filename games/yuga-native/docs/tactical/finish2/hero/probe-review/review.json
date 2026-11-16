@@ -1,0 +1,107 @@
+{
+  "task": "HERO-FINISH2",
+  "product": "native offline Casual",
+  "kind": "independent-original-pose-review-with-rejected-handoff",
+  "capture_report": "docs/tactical/finish2/hero/motion-probe-r1/motion.json",
+  "capture_report_sha256": "7ccfcc74729810458f7aa90547adba5fd85a4f80db4626309df76867fac66ee8",
+  "scope": "Isolated immutable art-r1 map plus new hero/root effects; not the pending new map material pass. Actual scripted 15-Hz rehearsal, not ordinary OS input.",
+  "original_count": 180,
+  "all_hashes_and_dimensions_match": true,
+  "mismatches": [],
+  "checks_passed": 18,
+  "checks_total": 18,
+  "reviewed_ranges": [
+    [
+      64,
+      79
+    ],
+    [
+      84,
+      99
+    ],
+    [
+      102,
+      117
+    ],
+    [
+      122,
+      153
+    ]
+  ],
+  "full_resolution_frames": [
+    64,
+    66,
+    67,
+    68,
+    69,
+    70,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    86,
+    88,
+    90,
+    94,
+    97,
+    98,
+    104,
+    106,
+    108,
+    112,
+    113,
+    124,
+    127,
+    130,
+    132
+  ],
+  "source_pins": {
+    "res://scripts/tactical_weapon.gd": "60b87d8ce9e77c67f94321152294db42e2154fc0c667139b5aaafa74f276f113",
+    "res://scripts/tactical_cast_motion.gd": "ffa3e4a9a84429de72dd719f934583727b42b3cb068f629bc269eaebf79f0c1b",
+    "res://scripts/tactical_effects.gd": "0170bca5c661e9b4e6cb264bd9c4fa2a95541605345d6cc6a705c609cbf00f65",
+    "res://tools/capture-tactical-motion.gd": "27258cb0ae5c3acb2471eec173a5960f7a771b8be059b7210892ba5209cd3219"
+  },
+  "accepted_bounded_findings": [
+    "Q open-hand follow-through is visible during seed flight; rifle lowers independently.",
+    "C has visible spread fingers, open palm and local solar rings; sleeves exit the lower frame.",
+    "E closes digits into a distinct brace during continuous sideways movement; the updated world ring is less harsh.",
+    "X shows the charged palm during anticipation and holds through shots; shorter traces have visible gaps before subsequent releases."
+  ],
+  "rejected_defect": {
+    "description": "The casting hand retracts to an on-screen location, then hides while the original support hand appears at the rifle in a different location. Numeric pose continuity and 18 passing checks missed the visibility handoff.",
+    "frame_pairs": [
+      [
+        75,
+        76
+      ],
+      [
+        97,
+        98
+      ],
+      [
+        111,
+        112
+      ],
+      [
+        145,
+        146
+      ]
+    ],
+    "decision": "Root agreed this blocks final first-person motion acceptance."
+  },
+  "correction_status": "Root approved and the hero lead implemented the correction: hidden rest at local Y -0.72, support restored only when inactive, and slower visual reach/withdrawal with unchanged authority. All 94 focused checks passed, including actual geometry projection, but corrected rendered motion is still pending.",
+  "correction_sources": {
+    "scripts/tactical_weapon.gd": "246b0038137a15787cef95d32d5e74238807997cfe8481fee774caa5620c2203",
+    "scripts/tactical_cast_motion.gd": "506dae75659f4a9a351866a7ded21cdd7dd202ed4fe3978542ce2610c4cdfe6b"
+  },
+  "correction_check_report": "docs/tactical/finish2/hero/checks-r3.json",
+  "correction_check_sha256": "35837b747946e8acb474e2f10f0d5c767a686edb47c2cb66043fe515d1358442",
+  "remaining": [
+    "Corrected rendered handoff and the integrated new map await the next root film.",
+    "Hands remain stylized procedural anatomy; no full-body FPS rig or anatomical contact claim.",
+    "No audio, hardware performance or online proof."
+  ],
+  "next_owner": "Root: final combined film; then hero lead: independent correction acceptance."
+}

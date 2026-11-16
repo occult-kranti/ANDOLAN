@@ -66,8 +66,35 @@ The harness now stops voices, frees the world, awaits two cleanup frames and
 allows 100 ms of wall time for the audio mix worker. A simulation timer alone
 does not guarantee that wall interval in accelerated headless tests.
 
-Next owner: root, after the new SURYA asset is imported and its runtime path is
-pinned. Run the tool on the serialized Forward+ display with `--fixed-fps 15`,
-omit `--probe-only`, and use a fresh absolute output directory. Review actual
-originals before claiming visual acceptance. No rendered film or actual audio
-review is claimed by this non-rendering checkpoint.
+## Subsequent actual native film review
+
+Root rendered [180 originals and their report](../evidence/motion-r1/motion.json)
+after importing the dedicated SURYA gun. All 180 PNG hashes and 1280×720
+dimensions independently match the report; the capture passed the same 17
+checks with unchanged sources. The combat reviewer inspected every advancing
+original through twelve labeled analysis contact sheets, plus sixteen full
+resolution originals. See the [independent visual receipt](motion-r1-review/review.json).
+Its findings apply to these exact pixels and source pins, rather than to the
+earlier procedural gun. Film report SHA-256:
+`7668c72f5893ca4630d00823352ca98dffc5bef174285990d89d5cace3e2bf83`.
+
+The sequence visibly demonstrates recoil/return, completed reload, centered
+ADS, seed flight followed by the occluding veil, a clearly patterned ward,
+continuous movement around its flank and the ultimate's second receiver
+collapse. No delivery blocker was found for this bounded demonstration.
+Dedicated Q/C hand casting, a softer veil entrance, a less harsh/faceted dash
+ring and stronger visible ultimate windup remain art work. The first two
+solar traces appear nearly continuous at 15 fps despite distinct authority
+releases; this film does not establish three visually isolated flashes.
+Reload contact is still a coarse stylized hand gesture near the bottom crop,
+not anatomical finger/contact qualification. Audio was not reviewed.
+
+The analysis sheets were generated with existing FFmpeg; original PNGs were
+not modified. The last sheet has four originals and twelve empty black cells.
+Source files and imports are pinned in the capture report, including SURYA
+GLB `f2ab39c6f559c47461d340a29ae51d040be9565cddd1602cd41cbe118f9cc810`
+and weapon script
+`7dca037cc8af82b0c0cb9313fa835551231eedfc598726555853c1d005ccfbe1`.
+
+Next owner: root for encoding and delivery. The staged resource/actor setup
+and limits above remain mandatory descriptions of the finished film.

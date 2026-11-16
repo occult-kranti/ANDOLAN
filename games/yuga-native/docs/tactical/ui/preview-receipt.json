@@ -1,0 +1,36 @@
+{
+  "file": "games/yuga-native/docs/tactical/PREVIEW.html",
+  "sha256": "099315e26ee35baf45dd73a010f1428786a496d58569b6e1e6cab06db0d1efd0",
+  "checks": {
+    "original_targets_exist": 19,
+    "unique_html_ids": 20,
+    "external_markup_urls": false,
+    "bundled_fonts_exist": true,
+    "motion_hidden_until_metadata": true
+  },
+  "scope": "Static checks plus focused local Chromium interaction and visual review of the HTML artifact. No native game input or hardware performance claim.",
+  "javascript_syntax": {
+    "command": "node --check games/yuga-native/docs/tactical/ui/preview-script-check.js",
+    "result": "exit0"
+  },
+  "browser_check": {
+    "report": "preview-browser-r1/result.json",
+    "result": "10/10 pass; zero script exceptions",
+    "source_commit": "789dd1268bbac63208d0d49ec77635dff9ce7567",
+    "viewports": [
+      [
+        1280,
+        900
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "actual_screenshots_reviewed": {
+      "desktop.png": "1555f72d8abb77b62c371ccedf6a2acdff9bec579bdd7915f29551556893eb16",
+      "mobile.png": "f6c11bc9754e8b990b178756c2e02b4ba671a05feaf2891e5d298cdf71c94dfc"
+    },
+    "visual_result": "Original screenshots display with readable captions and no horizontal overflow at either reviewed width."
+  }
+}

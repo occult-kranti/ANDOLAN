@@ -1,0 +1,296 @@
+extends Node3D
+## Original first-person left hand. This module never owns an ability or a shot.
+## All pose/charge accents use the caller's paused simulation clock, never TIME.
+const DURATIONS := {"q":.72, "c":.85, "e":.55, "x":1.50}
+const SOLAR_ACCENTS := [.55, .79, 1.03] # Presentation mirrors the existing authority.
+const REST_POSITION := Vector3(-.38, -.24, .05)
+const REST_ROTATION := Vector3(.12, .12, -.32)
+const ENTRY_BLEND := .09
+const CANCEL_DURATION := .12
+var _slot := ""
+var _age := 0.0
+var _active := false
+var _cancelling := false
+var _reduced := false
+var _motion_scale := 1.0
+var _pose: Dictionary = {}
+var _entry: Dictionary = {}
+var _hand: Node3D
+var _digits: Array[Array] = []
+var _digit_roots: Array[Node3D] = []
+var _halo: Node3D
+var _charge_core: MeshInstance3D
+var _rings: Array[Node3D] = []
+var _skin: StandardMaterial3D
+var _cloth: StandardMaterial3D
+var _brass: StandardMaterial3D
+var _light: StandardMaterial3D
+
+func _ready() -> void:
+	_ensure_pose()
+	_build()
+	_apply_pose()
+
+func begin(slot: String, reduced_motion: bool = false) -> bool:
+	if not DURATIONS.has(slot): return false
+	_ensure_pose()
+	# Do not alter any outgoing channel at the input boundary. First advancing
+	# sample blends from this complete pose, including fingers and weapon offsets.
+	_entry = _pose.duplicate(true)
+	_slot = slot; _age = 0.0; _active = true; _cancelling = false
+	_reduced = reduced_motion
+	return true
+
+func cancel() -> void:
+	if not _active: return
+	_ensure_pose()
+	_entry = _pose.duplicate(true)
+	_age = 0.0; _cancelling = true
+
+func step(delta: float, reduced_motion: bool = false) -> void:
+	if not is_finite(delta) or delta <= 0.0 or delta > .25: return
+	_ensure_pose()
+	_reduced = reduced_motion
+	_motion_scale = move_toward(_motion_scale, .5 if _reduced else 1.0, delta * 4.0)
+	if not _active: return
+	_age += delta
+	if _cancelling:
+		_pose = _mix_pose(_entry, _rest_pose(), _ease(_age / CANCEL_DURATION))
+		if _age >= CANCEL_DURATION: _finish_pose()
+	else:
+		_pose = _mix_pose(_entry, _cast_pose(), _ease(_age / ENTRY_BLEND))
+		if _age >= float(DURATIONS[_slot]): _finish_pose()
+	_apply_pose()
+
+func sample() -> Dictionary:
+	_ensure_pose()
+	return {"weapon_position":_pose.weapon_position, "weapon_rotation":_pose.weapon_rotation,
+		"support_weight":1.0 - float(_pose.weight), "active":_active, "slot":_slot,
+		"age_s":_age, "cast_weight":_pose.weight}
+
+func reset() -> void:
+	_slot = ""; _age = 0.0; _active = false; _cancelling = false
+	_pose = _rest_pose(); _entry = _pose.duplicate(true)
+	_apply_pose()
+
+func report() -> Dictionary:
+	_ensure_pose()
+	var angles: Array = []
+	var finite: bool = _pose.hand_position.is_finite() and _pose.hand_rotation.is_finite()
+	finite = finite and _pose.weapon_position.is_finite() and _pose.weapon_rotation.is_finite()
+	for chain: Array in _digits:
+		for joint: Node3D in chain:
+			angles.append(joint.rotation)
+			finite = finite and joint.position.is_finite() and joint.rotation.is_finite()
+	return {"active":_active, "slot":_slot, "phase":_phase(), "age_s":_age,
+		"finite":finite, "digit_count":_digits.size(), "finger_angles":angles,
+		"hand_position":_pose.hand_position, "hand_rotation":_pose.hand_rotation,
+		"weapon_position":_pose.weapon_position, "weapon_rotation":_pose.weapon_rotation,
+		"cast_weight":_pose.weight, "charge":_pose.charge, "presentation_pulse":_pose.pulse,
+		"reduced_motion":_reduced, "visible":is_instance_valid(_hand) and _hand.visible,
+		"scope":"Presentation only; no gameplay release, charge, collision, damage or input authority."}
+
+func _ensure_pose() -> void:
+	if _pose.is_empty():
+		_pose = _rest_pose(); _entry = _pose.duplicate(true)
+
+func _rest_pose() -> Dictionary:
+	return {"hand_position":REST_POSITION, "hand_rotation":REST_ROTATION,
+		"weapon_position":Vector3.ZERO, "weapon_rotation":Vector3.ZERO,
+		"curls":[.42, .46, .48, .50, .45], "spread":.15,
+		"weight":0.0, "charge":0.0, "pulse":0.0, "spin":0.0}
+
+func _finish_pose() -> void:
+	_pose = _rest_pose()
+	_slot = ""; _age = 0.0; _active = false; _cancelling = false
+
+func _phase() -> String:
+	if not _active: return "rest"
+	if _cancelling: return "cancel"
+	if _slot == "x":
+		if _age < .55: return "charge"
+		if _age <= 1.10: return "solar_accents"
+		return "return"
+	if _age < .16: return "follow_through" if _slot == "q" else "present"
+	if _age > float(DURATIONS[_slot]) - .25: return "return"
+	return "brace" if _slot == "e" else "hold"
+
+func _cast_pose() -> Dictionary:
+	var result := _rest_pose()
+	var reach := 0.0
+	var target_position := REST_POSITION
+	var target_rotation := REST_ROTATION
+	var rifle_position := Vector3.ZERO
+	var rifle_rotation := Vector3.ZERO
+	var curls: Array = [.1, .1, .1, .1, .1]
+	var spread := .8
+	var charge := 0.0
+	var pulse := 0.0
+	match _slot:
+		"q":
+			# The seed already left on authority acceptance: this is a fast open
+			# hand follow-through, with no pretend delayed launch or second seed.
+			reach = _envelope(_age, .13, .20, .72)
+			target_position = Vector3(-.32, .075, -.115)
+			target_rotation = Vector3(-.42, .16, -.35)
+			rifle_position = Vector3(.035, -.20, .06)
+			rifle_rotation = Vector3(.17, -.06, .10)
+			curls = [.06, .08, .12, .18, .25]
+		"c":
+			reach = _envelope(_age, .12, .46, .85)
+			target_position = Vector3(-.37, .075, -.10)
+			target_rotation = Vector3(-.08, .18, -.10)
+			rifle_position = Vector3(.025, -.23, .055)
+			rifle_rotation = Vector3(.22, -.04, .08)
+			curls = [.01, .01, .02, .03, .08]; spread = 1.0
+			charge = .45 * reach
+		"e":
+			reach = _envelope(_age, .06, .30, .55)
+			target_position = Vector3(-.31, -.075, .025)
+			target_rotation = Vector3(.24, .30, -.46)
+			rifle_position = Vector3(.02, -.08, .045)
+			rifle_rotation = Vector3(.10, -.05, .10)
+			curls = [.85, .9, .9, .92, .75]; spread = .1
+		"x":
+			reach = _envelope(_age, .12, 1.10, 1.50)
+			for at: float in SOLAR_ACCENTS:
+				if _age >= at: pulse = maxf(pulse, exp(-(_age - at) / .065))
+			charge = (.22 + .78 * _ease(_age / .50)) if _age < .55 else (.25 + .75 * pulse)
+			charge *= reach
+			target_position = Vector3(-.40, .025, -.055 + pulse * .025)
+			target_rotation = Vector3(-.14 + pulse * .10, .22, -.22)
+			# Keep the real solar-firing rifle visible; the left hand charges it.
+			rifle_position = Vector3(.012, -.065, .025)
+			rifle_rotation = Vector3(.065, -.025, .035)
+			var curl := lerpf(.58, .14, _ease(_age / .48))
+			curls = [curl, curl + .03, curl + .06, curl + .10, .28]
+			spread = .75
+	var movement: float = reach * _motion_scale
+	result.hand_position = REST_POSITION.lerp(target_position, movement)
+	result.hand_rotation = _rotation_lerp(REST_ROTATION, target_rotation, movement)
+	result.weapon_position = rifle_position * movement
+	result.weapon_rotation = rifle_rotation * movement
+	result.curls = []
+	var rest: Dictionary = _rest_pose()
+	for index in 5: result.curls.append(lerpf(float(rest.curls[index]), float(curls[index]), reach))
+	result.spread = lerpf(.15, spread, reach)
+	result.weight = reach
+	result.charge = charge
+	result.pulse = pulse * reach
+	result.spin = 0.0 if _reduced else _age * .8 * reach
+	return result
+
+func _envelope(age: float, attack: float, held_until: float, end: float) -> float:
+	return _ease(age / attack) * (1.0 - _ease((age - held_until) / (end - held_until)))
+
+func _ease(value: float) -> float:
+	var t := clampf(value, 0.0, 1.0)
+	return t * t * (3.0 - 2.0 * t)
+
+func _rotation_lerp(from: Vector3, to: Vector3, amount: float) -> Vector3:
+	return Vector3(lerp_angle(from.x, to.x, amount), lerp_angle(from.y, to.y, amount), lerp_angle(from.z, to.z, amount))
+
+func _mix_pose(from: Dictionary, to: Dictionary, amount: float) -> Dictionary:
+	var result := _rest_pose()
+	for key in ["hand_position", "weapon_position"]: result[key] = from[key].lerp(to[key], amount)
+	for key in ["hand_rotation", "weapon_rotation"]: result[key] = _rotation_lerp(from[key], to[key], amount)
+	for key in ["weight", "charge", "pulse", "spread", "spin"]: result[key] = lerpf(float(from[key]), float(to[key]), amount)
+	result.curls = []
+	for index in 5: result.curls.append(lerpf(float(from.curls[index]), float(to.curls[index]), amount))
+	return result
+
+func _apply_pose() -> void:
+	if not is_instance_valid(_hand): return
+	_hand.visible = _active and float(_pose.weight) > .005
+	_hand.position = _pose.hand_position
+	_hand.rotation = _pose.hand_rotation
+	for index in _digits.size():
+		var curl: float = _pose.curls[index]
+		var chain: Array = _digits[index]
+		if index < 4:
+			chain[0].rotation = Vector3(lerpf(-.04, 1.05, curl), 0, [.12, .04, -.035, -.13][index] * float(_pose.spread))
+			chain[1].rotation.x = curl * 1.25
+			chain[2].rotation.x = curl * .85
+		else:
+			chain[0].rotation = Vector3(.22 + curl * .60, -.25, -.92 + float(_pose.spread) * .35)
+			chain[1].rotation.x = curl * .80
+			chain[2].rotation.x = curl * .50
+	_halo.visible = _hand.visible and float(_pose.charge) > .025
+	_halo.scale = Vector3.ONE * (.75 + float(_pose.charge) * .25 + float(_pose.pulse) * .20)
+	for index in _rings.size():
+		_rings[index].rotation.z = float(_pose.spin) * (1.0 if index == 0 else -.7)
+	_charge_core.scale = Vector3.ONE * (.50 + float(_pose.charge) * .50)
+
+func _material(color: Color, metallic: float = 0.0, emission: float = 0.0) -> StandardMaterial3D:
+	var material := StandardMaterial3D.new()
+	material.albedo_color = color; material.metallic = metallic
+	material.roughness = .45 if metallic > .5 else .78
+	if emission > 0:
+		material.emission_enabled = true; material.emission = color; material.emission_energy_multiplier = emission
+	return material
+
+func _mesh(parent: Node3D, geometry: Mesh, material: Material, at: Vector3) -> MeshInstance3D:
+	var node := MeshInstance3D.new(); node.mesh = geometry; node.material_override = material; node.position = at
+	parent.add_child(node); return node
+
+func _capsule(parent: Node3D, radius: float, length: float, at: Vector3, material: Material) -> MeshInstance3D:
+	var geometry := CapsuleMesh.new(); geometry.radius = radius; geometry.height = length
+	geometry.radial_segments = 12; geometry.rings = 4
+	return _mesh(parent, geometry, material, at)
+
+func _band(parent: Node3D, radius: float, height: float, at: Vector3, material: Material) -> MeshInstance3D:
+	var geometry := CylinderMesh.new(); geometry.top_radius = radius; geometry.bottom_radius = radius
+	geometry.height = height; geometry.radial_segments = 16
+	return _mesh(parent, geometry, material, at)
+
+func _build() -> void:
+	if is_instance_valid(_hand): return
+	_skin = _material(Color("965e3d")); _cloth = _material(Color("25365d"))
+	_brass = _material(Color("b89750"), .72); _light = _material(Color("ffd59a"), .15, 1.35)
+	_hand = Node3D.new(); _hand.name = "OriginalArticulatedLeftHand"; add_child(_hand)
+	# A continuous rounded palm and tapered wrapped forearm, rather than a flat
+	# mitten. Finger pivots coincide with the ends of their parent phalanges.
+	var palm := _capsule(_hand, .037, .105, Vector3(0, .002, 0), _skin)
+	palm.scale = Vector3(1.18, 1, .49)
+	_capsule(_hand, .027, .065, Vector3(0, -.065, .006), _skin)
+	var sleeve := CylinderMesh.new(); sleeve.top_radius = .034; sleeve.bottom_radius = .054
+	# Keep the wrist at -.08, but carry the forearm to -.54 so an open-palm
+	# reach exits the lower first-person frame instead of exposing a cut cap.
+	sleeve.height = .46; sleeve.radial_segments = 16
+	_mesh(_hand, sleeve, _cloth, Vector3(0, -.31, .012))
+	for index in 3: _band(_hand, .036 + index * .004, .014, Vector3(0, -.095 - index * .095, .012), _brass)
+	# Three raised cloth seams keep the bracer readable without a texture import.
+	for x in [-.022, 0, .022]:
+		var seam := BoxMesh.new(); seam.size = Vector3(.004, .20, .004)
+		_mesh(_hand, seam, _brass, Vector3(x, -.22, .046))
+	var lengths := [[.039, .030, .022], [.045, .034, .024], [.042, .031, .022], [.034, .027, .019], [.035, .028, .022]]
+	for index in 5:
+		var chain: Array[Node3D] = []
+		var base := Node3D.new(); base.name = "Thumb" if index == 4 else "Finger%d" % index
+		base.position = Vector3(.043, .005, .003) if index == 4 else Vector3(-.031 + index * .021, .044, 0)
+		_hand.add_child(base); _digit_roots.append(base)
+		var parent: Node3D = base
+		for segment in 3:
+			var joint: Node3D = base if segment == 0 else Node3D.new()
+			if segment > 0:
+				joint.position.y = float(lengths[index][segment - 1]); parent.add_child(joint)
+			joint.name = base.name + "Joint%d" % segment if segment > 0 else base.name
+			chain.append(joint)
+			var length: float = lengths[index][segment]
+			_capsule(joint, (.0095 if index == 4 else .0085) - segment * .0008, length + .008, Vector3(0, length * .5, 0), _skin)
+			parent = joint
+		_digits.append(chain)
+	# Small solar accents live with the hand, never with the world projectile.
+	_halo = Node3D.new(); _halo.name = "SolarPalmAccent"; _halo.position = Vector3(0, .042, .032); _hand.add_child(_halo)
+	for index in 2:
+		var axis := Node3D.new(); _halo.add_child(axis); _rings.append(axis)
+		var ring := TorusMesh.new(); ring.inner_radius = .061 + index * .017; ring.outer_radius = ring.inner_radius + .003
+		ring.rings = 32; ring.ring_segments = 6
+		var node := _mesh(axis, ring, _light, Vector3.ZERO); node.rotation.x = PI / 2
+		for cardinal in 4:
+			var jewel := BoxMesh.new(); jewel.size = Vector3(.007, .007, .003)
+			var angle := float(cardinal) * PI / 2 + index * PI / 4
+			var marker := _mesh(axis, jewel, _light, Vector3(cos(angle), sin(angle), 0) * ring.inner_radius)
+			marker.rotation.z = angle + PI / 4
+	var core := SphereMesh.new(); core.radius = .017; core.height = .034; core.radial_segments = 16; core.rings = 8
+	_charge_core = _mesh(_halo, core, _light, Vector3(0, 0, .006))

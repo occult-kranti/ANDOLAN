@@ -9,9 +9,15 @@ float noise3(vec3 p) {
 }
 void vertex(){local_point=VERTEX;}
 void fragment(){
- vec3 p=local_point*.85+vec3(age*.09,age*-.11,0.0);
+ float settle=1.0-exp(-age*5.0);
+ float turn=(1.0-settle)*.45;
+ vec3 point=vec3(local_point.x*cos(turn)-local_point.z*sin(turn),local_point.y,local_point.x*sin(turn)+local_point.z*cos(turn));
+ vec3 p=point*(.85+(1.0-settle)*.35)+vec3(age*.09,age*-.11,0.0);
  float cloud=noise3(p)*.6+noise3(p*2.1)*.28+noise3(p*4.3)*.12;
  ALBEDO=mix(vec3(.14,.24,.28),vec3(.57,.65,.61),smoothstep(.2,.85,cloud));
  ROUGHNESS=1.0;SPECULAR=.12;
- EMISSION=vec3(.045,.063,.059)*cloud;
+ // The full opaque authority boundary remains visible from onset; light and
+ // cloud density settle inside it instead of scaling a deceptively small shell.
+ float crest=pow(max(0.0,1.0-abs(local_point.y-(age*13.0-4.2))*.8),3.0)*(1.0-smoothstep(.25,.65,age));
+ EMISSION=vec3(.045,.063,.059)*cloud+vec3(.22,.15,.065)*crest;
 }

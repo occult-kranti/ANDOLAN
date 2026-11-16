@@ -1,0 +1,26 @@
+{
+  "complete": true,
+  "input": "frame-%05d.png",
+  "original_count": 180,
+  "source_report_sha256": "7668c72f5893ca4630d00823352ca98dffc5bef174285990d89d5cace3e2bf83",
+  "command": "ffmpeg -hide_banner -loglevel warning -framerate 15 -i frame-%05d.png -c:v libx264 -pix_fmt yuv420p -crf 18 -movflags +faststart tactical-casual.mp4",
+  "exit_code": 0,
+  "video_sha256": "728fcba61271f3cbc45f0427ba4b074b367a98e70d3a20fa76b435ab949c4438",
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1280,
+        "height": 720,
+        "avg_frame_rate": "15/1",
+        "nb_frames": "180"
+      }
+    ],
+    "format": {
+      "duration": "12.000000",
+      "size": "1836197"
+    }
+  },
+  "scope": "Lossy H.264 delivery encode of 180 retained original native frames,12s at15simulation frames/second; silent, scripted rehearsal. Not physical-GPU FPS or ordinary played input."
+}

@@ -19,3 +19,16 @@ Interpretation: retain confirmed round rules and weapon choice; prioritize actua
 Continue `YUGA-TACTICAL-CASUAL-13` in the existing dirty checkout. Read `docs/START_HERE.md`, `games/yuga-native/docs/tactical/README.md`, `DELIVERY.md`, `ROADMAP.md` and `CONTRACT.md`. Preserve other workers' files and prior source/failed-run evidence. Lead three specialists with exclusive UI, combat and map ownership; root owns first-person weapon/effects/world integration. Keep first-to13 mythic-firearm Casual and South Asian identity. Inspect the latest actual native originals before making one concrete art correction. Finish complete native artifacts and save exact prompts. Do not mistake generated menu art for gameplay or reopen superseded MOBA rules. Browser/online/Ranked remain separate future work.
 
 Image generation used the built-in tool; the full original menu prompt is stored in [art/tactical/MENU_PROMPT.md](../../art/tactical/MENU_PROMPT.md). Native gameplay capture is rendered from the implemented scene, not generated video presented as working gameplay.
+
+## CPU Raea and distributed build continuation
+
+> use Raea on cpu and completely build the hero and map with all resources and agent swarm parallel sub sub sub shared code with dedicated roadmap and distributed work, code build actual game
+
+Continue at [finish2/README.md](finish2/README.md). Root uses the pinned Raea renderer on CPU software Vulkan and owns native integration. Hero lead delegates a dedicated cast-motion module to a nested child; map owner shares one architecture material/detail kit across the original map. Keep actual native game implementation separate from showcase rendering. Preserve the delivered [art checkpoint](ART_DELIVERY.md) and ordinary input evidence.
+
+
+## Final CPU / hero-map implementation packet
+
+The request to use Raea on CPU and nested agents was implemented as `YUGA-TACTICAL-FINISH2`. [Six actual working passes and exclusive ownership](finish2/README.md) preserve contracts, implementation, focused checks, rejected probes, corrections and delivery. [Final artifacts](finish2/DELIVERY.md) include native packages, the actual scripted game recording, a separately labelled CPU Raea weapon turntable and editable source/art.
+
+Resume prompt: “Open `docs/START_HERE.md`, then `games/yuga-native/docs/tactical/finish2/DELIVERY.md`. Preserve the frozen finish2 source and all other workers’ changes. Continue the next art packet: Rama full-body tactical weapon contact/locomotion, face/hair and bot silhouettes, using the current SURYA and shared material kit. Keep 5v5 first-to-13 local Casual rules; Ranked remains planned. Assign exclusive files, use focused checks and actual native captures, and preserve source hashes and rejected findings.”

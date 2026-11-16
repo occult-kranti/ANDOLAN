@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>YUGA · Native Casual lookbook</title>
+  <style>
+    @font-face{font-family:YugaSans;src:url('../../assets/fonts/NotoSans-Regular.ttf') format('truetype');font-display:swap}
+    @font-face{font-family:YugaSerif;src:url('../../assets/fonts/NotoSerif-Regular.ttf') format('truetype');font-display:swap}
+    :root{--ink:#101723;--surface:#182433;--text:#f5efdf;--muted:#a9b9c6;--gold:#e5bd78;--teal:#86d1c6;--rule:#344655}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ink);color:var(--text);font-family:YugaSans,system-ui,sans-serif;line-height:1.6}
+    button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;color:inherit;cursor:pointer}a{color:var(--gold);text-underline-offset:4px}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:5px}
+    .skip{position:absolute;left:24px;top:-80px;background:var(--gold);color:var(--ink);padding:10px 20px;z-index:20}.skip:focus{top:16px}
+    .wrap{width:min(1320px,calc(100% - 64px));margin:auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:25px 0;border-bottom:1px solid var(--rule)}
+    .wordmark{font-family:YugaSerif,serif;font-size:31px;letter-spacing:.06em;color:var(--text);text-decoration:none}.edition{font-size:13px;color:var(--muted);text-align:right}
+    .intro{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:end;padding:48px 0 30px}
+    h1,h2,h3,p{margin:0}h1,h2{font-family:YugaSerif,serif;font-weight:400}h1{font-size:clamp(34px,4.3vw,58px);line-height:1.14;letter-spacing:-.025em}h2{font-size:30px;line-height:1.3}h3{font-size:17px;font-weight:400}.intro p{max-width:58ch;color:var(--muted);font-size:16px}.intro .format{margin-top:18px;color:var(--gold);font-size:15px}
+    .feature-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:0 0 36px}.feature{margin:0}.feature button{padding:0;border:1px solid var(--rule);background:#080e14;display:block;width:100%;overflow:hidden}.feature img{width:100%;aspect-ratio:16/9;object-fit:contain;display:block}.feature figcaption{margin-top:10px;color:var(--muted);font-size:13px}.feature figcaption strong{color:var(--text);font-weight:400}
+    .context{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:24px 0;margin-bottom:42px;display:grid;grid-template-columns:1fr 1.1fr;gap:56px}.context p{color:var(--muted);font-size:14px;max-width:64ch}.context h3{margin-bottom:8px;color:var(--teal)}details summary{cursor:pointer;min-height:44px;display:flex;align-items:center;justify-content:space-between;color:var(--text)}details summary::after{content:'+';color:var(--gold);font-size:22px}details[open] summary::after{content:'−'}.controls{display:grid;grid-template-columns:100px 1fr;gap:8px 16px;margin:8px 0 0;font-size:14px}.controls dt{color:var(--gold)}.controls dd{margin:0;color:var(--muted)}
+    .gallery-heading{display:flex;align-items:baseline;gap:24px;justify-content:space-between;margin-bottom:16px}.count{font-size:13px;color:var(--muted)}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 24px}.filters button{border:1px solid transparent;border-bottom-color:var(--rule);background:none;min-height:44px;padding:8px 16px;color:var(--muted)}.filters button[aria-pressed=true]{border-bottom-color:var(--gold);color:var(--gold)}.filters button:hover{color:var(--text);background:rgba(229,189,120,.05)}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 22px}.shot{margin:0;min-width:0}.shot[hidden]{display:none}.shot button{width:100%;padding:0;background:#080e14;border:1px solid var(--rule);display:block;overflow:hidden}.shot img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;transition:opacity .16s}.shot button:hover img{opacity:.85}.shot figcaption{padding-top:10px}.shot .title-line{display:flex;justify-content:space-between;gap:10px}.shot h3{font-size:15px}.shot .type{font-size:10px;color:var(--gold);white-space:nowrap;text-transform:uppercase;letter-spacing:.08em;padding-top:4px}.shot p{color:var(--muted);font-size:12px;margin-top:3px}
+    section.media{margin-top:48px;border-top:1px solid var(--rule);padding-top:30px}section.media[hidden]{display:none}section.media p{margin:12px 0;color:var(--muted);font-size:14px}video{width:100%;max-height:72vh;background:#080e14;display:block;margin:20px 0 12px}
+    footer{margin-top:50px;padding:25px 0 35px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:24px;color:var(--muted);font-size:12px}footer p{max-width:80ch}
+    dialog{padding:0;background:#0a111b;color:var(--text);border:1px solid var(--rule);width:min(1440px,calc(100% - 36px));max-width:none;max-height:calc(100% - 36px);box-shadow:0 20px 80px #0008}dialog::backdrop{background:#02050bea}.viewer-top{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--rule)}.viewer-top p{font-size:13px;color:var(--muted)}.viewer-top button,.viewer-bottom button{background:var(--surface);border:1px solid var(--rule);min-width:44px;min-height:44px;padding:8px 16px}.viewer-image{display:block;max-width:100%;width:100%;height:min(72vh,850px);object-fit:contain;background:#05090f}.viewer-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:15px 18px}.viewer-bottom p{font-size:13px;color:var(--muted);max-width:80ch}.viewer-links{display:flex;gap:10px;align-items:center;flex-shrink:0}.viewer-links a{font-size:13px;margin-right:10px}.image-error{padding:30px;color:var(--muted);font-size:13px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+    @media(max-width:900px){.intro{gap:28px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.context{gap:28px}.viewer-bottom{align-items:flex-start;flex-direction:column}.viewer-image{height:65vh}}
+    @media(max-width:620px){.wrap{width:calc(100% - 32px)}header{padding:18px 0}.intro{display:block;padding-top:30px}.intro p{margin-top:22px}.feature-pair,.context{grid-template-columns:1fr;gap:22px}.grid{grid-template-columns:1fr}.gallery-heading{align-items:flex-start;flex-direction:column;gap:8px}.filters{gap:3px}.filters button{padding:8px 10px}.viewer-top h3{font-size:15px}.viewer-image{height:53vh}footer{flex-direction:column}.edition{font-size:11px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.shot img{transition:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#screens">Skip to native screens</a>
+  <div class="wrap">
+    <header><a class="wordmark" href="#">YUGA</a><div class="edition">Native Casual lookbook<br>Local build · mouse &amp; keyboard</div></header>
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <div><h1 id="title">Mythic precision.<br>Inside the native build.</h1><p class="format">5v5 · first to 13 · one life per round</p></div>
+        <p>Explore the playable Casual interface, Rama’s tactical kit, and the courts of Sangam. These are original screenshots from the native application. The current match runs locally with bots; Ranked and online services are planned.</p>
+      </section>
+      <div class="feature-pair">
+        <figure class="feature"><button type="button" data-open="2" aria-label="Open the native Rama character view"><img id="feature-hero" alt="Actual full-body Rama with SURYA in the native character inspection page"></button><figcaption><strong>Native 3D Rama.</strong> The skinned game model and SURYA with front/back inspection controls.</figcaption></figure>
+        <figure class="feature"><button type="button" data-open="9" aria-label="Open the first-person approach screenshot"><img id="feature-arena" alt="Native first-person view along the sandstone approach to site A"></button><figcaption><strong>Native 3D arena.</strong> Actual scene geometry, materials, weapon and match HUD.</figcaption></figure>
+      </div>
+      <section class="context" aria-label="Review context and controls">
+        <div><h3>What these images establish</h3><p>Staged screen states show the look, layout and available flows. They do not demonstrate live gameplay timing, hardware FPS, online matchmaking or commercial-game visual parity. Open any image to inspect the original pixels.</p></div>
+        <details><summary>Controls &amp; the round</summary><dl class="controls"><dt>WASD / Shift</dt><dd>Move / walk. Space jumps.</dd><dt>Mouse / R</dt><dd>Aim, fire with LMB, ADS with RMB, reload with R.</dd><dt>Q / E / C / X</dt><dd>Veil seed, grounded step, ward wall, Dawn volley.</dd><dt>Hold F</dt><dd>Attune the Astra at A or B; defenders sever it.</dd><dt>B / Tab / Esc</dt><dd>Buy at spawn / hold scoreboard / pause.</dd><dt>Round rules</dt><dd>Buy, fight, recover. Switch sides after round 12. First to 13 wins, without Casual overtime.</dd></dl></details>
+      </section>
+      <section id="screens" aria-labelledby="screens-title">
+        <div class="gallery-heading"><h2 id="screens-title">The native screens</h2><p class="count" id="count" aria-live="polite">25 original captures</p></div>
+        <div class="filters" role="group" aria-label="Filter screenshots"><button type="button" data-filter="all" aria-pressed="true">All screens</button><button type="button" data-filter="menu" aria-pressed="false">Menus</button><button type="button" data-filter="hero" aria-pressed="false">Hero &amp; weapon</button><button type="button" data-filter="match" aria-pressed="false">In match</button><button type="button" data-filter="overlay" aria-pressed="false">Arsenal &amp; guides</button><button type="button" data-filter="result" aria-pressed="false">Results</button><button type="button" data-filter="world" aria-pressed="false">World</button></div>
+        <div class="grid" id="gallery"></div>
+        <noscript><p>Enable JavaScript for the local gallery and lightbox, or <a href="finish2/final-visual-r1/menu-home.png">open an original menu capture</a> and <a href="finish2/final-visual-r1/05-a-approach.png">the native arena capture</a>.</p></noscript>
+      </section>
+      <section id="motion" class="media" hidden aria-labelledby="motion-title"><h2 id="motion-title">Native motion</h2><p>Actual native weapon and utility motion. This scripted rehearsal stages credits and ultimate points; damage, reload, physics and effects run in the game. Silent recording, with no hardware-FPS claim.</p><video id="motion-video" controls preload="metadata" playsinline></video><a id="motion-original" href="#">Open the video file</a></section>
+      <section id="cpu-motion" class="media" hidden aria-labelledby="cpu-motion-title"><h2 id="cpu-motion-title">SURYA · CPU studio turntable</h2><p>The original SURYA model rendered separately with Raea on the CPU. This orbit is an asset inspection, not native gameplay or a game-performance benchmark.</p><video id="cpu-motion-video" controls preload="metadata" playsinline></video><a id="cpu-motion-original" href="#">Open the CPU turntable</a></section>
+    </main>
+    <footer><p>YUGA · original mythology-inspired game. Menu illustration and rendered 3D are labelled separately. This page is a local review artifact, not a browser version of the game.</p><a href="finish2/DELIVERY.md">Current builds &amp; source</a> · <a href="../../art/tactical/surya-carbine/surya-carbine.blend">Editable SURYA model</a></footer>
+  </div>
+  <dialog id="viewer" aria-labelledby="viewer-title" aria-describedby="viewer-description">
+    <div class="viewer-top"><div><h3 id="viewer-title"></h3><p id="viewer-position"></p></div><button type="button" id="close-viewer" aria-label="Close image">Close</button></div>
+    <img id="viewer-image" class="viewer-image" alt="">
+    <div class="viewer-bottom"><p id="viewer-description"></p><div class="viewer-links"><a id="original" href="#" target="_blank" rel="noopener">Open original</a><button type="button" id="previous" aria-label="Previous image">←</button><button type="button" id="next" aria-label="Next image">→</button></div></div>
+  </dialog>
+  <script>
+    'use strict';
+    // Native screenshots and films retain separate source/capture provenance.
+    const CAPTURE_DIR = 'finish2/final-visual-r1';
+    // A later focused capture can replace individual views without relabelling older originals.
+    const CAPTURE_OVERRIDES = {'surya-left.png':'evidence/weapon-r4/surya-left.png','surya-right.png':'evidence/weapon-r4/surya-right.png','surya-muzzle.png':'evidence/weapon-r4/surya-muzzle.png'};
+    const MOTION_PATH = 'finish2/final-motion-r1/tactical-casual.mp4';
+    const CPU_MOTION_PATH = 'finish2/raea/surya-cpu-orbit-r3.mp4';
+    const screens = [
+      ['menu-home.png','Home','menu','Illustrated menu','Generated Rama background illustration with working native menu controls.'],
+      ['menu-casual.png','Choose Casual','menu','Native menu','Local 5v5 briefing, first-to-13 rules, deployment and visibly planned Ranked.'],
+      ['menu-hero.png','Rama / native character','hero','Native 3D','Existing skinned Rama with original SURYA, a static firearm hold and four tactical ability descriptions.'],
+      ['menu-settings.png','Player settings','menu','Native menu','Sensitivity, volume, field of view, interface scale and reduced motion. Save remains visible.'],
+      ['menu-help.png','Controls','menu','Native menu','Mouse and keyboard controls for combat, abilities and the Astra objective.'],
+      ['01-first-person-buy.png','Prepare at spawn','match','Native 3D','First-person weapon, real teammate minimap, round timer, equipment and buy barrier.'],
+      ['02-equipment-shop.png','Round arsenal','overlay','Native UI','Authoritative credits, prices, owned charges and unavailable offers. The local match pauses while browsing.'],
+      ['03-kit-guide.png','In-match kit guide','overlay','Native UI','Solar veil, Measured step, Ward wall and Dawn volley, with actual objective controls.'],
+      ['04-pause.png','Pause & resume','overlay','Native UI','Resume, settings, kit guide, restart and leave actions.'],
+      ['05-a-approach.png','Approach site A','match','Native 3D','Actual sandstone approach, cover and first-person match HUD.'],
+      ['06-aim-down-sights.png','Aim down sights','match','Native 3D','A staged ADS state. A still does not demonstrate recoil or aiming feel.'],
+      ['06b-reload.png','Reload feedback','match','Native 3D','Visible weapon reload state and authoritative magazine/reserve display.'],
+      ['07-ward-and-veil.png','Ward & veil','match','Native 3D','Original utility presentation within the real tactical scene.'],
+      ['08-astra-planted.png','Astra attuned','match','Native 3D','The active objective at site A, with phase and timer feedback.'],
+      ['09-map-overview.png','Sangam Crossing','world','Native 3D','Actual arena overview: two sites, middle connections, flank partitions and perimeter architecture.'],
+      ['10-b-site-architecture.png','Indigo yard / site B','world','Native 3D','Original indigo and sandstone architecture, usable ground cover and site identification.'],
+      ['11-scoreboard.png','Team scorecard','overlay','Native UI','Aligned teams and roles; actual ally status, with enemy economy and health concealed.'],
+      ['12-round-result.png','Round outcome','result','Native UI','Staged outcome presentation with a stable contrast backing.'],
+      ['13-match-result.png','Match outcome','result','Native UI','Staged first-to-13 result with replay and return-to-menu actions.'],
+      ['menu-hero-back.png','Rama / back view','hero','Native 3D','Actual rear character view: retained hair, cape and costume, with old archery equipment omitted in this inspection.'],
+      ['10b-lotus-relief.png','Lotus passage / stone relief','world','Native 3D','Close native view of the original lotus marker and coursed stone finish.'],
+      ['10c-indigo-relief.png','Indigo passage / glazed relief','world','Native 3D','Actual architectural geometry and material finish at walking-camera height.'],
+      ['surya-left.png','SURYA / left profile','hero','Native prop view','Original Blender-authored firearm rendered by Godot. Open stock, layered brass, ivory inlays and solar chamber.'],
+      ['surya-right.png','SURYA / right profile','hero','Native prop view','Opposite-side geometry and curved detachable magazine; actual native material rendering.'],
+      ['surya-muzzle.png','SURYA / muzzle','hero','Native prop view','Hollow muzzle and barrel ribs; actual 3D asset, not the generated concept reference.']
+    ].map(([file,title,category,type,description],index)=>({file,title,category,type,description,index,path:CAPTURE_OVERRIDES[file]||CAPTURE_DIR+'/'+file}));
+    const gallery=document.getElementById('gallery');
+    const viewer=document.getElementById('viewer');
+    let visible=screens.map(s=>s.index), current=0, returnFocus=null;
+    for(const screen of screens){
+      const figure=document.createElement('figure');figure.className='shot';figure.dataset.category=screen.category;
+      const button=document.createElement('button');button.type='button';button.dataset.open=String(screen.index);button.setAttribute('aria-label','Open '+screen.title);
+      const image=document.createElement('img');image.src=screen.path;image.alt=screen.title+' — '+screen.type;image.loading='lazy';image.width=1280;image.height=720;button.append(image);
+      image.addEventListener('error',()=>{const message=document.createElement('span');message.className='image-error';message.textContent='Original capture is unavailable at this local path.';image.replaceWith(message);});
+      const caption=document.createElement('figcaption');const line=document.createElement('div');line.className='title-line';
+      const title=document.createElement('h3');title.textContent=screen.title;const type=document.createElement('span');type.className='type';type.textContent=screen.type;line.append(title,type);
+      const detail=document.createElement('p');detail.textContent=screen.description;caption.append(line,detail);figure.append(button,caption);gallery.append(figure);
+    }
+    document.getElementById('feature-hero').src=screens[2].path;
+    document.getElementById('feature-arena').src=screens[9].path;
+    function show(index){
+      current=index;const screen=screens[index];
+      document.getElementById('viewer-title').textContent=screen.title;
+      document.getElementById('viewer-position').textContent=(index+1)+' / '+screens.length+' · '+screen.type+' · '+screen.path.split('/').slice(-2,-1)[0];
+      document.getElementById('viewer-description').textContent=screen.description;
+      const image=document.getElementById('viewer-image');image.src=screen.path;image.alt=screen.title+' — original native capture';
+      document.getElementById('original').href=screen.path;
+      if(!viewer.open)viewer.showModal();
+    }
+    document.addEventListener('click',event=>{
+      const trigger=event.target.closest('[data-open]');if(!trigger)return;
+      returnFocus=trigger;show(Number(trigger.dataset.open));
+    });
+    document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{
+      const category=button.dataset.filter;visible=[];
+      document.querySelectorAll('[data-filter]').forEach(control=>control.setAttribute('aria-pressed',String(control===button)));
+      [...gallery.children].forEach((figure,index)=>{figure.hidden=category!=='all'&&screens[index].category!==category;if(!figure.hidden)visible.push(index);});
+      document.getElementById('count').textContent=visible.length+' of '+screens.length+' original captures';
+    }));
+    function advance(direction){const list=visible.includes(current)?visible:screens.map(s=>s.index);show(list[(list.indexOf(current)+direction+list.length)%list.length]);}
+    document.getElementById('previous').addEventListener('click',()=>advance(-1));document.getElementById('next').addEventListener('click',()=>advance(1));
+    document.getElementById('close-viewer').addEventListener('click',()=>viewer.close());
+    viewer.addEventListener('click',event=>{if(event.target===viewer)viewer.close();});
+    viewer.addEventListener('close',()=>{if(returnFocus)returnFocus.focus();});
+    viewer.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();advance(event.key==='ArrowLeft'?-1:1);}});
+    // Media is never advertised before the local file can supply metadata.
+    function mountVideo(id,path){
+      const video=document.getElementById(id+'-video');
+      video.addEventListener('loadedmetadata',()=>{document.getElementById(id).hidden=false;document.getElementById(id+'-original').href=path;});
+      video.addEventListener('error',()=>{document.getElementById(id).hidden=true;});
+      video.src=path;
+    }
+    mountVideo('motion',MOTION_PATH);
+    mountVideo('cpu-motion',CPU_MOTION_PATH);
+  </script>
+</body>
+</html>

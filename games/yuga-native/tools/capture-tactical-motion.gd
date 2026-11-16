@@ -107,6 +107,14 @@ func run() -> void:
 	_check("actual placed ward remains active", _has_effect_frame("ward") and world.rules.actors[0].charges.c == 0)
 	_check("grounded dash moved past ward edge", dash_origin.distance_to(world.player.global_position) > 3.5 and world.player.global_position.x < -32.35 and world.rules.actors[0].charges.e == 0)
 	_check("three paced ultimate releases and real second receiver death", solar_releases.size() == 3 and not world.rules.actors[6].alive and world.rules.actors[0].ult < 6)
+	var presented_slots: Array = []
+	var poses_finite := true
+	for frame: Dictionary in frames:
+		var pose: Dictionary = frame.state.cast_presentation
+		poses_finite = poses_finite and bool(pose.finite)
+		if pose.active and not presented_slots.has(pose.slot): presented_slots.append(pose.slot)
+	var final_cast: Dictionary = world.player.weapon.cast_motion.sample()
+	_check("four cast presentations are finite and return after final action", poses_finite and ["q", "c", "e", "x"].all(func(slot): return presented_slots.has(slot)) and not final_cast.active and final_cast.weapon_position.length() < .00001 and final_cast.weapon_rotation.length() < .00001 and world.player.weapon.support_hand.visible)
 	_check("normal live one-life authority retained", world.rules.phase == "live" and world.rules.actors[0].alive and world.rules.round_number == 1)
 	_finish()
 
@@ -192,7 +200,7 @@ func _state() -> Dictionary:
 	var receivers: Array = []
 	for id: int in TARGETS:
 		receivers.append({"id":id, "health":world.rules.actors[id].health, "alive":world.rules.actors[id].alive, "position":_normal(world.actor_position(id)), "body_rotation":_normal(world.actor_nodes[id].body_visual.rotation)})
-	return {"clock_s":world._clock, "phase":world.rules.phase, "time_left_s":world.rules.time_left, "player_position":_normal(world.player.global_position), "grounded":world.player.is_on_floor(), "camera_yaw":world.player.yaw, "camera_pitch":world.player.pitch, "fov":world.player.camera.fov, "ammo":world.player.weapon.ammo, "reserve":world.player.weapon.reserve, "ads":world.player.weapon.ads, "reload_remaining_s":world.player.weapon.reload_remaining, "model_position":_normal(world.player.weapon.model.position), "model_rotation":_normal(world.player.weapon.model.rotation), "charges":world.rules.actors[0].charges.duplicate(true), "ult_points":world.rules.actors[0].ult, "ultimate_pending":world._ultimate.duplicate(), "receivers":receivers, "effects":fx, "authority_event_count":world.event_receipts.size()}
+	return {"clock_s":world._clock, "phase":world.rules.phase, "time_left_s":world.rules.time_left, "player_position":_normal(world.player.global_position), "grounded":world.player.is_on_floor(), "camera_yaw":world.player.yaw, "camera_pitch":world.player.pitch, "fov":world.player.camera.fov, "ammo":world.player.weapon.ammo, "reserve":world.player.weapon.reserve, "ads":world.player.weapon.ads, "reload_remaining_s":world.player.weapon.reload_remaining, "model_position":_normal(world.player.weapon.model.position), "model_rotation":_normal(world.player.weapon.model.rotation), "cast_presentation":_normal(world.player.weapon.cast_motion.report()), "charges":world.rules.actors[0].charges.duplicate(true), "ult_points":world.rules.actors[0].ult, "ultimate_pending":world._ultimate.duplicate(), "receivers":receivers, "effects":fx, "authority_event_count":world.event_receipts.size()}
 
 func _has_effect_frame(kind: String) -> bool:
 	for frame: Dictionary in frames:

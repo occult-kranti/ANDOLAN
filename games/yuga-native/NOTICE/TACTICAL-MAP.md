@@ -24,3 +24,5 @@ New stall/awning assemblies, planted-edge composition, shared procedural leaf
 clusters, skyline arrangement and lighting are original project work. All new
 source associations are pinned in the tactical map JSON. No source texture
 pixels, imported model bytes or earlier world adapters were modified.
+
+Finish2 adds an original world-space architecture material and three batches of carved civic relief in `tactical_architecture.gdshader` and `tactical_architecture_details.gd`. These reuse the unchanged original city mesh and common ground helpers; no external texture/model is added. Exact physics footprint agreement and art source hashes are recorded in `docs/tactical/finish2/map/`.

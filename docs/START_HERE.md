@@ -2,7 +2,9 @@
 
 **15 November source publication:** [verified Sanctum checkpoint and dashboard](../games/yuga-native/docs/tactical/PUBLICATION_2026-11-15.md). Its packaged snapshot, committed successor and ongoing weapon-art work retain distinct source identities.
 
-**Active user direction — tactical Casual:** [YUGA · Sanctum](../games/yuga-native/docs/tactical/README.md) → [current delivery](../games/yuga-native/docs/tactical/DELIVERY.md) → [art-first roadmap](../games/yuga-native/docs/tactical/ROADMAP.md). First-person mythic firearms and hero abilities, 5v5, first team to 13 wins, sides switch after round 12. Casual is local with bots; Ranked is planned. This supersedes the long MOBA-style match direction in older documents below. Native appearance and complete artifacts are the current priority; browser is deferred.
+**Current hero/map build:** [native artifacts and exact source](../games/yuga-native/docs/tactical/finish2/DELIVERY.md) → [screens and films](../games/yuga-native/docs/tactical/PREVIEW.html) → [distributed ownership](../games/yuga-native/docs/tactical/finish2/README.md). Raea CPU turntable, articulated casting, native Rama/SURYA inspection and shared map detail continue the earlier art build.
+
+**Active user direction — tactical Casual:** [YUGA · Sanctum](../games/yuga-native/docs/tactical/README.md) → [current delivery](../games/yuga-native/docs/tactical/finish2/DELIVERY.md) → [art-first roadmap](../games/yuga-native/docs/tactical/ROADMAP.md). First-person mythic firearms and hero abilities, 5v5, first team to 13 wins, sides switch after round 12. Casual is local with bots; Ranked is planned. This supersedes the long MOBA-style match direction in older documents below. Native appearance and complete artifacts are the current priority; browser is deferred.
 
 **16 November video continuation:** [delivered builds, panel study and verification](research/video-study/DELIVERY.md) → [video-derived roadmap](research/video-study/IMPLEMENTATION_ROADMAP.md). Source-bound checkpoints and concurrent Sangam integration retain their separate receipts.
 

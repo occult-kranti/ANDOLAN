@@ -1,0 +1,132 @@
+extends RefCounted
+## Original civic relief kit. All triangles are decorative; never creates a body.
+var _surfaces: Array[SurfaceTool] = []
+var _triangles := 0
+
+static func _face(surface: SurfaceTool, points: Array[Vector3], normal: Vector3) -> void:
+	if (points[1]-points[0]).cross(points[2]-points[0]).dot(normal)>0: points.reverse()
+	for i in range(1,points.size()-1):
+		for p in [points[0],points[i],points[i+1]]:
+			surface.set_normal(normal.normalized())
+			surface.add_vertex(p)
+
+static func _box_faces(surface: SurfaceTool, center: Vector3, size: Vector3, basis_: Basis, amount: float) -> int:
+	var half := size*.5
+	var bevel := minf(amount,minf(size.x,minf(size.y,size.z))*.2)
+	var triangles := 0
+	for axis in 3:
+		var u := (axis+1)%3; var v := (axis+2)%3
+		for sign_ in [-1.0,1.0]:
+			var points: Array[Vector3] = []
+			var normal := Vector3.ZERO; normal[axis] = sign_
+			for pair in [Vector2(-1,-1),Vector2(1,-1),Vector2(1,1),Vector2(-1,1)]:
+				var p := Vector3.ZERO; p[axis]=half[axis]*sign_;p[u]=(half[u]-bevel)*pair.x;p[v]=(half[v]-bevel)*pair.y
+				points.append(center+basis_*p)
+			_face(surface,points,basis_*normal);triangles+=2
+	for axis in 3:
+		var u := (axis+1)%3;var v := (axis+2)%3
+		for a in [-1.0,1.0]:
+			for b in [-1.0,1.0]:
+				var points: Array[Vector3]=[]
+				var normal:=Vector3.ZERO;normal[u]=a;normal[v]=b
+				for pair in [Vector2(-1,0),Vector2(1,0),Vector2(1,1),Vector2(-1,1)]:
+					var p:=Vector3.ZERO;p[axis]=(half[axis]-bevel)*pair.x;p[u]=(half[u]-(bevel if pair.y==0 else 0))*a;p[v]=(half[v]-(0 if pair.y==0 else bevel))*b
+					points.append(center+basis_*p)
+				_face(surface,points,basis_*normal);triangles+=2
+	for x in [-1.0,1.0]:
+		for y in [-1.0,1.0]:
+			for z in [-1.0,1.0]:
+				var points:Array[Vector3]=[];var normal:=Vector3(x,y,z)
+				for axis in 3:
+					var p:=(half-Vector3.ONE*bevel)*normal;p[axis]=half[axis]*normal[axis]
+					points.append(center+basis_*p)
+				_face(surface,points,basis_*normal);triangles+=1
+	return triangles
+
+static func beveled_box(size:Vector3,amount:=.035)->ArrayMesh:
+	var surface:=SurfaceTool.new();surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	_box_faces(surface,Vector3.ZERO,size,Basis.IDENTITY,amount)
+	surface.index()
+	return surface.commit()
+
+func _box(center:Vector3,size:Vector3,slot:int,basis_:=Basis.IDENTITY,bevel:=.012)->void:
+	_triangles+=_box_faces(_surfaces[slot],center,size,basis_,bevel)
+
+func _relief(center:Vector3,basis_:Basis,outline:Array[Vector2],depth:float,slot:int)->void:
+	var front:Array[Vector3]=[];var back:Array[Vector3]=[]
+	for point in outline:
+		front.append(center+basis_*Vector3(point.x,point.y,depth*.5))
+		back.append(center+basis_*Vector3(point.x,point.y,-depth*.5))
+	_face(_surfaces[slot],front,basis_.z);_face(_surfaces[slot],back,-basis_.z)
+	_triangles+=(outline.size()-2)*2
+	for i in outline.size():
+		var next:=(i+1)%outline.size()
+		var edge:=outline[next]-outline[i]
+		var normal:=basis_*Vector3(edge.y,-edge.x,0)
+		_face(_surfaces[slot],[front[i],front[next],back[next],back[i]],normal)
+		_triangles+=2
+
+func _panel(front:Vector3,normal:Vector3,size:Vector2,motif:int)->void:
+	var basis_:=Basis(Vector3.UP.cross(normal),Vector3.UP,normal)
+	_box(front-normal*.016,Vector3(size.x,size.y,.020),1,basis_)
+	for x in [-1.0,1.0]:
+		_box(front+basis_.x*x*(size.x*.5-.035)-normal*.006,Vector3(.07,size.y,.010),0,basis_)
+	for y in [-1.0,1.0]:
+		_box(front+Vector3.UP*y*(size.y*.5-.035)-normal*.006,Vector3(size.x-.12,.07,.010),0,basis_)
+	var scale_:=minf(size.x*.18,size.y*.34)
+	if motif==0:
+		# Five overlapping carved leaves have separate depth tiers, avoiding
+		# coplanar faces while staying behind the declared front plane.
+		for k in 5:
+			var angle:=(float(k)-2)*.43
+			var outline:Array[Vector2]=[]
+			for point in [Vector2(0,-.65),Vector2(-.34,-.05),Vector2(-.22,.5),Vector2(0,1),Vector2(.22,.5),Vector2(.34,-.05)]:
+				outline.append(point.rotated(angle)*scale_)
+			_relief(front-normal*(.005+float(k)*.0005),basis_,outline,.002,2)
+	else:
+		for k in [-1.0,0.0,1.0]:
+			var at:Vector3=front+basis_.x*k*scale_*.9-normal*.005
+			var outline:Array[Vector2]=[Vector2(0,.7),Vector2(.32,0),Vector2(0,-.7),Vector2(-.32,0)]
+			for i in outline.size():outline[i]*=scale_
+			_relief(at,basis_,outline,.003,2)
+
+func build(data:Dictionary,materials:Array[Material])->Node3D:
+	for material in materials:
+		var surface:=SurfaceTool.new();surface.begin(Mesh.PRIMITIVE_TRIANGLES);surface.set_material(material);_surfaces.append(surface)
+	# Divider faces recede by4cm visually; these panels remain inside their
+	# original ±.6m physical half-width and original length/height.
+	for partition in data.partitions:
+		var p:Vector3=Vector3(partition.position[0],0,partition.position[2])
+		for side in [-1.0,1.0]:
+			var normal:=Vector3(side,0,0)
+			var basis_:=Basis(Vector3.UP.cross(normal),Vector3.UP,normal)
+			_box(p+Vector3(side*.575,.25,0),Vector3(23.7,.5,.045),0,basis_,.018)
+			for offset in [-9.0,-3.0,3.0,9.0]:
+				_panel(p+Vector3(side*.596,1.85,offset),normal,Vector2(4.7,1.65),0 if p.x<0 else 1)
+	# Low and high storage cover receives shaped inset panels, not new cover.
+	for cover in data.covers:
+		if cover.kind=="monument":continue
+		var p:=Vector3(cover.position[0],cover.position[1],cover.position[2])
+		var size:=Vector3(cover.size[0],cover.size[1],cover.size[2])
+		for side in [-1.0,1.0]:
+			_panel(p+Vector3(0,size.y*.5,side*(size.z*.5-.004)),Vector3(0,0,side),Vector2(size.x*.78,size.y*.66),1)
+	# The inner perimeter faces stay inside the original wall solids. Their
+	# relief makes the city enclosure read as built stone, not a flat screen.
+	for side in [-1.0,1.0]:
+		for z in range(-54,55,12):
+			_panel(Vector3(side*50.004,3.0,z),Vector3(-side,0,0),Vector2(7.4,2.45),0 if side<0 else 1)
+		for x in range(-40,41,16):
+			_panel(Vector3(x,3.45,side*65.004),Vector3(0,0,-side),Vector2(9.8,2.8),1)
+	# Decorative trade emblems sit entirely above actor height beneath the
+	# existing awnings. They are not shops, prompts or navigable doorways.
+	for side in [-1.0,1.0]:
+		for z in [-31.0,-17.0,17.0,31.0]:
+			_panel(Vector3(side*25.91,2.48,z),Vector3(side,0,0),Vector2(1.3,.54),0 if z<0 else 1)
+	var result:=Node3D.new();result.name="CivicReliefDetails"
+	for i in _surfaces.size():
+		_surfaces[i].index()
+		var visual:=MeshInstance3D.new();visual.name="ReliefMaterialBatch%d"%i;visual.mesh=_surfaces[i].commit();result.add_child(visual)
+	result.set_meta("triangles",_triangles)
+	result.set_meta("material_batches",_surfaces.size())
+	result.set_meta("collision_bodies",0)
+	return result

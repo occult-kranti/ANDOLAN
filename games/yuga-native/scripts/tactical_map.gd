@@ -1,8 +1,8 @@
 extends Node3D
 ## Original tactical encounter layout; immutable Sangam art is reused locally.
 const DATA_PATH := "res://assets/tactical/map.json"
-const FINISH = preload("res://shaders/sangam_masonry.gdshader")
-const PAVING = preload("res://scripts/world_ground.gdshader")
+const FINISH = preload("res://shaders/tactical_architecture.gdshader")
+const DETAIL_KIT = preload("res://scripts/tactical_architecture_details.gd")
 var sites: Dictionary = {"A":Vector3(-29,0,8), "B":Vector3(29,0,8)}
 var site_radius := 5.0
 var bounds := Rect2(-50,-65,100,130)
@@ -31,8 +31,8 @@ func _ready() -> void:
 		_fail("sangam_asset_unavailable"); return
 	var library: Node3D = packed.instantiate()
 	var specification: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/world/sangam-district.json"))
-	_stone = _plain(Color(.65,.49,.32),.92)
-	_indigo = _plain(Color(.075,.15,.23),.78)
+	_stone = _architecture_material(Color(.69,.59,.46),0)
+	_indigo = _architecture_material(Color(.17,.25,.32),2)
 	_brass = _plain(Color(.69,.49,.20),.55)
 	for mesh: MeshInstance3D in library.find_children("*", "MeshInstance3D", true, false):
 		for surface in mesh.mesh.get_surface_count():
@@ -57,7 +57,8 @@ func _ready() -> void:
 	for partition in _data.partitions:
 		var base := _v(partition.position)
 		var dimensions := _v(partition.size)
-		_box(partition.id,base+Vector3.UP*dimensions.y*.5,dimensions,_stone,true)
+		var partition_visual:=_box(partition.id,base+Vector3.UP*dimensions.y*.5,dimensions,_stone,true)
+		partition_visual.mesh=DETAIL_KIT.beveled_box(dimensions-Vector3(.08,0,0),.045)
 		for offset in [-.61,.61]:
 			_box("PartitionFrieze",base+Vector3(offset,2.9,0),Vector3(.03,.45,dimensions.z),_indigo,false)
 		_box("PartitionCap",base+Vector3.UP*(dimensions.y+.1),Vector3(dimensions.x+.2,.2,dimensions.z+.2),_stone,false)
@@ -78,7 +79,8 @@ func _ready() -> void:
 		_copy_mesh(gallery,Vector3(0,0,z),Vector3(0,0,-28),Vector3(.72,.72,1),true)
 	library.free()
 	var paving := ShaderMaterial.new()
-	paving.shader = PAVING
+	paving.shader = FINISH
+	paving.set_shader_parameter("surface_kind",3)
 	paving.set_shader_parameter("sangam_paving",true)
 	paving.set_shader_parameter("arrival_court_z",54.0)
 	paving.set_shader_parameter("lane_count",3)
@@ -87,15 +89,22 @@ func _ready() -> void:
 	paving.set_shader_parameter("lane_segments",streets)
 	_box("Paving",Vector3(0,-.25,0),Vector3(100,.5,130),paving,true)
 	for x in [-50.5,50.5]:
-		_box("CourtyardWall",Vector3(x,2.8,0),Vector3(1,5.6,132),_stone,true)
+		var wall:=_box("CourtyardWall",Vector3(x,2.8,0),Vector3(1,5.6,132),_stone,true)
+		wall.mesh=DETAIL_KIT.beveled_box(Vector3(.92,5.6,132),.03)
 	for z in [-65.5,65.5]:
-		_box("EndWall",Vector3(0,3.2,z),Vector3(102,6.4,1),_stone,true)
+		var wall:=_box("EndWall",Vector3(0,3.2,z),Vector3(102,6.4,1),_stone,true)
+		wall.mesh=DETAIL_KIT.beveled_box(Vector3(102,6.4,.92),.03)
 	# A restrained upper frieze and piers give walls human-scale rhythm.
 	for x in [-49.8,49.8]:
 		_box("IndigoFrieze",Vector3(x,4.9,0),Vector3(.18,.6,130),_indigo,false)
 		for z in range(-60,61,12):
 			_box("WallPier",Vector3(x,2.8,z),Vector3(.45,5.6,.55),_stone,false)
 	_street_art()
+	var carved_trim:=_architecture_material(Color(.77,.71,.59),4)
+	var relief=DETAIL_KIT.new().build(_data,[_stone,_indigo,carved_trim])
+	add_child(relief)
+	_metrics["decorative_relief_triangles"]=int(relief.get_meta("triangles"))
+	_metrics["decorative_material_batches"]=int(relief.get_meta("material_batches"))
 	for site in sites:
 		_site_mark(site,sites[site])
 	for z in _data.buy_barrier_z: _buy_barrier(float(z))
@@ -118,24 +127,32 @@ func _plain(color: Color, roughness: float) -> StandardMaterial3D:
 	material.roughness = roughness
 	return material
 
+func _architecture_material(tint:Color,kind:int)->ShaderMaterial:
+	var material:=ShaderMaterial.new()
+	material.shader=FINISH
+	material.set_shader_parameter("mineral_tint",tint)
+	material.set_shader_parameter("surface_kind",kind)
+	material.set_shader_parameter("minimum_roughness",.58 if kind==2 else .78)
+	if kind==4:
+		material.set_shader_parameter("joint_gain",0.0)
+		material.set_shader_parameter("variation_gain",.05)
+	return material
+
 func _finish(source: Material) -> Material:
 	if not source is StandardMaterial3D: return source
 	var id := source.get_instance_id()
 	if _materials.has(id): return _materials[id]
 	var label := source.resource_name.to_lower()
 	var tint: Color
-	if label.contains("sandstone"): tint = Color(.73,.53,.35)
-	elif label.contains("limestone"): tint = Color(.79,.72,.59)
-	elif label.contains("indigo"): tint = Color(.20,.29,.39)
+	var kind:=0
+	if label.contains("sandstone"): tint = Color(.69,.59,.46)
+	elif label.contains("limestone"): tint = Color(.80,.76,.65);kind=1
+	elif label.contains("indigo"): tint = Color(.17,.25,.32);kind=2
 	else: return source
-	var material := ShaderMaterial.new()
-	material.shader = FINISH
+	var material := _architecture_material(tint,kind)
+	material.set_shader_parameter("source_maps",true)
 	material.set_shader_parameter("source_albedo",source.albedo_texture)
-	material.set_shader_parameter("source_normal",source.normal_texture)
 	material.set_shader_parameter("source_roughness",source.roughness_texture)
-	material.set_shader_parameter("mineral_tint",tint)
-	material.set_shader_parameter("minimum_roughness",.78)
-	material.set_shader_parameter("normal_strength",.18)
 	var channel := Vector4.ZERO
 	if source.roughness_texture_channel < 4: channel[source.roughness_texture_channel] = 1.0
 	else: channel = Vector4(.333333,.333333,.333333,0)
@@ -192,7 +209,8 @@ func _box(label: String, center: Vector3, dimensions: Vector3, material: Materia
 	return visual
 
 func _crate(label: String, base: Vector3, dimensions: Vector3) -> void:
-	_box(label,base+Vector3.UP*dimensions.y*.5,dimensions,_indigo,true)
+	var core:=_box(label,base+Vector3.UP*dimensions.y*.5,dimensions,_indigo,true)
+	core.mesh=DETAIL_KIT.beveled_box(dimensions-Vector3(.04,0,.04),.045)
 	for z in [-.36,.36]:
 		_box("BrassBand",base+Vector3(0,dimensions.y+.012,z*dimensions.z),Vector3(dimensions.x,.025,.08),_brass,false)
 	for x in [-.5,.5]:

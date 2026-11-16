@@ -2,8 +2,35 @@
   "task": "YUGA-TACTICAL-CASUAL-13",
   "product": "YUGA native offline tactical first13 5v5",
   "base_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
-  "revision": "UI focused R1 visual correction",
+  "revision": "Final minimap ground-footprint successor after acceptedR2lookpass",
   "source_sha256": {
+    "games/yuga-native/scripts/tactical_frontend.gd": "ad27e3a4dba9f58799ec342cb92bbea0278b5cc20de2897642f832341208b043",
+    "games/yuga-native/scripts/tactical_ui.gd": "7395fe40437c24d154bd1a24f33e6da3e94c2e3b09294f291dc1dba67b1b248e",
+    "games/yuga-native/scripts/tactical_theme.gd": "e15877e7da7b564d601109787311a2860ae34f19d4e7cd2f8b457935baae542a",
+    "games/yuga-native/scenes/tactical_frontend.tscn": "dba6dbdc620bc772b1d19c75655579ea2a20409cfbb86da5a31763a727636910",
+    "games/yuga-native/tests/tactical/ui_cases.gd": "536806e759c147253c3cb27a678b81a49c7337bdec1fdf40e16ce85c5bf8de3c",
+    "games/yuga-native/tests/tactical/ui_loading_fixture.tscn": "a5764f03537bf66bc643940178fec462c9e90c7dceda3f238fd1f0bca87d7ba0",
+    "games/yuga-native/assets/tactical/ui/wall.svg": "9b5f87f3061c04bcced7014b2a9bf39d3ca409c57013dcff8a2db7a242fb766c",
+    "games/yuga-native/assets/tactical/ui/veil.svg": "020500c747f6f4bf6e4a623047fa70616a7160f3788d9559cdd8d5fc8791894d",
+    "games/yuga-native/assets/tactical/ui/armor.svg": "cc6e9bc4863ac803b942af48abc0c4eee1041ee8e48eb99650a83c5c9b3e0bc0",
+    "games/yuga-native/assets/tactical/ui/crest.svg": "3529e6c9cf3167f3da58bc874a726cea0258d814f62cbe367c125bb0c0829457",
+    "games/yuga-native/assets/tactical/ui/carbine.svg": "490c7cb09285f2bd211784802037377c80227328aa4153b90bd14d6dfc0c761e",
+    "games/yuga-native/assets/tactical/ui/surge.svg": "31a0fd13b832e5dfd234bd74c4710d3e9a65cbd3503b29843b41dafe3edb2c2f",
+    "games/yuga-native/assets/tactical/ui/step.svg": "0247332aed29c443b2d165ba4b43e4878b9017954bf3a2b3206d47502f5154a2",
+    "games/yuga-native/tests/tactical/ui_minimap_cases.gd": "b0cff27ce542229a115ba375e86532658fe48a1757e01086ff88f4fe0d1f95d7",
+    "games/yuga-native/docs/tactical/PREVIEW.html": "099315e26ee35baf45dd73a010f1428786a496d58569b6e1e6cab06db0d1efd0"
+  },
+  "prior_runs": [
+    "checks-r1:32/36; testwindow logicalcontent remained project1280x720 while bounds asserted960x540. Harness fixed root.content_scale_size explicitly, originalfailure retained.",
+    "checks-r2:36/36 before focused visualcorrection."
+  ],
+  "runtime_scope": "Frontend main/Casual/hero/help/settings, real threadedscene loading withcancel/error/retry; native compactHUD, authoritative arsenal, teammate-only realmap, scorecard, pause/settings/guide and round/matchoutcomes. UI onlyrequests authoritative hostactions.",
+  "pending": [
+    "One final native minimap image afterground-data successor",
+    "Rootordinaryinput/package verification andnativeweaponart iteration",
+    "PhysicalGPU performance/humanfeel; onlinefuture"
+  ],
+  "prior_lookpass_source_sha256": {
     "games/yuga-native/scripts/tactical_frontend.gd": "ad27e3a4dba9f58799ec342cb92bbea0278b5cc20de2897642f832341208b043",
     "games/yuga-native/scripts/tactical_ui.gd": "8d09707f8808e048cf66d7efb31f0729289a6b9ed0addc1eafaf0a4a926b338b",
     "games/yuga-native/scripts/tactical_theme.gd": "e15877e7da7b564d601109787311a2860ae34f19d4e7cd2f8b457935baae542a",
@@ -18,20 +45,18 @@
     "games/yuga-native/assets/tactical/ui/surge.svg": "31a0fd13b832e5dfd234bd74c4710d3e9a65cbd3503b29843b41dafe3edb2c2f",
     "games/yuga-native/assets/tactical/ui/step.svg": "0247332aed29c443b2d165ba4b43e4878b9017954bf3a2b3206d47502f5154a2"
   },
-  "tests": {
+  "lookpass_tests": {
     "command": "godot --headless --path games/yuga-native --script res://tests/tactical/ui_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/tactical/ui/checks-r3/result.json",
     "count": 36,
     "passed": true,
     "errors": 0,
     "warnings": 0
   },
-  "prior_runs": [
-    "checks-r1:32/36; testwindow logicalcontent remained project1280x720 while bounds asserted960x540. Harness fixed root.content_scale_size explicitly, originalfailure retained.",
-    "checks-r2:36/36 before focused visualcorrection."
-  ],
-  "runtime_scope": "Frontend main/Casual/hero/help/settings, real threadedscene loading withcancel/error/retry; native compactHUD, authoritative arsenal, teammate-only realmap, scorecard, pause/settings/guide and round/matchoutcomes. UI onlyrequests authoritative hostactions.",
-  "pending": [
-    "Root serialized successor native original-image review and ordinaryinput journey",
-    "PhysicalGPU performance and human balance/feel; online services remain future."
-  ]
+  "focused_final_test": {
+    "command": "godot --headless --path games/yuga-native --script res://tests/tactical/ui_minimap_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/tactical/ui/minimap-r1/result.json",
+    "result": "6/6 pass, exit0, zero errors/warnings",
+    "map_sha256": "29be60f2a0db7d971cb579240d82fea80f3a0d8d6f1ad6400b91a51ea2338750"
+  },
+  "actual_visual_review": "All19R2originals personallyopened; hashes/findings inround5-successor-review.json",
+  "preview": "PREVIEW.html provides local original-imagegallery/lightbox; source-only checks inpreview-receipt.json"
 }

@@ -1,0 +1,18 @@
+{
+  "programs": [],
+  "streams": [
+    {
+      "codec_name": "h264",
+      "width": 1280,
+      "height": 720,
+      "r_frame_rate": "15/1",
+      "duration": "12.000000",
+      "nb_read_frames": "180"
+    }
+  ],
+  "file": "tactical-casual.mp4",
+  "sha256": "5a0f67b417606657e06eefb2dcad314231931e1a3f3eef6d0ce07a37032ef572",
+  "bytes": 2110415,
+  "scope": "180 actual native staged rehearsal frames; silent, 15 simulation fps, not natural play or hardware FPS",
+  "command": "ffmpeg -framerate 15 -i frame-%05d.png -c:v libx264 -threads 6 -preset medium -crf 18 -pix_fmt yuv420p -movflags +faststart tactical-casual.mp4"
+}

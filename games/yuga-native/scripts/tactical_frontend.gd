@@ -1,5 +1,6 @@
 extends Control
 const T = preload("res://scripts/tactical_theme.gd")
+const Showcase = preload("res://scripts/tactical_hero_showcase.gd")
 const WORLD := "res://scenes/tactical_world.tscn"
 var page := "home"
 var loading_path := ""
@@ -13,6 +14,9 @@ var _settings := T.DEFAULTS.duplicate()
 var _shell: MarginContainer
 var _page_actions: HBoxContainer
 var _navigation := {}
+var _content_row: HBoxContainer
+var _key_art: TextureRect
+var hero_showcase: Control
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -31,7 +35,7 @@ func _build() -> void:
 	var background := ColorRect.new();background.color=T.INK;background.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(background);background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var art_path := "res://assets/tactical/menu-keyart.png"
 	if ResourceLoader.exists(art_path):
-		var art := TextureRect.new();art.texture=load(art_path);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED;art.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(art);art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		var art := TextureRect.new();_key_art=art;art.texture=load(art_path);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED;art.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(art);art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var gradient := Gradient.new();gradient.set_color(0,Color(.035,.055,.085,.98));gradient.set_color(1,Color(.035,.055,.085,.12));gradient.add_point(.55,Color(.035,.055,.085,.86))
 	var texture := GradientTexture2D.new();texture.gradient=gradient;texture.fill_from=Vector2.ZERO;texture.fill_to=Vector2.RIGHT
 	var veil := TextureRect.new();veil.texture=texture;veil.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(veil);veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -43,7 +47,8 @@ func _build() -> void:
 	var space := Control.new();space.custom_minimum_size.x=24;navigation.add_child(space)
 	for nav in [["home","Home"],["casual","Play"],["hero","Rama"],["settings","Settings"]]:
 		var button := T.button(nav[1],func():show_page(nav[0]));button.name="Nav_"+nav[0];T.quiet(button);navigation.add_child(button);_navigation[nav[0]]=button
-	content_scroll=ScrollContainer.new();content_scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;content_scroll.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN;content_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;column.add_child(content_scroll)
+	_content_row=T.row(28);_content_row.size_flags_vertical=Control.SIZE_EXPAND_FILL;column.add_child(_content_row)
+	content_scroll=ScrollContainer.new();content_scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;content_scroll.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN;content_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;_content_row.add_child(content_scroll)
 	body=T.stack(18);body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content_scroll.add_child(body)
 	_page_actions=T.row(12);column.add_child(_page_actions)
 	var footer := T.row();footer.add_child(T.label("CASUAL  /  LOCAL 5V5",13,T.GOLD));var fill:=Control.new();fill.size_flags_horizontal=Control.SIZE_EXPAND_FILL;footer.add_child(fill)
@@ -54,7 +59,7 @@ func _build() -> void:
 
 func _layout() -> void:
 	if body==null:return
-	body.custom_minimum_size.x=minf(550,maxf(320,size.x-112))
+	body.custom_minimum_size.x=minf(480,maxf(340,size.x*.4)) if page=="hero" else minf(550,maxf(320,size.x-112))
 	content_scroll.custom_minimum_size.x=body.custom_minimum_size.x+16
 	body.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
 	for child in body.get_children():
@@ -63,6 +68,7 @@ func _layout() -> void:
 		elif child is Control:child.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 
 func _clear() -> void:
+	if is_instance_valid(hero_showcase):_content_row.remove_child(hero_showcase);hero_showcase.queue_free();hero_showcase=null
 	for node in body.get_children():body.remove_child(node);node.queue_free()
 	content_scroll.scroll_vertical=0
 	settings_controls.clear()
@@ -73,6 +79,7 @@ func _clear() -> void:
 func show_page(next: String) -> void:
 	if not loading_path.is_empty():return
 	page=next
+	if is_instance_valid(_key_art):_key_art.visible=page!="hero"
 	_clear()
 	body.add_theme_constant_override("separation",14)
 	for id in _navigation:T.quiet(_navigation[id],id==page)
@@ -97,6 +104,7 @@ func show_page(next: String) -> void:
 			body.add_child(T.label("Rama",40,T.IVORY,true));body.add_child(T.prose("Precision shaped by purpose.",18,T.GOLD))
 			body.add_child(T.prose("ARKA & SURYA firearms. Four ways to shape the round.",15))
 			_add_abilities(body,true)
+			hero_showcase=Showcase.new();_content_row.add_child(hero_showcase)
 			_page_actions.add_child(T.button("Choose Casual",func():show_page("casual"),true));_page_actions.show()
 		"settings":
 			body.add_theme_constant_override("separation",8)

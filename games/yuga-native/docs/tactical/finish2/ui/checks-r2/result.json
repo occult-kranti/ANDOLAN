@@ -1,0 +1,107 @@
+{
+	"checks": [
+		{
+			"name": "Hero page mounts the accepted full-body model and 164-bone skin",
+			"passed": true
+		},
+		{
+			"name": "SURYA is a right-wrist attachment without first-person arms",
+			"passed": true
+		},
+		{
+			"name": "Production material calibration, secondary and finish bind",
+			"passed": true
+		},
+		{
+			"name": "Bow and nocked arrow are hidden",
+			"passed": true
+		},
+		{
+			"name": "Inspection has no collision/authority and no active motion modifier",
+			"passed": true
+		},
+		{
+			"name": "Static hold reaches both wrists within 1cm",
+			"passed": false
+		},
+		{
+			"name": "Every posed bone stays finite",
+			"passed": true
+		},
+		{
+			"name": "Back action turns the full character",
+			"passed": true
+		},
+		{
+			"name": "Focused keyboard rotation changes inspection only",
+			"passed": true
+		},
+		{
+			"name": "Zoom has a safe close bound",
+			"passed": true
+		},
+		{
+			"name": "Zoom has a safe far bound",
+			"passed": true
+		},
+		{
+			"name": "Nonfinite control input is ignored",
+			"passed": true
+		},
+		{
+			"name": "Inspection stays within native viewport (1280, 720)",
+			"passed": true
+		},
+		{
+			"name": "Inspection stays within native viewport (960, 540)",
+			"passed": true
+		},
+		{
+			"name": "Leaving hero page frees viewport and releases original menu art",
+			"passed": true
+		},
+		{
+			"name": "Repeated hero entry has exactly one isolated world",
+			"passed": true
+		},
+		{
+			"name": "Settings flow remains available after inspection",
+			"passed": true
+		},
+		{
+			"name": "Missing model shows a truthful recoverable fallback",
+			"passed": true
+		}
+	],
+	"count": 18,
+	"inspection": {
+		"authority_nodes": 0,
+		"bones": 164,
+		"distance": 4.4,
+		"hero_path": "res://assets/heroes/rama-hero.glb",
+		"materials": {
+			"calibration": true,
+			"finish": true,
+			"secondary": true
+		},
+		"modifier_active": false,
+		"scope": "Existing skinned Rama and SURYA with a static inspection hold. No new rig or combat animation claim.",
+		"state": "ready",
+		"weapon_attached": true,
+		"weapon_path": "res://assets/tactical/surya-carbine.glb",
+		"wrist_error_m": {
+			"L": 0.241450771689415,
+			"R": 0.000000562309082852153
+		},
+		"yaw": 0.28
+	},
+	"passed": false,
+	"scope": "Headless native model/rig/material/pose binding, page lifecycle, controls and geometry bounds. Rendered art, finger contacts and ordinary pointer interaction need separate native capture.",
+	"sources": {
+		"res://assets/heroes/rama-hero.glb": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e",
+		"res://assets/tactical/surya-carbine.glb": "f2ab39c6f559c47461d340a29ae51d040be9565cddd1602cd41cbe118f9cc810",
+		"res://scripts/tactical_frontend.gd": "cdc23c9b7171d2533c1452fc8cab68a616bcbb2145a2d4541225aff18248f482",
+		"res://scripts/tactical_hero_showcase.gd": "65514628fc44d3dc1ebd8a2e0025dbc3f2be1dfea965274171a5a04dafdc6564",
+		"res://tests/tactical/showcase_cases.gd": "6b67434fb6e95abbb24af482054c6603aebe7ded34584a77002d01c4fa2ae69d"
+	}
+}

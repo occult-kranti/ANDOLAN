@@ -17,3 +17,7 @@ Task `YUGA-TACTICAL-CASUAL-13`; source base `7162b5d0b666e4422b0bc73100e1fba947d
 Panel sequence: contract and reference interpretation → specialist art/code implementation → focused functional checks → actual native visual/input review → corrections to observed defects → packaged artifacts and resumable handoff. The six passes describe work organization, not six independent certifications or commercial-level completion.
 
 Reuse policy: preserve shared original meshes, materials, fonts and geometry helpers; create independent tactical simulation state. Do not duplicate entire engines or import unrelated repositories merely to increase resource use. New dependencies must solve a concrete production need. Keep original generated art and prompt history; reuse accepted graphical motifs in native code rather than baking interactive text into images.
+
+Current implementation: [hero/map successor delivery](finish2/DELIVERY.md) and [CPU Raea / nested ownership](finish2/README.md). The [SURYA art checkpoint](ART_DELIVERY.md) is packaged and normally exercised on Linux; successor art work keeps its own source and output records.
+
+Next art packet: full-body tactical locomotion and two-hand weapon contact, richer face/hair and the simple bot silhouettes. Reuse the accepted source materials, firearm and first-person utility poses; do not reopen match rules or duplicate the engine. Online remains a separate implementation packet.

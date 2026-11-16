@@ -1,0 +1,49 @@
+extends SceneTree
+func _initialize()->void:
+	call_deferred("run")
+
+func signature(map:Node3D)->Array:
+	var result:Array=[]
+	for body in map.get_children():
+		if not body is StaticBody3D:continue
+		var shape=body.get_child(0).shape
+		var geometry:Variant=shape.size if shape is BoxShape3D else shape.get_faces()
+		var hash:=HashingContext.new();hash.start(HashingContext.HASH_SHA256);hash.update(var_to_bytes(geometry))
+		result.append({"transform":var_to_str(body.transform),"layer":body.collision_layer,"mask":body.collision_mask,"shape":shape.get_class(),"geometry_sha256":hash.finish().hex_encode()})
+	return result
+
+func allowed(point:Vector3,data:Dictionary)->bool:
+	if point.y>=2.1 or absf(point.x)>=50.0 or absf(point.z)>=65.0:return true
+	for item in data.covers+data.partitions:
+		var center:=Vector3(item.position[0],item.position[1],item.position[2])
+		var size:=Vector3(item.size[0],item.size[1],item.size[2])
+		if absf(point.x-center.x)<=size.x*.5+.0001 and absf(point.z-center.z)<=size.z*.5+.0001 and point.y>=center.y-.0001 and point.y<=center.y+size.y+.0001:return true
+	return false
+
+func run()->void:
+	var baseline_script:=GDScript.new()
+	baseline_script.source_code=FileAccess.get_file_as_string("res://docs/tactical/finish2/map/tactical_map-baseline.gd.txt")
+	var compile_result:=baseline_script.reload()
+	if compile_result!=OK:push_error("Baseline compile failed");quit(1);return
+	var baseline=baseline_script.new();root.add_child(baseline)
+	await physics_frame
+	var before:=signature(baseline)
+	baseline.queue_free();await process_frame
+	var candidate=load("res://scripts/tactical_map.gd").new();root.add_child(candidate)
+	await physics_frame
+	var after:=signature(candidate)
+	var data:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/tactical/map.json"))
+	var detail=candidate.get_node_or_null("CivicReliefDetails")
+	var tested:=0;var outside:=0
+	if detail:
+		for child in detail.get_children():
+			var vertices:PackedVector3Array=child.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+			for point in vertices:
+				tested+=1
+				if not allowed(point,data):outside+=1
+	var record={"task":"MAP-FINISH2","ready":candidate.report().ready,"before_physics_bodies":before.size(),"after_physics_bodies":after.size(),"exact_physics_signatures_equal":before==after,"relief_vertices_checked":tested,"relief_vertices_outside_allowed_regions":outside,"candidate_report":candidate.report(),"map_json_sha256":FileAccess.get_sha256("res://assets/tactical/map.json"),"scope":"Two actual headless scene constructions; exact physics shape buffers/transforms/layers and new decorative vertex containment. No rendered or hardware performance claim."}
+	var stream=FileAccess.open("res://docs/tactical/finish2/map/authority-preservation-r1.json",FileAccess.WRITE);stream.store_string(JSON.stringify(record,"\t")+"\n");stream.close()
+	print(JSON.stringify(record))
+	var passed:bool=record.ready and before==after and before.size()==62 and tested>0 and outside==0
+	candidate.queue_free();await process_frame
+	quit(0 if passed else 1)

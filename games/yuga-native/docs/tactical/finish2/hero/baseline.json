@@ -1,0 +1,19 @@
+{
+  "task": "HERO-FINISH2",
+  "goal": "Visible first-person casting and weapon return with unchanged combat authority",
+  "source_commit": "143289f410ef17ced20d0546efc7fccafee75ba9",
+  "baseline_weapon_sha256": "7dca037cc8af82b0c0cb9313fa835551231eedfc598726555853c1d005ccfbe1",
+  "surya_asset_sha256": "f2ab39c6f559c47461d340a29ae51d040be9565cddd1602cd41cbe118f9cc810",
+  "observed_defect": "Q/C and X windup retain the firearm hold pose in the delivered180-frame rehearsal.",
+  "ownership": {
+    "hero_combat": [
+      "scripts/tactical_weapon.gd",
+      "tests/tactical/hero_finish_cases.gd",
+      "docs/tactical/finish2/hero/"
+    ],
+    "hero_combat/cast_motion": [
+      "scripts/tactical_cast_motion.gd"
+    ]
+  },
+  "frozen_authority": "No changes to costs, damage, Q/C/E instant authority start, .55/.79/1.03 X shot times, fire/reload timings or one-life rules."
+}

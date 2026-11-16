@@ -1,5 +1,8 @@
 # YUGA · Sanctum delivery
 
+**Native art continuation:** the dedicated SURYA Blender asset, final weapon/motion captures and local portable art build are recorded separately in [ART_DELIVERY.md](ART_DELIVERY.md). The concurrent publication/checkpoint stream below is preserved with its own exact source and receipts.
+
+
 Task **YUGA-TACTICAL-CASUAL-13**, product **YUGA native desktop**. The current
 continuation prepares the original first-person tactical Casual source checkpoint
 for publication and updates the production dashboard. Casual is local: one human

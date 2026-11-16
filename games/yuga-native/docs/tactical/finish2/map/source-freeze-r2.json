@@ -1,0 +1,63 @@
+{
+  "task": "MAP-FINISH2",
+  "product": "YUGA native tactical Casual",
+  "source_commit": "143289f410ef17ced20d0546efc7fccafee75ba9",
+  "decision": "Helper successor frozen for root matched native originals; source/physics pass does not replace visual acceptance.",
+  "source_sha256": {
+    "games/yuga-native/scripts/tactical_map.gd": "a96fd5394003587742488eb9ce2c853db322741a0585df46e68928c91d75e539",
+    "games/yuga-native/scripts/tactical_architecture_details.gd": "58599898d4e61b808ab36ce4118346c60fcfb8e8d1d4897ba11443c8bf48774e",
+    "games/yuga-native/shaders/tactical_architecture.gdshader": "5fff88aa10e88292366df990e83a74ce75654214298626f4562aac120cac03c0"
+  },
+  "authority_map_json_sha256": "29be60f2a0db7d971cb579240d82fea80f3a0d8d6f1ad6400b91a51ea2338750",
+  "shared_include": {
+    "path": "games/yuga-native/scripts/world_ground_common.gdshaderinc",
+    "sha256": "577e8ed9a85b61c5b2db2274a55ad89528981243897ce0493c3ae5d0cac2837a"
+  },
+  "changes": [
+    "One shared world-metre architecture shader with scale-correct mortar, quiet mineral variation, mild lower-edge aging, subdued indigo glaze and cooler paving variation.",
+    "Original inset relief panels inside existing divider/wall/cover footprints, with shaped bevels and three combined material batches.",
+    "Small original trade emblems under existing awnings above2.1m; no interaction affordance or new collider."
+  ],
+  "counts": {
+    "decorative_triangles": 20296,
+    "decorative_material_batches": 3,
+    "reused_meshes": 59,
+    "reused_triangles": 438744,
+    "physics_bodies": 62
+  },
+  "checks": {
+    "command": "timeout 30s env XDG_DATA_HOME=/tmp/yuga-map-finish2 godot --headless --path games/yuga-native --script res://docs/tactical/finish2/map/authority-preservation.gd -- --report=res://docs/tactical/finish2/map/authority-preservation-r2.json",
+    "exit_code": 0,
+    "receipt": "authority-preservation-r2.json",
+    "receipt_sha256": "f246635ef8cc913fced0db12490c67fb2c23da05a07705470d27212d4defbcf9",
+    "exact_physics_equal": true,
+    "new_relief_vertices_checked": 42700,
+    "outside_allowed_regions": 0
+  },
+  "preserved_failure": "preflight-r1.log/json: initial inferred-Variant at variable prevented helper compilation; corrected to explicit Vector3 before the succeeding comparison.",
+  "recommended_views": [
+    "Matched05-a-approach with currentLotus divider/stall foreground",
+    "Matched10-b-site-architecture for indigo/glaze/cover and paving",
+    "Ground eye close-up of west divider atx\u221236,z\u221223, looking\u2212X",
+    "Reverse ground eye along east divider atx36,z\u221217, looking+X",
+    "Matched09-map-overview for tonal hierarchy, not art acceptance alone"
+  ],
+  "limits": [
+    "Initial five native probe originals reviewed. Corrected helper still awaits matched successor pixels.",
+    "No new broad335navigation or stress matrix run.",
+    "Shader surface relief does not change collision or actual stone geometry.",
+    "Shared surfaces/batching do not establish hardware FPS; final materials need root Forward+ review."
+  ],
+  "next_owner": "Root: imports/manifests and focused native capture; then independent actual-image decision.",
+  "pass": "Narrow helper correction after actual probe R1",
+  "actual_prior_review": {
+    "path": "visual-review-r1.json",
+    "sha256": "f2c5e6ae0585681e6d50ec08dedbf4b8079f46f1e8d0f0424d081220cd28b797",
+    "scope": "All five original probe views personally inspected; Lotus merged into a jagged star and shallow relief read as stencil."
+  },
+  "correction": [
+    "Five petals now rotate about a shared lower base instead of each leaf center, removing downward spikes.",
+    "Relief fronts now have an inset bevel; polygon winding is normalized before assigning outward side normals.",
+    "Only runtime helper changed; map adapter,shared shader,authority JSON and all physics stay byte-identical to initial probe."
+  ]
+}
