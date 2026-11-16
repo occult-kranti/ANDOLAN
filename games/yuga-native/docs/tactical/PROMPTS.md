@@ -32,3 +32,7 @@ Continue at [finish2/README.md](finish2/README.md). Root uses the pinned Raea re
 The request to use Raea on CPU and nested agents was implemented as `YUGA-TACTICAL-FINISH2`. [Six actual working passes and exclusive ownership](finish2/README.md) preserve contracts, implementation, focused checks, rejected probes, corrections and delivery. [Final artifacts](finish2/DELIVERY.md) include native packages, the actual scripted game recording, a separately labelled CPU Raea weapon turntable and editable source/art.
 
 Resume prompt: “Open `docs/START_HERE.md`, then `games/yuga-native/docs/tactical/finish2/DELIVERY.md`. Preserve the frozen finish2 source and all other workers’ changes. Continue the next art packet: Rama full-body tactical weapon contact/locomotion, face/hair and bot silhouettes, using the current SURYA and shared material kit. Keep 5v5 first-to-13 local Casual rules; Ranked remains planned. Assign exclusive files, use focused checks and actual native captures, and preserve source hashes and rejected findings.”
+
+## Repository and hero/UI continuation
+
+User: “and push and maintain repo and continue building heros and ui ux further”. Authorized normal source push to the existing native production branch. Completed checkpoint e59a07a4 preserves finish2; `YUGA-HERO-STUDIO3` continues Rama pose/UI work with exclusive modules, focused checks, actual native capture and successor packages. See [ownership and next work](studio3/README.md).

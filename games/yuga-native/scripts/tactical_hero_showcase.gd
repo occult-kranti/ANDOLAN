@@ -1,11 +1,12 @@
 extends Control
-## Isolated character inspection. Reuses accepted skin, finish and authored idle.
+## Isolated hero studio. Reuses accepted skin, finish and actual firearm art.
 ## No player, collision, combat input, authority clock or animation release exists here.
 const T = preload("res://scripts/tactical_theme.gd")
 const Motion = preload("res://scripts/rama_motion.gd")
 const Surface = preload("res://scripts/rama_surface_materials.gd")
 const Secondary = preload("res://scripts/rama_secondary_motion.gd")
 const Finish = preload("res://scripts/rama_surface_finish.gd")
+const Weapon = preload("res://scripts/tactical_weapon.gd")
 const HERO_PATH := "res://assets/heroes/rama-hero.glb"
 const WEAPON_PATH := "res://assets/tactical/surya-carbine.glb"
 var viewport: SubViewport
@@ -28,6 +29,21 @@ var _dragging := false
 var _materials := {}
 var _wrist_error := {}
 var _gear_filter := {}
+var hero_pose: RefCounted
+var first_person_weapon: Node3D
+var first_person_camera: Camera3D
+var _floor: MeshInstance3D
+var _loading_cover: PanelContainer
+var _mode_buttons := {}
+var _turn_buttons: Array[Button] = []
+var _pause_button: Button
+var _view_mode := "hero"
+var _selected_stance := "idle"
+var _preview_paused := false
+var _reduced_motion := false
+var _render_ready := false
+var _render_probe_clock := 0.0
+var _base_firearm := Transform3D.IDENTITY
 
 func _ready() -> void:
 	name="RamaShowcase"
@@ -45,11 +61,17 @@ func _ready() -> void:
 	var margin:=MarginContainer.new();layout.add_child(margin)
 	for side in ["left","right","top","bottom"]:margin.add_theme_constant_override("margin_"+side,12)
 	var controls:=T.stack(6);margin.add_child(controls)
+	var modes:=T.row(6);controls.add_child(modes)
+	for entry in [["Hero","hero"],["First person","first_person"]]:
+		var mode:=T.button(entry[0],func():set_view_mode(entry[1]));mode.name="StudioMode_"+entry[1];mode.custom_minimum_size.y=34;mode.size_flags_horizontal=Control.SIZE_EXPAND_FILL;mode.add_theme_font_size_override("font_size",14);modes.add_child(mode);_mode_buttons[entry[1]]=mode
+	_pause_button=T.button("Pause",func():set_preview_paused(not _preview_paused));_pause_button.name="PausePreview";_pause_button.custom_minimum_size.y=34;_pause_button.add_theme_font_size_override("font_size",14);modes.add_child(_pause_button)
 	var row:=T.row(8);controls.add_child(row)
 	for entry in [["Front","front"],["Back","back"]]:
-		var button:=T.button(entry[0],func():set_view(entry[1]));button.name="Inspect"+entry[0];button.size_flags_horizontal=Control.SIZE_EXPAND_FILL;T.quiet(button);row.add_child(button)
+		var button:=T.button(entry[0],func():set_view(entry[1]));button.name="Inspect"+entry[0];button.size_flags_horizontal=Control.SIZE_EXPAND_FILL;T.quiet(button);row.add_child(button);_turn_buttons.append(button)
 	feedback=T.prose("Preparing character…",12);feedback.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;controls.add_child(feedback)
 	drag_area=Control.new();drag_area.name="RotateCharacter";drag_area.focus_mode=Control.FOCUS_ALL;drag_area.mouse_default_cursor_shape=Control.CURSOR_DRAG;container.add_child(drag_area);drag_area.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);drag_area.gui_input.connect(_inspect_input)
+	_loading_cover=PanelContainer.new();_loading_cover.mouse_filter=Control.MOUSE_FILTER_IGNORE;_loading_cover.add_theme_stylebox_override("panel",T.panel(Color("111c2a"),16));container.add_child(_loading_cover);_loading_cover.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var preparing:=T.prose("Preparing Rama’s studio…",16,T.GOLD);preparing.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;preparing.vertical_alignment=VERTICAL_ALIGNMENT_CENTER;_loading_cover.add_child(preparing)
 	resized.connect(_stop_drag)
 	set_view("front")
 	call_deferred("_load_character")
@@ -61,7 +83,7 @@ func _environment() -> void:
 		var light:=DirectionalLight3D.new();light.rotation_degrees=spec[0];light.light_color=spec[1];light.light_energy=spec[2];light.shadow_enabled=key_light
 		if key_light:light.shadow_bias=.035;light.shadow_normal_bias=.5;light.directional_shadow_max_distance=10.0
 		stage.add_child(light);key_light=false
-	var floor:=MeshInstance3D.new();var cylinder:=CylinderMesh.new();cylinder.top_radius=.65;cylinder.bottom_radius=.65;cylinder.height=.04;cylinder.radial_segments=64;floor.mesh=cylinder;floor.position.y=-.023
+	var floor:=MeshInstance3D.new();_floor=floor;var cylinder:=CylinderMesh.new();cylinder.top_radius=.65;cylinder.bottom_radius=.65;cylinder.height=.04;cylinder.radial_segments=64;floor.mesh=cylinder;floor.position.y=-.023
 	var material:=StandardMaterial3D.new();material.albedo_color=Color("263343");material.roughness=.72;floor.material_override=material;stage.add_child(floor)
 
 func _load_character() -> void:
@@ -88,8 +110,14 @@ func _load_character() -> void:
 	for pair in [["calibration",Surface],["secondary",Secondary],["finish",Finish]]:
 		var owner:Node=pair[1].new();visual.add_child(owner);_materials[pair[0]]=owner.configure(visual)
 	if ResourceLoader.exists(source_weapon):_attach_weapon()
+	if is_instance_valid(weapon):
+		var pose_script=load("res://scripts/tactical_hero_pose.gd")
+		if pose_script!=null:
+			hero_pose=pose_script.new()
+			if not hero_pose.configure(rig,motion,socket,weapon,_base_firearm):hero_pose=null
+	set_reduced_motion(_reduced_motion)
 	state="ready"
-	feedback.text="Drag to turn · scroll to zoom" if weapon!=null else "Character view · SURYA model unavailable"
+	set_view_mode("hero")
 	_apply_view()
 
 # The original export merged quiver/shafts/fletching into RamaHero. Identify
@@ -176,6 +204,7 @@ func _attach_weapon() -> void:
 	if not packed is PackedScene:return
 	# A fixed, authored low-ready pose. The existing skin retains its rest lengths.
 	var firearm:=Transform3D(Basis(Vector3.UP,PI+.60),Vector3(-.16,1.31,.10))
+	_base_firearm=firearm
 	var right_basis:=Basis(Vector3(1,0,0),Vector3(0,-1,0),Vector3(0,0,-1))
 	var right_grip:=firearm*Vector3(0,-.125,.008)
 	var right_target:=right_grip-right_basis*Motion.GRIP_CENTER
@@ -206,6 +235,79 @@ func _find(node:Node,kind:String)->Node:
 func _fail(message:String)->void:
 	state="unavailable";feedback.text=message
 	if is_instance_valid(visual):visual.hide()
+	if is_instance_valid(_loading_cover):_loading_cover.hide()
+	_pause_button.disabled=true
+	for button in _mode_buttons.values():button.disabled=true
+
+func set_reduced_motion(enabled:bool)->void:
+	_reduced_motion=enabled
+	if is_instance_valid(first_person_weapon):first_person_weapon.reduced_motion=enabled
+	if hero_pose!=null and hero_pose.has_method("set_reduced_motion"):hero_pose.set_reduced_motion(enabled)
+
+func set_preview(action:String)->bool:
+	if state!="ready" or action not in ["idle","aim","q","e","c","x"] or hero_pose==null:return false
+	var accepted:bool=hero_pose.set_stance(action) if action in ["idle","aim"] else hero_pose.play_ability(action)
+	if not accepted:return false
+	set_preview_paused(false)
+	if action in ["idle","aim"]:_selected_stance=action
+	if is_instance_valid(first_person_weapon):
+		first_person_weapon.ads=_selected_stance=="aim"
+		if action in ["idle","aim"]:first_person_weapon.reset_presentation()
+		else:first_person_weapon.present_ability(action)
+	return true
+
+func set_preview_paused(paused:bool)->void:
+	_preview_paused=paused
+	if is_instance_valid(_pause_button):_pause_button.text="Play" if paused else "Pause"
+
+func set_view_mode(mode:String)->bool:
+	if mode not in ["hero","first_person"] or state!="ready":return false
+	_stop_drag()
+	if mode=="first_person" and not is_instance_valid(first_person_weapon):
+		first_person_camera=Camera3D.new();first_person_camera.name="FirstPersonStudioCamera";first_person_camera.position=Vector3(20,0,0);first_person_camera.near=.03;first_person_camera.far=8;first_person_camera.fov=75;stage.add_child(first_person_camera)
+		first_person_weapon=Weapon.new();first_person_weapon.name="StudioSurya";first_person_camera.add_child(first_person_weapon);first_person_weapon.equip("carbine");first_person_weapon.reduced_motion=_reduced_motion;first_person_weapon.ads=_selected_stance=="aim";first_person_weapon.step(1.0)
+	_view_mode=mode
+	turntable.visible=mode=="hero";_floor.visible=mode=="hero"
+	if is_instance_valid(first_person_weapon):first_person_weapon.visible=mode=="first_person"
+	if mode=="hero":camera.make_current()
+	else:first_person_camera.make_current()
+	for id in _mode_buttons:T.quiet(_mode_buttons[id],id==mode)
+	for button in _turn_buttons:button.disabled=mode!="hero"
+	drag_area.mouse_default_cursor_shape=Control.CURSOR_DRAG if mode=="hero" else Control.CURSOR_ARROW
+	feedback.text="Drag to turn · scroll to zoom" if mode=="hero" else "SURYA · first-person motion preview"
+	# A new camera can need new shaders. Keep the studio covered until it draws.
+	_render_ready=false;_render_probe_clock=0
+	if is_instance_valid(_loading_cover):_loading_cover.show()
+	return true
+
+func advance_preview(delta:float)->void:
+	if state!="ready" or _preview_paused or not is_finite(delta) or delta<=0:return
+	var advance:=minf(delta,.25)
+	if hero_pose!=null:hero_pose.step(advance)
+	if is_instance_valid(first_person_weapon):
+		first_person_weapon.step(advance)
+		first_person_camera.fov=lerpf(first_person_camera.fov,54.0 if first_person_weapon.ads else 75.0,minf(1.0,advance*13.0))
+
+func _process(delta:float)->void:
+	if not is_visible_in_tree():return
+	advance_preview(delta)
+	if state!="ready" or _render_ready or DisplayServer.get_name()=="headless":return
+	_render_probe_clock+=delta
+	if _render_probe_clock<.3:return
+	_render_probe_clock=0
+	var rendered:Image=viewport.get_texture().get_image()
+	if rendered==null or rendered.is_empty():return
+	# The previous packaged run exposed a black uncompiled SubViewport. Inspect
+	# actual rendered pixels instead of reporting a fabricated percentage/timer.
+	for sample in [Vector2(.25,.25),Vector2(.5,.5),Vector2(.75,.75)]:
+		var color:=rendered.get_pixel(clampi(int(rendered.get_width()*sample.x),0,rendered.get_width()-1),clampi(int(rendered.get_height()*sample.y),0,rendered.get_height()-1))
+		if maxf(color.r,maxf(color.g,color.b))>.035:
+			_render_ready=true;_loading_cover.hide();break
+
+func preview_report()->Dictionary:
+	var pose:Dictionary=hero_pose.report() if hero_pose!=null else {}
+	var active:String=pose.get("active_slot","")
+	return {"ready":state=="ready" and hero_pose!=null,"supported_actions":["idle","aim","q","e","c","x"],"current_action":active if not active.is_empty() else _selected_stance,"busy":not active.is_empty(),"paused":_preview_paused,"reduced_motion":_reduced_motion,"view_mode":_view_mode,"render_ready":_render_ready,"pose":pose,"authority":"none; presentation-only studio"}
 
 func set_view(view:String)->void:
 	yaw=PI+.28 if view=="back" else .28
@@ -226,6 +328,7 @@ func _apply_view()->void:
 func _stop_drag()->void:_dragging=false
 
 func _inspect_input(event:InputEvent)->void:
+	if _view_mode!="hero":return
 	if event is InputEventMouseButton:
 		if event.button_index==MOUSE_BUTTON_LEFT:_dragging=event.pressed;drag_area.grab_focus();accept_event()
 		elif event.pressed and event.button_index in [MOUSE_BUTTON_WHEEL_UP,MOUSE_BUTTON_WHEEL_DOWN]:zoom_by(-.2 if event.button_index==MOUSE_BUTTON_WHEEL_UP else .2);accept_event()
@@ -238,4 +341,4 @@ func _inspect_input(event:InputEvent)->void:
 		elif event.keycode==KEY_HOME:set_view("front");accept_event()
 
 func inspection_report()->Dictionary:
-	return {"state":state,"hero_path":source_hero,"weapon_path":source_weapon,"bones":rig.get_bone_count() if is_instance_valid(rig) else 0,"weapon_attached":is_instance_valid(weapon),"materials":_materials.duplicate(),"wrist_error_m":_wrist_error.duplicate(),"gear_filter":_gear_filter.duplicate(true),"modifier_active":motion.active if is_instance_valid(motion) else false,"yaw":yaw,"distance":distance,"authority_nodes":find_children("*","CollisionObject3D",true,false).size(),"scope":"Existing skinned Rama and SURYA with a static inspection hold. No new rig or combat animation claim."}
+	return {"state":state,"hero_path":source_hero,"weapon_path":source_weapon,"bones":rig.get_bone_count() if is_instance_valid(rig) else 0,"weapon_attached":is_instance_valid(weapon),"materials":_materials.duplicate(),"wrist_error_m":_wrist_error.duplicate(),"gear_filter":_gear_filter.duplicate(true),"modifier_active":motion.active if is_instance_valid(motion) else false,"yaw":yaw,"distance":distance,"authority_nodes":find_children("*","CollisionObject3D",true,false).size(),"preview":preview_report(),"scope":"Existing skinned Rama/SURYA with tactical pose and first-person previews. Isolated from match state; no new hero or full-body gameplay controller claim."}

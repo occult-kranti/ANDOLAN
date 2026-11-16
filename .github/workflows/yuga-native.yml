@@ -104,7 +104,7 @@ jobs:
           set -euo pipefail
           tactical_out="$RUNNER_TEMP/tactical-casual"
           mkdir -p "$tactical_out"
-          for suite in round_rules bot map ui world full_match; do
+          for suite in round_rules bot map ui world hero_finish showcase hero_pose hero_dossier full_match; do
             timing_args=()
             if [ "$suite" = full_match ]; then
               timing_args=(--disable-render-loop --fixed-fps 60)

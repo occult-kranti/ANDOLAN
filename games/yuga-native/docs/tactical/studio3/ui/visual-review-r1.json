@@ -1,0 +1,133 @@
+{
+  "task": "YUGA-HERO-STUDIO3",
+  "product": "Native tactical Casual hero/loadout studio",
+  "baseline_commit": "e59a07a4786e9ad491cfef7a4e706dbd06063adc",
+  "decision": "Scoped UI visual acceptance; no material clipping blocker in the 13 originals",
+  "capture": "visual-r1/review.json",
+  "capture_sha256": "b424fea55ee94e8f06b696b21d02ed6e63d82d0eedb364bb8649e403708f0cd7",
+  "renderer": "forward_plus",
+  "adapter": "llvmpipe (LLVM 20.1.2, 256 bits)",
+  "complete": true,
+  "changed_sources": [],
+  "sources": {
+    "res://assets/heroes/rama-hero.glb": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e",
+    "res://assets/tactical/surya-carbine.glb": "f2ab39c6f559c47461d340a29ae51d040be9565cddd1602cd41cbe118f9cc810",
+    "res://scripts/tactical_cast_motion.gd": "506dae75659f4a9a351866a7ded21cdd7dd202ed4fe3978542ce2610c4cdfe6b",
+    "res://scripts/tactical_frontend.gd": "fe1b31b920eeb4a6b08c0807ecde3400ce6dd8627bf247ad20e172dfe62018b5",
+    "res://scripts/tactical_hero_dossier.gd": "0746a845396cc113d807fe26baf366a80b87ab077a4c06dd5a21c7ed0ce66168",
+    "res://scripts/tactical_hero_pose.gd": "43dee1cd2c890e38b09377bba3158405331b1599e10c325555ee0f383a77c61e",
+    "res://scripts/tactical_hero_showcase.gd": "ddd77d6076ee6f1b4b844c9b15576c27e52ccbe98e17e1ba9b2a6788668d3143",
+    "res://scripts/tactical_weapon.gd": "246b0038137a15787cef95d32d5e74238807997cfe8481fee774caa5620c2203"
+  },
+  "shots": [
+    {
+      "file": "visual-r1/01-hero-ready.png",
+      "sha256": "71315ad84f89fb56081f00ed12b7d6a82c0f5403de6f9138be563586b28f8d95",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/02-hero-aim.png",
+      "sha256": "f9878b89d5739e52aed9e6347b468f6701bf8cded9ef84e8a896fe7a3d260370",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/02-hero-q.png",
+      "sha256": "4ef16707c371a94a1865299e418f0ea8bc9a7d5fae0caf476f73a21524848bfb",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/02-hero-c.png",
+      "sha256": "63110aaf579f6d3b0a48e3405eb4aff612158c274fe77e05a40b2822efcf2132",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/02-hero-e.png",
+      "sha256": "d980a0b05a7dc175ae03b892b93a91478a3831147eeb5db016f7e87e4dc69ecd",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/02-hero-x.png",
+      "sha256": "40cbf4d42e02e3da324b49422f0a8de7dbaaef9581a7c06e079c1de681f0f3d8",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/03-hero-back.png",
+      "sha256": "9d42b62edb97f320f9420800daab8516f9a6a6a947f2a6c2a92e30717e33a1a3",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/04-first-person-ready.png",
+      "sha256": "a9859446319c72f730076208b1b9903d0af9de9d8d5562552c5fcc4c94a3ad31",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/05-first-person-q.png",
+      "sha256": "10d4934397d432a08931f4f49012ae72b127687f9de2b12b253d9aff4c2815eb",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/05-first-person-x.png",
+      "sha256": "f46a0339a8719e5b66f3dc143c9d2458d425817f92262143dec05ab8d60c06e4",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/05-first-person-aim.png",
+      "sha256": "7a6a5e64dd88e924eff461d2a95c69b6e623554ee6622fea5e220374964a6f95",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/06-studio-960.png",
+      "sha256": "5f9ec8774da198e8ba5038945952ef805ee03637062aacf67703e7270ddeacab",
+      "personally_reviewed": true
+    },
+    {
+      "file": "visual-r1/07-studio-960-large.png",
+      "sha256": "d647c5747881d1fa86f8ac6e068c70b3ef2b9b5933448ed864b92422e2e22e4b",
+      "personally_reviewed": true
+    }
+  ],
+  "observations": [
+    "At 1280x720 normal scale the selected ability, source-backed cost/cap/duration, counterplay and paused feedback are readable beside native Rama/SURYA.",
+    "Full-body front, aim, Q/C/E/X and back are framed inside the viewport. Old archery gear remains omitted.",
+    "First-person Ready/Aim/Q/X show the actual SURYA and cast-hand presentation with readable view-mode and Play controls.",
+    "At 960x540 normal and 150% scale, Choose Casual and viewer controls remain inside bounds; the left dossier scrolls.",
+    "Paused selected gestures truthfully show Preview paused / Play resumes."
+  ],
+  "limits": [
+    "At 960x540 / 150%, the hero is only about 100 pixels tall; most dossier details require scrolling. 1280x720 normal scale remains the primary art view.",
+    "Capture code selects later abilities programmatically while Q retains keyboard focus; selected button background/title remain truthful. Ordinary selector navigation was tested separately.",
+    "Staged capture states do not alone establish ordinary input, smooth motion, anatomical polish, online integration or hardware performance.",
+    "Weapon facts below the scroll fold remain accessible through the scrolling dossier; this is not a weapon equip selector."
+  ],
+  "checks_separate": {
+    "dossier": "checks-r3/result.json: 33/33; PreviewHost contract fake, not root pose acceptance",
+    "existing_ui": "flow-r1/result.json: 36/36 before the pause-copy-only correction"
+  },
+  "film": {
+    "path": "visual-r1/studio-motion.mp4",
+    "sha256": "1c919addd1462e70be3b82ac487d1c9161b0acbaeb356b729a40514b5a20cec7",
+    "metadata": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "avg_frame_rate": "15/1",
+          "nb_frames": "135"
+        }
+      ],
+      "format": {
+        "duration": "9.000000"
+      }
+    },
+    "scope": "Native staged presentation clock, silent. No combat authority or hardware FPS claim.",
+    "preserved_initial_loading_frames": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "next_owner": "Root: combined delivery and integration/input acceptance. Final gallery receipt: ui/preview-r4/receipt.json (9/9)."
+}

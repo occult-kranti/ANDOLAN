@@ -13,6 +13,7 @@ def main():
     p.add_argument('--weapon-only',action='store_true')
     p.add_argument('--showcase-only',action='store_true')
     p.add_argument('--map-only',action='store_true')
+    p.add_argument('--studio',action='store_true')
     p.add_argument('--cache-seed',type=Path)
     args=p.parse_args();out=args.output.resolve();project=args.project.resolve()
     if out.exists() or Path(f'/tmp/.X11-unix/X{args.display}').exists():raise ValueError('Fresh output and unused display required')
@@ -30,8 +31,9 @@ def main():
                 if Path(f'/tmp/.X11-unix/X{args.display}').exists():break
                 time.sleep(.1)
             command=['godot','--path',str(project),'--display-driver','x11','--rendering-method','forward_plus','--audio-driver','Dummy','--disable-vsync']
-            if args.motion:command+=['--fixed-fps','15']
-            command+=['--script','res://tools/capture-tactical-motion.gd' if args.motion else 'res://tools/capture-tactical.gd','--','--output='+str(out)]
+            if args.motion or args.studio:command+=['--fixed-fps','15']
+            script='res://tools/capture-tactical-studio.gd' if args.studio else ('res://tools/capture-tactical-motion.gd' if args.motion else 'res://tools/capture-tactical.gd')
+            command+=['--script',script,'--','--output='+str(out)]
             if args.weapon_only:command+=['--weapon-only']
             if args.showcase_only:command+=['--showcase-only']
             if args.map_only:command+=['--map-only']

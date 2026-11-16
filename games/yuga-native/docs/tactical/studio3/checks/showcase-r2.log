@@ -1,0 +1,34 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+{"authority_nodes":0,"bones":164,"distance":4.2,"gear_filter":{"applied":true,"complete_components":40,"removed_triangles":8100,"retained_vertex_bone_material_arrays_unchanged":true,"surfaces":{"Cobalt handwoven silk":{"components":2,"removed_triangles":1148,"unused_vertices":612},"Ivory silk":{"components":14,"removed_triangles":2856,"unused_vertices":1806},"Worked warm gold":{"components":24,"removed_triangles":4096,"unused_vertices":2590}}},"hero_path":"res://assets/heroes/rama-hero.glb","materials":{"calibration":true,"finish":true,"secondary":true},"modifier_active":false,"preview":{"authority":"none; presentation-only studio","busy":false,"current_action":"idle","paused":false,"pose":{"active_slot":"","age_s":0.0,"clock_s":0.266666666666667,"configured":true,"duration_s":0.0,"finite":true,"firearm_in_skeleton_space":"[X: (-0.825336, 0.0, 0.564642), Y: (0.0, 1.0, 0.0), Z: (-0.564642, 0.0, -0.825336), O: (-0.16, 1.311346, 0.1)]","left_support_weight":1.0,"phase":"stance","reduced_motion":false,"scope":"Explicit-clock upper-body preview. No gameplay, root motion, release, collision or new hero asset.","selected_stance":"idle","wrist_error_m":{"L":0.00000115580098736245,"R":0.00000069880724140603}},"ready":true,"reduced_motion":false,"render_ready":false,"supported_actions":["idle","aim","q","e","c","x"],"view_mode":"hero"},"scope":"Existing skinned Rama/SURYA with tactical pose and first-person previews. Isolated from match state; no new hero or full-body gameplay controller claim.","state":"ready","weapon_attached":true,"weapon_path":"res://assets/tactical/surya-carbine.glb","wrist_error_m":{"L":0.00000116065507427265,"R":0.000000698966118761746},"yaw":0.28}
+PASS Hero page mounts the accepted full-body model and 164-bone skin
+PASS SURYA is a right-wrist attachment without first-person arms
+PASS Production material calibration, secondary and finish bind
+PASS Bow and nocked arrow are hidden
+PASS Inspection has no collision/authority and no active motion modifier
+PASS Static hold reaches both wrists within 1cm
+PASS Every posed bone stays finite
+PASS Only 40 complete authored quiver components are omitted
+PASS Retained skin, vertex and material arrays stay unchanged
+PASS Studio provides all six real presentation actions
+PASS First-person mode mounts the real isolated SURYA component
+PASS Studio weapon starts with its own magazine and no world authority
+PASS Aim previews change both representations
+PASS First-person ADS reaches a readable camera while preserving rounds
+PASS Utility preview is accepted without a purchase or match
+PASS Pause freezes both hero and first-person clocks
+PASS Utility returns to the selected stance without spending ammunition
+PASS Saved reduced motion reaches both preview representations
+PASS Unsupported preview input leaves current state intact
+PASS Return to hero restores its camera and interaction
+PASS Back action turns the full character
+PASS Focused keyboard rotation changes inspection only
+PASS Zoom has a safe close bound
+PASS Zoom has a safe far bound
+PASS Nonfinite control input is ignored
+PASS Inspection stays within native viewport (1280, 720)
+PASS Inspection stays within native viewport (960, 540)
+PASS Leaving hero page frees viewport and releases original menu art
+PASS Repeated hero entry has exactly one isolated world
+PASS Settings flow remains available after inspection
+PASS Missing model shows a truthful recoverable fallback

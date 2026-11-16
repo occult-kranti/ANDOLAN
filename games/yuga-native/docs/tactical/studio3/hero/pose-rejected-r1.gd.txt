@@ -1,0 +1,215 @@
+extends RefCounted
+## Original tactical inspection poses on the accepted Rama skin. Presentation only.
+## The caller owns the clock, visibility, socket, gear filtering and materials.
+## This object has no input, process callback, authority, movement or release event.
+const DURATIONS := {"q":1.35, "c":1.50, "e":.90, "x":1.95}
+const ATTACKS := {"q":.30, "c":.34, "e":.25, "x":.30}
+const HOLDS := {"q":.52, "c":.72, "e":.40, "x":1.15}
+const STANCE_BLEND_S := .30
+const CAST_ENTRY_S := .18
+var configured := false
+var reduced_motion := false
+var rig: Skeleton3D
+var motion: SkeletonModifier3D
+var socket: BoneAttachment3D
+var weapon: Node3D
+var selected_stance := "idle"
+var active_slot := ""
+var age_s := 0.0
+var duration_s := 0.0
+var _clock := 0.0
+var _transition_age := STANCE_BLEND_S
+var _base_firearm := Transform3D.IDENTITY
+var _weapon_local := Transform3D.IDENTITY
+var _right_relative := Transform3D.IDENTITY
+var _left_relative := Transform3D.IDENTITY
+var _positions: Array[Vector3] = []
+var _rotations: Array[Quaternion] = []
+var _scales: Array[Vector3] = []
+var _left_fingers: Array[int] = []
+var _pose: Dictionary = {}
+var _entry: Dictionary = {}
+var _target_wrists := {"L":Transform3D.IDENTITY, "R":Transform3D.IDENTITY}
+
+func configure(skeleton: Skeleton3D, adapter: SkeletonModifier3D,
+		attachment: BoneAttachment3D, firearm: Node3D, base_firearm: Transform3D) -> bool:
+	if configured or not is_instance_valid(skeleton) or not is_instance_valid(adapter): return false
+	if not is_instance_valid(attachment) or not is_instance_valid(firearm): return false
+	if skeleton.get_bone_count() != 164 or not adapter.get("configured") or adapter.get("rig") != skeleton or adapter.active: return false
+	if attachment.get_parent() != skeleton or attachment.bone_name != "wrist.R" or firearm.get_parent() != attachment: return false
+	if not base_firearm.is_finite() or absf(base_firearm.basis.determinant() - 1.0) > .001: return false
+	for bone in ["root", "spine03", "head", "wrist.L", "wrist.R", "foot.L", "foot.R"]:
+		if skeleton.find_bone(bone) < 0: return false
+	var attached: Transform3D = skeleton.get_bone_global_pose(skeleton.find_bone("wrist.R")) * firearm.transform
+	if not _same_transform(attached, base_firearm, .0001): return false
+	rig = skeleton; motion = adapter; socket = attachment; weapon = firearm
+	_base_firearm = base_firearm; _weapon_local = firearm.transform
+	_right_relative = base_firearm.affine_inverse() * rig.get_bone_global_pose(rig.find_bone("wrist.R"))
+	_left_relative = base_firearm.affine_inverse() * rig.get_bone_global_pose(rig.find_bone("wrist.L"))
+	for index in rig.get_bone_count():
+		_positions.append(rig.get_bone_pose_position(index))
+		_rotations.append(rig.get_bone_pose_rotation(index))
+		_scales.append(rig.get_bone_pose_scale(index))
+		if String(rig.get_bone_name(index)).begins_with("finger") and String(rig.get_bone_name(index)).ends_with(".L"):
+			_left_fingers.append(index)
+	configured = true
+	reset()
+	return true
+
+func set_reduced_motion(enabled: bool) -> void:
+	reduced_motion = enabled
+
+func set_stance(stance: String) -> bool:
+	if not _valid() or stance not in ["idle", "aim"]: return false
+	if selected_stance == stance and active_slot.is_empty(): return true
+	_entry = _pose.duplicate(true); _transition_age = 0.0
+	selected_stance = stance; active_slot = ""; age_s = 0.0; duration_s = 0.0
+	return true
+
+func play_ability(slot: String) -> bool:
+	if not _valid() or not DURATIONS.has(slot): return false
+	_entry = _pose.duplicate(true)
+	active_slot = slot; age_s = 0.0; duration_s = DURATIONS[slot]
+	_transition_age = STANCE_BLEND_S
+	return true
+
+func step(delta: float) -> void:
+	if not _valid() or not is_finite(delta) or delta <= 0.0: return
+	# Bounded substeps preserve the same authored path for a slow preview caller.
+	var remaining := minf(delta, .25)
+	while remaining > .000001:
+		var dt := minf(remaining, 1.0 / 60.0)
+		_clock += dt
+		if not active_slot.is_empty():
+			age_s = minf(age_s + dt, duration_s)
+			_pose = _mix(_entry, _cast_pose(), _smooth(age_s / CAST_ENTRY_S))
+			if age_s >= duration_s:
+				active_slot = ""; age_s = 0.0; duration_s = 0.0
+				_pose = _stance_pose()
+		else:
+			_transition_age += dt
+			_pose = _mix(_entry, _stance_pose(), _smooth(_transition_age / STANCE_BLEND_S)) if _transition_age < STANCE_BLEND_S else _stance_pose()
+		_apply()
+		remaining -= dt
+
+func reset() -> void:
+	if not _valid(): return
+	selected_stance = "idle"; active_slot = ""; age_s = 0.0; duration_s = 0.0
+	_clock = 0.0; _transition_age = STANCE_BLEND_S
+	_pose = _stance_pose(); _entry = _pose.duplicate(true)
+	# Exact accepted source pose, not another solve of its already solved arms.
+	_restore_base()
+	weapon.transform = _weapon_local
+	_target_wrists.L = _base_firearm * _left_relative
+	_target_wrists.R = _base_firearm * _right_relative
+
+func report() -> Dictionary:
+	var errors := {}; var finite := _valid()
+	if _valid():
+		for side in ["L", "R"]:
+			var actual: Transform3D = rig.get_bone_global_pose(rig.find_bone("wrist." + side))
+			errors[side] = actual.origin.distance_to(_target_wrists[side].origin)
+		for index in rig.get_bone_count(): finite = finite and rig.get_bone_global_pose(index).is_finite()
+	var phase := "stance"
+	if not active_slot.is_empty(): phase = "entry" if age_s < ATTACKS[active_slot] else ("return" if age_s > HOLDS[active_slot] else "gesture")
+	elif _transition_age < STANCE_BLEND_S: phase = "stance_blend"
+	return {"configured":configured, "selected_stance":selected_stance, "active_slot":active_slot,
+		"age_s":age_s, "duration_s":duration_s, "phase":phase, "clock_s":_clock,
+		"finite":finite, "wrist_error_m":errors, "left_support_weight":1.0 - float(_pose.get("open", 0.0)),
+		"firearm_in_skeleton_space":_pose.get("gun", Transform3D.IDENTITY),
+		"reduced_motion":reduced_motion, "scope":"Explicit-clock upper-body preview. No gameplay, root motion, release, collision or new hero asset."}
+
+func _valid() -> bool:
+	return configured and is_instance_valid(rig) and is_instance_valid(motion) and is_instance_valid(socket) and is_instance_valid(weapon)
+
+func _same_transform(a: Transform3D, b: Transform3D, tolerance: float) -> bool:
+	return a.origin.distance_to(b.origin) <= tolerance and a.basis.x.distance_to(b.basis.x) <= tolerance and a.basis.y.distance_to(b.basis.y) <= tolerance and a.basis.z.distance_to(b.basis.z) <= tolerance
+
+func _smooth(value: float) -> float:
+	var t := clampf(value, 0.0, 1.0)
+	return t * t * (3.0 - 2.0 * t)
+
+func _envelope(attack: float, hold: float) -> float:
+	return _smooth(age_s / attack) if age_s < attack else (1.0 - _smooth((age_s - hold) / (duration_s - hold)) if age_s > hold else 1.0)
+
+func _stance_pose() -> Dictionary:
+	var gun := _base_firearm
+	var torso := Vector3.ZERO; var head := Vector3.ZERO
+	if selected_stance == "aim":
+		gun.basis = Basis(Vector3.UP, -.38) * gun.basis
+		gun.origin += Vector3(-.015, .065, .060)
+		torso = Vector3(.025, -.045, 0); head = Vector3(.025, -.10, 0)
+	var breath := 0.0 if reduced_motion else sin(_clock * TAU / 3.6)
+	gun.origin.y += breath * .003
+	torso.x += breath * .006
+	return {"gun":gun, "left":_left_relative, "torso":torso, "head":head, "open":0.0}
+
+func _cast_pose() -> Dictionary:
+	var result := _stance_pose()
+	var gun: Transform3D = result.gun
+	var hand := Transform3D.IDENTITY
+	var weight := 0.0
+	var torso := Vector3.ZERO
+	match active_slot:
+		"q":
+			weight = _envelope(.30, .52)
+			var throw_weight := _smooth((age_s - .16) / .30)
+			hand = Transform3D(Basis(Vector3.RIGHT, -.10), Vector3(.29, 1.46, .16).lerp(Vector3(.30, 1.38, .48), throw_weight))
+			gun.origin += Vector3(.035, -.055, -.015) * weight
+			torso = Vector3(.035, -.07, -.02) * weight
+		"c":
+			weight = _envelope(.34, .72)
+			hand = Transform3D(Basis.IDENTITY, Vector3(.27, 1.30, .46))
+			gun.origin += Vector3(.035, -.045, 0) * weight
+			torso = Vector3(.015, -.035, 0) * weight
+		"e":
+			weight = _envelope(.25, .40)
+			gun.origin += Vector3(-.025, -.035, -.015) * weight
+			gun.basis = Basis(Vector3.FORWARD, .045 * weight) * gun.basis
+			torso = Vector3(.09, -.055, -.035) * weight
+		"x":
+			weight = _envelope(.30, 1.15)
+			var pulse := 0.0
+			for release in [.55, .79, 1.03]: pulse = maxf(pulse, maxf(0.0, 1.0 - absf(age_s - release) / .10))
+			hand = Transform3D(Basis(Vector3.RIGHT, -.12), Vector3(.32, 1.42, .38 + pulse * .018))
+			gun.origin += Vector3(.03, -.025, 0) * weight
+			torso = Vector3(-.02, -.045, 0) * weight
+	if reduced_motion: torso *= .4
+	result.gun = gun
+	result.torso += torso
+	if active_slot != "e":
+		result.left = _left_relative.interpolate_with(gun.affine_inverse() * hand, weight)
+		result.open = weight
+	return result
+
+func _mix(from: Dictionary, to: Dictionary, weight: float) -> Dictionary:
+	var result := {}
+	for key in ["gun", "left"]: result[key] = from[key].interpolate_with(to[key], weight)
+	for key in ["torso", "head"]: result[key] = from[key].lerp(to[key], weight)
+	result.open = lerpf(from.open, to.open, weight)
+	return result
+
+func _restore_base() -> void:
+	for index in rig.get_bone_count():
+		rig.set_bone_pose_position(index, _positions[index])
+		rig.set_bone_pose_rotation(index, _rotations[index])
+		rig.set_bone_pose_scale(index, _scales[index])
+
+func _apply() -> void:
+	_restore_base()
+	for entry in [["spine03", _pose.torso], ["head", _pose.head]]:
+		var bone := rig.find_bone(entry[0])
+		rig.set_bone_pose_rotation(bone, (_rotations[bone] * Quaternion.from_euler(entry[1])).normalized())
+	var gun: Transform3D = _pose.gun
+	_target_wrists.R = gun * _right_relative
+	_target_wrists.L = gun * _pose.left
+	for side in ["R", "L"]:
+		var target: Transform3D = _target_wrists[side]
+		var pole := Vector3(-.65, 1.1, .08) if side == "R" else Vector3(.55, 1.05, .18)
+		motion._solve_reaction_arm(side, target.origin, pole)
+		motion._global_rotate(rig.find_bone("wrist." + side), target.basis.get_rotation_quaternion())
+	for bone in _left_fingers:
+		rig.set_bone_pose_rotation(bone, _rotations[bone].slerp(motion.rest_rotations[bone], float(_pose.open)).normalized())
+	# Never reposition the gun to conceal unreachable hands. The fixed accepted
+	# right-wrist attachment follows the solved skin; report exposes target error.
+	weapon.transform = _weapon_local

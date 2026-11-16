@@ -1,5 +1,6 @@
 extends Control
 const T = preload("res://scripts/tactical_theme.gd")
+const Dossier = preload("res://scripts/tactical_hero_dossier.gd")
 const Showcase = preload("res://scripts/tactical_hero_showcase.gd")
 const WORLD := "res://scenes/tactical_world.tscn"
 var page := "home"
@@ -17,6 +18,7 @@ var _navigation := {}
 var _content_row: HBoxContainer
 var _key_art: TextureRect
 var hero_showcase: Control
+var hero_dossier: VBoxContainer
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -48,7 +50,7 @@ func _build() -> void:
 	for nav in [["home","Home"],["casual","Play"],["hero","Rama"],["settings","Settings"]]:
 		var button := T.button(nav[1],func():show_page(nav[0]));button.name="Nav_"+nav[0];T.quiet(button);navigation.add_child(button);_navigation[nav[0]]=button
 	_content_row=T.row(28);_content_row.size_flags_vertical=Control.SIZE_EXPAND_FILL;column.add_child(_content_row)
-	content_scroll=ScrollContainer.new();content_scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;content_scroll.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN;content_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;_content_row.add_child(content_scroll)
+	content_scroll=ScrollContainer.new();content_scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;content_scroll.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN;content_scroll.follow_focus=true;content_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;_content_row.add_child(content_scroll)
 	body=T.stack(18);body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content_scroll.add_child(body)
 	_page_actions=T.row(12);column.add_child(_page_actions)
 	var footer := T.row();footer.add_child(T.label("CASUAL  /  LOCAL 5V5",13,T.GOLD));var fill:=Control.new();fill.size_flags_horizontal=Control.SIZE_EXPAND_FILL;footer.add_child(fill)
@@ -71,7 +73,7 @@ func _clear() -> void:
 	if is_instance_valid(hero_showcase):_content_row.remove_child(hero_showcase);hero_showcase.queue_free();hero_showcase=null
 	for node in body.get_children():body.remove_child(node);node.queue_free()
 	content_scroll.scroll_vertical=0
-	settings_controls.clear()
+	settings_controls.clear();hero_dossier=null
 	for node in _page_actions.get_children():_page_actions.remove_child(node);node.queue_free()
 	_page_actions.hide()
 	status=null;progress=null
@@ -101,10 +103,9 @@ func show_page(next: String) -> void:
 			body.add_child(T.prose("Local match with bots. Online matchmaking and ranks are planned.",14))
 		"hero":
 			body.add_theme_constant_override("separation",10)
-			body.add_child(T.label("Rama",40,T.IVORY,true));body.add_child(T.prose("Precision shaped by purpose.",18,T.GOLD))
-			body.add_child(T.prose("ARKA & SURYA firearms. Four ways to shape the round.",15))
-			_add_abilities(body,true)
+			body.add_child(T.label("Rama",40,T.IVORY,true));body.add_child(T.prose("Ability & loadout studio",16,T.GOLD))
 			hero_showcase=Showcase.new();_content_row.add_child(hero_showcase)
+			hero_dossier=Dossier.new();body.add_child(hero_dossier);hero_dossier.configure(hero_showcase,_settings)
 			_page_actions.add_child(T.button("Choose Casual",func():show_page("casual"),true));_page_actions.show()
 		"settings":
 			body.add_theme_constant_override("separation",8)

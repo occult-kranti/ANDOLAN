@@ -21,3 +21,11 @@ Reuse policy: preserve shared original meshes, materials, fonts and geometry hel
 Current implementation: [hero/map successor delivery](finish2/DELIVERY.md) and [CPU Raea / nested ownership](finish2/README.md). The [SURYA art checkpoint](ART_DELIVERY.md) is packaged and normally exercised on Linux; successor art work keeps its own source and output records.
 
 Next art packet: full-body tactical locomotion and two-hand weapon contact, richer face/hair and the simple bot silhouettes. Reuse the accepted source materials, firearm and first-person utility poses; do not reopen match rules or duplicate the engine. Online remains a separate implementation packet.
+
+The [studio3 continuation](studio3/README.md) implements full-body inspection gestures, continuous support-hand return and the native ability dossier. These are isolated studio previews; actual third-person tactical locomotion and fully shouldered contact remain the next art work.
+
+## Resource-driven continuation · 15 November 2026
+
+[The primary-source audit](../research/resource-catalog-2026-11-15/README.md) evaluates 22 Blender/art resources and 26 engine/game/tool resources against the existing Godot product. [Packets RC-01–RC-06](../research/resource-catalog-2026-11-15/ADOPTION_PLAN.md) give owners and acceptance evidence. Next: finish one Sangam approach/site using the existing kit and repair Rama contact/face/hair. Optional brush tooling and new pack intake follow a demonstrated gap; online remains a later authority packet.
+
+Check tool-code, asset, output and public-source redistribution terms separately. CC0/CC BY materials and original modules are the simplest default. Restricted marketplace sources, proprietary extractions and copied copyleft runtime code are not imported by this study. New source research changes no historical art/match/hardware acceptance counts.

@@ -21,6 +21,19 @@ func node_ids()->Dictionary:
 	var relics:Node3D=scene.world.get_node("TraversalRelics")
 	for anchor in scene.manifest.traversal.anchors:result[anchor.id]=relics.get_node(NodePath(anchor.id)).get_instance_id()
 	return result
+func sangam_covers_match(footprints:Array,army_boxes:Array,approved:Array)->bool:
+	# The army intentionally strips authoring IDs. Check the district IDs against
+	# its approved specification, then require each exact shape once in the army.
+	if footprints.size()!=4 or approved.size()!=4:return false
+	var seen:Dictionary={}
+	for source:Dictionary in approved:
+		if seen.has(source.id):return false
+		seen[source.id]=true
+		if footprints.filter(func(row):return row==source).size()!=1:return false
+		var at:=Vector3(source.position[0],source.position[1],source.position[2])
+		var size:=Vector3(source.size[0],source.size[1],source.size[2])
+		if army_boxes.filter(func(row):return row.position.is_equal_approx(at) and row.size.is_equal_approx(size)).size()!=1:return false
+	return true
 func run()->void:
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--output="):output=arg.trim_prefix("--output=")
@@ -71,14 +84,29 @@ func run()->void:
 	scene=load("res://scenes/confluence_world.tscn").instantiate();root.add_child(scene);current_scene=scene;await physics_frame;await physics_frame
 	check("fresh default canonical caller enables exact one gate and report",scene.world_ready and scene.lanka_lane_gate_enabled and scene.lanka_lane_gate_report==report and scene.world.has_node("LankaLaneGate") and scene.world.get_node("LankaLaneGate").find_children("*","StaticBody3D",true,false).size()==1)
 	check("default canonical construction retains original authority and deck arrays",scene.authority_bodies.size()==8 and scene.native_platform_bodies.size()==8)
-	check("default caller retains gate10/garden4/relay9 private footprints without mutating manifest",scene.army.boxes.size()==scene.manifest.authority_collision_boxes.size()+scene.manifest.traversal.native_collision_boxes.size()+10+4+scene.relays.art.collision_boxes().size() and scene.manifest.traversal.native_collision_boxes.size()==8 and not scene.army.line_clear(Vector3(-49,0,-70),Vector3(-49,0,-38)) and scene.army.line_clear(Vector3(-40,0,-70),Vector3(-40,0,-38)),{"army_boxes":scene.army.boxes.size(),"source_native_boxes":scene.manifest.traversal.native_collision_boxes.size(),"pier_clear":scene.army.line_clear(Vector3(-49,0,-70),Vector3(-49,0,-38)),"opening_clear":scene.army.line_clear(Vector3(-40,0,-70),Vector3(-40,0,-38))})
+	var district_spec:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/world/sangam-district.json"))
+	var approved_covers:Array=district_spec.ground_footprints
+	var district:Node3D=scene.world.get_node("SangamDistrict")
+	var cover_rows:Array=district.get_meta("ground_footprints")
+	var covers_match:=sangam_covers_match(cover_rows,scene.army.boxes,approved_covers)
+	check("default Sangam cover identities and exact geometry match approved specification and actual army",scene.sangam_district_report.enabled and scene.sangam_district_report.specification_sha256==FileAccess.get_sha256("res://assets/world/sangam-district.json") and scene.sangam_district_report.ground_footprints==approved_covers and covers_match,{"approved_footprints":approved_covers,"actual_footprints":cover_rows})
+	var expected_boxes:int=scene.manifest.authority_collision_boxes.size()+scene.manifest.traversal.native_collision_boxes.size()+10+4+scene.relays.art.collision_boxes().size()+approved_covers.size()
+	check("default caller retains exact43 authority/deck/gate/garden/relay/Sangam footprints without mutating manifest",covers_match and expected_boxes==43 and scene.army.boxes.size()==expected_boxes and scene.manifest==army_before and scene.manifest.traversal.native_collision_boxes.size()==8 and not scene.army.line_clear(Vector3(-49,0,-70),Vector3(-49,0,-38)) and scene.army.line_clear(Vector3(-40,0,-70),Vector3(-40,0,-38)),{"expected_boxes":expected_boxes,"army_boxes":scene.army.boxes.size(),"sangam_covers":approved_covers.size(),"source_native_boxes":scene.manifest.traversal.native_collision_boxes.size(),"pier_clear":scene.army.line_clear(Vector3(-49,0,-70),Vector3(-49,0,-38)),"opening_clear":scene.army.line_clear(Vector3(-40,0,-70),Vector3(-40,0,-38))})
+	var wrong_identity:Array=cover_rows.duplicate(true);wrong_identity[0].id="unreviewed-cover"
+	check("same-count footprint identity replacement is rejected",not sangam_covers_match(wrong_identity,scene.army.boxes,approved_covers))
+	var moved_boxes:Array=scene.army.boxes.duplicate(true)
+	var first_cover:Dictionary=approved_covers[0]
+	var first_at:=Vector3(first_cover.position[0],first_cover.position[1],first_cover.position[2])
+	for moved_box in moved_boxes:
+		if moved_box.position.is_equal_approx(first_at):moved_box.position+=Vector3(1,0,0)
+	check("same43-box total with a misplaced Sangam cover is rejected",moved_boxes.size()==43 and not sangam_covers_match(cover_rows,moved_boxes,approved_covers))
 	check("duplicate canonical configure cannot add another body",not Helper.build(scene.world).enabled and scene.world.get_node("LankaLaneGate").get_child_count()==12)
 	scene.set_paused(false);scene.set_process(false);scene.set_physics_process(false);hold_callbacks(scene.world);await physics_frame
 	check("fresh default integration preserves all full-map routes",route_sweeps().is_empty())
 	await finish_integrated()
 func finish_integrated()->void:
 	var passed:=checks.all(func(row):return row.passed)
-	FileAccess.open(output,FileAccess.WRITE).store_string(JSON.stringify({"schema":1,"passed":passed,"checks":checks,"engine":Engine.get_version_info(),"helper_sha256":FileAccess.get_sha256("res://scripts/lanka_lane_gate.gd"),"world_sha256":FileAccess.get_sha256("res://scripts/confluence_world.gd"),"asset_sha256":FileAccess.get_sha256("res://assets/world/lanka-lane-gate.scn"),"scope":"Actual canonical caller and opt-out, all three lane and rotation capsule sweeps, preserved8authority/8deck/10anchor identity, native body/cache duplication, all-role probes and injected broad-box counterexample. Headless, no rendering/online/performance claim."},"  ")+"\n")
+	FileAccess.open(output,FileAccess.WRITE).store_string(JSON.stringify({"schema":1,"passed":passed,"checks":checks,"engine":Engine.get_version_info(),"test_sha256":FileAccess.get_sha256("res://tools/map-reuse-placement/test_integrated.gd"),"helper_sha256":FileAccess.get_sha256("res://scripts/lanka_lane_gate.gd"),"world_sha256":FileAccess.get_sha256("res://scripts/confluence_world.gd"),"asset_sha256":FileAccess.get_sha256("res://assets/world/lanka-lane-gate.scn"),"sangam_specification_sha256":FileAccess.get_sha256("res://assets/world/sangam-district.json"),"scope":"Actual canonical caller and opt-out, all three lane and rotation capsule sweeps, preserved8authority/8deck/10anchor identity, native body/cache duplication, all-role probes and injected broad-box counterexample. Exact43 combined army footprints include four approved Sangam identities/positions/sizes; same-count wrong identity and moved-cover counterexamples. Headless, no rendering/online/performance claim."},"  ")+"\n")
 	if is_instance_valid(scene):scene.queue_free()
 	for unused in 8:await process_frame
 	print(JSON.stringify({"passed":passed,"checks":checks.size()}));quit(0 if passed else 1)

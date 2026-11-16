@@ -1,0 +1,218 @@
+{
+	"checks": [
+		{
+			"name": "Hero page mounts the accepted full-body model and 164-bone skin",
+			"passed": true
+		},
+		{
+			"name": "SURYA is a right-wrist attachment without first-person arms",
+			"passed": true
+		},
+		{
+			"name": "Production material calibration, secondary and finish bind",
+			"passed": true
+		},
+		{
+			"name": "Bow and nocked arrow are hidden",
+			"passed": true
+		},
+		{
+			"name": "Inspection has no collision/authority and no active motion modifier",
+			"passed": true
+		},
+		{
+			"name": "Static hold reaches both wrists within 1cm",
+			"passed": true
+		},
+		{
+			"name": "Every posed bone stays finite",
+			"passed": true
+		},
+		{
+			"name": "Only 40 complete authored quiver components are omitted",
+			"passed": true
+		},
+		{
+			"name": "Retained skin, vertex and material arrays stay unchanged",
+			"passed": true
+		},
+		{
+			"name": "Studio provides all six real presentation actions",
+			"passed": true
+		},
+		{
+			"name": "First-person mode mounts the real isolated SURYA component",
+			"passed": true
+		},
+		{
+			"name": "Studio weapon starts with its own magazine and no world authority",
+			"passed": true
+		},
+		{
+			"name": "Aim previews change both representations",
+			"passed": true
+		},
+		{
+			"name": "First-person ADS reaches a readable camera while preserving rounds",
+			"passed": true
+		},
+		{
+			"name": "Utility preview is accepted without a purchase or match",
+			"passed": true
+		},
+		{
+			"name": "Pause freezes both hero and first-person clocks",
+			"passed": true
+		},
+		{
+			"name": "Utility returns to the selected stance without spending ammunition",
+			"passed": true
+		},
+		{
+			"name": "Saved reduced motion reaches both preview representations",
+			"passed": true
+		},
+		{
+			"name": "Unsupported preview input leaves current state intact",
+			"passed": true
+		},
+		{
+			"name": "Return to hero restores its camera and interaction",
+			"passed": true
+		},
+		{
+			"name": "Back action turns the full character",
+			"passed": true
+		},
+		{
+			"name": "Focused keyboard rotation changes inspection only",
+			"passed": true
+		},
+		{
+			"name": "Zoom has a safe close bound",
+			"passed": true
+		},
+		{
+			"name": "Zoom has a safe far bound",
+			"passed": true
+		},
+		{
+			"name": "Nonfinite control input is ignored",
+			"passed": true
+		},
+		{
+			"name": "Inspection stays within native viewport (1280, 720)",
+			"passed": true
+		},
+		{
+			"name": "Inspection stays within native viewport (960, 540)",
+			"passed": true
+		},
+		{
+			"name": "Leaving hero page frees viewport and releases original menu art",
+			"passed": true
+		},
+		{
+			"name": "Repeated hero entry has exactly one isolated world",
+			"passed": true
+		},
+		{
+			"name": "Settings flow remains available after inspection",
+			"passed": true
+		},
+		{
+			"name": "Missing model shows a truthful recoverable fallback",
+			"passed": true
+		}
+	],
+	"count": 31,
+	"inspection": {
+		"authority_nodes": 0,
+		"bones": 164,
+		"distance": 4.2,
+		"gear_filter": {
+			"applied": true,
+			"complete_components": 40,
+			"removed_triangles": 8100,
+			"retained_vertex_bone_material_arrays_unchanged": true,
+			"surfaces": {
+				"Cobalt handwoven silk": {
+					"components": 2,
+					"removed_triangles": 1148,
+					"unused_vertices": 612
+				},
+				"Ivory silk": {
+					"components": 14,
+					"removed_triangles": 2856,
+					"unused_vertices": 1806
+				},
+				"Worked warm gold": {
+					"components": 24,
+					"removed_triangles": 4096,
+					"unused_vertices": 2590
+				}
+			}
+		},
+		"hero_path": "res://assets/heroes/rama-hero.glb",
+		"materials": {
+			"calibration": true,
+			"finish": true,
+			"secondary": true
+		},
+		"modifier_active": false,
+		"preview": {
+			"authority": "none; presentation-only studio",
+			"busy": false,
+			"current_action": "idle",
+			"paused": false,
+			"pose": {
+				"active_slot": "",
+				"age_s": 0.0,
+				"clock_s": 0.279893333333333,
+				"configured": true,
+				"duration_s": 0.0,
+				"finite": true,
+				"firearm_in_skeleton_space": "[X: (-0.825336, 0.0, 0.564642), Y: (0.0, 1.0, 0.0), Z: (-0.564642, 0.0, -0.825336), O: (-0.16, 1.311408, 0.1)]",
+				"left_support_weight": 1.0,
+				"phase": "stance",
+				"reduced_motion": false,
+				"scope": "Explicit-clock upper-body preview. No gameplay, root motion, release, collision or new hero asset.",
+				"selected_stance": "idle",
+				"wrist_error_m": {
+					"L": 0.00000125382450733014,
+					"R": 0.000000713390647888446
+				}
+			},
+			"ready": true,
+			"reduced_motion": false,
+			"render_ready": false,
+			"supported_actions": [
+				"idle",
+				"aim",
+				"q",
+				"e",
+				"c",
+				"x"
+			],
+			"view_mode": "hero"
+		},
+		"scope": "Existing skinned Rama/SURYA with tactical pose and first-person previews. Isolated from match state; no new hero or full-body gameplay controller claim.",
+		"state": "ready",
+		"weapon_attached": true,
+		"weapon_path": "res://assets/tactical/surya-carbine.glb",
+		"wrist_error_m": {
+			"L": 0.00000116065507427265,
+			"R": 0.000000698966118761746
+		},
+		"yaw": 0.28
+	},
+	"passed": true,
+	"scope": "Headless native model/rig/material/pose binding, page lifecycle, controls and geometry bounds. Rendered art, finger contacts and ordinary pointer interaction need separate native capture.",
+	"sources": {
+		"res://assets/heroes/rama-hero.glb": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e",
+		"res://assets/tactical/surya-carbine.glb": "f2ab39c6f559c47461d340a29ae51d040be9565cddd1602cd41cbe118f9cc810",
+		"res://scripts/tactical_frontend.gd": "fe1b31b920eeb4a6b08c0807ecde3400ce6dd8627bf247ad20e172dfe62018b5",
+		"res://scripts/tactical_hero_showcase.gd": "ddd77d6076ee6f1b4b844c9b15576c27e52ccbe98e17e1ba9b2a6788668d3143",
+		"res://tests/tactical/showcase_cases.gd": "e45522e4dc6b40fb87392b0b4146157c716ed4d7b12a89f67c0ccbf5133ccc3e"
+	}
+}

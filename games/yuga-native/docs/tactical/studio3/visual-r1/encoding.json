@@ -1,0 +1,25 @@
+{
+  "programs": [],
+  "streams": [
+    {
+      "codec_name": "h264",
+      "width": 1280,
+      "height": 720,
+      "r_frame_rate": "15/1",
+      "duration": "9.000000",
+      "nb_read_frames": "135"
+    }
+  ],
+  "file": "studio-motion.mp4",
+  "sha256": "1c919addd1462e70be3b82ac487d1c9161b0acbaeb356b729a40514b5a20cec7",
+  "bytes": 367199,
+  "command": "ffmpeg -hide_banner -loglevel warning -framerate 15 -i frame-%05d.png -c:v libx264 -threads 6 -preset medium -crf 18 -pix_fmt yuv420p -movflags +faststart studio-motion.mp4",
+  "scope": "135 original native hero-studio frames, explicit presentation clock,15simfps,silent; not gameplay orhardwareFPS",
+  "visible_hero_frames": 131,
+  "preserved_loading_frames": [
+    0,
+    1,
+    2,
+    3
+  ]
+}

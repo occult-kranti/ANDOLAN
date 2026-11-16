@@ -1,0 +1,205 @@
+extends SceneTree
+const Pose = preload("res://scripts/tactical_hero_pose.gd")
+const Motion = preload("res://scripts/rama_motion.gd")
+const HERO := "res://assets/heroes/rama-hero.glb"
+const GUN := "res://assets/tactical/surya-carbine.glb"
+var report_path := ""
+var checks: Array[Dictionary] = []
+var hero: Node3D
+var rig: Skeleton3D
+var motion: SkeletonModifier3D
+var socket: BoneAttachment3D
+var weapon: Node3D
+var controller: RefCounted
+var base_firearm := Transform3D.IDENTITY
+var baseline: Array[Transform3D] = []
+var baseline_globals: Array[Transform3D] = []
+var frozen_bones: Array[int] = []
+var skin_points := {"L":[], "R":[]}
+var baseline_skin := {"L":PackedVector3Array(), "R":PackedVector3Array()}
+var sources := {}
+
+func _initialize() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--report="): report_path = arg.trim_prefix("--report=")
+	call_deferred("run")
+
+func check(label: String, passed: bool, detail: Dictionary = {}) -> void:
+	checks.append({"name":label, "passed":passed, "detail":detail})
+	print("PASS " if passed else "FAIL ", label, " ", JSON.stringify(detail))
+
+func _find(node: Node, type: String) -> Node:
+	if node.is_class(type): return node
+	for child in node.get_children():
+		var found := _find(child, type)
+		if found != null: return found
+	return null
+
+func _fixture() -> bool:
+	hero = load(HERO).instantiate(); root.add_child(hero)
+	motion = Motion.new()
+	if not motion.configure(hero, _find(hero, "AnimationPlayer")): return false
+	motion.active = false; rig = motion.rig
+	hero.find_child("RamaBow", true, false).hide(); motion.nocked_arrow.hide()
+	var idle: Dictionary = motion._sample("idle", .2)
+	for index in rig.get_bone_count():
+		rig.set_bone_pose_position(index, idle.positions[index]); rig.set_bone_pose_rotation(index, idle.rotations[index])
+	# Accepted finish2 inspection hold, independent of the evolving UI adapter.
+	base_firearm = Transform3D(Basis(Vector3.UP, PI + .60), Vector3(-.16, 1.31, .10))
+	var right_basis := Basis(Vector3(1,0,0), Vector3(0,-1,0), Vector3(0,0,-1))
+	var left_basis := Basis(Vector3(0,0,-1), Vector3(0,1,0), Vector3(1,0,0))
+	var right_target := base_firearm * Vector3(0,-.125,.008) - right_basis * Motion.GRIP_CENTER
+	var left_target := base_firearm * Vector3(0,-.045,-.28) - left_basis * Motion.GRIP_CENTER
+	for entry in [["R",right_target,Vector3(-.65,1.1,.08),right_basis],["L",left_target,Vector3(.55,1.05,.18),left_basis]]:
+		motion._solve_reaction_arm(entry[0], entry[1], entry[2])
+		motion._global_rotate(rig.find_bone("wrist."+entry[0]), entry[3].get_rotation_quaternion())
+	var grip: Dictionary = motion._sample("ready_draw", .75)
+	for index in rig.get_bone_count():
+		if String(rig.get_bone_name(index)).begins_with("finger"): rig.set_bone_pose_rotation(index, grip.rotations[index])
+	socket = BoneAttachment3D.new(); socket.bone_name = "wrist.R"; rig.add_child(socket)
+	weapon = load(GUN).instantiate(); socket.add_child(weapon)
+	weapon.transform = rig.get_bone_global_pose(rig.find_bone("wrist.R")).affine_inverse() * base_firearm
+	for index in rig.get_bone_count():
+		baseline.append(rig.get_bone_pose(index))
+		baseline_globals.append(rig.get_bone_global_pose(index))
+		var bone := String(rig.get_bone_name(index))
+		if bone == "root" or bone.begins_with("pelvis") or bone.contains("leg") or bone.begins_with("foot") or bone.begins_with("toe"): frozen_bones.append(index)
+	_collect_skin()
+	for side in ["L", "R"]: baseline_skin[side] = _skin_in_gun(side)
+	controller = Pose.new()
+	return controller.configure(rig, motion, socket, weapon, base_firearm)
+
+func _collect_skin() -> void:
+	var mesh: MeshInstance3D = hero.find_child("RamaHero", true, false)
+	var binds: Array[Dictionary] = []
+	for index in mesh.skin.get_bind_count():
+		var name_: String = mesh.skin.get_bind_name(index)
+		binds.append({"bone":rig.find_bone(name_) if not name_.is_empty() else mesh.skin.get_bind_bone(index), "inverse":mesh.skin.get_bind_pose(index)})
+	for surface in mesh.mesh.get_surface_count():
+		var arrays := mesh.mesh.surface_get_arrays(surface)
+		var points: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var joints: PackedInt32Array = arrays[Mesh.ARRAY_BONES]
+		var weights: PackedFloat32Array = arrays[Mesh.ARRAY_WEIGHTS]
+		var stride: int = joints.size() / points.size()
+		for index in range(0, points.size(), 5):
+			var largest := 0.0; var dominant := -1; var influences: Array[Dictionary] = []
+			for slot in stride:
+				var weight := weights[index * stride + slot]
+				if weight <= 0: continue
+				var bind: Dictionary = binds[joints[index * stride + slot]]
+				influences.append({"bone":bind.bone, "point":bind.inverse * points[index], "weight":weight})
+				if weight > largest: largest = weight; dominant = bind.bone
+			var name_ := String(rig.get_bone_name(dominant)) if dominant >= 0 else ""
+			for side in ["L", "R"]:
+				if name_.begins_with("finger") and name_.ends_with("-3." + side): skin_points[side].append(influences)
+
+func _skin_in_gun(side: String) -> PackedVector3Array:
+	var inverse := (rig.get_bone_global_pose(rig.find_bone("wrist.R")) * weapon.transform).affine_inverse()
+	var result := PackedVector3Array()
+	for influences in skin_points[side]:
+		var point := Vector3.ZERO
+		for entry in influences: point += (rig.get_bone_global_pose(entry.bone) * entry.point) * entry.weight
+		result.append(inverse * point)
+	return result
+
+func _skin_error(side: String) -> float:
+	var current := _skin_in_gun(side); var worst := 0.0
+	for index in current.size(): worst = maxf(worst, current[index].distance_to(baseline_skin[side][index]))
+	return worst
+
+func _frozen_error() -> float:
+	var worst := 0.0
+	for index in frozen_bones:
+		var current := rig.get_bone_pose(index)
+		worst = maxf(worst, current.origin.distance_to(baseline[index].origin))
+		worst = maxf(worst, current.basis.x.distance_to(baseline[index].basis.x))
+		worst = maxf(worst, current.basis.y.distance_to(baseline[index].basis.y))
+		worst = maxf(worst, current.basis.z.distance_to(baseline[index].basis.z))
+		var global_: Transform3D = rig.get_bone_global_pose(index)
+		worst = maxf(worst, global_.origin.distance_to(baseline_globals[index].origin))
+		worst = maxf(worst, global_.basis.x.distance_to(baseline_globals[index].basis.x))
+		worst = maxf(worst, global_.basis.y.distance_to(baseline_globals[index].basis.y))
+		worst = maxf(worst, global_.basis.z.distance_to(baseline_globals[index].basis.z))
+	return worst
+
+func _step(seconds: float, hz := 60) -> void:
+	for unused in int(ceil(seconds * hz)): controller.step(1.0 / hz)
+
+func run() -> void:
+	for path in [HERO,GUN,Motion.LIBRARY_PATH,"res://scripts/rama_motion.gd","res://scripts/tactical_hero_pose.gd","res://tests/tactical/hero_pose_cases.gd"]: sources[path] = FileAccess.get_sha256(path)
+	check("Accepted actual 164-bone Rama and SURYA bind", _fixture())
+	if not controller.configured: quit(1); return
+	check("Actual distal skin samples exist for both hands", skin_points.L.size() >= 15 and skin_points.R.size() >= 15, {"left":skin_points.L.size(),"right":skin_points.R.size()})
+	check("Duplicate configure is rejected", not controller.configure(rig,motion,socket,weapon,base_firearm))
+	var invalid = Pose.new()
+	var corrupt := base_firearm; corrupt.origin.x += .03
+	check("Mismatched firearm transform is rejected before mutation", not invalid.configure(rig,motion,socket,weapon,corrupt) and not invalid.configured)
+	check("Active competing motion modifier is rejected", _reject_active())
+	for stance in ["idle", "aim"]:
+		check(stance + " request accepted", controller.set_stance(stance))
+		_step(.8)
+		var result: Dictionary = controller.report()
+		var left_error := _skin_error("L"); var right_error := _skin_error("R")
+		check(stance + " preserves actual fingertip skin relative to firearm", left_error < .003 and right_error < .003, {"left_m":left_error,"right_m":right_error,"wrist_target_m":result.wrist_error_m})
+		check(stance + " preserves root, legs and feet exactly", _frozen_error() == 0.0)
+	for hz in [30,60]:
+		for slot in ["q", "c", "e", "x"]:
+			controller.reset(); controller.play_ability(slot)
+			var last: Array[Transform3D] = []
+			for index in rig.get_bone_count(): last.append(rig.get_bone_global_pose(index))
+			var worst_step := 0.0; var worst_angle := 0.0; var worst_contact := 0.0; var frozen := 0.0; var finite := true
+			var worst_step_at := {}; var worst_angle_at := {}
+			for unused in int(ceil((Pose.DURATIONS[slot] + .35) * hz)):
+				controller.step(1.0 / hz)
+				for index in rig.get_bone_count():
+					var current := rig.get_bone_global_pose(index)
+					finite = finite and current.is_finite()
+					var distance := current.origin.distance_to(last[index].origin)
+					var angle := current.basis.get_rotation_quaternion().angle_to(last[index].basis.get_rotation_quaternion())
+					if distance > worst_step: worst_step = distance; worst_step_at = {"bone":rig.get_bone_name(index),"age_s":controller.age_s}
+					if angle > worst_angle: worst_angle = angle; worst_angle_at = {"bone":rig.get_bone_name(index),"age_s":controller.age_s}
+					last[index] = current
+				var result: Dictionary = controller.report()
+				worst_contact = maxf(worst_contact, maxf(result.wrist_error_m.L, result.wrist_error_m.R))
+				frozen = maxf(frozen, _frozen_error())
+			check("%s/%d finite continuous actual rig with reachable targets" % [slot,hz], finite and worst_step < .09 and worst_angle < .65 and worst_contact < .01, {"max_bone_step_m":worst_step,"max_bone_angle_rad":worst_angle,"max_wrist_target_error_m":worst_contact,"max_step_at":worst_step_at,"max_angle_at":worst_angle_at})
+			check("%s/%d returns both skin grips and keeps lower body fixed" % [slot,hz], controller.active_slot.is_empty() and _skin_error("L") < .003 and _skin_error("R") < .003 and frozen == 0.0, {"left_skin_m":_skin_error("L"),"right_skin_m":_skin_error("R"),"frozen_error":frozen})
+	controller.reset(); controller.play_ability("q"); _step(.35)
+	var before := rig.get_bone_global_pose(rig.find_bone("wrist.L"))
+	check("Interrupted gesture request does not snap its outgoing pose", controller.play_ability("x") and rig.get_bone_global_pose(rig.find_bone("wrist.L")) == before)
+	controller.step(1.0/60.0)
+	check("Interrupted gesture has bounded first advancing frame", rig.get_bone_global_pose(rig.find_bone("wrist.L")).origin.distance_to(before.origin) < .03)
+	var clock: float = controller.report().clock_s
+	var paused := rig.get_bone_global_pose(rig.find_bone("wrist.L"))
+	await process_frame; await process_frame
+	check("No autonomous process or authority clock", controller.report().clock_s == clock and rig.get_bone_global_pose(rig.find_bone("wrist.L")) == paused and motion.release_count == 0 and not motion.active)
+	for value in [NAN, INF, -1.0, 0.0]: controller.step(value)
+	check("Invalid delta and unknown requests leave presentation unchanged", controller.report().clock_s == clock and not controller.set_stance("unknown") and not controller.play_ability("unknown") and rig.get_bone_global_pose(rig.find_bone("wrist.L")) == paused)
+	controller.set_stance("aim"); _step(.7)
+	check("Cancel to aim returns actual left support contact", controller.active_slot.is_empty() and controller.selected_stance == "aim" and _skin_error("L") < .003)
+	controller.play_ability("q"); _step(Pose.DURATIONS.q + .2)
+	check("Gesture begun from aim returns to selected aim and both skin grips", controller.active_slot.is_empty() and controller.selected_stance == "aim" and _skin_error("L") < .003 and _skin_error("R") < .003 and _frozen_error() == 0.0)
+	controller.set_reduced_motion(true); controller.play_ability("c"); _step(.5)
+	check("Reduced motion retains a finite visible gesture and planted feet", controller.report().finite and controller.report().left_support_weight < .1 and _frozen_error() == 0.0)
+	controller.reset()
+	var exact := true
+	for index in rig.get_bone_count(): exact = exact and rig.get_bone_pose(index) == baseline[index]
+	check("Reset restores every accepted local bone exactly", exact and controller.active_slot.is_empty() and controller.age_s == 0.0 and controller.selected_stance == "idle")
+	check("Preview leaves hidden archery gear and authority untouched", not hero.find_child("RamaBow",true,false).visible and not motion.nocked_arrow.visible and motion.release_count == 0 and hero.find_children("*","CollisionObject3D",true,false).is_empty())
+	var changed := []
+	for path in sources:
+		if FileAccess.get_sha256(path) != sources[path]: changed.append(path)
+	check("Canonical assets, rig library and test sources unchanged during check", changed.is_empty())
+	var passed := checks.all(func(row): return row.passed)
+	var report := {"task":"YUGA-HERO-STUDIO3", "passed":passed, "count":checks.size(), "checks":checks, "sources":sources, "changed_sources":changed, "scope":"Actual imported rig and skinned fingertip retention, explicit-clock poses and lifecycle. Baseline fingertip shape is preserved, not newly proven collision contact. Rendered anatomy, unseen-side cloth contact and full-body tactical gameplay remain separate."}
+	if not report_path.is_empty():
+		var file := FileAccess.open(report_path, FileAccess.WRITE); file.store_string(JSON.stringify(report,"\t")+"\n")
+	hero.free(); await process_frame
+	quit(0 if passed else 1)
+
+func _reject_active() -> bool:
+	motion.active = true
+	var other = Pose.new()
+	var rejected: bool = not other.configure(rig,motion,socket,weapon,base_firearm)
+	motion.active = false
+	return rejected

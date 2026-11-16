@@ -1,0 +1,62 @@
+{
+  "task": "YUGA-HERO-STUDIO3",
+  "product": "Native tactical Casual hero/loadout studio",
+  "baseline_commit": "e59a07a4786e9ad491cfef7a4e706dbd06063adc",
+  "exclusive_files": [
+    "games/yuga-native/scripts/tactical_frontend.gd",
+    "games/yuga-native/scripts/tactical_hero_dossier.gd",
+    "games/yuga-native/tests/tactical/hero_dossier_cases.gd",
+    "games/yuga-native/tests/tactical/ui_cases.gd",
+    "games/yuga-native/docs/tactical/studio3/ui/",
+    "games/yuga-native/docs/tactical/studio3/PREVIEW.html"
+  ],
+  "sources": {
+    "games/yuga-native/scripts/tactical_frontend.gd": "fe1b31b920eeb4a6b08c0807ecde3400ce6dd8627bf247ad20e172dfe62018b5",
+    "games/yuga-native/scripts/tactical_hero_dossier.gd": "0746a845396cc113d807fe26baf366a80b87ab077a4c06dd5a21c7ed0ce66168",
+    "games/yuga-native/tests/tactical/hero_dossier_cases.gd": "965c42f07e926a680be097e8c64409774f92fdd8647c0d6a44816287a4f6db48",
+    "games/yuga-native/tests/tactical/ui_cases.gd": "94a63087186390c0ff0b8101d368ef23e61c516ca306d540273d1e4348a0f98f"
+  },
+  "layout": "Existing native frontend navigation and pinned ChooseCasual; left four-selector read-only dossier, one selected ability detail/counterplay panel and actual ARKA/SURYA facts; right root-owned native showcase.",
+  "preview_contract": {
+    "calls": [
+      "set_preview(idle|aim|q|e|c|x)->bool",
+      "preview_report()->{ready,supported_actions,current_action,busy,reduced_motion,paused}",
+      "set_reduced_motion(bool)"
+    ],
+    "selection": "Updates facts only; never dispatches animation.",
+    "explicit_actions": "Preview selected ability; Ready resets; Aim requests aim. Busy disables ability/Aim while Ready stays available.",
+    "ownership": "No match actors, purchases, utility spending, world damage, view-mode or pose code in the dossier.",
+    "paused": "Paused copy takes precedence over Playing/busy copy: Preview paused \u00b7 Play resumes. Ready remains available."
+  },
+  "data_provenance": {
+    "economy": "Rules.config.catalog and ult_cost; constructor validation only, never start_match.",
+    "weapons": "Weapon.PROFILES magazine/reserve/base damage/reload; names/prices from rules catalog.",
+    "durations": "Existing tactical_theme ABILITIES detail12s/10s, parsed into display facts; no new balance constants.",
+    "other_abilities": "Grounded dash / Three shots, without fabricated cooldown.",
+    "counterplay": "Verified tactical_world cover rays/placement, tactical_effects veil/ward, player dash collision. Human-authored qualitative text; no new mechanic."
+  },
+  "checks": {
+    "dossier": "checks-r3/result.json:33/33,exit0,zero engine warnings/errors; adds paused viewer copy counterexample and retained Ready reset access.",
+    "existing_ui": "flow-r1/result.json:36/36,exit0,zero engine warnings/errors; only relevant hero assertion migrated. This prior flow run precedes the pause-copy-only successor.",
+    "retained_failure": "checks-r1 contains test-host naming conflict with Node.ready signal; renamed is_ready. Runtime source unaffected."
+  },
+  "pending": [
+    "Root actual-input and combined delivery acceptance remain separate from staged originals.",
+    "No new rig/commercial quality/online/hardware-FPS claim."
+  ],
+  "next_owner": "Root: combined delivery and ordinary native-input acceptance. UI runtime and gallery frozen.",
+  "prior_sources": {
+    "games/yuga-native/scripts/tactical_frontend.gd": "fe1b31b920eeb4a6b08c0807ecde3400ce6dd8627bf247ad20e172dfe62018b5",
+    "games/yuga-native/scripts/tactical_hero_dossier.gd": "42df66ebfc287c5eded6d615ca77d719dcdbf8f07f4a648394e00a4ec266a15c",
+    "games/yuga-native/tests/tactical/hero_dossier_cases.gd": "05e6b8bf098c9a2cadc23eb11b770a0ac9355897e1dbb8a3e1068012a08ecaf7",
+    "games/yuga-native/tests/tactical/ui_cases.gd": "94a63087186390c0ff0b8101d368ef23e61c516ca306d540273d1e4348a0f98f"
+  },
+  "visual_review": "visual-review-r1.json: all 13 actual source-bound originals personally inspected; compact 150% hero-size limitation retained.",
+  "gallery": {
+    "path": "games/yuga-native/docs/tactical/studio3/PREVIEW.html",
+    "sha256": "a85b08df745136c526c841f85e4fc2488b4afde4b732b7ee75e693089ccc9968",
+    "receipt": "preview-r4/receipt.json",
+    "checks": "9/9 focused local Chromium checks; settled desktop personally inspected; historical capture-timing receipts retained",
+    "prior_gallery_sha256": "8a7f80cb1fb9f24bd9c083f387f8a88fee1b2caa23477117159ab7a6ad7534cd"
+  }
+}

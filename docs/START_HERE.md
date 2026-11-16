@@ -1,6 +1,10 @@
 # Start here: project and agent handoff
 
+**15 November resource audit and publication:** [Blender, open art, maps, artifacts and engine/tool research](../games/yuga-native/docs/research/resource-catalog-2026-11-15/README.md) → [bounded adoption plan](../games/yuga-native/docs/research/resource-catalog-2026-11-15/ADOPTION_PLAN.md) → [source checks](../games/yuga-native/docs/research/resource-catalog-2026-11-15/VERIFICATION.md) → [push/dashboard record](../games/yuga-native/docs/research/resource-catalog-2026-11-15/PUBLICATION.md). This audits the supplied catalog against primary sources and retains the active Godot/Blender Sanctum direction. Research candidates are separate from integrated art.
+
 **15 November source publication:** [verified Sanctum checkpoint and dashboard](../games/yuga-native/docs/tactical/PUBLICATION_2026-11-15.md). Its packaged snapshot, committed successor and ongoing weapon-art work retain distinct source identities.
+
+**Latest hero/UI continuation:** [Rama studio, source and checks](../games/yuga-native/docs/tactical/studio3/README.md) → [native studio gallery](../games/yuga-native/docs/tactical/studio3/PREVIEW.html). Animated hero/first-person previews and an ability dossier continue the pushed finish2 checkpoint.
 
 **Current hero/map build:** [native artifacts and exact source](../games/yuga-native/docs/tactical/finish2/DELIVERY.md) → [screens and films](../games/yuga-native/docs/tactical/PREVIEW.html) → [distributed ownership](../games/yuga-native/docs/tactical/finish2/README.md). Raea CPU turntable, articulated casting, native Rama/SURYA inspection and shared map detail continue the earlier art build.
 
@@ -42,9 +46,15 @@ Updated 23 October 2026. Start here, then open only the subsystem assigned to yo
 
 ## The current build in one minute
 
-The active product is **YUGA native**, an original mythology-inspired third-person game under `games/yuga-native/`, on `game/yuga-native-production`. It has one Rama hero with a bow and four abilities shared by courtyard training and offline Confluence practice.
+The active product is **YUGA native · Sanctum**, a first-person tactical hero shooter under `games/yuga-native/`, published on `game/yuga-native-production`. Run `godot --path games/yuga-native`, then choose **Play Casual → Deploy as Rama**. Local Casual is 5v5 with bots, first team to 13 wins, and sides switch after round 12. Rama uses ARKA/SURYA firearms and Q/E/C/X abilities. Ranked and online remain planned.
 
-**The active campaign has 17/78 accepted scoped packets and 0/13 complete rounds.** The [active handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) owns the current source, six-worker queue and exact next gates. The earlier [48-assignment screen campaign](../games/yuga-native/docs/SCREEN_CAMPAIGN.json) and [three fifteen-role visual rounds](../games/yuga-native/docs/VISUAL_ROUNDS_2_4_EXECUTION.json) retain their separate outcomes.
+Start at [the current tactical handoff](../games/yuga-native/docs/tactical/README.md). The [hero studio continuation](../games/yuga-native/docs/tactical/studio3/README.md) records the latest ownership, source push and hero/UI changes. Historical classic packages below retain their original sources and qualification.
+
+## Historical classic build and evidence
+
+The earlier third-person native game used Rama with a bow and four abilities shared by courtyard training and offline Confluence practice. It remains available as a separate classic flow.
+
+**The historical desktop campaign records 17/78 accepted scoped packets and 0/13 complete rounds.** The [active handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) owns the current source, six-worker queue and exact next gates. The earlier [48-assignment screen campaign](../games/yuga-native/docs/SCREEN_CAMPAIGN.json) and [three fifteen-role visual rounds](../games/yuga-native/docs/VISUAL_ROUNDS_2_4_EXECUTION.json) retain their separate outcomes.
 
 Previously qualified runtime source is `1236db50`; test-only successor `93ebba9f` passed [all 37 foundation CI steps](https://github.com/occult-kranti/ANDOLAN/actions/runs/39154538312). [The current continuation report](../games/yuga-native/docs/evidence/desktop-finish/continuation-oct18b/ROOT_FINAL_REVIEW.md) records accepted traversal/reload guidance, authored descent, thin-film swamp colour and the composed-source native smoke. Native content revision remains 8; public executable identity remains `79e5`. The new source is not yet a qualified new public package.
 
@@ -62,7 +72,7 @@ The [earlier UI preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/y
 
 Confluence is an offline 140 × 260 m world with three lanes, local armies, capture/supply relays, core outcomes and day/night lighting. The older fourteen-invocation catalogue is a separate study through the existing avatar; the 24-second duel film has its own authored actors. Neither establishes fourteen finished native heroes.
 
-The intended production game remains **6v6, fourteen heroes, three lanes and an 18-minute match**. Native online matches, shared elevation authority, the full roster, human playtesting, physical-GPU profiling and Deadlock-level art/motion quality remain open. Small HUD text, foot support, garment contact and abrupt cast-entry motion retain explicit limits. Use the [visual handoff](../games/yuga-native/docs/VISUAL_CAMPAIGN_HANDOFF.md) for current art evidence and the [reuse consultation](../games/yuga-native/docs/research/community-reuse/README.md) for source research and next production goals.
+The superseded classic production proposal was **6v6, fourteen heroes, three lanes and an 18-minute match**. Native online matches, shared elevation authority, the full roster, human playtesting, physical-GPU profiling and Deadlock-level art/motion quality remain open. Small HUD text, foot support, garment contact and abrupt cast-entry motion retain explicit limits. Use the [visual handoff](../games/yuga-native/docs/VISUAL_CAMPAIGN_HANDOFF.md) for current art evidence and the [reuse consultation](../games/yuga-native/docs/research/community-reuse/README.md) for source research and next production goals.
 
 Earlier [Mythic](../games/yuga-native/docs/evidence/mythic-published/REVIEW.md), [Triad/siege](../games/yuga-native/docs/evidence/triad-published/REVIEW.md) and [Rama milestone](../games/yuga-native/docs/RAMA_HERO_MILESTONE.md) reports retain their original sources and acceptance scope. Do not substitute historical reports for a new source or package check.
 

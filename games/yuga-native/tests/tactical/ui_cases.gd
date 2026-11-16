@@ -54,7 +54,7 @@ func run()->void:
 		if button.text.begins_with("Ranked"):ranked=button.disabled
 	check("Ranked is visibly planned and cannot launch",ranked)
 	front.show_page("hero")
-	check("Hero page presents four tactical abilities and firearm identity",labels(front).contains("Solar veil") and labels(front).contains("Measured step") and labels(front).contains("Ward wall") and labels(front).contains("Dawn volley") and labels(front).contains("ARKA"))
+	check("Hero studio exposes four tactical selectors, selected details and actual firearms",front.hero_dossier.selectors.size()==4 and front.hero_dossier.abilities.keys()==["q","e","c","x"] and labels(front).contains("Solar veil") and labels(front).contains("ARKA") and labels(front).contains("SURYA"))
 	front.show_page("settings")
 	check("Settings page exposes all saved controls",front.settings_controls.size()==5)
 	front.show_page("help")

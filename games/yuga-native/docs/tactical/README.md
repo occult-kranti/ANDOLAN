@@ -2,6 +2,8 @@
 
 The active native direction is a **first-person 5v5 tactical hero shooter, first team to 13 wins**, with original mythic firearms and a South Asian fantasy city. Casual runs locally with one human and nine bots. Ranked is a visible future mode. This replaces the long single-match, lane-army format as the active product direction; the earlier Rama/Sangam checkpoint remains available separately.
 
+Latest continuation: [animated Rama studio and repository handoff](studio3/README.md), with [native previews](studio3/PREVIEW.html). The hero page now has ability selectors, source-backed cost/charge facts, counterplay, explicit pose previews, and hero/first-person views.
+
 Run from the repository root:
 
 ```sh
