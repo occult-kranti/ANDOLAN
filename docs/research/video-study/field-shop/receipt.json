@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "task": "video-study/native-field-shop",
+  "product": "YUGA native offline Confluence",
+  "baseline_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "branch": "work/yuga-studio",
+  "retained_at_utc": "2026-11-16T00:03:43.283991+00:00",
+  "command": [
+    "godot",
+    "--headless",
+    "--path",
+    "games/yuga-native",
+    "--script",
+    "tests/native_field_shop_cases.gd",
+    "--",
+    "--report=/workspaces/scratch/native-field-shop-r1/cases.json"
+  ],
+  "result": {
+    "passed": true,
+    "count": 50,
+    "report": "cases.json",
+    "report_sha256": "c548068a84c8bab604ab3edd3cf46c86a62adbaef3c0d52f3898fffb4374382b",
+    "selected_source_bytes_unchanged": true
+  },
+  "engine": "4.6.3.stable.official.7d41c59c4",
+  "scope": "Actual army last-hit reward, healing/shield receivers, temporary spear summoning and expiry; ammo via minimal player adapter. No rendered UI, multiplayer, complete-match or balance acceptance.",
+  "source_hashes": {
+    "res://assets/design/native-field-shop.json": "c4d64681db684d0c90ee0a5f1a848282b29fdddc8d709272625011bff4f2ebca",
+    "res://scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+    "res://scripts/lane_minion.gd": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387",
+    "res://scripts/native_field_shop.gd": "6d2ec781d5fc6c57ab6b5eecb64c6e6ddd9827856c6c5bffe785385ef5ab0af5",
+    "res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+    "res://tests/native_field_shop_cases.gd": "e1ef5abb11b1f4cbcf19822288d2e82cd3c5cc48a732f8ad0c0a1eefb9463fe2"
+  },
+  "inputs_reviewed": {
+    "video_content": false,
+    "game_captures": false,
+    "current_source": true,
+    "focused_runtime_receipts": true
+  },
+  "next_owner": "Root integrates actual HUD/shop flow and rendered/input acceptance; launcher_research owns content9 migration."
+}

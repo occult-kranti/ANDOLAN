@@ -5,7 +5,15 @@ const UI = preload("res://scripts/hero_ui_theme.gd")
 const Bindings = preload("res://scripts/input_bindings.gd")
 const Glyph = preload("res://scripts/rama_ability_glyph.gd")
 const ScrollFocus = preload("res://scripts/ui_scroll_focus.gd")
+const Vitals = preload("res://scripts/rama_vitals.gd")
 const KIT_PATH := "res://assets/design/rama-ability-kit.json"
+const TACTICS := {
+	"kodanda": ["CONTROL THE GAP", "Use cover between draws and keep the next target in view.", "Solid cover stops the arrow. Move across the archer's aim rather than toward it.", "Use Measured Step to change your angle, then draw again."],
+	"piercing_dawn": ["BREAK A FORMATION", "Line up a troop column before committing to the longer draw.", "Break the firing line behind solid cover; piercing does not pass through walls.", "Reposition with Measured Step after recovery to avoid returning fire."],
+	"measured_step": ["KEEP YOUR SIGHTLINE", "Choose a movement direction to reach nearby cover while keeping your aim.", "The step gives no invulnerability. Cover shortens the route.", "Create a new angle before Piercing Dawn or Dawn Volley locks your aim."],
+	"guardian_circle": ["HOLD GROUND TOGETHER", "Place the fixed circle where you and allied troops can stay inside it.", "Healing requires staying inside the fixed circle; an existing shield lasts until expiry. Solid cover blocks placement.", "Protect a lane position, then draw while your allies advance."],
+	"dawn_volley": ["COMMIT THREE LANES", "Aim before casting: all three firing lanes lock when the draw begins.", "Move sideways during the warning or use solid cover; every arrow stops at its first target.", "Use Measured Step first to open an angle. Three marks during the cast show pending and launched lanes, not charges or hits."]
+}
 
 signal closed
 
@@ -18,6 +26,8 @@ var detail_description: Label
 var detail_timing: Label
 var detail_range: Label
 var detail_context: Label
+var detail_power: Label
+var detail_tactics: Label
 var key_label: Label
 var status_label: Label
 var effects_notice: Label
@@ -38,6 +48,13 @@ var _effects_receiver: WeakRef
 var _effects_options := {"reduced_effects":false,"reduced_motion":false}
 var _reveal_pending := false
 var _feedback_revision := 0
+var profile_label: Label
+var hero_identity_label: Label
+var _profile_box: VBoxContainer
+var practice_heading: Label
+var practice_label: Label
+var _practice_report_provider := Callable()
+var _practice_clock := 0.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -74,7 +91,10 @@ func _build() -> void:
 	heading.add_theme_constant_override("separation", 2)
 	heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(heading)
-	heading.add_child(UI.label("RAMA · BOW + FOUR ABILITIES", UI.TYPE_CAPTION, UI.GOLD))
+	hero_identity_label = UI.label("RAMA · BOW + FOUR ABILITIES", UI.TYPE_CAPTION, UI.GOLD)
+	hero_identity_label.clip_text = true
+	hero_identity_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	heading.add_child(hero_identity_label)
 	var title := UI.label("The solar archer", UI.TYPE_TITLE)
 	title.add_theme_font_override("font", UI.display_font())
 	heading.add_child(title)
@@ -124,6 +144,9 @@ func _build() -> void:
 	title_stack.add_child(detail_title)
 	detail_description = _wrapped("", 18, UI.CREAM)
 	detail.add_child(detail_description)
+	detail_power = _wrapped("", UI.TYPE_CAPTION, UI.GOLD)
+	detail_power.name = "AbilityOutput"
+	detail.add_child(detail_power)
 	detail.add_child(HSeparator.new())
 	detail_timing = _wrapped("", 15, UI.MIST)
 	detail.add_child(detail_timing)
@@ -131,6 +154,10 @@ func _build() -> void:
 	detail.add_child(detail_range)
 	detail_context = _wrapped("", 14, UI.MIST)
 	detail.add_child(detail_context)
+	detail.add_child(HSeparator.new())
+	detail_tactics = _wrapped("", UI.TYPE_BODY, UI.CREAM)
+	detail_tactics.name = "TacticalGuide"
+	detail.add_child(detail_tactics)
 	detail.add_child(HSeparator.new())
 	detail.add_child(UI.label("Ability effects", UI.TYPE_BODY, UI.GOLD))
 	for item in [{"key":"reduced_effects","text":"Fewer decorative layers"},{"key":"reduced_motion","text":"Still ornamental motion"}]:
@@ -145,10 +172,24 @@ func _build() -> void:
 		else: reduced_motion_button = toggle
 	effects_notice = _wrapped("Ability effects settings are unavailable in this view.", UI.TYPE_CAPTION, UI.MIST)
 	detail.add_child(effects_notice)
+	_profile_box = VBoxContainer.new()
+	_profile_box.name = "HeroProfileAndPractice"
+	_profile_box.add_theme_constant_override("separation", UI.SPACE_SM)
+	_profile_box.add_child(HSeparator.new())
+	_profile_box.add_child(UI.label("HERO PROFILE", UI.TYPE_CAPTION, UI.GOLD))
+	profile_label = _wrapped("", UI.TYPE_CAPTION, UI.CREAM)
+	profile_label.name = "HeroProfile"
+	_profile_box.add_child(profile_label)
+	practice_heading = _wrapped("CURRENT TRAINING ATTEMPT", UI.TYPE_CAPTION, UI.GOLD)
+	practice_heading.name = "PracticeRecordHeading"
+	_profile_box.add_child(practice_heading)
+	practice_label = _wrapped("", UI.TYPE_CAPTION, UI.CREAM)
+	practice_label.name = "PracticeRecord"
+	_profile_box.add_child(practice_label)
 	var footer := HBoxContainer.new()
 	footer.add_theme_constant_override("separation", UI.SPACE_LG)
 	stack.add_child(footer)
-	var note := _wrapped("Select an ability · PgUp / PgDn scroll details.\n%s or %s returns to your previous screen." % [Bindings.label("pause_game"),Bindings.label("open_invocations")], 13, UI.MIST)
+	var note := _wrapped("PgUp / PgDn: details · Shift: profile\n%s or %s returns to your previous screen." % [Bindings.label("pause_game"),Bindings.label("open_invocations")], 13, UI.MIST)
 	note.custom_minimum_size.x = 280
 	note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	footer.add_child(note)
@@ -186,9 +227,11 @@ func _load_kit() -> void:
 		_list.add_child(button)
 		ability_buttons[ability.id] = button
 		focus_order.append(button)
+	_list.add_child(_profile_box)
 	focus_order.append_array([reduced_effects_button,reduced_motion_button,close_button])
 	refresh_bindings()
 	select_ability(selected_id)
+	_refresh_profile()
 
 func _wrapped(text: String, font_size: int, color: Color) -> Label:
 	var label := UI.label(text, font_size, color)
@@ -215,6 +258,15 @@ func select_ability(id: String) -> void:
 	key_label.text = "%s  /  %s" % [_binding(id), "PRIMARY" if id == "kodanda" else ("ULTIMATE" if id == "dawn_volley" else "ABILITY")]
 	detail_title.text = rule.label
 	detail_description.text = rule.description
+	if id == "guardian_circle":
+		detail_power.text = "%s shield on entry · %s healing / s" % [_number(rule.shield), _number(rule.heal_per_s)]
+	elif id == "measured_step":
+		detail_power.text = "%s m step · %s s movement · No invulnerability" % [_number(rule.range_m), _number(rule.movement_s)]
+	else:
+		detail_power.text = "%s damage / arrow · %s" % [_number(rule.damage), ("Up to %s enemies" % _number(rule.max_hits)) if int(rule.max_hits) > 1 else "First target only"]
+		if id == "dawn_volley": detail_power.text += " · 3 paced arrows"
+	var tactic: Array = TACTICS.get(id, [])
+	detail_tactics.text = "%s\n\nUSE  %s\n\nCOUNTER  %s\n\nFOLLOW-UP  %s" % tactic if tactic.size() == 4 else ""
 	detail_timing.text = "Cooldown  %s s\nDraw / preparation  %s s\nRecovery  %s s" % [_number(rule.get("cooldown_s", 0)), _number(rule.get("windup_s", 0)), _number(rule.get("recovery_s", 0))]
 	if rule.has("active_s"): detail_timing.text += "\nDuration  %s s" % _number(rule.active_s)
 	detail_range.text = "Range  %s m" % _number(rule.get("range_m", 0))
@@ -226,6 +278,7 @@ func select_ability(id: String) -> void:
 		for color_name in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
 			button.add_theme_color_override(color_name, Glyph.color_for(&"selected" if ability_id == id else &"unavailable"))
 	details_scroll.scroll_vertical = 0
+	_refresh_profile()
 
 func configure_effects(receiver: Node) -> void:
 	_effects_receiver = weakref(receiver) if is_instance_valid(receiver) and receiver.has_method("set_options") else null
@@ -347,10 +400,11 @@ func _input(event: InputEvent) -> void:
 			close()
 			get_viewport().set_input_as_handled()
 		elif key in [KEY_PAGEUP,KEY_PAGEDOWN,KEY_HOME,KEY_END]:
-			var step := maxi(1,int(details_scroll.size.y)-UI.SPACE_LG)
-			if key == KEY_HOME: details_scroll.scroll_vertical = 0
-			elif key == KEY_END: details_scroll.scroll_vertical = int(details_scroll.get_v_scroll_bar().max_value)
-			else: details_scroll.scroll_vertical += step * (-1 if key == KEY_PAGEUP else 1)
+			var reading: ScrollContainer = abilities_scroll if event.shift_pressed else details_scroll
+			var step := maxi(1,int(reading.size.y)-UI.SPACE_LG)
+			if key == KEY_HOME: reading.scroll_vertical = 0
+			elif key == KEY_END: reading.scroll_vertical = int(reading.get_v_scroll_bar().max_value)
+			else: reading.scroll_vertical += step * (-1 if key == KEY_PAGEUP else 1)
 			get_viewport().set_input_as_handled()
 		elif key in [KEY_TAB, KEY_UP, KEY_DOWN]:
 			var available: Array[Control] = []
@@ -376,6 +430,10 @@ func _accepts_input() -> bool:
 
 func _process(_delta: float) -> void:
 	if not visible: return
+	_practice_clock += _delta
+	if _practice_clock >= .2:
+		_practice_clock = 0
+		_refresh_profile()
 	if not is_instance_valid(_effect_receiver()) and not reduced_effects_button.disabled: _load_effect_options()
 	var viewport := get_viewport_rect().size
 	# Wrapped labels settle after the first container sort. Reapply the bounded
@@ -411,3 +469,38 @@ func _reveal_initial_choice() -> void:
 	_reveal_pending = false
 	if _accepts_input() and selected_id=="kodanda" and get_viewport().gui_get_focus_owner()==ability_buttons.get("kodanda"):
 		abilities_scroll.scroll_vertical = 0
+
+func configure_practice_report(provider: Callable) -> void:
+	_practice_report_provider = provider
+	_refresh_profile()
+
+func _practice_number(value: Variant) -> bool:
+	return typeof(value) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(value)) and float(value) >= 0 and float(value) <= 100000000
+
+func _refresh_profile() -> void:
+	if not is_instance_valid(profile_label): return
+	var bow: Dictionary = _rules.get("kodanda", {})
+	var volley: Dictionary = _rules.get("dawn_volley", {})
+	profile_label.text = "%d health · %d shield capacity\nPrecision arrows, formation pressure and fixed protection.\n%s m bow · %s m volley · Land before casting." % [Vitals.MAX_HEALTH, Vitals.MAX_SHIELD, _number(bow.get("range_m",0)), _number(volley.get("range_m",0))]
+	hero_identity_label.text = "RAMA · BOW + FOUR ABILITIES"
+	hero_identity_label.tooltip_text = "Rama · The solar archer"
+	practice_heading.hide()
+	practice_label.hide()
+	if context != "courtyard" or not _practice_report_provider.is_valid(): return
+	var value: Variant = _practice_report_provider.call()
+	if not value is Dictionary or not value.get("configured",false) or value.get("scope") != "courtyard": return
+	for field in ["casts_started", "hits", "damage_dealt", "healing_applied", "shield_granted", "step_distance_m"]:
+		if not _practice_number(value.get(field)): return
+	practice_label.text = "%d casts · %d contacts · %.0f effective damage\n%.0f healing · %.0f shield granted\n%.1f m accepted steps" % [int(value.casts_started), int(value.hits), float(value.damage_dealt), float(value.healing_applied), float(value.shield_granted), float(value.step_distance_m)]
+	var rows: Variant = value.get("by_ability", [])
+	if rows is Array:
+		for item: Variant in rows:
+			if not item is Dictionary or item.get("ability_id") != selected_id: continue
+			if _practice_number(item.get("casts_started")) and _practice_number(item.get("hits")) and _practice_number(item.get("damage_dealt")):
+				practice_label.text += "\n%s · %d casts · %d contacts · %.0f damage" % [_rules.get(selected_id,{}).get("label",selected_id), int(item.casts_started), int(item.hits), float(item.damage_dealt)]
+			break
+	practice_label.text += "\nObserved this training attempt; reset clears this record."
+	hero_identity_label.text = "RAMA · %d casts · %d contacts · %.0f damage" % [int(value.casts_started), int(value.hits), float(value.damage_dealt)]
+	hero_identity_label.tooltip_text = "Current training attempt\n" + practice_label.text
+	practice_heading.show()
+	practice_label.show()

@@ -6,12 +6,14 @@ const ASSET_SHA := "69cebe64d18b6acadc16c5b43c2d4fd4ae069793590a909f2b636ba81cc6
 const SOURCE_SHA := "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33"
 const SELECTION_SHA := "6a9376f1cec2806f467a43ff4ceed5554a989c0fa9d02870077a77e220779151"
 const ROOT_NAME := "LankaWaterGarden"
+const TexturePalette = preload("res://scripts/lanka_texture_palette.gd")
 const INSTANCE_SPEC := [
 	{"id": "garden-north-column", "position": Vector3(-62.5, 0, 5), "size": Vector3(1.2, 3.31, 1.2)},
 	{"id": "garden-south-column", "position": Vector3(-62.5, 0, -5), "size": Vector3(1.2, 3.31, 1.2)},
 	{"id": "garden-north-diya", "position": Vector3(-59.8, 0, 5.2), "size": Vector3(.48, 1.075, .48)},
 	{"id": "garden-south-diya", "position": Vector3(-59.8, 0, -5.2), "size": Vector3(.48, 1.075, .48)}]
 static var _cache: Dictionary = {}
+static var _palette_ready: Dictionary = {}
 
 static func _local_placement_valid(node: Node3D) -> bool:
 	if not node.transform.is_equal_approx(Transform3D.IDENTITY) or node.get_child_count() != 4: return false
@@ -77,6 +79,9 @@ static func build(parent: Node3D, enabled: bool = false, path: String = ASSET) -
 				collision_triangles += faces.size() / 3
 	if meshes.size() != 7 or instances != 14 or triangles != 2688 or collision_triangles != 760 or bodies.size() != 4 or shapes.size() != 2:
 		node.free(); return {"enabled": false, "reason": "source_budget"}
+	if not _palette_ready.has(path):
+		TexturePalette.share(node)
+		_palette_ready[path] = true
 	node.set_meta("review_only", false)
 	node.set_meta("native_only", true)
 	parent.add_child(node)

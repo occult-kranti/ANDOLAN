@@ -1,5 +1,7 @@
 # YUGA native
 
+**Current product supersedes the historical description below:** [YUGA · Sanctum](docs/tactical/README.md) is a first-person 5v5 tactical hero shooter with mythic firearms, original South Asian city design and first-to13 rounds. The active native entry point is `tactical_frontend.tscn`; Casual runs locally with bots, Ranked remains planned. The user prioritizes native art/screens/effects and complete Rama/map artifacts. See [current contract](docs/tactical/CONTRACT.md) and [delivery](docs/tactical/DELIVERY.md). The following text records the earlier practice product and its releases.
+
 This context belongs to the Godot desktop game in `games/yuga-native`. The root ANDOLAN product documents describe a separate browser game. Source baseline: `1b2e6f5202490036a6195581f2901a2075750b56`, the corrective startup regression following the accepted one-building frontage checkpoint `0964564d1ba283a5ac0aee8eab0a6cccd8f443f3`; later UI work needs its own verification. Neither checkpoint changes the public preview’s source identity.
 
 YUGA is an original mythology-inspired third-person action game. The playable build offers Rama, his bow and four abilities in **offline practice**. Confluence contains local army battles, three lanes, relays and core outcomes; Bow training provides courtyard targets and resettable practice. “Watch duel” opens a scripted presentation, not a multiplayer match.

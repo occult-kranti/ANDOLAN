@@ -14,4 +14,7 @@ void fragment() {
 	METALLIC = 0.0;
 	ROUGHNESS = world_paving_roughness(world_position.xz);
 	SPECULAR = 0.30;
+	if (sangam_paving) {
+		NORMAL = normalize((VIEW_MATRIX * vec4(sangam_paving_normal(world_position.xz), 0.0)).xyz);
+	}
 }

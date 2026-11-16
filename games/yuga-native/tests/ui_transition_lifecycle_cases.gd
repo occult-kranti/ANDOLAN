@@ -33,7 +33,8 @@ func key(code: Key) -> void:
 
 func run() -> void:
 	root.size = Vector2i(960,600)
-	change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))
+	# This suite owns classic training/world transitions, not tactical startup.
+	change_scene_to_file("res://scenes/boot.tscn")
 	record("Boot reaches native courtyard", await until(func(): return current_scene != null and current_scene.scene_file_path == "res://scenes/courtyard.tscn"))
 	await frames()
 	var court := current_scene

@@ -1,0 +1,606 @@
+{
+	"actions": [],
+	"adapter": "",
+	"authority_events": [
+		{
+			"generation": 1,
+			"kind": "match_start",
+			"phase": "buy",
+			"round_number": 1,
+			"seq": 1,
+			"time_s": 0.0
+		},
+		{
+			"attack_team": "sun",
+			"generation": 1,
+			"kind": "round_start",
+			"phase": "buy",
+			"round_number": 1,
+			"seq": 2,
+			"time_s": 0.0
+		},
+		{
+			"actor_id": 0,
+			"cost": 2900,
+			"credits": 6100,
+			"generation": 1,
+			"item": "carbine",
+			"kind": "purchase",
+			"phase": "buy",
+			"round_number": 1,
+			"seq": 3,
+			"time_s": 0.0
+		},
+		{
+			"actor_id": 0,
+			"cost": 1000,
+			"credits": 5100,
+			"generation": 1,
+			"item": "armor",
+			"kind": "purchase",
+			"phase": "buy",
+			"round_number": 1,
+			"seq": 4,
+			"time_s": 0.0
+		},
+		{
+			"actor_id": 0,
+			"cost": 200,
+			"credits": 4900,
+			"generation": 1,
+			"item": "q",
+			"kind": "purchase",
+			"phase": "buy",
+			"round_number": 1,
+			"seq": 5,
+			"time_s": 0.0
+		},
+		{
+			"actor_id": 0,
+			"cost": 300,
+			"credits": 4600,
+			"generation": 1,
+			"item": "c",
+			"kind": "purchase",
+			"phase": "buy",
+			"round_number": 1,
+			"seq": 6,
+			"time_s": 0.0
+		},
+		{
+			"generation": 1,
+			"kind": "buy_end",
+			"phase": "live",
+			"round_number": 1,
+			"seq": 7,
+			"time_s": 20.0
+		}
+	],
+	"changed_sources": [],
+	"checks": [
+		{
+			"id": "fixture purchases accepted through real own-spawn buy API",
+			"passed": true
+		},
+		{
+			"id": "actual preparation clock reached live",
+			"passed": true
+		},
+		{
+			"id": "grounded start and clear receiver",
+			"passed": true
+		},
+		{
+			"id": "180 simulation samples / twelve seconds",
+			"passed": false
+		},
+		{
+			"id": "real primary damage and receiver death",
+			"passed": false
+		},
+		{
+			"id": "reload returned magazine and model origin",
+			"passed": false
+		},
+		{
+			"id": "actual seed flight then cloud",
+			"passed": false
+		},
+		{
+			"id": "actual placed ward remains active",
+			"passed": false
+		},
+		{
+			"id": "grounded dash moved past ward edge",
+			"passed": false
+		},
+		{
+			"id": "three paced ultimate releases and real second receiver death",
+			"passed": false
+		},
+		{
+			"id": "normal live one-life authority retained",
+			"passed": true
+		},
+		{
+			"id": "source and imports unchanged",
+			"passed": true
+		}
+	],
+	"complete": false,
+	"duration_s": 0.0666666666666667,
+	"failure": "Unexpected actual physics delta 0.01666666666667",
+	"final": {
+		"ads": false,
+		"ammo": 24,
+		"authority_event_count": 7,
+		"camera_pitch": -0.0373160078260932,
+		"camera_yaw": 3.14159265358979,
+		"charges": {
+			"c": 1,
+			"e": 1,
+			"q": 1
+		},
+		"clock_s": 0.6,
+		"effects": [],
+		"fov": 90.0,
+		"grounded": true,
+		"model_position": [
+			0.0,
+			0.0,
+			0.0
+		],
+		"model_rotation": [
+			0.0,
+			0.0,
+			0.0
+		],
+		"phase": "live",
+		"player_position": [
+			-29.0,
+			0.000156247988343239,
+			-18.0
+		],
+		"receivers": [
+			{
+				"alive": true,
+				"body_rotation": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"health": 100,
+				"id": 5,
+				"position": [
+					-29.0,
+					0.0599999986588955,
+					-3.0
+				]
+			},
+			{
+				"alive": true,
+				"body_rotation": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"health": 100,
+				"id": 6,
+				"position": [
+					-35.0,
+					0.0599999986588955,
+					-2.0
+				]
+			}
+		],
+		"reload_remaining_s": 0.0,
+		"reserve": 72,
+		"time_left_s": 99.4,
+		"ult_points": 0,
+		"ultimate_pending": []
+	},
+	"fixture": {
+		"bot_decisions": "disabled; real actor poses/deaths remain active",
+		"buy_advance": "80 authority ticks of .25 seconds before staging",
+		"camera": "continuous gameplay camera; scripted aim and input actions, no in-film teleports",
+		"credits": 9000,
+		"physics_hz": 15,
+		"player_start": [
+			-29.0,
+			0.0,
+			-18.0
+		],
+		"purchases": [
+			"carbine",
+			"armor",
+			"q",
+			"c"
+		],
+		"receivers": {
+			"5": [
+				-29.0,
+				0.0,
+				-3.0
+			],
+			"6": [
+				-35.0,
+				0.0,
+				-2.0
+			]
+		},
+		"ultimate": "set to 6 points at frame 124; these points were not naturally earned",
+		"warmup_ticks": 8
+	},
+	"fps": 15,
+	"frame_count": 1,
+	"frames": [
+		{
+			"index": 0,
+			"phase_label": "SURYA · FIRE / HIT",
+			"physics_tick": 10,
+			"render_frame": 0,
+			"sample_time_s": 0.0666666666666667,
+			"simulation_delta_s": 0.0666666666666667,
+			"state": {
+				"ads": false,
+				"ammo": 24,
+				"authority_event_count": 7,
+				"camera_pitch": -0.0373160078260932,
+				"camera_yaw": 3.14159265358979,
+				"charges": {
+					"c": 1,
+					"e": 1,
+					"q": 1
+				},
+				"clock_s": 0.6,
+				"effects": [],
+				"fov": 90.0,
+				"grounded": true,
+				"model_position": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_rotation": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"phase": "live",
+				"player_position": [
+					-29.0,
+					0.000156247988343239,
+					-18.0
+				],
+				"receivers": [
+					{
+						"alive": true,
+						"body_rotation": [
+							0.0,
+							0.0,
+							0.0
+						],
+						"health": 100,
+						"id": 5,
+						"position": [
+							-29.0,
+							0.0599999986588955,
+							-3.0
+						]
+					},
+					{
+						"alive": true,
+						"body_rotation": [
+							0.0,
+							0.0,
+							0.0
+						],
+						"health": 100,
+						"id": 6,
+						"position": [
+							-35.0,
+							0.0599999986588955,
+							-2.0
+						]
+					}
+				],
+				"reload_remaining_s": 0.0,
+				"reserve": 72,
+				"time_left_s": 99.4,
+				"ult_points": 0,
+				"ultimate_pending": []
+			}
+		}
+	],
+	"import_sha256": {
+		"res://.godot/imported/DejaVuSans.ttf-0dcd47e426510e02f045e926ff1bfdf0.fontdata": "68d0b938e9b8dd12b9d527059a91598fc8cadaa9b8ed6d45b27991d15ee03381",
+		"res://.godot/imported/NotoSans-Regular.ttf-674bcff8e78e1ac2b0101362155b4faa.fontdata": "1e6192539e600859edca6a02304d085f9fa2c432a1bf272e67c2d1dc8ca9fda6",
+		"res://.godot/imported/NotoSerif-Regular.ttf-6e3f67e84ff840e5e437d5cce0416d65.fontdata": "a2b62772d5dfe5765b9d5d99768652c915494966b950563a8bdeb224a4ad0e55",
+		"res://.godot/imported/architecture.glb-fc308447ef50d05722caa180e409109b.scn": "cb3dd8d8eb0448ef1972a8aa18b0ff4f82d49fada92d850d86be974dae126461",
+		"res://.godot/imported/armor.svg-4f70e386f09c0228f1801f562fbfa5ab.ctex": "d616f1110a1bd46ecc9d47a357253023cbfecb59507f0552362e468bcbc77c37",
+		"res://.godot/imported/beep.wav-3cf3848617072af6ce8bd7d8ace303be.sample": "1e6d19d3969b1720ca1c0c29328611d96c4139d1736e8d945397b348575f502f",
+		"res://.godot/imported/buy.wav-f40d91a31a80bd2af6b6da5d24c1eeeb.sample": "fa8e5d06e3a6685eb44d44b5dfc5d8aa5761d96499d73acc2ced17eefb031f85",
+		"res://.godot/imported/carbine.svg-a543190405ba8493e889af8e22f92927.ctex": "0136bb50b8acdab4f56c83e2fc2dc449065c2b373c1793839f9dd3a12bc72f6f",
+		"res://.godot/imported/carbine.wav-6ff091ee50e8059094d55389d35e9647.sample": "76bf0a9eba58a791fb162d868d7b552198ba6b97ab391908585e6ee5c354019f",
+		"res://.godot/imported/crest.svg-7f5c338865902917b5f9c45f0a82e4d2.ctex": "0588c69912c260507c9078370bf7a1012db8470ce14766dffd5e42269a2d3e17",
+		"res://.godot/imported/dash.wav-1833895118f9b1534dc36764cdbf9d74.sample": "fd219c701f23ac84fb30b0166f6ac893c8c604f99f32ef3b6f927c7ba4f6795b",
+		"res://.godot/imported/hit.wav-964d3646c551c5e8d4be7e76dc9c4eed.sample": "4b3e29fd9e25695efcea4b02e2adfe942be41261a03c6b70536a2b52df0ee7c3",
+		"res://.godot/imported/menu-keyart.png-f90b676b3524dcf1fa22c9641beb1a46.ctex": "d3b8f63550e1393ce0c64cc2551eb9169449160cda8de979abc872a032e20fb8",
+		"res://.godot/imported/nature.glb-5e708a9f5db22c699376f95a4e1831a9.scn": "e9f8b055b59a44399937cd5a5692b09ca3d26125537b1afcef37c77226af3e82",
+		"res://.godot/imported/objective.wav-f69c181f840ea41b5515cdbceed23cbf.sample": "993d2d821e7039935c0c14c0a36d957e4fb394103131f78cf78737cf839fea5d",
+		"res://.godot/imported/pistol.wav-03583ceed559d33229193323368b992f.sample": "34c5bcd37e589219fb74537241e68b503e1c802546b4cda4e2c712da69d8e6c1",
+		"res://.godot/imported/reload.wav-42eb892b21356eb69513838a9d0da6f5.sample": "8a3d4c1fafae6a6cbd22d93ccba1f6cc2afed86a562aa05089088a6a7a25d1d5",
+		"res://.godot/imported/sangam-district.glb-b5e35f121d390527cd5819ac569115d3.scn": "287f0fef21f38c6baae95d83cfe2fcf6b5118c24a70748036fcd21c46d036e4b",
+		"res://.godot/imported/solar.wav-f38ddd83ab26f35a7d90626c5fd115cf.sample": "5bde7d34dabb0acd04694b41ab557b2559ba794cd722998a3892224cdf9de68d",
+		"res://.godot/imported/step.svg-40325d56b568ca24ea3def05242d7347.ctex": "c828883b7d37eb1090994d2ae09625b8e25fa48f0cfd4c432239e60cc25ac681",
+		"res://.godot/imported/step.wav-630c30d958429d91f6b4419268c994b7.sample": "b68ba8dc3206720f5e12bbac8b6a207dc1a2bb832e82afbb8e93fbc3870d4419",
+		"res://.godot/imported/surge.svg-7bc6be9f0f295c8b57f5beabf0429278.ctex": "cb7ab645c1eebeadc955a28c70bab2f28166e7edd2c6087da9d900e2a0235d76",
+		"res://.godot/imported/ultimate.wav-d01dffc805c1d25c769c4a9de8ce9e32.sample": "e2a9e9232e79c966fb4e40e52f7c285b83b389e52b3de8d421d01a151b7df4a4",
+		"res://.godot/imported/veil.svg-07635ed791d4ad1f104ecfc6fae5db9d.ctex": "2ee0934cee5ce5c45f76660c4d253c71568afcad37e5b536c02612e92b317f3e",
+		"res://.godot/imported/veil.wav-6877d013107c681c59d5011f1e1e4970.sample": "deed6fe18f12bb9f63b90ceb1eb41202501b1af95688566b9be709a441ab5574",
+		"res://.godot/imported/wall.svg-b0a0c442007186acced86fc5633f4211.ctex": "df70b1606fb51b73c57bf51f7acd2b0e1fb1956dfdf9df25becb65925ad06fbf",
+		"res://.godot/imported/ward.wav-45f8e48adf21905dcd461b95063b3552.sample": "4c3ded1916fb224b24d650d1e92e32b33e797cecf02583cb0a79299450bf18fc",
+		"res://assets/fonts/DejaVuSans.ttf.import": "3d1c9315fe118a11830f3b2cb13c7fa88f47028f229100a8053705799bd777a6",
+		"res://assets/fonts/NotoSans-Regular.ttf.import": "7ddb7fe1898a55896f6790224f4f00070a4b99d83c0ba9b0bb02d6ba74e342cd",
+		"res://assets/fonts/NotoSerif-Regular.ttf.import": "d2b38a67ee6a5962bd073b551085f1f4c29d1af64474e90450f56f33b5e96a5b",
+		"res://assets/tactical/audio/beep.wav.import": "383ffc3dcd072c02c57ab24a7e4fe1ce7052e4ef3dce3dd73b0ebf23a9d20649",
+		"res://assets/tactical/audio/buy.wav.import": "936b32cdb6dcdd31b4fdfa7d9c696aca9eee76c525cf4807ceb3bedcc25e1fc6",
+		"res://assets/tactical/audio/carbine.wav.import": "1cfd148da78d04546401d834d0a3b39ff5dbeb440742ed4ef36f2b03fce0a8b1",
+		"res://assets/tactical/audio/dash.wav.import": "40849509f9e337d06ef8d8d7008ca26b1037c167620210f38ec83a5376786dd5",
+		"res://assets/tactical/audio/hit.wav.import": "90348351b9e03a0ef773902ebb7ef941f9808b140b4ddff555ca43c34d27f2d8",
+		"res://assets/tactical/audio/objective.wav.import": "b26451f9ef6c573df172cf635b7018146a3f9c15aed27f2447b45d511a2db396",
+		"res://assets/tactical/audio/pistol.wav.import": "74e611f3793e0a2f369740992724b1d2628aa1c3ab1019be48a7d41776e8116e",
+		"res://assets/tactical/audio/reload.wav.import": "bfc027e514b17e6c63d98f7bdb73770f960e00a87199086f70b2ca354b1451cd",
+		"res://assets/tactical/audio/solar.wav.import": "b59467c7834de2b98fc06954ed9c62a12bbab0fd1cea60bc1e607785caf6ecb8",
+		"res://assets/tactical/audio/step.wav.import": "b64ab9f4728233d21f878b3764bca666b8665f3d993e62720360b508a7970912",
+		"res://assets/tactical/audio/ultimate.wav.import": "3a8f97b065590dc6d15c94a19bd2e7db98b654f74b920c17c7df865dca471b3d",
+		"res://assets/tactical/audio/veil.wav.import": "9bb0277b7398845544f89ba551fec9834e7b7f2da464ebc43ad5bc0061696721",
+		"res://assets/tactical/audio/ward.wav.import": "4fa5c748bf9df5643dd1da9733a5509211a9804af25cd0ce2575d9f099509ff9",
+		"res://assets/tactical/menu-keyart.png.import": "b6c27338bcfd41438b693a59e923c1e64e4397046e6a49deaf59dac86f1d527a",
+		"res://assets/tactical/ui/armor.svg.import": "ac91565546a5424f46662ff5f9ced96cb498b09095362229058db6160bff37c7",
+		"res://assets/tactical/ui/carbine.svg.import": "d0e132712b4c086edf30a3570c5d155fb053440f125b47103195807ce551306d",
+		"res://assets/tactical/ui/crest.svg.import": "6a679ead38de63e532cf793d53a80d3c9cb0fadbb67b841a633e8b9bf0d40ca2",
+		"res://assets/tactical/ui/step.svg.import": "0884032e4ccac2ea3e09a13b03317684e85fa43f6152fe492eefce331dbae25b",
+		"res://assets/tactical/ui/surge.svg.import": "fcdcdaf865c42b09604fd46987023963561dbfa5fdbfe22a75e9caa75502ec35",
+		"res://assets/tactical/ui/veil.svg.import": "1e5e287e60a99bc9c06957a607d0143e4fc0359faf63281302224380bef77d40",
+		"res://assets/tactical/ui/wall.svg.import": "15804c646c8e2e5b9c0981f592c42bca24d7e7db68748355a0df26c63c4b7663",
+		"res://assets/world/architecture.glb.import": "51824b8cb5c362d860997aedbbf716c513310702fef19dfdb07fd2b035191318",
+		"res://assets/world/nature.glb.import": "c668eb479de7efaaba9e87bcaebee00882cf5b31e99ea4f112efffd5d723512b",
+		"res://assets/world/sangam-district.glb.import": "941017b06292fb5fd2b6d3acc3760107aaa484ef479998f3e2f2c5adc1e3c3c7"
+	},
+	"initial": {
+		"ads": false,
+		"ammo": 24,
+		"authority_event_count": 7,
+		"camera_pitch": -0.0373160078260932,
+		"camera_yaw": 3.14159265358979,
+		"charges": {
+			"c": 1,
+			"e": 1,
+			"q": 1
+		},
+		"clock_s": 0.533333333333333,
+		"effects": [],
+		"fov": 90.0,
+		"grounded": true,
+		"model_position": [
+			0.0,
+			0.0,
+			0.0
+		],
+		"model_rotation": [
+			0.0,
+			0.0,
+			0.0
+		],
+		"phase": "live",
+		"player_position": [
+			-29.0,
+			0.000156247988343239,
+			-18.0
+		],
+		"receivers": [
+			{
+				"alive": true,
+				"body_rotation": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"health": 100,
+				"id": 5,
+				"position": [
+					-29.0,
+					0.0599999986588955,
+					-3.0
+				]
+			},
+			{
+				"alive": true,
+				"body_rotation": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"health": 100,
+				"id": 6,
+				"position": [
+					-35.0,
+					0.0599999986588955,
+					-2.0
+				]
+			}
+		],
+		"reload_remaining_s": 0.0,
+		"reserve": 72,
+		"time_left_s": 99.4666666666667,
+		"ult_points": 0,
+		"ultimate_pending": []
+	},
+	"kind": "staged-native-tactical-motion-rehearsal",
+	"probe_only": true,
+	"renderer": "forward_plus",
+	"scope": "Actual world firearm/utility authority, physics, poses, HUD and rendered originals driven by a deterministic script. Not OS input, natural match, audio sync, hardware FPS, or production art acceptance.",
+	"solar_releases": [],
+	"source_sha256": {
+		"res://assets/fonts/DejaVuSans.ttf": "57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e",
+		"res://assets/fonts/NotoSans-Regular.ttf": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+		"res://assets/fonts/NotoSerif-Regular.ttf": "9d7583b7dc9e812afd32a14280c5cac3160012efe50c8d08938f4fea266ff67f",
+		"res://assets/tactical/audio/beep.wav": "bc91b6f848b96240ae6fcb2f9b03c62701003683b42ccb76c7f6e26f8ebd0ac1",
+		"res://assets/tactical/audio/buy.wav": "26d991f90bafd80bfad190ae05626ca6ae9a2daf2f6a9ca7926268499462736f",
+		"res://assets/tactical/audio/carbine.wav": "7e295db11a8b353d969ec9301248e286059e5787824ee33d2c781efa40208c4d",
+		"res://assets/tactical/audio/dash.wav": "a4957fec597eeca4bd3079f6f52cafa6f2b8800f755ac4f544f64fda24ecaf47",
+		"res://assets/tactical/audio/hit.wav": "79d3c732cc2dcb424bab58a23de5afecb86f62c392d234a708ec413017829d4f",
+		"res://assets/tactical/audio/manifest.json": "850eea7351b36e8483f54c120b2d4d25b99188a7a7e6d6d8c4195e66929860bd",
+		"res://assets/tactical/audio/objective.wav": "9c1642e864b454e514cdd5ffd9d5da5f1f635d4a00ab7a800cbcb845c48260ee",
+		"res://assets/tactical/audio/pistol.wav": "906b7cbe9529cb61b9edfb864629fc0144ca9815fc6e9feeedba05befb289918",
+		"res://assets/tactical/audio/reload.wav": "77e41ca566c8e81daec9f1afae9ee2ba3a8b2fe5da62d4abe35b504ba3980ef9",
+		"res://assets/tactical/audio/solar.wav": "ff79ad3d2eab2703d5f611199a4ce9c781b4cdc84f61a981dae9e7b74759ce0f",
+		"res://assets/tactical/audio/step.wav": "3b212947bb41986a3335c5252ca92a4275306b595b5bd2e0c5d77058e9f6e5a8",
+		"res://assets/tactical/audio/ultimate.wav": "11588cac535d06987f4af4893c32b93ef67f0834528b5778215851bf144c4c8d",
+		"res://assets/tactical/audio/veil.wav": "511c1fc07ad66ca9ba4377a7b3cde910b5389d315a826d853402aedc6cc0664e",
+		"res://assets/tactical/audio/ward.wav": "d6bbcf03fdf1c3c057328173d57860ff5f5f223499c36541948943002f1c5716",
+		"res://assets/tactical/map.json": "c6865b62495501d34c9ced7a2aa87c3f713f4fe3c94917c4b0ab8faae0b836ca",
+		"res://assets/tactical/menu-keyart.png": "17f12c6c9a38a8835ad5d0e19c931a0f2ceb5999695631a35482f492be30ab24",
+		"res://assets/tactical/rules.json": "cad9040663dcab8adc720cb051c34046b214dd923828d2b5b53af52207a9f017",
+		"res://assets/tactical/ui/NOTICE.md": "b0f2de3e11f1c37cd79d2847efb504aac2fe692dbd18c5ddfdccc0a0689fa30a",
+		"res://assets/tactical/ui/armor.svg": "cc6e9bc4863ac803b942af48abc0c4eee1041ee8e48eb99650a83c5c9b3e0bc0",
+		"res://assets/tactical/ui/carbine.svg": "490c7cb09285f2bd211784802037377c80227328aa4153b90bd14d6dfc0c761e",
+		"res://assets/tactical/ui/crest.svg": "3529e6c9cf3167f3da58bc874a726cea0258d814f62cbe367c125bb0c0829457",
+		"res://assets/tactical/ui/step.svg": "0247332aed29c443b2d165ba4b43e4878b9017954bf3a2b3206d47502f5154a2",
+		"res://assets/tactical/ui/surge.svg": "31a0fd13b832e5dfd234bd74c4710d3e9a65cbd3503b29843b41dafe3edb2c2f",
+		"res://assets/tactical/ui/veil.svg": "020500c747f6f4bf6e4a623047fa70616a7160f3788d9559cdd8d5fc8791894d",
+		"res://assets/tactical/ui/wall.svg": "9b5f87f3061c04bcced7014b2a9bf39d3ca409c57013dcff8a2db7a242fb766c",
+		"res://assets/world/architecture.glb": "8bcc8c06cb87cb1e71b0adf34c36b8fe63ffbd8e94ba8d216cbc8b1578500c7a",
+		"res://assets/world/nature.glb": "856fc1ed86daf624611a5afaeaa4d27b6c370cc2d9ba2b6a4dcec3c282d4be7f",
+		"res://assets/world/sangam-district.glb": "c29f403d894d183355e785442695f35369b28da57c057be28256ff90c2498a3e",
+		"res://assets/world/sangam-district.json": "439e43b4a1b0fc78daf1caea589b8b02888b0b0db949521a2015c175ba6cf0fd",
+		"res://project.godot": "3f3a57abae80059f8b29dd798340cd59cdea88d6178e70817b293aebe00386a4",
+		"res://scenes/boot.tscn": "36307974fa48fc6a47855c6eb43e4524534d4c97560c548cc6ba51d537838026",
+		"res://scenes/combat_film.tscn": "cb2fac9df0192f82c495f481f3c0ba725b6caf6a22a17daf2b33e7265540b32d",
+		"res://scenes/confluence_world.tscn": "06fcf9de444e3216b99e1ffd8ac70877cd26b81c7951a14aac4f64667f04ddf3",
+		"res://scenes/courtyard.tscn": "8a901cbe8bd5a44d50b6d2f46fc728e7430810bf5b794bdedb6839e7722be0f5",
+		"res://scenes/studio_map_study.tscn": "cbc92deb63c3cd4cf352ffbd9a31f1002eb970e465beb571bd60aa943496aa86",
+		"res://scenes/tactical_frontend.tscn": "dba6dbdc620bc772b1d19c75655579ea2a20409cfbb86da5a31763a727636910",
+		"res://scenes/tactical_world.tscn": "ad97e15f0a98a8a24fd1a6fb6efceb9bb97ec049ff669a886201a208725c5a25",
+		"res://scripts/arena_client.gd": "b0482d783a9e9bf9b64be8f07c8878259cd417f39bb90ae7b4752d1b7e34cbb0",
+		"res://scripts/arena_interpolator.gd": "563b2097e5180cbba285e57bdebc3dafe07c919cabeec1d89d5a8d4b021e0619",
+		"res://scripts/boot.gd": "c54ecd527578cf09e56c0a0f6d3799ba27b2da24e725873cec83df1c019ab5f5",
+		"res://scripts/cinematic_actor.gd": "f050e4d5fb75ea84c4837423d887805fa986f8389b95371b33179d98c7bd6433",
+		"res://scripts/coastal_water.gdshader": "800a58c6621577915b56170fcfc526025de43bdc0319458a144b7339b5e4af35",
+		"res://scripts/combat_film.gd": "2ec53730d0f86290e6ef230972b9f4635853f26f467b96c6de985ea9da1b2ac6",
+		"res://scripts/combat_match_metrics.gd": "cdf60137dcca27ee9b16fb01ea50042865c68fc548c397668e59ed3db4eda600",
+		"res://scripts/confluence_battle_hud.gd": "7a6eeb929074cd10446c8b9bdca3b80200f49a45640116ee5004a2b0fa03ae77",
+		"res://scripts/confluence_world.gd": "cf58bec7c5379bbfaac52efd3c7a4a049fd8cda70e8cd907c54200f3a9e0674e",
+		"res://scripts/controls_overlay.gd": "c232d079f8524ac0cd9f47e4eb46003d3b1196789e31814fcf7417aa53ade9ec",
+		"res://scripts/courtyard.gd": "1e603f23eac5260e84b860510e814cad5c4c54672ef695dd7cba7bfbe7711acc",
+		"res://scripts/duel_effects.gd": "ee3f875c63466cd8732634c1695999d95671780a381f99ba66afdb2c9fd039cf",
+		"res://scripts/duel_energy.gdshader": "7d59dd294a94658e6380052fd0b27bb3a728d83337799e5bf267f62202e65f14",
+		"res://scripts/entity_bridge.gd": "fc89950bf586745a9056bd1909c345dfd2ba34a74875e21a9b0193e0eb6adfd9",
+		"res://scripts/environment_surface_finish.gd": "eb4335695318daedc578cc9cd7e8424d329896b36149e786ae473346b642726a",
+		"res://scripts/film_lighting.gd": "b0878fe87257689825458401a92d02a0d8367a0cb647d5e49d2466999d48519d",
+		"res://scripts/friendly_camera_visibility.gd": "4bf8e41a03b115d3bf5f9f79c238bc15d592975c500a29817db3481083aca787",
+		"res://scripts/ground_shadow_policy.gd": "06265b42063a54e61cf5325a9d251cb8323cf52ac628184700ff47c0230770e3",
+		"res://scripts/hero_atmosphere.gd": "40739a23b74149cebda62acd6af8a7ca54ac1a39aab2538adbc5211d309a1373",
+		"res://scripts/hero_district_detail.gd": "09c6447f36a9eba2d0898f3db846fedb45693b9c9d56f3212bc2ec537de56431",
+		"res://scripts/hero_pose.gd": "c07def74a71e755cd323c7e730d0884ea737fb8efd1342ed36d87dd8da22fceb",
+		"res://scripts/hero_ui_theme.gd": "5a7264614f2ec7eccafdaa40620f605e0f016a7f7a3185c60c7c82b66bd85d6a",
+		"res://scripts/input_bindings.gd": "6352e1aa8f70ee85062e1a68cd2859109190a4568d71e270f061d212b4a92d29",
+		"res://scripts/invocation_audio.gd": "2eb88e715d766fb4ed6feaf307e32912fd66dd3ddc5a8155b1ebb4993b78614e",
+		"res://scripts/invocation_panel.gd": "8b223dffd25de4e24ee11fa3155f70c79f69ae60dbf3f209a4afe57eeeea9c51",
+		"res://scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+		"res://scripts/lane_infantry_art.gd": "a64b4cc283dc7b5c4eb28391ec362928a9fb3126e2a1d41ae5cc27e0a67ae6f2",
+		"res://scripts/lane_minion.gd": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387",
+		"res://scripts/lane_unit_art.gd": "5861731faf1fc4dc77be7d99861a8c8eb885dba95c82cd074fe2b260e805482d",
+		"res://scripts/lane_vehicle_art.gd": "ac78ef11354adecb60fabf0b7e9b060585be42168eac184cc67c09b9b36e0fb1",
+		"res://scripts/lanka_lane_gate.gd": "6e7e5b91c6ca4fed2b8372224ea010bf5af0ac46232c9ddffb66222372a18556",
+		"res://scripts/lanka_texture_palette.gd": "eb01e36c99f64b57f519aaf8bc60cf74fa794f7b1f8af4941822442aff42e5db",
+		"res://scripts/lanka_water_garden.gd": "e2214cfb1c3ece2836cf05d9d5ca20f97fe0c2e9a2a2798b2bc85250677461d4",
+		"res://scripts/launch_briefing.gd": "a2a6027e5e7f94fb37486b5b7fa144e1ce4ec6967a1b11fd4d35de3e0b181e94",
+		"res://scripts/launch_shell.gd": "1c4d58b8a52687555f4e32ad0bd6eba611061bcac279bc576c6c7592a2667ac6",
+		"res://scripts/loading_presentation.gd": "c3c785b8fe73876510109601b0a4f80c3567ced2ba6fb12ed38b54d1182088d7",
+		"res://scripts/mythic_environment.gd": "a93295f73be9f4c983a74fc7a209935be2f752ee132ae6734280757672e59cb0",
+		"res://scripts/native_contracts.gd": "06b46d5d54618aaaa48204103784e23788a0acad983770d88bd482054e8690c4",
+		"res://scripts/native_field_shop.gd": "6d2ec781d5fc6c57ab6b5eecb64c6e6ddd9827856c6c5bffe785385ef5ab0af5",
+		"res://scripts/native_field_shop_panel.gd": "20a249ffc55e24914c01c94f80a7b0c583ebb4b2ab2e00ae4210c308198c37ad",
+		"res://scripts/player.gd": "54beb1c88df226983edf8bf4609b989731c0915103e590b97d303f77f845cc86",
+		"res://scripts/player_traversal.gd": "46e729e81c94472d6daad3e386744d7823f6013440f4f79c2bd9586394aa139f",
+		"res://scripts/production_lighting.gd": "2199305bdd8c2d0a897a112e072009547cc475d24960de6abaaef4b2380a5fb7",
+		"res://scripts/projectile.gd": "39b651bf014b91352e3cd62d15ec22966e5de4707a6dd1b9bcfb2dddd438695a",
+		"res://scripts/rama_ability_effects.gd": "c47636d15566b4404175e500f808c6e62e18e0599e13e23f8fc71138ed6bdae1",
+		"res://scripts/rama_ability_glyph.gd": "682e2d423b0824e5fb3c1ad82f56d26154014f91be0f0cba0af45aa89045850a",
+		"res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+		"res://scripts/rama_ability_meter.gd": "1aeffd0c91215faa5c019f3241808e8d73a2cc4e6283f14185bc032b010c4344",
+		"res://scripts/rama_action_audio.gd": "ea3df7769c1528131a50180ec7963e55fd987f7aa7a2328c1e4b61f187cd66c8",
+		"res://scripts/rama_action_buffer.gd": "f8c3e3c246b76ff7454063f0d5f7fd573c90ebdf383fb7aad0606c14e9ca2ec4",
+		"res://scripts/rama_arrow_fletching.gd": "687fb8ee135929d00d58695d5d74f7fd8ed20c1e206201f40fe80ae879a860b0",
+		"res://scripts/rama_character_accents.gd": "171e1ed2a8c671d373b5e1072754bd29b5f4ac73ffda7eafe56ba2d71ba0fc4d",
+		"res://scripts/rama_combat_feedback.gd": "52afce181fadc6e360be0cbc06130fe6ba07eb01f1e39a36f2d71ebd49840f3c",
+		"res://scripts/rama_facial_performance.gd": "c525d720eab133c66be18e9d49a14ddc2dd20fd0616ec4a5e4f96ee5d2947128",
+		"res://scripts/rama_hero_hud.gd": "09f3acc3bd8188ed69c4077257df3d39faab8eadc943ca87b43fa3007a2d4195",
+		"res://scripts/rama_hero_panel.gd": "83da93d619ebf7e932c1c97e601bff786f9e9c98006560ad7e84b237f66647be",
+		"res://scripts/rama_hero_runtime.gd": "1224b23035d7a3592be887378ccfe33d23362ce08aebde5955e196e3679d3ad0",
+		"res://scripts/rama_hit_response.gd": "b284975f246488ff99ad79c1942bdfb2f5c2d639852ab976dde667b91d275e3a",
+		"res://scripts/rama_lod_binding.gd": "266e29dfa72cac407d3750eefcb296ec0b9cf82dc7665afb30b2eaa658956bfc",
+		"res://scripts/rama_motion.gd": "6c91f4c7cab1993ad9e761fb076e6f32749f85610a5b86070f5cc7ab8af9cc60",
+		"res://scripts/rama_practice_army.gd": "0a075ee1096c04fdbda416e5cbb932f261c7ec7aae3e14301083c90d5861f906",
+		"res://scripts/rama_practice_brain.gd": "a085481c1ee5cec2ab07d1f7a5cf206bef14105b821f6032ac2fc25e2ea202d1",
+		"res://scripts/rama_practice_record.gd": "6e9bd673b7b2421baf75da3e1b21a8fd4a01116883e34d5902169a56a8929ce1",
+		"res://scripts/rama_practice_target.gd": "e8cd1ad14191bd47d51ed0375889ff6938bf7c17023485638c0f57b64506721d",
+		"res://scripts/rama_remote_replica.gd": "b62842e378f220f0895bb5d2906d313b38bceb6f76b511334d02614d079fa9d5",
+		"res://scripts/rama_secondary_motion.gd": "2b8e467df254dcda175694ab988071f24b41ddaa93275f5cbb9768abcb143f34",
+		"res://scripts/rama_surface_finish.gd": "6eb51ce8f34a3d5a33deb142ca92aaa20505516b0ee8fff3ca445bcab603078a",
+		"res://scripts/rama_surface_materials.gd": "71357f00a48c210ae0d57df82eb7c7608762393f0577a7755177bdd0595bb05a",
+		"res://scripts/rama_training_journey.gd": "fb1d48b9de91c95a849243414c33aa4f3f85939ee61f01c3663c8e4ed47290fb",
+		"res://scripts/rama_upper_hair_layers.gd": "989d069b1364e50a3ae31530f778659e5910ea1c3e05f7b81edccf90e3101732",
+		"res://scripts/rama_visual_lod.gd": "bbc0689ee8376b00882cd7fb4fba1ee8b33e4ee9c02a6c5f023897afd8ee7aa5",
+		"res://scripts/rama_vitals.gd": "0280744a80a4ec914e6c0b263888c6bfeef4093b36df856790eef7c62ee14cdd",
+		"res://scripts/relay_art.gd": "32e42d32a4a1e52414c2e274d076c1aac4531fd10084b052082f0cc08cd31cb6",
+		"res://scripts/relay_control.gd": "42d68a7d034c31033c5e105fd227e9e179d35d88209428544f396fa39f2fe000",
+		"res://scripts/relay_session.gd": "3c15d66e32e59f0b593fa7e3a815a4163edaaf427e50c9e8a5186908330ff0a3",
+		"res://scripts/sangam_district.gd": "4bc793ca04f17ef4e9f3e3e2992551a55b7c90ff1e3b7fd67ba9bf835654df1e",
+		"res://scripts/scene_transition.gd": "a5d236a40d1513111bd1a7d92281308019cd7de13d66350ac3935b331061b483",
+		"res://scripts/siege_effects.gd": "ef39110b21b9f3d1f6ee6591d4ce0a883a86f1e98587916823cf2b95997f75c0",
+		"res://scripts/studio_map_study.gd": "86d99fdf9416f2b82bb01f0b461d2a873a715d23328b61d66657adc4bf8e7af4",
+		"res://scripts/tactical_actor.gd": "dfa003ad48a673439ee6dcedb8830ad904e8896e27c0dc173b4a5ee06629cecf",
+		"res://scripts/tactical_bots.gd": "deb952fc068524f91fd75a04fde149bd2282c39d45119da7a02120b176ef0ca3",
+		"res://scripts/tactical_effects.gd": "7c09033bf901a4d56c0af51ac5ac6105f265a67458c0909bd4fd4471f0f871df",
+		"res://scripts/tactical_frontend.gd": "ad27e3a4dba9f58799ec342cb92bbea0278b5cc20de2897642f832341208b043",
+		"res://scripts/tactical_map.gd": "1550f502b8d1a76569698a9f58e5b13805e1db07958ae0eca38d17a244e3246f",
+		"res://scripts/tactical_player.gd": "eb29d2b450778f031ab2ff43e5ebd895ba7cc7bb087cbd6ec7ae5707a7be7e98",
+		"res://scripts/tactical_round_rules.gd": "d41cfc4156e5973c7cdf80c435c0fd9d17e483bece496f5b658447696e92871f",
+		"res://scripts/tactical_theme.gd": "e15877e7da7b564d601109787311a2860ae34f19d4e7cd2f8b457935baae542a",
+		"res://scripts/tactical_ui.gd": "8d09707f8808e048cf66d7efb31f0729289a6b9ed0addc1eafaf0a4a926b338b",
+		"res://scripts/tactical_weapon.gd": "85aa510ad59f27adad3699a04fba76c6a45537cf47ce316e3ea6232f83f37a20",
+		"res://scripts/tactical_world.gd": "8e0445f31063ea31b5e87f7d23cbfe1762fec8adf58dcf158c63702618b53a6f",
+		"res://scripts/target.gd": "6d96be5379232438d68c5dfc28f29e46ec239f89f485b2ff2b2f078b874295a6",
+		"res://scripts/traversal_audio.gd": "067ff9f82cb73305418330de32fa7d59b4c492b16985d64e58bd09c1df77fd2a",
+		"res://scripts/traversal_landmarks.gd": "455d377c4f206df7ee20fec23ddeaf3803eb58bdb80ba5179f3d8b7c8b3599a5",
+		"res://scripts/traversal_pose.gd": "92502267f318fef5ce822f698457a7fc07f8129cebd20c17a6b187ef333e2cdf",
+		"res://scripts/traversal_stone.gdshader": "711a5cc8bbdeff0d7456379c7a921ec26f2019c59695363ec0b3e59a3327f548",
+		"res://scripts/ui_scroll_focus.gd": "c0e9e0a9d6a117ebe5c03939cdaa9159b0b7ee7d1487fb9f45898f04acc7c129",
+		"res://scripts/ultimate_effects.gd": "61fb144275d52ba5705404201de5f7c99a0826d1eb233512343ff408d5a602d6",
+		"res://scripts/ultimate_rules.gd": "32348cbccb798111087ca95e421a0fe983938c45daf91f23aecfbf5f0386c068",
+		"res://scripts/ultimate_session.gd": "89958d9afea47aca96ce2fd98421569f554f15fe4d18a58efe9bacce92090ee9",
+		"res://scripts/world_atlas.gd": "138c54e86adc4f41ee0ee915619efd58ec8fd6ed6c0d53179f9b770d64b7fdc7",
+		"res://scripts/world_ground.gdshader": "dd4fced8f85a791b28442f308825581b44c2d245fa98caab625b5c69e09059f2",
+		"res://scripts/world_ground_common.gdshaderinc": "577e8ed9a85b61c5b2db2274a55ad89528981243897ce0493c3ae5d0cac2837a",
+		"res://scripts/world_lane_frontage.gd": "dcd0c73d8a12fc32e2fc32fa69ccc3466c3835ab0f4c15b8f18b72e8990dda72",
+		"res://scripts/world_lighting.gd": "d81f11df8766df89ef662bc3757ac087bd940963678db4a2622a0279f5b7022f",
+		"res://scripts/world_outcome_summary.gd": "1185ce65f3598f7f6927e9a2b3d7d116fb008f114a63953ed0daa67722666252",
+		"res://scripts/world_render_resources.gd": "9c05d06cd78fd8e9326ac55f89939038ffd08fa69d1f5cdac00dc8a5a1b93472",
+		"res://scripts/world_roof_loggia.gd": "e6305e3fd2734901a488d61b4a715e0c6b75f6b95c7ef6810e945a62e7b69c3c",
+		"res://scripts/world_water.gdshader": "34f2238a8027fac9e94037d4bcc3e42691db1ea3a15dd10b484cbc5b78e319e3",
+		"res://shaders/production_water.gdshader": "b2fec95192854896fb23daaeecd9a8d6ab0b0f029c9ac4166d487a686a0f425e",
+		"res://shaders/rama_ability_boundary.gdshader": "482cfd71a199ee03bea7f7d8c774f569e91f917b2cdff0190751ada560677da7",
+		"res://shaders/rama_ability_calligraphy.gdshader": "5b5ae03de886c30ef29ec6cadbbbbe12e616730db1f9c4531b378327624e5301",
+		"res://shaders/rama_projectile_warning.gdshader": "96858b0a319d8ce9aa399b5e6bb2b699904a77aa240479b938551daad682fd40",
+		"res://shaders/rama_ribbon.gdshader": "6fa1b9f1064a5b4396a36eebe1e0d232b1bf5ef8fda5a0e6ab03b0a7ac53e7de",
+		"res://shaders/rama_secondary_cloth.gdshader": "c1712f075af34b0e57dd7f70e5494c2060703e7f1ee68ff87c8a645cff95c6d7",
+		"res://shaders/sangam_masonry.gdshader": "c8e455ca0e0a80cc1e21ff809f5afdcb365f2d8668bb1b7b54ef586798eb9d07",
+		"res://shaders/tactical_veil.gdshader": "26a681fef26b2da0db9bc4453722b35c7eba67cf12e9e6c274c26d24e7cb9cd8",
+		"res://shaders/tactical_ward.gdshader": "7def2b5e23e725fc63284163d637e9d2c8f40eeab6b4c7a9251763c009a16e54",
+		"res://tools/capture-tactical-motion.gd": "ed185031b0c6f0ffee3564e60e5ced56dc6dcacba2363d28c5329a79d583b59a"
+	},
+	"task": "YUGA-TACTICAL-CASUAL-13"
+}

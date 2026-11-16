@@ -1,0 +1,50 @@
+{
+  "task_id": "YUGA-TACTICAL-CASUAL-13",
+  "pass": "focused R1 actual-visual correction / R2 candidate",
+  "source_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "decision": "ready for root native capture; no visual acceptance claimed before successor images",
+  "source_sha256": {
+    "scripts/tactical_map.gd": "1550f502b8d1a76569698a9f58e5b13805e1db07958ae0eca38d17a244e3246f",
+    "assets/tactical/map.json": "c6865b62495501d34c9ced7a2aa87c3f713f4fe3c94917c4b0ab8faae0b836ca",
+    "NOTICE/TACTICAL-MAP.md": "50136f935208dedcd02f5fdbaaa93888380be4ad9fb4eaa0740f069eff4d9879"
+  },
+  "actual_prior_images_reviewed": {
+    "05-a-approach.png": "4611de7f3ce1574f7845c5d13e540c71aa9b3d35c941f867eda23d5eded0f87b",
+    "09-map-overview.png": "f4a93d66401a3a8dd36cfc6e7b3db189e63c3761e2efe8e8b0f34a41d7a521b8",
+    "10-b-site-architecture.png": "7afd16d614801a39d85254ee9215237f12c66aee5fa8b00b04bbbd22333b4d71"
+  },
+  "prior_render_finding": "Forward+ on llvmpipe, not a fallback. Floor used a wall shader with unit BoxMesh UVs over130m; BG_COLOR and high ambient lacked material scale, atmosphere and contact contrast. Three warmframes may affect settle, but cannot explain these source choices. Root successor will warm30 frames.",
+  "changes": [
+    "Immutable shared world-space paving shader/include with human-scale slabs and subdued streets.",
+    "Procedural sky, sky reflections, depth haze, lowered ambient, shadow bias/splits and Forward+ SSAO.",
+    "Four continuous boundary facades, two actual overhead galleries and four outside-bounds landmark meshes.",
+    "Eight facade stalls with awnings/counters/posts and original lantern props; twelve edge planters with reeds and sixty leaf clumps in three MultiMesh batches.",
+    "Short billboard site labels; low-alpha buy panels and fine edge strips."
+  ],
+  "preserved": [
+    "A/B centers and5m radius",
+    "all route waypoints",
+    "original collision boundaries",
+    "all reused immutable source bytes",
+    "no MOBA army rules or actors"
+  ],
+  "preflight": {
+    "report": "visual-r2-preflight.json",
+    "sha256": "6651a903a7399ac7b5f2d47cba68c4d2b798410fa7b05c2080256a5e0499ae46",
+    "actual_scene_ready": true,
+    "runtime_errors": false,
+    "reused_meshes": 59,
+    "reused_triangles": 438744,
+    "collision_bodies": 62,
+    "scope": "One headless scene construction, not a stress/navigation/render suite. Earlier335 navigation cases remain historical layout evidence."
+  },
+  "meaningful_failure": "visual-r2-preflight-parse-failed.log preserves initial local type inference failure; x was explicitly typed float. Successor preflight exits0.",
+  "command": "timeout 20s env XDG_DATA_HOME=/tmp/yuga-tactical-map-art godot --headless --path games/yuga-native --script res://docs/tactical/research/visual-preflight.gd > games/yuga-native/docs/tactical/research/visual-r2-preflight-successor.log 2>&1",
+  "limits": [
+    "No R2 pixels reviewed yet.",
+    "Contact shading and sky reflections need Forward+ successor review.",
+    "Added props sit outside explicit routes, but no new broad route suite was run per user steering.",
+    "No physical-GPU performance claim."
+  ],
+  "next_owner": "Root: serialize actual R2 native capture, then independent world review."
+}

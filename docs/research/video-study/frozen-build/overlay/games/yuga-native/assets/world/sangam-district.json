@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "id": "sangam-civic-quarter-v1",
+  "product": "YUGA native offline Confluence",
+  "scope": "Original full-district visual replacement, true overhead collision and four additional grounded cover footprints. Existing eight ground solids, three lanes, gate/garden and relays retained; no online or elevated-cast claim.",
+  "source_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "source_map_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+  "authoring_script": "tools/studio/build_sangam_district.py",
+  "authoring_script_sha256": "900b00d3a112e6864d67bec58f584920e78f750233059fb1227a10db66fd350f",
+  "blender_version": "4.3.2",
+  "asset_sha256": "c29f403d894d183355e785442695f35369b28da57c057be28256ff90c2498a3e",
+  "blend_sha256": "b8027665a14fc4259b76d1df2763191d447b4520f32a3eb83e7f27fcdd68354d",
+  "finish_shader": "games/yuga-native/shaders/sangam_masonry.gdshader",
+  "finish_shader_sha256": "c8e455ca0e0a80cc1e21ff809f5afdcb365f2d8668bb1b7b54ef586798eb9d07",
+  "finish_scope": "Native Sangam-only shared shader compresses existing stone-map luminance to +/-3.5% around warm sandstone, limestone and muted indigo; original normal and roughness maps retained. Restrained 1.2 by .52 metre ashlar joints with filtered bevel/micrograin establish stone scale. No texture pixels modified. Blender material preview retains original input albedo.",
+  "materials": [
+    "Sangam / carved warm sandstone",
+    "Sangam / dressed limestone",
+    "Sangam / glazed indigo",
+    "Sangam / weathered worked brass",
+    "Sangam / oiled timber",
+    "Sangam / recessed shutter shadow",
+    "Sangam / fired terracotta",
+    "Sangam / garden leaves"
+  ],
+  "texture_sources": {
+    "games/yuga-native/assets/environment/lanka_courtyard_Warm_carved_sandstone_albedo.png": "4a83f87fbfc60a83f5f62554cecf69c57ab958945ba3c120ea0d67b1fe1f4711",
+    "games/yuga-native/assets/environment/lanka_courtyard_Warm_carved_sandstone_roughness.png": "42e9c580180fd0424aef518519a9dfd77deae6c8ec57eadbc9754fd5fa332728",
+    "games/yuga-native/assets/environment/lanka_courtyard_Warm_carved_sandstone_normal.png": "51a60befc033760f25c62bb7c91a36bd1167d9c7ef2ebb75efbc186107391e4b",
+    "games/yuga-native/assets/environment/lanka_courtyard_Pale_limestone_albedo.png": "315b7fa840ab9e6f15152f86106c56867f239a83932278f07fecda2170ae80c6",
+    "games/yuga-native/assets/environment/lanka_courtyard_Pale_limestone_roughness.png": "7220c51d4091d7b7dcfba6139a0ab5003305ec4fd943bc8dc5fa0f013bdf01ba",
+    "games/yuga-native/assets/environment/lanka_courtyard_Pale_limestone_normal.png": "98724dda9df612cd7de5a2df20db9d0c9c70c734e70bad819e05969cdb8df039",
+    "games/yuga-native/assets/environment/lanka_courtyard_Indigo_glazed_stone_albedo.png": "70c1a5b7d7fb2ec1b3d26e661b079426ceb5cf60dfd23d798271b84f55b70592",
+    "games/yuga-native/assets/environment/lanka_courtyard_Indigo_glazed_stone_roughness.png": "123dcef6edda3dd476dd722967be4cf38a32939b2bb978989ed44052db8694b3",
+    "games/yuga-native/assets/environment/lanka_courtyard_Indigo_glazed_stone_normal.png": "46fc849748b210a1981a0eb997f7dded09a359b771266e55bb6f15360f2a5114",
+    "games/yuga-native/assets/environment/lanka_courtyard_Aged_brass_albedo.png": "a7c04d78580fdeda9b5a4fc815a49ad748515ac8e1294077bfef18198fd01b41",
+    "games/yuga-native/assets/environment/lanka_courtyard_Aged_brass_roughness.png": "24c71ff65758241737fcd328a32cc6075f50b67a1ccbe18ac68d8d013bb12386",
+    "games/yuga-native/assets/environment/lanka_courtyard_Aged_brass_normal.png": "648d225baa0e3dc4c27b2411e274e138607cb06c6a57762990d721663a2a5bb5"
+  },
+  "triangles": 308422,
+  "mesh_objects": 26,
+  "modules": [
+    {
+      "id": "block-0",
+      "family": "ghat-colonnade",
+      "base_mesh": "BASE_Block_0",
+      "overhead_mesh": "SOLID_Overhead_0",
+      "position": [
+        -20,
+        0,
+        -28
+      ],
+      "inherited_ground_size": [
+        18,
+        10,
+        18
+      ],
+      "canopy_bottom_y": 4.6,
+      "canopy_projection_m": 2.8,
+      "ground_collision": "existing_authority_solid",
+      "upper_collision": "exact_overhead_render_triangles"
+    },
+    {
+      "id": "block-1",
+      "family": "ghat-colonnade",
+      "base_mesh": "BASE_Block_1",
+      "overhead_mesh": "SOLID_Overhead_1",
+      "position": [
+        -20,
+        0,
+        28
+      ],
+      "inherited_ground_size": [
+        18,
+        12,
+        18
+      ],
+      "canopy_bottom_y": 4.6,
+      "canopy_projection_m": 2.8,
+      "ground_collision": "existing_authority_solid",
+      "upper_collision": "exact_overhead_render_triangles"
+    },
+    {
+      "id": "block-2",
+      "family": "indigo-archive",
+      "base_mesh": "BASE_Block_2",
+      "overhead_mesh": "SOLID_Overhead_2",
+      "position": [
+        20,
+        0,
+        -28
+      ],
+      "inherited_ground_size": [
+        18,
+        15,
+        18
+      ],
+      "canopy_bottom_y": 4.6,
+      "canopy_projection_m": 2.8,
+      "ground_collision": "existing_authority_solid",
+      "upper_collision": "exact_overhead_render_triangles"
+    },
+    {
+      "id": "block-3",
+      "family": "indigo-archive",
+      "base_mesh": "BASE_Block_3",
+      "overhead_mesh": "SOLID_Overhead_3",
+      "position": [
+        20,
+        0,
+        28
+      ],
+      "inherited_ground_size": [
+        18,
+        18,
+        18
+      ],
+      "canopy_bottom_y": 4.6,
+      "canopy_projection_m": 2.8,
+      "ground_collision": "existing_authority_solid",
+      "upper_collision": "exact_overhead_render_triangles"
+    },
+    {
+      "id": "block-4",
+      "family": "observatory-chhatri",
+      "base_mesh": "BASE_Block_4",
+      "overhead_mesh": "SOLID_Overhead_4",
+      "position": [
+        -63,
+        0,
+        -18
+      ],
+      "inherited_ground_size": [
+        12,
+        8,
+        20
+      ],
+      "canopy_bottom_y": 4.6,
+      "canopy_projection_m": 2.1,
+      "ground_collision": "existing_authority_solid",
+      "upper_collision": "exact_overhead_render_triangles"
+    },
+    {
+      "id": "block-5",
+      "family": "observatory-chhatri",
+      "base_mesh": "BASE_Block_5",
+      "overhead_mesh": "SOLID_Overhead_5",
+      "position": [
+        -63,
+        0,
+        22
+      ],
+      "inherited_ground_size": [
+        12,
+        9,
+        20
+      ],
+      "canopy_bottom_y": 4.6,
+      "canopy_projection_m": 2.1,
+      "ground_collision": "existing_authority_solid",
+      "upper_collision": "exact_overhead_render_triangles"
+    },
+    {
+      "id": "block-6",
+      "family": "brass-eave-gallery",
+      "base_mesh": "BASE_Block_6",
+      "overhead_mesh": "SOLID_Overhead_6",
+      "position": [
+        63,
+        0,
+        -18
+      ],
+      "inherited_ground_size": [
+        12,
+        20,
+        20
+      ],
+      "canopy_bottom_y": 4.6,
+      "canopy_projection_m": 2.1,
+      "ground_collision": "existing_authority_solid",
+      "upper_collision": "exact_overhead_render_triangles"
+    },
+    {
+      "id": "block-7",
+      "family": "brass-eave-gallery",
+      "base_mesh": "BASE_Block_7",
+      "overhead_mesh": "SOLID_Overhead_7",
+      "position": [
+        63,
+        0,
+        22
+      ],
+      "inherited_ground_size": [
+        12,
+        16,
+        20
+      ],
+      "canopy_bottom_y": 4.6,
+      "canopy_projection_m": 2.1,
+      "ground_collision": "existing_authority_solid",
+      "upper_collision": "exact_overhead_render_triangles"
+    }
+  ],
+  "ground_footprints": [
+    {
+      "id": "sangam-cover-West_South",
+      "kind": "solid_civic_cover_monument",
+      "mesh": "SOLID_Cover_West_South",
+      "position": [
+        -8,
+        0,
+        -60
+      ],
+      "size": [
+        3,
+        2.7,
+        6
+      ],
+      "anchor": "base_center",
+      "collision_layer": 1,
+      "native_only": true
+    },
+    {
+      "id": "sangam-cover-West_North",
+      "kind": "solid_civic_cover_monument",
+      "mesh": "SOLID_Cover_West_North",
+      "position": [
+        -8,
+        0,
+        60
+      ],
+      "size": [
+        3,
+        2.7,
+        6
+      ],
+      "anchor": "base_center",
+      "collision_layer": 1,
+      "native_only": true
+    },
+    {
+      "id": "sangam-cover-East_South",
+      "kind": "solid_civic_cover_monument",
+      "mesh": "SOLID_Cover_East_South",
+      "position": [
+        8,
+        0,
+        -60
+      ],
+      "size": [
+        3,
+        2.7,
+        6
+      ],
+      "anchor": "base_center",
+      "collision_layer": 1,
+      "native_only": true
+    },
+    {
+      "id": "sangam-cover-East_North",
+      "kind": "solid_civic_cover_monument",
+      "mesh": "SOLID_Cover_East_North",
+      "position": [
+        8,
+        0,
+        60
+      ],
+      "size": [
+        3,
+        2.7,
+        6
+      ],
+      "anchor": "base_center",
+      "collision_layer": 1,
+      "native_only": true
+    }
+  ],
+  "overhead_routes": [
+    {
+      "id": "avenue-gallery--28",
+      "position": [
+        0,
+        8,
+        -28
+      ],
+      "size": [
+        22,
+        0.4,
+        4.8
+      ],
+      "ground_route_below_m": 8,
+      "collision": "exact_visible_triangles"
+    },
+    {
+      "id": "avenue-gallery-28",
+      "position": [
+        0,
+        8,
+        28
+      ],
+      "size": [
+        22,
+        0.4,
+        4.8
+      ],
+      "ground_route_below_m": 8,
+      "collision": "exact_visible_triangles"
+    }
+  ],
+  "coordinate_contract": "metres Godot +Y-up; Blender [x,-z,y] proper rotation; glTF converts back",
+  "hide_original_nodes": [
+    "CityArt/block-0",
+    "CityArt/block-1",
+    "CityArt/block-2",
+    "CityArt/block-3",
+    "CityArt/block-4",
+    "CityArt/block-5",
+    "CityArt/block-6",
+    "CityArt/block-7",
+    "CityArt/block-0-roof",
+    "CityArt/block-1-roof",
+    "CityArt/block-2-roof",
+    "CityArt/block-3-roof",
+    "CityArt/block-4-roof",
+    "CityArt/block-5-roof",
+    "CityArt/block-6-roof",
+    "CityArt/block-7-roof",
+    "CityArt/skyline-0",
+    "CityArt/skyline-1",
+    "CityArt/skyline-2",
+    "CityArt/skyline-3",
+    "CityArt/skyline-4",
+    "CityArt/skyline-5",
+    "CityArt/skyline-6",
+    "CityArt/skyline-7",
+    "ReviewBlock2Frontage",
+    "ReviewBlock2RoofLoggia"
+  ],
+  "reference_scope": "Original invented South Asian civic architecture; historical references guide massing, eaves, galleries and jali rhythm, not archaeological reconstruction. No external photographs or game assets used.",
+  "budget_scope": "Measured authored counts only; physical GPU performance and human visual acceptance remain unrun."
+}

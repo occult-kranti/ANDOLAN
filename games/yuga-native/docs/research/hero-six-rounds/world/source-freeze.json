@@ -1,0 +1,65 @@
+{
+  "task": "YUGA-HERO-6R-WORLD",
+  "product": "YUGA native offline Confluence",
+  "source_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "source_sha256": {
+    "tools/studio/build_sangam_district.py": "900b00d3a112e6864d67bec58f584920e78f750233059fb1227a10db66fd350f",
+    "games/yuga-native/scripts/sangam_district.gd": "4bc793ca04f17ef4e9f3e3e2992551a55b7c90ff1e3b7fd67ba9bf835654df1e",
+    "games/yuga-native/tests/sangam_district_cases.gd": "eb4ed58486f72c16ff62b43d29e29e74800d9a9698232578583abda8b7677259",
+    "games/yuga-native/assets/world/sangam-district.glb": "c29f403d894d183355e785442695f35369b28da57c057be28256ff90c2498a3e",
+    "games/yuga-native/assets/world/sangam-district.json": "439e43b4a1b0fc78daf1caea589b8b02888b0b0db949521a2015c175ba6cf0fd",
+    "games/yuga-native/art/sangam-district/sangam-district.blend": "7577778054768a96400a78a3a364deb9b71f278376959e5ae3f4fb05d6e071a4",
+    "games/yuga-native/assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "games/yuga-native/shaders/sangam_masonry.gdshader": "c8e455ca0e0a80cc1e21ff809f5afdcb365f2d8668bb1b7b54ef586798eb9d07"
+  },
+  "authoring": {
+    "engine": "Blender 4.3.2",
+    "threads": 8,
+    "command": "blender4.3 --background --threads 8 --python-exit-code 1 --python tools/studio/build_sangam_district.py",
+    "result": "R6d exit0,308422triangles/26meshes; no Blender render; coplanar audit0 exposed conflicts and28 explicitly hidden contacts",
+    "triangles": 308422,
+    "meshes": 26,
+    "material_definitions": 8
+  },
+  "rejected_runs": [
+    "art/sangam-district/rejected-r1:475942 triangles over authored320000 gate",
+    "art/sangam-district/rejected-r2:369094 triangles over authored320000 gate"
+  ],
+  "visual_review": [
+    "Prior studio native gameplay+overview screenshots",
+    "art/sangam-direction/art-direction.png (aspirational concept only)",
+    "10 actual1280x720 Forward+ district-capture-r1 originals personally opened; exact image hashes/findings in round5-actual-review.json",
+    "6 actual district-capture-r2 originals personally opened, source-consistency limit recorded in round6-repair-review.json",
+    "All12 final frozen district-capture-r3 originals personally viewed; capturecomplete true/failure empty; exact source/image pins and remaininglimits in round6-final-visual-review.json"
+  ],
+  "pending": [
+    "Lead-owned integrated ordinaryinput/package checks; combat camera/encounter findings",
+    "Native physicalGPU profiling and human game-feel/art acceptance"
+  ],
+  "next_owner": "Root lead final handoff/package; future art backlog retains world-scale/composition/HUD limits.",
+  "revision": "R6d final geometry/material repair after R1/R2 actual-image review",
+  "prior_test": {
+    "command": "godot --headless --path games/yuga-native --script res://tests/sangam_district_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/world/checks-r1/result.json",
+    "result": "31/31 pass, exit0, zero warnings/errors",
+    "scope": "Actual imported meshes, isolated matching host, native ray collision, real army/kit, lifecycle and metadata adverse cases"
+  },
+  "test": {
+    "command": "godot --headless --path games/yuga-native --script res://tests/sangam_district_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/world/checks-r6d/result.json",
+    "result": "33/33 pass, exit0, zero warnings/errors",
+    "scope": "FinalR6d actual imported meshes, original material/texture bindings, isolated matching host, native ray collision, real army/kit, lifecycle and metadata adverse cases"
+  },
+  "retained_evidence": [
+    "art/sangam-district/accepted-r3 original source/GLB/blend/spec/adapter/test/freeze",
+    "root/district-capture-r1 images remain original and unedited"
+  ],
+  "finish": {
+    "scope": "Three shared native masonry ShaderMaterials compress original input albedo luminance and lower stone normal strength; source input textures unmodified. Private brassStandardMaterial uses metallic0.25 roughness0.72 to reduce distant glitter. Final shader adds filtered metre-scale ashlar courses, shallow bevel and fine mineral grain.",
+    "source_texture_pixels_modified": false,
+    "blender_preview_limit": "Blender retains original albedo. Native finish shader determines accepted material appearance."
+  },
+  "prior_r6_test": {
+    "command": "godot --headless --path games/yuga-native --script res://tests/sangam_district_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/world/checks-r6/result.json",
+    "result": "33/33 pass, exit0, zero warnings/errors",
+    "scope": "R6 actual imported meshes and source material/texture bindings, isolated matching host, native ray collision, real army/kit, lifecycle and metadata adverse cases"
+  }
+}

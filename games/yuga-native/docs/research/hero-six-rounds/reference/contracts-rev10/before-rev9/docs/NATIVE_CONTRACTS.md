@@ -1,0 +1,129 @@
+# Native rules, identity and replay contracts
+
+FG00-T04 / MYTH06 / FIELD-SHOP-01, envelope revision 1 and native-practice content revision 9. This implements a pure Godot admission/stream validator and machine-readable specification. It does not change the browser server, connect a native match, simulate a replay or select production collision authority. The existing native `arena_client.gd` continues to speak browser protocol 2.
+
+The current content-9 update adds `scripts/native_field_shop.gd` and `assets/design/native-field-shop.json` to the authority-source set. The original offline field shop tracks earned gold versus spending and applies its configured upgrades to real native receivers; it does not adopt items or assets from the reference game. One existing pin changes: `rama_hero_runtime.gd` removes the `player.active` condition from enemy siege impact eligibility. The shop temporarily disables active player input while its menu is open; retaining that condition would incorrectly grant damage immunity during shopping. The runtime's configured/suspended/event/cancelled checks, spatial/line-of-sight checks and vitals availability checks remain responsible for genuine pause, death and invalid damage. All fourteen other existing source pins remain identical to content8. The source aggregate and native content revision change; wire versions, browser/production profiles, map and non-content native profile rules do not. `scripts/native_contracts.gd` is the validator and is not in its own content-source list, avoiding a self-hash cycle. This finite authority-source list does not claim to pin every visual dependency.
+
+The exact content-8 catalog and its descriptor, derived with the unchanged prior Godot validator before this migration, are preserved in `tests/fixtures/contracts/native-content8-{catalog,descriptor}.json`. Their SHA256 values are `2e90bbb45d9faa46ce9ede3ad2bdab15233d3ffd18f363dd28c4c3efa4372824` and `5600004d02a3910f2627e561ce2c71c564a99ff5144e31e2562e2ba7fc755b36`. The descriptor was produced by Godot 4.6.3 using validator hash `e65c9f882229068628be529c16b143b1ebc1606beba0b8fb6cb121b63cf03261`; its rules digest is `bb2129f1df0e38481525d995f5b448f445e84416d7a9b2c249ddf39a5df7091b`. It was not reconstructed with Python's differing number formatting. Existing content3–7 fixtures remain untouched. The checker retains revision6→7's minion-only change and revision7→8's exact army/minion resource-sharing changes, then requires revision8→9 to add only the two shop sources and change only the runtime siege-eligibility pin. Revision8 load/open/resume/migration/replay rejects transactionally; changing only its version number or replaying its old digest cannot forge current identity. Valid content9 admission remains possible after rejection. Packaging binds the retained revision6/7/8 fixture files and rejects missing or changed bytes before export.
+
+## Distinct profiles
+
+| Profile ID | Evidence/state | Rules | Map/authority |
+| --- | --- | --- | --- |
+| `browser-p2-3v3` | Observed current default | Protocol 2; 3 per team; 480 seconds | 140 × 170 m; Node/TypeScript, 20 Hz simulation and 10 Hz snapshots |
+| `native-offline-triad` | Current offline implementation | One controlled hero; no competitive team-slot or match-duration contract (`team_size=0`, `duration_seconds=0` means not applicable) | 140 × 260 m; Godot physics 60 Hz, army 20 Hz, relays 10 Hz |
+| `production-6v6` | Proposed, unimplemented | 6 per team; 1,080 seconds | Geometry and authority selection pending FG05-T02; no assigned network protocol or simulation frequency |
+
+Protocol `0` in this catalogue means **no network wire protocol assigned**. It must never be sent to the current browser join endpoint. Browser simulation test overrides permit other durations/bot counts; they do not change the named default profile.
+
+The native profile permits flight, grappling and relay supply. The browser and production profiles do not inherit those training mechanics. The native Rama slice implements health, damage and respawn through `rama_vitals.gd` and its runtime integration. This offline capability does not establish an implemented production or online match.
+
+Runtime definitions:
+
+- [native-contracts-v1.json](../assets/contracts/native-contracts-v1.json): profile versions, finite bounds, coordinate conventions and source digests.
+- [native-envelope-v1.schema.json](../assets/contracts/native-envelope-v1.schema.json): original closed JSON structural schema, draft 2020-12. Cross-record semantics and finite-number checks belong to the Godot validator.
+- [native_contracts.gd](../scripts/native_contracts.gd): engine-consumable `RefCounted`; no nodes, sockets, rendering, rewards or automatic processing.
+
+## Compatibility and deployment
+
+Descriptors contain `contract_id`, `profile_id`, `protocol`, `versions`, `rules_sha256`, `map_id`, `map_sha256` and `content_sha256`. `versions` has independent positive integer `contract`, `rules`, `map`, `content`, `replay`, `input`, `event` and `entity` fields. Version 1 requires an exact match for each field. There is no permissive protocol range, silent downgrade or fallback-to-offline admission. Mismatch returns a reason such as `MISMATCH_MAP_SHA256` before any world is admitted.
+
+`content_revision` is required on each profile. Native practice is revision **9**, while browser and production-proposal content remain **1**. `descriptor()` copies the envelope versions and overrides only `versions.content` from that profile. Input/event/entity/replay wire versions remain 1. Missing, malformed or wrong known revisions reject before catalogue loading. The global `envelope_versions.content=1` is the base value, not the native profile's effective revision.
+
+`rules_sha256` hashes compact, sorted-key JSON for `{profile, coordinates, limits}` using Godot `JSON.stringify(..., "", true)` and UTF-8 SHA-256. Version 1 profile numbers have finite fixed values. Changing masks, authority, dimensions, timing, coordinate conventions or caps therefore cannot retain an identical descriptor merely by leaving version numbers unchanged. The loader also rejects changes to the three known profiles' essential semantics. An intentional migration updates the catalogue, relevant version, fixtures and source pins together.
+
+The map digests have explicit scope:
+
+- Browser: exact bytes of `games/yuga/shared/map.ts`, not an independently exported collision mesh.
+- Native: exact staged `assets/world/confluence-map.json`. Relay centres remain defined in the separately pinned `relay_control.gd`; they are not invented fields in this map.
+- Production: exact design-document bytes, labelled `design_document_not_collision_geometry`. No collision map exists for this proposal.
+
+`content_sha256` hashes compact, sorted-key JSON of the catalogue's `path → SHA-256` source ledger. Current native revision9 pins17 files: the scripts `lane_army.gd`, `lane_minion.gd`, `player.gd`, `player_traversal.gd`, `relay_control.gd`, `ultimate_rules.gd`, `ultimate_session.gd`, `rama_ability_kit.gd`, `rama_action_buffer.gd`, `rama_hero_runtime.gd`, `rama_vitals.gd`, `rama_practice_army.gd`, `rama_practice_target.gd` and `native_field_shop.gd`, plus `assets/design/native-ultimate-rules.json`, `assets/design/rama-ability-kit.json` and `assets/design/native-field-shop.json`. Its content digest is `41832693f4231f4601e61f1bf6a371880a621b255aba6560c2b9e41bfc896dc4`. This is the explicitly enumerated content-source set, not every render asset or a complete production hero. The recorder/result presentation is read-only and is not added to the authority-source ledger. The checker verifies these bytes against the checkout. Revision9 preserves browser/proposal profiles, wire versions, map and non-content native profile rules relative to revision8. A source or map edit must deliberately refresh the affected identity; mismatches fail preflight. Packaged catalogue reads do not require development source files.
+
+Admission API:
+
+```gdscript
+const Contracts = preload("res://scripts/native_contracts.gd")
+var contract = Contracts.new()
+assert(contract.load_catalog().ok)
+var expected = contract.descriptor("native-offline-triad")
+var result = contract.open_session("native-offline-triad", expected,
+    {"room":"PRACTICE", "epoch":1, "identity":"hero"})
+```
+
+This opens only a **validator session**, never a network connection. The bridge owner supplies authenticated, authority-issued scope. Schema validity is not authentication. Do not accept a client-selected epoch or local catalogue as authority to change rules.
+
+| Operation | Contract |
+| --- | --- |
+| `open_session(profile_id, remote_descriptor, scope)` | Only when no session exists; complete descriptor match and valid `{room, epoch, identity}` required. |
+| `resume_session(remote_descriptor, scope)` | Exact same room, epoch, identity and descriptor. Preserves input/ack/event/snapshot watermarks, entities and tombstones. JSON numeric round trips are accepted. |
+| `migrate_session(profile_id, remote_descriptor, scope)` | Explicit new-match/deployment transition only. Same room and identity, strictly greater epoch, known target profile and matching descriptor; then all old stream/pose state is discarded atomically. |
+| `reset()` | Explicit local teardown. Clears the guard; it is not authorization to replay an old room. External session ownership must prevent that. |
+| Rollback | Select an available old profile explicitly at a new epoch; reject old-epoch inputs/events/snapshots. Never replay old input or reward receipts into the replacement session. |
+
+Failed validation, resume or migration leaves prior state unchanged. Cold reconnect into a new process needs an authenticated full bootstrap and input/event watermarks; that transport/bootstrap adapter remains FG04-T02 work. The implemented resume path intentionally preserves an existing guard's state. Exhausted safe-integer counters require a new epoch, not integer wrap.
+
+## Inputs, events and entity lifetimes
+
+All wire records are closed objects: unknown fields reject. JSON numbers must be finite; booleans are not integers. Integers lie within JavaScript's safe range `0..9,007,199,254,740,991` unless an explicit sentinel applies. Positions are arrays `[x,y,z]`, bounded to ±10,000 m before float32 vector operations; this is a corruption bound, not traversable map admission.
+
+Every record carries `version`, `room` and `epoch`. The authority owns the monotonically increasing positive epoch; reconnect within the same match does not increment it. Inputs/events cannot cross room/epoch boundaries.
+
+**Input** additionally has `seq`, `actor_id`, `move:[x,z]`, `yaw`, `pitch`, `buttons`. Actor ID must equal the session identity. Start at sequence 0; increasing gaps up to 4,096 allow coalesced transport, while duplicate/stale intent rejects. Movement magnitude is at most one. Yaw is canonical radians in `[-π,π]`, pitch in `[-1.35,1.35]` with positive pitch upward.
+
+Button bits: fire 1, jump 2, pulse 4, dash 8, flight 16, grapple 32, descend 64, reload 128, sprint 256. These are logical contract bits, not physical keys. Only mask 3 is admitted for the browser/default production proposal; native offline admits 511. Existing protocol-2 ability/upgrade commands remain a separate real-server API, not new button bits sent over that wire. This validator does not schedule input; authority/bridge integration must enforce the declared 350 ms stale-intent timeout, clear held actions on pause/focus loss/reconnect, and preserve existing command receipts.
+
+**Event** additionally has `seq`, `tick`, `kind`, `actor_id`, `target_id`, `position`, `amount`. Kinds are spawn, despawn, shot, hit, defeat, objective, reward and match_end. Empty actor ID is allowed only for match_end; target may be empty. Start at event sequence 0; require exactly next sequence. Gaps require ordered event recovery/resync, not skipping rewards. Ticks cannot regress; at most 128 events per tick. Amount is finite in `[0,1,000,000]`. The receipt key is `(room, epoch, seq)`; accepting a receipt never itself grants a reward. Referenced actor/target strings are historical labels in this minimal envelope. Gameplay application must bind the authority's lifetime identity and payload definition, rather than using an old event to mutate a reused actor ID.
+
+**Snapshot** has `tick` and a full `entities` array. Ticks strictly increase; a gap over 200 requires resync. This is a bounded transport guard, not a prediction clock or hardware measurement. Maximum 640 entities, plus per-kind bounds: actors 1/6/12 for offline/browser/proposal respectively; minions 96, neutrals 32, structures 32, projectiles 192, zones 128, pickups 32 and gold shards 96.
+
+Each entity has:
+
+```text
+id, generation, kind, team, position, yaw, pitch,
+discontinuity, alive, ack_input, owner_id
+```
+
+The authority owns entity creation, pose, hit outcomes and removal. `owner_id` records attribution; presentation never becomes authority. A full-snapshot omission despawns presentation. Tombstones retain the last generation; the same `(id,generation)` cannot silently reappear. Reuse requires a greater positive generation. Identity kind/team/owner cannot change within that lifetime. Old generations reject. History is bounded at 4,096 IDs per epoch; an exhausted guard requires a deliberate new epoch/bootstrap, not unbounded growth or eviction that permits old lifetimes to return.
+
+Remote pitch is required in this new envelope; it is **absent from current protocol-2 Actor snapshots**, although protocol-2 input and projectile motion already use pitch. An adapter may not infer verified remote pitch from the local camera. That missing data requires an explicit protocol change or an honest unavailable presentation state in FG04-T02.
+
+Discontinuity is a nondecreasing per-lifetime counter. Death/respawn and displacements over 8 m require it to advance. A generation change or increased counter tells presentation to clear interpolation, trails and temporary attachment state; never blend through teleport or death. The 8 m guard requests resync for a large unmarked gap; it does not prove the authority's collision/movement is valid. Ordinary yaw interpolation should take the shortest circular path; pitch is bounded, not wrapped. This module validates poses but does not interpolate them.
+
+The local actor must appear in a snapshot. Its `ack_input` is `-1` before any input, otherwise monotonic and no greater than the last locally issued sequence. Reconnect retains this watermark. Snapshot/payload dictionaries returned by the module are detached copies.
+
+This minimal envelope deliberately does not claim a finished production actor schema: health/shield, equipment, cast phase/time, support surface, movement mode and rule-specific effect shape/expiry must receive explicit typed bridge payloads/version changes before gameplay application.
+
+## Replay and rollback safety
+
+`validate_replay(header, records)` constructs a private guard. Header fields: `format:1`, exact `descriptor`, `room`, `epoch`, `identity`, uint32 `seed`, exact `record_count`. Maximum 100,000 records. Each record is `{kind:"input"|"event"|"snapshot", value:...}` and passes the same stateful acceptance path.
+
+The format records arrival order with independently monotonic channels. It does not invent a global simulation time for input records. Reordered acknowledgements, duplicate events, missing sequence recovery, foreign epochs, incompatible descriptors, malformed entities and inconsistent counts reject. Validation is transactional relative to the caller's active session. Seeking in this version validates again from the epoch start; there is no unchecked checkpoint restore. Seeds are retained metadata, not proof of deterministic simulation replay.
+
+`parse_packet(bytes, channel)` caps input at 2,048 bytes and event/snapshot data at 524,288 bytes before JSON parsing. No resources or arbitrary object classes are deserialized. Replay container file/stream acquisition and total byte budgets belong to the future replay loader; this bounded in-memory validator is not a large-file parser.
+
+## Handoff to the next batches
+
+[The MYTH06 entity bridge](NATIVE_ENTITY_BRIDGE.md) now consumes these guards and creates bounded diagnostic native nodes. Cold authenticated transport and production payloads remain open. FG04-T02 consumers should use `descriptor`, `compatibility`, `report` and the admission methods rather than mutating protocol 2 in place. Keep the actual protocol-2 adapter as a distinct profile boundary. Define actor/minion/structure/projectile/zone/pickup lifetime adapters and a checked shared-yaw/native-yaw transform: shared yaw 0 faces +Z, native camera yaw 0 faces −Z; `shared_yaw=wrap(native_yaw+π)`. Preserve room identity/acknowledged input, add honest pitch availability and clear interpolation on declared discontinuities. Authenticating a cold reconnect and mapping command receipts remain integration work.
+
+FG05-T02 should create a new versioned collision artifact, not relabel the browser source hash as a solved vertical map. Contract axes are metres, +Y up, +Z forward, feet origin; layer bits world 1/actor 2/target 4 describe current native queries. Support surfaces must allow multiple decks at one x/z. Export identical ramp, stairs, ledge, low ceiling and bridge-over-road fixtures with stable collider/support IDs, transforms and visual-only tags. Compare TypeScript shape queries with headless Godot authority on the same two-client inputs before choosing simulation ownership. This module defines the boundary; it performs no collision experiment or online authority selection.
+
+## Verification and observed corrections
+
+From repository root, without imports or rendering:
+
+```sh
+python3 games/yuga-native/tools/check-native-contracts.py --report /tmp/native-contract-source-pins.json
+XDG_DATA_HOME=/tmp/yuga-contract-tests godot --headless --path games/yuga-native \
+  --script res://tests/native_contract_cases.gd -- --report=/tmp/native-contract-cases.json
+```
+
+The historical Batch 2 owner suite passed 228 cases, including 2,000 interleaved input/event/snapshot cycles, exact entity-history and population caps, malformed types/finite values, epoch rollback, replay corruption and unchanged source hashes. Its source-pin checker passed 33 cases; current revision8 results are recorded separately in the continuation evidence. New revision fixtures reject the preserved Batch 1 descriptor during open, resume, migration and replay without state mutation; changing only its version number still fails source identity. The historical [independent Batch 2 run](evidence/mythic-batch2/contracts/independent/summary.json) passed 287 probes: the original 170 malformed/replay cases plus 117 revision and transaction checks. Those historical runtime and catalogue hashes remain frozen in their reports. Batch 1 reports retain their original source scope.
+
+Preserved failures led to three corrections: numeric JSON arrays now compare dimensions by value; malformed Variant scalar types reject before String comparisons; rules identity now covers semantic profile data and rejects changed masks/frequencies/authority. An early checker incorrectly assumed relay sites were in map JSON; it now checks their actual pinned rules source. Reports retain those failures. Evidence is headless specification/validator evidence only; no live server migration, rendered online match, production collision or deterministic gameplay replay is claimed.
+
+Historical revision8 verification: **58 source checks,279 native admission/transaction/stream/replay cases and21 package source-proof cases** passed. [Continuation receipt](evidence/desktop-finish/continuation-oct18/W4-content8-r1/receipt.json) preserves the original stale-pin export failure, exact content7 fixture derivation and the bounded repair. Content9 has its own fresh source/admission/package reports; historical evidence is not relabelled as a new export or network qualification.
+
+Content9 verification on Godot 4.6.3: **69 source checks, 289 native admission/transaction/stream/replay cases and 25 package source-proof cases** passed. The package suite extends retained-fixture tamper/missing checks to content8 while preserving its exact historical `83f88f8` stale-player counterexample. These checks perform no export, render or live network migration.
+
+Historical Batch2 evidence: [Batch 2 contract owner report](evidence/mythic-batch2/contracts/native-contracts.json), [source pins](evidence/mythic-batch2/contracts/source-pins.json), and the [preserved content-1 descriptor](evidence/mythic-batch2/contracts/native-practice-content1-descriptor.json). Batch 1 reports remain untouched. Root owns integrated acceptance and publication.

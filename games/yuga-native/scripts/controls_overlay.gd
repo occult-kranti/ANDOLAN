@@ -59,7 +59,7 @@ func _ready() -> void:
 		for action in group.actions: _binding_row(rows,action)
 	rows.add_child(UI.label("Fixed controls",UI.TYPE_CAPTION,UI.GOLD))
 	var fixed := Label.new()
-	fixed.text = "%s fire · arrow keys move · %s pause / back\n%s help · %s abilities · %s restart\nWorld: %s overview · %s day / night" % [Bindings.label("fire"), Bindings.label("pause_game"), Bindings.label("help_controls"), Bindings.label("open_invocations"), Bindings.label("reset_training"), Bindings.label("world_overview"), Bindings.label("world_night")]
+	fixed.text = "%s fire · arrow keys move · %s pause / back\n%s help · %s abilities · %s restart\nWorld: %s overview · %s day / night · %s field shop" % [Bindings.label("fire"), Bindings.label("pause_game"), Bindings.label("help_controls"), Bindings.label("open_invocations"), Bindings.label("reset_training"), Bindings.label("world_overview"), Bindings.label("world_night"), Bindings.label("open_field_shop")]
 	fixed.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	fixed.theme_type_variation = &"YugaCaption"
 	rows.add_child(fixed)

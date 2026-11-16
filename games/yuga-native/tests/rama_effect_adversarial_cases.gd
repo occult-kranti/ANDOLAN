@@ -59,6 +59,15 @@ func run() -> void:
 	kit.ability_event.connect(func(event):events.append(event.duplicate(true)))
 	for id in Effects.IDS:
 		army.reset();events.clear()
+		if id == "piercing_dawn":
+			# Pool/expiry must be challenged with a real accepted receiver hit.
+			# A range endpoint is not a physical contact or a success receipt.
+			for receiver in army.units:
+				if receiver.team != "moon": continue
+				receiver.position = Vector3(0,0,5)
+				receiver.attack_time = 1000
+				receiver.attack_cooldown = 1000
+				break
 		check(id+"_real_request_accepted",kit.request_ability(id,Vector3.ZERO,Vector3.BACK,Vector3(0,0,4)).accepted)
 		for tick in range(170):army.step_simulation(.05)
 		templates[id]=events.duplicate(true)
@@ -84,6 +93,7 @@ func run() -> void:
 	var fx=effect();var first:=begin(fx,"piercing_dawn")
 	var impact:=event_at("piercing_dawn","impact")
 	check("actual_piercing_contact_available",not impact.is_empty())
+	check("pool_fixture_uses_confirmed_damage_not_range_dissipation",impact.get("reason") == "unit" and impact.get("receipts",[]).any(func(receipt):return receipt.get("kind") == "damage" and float(receipt.get("damage_applied",0)) > 0),{"reason":impact.get("reason"),"receipts":impact.get("receipts",[])})
 	var premature_accepted: bool=fx.consume_event(impact)
 	check("changed_muzzle_contact_before_release_is_refused",not premature_accepted and fx.report().impacts==0,{"admitted":premature_accepted,"report":fx.report(),"event_age":impact.get("age_s")})
 	var consistent_impact:=impact.duplicate(true);consistent_impact.geometry=first.geometry.duplicate(true)

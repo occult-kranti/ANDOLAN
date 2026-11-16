@@ -32,6 +32,8 @@ func _run() -> void:
 		before[path] = FileAccess.get_sha256(path)
 	for path in ["res://scripts/world_lane_frontage.gd","res://scripts/world_lane_frontage.gd.uid",FRONTAGE_DATA]:
 		before[path] = FileAccess.get_sha256(path)
+	for path in ["res://scripts/input_bindings.gd","res://scripts/native_field_shop.gd","res://scripts/native_field_shop_panel.gd","res://scripts/sangam_district.gd"]:
+		before[path] = FileAccess.get_sha256(path)
 	manifest = JSON.parse_string(FileAccess.get_file_as_string("res://art/world/confluence-map.json"))
 	var packed = load("res://scenes/confluence_world.tscn")
 	if not packed is PackedScene:
@@ -39,10 +41,13 @@ func _run() -> void:
 		_finish()
 		return
 	scene = packed.instantiate()
-	# Retained pre-gate/garden floor-envelope regression. The mandatory W4 integrated
-	# suite exercises the default gate, its occupied piers and full-map routes.
+	# Retained legacy floor/frontage regression: Sangam intentionally replaces
+	# the reviewed Block2 detail and adds colliding roof architecture. Its default
+	# integrated geometry is covered by sangam_district_cases and the independent
+	# 60-check sangam_encounter_cases; do not apply legacy surface positions to it.
 	scene.set("lanka_lane_gate_enabled",false)
 	scene.set("lanka_water_garden_enabled",false)
+	scene.set("sangam_district_enabled",false)
 	root.add_child(scene)
 	driver = StepDriver.new()
 	driver.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -52,6 +57,7 @@ func _run() -> void:
 		_record("world traversal API is ready", false, {})
 		_finish()
 		return
+	_record("explicit legacy geometry fixture excludes district gate and garden",not scene.sangam_district_report.get("enabled",true) and not scene.lanka_lane_gate_report.get("enabled",true) and not scene.lanka_water_garden_report.get("enabled",true),{"default_integrated_suite":"res://docs/research/hero-six-rounds/combat/sangam_encounter_cases.gd","legacy_frontage_oracle":true})
 	var army_ready: bool=scene.army!=null and scene.army.has_method("report") and scene.army.report().get("configured",false)
 	var traversal_ready: bool=scene.player.traversal_report().get("enabled",false) and scene.player.traversal_report().get("anchor_count",0)==10
 	_record("offline army and traversal initialized",army_ready and traversal_ready,{"army":army_ready,"traversal":traversal_ready})
@@ -172,7 +178,7 @@ func _finish() -> void:
 	for check in checks:
 		passed = passed and check.passed
 	var report := {"passed":passed,"engine":Engine.get_version_info().string,"sources":before,"checks":checks,
-		"scope":"Real headless Godot physics queries in _physics_process against instantiated native world. Expanded140×260m floor, seven unchanged box surfaces plus one reviewed closed frontage within its preserved browser-source broadbounds, eight native landing decks, capsule route sweeps and native-only bounds. Army state is offline; tower markers remain nonblocking. Detailed frontage3D collision is not old-box or browser-authority parity. UI rectangles at two logical viewport sizes and injected actions/button signals are checked, not OS input. No renderer, AI, online match, continuous exhaustive proof or performance claim."}
+		"scope":"Real headless Godot physics queries against the explicitly selected legacy world fixture with Sangam, gate and garden disabled. Expanded140×260m floor, seven unchanged box surfaces plus one reviewed closed frontage within preserved browser-source broadbounds, eight native landing decks, capsule routes and native bounds. Separate sangam_district_cases and independent 60-check sangam_encounter_cases cover default integrated geometry. Army state is offline; tower markers remain nonblocking. Detailed frontage3D collision is not old-box or browser-authority parity. Current 13-button/14-action pause menu contract, adverse mutations, UI rectangles at two logical viewport sizes and injected actions/button signals are checked, not OS input. No renderer, AI, online match, continuous exhaustive proof or performance claim."}
 	print("YUGA_WORLD_PHYSICS ",JSON.stringify(report))
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--report="):
@@ -363,6 +369,56 @@ func _button_named(label: String) -> Button:
 		if item.text == label: return item
 	return null
 
+func _pause_action_errors() -> Array:
+	# Exact intended order, not a permissive count increase. The field shop is
+	# an additional action; legacy invocation remains distinct from Rama's guide.
+	var labels := ["Continue practice","Restart lane practice","Rama · abilities and controls",
+		"Field shop · %s" % scene.Bindings.label("open_field_shop"),"Legacy invocation studies",
+		"Siege practice · enter drill","Day / night","Visit Lotus relay","Visit Lanka coast",
+		"Visit Metro gardens","Controls / remap keys","Return to courtyard","Quit game"]
+	var errors := []
+	var buttons: Array[Node] = scene.pause_panel.find_children("*","Button",true,false)
+	if buttons.size()!=labels.size(): errors.append("exact button count")
+	for index in range(mini(buttons.size(),labels.size())):
+		if buttons[index].text!=labels[index]: errors.append("button label/order "+str(index))
+	var volume := scene.pause_panel.find_child("WorldVolume",true,false) as HSlider
+	if volume==null: errors.append("volume slider")
+	var expected: Array=[]
+	for index in range(labels.size()):
+		if index==11: expected.append(volume)
+		expected.append(_button_named(labels[index]))
+	if scene.pause_actions!=expected: errors.append("exact unique keyboard action order")
+	if scene.rama_button!=_button_named(labels[2]) or scene.invocation_button!=_button_named(labels[4]):
+		errors.append("Rama and legacy action identity")
+	for pair in [[labels[2],"_open_rama_panel"],[labels[3],"_open_field_shop"],[labels[4],"_open_invocations"]]:
+		var button := _button_named(pair[0])
+		if button==null or not button.pressed.is_connected(Callable(scene,pair[1])):
+			errors.append("connected "+pair[1])
+	return errors
+
+func _check_pause_action_counterexamples() -> void:
+	var actions: Array=scene.pause_actions.duplicate()
+	scene.pause_actions.remove_at(3)
+	_record("negative missing field shop keyboard action detected",not _pause_action_errors().is_empty(),{})
+	scene.pause_actions.assign(actions)
+	scene.pause_actions[3]=scene.pause_actions[2]
+	_record("negative duplicate keyboard action at unchanged count detected",not _pause_action_errors().is_empty(),{})
+	scene.pause_actions.assign(actions)
+	scene.pause_actions[2]=actions[3]
+	scene.pause_actions[3]=actions[2]
+	_record("negative reordered keyboard actions detected",not _pause_action_errors().is_empty(),{})
+	scene.pause_actions.assign(actions)
+	var shop: Button=actions[3]
+	var original_label:=shop.text
+	shop.text="Unspecified action"
+	_record("negative wrong action label at unchanged count detected",not _pause_action_errors().is_empty(),{})
+	shop.text=original_label
+	var callback:=Callable(scene,"_open_field_shop")
+	shop.pressed.disconnect(callback)
+	_record("negative disconnected field shop action detected",not _pause_action_errors().is_empty(),{})
+	shop.pressed.connect(callback)
+	_record("restored exact pause action contract",_pause_action_errors().is_empty(),{"buttons":13,"keyboard_actions":14})
+
 func _key(code: Key) -> void:
 	var down := InputEventKey.new()
 	down.physical_keycode=code
@@ -383,6 +439,7 @@ func _horizontal_distance(a: Vector3,b: Vector3) -> float:
 	return Vector2(a.x,a.z).distance_to(Vector2(b.x,b.z))
 
 func _check_layout_and_state() -> void:
+	_check_pause_action_counterexamples()
 	# Both dimensions are explicit logical canvas sizes. The production window
 	# stretch mode is a separate OS/windowing concern covered by root captures.
 	for dimensions in [Vector2i(1280,720),Vector2i(960,600)]:
@@ -431,8 +488,9 @@ func _check_layout_and_state() -> void:
 		if is_instance_valid(continue_button): continue_button.grab_focus()
 		await _frames(4)
 		var focus_ready := is_instance_valid(continue_button) and continue_button.has_focus() and scroll_rect.grow(1).encloses(continue_button.get_global_rect())
-		_record("UI inside viewport and focused controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and buttons.size()==12 and scene.pause_actions.size()==13 and is_instance_valid(scene.invocation_button) and scene.rama_button in scene.pause_actions and focus_reachable and centered and focus_ready,
-			{"logical_viewport":[viewport_rect.size.x,viewport_rect.size.y],"outside_or_small":failures,"overlaps":overlaps,"crosshair_near_center":centered,"resume_keyboard_focus":focus_ready,"all_targets_reachable":focus_reachable,"focused_rectangles":rectangles})
+		var action_errors := _pause_action_errors()
+		_record("UI inside viewport and focused controls separated " + str(dimensions), failures.is_empty() and overlaps.is_empty() and action_errors.is_empty() and focus_reachable and centered and focus_ready,
+			{"logical_viewport":[viewport_rect.size.x,viewport_rect.size.y],"outside_or_small":failures,"overlaps":overlaps,"action_contract_errors":action_errors,"button_count":buttons.size(),"keyboard_action_count":scene.pause_actions.size(),"crosshair_near_center":centered,"resume_keyboard_focus":focus_ready,"all_targets_reachable":focus_reachable,"focused_rectangles":rectangles})
 	# Resume the actual character controller, then use input actions rather than
 	# assigning a fake position to prove held movement had an effect before pause.
 	scene.set_paused(false)

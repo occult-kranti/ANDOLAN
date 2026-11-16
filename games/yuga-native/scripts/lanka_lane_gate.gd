@@ -5,8 +5,12 @@ const ASSET_SHA:="e895e0aaef172901e445aa1e782b7ecbfbdf6b021cf13f1c311db3c60cae7d
 const SOURCE_SHA:="1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33"
 const ROOT_NAME:="LankaLaneGate"
 const POSITION:=Vector3(-40,0,-54)
+const TexturePalette = preload("res://scripts/lanka_texture_palette.gd")
 static var _scene_cache:Dictionary={}
-static func clear_cache()->void:_scene_cache.clear()
+static var _palette_ready:Dictionary={}
+static func clear_cache()->void:
+	_scene_cache.clear()
+	_palette_ready.clear()
 static func cache_report()->Dictionary:return {"entries":_scene_cache.size(),"policy":"one cached immutable native PackedScene per verified asset path; per-instance nodes and collision shape"}
 static func build(parent:Node3D,path:String=ASSET)->Dictionary:
 	if not is_instance_valid(parent):return {"enabled":false,"reason":"parent_required"}
@@ -32,6 +36,9 @@ static func build(parent:Node3D,path:String=ASSET)->Dictionary:
 	if not exact_faces is PackedVector3Array or exact_faces.size()!=6706*3:node.free();return {"enabled":false,"reason":"source_collision_required"}
 	for point in exact_faces:
 		if not point.is_finite():node.free();return {"enabled":false,"reason":"source_collision_finite"}
+	if not _palette_ready.has(path):
+		TexturePalette.share(node)
+		_palette_ready[path] = true
 	var body:=StaticBody3D.new();body.name="SourceTriangleCollision";body.collision_layer=1;body.collision_mask=0;body.set_meta("native_only",true);body.set_meta("source_sha256",SOURCE_SHA)
 	var shape:=ConcavePolygonShape3D.new();shape.backface_collision=true;shape.set_faces(exact_faces)
 	var holder:=CollisionShape3D.new();holder.shape=shape;body.add_child(holder);node.add_child(body)

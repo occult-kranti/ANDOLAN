@@ -22,6 +22,11 @@ const MAX_PELVIS_COMPRESSION_M := .14
 # Resolve only a nearby flat support plane; never move the actor or its capsule.
 const IDLE_SUPPORT_PROBE_M := .08
 const IDLE_SUPPORT_SETTLE_S := .12
+# Defeat is a visual settle, independent of the combat request's brief entry
+# marker and the vitals owner's three-second respawn timer.
+const DEFEAT_SETTLE_S := .72
+const DEFEAT_ENTRY_S := .30
+const RESPAWN_ENTRY_S := .34
 const ACTIONS := {
 	"kodanda":["draw","release",false],
 	"piercing_dawn":["piercing_draw","piercing_release",false],
@@ -73,6 +78,8 @@ var cancel_positions: Array[Vector3] = []
 var cancel_rotations: Array[Quaternion] = []
 var action_from_positions: Array[Vector3] = []
 var action_from_rotations: Array[Quaternion] = []
+var defeat_entry_wrists := {}
+var defeat_target_wrists := {}
 var action_aim_entry_weight := 0.0
 var action_aim_cancel_weight := 0.0
 var nocked := false
@@ -98,6 +105,9 @@ var support_chains := {}
 # Existing authored landing entry is the neutral descent leg pose. Cache only
 # its leg channels; it owns no support plane, target, or elapsed-time state.
 var descent_leg_channels: Array[Dictionary] = []
+# Reuse the authored raised-bow arm chains for power preparation. Their torso
+# and planted legs still come from each power's own clip.
+var power_arm_channels: Array[int] = []
 var idle_support_ready := true
 var idle_support_pending := {"L":false,"R":false}
 var idle_support_age := {"L":IDLE_SUPPORT_SETTLE_S,"R":IDLE_SUPPORT_SETTLE_S}
@@ -146,6 +156,8 @@ func configure(visual: Node, animator: AnimationPlayer = null) -> bool:
 		rest_globals.append(rig.get_bone_global_rest(index))
 		var name_:=String(rig.get_bone_name(index))
 		upper.append(not (name_=="root" or name_.begins_with("pelvis") or name_.contains("leg") or name_.begins_with("foot") or name_.begins_with("toe")))
+		if name_.begins_with("upperarm") or name_.begins_with("lowerarm") or name_.begins_with("wrist") or name_.begins_with("finger") or name_=="bowstring":
+			power_arm_channels.append(index)
 	for side in ["L","R"]:
 		var chain:Array[int]=[]
 		var cursor:=rig.find_bone("foot."+side)
@@ -379,8 +391,15 @@ func request_action(ability_id: String, duration := .18, recovery_seconds := .22
 	if action_stage in ["windup","hold"] and ability_id not in ["hit","death","respawn"]: return false
 	# Pose entry already starts at the previous evaluated pose. Shoulder aim
 	# must start at its previous weight too, before action_blend becomes one.
+	if ability_id=="death":
+		defeat_entry_wrists.clear(); defeat_target_wrists.clear()
+		var terminal_pose:=_sample("death",1.0)
+		for side in ["L","R"]:
+			var index:=rig.find_bone("wrist."+side)
+			defeat_entry_wrists[side]=last_globals[index]
+			defeat_target_wrists[side]=_pose_bone_transform(index,terminal_pose)
 	action_aim_entry_weight=maxf(aim_weight,_action_aim_weight())
-	warm_bow=ability_id=="kodanda" and (aim_weight>.5 or (action in ["kodanda","piercing_dawn","dawn_volley"] and action_stage!="none"))
+	warm_bow=ability_id in ["kodanda","piercing_dawn","dawn_volley"] and (aim_weight>.5 or (action in ["kodanda","piercing_dawn","dawn_volley"] and action_stage!="none"))
 	action_from_positions=blend_positions.duplicate()
 	action_from_rotations=blend_rotations.duplicate()
 	action=ability_id
@@ -427,6 +446,7 @@ func cancel(reason := "reset") -> void:
 	descent_support_owner_transform.clear()
 	descent_support_shape.clear()
 	aim_weight=0; aim_target=0; aim_pitch=0; aim_yaw=0
+	defeat_entry_wrists.clear(); defeat_target_wrists.clear()
 	action_aim_entry_weight=0; action_aim_cancel_weight=0
 	foot_locks={"L":false,"R":false}
 	# Bare imported previews use their supplied plane immediately, as before.
@@ -480,6 +500,62 @@ func _solve_leg(side: String, target: Vector3) -> void:
 	for index in [n3,n4]: _aim_bone(index,origin+direction*d-joint)
 	_global_rotate(end,rest_globals[end].basis.get_rotation_quaternion().normalized())
 
+func _pose_bone_transform(index: int, pose: Dictionary) -> Transform3D:
+	var chain:Array[int]=[]
+	var cursor:=index
+	while cursor>=0:
+		chain.push_front(cursor)
+		cursor=rig.get_bone_parent(cursor)
+	var transform:=Transform3D.IDENTITY
+	for bone in chain:
+		transform=transform*Transform3D(Basis(pose.rotations[bone]).scaled(rig.get_bone_pose_scale(bone)),pose.positions[bone])
+	return transform
+
+func _solve_reaction_arm(side: String, target: Vector3, pole: Vector3) -> void:
+	# The same imported four-segment chain as the authored arm trajectories.
+	# Targets are presentation-space metres; the CharacterBody never moves.
+	var n1:=rig.find_bone("upperarm01."+side)
+	var n2:=rig.find_bone("upperarm02."+side)
+	var n3:=rig.find_bone("lowerarm01."+side)
+	var n4:=rig.find_bone("lowerarm02."+side)
+	var wrist:=rig.find_bone("wrist."+side)
+	var a:=rest_positions[n2].length()+rest_positions[n3].length()
+	var b:=rest_positions[n4].length()+rest_positions[wrist].length()
+	var origin:=rig.get_bone_global_pose(n1).origin
+	var offset:=target-origin
+	var distance:=clampf(offset.length(),absf(a-b)+.002,a+b-.004)
+	var direction:=offset.normalized()
+	var bend:=pole-origin
+	bend-=direction*bend.dot(direction)
+	if bend.length_squared()<.00001: bend=Vector3.RIGHT.cross(direction)
+	bend=bend.normalized()
+	var along:=(a*a-b*b+distance*distance)/(2*distance)
+	var elbow:=origin+direction*along+bend*sqrt(maxf(0,a*a-along*along))
+	for bone in [n1,n2]: _aim_bone(bone,elbow-origin)
+	for bone in [n3,n4]: _aim_bone(bone,origin+direction*distance-elbow)
+
+func _apply_defeat_gesture() -> void:
+	if action!="death" or action_stage not in ["windup","hold","recovery"]: return
+	var settle:=_smooth(action_elapsed/DEFEAT_SETTLE_S)
+	# The original death clip kneels but keeps both hands at standing height.
+	# Set the bow across the forward side and rest the open hand near the knee.
+	for side in ["L","R"]:
+		var wrist:=rig.find_bone("wrist."+side)
+		if not defeat_entry_wrists.has(side) or not defeat_target_wrists.has(side): continue
+		var entry:Transform3D=defeat_entry_wrists[side]
+		var terminal:Transform3D=defeat_target_wrists[side]
+		var target:=Vector3(.25,.54,.42) if side=="L" else Vector3(-.38,.50,.44)
+		var pole:=Vector3(.55,.70,.12) if side=="L" else Vector3(-.60,.70,.12)
+		_solve_reaction_arm(side,entry.origin.lerp(target,settle),pole)
+		# Preserve the calibrated finger/grip closure. Rotating the wrist also
+		# carries its bound bow/string; it never shifts the skin or grip socket.
+		var tilt:=Quaternion(Vector3.FORWARD,1.10) if side=="R" else Quaternion(Vector3.RIGHT,.35)
+		var orientation:Quaternion=(tilt*terminal.basis.get_rotation_quaternion()).normalized()
+		_global_rotate(wrist,entry.basis.get_rotation_quaternion().slerp(orientation,settle).normalized())
+	var head:=rig.find_bone("head")
+	var current:=rig.get_bone_global_pose(head).basis.get_rotation_quaternion()
+	_global_rotate(head,(Quaternion(Vector3.RIGHT,.30*settle)*current).normalized())
+
 func _action_aim_weight() -> float:
 	if action not in ["kodanda","piercing_dawn","dawn_volley"]: return 0.0
 	if action_stage=="windup":
@@ -492,6 +568,7 @@ func _action_aim_weight() -> float:
 
 func _apply_aim() -> void:
 	var weight:=maxf(aim_weight,_action_aim_weight())
+	if action=="death": weight=action_aim_entry_weight*(1.0-_smooth(action_elapsed/DEFEAT_ENTRY_S))
 	if weight<.001: return
 	# Rotate the complete shoulder frame, preserving arm/string relationship.
 	var index:=rig.find_bone("spine03")
@@ -616,13 +693,29 @@ func _motion_pose() -> Dictionary:
 		if warm_bow and action=="kodanda" and action_stage in ["windup","hold"]: clip="ready_draw"
 		var p:=clampf(action_elapsed/(recovery if action_stage in ["recovery","fade"] else windup),0,1)
 		if action_stage=="fade": p=1
+		if action=="death" and action_stage in ["windup","hold"]: p=clampf(action_elapsed/DEFEAT_SETTLE_S,0,1)
 		var action_pose:=_sample(clip,p)
+		if action in ["piercing_dawn","dawn_volley"] and action_stage in ["windup","hold"]:
+			# Power shots should not lower and redraw an already aimed bow.
+			# The original power arm tracks also cross an IK orientation branch
+			# between authored keys. Existing ready_draw chains avoid that branch
+			# while preserving the power-specific chest and support-foot poses.
+			var ready_pose:=_sample("ready_draw",p)
+			for bone in power_arm_channels:
+				action_pose.positions[bone]=ready_pose.positions[bone]
+				action_pose.rotations[bone]=ready_pose.rotations[bone]
 		if cancelled_pose and action_stage=="fade": action_pose={"positions":cancel_positions.duplicate(),"rotations":cancel_rotations.duplicate()}
 		# Every new attack begins from the last evaluated pose, including rapid
 		# release-to-draw retriggers, instead of snapping back to a rest key.
-		if (action_stage=="windup" or (action_stage=="recovery" and bool(pair[2]))) and action_elapsed<.10 and not action_from_positions.is_empty():
+		# Power anticipation has time to raise the bow from a cold stance;
+		# primary and all recovery entries retain their existing duration.
+		var entry_duration:=.24 if action in ["piercing_dawn","dawn_volley"] and action_stage=="windup" else .10
+		if action=="death": entry_duration=DEFEAT_ENTRY_S
+		elif action=="respawn": entry_duration=RESPAWN_ENTRY_S
+		var defeat_entry:=action=="death" and action_stage in ["windup","hold"]
+		if (defeat_entry or action_stage=="windup" or (action_stage=="recovery" and bool(pair[2]))) and action_elapsed<entry_duration and not action_from_positions.is_empty():
 			var previous:={"positions":action_from_positions.duplicate(),"rotations":action_from_rotations.duplicate()}
-			_mix_pose(previous,action_pose,_smooth(action_elapsed/.10),true)
+			_mix_pose(previous,action_pose,_smooth(action_elapsed/entry_duration),true)
 			action_pose=previous
 		var planted_action:=action in ["piercing_dawn","guardian_circle","dawn_volley"] and grounded and traversal=="ground" and movement_speed<.12
 		_mix_pose(pose,action_pose,action_blend,bool(pair[2]) or planted_action)
@@ -674,6 +767,7 @@ func evaluate_pose() -> void:
 				clearance=sin(swing*PI)*.07
 			var side_target:=Vector3((.24 if side=="L" else -.24)+signf(local_velocity.x)*offset,rest_globals[index].origin.y+clearance,0)
 			_solve_leg(side,point.lerp(forward_target.lerp(side_target,lateral_blend),direction_blend))
+	_apply_defeat_gesture()
 	_apply_contact()
 	# During hold, position the deforming string at the actual posed fingertips.
 	# Release uses the authored returning string and preserves finger followthrough.

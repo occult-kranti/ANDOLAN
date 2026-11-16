@@ -1,0 +1,143 @@
+{
+  "task_id": "YUGA-HERO-6R",
+  "round": 3,
+  "source_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "branch": "work/yuga-studio",
+  "status": "implemented_and_component_verified_render_review_pending",
+  "source_sha256": {
+    "scripts/rama_motion.gd": "09c4e72153ad5ca21e70e58c1ae691899041076bdacc8e7495870c9bd23f3301",
+    "scripts/rama_ability_effects.gd": "c8579329c1eeae3e6d4bc9575dce29836a3490a7da5bdba8169b29ae8aae0cb8",
+    "shaders/rama_projectile_warning.gdshader": "96858b0a319d8ce9aa399b5e6bb2b699904a77aa240479b938551daad682fd40",
+    "tests/rama_power_entry_cases.gd": "359699b78b53aed9fc45162c31ab6bc151c0dec4093f732e710c046846a868cf",
+    "tests/rama_volley_warning_cases.gd": "66b1fc0bf823159210ed5d5fbf48e0bc076c0226a2a960c8f91b44616624e490",
+    "tests/rama_ability_visual_cases.gd": "c6da514023af9ee9841038847b78e3c2ff8e14c8ceb0e78144465b9ea41b8709"
+  },
+  "sources_unchanged": [
+    "scripts/rama_ability_kit.gd",
+    "assets/design/rama-ability-kit.json",
+    "assets/heroes/rama-hero.glb",
+    "assets/animations/rama_hero_motion.tres"
+  ],
+  "power_channels": [
+    "finger1-3.L",
+    "finger1-2.L",
+    "finger1-1.L",
+    "finger2-3.L",
+    "finger2-2.L",
+    "finger2-1.L",
+    "finger3-3.L",
+    "finger3-2.L",
+    "finger3-1.L",
+    "finger4-3.L",
+    "finger4-2.L",
+    "finger4-1.L",
+    "finger5-3.L",
+    "finger5-2.L",
+    "finger5-1.L",
+    "wrist.L",
+    "lowerarm02.L",
+    "lowerarm01.L",
+    "upperarm02.L",
+    "upperarm01.L",
+    "finger1-3.R",
+    "finger1-2.R",
+    "finger1-1.R",
+    "finger2-3.R",
+    "finger2-2.R",
+    "finger2-1.R",
+    "finger3-3.R",
+    "finger3-2.R",
+    "finger3-1.R",
+    "finger4-3.R",
+    "finger4-2.R",
+    "finger4-1.R",
+    "finger5-3.R",
+    "finger5-2.R",
+    "finger5-1.R",
+    "bowstring",
+    "wrist.R",
+    "lowerarm02.R",
+    "lowerarm01.R",
+    "upperarm02.R",
+    "upperarm01.R"
+  ],
+  "preserved_channels": "All joints outside named upperarm/lowerarm/wrist/finger/bowstring chains preserve original power pose selection, including spine/torso/pelvis/legs; recovery and release clips unchanged. No animation library or mesh mutation.",
+  "primary_identity": {
+    "passed": true,
+    "trials": 18,
+    "scope": "Exact equality of all primary skin/contact rows for six entry/reset modes at30/60/120Hz",
+    "baseline_motion_sha256": "6261a692308e84863dbac4ff049fb7855cc8c5ebf70d8ec844b1dfb2225e53c1",
+    "current_motion_sha256": "09c4e72153ad5ca21e70e58c1ae691899041076bdacc8e7495870c9bd23f3301",
+    "hero_sha256": "db4b2ec7a14cad72299d462c1265374f615d5e9d8b8852c4669e1f960f78245e",
+    "library_sha256": "1d997aed90f71dae3d0f9e38d02485dbf202d8425e61c77d8de7108fa63a9ae8"
+  },
+  "checks": {
+    "abilities": {
+      "passed": true,
+      "count": 85,
+      "report": "round3/abilities.json",
+      "command": "godot --headless --path games/yuga-native --script res://tests/rama_ability_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/combat/round3/abilities.json",
+      "exit_code": 0
+    },
+    "visual-structure": {
+      "passed": true,
+      "count": 74,
+      "report": "round3/visual-structure.json",
+      "command": "godot --headless --path games/yuga-native --script res://tests/rama_ability_visual_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/combat/round3/visual-structure.json",
+      "exit_code": 0
+    },
+    "adversarial": {
+      "passed": true,
+      "count": 56,
+      "report": "round3/adversarial.json",
+      "command": "godot --headless --path games/yuga-native --script res://tests/rama_effect_adversarial_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/combat/round3/adversarial.json",
+      "exit_code": 0
+    },
+    "volley-warning": {
+      "passed": true,
+      "count": 24,
+      "report": "round3/volley-warning.json",
+      "command": "godot --headless --path games/yuga-native --script res://tests/rama_volley_warning_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/combat/round3/volley-warning.json",
+      "exit_code": 0
+    },
+    "motion-existing": {
+      "passed": true,
+      "count": 39,
+      "report": "round3/motion-existing.json",
+      "command": "godot --headless --path games/yuga-native --script res://tests/rama_motion_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/combat/round3/motion-existing.json",
+      "exit_code": 0
+    },
+    "motion-polish": {
+      "passed": true,
+      "count": 22,
+      "report": "round3/motion-polish.json",
+      "command": "godot --headless --path games/yuga-native --script res://tests/rama_motion_polish_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/combat/round3/motion-polish.json",
+      "exit_code": 0
+    },
+    "motion-adversarial": {
+      "passed": true,
+      "count": 40,
+      "report": "round3/motion-adversarial.json",
+      "command": "godot --headless --path games/yuga-native --script res://tests/rama_motion_adversarial_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/combat/round3/motion-adversarial.json",
+      "exit_code": 0
+    },
+    "power-entry-runtime-commit": {
+      "passed": true,
+      "count": 217,
+      "report": "round3/power-entry-runtime-commit.json",
+      "command": "godot --headless --path games/yuga-native --script res://tests/rama_power_entry_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/combat/round3/power-entry-runtime-commit.json",
+      "exit_code": 0
+    }
+  },
+  "failed_trials": [
+    "Initial test assumed reusable pose caches had to be empty after reset; actual contract only clears action/nock/aim and overwrites entry pose on next request. Changed oracle to reject stale release and require next request cold.",
+    "Initial moving fixture retained 5m/s during committed powers; real runtime zeros velocity on begin. The impossible sliding fixture has a2.511cm120Hz entry residual and remains retained. Revised fixture moves into actual committed stop and passes same bound.",
+    "Power candidate1 preserved outgoing nock only; rejected because ~16.9cm30Hz entry remains. Candidate2 longer entry improves first step but retains authored Piercing interpolation flip at120Hz. Candidate3 reuses raised-bow arm chains and removes flip."
+  ],
+  "limits": [
+    "Rendering and ordinary input review delegated to root; no visual acceptance from headless checks",
+    "Cold power raise is intentionally brisk over.24s and requires actual view review",
+    "Hair/costume/contact/full commercial graphics remain open",
+    "Human feel/listening, online multiplayer and physical GPU performance unrun"
+  ]
+}

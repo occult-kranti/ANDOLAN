@@ -152,7 +152,7 @@ def main():
     if a.dry_run: print(json.dumps({'mode':a.mode,'plan':plan,'engine':str(engine),'engine_sha256':sha(engine),'render_threads':a.render_threads,'shader_cache_seed':str(a.shader_cache_seed) if a.shader_cache_seed else None,'godot_shader_cache_seed':str(a.godot_shader_cache_seed) if a.godot_shader_cache_seed else None,'starts_processes':False},indent=2)); return
     out.mkdir(parents=True); project=source
     pins={}
-    files=['scripts/launch_shell.gd','scripts/hero_ui_theme.gd','scripts/scene_transition.gd','scripts/loading_presentation.gd','tools/ui-campaign/board.gd','tools/ui-campaign/observer.gd','tools/ui-campaign/run.py','tests/ui_campaign_flow_cases.gd']
+    files=['scripts/launch_shell.gd','scripts/launch_briefing.gd','scripts/input_bindings.gd','scripts/rama_ability_glyph.gd','scripts/hero_ui_theme.gd','scripts/scene_transition.gd','scripts/loading_presentation.gd','tools/ui-campaign/board.gd','tools/ui-campaign/observer.gd','tools/ui-campaign/run.py','tests/ui_campaign_flow_cases.gd']
     if a.allow_authority_staging: files += ['tools/ui-campaign/integrated_capture.gd','tools/ui-campaign/authority_stage.gd']
     if a.mode in ['component','boot_recovery','transition_fixture']:
         project=out/'fixture'; project.mkdir()

@@ -5,6 +5,9 @@ uniform int lane_count : hint_range(0, 8) = 0;
 uniform vec4 lane_segments[8];
 uniform int rotation_count : hint_range(0, 20) = 0;
 uniform vec4 rotation_segments[20];
+// The composed Sangam district selects this profile for both paving and the
+// opaque dry edge of shallow water. Legacy scenes retain their exact palette.
+uniform bool sangam_paving = false;
 
 float segment_distance(vec2 p, vec4 segment) {
 	vec2 a = segment.xy;
@@ -47,7 +50,23 @@ vec3 paving_stones(vec2 p, vec2 slab_size, vec3 tint) {
 float world_paving_roughness(vec2 p) {
 	// Broad dry wear, not wet mirror lanes. Shared by opaque pool borders.
 	float wear = sin(p.x * 0.23 + sin(p.y * 0.09)) * sin(p.y * 0.31);
-	return 0.84 + wear * 0.055;
+	return (sangam_paving ? 0.77 : 0.84) + wear * 0.055;
+}
+
+// Shallow stone bevels change shading only, never physical floor elevation.
+// Derivative fading removes the fine normal response before it aliases.
+float sangam_stone_height(vec2 p) {
+	float row = floor(p.y / 0.72);
+	vec2 uv = vec2(p.x / 1.12 + mod(row, 2.0) * 0.5, p.y / 0.72);
+	vec2 edge = min(fract(uv), 1.0 - fract(uv)) * vec2(1.12, 0.72);
+	return smoothstep(0.006, 0.035, min(edge.x, edge.y)) * 0.008;
+}
+
+vec3 sangam_paving_normal(vec2 p) {
+	float detail = 1.0 - smoothstep(0.025, 0.13, max(fwidth(p.x), fwidth(p.y)));
+	float dx = (sangam_stone_height(p + vec2(0.006, 0.0)) - sangam_stone_height(p - vec2(0.006, 0.0))) / 0.012;
+	float dz = (sangam_stone_height(p + vec2(0.0, 0.006)) - sangam_stone_height(p - vec2(0.0, 0.006))) / 0.012;
+	return normalize(vec3(-dx * detail, 1.0, -dz * detail));
 }
 
 vec3 world_paving(vec2 p) {
@@ -66,6 +85,15 @@ vec3 world_paving(vec2 p) {
 	float rotation = 1.0 - smoothstep(1.33 - aa, 1.45 + aa, rotation_distance);
 	vec3 paving = paving_stones(p, vec2(1.65, 1.10), vec3(0.205, 0.221, 0.207));
 	vec3 avenue = paving_stones(p, vec2(2.40, 1.20), vec3(0.133, 0.165, 0.166));
+	if (sangam_paving) {
+		// Human-scale warm sandstone gives the indigo hero and cool arcades a
+		// stable background. Broad wear stays quiet beneath hostile telegraphs.
+		paving = paving_stones(p, vec2(1.12, 0.72), vec3(0.285, 0.221, 0.155));
+		avenue = paving_stones(p, vec2(1.12, 0.72), vec3(0.205, 0.175, 0.145));
+		float seam = 1.0 - smoothstep(0.025 - aa, 0.055 + aa, abs(lane_distance - 3.85));
+		seam *= 1.0 - smoothstep(0.12, 0.5, aa);
+		paving = mix(paving, vec3(0.36, 0.32, 0.24), seam * 0.65);
+	}
 	// A single union mask resolves intersections without overlapping geometry.
 	paving = mix(paving, avenue, max(lane, rotation * 0.55));
 	// Quiet arrival-court inlays are descriptive scenery, never combat markers.

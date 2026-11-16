@@ -1,5 +1,18 @@
 # Start here: project and agent handoff
 
+**Active user direction — tactical Casual:** [YUGA · Sanctum](../games/yuga-native/docs/tactical/README.md) → [current delivery](../games/yuga-native/docs/tactical/DELIVERY.md) → [art-first roadmap](../games/yuga-native/docs/tactical/ROADMAP.md). First-person mythic firearms and hero abilities, 5v5, first team to 13 wins, sides switch after round 12. Casual is local with bots; Ranked is planned. This supersedes the long MOBA-style match direction in older documents below. Native appearance and complete artifacts are the current priority; browser is deferred.
+
+**16 November video continuation:** [delivered builds, panel study and verification](research/video-study/DELIVERY.md) → [video-derived roadmap](research/video-study/IMPLEMENTATION_ROADMAP.md). Source-bound checkpoints and concurrent Sangam integration retain their separate receipts.
+
+**Current Rama / Sangam continuation:** [six-round panel and resumable evidence](../games/yuga-native/docs/research/hero-six-rounds/README.md) → [implemented hero/map, shop and controls](../games/yuga-native/docs/research/hero-six-rounds/HERO_AND_MAP.md) → [remaining work](../games/yuga-native/docs/research/hero-six-rounds/ROADMAP.md). This integrates the native district rebuild with the separately authorized field-shop/battle-HUD stream. It preserves the historical published builds and campaign counts below.
+
+**15 November studio continuation:** [local delivery and verification](research/STUDIO_DELIVERY.md)
+→ [game/story/mode/map production plan](../games/yuga-native/docs/STUDIO_PRODUCTION_PLAN.md).
+`work/yuga-studio` continues the native production branch with a launch briefing,
+shared gate/garden textures and an original Blender map-study candidate. Read the
+new report for exact current artifacts and test/render limits. Historical public
+packages and campaign acceptance counts below keep their original scope.
+
 **Latest implementation:** [reuse into playable integration](../games/yuga-native/docs/research/reuse-production-continuation/README.md). Start there for the source-derived water garden, typed authority factory, event/socket diagnostics, MPFB native hair candidates and ordinary gate-input results. Its exact worker/root receipts take precedence over historical source summaries below. The [ten-stage guide](../games/yuga-native/docs/research/reuse-production-continuation/NEXT_TEN.md) retains dependency gates; complete hero art, full matches and physical-GPU qualification remain open.
 
 **Active desktop work:** [resume handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.

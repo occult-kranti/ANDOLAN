@@ -3,6 +3,7 @@ extends Control
 ## dialogs and loading; this shell emits intent and never fabricates availability.
 
 const HeroUITheme = preload("res://scripts/hero_ui_theme.gd")
+const LaunchBriefing = preload("res://scripts/launch_briefing.gd")
 const MODE_WORLD := "world"
 const MODE_TRAIN := "train"
 const WINDOW_MINIMUM := Vector2i(960, 540)
@@ -38,6 +39,7 @@ var _identity_gap: Control
 var _footer_gap: Control
 var _identity: VBoxContainer
 var _practice_prompt: Label
+var briefing: VBoxContainer
 
 func _ready() -> void:
 	# The native window must keep menu controls usable at the supported base size.
@@ -132,6 +134,8 @@ func _build() -> void:
 	primary_button = _button("", "ExploreConfluence", _launch, &"primary")
 	primary_button.custom_minimum_size.y = 56
 	decision.add_child(primary_button)
+	briefing = LaunchBriefing.new()
+	decision.add_child(briefing)
 	_footer_gap = Control.new()
 	_footer_gap.name = "FooterBreathingRoom"
 	_footer_gap.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -200,6 +204,9 @@ func _layout() -> void:
 	_practice_prompt.visible = not short_canvas
 	mode_title.visible = not short_canvas
 	_identity_gap.visible = not short_canvas
+	# The optional schematic uses the portrait menu's spare desktop space.
+	# Essential mode context stays above the action at every supported scale.
+	briefing.visible = size.x >= 1200 and size.y >= 720
 	if short_canvas:
 		if _identity.get_parent() != self: _identity.reparent(self)
 		_identity.position = Vector2(inset, top)
@@ -249,6 +256,7 @@ func _refresh() -> void:
 		_style_mode(item, item.button_pressed)
 	mode_title.text = "Confluence" if world_selected else "Bow training"
 	mode_description.text = "Offline practice with local armies, three lanes and capture relays as Rama." if world_selected else "Offline practice with Rama’s bow and four abilities against courtyard targets. Reset anytime."
+	briefing.refresh(selected_mode)
 	primary_button.text = ("Enter Confluence  →" if world_selected else "Begin bow training  →")
 	var loading := launch_state == "loading"
 	for action in _actions: action.disabled = loading
@@ -283,7 +291,9 @@ func focus_primary() -> void:
 		scroll.ensure_control_visible(primary_button)
 
 func _on_visibility_changed() -> void:
-	if is_visible_in_tree(): call_deferred("_focus_when_unclaimed")
+	if is_visible_in_tree():
+		if is_instance_valid(briefing): briefing.refresh(selected_mode)
+		call_deferred("_focus_when_unclaimed")
 
 func _focus_when_unclaimed() -> void:
 	if not is_inside_tree() or is_queued_for_deletion() or not is_visible_in_tree(): return
@@ -293,4 +303,4 @@ func _focus_when_unclaimed() -> void:
 	focus_primary()
 
 func snapshot() -> Dictionary:
-	return {"selected_mode":selected_mode, "launch_state":launch_state, "offline":true, "compact":_compact, "status":menu_hint.text if is_instance_valid(menu_hint) else _status_message}
+	return {"selected_mode":selected_mode, "launch_state":launch_state, "offline":true, "compact":_compact, "status":menu_hint.text if is_instance_valid(menu_hint) else _status_message, "briefing":briefing.snapshot() if is_instance_valid(briefing) else {}}

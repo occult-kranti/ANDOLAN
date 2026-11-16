@@ -1,0 +1,3497 @@
+{
+  "complete": true,
+  "scope": "Actual XTest input and raw framebuffer; component fixture is not integrated gameplay.",
+  "mode": "component",
+  "command": [
+    "/workspaces/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64",
+    "--path",
+    "/workspaces/scratch/studio-component-final-r1/fixture",
+    "--display-driver",
+    "x11",
+    "--rendering-method",
+    "gl_compatibility",
+    "--audio-driver",
+    "Dummy",
+    "--resolution",
+    "1280x720",
+    "--position",
+    "0,0",
+    "--max-fps",
+    "20",
+    "--disable-vsync",
+    "--script",
+    "res://tools/ui-campaign/observer.gd",
+    "--",
+    "--mode=component",
+    "--output=/workspaces/scratch/studio-component-final-r1"
+  ],
+  "source_sha256": {
+    "scripts/launch_shell.gd": "9b1805d40fc11eecc21e86c23dab09cb38f4d0a79f48472b149ef63f0660ce36",
+    "scripts/launch_briefing.gd": "a2a6027e5e7f94fb37486b5b7fa144e1ce4ec6967a1b11fd4d35de3e0b181e94",
+    "scripts/input_bindings.gd": "592be5a9950f171005f27740daaeb0a756abfe3fd18368a8a6e80c4af6e3b243",
+    "scripts/rama_ability_glyph.gd": "682e2d423b0824e5fb3c1ad82f56d26154014f91be0f0cba0af45aa89045850a",
+    "scripts/hero_ui_theme.gd": "5a7264614f2ec7eccafdaa40620f605e0f016a7f7a3185c60c7c82b66bd85d6a",
+    "scripts/scene_transition.gd": "a5d236a40d1513111bd1a7d92281308019cd7de13d66350ac3935b331061b483",
+    "scripts/loading_presentation.gd": "c3c785b8fe73876510109601b0a4f80c3567ced2ba6fb12ed38b54d1182088d7",
+    "tools/ui-campaign/board.gd": "543abdd42226226fdf4f9a5e01a471b4b42282e6e161c86c0c38f77742996750",
+    "tools/ui-campaign/observer.gd": "58cbfad590d29d60510f3e7187548d62408afdae9a103faca71e4492e5d1092c",
+    "tools/ui-campaign/run.py": "a686909bb0b1e34d6d09f5c0a6f01e51ce6b497fba9da03d19c40c12eaa0c3d5",
+    "tests/ui_campaign_flow_cases.gd": "4cc08e1019718131e70bd6c78922c7117faf98b1f6d62da12f0f2f351c577f81",
+    "assets/fonts/NotoSerif-Regular.ttf": "9d7583b7dc9e812afd32a14280c5cac3160012efe50c8d08938f4fea266ff67f",
+    "assets/fonts/NotoSans-Regular.ttf": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+    "assets/fonts/DejaVuSans.ttf.import": "3d1c9315fe118a11830f3b2cb13c7fa88f47028f229100a8053705799bd777a6",
+    "assets/fonts/NotoSans-Regular.ttf.import": "7ddb7fe1898a55896f6790224f4f00070a4b99d83c0ba9b0bb02d6ba74e342cd",
+    "assets/fonts/DejaVuSans.ttf": "57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e",
+    "assets/fonts/NotoSerif-Regular.ttf.import": "d2b38a67ee6a5962bd073b551085f1f4c29d1af64474e90450f56f33b5e96a5b",
+    ".godot/imported/DejaVuSans.ttf-0dcd47e426510e02f045e926ff1bfdf0.fontdata": "68d0b938e9b8dd12b9d527059a91598fc8cadaa9b8ed6d45b27991d15ee03381",
+    ".godot/imported/NotoSans-Regular.ttf-674bcff8e78e1ac2b0101362155b4faa.fontdata": "1e6192539e600859edca6a02304d085f9fa2c432a1bf272e67c2d1dc8ca9fda6",
+    ".godot/imported/DejaVuSans.ttf-0dcd47e426510e02f045e926ff1bfdf0.md5": "8827886add3c5260014a2d9a26fac932a3d62146d8182b7bf15b1bf40781a38e",
+    ".godot/imported/NotoSans-Regular.ttf-674bcff8e78e1ac2b0101362155b4faa.md5": "6471f2b105ce3461fcc42c475867cbffb768c24f6f2cd8774de703f81b1c1a3c",
+    ".godot/imported/NotoSerif-Regular.ttf-6e3f67e84ff840e5e437d5cce0416d65.md5": "dc7a1c0584ee966f5a440f4a68a58285575ff450609f22b3a02ed2706f08fbc8",
+    ".godot/imported/NotoSerif-Regular.ttf-6e3f67e84ff840e5e437d5cce0416d65.fontdata": "a2b62772d5dfe5765b9d5d99768652c915494966b950563a8bdeb224a4ad0e55",
+    "project.godot": "f793077575e5be0e6ae64d7e79dfbdb10123d4f8f31bf3f8961ff3f10c43c7c7"
+  },
+  "plan": [
+    {
+      "capture": "01-launch",
+      "expect": {
+        "launch.selected_mode": "world"
+      }
+    },
+    {
+      "click_name": "TrainingMode",
+      "expect": {
+        "launch.selected_mode": "train"
+      },
+      "capture": "02-training-selected"
+    },
+    {
+      "key": "Tab",
+      "capture": "03-keyboard-focus"
+    },
+    {
+      "click_name": "ExploreConfluence",
+      "expect": {
+        "transition.phase": "error"
+      },
+      "capture": "04-real-missing-scene-error"
+    },
+    {
+      "key": "Return",
+      "expect": {
+        "transition.phase": "error",
+        "transition.attempt": 2
+      },
+      "capture": "05-retry-error"
+    },
+    {
+      "key": "Escape",
+      "expect": {
+        "transition.phase": "cancelled"
+      },
+      "capture": "06-back-focus"
+    }
+  ],
+  "plan_sha256": null,
+  "events": [
+    {
+      "click_name": "TrainingMode",
+      "expect": {
+        "launch.selected_mode": "train"
+      },
+      "capture": "02-training-selected",
+      "point": [
+        382.5,
+        233.0
+      ],
+      "pointer_settlement": [
+        {
+          "frame": 2,
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ]
+        },
+        {
+          "frame": 4,
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ]
+        },
+        {
+          "frame": 7,
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ]
+        }
+      ],
+      "window_id": 8388611,
+      "before": {
+        "audio_state": {
+          "master_bus_muted": false
+        },
+        "content_scale_factor": 1.0,
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "ConfluenceMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+            "rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Confluence"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "TrainingMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+            "rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Bow training"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "interactive": true,
+            "name": "ExploreConfluence",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+            "rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "text": "Enter Confluence  \u2192"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "RamaAbilities",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+            "rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Rama\u2019s abilities"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "WatchConfluenceDuel",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+            "rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Watch duel"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Help",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+            "rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "text": "Help"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Settings",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+            "rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Settings"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Quit",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+            "rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Quit"
+          }
+        ],
+        "focus": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+        "focus_name": "ExploreConfluence",
+        "focus_text": "Enter Confluence  \u2192",
+        "frame": 7,
+        "launch": {
+          "briefing": {
+            "bindings": {
+              "dash": "E",
+              "fire": "LMB",
+              "guardian_circle": "C",
+              "pulse": "Q",
+              "ultimate": "X"
+            },
+            "first_move": "Follow a wave; hold relays for arrows.",
+            "mode": "world",
+            "schematic": true,
+            "visible": true
+          },
+          "compact": false,
+          "launch_state": "ready",
+          "offline": true,
+          "selected_mode": "world",
+          "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+        },
+        "loader_count": 1,
+        "logical_viewport_size": [
+          1280.0,
+          720.0
+        ],
+        "modal_scroll": {},
+        "mode": "component",
+        "mouse_mode": 0,
+        "panels": {
+          "MainMenu": true,
+          "SceneTransition": false,
+          "Settings": true
+        },
+        "paused": false,
+        "physics_frame": 32,
+        "scene": "UIComponentBoard",
+        "scene_can_process": true,
+        "scene_path": "",
+        "scene_process_mode": 0,
+        "size": [
+          1280,
+          720
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 0,
+          "busy": false,
+          "committing": false,
+          "destination": "",
+          "message": "",
+          "phase": "idle",
+          "resource_progress": -1.0,
+          "visible": false
+        },
+        "transition_event_count": 1,
+        "transition_layer_count": 0,
+        "transition_owner_present": false,
+        "window_focused": true
+      },
+      "time_unix": 1794783544.5749414
+    },
+    {
+      "key": "Tab",
+      "capture": "03-keyboard-focus",
+      "window_id": 8388611,
+      "before": {
+        "audio_state": {
+          "master_bus_muted": false
+        },
+        "content_scale_factor": 1.0,
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "ConfluenceMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+            "rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Confluence"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "TrainingMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+            "rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Bow training"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "interactive": true,
+            "name": "ExploreConfluence",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+            "rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "text": "Begin bow training  \u2192"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "RamaAbilities",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+            "rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Rama\u2019s abilities"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "WatchConfluenceDuel",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+            "rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Watch duel"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Help",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+            "rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "text": "Help"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Settings",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+            "rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Settings"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Quit",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+            "rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Quit"
+          }
+        ],
+        "focus": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+        "focus_name": "TrainingMode",
+        "focus_text": "Bow training",
+        "frame": 17,
+        "launch": {
+          "briefing": {
+            "bindings": {
+              "dash": "E",
+              "fire": "LMB",
+              "guardian_circle": "C",
+              "pulse": "Q",
+              "ultimate": "X"
+            },
+            "first_move": "Move, draw, release. Try each ability.",
+            "mode": "train",
+            "schematic": true,
+            "visible": true
+          },
+          "compact": false,
+          "launch_state": "ready",
+          "offline": true,
+          "selected_mode": "train",
+          "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+        },
+        "loader_count": 1,
+        "logical_viewport_size": [
+          1280.0,
+          720.0
+        ],
+        "modal_scroll": {},
+        "mode": "component",
+        "mouse_mode": 0,
+        "panels": {
+          "MainMenu": true,
+          "SceneTransition": false,
+          "Settings": true
+        },
+        "paused": false,
+        "physics_frame": 65,
+        "scene": "UIComponentBoard",
+        "scene_can_process": true,
+        "scene_path": "",
+        "scene_process_mode": 0,
+        "size": [
+          1280,
+          720
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 0,
+          "busy": false,
+          "committing": false,
+          "destination": "",
+          "message": "",
+          "phase": "idle",
+          "resource_progress": -1.0,
+          "visible": false
+        },
+        "transition_event_count": 1,
+        "transition_layer_count": 0,
+        "transition_owner_present": false,
+        "window_focused": true
+      },
+      "time_unix": 1794783545.1304142
+    },
+    {
+      "click_name": "ExploreConfluence",
+      "expect": {
+        "transition.phase": "error"
+      },
+      "capture": "04-real-missing-scene-error",
+      "point": [
+        271.0,
+        411.0
+      ],
+      "pointer_settlement": [
+        {
+          "frame": 26,
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ]
+        },
+        {
+          "frame": 28,
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ]
+        },
+        {
+          "frame": 30,
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ]
+        }
+      ],
+      "window_id": 8388611,
+      "before": {
+        "audio_state": {
+          "master_bus_muted": false
+        },
+        "content_scale_factor": 1.0,
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "ConfluenceMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+            "rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Confluence"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "TrainingMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+            "rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Bow training"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "interactive": true,
+            "name": "ExploreConfluence",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+            "rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "text": "Begin bow training  \u2192"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "RamaAbilities",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+            "rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Rama\u2019s abilities"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "WatchConfluenceDuel",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+            "rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Watch duel"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Help",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+            "rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "text": "Help"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Settings",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+            "rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Settings"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": true,
+            "name": "Quit",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+            "rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Quit"
+          }
+        ],
+        "focus": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+        "focus_name": "ExploreConfluence",
+        "focus_text": "Begin bow training  \u2192",
+        "frame": 30,
+        "launch": {
+          "briefing": {
+            "bindings": {
+              "dash": "E",
+              "fire": "LMB",
+              "guardian_circle": "C",
+              "pulse": "Q",
+              "ultimate": "X"
+            },
+            "first_move": "Move, draw, release. Try each ability.",
+            "mode": "train",
+            "schematic": true,
+            "visible": true
+          },
+          "compact": false,
+          "launch_state": "ready",
+          "offline": true,
+          "selected_mode": "train",
+          "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+        },
+        "loader_count": 1,
+        "logical_viewport_size": [
+          1280.0,
+          720.0
+        ],
+        "modal_scroll": {},
+        "mode": "component",
+        "mouse_mode": 0,
+        "panels": {
+          "MainMenu": true,
+          "SceneTransition": false,
+          "Settings": true
+        },
+        "paused": false,
+        "physics_frame": 109,
+        "scene": "UIComponentBoard",
+        "scene_can_process": true,
+        "scene_path": "",
+        "scene_process_mode": 0,
+        "size": [
+          1280,
+          720
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 0,
+          "busy": false,
+          "committing": false,
+          "destination": "",
+          "message": "",
+          "phase": "idle",
+          "resource_progress": -1.0,
+          "visible": false
+        },
+        "transition_event_count": 1,
+        "transition_layer_count": 0,
+        "transition_owner_present": false,
+        "window_focused": true
+      },
+      "time_unix": 1794783545.8406923
+    },
+    {
+      "key": "Return",
+      "expect": {
+        "transition.phase": "error",
+        "transition.attempt": 2
+      },
+      "capture": "05-retry-error",
+      "window_id": 8388611,
+      "before": {
+        "audio_state": {
+          "master_bus_muted": false
+        },
+        "content_scale_factor": 1.0,
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "ConfluenceMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+            "rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Confluence"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "TrainingMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+            "rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Bow training"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "interactive": false,
+            "name": "ExploreConfluence",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+            "rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "text": "Begin bow training  \u2192"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "RamaAbilities",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+            "rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Rama\u2019s abilities"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "WatchConfluenceDuel",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+            "rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Watch duel"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "Help",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+            "rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "text": "Help"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "Settings",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+            "rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Settings"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "Quit",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+            "rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Quit"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              400.0,
+              504.0,
+              234.0,
+              56.0
+            ],
+            "interactive": true,
+            "name": "TransitionRetry",
+            "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionRetry",
+            "rect": [
+              400.0,
+              504.0,
+              234.0,
+              56.0
+            ],
+            "text": "Retry"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              646.0,
+              504.0,
+              234.0,
+              56.0
+            ],
+            "interactive": true,
+            "name": "TransitionBack",
+            "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionBack",
+            "rect": [
+              646.0,
+              504.0,
+              234.0,
+              56.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionRetry",
+        "focus_name": "TransitionRetry",
+        "focus_text": "Retry",
+        "frame": 38,
+        "launch": {
+          "briefing": {
+            "bindings": {
+              "dash": "E",
+              "fire": "LMB",
+              "guardian_circle": "C",
+              "pulse": "Q",
+              "ultimate": "X"
+            },
+            "first_move": "Move, draw, release. Try each ability.",
+            "mode": "train",
+            "schematic": true,
+            "visible": true
+          },
+          "compact": false,
+          "launch_state": "ready",
+          "offline": true,
+          "selected_mode": "train",
+          "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+        },
+        "loader_count": 1,
+        "logical_viewport_size": [
+          1280.0,
+          720.0
+        ],
+        "modal_scroll": {},
+        "mode": "component",
+        "mouse_mode": 0,
+        "panels": {
+          "MainMenu": true,
+          "SceneTransition": true,
+          "Settings": true
+        },
+        "paused": false,
+        "physics_frame": 146,
+        "scene": "UIComponentBoard",
+        "scene_can_process": false,
+        "scene_path": "",
+        "scene_process_mode": 4,
+        "size": [
+          1280,
+          720
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 1,
+          "busy": false,
+          "committing": false,
+          "destination": "courtyard",
+          "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+          "phase": "error",
+          "resource_progress": -1.0,
+          "visible": true
+        },
+        "transition_event_count": 4,
+        "transition_layer_count": 0,
+        "transition_owner_present": true,
+        "window_focused": true
+      },
+      "time_unix": 1794783546.488242
+    },
+    {
+      "key": "Escape",
+      "expect": {
+        "transition.phase": "cancelled"
+      },
+      "capture": "06-back-focus",
+      "window_id": 8388611,
+      "before": {
+        "audio_state": {
+          "master_bus_muted": false
+        },
+        "content_scale_factor": 1.0,
+        "controls": [
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "ConfluenceMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+            "rect": [
+              52.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Confluence"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "TrainingMode",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+            "rect": [
+              275.0,
+              209.0,
+              215.0,
+              48.0
+            ],
+            "text": "Bow training"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "interactive": false,
+            "name": "ExploreConfluence",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+            "rect": [
+              52.0,
+              383.0,
+              438.0,
+              56.0
+            ],
+            "text": "Begin bow training  \u2192"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "RamaAbilities",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+            "rect": [
+              52.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Rama\u2019s abilities"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "WatchConfluenceDuel",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+            "rect": [
+              275.0,
+              546.0,
+              215.0,
+              48.0
+            ],
+            "text": "Watch duel"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "Help",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+            "rect": [
+              52.0,
+              606.0,
+              140.0,
+              48.0
+            ],
+            "text": "Help"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "Settings",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+            "rect": [
+              200.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Settings"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "interactive": false,
+            "name": "Quit",
+            "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+            "rect": [
+              349.0,
+              606.0,
+              141.0,
+              48.0
+            ],
+            "text": "Quit"
+          },
+          {
+            "disabled": false,
+            "focus": true,
+            "input_rect": [
+              400.0,
+              504.0,
+              234.0,
+              56.0
+            ],
+            "interactive": true,
+            "name": "TransitionRetry",
+            "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionRetry",
+            "rect": [
+              400.0,
+              504.0,
+              234.0,
+              56.0
+            ],
+            "text": "Retry"
+          },
+          {
+            "disabled": false,
+            "focus": false,
+            "input_rect": [
+              646.0,
+              504.0,
+              234.0,
+              56.0
+            ],
+            "interactive": true,
+            "name": "TransitionBack",
+            "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionBack",
+            "rect": [
+              646.0,
+              504.0,
+              234.0,
+              56.0
+            ],
+            "text": "Back"
+          }
+        ],
+        "focus": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionRetry",
+        "focus_name": "TransitionRetry",
+        "focus_text": "Retry",
+        "frame": 45,
+        "launch": {
+          "briefing": {
+            "bindings": {
+              "dash": "E",
+              "fire": "LMB",
+              "guardian_circle": "C",
+              "pulse": "Q",
+              "ultimate": "X"
+            },
+            "first_move": "Move, draw, release. Try each ability.",
+            "mode": "train",
+            "schematic": true,
+            "visible": true
+          },
+          "compact": false,
+          "launch_state": "ready",
+          "offline": true,
+          "selected_mode": "train",
+          "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+        },
+        "loader_count": 1,
+        "logical_viewport_size": [
+          1280.0,
+          720.0
+        ],
+        "modal_scroll": {},
+        "mode": "component",
+        "mouse_mode": 0,
+        "panels": {
+          "MainMenu": true,
+          "SceneTransition": true,
+          "Settings": true
+        },
+        "paused": false,
+        "physics_frame": 185,
+        "scene": "UIComponentBoard",
+        "scene_can_process": false,
+        "scene_path": "",
+        "scene_process_mode": 4,
+        "size": [
+          1280,
+          720
+        ],
+        "state": {},
+        "transition": {
+          "attempt": 2,
+          "busy": false,
+          "committing": false,
+          "destination": "courtyard",
+          "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+          "phase": "error",
+          "resource_progress": -1.0,
+          "visible": true
+        },
+        "transition_event_count": 7,
+        "transition_layer_count": 0,
+        "transition_owner_present": true,
+        "window_focused": true
+      },
+      "time_unix": 1794783547.1360683
+    }
+  ],
+  "shots": [
+    {
+      "audio_state": {
+        "master_bus_muted": false
+      },
+      "content_scale_factor": 1.0,
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "ConfluenceMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+          "rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Confluence"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "TrainingMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Bow training"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "ExploreConfluence",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "text": "Enter Confluence  \u2192"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "RamaAbilities",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+          "rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Rama\u2019s abilities"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "WatchConfluenceDuel",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+          "rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Watch duel"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Help",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+          "rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "text": "Help"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Settings",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+          "rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Settings"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Quit",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+          "rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Quit"
+        }
+      ],
+      "file": "01-launch.png",
+      "focus": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+      "focus_name": "ExploreConfluence",
+      "focus_text": "Enter Confluence  \u2192",
+      "frame": 1,
+      "launch": {
+        "briefing": {
+          "bindings": {
+            "dash": "E",
+            "fire": "LMB",
+            "guardian_circle": "C",
+            "pulse": "Q",
+            "ultimate": "X"
+          },
+          "first_move": "Follow a wave; hold relays for arrows.",
+          "mode": "world",
+          "schematic": true,
+          "visible": true
+        },
+        "compact": false,
+        "launch_state": "ready",
+        "offline": true,
+        "selected_mode": "world",
+        "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+      },
+      "loader_count": 1,
+      "logical_viewport_size": [
+        1280.0,
+        720.0
+      ],
+      "modal_scroll": {},
+      "mode": "component",
+      "mouse_mode": 0,
+      "panels": {
+        "MainMenu": true,
+        "SceneTransition": false,
+        "Settings": true
+      },
+      "paused": false,
+      "physics_frame": 9,
+      "png_status": 0,
+      "scene": "UIComponentBoard",
+      "scene_can_process": true,
+      "scene_path": "",
+      "scene_process_mode": 0,
+      "sha256": "fc5fcd5407ced918a1b58f749f3899621a7d6e3d18e5c3eddcf58665e0d796b9",
+      "size": [
+        1280,
+        720
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 0,
+        "busy": false,
+        "committing": false,
+        "destination": "",
+        "message": "",
+        "phase": "idle",
+        "resource_progress": -1.0,
+        "visible": false
+      },
+      "transition_event_count": 1,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    },
+    {
+      "audio_state": {
+        "master_bus_muted": false
+      },
+      "content_scale_factor": 1.0,
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "ConfluenceMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+          "rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Confluence"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "TrainingMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Bow training"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "ExploreConfluence",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "text": "Begin bow training  \u2192"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "RamaAbilities",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+          "rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Rama\u2019s abilities"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "WatchConfluenceDuel",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+          "rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Watch duel"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Help",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+          "rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "text": "Help"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Settings",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+          "rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Settings"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Quit",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+          "rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Quit"
+        }
+      ],
+      "file": "02-training-selected.png",
+      "focus": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+      "focus_name": "TrainingMode",
+      "focus_text": "Bow training",
+      "frame": 16,
+      "launch": {
+        "briefing": {
+          "bindings": {
+            "dash": "E",
+            "fire": "LMB",
+            "guardian_circle": "C",
+            "pulse": "Q",
+            "ultimate": "X"
+          },
+          "first_move": "Move, draw, release. Try each ability.",
+          "mode": "train",
+          "schematic": true,
+          "visible": true
+        },
+        "compact": false,
+        "launch_state": "ready",
+        "offline": true,
+        "selected_mode": "train",
+        "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+      },
+      "loader_count": 1,
+      "logical_viewport_size": [
+        1280.0,
+        720.0
+      ],
+      "modal_scroll": {},
+      "mode": "component",
+      "mouse_mode": 0,
+      "panels": {
+        "MainMenu": true,
+        "SceneTransition": false,
+        "Settings": true
+      },
+      "paused": false,
+      "physics_frame": 59,
+      "png_status": 0,
+      "scene": "UIComponentBoard",
+      "scene_can_process": true,
+      "scene_path": "",
+      "scene_process_mode": 0,
+      "sha256": "72af934086ab0867b239bff478f1aea2ee7869e8216b3c37f7ebf1b68cd40c86",
+      "size": [
+        1280,
+        720
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 0,
+        "busy": false,
+        "committing": false,
+        "destination": "",
+        "message": "",
+        "phase": "idle",
+        "resource_progress": -1.0,
+        "visible": false
+      },
+      "transition_event_count": 1,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    },
+    {
+      "audio_state": {
+        "master_bus_muted": false
+      },
+      "content_scale_factor": 1.0,
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "ConfluenceMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+          "rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Confluence"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "TrainingMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Bow training"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "ExploreConfluence",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "text": "Begin bow training  \u2192"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "RamaAbilities",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+          "rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Rama\u2019s abilities"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "WatchConfluenceDuel",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+          "rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Watch duel"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Help",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+          "rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "text": "Help"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Settings",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+          "rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Settings"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Quit",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+          "rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Quit"
+        }
+      ],
+      "file": "03-keyboard-focus.png",
+      "focus": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+      "focus_name": "ExploreConfluence",
+      "focus_text": "Begin bow training  \u2192",
+      "frame": 25,
+      "launch": {
+        "briefing": {
+          "bindings": {
+            "dash": "E",
+            "fire": "LMB",
+            "guardian_circle": "C",
+            "pulse": "Q",
+            "ultimate": "X"
+          },
+          "first_move": "Move, draw, release. Try each ability.",
+          "mode": "train",
+          "schematic": true,
+          "visible": true
+        },
+        "compact": false,
+        "launch_state": "ready",
+        "offline": true,
+        "selected_mode": "train",
+        "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+      },
+      "loader_count": 1,
+      "logical_viewport_size": [
+        1280.0,
+        720.0
+      ],
+      "modal_scroll": {},
+      "mode": "component",
+      "mouse_mode": 0,
+      "panels": {
+        "MainMenu": true,
+        "SceneTransition": false,
+        "Settings": true
+      },
+      "paused": false,
+      "physics_frame": 89,
+      "png_status": 0,
+      "scene": "UIComponentBoard",
+      "scene_can_process": true,
+      "scene_path": "",
+      "scene_process_mode": 0,
+      "sha256": "a6c20740990f48a020a1df1addaabe9cdf4d85a06bf8d17e754423d45f0c1e8b",
+      "size": [
+        1280,
+        720
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 0,
+        "busy": false,
+        "committing": false,
+        "destination": "",
+        "message": "",
+        "phase": "idle",
+        "resource_progress": -1.0,
+        "visible": false
+      },
+      "transition_event_count": 1,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    },
+    {
+      "audio_state": {
+        "master_bus_muted": false
+      },
+      "content_scale_factor": 1.0,
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "ConfluenceMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+          "rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Confluence"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "TrainingMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Bow training"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "interactive": false,
+          "name": "ExploreConfluence",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "text": "Begin bow training  \u2192"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "RamaAbilities",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+          "rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Rama\u2019s abilities"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "WatchConfluenceDuel",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+          "rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Watch duel"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Help",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+          "rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "text": "Help"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Settings",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+          "rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Settings"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Quit",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+          "rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            400.0,
+            504.0,
+            234.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "TransitionRetry",
+          "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionRetry",
+          "rect": [
+            400.0,
+            504.0,
+            234.0,
+            56.0
+          ],
+          "text": "Retry"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            646.0,
+            504.0,
+            234.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "TransitionBack",
+          "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionBack",
+          "rect": [
+            646.0,
+            504.0,
+            234.0,
+            56.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "04-real-missing-scene-error.png",
+      "focus": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionRetry",
+      "focus_name": "TransitionRetry",
+      "focus_text": "Retry",
+      "frame": 37,
+      "launch": {
+        "briefing": {
+          "bindings": {
+            "dash": "E",
+            "fire": "LMB",
+            "guardian_circle": "C",
+            "pulse": "Q",
+            "ultimate": "X"
+          },
+          "first_move": "Move, draw, release. Try each ability.",
+          "mode": "train",
+          "schematic": true,
+          "visible": true
+        },
+        "compact": false,
+        "launch_state": "ready",
+        "offline": true,
+        "selected_mode": "train",
+        "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+      },
+      "loader_count": 1,
+      "logical_viewport_size": [
+        1280.0,
+        720.0
+      ],
+      "modal_scroll": {},
+      "mode": "component",
+      "mouse_mode": 0,
+      "panels": {
+        "MainMenu": true,
+        "SceneTransition": true,
+        "Settings": true
+      },
+      "paused": false,
+      "physics_frame": 139,
+      "png_status": 0,
+      "scene": "UIComponentBoard",
+      "scene_can_process": false,
+      "scene_path": "",
+      "scene_process_mode": 4,
+      "sha256": "1db0846f365e35fa10e57177ebb4427fb07c42fd1051a04bc33deb83be45b890",
+      "size": [
+        1280,
+        720
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 1,
+        "busy": false,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+        "phase": "error",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "transition_event_count": 4,
+      "transition_layer_count": 0,
+      "transition_owner_present": true,
+      "window_focused": true
+    },
+    {
+      "audio_state": {
+        "master_bus_muted": false
+      },
+      "content_scale_factor": 1.0,
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "ConfluenceMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+          "rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Confluence"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "TrainingMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Bow training"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "interactive": false,
+          "name": "ExploreConfluence",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "text": "Begin bow training  \u2192"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "RamaAbilities",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+          "rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Rama\u2019s abilities"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "WatchConfluenceDuel",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+          "rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Watch duel"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Help",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+          "rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "text": "Help"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Settings",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+          "rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Settings"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Quit",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+          "rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            400.0,
+            504.0,
+            234.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "TransitionRetry",
+          "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionRetry",
+          "rect": [
+            400.0,
+            504.0,
+            234.0,
+            56.0
+          ],
+          "text": "Retry"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            646.0,
+            504.0,
+            234.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "TransitionBack",
+          "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionBack",
+          "rect": [
+            646.0,
+            504.0,
+            234.0,
+            56.0
+          ],
+          "text": "Back"
+        }
+      ],
+      "file": "05-retry-error.png",
+      "focus": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionRetry",
+      "focus_name": "TransitionRetry",
+      "focus_text": "Retry",
+      "frame": 44,
+      "launch": {
+        "briefing": {
+          "bindings": {
+            "dash": "E",
+            "fire": "LMB",
+            "guardian_circle": "C",
+            "pulse": "Q",
+            "ultimate": "X"
+          },
+          "first_move": "Move, draw, release. Try each ability.",
+          "mode": "train",
+          "schematic": true,
+          "visible": true
+        },
+        "compact": false,
+        "launch_state": "ready",
+        "offline": true,
+        "selected_mode": "train",
+        "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+      },
+      "loader_count": 1,
+      "logical_viewport_size": [
+        1280.0,
+        720.0
+      ],
+      "modal_scroll": {},
+      "mode": "component",
+      "mouse_mode": 0,
+      "panels": {
+        "MainMenu": true,
+        "SceneTransition": true,
+        "Settings": true
+      },
+      "paused": false,
+      "physics_frame": 178,
+      "png_status": 0,
+      "scene": "UIComponentBoard",
+      "scene_can_process": false,
+      "scene_path": "",
+      "scene_process_mode": 4,
+      "sha256": "1db0846f365e35fa10e57177ebb4427fb07c42fd1051a04bc33deb83be45b890",
+      "size": [
+        1280,
+        720
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 2,
+        "busy": false,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "This scene is unavailable. Retry, or go back to the previous screen.",
+        "phase": "error",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "transition_event_count": 7,
+      "transition_layer_count": 0,
+      "transition_owner_present": true,
+      "window_focused": true
+    },
+    {
+      "audio_state": {
+        "master_bus_muted": false
+      },
+      "content_scale_factor": 1.0,
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "ConfluenceMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+          "rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Confluence"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "TrainingMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Bow training"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "ExploreConfluence",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "text": "Begin bow training  \u2192"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "RamaAbilities",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+          "rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Rama\u2019s abilities"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "WatchConfluenceDuel",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+          "rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Watch duel"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Help",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+          "rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "text": "Help"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Settings",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+          "rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Settings"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": true,
+          "name": "Quit",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+          "rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Quit"
+        }
+      ],
+      "file": "06-back-focus.png",
+      "focus": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+      "focus_name": "ExploreConfluence",
+      "focus_text": "Begin bow training  \u2192",
+      "frame": 51,
+      "launch": {
+        "briefing": {
+          "bindings": {
+            "dash": "E",
+            "fire": "LMB",
+            "guardian_circle": "C",
+            "pulse": "Q",
+            "ultimate": "X"
+          },
+          "first_move": "Move, draw, release. Try each ability.",
+          "mode": "train",
+          "schematic": true,
+          "visible": true
+        },
+        "compact": false,
+        "launch_state": "ready",
+        "offline": true,
+        "selected_mode": "train",
+        "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+      },
+      "loader_count": 1,
+      "logical_viewport_size": [
+        1280.0,
+        720.0
+      ],
+      "modal_scroll": {},
+      "mode": "component",
+      "mouse_mode": 0,
+      "panels": {
+        "MainMenu": true,
+        "SceneTransition": false,
+        "Settings": true
+      },
+      "paused": false,
+      "physics_frame": 206,
+      "png_status": 0,
+      "scene": "UIComponentBoard",
+      "scene_can_process": true,
+      "scene_path": "",
+      "scene_process_mode": 0,
+      "sha256": "8435d308f16df8928b0b28c1668249557253a4d18cf4b252f7cd0c09c7979c17",
+      "size": [
+        1280,
+        720
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 3,
+        "busy": false,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "Returned to the previous screen.",
+        "phase": "cancelled",
+        "resource_progress": -1.0,
+        "visible": false
+      },
+      "transition_event_count": 9,
+      "transition_layer_count": 0,
+      "transition_owner_present": false,
+      "window_focused": true
+    }
+  ],
+  "started_unix": 1794783542.0631504,
+  "renderer_requested": "gl_compatibility",
+  "engine_sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+  "package_sha256": {},
+  "import_cache_sha256": {},
+  "import_freeze_manifest_sha256": null,
+  "export_manifest": null,
+  "package_archive": null,
+  "instrumentation_sha256": {},
+  "user_state": {
+    "path": "/workspaces/scratch/studio-component-final-r1/user",
+    "before": {},
+    "after": {}
+  },
+  "scheduling": {
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "render_threads": 1,
+    "LP_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "authority_staging": {
+    "enabled": false,
+    "stages": [],
+    "scope": "Only explicit stage steps use authority fixtures. Navigation remains native XTest. Staged outcomes are not native-playthrough claims."
+  },
+  "shader_cache_seed": {
+    "path": null,
+    "copied_to": "/workspaces/scratch/studio-component-final-r1/user/cache/mesa",
+    "files_sha256": {},
+    "reused_isolated_cache_sha256": {},
+    "scope": "No Mesa cache seed supplied."
+  },
+  "godot_shader_cache_seed": {
+    "path": null,
+    "copied_to": null,
+    "files_sha256": {},
+    "scope": "No Godot shader cache seed supplied."
+  },
+  "automatic_shots": [
+    {
+      "audio_state": {
+        "master_bus_muted": false
+      },
+      "content_scale_factor": 1.0,
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "ConfluenceMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+          "rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Confluence"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "TrainingMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Bow training"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "interactive": false,
+          "name": "ExploreConfluence",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "text": "Begin bow training  \u2192"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "RamaAbilities",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+          "rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Rama\u2019s abilities"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "WatchConfluenceDuel",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+          "rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Watch duel"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Help",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+          "rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "text": "Help"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Settings",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+          "rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Settings"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Quit",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+          "rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            400.0,
+            504.0,
+            480.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "TransitionBack",
+          "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionBack",
+          "rect": [
+            400.0,
+            504.0,
+            480.0,
+            56.0
+          ],
+          "text": "Cancel loading"
+        }
+      ],
+      "file": "auto-queued-1.png",
+      "focus": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionBack",
+      "focus_name": "TransitionBack",
+      "focus_text": "Cancel loading",
+      "frame": 34,
+      "launch": {
+        "briefing": {
+          "bindings": {
+            "dash": "E",
+            "fire": "LMB",
+            "guardian_circle": "C",
+            "pulse": "Q",
+            "ultimate": "X"
+          },
+          "first_move": "Move, draw, release. Try each ability.",
+          "mode": "train",
+          "schematic": true,
+          "visible": true
+        },
+        "compact": false,
+        "launch_state": "ready",
+        "offline": true,
+        "selected_mode": "train",
+        "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+      },
+      "loader_count": 1,
+      "logical_viewport_size": [
+        1280.0,
+        720.0
+      ],
+      "modal_scroll": {},
+      "mode": "component",
+      "mouse_mode": 0,
+      "panels": {
+        "MainMenu": true,
+        "SceneTransition": true,
+        "Settings": true
+      },
+      "paused": false,
+      "physics_frame": 120,
+      "png_status": 0,
+      "scene": "UIComponentBoard",
+      "scene_can_process": false,
+      "scene_path": "",
+      "scene_process_mode": 4,
+      "sha256": "658e1eeaeba33b673abd3d27347a77c41d9d9ea6b7817e790b26deb01bcb7d28",
+      "size": [
+        1280,
+        720
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 1,
+        "busy": true,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "Preparing to load\u2026",
+        "phase": "queued",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "transition_event_count": 2,
+      "transition_layer_count": 0,
+      "transition_owner_present": true,
+      "window_focused": true
+    },
+    {
+      "audio_state": {
+        "master_bus_muted": false
+      },
+      "content_scale_factor": 1.0,
+      "controls": [
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "ConfluenceMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/ConfluenceMode",
+          "rect": [
+            52.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Confluence"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "TrainingMode",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ModeChoice/PracticeModes/TrainingMode",
+          "rect": [
+            275.0,
+            209.0,
+            215.0,
+            48.0
+          ],
+          "text": "Bow training"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "interactive": false,
+          "name": "ExploreConfluence",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/PracticeDecision/ExploreConfluence",
+          "rect": [
+            52.0,
+            383.0,
+            438.0,
+            56.0
+          ],
+          "text": "Begin bow training  \u2192"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "RamaAbilities",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/RamaAbilities",
+          "rect": [
+            52.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Rama\u2019s abilities"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "WatchConfluenceDuel",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/LearnAndWatch/WatchConfluenceDuel",
+          "rect": [
+            275.0,
+            546.0,
+            215.0,
+            48.0
+          ],
+          "text": "Watch duel"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Help",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Help",
+          "rect": [
+            52.0,
+            606.0,
+            140.0,
+            48.0
+          ],
+          "text": "Help"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Settings",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Settings",
+          "rect": [
+            200.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Settings"
+        },
+        {
+          "disabled": false,
+          "focus": false,
+          "input_rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "interactive": false,
+          "name": "Quit",
+          "path": "/root/UIComponentBoard/MainMenu/Card/Scroll/Content/LaunchFooter/TitleUtilities/Quit",
+          "rect": [
+            349.0,
+            606.0,
+            141.0,
+            48.0
+          ],
+          "text": "Quit"
+        },
+        {
+          "disabled": false,
+          "focus": true,
+          "input_rect": [
+            400.0,
+            504.0,
+            480.0,
+            56.0
+          ],
+          "interactive": true,
+          "name": "TransitionBack",
+          "path": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionBack",
+          "rect": [
+            400.0,
+            504.0,
+            480.0,
+            56.0
+          ],
+          "text": "Cancel loading"
+        }
+      ],
+      "file": "auto-queued-2.png",
+      "focus": "/root/SceneTransition/LoadingPresentation/LoadingCard/@VBoxContainer@27/LoadingActions/TransitionBack",
+      "focus_name": "TransitionBack",
+      "focus_text": "Cancel loading",
+      "frame": 41,
+      "launch": {
+        "briefing": {
+          "bindings": {
+            "dash": "E",
+            "fire": "LMB",
+            "guardian_circle": "C",
+            "pulse": "Q",
+            "ultimate": "X"
+          },
+          "first_move": "Move, draw, release. Try each ability.",
+          "mode": "train",
+          "schematic": true,
+          "visible": true
+        },
+        "compact": false,
+        "launch_state": "ready",
+        "offline": true,
+        "selected_mode": "train",
+        "status": "Offline practice  \u00b7  F2 help  \u00b7  F3 abilities"
+      },
+      "loader_count": 1,
+      "logical_viewport_size": [
+        1280.0,
+        720.0
+      ],
+      "modal_scroll": {},
+      "mode": "component",
+      "mouse_mode": 0,
+      "panels": {
+        "MainMenu": true,
+        "SceneTransition": true,
+        "Settings": true
+      },
+      "paused": false,
+      "physics_frame": 160,
+      "png_status": 0,
+      "scene": "UIComponentBoard",
+      "scene_can_process": false,
+      "scene_path": "",
+      "scene_process_mode": 4,
+      "sha256": "658e1eeaeba33b673abd3d27347a77c41d9d9ea6b7817e790b26deb01bcb7d28",
+      "size": [
+        1280,
+        720
+      ],
+      "state": {},
+      "transition": {
+        "attempt": 2,
+        "busy": true,
+        "committing": false,
+        "destination": "courtyard",
+        "message": "Preparing to load\u2026",
+        "phase": "queued",
+        "resource_progress": -1.0,
+        "visible": true
+      },
+      "transition_event_count": 5,
+      "transition_layer_count": 0,
+      "transition_owner_present": true,
+      "window_focused": true
+    }
+  ],
+  "package_unchanged": true,
+  "instrumentation_unchanged": true,
+  "archive_unchanged": true,
+  "export_manifest_unchanged": true,
+  "source_unchanged": true,
+  "import_cache_unchanged": true,
+  "import_freeze_manifest_unchanged": true,
+  "shader_cache_seed_unchanged": true,
+  "godot_shader_cache_seed_unchanged": true,
+  "finished_unix": 1794783547.3267434,
+  "cleanup_exit": -15,
+  "logs": {
+    "godot.log": "03cac66c65e6109123d0375c7c9dc85940fe853f0956396f34090badf27471d6",
+    "xvfb.log": "f7a50b54a42cda7eb41a65fb54f4188cc18d8c0fea1e3c0695e981543de36585"
+  }
+}

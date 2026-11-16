@@ -18,6 +18,8 @@ const RamaHeroPanel = preload("res://scripts/rama_hero_panel.gd")
 const RamaHeroHUD = preload("res://scripts/rama_hero_hud.gd")
 const RamaHeroRuntime = preload("res://scripts/rama_hero_runtime.gd")
 const RamaPracticeArmy = preload("res://scripts/rama_practice_army.gd")
+const RamaTrainingJourney = preload("res://scripts/rama_training_journey.gd")
+const RamaPracticeRecord = preload("res://scripts/rama_practice_record.gd")
 const ENVIRONMENT_PATH := "res://assets/environment/lanka_courtyard.glb"
 const SAVE_PATH := "user://courtyard-settings.cfg"
 const INK := HeroUITheme.INK
@@ -92,6 +94,8 @@ var rama_panel: Control
 var rama_runtime: Node
 var rama_hud: Control
 var practice_army: Node3D
+var training_journey := RamaTrainingJourney.new()
+var practice_record := RamaPracticeRecord.new()
 var hero_atmosphere := HeroAtmosphere.new()
 var scene_transition: Control
 var _transition_return_focus: WeakRef
@@ -242,7 +246,20 @@ func _create_rama_practice() -> void:
 	rama_kit = rama_runtime.kit
 	rama_effects = rama_runtime.effects
 	rama_runtime.changed.connect(_refresh_hud)
+	training_journey.reset(rama_kit.generation)
+	practice_record.reset(rama_kit.generation)
+	rama_runtime.combat_event.connect(func(event: Dictionary):
+		practice_record.observe(event)
+		if training_journey.observe(event): _refresh_hud())
 	_set_practice_suspended(true)
+
+func _practice_record_report() -> Dictionary:
+	var data := practice_record.report()
+	if is_instance_valid(practice_army): data.elapsed_s = practice_army.elapsed
+	var journey := training_journey.report()
+	data.practiced = int(journey.completed)
+	data.practice_total = int(journey.total)
+	return data
 
 func _set_practice_suspended(value: bool) -> void:
 	if is_instance_valid(practice_army): practice_army.set_suspended(value)
@@ -363,6 +380,7 @@ func _create_ui() -> void:
 	feedback_label.add_theme_constant_override("outline_size", 4)
 	feedback_label.add_theme_color_override("font_outline_color", INK)
 	hud.add_child(feedback_label)
+	feedback_label.visible = not is_instance_valid(rama_runtime) or not rama_runtime.configured
 	main_panel = LaunchShell.new()
 	root.add_child(main_panel)
 	# Keep the player's practice selection across film/world scene replacement.
@@ -456,6 +474,7 @@ func _create_ui() -> void:
 	rama_panel = hero_panel
 	root.add_child(hero_panel)
 	hero_panel.configure_effects(rama_effects)
+	hero_panel.configure_practice_report(_practice_record_report)
 	hero_panel.closed.connect(_close_hero)
 	controls_overlay = ControlsOverlay.new()
 	root.add_child(controls_overlay)
@@ -964,7 +983,9 @@ func _physics_process(delta: float) -> void:
 func _refresh_hud() -> void:
 	if not is_instance_valid(stats_label): return
 	stats_label.text = "%d hits  ·  %d targets cleared  ·  %02d:%02d" % [hit_count, defeat_count, int(elapsed) / 60, int(elapsed) % 60]
-	objective_label.text = "Master the bow" if defeat_count < 5 else "Find your rhythm"
+	var journey := training_journey.report()
+	objective_label.text = journey.title
+	status_label.text = "%s\n%s reload · F3 abilities · F2 help" % [journey.hint, Bindings.label("reload")]
 	if rama_hud: rama_hud._refresh()
 
 func _on_fired(origin: Vector3, direction: Vector3, _empowered: bool) -> void:
@@ -985,8 +1006,12 @@ func _on_projectile_impact(location: Vector3, _target: Node) -> void:
 
 func _on_target_struck(target: Node3D, defeated: bool) -> void:
 	hit_count += 1
+	if defeated: defeat_count += 1
+	# The current Rama kit emits effective receipts after the receiver accepts
+	# damage. Its HUD/effect/audio consumers own hero feedback; the old bullseye
+	# text/ring/cue would duplicate it and overlap the confirmed reticle badge.
+	if is_instance_valid(rama_runtime) and rama_runtime.configured: return
 	if defeated:
-		defeat_count += 1
 		feedback_label.text = "TARGET CLEARED  +1"
 		feedback_clock = 1.3
 		_sound("clear", -1)

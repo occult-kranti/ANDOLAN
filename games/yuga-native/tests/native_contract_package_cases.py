@@ -120,7 +120,7 @@ def main():
         checker.write_bytes(checker_original)
         # Each new retained identity is a direct packaging input: absence
         # and changed bytes must reject instead of replaying an older proof.
-        for revision in (6, 7):
+        for revision in (6, 7, 8, 9):
             for kind in ('catalog', 'descriptor'):
                 retained = project / f'tests/fixtures/contracts/native-content{revision}-{kind}.json'
                 retained_bytes = retained.read_bytes()
@@ -134,8 +134,36 @@ def main():
                          lambda: packaging._native_contract_inputs(project),
                          'Missing or unsafe native contract input')
                 retained.write_bytes(retained_bytes)
+        # The adapter/spec are direct pins and the imported collision geometry
+        # and finish shader are transitive spec pins. Neither may change under an accepted export.
+        for relative, check_name in [
+            ('scripts/sangam_district.gd', 'native-offline-triad_content_games/yuga-native/scripts/sangam_district.gd'),
+            ('assets/world/sangam-district.json', 'native-offline-triad_content_games/yuga-native/assets/world/sangam-district.json'),
+            ('assets/world/sangam-district.glb', 'sangam_spec_transitive_glb_pin'),
+            ('shaders/sangam_masonry.gdshader', 'sangam_spec_transitive_finish_shader_pin'),
+        ]:
+            target = project / relative
+            original = target.read_bytes()
+            target.write_bytes(original + b'\n')
+            changed_dir = folder()
+            rejected(f'changed Sangam {relative} rejects actual source proof',
+                     lambda: packaging.prove_native_contract_sources(changed_dir / 'report.json', project),
+                     'Native contract source check failed')
+            changed_report = json.loads((changed_dir / 'report.json').read_text())
+            checks.append({'name': f'actual checker identifies Sangam pin {relative}',
+                           'passed': any(item['name'] == check_name and item['passed'] is False
+                                         for item in changed_report['checks'])})
+            rejected(f'package rejects changed Sangam {relative} after valid engine identity',
+                     lambda: package_contract_gate({'native_contracts': valid}),
+                     'Native contract source check failed')
+            target.write_bytes(original)
+            target.unlink()
+            rejected(f'missing Sangam {relative} rejects input closure',
+                     lambda: packaging._native_contract_inputs(project),
+                     'Missing or unsafe native contract input')
+            target.write_bytes(original)
         # The exact rejected source state is reconstructed from committed bytes,
-        # independent of the currently corrected revision8 catalog/checker.
+        # independent of the currently corrected revision10 catalog/checker.
         for relative in ['assets/contracts/native-contracts-v1.json', 'tools/check-native-contracts.py', 'scripts/native_contracts.gd']:
             (project / relative).write_bytes(subprocess.check_output([
                 'git', 'show', '83f88f840c59934155aec19d95b41d920d15c6c1:games/yuga-native/' + relative], cwd=PROJECT))
@@ -174,7 +202,7 @@ def main():
               'sources': {'tools/package-native.py': packaging.record(PROJECT / 'tools/package-native.py'),
                           'tools/check-native-contracts.py': packaging.record(PROJECT / 'tools/check-native-contracts.py'),
                           'tests/native_contract_package_cases.py': packaging.record(Path(__file__))},
-              'scope': 'Actual source checker, isolated tiny source closure, entry-point early rejection and retained exact83f counterexample. No engine, import, export or runtime scene executed.'}
+              'scope': 'Actual source checker, isolated finite source closure, entry-point early rejection and retained exact83f counterexample. No engine, import, export or runtime scene executed.'}
     args.report.write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps({'passed': report['passed'], 'checks': len(checks), 'failed': [item for item in checks if not item['passed']]}))
     return 0 if report['passed'] else 1

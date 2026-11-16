@@ -1,0 +1,768 @@
+{
+  "input": "/workspaces/ANDOLAN/gameplay.mp4",
+  "sha256": "bed8ca9b5981a0509041b95f32392762a05358d20edb390cce1388c451b982bb",
+  "sample_step_seconds": 20.0,
+  "sample_start_seconds": 0,
+  "sample_duration_seconds": null,
+  "commands": [
+    {
+      "argv": [
+        "ffprobe",
+        "-v",
+        "error",
+        "-show_format",
+        "-show_streams",
+        "-of",
+        "json",
+        "gameplay.mp4"
+      ],
+      "returncode": 0,
+      "stdout": "{\n    \"streams\": [\n        {\n            \"index\": 0,\n            \"codec_name\": \"h264\",\n            \"codec_long_name\": \"H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10\",\n            \"profile\": \"Main\",\n            \"codec_type\": \"video\",\n            \"codec_tag_string\": \"avc1\",\n            \"codec_tag\": \"0x31637661\",\n            \"width\": 640,\n            \"height\": 360,\n            \"coded_width\": 640,\n            \"coded_height\": 360,\n            \"closed_captions\": 0,\n            \"film_grain\": 0,\n            \"has_b_frames\": 1,\n            \"sample_aspect_ratio\": \"1:1\",\n            \"display_aspect_ratio\": \"16:9\",\n            \"pix_fmt\": \"yuv420p\",\n            \"level\": 30,\n            \"color_range\": \"tv\",\n            \"color_space\": \"bt709\",\n            \"color_transfer\": \"bt709\",\n            \"color_primaries\": \"bt709\",\n            \"chroma_location\": \"left\",\n            \"field_order\": \"progressive\",\n            \"refs\": 1,\n            \"is_avc\": \"true\",\n            \"nal_length_size\": \"4\",\n            \"id\": \"0x1\",\n            \"r_frame_rate\": \"2997/100\",\n            \"avg_frame_rate\": \"2997/100\",\n            \"time_base\": \"1/11988\",\n            \"start_pts\": 0,\n            \"start_time\": \"0.000000\",\n            \"duration_ts\": 24536400,\n            \"duration\": \"2046.746747\",\n            \"bit_rate\": \"525636\",\n            \"bits_per_raw_sample\": \"8\",\n            \"nb_frames\": \"61341\",\n            \"extradata_size\": 43,\n            \"disposition\": {\n                \"default\": 1,\n                \"dub\": 0,\n                \"original\": 0,\n                \"comment\": 0,\n                \"lyrics\": 0,\n                \"karaoke\": 0,\n                \"forced\": 0,\n                \"hearing_impaired\": 0,\n                \"visual_impaired\": 0,\n                \"clean_effects\": 0,\n                \"attached_pic\": 0,\n                \"timed_thumbnails\": 0,\n                \"non_diegetic\": 0,\n                \"captions\": 0,\n                \"descriptions\": 0,\n                \"metadata\": 0,\n                \"dependent\": 0,\n                \"still_image\": 0\n            },\n            \"tags\": {\n                \"creation_time\": \"2026-10-23T00:09:48.000000Z\",\n                \"language\": \"und\",\n                \"handler_name\": \"ISO Media file produced by Google Inc. Created on: 10/22/2026.\",\n                \"vendor_id\": \"[0][0][0][0]\"\n            }\n        },\n        {\n            \"index\": 1,\n            \"codec_name\": \"aac\",\n            \"codec_long_name\": \"AAC (Advanced Audio Coding)\",\n            \"profile\": \"HE-AAC\",\n            \"codec_type\": \"audio\",\n            \"codec_tag_string\": \"mp4a\",\n            \"codec_tag\": \"0x6134706d\",\n            \"sample_fmt\": \"fltp\",\n            \"sample_rate\": \"44100\",\n            \"channels\": 2,\n            \"channel_layout\": \"stereo\",\n            \"bits_per_sample\": 0,\n            \"initial_padding\": 0,\n            \"id\": \"0x2\",\n            \"r_frame_rate\": \"0/0\",\n            \"avg_frame_rate\": \"0/0\",\n            \"time_base\": \"1/22050\",\n            \"start_pts\": 0,\n            \"start_time\": \"0.000000\",\n            \"duration_ts\": 45133824,\n            \"duration\": \"2046.885442\",\n            \"bit_rate\": \"47999\",\n            \"nb_frames\": \"44076\",\n            \"extradata_size\": 25,\n            \"disposition\": {\n                \"default\": 1,\n                \"dub\": 0,\n                \"original\": 0,\n                \"comment\": 0,\n                \"lyrics\": 0,\n                \"karaoke\": 0,\n                \"forced\": 0,\n                \"hearing_impaired\": 0,\n                \"visual_impaired\": 0,\n                \"clean_effects\": 0,\n                \"attached_pic\": 0,\n                \"timed_thumbnails\": 0,\n                \"non_diegetic\": 0,\n                \"captions\": 0,\n                \"descriptions\": 0,\n                \"metadata\": 0,\n                \"dependent\": 0,\n                \"still_image\": 0\n            },\n            \"tags\": {\n                \"creation_time\": \"2026-10-23T00:09:48.000000Z\",\n                \"language\": \"eng\",\n                \"handler_name\": \"ISO Media file produced by Google Inc. Created on: 10/22/2026.\",\n                \"vendor_id\": \"[0][0][0][0]\"\n            }\n        }\n    ],\n    \"format\": {\n        \"filename\": \"gameplay.mp4\",\n        \"nb_streams\": 2,\n        \"nb_programs\": 0,\n        \"format_name\": \"mov,mp4,m4a,3gp,3g2,mj2\",\n        \"format_long_name\": \"QuickTime / MOV\",\n        \"start_time\": \"0.000000\",\n        \"duration\": \"2046.885442\",\n        \"size\": \"147387363\",\n        \"bit_rate\": \"576045\",\n        \"probe_score\": 100,\n        \"tags\": {\n            \"major_brand\": \"mp42\",\n            \"minor_version\": \"0\",\n            \"compatible_brands\": \"isommp42\",\n            \"creation_time\": \"2026-10-23T00:09:48.000000Z\",\n            \"encoder\": \"Google\"\n        }\n    }\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ffmpeg",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-threads",
+        "2",
+        "-ss",
+        "0",
+        "-i",
+        "gameplay.mp4",
+        "-vf",
+        "fps=1/20.0:start_time=0,setpts=PTS+0/TB,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='%{pts\\:hms}':x=8:y=8:fontsize=20:fontcolor=white:box=1:boxcolor=black@0.8",
+        "-fps_mode",
+        "vfr",
+        "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/frames/frame-%04d.png"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ffmpeg",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-threads",
+        "2",
+        "-framerate",
+        "1",
+        "-i",
+        "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/frames/frame-%04d.png",
+        "-vf",
+        "scale=320:180,tile=4x4:padding=4:margin=4:color=0x13191d",
+        "-q:v",
+        "2",
+        "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/sheet-%02d.jpg"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "evidence_scope": "Timestamped sampled stills. No claim of uninterrupted viewing or audio listening.",
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "Main",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 640,
+        "height": 360,
+        "coded_width": 640,
+        "coded_height": 360,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 1,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 30,
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709",
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "2997/100",
+        "avg_frame_rate": "2997/100",
+        "time_base": "1/11988",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 24536400,
+        "duration": "2046.746747",
+        "bit_rate": "525636",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "61341",
+        "extradata_size": 43,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0
+        },
+        "tags": {
+          "creation_time": "2026-10-23T00:09:48.000000Z",
+          "language": "und",
+          "handler_name": "ISO Media file produced by Google Inc. Created on: 10/22/2026.",
+          "vendor_id": "[0][0][0][0]"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "HE-AAC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "44100",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/22050",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 45133824,
+        "duration": "2046.885442",
+        "bit_rate": "47999",
+        "nb_frames": "44076",
+        "extradata_size": 25,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0
+        },
+        "tags": {
+          "creation_time": "2026-10-23T00:09:48.000000Z",
+          "language": "eng",
+          "handler_name": "ISO Media file produced by Google Inc. Created on: 10/22/2026.",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "gameplay.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "2046.885442",
+      "size": "147387363",
+      "bit_rate": "576045",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "mp42",
+        "minor_version": "0",
+        "compatible_brands": "isommp42",
+        "creation_time": "2026-10-23T00:09:48.000000Z",
+        "encoder": "Google"
+      }
+    }
+  },
+  "frame_count": 102,
+  "sheets": [
+    "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/sheet-01.jpg",
+    "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/sheet-02.jpg",
+    "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/sheet-03.jpg",
+    "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/sheet-04.jpg",
+    "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/sheet-05.jpg",
+    "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/sheet-06.jpg",
+    "games/yuga-native/docs/research/hero-six-rounds/reference/gameplay-20s/sheet-07.jpg"
+  ],
+  "artifacts": [
+    {
+      "path": "frames/frame-0001.png",
+      "bytes": 361500,
+      "sha256": "12ab2e2dc65de888b3eadbdeee34ba3b5ca946a6f094aed7faa29b752faf46c7"
+    },
+    {
+      "path": "frames/frame-0002.png",
+      "bytes": 301040,
+      "sha256": "5b3674308e34d0d6d1e8a43eb2c3ae867e0e008e842988f01833ee5a425d1993"
+    },
+    {
+      "path": "frames/frame-0003.png",
+      "bytes": 351967,
+      "sha256": "f14512329a6cff79bdce1ee2139cad955bed1bcf07651db3add7cc554abc888b"
+    },
+    {
+      "path": "frames/frame-0004.png",
+      "bytes": 323216,
+      "sha256": "6f7d3b819c1154f7883002b910526c8a28974aa52b3bb38236c6602d77bc3e17"
+    },
+    {
+      "path": "frames/frame-0005.png",
+      "bytes": 320049,
+      "sha256": "6e02ac543c47c5c511068a81918ebec009743c15da551f174dc3ee36ef67e384"
+    },
+    {
+      "path": "frames/frame-0006.png",
+      "bytes": 284717,
+      "sha256": "c451ef317269e1e054fe56a64a5a85f3753a61c61a1bb21ec6fd96bbd2131974"
+    },
+    {
+      "path": "frames/frame-0007.png",
+      "bytes": 267461,
+      "sha256": "147effa7f682555c0a929fdce1492600822549b5ac1df0ef2d8005e0a1a436ac"
+    },
+    {
+      "path": "frames/frame-0008.png",
+      "bytes": 302489,
+      "sha256": "1870e737fce39a1023abe1080f28f216c3b25a29085a8ead0e56298f1456d635"
+    },
+    {
+      "path": "frames/frame-0009.png",
+      "bytes": 342712,
+      "sha256": "3afa9f9b87b2f750d2ad2dd720a128fa01eaf20685240544490ec5d5f27a481e"
+    },
+    {
+      "path": "frames/frame-0010.png",
+      "bytes": 400697,
+      "sha256": "b3900c7cc8f6319c405170d80f0cfecf8fd136da95183ff5116bbf495e67fffa"
+    },
+    {
+      "path": "frames/frame-0011.png",
+      "bytes": 322862,
+      "sha256": "43e8a96accaf11d038157ec456fc671c6330871a9b2da023c3927f606edaa95f"
+    },
+    {
+      "path": "frames/frame-0012.png",
+      "bytes": 312598,
+      "sha256": "70a9cb4e81a011ea0b95ca279f951e08a14c52fd60f2fe1c81bde77a17fc2c70"
+    },
+    {
+      "path": "frames/frame-0013.png",
+      "bytes": 310309,
+      "sha256": "3f5bf09f3218971656b01c4042a64b805f0f070b08bbf0c5bd3bf0435be4f85e"
+    },
+    {
+      "path": "frames/frame-0014.png",
+      "bytes": 284629,
+      "sha256": "6391bb2defc96195181ac8f6ec16d8e59fd6ebbf3559087e2e9809fbf32a0a04"
+    },
+    {
+      "path": "frames/frame-0015.png",
+      "bytes": 357380,
+      "sha256": "da1d50cdd7e919a6d0d9a7d4cfa29e6e439ff4b02084575702f1a2f332326b0e"
+    },
+    {
+      "path": "frames/frame-0016.png",
+      "bytes": 367653,
+      "sha256": "65353685d5606782e9b1a6fd0ca53d320db79a7fbdf7ef7350f547f6890ca446"
+    },
+    {
+      "path": "frames/frame-0017.png",
+      "bytes": 352412,
+      "sha256": "565ecca2380988ddb5a899bf133d9ee2469c9b00ce181d681aa249bffa56c080"
+    },
+    {
+      "path": "frames/frame-0018.png",
+      "bytes": 372012,
+      "sha256": "05454edf975a86b7146c2fab8085d5d10a886578b6d0bb2a6e8493cf42a11780"
+    },
+    {
+      "path": "frames/frame-0019.png",
+      "bytes": 395841,
+      "sha256": "8495c27f38085abe079a44b5cf72ff26db62dacb2cb8d5b9ed784580ecb03f92"
+    },
+    {
+      "path": "frames/frame-0020.png",
+      "bytes": 275162,
+      "sha256": "28b815dd5aca6c879f2f5e9efd146d93ae71e95a7533af0844479896450d5cfd"
+    },
+    {
+      "path": "frames/frame-0021.png",
+      "bytes": 289148,
+      "sha256": "8374a84e758efe7798f0aed1992d8842fb1a74e8da929b51e9062d6eb6d6ff99"
+    },
+    {
+      "path": "frames/frame-0022.png",
+      "bytes": 306907,
+      "sha256": "5a6ed142e6bbba91cf47d573ff5db1c293ee381eb072970e2f6be69f6c39cb0a"
+    },
+    {
+      "path": "frames/frame-0023.png",
+      "bytes": 300548,
+      "sha256": "03c2f0bf40316d421f3f24c5783e0d379fcb7417d1e611b272f97083876a2b7a"
+    },
+    {
+      "path": "frames/frame-0024.png",
+      "bytes": 351607,
+      "sha256": "4398f2ee0c45db942bf15f605c9eb0abde005d74327d5aeef0b722cf97aab892"
+    },
+    {
+      "path": "frames/frame-0025.png",
+      "bytes": 349322,
+      "sha256": "a9ee4ef5b72240ebf0913fe0f3eb2e6ed0bb82931664508a484dd1d1f33f64e9"
+    },
+    {
+      "path": "frames/frame-0026.png",
+      "bytes": 279218,
+      "sha256": "002b56ca0cdba3810a1833890d9383a0ceb28fc4aea0852c94c3237a11b24d7c"
+    },
+    {
+      "path": "frames/frame-0027.png",
+      "bytes": 392903,
+      "sha256": "bbad012a485420203eed2a03959f308d277aee11909119fa35f898bb4873dd79"
+    },
+    {
+      "path": "frames/frame-0028.png",
+      "bytes": 385896,
+      "sha256": "5a35740d81c1706cdb34c899cceb47622d77de3c8835353ee701b34b3ee5131f"
+    },
+    {
+      "path": "frames/frame-0029.png",
+      "bytes": 279397,
+      "sha256": "a70cb22e836bde094a39151de1b5ec0acae659d61eb689a63f46d96b9fe12e41"
+    },
+    {
+      "path": "frames/frame-0030.png",
+      "bytes": 266707,
+      "sha256": "ef7d7dc4a326038a2accb2a046f9a0302c1e2ff2831a236de9bf61f02dc0cabc"
+    },
+    {
+      "path": "frames/frame-0031.png",
+      "bytes": 287952,
+      "sha256": "4b46a53067f489a630cf163e4ac2ae108f6f66c4942517de0c075ad5f5562501"
+    },
+    {
+      "path": "frames/frame-0032.png",
+      "bytes": 352783,
+      "sha256": "b6f0aee5037f121de6a9a7af2725a5344e7e59c064b94d08ce6dc7b25d168c8e"
+    },
+    {
+      "path": "frames/frame-0033.png",
+      "bytes": 305255,
+      "sha256": "189b24705562dce072be3cc7d3b89fe089dd4153e05c93cb6e33fa0352a63295"
+    },
+    {
+      "path": "frames/frame-0034.png",
+      "bytes": 352113,
+      "sha256": "63799abfc7b39dc79939d09a8f9d5ced0bdd13ff13419209fdfa3411ec611f09"
+    },
+    {
+      "path": "frames/frame-0035.png",
+      "bytes": 347263,
+      "sha256": "ed9d275f05175e1d418133f73d48d00a4cf06a37425039f2cdcd2fc6af674714"
+    },
+    {
+      "path": "frames/frame-0036.png",
+      "bytes": 348609,
+      "sha256": "4fe018fa0cd9caabfc6dea36703a843b35e9446c7d1b5bfb9630bdfe302ada28"
+    },
+    {
+      "path": "frames/frame-0037.png",
+      "bytes": 306790,
+      "sha256": "68e4593b25ace90470ce3bc820d987e42b159a32f14648d4d61cbfa4f38854ca"
+    },
+    {
+      "path": "frames/frame-0038.png",
+      "bytes": 366629,
+      "sha256": "7b9ea9cc6a8dfad7b175a9134446921ea2a3b19ac7e2e3146dc418b8d6432c30"
+    },
+    {
+      "path": "frames/frame-0039.png",
+      "bytes": 225793,
+      "sha256": "3a51f00ee4b4433518614004de559ac15cfc2879edc38390cc6ba274b99a2372"
+    },
+    {
+      "path": "frames/frame-0040.png",
+      "bytes": 395812,
+      "sha256": "892effb48114a9d926bd5ce178dcd89c3808ade16b8924846c088659e22cc2a4"
+    },
+    {
+      "path": "frames/frame-0041.png",
+      "bytes": 370091,
+      "sha256": "f073efa85dc7c2c8b58cd9050ee9e66246b62c90e2efbfe0f66c82d045ce7fc7"
+    },
+    {
+      "path": "frames/frame-0042.png",
+      "bytes": 375429,
+      "sha256": "bb9acc569459ebc794928c2c6e7cab414eab173840d793ec3c582320cb302cfd"
+    },
+    {
+      "path": "frames/frame-0043.png",
+      "bytes": 385457,
+      "sha256": "7c301d03db8f6ed1db8e09940fc75a30fbeae0b403fd4410faaac7dd6d945135"
+    },
+    {
+      "path": "frames/frame-0044.png",
+      "bytes": 328771,
+      "sha256": "7eb35dc669e023492002f9e8122e5f231cdb8318db1de269230d24ef34a64912"
+    },
+    {
+      "path": "frames/frame-0045.png",
+      "bytes": 347501,
+      "sha256": "386c84400e8d6efc195a7cfc8b7ec2e74e2b84a6d004c268ba621be136fb2a2f"
+    },
+    {
+      "path": "frames/frame-0046.png",
+      "bytes": 356498,
+      "sha256": "6674642816700260899f4d0b735e8402042b77fb0c6134187ec75b41b7be9452"
+    },
+    {
+      "path": "frames/frame-0047.png",
+      "bytes": 370766,
+      "sha256": "7f65282a2033a16b96d6369b3cfb0c19b959f37b0550c3d82751403f916fcb11"
+    },
+    {
+      "path": "frames/frame-0048.png",
+      "bytes": 270905,
+      "sha256": "ba95478d91a2d534ed30cda3c7c9a767f8011710c56e83be33614419bc4bfd26"
+    },
+    {
+      "path": "frames/frame-0049.png",
+      "bytes": 467716,
+      "sha256": "654531c5826e8fd72bfdfa14f9eb93fa29b8d2e6c660e8bb7ff9a034c6e7d118"
+    },
+    {
+      "path": "frames/frame-0050.png",
+      "bytes": 425858,
+      "sha256": "3e10af4e69fb3277a15d70270401a066b55986b8762b6176ba43ebc3162eabf5"
+    },
+    {
+      "path": "frames/frame-0051.png",
+      "bytes": 340482,
+      "sha256": "35511743dd733ff3773ca322259e185ebca3ab21734509a6efd6d116d1cbb443"
+    },
+    {
+      "path": "frames/frame-0052.png",
+      "bytes": 416783,
+      "sha256": "73d2324df17713353d74b0f1a1a5acce6af51f69f203432826be866bfb0ac2bb"
+    },
+    {
+      "path": "frames/frame-0053.png",
+      "bytes": 406414,
+      "sha256": "0da82de4c9d13c89d62e648ae78be57022eee36a4b1ade5c6d3cc4ad2ba968ae"
+    },
+    {
+      "path": "frames/frame-0054.png",
+      "bytes": 419493,
+      "sha256": "7e22b6ca712bb79e7e7048623ada7526882a2150ccad55d160087cbcda81268a"
+    },
+    {
+      "path": "frames/frame-0055.png",
+      "bytes": 334307,
+      "sha256": "24bd76a8c163f92e9c9711b77eb7bfb9a453703b16bd9896a1b494ca600a2f88"
+    },
+    {
+      "path": "frames/frame-0056.png",
+      "bytes": 342178,
+      "sha256": "100ec7499e4dfad987edb5d8af03c68cb9633459eb85aff918855a96bf8341e2"
+    },
+    {
+      "path": "frames/frame-0057.png",
+      "bytes": 316669,
+      "sha256": "f6089e672011f4fc8dbef8db6fba3f9008257ee2142f71ba8a4d8a278709033b"
+    },
+    {
+      "path": "frames/frame-0058.png",
+      "bytes": 385164,
+      "sha256": "bf0beee252b587fd6e5637dee32556574123ebdb99c996d33d149afae08f7890"
+    },
+    {
+      "path": "frames/frame-0059.png",
+      "bytes": 339995,
+      "sha256": "163f9e25546a48a0132239d6398c6e79c71667bc4fadcf5e9882d742ea0b02e1"
+    },
+    {
+      "path": "frames/frame-0060.png",
+      "bytes": 394552,
+      "sha256": "4467e2e70f13a0f0164a40349c162693cec2c1a697f3339ee2daa749ff9fb49a"
+    },
+    {
+      "path": "frames/frame-0061.png",
+      "bytes": 345515,
+      "sha256": "dbb47ccb56994e3571acdba43733345fd3a52ec5e9d1281890ffc7d3c7ac804a"
+    },
+    {
+      "path": "frames/frame-0062.png",
+      "bytes": 417764,
+      "sha256": "6ede1c482e2f6628c9195a4e5ada3c4d1f3f36f2a4291678b49b25cbf000e989"
+    },
+    {
+      "path": "frames/frame-0063.png",
+      "bytes": 447062,
+      "sha256": "d4b0c29260e0f01194f7aca74dec174b8a5eea865d39cb60d82713879abdce6f"
+    },
+    {
+      "path": "frames/frame-0064.png",
+      "bytes": 302554,
+      "sha256": "c7af19624b3287071f4b931a1ff5fa7308f32ace36187a8a2b446d4123907b4f"
+    },
+    {
+      "path": "frames/frame-0065.png",
+      "bytes": 323915,
+      "sha256": "3950f3da070f8f9d2182628b2574193469e26c4e49352ead7b91800e0df2ddca"
+    },
+    {
+      "path": "frames/frame-0066.png",
+      "bytes": 359551,
+      "sha256": "92810d216fdcb962a8f3abd4970ca759779cf8394f0aba6c00c989848b42d303"
+    },
+    {
+      "path": "frames/frame-0067.png",
+      "bytes": 278968,
+      "sha256": "af9a63e2baf16278dd55bd9b7fb86f397ee968add7e79958902c1053f5d8155d"
+    },
+    {
+      "path": "frames/frame-0068.png",
+      "bytes": 336227,
+      "sha256": "dcbd24709dfcda82f80da48b354832b0f0482c33e506231980b7c1af6504da17"
+    },
+    {
+      "path": "frames/frame-0069.png",
+      "bytes": 298999,
+      "sha256": "3baf9670dc339329c96126bf98a251e9b7bfd269030dcd53e2b773864e81134a"
+    },
+    {
+      "path": "frames/frame-0070.png",
+      "bytes": 350005,
+      "sha256": "f265dcb4e0ac5da06e3012a66d84b1f2213af3df4a3b2dd26db0a921269234b5"
+    },
+    {
+      "path": "frames/frame-0071.png",
+      "bytes": 357912,
+      "sha256": "7899773ec3f38a186cedf559fa3eedeff0df19d7cd82e0b3671d84c759bf8a1c"
+    },
+    {
+      "path": "frames/frame-0072.png",
+      "bytes": 300090,
+      "sha256": "ea294ea662c16e1a52f5ba34b6921d72ee59263902e1c8300b4f705131acf330"
+    },
+    {
+      "path": "frames/frame-0073.png",
+      "bytes": 383962,
+      "sha256": "7608ed7e42da87c3e0cc3f22d334ea6f6c8c413538cd2afabfd9e817b9f3db50"
+    },
+    {
+      "path": "frames/frame-0074.png",
+      "bytes": 300635,
+      "sha256": "4f8e2c8a421493f500d809c80e857b034603ddca581b585c94e10f58d4213011"
+    },
+    {
+      "path": "frames/frame-0075.png",
+      "bytes": 296994,
+      "sha256": "ef32cd130df4684f2dfffd34e733e86d98610884caf1de993e05acc256a01281"
+    },
+    {
+      "path": "frames/frame-0076.png",
+      "bytes": 371728,
+      "sha256": "82da2c1608aa8d9545761647039027482bc73ad56bcf3191012b7487f7eec144"
+    },
+    {
+      "path": "frames/frame-0077.png",
+      "bytes": 444163,
+      "sha256": "a4973ebf5884b3945b4a9dea16833726cdee68bbfb8581ebeb32d6a996a77665"
+    },
+    {
+      "path": "frames/frame-0078.png",
+      "bytes": 351365,
+      "sha256": "7f9a4eea89f0ca9cc9bf6e2e3a59e8a01de2465456310f324497b814c6897f4d"
+    },
+    {
+      "path": "frames/frame-0079.png",
+      "bytes": 416271,
+      "sha256": "f45f4c73fd5cb401a6b62f0be4b320ace07c6475e777cc5e2aebb1ac366c745a"
+    },
+    {
+      "path": "frames/frame-0080.png",
+      "bytes": 327448,
+      "sha256": "1644e66f1c1aab62f30664a631abb393da4ffac2842eda7830ef557da0085592"
+    },
+    {
+      "path": "frames/frame-0081.png",
+      "bytes": 353790,
+      "sha256": "ea99d8ecefebee90b912210df4a083dc3fb293cbdcb5c43cd3f42e1f7c6e5163"
+    },
+    {
+      "path": "frames/frame-0082.png",
+      "bytes": 335596,
+      "sha256": "ea026938e1dc439edbc77063d63efc667310a040471c9abd173974147232b83a"
+    },
+    {
+      "path": "frames/frame-0083.png",
+      "bytes": 426643,
+      "sha256": "df4e22f2af5659b22f47df5fe56f16cf81969510e622df7a63f23be90cdd8475"
+    },
+    {
+      "path": "frames/frame-0084.png",
+      "bytes": 348328,
+      "sha256": "880a3ff7b8eb3e9779f151eb9df39d6f1e82b75ea2f9e7557d5647b19f41b47c"
+    },
+    {
+      "path": "frames/frame-0085.png",
+      "bytes": 344253,
+      "sha256": "8acaa338088dcedacb08661652a9cedc202f62ecb17014782eaa5865249cab1d"
+    },
+    {
+      "path": "frames/frame-0086.png",
+      "bytes": 292325,
+      "sha256": "b469f1563e95de286e58c18ec855e14795ee84deb7bc02fc3b8db50f6d320d29"
+    },
+    {
+      "path": "frames/frame-0087.png",
+      "bytes": 322079,
+      "sha256": "d70587bfe9c5fb6201df742eb9602977deba40f41f98125990360b4d8ab818db"
+    },
+    {
+      "path": "frames/frame-0088.png",
+      "bytes": 350674,
+      "sha256": "bf12b41fc7b6187ca78c4000c8af1802251f0692489f1e3b28745abce11db8da"
+    },
+    {
+      "path": "frames/frame-0089.png",
+      "bytes": 381553,
+      "sha256": "90537e36b9478104dc967d836f11249899aec8e592abe52fde7a8e573c032aa5"
+    },
+    {
+      "path": "frames/frame-0090.png",
+      "bytes": 373474,
+      "sha256": "e573bfd938e8da1c8f76d2b7545b4e83c0dbecd80e18cf8d16f85c6f4ca979fa"
+    },
+    {
+      "path": "frames/frame-0091.png",
+      "bytes": 307959,
+      "sha256": "fedb834d9e4f26bee2fc339607069229db5cb8e15ee9bbbe976c4b8c41af4093"
+    },
+    {
+      "path": "frames/frame-0092.png",
+      "bytes": 317143,
+      "sha256": "8e3a62e06acc192c76a1637d4709e2ffaf1000e832a83d8c082b9a600160007d"
+    },
+    {
+      "path": "frames/frame-0093.png",
+      "bytes": 449931,
+      "sha256": "acb718ef7ed0240ef6cf12fa00a323a2c8ed8f39c8b8e302797e9618078433ab"
+    },
+    {
+      "path": "frames/frame-0094.png",
+      "bytes": 371746,
+      "sha256": "b1b3dd2dfce0a0a6fbe1153920b708cacad292c5bb9e827a57dc934452997fec"
+    },
+    {
+      "path": "frames/frame-0095.png",
+      "bytes": 310083,
+      "sha256": "4da7ddaf709b9299a4ea8196319d26d83e168454b0948941eaefbbf3ffc04881"
+    },
+    {
+      "path": "frames/frame-0096.png",
+      "bytes": 324742,
+      "sha256": "c6b84dccb70958daeff8c1094ec822f584c9a9db0950f70829ee24d9f160a28b"
+    },
+    {
+      "path": "frames/frame-0097.png",
+      "bytes": 419313,
+      "sha256": "b45caa17c49f6ed4771f748439a7e508ae89dc34868053d0803878712c3de20c"
+    },
+    {
+      "path": "frames/frame-0098.png",
+      "bytes": 454204,
+      "sha256": "28944b9b8565a37efd2dc59aa2d2c3e66ac6de1e42da8c3a5b4cf5207d06bdc0"
+    },
+    {
+      "path": "frames/frame-0099.png",
+      "bytes": 426728,
+      "sha256": "490474ac0293a4332f34f679d69b15860fc21141ca369727293ce41632953bd4"
+    },
+    {
+      "path": "frames/frame-0100.png",
+      "bytes": 415393,
+      "sha256": "313cb05d9df3964b2a7f9c04c75ffa5417b917d0439d5143b1777ceffbaf8ac7"
+    },
+    {
+      "path": "frames/frame-0101.png",
+      "bytes": 534795,
+      "sha256": "97caa6d2f2c93b58453f6a90c7fa63e0bb572ae16d5b78008d0658dde655f918"
+    },
+    {
+      "path": "frames/frame-0102.png",
+      "bytes": 208952,
+      "sha256": "b29ad0fa2c33664cb98aa44e711708ed85070cefddef0e33ae81062d3a384889"
+    },
+    {
+      "path": "sheet-01.jpg",
+      "bytes": 380451,
+      "sha256": "f5694d0ad78ee3c9f19612ba4ffdfd1834a7e327e0ac98f327dcc1a8d7df78da"
+    },
+    {
+      "path": "sheet-02.jpg",
+      "bytes": 388906,
+      "sha256": "21aafddce99d8c9ce2db56de51cd894aa183e914d7c756b113824cc0a03afd59"
+    },
+    {
+      "path": "sheet-03.jpg",
+      "bytes": 410846,
+      "sha256": "f6ecd897ae04a9723a65f3e0a4cab85172053d4f8a6fb98515c2552ffd097ad3"
+    },
+    {
+      "path": "sheet-04.jpg",
+      "bytes": 449442,
+      "sha256": "8ab608d1ef59a66e865696903c63b5ec0d17bf43a0d13cf23d54dfddccb852ee"
+    },
+    {
+      "path": "sheet-05.jpg",
+      "bytes": 419700,
+      "sha256": "4669bb98b82cfa69597ab0c82e090f6f110e6efd2989ecd0bc0d283d1f576388"
+    },
+    {
+      "path": "sheet-06.jpg",
+      "bytes": 422826,
+      "sha256": "054053e1636638212896979280bb2992a658a18eb69cece227d8f553aaaf0d5b"
+    },
+    {
+      "path": "sheet-07.jpg",
+      "bytes": 193919,
+      "sha256": "c682bc0b6c3e39745c8ba57f8a0faabd6b7eca51193debf4d5adc4cd350d36a3"
+    }
+  ]
+}

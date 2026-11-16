@@ -1,0 +1,152 @@
+{
+  "after_decoded_bytes": 9437184,
+  "after_texture_resources": 12,
+  "before_decoded_bytes": 18874368,
+  "before_texture_resources": 24,
+  "checks": [
+    {
+      "detail": {
+        "contents": 12,
+        "resources": 24
+      },
+      "name": "two bundled caches start with24distinct resources and12equal image contents",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "both verified production adapters mount",
+      "passed": true
+    },
+    {
+      "detail": {
+        "contents": 12,
+        "resources": 12
+      },
+      "name": "gate and garden now reference12actual shared Texture2D resources",
+      "passed": true
+    },
+    {
+      "detail": {
+        "observed_original_textures": 12,
+        "released": 12
+      },
+      "name": "all12replaced embedded garden textures are actually released",
+      "passed": true
+    },
+    {
+      "detail": {
+        "after": 9437184,
+        "before": 18874368,
+        "delta": 9437184
+      },
+      "name": "exact decoded-resource census removes9437184duplicate bytes",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "all geometry transforms and every stored material channel/setting are identical",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "garden collision faces transforms and masks are unchanged",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "gate collider retains exact source face metadata",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "multiple cached instances retain12textures and exact presentation",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "repeated gate keeps collider state private",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "pooling is idempotent",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "clearing and reloading gate cache preserves canonical12textures and surviving peers",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "source-derived10gate and4garden footprints remain exact copies",
+      "passed": true
+    },
+    {
+      "detail": {
+        "eligible": 0,
+        "replaced": 0,
+        "skipped": 2
+      },
+      "name": "null empty and non-image textures are preserved without replacement",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "null scene is a no-op",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "new exact pixel content never aliases an unrelated source image",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "same base pixels with different mipmaps are separate resources",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "same pixel data with different texture size override stays distinct",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "externally mutated canonical image cannot replace original pixels under a stale key",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "serialized assets map and accepted asset pins remain immutable",
+      "passed": true
+    }
+  ],
+  "count": 20,
+  "decoded_resource_bytes_removed": 9437184,
+  "engine": {
+    "build": "official",
+    "hash": "7d41c59c457bd5a245092b4e7eb2d833e3b3f8c3",
+    "hex": 263683,
+    "major": 4,
+    "minor": 6,
+    "patch": 3,
+    "status": "stable",
+    "string": "4.6.3-stable (official)",
+    "timestamp": 0
+  },
+  "passed": false,
+  "schema": 1,
+  "scope": "Real native source texture identity and exact pixel/material/geometry/collision equivalence only. No GPU allocation, frame-time, package-size or rendered visual acceptance.",
+  "source_asset_sha256": {
+    "res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "res://assets/world/lanka-lane-gate.scn": "e895e0aaef172901e445aa1e782b7ecbfbdf6b021cf13f1c311db3c60cae7d25",
+    "res://assets/world/lanka-water-garden-candidate.scn": "69cebe64d18b6acadc16c5b43c2d4fd4ae069793590a909f2b636ba81cc64dd0"
+  },
+  "source_sha256": {
+    "res://scripts/lanka_lane_gate.gd": "6e7e5b91c6ca4fed2b8372224ea010bf5af0ac46232c9ddffb66222372a18556",
+    "res://scripts/lanka_texture_palette.gd": "eb01e36c99f64b57f519aaf8bc60cf74fa794f7b1f8af4941822442aff42e5db",
+    "res://scripts/lanka_water_garden.gd": "e2214cfb1c3ece2836cf05d9d5ca20f97fe0c2e9a2a2798b2bc85250677461d4",
+    "res://tests/lanka_texture_palette_cases.gd": "c1b75d2e024c9853c34487b3ae42cf71db5ac759447f2c4c6a299ffce9715019"
+  }
+}

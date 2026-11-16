@@ -1,0 +1,59 @@
+{
+  "checks": [
+    {
+      "case": "four_planters_preserve_actual_lane_configuration",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "proposal_does_not_mutate_base_manifest",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "center_lane_remains_clear_between_planters",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "planter_blocks_ground_cross_shot",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "low_cover_counterexample_is_real",
+      "evidence": {
+        "meaning": "Low cover needs visually solid height matching current planar shot behavior; this does not approve the1.4m proposal.",
+        "native_ray_at_1m_hits": true,
+        "native_ray_at_2m_hits": false,
+        "planar_army_stops_at_2m": true
+      },
+      "passed": true
+    },
+    {
+      "case": "overhead_in_planar_manifest_rejected_by_real_army",
+      "evidence": {
+        "meaning": "Overhead must stay native-physics-only; Y does not exempt its planar footprint."
+      },
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "round": 5,
+  "scope": "Independent proposed-geometry counterexamples with actual army and Godot physics. Does not accept an unbuilt district, camera, art or human route design.",
+  "source_sha256": {
+    "res://assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "res://docs/research/hero-six-rounds/combat/map_counterexamples.gd": "7c3ed5de7066100e7db28fdf7f80b4297767edd1f9e11634cef530d762f4adad",
+    "res://scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+    "res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc"
+  },
+  "task_id": "YUGA-HERO-6R"
+}

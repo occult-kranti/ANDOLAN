@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "existing-evidence",
+      "command": [
+        "python",
+        "/workspaces/ANDOLAN/tools/studio/inspect-source-asset.py",
+        "--input",
+        "/workspaces/ANDOLAN/games/yuga-native/assets/world/studio-relay-foundry.glb",
+        "--output",
+        "/workspaces/scratch/blender-inspector-cli-r1/existing-evidence"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "asset inspection rejected: [Errno 17] File exists: '/workspaces/scratch/blender-inspector-cli-r1/existing-evidence'\n",
+      "passed": true,
+      "Blender_execution": false
+    },
+    {
+      "name": "existing-symlink",
+      "command": [
+        "python",
+        "/workspaces/ANDOLAN/tools/studio/inspect-source-asset.py",
+        "--input",
+        "/workspaces/ANDOLAN/games/yuga-native/assets/world/studio-relay-foundry.glb",
+        "--output",
+        "/workspaces/scratch/blender-inspector-cli-r1/existing-alias"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "asset inspection rejected: [Errno 17] File exists: '/workspaces/scratch/blender-inspector-cli-r1/existing-alias'\n",
+      "passed": true,
+      "Blender_execution": false
+    },
+    {
+      "name": "malformed-glb",
+      "command": [
+        "python",
+        "/workspaces/ANDOLAN/tools/studio/inspect-source-asset.py",
+        "--input",
+        "/workspaces/scratch/blender-inspector-cli-r1/invalid.glb",
+        "--output",
+        "/workspaces/scratch/blender-inspector-cli-r1/invalid-out"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "asset inspection rejected: input must be 20 bytes to 64 MiB\n",
+      "passed": true,
+      "Blender_execution": false
+    },
+    {
+      "name": "external-buffer",
+      "command": [
+        "python",
+        "/workspaces/ANDOLAN/tools/studio/inspect-source-asset.py",
+        "--input",
+        "/workspaces/scratch/blender-inspector-cli-r1/external.glb",
+        "--output",
+        "/workspaces/scratch/blender-inspector-cli-r1/external-out"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "asset inspection rejected: external resource URI rejected; use an embedded owned GLB\n",
+      "passed": true,
+      "Blender_execution": false
+    }
+  ],
+  "owned_input_sha256_before": "468448f03984fdaadc1be3563ed0ace75b3d635cc5c546bd321c364ae55e84cf",
+  "owned_input_sha256_after": "468448f03984fdaadc1be3563ed0ace75b3d635cc5c546bd321c364ae55e84cf",
+  "prior_evidence_unchanged": true,
+  "invalid_output_dirs_absent": true,
+  "tool_sha256": "e44c1bf4b2ea08e29e81d0aa1ca9e384ff6b60344ce7c2f0586e84942ca5302b",
+  "scope": "Actual CLI preflight rejection only; none of these commands launch Blender."
+}

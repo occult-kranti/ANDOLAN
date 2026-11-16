@@ -2,7 +2,7 @@
 """Own one X11 server/game process and record actual window/input review.
 
 This is a Linux review aid, not a GPU benchmark or an automatic visual pass.
-Commands on stdin are JSON: capture, key, motion, click, or quit. All input goes to the
+Commands on stdin are JSON: capture, key, motion, click, button, or quit. All input goes to the
 single YUGA window on the owned display. No simulation state is injected.
 """
 import argparse
@@ -13,6 +13,7 @@ import importlib.util
 import json
 import math
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -24,7 +25,7 @@ from PIL import ImageGrab
 REVIEW_KEYS = frozenset([
     'w', 'a', 's', 'd', 'q', 'e', 'r', 'n', 'Escape', 'Return', 'Tab', 'space',
     'Left', 'Right', 'F1', 'F2', 'F5', 'f', 'g', 'j', 'x', 'v', 'b', 'c', 'F3',
-    'Up', 'Down', 'Control_L', 'Shift_L', 'Page_Up', 'Page_Down', 'Home', 'End',
+    'F4', 'Up', 'Down', 'o', 'Control_L', 'Shift_L', 'Page_Up', 'Page_Down', 'Home', 'End',
 ])
 
 
@@ -38,10 +39,17 @@ def bounded_dimension(value, minimum, maximum):
     return dimension
 
 
+def scene_resource(value):
+    if not re.fullmatch(r"res://scenes/[A-Za-z0-9_/-]+\.tscn", value):
+        raise argparse.ArgumentTypeError("Scene must be an ordinary res://scenes/*.tscn resource.")
+    return value
+
+
 def build_parser():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--engine', required=True)
     parser.add_argument('--pack', required=True)
+    parser.add_argument('--scene', type=scene_resource, help='Optional standalone scene in the same exported pack.')
     parser.add_argument('--output', required=True)
     parser.add_argument('--xvfb', default=shutil.which('Xvfb'))
     parser.add_argument('--display', default=':107')
@@ -79,7 +87,7 @@ def main():
         'scope': 'Actual Linux native window screenshots and XTest keyboard/mouse events. Human visual review is separate. Software rendering is not hardware-performance evidence.',
         'engine': {'file': engine.name, 'sha256': hashlib.sha256(engine.read_bytes()).hexdigest()},
         'pack': {'file': pack.name, 'sha256': hashlib.sha256(pack.read_bytes()).hexdigest()},
-        'rendererRequested': args.renderer, 'events': [], 'startedAtUnix': time.time(),
+        'rendererRequested': args.renderer, 'sceneRequested': args.scene, 'events': [], 'startedAtUnix': time.time(),
         'resolutionRequested': {'width': args.width, 'height': args.height},
     }
     if args.shader_cache_seed:
@@ -94,6 +102,7 @@ def main():
     server = subprocess.Popen([args.xvfb, args.display, '-screen', '0', resolution + 'x24', '-nolisten', 'tcp', '-extension', 'MIT-SHM', '-ac'], env=env, stdout=xlog, stderr=subprocess.STDOUT)
     game = None
     display = None
+    held_buttons = set()
     x = C.CDLL(ctypes.util.find_library('X11'))
     xt = C.CDLL(ctypes.util.find_library('Xtst'))
     x.XOpenDisplay.argtypes = [C.c_char_p]; x.XOpenDisplay.restype = C.c_void_p
@@ -136,7 +145,10 @@ def main():
         display = x.XOpenDisplay(args.display.encode())
         if not display:
             raise RuntimeError('Cannot open owned X display.')
-        game = subprocess.Popen([str(engine), '--main-pack', str(pack), '--display-driver', 'x11', '--rendering-method', args.renderer, '--audio-driver', 'Dummy', '--resolution', resolution, '--position', '0,0', '--disable-vsync', '--max-fps', '30'], env=env, cwd=out, stdout=log, stderr=subprocess.STDOUT)
+        game_command = [str(engine), '--main-pack', str(pack), '--display-driver', 'x11', '--rendering-method', args.renderer, '--audio-driver', 'Dummy', '--resolution', resolution, '--position', '0,0', '--disable-vsync', '--max-fps', '30']
+        if args.scene:
+            game_command.append(args.scene)
+        game = subprocess.Popen(game_command, env=env, cwd=out, stdout=log, stderr=subprocess.STDOUT)
         print(json.dumps({'readyForCommands': True, 'output': str(out), 'gamePid': game.pid}), flush=True)
         for line in sys.stdin:
             command = json.loads(line)
@@ -175,6 +187,17 @@ def main():
                 xt.XTestFakeRelativeMotionEvent(display, dx, dy, 0)
                 x.XFlush(display)
                 record['events'].append({'action': action, 'dx': dx, 'dy': dy, 'time': time.time()})
+            elif action == 'button':
+                button, pressed = command.get('button'), command.get('pressed')
+                if type(button) is not int or button not in (1, 3) or type(pressed) is not bool:
+                    raise ValueError('Button requires left=1 or right=3 and a boolean pressed state.')
+                xt.XTestFakeButtonEvent(display, button, int(pressed), 0)
+                x.XFlush(display)
+                if pressed:
+                    held_buttons.add(button)
+                else:
+                    held_buttons.discard(button)
+                record['events'].append({'action': action, 'button': button, 'pressed': pressed, 'time': time.time()})
             elif action == 'click':
                 move = command.get('move', True)
                 if not isinstance(move, bool):
@@ -196,6 +219,10 @@ def main():
             (out / 'input-review.json').write_text(json.dumps(record, indent=2) + '\n')
             print(json.dumps({'recorded': record['events'][-1]}), flush=True)
     finally:
+        if display:
+            for button in held_buttons:
+                xt.XTestFakeButtonEvent(display, button, 0, 0)
+            x.XFlush(display)
         if game and game.poll() is None:
             game.terminate()
             try: game.wait(timeout=8)

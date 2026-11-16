@@ -17,6 +17,30 @@ spec.loader.exec_module(helpers)
 IDS = ['kodanda','piercing_dawn','measured_step','guardian_circle','dawn_volley']
 
 
+def expected_hud_notice(truth, labels):
+    """Check the controlled take's authority phase, then its intentional HUD copy.
+
+    Current HUD names the locked recovery interval RECOVERING; runtime.notice
+    retains the last release event. Comparing those strings directly was an old
+    oracle. Do not allow arbitrary substitutions or normalize away stale text.
+    """
+    committed = [cast for cast in truth.get('casts', [])
+                 if cast.get('phase') in ('windup', 'recovery')]
+    if len(committed) > 1:
+        raise ValueError('Multiple committed casts in single-action capture')
+    if not committed:
+        return truth['runtime_notice']
+    cast = committed[0]
+    label = labels[cast['ability_id']]
+    released = cast['phase'] == 'recovery'
+    if cast.get('released') is not released:
+        raise ValueError('Cast phase and release authority disagree')
+    runtime_expected = label + (' · released' if released else ' · drawing')
+    if truth['runtime_notice'] != runtime_expected:
+        raise ValueError('Runtime notice differs from committed cast authority')
+    return label + (' · RECOVERING' if released else ' · DRAWING')
+
+
 def validate(report, output, project, preview, guardian_probe=False):
     if not report.get('complete') or report.get('failure') or report.get('kind') != 'actual-rama-native-gameplay':
         raise ValueError('Capture failed: ' + str(report.get('failure')))
@@ -37,11 +61,13 @@ def validate(report, output, project, preview, guardian_probe=False):
             raise ValueError('Wrong release or real physics chronology')
         if not preview and not take['normal_expiry']:
             raise ValueError('Full take must show natural expiry')
+    rules = json.loads((project / 'assets/design/rama-ability-kit.json').read_text())
+    labels = {ability['id']: ability['label'] for ability in rules['abilities']}
     for index, frame in enumerate(report['frames']):
         if frame['index'] != index or frame['physics_tick_delta'] != 2 or not frame['fx']['finite']:
             raise ValueError('Invalid sequential frame')
         truth=frame.get('truth',{})
-        if not truth or truth['displayed_notice'] != truth['runtime_notice']:
+        if not truth or truth['displayed_notice'] != expected_hud_notice(truth, labels):
             raise ValueError('Rendered HUD notice differs from current authority at frame '+str(index))
         shield=truth['vitals']['shield']
         if (shield>0 and ('+%.0f'%shield) not in truth['displayed_life']) or (shield<=0 and '+' in truth['displayed_life']):
@@ -72,10 +98,29 @@ def main():
     parser.add_argument('--guardian-probe', action='store_true', help='One complete actual Guardian take, with per-frame authority/HUD evidence')
     parser.add_argument('--shader-cache-seed', type=Path)
     parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--validate-only', action='store_true', help='Validate retained originals against their frozen source project; no renderer or image/report mutation')
+    parser.add_argument('--validation-report', type=Path, help='Fresh absolute receipt path required with --validate-only')
     args = parser.parse_args()
     if args.preview and args.guardian_probe:parser.error('Guardian probe requires a complete natural lifetime')
     if not args.output.is_absolute():parser.error('Output must be absolute')
     output, project, runtime = args.output.resolve(), args.project.resolve(), args.runtime.resolve()
+    if args.validate_only:
+        if args.dry_run or not args.validation_report or not args.validation_report.is_absolute() or args.validation_report.exists():
+            parser.error('Validation requires a fresh absolute --validation-report and cannot use --dry-run')
+        report_path = output / 'rama-gameplay-review.json'
+        report = json.loads(report_path.read_text())
+        validate(report, output, project, args.preview, args.guardian_probe)
+        receipt = {'complete': True, 'kind': 'retained-rama-capture-validation',
+                   'output': str(output), 'frozen_project': str(project),
+                   'report_sha256': helpers.sha256(report_path),
+                   'validator_sha256': helpers.sha256(Path(__file__)),
+                   'captured_runner_sha256': report['source_sha256']['res://tools/run-rama-gameplay.py'],
+                   'frames': len(report['frames']), 'stills': len(report['stills']),
+                   'scope': 'Checks all original image bytes, frozen sources/imports, authority chronology and explicit HUD phase copy. No rendering, image/report mutation, video encoding or visual acceptance.'}
+        args.validation_report.parent.mkdir(parents=True, exist_ok=True)
+        helpers.write_new_json(args.validation_report, receipt)
+        print(json.dumps(receipt));return
+    if args.validation_report:parser.error('--validation-report requires --validate-only')
     user = output.with_name(output.name + '-user')
     log_path = output.with_name(output.name + '.godot.log')
     xlog_path = output.with_name(output.name + '.xvfb.log')

@@ -1,0 +1,37 @@
+# YUGA — tactical Casual contract v1
+
+Task: `YUGA-TACTICAL-CASUAL-13`. Base commit: `7162b5d0b666e4422b0bc73100e1fba947d3323f`, dirty shared checkout preserved. User decisions: first team to 13 wins; mythic firearms with hero abilities; first-person; 5v5 starting design; Casual now, Ranked planned. This supersedes the long single-match direction for the active product. Prior Rama/Sangam builds remain historical checkpoints.
+
+Six panel passes: (1) contract/reference review, (2) specialist implementation, (3) deterministic adverse cases, (4) integrated native visuals/input, (5) independent corrections, (6) delivery and resumable roadmap. A pass is not a claim of commercial-game parity.
+
+## Ownership
+
+- Root: `tactical_world.gd`, `tactical_player.gd`, `tactical_weapon.gd`, `tactical_effects.gd`, corresponding world scene, project entry point, integration, generated art intake, top-level docs and delivery.
+- Combat: `tactical_round_rules.gd`, `tactical_bots.gd`, `assets/tactical/rules.json`, `tests/tactical/round_rules_cases.gd`, `tests/tactical/bot_cases.gd`, `docs/tactical/combat/`.
+- UI: `tactical_frontend.gd`, `tactical_ui.gd`, `tactical_theme.gd`, frontend scene, UI tests, `docs/tactical/ui/`, original vector UI graphics under `assets/tactical/ui/`.
+- Reference/world: `tactical_map.gd`, `assets/tactical/map.json`, map tests, `docs/tactical/research/`, `NOTICE/TACTICAL-MAP.md`. May reuse existing immutable world assets; do not edit old district assets or adapters.
+- Root serializes imports, heavy captures, shared manifests and final exports. Workers may run isolated headless script tests; report exact commands and hashes.
+
+## Simulation API (combat owns)
+
+`tactical_round_rules.gd` extends RefCounted. `actors: Array[Dictionary]` has ten entries with integer IDs 0–9; 0–4 sun, 5–9 moon, local human 0. Fields: id, team, name, alive, health, armor, credits, weapon (`pistol`/`carbine`), charges dictionary q/e/c, ult (0–6), kills, deaths. `phase` is `buy`, `live`, `planted`, `round_end`, `match_end`. `round_number` starts 1, `scores` dictionary sun/moon, `attack_team`, `time_left`, `site`, `winner`, `reason`. `events: Array[Dictionary]` is drainable via `drain_events()`; events include kind and concrete authority data.
+
+Methods: `start_match()`, `tick(delta)`, `damage(target_id, amount, attacker_id) -> bool`, `purchase(actor_id, item) -> bool`, `use_ability(actor_id, slot) -> bool`, `interact(actor_id, site_name, delta) -> bool`, `cancel_interaction(actor_id)`, `snapshot() -> Dictionary`. World calls interact every held frame only when alive, on the correct site and within interaction range; otherwise cancels. Rules additionally enforce phase/team and one current interactor, and invalidate stale holds. Snapshot includes actors, phase, round_number, scores, attack_team, time_left, site, winner, reason, interaction_progress and interaction_actor.
+
+Buy 20 s, live 100 s, planted 40 s, plant hold 4 s, defuse hold 7 s, round result 5 s. Buy-phase fire/damage disabled. One life per round. All attacker deaths after plant do not end the round. Defender elimination ends an active round; round timer does not cancel an active plant unless timer expires before completion. First 13 wins; sides swap after round 12; no Casual overtime. Credits start 800, cap 9000; win 3000, loss 1900, kill 200. Inventory retained only for survivors; dead actors restart pistol, no armor. Purchases only in buy phase (root additionally checks own spawn). All-round equipment is authoritative. Q solar veil smoke (200, max2); E short grounded dash (100, max1); C ward wall (300, max1); X three piercing solar shots costs 6 ult points. E starts with one charge per round; other utility purchased. Ultimate gains one point per kill and objective completion, capped6. No passive cooldown ultimate.
+
+`tactical_bots.gd` extends Node. `configure(host)` stores world. `step(delta)` called by world only while not paused. Host interface: `rules`, `map`, `actor_nodes` dictionary IDs -> Node3D; `bot_move(id, target:Vector3, delta)`, `bot_fire(id,target_id)`, `line_of_sight(from_id,to_id)->bool`, `actor_position(id)->Vector3`. Bots use rules directly for objective holds with distance/site validation. Bots move along map routes, aim with reaction time, and fight on line of sight. No respawn before next round.
+
+## Map API (world specialist owns)
+
+`tactical_map.gd` extends Node3D. Build in `_ready()`. Public `sites: Dictionary` maps A/B to Vector3 ground centers; `site_radius = 5.0`; `bounds: Rect2` X/Z. `spawn(team:String, index:int, attack_team:String)->Vector3`; `route(team:String, index:int, attack_team:String, target_site:String)->Array[Vector3]`; `callout(pos:Vector3)->String`; `is_buy_zone(pos:Vector3, team:String, attack_team:String)->bool`; `set_buy_barriers(enabled:bool)`; `report()->Dictionary`. 100 × 130 m approximate arena, human-scale geometry, two distinct sites, middle connector, protected spawn, reachable flanks, clear physical collision. Proposed site A(-28,0,0), B(28,0,0), spawns around z±50. Exact placement map owner's choice, notify others. World geometry collision layer1; actors layer2. Barriers real collision during buy, vanish for live. Original South Asian sandstone/indigo/brass, layered skyline and enclosed encounter spaces, no commercial assets copied.
+
+## UI API (UI specialist owns)
+
+`tactical_ui.gd` extends CanvasLayer. `configure(host)` builds UI. `update_view(view:Dictionary)` consumes rules snapshot plus local `ammo`, `reserve`, `reload_progress`, `ads`, `callout`, `hint`, `crosshair_spread`, `paused`, `shop_open`, `scoreboard_open`, `hit_marker`, `weapon_name`, `interaction_progress`, `interaction_actor`, `feed`, `ability_hint`, `spectating`. Host methods: `request_purchase(item)`, `request_resume()`, `request_menu()`, `request_restart()`, `request_shop_close()`, `request_settings()`, `apply_settings(values:Dictionary)`. UI must have truthful mode/round/equipment indicators, compact live HUD, held Tab scoreboard, buy shop, pause/settings, round outcome, match outcome/replay/menu, ability guide. Blocking overlays expose `has_modal()->bool`. Input capture belongs to root world. Settings sensitivity, master volume, FOV, reduced motion persist to `user://tactical-settings.cfg` through UI helper methods agreed with root.
+
+`tactical_frontend.gd` owns main menu, Casual selection/briefing, Rama hero/ability loadout, settings/help and actual threaded loading into `res://scenes/tactical_world.tscn`. Ranked visibly planned and non-playable. Original generated menu background will be `res://assets/tactical/menu-keyart.png` if present; load optionally, don't preload missing art. Original vector icons may be used immediately. Entry point will become tactical_frontend.tscn. Legacy courtyard remains an explicit training/archive route only if clearly labelled.
+
+## Input and root combat
+
+WASD move, Shift walk, Space jump, mouse aim, LMB fire, RMB ADS, R reload, Q/E/C/X abilities, F hold objective, B shop in buy zone, Tab held scoreboard, Esc pause/back, F1 guide. Defaults use separate tactical actions so old saved training bindings remain intact. Root will implement mouse/focus release and held input cancellation. Firearms: sidearm and carbine, damage/range/recoil/ammo/reload controlled by root; hit tests must honor world cover. Original first-person weapon meshes and arms, visible firing/reload/ADS feedback. Local offline bots are labelled honestly; online matchmaking/rating/anti-cheat remain roadmap work.

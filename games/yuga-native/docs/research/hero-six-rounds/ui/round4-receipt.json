@@ -1,0 +1,97 @@
+{
+  "task": "YUGA-HERO-6R",
+  "round": 4,
+  "product": "YUGA native",
+  "source_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "files": [
+    "games/yuga-native/scripts/rama_hero_hud.gd",
+    "games/yuga-native/scripts/rama_hero_panel.gd",
+    "games/yuga-native/scripts/rama_ability_meter.gd",
+    "games/yuga-native/tests/rama_hero_feedback_cases.gd"
+  ],
+  "sha256": {
+    "games/yuga-native/scripts/rama_hero_hud.gd": "fa4be323a08f3a5de5578817d2603d1373b8bd2396f88a5d2fcc8b5096464087",
+    "games/yuga-native/scripts/rama_hero_panel.gd": "a843627942be923b98d32e4baa038d4ed282d2767b56fd169e9d747353f62ff7",
+    "games/yuga-native/scripts/rama_ability_meter.gd": "1aeffd0c91215faa5c019f3241808e8d73a2cc4e6283f14185bc032b010c4344",
+    "games/yuga-native/tests/rama_hero_feedback_cases.gd": "e67db9d6287c00998e5c273777555136f141bb948f3dc5203654b439a1ead115"
+  },
+  "successor_tests": [
+    {
+      "suite": "rama_hero_feedback_cases",
+      "exit": 0,
+      "passed": true,
+      "checks": 25,
+      "warnings": 0,
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/rama_hero_feedback_cases.gd",
+        "--",
+        "--report=/tmp/yuga-hero-ui-r4b/rama_hero_feedback_cases/result.json"
+      ]
+    },
+    {
+      "suite": "ui_hud_context_cases",
+      "exit": 0,
+      "passed": true,
+      "checks": 14,
+      "warnings": 0,
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/ui_hud_context_cases.gd",
+        "--",
+        "--report=/tmp/yuga-hero-ui-r4b/ui_hud_context_cases/result.json"
+      ]
+    },
+    {
+      "suite": "ui_hud_reload_availability_cases",
+      "exit": 0,
+      "passed": true,
+      "checks": 17,
+      "warnings": 0,
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/ui_hud_reload_availability_cases.gd",
+        "--",
+        "--report=/tmp/yuga-hero-ui-r4b/ui_hud_reload_availability_cases/result.json"
+      ]
+    },
+    {
+      "suite": "desktop_s5_compact_hud_cases",
+      "exit": 0,
+      "passed": true,
+      "checks": 31,
+      "warnings": 0,
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/desktop_s5_compact_hud_cases.gd",
+        "--",
+        "--report=/tmp/yuga-hero-ui-r4b/desktop_s5_compact_hud_cases/result.json"
+      ]
+    }
+  ],
+  "checks": 87,
+  "all_passed": true,
+  "unchanged_panel_evidence": "r3-evidence/desktop_s4_guide_scaling_cases/result.json + rama_screen_cases/result.json",
+  "independent_root_layout": "r4a-evidence/journey-layout.json",
+  "next_owner": "Lead serialized import/native render; UI owner R5 image review",
+  "limits": [
+    "No new actual native image/OS-input evidence yet",
+    "No hardware, listening or commercial art acceptance"
+  ]
+}

@@ -1,0 +1,9 @@
+# Preserved Rama / Sangam checkpoint
+
+The user's later first-to13 tactical direction supersedes this checkpoint's long-match gameplay. Continue active work at [tactical README](../../tactical/README.md). This record preserves completed work and actual evidence without relabeling it as the new mode.
+
+Source base `7162b5d0b666e4422b0bc73100e1fba947d3323f`, dirty shared branch `work/yuga-studio`. Runtime snapshot `.local-tools/review/sangam-release-r1` has signature `b4a253fea063f4fdcb013b56bb83d95fb44fff9d9b8b1080f6084d99d8ada6b9`. The 29-suite composed receipt passed 1,276 checks, retaining two corrected fixture failures. Twelve final native district originals and the packaged OS-input session have separate receipts; the latter ended native Quit with exit0, zero runtime warnings/errors. The ordinary-input motion review accepted Volley at this camera and a post-primary Pierce transition, with narrower warm-entry/finger-contact limits retained.
+
+Historical local archives remain `dist/sangam-rama-r1/yuga-native-linux-x86_64.zip` and the Windows sibling. Linux ZIP SHA-256 `4cecfd8e8ff386f3b6bf1a2bea6fd5fb225c55bb267da540a35661fef79716ab`; Windows `8eb3454db4885fd7eea9b24d52011736b8163c801f3fcf2adef299fdc9820dbd`. Windows execution was not performed. The actual 40-second desktop recording is `root/package-input-r1/primary-transition/window-input.mp4`; the failed FFmpeg X11 attempt is preserved separately.
+
+Delivered changes include Rama power-entry continuity, truthful hero feedback, receipt-driven training, original authored Sangam architecture/material finish and the separately authorized field-shop/battle-HUD stream. Full commercial art, human balance/listening and physical-GPU acceptance were not established. Root owns the new tactical integration; this older snapshot is immutable.

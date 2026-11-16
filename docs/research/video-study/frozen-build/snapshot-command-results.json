@@ -1,0 +1,74 @@
+[
+  {
+    "name": "import-generated-r2",
+    "command": [
+      "/workspaces/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/workspaces/scratch/yuga-video-frozen-r1/games/yuga-native",
+      "--editor",
+      "--import",
+      "--quit"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "contract-source-r2",
+    "command": [
+      "python",
+      "/workspaces/scratch/yuga-video-frozen-r1/games/yuga-native/tools/check-native-contracts.py",
+      "--report",
+      "/workspaces/ANDOLAN/docs/research/video-study/frozen-build/contract-source-r2.json"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sangam-cases-r2",
+    "command": [
+      "/workspaces/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/workspaces/scratch/yuga-video-frozen-r1/games/yuga-native",
+      "--script",
+      "res://tests/sangam_district_cases.gd",
+      "--",
+      "--report=/workspaces/ANDOLAN/docs/research/video-study/frozen-build/sangam-cases-r2.json"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "shop-flow-r2",
+    "command": [
+      "/workspaces/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/workspaces/scratch/yuga-video-frozen-r1/games/yuga-native",
+      "--script",
+      "res://tests/native_shop_flow_cases.gd",
+      "--",
+      "--report=/workspaces/ANDOLAN/docs/research/video-study/frozen-build/shop-flow-r2.json"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "canonical-export-r1",
+    "command": [
+      "python",
+      "/workspaces/scratch/yuga-video-frozen-r1/games/yuga-native/tools/package-native.py",
+      "--linux-engine",
+      "/workspaces/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64",
+      "--linux-runtime",
+      "/workspaces/tooling/recovered-public-runtime/godot",
+      "--linux-runtime-provenance",
+      "/workspaces/scratch/yuga-video-frozen-r1/games/yuga-native/docs/evidence/desktop-finish/G0/template-priority-build-r1/finished-build-verification.json",
+      "--linux-runtime-variant",
+      "pipeline-low-priority",
+      "--windows-engine",
+      "/workspaces/tooling/native-engine/Godot_v4.6.3-stable_win64.exe",
+      "--build-dir",
+      "/workspaces/scratch/yuga-video-frozen-r1/build",
+      "--export-only"
+    ],
+    "exit_code": 1
+  }
+]

@@ -1,0 +1,69 @@
+{
+  "sourceBranch": "work/yuga-studio",
+  "baselineCommit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "machine": "Ubuntu 24.04.5 x86_64; AMD EPYC; software llvmpipe",
+  "tools": {
+    "godot": "4.6.3.stable.official.7d41c59c4",
+    "godotBinary": "/usr/local/bin/godot",
+    "python": "/workspaces/tooling/yuga-native-python312/bin/python",
+    "blender": "Official portable4.3.2 at /usr/local/bin/blender4.3; Ubuntu archive4.0.2 at /usr/bin/blender",
+    "ffmpeg": "6.1.1",
+    "Mesa": "25.2.8",
+    "Chromium": "Playwright 1248 / Chrome156.0.8078.4",
+    "ripgrep": "14.1.0"
+  },
+  "baselinePack": {
+    "path": "/workspaces/scratch/studio-toolchain/before.pck",
+    "bytes": 77892904,
+    "sha256": "39efcc8968c319d430b817b18eb6f94157392c8ba49322ab9155bfaa0768912d"
+  },
+  "checks": [
+    {
+      "name": "native-contract-pins",
+      "passed": true,
+      "checks": 58
+    },
+    {
+      "name": "native-contracts",
+      "passed": true,
+      "checks": 279
+    },
+    {
+      "name": "rama-ability",
+      "passed": true,
+      "checks": 85
+    },
+    {
+      "name": "blender-factory-startup",
+      "passed": true,
+      "version": "4.0.2"
+    },
+    {
+      "name": "headless-screen-catalog",
+      "passed": true,
+      "suites": 47,
+      "checks": 971
+    },
+    {
+      "name": "official-blender-baseline-startup",
+      "passed": true,
+      "version": "4.3.2",
+      "archiveSHA256": "4da1c956673c0485e63054e563ee69198cc8f80d8157dd7592dffc8a6a5592e6"
+    }
+  ],
+  "render": {
+    "forwardPlus": "Started on software Vulkan and emitted READY but remained on scene-preparing overlay; current failed/stalled attempt preserved, no art acceptance.",
+    "compatibility": "Actual 1280x720 title reviewed; expected VSync/subsurface unsupported warnings. Native Quit0 observed. Reduced effects render, not Forward+ art target."
+  },
+  "setupRecovery": [
+    "Default Python3.14 could not use scipy1.15.3 wheel; stopped source build and created Python3.12 venv, all pinned wheels installed.",
+    "Ubuntu chromium-browser is snap-only and did not install a working snap browser; installed Playwright Chromium instead.",
+    "Direct ui_boot test refused unsafe product fixture writes; used supported catalog runner with isolated fixture.",
+    "First export tried incorrect preset Linux; corrected to Linux x86_64, export succeeded."
+  ],
+  "limits": [
+    "Blender4.3.2 official binary and Ubuntu4.0.2 both start; no existing game asset export was changed.",
+    "No hardware GPU is attached; no physical-GPU FPS or Windows execution claimed.",
+    "No persistent REA MCP/agent configuration changed."
+  ]
+}

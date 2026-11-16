@@ -1,0 +1,13 @@
+# Tactical native UI handoff
+
+Task `YUGA-TACTICAL-CASUAL-13`, base `7162b5d0b666e4422b0bc73100e1fba947d3323f`. This UI belongs to the new local first-to-13, 5v5 tactical Casual mode. Prior MOBA and Rama bow UI remain historical sources; online matchmaking and Ranked are not presented as available.
+
+The native frontend opens Home, Casual briefing, Rama kit, settings and controls. Deployment uses ResourceLoader threaded status, actual PackedScene completion, cancel, error and retry. Optional original menu art is loaded from `assets/tactical/menu-keyart.png`; original SVG controls live in `assets/tactical/ui/`. Existing bundled Noto/DejaVu fonts retain their original notices.
+
+The match UI consumes the real rules snapshot and root-owned player fields. It presents health/armor, magazine/reserve, ability charges and earned ultimate points, team scores/alive counts, authority timer, objective hold, callout, teammate-only minimap, kill feed, buy shop, held-Tab scorecard, pause/settings/guide, round result and match replay/menu. Arsenal prices and caps come from snapshot.catalog. No optimistic credit/inventory edits occur in UI.
+
+`configure(host)` is idempotent; `update_view(view)` refreshes presentation. `show_settings()`, `show_guide()`, `close_modal(notify_host=true)` and `has_modal()` support root input ownership. Root request_resume uses close_modal(false), preventing recursion. Root pauses local simulation and cancels held inputs while modal; scorecard is nonmodal. Settings persist through TacticalTheme.load_settings/save_settings/sanitize_settings at user://tactical-settings.cfg. Sensitivity, volume, FOV, reduced motion and interface scale are validated; failed saves remain visible.
+
+[Source freeze](source-freeze.json) pins files and exact executed checks. [Focused checks](checks-r3/result.json) pass36/36 with zero errors/warnings. They use actual native controls, ConfigFile persistence, threaded resources, real authority catalog/receipts and960×540 layout at100/150%. The first harness failure remains in checks-r1; logicalviewport configuration was corrected rather than weakening bounds.
+
+All18 [first native originals](round4-visual-review.json) were personally reviewed. One focused correction fixes primary contrast, navigation/action proportions, pinnedsettingssave, densehero rhythm, real alignedscorecard, roundresultcontrast andquietutilityavailability. Root owns successor rendering and ordinaryinput/package validation. These controls/tests and generated background do not establish commercial art parity, online multiplayer, physicalGPU performance or human gamefeel.

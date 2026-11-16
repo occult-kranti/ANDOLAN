@@ -1,5 +1,15 @@
 # ANDOLAN / YUGA
 
+Current native work: [YUGA · Sanctum tactical Casual](games/yuga-native/docs/tactical/README.md): first-person mythic firearms, hero abilities, 5v5 and first to 13 wins. [Roadmap](games/yuga-native/docs/tactical/ROADMAP.md) · [Prompt record](games/yuga-native/docs/tactical/PROMPTS.md) · [Delivery](games/yuga-native/docs/tactical/DELIVERY.md). Launch with `godot --path games/yuga-native`. The [Rama + Sangam civic checkpoint](games/yuga-native/docs/research/hero-six-rounds/README.md) remains historical, including the integrated field shop and battle HUD.
+
+**Studio continuation, 15 November 2026:** [local builds and verification](docs/research/STUDIO_DELIVERY.md)
+→ [game, story, modes and map production plan](games/yuga-native/docs/STUDIO_PRODUCTION_PLAN.md).
+The working `work/yuga-studio` branch adds native launch guidance, exact texture
+sharing and an original Blender map-study candidate. The report includes the
+two-round panel, installed tools, twenty-screen concept boards, current credits
+and downloadable local artifacts. New studio work has not replaced the public
+release or completed the final roster/online/art gates described below.
+
 This repository contains two games: **YUGA**, an original mythology-inspired native 3D game, and **ANDOLAN**, a separate browser city game.
 
 **YUGA desktop work:** [active handoff](games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [10 screen rounds + 3 integration rounds](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [six-worker task ledger](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The campaign has **17/78 reviewed packets and 0/13 complete rounds**. Mobile is deferred. Whole-hero/world art and sustained motion remain active work.

@@ -1,0 +1,160 @@
+{
+  "task_id": "YUGA-HERO-6R",
+  "round": 6,
+  "passed": false,
+  "count": 22,
+  "checks": [
+    {
+      "case": "valid_snapshot_preserves_exact_original_dirty_context",
+      "passed": true,
+      "live_git_calls": 0
+    },
+    {
+      "case": "wrong_snapshot_location",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "changed_runtime_bytes",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "added_runtime_file",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "removed_runtime_file",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "marker_runtime_digest_mismatch",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "marker_packaging_script_mismatch",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "packaging_file_changed_after_marker",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "snapshot_manifest_changed",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "malformed_git_container",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Invalid original snapshot git context"
+    },
+    {
+      "case": "malformed_git_head",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Invalid original snapshot git context"
+    },
+    {
+      "case": "malformed_git_dirty_status",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Invalid original snapshot git context"
+    },
+    {
+      "case": "missing_git_branch",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Invalid original snapshot git context"
+    },
+    {
+      "case": "incomplete_marker",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "wrong_marker_kind",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Snapshot source/provenance changed; make a fresh verified copy"
+    },
+    {
+      "case": "invalid_marker_json",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+    },
+    {
+      "case": "pending_without_completed_marker",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Incomplete snapshot cannot supply build provenance"
+    },
+    {
+      "case": "failed_without_completed_marker",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Incomplete snapshot cannot supply build provenance"
+    },
+    {
+      "case": "manifest_without_completed_marker",
+      "passed": true,
+      "rejected": true,
+      "live_git_calls": 0,
+      "error": "Incomplete snapshot cannot supply build provenance"
+    },
+    {
+      "case": "failed_journal_overrides_even_otherwise_valid_marker",
+      "passed": false,
+      "rejected": false,
+      "live_git_calls": 0,
+      "error": null
+    },
+    {
+      "case": "dangling_marker_must_not_fall_back_to_live_clean_git",
+      "passed": false,
+      "rejected": false,
+      "live_git_calls": 3,
+      "error": null
+    },
+    {
+      "case": "original_packager_source_unchanged",
+      "passed": true
+    }
+  ],
+  "packager_sha256": "20ff573fba2b3e03fb0d41f3c023cb99db0e1b0b3dd3805ed7ea4c3bac3bd307",
+  "probe_sha256": "6c4c75e2adb0b4c2c484c11674742e7426fc16b43956a9b2725713b098503e6a",
+  "scope": "Real copied package git_context/source_state in temporary minimal source trees. Only live-git fallback is replaced by an unrelated clean-context witness; any fallback for marked/failed input fails the test. No Godot, export, source mutation or package execution."
+}

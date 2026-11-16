@@ -284,7 +284,7 @@ func _respawn() -> void:
 	changed.emit()
 
 func _siege_event(event: Dictionary) -> void:
-	if not configured or suspended or not player.active or event.get("kind") != "impact" or event.get("team") != "moon" or event.get("cancelled", false): return
+	if not configured or suspended or event.get("kind") != "impact" or event.get("team") != "moon" or event.get("cancelled", false): return
 	var point = event.get("target")
 	if not point is Vector3 or not point.is_finite(): return
 	var radius := float(event.get("radius", 0))

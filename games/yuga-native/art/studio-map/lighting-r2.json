@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "status": "accepted_scoped_compatibility_lighting_preview",
+  "before_source_sha256": "c46cbc96cca9c500861b75a59ce61603135d0a51f0ba8403c679c49f0b1a10eb",
+  "after_source_sha256": "86d99fdf9416f2b82bb01f0b461d2a873a715d23328b61d66657adc4bf8e7af4",
+  "unchanged_glb_sha256": "468448f03984fdaadc1be3563ed0ace75b3d635cc5c546bd321c364ae55e84cf",
+  "before_lighting": {
+    "ambient_energy": 0.65,
+    "ambient_sky_contribution": 1.0,
+    "sun_energy": 1.5,
+    "tonemap": "FILMIC",
+    "exposure": 1.0,
+    "white_point": 1.0
+  },
+  "after_lighting": {
+    "ambient_energy": 0.22,
+    "ambient_sky_contribution": 0.0,
+    "sun_energy": 0.65,
+    "tonemap": "LINEAR",
+    "exposure": 0.9,
+    "white_point": 1.0
+  },
+  "imported_material_inspection": [
+    {
+      "albedo": "(0.2348, 0.3318, 0.41, 1.0)",
+      "material": "Foundry / deep indigo",
+      "metallic": 0.0,
+      "node": "COL_BOX_FOUNDATION",
+      "roughness": 0.720000028610229,
+      "shading": 1
+    },
+    {
+      "albedo": "(0.4366, 0.5564, 0.5838, 1.0)",
+      "material": "Foundry / blue slate",
+      "metallic": 0.0,
+      "node": "DECOR_ROUTE_LOOM",
+      "roughness": 0.720000028610229,
+      "shading": 1
+    },
+    {
+      "albedo": "(0.6872, 0.8962, 0.9309, 1.0)",
+      "material": "North / chalk blue",
+      "metallic": 0.25,
+      "node": "DECOR_LABEL_LOOM",
+      "roughness": 0.400000005960464,
+      "shading": 1
+    },
+    {
+      "albedo": "(0.7674, 0.5749, 0.3575, 1.0)",
+      "material": "Foundry / copper",
+      "metallic": 0.550000011920929,
+      "node": "DECOR_TICK_LOOM-65",
+      "roughness": 0.379999995231628,
+      "shading": 1
+    },
+    {
+      "albedo": "(0.9777, 0.8095, 0.4236, 1.0)",
+      "material": "Relay / amber",
+      "metallic": 0.300000011920929,
+      "node": "DECOR_SUN_SPAWN_INLAY",
+      "roughness": 0.300000011920929,
+      "shading": 1
+    },
+    {
+      "albedo": "(0.8703, 0.8153, 0.68, 1.0)",
+      "material": "Foundry / dressed sandstone",
+      "metallic": 0.0,
+      "node": "COL_BOX_SUN_CORE_PLINTH_-16",
+      "roughness": 0.720000028610229,
+      "shading": 1
+    },
+    {
+      "albedo": "(0.7484, 0.6872, 0.5749, 1.0)",
+      "material": "Foundry / warm limestone",
+      "metallic": 0.0,
+      "node": "COL_BOX_HALL_-20_-46",
+      "roughness": 0.720000028610229,
+      "shading": 1
+    },
+    {
+      "albedo": "(0.6422, 0.4731, 0.3959, 1.0)",
+      "material": "Court / terracotta",
+      "metallic": 0.0,
+      "node": "COL_BOX_KILN_COVER_-50",
+      "roughness": 0.720000028610229,
+      "shading": 1
+    },
+    {
+      "albedo": "(0.9451, 0.8431, 0.6039, 1.0)",
+      "material": "",
+      "metallic": 0.0,
+      "node": "@MeshInstance3D@106",
+      "roughness": 0.649999976158142,
+      "shading": 1
+    }
+  ],
+  "diagnosis": {
+    "observed": "Actual Compatibility screenshot clips walls/paving and the amber spawn, despite correctly imported nonemissive PBR colors.",
+    "inference": "The combined ambient/sun/filmic white-point/exposure setup overdrives flat-color materials; compare same-geometry source preview after bounded SDR lighting change.",
+    "source": "https://docs.godotengine.org/en/4.6/classes/class_environment.html#class-environment-property-tonemap-exposure",
+    "source_support": "Godot4.6 Environment docs describe FILMIC multiplying input values by2 and explain that higher white reference reduces blown highlights. No claim that FILMIC is unsupported in Compatibility.",
+    "external_material_bug_found": false
+  },
+  "baseline_image": {
+    "path": "docs/research/evidence/studio/final-map/01-map-ground.png",
+    "sha256": "5bf9fcb9e0c27a0a29ba83e5961776a8e5f6bd6018afd04887b27cec51b12c05",
+    "pixel_region": [
+      0,
+      225,
+      1280,
+      720
+    ],
+    "pixels": 633600,
+    "near_white_all_channels_240_fraction": 0.1165,
+    "clipped_any_channel_254_fraction": 0.8865
+  },
+  "physics": {
+    "asset_sha256": "468448f03984fdaadc1be3563ed0ace75b3d635cc5c546bd321c364ae55e84cf",
+    "checks": [
+      {
+        "colliders": 101,
+        "name": "Imported two wedge ramps and bounded collision set",
+        "passed": true
+      },
+      {
+        "name": "Crossover deck collision at x=0.0",
+        "passed": true
+      },
+      {
+        "name": "Crossover deck collision at x=-40.0",
+        "passed": true
+      },
+      {
+        "name": "Crossover deck collision at x=40.0",
+        "passed": true
+      },
+      {
+        "name": "Ground lane remains below the crossover",
+        "passed": true
+      },
+      {
+        "name": "Actual capsule walks south ramp onto six-metre deck",
+        "passed": true,
+        "position": "(0.0, 6.028409, 0.700951)"
+      },
+      {
+        "name": "Actual capsule walks down ramp to ground",
+        "passed": true,
+        "position": "(0.0, 0.016608, 39.87058)"
+      },
+      {
+        "name": "Actual jump input rises and returns to ground",
+        "passed": true,
+        "peak_height": 1.6519581079483
+      },
+      {
+        "name": "Visible perimeter has collision",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "scope": "Actual imported geometry and physics traversal; no art/match/hardware acceptance",
+    "source_sha256": "86d99fdf9416f2b82bb01f0b461d2a873a715d23328b61d66657adc4bf8e7af4"
+  },
+  "controls_geometry_collision_changes": false,
+  "previous_freeze_and_first_package_preserved": true,
+  "actual_new_capture": {
+    "ground": "docs/research/evidence/studio/lighting-r2-preview/01-lighting-r2-ground.png",
+    "ground_sha256": "a30d8329dc3e492ce86695e18db8b8fa817be0b05b506536eb8d962144e7bb2a",
+    "overview": "docs/research/evidence/studio/lighting-r2-preview/02-lighting-r2-overview.png",
+    "overview_sha256": "b681cfc28ab0998b4222b226e16d2088da8543aec8e87ff9c180142331d1462d",
+    "input_receipt_sha256": "0fb5880eea89120be3ea318196e19965848534ae74fd19372c69ee7c5c86b573",
+    "source_receipt": {
+      "scripts/studio_map_study.gd": {
+        "bytes": 10311,
+        "sha256": "86d99fdf9416f2b82bb01f0b461d2a873a715d23328b61d66657adc4bf8e7af4"
+      },
+      "scenes/studio_map_study.tscn": {
+        "bytes": 187,
+        "sha256": "cbc92deb63c3cd4cf352ffbd9a31f1002eb970e465beb571bd60aa943496aa86"
+      },
+      "assets/world/studio-relay-foundry.glb": {
+        "bytes": 644556,
+        "sha256": "468448f03984fdaadc1be3563ed0ace75b3d635cc5c546bd321c364ae55e84cf"
+      }
+    },
+    "native_exit_code": 0,
+    "os_overview_toggle_exercised": true
+  },
+  "limit": "No forward renderer, production-art, balance, multiplayer or hardware FPS acceptance follows from headless material/physics inspection.",
+  "after_image": {
+    "path": "docs/research/evidence/studio/lighting-r2-preview/01-lighting-r2-ground.png",
+    "sha256": "a30d8329dc3e492ce86695e18db8b8fa817be0b05b506536eb8d962144e7bb2a",
+    "pixel_region": [
+      0,
+      225,
+      1280,
+      720
+    ],
+    "pixels": 633600,
+    "near_white_all_channels_240_fraction": 0.0,
+    "clipped_any_channel_254_fraction": 0.0029
+  },
+  "visual_review": {
+    "directly_opened_both_original_images": true,
+    "accepted": "Ground walls/paving/spawn colors and depth remain visible without the original clipped-white/neon-yellow appearance. Matching same-view screenshot, unchanged GLB and controls overlay.",
+    "remaining": "Fine striped shadow/depth aliasing remains on some thin decorative paving in Compatibility overview; map remains a blockout, not finished art.",
+    "forward_plus_lighting": "Not separately captured at this correction source yet. The lower bounded SDR lighting uses shared supported controls; no cross-renderer visual equality is claimed."
+  },
+  "pixel_metric_limit": "Clipping fractions are simple pixel counts outside the HUD, not a perceptual quality metric or proof of physically accurate color. Both actual images were also visually inspected."
+}

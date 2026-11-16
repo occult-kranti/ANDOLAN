@@ -1,6 +1,34 @@
 # YUGA production observatory and reuse-first art stages
 
-**Current run:** [reuse into playable integration](research/reuse-production-continuation/README.md), ignored state `.local-swarm/observatory-reuse-production-continuation`, loopback port **8768**. The jobs separate integrated banks/camera, the typed authority factory, diagnostics and rejected hair appearances. Public data is a deliberately exported snapshot; hosted workers and CPU authoring do not imply active local inference or an attached production GPU.
+**Active continuation — YUGA · Sanctum:** the [native tactical direction](tactical/README.md)
+and [art-first roadmap](tactical/ROADMAP.md) own the current task,
+`YUGA-TACTICAL-CASUAL-13`. The dashboard now tracks first-person Rama,
+two-site Sangam Crossing and local **5v5 Casual, first to 13 wins**, with sides
+switching after round 12. One human and nine bots do not establish online
+Casual or Ranked. Native is the priority; browser/mobile expansion is deferred.
+
+The saved run is `sanctum-casual-continuation`; its ignored producer state is
+`.local-swarm/observatory-sanctum-publication-r1/`. Use that explicit
+`--state-dir` when updating/exporting this run. A snapshot is a dated record,
+not live worker activity. Source, test, native image, input, package and public
+delivery claims retain separate evidence. The [current delivery](tactical/DELIVERY.md)
+owns the final source and verification receipt.
+
+The four Sanctum previews are actual **source-bound staged R2 captures**;
+their nineteen-shot receipt records no source drift. Their [copy manifest and provenance](../tools/build-observatory/web/media/licenses/YUGA-SANCTUM-PREVIEWS.md)
+identifies exact original bytes. Generated decorative menu art is not a
+production character model. These views do not close final art, ordinary
+input, motion, human balance or hardware-performance gates.
+
+Historical acceptance stays **17/78 desktop packets, 0/13 complete rounds**,
+and deferred mobile **0/108**. The tactical continuation does not silently
+increment the older campaigns or replace the earlier downloadable executable.
+The dashboard retains a clearly labeled historical Confluence image and
+unrigged source viewer; prior snapshots remain in Git history.
+
+## Historical reuse checkpoints
+
+**Previous run:** [reuse into playable integration](research/reuse-production-continuation/README.md), ignored state `.local-swarm/observatory-reuse-production-continuation`, loopback port **8768**. The jobs separate integrated banks/camera, the typed authority factory, diagnostics and rejected hair appearances. Public data is a deliberately exported snapshot; hosted workers and CPU authoring do not imply active local inference or an attached production GPU.
 
 The [observatory source](../tools/build-observatory/README.md) is a read-only progress dashboard for actual jobs, model/tool identities, outputs and next steps. The [reuse stage](research/production-reuse-oct23/README.md) owns source decisions and the next five dependent production gates. The [art packet](../art/production-stage-oct23/README.md) distinguishes the existing animated Rama from the new, unrigged GPU-generated source. Neither a concept image nor a clean dashboard closes the commercial graphics target.
 
@@ -76,3 +104,21 @@ The current stage delivered a monitoring tool, source/model intake and bounded r
 The dedicated workflow rebuilds the existing browser site from its exact previously deployed source before adding `/production/`; it does not replace the site root with the dashboard. The publisher verifies pre-existing sibling file hashes remain unchanged during the additive copy, validates snapshot mode and copies only approved web/media/viewer/license files. Rebuilding that pinned source does not establish byte equality with an older deployment; public checks have their own receipt.
 
 After an observable job result, emit its CLI record and export `web/status.json`. Then publish a reviewed snapshot. Never keep an abandoned process or anonymous demo marked running indefinitely, and never run a heartbeat loop that outlives its actual owner just to make the dashboard appear busy.
+
+For the Sanctum publication, commit the reviewed source first, then export
+from that clean checkout and commit the snapshot as a separate successor:
+
+```sh
+python3 games/yuga-native/tools/build-observatory/observatory.py export \
+  --workspace /workspaces/ANDOLAN \
+  --state-dir /workspaces/ANDOLAN/.local-swarm/observatory-sanctum-publication-r1 \
+  --output games/yuga-native/tools/build-observatory/web/status.json
+```
+
+The existing `yuga-observatory.yml` deploys changes under this tool on
+`game/yuga-native-production`, or by explicit workflow dispatch. It preserves
+browser baseline `176b6f8e71fcffd3d570d96e66643d8cb9893603`. The publication
+receipt pins the dashboard commit separately from the observed native source.
+Run `audit_public.py` against the exact deployed commit and browser baseline,
+then `audit_browser.py` for actual Chromium behavior. A successful push alone
+does not establish deployment or public-byte verification.

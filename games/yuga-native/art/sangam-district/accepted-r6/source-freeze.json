@@ -1,0 +1,59 @@
+{
+  "task": "YUGA-HERO-6R-WORLD",
+  "product": "YUGA native offline Confluence",
+  "source_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "source_sha256": {
+    "tools/studio/build_sangam_district.py": "ae8afc988f271f4d5fb0afe0ece7309506ab3d7a3d20555c89a0795741d6b249",
+    "games/yuga-native/scripts/sangam_district.gd": "4bc793ca04f17ef4e9f3e3e2992551a55b7c90ff1e3b7fd67ba9bf835654df1e",
+    "games/yuga-native/tests/sangam_district_cases.gd": "eb4ed58486f72c16ff62b43d29e29e74800d9a9698232578583abda8b7677259",
+    "games/yuga-native/assets/world/sangam-district.glb": "8957548ccc748752055bf0867d5640e710779b3fd5ce8ab613e03addd6cc90fb",
+    "games/yuga-native/assets/world/sangam-district.json": "e5747a11871c7cc3735d9516dd78855beb8f639f8a3e7adfbc97a489b0fa5ba2",
+    "games/yuga-native/art/sangam-district/sangam-district.blend": "24348fd94939c753f0010330d45f0197a8bdb90428a7b7c8a1ef9b0530e3424f",
+    "games/yuga-native/assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "games/yuga-native/shaders/sangam_masonry.gdshader": "fb90a037589caf756997cf6d1abfe3ad7e9ce452f0d2c97a5f4b876517ae8184"
+  },
+  "authoring": {
+    "engine": "Blender 4.3.2",
+    "threads": 8,
+    "command": "blender4.3 --background --threads 8 --python tools/studio/build_sangam_district.py",
+    "result": "R6 exit0, geometry-only GLB and editable BLEND exported; no Blender render; unchanged308422triangles",
+    "triangles": 308422,
+    "meshes": 26,
+    "material_definitions": 8
+  },
+  "rejected_runs": [
+    "art/sangam-district/rejected-r1:475942 triangles over authored320000 gate",
+    "art/sangam-district/rejected-r2:369094 triangles over authored320000 gate"
+  ],
+  "visual_review": [
+    "Prior studio native gameplay+overview screenshots",
+    "art/sangam-direction/art-direction.png (aspirational concept only)",
+    "10 actual1280x720 Forward+ district-capture-r1 originals personally opened; exact image hashes/findings in round5-actual-review.json"
+  ],
+  "pending": [
+    "R6 successor native stills; specifically inspect residual top-face cover coplanarity",
+    "Ordinary input/camera corner/covered traversal review",
+    "Native realGPU profiling/human feel"
+  ],
+  "next_owner": "Root integration preserves external fieldshop/HUD; root captures; world/combat/reference review originals.",
+  "revision": "R6 actual-image corrections after preserved native district-capture-r1",
+  "prior_test": {
+    "command": "godot --headless --path games/yuga-native --script res://tests/sangam_district_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/world/checks-r1/result.json",
+    "result": "31/31 pass, exit0, zero warnings/errors",
+    "scope": "Actual imported meshes, isolated matching host, native ray collision, real army/kit, lifecycle and metadata adverse cases"
+  },
+  "test": {
+    "command": "godot --headless --path games/yuga-native --script res://tests/sangam_district_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/world/checks-r6/result.json",
+    "result": "33/33 pass, exit0, zero warnings/errors",
+    "scope": "R6 actual imported meshes and source material/texture bindings, isolated matching host, native ray collision, real army/kit, lifecycle and metadata adverse cases"
+  },
+  "retained_evidence": [
+    "art/sangam-district/accepted-r3 original source/GLB/blend/spec/adapter/test/freeze",
+    "root/district-capture-r1 images remain original and unedited"
+  ],
+  "finish": {
+    "scope": "Three shared native masonry ShaderMaterials compress original input albedo luminance and lower stone normal strength; source input textures unmodified. Private brassStandardMaterial uses metallic0.25 roughness0.72 to reduce distant glitter.",
+    "source_texture_pixels_modified": false,
+    "blender_preview_limit": "Blender retains original albedo. Native finish shader determines accepted material appearance."
+  }
+}

@@ -59,6 +59,10 @@ void fragment() {
 	ROUGHNESS = clamp(base_roughness + current * 0.05, 0.1, 0.8);
 	if (swamp_overlay) {
 		vec3 paving = world_paving(p);
+		if (sangam_paving) {
+			vec3 dry_normal = sangam_paving_normal(p);
+			NORMAL = normalize((VIEW_MATRIX * vec4(normalize(mix(dry_normal, blended_normal, pool)), 0.0)).xyz);
+		}
 		// A shallow wet film retains the paving bed instead of filling its
 		// centre with opaque moss paint. Keep at least 82% of the damp-stone
 		// colour signal; the original pool mask and dry border stay identical.

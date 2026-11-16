@@ -1325,6 +1325,35 @@ def source_state() -> dict:
 
 
 def git_context() -> dict:
+    # A copied source tree under an ignored review folder inherits the live
+    # checkout's HEAD but not its meaningful path-relative dirty status. Bind
+    # the original context to the verified snapshot instead of calling it clean.
+    marker_path = REPOSITORY / 'SOURCE_SNAPSHOT.json'
+    manifest_path = REPOSITORY / 'SNAPSHOT-MANIFEST.json'
+    failed_path = REPOSITORY / 'SNAPSHOT-FAILED.json'
+    if marker_path.is_symlink() or failed_path.exists() or failed_path.is_symlink():
+        raise ValueError('Failed or symlinked snapshot cannot supply build provenance')
+    if marker_path.exists():
+        if marker_path.is_symlink() or manifest_path.is_symlink() or not manifest_path.is_file():
+            raise ValueError('Snapshot provenance must use regular marker/manifest files')
+        marker = json.loads(marker_path.read_text())
+        if (marker.get('schema') != 1 or marker.get('kind') != 'yuga-native-source-snapshot'
+                or marker.get('complete') is not True
+                or marker.get('snapshot_repository') != str(REPOSITORY.resolve())
+                or marker.get('runtime_source') != source_state()
+                or marker.get('packaging_script') != record(Path(__file__).resolve())
+                or marker.get('snapshot_manifest') != record(manifest_path)):
+            raise ValueError('Snapshot source/provenance changed; make a fresh verified copy')
+        context = marker.get('git')
+        if (not isinstance(context, dict)
+                or not all(isinstance(context.get(key), str) for key in ('head', 'branch', 'native_worktree_status'))
+                or not re.fullmatch(r'[a-f0-9]{40}', context['head'])
+                or not isinstance(marker.get('source_repository'), str)):
+            raise ValueError('Invalid original snapshot git context')
+        return {**context, 'source_snapshot': {'marker_sha256': digest(marker_path),
+                                             'original_repository': marker['source_repository']}}
+    if any((REPOSITORY / name).exists() for name in ('SNAPSHOT-PENDING.json', 'SNAPSHOT-MANIFEST.json', 'SNAPSHOT-FAILED.json')):
+        raise ValueError('Incomplete snapshot cannot supply build provenance')
     def git(*args: str) -> str:
         return subprocess.check_output(['git', *args], cwd=REPOSITORY, text=True).strip()
     return {'head': git('rev-parse', 'HEAD'), 'branch': git('branch', '--show-current'),
@@ -1582,10 +1611,12 @@ def _native_contract_inputs(project: Path) -> dict:
         'games/yuga-native/scripts/native_contracts.gd',
         'games/yuga/shared/map.ts', 'games/yuga/shared/types.ts',
         'games/yuga-native/assets/world/confluence-map.json',
+        'games/yuga-native/assets/world/sangam-district.glb',
+        'games/yuga-native/shaders/sangam_masonry.gdshader',
         'games/yuga-native/docs/GAME_DESIGN_MASTER.md',
         'games/yuga-native/scripts/relay_control.gd',
         *[f'games/yuga-native/tests/fixtures/contracts/native-content{revision}-{kind}.json'
-          for revision in (3, 4, 5, 6, 7) for kind in ('catalog', 'descriptor')],
+          for revision in (3, 4, 5, 6, 7, 8, 9) for kind in ('catalog', 'descriptor')],
     }
     catalog = json.loads((project / 'assets/contracts/native-contracts-v1.json').read_text())
     for profile in catalog['profiles']:
@@ -1763,7 +1794,43 @@ def start_readme(platform: str, engines: dict | None = None) -> str:
                             'See NOTICE/GODOT-RUNTIME.txt and GODOT-RUNTIME-PROVENANCE.json for\n'
                             'exact runtime, original source, patch, build and license records.\n'
                             'Archive checks do not prove execution or a universal cold-start repair.')
-    return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. {runtime_text}\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. Flight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWatch duel opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
+    if 'res://scenes/tactical_frontend.tscn' in (PROJECT / 'project.godot').read_text():
+        return f'''YUGA · SANCTUM — TACTICAL CASUAL / {platform} x86_64
+
+Extract the entire ZIP, then run {start}. No Godot editor installation required.
+{runtime_text}
+
+PLAY CASUAL → DEPLOY AS RAMA
+First-person mythic firearms and hero abilities. One human plus nine local bots.
+5v5, first team to 13 wins; attack/defend sides swap after round 12.
+20-second buy phase, one life per round, two original Astra plant/defuse sites.
+Ranked is planned; online matchmaking and rating services are not present.
+
+WASD move; Shift walk; Space jump; mouse aim; LMB fire; RMB aim down sights;
+R reload; Q Solar veil; E Measured step; C Ward wall; X Dawn volley;
+hold F to attune/sever the Astra; B buy at spawn during preparation;
+hold Tab scoreboard; F1 hero guide; Esc pause/settings/menu.
+Earn ultimate points through eliminations and objectives; buy finite utility.
+Pausing freezes this offline match. Sensitivity, FOV, sound and reduced motion
+settings persist separately from the retained older practice controls.
+
+Sangam Crossing uses original sandstone, indigo and brass city architecture.
+The menu's generated YUGA illustration is decorative key art. Actual gameplay
+is native 3D; the older courtyard/district resources remain in this package as
+historical assets, not the active long-match mode.
+
+Compatibility fallback: {start} --rendering-method gl_compatibility
+Forward+ needs Vulkan-capable graphics. Compatibility omits some effects.
+Windows is archive-validated from Linux; Windows execution is not claimed.
+Local software rendering does not establish target hardware performance,
+commercial art parity, a finished hero roster or human gameplay/audio acceptance.
+
+See NOTICE/TACTICAL-ART.md, NOTICE/TACTICAL-MAP.md and PACKAGE-MANIFEST.json.
+Source and continuation: games/yuga-native/docs/tactical/ in the repository.
+Linux requires a desktop session and graphics/audio/system libraries.
+If executable bits are lost: chmod +x launch.sh godot
+'''
+    return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. {runtime_text}\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F4: field shop; F5: reset/respawn; N: day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. The Sangam civic district adds authored\neight-building architecture, four solid civic covers and raised galleries.\nThe base field shop spends match-local gold on actual health, arrows, shield\nand temporary escorts. Battle continues while the shop is open. Elevated\nRama casts remain unsupported: land before using the kit.\nFlight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWatch duel opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
 
 
 def copy_rama_crown_companions(project: Path, destination: Path) -> dict:

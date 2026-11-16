@@ -1,0 +1,1479 @@
+{
+  "schema_version": 1,
+  "name": "Relay Foundry",
+  "status": "original playable map-design study",
+  "blender_version": "4.3.2",
+  "source_script": "tools/studio/build_relay_foundry.py",
+  "source_script_sha256": "a69881ff9e7a53f4ae130c603311881f1159c2ab1ed168ff68f7be6d599eb879",
+  "asset": "assets/world/studio-relay-foundry.glb",
+  "asset_sha256": "468448f03984fdaadc1be3563ed0ace75b3d635cc5c546bd321c364ae55e84cf",
+  "blend_sha256": "216224dd748a7e3be786f7d6abaa8780a941811e6239ffa43283a3446a5fc6c9",
+  "units": "metres; Godot +Y up; Blender Z-up export converted by glTF",
+  "bounds": {
+    "width": 132,
+    "length": 190,
+    "crossover_height": 6
+  },
+  "lanes": [
+    {
+      "id": "loom",
+      "x": -40
+    },
+    {
+      "id": "span",
+      "x": 0
+    },
+    {
+      "id": "kiln",
+      "x": 40
+    }
+  ],
+  "spawns": [
+    [
+      0,
+      0.15,
+      79
+    ],
+    [
+      0,
+      0.15,
+      -79
+    ]
+  ],
+  "relays": [
+    [
+      -40,
+      0,
+      -12
+    ],
+    [
+      0,
+      6,
+      0
+    ],
+    [
+      40,
+      0,
+      12
+    ]
+  ],
+  "collision_contract": "COL_BOX_ meshes -> local mesh AABB boxes; COL_RAMP_ meshes -> convex wedge shapes",
+  "colliders": [
+    {
+      "name": "COL_BOX_FOUNDATION",
+      "shape": "box",
+      "center": [
+        0,
+        -0.6,
+        0
+      ],
+      "size": [
+        132,
+        1.2,
+        190
+      ]
+    },
+    {
+      "name": "COL_BOX_SUN_CORE_PLINTH_-16",
+      "shape": "box",
+      "center": [
+        -16,
+        0.75,
+        76
+      ],
+      "size": [
+        5,
+        1.5,
+        6
+      ]
+    },
+    {
+      "name": "COL_BOX_SUN_CORE_TOWER_-16",
+      "shape": "box",
+      "center": [
+        -16,
+        6.5,
+        76
+      ],
+      "size": [
+        2.6,
+        10,
+        2.6
+      ]
+    },
+    {
+      "name": "COL_BOX_SUN_CORE_PLINTH_16",
+      "shape": "box",
+      "center": [
+        16,
+        0.75,
+        76
+      ],
+      "size": [
+        5,
+        1.5,
+        6
+      ]
+    },
+    {
+      "name": "COL_BOX_SUN_CORE_TOWER_16",
+      "shape": "box",
+      "center": [
+        16,
+        6.5,
+        76
+      ],
+      "size": [
+        2.6,
+        10,
+        2.6
+      ]
+    },
+    {
+      "name": "COL_BOX_MOON_CORE_PLINTH_-16",
+      "shape": "box",
+      "center": [
+        -16,
+        0.75,
+        -76
+      ],
+      "size": [
+        5,
+        1.5,
+        6
+      ]
+    },
+    {
+      "name": "COL_BOX_MOON_CORE_TOWER_-16",
+      "shape": "box",
+      "center": [
+        -16,
+        6.5,
+        -76
+      ],
+      "size": [
+        2.6,
+        10,
+        2.6
+      ]
+    },
+    {
+      "name": "COL_BOX_MOON_CORE_PLINTH_16",
+      "shape": "box",
+      "center": [
+        16,
+        0.75,
+        -76
+      ],
+      "size": [
+        5,
+        1.5,
+        6
+      ]
+    },
+    {
+      "name": "COL_BOX_MOON_CORE_TOWER_16",
+      "shape": "box",
+      "center": [
+        16,
+        6.5,
+        -76
+      ],
+      "size": [
+        2.6,
+        10,
+        2.6
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_-46",
+      "shape": "box",
+      "center": [
+        -20,
+        4.5,
+        -46
+      ],
+      "size": [
+        12,
+        9,
+        32
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_-46_CORNICE",
+      "shape": "box",
+      "center": [
+        -20,
+        9.275,
+        -46
+      ],
+      "size": [
+        13,
+        0.55,
+        33
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_-46_ROOF",
+      "shape": "box",
+      "center": [
+        -20,
+        9.75,
+        -46
+      ],
+      "size": [
+        11.4,
+        0.4,
+        31.4
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_-46_PILASTER_-11",
+      "shape": "box",
+      "center": [
+        -26.15,
+        4.25,
+        -57
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_-46_PILASTER_0",
+      "shape": "box",
+      "center": [
+        -26.15,
+        4.25,
+        -46
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_-46_PILASTER_11",
+      "shape": "box",
+      "center": [
+        -26.15,
+        4.25,
+        -35
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_46",
+      "shape": "box",
+      "center": [
+        -20,
+        4.5,
+        46
+      ],
+      "size": [
+        12,
+        9,
+        32
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_46_CORNICE",
+      "shape": "box",
+      "center": [
+        -20,
+        9.275,
+        46
+      ],
+      "size": [
+        13,
+        0.55,
+        33
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_46_ROOF",
+      "shape": "box",
+      "center": [
+        -20,
+        9.75,
+        46
+      ],
+      "size": [
+        11.4,
+        0.4,
+        31.4
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_46_PILASTER_-11",
+      "shape": "box",
+      "center": [
+        -26.15,
+        4.25,
+        35
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_46_PILASTER_0",
+      "shape": "box",
+      "center": [
+        -26.15,
+        4.25,
+        46
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_-20_46_PILASTER_11",
+      "shape": "box",
+      "center": [
+        -26.15,
+        4.25,
+        57
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_-46",
+      "shape": "box",
+      "center": [
+        20,
+        4.5,
+        -46
+      ],
+      "size": [
+        12,
+        9,
+        32
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_-46_CORNICE",
+      "shape": "box",
+      "center": [
+        20,
+        9.275,
+        -46
+      ],
+      "size": [
+        13,
+        0.55,
+        33
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_-46_ROOF",
+      "shape": "box",
+      "center": [
+        20,
+        9.75,
+        -46
+      ],
+      "size": [
+        11.4,
+        0.4,
+        31.4
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_-46_PILASTER_-11",
+      "shape": "box",
+      "center": [
+        26.15,
+        4.25,
+        -57
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_-46_PILASTER_0",
+      "shape": "box",
+      "center": [
+        26.15,
+        4.25,
+        -46
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_-46_PILASTER_11",
+      "shape": "box",
+      "center": [
+        26.15,
+        4.25,
+        -35
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_46",
+      "shape": "box",
+      "center": [
+        20,
+        4.5,
+        46
+      ],
+      "size": [
+        12,
+        9,
+        32
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_46_CORNICE",
+      "shape": "box",
+      "center": [
+        20,
+        9.275,
+        46
+      ],
+      "size": [
+        13,
+        0.55,
+        33
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_46_ROOF",
+      "shape": "box",
+      "center": [
+        20,
+        9.75,
+        46
+      ],
+      "size": [
+        11.4,
+        0.4,
+        31.4
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_46_PILASTER_-11",
+      "shape": "box",
+      "center": [
+        26.15,
+        4.25,
+        35
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_46_PILASTER_0",
+      "shape": "box",
+      "center": [
+        26.15,
+        4.25,
+        46
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_HALL_20_46_PILASTER_11",
+      "shape": "box",
+      "center": [
+        26.15,
+        4.25,
+        57
+      ],
+      "size": [
+        0.5,
+        8.5,
+        1.1
+      ]
+    },
+    {
+      "name": "COL_BOX_LOOM_PILLAR_-56_-48",
+      "shape": "box",
+      "center": [
+        -56,
+        2.5,
+        -48
+      ],
+      "size": [
+        3.5,
+        5,
+        4
+      ]
+    },
+    {
+      "name": "COL_BOX_LOOM_CAP_-56_-48",
+      "shape": "box",
+      "center": [
+        -56,
+        5.175,
+        -48
+      ],
+      "size": [
+        4.1,
+        0.35,
+        4.6
+      ]
+    },
+    {
+      "name": "COL_BOX_LOOM_PILLAR_-56_-32",
+      "shape": "box",
+      "center": [
+        -56,
+        2.5,
+        -32
+      ],
+      "size": [
+        3.5,
+        5,
+        4
+      ]
+    },
+    {
+      "name": "COL_BOX_LOOM_CAP_-56_-32",
+      "shape": "box",
+      "center": [
+        -56,
+        5.175,
+        -32
+      ],
+      "size": [
+        4.1,
+        0.35,
+        4.6
+      ]
+    },
+    {
+      "name": "COL_BOX_LOOM_PILLAR_-56_32",
+      "shape": "box",
+      "center": [
+        -56,
+        2.5,
+        32
+      ],
+      "size": [
+        3.5,
+        5,
+        4
+      ]
+    },
+    {
+      "name": "COL_BOX_LOOM_CAP_-56_32",
+      "shape": "box",
+      "center": [
+        -56,
+        5.175,
+        32
+      ],
+      "size": [
+        4.1,
+        0.35,
+        4.6
+      ]
+    },
+    {
+      "name": "COL_BOX_LOOM_PILLAR_-56_48",
+      "shape": "box",
+      "center": [
+        -56,
+        2.5,
+        48
+      ],
+      "size": [
+        3.5,
+        5,
+        4
+      ]
+    },
+    {
+      "name": "COL_BOX_LOOM_CAP_-56_48",
+      "shape": "box",
+      "center": [
+        -56,
+        5.175,
+        48
+      ],
+      "size": [
+        4.1,
+        0.35,
+        4.6
+      ]
+    },
+    {
+      "name": "COL_BOX_KILN_COVER_-50",
+      "shape": "box",
+      "center": [
+        55,
+        1.2,
+        -50
+      ],
+      "size": [
+        6,
+        2.4,
+        5
+      ]
+    },
+    {
+      "name": "COL_BOX_KILN_CHIMNEY_-50",
+      "shape": "box",
+      "center": [
+        60,
+        3.5,
+        -50
+      ],
+      "size": [
+        2,
+        7,
+        2
+      ]
+    },
+    {
+      "name": "COL_BOX_KILN_COVER_-32",
+      "shape": "box",
+      "center": [
+        55,
+        1.2,
+        -32
+      ],
+      "size": [
+        6,
+        2.4,
+        5
+      ]
+    },
+    {
+      "name": "COL_BOX_KILN_CHIMNEY_-32",
+      "shape": "box",
+      "center": [
+        60,
+        3.5,
+        -32
+      ],
+      "size": [
+        2,
+        7,
+        2
+      ]
+    },
+    {
+      "name": "COL_BOX_KILN_COVER_32",
+      "shape": "box",
+      "center": [
+        57,
+        1.2,
+        32
+      ],
+      "size": [
+        6,
+        2.4,
+        5
+      ]
+    },
+    {
+      "name": "COL_BOX_KILN_CHIMNEY_32",
+      "shape": "box",
+      "center": [
+        60,
+        3.5,
+        32
+      ],
+      "size": [
+        2,
+        7,
+        2
+      ]
+    },
+    {
+      "name": "COL_BOX_KILN_COVER_50",
+      "shape": "box",
+      "center": [
+        57,
+        1.2,
+        50
+      ],
+      "size": [
+        6,
+        2.4,
+        5
+      ]
+    },
+    {
+      "name": "COL_BOX_KILN_CHIMNEY_50",
+      "shape": "box",
+      "center": [
+        60,
+        3.5,
+        50
+      ],
+      "size": [
+        2,
+        7,
+        2
+      ]
+    },
+    {
+      "name": "COL_BOX_LANE_COVER_-40_-52",
+      "shape": "box",
+      "center": [
+        -45,
+        0.65,
+        -52
+      ],
+      "size": [
+        5,
+        1.3,
+        3.5
+      ]
+    },
+    {
+      "name": "COL_BOX_LANE_COVER_-40_52",
+      "shape": "box",
+      "center": [
+        -35,
+        0.65,
+        52
+      ],
+      "size": [
+        5,
+        1.3,
+        3.5
+      ]
+    },
+    {
+      "name": "COL_BOX_LANE_COVER_0_-52",
+      "shape": "box",
+      "center": [
+        -5,
+        0.65,
+        -52
+      ],
+      "size": [
+        5,
+        1.3,
+        3.5
+      ]
+    },
+    {
+      "name": "COL_BOX_LANE_COVER_0_52",
+      "shape": "box",
+      "center": [
+        5,
+        0.65,
+        52
+      ],
+      "size": [
+        5,
+        1.3,
+        3.5
+      ]
+    },
+    {
+      "name": "COL_BOX_LANE_COVER_40_-52",
+      "shape": "box",
+      "center": [
+        35,
+        0.65,
+        -52
+      ],
+      "size": [
+        5,
+        1.3,
+        3.5
+      ]
+    },
+    {
+      "name": "COL_BOX_LANE_COVER_40_52",
+      "shape": "box",
+      "center": [
+        45,
+        0.65,
+        52
+      ],
+      "size": [
+        5,
+        1.3,
+        3.5
+      ]
+    },
+    {
+      "name": "COL_BOX_CROSSOVER_DECK",
+      "shape": "box",
+      "center": [
+        0,
+        5.6000000000000005,
+        0
+      ],
+      "size": [
+        104,
+        0.8,
+        10
+      ]
+    },
+    {
+      "name": "COL_BOX_BRIDGE_PIER_-23_-3.8",
+      "shape": "box",
+      "center": [
+        -23,
+        2.6,
+        -3.8
+      ],
+      "size": [
+        2.2,
+        5.2,
+        2.2
+      ]
+    },
+    {
+      "name": "COL_BOX_BRIDGE_PIER_-23_3.8",
+      "shape": "box",
+      "center": [
+        -23,
+        2.6,
+        3.8
+      ],
+      "size": [
+        2.2,
+        5.2,
+        2.2
+      ]
+    },
+    {
+      "name": "COL_BOX_BRIDGE_PIER_23_-3.8",
+      "shape": "box",
+      "center": [
+        23,
+        2.6,
+        -3.8
+      ],
+      "size": [
+        2.2,
+        5.2,
+        2.2
+      ]
+    },
+    {
+      "name": "COL_BOX_BRIDGE_PIER_23_3.8",
+      "shape": "box",
+      "center": [
+        23,
+        2.6,
+        3.8
+      ],
+      "size": [
+        2.2,
+        5.2,
+        2.2
+      ]
+    },
+    {
+      "name": "COL_BOX_BRIDGE_RAIL_-39_-4.65",
+      "shape": "box",
+      "center": [
+        -39,
+        6.4,
+        -4.65
+      ],
+      "size": [
+        25,
+        0.8,
+        0.4
+      ]
+    },
+    {
+      "name": "COL_BOX_BRIDGE_RAIL_-39_4.65",
+      "shape": "box",
+      "center": [
+        -39,
+        6.4,
+        4.65
+      ],
+      "size": [
+        25,
+        0.8,
+        0.4
+      ]
+    },
+    {
+      "name": "COL_BOX_BRIDGE_RAIL_39_-4.65",
+      "shape": "box",
+      "center": [
+        39,
+        6.4,
+        -4.65
+      ],
+      "size": [
+        25,
+        0.8,
+        0.4
+      ]
+    },
+    {
+      "name": "COL_BOX_BRIDGE_RAIL_39_4.65",
+      "shape": "box",
+      "center": [
+        39,
+        6.4,
+        4.65
+      ],
+      "size": [
+        25,
+        0.8,
+        0.4
+      ]
+    },
+    {
+      "name": "COL_RAMP_SOUTH_ACCESS",
+      "shape": "convex_wedge",
+      "width": 12,
+      "z_low": 35,
+      "z_high": 5,
+      "elevation": 6
+    },
+    {
+      "name": "COL_RAMP_NORTH_ACCESS",
+      "shape": "convex_wedge",
+      "width": 12,
+      "z_low": -35,
+      "z_high": -5,
+      "elevation": 6
+    },
+    {
+      "name": "COL_BOX_RELAY_1_MAST",
+      "shape": "box",
+      "center": [
+        -36.7,
+        1.9,
+        -12
+      ],
+      "size": [
+        0.5,
+        3.8,
+        0.5
+      ]
+    },
+    {
+      "name": "COL_BOX_RELAY_2_MAST",
+      "shape": "box",
+      "center": [
+        3.3,
+        7.9,
+        0
+      ],
+      "size": [
+        0.5,
+        3.8,
+        0.5
+      ]
+    },
+    {
+      "name": "COL_BOX_RELAY_3_MAST",
+      "shape": "box",
+      "center": [
+        43.3,
+        1.9,
+        12
+      ],
+      "size": [
+        0.5,
+        3.8,
+        0.5
+      ]
+    },
+    {
+      "name": "COL_BOX_BOUNDARY_X_-65",
+      "shape": "box",
+      "center": [
+        -65,
+        2.0,
+        0
+      ],
+      "size": [
+        2,
+        4,
+        190
+      ]
+    },
+    {
+      "name": "COL_BOX_BOUNDARY_CROWN_X_-65",
+      "shape": "box",
+      "center": [
+        -65,
+        4.175,
+        0
+      ],
+      "size": [
+        2.2,
+        0.35,
+        190
+      ]
+    },
+    {
+      "name": "COL_BOX_BOUNDARY_X_65",
+      "shape": "box",
+      "center": [
+        65,
+        2.0,
+        0
+      ],
+      "size": [
+        2,
+        4,
+        190
+      ]
+    },
+    {
+      "name": "COL_BOX_BOUNDARY_CROWN_X_65",
+      "shape": "box",
+      "center": [
+        65,
+        4.175,
+        0
+      ],
+      "size": [
+        2.2,
+        0.35,
+        190
+      ]
+    },
+    {
+      "name": "COL_BOX_BOUNDARY_Z_-94",
+      "shape": "box",
+      "center": [
+        0,
+        2.0,
+        -94
+      ],
+      "size": [
+        128,
+        4,
+        2
+      ]
+    },
+    {
+      "name": "COL_BOX_BOUNDARY_Z_94",
+      "shape": "box",
+      "center": [
+        0,
+        2.0,
+        94
+      ],
+      "size": [
+        128,
+        4,
+        2
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_-84",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        -84
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_-84",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        -84
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_-70",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        -70
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_-70",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        -70
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_-56",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        -56
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_-56",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        -56
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_-42",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        -42
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_-42",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        -42
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_-28",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        -28
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_-28",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        -28
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_-14",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        -14
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_-14",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        -14
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_0",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        0
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_0",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        0
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_14",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        14
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_14",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        14
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_28",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        28
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_28",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        28
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_42",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        42
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_42",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        42
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_56",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        56
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_56",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        56
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_70",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        70
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_70",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        70
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_-65_84",
+      "shape": "box",
+      "center": [
+        -65,
+        5.35,
+        84
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "COL_BOX_PERIMETER_POST_65_84",
+      "shape": "box",
+      "center": [
+        65,
+        5.35,
+        84
+      ],
+      "size": [
+        3,
+        2,
+        3
+      ]
+    }
+  ],
+  "mesh_objects": 163,
+  "triangles": 12588,
+  "material_count": 8,
+  "checks": {
+    "three_lanes": true,
+    "three_relay_landmarks": true,
+    "two_walkable_ramps": true,
+    "bounded_material_count": true,
+    "bounded_triangle_count": true,
+    "no_external_images": true,
+    "unique_collision_names": true
+  },
+  "rights": "Original procedural geometry/materials authored in this repository; no external assets or game data.",
+  "limits": "No combat, capture rewards, army navigation, native online authority, production art or hardware FPS qualification."
+}

@@ -1,0 +1,54 @@
+{
+  "task": "YUGA-TACTICAL-CASUAL-13",
+  "product": "YUGA native / production dashboard",
+  "source_base": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "working_changes": true,
+  "scope": "Prepared static dashboard data and media; clean source export and public publication are subsequent root actions",
+  "counts": {
+    "jobs": 6,
+    "assets": 6,
+    "milestones": 8
+  },
+  "running_jobs": 0,
+  "tests": {
+    "observatory_unit_tests": {
+      "command": "python3 -m unittest discover -s games/yuga-native/tools/build-observatory -p 'test_*.py' -v",
+      "passed": 34,
+      "exit": 0
+    },
+    "local_chromium": {
+      "command": "node /tmp/yuga-dashboard-sanctum-r2/check-browser.cjs",
+      "passed": 21,
+      "exit": 0,
+      "viewports": [
+        "1440x1080",
+        "390x844"
+      ],
+      "timezone": "America/New_York"
+    },
+    "actual_snapshot_validation": true
+  },
+  "source_sha256": {
+    "games/yuga-native/docs/PRODUCTION_OBSERVATORY.md": "4d3e2b36deed116aad00da62850472a2e2d22db31cb27515c298da2b7280d49e",
+    "games/yuga-native/tools/build-observatory/web/status.json": "ea465d5ccef8cf2be13a5358ad161a61442f368f7cfa413ecfadeef1e9a1a3ea",
+    "games/yuga-native/tools/build-observatory/web/media/licenses/YUGA-SANCTUM-PREVIEWS.md": "d5d430ea7bae7503a24e931a453eb1ea800ef3a39b59c94e2d89df51a3721bea",
+    "games/yuga-native/tools/build-observatory/web/media/sanctum-r2-02-equipment-shop.png": "b229829b577da11529ce646898f2698f6b3889ad346c446f15093ff34ebe2cfb",
+    "games/yuga-native/tools/build-observatory/web/media/sanctum-r2-05-a-approach.png": "d8d840311a1db92138dbbf01fe75431641ba19fabf7de1b2d6ee5c0bd2f465fa",
+    "games/yuga-native/tools/build-observatory/web/media/sanctum-r2-09-map-overview.png": "734bed0d14b218f99544e251c2faf044657625eeb75ca9acd298a1fc29cd70ed",
+    "games/yuga-native/tools/build-observatory/web/media/sanctum-r2-menu-home.png": "08f2df8f6ff05aaadb8d5072a16c1102263417acf144b77836752efa163ef6b4"
+  },
+  "native_originals_reviewed": [
+    "menu-home.png",
+    "05-a-approach.png",
+    "02-equipment-shop.png",
+    "09-map-overview.png"
+  ],
+  "visual_source": "games/yuga-native/docs/tactical/evidence/publication-r1/visual-r2/review.json",
+  "browser_review_snapshot_sha256": "73ba4e7e4be5af384faaa00ee602cca2b4b212c0b67a0c3d419f3995044e482d",
+  "limits": [
+    "Staged native images do not establish ordinary input, continuous motion, hardware performance or finished art.",
+    "Local browser checks do not establish public deployment.",
+    "The pending final export must observe the clean committed checkout.",
+    "Final content adds the root verification-summary link after the browser check; schema, counts, controls and media are unchanged."
+  ]
+}

@@ -21,14 +21,24 @@ const RamaPanel = preload("res://scripts/rama_hero_panel.gd")
 const RamaHUD = preload("res://scripts/rama_hero_hud.gd")
 const HeroUI = preload("res://scripts/hero_ui_theme.gd")
 const Atlas = preload("res://scripts/world_atlas.gd")
+const MatchMetrics = preload("res://scripts/combat_match_metrics.gd")
+const FieldShop = preload("res://scripts/native_field_shop.gd")
+const FieldShopPanel = preload("res://scripts/native_field_shop_panel.gd")
+const BattleHUD = preload("res://scripts/confluence_battle_hud.gd")
 const WorldOutcome = preload("res://scripts/world_outcome_summary.gd")
 const FriendlyCameraVisibility = preload("res://scripts/friendly_camera_visibility.gd")
+const SangamDistrict = preload("res://scripts/sangam_district.gd")
 const RUNTIME_MANIFEST := "res://assets/world/confluence-map.json"
 const SOURCE_MANIFEST := "res://art/world/confluence-map.json"
 const CREAM := Color("f0e5d0")
 const GOLD := Color("dfb96e")
 const TEAL := Color("6cb9c1")
 
+var match_metrics: Node
+var field_shop: Node
+var field_shop_panel: Control
+var battle_hud: Control
+var _wide_battle_layout := false
 var rama_runtime: Node3D
 var rama_kit: Node3D
 var rama_effects: Node3D
@@ -53,6 +63,8 @@ var lanka_lane_gate_report: Dictionary = {"enabled":false}
 # Four reviewed source-derived markers on the existing shallow reed-court banks.
 var lanka_water_garden_enabled := true
 var lanka_water_garden_report: Dictionary = {"enabled":false}
+var sangam_district_enabled := true
+var sangam_district_report: Dictionary = {"enabled":false}
 var army: Node3D
 var friendly_camera_visibility = FriendlyCameraVisibility.new()
 var audio: Node
@@ -168,6 +180,7 @@ func _ready() -> void:
 		push_error("Confluence frontage could not configure: "+String(frontage_install.get("reason","unknown")))
 		return
 	if not _build_lanka_lane_gate() or not _build_lanka_water_garden(): return
+	if not _build_sangam_district(): return
 	_build_player()
 	if not _build_army_audio() or not player.traversal_report().get("enabled",false):
 		push_error("Confluence requires a configured army and traversal controller.")
@@ -186,6 +199,17 @@ func _ready() -> void:
 		return
 	rama_kit = rama_runtime.kit
 	rama_effects = rama_runtime.effects
+	field_shop = FieldShop.new()
+	world.add_child(field_shop)
+	if not field_shop.configure(army, rama_runtime, player, start_position):
+		push_error("Confluence field shop could not configure")
+		return
+	rama_runtime.changed.connect(_shop_respawned)
+	match_metrics = MatchMetrics.new()
+	world.add_child(match_metrics)
+	if not match_metrics.configure(army, rama_runtime):
+		push_error("Confluence match metrics could not configure")
+		return
 	_build_ui()
 	for template in kit_templates.values(): template.free()
 	kit_templates.clear()
@@ -193,6 +217,16 @@ func _ready() -> void:
 	world_ready=true
 	Input.mouse_mode=Input.MOUSE_MODE_CAPTURED
 	print("YUGA_CONFLUENCE_READY ",JSON.stringify(build_report()))
+
+func _build_sangam_district() -> bool:
+	sangam_district_report={"enabled":false}
+	if not sangam_district_enabled: return true
+	var result: Dictionary=SangamDistrict.build(world)
+	if not result.get("ok",false):
+		push_error("Confluence Sangam district could not configure: "+String(result.get("reason","unknown")))
+		return false
+	sangam_district_report=result.report
+	return true
 
 func _build_lanka_lane_gate() -> bool:
 	lanka_lane_gate_report={"enabled":false}
@@ -390,6 +424,7 @@ func _build_floor() -> void:
 	for z in [-float(bounds[1])*.5+1,float(bounds[1])*.5-1]: _box(world,Vector3(0,.08,z),Vector3(bounds[0]-2,.16,.4),perimeter,"PerimeterInlay")
 
 func _configure_paving(material: ShaderMaterial) -> void:
+	material.set_shader_parameter("sangam_paving",sangam_district_enabled)
 	material.set_shader_parameter("arrival_court_z",112.0)
 	var lanes:=_route_segments(manifest.lanes)
 	var rotations:=_route_segments(manifest.get("rotations",[]))
@@ -493,6 +528,12 @@ func _build_army_audio() -> bool:
 				push_error("Confluence reed-court army footprints could not configure: "+String(prepared.get("reason","unknown")))
 				return false
 			army_manifest=prepared.manifest
+		if sangam_district_report.get("enabled",false):
+			var prepared: Dictionary=SangamDistrict.prepare_army_manifest(army_manifest,world.get_node("SangamDistrict"))
+			if not prepared.get("ok",false):
+				push_error("Confluence Sangam army footprints could not configure: "+String(prepared.get("reason","unknown")))
+				return false
+			army_manifest=prepared.manifest
 		return army.configure(army_manifest,player)
 	return false
 
@@ -505,6 +546,7 @@ func _army_outcome(team: String) -> void:
 	set_paused(true)
 
 func _start_siege_practice() -> bool:
+	_dismiss_field_shop()
 	# Validate the drill before disturbing current practice. Army owns gameplay.
 	if not army or not army.has_method("start_siege_drill") or not army.start_siege_drill():
 		practice_error="Siege practice unavailable; the current round is unchanged."
@@ -530,6 +572,7 @@ func _clear_combat_presentation() -> void:
 		for child in parent.get_children(): child.queue_free()
 
 func _restart_army() -> void:
+	_dismiss_field_shop()
 	friendly_camera_visibility.reset()
 	practice_error=""
 	last_gold=0
@@ -870,6 +913,7 @@ func _build_ui() -> void:
 	continue_practice_button = _button(menu,"Continue practice",func():set_paused(false))
 	restart_practice_button = _button(menu,"Restart lane practice",_restart_army)
 	rama_button = _button(menu,"Rama · abilities and controls",_open_rama_panel)
+	_button(menu,"Field shop · %s" % Bindings.label("open_field_shop"),_open_field_shop)
 	invocation_button = _button(menu,"Legacy invocation studies",_open_invocations)
 	invocation_button.name = "ChooseInvocation"
 	siege_practice_button=_button(menu,"Siege practice · enter drill",_start_siege_practice)
@@ -918,6 +962,14 @@ func _build_ui() -> void:
 	rama_hud = RamaHUD.new()
 	hud.add_child(rama_hud)
 	rama_hud.configure(rama_runtime)
+	field_shop_panel = FieldShopPanel.new()
+	ui.add_child(field_shop_panel)
+	field_shop_panel.configure(field_shop)
+	field_shop_panel.closed.connect(_close_field_shop)
+	battle_hud = BattleHUD.new()
+	hud.add_child(battle_hud)
+	battle_hud.configure(self)
+	battle_hud.shop_requested.connect(_open_field_shop)
 	hud.resized.connect(_layout_world_hud)
 	rama_hud.resized.connect(_layout_world_hud)
 	_layout_world_hud()
@@ -925,6 +977,29 @@ func _build_ui() -> void:
 	_update_invocation_hud()
 	_wire_pause_focus()
 	_layout_pause_panel()
+
+func _open_field_shop() -> void:
+	if not is_instance_valid(field_shop_panel) or not world_ready: return
+	if overview: set_overview(false)
+	if paused: set_paused(false)
+	release_actions()
+	rama_runtime.action_buffer.cancel_pending("Field shop opened")
+	player.active = false
+	field_shop_panel.open()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func _close_field_shop() -> void:
+	if not is_instance_valid(player): return
+	release_actions()
+	player.active = not paused and not overview and rama_runtime.vitals.alive
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if paused or overview else Input.MOUSE_MODE_CAPTURED
+	get_viewport().gui_release_focus()
+
+func _shop_respawned() -> void:
+	if is_instance_valid(field_shop_panel) and field_shop_panel.visible: player.active = false
+
+func _dismiss_field_shop() -> void:
+	if is_instance_valid(field_shop_panel) and field_shop_panel.visible: field_shop_panel.close()
 
 func _refresh_control_labels() -> void:
 	if is_instance_valid(map_control) and map_control.get_node("AtlasLegend").text!=_atlas_key_text():
@@ -995,10 +1070,19 @@ func _wire_pause_focus() -> void:
 func _layout_world_hud() -> void:
 	if not is_inside_tree() or not is_instance_valid(hud) or not is_instance_valid(rama_hud): return
 	if overview:
+		if is_instance_valid(battle_hud): battle_hud.hide()
+		_wide_battle_layout = false
 		_layout_overview_composition()
 		return
 	rama_hud.show()
 	_restore_overview_map_parent()
+	_wide_battle_layout = is_instance_valid(battle_hud) and battle_hud.apply_layout()
+	if _wide_battle_layout:
+		_constrained_world = false
+		return
+	score_label.show()
+	energy_bar.custom_minimum_size.x = 200
+	goal_label.custom_minimum_size.x = 200
 	var screen := get_viewport().get_visible_rect().size
 	var compact := screen.x < 1100
 	_constrained_world=screen.x<900 or screen.y<500
@@ -1034,7 +1118,7 @@ func _refresh_lane_visibility(battle: Dictionary={}) -> void:
 	# Native resize callbacks and periodic HUD refresh share this rule; a
 	# compact title must not grow again when the next army report arrives.
 	if battle.is_empty() and army: battle=army.report()
-	lane_label.visible=get_viewport().get_visible_rect().size.x>=1100 and not bool(battle.get("siege_drill",false)) and String(battle.get("winner","")).is_empty()
+	lane_label.visible=not _wide_battle_layout and get_viewport().get_visible_rect().size.x>=1100 and not bool(battle.get("siege_drill",false)) and String(battle.get("winner","")).is_empty()
 
 func _atlas_key_text() -> String:
 	var key:=Bindings.label("world_overview")
@@ -1076,6 +1160,9 @@ func _build_atlas_guide() -> void:
 	atlas_guide.hide()
 
 func _layout_atlas() -> void:
+	if _wide_battle_layout and not overview and is_instance_valid(battle_hud):
+		battle_hud.apply_layout()
+		return
 	if not is_inside_tree() or not is_instance_valid(map_control) or not is_instance_valid(rama_hud): return
 	if overview:
 		_layout_overview_composition()
@@ -1272,9 +1359,14 @@ func _layout_pause_panel() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo: return
+	if field_shop_panel and field_shop_panel.visible: return
 	if controls_overlay and controls_overlay.visible: return
 	if invocation_panel and invocation_panel.visible: return
 	if rama_panel and rama_panel.visible: return
+	if event.is_action_pressed("open_field_shop"):
+		_open_field_shop()
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("open_invocations"):
 		_open_rama_panel()
 		get_viewport().set_input_as_handled()
@@ -1381,7 +1473,7 @@ func _update_practice_hud() -> void:
 	var battle: Dictionary={}
 	if army:
 		battle=army.report()
-		outcome_summary.present(battle)
+		outcome_summary.present(battle, match_metrics.report() if match_metrics else {})
 		var cores: Dictionary=battle.get("cores",{})
 		siege_drill=battle.get("siege_drill",false)
 		_refresh_lane_visibility(battle)
@@ -1531,6 +1623,10 @@ func release_actions(cancel_movement := true) -> void:
 			player.dash_direction=Vector3.ZERO
 
 func set_paused(value: bool) -> void:
+	# A fresh pause/outcome owns its initial reading position. Modal returns
+	# already paused retain their exact opener and scroll context.
+	if value and not paused and is_instance_valid(pause_scroll): pause_scroll.scroll_vertical = 0
+	if value: _dismiss_field_shop()
 	if value: friendly_camera_visibility.reset()
 	paused=value
 	if is_instance_valid(atlas_guide): atlas_guide.visible=overview and not value
@@ -1646,6 +1742,7 @@ func visit_anchor(id: String) -> bool:
 	return false
 
 func set_overview(value: bool) -> void:
+	if value: _dismiss_field_shop()
 	if value: friendly_camera_visibility.reset()
 	overview=value
 	_layout_atlas()
@@ -1725,7 +1822,7 @@ func _pulse(origin: Vector3) -> void:
 	tween.tween_callback(ring.queue_free)
 
 func build_report() -> Dictionary:
-	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"lanka_lane_gate":lanka_lane_gate_report,"lanka_water_garden":lanka_water_garden_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"relays":relays.report() if relays else {},"invocations":invocations.report() if invocations else {},"ultimate_effects":ultimate_fx.report() if ultimate_fx else {},"invocation_ui":invocation_panel.report() if invocation_panel else {},"invocation_audio":invocation_audio.report() if invocation_audio else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","rama_hero":rama_runtime.report() if rama_runtime else {},"hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
+	return {"ready":world_ready,"manifest_path":manifest_path,"manifest_sha256":FileAccess.get_sha256(manifest_path),"manifest_revision":manifest.get("revision",0),"authority_boxes":authority_bodies.size(),"native_platforms":native_platform_bodies.size(),"native_bounds":manifest.bounds.get("actor_xz",[]),"landmarks":landmark_report,"lanka_lane_gate":lanka_lane_gate_report,"lanka_water_garden":lanka_water_garden_report,"sangam_district":sangam_district_report,"army":army.report() if army else {},"traversal":player.traversal_report() if player and player.has_method("traversal_report") else {},"audio":audio.get_diagnostics() if audio else {},"siege_effects":siege_effects.report() if siege_effects else {},"relays":relays.report() if relays else {},"invocations":invocations.report() if invocations else {},"ultimate_effects":ultimate_fx.report() if ultimate_fx else {},"invocation_ui":invocation_panel.report() if invocation_panel else {},"invocation_audio":invocation_audio.report() if invocation_audio else {},"siege_ui":{"pause_rect":str(pause_panel.get_global_rect()) if pause_panel else "","focus_targets":pause_actions.size(),"practice_label":practice_mode_label.text if practice_mode_label else ""},"floor_bodies":1,"props":manifest.get("props",[]).size(),"imported_props":imported_prop_count,"procedural_props":fallback_prop_count,"builtin_procedural_props":builtin_prop_count,"missing_presets":missing_presets,"kit_sha256":kit_hashes,"kit_hash_scope":"Raw source hashes when available; empty for remapped exported scene resources.","rama_hero":rama_runtime.report() if rama_runtime else {},"hero_model_ready":player.model_ready if player else false,"hero_radius":manifest.get("bounds",{}).get("hero_radius",0),"lanes":manifest.get("lanes",[]).size(),"camps":manifest.get("camps",[]).size(),"objectives":manifest.get("objectives",[]).size(),"lighting":lighting.diagnostics() if lighting else {},"scope":"Offline 140×260m native lane practice with raised decks, limited flight and tether relics. Eight central boxes retain browser dimensions; expanded bounds/platforms/local army do not share browser authority. No online-match or commercial visual-parity claim."}
 
 func get_build_report() -> Dictionary:
 	return build_report()

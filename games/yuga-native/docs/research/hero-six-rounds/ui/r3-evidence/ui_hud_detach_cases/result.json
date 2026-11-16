@@ -1,0 +1,33 @@
+{
+	"checks": [
+		{
+			"name": "World guide connects the actual effect owner and saved preferences",
+			"passed": true
+		},
+		{
+			"name": "Detached live HUD retires readiness without accessing a missing tree",
+			"passed": true
+		},
+		{
+			"name": "Detached presentation leaves its actual runtime untouched",
+			"passed": true
+		},
+		{
+			"name": "Reattached HUD reads the caller's actual paused state",
+			"passed": true
+		},
+		{
+			"name": "Training guide connects the actual effect owner and saved preferences",
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Headless real world/training scene resources, explicit HUD removal before owner teardown, and actual guide/effect receiver hooks. No rendering, OS input or hardware claim.",
+	"sources": {
+		"res://scripts/confluence_world.gd": "178e73e34ec538180709e358824c45b71edd56a4484f86d118e828b7763d0f60",
+		"res://scripts/courtyard.gd": "4dae24c2e972b8449a600147e99821d7d76190f17c964afe0d7192ac69867457",
+		"res://scripts/rama_hero_hud.gd": "76e51cffd6e25fccbb718f689a9aa203c3feb0b28ce1e6c01b20633adb1fb83f",
+		"res://scripts/rama_hero_panel.gd": "a843627942be923b98d32e4baa038d4ed282d2767b56fd169e9d747353f62ff7",
+		"res://tests/ui_hud_detach_cases.gd": "e697003bed644228c3e5d51c3bf9b93942d8560a2b4fd8c5d7e94952959b5ad2"
+	}
+}

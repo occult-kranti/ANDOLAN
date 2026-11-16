@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "product": "YUGA native separate Relay Foundry map study",
+  "hashes": {
+    "tools/studio/build_relay_foundry.py": "a69881ff9e7a53f4ae130c603311881f1159c2ab1ed168ff68f7be6d599eb879",
+    "games/yuga-native/scripts/studio_map_study.gd": "c46cbc96cca9c500861b75a59ce61603135d0a51f0ba8403c679c49f0b1a10eb",
+    "games/yuga-native/scenes/studio_map_study.tscn": "cbc92deb63c3cd4cf352ffbd9a31f1002eb970e465beb571bd60aa943496aa86",
+    "games/yuga-native/assets/world/studio-relay-foundry.glb": "468448f03984fdaadc1be3563ed0ace75b3d635cc5c546bd321c364ae55e84cf",
+    "games/yuga-native/art/studio-map/relay-foundry.blend": "216224dd748a7e3be786f7d6abaa8780a941811e6239ffa43283a3446a5fc6c9",
+    "games/yuga-native/art/studio-map/blender-overview.png": "23a70da2e3b556d91477c32b37c8522e1b8b9dd9f70a4c39ef6805de6592d658"
+  },
+  "geometry_checks": {
+    "three_lanes": true,
+    "three_relay_landmarks": true,
+    "two_walkable_ramps": true,
+    "bounded_material_count": true,
+    "bounded_triangle_count": true,
+    "no_external_images": true,
+    "unique_collision_names": true
+  },
+  "native_checks": {
+    "asset_sha256": "468448f03984fdaadc1be3563ed0ace75b3d635cc5c546bd321c364ae55e84cf",
+    "checks": [
+      {
+        "colliders": 101,
+        "name": "Imported two wedge ramps and bounded collision set",
+        "passed": true
+      },
+      {
+        "name": "Crossover deck collision at x=0.0",
+        "passed": true
+      },
+      {
+        "name": "Crossover deck collision at x=-40.0",
+        "passed": true
+      },
+      {
+        "name": "Crossover deck collision at x=40.0",
+        "passed": true
+      },
+      {
+        "name": "Ground lane remains below the crossover",
+        "passed": true
+      },
+      {
+        "name": "Actual capsule walks south ramp onto six-metre deck",
+        "passed": true,
+        "position": "(0.0, 6.028409, 0.700951)"
+      },
+      {
+        "name": "Actual capsule walks down ramp to ground",
+        "passed": true,
+        "position": "(0.0, 0.016608, 39.87058)"
+      },
+      {
+        "name": "Actual jump input rises and returns to ground",
+        "passed": true,
+        "peak_height": 1.6519581079483
+      },
+      {
+        "name": "Visible perimeter has collision",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "scope": "Actual imported geometry and physics traversal; no art/match/hardware acceptance",
+    "source_sha256": "c46cbc96cca9c500861b75a59ce61603135d0a51f0ba8403c679c49f0b1a10eb"
+  },
+  "rights": "Original procedural project geometry/materials; no external source art or proprietary data."
+}

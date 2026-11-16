@@ -32,3 +32,33 @@ games/yuga-native/art/output/
 
 # Local agent job receipts, cooperative locks and recoverable quarantine.
 /.local-swarm/
+
+# Reproducible external research checkouts and isolated tool installs.
+/.local-tools/
+
+# Editor-generated IDs for source checks/capture tools (tracked IDs stay tracked).
+/games/yuga-native/tests/**/*.gd.uid
+/games/yuga-native/tools/**/*.gd.uid
+
+# Supplied reference media and private capture state stay local; receipts remain versioned.
+/all ults.mp4
+/gameplay.mp4
+/o.txt
+/games/yuga-native/docs/research/hero-six-rounds/root/*-user/
+/games/yuga-native/docs/research/hero-six-rounds/root/package-input-r1/user/
+/games/yuga-native/docs/tactical/evidence/*-user/
+/games/yuga-native/docs/research/hero-six-rounds/reference/**/*.png
+/games/yuga-native/docs/research/hero-six-rounds/reference/**/*.jpg
+!/games/yuga-native/docs/research/hero-six-rounds/reference/round5-hero/*.jpg
+/games/yuga-native/docs/research/hero-six-rounds/reference/**/*.wav
+/games/yuga-native/docs/research/hero-six-rounds/reference/**/transcript.txt
+/games/yuga-native/docs/research/hero-six-rounds/reference/**/segments.jsonl
+/docs/research/video-study/gameplay/**/*.png
+/docs/research/video-study/gameplay/**/*.jpg
+/docs/research/video-study/ults/**/*.png
+/docs/research/video-study/ults/**/*.jpg
+
+# Retain source-bound continuation diagnostics, including failed attempts.
+!docs/research/**/*.log
+!games/yuga-native/docs/tactical/**/*.log
+!games/yuga-native/docs/research/hero-six-rounds/**/*.log

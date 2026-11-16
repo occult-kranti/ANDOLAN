@@ -1,0 +1,42 @@
+{
+  "task": "YUGA-HERO-6R-WORLD",
+  "product": "YUGA native offline Confluence",
+  "source_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "source_sha256": {
+    "tools/studio/build_sangam_district.py": "6112fe3ba498ac242044aaff2f94cff76149b8ee41ae20e147e9c0f4711c20ef",
+    "games/yuga-native/scripts/sangam_district.gd": "892524f72e77a084470f7522880d08002c04130349b5e14d21740c6b28623627",
+    "games/yuga-native/tests/sangam_district_cases.gd": "588eba38a4f75c8acd9501c553aad6fae99f057b1847ed9b3e343ebcb0ca5764",
+    "games/yuga-native/assets/world/sangam-district.glb": "42b2f7cf814def5368b10987bc3c40fd14ad66b88e594d9bb5e00afc43e45fa5",
+    "games/yuga-native/assets/world/sangam-district.json": "678bb28e027450c30f335212407f32377cfa304599b1d6561d7ede9839a95c9c",
+    "games/yuga-native/art/sangam-district/sangam-district.blend": "3be9f2380342f730266e913f85fcc3dea6552ccfed18c9090c5af6d618fec2b5",
+    "games/yuga-native/assets/world/confluence-map.json": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c"
+  },
+  "authoring": {
+    "engine": "Blender 4.3.2",
+    "threads": 8,
+    "command": "blender4.3 --background --threads 8 --python tools/studio/build_sangam_district.py",
+    "result": "exit0, geometry-only GLB and editable BLEND exported; no Blender render",
+    "triangles": 308422,
+    "meshes": 26,
+    "material_definitions": 8
+  },
+  "test": {
+    "command": "godot --headless --path games/yuga-native --script res://tests/sangam_district_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/world/checks-r1/result.json",
+    "result": "31/31 pass, exit0, zero warnings/errors",
+    "scope": "Actual imported meshes, isolated matching host, native ray collision, real army/kit, lifecycle and metadata adverse cases"
+  },
+  "rejected_runs": [
+    "art/sangam-district/rejected-r1:475942 triangles over authored320000 gate",
+    "art/sangam-district/rejected-r2:369094 triangles over authored320000 gate"
+  ],
+  "visual_review": [
+    "Prior studio native gameplay+overview screenshots",
+    "art/sangam-direction/art-direction.png (aspirational concept only)"
+  ],
+  "pending": [
+    "Actual integrated root map render",
+    "Ordinary input/camera corner/covered traversal review",
+    "Native realGPU profiling/human feel"
+  ],
+  "next_owner": "Root integration preserves external fieldshop/HUD; root captures; world/combat/reference review originals."
+}

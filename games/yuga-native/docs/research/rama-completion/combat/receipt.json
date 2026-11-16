@@ -1,0 +1,104 @@
+{
+  "task": "RAMA-COMPLETE-01/combat",
+  "product": "NativeofflineRama",
+  "baseline_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "branch": "work/yuga-studio",
+  "source_frozen": {
+    "games/yuga-native/scripts/rama_ability_effects.gd": "c47636d15566b4404175e500f808c6e62e18e0599e13e23f8fc71138ed6bdae1",
+    "games/yuga-native/scripts/rama_action_audio.gd": "ea3df7769c1528131a50180ec7963e55fd987f7aa7a2328c1e4b61f187cd66c8",
+    "games/yuga-native/scripts/rama_hit_response.gd": "b284975f246488ff99ad79c1942bdfb2f5c2d639852ab976dde667b91d275e3a",
+    "games/yuga-native/tests/rama_completion_combat_cases.gd": "acf955bb926a200a33406c7d3d4c4574734855746e8a01935c1653e2b62808c7",
+    "games/yuga-native/tests/rama_effect_adversarial_cases.gd": "4004fa2c00b260216d09a8f33e880d94b838db9700af141cbb92496c840e148a"
+  },
+  "selected_executions": {
+    "completion-r4": {
+      "command": [
+        "godot",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/rama_completion_combat_cases.gd",
+        "--",
+        "--report=/workspaces/scratch/rama-completion-combat-r1/reports/completion-r4.json"
+      ],
+      "exit_code": 0,
+      "checks": 52,
+      "report": "reports/completion-r4.json",
+      "report_sha256": "a425dcb49099dfb712fd9b5dad3e3ec5704a3eabe11ff26431046bb56ab4687e"
+    },
+    "visual-r2": {
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/rama_ability_visual_cases.gd",
+        "--",
+        "--report=/workspaces/scratch/rama-completion-combat-r1/reports/visual-r2.json"
+      ],
+      "exit_code": 0,
+      "checks": 74,
+      "report": "reports/visual-r2.json",
+      "report_sha256": "039bc50a82dbff7d1ff8091ba5d38ed3e30a62d0c856b08144fcb350ba928234"
+    },
+    "audio": {
+      "command": [
+        "godot",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/rama_action_audio_cases.gd",
+        "--",
+        "--report=/workspaces/scratch/rama-completion-combat-r1/reports/audio.json"
+      ],
+      "exit_code": 0,
+      "checks": 115,
+      "report": "reports/audio.json",
+      "report_sha256": "a1fd886a69f4bdf161eae9b241e05585d3239c16a169e0447b00ad5be89be533"
+    },
+    "adversarial-r3": {
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "games/yuga-native",
+        "--script",
+        "res://tests/rama_effect_adversarial_cases.gd",
+        "--",
+        "--report=/workspaces/scratch/rama-completion-combat-r1/reports/adversarial-r3.json"
+      ],
+      "exit_code": 0,
+      "checks": 57,
+      "report": "reports/adversarial-r3.json",
+      "report_sha256": "4c0ee5ba2df4fb615863a483c67065174853a0a429e9bc5a260833bcf5aef0fd"
+    }
+  },
+  "rejected_runs": {
+    "completion": {
+      "exit_code": 134,
+      "meaning": "Harness freed subscribers before kit cancellation; assertions alone not accepted as pass."
+    },
+    "completion-r2": {
+      "exit_code": 0,
+      "meaning": "50assertions passed; ObjectDB exit warning retained, superseded."
+    },
+    "adversarial": {
+      "exit_code": 1,
+      "meaning": "54/56; positive pool fixture was actually empty range expiry, corrected with real receiver while retaining budgets."
+    }
+  },
+  "limits": [
+    "No authoritative gameplay changes",
+    "No native rendered or human listening acceptance from these checks",
+    "Root import must create newhelperUID beforeexport",
+    "Root owns scene integration/capture/package"
+  ],
+  "next_owner": "Root composed hero capture and independent UI/art/audio review"
+}

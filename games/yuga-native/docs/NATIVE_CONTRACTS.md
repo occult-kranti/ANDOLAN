@@ -1,10 +1,39 @@
 # Native rules, identity and replay contracts
 
-FG00-T04 / MYTH06, envelope revision 1 and native-practice content revision 8. This implements a pure Godot admission/stream validator and machine-readable specification. It does not change the browser server, connect a native match, simulate a replay or select production collision authority. The existing native `arena_client.gd` continues to speak browser protocol 2.
+**Scope of the new tactical entry:** active [YUGA · Sanctum Casual](tactical/README.md) has a separate local round authority, `assets/tactical/rules.json`, and exact `assets/tactical/content-manifest.json`. The three legacy practice/army profiles below remain pinned to their original runtime scope. They do not describe tactical first-to13 rounds or establish a native network protocol. Browser authority remains unchanged.
 
-The current content-8 update admits only the reviewed `lane_army.gd` and `lane_minion.gd` resource-sharing source changes. Their two exact SHA-256 pins, the canonical content-source aggregate and native content revision change; wire versions, browser/production profiles, map and gameplay rules do not. `scripts/native_contracts.gd` is the validator and is not in its own content-source list, avoiding a self-hash cycle. This finite authority-source list does not claim to pin every visual dependency.
+FG00-T04 / MYTH06 / FIELD-SHOP-01 / YUGA-HERO-6R, envelope revision 1 and native-practice content revision 10. This implements a pure Godot admission/stream validator and machine-readable specification. It does not change the browser server, connect a native match, simulate a replay or select production collision authority. The existing native `arena_client.gd` continues to speak browser protocol 2.
 
-The exact content-7 catalog from source `85d5831dd8586a264caa93a7ba4625d1ec0b7f21` and its descriptor, derived with the prior Godot validator, are preserved in `tests/fixtures/contracts/native-content7-{catalog,descriptor}.json`. The checker retains the revision6→7 minion-only history and separately requires revision7→8 to change exactly the army/minion source pins. Revision7 load/open/resume/migration/replay rejects transactionally; changing only its version number or replaying its old digest cannot forge current identity. Valid content8 admission remains possible after rejection. Packaging binds the retained revision6/7 fixture files and rejects missing or changed bytes before export.
+The current content-10 migration adds exactly `scripts/sangam_district.gd` and
+`assets/world/sangam-district.json` to the finite authority-source ledger. The
+adapter contributes four original grounded cover footprints to the existing
+army collision manifest and installs the authored gallery/roof collision. All
+17 content-9 authority pins remain byte-identical. The base Confluence map,
+wire versions, browser/proposal profiles and all non-content native rules remain
+unchanged. The Sangam spec transitively pins its GLB and shared masonry shader; the source
+checker and package proof also bind those actual geometry and finish bytes. This version identifies the
+original offline district extension, not an online or shared-elevation authority
+implementation. The current Rama kit still requires its supported ground plane
+for casts; elevated traversal does not imply elevated combat support.
+
+The exact content-9 catalog and Godot-derived descriptor are preserved in
+`tests/fixtures/contracts/native-content9-{catalog,descriptor}.json`, with hashes
+`06c1fe1c2d8c5b73b0ff5eced576c4b47654b4bf30acfdfc11e168733ab26906` and
+`1de409f4191fc5d1926bc4f9403e3f84da793be3cd252fa65cd3fcc76be18e6b`.
+Godot 4.6.3 derived that descriptor before changing validator hash
+`c2bf6bd6688c5ad30fdf43551f14043745cd2e1ec29fc2d23419f51565bfb4d5`;
+its rules digest is
+`d058cf699f5d45403f55cff76346ef2858638b04c587d9280e3fb566bb75f8b8`.
+The [migration receipt](research/hero-six-rounds/reference/contracts-rev10/README.md)
+retains the pre-migration source proof and exact prior sources. Content9 catalog
+load, open, resume, migration and replay reject transactionally; changing only
+its revision number or supplying its old digest cannot forge content10 identity.
+The package closure includes retained content9 fixtures and rejects changed or
+missing district inputs before export.
+
+The preserved content-9 update adds `scripts/native_field_shop.gd` and `assets/design/native-field-shop.json` to the authority-source set. The original offline field shop tracks earned gold versus spending and applies its configured upgrades to real native receivers; it does not adopt items or assets from the reference game. One existing pin changes: `rama_hero_runtime.gd` removes the `player.active` condition from enemy siege impact eligibility. The shop temporarily disables active player input while its menu is open; retaining that condition would incorrectly grant damage immunity during shopping. The runtime's configured/suspended/event/cancelled checks, spatial/line-of-sight checks and vitals availability checks remain responsible for genuine pause, death and invalid damage. All fourteen other existing source pins remain identical to content8. The source aggregate and native content revision change; wire versions, browser/production profiles, map and non-content native profile rules do not. `scripts/native_contracts.gd` is the validator and is not in its own content-source list, avoiding a self-hash cycle. This finite authority-source list does not claim to pin every visual dependency.
+
+The exact content-8 catalog and its descriptor, derived with the unchanged prior Godot validator before this migration, are preserved in `tests/fixtures/contracts/native-content8-{catalog,descriptor}.json`. Their SHA256 values are `2e90bbb45d9faa46ce9ede3ad2bdab15233d3ffd18f363dd28c4c3efa4372824` and `5600004d02a3910f2627e561ce2c71c564a99ff5144e31e2562e2ba7fc755b36`. The descriptor was produced by Godot 4.6.3 using validator hash `e65c9f882229068628be529c16b143b1ebc1606beba0b8fb6cb121b63cf03261`; its rules digest is `bb2129f1df0e38481525d995f5b448f445e84416d7a9b2c249ddf39a5df7091b`. It was not reconstructed with Python's differing number formatting. Existing content3–7 fixtures remain untouched. The checker retains revision6→7's minion-only change and revision7→8's exact army/minion resource-sharing changes, then requires revision8→9 to add only the two shop sources and change only the runtime siege-eligibility pin. Revision8 load/open/resume/migration/replay rejects transactionally; changing only its version number or replaying its old digest cannot forge current identity. Valid content9 admission remains possible after rejection. Packaging binds the retained revision6/7/8 fixture files and rejects missing or changed bytes before export.
 
 ## Distinct profiles
 
@@ -28,7 +57,7 @@ Runtime definitions:
 
 Descriptors contain `contract_id`, `profile_id`, `protocol`, `versions`, `rules_sha256`, `map_id`, `map_sha256` and `content_sha256`. `versions` has independent positive integer `contract`, `rules`, `map`, `content`, `replay`, `input`, `event` and `entity` fields. Version 1 requires an exact match for each field. There is no permissive protocol range, silent downgrade or fallback-to-offline admission. Mismatch returns a reason such as `MISMATCH_MAP_SHA256` before any world is admitted.
 
-`content_revision` is required on each profile. Native practice is revision **8**, while browser and production-proposal content remain **1**. `descriptor()` copies the envelope versions and overrides only `versions.content` from that profile. Input/event/entity/replay wire versions remain 1. Missing, malformed or wrong known revisions reject before catalogue loading. The global `envelope_versions.content=1` is the base value, not the native profile's effective revision.
+`content_revision` is required on each profile. Native practice is revision **9**, while browser and production-proposal content remain **1**. `descriptor()` copies the envelope versions and overrides only `versions.content` from that profile. Input/event/entity/replay wire versions remain 1. Missing, malformed or wrong known revisions reject before catalogue loading. The global `envelope_versions.content=1` is the base value, not the native profile's effective revision.
 
 `rules_sha256` hashes compact, sorted-key JSON for `{profile, coordinates, limits}` using Godot `JSON.stringify(..., "", true)` and UTF-8 SHA-256. Version 1 profile numbers have finite fixed values. Changing masks, authority, dimensions, timing, coordinate conventions or caps therefore cannot retain an identical descriptor merely by leaving version numbers unchanged. The loader also rejects changes to the three known profiles' essential semantics. An intentional migration updates the catalogue, relevant version, fixtures and source pins together.
 
@@ -38,7 +67,7 @@ The map digests have explicit scope:
 - Native: exact staged `assets/world/confluence-map.json`. Relay centres remain defined in the separately pinned `relay_control.gd`; they are not invented fields in this map.
 - Production: exact design-document bytes, labelled `design_document_not_collision_geometry`. No collision map exists for this proposal.
 
-`content_sha256` hashes compact, sorted-key JSON of the catalogue's `path → SHA-256` source ledger. Current native revision8 pins15 files: the scripts `lane_army.gd`, `lane_minion.gd`, `player.gd`, `player_traversal.gd`, `relay_control.gd`, `ultimate_rules.gd`, `ultimate_session.gd`, `rama_ability_kit.gd`, `rama_action_buffer.gd`, `rama_hero_runtime.gd`, `rama_vitals.gd`, `rama_practice_army.gd` and `rama_practice_target.gd`, plus `assets/design/native-ultimate-rules.json` and `assets/design/rama-ability-kit.json`. This is the explicitly enumerated content-source set, not every render asset or a complete production hero. The checker verifies these bytes against the checkout. Revision8 preserves browser/proposal profiles, wire versions, map and non-content native rules relative to revision7. A source or map edit must deliberately refresh the affected identity; mismatches fail preflight. Packaged catalogue reads do not require development source files.
+`content_sha256` hashes compact, sorted-key JSON of the catalogue's `path → SHA-256` source ledger. Preserved native revision9 pins 17 files: the scripts `lane_army.gd`, `lane_minion.gd`, `player.gd`, `player_traversal.gd`, `relay_control.gd`, `ultimate_rules.gd`, `ultimate_session.gd`, `rama_ability_kit.gd`, `rama_action_buffer.gd`, `rama_hero_runtime.gd`, `rama_vitals.gd`, `rama_practice_army.gd`, `rama_practice_target.gd` and `native_field_shop.gd`, plus `assets/design/native-ultimate-rules.json`, `assets/design/rama-ability-kit.json` and `assets/design/native-field-shop.json`. Its content digest is `41832693f4231f4601e61f1bf6a371880a621b255aba6560c2b9e41bfc896dc4`. Revision10 extends this set to 19 files with the Sangam adapter/spec described above. The current aggregate is recorded in the catalog and migration receipt. This is the explicitly enumerated content-source set, not every render asset or a complete production hero. The recorder/result presentation is read-only and is not added to the authority-source ledger. The checker verifies these bytes against the checkout. Revision9 preserves browser/proposal profiles, wire versions, map and non-content native profile rules relative to revision8. A source or map edit must deliberately refresh the affected identity; mismatches fail preflight. Packaged catalogue reads do not require development source files.
 
 Admission API:
 
@@ -122,6 +151,16 @@ The historical Batch 2 owner suite passed 228 cases, including 2,000 interleaved
 
 Preserved failures led to three corrections: numeric JSON arrays now compare dimensions by value; malformed Variant scalar types reject before String comparisons; rules identity now covers semantic profile data and rejects changed masks/frequencies/authority. An early checker incorrectly assumed relay sites were in map JSON; it now checks their actual pinned rules source. Reports retain those failures. Evidence is headless specification/validator evidence only; no live server migration, rendered online match, production collision or deterministic gameplay replay is claimed.
 
-Current revision8 verification: **58 source checks,279 native admission/transaction/stream/replay cases and21 package source-proof cases** pass. [Continuation receipt](evidence/desktop-finish/continuation-oct18/W4-content8-r1/receipt.json) preserves the original stale-pin export failure, exact content7 fixture derivation and the bounded repair.
+Historical revision8 verification: **58 source checks,279 native admission/transaction/stream/replay cases and21 package source-proof cases** passed. [Continuation receipt](evidence/desktop-finish/continuation-oct18/W4-content8-r1/receipt.json) preserves the original stale-pin export failure, exact content7 fixture derivation and the bounded repair. Content9 has its own fresh source/admission/package reports; historical evidence is not relabelled as a new export or network qualification.
+
+Historical content9 verification on Godot 4.6.3: **69 source checks, 289 native admission/transaction/stream/replay cases and 25 package source-proof cases** passed. The package suite extends retained-fixture tamper/missing checks to content8 while preserving its exact historical `83f88f8` stale-player counterexample. These checks perform no export, render or live network migration.
+
+Content10 verification on Godot 4.6.3: **83 source checks, 299 native
+admission/transaction/stream/replay cases and 45 package source-proof cases**
+passed against the frozen R6d district (R3 source/admission and refreshed R5 package proof). The
+[migration handoff](research/hero-six-rounds/reference/contracts-rev10/handoff.json)
+binds exact files, commands and reports. Package cases exercise changed/missing
+adapter, spec, GLB and finish shader as well as both retained content9 fixtures.
+These checks perform no export, render or live network migration.
 
 Historical Batch2 evidence: [Batch 2 contract owner report](evidence/mythic-batch2/contracts/native-contracts.json), [source pins](evidence/mythic-batch2/contracts/source-pins.json), and the [preserved content-1 descriptor](evidence/mythic-batch2/contracts/native-practice-content1-descriptor.json). Batch 1 reports remain untouched. Root owns integrated acceptance and publication.

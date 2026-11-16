@@ -56,8 +56,10 @@ func loader() -> Control:
 func _run() -> void:
 	root.size = Vector2i(960,600)
 	root.content_scale_size = Vector2i(960,600)
-	record("Configured main scene is the light boot", ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/boot.tscn")
-	change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))
+	# This retained journey qualifies the classic courtyard/Confluence product.
+	# The active tactical entry point has its own startup/UI suite.
+	record("Classic light boot remains available", ResourceLoader.exists("res://scenes/boot.tscn"))
+	change_scene_to_file("res://scenes/boot.tscn")
 	if not await scene("res://scenes/courtyard.tscn"):
 		record("Configured boot reaches title",false)
 		await finish()

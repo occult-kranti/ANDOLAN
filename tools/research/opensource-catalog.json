@@ -1,0 +1,856 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-15",
+  "product": "YUGA native desktop, offline Rama slice",
+  "scope": "Curated source-only research preparation. This catalog is not an installer, build receipt, asset permission grant or completed-game claim.",
+  "sources_reviewed": {
+    "round1_games_exa_slots": 25,
+    "round1_tools_exa_slots": 35,
+    "round2_new_exa_search_slots": 0,
+    "round2_exa_direct_fetch_urls": 3,
+    "counting_rule": "Search slots include duplicates; source metadata and license checks are separate direct primary retrievals."
+  },
+  "source_policy": {
+    "upstream_scripts_execute": false,
+    "submodules_initialize": false,
+    "lfs_download": false,
+    "mcp_registration": false,
+    "product_asset_import": false,
+    "commercial_game_download": false
+  },
+  "entries": [
+    {
+      "id": "prometheus",
+      "name": "Prometheus",
+      "canonical_url": "https://github.com/saturn-xvi/prometheus",
+      "source": {
+        "repository": "https://github.com/saturn-xvi/prometheus",
+        "revision": "ad1fea7e6c04c9959c7115cb8ecd9c79c93c1ccb",
+        "revision_status": "git-ls-remote-HEAD-verified-2026-11-15"
+      },
+      "licenses": [
+        {
+          "spdx": "AGPL-3.0-only",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/saturn-xvi/prometheus/blob/ad1fea7e6c04c9959c7115cb8ecd9c79c93c1ccb/LICENSE",
+          "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+        }
+      ],
+      "purpose": "Overwatch 0.8 beta research/injection and ECS/STU/DataFlow inspection.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Architecture reference; requires external proprietary game executable for runtime. Native Windows injector is not a Godot component.",
+        "prerequisites": [
+          "Visual Studio 2022 for documented source build",
+          "vcpkg/submodules",
+          "separate authorized OW 0.8 game data for runtime"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "prometheus",
+          "patcher"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": true,
+        "runtime_game_data_acquisition": "not-part-of-this-task"
+      },
+      "evidence": [
+        "docs/research/panel-round1-games.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "owlib",
+      "name": "OWLib / DataTool",
+      "canonical_url": "https://github.com/overtools/OWLib",
+      "source": {
+        "repository": "https://github.com/overtools/OWLib",
+        "revision": "546efa19516d7df7ba138802d221c73ad886df28",
+        "revision_status": "pinned-primary-source-round1"
+      },
+      "licenses": [
+        {
+          "spdx": "MIT",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/overtools/OWLib/blob/546efa19516d7df7ba138802d221c73ad886df28/LICENSE",
+          "sha256": "c9d3f0ec202d809a28ab5ec728ac23cbc7b1015566ee5cd017ed84b2b8781bff"
+        }
+      ],
+      "purpose": "Overwatch asset-format libraries and installed-game extraction CLI.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Read track/event data-format boundaries; extracted Blizzard artwork is outside MIT tool license and is not a product asset source.",
+        "prerequisites": [
+          ".NET toolchain",
+          "installed authorized Overwatch for extraction"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "TankLib",
+          "DataTool"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": true,
+        "runtime_game_data_acquisition": "not-part-of-this-task"
+      },
+      "evidence": [
+        "docs/research/panel-round1-games.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "owm",
+      "name": "OWM Blender importer",
+      "canonical_url": "https://github.com/overtools/io_scene_owm",
+      "source": {
+        "repository": "https://github.com/overtools/io_scene_owm",
+        "revision": "a13b4483ec1c0d42556b22a9ee61ffe68eae979f",
+        "revision_status": "git-ls-remote-HEAD-verified-2026-11-15"
+      },
+      "licenses": [
+        {
+          "spdx": "GPL-3.0-only",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/overtools/io_scene_owm/blob/a13b4483ec1c0d42556b22a9ee61ffe68eae979f/LICENSE",
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+        }
+      ],
+      "purpose": "Blender importer for DataTool/TankLib formats.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Format-specific addon needs no role in original glTF pipeline. Its own README requires Blender 4.2+, superseding older OWLib wording.",
+        "prerequisites": [
+          "Blender 4.2+",
+          "authorized DataTool output for useful runtime import"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "importer",
+          "readers"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": true,
+        "runtime_game_data_acquisition": "not-part-of-this-task"
+      },
+      "evidence": [
+        "docs/research/panel-round1-games.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "rea",
+      "name": "REA",
+      "canonical_url": "https://github.com/morluto/rea",
+      "source": {
+        "repository": "https://github.com/morluto/rea",
+        "revision": "807dd1742f731ad4a0dba34176527eb248b848a2",
+        "revision_status": "git-ls-remote-HEAD-verified-2026-11-15"
+      },
+      "licenses": [
+        {
+          "spdx": "MIT",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/morluto/rea/blob/807dd1742f731ad4a0dba34176527eb248b848a2/LICENSE",
+          "sha256": "798f9e4d18e49b30bf2f12696c8ced73dc4e1413da375a333d01281543a1ea8b"
+        }
+      ],
+      "purpose": "Evidence-backed JavaScript/native/application analysis CLI/MCP. Distinct from Raea renderer.",
+      "install": {
+        "decision": "source_only",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Prepare pinned source for bounded static analysis. Do not execute setup, register MCP, install native providers or infer absent game behavior from source inventory.",
+        "prerequisites": [
+          "Compatible Node.js; exact package engine range must be checked before runtime installation",
+          "native providers only for selected native analysis"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "THIRD_PARTY_NOTICES.md",
+          "package.json",
+          "src",
+          "scripts"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": false,
+        "runtime_game_data_acquisition": "none-required-for-selected-source-study"
+      },
+      "evidence": [
+        "docs/research/REA_RUNBOOK.md",
+        "docs/research/panel-round2-games.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "raea",
+      "name": "Raea",
+      "canonical_url": "https://github.com/shinyobjectz/raea",
+      "source": {
+        "repository": "https://github.com/shinyobjectz/raea",
+        "revision": "6665a2e5a8b735172d5515e5f498e5968f16bdb7",
+        "revision_status": "pinned-primary-source-round1"
+      },
+      "licenses": [
+        {
+          "spdx": "FSL-1.1-ALv2",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/shinyobjectz/raea/blob/6665a2e5a8b735172d5515e5f498e5968f16bdb7/LICENSE",
+          "sha256": "fe3ce8198545420f93b83a2fd02e6fff4a4414ffcb2309df50878adf39d1c392"
+        }
+      ],
+      "purpose": "React/TypeScript composition renderer built with Rust/Bevy/wgpu; distinct from REA analysis.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Source available with current competing-use restriction and future Apache grant; do not classify as unrestricted open source. Isolated original render only after adapter validation.",
+        "prerequisites": [
+          "Supported Linux x86_64 release or Rust/Bun/CMake/NASM source toolchain",
+          "working GPU/software Vulkan adapter"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": false,
+        "runtime_game_data_acquisition": "none-required-for-selected-source-study"
+      },
+      "evidence": [
+        "docs/research/panel-round1-tools.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "opengoal",
+      "name": "OpenGOAL",
+      "canonical_url": "https://github.com/open-goal/jak-project",
+      "source": {
+        "repository": "https://github.com/open-goal/jak-project",
+        "revision": "4cd2a71fa15ae214a03925beafa59c7228ec81d3",
+        "revision_status": "git-ls-remote-HEAD-verified-2026-11-15"
+      },
+      "licenses": [
+        {
+          "spdx": "ISC",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/open-goal/jak-project/blob/4cd2a71fa15ae214a03925beafa59c7228ec81d3/LICENSE",
+          "sha256": "64983c21481eeab85e9df874e4b452bf6df9005bb5f422fb154705a9931ece56"
+        }
+      ],
+      "purpose": "Specialized GOAL decompiler/compiler and Jak native port/reconstruction workflow.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Useful compiler/reconstruction test discipline. Not a general-purpose instant game port; no PS2 data supplied or acquired.",
+        "prerequisites": [
+          "C++ toolchain",
+          "legitimately obtained compatible PS2 game data to play Jak"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "decompiler",
+          "goalc"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": true,
+        "runtime_game_data_acquisition": "not-part-of-this-task"
+      },
+      "evidence": [
+        "docs/research/panel-round1-games.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "openlara",
+      "name": "OpenLara",
+      "canonical_url": "https://github.com/XProger/OpenLara",
+      "source": {
+        "repository": "https://github.com/XProger/OpenLara",
+        "revision": "3b268ca4bf986c380f44a26ffd9218bf6d376249",
+        "revision_status": "pinned-primary-source-round1"
+      },
+      "licenses": [
+        {
+          "spdx": "BSD-2-Clause",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/XProger/OpenLara/blob/3b268ca4bf986c380f44a26ffd9218bf6d376249/LICENSE",
+          "sha256": "76efb6dce59e7de6f0de06ed1459177ca921826b3e5c6da014cfa1e79c911d39"
+        }
+      ],
+      "purpose": "Classic Tomb Raider engine and explicit locomotion-mode/animation reference.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Existing pinned movement study is sufficient; original game assets are separate. Integrate no second game engine for a launch-screen change.",
+        "prerequisites": [
+          "Platform C++/graphics toolchain",
+          "separately authorized Tomb Raider content for game play"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "src/character.h"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": true,
+        "runtime_game_data_acquisition": "not-part-of-this-task"
+      },
+      "evidence": [
+        "docs/research/panel-round1-games.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "openmw",
+      "name": "OpenMW",
+      "canonical_url": "https://github.com/OpenMW/openmw",
+      "source": {
+        "repository": "https://github.com/OpenMW/openmw",
+        "revision": "77eec0471802676324fb014d4d465ea652a8ec27",
+        "revision_status": "git-ls-remote-HEAD-verified-2026-11-15"
+      },
+      "licenses": [
+        {
+          "spdx": "GPL-3.0-only",
+          "scope": "Root GPLv3 text; check per-file grants and bundled font/dependency notices before code reuse.",
+          "path": "LICENSE",
+          "url": "https://github.com/OpenMW/openmw/blob/77eec0471802676324fb014d4d465ea652a8ec27/LICENSE",
+          "sha256": "a187395428b34e87a0279ba67f1dba3c929eec303bea0d2200a2effd55787829"
+        }
+      ],
+      "purpose": "Reimplemented RPG engine and OpenMW-CS original-game editor; GitHub mirror points to GitLab upstream.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Engine/editor architecture study. Morrowind play requires owned content; original OpenMW-CS games can use new content. Does not supply current YUGA assets.",
+        "prerequisites": [
+          "CMake/C++ and engine libraries",
+          "Morrowind content only if playing Morrowind"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "apps/openmw"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": true,
+        "runtime_game_data_acquisition": "not-part-of-this-task"
+      },
+      "evidence": [
+        "docs/research/panel-round1-games.md",
+        "https://openmw.org/faq/"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "openra",
+      "name": "OpenRA",
+      "canonical_url": "https://github.com/OpenRA/OpenRA",
+      "source": {
+        "repository": "https://github.com/OpenRA/OpenRA",
+        "revision": "b4d95a56717d8d0070f195e343f6c2728ce87900",
+        "revision_status": "git-ls-remote-HEAD-verified-2026-11-15"
+      },
+      "licenses": [
+        {
+          "spdx": "GPL-3.0-or-later",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "COPYING",
+          "url": "https://github.com/OpenRA/OpenRA/blob/b4d95a56717d8d0070f195e343f6c2728ce87900/COPYING",
+          "sha256": "e79e9c8a0c85d735ff98185918ec94ed7d175efc377012787aebcf3b80f0d90b"
+        }
+      ],
+      "purpose": "Original RTS engine/reimaginings and mod SDK; YAML traits and Lua missions.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Simulation/mod-data architecture study; EA game artwork remains separate. A separate C# RTS engine is not a native Godot UI dependency.",
+        "prerequisites": [
+          ".NET/SDL/OpenGL",
+          "separate approved game content for included reimaginings"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "COPYING",
+          "OpenRA.Game"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": true,
+        "runtime_game_data_acquisition": "not-part-of-this-task"
+      },
+      "evidence": [
+        "docs/research/panel-round1-games.md",
+        "https://www.openra.net/legal/"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "openjk",
+      "name": "OpenJK",
+      "canonical_url": "https://github.com/JACoders/OpenJK",
+      "source": {
+        "repository": "https://github.com/JACoders/OpenJK",
+        "revision": "260c59c2907187af555a676fe0cc798893bf7757",
+        "revision_status": "git-ls-remote-HEAD-verified-2026-11-15"
+      },
+      "licenses": [
+        {
+          "spdx": "GPL-2.0-only",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE.txt",
+          "url": "https://github.com/JACoders/OpenJK/blob/260c59c2907187af555a676fe0cc798893bf7757/LICENSE.txt",
+          "sha256": "db296f2f7f35bca3a174efb0eb392b3b17bd94b341851429a3dff411b1c2fc73"
+        }
+      ],
+      "purpose": "Community maintenance of released Jedi Academy/Jedi Outcast engine source.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Source-release descendant, not recovery of absent commercial source. Camera/input reference only; original Star Wars game data are separate.",
+        "prerequisites": [
+          "CMake/C++/SDL",
+          "installed Jedi Academy data for documented player setup"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE.txt",
+          "codemp/cgame"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": true,
+        "runtime_game_data_acquisition": "not-part-of-this-task"
+      },
+      "evidence": [
+        "docs/research/panel-round1-games.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "xash3d",
+      "name": "Xash3D FWGS",
+      "canonical_url": "https://github.com/FWGS/xash3d-fwgs",
+      "source": {
+        "repository": "https://github.com/FWGS/xash3d-fwgs",
+        "revision": "707596f4905689ec224e993fcaa4d4ad66aa67d6",
+        "revision_status": "git-ls-remote-HEAD-verified-2026-11-15"
+      },
+      "licenses": [
+        {
+          "spdx": "GPL-3.0-or-later",
+          "scope": "Selected cl_cmds.c header only; this does not establish a whole-repository or third-party license inventory.",
+          "path": "engine/client/cl_cmds.c",
+          "url": "https://github.com/FWGS/xash3d-fwgs/blob/707596f4905689ec224e993fcaa4d4ad66aa67d6/engine/client/cl_cmds.c"
+        }
+      ],
+      "purpose": "GoldSrc-compatible engine with dedicated servers, native/mobile input and several renderers.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Current repository has no root COPYING/LICENSE in inspected tree. Selected source headers grant GPLv3-or-later; whole-tree/submodule license audit remains open. Half-Life resources not acquired.",
+        "prerequisites": [
+          "Python/Waf/C toolchain",
+          "SDL and platform libraries",
+          "Half-Life valve resources plus compatible game libraries to play"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "engine/client/cl_cmds.c"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": true,
+        "runtime_game_data_acquisition": "not-part-of-this-task"
+      },
+      "evidence": [
+        "docs/research/panel-round1-games.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "gdquest-tps",
+      "name": "GDQuest RoboBlast TPS source",
+      "canonical_url": "https://github.com/gdquest-demos/godot-4-3d-third-person-controller",
+      "source": {
+        "repository": "https://github.com/gdquest-demos/godot-4-3d-third-person-controller",
+        "revision": "b3bd6e81084f568be8aa44a69a0c2b1e52e806b3",
+        "revision_status": "git-ls-remote-HEAD-verified-2026-11-15"
+      },
+      "licenses": [
+        {
+          "spdx": "MIT",
+          "scope": "Scripts, scenes, shaders and generally Godot-generated resources; art uses separately scoped noncommercial/share-alike terms.",
+          "path": "LICENSE",
+          "url": "https://github.com/gdquest-demos/godot-4-3d-third-person-controller/blob/b3bd6e81084f568be8aa44a69a0c2b1e52e806b3/LICENSE",
+          "sha256": "c298531e638430618d5f68ca9e1be23d3e6510173aa764068c3f7e3fcf25d140"
+        },
+        {
+          "spdx": "CC-BY-NC-SA-4.0",
+          "scope": "Image textures and 3D models; excluded from this source-only intake and product reuse.",
+          "path": "LICENSE",
+          "url": "https://github.com/gdquest-demos/godot-4-3d-third-person-controller/blob/b3bd6e81084f568be8aa44a69a0c2b1e52e806b3/LICENSE"
+        }
+      ],
+      "purpose": "Godot third-person controller/aiming/camera/UI reference; original playable demo.",
+      "install": {
+        "decision": "source_only",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Small same-engine script reference. Current repository LICENSE says art CC-BY-NC-SA-4.0, contradicting older demo website CC-BY4 wording. Fetch script-only selection; import no art.",
+        "prerequisites": [
+          "Godot version matching pinned project.godot if running the complete upstream demo"
+        ],
+        "sparse_paths": [
+          "LICENSE",
+          "project.godot",
+          "main.gd",
+          "player/player.gd",
+          "player/camera_controller.gd",
+          "player/gdbot/gdbot_skin.gd",
+          "player/weapons_ui/weapons_ui.gd",
+          "menu/menu.gd",
+          "autoloads/camera_mode.gd"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": false,
+        "runtime_game_data_acquisition": "none-required-for-selected-source-study"
+      },
+      "evidence": [
+        "docs/research/panel-round2-games.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "rapier",
+      "name": "Rapier",
+      "canonical_url": "https://github.com/dimforge/rapier",
+      "source": {
+        "repository": "https://github.com/dimforge/rapier",
+        "revision": "475caa3ff4646fd9a796b67d14116256f4962bc7",
+        "revision_status": "pinned-primary-source-round1"
+      },
+      "licenses": [
+        {
+          "spdx": "Apache-2.0",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/dimforge/rapier/blob/475caa3ff4646fd9a796b67d14116256f4962bc7/LICENSE",
+          "sha256": "ceacfa4d7fa67df64ab09a56fe248c50a3bfc9bc00374d69bd74ad763b14b89c"
+        }
+      ],
+      "purpose": "Rust/JS-Wasm 2D/3D physics library.",
+      "install": {
+        "decision": "source_only",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Prepare source as collision/physics reference. Current native Godot and original authority rules stay authoritative; backend adoption needs a concrete parity spike.",
+        "prerequisites": [
+          "Rust for native source build; compatible JS/Wasm binding for browser experiment"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "Cargo.toml",
+          "ARCHITECTURE.md",
+          "src"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": false,
+        "runtime_game_data_acquisition": "none-required-for-selected-source-study"
+      },
+      "evidence": [
+        "docs/research/panel-round1-tools.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "threert",
+      "name": "ThreeRT",
+      "canonical_url": "https://github.com/meshy-dev/ThreeRT",
+      "source": {
+        "repository": "https://github.com/meshy-dev/ThreeRT",
+        "revision": "1a25d1fc240ca5ba6675e197ca8961cf559b05f8",
+        "revision_status": "pinned-primary-source-round1"
+      },
+      "licenses": [
+        {
+          "spdx": "MIT",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/meshy-dev/ThreeRT/blob/1a25d1fc240ca5ba6675e197ca8961cf559b05f8/LICENSE",
+          "sha256": "073c6c7012ec8ab3d859d2b9d1ef9fba58ee5b6064518c7a24372f60e2f10b13"
+        }
+      ],
+      "purpose": "Rust/wgpu ray-query/software-BVH renderer with TypeScript scene packages and three.js browser fallback.",
+      "install": {
+        "decision": "defer",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Separate renderer research. Closed-source packaged native clients and device/API support differ from source engine; no universal browser path-tracing or 60fps claim is accepted.",
+        "prerequisites": [
+          "Node 24/Bun/Rust for source engine",
+          "working supported GPU/software adapter"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "docs/COMPARE.md"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": false,
+        "runtime_game_data_acquisition": "none-required-for-selected-source-study"
+      },
+      "evidence": [
+        "docs/research/panel-round1-tools.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    },
+    {
+      "id": "hyperframes",
+      "name": "HyperFrames",
+      "canonical_url": "https://github.com/heygen-com/hyperframes",
+      "source": {
+        "repository": "https://github.com/heygen-com/hyperframes",
+        "revision": "e2430edecf5492a02a363eaa5c30ad2708af5aee",
+        "revision_status": "pinned-primary-source-round1"
+      },
+      "licenses": [
+        {
+          "spdx": "Apache-2.0",
+          "scope": "Root project source; dependency and asset terms require separate review.",
+          "path": "LICENSE",
+          "url": "https://github.com/heygen-com/hyperframes/blob/e2430edecf5492a02a363eaa5c30ad2708af5aee/LICENSE",
+          "sha256": "4259155fb06f127687ee7b0a8a3682d45132db0f2da26cbc0b7a2d1e796436b8"
+        }
+      ],
+      "purpose": "HTML/CSS/media compositions to seekable browser capture and MP4.",
+      "install": {
+        "decision": "source_only",
+        "source_only": true,
+        "approval_required": false,
+        "commands": [],
+        "reason": "Prepare external trailer/contact-sheet tooling source; native screenshots must remain actual Godot outputs, not reconstructed video frames.",
+        "prerequisites": [
+          "Node >=22",
+          "Chromium/Puppeteer",
+          "FFmpeg"
+        ],
+        "sparse_paths": [
+          "README.md",
+          "LICENSE",
+          "package.json",
+          "packages/cli"
+        ],
+        "max_checkout_bytes": 157286400
+      },
+      "reuse": {
+        "decision": "research-source-only",
+        "proprietary_assets_required": false,
+        "product_import": false,
+        "runtime_game_data_required": false,
+        "runtime_game_data_acquisition": "none-required-for-selected-source-study"
+      },
+      "evidence": [
+        "docs/research/panel-round1-tools.md"
+      ],
+      "verification": {
+        "source_metadata_checked": true,
+        "full_checkout": false,
+        "built": false,
+        "executed": false,
+        "claim_limit": "Catalog authorization is source-only preparation. Separate execution receipts own any actual fetch/build/run."
+      }
+    }
+  ]
+}

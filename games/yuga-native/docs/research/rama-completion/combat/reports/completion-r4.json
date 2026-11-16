@@ -1,0 +1,598 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"name": "Actual normal army configures",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual kit and existing15-cue/four-voice audio configure",
+			"passed": true
+		},
+		{
+			"details": {
+				"health": 122.0,
+				"shield": 0.0
+			},
+			"name": "health uses an actual accepted kit/receiver receipt",
+			"passed": true
+		},
+		{
+			"details": {
+				"damage_applied": 28.0,
+				"health_after": 122.0,
+				"health_before": 150.0,
+				"kind": "damage",
+				"position": "(0.0, 0.0, 5.0)",
+				"shield_after": 0.0,
+				"shield_before": 0.0,
+				"unit_id": 31
+			},
+			"name": "health classification matches effective receiver math",
+			"passed": true
+		},
+		{
+			"details": {
+				"audio": {
+					"cast_id": 1,
+					"damage_applied": 28.0,
+					"response": "health",
+					"time_s": 0.3
+				},
+				"effects": [
+					{
+						"age_s": 0.15,
+						"position": "(0.0, 1.25, 4.39)",
+						"response": "health"
+					}
+				]
+			},
+			"name": "health selects matching world contact and audio response",
+			"passed": true
+		},
+		{
+			"details": {
+				"cast_id": 1,
+				"cue": "confirm",
+				"pitch_scale": 0.987999975681305,
+				"playing": true,
+				"priority": 2,
+				"response": "health",
+				"serial": 4,
+				"spatial": false,
+				"volume_db": -27.1186389923096
+			},
+			"name": "health local cue has bounded distinguishing pitch",
+			"passed": true
+		},
+		{
+			"details": {
+				"health": 150.0,
+				"shield": 17.0
+			},
+			"name": "shield uses an actual accepted kit/receiver receipt",
+			"passed": true
+		},
+		{
+			"details": {
+				"damage_applied": 28.0,
+				"health_after": 150.0,
+				"health_before": 150.0,
+				"kind": "damage",
+				"position": "(0.0, 0.0, 5.0)",
+				"shield_after": 17.0,
+				"shield_before": 45.0,
+				"unit_id": 31
+			},
+			"name": "shield classification matches effective receiver math",
+			"passed": true
+		},
+		{
+			"details": {
+				"audio": {
+					"cast_id": 1,
+					"damage_applied": 28.0,
+					"response": "shield",
+					"time_s": 0.3
+				},
+				"effects": [
+					{
+						"age_s": 0.15,
+						"position": "(0.0, 1.25, 4.39)",
+						"response": "shield"
+					}
+				]
+			},
+			"name": "shield selects matching world contact and audio response",
+			"passed": true
+		},
+		{
+			"details": {
+				"cast_id": 1,
+				"cue": "confirm",
+				"pitch_scale": 0.874719977378845,
+				"playing": true,
+				"priority": 2,
+				"response": "shield",
+				"serial": 9,
+				"spatial": false,
+				"volume_db": -27.1186389923096
+			},
+			"name": "shield local cue has bounded distinguishing pitch",
+			"passed": true
+		},
+		{
+			"details": {
+				"health": 0.0,
+				"shield": 0.0
+			},
+			"name": "defeat uses an actual accepted kit/receiver receipt",
+			"passed": true
+		},
+		{
+			"details": {
+				"damage_applied": 20.0,
+				"health_after": 0.0,
+				"health_before": 20.0,
+				"kind": "damage",
+				"position": "(0.0, 0.0, 5.0)",
+				"shield_after": 0.0,
+				"shield_before": 0.0,
+				"unit_id": 31
+			},
+			"name": "defeat classification matches effective receiver math",
+			"passed": true
+		},
+		{
+			"details": {
+				"audio": {
+					"cast_id": 1,
+					"damage_applied": 20.0,
+					"response": "defeat",
+					"time_s": 0.3
+				},
+				"effects": [
+					{
+						"age_s": 0.15,
+						"position": "(0.0, 1.25, 4.39)",
+						"response": "defeat"
+					}
+				]
+			},
+			"name": "defeat selects matching world contact and audio response",
+			"passed": true
+		},
+		{
+			"details": {
+				"cast_id": 1,
+				"cue": "confirm",
+				"pitch_scale": 1.17999994754791,
+				"playing": true,
+				"priority": 2,
+				"response": "defeat",
+				"serial": 14,
+				"spatial": false,
+				"volume_db": -27.1186389923096
+			},
+			"name": "defeat local cue has bounded distinguishing pitch",
+			"passed": true
+		},
+		{
+			"details": {
+				"gold": 45,
+				"kills": 1
+			},
+			"name": "Defeat response never grants an extra reward",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Real receiver events do not produce consumer schema failures",
+			"passed": true
+		},
+		{
+			"details": {
+				"admitted": true,
+				"response_count": 0
+			},
+			"name": "Empty unit collision cannot show a confirmed-hit bloom",
+			"passed": true
+		},
+		{
+			"details": {
+				"admitted": true,
+				"response_count": 0
+			},
+			"name": "Zero damage cannot show a confirmed-hit bloom",
+			"passed": true
+		},
+		{
+			"details": {
+				"admitted": true,
+				"response_count": 0
+			},
+			"name": "Inconsistent health math cannot invent a defeat bloom",
+			"passed": true
+		},
+		{
+			"details": {
+				"admitted": true,
+				"response_count": 0
+			},
+			"name": "Partial health snapshots cannot invent a typed contact",
+			"passed": true
+		},
+		{
+			"details": {
+				"admitted": true,
+				"response_count": 0
+			},
+			"name": "Maximum range has no physical contact bloom",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Malformed damage value is never confirmed: <null>",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Malformed damage value is never confirmed: {  }",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Malformed damage value is never confirmed: []",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Malformed damage value is never confirmed: true",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Malformed damage value is never confirmed: nan",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Malformed damage value is never confirmed: inf",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Malformed damage value is never confirmed: -1.0",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Legacy positive receipt stays generic without inventing defeat",
+			"passed": true
+		},
+		{
+			"details": {
+				"admitted": true,
+				"response_count": 0
+			},
+			"name": "Unknown kind cannot create a hit bloom",
+			"passed": true
+		},
+		{
+			"details": {
+				"admitted": true,
+				"response_count": 0
+			},
+			"name": "A nonterminal empty contact does not create a bloom",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "A later real piercing-style receipt creates one contact",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Higher sequence duplicate target/projectile has no second bloom",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Different accepted target can create another piercing contact",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Actual surface contact uses a dull wall response",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "A terminated projectile cannot create a later contact",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Rejected terminal replay preserves real cast clock and event watermark",
+			"passed": true
+		},
+		{
+			"details": {
+				"triangles": 312
+			},
+			"name": "Distinct finite bounded geometry health/false",
+			"passed": true
+		},
+		{
+			"details": {
+				"triangles": 184
+			},
+			"name": "Distinct finite bounded geometry shield/false",
+			"passed": true
+		},
+		{
+			"details": {
+				"triangles": 288
+			},
+			"name": "Distinct finite bounded geometry defeat/false",
+			"passed": true
+		},
+		{
+			"details": {
+				"triangles": 152
+			},
+			"name": "Distinct finite bounded geometry wall/false",
+			"passed": true
+		},
+		{
+			"details": {
+				"triangles": 80
+			},
+			"name": "Distinct finite bounded geometry health/true",
+			"passed": true
+		},
+		{
+			"details": {
+				"triangles": 104
+			},
+			"name": "Distinct finite bounded geometry shield/true",
+			"passed": true
+		},
+		{
+			"details": {
+				"triangles": 64
+			},
+			"name": "Distinct finite bounded geometry defeat/true",
+			"passed": true
+		},
+		{
+			"details": {
+				"triangles": 80
+			},
+			"name": "Distinct finite bounded geometry wall/true",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "All contact variants use only8 immutable cached meshes",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Suspension freezes all contact transforms",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Contact variants expire into the same bounded pool",
+			"passed": true
+		},
+		{
+			"details": {
+				"active": 0,
+				"allocated_impacts": 18,
+				"cached_contact_meshes": 8,
+				"casts": [],
+				"contact_counts": {
+					"contact": 0,
+					"defeat": 53,
+					"health": 55,
+					"shield": 53,
+					"wall": 53
+				},
+				"contact_styles": [
+					{
+						"age_s": 0.0,
+						"position": "(2.0, 1.0, 0.0)",
+						"response": "defeat"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(3.0, 1.0, 0.0)",
+						"response": "wall"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(4.0, 1.0, 0.0)",
+						"response": "health"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(5.0, 1.0, 0.0)",
+						"response": "shield"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(6.0, 1.0, 0.0)",
+						"response": "defeat"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(7.0, 1.0, 0.0)",
+						"response": "wall"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(8.0, 1.0, 0.0)",
+						"response": "health"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(0.0, 1.0, 0.0)",
+						"response": "shield"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(1.0, 1.0, 0.0)",
+						"response": "defeat"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(2.0, 1.0, 0.0)",
+						"response": "wall"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(3.0, 1.0, 0.0)",
+						"response": "health"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(4.0, 1.0, 0.0)",
+						"response": "shield"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(5.0, 1.0, 0.0)",
+						"response": "defeat"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(6.0, 1.0, 0.0)",
+						"response": "wall"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(7.0, 1.0, 0.0)",
+						"response": "health"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(8.0, 1.0, 0.0)",
+						"response": "shield"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(0.0, 1.0, 0.0)",
+						"response": "defeat"
+					},
+					{
+						"age_s": 0.0,
+						"position": "(1.0, 1.0, 0.0)",
+						"response": "wall"
+					}
+				],
+				"counts": {
+					"accepted": 66,
+					"capacity": 0,
+					"expired": 0,
+					"invalid": 0,
+					"stale": 1
+				},
+				"finite": true,
+				"generation": 1007,
+				"impact_triangles": 1456,
+				"impacts": 18,
+				"lights": 0,
+				"live_arrows": 0,
+				"max_casts": 12,
+				"max_impacts": 18,
+				"meshes": 0,
+				"particles": 0,
+				"peak_active": 1,
+				"pooled_impacts": 0,
+				"reduced_effects": true,
+				"reduced_motion": true,
+				"scope": "Original event-driven Rama presentation; no gameplay authority",
+				"total_triangles": 1456,
+				"triangles": 0
+			},
+			"name": "Dense contact mix keeps18nodes/5616triangles andzero lights or particles",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Reset clears all pooled/live nodes",
+			"passed": true
+		},
+		{
+			"details": {
+
+			},
+			"name": "Selected sources remain stable during the run",
+			"passed": true
+		},
+		{
+			"details": {
+				"sampled_playbacks": 2,
+				"wait_ms": 0
+			},
+			"name": "Stopped Dummy playback retires before engine teardown",
+			"passed": true
+		}
+	],
+	"passed": true,
+	"scope": "Actual normal army/Rama kit damage receivers plus altered receipt counterexamples, CPU effect geometry and Dummy-driver voice selection. No actual rendered appearance, human listening, combat feel or hardware claim.",
+	"source_sha256": {
+		"res://scripts/lane_army.gd": "10dc1372ac2580b5ca20573a6a28f5a01e7973c731965c87a2473d7859eb032e",
+		"res://scripts/lane_minion.gd": "39e9dd57dc229bb6d99dcf84a42b5e6ef5919d203dfc2092d5f8dae7aa6dc387",
+		"res://scripts/rama_ability_effects.gd": "c47636d15566b4404175e500f808c6e62e18e0599e13e23f8fc71138ed6bdae1",
+		"res://scripts/rama_ability_kit.gd": "ed8ac617c003ee1307c2cfff5a093ebbc092cc40b60b1c4b2d751a0a165323cc",
+		"res://scripts/rama_action_audio.gd": "ea3df7769c1528131a50180ec7963e55fd987f7aa7a2328c1e4b61f187cd66c8",
+		"res://scripts/rama_hit_response.gd": "b284975f246488ff99ad79c1942bdfb2f5c2d639852ab976dde667b91d275e3a",
+		"res://tests/rama_completion_combat_cases.gd": "acf955bb926a200a33406c7d3d4c4574734855746e8a01935c1653e2b62808c7"
+	}
+}

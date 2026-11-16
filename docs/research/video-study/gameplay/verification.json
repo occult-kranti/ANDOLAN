@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "source_sha256": "bed8ca9b5981a0509041b95f32392762a05358d20edb390cce1388c451b982bb",
+  "checks": [
+    {
+      "index": "timeline-index.json",
+      "count": 70,
+      "hashes_and_dimensions": "passed"
+    },
+    {
+      "index": "dense-index.json",
+      "count": 65,
+      "hashes_and_dimensions": "passed"
+    }
+  ],
+  "actually_viewed_files": 20,
+  "audio_reviewed": false,
+  "native_runtime_tests_run": false,
+  "failed_attempts": [
+    {
+      "operation": "Contact-sheet composition",
+      "reason": "Default Python had no Pillow; rerun succeeded with existing native Python312 environment.",
+      "source_changed": false
+    },
+    {
+      "operation": "Evidence verification first run",
+      "reason": "Timeline index uses file, dense index uses path; verifier expected only path. Reader corrected; all original files/hashes unchanged.",
+      "source_changed": false
+    }
+  ]
+}

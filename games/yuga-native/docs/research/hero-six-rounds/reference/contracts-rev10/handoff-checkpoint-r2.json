@@ -1,0 +1,83 @@
+{
+  "task_id": "YUGA-HERO-6R / native content10",
+  "product": "native YUGA offline",
+  "source_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "decision": "accepted scoped native identity migration; final gameplay/render/package acceptance belongs to root",
+  "source_sha256": {
+    "games/yuga-native/scripts/native_contracts.gd": "06b46d5d54618aaaa48204103784e23788a0acad983770d88bd482054e8690c4",
+    "games/yuga-native/assets/contracts/native-contracts-v1.json": "515d2de079acf7bc9b26cb7c29adbebc025007ff01537df443185498c5f54280",
+    "games/yuga-native/tools/check-native-contracts.py": "f516fe01dacaa6dfd9039bb8f050d6b9771fa71e860403cab186eafde74df4a9",
+    "games/yuga-native/tests/native_contract_cases.gd": "c9aff2fd662163f0fc4eaf87a7fbaea3bc006a2c4641ac405a0d896a1b6a3375",
+    "games/yuga-native/tests/native_contract_package_cases.py": "d9f209bbf5428dddedce7afee0ecff406ce54e628d381d451a59e2803c87a09b",
+    "games/yuga-native/tests/fixtures/contracts/native-content9-catalog.json": "06c1fe1c2d8c5b73b0ff5eced576c4b47654b4bf30acfdfc11e168733ab26906",
+    "games/yuga-native/tests/fixtures/contracts/native-content9-descriptor.json": "1de409f4191fc5d1926bc4f9403e3f84da793be3cd252fa65cd3fcc76be18e6b",
+    "games/yuga-native/tools/package-native.py": "5f0e17ba903a5415922d6446ec3b01fa26eee55c39f377fa83b81b2b7d0f1cff",
+    "games/yuga-native/docs/NATIVE_CONTRACTS.md": "2f8a6af7699bd3168e90c60ec1e7943959d472c4d4d6444a3a6b8caf124171bb"
+  },
+  "district_sha256": {
+    "scripts/sangam_district.gd": "4bc793ca04f17ef4e9f3e3e2992551a55b7c90ff1e3b7fd67ba9bf835654df1e",
+    "assets/world/sangam-district.json": "e5747a11871c7cc3735d9516dd78855beb8f639f8a3e7adfbc97a489b0fa5ba2",
+    "assets/world/sangam-district.glb": "8957548ccc748752055bf0867d5640e710779b3fd5ce8ab613e03addd6cc90fb",
+    "shaders/sangam_masonry.gdshader": "fb90a037589caf756997cf6d1abfe3ad7e9ce452f0d2c97a5f4b876517ae8184"
+  },
+  "descriptor": {
+    "content_sha256": "29c17cc0f1f36fac647922d3cf430aea07bef39ea8a563427924aa326239cb12",
+    "contract_id": "yuga-native-contracts-v1",
+    "map_id": "native-confluence-140x260",
+    "map_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "profile_id": "native-offline-triad",
+    "protocol": 0.0,
+    "rules_sha256": "6ea7b0b2e9f319b3009b7b1e1394694435a7d6cd8e60538f736d5d05d0af40b8",
+    "versions": {
+      "content": 10,
+      "contract": 1.0,
+      "entity": 1.0,
+      "event": 1.0,
+      "input": 1.0,
+      "map": 1.0,
+      "replay": 1.0,
+      "rules": 1.0
+    }
+  },
+  "descriptor_sha256": "ac8b609009c62c82274552b388c6b5c4951c4c738dc2d2b696083329e0b9e676",
+  "reports": {
+    "source-check-r2.json": {
+      "sha256": "cb7640818c6d7264045b4d0bfbb7d08941fc98970b68e2d578d0ac6a6ae5452f",
+      "passed": true,
+      "checks": 83
+    },
+    "native-cases-r2.json": {
+      "sha256": "0757f7443f0a7864cd27301f34019591599912e2874881f77c9b91c962401790",
+      "passed": true,
+      "checks": 299
+    },
+    "package-cases-r2.json": {
+      "sha256": "58ee0962efe2331fa6d8e35e4a4d30d6015387efe4c58d603ee29c165245df95",
+      "passed": true,
+      "checks": 45
+    }
+  },
+  "invariants": {
+    "prior17_authority_pins_unchanged": true,
+    "direct_pins": 19,
+    "base_map_unchanged": true,
+    "browser_and_proposal_unchanged": true,
+    "wire_versions_unchanged": true,
+    "catalog_adds_only_adapter_and_spec": true,
+    "glb_and_shader_transitive_bytes_in_package_proof": true
+  },
+  "commands": [
+    "python3 games/yuga-native/docs/research/hero-six-rounds/reference/contracts-rev10/refresh-content10.py",
+    "python3 games/yuga-native/tools/check-native-contracts.py --report games/yuga-native/docs/research/hero-six-rounds/reference/contracts-rev10/source-check-r2.json",
+    "XDG_DATA_HOME=/tmp/yuga-contract-tests10 godot --headless --path games/yuga-native --script res://tests/native_contract_cases.gd -- --report=/workspaces/ANDOLAN/games/yuga-native/docs/research/hero-six-rounds/reference/contracts-rev10/native-cases-r2.json",
+    "python3 games/yuga-native/tests/native_contract_package_cases.py --report games/yuga-native/docs/research/hero-six-rounds/reference/contracts-rev10/package-cases-r2.json",
+    "XDG_DATA_HOME=/tmp/yuga-contract-tests10 godot --headless --path games/yuga-native --script res://docs/research/hero-six-rounds/reference/contracts-rev10/describe-content10.gd"
+  ],
+  "actual_visuals": "Independently viewed all12 R1 district originals; separately reviewed363 hero frames +25 originals. These contract suites do not render. Successor R6 map visuals are separate root/world evidence.",
+  "limits": [
+    "Pure source/admission/package-preflight validation, no import/export performed here.",
+    "Offline map extension only, not a live network migration or shared elevation authority.",
+    "Root owns actual successor district render, OS input and final package."
+  ],
+  "next_owner": "root integration and acceptance"
+}

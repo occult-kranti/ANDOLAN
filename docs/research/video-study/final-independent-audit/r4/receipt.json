@@ -1,0 +1,86 @@
+{
+  "task_id": "FINAL-INDEPENDENT-AUDIT-01-R4",
+  "passed": true,
+  "date_utc": "2026-11-16T00:49:24.078337+00:00",
+  "total_checks": 68,
+  "checks": {
+    "pck-source-audit.json": 32,
+    "zip-audit.json": 27,
+    "packed-contract-probe.json": 9
+  },
+  "snapshot": "/workspaces/scratch/yuga-video-frozen-r1",
+  "build": "/workspaces/scratch/yuga-video-frozen-r1/build-r4",
+  "source_state_sha256": "27c18c8e98eb242aeddb228b47ffeece7dd74de0f460867b96d9291c56017c6d",
+  "source_file_count": 622,
+  "actual_packed_contract_descriptor": {
+    "content_sha256": "c46efd90482a936b0220e4805edfbe7301c034cbfcf0545a066b3995c62f4e4b",
+    "contract_id": "yuga-native-contracts-v1",
+    "map_id": "native-confluence-140x260",
+    "map_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+    "profile_id": "native-offline-triad",
+    "protocol": 0.0,
+    "rules_sha256": "aa4fba5258ed00f20fe6d4bce560ce298d7e7e025a336a73f4250635af478b2f",
+    "versions": {
+      "content": 10,
+      "contract": 1.0,
+      "entity": 1.0,
+      "event": 1.0,
+      "input": 1.0,
+      "map": 1.0,
+      "replay": 1.0,
+      "rules": 1.0
+    }
+  },
+  "reports": {
+    "pck-source-audit.json": {
+      "bytes": 434800,
+      "sha256": "78f0c9c5fae34722442f139940f9cc27ab67b8de49dad355826ab2f111004023"
+    },
+    "zip-audit.json": {
+      "bytes": 28920,
+      "sha256": "e7207d8e07f79831cabe1edb06b8c1d0685288736c1d1ba221c5382c69caafad"
+    },
+    "packed-contract-probe.json": {
+      "bytes": 3421,
+      "sha256": "e8727d8d315ce90fad93e075c2a9e093c8eb074f178427fc7f342091a58d75c5"
+    },
+    "r2-to-r4-delta.json": {
+      "bytes": 1259,
+      "sha256": "adf94ab80975bbea4fe861e784ddb00303863b70d306cf14fccbed93c55107be"
+    }
+  },
+  "audit_tools": {
+    "audit-pck-and-source.py": {
+      "bytes": 7834,
+      "sha256": "2cd5f7d24a2c7541a74d1441ab24b1e63c40cbd0ee4b08f8d5267298884e7473"
+    },
+    "r4/audit-zips-r4.py": {
+      "bytes": 5105,
+      "sha256": "e4ad76402a23bce16602fd179ade3c2f25d7df1801e03d6bd99fb508b78aacf2"
+    },
+    "probe-packed-contract.gd": {
+      "bytes": 3765,
+      "sha256": "c9fd79a64e48f49b3dc618c60db6316743714e09f2778615b2f9ade61e7f4459"
+    }
+  },
+  "probe_engine": {
+    "path": "/workspaces/tooling/native-engine/Godot_v4.6.3-stable_linux.x86_64",
+    "bytes": 138981968,
+    "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+    "version": "4.6.3-stable (official)"
+  },
+  "commands": [
+    "python3 docs/research/video-study/final-independent-audit/audit-pck-and-source.py --snapshot /workspaces/scratch/yuga-video-frozen-r1 --build /workspaces/scratch/yuga-video-frozen-r1/build-r4 --output /workspaces/ANDOLAN/docs/research/video-study/final-independent-audit/r4",
+    "python3 docs/research/video-study/final-independent-audit/r4/audit-zips-r4.py",
+    "XDG_DATA_HOME=/workspaces/ANDOLAN/docs/research/video-study/final-independent-audit/r4/contract-probe-userdata godot --headless --main-pack /workspaces/scratch/yuga-video-frozen-r1/build-r4/yuga-native-linux.pck --script /workspaces/ANDOLAN/docs/research/video-study/final-independent-audit/probe-packed-contract.gd -- --report=/workspaces/ANDOLAN/docs/research/video-study/final-independent-audit/r4/packed-contract-probe.json --catalog=/workspaces/scratch/yuga-video-frozen-r1/games/yuga-native/assets/contracts/native-contracts-v1.json --old9=/workspaces/scratch/yuga-video-frozen-r1/games/yuga-native/tests/fixtures/contracts/native-content9-descriptor.json"
+  ],
+  "preserved_r2": "../receipt.json",
+  "supersedes_r2_for_delivery": true,
+  "imports_run": false,
+  "exports_run": false,
+  "renders_run": false,
+  "actual_windows_execution": false,
+  "actual_native_visuals_or_gameplay_input_reviewed": false,
+  "scope": "Fresh R4 artifact/source/contract qualification; original R2 report untouched. Visual shop layout acceptance remains in independent UI/render receipts.",
+  "next_owner": "root for final rendered/input acceptance and any release/publication decision"
+}

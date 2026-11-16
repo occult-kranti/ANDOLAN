@@ -1,0 +1,39 @@
+{
+  "task_id": "YUGA-HERO-6R",
+  "round": 3,
+  "scope": "Offline Rama pending-projectile warning implementation; structural verification only",
+  "source_commit": "7162b5d0b666e4422b0bc73100e1fba947d3323f",
+  "modified_sources": {
+    "scripts/rama_ability_effects.gd": "c8579329c1eeae3e6d4bc9575dce29836a3490a7da5bdba8169b29ae8aae0cb8",
+    "shaders/rama_projectile_warning.gdshader": "96858b0a319d8ce9aa399b5e6bb2b699904a77aa240479b938551daad682fd40",
+    "tests/rama_volley_warning_cases.gd": "66b1fc0bf823159210ed5d5fbf48e0bc076c0226a2a960c8f91b44616624e490",
+    "tests/rama_ability_visual_cases.gd": "c6da514023af9ee9841038847b78e3c2ff8e14c8ceb0e78144465b9ea41b8709"
+  },
+  "checks": {
+    "abilities": {
+      "passed": true,
+      "count": 85,
+      "report": "round3/abilities.json"
+    },
+    "visual-structure": {
+      "passed": true,
+      "count": 74,
+      "report": "round3/visual-structure.json"
+    },
+    "adversarial": {
+      "passed": true,
+      "count": 56,
+      "report": "round3/adversarial.json"
+    },
+    "volley-warning": {
+      "passed": true,
+      "count": 24,
+      "report": "round3/volley-warning.json"
+    }
+  },
+  "limits": [
+    "Actual rendered warning clarity not reviewed yet",
+    "Human game feel, full hero art and physical GPU qualification remain open",
+    "No gameplay timing, damage, rig or asset change in this warning packet"
+  ]
+}

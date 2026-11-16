@@ -22,6 +22,12 @@ const CONTENT6_DESCRIPTOR_PATH := "res://tests/fixtures/contracts/native-content
 # Exact accepted revision7 catalog/descriptor before per-army resource pooling.
 const CONTENT7_CATALOG_PATH := "res://tests/fixtures/contracts/native-content7-catalog.json"
 const CONTENT7_DESCRIPTOR_PATH := "res://tests/fixtures/contracts/native-content7-descriptor.json"
+# Exact content8 catalog and its prior Godot-derived descriptor before field shop.
+const CONTENT8_CATALOG_PATH := "res://tests/fixtures/contracts/native-content8-catalog.json"
+const CONTENT8_DESCRIPTOR_PATH := "res://tests/fixtures/contracts/native-content8-descriptor.json"
+# Exact content9 identity before the Sangam ground-footprint migration.
+const CONTENT9_CATALOG_PATH := "res://tests/fixtures/contracts/native-content9-catalog.json"
+const CONTENT9_DESCRIPTOR_PATH := "res://tests/fixtures/contracts/native-content9-descriptor.json"
 const SCOPE := {"room":"FIXTURE","epoch":1,"identity":"hero"}
 
 func _initialize() -> void:
@@ -55,7 +61,7 @@ func rejected(g: RefCounted, channel: String, v: Variant, name_: String) -> void
 	check(name_,not result.ok and before==g.report(),{"code":result.code,"transactional":before==g.report()})
 
 func run() -> void:
-	for path in ["res://scripts/native_contracts.gd","res://assets/contracts/native-contracts-v1.json","res://tests/native_contract_cases.gd","res://assets/contracts/native-envelope-v1.schema.json", CONTENT3_CATALOG_PATH, CONTENT3_DESCRIPTOR_PATH, CONTENT4_CATALOG_PATH, CONTENT4_DESCRIPTOR_PATH, CONTENT5_CATALOG_PATH, CONTENT5_DESCRIPTOR_PATH, CONTENT6_CATALOG_PATH, CONTENT6_DESCRIPTOR_PATH, CONTENT7_CATALOG_PATH, CONTENT7_DESCRIPTOR_PATH]:
+	for path in ["res://scripts/native_contracts.gd","res://assets/contracts/native-contracts-v1.json","res://tests/native_contract_cases.gd","res://assets/contracts/native-envelope-v1.schema.json", CONTENT3_CATALOG_PATH, CONTENT3_DESCRIPTOR_PATH, CONTENT4_CATALOG_PATH, CONTENT4_DESCRIPTOR_PATH, CONTENT5_CATALOG_PATH, CONTENT5_DESCRIPTOR_PATH, CONTENT6_CATALOG_PATH, CONTENT6_DESCRIPTOR_PATH, CONTENT7_CATALOG_PATH, CONTENT7_DESCRIPTOR_PATH, CONTENT8_CATALOG_PATH, CONTENT8_DESCRIPTOR_PATH, CONTENT9_CATALOG_PATH, CONTENT9_DESCRIPTOR_PATH]:
 		sources[path]=FileAccess.get_sha256(path)
 	var catalog: Variant=JSON.parse_string(FileAccess.get_file_as_string(Contracts.CATALOG_PATH))
 	check("catalog_loads_three_separate_rulesets",Contracts.validate_catalog(catalog).ok)
@@ -89,7 +95,7 @@ func run() -> void:
 		check("reject_changed_catalog_%d"%alteration,not Contracts.validate_catalog(bad).ok)
 	var local: Dictionary=g.descriptor(PROFILE)
 	check("exact_descriptor_match",Contracts.compatibility(local,local.duplicate(true)).ok)
-	check("native_content_revision8_separate_from_unchanged_wire",local.versions.content==8 and local.versions.input==1 and local.versions.entity==1 and local.versions.event==1 and local.versions.replay==1)
+	check("native_content_revision10_separate_from_unchanged_wire",local.versions.content==10 and local.versions.input==1 and local.versions.entity==1 and local.versions.event==1 and local.versions.replay==1)
 	check("browser_and_proposal_content_stay_revision1",g.descriptor("browser-p2-3v3").versions.content==1 and g.descriptor("production-6v6").versions.content==1)
 	for profile_index in 3:
 		for invalid in [null,0,-1,1.5,true,"2",[],{},NAN,INF,65536]:
@@ -103,7 +109,7 @@ func run() -> void:
 	var old_open := Contracts.new();assert(old_open.load_catalog().ok)
 	var empty_before: Dictionary=old_open.report()
 	var mismatch: Dictionary=old_open.open_session(PROFILE,CONTENT1_DESCRIPTOR,SCOPE)
-	check("old_content1_cannot_open_revision8",not mismatch.ok and mismatch.code=="MISMATCH_VERSIONS" and mismatch.details.field=="content" and old_open.report()==empty_before)
+	check("old_content1_cannot_open_revision10",not mismatch.ok and mismatch.code=="MISMATCH_VERSIONS" and mismatch.details.field=="content" and old_open.report()==empty_before)
 	var before_revision_reject: Dictionary=g.report()
 	check("old_content1_resume_transactional",not g.resume_session(CONTENT1_DESCRIPTOR,SCOPE).ok and before_revision_reject==g.report())
 	var next_epoch: Dictionary=SCOPE.duplicate(true);next_epoch.epoch=2
@@ -115,14 +121,14 @@ func run() -> void:
 	var old2_open := Contracts.new();assert(old2_open.load_catalog().ok)
 	var old2_before: Dictionary=old2_open.report()
 	var old2_mismatch: Dictionary=old2_open.open_session(PROFILE,CONTENT2_DESCRIPTOR,SCOPE)
-	check("old_content2_cannot_open_revision8",not old2_mismatch.ok and old2_mismatch.code=="MISMATCH_VERSIONS" and old2_mismatch.details.field=="content" and old2_open.report()==old2_before)
+	check("old_content2_cannot_open_revision10",not old2_mismatch.ok and old2_mismatch.code=="MISMATCH_VERSIONS" and old2_mismatch.details.field=="content" and old2_open.report()==old2_before)
 	check("old_content2_resume_transactional",not g.resume_session(CONTENT2_DESCRIPTOR,SCOPE).ok and before_revision_reject==g.report())
 	check("old_content2_migration_cannot_downgrade",not g.migrate_session(PROFILE,CONTENT2_DESCRIPTOR,next_epoch).ok and before_revision_reject==g.report())
 	var old2_replay: Dictionary={"format":1,"descriptor":CONTENT2_DESCRIPTOR.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
 	check("old_content2_replay_rejected_before_reconstruction",not g.validate_replay(old2_replay,[]).ok and before_revision_reject==g.report())
-	var forged_content2: Dictionary=CONTENT2_DESCRIPTOR.duplicate(true);forged_content2.versions.content=8
+	var forged_content2: Dictionary=CONTENT2_DESCRIPTOR.duplicate(true);forged_content2.versions.content=10
 	check("old_content2_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content2).ok)
-	var forged_current: Dictionary=CONTENT1_DESCRIPTOR.duplicate(true);forged_current.versions.content=8
+	var forged_current: Dictionary=CONTENT1_DESCRIPTOR.duplicate(true);forged_current.versions.content=10
 	check("revision_number_alone_does_not_bypass_source_identity",not Contracts.compatibility(local,forged_current).ok)
 	var old3_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT3_CATALOG_PATH))
 	var old3_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT3_DESCRIPTOR_PATH))
@@ -134,12 +140,12 @@ func run() -> void:
 	var old3_open := Contracts.new();assert(old3_open.load_catalog().ok)
 	var old3_before: Dictionary=old3_open.report()
 	var old3_mismatch: Dictionary=old3_open.open_session(PROFILE,old3_descriptor,SCOPE)
-	check("old_content3_cannot_open_revision8",not old3_mismatch.ok and old3_mismatch.code=="MISMATCH_VERSIONS" and old3_mismatch.details.field=="content" and old3_open.report()==old3_before)
+	check("old_content3_cannot_open_revision10",not old3_mismatch.ok and old3_mismatch.code=="MISMATCH_VERSIONS" and old3_mismatch.details.field=="content" and old3_open.report()==old3_before)
 	check("old_content3_resume_transactional",not g.resume_session(old3_descriptor,SCOPE).ok and before_revision_reject==g.report())
 	check("old_content3_migration_cannot_downgrade",not g.migrate_session(PROFILE,old3_descriptor,next_epoch).ok and before_revision_reject==g.report())
 	var old3_replay: Dictionary={"format":1,"descriptor":old3_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
 	check("old_content3_replay_rejected_before_reconstruction",not g.validate_replay(old3_replay,[]).ok and before_revision_reject==g.report())
-	var forged_content3: Dictionary=old3_descriptor.duplicate(true);forged_content3.versions.content=8
+	var forged_content3: Dictionary=old3_descriptor.duplicate(true);forged_content3.versions.content=10
 	check("old_content3_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content3).ok)
 	var old4_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT4_CATALOG_PATH))
 	var old4_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT4_DESCRIPTOR_PATH))
@@ -151,12 +157,12 @@ func run() -> void:
 	var old4_open := Contracts.new();assert(old4_open.load_catalog().ok)
 	var old4_before: Dictionary=old4_open.report()
 	var old4_mismatch: Dictionary=old4_open.open_session(PROFILE,old4_descriptor,SCOPE)
-	check("old_content4_cannot_open_revision8",not old4_mismatch.ok and old4_mismatch.code=="MISMATCH_VERSIONS" and old4_mismatch.details.field=="content" and old4_open.report()==old4_before)
+	check("old_content4_cannot_open_revision10",not old4_mismatch.ok and old4_mismatch.code=="MISMATCH_VERSIONS" and old4_mismatch.details.field=="content" and old4_open.report()==old4_before)
 	check("old_content4_resume_transactional",not g.resume_session(old4_descriptor,SCOPE).ok and before_revision_reject==g.report())
 	check("old_content4_migration_cannot_downgrade",not g.migrate_session(PROFILE,old4_descriptor,next_epoch).ok and before_revision_reject==g.report())
 	var old4_replay: Dictionary={"format":1,"descriptor":old4_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
 	check("old_content4_replay_rejected_before_reconstruction",not g.validate_replay(old4_replay,[]).ok and before_revision_reject==g.report())
-	var forged_content4: Dictionary=old4_descriptor.duplicate(true);forged_content4.versions.content=8
+	var forged_content4: Dictionary=old4_descriptor.duplicate(true);forged_content4.versions.content=10
 	check("old_content4_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content4).ok)
 	var old5_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT5_CATALOG_PATH))
 	var old5_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT5_DESCRIPTOR_PATH))
@@ -169,14 +175,14 @@ func run() -> void:
 	var old5_open := Contracts.new();assert(old5_open.load_catalog().ok)
 	var old5_before: Dictionary=old5_open.report()
 	var old5_load: Dictionary=old5_open.load_catalog(CONTENT5_CATALOG_PATH)
-	check("revision5_catalog_load_cannot_replace_revision8_identity",not old5_load.ok and old5_open.descriptor(PROFILE)==local and old5_open.report()==old5_before)
+	check("revision5_catalog_load_cannot_replace_revision10_identity",not old5_load.ok and old5_open.descriptor(PROFILE)==local and old5_open.report()==old5_before)
 	var old5_mismatch: Dictionary=old5_open.open_session(PROFILE,old5_descriptor,SCOPE)
-	check("old_content5_cannot_open_revision8",not old5_mismatch.ok and old5_mismatch.code=="MISMATCH_VERSIONS" and old5_mismatch.details.field=="content" and old5_open.report()==old5_before)
+	check("old_content5_cannot_open_revision10",not old5_mismatch.ok and old5_mismatch.code=="MISMATCH_VERSIONS" and old5_mismatch.details.field=="content" and old5_open.report()==old5_before)
 	check("old_content5_resume_transactional",not g.resume_session(old5_descriptor,SCOPE).ok and before_revision_reject==g.report())
 	check("old_content5_migration_cannot_downgrade",not g.migrate_session(PROFILE,old5_descriptor,next_epoch).ok and before_revision_reject==g.report())
 	var old5_replay: Dictionary={"format":1,"descriptor":old5_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
 	check("old_content5_replay_rejected_before_reconstruction",not g.validate_replay(old5_replay,[]).ok and before_revision_reject==g.report())
-	var forged_content5: Dictionary=old5_descriptor.duplicate(true);forged_content5.versions.content=8
+	var forged_content5: Dictionary=old5_descriptor.duplicate(true);forged_content5.versions.content=10
 	check("old_content5_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content5).ok)
 	var old6_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT6_CATALOG_PATH))
 	var old6_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT6_DESCRIPTOR_PATH))
@@ -189,23 +195,23 @@ func run() -> void:
 	var old6_open := Contracts.new();assert(old6_open.load_catalog().ok)
 	var old6_before: Dictionary=old6_open.report()
 	var old6_load: Dictionary=old6_open.load_catalog(CONTENT6_CATALOG_PATH)
-	check("revision6_catalog_load_cannot_replace_revision8_identity",not old6_load.ok and old6_open.descriptor(PROFILE)==local and old6_open.report()==old6_before)
+	check("revision6_catalog_load_cannot_replace_revision10_identity",not old6_load.ok and old6_open.descriptor(PROFILE)==local and old6_open.report()==old6_before)
 	var old6_mismatch: Dictionary=old6_open.open_session(PROFILE,old6_descriptor,SCOPE)
-	check("old_content6_cannot_open_revision8",not old6_mismatch.ok and old6_mismatch.code=="MISMATCH_VERSIONS" and old6_mismatch.details.field=="content" and old6_open.report()==old6_before)
+	check("old_content6_cannot_open_revision10",not old6_mismatch.ok and old6_mismatch.code=="MISMATCH_VERSIONS" and old6_mismatch.details.field=="content" and old6_open.report()==old6_before)
 	check("old_content6_resume_transactional",not g.resume_session(old6_descriptor,SCOPE).ok and before_revision_reject==g.report())
 	check("old_content6_migration_cannot_downgrade",not g.migrate_session(PROFILE,old6_descriptor,next_epoch).ok and before_revision_reject==g.report())
 	var old6_replay: Dictionary={"format":1,"descriptor":old6_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
 	check("old_content6_replay_rejected_before_reconstruction",not g.validate_replay(old6_replay,[]).ok and before_revision_reject==g.report())
-	var forged_content6: Dictionary=old6_descriptor.duplicate(true);forged_content6.versions.content=8
+	var forged_content6: Dictionary=old6_descriptor.duplicate(true);forged_content6.versions.content=10
 	check("old_content6_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content6).ok)
 	var stale_digest6: Dictionary=local.duplicate(true);stale_digest6.content_sha256=old5_descriptor.content_sha256
 	var stale_digest_result: Dictionary=Contracts.compatibility(local,stale_digest6)
-	check("revision8_with_revision5_digest_still_rejected",not stale_digest_result.ok and stale_digest_result.code=="MISMATCH_CONTENT_SHA256")
-	check("valid_revision8_admitted_after_revision5_rejection",old5_open.open_session(PROFILE,local,SCOPE).ok and old5_open.report().session.descriptor.versions.content==8)
+	check("revision10_with_revision5_digest_still_rejected",not stale_digest_result.ok and stale_digest_result.code=="MISMATCH_CONTENT_SHA256")
+	check("valid_revision10_admitted_after_revision5_rejection",old5_open.open_session(PROFILE,local,SCOPE).ok and old5_open.report().session.descriptor.versions.content==10)
 	var stale_current_digest: Dictionary=local.duplicate(true);stale_current_digest.content_sha256=old6_descriptor.content_sha256
 	var digest_gate: Dictionary=Contracts.compatibility(local,stale_current_digest)
-	check("revision8_with_released_revision6_digest_rejected",not digest_gate.ok and digest_gate.code=="MISMATCH_CONTENT_SHA256")
-	check("valid_revision8_admitted_after_revision6_rejection",old6_open.open_session(PROFILE,local,SCOPE).ok and old6_open.report().session.descriptor.versions.content==8)
+	check("revision10_with_released_revision6_digest_rejected",not digest_gate.ok and digest_gate.code=="MISMATCH_CONTENT_SHA256")
+	check("valid_revision10_admitted_after_revision6_rejection",old6_open.open_session(PROFILE,local,SCOPE).ok and old6_open.report().session.descriptor.versions.content==10)
 
 	var old7_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT7_CATALOG_PATH))
 	var old7_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT7_DESCRIPTOR_PATH))
@@ -218,19 +224,70 @@ func run() -> void:
 	var old7_open := Contracts.new();assert(old7_open.load_catalog().ok)
 	var old7_before: Dictionary=old7_open.report()
 	var old7_load: Dictionary=old7_open.load_catalog(CONTENT7_CATALOG_PATH)
-	check("revision7_catalog_load_cannot_replace_revision8_identity",not old7_load.ok and old7_open.descriptor(PROFILE)==local and old7_open.report()==old7_before)
+	check("revision7_catalog_load_cannot_replace_revision10_identity",not old7_load.ok and old7_open.descriptor(PROFILE)==local and old7_open.report()==old7_before)
 	var old7_mismatch: Dictionary=old7_open.open_session(PROFILE,old7_descriptor,SCOPE)
-	check("old_content7_cannot_open_revision8",not old7_mismatch.ok and old7_mismatch.code=="MISMATCH_VERSIONS" and old7_mismatch.details.field=="content" and old7_open.report()==old7_before)
+	check("old_content7_cannot_open_revision10",not old7_mismatch.ok and old7_mismatch.code=="MISMATCH_VERSIONS" and old7_mismatch.details.field=="content" and old7_open.report()==old7_before)
 	check("old_content7_resume_transactional",not g.resume_session(old7_descriptor,SCOPE).ok and before_revision_reject==g.report())
 	check("old_content7_migration_cannot_downgrade",not g.migrate_session(PROFILE,old7_descriptor,next_epoch).ok and before_revision_reject==g.report())
 	var old7_replay: Dictionary={"format":1,"descriptor":old7_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
 	check("old_content7_replay_rejected_before_reconstruction",not g.validate_replay(old7_replay,[]).ok and before_revision_reject==g.report())
-	var forged_content7: Dictionary=old7_descriptor.duplicate(true);forged_content7.versions.content=8
+	var forged_content7: Dictionary=old7_descriptor.duplicate(true);forged_content7.versions.content=10
 	check("old_content7_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content7).ok)
 	var stale_digest7: Dictionary=local.duplicate(true);stale_digest7.content_sha256=old7_descriptor.content_sha256
 	var stale7_gate: Dictionary=Contracts.compatibility(local,stale_digest7)
-	check("revision8_with_previous_revision7_digest_rejected",not stale7_gate.ok and stale7_gate.code=="MISMATCH_CONTENT_SHA256")
-	check("valid_revision8_admitted_after_revision7_rejection",old7_open.open_session(PROFILE,local,SCOPE).ok and old7_open.report().session.descriptor.versions.content==8)
+	check("revision10_with_previous_revision7_digest_rejected",not stale7_gate.ok and stale7_gate.code=="MISMATCH_CONTENT_SHA256")
+	check("valid_revision10_admitted_after_revision7_rejection",old7_open.open_session(PROFILE,local,SCOPE).ok and old7_open.report().session.descriptor.versions.content==10)
+
+
+	var old8_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT8_CATALOG_PATH))
+	var old8_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT8_DESCRIPTOR_PATH))
+	var old8_profile: Dictionary=old8_catalog.profiles[1]
+	var old8_versions: Dictionary=old8_catalog.envelope_versions.duplicate(true);old8_versions.content=8
+	var derived_old8 := {"contract_id":old8_catalog.contract_id,"profile_id":old8_profile.id,"versions":old8_versions,"protocol":old8_profile.protocol,"rules_sha256":JSON.stringify({"profile":old8_profile,"coordinates":old8_catalog.coordinate_contract,"limits":old8_catalog.limits},"",true).sha256_text(),"map_id":old8_profile.map_id,"map_sha256":old8_profile.map_sha256,"content_sha256":old8_profile.content_sha256}
+	check("preserved_revision8_descriptor_matches_exact_catalog_derivation",Contracts.compatibility(derived_old8,old8_descriptor).ok,{"derived":derived_old8,"fixture":old8_descriptor})
+	var old8_result: Dictionary=Contracts.validate_catalog(old8_catalog)
+	check("preserved_revision8_catalog_rejected",not old8_result.ok and old8_result.code=="CATALOG_CONTENT_REVISION")
+	var old8_open := Contracts.new();assert(old8_open.load_catalog().ok)
+	var old8_before: Dictionary=old8_open.report()
+	var old8_load: Dictionary=old8_open.load_catalog(CONTENT8_CATALOG_PATH)
+	check("revision8_catalog_load_cannot_replace_revision10_identity",not old8_load.ok and old8_open.descriptor(PROFILE)==local and old8_open.report()==old8_before)
+	var old8_mismatch: Dictionary=old8_open.open_session(PROFILE,old8_descriptor,SCOPE)
+	check("old_content8_cannot_open_revision10",not old8_mismatch.ok and old8_mismatch.code=="MISMATCH_VERSIONS" and old8_mismatch.details.field=="content" and old8_open.report()==old8_before)
+	check("old_content8_resume_transactional",not g.resume_session(old8_descriptor,SCOPE).ok and before_revision_reject==g.report())
+	check("old_content8_migration_cannot_downgrade",not g.migrate_session(PROFILE,old8_descriptor,next_epoch).ok and before_revision_reject==g.report())
+	var old8_replay: Dictionary={"format":1,"descriptor":old8_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
+	check("old_content8_replay_rejected_before_reconstruction",not g.validate_replay(old8_replay,[]).ok and before_revision_reject==g.report())
+	var forged_content8: Dictionary=old8_descriptor.duplicate(true);forged_content8.versions.content=10
+	check("old_content8_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content8).ok)
+	var stale_digest8: Dictionary=local.duplicate(true);stale_digest8.content_sha256=old8_descriptor.content_sha256
+	var stale8_gate: Dictionary=Contracts.compatibility(local,stale_digest8)
+	check("revision10_with_previous_revision8_digest_rejected",not stale8_gate.ok and stale8_gate.code=="MISMATCH_CONTENT_SHA256")
+	check("valid_revision10_admitted_after_revision8_rejection",old8_open.open_session(PROFILE,local,SCOPE).ok and old8_open.report().session.descriptor.versions.content==10)
+
+	var old9_catalog: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT9_CATALOG_PATH))
+	var old9_descriptor: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(CONTENT9_DESCRIPTOR_PATH))
+	var old9_profile: Dictionary=old9_catalog.profiles[1]
+	var old9_versions: Dictionary=old9_catalog.envelope_versions.duplicate(true);old9_versions.content=9
+	var derived_old9 := {"contract_id":old9_catalog.contract_id,"profile_id":old9_profile.id,"versions":old9_versions,"protocol":old9_profile.protocol,"rules_sha256":JSON.stringify({"profile":old9_profile,"coordinates":old9_catalog.coordinate_contract,"limits":old9_catalog.limits},"",true).sha256_text(),"map_id":old9_profile.map_id,"map_sha256":old9_profile.map_sha256,"content_sha256":old9_profile.content_sha256}
+	check("preserved_revision9_descriptor_matches_exact_catalog_derivation",Contracts.compatibility(derived_old9,old9_descriptor).ok,{"derived":derived_old9,"fixture":old9_descriptor})
+	var old9_result: Dictionary=Contracts.validate_catalog(old9_catalog)
+	check("preserved_revision9_catalog_rejected",not old9_result.ok and old9_result.code=="CATALOG_CONTENT_REVISION")
+	var old9_open := Contracts.new();assert(old9_open.load_catalog().ok)
+	var old9_before: Dictionary=old9_open.report()
+	var old9_load: Dictionary=old9_open.load_catalog(CONTENT9_CATALOG_PATH)
+	check("revision9_catalog_load_cannot_replace_revision10_identity",not old9_load.ok and old9_open.descriptor(PROFILE)==local and old9_open.report()==old9_before)
+	var old9_mismatch: Dictionary=old9_open.open_session(PROFILE,old9_descriptor,SCOPE)
+	check("old_content9_cannot_open_revision10",not old9_mismatch.ok and old9_mismatch.code=="MISMATCH_VERSIONS" and old9_mismatch.details.field=="content" and old9_open.report()==old9_before)
+	check("old_content9_resume_transactional",not g.resume_session(old9_descriptor,SCOPE).ok and before_revision_reject==g.report())
+	check("old_content9_migration_cannot_downgrade",not g.migrate_session(PROFILE,old9_descriptor,next_epoch).ok and before_revision_reject==g.report())
+	var old9_replay: Dictionary={"format":1,"descriptor":old9_descriptor.duplicate(true),"room":"FIXTURE","epoch":1,"identity":"hero","seed":1,"record_count":0}
+	check("old_content9_replay_rejected_before_reconstruction",not g.validate_replay(old9_replay,[]).ok and before_revision_reject==g.report())
+	var forged_content9: Dictionary=old9_descriptor.duplicate(true);forged_content9.versions.content=10
+	check("old_content9_cannot_bypass_identity_with_revision_number",not Contracts.compatibility(local,forged_content9).ok)
+	var stale_digest9: Dictionary=local.duplicate(true);stale_digest9.content_sha256=old9_descriptor.content_sha256
+	var stale9_gate: Dictionary=Contracts.compatibility(local,stale_digest9)
+	check("revision10_with_previous_revision9_digest_rejected",not stale9_gate.ok and stale9_gate.code=="MISMATCH_CONTENT_SHA256")
+	check("valid_revision10_admitted_after_revision9_rejection",old9_open.open_session(PROFILE,local,SCOPE).ok and old9_open.report().session.descriptor.versions.content==10)
 
 	for field in ["contract_id","profile_id","protocol","rules_sha256","map_id","map_sha256","content_sha256"]:
 		var bad := local.duplicate(true)

@@ -68,8 +68,9 @@ func run() -> void:
 	loader=Transition.ensure_for_tree(self)
 	loader.phase_changed.connect(on_phase)
 	loader.completed.connect(mounted)
-	check("Configured application starts at the light boot scene",ProjectSettings.get_setting("application/run/main_scene","")=="res://scenes/boot.tscn")
-	check("Real configured boot mounts successfully",change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))==OK)
+	# Qualify the retained classic boot; tactical startup is checked separately.
+	check("Classic light boot remains available",ResourceLoader.exists("res://scenes/boot.tscn"))
+	check("Real classic boot mounts successfully",change_scene_to_file("res://scenes/boot.tscn")==OK)
 	if not await wait_mount(1):
 		check("Boot reaches its title mount before the deadline",false,{"phase":loader.snapshot()})
 		await finish();return

@@ -167,7 +167,9 @@ func run() -> void:
 		if filename.begins_with("rama-hero") and filename.ends_with(".import"):
 			pin_import("res://assets/heroes/"+filename.trim_suffix(".import"))
 	source_before=pin_sources()
-	change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))
+	# This retained material-lifecycle suite owns the classic hero/world route.
+	# Active tactical startup is qualified by tests/tactical/ui_cases.gd.
+	change_scene_to_file("res://scenes/boot.tscn")
 	var arrived := await wait_scene("res://scenes/courtyard.tscn")
 	check("Actual boot loader reaches courtyard",arrived)
 	if not arrived: await finish();return

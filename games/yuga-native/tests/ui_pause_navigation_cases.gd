@@ -62,7 +62,7 @@ func run() -> void:
 	# Pause from actual terminal authority; no UI owns the winner.
 	world.set_paused(false);world.army.cores.moon=0;world.army.step_simulation(.05);world.set_paused(true);await frames()
 	var restart:=button(world.pause_panel,"Restart lane practice")
-	check("terminal pause prioritizes existing restart action",world.army.winner=="sun" and world.outcome_summary.visible and root.gui_get_focus_owner()==restart and world.pause_scroll.scroll_vertical==0)
+	check("terminal pause keeps result heading and focused restart visible",world.army.winner=="sun" and world.outcome_summary.visible and root.gui_get_focus_owner()==restart and world.pause_scroll.get_global_rect().encloses(restart.get_global_rect()) and world.pause_scroll.get_global_rect().encloses(world.outcome_summary.heading.get_global_rect()),{"winner":world.army.winner,"summary_visible":world.outcome_summary.visible,"restart_focused":root.gui_get_focus_owner()==restart,"scroll":world.pause_scroll.scroll_vertical,"viewport":str(world.pause_scroll.get_global_rect()),"restart":str(restart.get_global_rect()),"result_heading":str(world.outcome_summary.heading.get_global_rect())})
 	check("terminal pause describes world return without claiming continued simulation",button(world.pause_panel,"Return to world")!=null)
 	var snapshot:Dictionary=world.army.report();world._layout_pause_panel();world._update_practice_hud();await frames(5)
 	check("outcome navigation preserves authority clocks and winner",world.army.report()==snapshot and paused)

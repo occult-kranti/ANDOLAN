@@ -61,7 +61,8 @@ func run() -> void:
 		var normal: Dictionary=fx.report()
 		budgets[id]={"windup_triangles":normal.triangles,"meshes":normal.meshes}
 		check(id+"_finite_and_under4096_triangle_budget",normal.finite and geometry_finite(state.root) and normal.triangles<=4096,normal)
-		check(id+"_warning_uses_essential_boundary_material",state.warning.material_override.shader==(Effects.BoundaryShader if id=="guardian_circle" else Effects.RibbonShader) and state.main.shader==Effects.CalligraphyShader)
+		var expected_warning: Shader=Effects.BoundaryShader if id=="guardian_circle" else (Effects.ProjectileWarningShader if id in ["kodanda","piercing_dawn","dawn_volley"] else Effects.RibbonShader)
+		check(id+"_warning_uses_essential_boundary_material",state.warning.material_override.shader==expected_warning and state.main.shader==Effects.CalligraphyShader)
 		var boundary: Mesh=state.warning.mesh
 		fx.set_options({"reduced_effects":true})
 		check(id+"_reduced_effects_leave_boundary_exact",state.warning.mesh==boundary and state.accent.mesh.get_surface_count()==0)
@@ -178,7 +179,7 @@ func run() -> void:
 	fx.reset()
 	check("saturation_reset_clears_every_owned_node",fx.get_child_count()==0 and fx.report().total_triangles==0)
 	var sources: Dictionary={}
-	for path in ["res://scripts/rama_ability_effects.gd","res://scripts/rama_ability_kit.gd","res://shaders/rama_ability_calligraphy.gdshader","res://shaders/rama_ability_boundary.gdshader","res://shaders/rama_ribbon.gdshader",get_script().resource_path]:sources[path]=FileAccess.get_sha256(path)
+	for path in ["res://scripts/rama_ability_effects.gd","res://scripts/rama_ability_kit.gd","res://shaders/rama_ability_calligraphy.gdshader","res://shaders/rama_ability_boundary.gdshader","res://shaders/rama_projectile_warning.gdshader","res://shaders/rama_ribbon.gdshader",get_script().resource_path]:sources[path]=FileAccess.get_sha256(path)
 	var passed:=checks.all(func(item):return item.passed)
 	var report:={"schema":1,"suite":"rama_ability_visual_cases","passed":passed,"checks":checks,"source_sha256":sources,"sample_budgets":budgets,"scope":"Actual offline accepted kit events, geometry and resource lifecycle. Headless assertions do not establish rendered beauty, frame rate, AAA quality or online authority."}
 	for argument in OS.get_cmdline_user_args():

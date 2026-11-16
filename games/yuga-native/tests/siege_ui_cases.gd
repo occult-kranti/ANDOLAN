@@ -1,6 +1,7 @@
 extends SceneTree
 ## Real-scene siege menu, focus, layout and presentation lifecycle regressions.
 ## Run with an isolated XDG_DATA_HOME; no persistent volume setting is written.
+const Bindings = preload("res://scripts/input_bindings.gd")
 
 var scene: Node3D
 var checks: Array = []
@@ -51,7 +52,7 @@ func _run() -> void:
 		await frames(5)
 		var rect: Rect2 = scene.pause_panel.get_global_rect()
 		check("pause panel fits " + str(viewport),Rect2(Vector2.ZERO,Vector2(viewport)).encloses(rect),{"rect":str(rect)})
-		check("thirteen focus targets including Rama abilities, invocation, relay, siege and volume " + str(viewport),scene.pause_actions.size()==13 and scene.rama_button in scene.pause_actions and scene.siege_practice_button in scene.pause_actions and scene.invocation_button in scene.pause_actions)
+		check("fourteen focus targets include the bound Field shop entry " + str(viewport),scene.pause_actions.size()==14 and scene.rama_button in scene.pause_actions and scene.siege_practice_button in scene.pause_actions and scene.invocation_button in scene.pause_actions and scene.pause_actions.any(func(action): return action is Button and action.text == "Field shop · " + Bindings.label("open_field_shop")))
 		var reached := []
 		var focus_ok := true
 		var scroll_ok := true

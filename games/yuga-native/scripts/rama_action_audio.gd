@@ -1,6 +1,7 @@
 extends Node3D
 ## One bounded presentation subscriber. Kit/vitals receipts alone select onsets.
 ## No timer, delayed queue, gameplay authority, bus mutation or external samples.
+const HitResponse = preload("res://scripts/rama_hit_response.gd")
 const DEFAULT_DIRECTORY := "res://assets/audio/rama-quality/"
 const MAX_VOICES := 4
 const WORLD_VOICES := 3
@@ -33,6 +34,9 @@ var _suppressed := 0
 var _rejected := 0
 var _dropped := 0
 var _last_confirm_time := -1.0
+var _last_confirm_kind: StringName = &""
+var _contact_counts := {"contact":0,"health":0,"shield":0,"defeat":0}
+var _last_contact: Dictionary = {}
 
 func _init(directory: String = DEFAULT_DIRECTORY) -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -73,7 +77,7 @@ func _ready() -> void:
 
 func _init_meta(voice: Node) -> void:
 	voice.set_meta("serial", -1); voice.set_meta("cast_id", 0)
-	voice.set_meta("cue", ""); voice.set_meta("priority", 0)
+	voice.set_meta("cue", ""); voice.set_meta("priority", 0); voice.set_meta("response", "")
 
 static func _integer(value: Variant, minimum := 0) -> bool:
 	return typeof(value) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(value)) and value >= minimum and value <= MAX_INTEGER and floorf(float(value)) == float(value)
@@ -124,7 +128,7 @@ func consume_event(event: Variant) -> Dictionary:
 	if generation < _generation or generation == _generation and (event.event_seq <= _last_seq or kind == "reset" or float(event.time_s) + 1e-8 < _last_time): return _reject("STALE_EVENT")
 	if generation > _generation:
 		if kind not in ["begin", "reset"]: return _reject("GENERATION_REQUIRES_BEGIN_OR_RESET")
-		_stop_all(); _active.clear(); _generation = generation; _last_seq = -1; _last_cast = 0; _last_confirm_time = -1; _last_time = -1
+		_stop_all(); _active.clear(); _generation = generation; _last_seq = -1; _last_cast = 0; _last_confirm_time = -1; _last_confirm_kind = &""; _last_time = -1
 	if kind == "reset":
 		_last_seq = int(event.event_seq); _last_time = float(event.time_s); _stop_all(); _active.clear()
 		return {"ok":true, "code":"RESET"}
@@ -182,16 +186,26 @@ func _impact(event: Dictionary) -> void:
 			_play("blocked", event.get("contact_position", event.target), 1, int(event.cast_id))
 		return
 	if event.get("reason", "") != "unit": return
-	var accepted := false
+	var kind: StringName = &""
+	var total := 0.0
 	for receipt in event.receipts:
-		if receipt.kind != "damage" or receipt.damage_applied <= 0: continue
+		var response: StringName = HitResponse.classify(receipt)
+		if response.is_empty(): continue
 		var key := "%s:%s" % [event.get("projectile_index", 0), receipt.unit_id]
-		if not cast.confirmed.has(key) and cast.confirmed.size() < 18: cast.confirmed[key] = true; accepted = true
-	if not accepted: return
-	_play("contact", event.get("contact_position", event.target), 1, int(event.cast_id))
-	if float(event.time_s) - _last_confirm_time + 1e-8 >= .07:
+		if cast.confirmed.has(key) or cast.confirmed.size() >= 18: continue
+		cast.confirmed[key] = true
+		total += float(receipt.damage_applied)
+		if HitResponse.rank(response) > HitResponse.rank(kind): kind = response
+	if kind.is_empty(): return
+	_contact_counts[String(kind)] += 1
+	_last_contact = {"response":String(kind),"damage_applied":total,"cast_id":int(event.cast_id),"time_s":float(event.time_s)}
+	_play("blocked" if kind == &"shield" else "contact", event.get("contact_position", event.target), 1, int(event.cast_id), false, kind)
+	# One local cue coalesces a piercing cluster; a newly confirmed defeat can
+	# strengthen an earlier ordinary hit, but never evicts incoming danger.
+	if float(event.time_s) - _last_confirm_time + 1e-8 >= .07 or HitResponse.rank(kind) > HitResponse.rank(_last_confirm_kind):
 		_last_confirm_time = float(event.time_s)
-		_play("confirm", Vector3.ZERO, 2, int(event.cast_id), true)
+		_last_confirm_kind = kind
+		_play("confirm", Vector3.ZERO, 2, int(event.cast_id), true, kind)
 
 func consume_damage(receipt: Variant) -> Dictionary:
 	if not receipt is Dictionary or not receipt.get("accepted") is bool or not receipt.accepted or not _integer(receipt.get("generation")) or not receipt.get("source_id") is String or receipt.source_id.is_empty() or receipt.source_id.length() > 80 or not _integer(receipt.get("sequence"), -1): return _reject("INVALID_DAMAGE")
@@ -219,7 +233,7 @@ func consume_damage(receipt: Variant) -> Dictionary:
 func _can_play() -> bool:
 	return _errors.is_empty() and _alive and _volume > 0 and not _suspended and _focused and is_inside_tree() and not get_tree().paused
 
-func _play(cue: String, point: Vector3, priority: int, cast_id: int, feedback := false) -> void:
+func _play(cue: String, point: Vector3, priority: int, cast_id: int, feedback := false, response: StringName = &"") -> void:
 	if not _can_play(): _suppressed += 1; return
 	var selected: Node
 	if feedback:
@@ -234,11 +248,12 @@ func _play(cue: String, point: Vector3, priority: int, cast_id: int, feedback :=
 	if selected == null: _dropped += 1; return
 	selected.stop(); selected.stream = _streams[cue]
 	selected.volume_db = GAIN_DB + linear_to_db(_volume)
-	selected.pitch_scale = .988 + .006 * posmod(cast_id + _generation + NAMES.find(cue), 5)
+	var response_pitch := .88 if response == &"shield" else (1.18 if response == &"defeat" else 1.0)
+	selected.pitch_scale = (.988 + .006 * posmod(cast_id + _generation + NAMES.find(cue), 5)) * response_pitch
 	if selected is AudioStreamPlayer3D: selected.global_position = point
 	_serial += 1
 	selected.set_meta("serial", _serial); selected.set_meta("cast_id", cast_id)
-	selected.set_meta("cue", cue); selected.set_meta("priority", priority)
+	selected.set_meta("cue", cue); selected.set_meta("priority", priority); selected.set_meta("response", String(response))
 	selected.play(); _played += 1
 
 func _stop_cast_draw(cast_id: int) -> void:
@@ -304,5 +319,5 @@ func report() -> Dictionary:
 	var playing := 0
 	for voice in _world + [_feedback]:
 		if voice.playing: playing += 1
-		voices.append({"playing":voice.playing, "cue":voice.get_meta("cue"), "cast_id":voice.get_meta("cast_id"), "serial":voice.get_meta("serial"), "priority":voice.get_meta("priority"), "volume_db":voice.volume_db, "pitch_scale":voice.pitch_scale, "spatial":voice is AudioStreamPlayer3D})
-	return {"ready":_errors.is_empty() and _streams.size() == NAMES.size(), "errors":_errors.duplicate(), "generation":_generation, "last_event_seq":_last_seq, "last_cast_id":_last_cast, "active_casts":_active.size(), "damage_sources":_damage_sources.size(), "vitals_generation":_vitals_generation, "receiver_generation":_receiver_generation, "volume":_volume, "suspended":_suspended, "focused":_focused, "alive":_alive, "playing":playing, "players":MAX_VOICES, "streams":_streams.size(), "played":_played, "suppressed":_suppressed, "rejected":_rejected, "dropped":_dropped, "voices":voices, "listening":"UNRUN"}
+		voices.append({"playing":voice.playing, "cue":voice.get_meta("cue"), "cast_id":voice.get_meta("cast_id"), "serial":voice.get_meta("serial"), "priority":voice.get_meta("priority"), "volume_db":voice.volume_db, "pitch_scale":voice.pitch_scale, "spatial":voice is AudioStreamPlayer3D, "response":voice.get_meta("response", "")})
+	return {"ready":_errors.is_empty() and _streams.size() == NAMES.size(), "errors":_errors.duplicate(), "generation":_generation, "last_event_seq":_last_seq, "last_cast_id":_last_cast, "active_casts":_active.size(), "damage_sources":_damage_sources.size(), "vitals_generation":_vitals_generation, "receiver_generation":_receiver_generation, "volume":_volume, "suspended":_suspended, "focused":_focused, "alive":_alive, "playing":playing, "players":MAX_VOICES, "streams":_streams.size(), "played":_played, "suppressed":_suppressed, "rejected":_rejected, "dropped":_dropped, "voices":voices, "contact_counts":_contact_counts.duplicate(), "last_contact":_last_contact.duplicate(), "listening":"UNRUN"}

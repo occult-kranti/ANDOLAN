@@ -1,0 +1,55 @@
+{
+  "task": "YUGA-HERO-6R-WORLD",
+  "round": 5,
+  "reviewer": "hero_ui world technical-art",
+  "source_asset_sha256": "42b2f7cf814def5368b10987bc3c40fd14ad66b88e594d9bb5e00afc43e45fa5",
+  "images_personally_viewed": {
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/00-cover-avenue.png": "7b467f8d28d251ed25f49c87e39cb13563982c20405a51eb715c1700e8e6487f",
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/00-gallery-underpass.png": "5a4b927fe2f4864bf0499c41e0317764ad4de4d0a12603a184aa0ff6ee87884a",
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/01-city-overview.png": "6989a8c87e661a2dcdce01ddc8cfe5dde7dc13f7404ae92d16fe2bf218f343b5",
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/02-temple-avenue.png": "a651f991f63c64a11be90b9c27c6848e0e5d639714c0ae1ab4991cbca8ad5131",
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/03-coastal-ghat.png": "d494bb04d42e38001a8be93aceecca5fbfe239f558980de2105e9dc889448929",
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/04-metro-gardens.png": "ce61b4a08bc2fdfb4415e5d53420751eca83fed8d454c48893823a8c24ade2b7",
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/06-lantern-night.png": "e7ac6b57cc27eee55a4b044d799180814748d56a1ad163576d1631680c251a93",
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/07-night-overview.png": "26b56a3c8d3779ac8bcedafc7aede1d19bf23be417fb3629131b3cf741c71c90",
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/08-player-scale.png": "b2ed479f2d0b34e3a93fae8ca6db9f66038803390f45eb5405d66360561f8632",
+    "games/yuga-native/docs/research/hero-six-rounds/root/district-capture-r1/09-field-shop.png": "ee5936f18c1533f86a04a6fd3d6d058c5968e37cc2cde61dfa8af00a2edbf9b3"
+  },
+  "findings": [
+    {
+      "priority": 1,
+      "finding": "Cover plinth/cornice band side faces are coplanar with the full-size core; near capture shows fine striped depth interference.",
+      "source": "cover(): core and bands both have 3 by 6 outer dimensions.",
+      "proposal": "Inset core to 2.88 by 5.88; retain exact band outer envelope and existing box collision."
+    },
+    {
+      "priority": 1,
+      "finding": "Large stone surfaces show strong diagonal wave/cloth-like grain and gray-brown read, obscuring stone hierarchy.",
+      "source": "Existing reused albedo pattern at metre-scale UV repeats in large wall faces.",
+      "proposal": "Sangam-only quiet warm albedo derivative from credited source luminance; lower stone normal strength, keep source maps intact."
+    },
+    {
+      "priority": 1,
+      "finding": "Distant perimeter reads as blank textured wall despite authored arches/pilasters.",
+      "source": "Facade coordinates at 5.84 inside body half-width 6.0; most relief is hidden.",
+      "proposal": "Move front panel plane to 6.02 and supporting trim to 6.03, outside body."
+    },
+    {
+      "priority": 2,
+      "finding": "Closed shutter background is exactly coplanar with body front.",
+      "source": "body front offset -0.18 and panel offset -0.18.",
+      "proposal": "Lift shutter background 0.015 metres, retaining closed relief."
+    },
+    {
+      "priority": 2,
+      "finding": "Indigo archive is almost black; dense thin bright bands dominate at distance.",
+      "proposal": "Muted lighter indigo and rougher less metallic brass before removing useful relief."
+    }
+  ],
+  "readability": {
+    "hud": "Existing hero slot text and meters readable at 1280x720; large top/side panels still consume substantial scene area. Screenshot cannot establish interaction or supported-scale layouts.",
+    "shop": "Clear title, prices, status, visible scroll and fixed return action; lower offer intentionally scrolls. No screenshot clipping blocker observed.",
+    "architecture": "New family silhouettes, canopies and bridge underpass are visible at actual player-adjacent scale. Interior spaces remain closed; aspirational concept fidelity is not achieved."
+  },
+  "decision": "Request one scoped R6 geometry/material export, followed by native successor still review. Preserve R1 images as failure evidence. No performance/animation/input acceptance from these stills."
+}

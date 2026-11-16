@@ -1,5 +1,7 @@
 # YUGA native design context
 
+**Active tactical design:** [YUGA · Sanctum](docs/tactical/README.md) retains indigo, warm ivory, worked brass and original South Asian civic architecture. `tactical_theme.gd`, `tactical_frontend.gd` and `tactical_ui.gd` own the new first-person Casual screens; preserve the old theme for historical training scenes. Menu key art is original generated illustration; live combat stays actual native 3D with a compact score/clock, teammate minimap, vitals, weapon and four utility indicators. Fullscreen operation uses native controls over quiet art regions. The user prioritizes look and complete artifacts; follow [the art-first roadmap](docs/tactical/ROADMAP.md), not the older practice-selection requirements below.
+
 Refine the existing indigo, ivory and worked-gold identity. This document records the implemented system at `1b2e6f5`; it does not replace the game’s art direction or accept pending models.
 
 ## Surface intent

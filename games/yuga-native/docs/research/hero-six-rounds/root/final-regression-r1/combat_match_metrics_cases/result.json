@@ -1,0 +1,238 @@
+{
+  "checks": [
+    {
+      "case": "Actual lane authority configures",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Actual kit and vitals configure",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Missing sources are rejected without listeners",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Recorder configures once",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Initial report is real and cannot mutate authority",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Report arrays and dictionaries are independent snapshots",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Actual primary cast is accepted",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Actual lethal receipt counts applied health rather than attempted overkill",
+      "evidence": {
+        "hero": {
+          "casts_started": 1,
+          "damage_dealt": 10.0,
+          "damage_receipts": 1,
+          "damage_taken": 0.0,
+          "deaths": 0,
+          "releases": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "case": "Lane last hits and earned gold equal army totals",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Replayed event sequence cannot double count a damage receipt",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Only accepted effective hero damage is counted",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Hero defeat counts once and overkill remains bounded",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Actual respawn is available without resetting the round",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Hero lifecycle reset preserves the match totals",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "sun final authority tick freezes exact winner/cores/time",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "sun terminal report ignores later steps/events",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "sun native summary shows truthful metrics/chart without changing battle",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "sun old summary caller remains supported",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "moon final authority tick freezes exact winner/cores/time",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "moon terminal report ignores later steps/events",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "moon native summary shows truthful metrics/chart without changing battle",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "moon old summary caller remains supported",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "draw final authority tick freezes exact winner/cores/time",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "draw terminal report ignores later steps/events",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "draw native summary shows truthful metrics/chart without changing battle",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "draw old summary caller remains supported",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Army reset clears terminal and hero data once",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Fresh round hides the prior result",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Long-round sampling is bounded and retains real first/latest samples",
+      "evidence": {
+        "last": 300.0,
+        "period": 2.0,
+        "samples": 151
+      },
+      "passed": true
+    },
+    {
+      "case": "Midround attach declares partial event coverage",
+      "evidence": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "Recorder removal disconnects its subscriptions",
+      "evidence": {
+
+      },
+      "passed": true
+    }
+  ],
+  "count": 31,
+  "passed": true,
+  "scope": "Actual nonvisual lane/kit/vitals, real damage receipts and event replay, core fixtures through real outcome ticks, bounded time-series and native Control data; no actual pixels or input acceptance.",
+  "sources": {
+    "res://scripts/combat_match_metrics.gd": "cdf60137dcca27ee9b16fb01ea50042865c68fc548c397668e59ed3db4eda600",
+    "res://scripts/world_outcome_summary.gd": "1185ce65f3598f7f6927e9a2b3d7d116fb008f114a63953ed0daa67722666252",
+    "res://tests/combat_match_metrics_cases.gd": "c19325188ee010606c246c4c12e630639030856cc0eb00a7f049efeadb9586d8"
+  }
+}
