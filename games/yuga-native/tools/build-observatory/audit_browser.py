@@ -14,11 +14,21 @@ import re
 from urllib.parse import urljoin, urlsplit
 from urllib.request import getproxies
 
-from playwright.sync_api import sync_playwright
-
-
 def digest(raw):
     return {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+
+
+def allowed_output_link(url, base_url):
+    """Allow hosted media and this repository's report pages, not arbitrary origins."""
+    parsed, origin = urlsplit(url), urlsplit(base_url)
+    if parsed.username or parsed.password or parsed.scheme not in {"http", "https"}:
+        return False
+    if (parsed.scheme, parsed.netloc) == (origin.scheme, origin.netloc):
+        return True
+    return (parsed.scheme == "https" and parsed.netloc == "github.com"
+            and parsed.path.startswith("/occult-kranti/ANDOLAN/blob/")
+            and not parsed.query and "%" not in parsed.path
+            and not any(part in {".", ".."} for part in parsed.path.split("/")))
 
 
 def arguments():
@@ -52,6 +62,8 @@ def arguments():
 
 
 def audit(args):
+    from playwright.sync_api import sync_playwright
+
     args.output.mkdir(parents=True, exist_ok=False)
     receipt = {
         "schema": 1, "passed": False,
@@ -185,15 +197,13 @@ def audit(args):
                 expected = [urljoin(args.base_url, item["url"]) for item in job.get("outputs", []) if item.get("url")]
                 check(f"job_output_links_{job_id}", actual == expected, actual)
                 links.update(actual)
-            origin = urlsplit(args.base_url)
             for url in sorted(links):
-                parsed = urlsplit(url)
-                check("link_safe_origin", (parsed.scheme, parsed.netloc) == (origin.scheme, origin.netloc)
-                      and not parsed.username and not parsed.password, url)
+                check("link_safe_origin", allowed_output_link(url, args.base_url), url)
                 response = context.request.head(url, timeout=45000)
                 row = {"url": url, "final_url": response.url, "status": response.status,
                        "content_type": response.headers.get("content-type")}
                 receipt["links"].append(row)
+                check("linked_output_redirect_stays_allowed", allowed_output_link(response.url, args.base_url), row)
                 check("linked_media_available", response.status == 200, row)
             page.locator(f'.job-row[data-job-id="{args.select_job}"]').click()
             for width, height in ((1440, 1080), (390, 844), (320, 740)):

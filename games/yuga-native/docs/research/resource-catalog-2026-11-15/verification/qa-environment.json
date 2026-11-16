@@ -1,0 +1,21 @@
+{
+  "scope": "Existing dashboard Python audit environment only; no researched upstream art/engine installed",
+  "initial_probes": [
+    {
+      "python": "/workspaces/tooling/yuga-native-python/bin/python",
+      "playwright": "ModuleNotFoundError"
+    },
+    {
+      "python": "python3",
+      "playwright": "ModuleNotFoundError"
+    }
+  ],
+  "selected_environment": ".local-tools/resource-catalog-qa",
+  "installation": "python3 -m venv .local-tools/resource-catalog-qa; .local-tools/resource-catalog-qa/bin/python -m pip install playwright",
+  "browser": "/home/codespace/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome",
+  "browser_scope": "Existing installed Chromium; no browser download",
+  "installed_versions": {
+    "playwright": "1.65.2",
+    "greenlet": "3.5.6"
+  }
+}
