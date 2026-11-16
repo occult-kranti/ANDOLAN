@@ -58,9 +58,7 @@ engine warnings/errors as well as process exit.
 Prior [18-shot native art capture](../visual-r1/review.json) and
 [actual-scene full match](../../combat/full-match-r1.json) have separate source
 identities and explicit fixture limits. The documentation worker read receipts;
-root performed the successor original-image review listed above. Ordinary player
-input, packaging, source push and live dashboard/public-byte verification are
-pending root's receipts. This directory's name alone does not establish publication.
+root performed the successor original-image review listed above. Ordinary packaged input and archive checks are now recorded in `ordinary-input-r2/` and `package-r2/`. Source push and public-byte verification have separate receipts. This directory's name alone does not establish publication.
 
 The source checkpoint retains original native evidence, failed-run diagnostics,
 authoring sources and notices. Raw supplied reference videos and their bulk
@@ -75,3 +73,7 @@ audio listening, Windows execution, physical hardware and online/Ranked remain
 independent acceptance gates.
 
 Additional packaging guards: 22 snapshot provenance cases and 45 native contract/package cases passed. The current verification summary records 717 scoped passing assertions. The first export generated three missing Godot metadata sidecars; the source guard rejected that export. Those metadata files are retained and a fresh independent successor snapshot is used for packaging. Runtime code and asset bytes did not change.
+
+Verified runtime source commit: `789dd1268bbac63208d0d49ec77635dff9ce7567`. The package source set in `packaged-source.json` matches 700 of that commit's 704 runtime files; four later map/minimap/objective-hint source changes are explicitly separated in `source-commit-match.json`; three generated Godot sidecars were added after the visual/source checks without changing code or asset bytes. Package successor `package-r2` passed complete ZIP CRC/payload and PCK resource checks for Linux and Windows. The current extracted Linux ordinary-input route is recorded separately. New concurrent weapon-art changes in the live checkout are preserved outside this verified commit. The final dashboard export samples a clean copy of the committed checkpoint, never relabeling the active dirty checkout as clean.
+
+Use [the publication handoff](../../PUBLICATION_2026-11-15.md) for the source/package distinction and actual bounded Linux input. The active development DELIVERY.md may describe a later concurrent weapon-art pass.

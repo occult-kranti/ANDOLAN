@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**15 November source publication:** [verified Sanctum checkpoint and dashboard](../games/yuga-native/docs/tactical/PUBLICATION_2026-11-15.md). Its packaged snapshot, committed successor and ongoing weapon-art work retain distinct source identities.
+
 **Active user direction — tactical Casual:** [YUGA · Sanctum](../games/yuga-native/docs/tactical/README.md) → [current delivery](../games/yuga-native/docs/tactical/DELIVERY.md) → [art-first roadmap](../games/yuga-native/docs/tactical/ROADMAP.md). First-person mythic firearms and hero abilities, 5v5, first team to 13 wins, sides switch after round 12. Casual is local with bots; Ranked is planned. This supersedes the long MOBA-style match direction in older documents below. Native appearance and complete artifacts are the current priority; browser is deferred.
 
 **16 November video continuation:** [delivered builds, panel study and verification](research/video-study/DELIVERY.md) → [video-derived roadmap](research/video-study/IMPLEMENTATION_ROADMAP.md). Source-bound checkpoints and concurrent Sangam integration retain their separate receipts.

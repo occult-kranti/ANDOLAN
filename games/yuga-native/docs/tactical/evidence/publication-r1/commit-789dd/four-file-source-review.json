@@ -1,0 +1,34 @@
+{
+  "source_commit": "789dd1268bbac63208d0d49ec77635dff9ce7567",
+  "reviewed_files": {
+    "assets/tactical/map.json": {
+      "packaged_sha256": "c6865b62495501d34c9ced7a2aa87c3f713f4fe3c94917c4b0ab8faae0b836ca",
+      "committed_sha256": "29be60f2a0db7d971cb579240d82fea80f3a0d8d6f1ad6400b91a51ea2338750"
+    },
+    "scripts/tactical_map.gd": {
+      "packaged_sha256": "1550f502b8d1a76569698a9f58e5b13805e1db07958ae0eca38d17a244e3246f",
+      "committed_sha256": "558396c827017acfc8510a984f99ebd181113fd9cbb50318d284aa74b2a52145"
+    },
+    "scripts/tactical_ui.gd": {
+      "packaged_sha256": "8d09707f8808e048cf66d7efb31f0729289a6b9ed0addc1eafaf0a4a926b338b",
+      "committed_sha256": "7395fe40437c24d154bd1a24f33e6da3e94c2e3b09294f291dc1dba67b1b248e"
+    },
+    "scripts/tactical_world.gd": {
+      "packaged_sha256": "8e0445f31063ea31b5e87f7d23cbfe1762fec8adf58dcf158c63702618b53a6f",
+      "committed_sha256": "ec094eef42c1db976ff2de802ead7f0cc47a0c53fb434057fccb77e85bc77e91"
+    }
+  },
+  "collider_equivalence": {
+    "before_count": 36,
+    "after_count": 36,
+    "same_centers_and_dimensions_to_6_decimals": true,
+    "unique_detail_ids": true
+  },
+  "map_json_other_keys_unchanged": true,
+  "source_review": [
+    "Map replaces36 procedural box colliders with identical map-data box colliders; corresponding visuals retained and no duplicate colliders.",
+    "Minimap includes partitions and36 ground detail footprints using the same map data; overhead galleries omitted intentionally.",
+    "World clears objective hints during round/match outcome and adds attack/defend hints for armed site; authority simulation unchanged."
+  ],
+  "scope": "Source semantics plus exact-commit suites/startup; earlier package/rendered captures remain bound to their original source and are not relabeled."
+}
