@@ -1,0 +1,36 @@
+{
+  "all_image_hashes_match": true,
+  "failed_images": [],
+  "stills": 13,
+  "frames": 135,
+  "sources_match_current": true,
+  "capture_report_sha256": "b424fea55ee94e8f06b696b21d02ed6e63d82d0eedb364bb8649e403708f0cd7",
+  "film_sha256": "1c919addd1462e70be3b82ac487d1c9161b0acbaeb356b729a40514b5a20cec7",
+  "ffprobe_command": [
+    "ffprobe",
+    "-v",
+    "error",
+    "-select_streams",
+    "v:0",
+    "-count_frames",
+    "-show_entries",
+    "stream=codec_name,width,height,r_frame_rate,nb_read_frames,duration",
+    "-of",
+    "json",
+    "games/yuga-native/docs/tactical/studio3/visual-r1/studio-motion.mp4"
+  ],
+  "ffprobe_exit": 0,
+  "ffprobe_result": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "15/1",
+        "duration": "9.000000",
+        "nb_read_frames": "135"
+      }
+    ]
+  }
+}

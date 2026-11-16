@@ -1,5 +1,7 @@
 # YUGA research brief for implementation agents
 
+**Current resource audit, 15 November 2026:** [Blender, open art, maps, artifacts, engines and inspection tools](resource-catalog-2026-11-15/README.md). This primary-source study corrects the supplied Unreal-oriented catalog, records code/content/output rights separately, and proposes [six bounded adoption packets](resource-catalog-2026-11-15/ADOPTION_PLAN.md) for the current Godot Sanctum product. No newly researched pack/tool is claimed integrated. Historical evidence below retains its original scope.
+
 Reviewed **17 October 2026 UTC**. This is a bounded synthesis of retained evidence, selected official documentation and the new TF2 source study. Historical feedback links below retain their original implementation baseline. For the current verified build and later relay milestone, start at [START_HERE](../../../../docs/START_HERE.md). Read the [production roadmap](../FULL_GAME_PRODUCTION_ROADMAP.md), [design master](../GAME_DESIGN_MASTER.md) and [current verification](../TRAVERSAL_ARMY_VERIFICATION.md) before selecting work. This brief does not establish commercial-game visual parity or a complete online native game.
 
 ## Evidence map and reading limits

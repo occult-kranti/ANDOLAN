@@ -1,5 +1,7 @@
 # YUGA production observatory and reuse-first art stages
 
+**Current saved run — studio and resource audit, 15 November 2026:** [research and decisions](research/resource-catalog-2026-11-15/README.md), [verification](research/resource-catalog-2026-11-15/VERIFICATION.md), [publication receipt](research/resource-catalog-2026-11-15/PUBLICATION.md). Producer state is `.local-swarm/observatory-resource-catalog-2026-11-15/`, run ID `sanctum-resource-catalog-2026-11-15`. Pass this explicit state directory for this run; the older state paths below are historical. The new native studio preview is bound by [its media notice](../tools/build-observatory/web/media/licenses/YUGA-STUDIO3-PREVIEW.md). New resource entries are researched candidates, with no new pack/tool adoption. Export from the reviewed clean source, then commit the dated snapshot separately.
+
 **Active continuation — YUGA · Sanctum:** the [native tactical direction](tactical/README.md)
 and [art-first roadmap](tactical/ROADMAP.md) own the current task,
 `YUGA-TACTICAL-CASUAL-13`. The dashboard now tracks first-person Rama,

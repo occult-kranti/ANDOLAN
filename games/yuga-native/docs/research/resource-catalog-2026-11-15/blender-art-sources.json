@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "task_id": "YUGA-RESOURCE-AUDIT-2026-11-15",
+  "product": "YUGA native Sanctum",
+  "review_date": "2026-11-15",
+  "review_timezone": "America/New_York",
+  "baseline_commit": "e59a07a4786e9ad491cfef7a4e706dbd06063adc",
+  "scope": "22 resource decisions, primary-source review only",
+  "resources": [
+    {
+      "id": "B01",
+      "name": "Blender and Geometry Nodes",
+      "url": "https://www.blender.org/about/license/",
+      "access": "official_search_index",
+      "license": "GPL software; original artwork owned by creator",
+      "decision": "P0 authoring",
+      "limits": "Direct license page 403; official indexed license text read. Instance docs read through official indexed pages."
+    },
+    {
+      "id": "B02",
+      "name": "Blender Human Base Meshes v1.4.1",
+      "url": "https://www.blender.org/download/demo-files/",
+      "access": "official_search_index",
+      "license": "CC0 bundle, Blender 4.2+",
+      "decision": "P1 base",
+      "limits": "Main page 403; official indexed card and official download directory read. Directory date January 20 2026 differs from page excerpt date January 20 2025."
+    },
+    {
+      "id": "B03",
+      "name": "MPFB",
+      "url": "https://github.com/makehumancommunity/mpfb2",
+      "access": "github_pinned_license",
+      "license": "GPLv3 code; CC0 core assets and output, third-party assets separate",
+      "decision": "P0 existing workflow",
+      "limits": "No installation or compatibility test."
+    },
+    {
+      "id": "B04",
+      "name": "Rigify",
+      "url": "https://docs.blender.org/manual/en/4.3/addons/rigging/rigify/introduction.html",
+      "access": "official_search_index",
+      "license": "GPL add-on; skinning and art licenses separate",
+      "decision": "P0 existing workflow",
+      "limits": "Direct page 402; official indexed 4.3 introduction and 4.0 license page read."
+    },
+    {
+      "id": "B05",
+      "name": "RetopoFlow",
+      "url": "https://github.com/CGCookie/retopoflow",
+      "access": "github_pinned_license",
+      "license": "GPL-3.0-or-later code; non-code assets restricted",
+      "decision": "P1 retopology",
+      "limits": "No installation; source README compatibility table is not local test."
+    },
+    {
+      "id": "B06",
+      "name": "Ucupaint",
+      "url": "https://github.com/ucupumar/ucupaint",
+      "access": "github_pinned_license",
+      "license": "GPL-3.0 code; source art terms separate",
+      "decision": "P0 layered painting",
+      "limits": "No installation or bake test."
+    },
+    {
+      "id": "B07",
+      "name": "glTF-Blender-IO",
+      "url": "https://github.com/KhronosGroup/glTF-Blender-IO",
+      "access": "github_pinned_license",
+      "license": "Apache-2.0 code; no asset grant",
+      "decision": "P0 keep qualified exporter",
+      "limits": "Research HEAD not recommended as automatic upgrade."
+    },
+    {
+      "id": "B08",
+      "name": "Archimesh 1.2.5",
+      "url": "https://extensions.blender.org/add-ons/archimesh/",
+      "access": "official_search_index",
+      "license": "GPL-2.0-or-later, Blender 4.2+",
+      "decision": "P1 structural scaffold",
+      "limits": "Limited support disclosed."
+    },
+    {
+      "id": "B09",
+      "name": "Arch Generator 1.0.1",
+      "url": "https://extensions.blender.org/add-ons/arch-generator/",
+      "access": "official_search_index",
+      "license": "GPL-3.0-or-later, Blender 5.0+",
+      "decision": "hold_version",
+      "limits": "Not compatible with recorded 4.3.2 lane without qualification."
+    },
+    {
+      "id": "B10",
+      "name": "A.N.T.Landscape 0.2.0",
+      "url": "https://extensions.blender.org/add-ons/antlandscape/",
+      "access": "official_search_index",
+      "license": "GPL-2.0-or-later, Blender 4.2+",
+      "decision": "P1 background terrain",
+      "limits": "Direct page 402; official indexed page read. Not collision/navmesh evidence."
+    },
+    {
+      "id": "B11",
+      "name": "Sapling Tree Gen 1.0.0",
+      "url": "https://extensions.blender.org/add-ons/sapling-tree-gen/",
+      "access": "official_search_index",
+      "license": "GPL-3.0-or-later, Blender 5.2+",
+      "decision": "hold_version",
+      "limits": "Direct page 402; indexed current release read. Earlier compatible version not qualified."
+    },
+    {
+      "id": "B12",
+      "name": "Material Maker",
+      "url": "https://github.com/RodZill4/material-maker",
+      "access": "github_pinned_license",
+      "license": "MIT except marked files; external graphs/assets separate",
+      "decision": "P1 procedural material",
+      "limits": "README and license pinned; no build."
+    },
+    {
+      "id": "A01",
+      "name": "Poly Haven",
+      "url": "https://polyhaven.com/license",
+      "access": "primary_page_read",
+      "license": "CC0 assets; other website media/text and API terms separate",
+      "decision": "P0 surfaces/props",
+      "limits": "No pack download or item-specific selection."
+    },
+    {
+      "id": "A02",
+      "name": "ambientCG",
+      "url": "https://docs.ambientcg.com/license/",
+      "access": "primary_page_read",
+      "license": "CC0 asset files and material preview renders",
+      "decision": "P0 surfaces",
+      "limits": "No pack download."
+    },
+    {
+      "id": "A03",
+      "name": "TextureCan",
+      "url": "https://www.texturecan.com/terms/",
+      "access": "primary_page_read",
+      "license": "CC0 PBR textures, graphics, photos; marks caveat",
+      "decision": "P1 surfaces",
+      "limits": "Page does not explicitly clear all 3D models."
+    },
+    {
+      "id": "A04",
+      "name": "Kenney",
+      "url": "https://kenney.nl/support",
+      "access": "official_search_index",
+      "license": "Official support text states CC0 game assets",
+      "decision": "P1 placeholders",
+      "limits": "Direct access blocked; selected pack license still required."
+    },
+    {
+      "id": "A05",
+      "name": "Quaternius",
+      "url": "https://quaternius.com/license.html",
+      "access": "primary_page_read",
+      "license": "QAL v1.0 dated 2026-08-28; no standalone asset redistribution",
+      "decision": "hold_raw_publication",
+      "limits": "Existing earlier grants retained separately; no retroactive reassignment."
+    },
+    {
+      "id": "A06",
+      "name": "South Indian Temple Modular Kit by rSquare",
+      "url": "https://sketchfab.com/3d-models/south-indian-temple-modular-kit-25f0176668004faa98ec351e04e58920",
+      "access": "identity_only",
+      "license": "Supplied catalog claims CC-BY-4.0; primary grant unverified",
+      "decision": "hold_license",
+      "limits": "Main page 403; indexed embed identifies model/author only. Secondary repost not used as clearance."
+    },
+    {
+      "id": "A07",
+      "name": "100+ Ancient South Indian Temple Ruins by SrushtiLabs",
+      "url": "https://www.fab.com/listings/a3910c1c-1733-4851-8057-f6b433e1804b",
+      "access": "primary_search_listing_read",
+      "license": "Description asserts CC0; structured license terms blank",
+      "decision": "hold_license_and_quality",
+      "limits": "AI-generated flag yes. Archive not downloaded; game-ready seller claim untested."
+    },
+    {
+      "id": "A08",
+      "name": "Smithsonian Open Access",
+      "url": "https://www.si.edu/openaccess/faq",
+      "access": "official_search_index",
+      "license": "Only CC0-designated media; third-party restrictions may remain",
+      "decision": "P1 artifact sources",
+      "limits": "Direct page 520; official indexed FAQ read. No item selected or downloaded."
+    },
+    {
+      "id": "A09",
+      "name": "Met Open Access and Four-Sided Pillar",
+      "url": "https://www.metmuseum.org/hubs/open-access",
+      "access": "primary_page_read",
+      "license": "CC0 public-domain artwork images and data",
+      "decision": "P0 reference",
+      "limits": "Exact item https://www.metmuseum.org/art/collection/search/38236 read via official index; image labeled Public Domain. No 3D grant inferred."
+    },
+    {
+      "id": "A10",
+      "name": "game-icons.net",
+      "url": "https://game-icons.net/about.html",
+      "access": "primary_page_read",
+      "license": "CC BY 3.0 with individual original author credit",
+      "decision": "P1 HUD symbols",
+      "limits": "No icon selected or downloaded."
+    }
+  ],
+  "pinned_repositories": [
+    {
+      "repo": "ucupumar/ucupaint",
+      "commit": "0ef234196a770e39235f8cafc9da54de68f3832d",
+      "commit_date": "2026-11-15T09:51:41Z",
+      "path": "COPYING",
+      "license_blob_sha": "f288702d2fa16d3cdf0035b15a9fcbc552cd88e7",
+      "url": "https://github.com/ucupumar/ucupaint/blob/0ef234196a770e39235f8cafc9da54de68f3832d/COPYING",
+      "method": "Connected GitHub commit collection then fetch_file at returned commit; complete license file read",
+      "execution": "unrun"
+    },
+    {
+      "repo": "CGCookie/retopoflow",
+      "commit": "ac2570c5292c1dd90190fd3641b4dbc42cf4bd63",
+      "commit_date": "2026-05-18T22:22:30Z",
+      "path": "RetopoFlow.LICENSE",
+      "license_blob_sha": "378dc2b70b1450d78f57d9621797b73f029de9f0",
+      "url": "https://github.com/CGCookie/retopoflow/blob/ac2570c5292c1dd90190fd3641b4dbc42cf4bd63/RetopoFlow.LICENSE",
+      "method": "Connected GitHub commit collection then fetch_file at returned commit; complete license file read",
+      "execution": "unrun"
+    },
+    {
+      "repo": "KhronosGroup/glTF-Blender-IO",
+      "commit": "9a355808e0b357a9e8d163f17ea53455c823cd59",
+      "commit_date": "2026-11-05T13:30:20Z",
+      "path": "LICENSE.txt",
+      "license_blob_sha": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+      "url": "https://github.com/KhronosGroup/glTF-Blender-IO/blob/9a355808e0b357a9e8d163f17ea53455c823cd59/LICENSE.txt",
+      "method": "Connected GitHub commit collection then fetch_file at returned commit; complete license file read",
+      "execution": "unrun"
+    },
+    {
+      "repo": "makehumancommunity/mpfb2",
+      "commit": "9de0707fdc88438d7c53a1a2ac7937d9221e2431",
+      "commit_date": "2026-11-12T17:40:10Z",
+      "path": "LICENSE.md",
+      "license_blob_sha": "88cf832acc18dd64fd27ff2efb84625718bf2201",
+      "url": "https://github.com/makehumancommunity/mpfb2/blob/9de0707fdc88438d7c53a1a2ac7937d9221e2431/LICENSE.md",
+      "method": "Connected GitHub commit collection then fetch_file at returned commit; complete license file read",
+      "execution": "unrun"
+    },
+    {
+      "repo": "RodZill4/material-maker",
+      "commit": "7d6daae3c74c09720afe4138ce09699ab3591ce1",
+      "commit_date": "2026-10-24T18:04:47Z",
+      "path": "LICENSE.md",
+      "license_blob_sha": "253332f02700092287ed8a0d15bc5c6e4edc163c",
+      "url": "https://github.com/RodZill4/material-maker/blob/7d6daae3c74c09720afe4138ce09699ab3591ce1/LICENSE.md",
+      "method": "Connected GitHub commit collection then fetch_file at returned commit; complete license file read",
+      "execution": "unrun"
+    }
+  ],
+  "supporting_sources": [
+    {
+      "url": "https://static.makehumancommunity.org/about/license.html",
+      "access": "official_search_index",
+      "finding": "GPL MPFB code and CC0 core assets separated."
+    },
+    {
+      "url": "https://static.makehumancommunity.org/mpfb/faq/can_i_sell_models.html",
+      "access": "official_search_index",
+      "finding": "Core assets CC0; third-party license obligations remain."
+    },
+    {
+      "url": "https://static.makehumancommunity.org/",
+      "access": "official_search_index",
+      "finding": "2026-11-08 announcement: old forum closed and browseable asset repo unavailable; asset packs unaffected."
+    },
+    {
+      "url": "https://download.blender.org/demo/asset-bundles/human-base-meshes/",
+      "access": "primary_directory_read",
+      "finding": "v1.4.1 archive listed; files not downloaded."
+    },
+    {
+      "url": "https://studio.blender.org/training/realistic-human-research/use-of-base-meshes/",
+      "access": "official_search_index",
+      "finding": "Separate realistic_human_base.blend training file marked CC-BY."
+    },
+    {
+      "url": "https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_3d_scenes/available_formats.html",
+      "access": "official_search_index",
+      "finding": "glTF recommended, blend uses Blender exporter, deformation bones and backface culling cautions."
+    },
+    {
+      "url": "https://docs.blender.org/manual/sl/4.3/addons/import_export/scene_gltf2.html",
+      "access": "official_search_index",
+      "finding": "Official 4.3 localized page includes English material documentation; supported PBR channels and tangent-space normal handling."
+    },
+    {
+      "url": "https://docs.blender.org/manual/en/4.3/modeling/geometry_nodes/instances/index.html",
+      "access": "official_search_index",
+      "finding": "Versioned instance-node index."
+    },
+    {
+      "url": "https://docs.blender.org/manual/en/4.5/modeling/geometry_nodes/instances/realize_instances.html",
+      "access": "official_search_index",
+      "finding": "Realize converts instances into actual geometry; memory/performance can worsen."
+    },
+    {
+      "url": "https://docs.blender.org/manual/en/4.0/addons/rigging/rigify/index.html",
+      "access": "official_search_index",
+      "finding": "GPL license and bundled add-on identified."
+    },
+    {
+      "url": "https://sketchfab.com/models/25f0176668004faa98ec351e04e58920/embed",
+      "access": "official_search_index",
+      "finding": "Exact temple model identity and rSquare author; no license label."
+    },
+    {
+      "url": "https://www.metmuseum.org/art/collection/search/38236",
+      "access": "official_search_index",
+      "finding": "Object 1986.502.1, Indian limestone, 3rd–4th century; image Public Domain; height 25.7 cm."
+    }
+  ],
+  "access_failures": [
+    {
+      "url": "https://www.blender.org/download/demo-files/",
+      "result": "403 direct web open; official search indexed page used"
+    },
+    {
+      "url": "https://www.blender.org/about/license/",
+      "result": "403 direct web open; official indexed license page used"
+    },
+    {
+      "url": "https://static.makehumancommunity.org/mpfb/faq/licensing.html",
+      "result": "URL inaccessible; corrected to official about/license.html and FAQ can_i_sell_models.html"
+    },
+    {
+      "url": "https://kenney.nl/support",
+      "result": "Direct restricted/robots blocked; official search indexed support text used"
+    },
+    {
+      "url": "https://extensions.blender.org/add-ons/rigify/",
+      "result": "URL inaccessible; versioned Blender manual used"
+    },
+    {
+      "url": "https://extensions.blender.org/add-ons/antlandscape/",
+      "result": "402 direct web open; official indexed entry used"
+    },
+    {
+      "url": "https://extensions.blender.org/add-ons/sapling-tree-gen/",
+      "result": "402 direct web open; official indexed entry used"
+    },
+    {
+      "url": "https://www.si.edu/openaccess/faq",
+      "result": "520 direct web open; official indexed FAQ used"
+    },
+    {
+      "url": "https://sketchfab.com/3d-models/south-indian-temple-modular-kit-25f0176668004faa98ec351e04e58920",
+      "result": "403; identity only via official embed"
+    },
+    {
+      "url": "https://docs.blender.org/manual/en/4.3/modeling/geometry_nodes/instances/realize_instances.html",
+      "result": "402 direct web open; official indexed versioned pages used"
+    },
+    {
+      "url": "https://docs.blender.org/manual/en/4.3/addons/rigging/rigify/introduction.html",
+      "result": "402 direct web open; official indexed page used"
+    },
+    {
+      "url": "https://docs.blender.org/manual/en/4.3/addons/import_export/scene_gltf2.html",
+      "result": "402 direct web open; official localized page indexed English material passages used"
+    },
+    {
+      "url": "https://github.com/KhronosGroup/glTF-Blender-IO/blob/main/LICENSE",
+      "result": "404; actual LICENSE.txt successfully read and pinned"
+    }
+  ],
+  "verification": {
+    "downloaded_asset_packs": 0,
+    "installed_tools": 0,
+    "local_blender_runs": 0,
+    "local_godot_runs": 0,
+    "visuals_reviewed": 0,
+    "production_assets_accepted": 0
+  },
+  "limits": [
+    "Search-indexed text is distinguished from direct page access.",
+    "No source code repository was cloned or built.",
+    "No public pack/raw asset redistribution is authorized by tool license alone.",
+    "No status or production milestone count changed by this research."
+  ]
+}

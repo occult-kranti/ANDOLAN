@@ -1,5 +1,11 @@
 # YUGA native production track
 
+**Current product — YUGA · Sanctum:** first-person **5v5 local Casual**, first to 13 wins, sides switch after round 12. Run `godot --path games/yuga-native` and choose **Play Casual → Deploy as Rama**. [Tactical controls and delivery](docs/tactical/README.md) · [Rama studio continuation](docs/tactical/studio3/README.md) · [current roadmap](docs/tactical/ROADMAP.md). One human and nine bots do not establish Online Casual or Ranked. The classic bow/Confluence rules and earlier releases below are historical.
+
+**15 November research and publication:** [Blender, open art, maps, artifacts and engine/resource audit](docs/research/resource-catalog-2026-11-15/README.md), [concrete adoption packets](docs/research/resource-catalog-2026-11-15/ADOPTION_PLAN.md), [fresh source verification](docs/research/resource-catalog-2026-11-15/VERIFICATION.md), [push/dashboard receipt](docs/research/resource-catalog-2026-11-15/PUBLICATION.md). Retain Godot/Blender and existing accepted sources; new tool/asset candidates require their own compatibility, license and native visual review. Research does not increase historical completion counts.
+
+## Historical classic campaign and releases
+
 **Active desktop work:** [resume handoff](docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.
 
 **Latest source work:** [reuse into playable integration](docs/research/reuse-production-continuation/README.md) owns current source pins, six-worker results and next steps. It extends the existing world, transport and art tooling; source candidates are accepted separately from finished game art. The ledger remains **17/78 scoped packets, 0/13 complete rounds**. The public download below retains its older executable identity.

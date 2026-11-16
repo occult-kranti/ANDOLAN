@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**15 November resource and studio continuation:** [detailed Blender, open-art, maps and engine study](games/yuga-native/docs/research/resource-catalog-2026-11-15/README.md) · [what to adopt next](games/yuga-native/docs/research/resource-catalog-2026-11-15/ADOPTION_PLAN.md) · [studio verification](games/yuga-native/docs/research/resource-catalog-2026-11-15/VERIFICATION.md) · [publication record](games/yuga-native/docs/research/resource-catalog-2026-11-15/PUBLICATION.md). The study audits the supplied catalog against primary sources and separates tool, game-content and public-source rights. Keep Godot/Blender; finish Rama and one Sangam encounter before expanding. The [dashboard](https://occult-kranti.github.io/ANDOLAN/production/) is an explicitly dated snapshot.
+
 Current native work: [YUGA · Sanctum tactical Casual](games/yuga-native/docs/tactical/README.md): first-person mythic firearms, hero abilities, 5v5 and first to 13 wins. [Roadmap](games/yuga-native/docs/tactical/ROADMAP.md) · [Prompt record](games/yuga-native/docs/tactical/PROMPTS.md) · [Delivery](games/yuga-native/docs/tactical/DELIVERY.md). Launch with `godot --path games/yuga-native`. The [Rama + Sangam civic checkpoint](games/yuga-native/docs/research/hero-six-rounds/README.md) remains historical, including the integrated field shop and battle HUD.
 
 **Studio continuation, 15 November 2026:** [local builds and verification](docs/research/STUDIO_DELIVERY.md)
