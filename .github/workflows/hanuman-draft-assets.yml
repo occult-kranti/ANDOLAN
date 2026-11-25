@@ -1,0 +1,54 @@
+name: Upload verified Hanuman desktop packages
+on:
+  push:
+    branches: ['distribution/hanuman-abilities-2026-11-25']
+    paths: ['.github/workflows/hanuman-draft-assets.yml']
+
+permissions: {}
+concurrency:
+  group: hanuman-abilities-457784902-assets
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    if: github.repository == 'occult-kranti/ANDOLAN'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Assemble and verify both previously tested packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 rebuild-packages.py assembled
+          cp SHA256SUMS.txt assembled/package-SHA256SUMS.txt
+          cd assembled
+          sha256sum --check package-SHA256SUMS.txt
+      - name: Attach verified files to the existing Hanuman draft
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: yuga-hanuman-abilities-2026-11-25
+          RELEASE_ID: '457784902'
+        run: |
+          set -euo pipefail
+          cd assembled
+          for file in yuga-native-linux-x86_64.zip yuga-native-windows-x86_64.zip package-SHA256SUMS.txt; do
+            metadata=$(gh api "repos/$GH_REPO/releases/$RELEASE_ID")
+            jq -e --arg tag "$TAG" '(.id == 457784902) and (.draft == true) and (.tag_name == $tag)' <<<"$metadata" >/dev/null
+            expected="sha256:$(sha256sum "$file" | cut -d' ' -f1)"
+            previous=$(jq -r --arg name "$file" '.assets[] | select(.name == $name) | .digest' <<<"$metadata")
+            if [[ -z "$previous" ]]; then
+              gh release upload "$TAG" "$file"
+            elif [[ "$previous" != "$expected" ]]; then
+              echo "Previously uploaded asset differs from verified bytes: $file" >&2
+              exit 1
+            fi
+            actual=$(gh api "repos/$GH_REPO/releases/$RELEASE_ID" --jq ".assets[] | select(.name == \"$file\" and .state == \"uploaded\") | .digest")
+            test "$actual" = "$expected"
+          done
