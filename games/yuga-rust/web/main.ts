@@ -1,4 +1,5 @@
 import { makeScene } from './scene';
+import { PracticeCoach } from './practice-coach';
 
 const data = JSON.parse(document.querySelector('#payload')!.textContent!);
 const byId = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -9,6 +10,7 @@ const menu = byId('menu'),
   overlay = byId('overlay');
 const credits = byId<HTMLDialogElement>('credits');
 const keyNames = ['LMB', 'Q', 'E', 'C', 'X'];
+const practiceCoach = new PracticeCoach();
 const keys = new Set<string>();
 const decoder = new TextDecoder();
 const PERIOD = 0.05;
@@ -34,6 +36,9 @@ let pointer: [number, number] | null = null;
 let lastGround: [number, number] | null = null;
 let lastAim: [number, number] = [0, 1];
 let armedSlot: number | null = null;
+const aimMessages = ['Clear landing · Click to cast Mountain Pulse', 'Out of range · Bring the landing point closer',
+  'Cover blocks this landing · Choose open ground', 'Land on clear ground before casting', 'Aim at the arena floor'];
+let mountainAim: { code: number; ground: [number, number] | null; actorX: number; actorZ: number; height: number; ready: boolean } | null = null;
 let messageUntil = 0;
 let ctx: AudioContext | undefined;
 let output: GainNode | undefined;
@@ -71,7 +76,8 @@ function observe() {
     room: room && { ...room },
     state: current ? structuredClone(current) : null,
     renderer: scene?.diagnostics(),
-    input: { armedSlot, pointer: pointer?.slice() ?? null, ground: lastGround?.slice() ?? null },
+    input: { armedSlot, pointer: pointer?.slice() ?? null, ground: lastGround?.slice() ?? null,
+      mountainAim: mountainAim && structuredClone(mountainAim) },
     period: PERIOD,
     mixer: mixerKind,
     audio: { state: ctx?.state ?? null, muted, gain: output?.gain.value ?? null },
@@ -195,8 +201,35 @@ function target(): [number, number] {
   return [current.actor.pos[0] + lastAim[0] * 6, current.actor.pos[1] + lastAim[1] * 6];
 }
 
+// The local Wasm uses the same spatial rules as the room host. Cooldown and all
+// hits still resolve on the authoritative tick when the pointer is committed.
+function updateGroundAim() {
+  if (mode !== 'playing' || armedSlot === null || current.abilities[armedSlot]?.id !== 'mountain_pulse') {
+    if (mountainAim) scene.showGroundAim(null);
+    mountainAim = null;
+    return;
+  }
+  const at = pointer && scene.ground(...pointer);
+  const actor = current.actor;
+  const sameLanding = at && mountainAim?.ground && at[0] === mountainAim.ground[0] && at[1] === mountainAim.ground[1]
+    && actor.pos[0] === mountainAim.actorX && actor.pos[1] === mountainAim.actorZ && actor.y === mountainAim.height;
+  const code = !at ? 4 : sameLanding ? mountainAim!.code : wasm.trial_ground_aim(armedSlot, ...actor.pos, actor.y, ...at);
+  const ready = code === 0 && !current.respawn_ticks && !current.active && !current.abilities[armedSlot].cooldown_ticks;
+  if (!sameLanding || mountainAim?.ready !== ready) scene.showGroundAim(at, ready);
+  mountainAim = { code, ground: at, actorX: actor.pos[0], actorZ: actor.pos[1], height: actor.y, ready };
+  let message = aimMessages[code] ?? aimMessages[4];
+  if (current.respawn_ticks) message = 'Wait for respawn';
+  else if (current.active) message = 'Finish the current invocation';
+  else if (current.abilities[armedSlot].cooldown_ticks) message = 'Mountain Pulse is cooling down';
+  if (byId('status').textContent !== message) byId('status').textContent = message;
+}
+
 function cast(slot: number) {
   if (mode !== 'playing') return false;
+  if (armedSlot === slot && current.abilities[slot].id === 'mountain_pulse') {
+    updateGroundAim();
+    if (!mountainAim?.ready) return false;
+  }
   const point = target();
   if (playMode === 'online') {
     if (!socket || socket.readyState !== WebSocket.OPEN || current.respawn_ticks) return false;
@@ -228,6 +261,7 @@ function arm(slot: number | null) {
   canvas.classList.toggle('targeting', slot !== null);
   if (slot === null) byId('status').textContent = '';
   else say(current.abilities[slot].label + ' · Click in the arena to cast. Esc to cancel.');
+  updateGroundAim();
 }
 
 function buildHud() {
@@ -282,7 +316,6 @@ function updateHud() {
   } else {
     byId('location').textContent = 'Temple avenue';
     byId('objective').textContent = 'Moon guard · ' + current.defeated + ' / ' + current.enemies;
-    byId('match-detail').textContent = '';
   }
   const a = current.actor;
   byId('vital-text').textContent =
@@ -306,6 +339,7 @@ function updateHud() {
   for (const ev of current.events) {
     if (ev.seq <= lastEvent) continue;
     lastEvent = ev.seq;
+    if (playMode === 'drill') practiceCoach.observe(ev);
     if (current.hero === 'rama') {
       if (ev.kind === 'begin') cue('rama/draw_' + ev.id);
       if (ev.kind === 'release') cue('rama/release_' + ev.id);
@@ -317,9 +351,11 @@ function updateHud() {
         say(current.abilities[ev.slot].label + ' · ' + ev.receipts.length + ' affected');
     }
   }
+  if (playMode === 'drill') byId('match-detail').textContent = practiceCoach.hint(keyNames);
 }
 
 function start(restart: boolean, networkState?: any) {
+  practiceCoach.reset();
   if (restart) wasm.trial_reset();
   current = networkState || readState();
   buildHud();
@@ -379,7 +415,7 @@ function pause(complete = false) {
         Math.ceil(current.army.cores.sun) +
         ' / Moon ' +
         Math.ceil(current.army.cores.moon)
-      : 'All three Moon guards are down.'
+      : 'All three Moon guards are down. ' + practiceCoach.score + ' demonstrated.'
     : playMode === 'online'
       ? 'The room continues while this menu is open.'
       : 'The simulation clock is stopped.';
@@ -570,6 +606,7 @@ function frame(now: number) {
       }
     }
     if (armedSlot === null && now > messageUntil) byId('status').textContent = '';
+    if (armedSlot !== null) updateGroundAim();
   }
   if (!menu.hidden || !current) {
     last = now;
@@ -709,7 +746,7 @@ byId('cancel-room').onclick = () => leaveRoom();
 
 async function init() {
   document.querySelector<HTMLElement>('.cover')!.style.backgroundImage =
-    'url(' + blob('cover', 'image/png') + ')';
+    'url(' + blob('cover', data.coverMime ?? 'image/png') + ')';
   byId('notices').textContent = data.notices;
   for (const [family, id] of [
     ['BC', 'display-font'],

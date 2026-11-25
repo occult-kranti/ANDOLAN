@@ -8,6 +8,8 @@ Play as **Hanuman or Rama** alongside an army fighting across three lanes. Escor
 
 **Solo.** Extract the ZIP and open `yuga-rust.html` in a desktop browser with WebAssembly and WebGL 2. Choose a hero and select **Play lane match**. To try the five attacks on stationary targets, choose **Hanuman practice**. If your browser blocks local HTML, run `python3 -m http.server 8000 --bind 127.0.0.1` in the extracted folder and open `http://127.0.0.1:8000/yuga-rust.html`.
 
+**Hanuman.** Click **Mountain Pulse** in the action bar and point at the ground. The seven-metre ring previews its footprint. A gold center marks a clear landing, and a cross explains a blocked or distant target in the status line. Press **X** for an immediate cast, or **Esc** to cancel an armed shot. In practice, the technique counter credits effective casts. [Hero art, timing and testing](../yuga-native/art/hanuman-hero-finish/GAMEPLAY.md)
+
 **Private 1v1 or 3v3, on one computer or LAN.** The ZIP contains the same Rust match engine as a portable WebAssembly worker and bundles the WebSocket transport. Install Node **22.12 or newer** on the host computer. Each player needs a browser. Run one of the following commands in the extracted folder.
 
 ```sh

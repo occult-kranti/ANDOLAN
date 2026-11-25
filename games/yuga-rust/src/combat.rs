@@ -29,6 +29,28 @@ fn finite(a: Point) -> bool {
     a.into_iter().all(f32::is_finite)
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[repr(u32)]
+pub enum GroundAim {
+    Clear = 0,
+    OutOfRange = 1,
+    Obstructed = 2,
+    InvalidOrigin = 3,
+    Unavailable = 4,
+}
+
+impl GroundAim {
+    fn message(self) -> &'static str {
+        match self {
+            Self::Clear => "",
+            Self::OutOfRange => "Ground target is out of range",
+            Self::Obstructed => "Cover blocks the ground target",
+            Self::InvalidOrigin => "Cast origin is blocked or airborne",
+            Self::Unavailable => "Choose a finite ground target",
+        }
+    }
+}
+
 #[derive(Deserialize)]
 struct Kit {
     schema_version: u32,
@@ -377,6 +399,35 @@ impl Combat {
             .find(|c| self.now - c.start < self.kit.abilities[c.slot].beats().recovery)
     }
 
+    /// Checks spatial eligibility only. The server checks action locks and cooldowns on commit.
+    pub fn ground_aim(
+        &self,
+        slot: usize,
+        origin: Point,
+        height: f32,
+        ground: Point,
+        world: &World,
+    ) -> GroundAim {
+        let Some(Geometry::Disk { target_range_m, .. }) =
+            self.kit.abilities.get(slot).map(|r| &r.geometry)
+        else {
+            return GroundAim::Unavailable;
+        };
+        if !finite(ground) {
+            return GroundAim::Unavailable;
+        }
+        if !height.is_finite() || height.abs() > 0.35 || !world.ground_target_allowed(origin) {
+            return GroundAim::InvalidOrigin;
+        }
+        if length(difference(ground, origin)) > target_range_m + 1e-6 {
+            return GroundAim::OutOfRange;
+        }
+        if !world.ground_target_allowed(ground) || !world.clear_line(origin, ground) {
+            return GroundAim::Obstructed;
+        }
+        GroundAim::Clear
+    }
+
     pub fn cast(&mut self, slot: usize, ground: Point, world: &World) -> Result<(), String> {
         let rule = self.kit.abilities.get(slot).ok_or("Unknown ability")?;
         if self.locked().is_some() || self.casts.len() >= 3 {
@@ -389,16 +440,16 @@ impl Combat {
             return Err("Choose a finite ground target".into());
         }
         let origin = self.actor.pos;
-        if !world.ground_target_allowed(origin) || self.height.abs() > 0.35 {
+        if !matches!(rule.geometry, Geometry::Disk { .. })
+            && (!world.ground_target_allowed(origin) || self.height.abs() > 0.35)
+        {
             return Err("Cast origin is blocked or airborne".into());
         }
         let target = match rule.geometry {
-            Geometry::Disk { target_range_m, .. } => {
-                if length(difference(ground, origin)) > target_range_m + 1e-6 {
-                    return Err("Ground target is out of range".into());
-                }
-                if !world.ground_target_allowed(ground) || !world.clear_line(origin, ground) {
-                    return Err("Cover blocks the ground target".into());
+            Geometry::Disk { .. } => {
+                let aim = self.ground_aim(slot, origin, self.height, ground, world);
+                if aim != GroundAim::Clear {
+                    return Err(aim.message().into());
                 }
                 ground
             }
@@ -754,6 +805,33 @@ mod tests {
             advance(&mut s, &w, travel);
             assert!((pose(&s) - contact_pose).abs() < 1e-6);
             assert_eq!(s.snapshot()["active"]["phase"], "recovery");
+        }
+    }
+
+    #[test]
+    fn mountain_preview_matches_commit_at_range_cover_and_landing_edges() {
+        for (origin, height, point, expected) in [
+            ([0., -55.], 0., [0., -41.], GroundAim::Clear),
+            ([0., -55.], 0., [0., -40.99], GroundAim::OutOfRange),
+            ([-13., -18.], 0., [-10., -21.], GroundAim::Obstructed),
+            ([0., -55.], 0.351, [0., -53.], GroundAim::InvalidOrigin),
+            ([0., -55.], 0.35, [0., -53.], GroundAim::Clear),
+            ([0., -55.], 0., [f32::NAN, 0.], GroundAim::Unavailable),
+        ] {
+            let (mut s, w) = setup();
+            s.actor.pos = origin;
+            s.height = height;
+            let before = s.snapshot();
+            assert_eq!(s.ground_aim(4, origin, height, point, &w), expected);
+            assert_eq!(
+                s.ground_aim(99, origin, height, point, &w),
+                GroundAim::Unavailable
+            );
+            assert_eq!(s.snapshot(), before);
+            assert_eq!(s.cast(4, point, &w).is_ok(), expected == GroundAim::Clear);
+            if expected != GroundAim::Clear {
+                assert_eq!(s.snapshot(), before);
+            }
         }
     }
 

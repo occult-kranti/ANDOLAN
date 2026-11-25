@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import { build } from 'esbuild';
+import { fileURLToPath } from 'node:url';
+
+const source = fileURLToPath(new URL('../web/practice-coach.ts', import.meta.url));
+const js = await build({entryPoints:[source],bundle:true,format:'esm',write:false});
+const { PracticeCoach } = await import('data:text/javascript;base64,' + Buffer.from(js.outputFiles[0].contents).toString('base64'));
+const coach = new PracticeCoach(), keys = ['LMB','Q','E','C','X'];
+const send = (id,kind,receipts=[],target=[0,0]) => coach.observe({id,kind,receipts,origin:[0,0],target});
+assert.match(coach.hint(keys), /^0\/5.*LMB/);
+send('vajra_gada','begin'); send('vajra_gada','impact',[{damage:0}]); send('lanka_dahan','tick',[]);
+send('vajra_kavacha','impact',[{unit:0,shield_after:48}]);
+send('maruti_udayana','cancel',[],[0,5]);send('maruti_udayana','recovery',[],[0,0]);
+send('mountain_pulse','impact',[{unit:0,damage:0,heal:45}]);
+assert.equal(coach.score,'0/5 techniques');
+send('lanka_dahan','tick',[{damage:.4}]);send('lanka_dahan','impact',[{damage:28}]);
+send('vajra_kavacha','impact',[{unit:2,shield_after:48}]);send('maruti_udayana','recovery',[],[0,1]);
+assert.match(coach.hint(keys), /^3\/5.*LMB/);
+send('mountain_pulse','impact',[{unit:2,heal:15}]);send('vajra_gada','impact',[{unit:4,damage:34}]);
+assert.equal(coach.hint(keys),'5/5 techniques demonstrated');
+coach.reset();assert.match(coach.hint(keys),/^0\/5/);
+send('mountain_pulse','impact',[{unit:4,damage:65}]);assert.equal(coach.score,'1/5 techniques');
+console.log('Passed practice coaching for five techniques, effect receipts, out-of-order actions, retries, blocked movement and reset.');

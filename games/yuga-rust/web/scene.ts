@@ -1,6 +1,7 @@
 import * as pc from 'playcanvas';
 import { RenderKit, RAD, clamp, mixAngle } from '../../yuga/client/render-kit';
 import { makeArmyScene, setMaterial } from './army-scene';
+import { GROOM_MATERIAL, groomVisible, projectedHanumanHeight, verticalFocalPixels } from './groom-detail';
 import { createOriginalEnvironment } from '../../yuga/client/environment-light';
 
 type Assets = {
@@ -24,7 +25,7 @@ function loadGlb(app: pc.Application, url: string, name: string): Promise<pc.Con
   });
 }
 
-function figure(container: pc.ContainerResource, parent: pc.Entity) {
+function figure(container: pc.ContainerResource, parent: pc.Entity, findGroom = false) {
   const model = container.instantiateRenderEntity({ castShadows: true, receiveShadows: true });
   parent.addChild(model);
   model.addComponent('anim', { activate: true });
@@ -49,7 +50,8 @@ function figure(container: pc.ContainerResource, parent: pc.Entity) {
   const layer = anim.baseLayer;
   if (!layer) throw new Error('Missing animation layer on ' + model.name);
   layer.play('idle');
-  return { model, anim, layer, tracks, bones, clip: 'idle' };
+  const groom = findGroom ? skinned.find((mesh) => mesh.material?.name === GROOM_MATERIAL) : undefined;
+  return { model, anim, layer, tracks, bones, groom, surfaces: skinned.length, clip: 'idle' };
 }
 
 function buildMap(
@@ -313,12 +315,33 @@ export async function makeScene(
     vitalsBacking = kit.material('Hero vitals', '#142522');
   const localRing = kit.ring(app.root, sunMarker, 0.66, 0.065, 0.03, 32);
   localRing.enabled = false;
-  function makeRig(id: string) {
+  const mountainRule = rules.abilities.find((rule: any) => rule.id === 'mountain_pulse');
+  const aimFootprint = new pc.Entity('Mountain Pulse targeting', app);
+  app.root.addChild(aimFootprint);
+  const eligible = kit.material('Clear pulse aim', '#ffe5a1', 0.8);
+  const rejected = kit.material('Blocked pulse aim', '#ff8475', 0.8);
+  const area = kit.arc(aimFootprint, eligible, mountainRule.geometry.radius_m, 0.09, 0.065, -Math.PI, Math.PI, 64);
+  const center = kit.ring(aimFootprint, eligible, 0.24, 0.07, 0.067, 24);
+  const cross = new pc.Entity('Unavailable ground', app);
+  aimFootprint.addChild(cross);
+  for (const angle of [-45, 45])
+    kit.shape(cross, 'plane', rejected, 0, 0.07, 0, 0.12, 1, 0.84).setLocalEulerAngles(0, angle, 0);
+  aimFootprint.enabled = false;
+
+  function showGroundAim(at: Point | null, clear = false) {
+    aimFootprint.enabled = at !== null;
+    if (!at) return;
+    aimFootprint.setPosition(at[0], 0, at[1]);
+    center.enabled = clear;
+    cross.enabled = !clear;
+    setMaterial(area, clear ? eligible : rejected);
+  }
+  function makeRig(id: string, remote = false) {
     const resource = resources[id];
     if (!resource) throw new Error('Unbundled hero: ' + id);
     const holder = new pc.Entity(id + ' feet', app);
     app.root.addChild(holder);
-    const rig = figure(resource, holder);
+    const rig = figure(resource, holder, remote && id === 'hanuman');
     const nodes = [
       'spine03',
       'upperarm01.R',
@@ -430,7 +453,7 @@ export async function makeScene(
     const bar = kit.shape(markers, 'box', vitalsBacking, 0, 0, 0, 1.1, 0.13, 0.07);
     const hp = kit.shape(markers, 'box', sunMarker, 0, 0, 0, 1, 0.074, 0.09);
     bar.render!.castShadows = hp.render!.castShadows = false;
-    return { seat, rig: makeRig(id), fx: makeHeroEffects('seat' + seat), markers, ring, bar, hp, state: null as any };
+    return { seat, rig: makeRig(id, true), fx: makeHeroEffects('seat' + seat), markers, ring, bar, hp, state: null as any };
   }
   const remotes = new Map<number, ReturnType<typeof makeRemote>>();
   function remoteStates(state: any): any[] {
@@ -469,6 +492,7 @@ export async function makeScene(
       setMaterial(localRing, sign === 1 ? sunMarker : moonMarker);
     }
     const roster = remoteStates(state), oldRoster = remoteStates(prev);
+    const focal = roster.length ? verticalFocalPixels(canvas.clientHeight, camera.camera!.fov) : 0;
     for (const remote of roster) {
       const seat = seatOf(remote), heroId = remote.hero ?? remote.hero_id;
       let view = remotes.get(seat);
@@ -481,12 +505,17 @@ export async function makeScene(
         prior.generation !== remote.generation || view.rig.id !== heroId;
       if (view.rig.id !== heroId) {
         view.rig.holder.destroy();
-        view.rig = makeRig(heroId);
+        view.rig = makeRig(heroId, true);
       }
       view.state = remote;
       view.rig.holder.enabled = view.markers.enabled = true;
       const from = newPose ? remote : prior;
       const p = poseRig(view.rig, remote, from, t, dt, newPose);
+      const groom = view.rig.groom;
+      if (groom) {
+        const pixels = projectedHanumanHeight(p, camera.getPosition(), camera.forward, camera.up, focal);
+        groom.visible = groomVisible(groom.visible, pixels);
+      }
       const hp = clamp(remote.actor.hp / remote.actor.max_hp, 0, 1);
       const marker = remote.actor.team === 'sun' ? sunMarker : moonMarker;
       view.ring.setPosition(p.x, 0.032, p.z);
@@ -666,7 +695,7 @@ export async function makeScene(
     const remoteHeroes = activeRemotes.map(({ seat, rig, state, fx }) => {
       const { actor } = state, p = rig.holder.getPosition();
       return { seat, id: actor.id, team: actor.team, color: actor.team === 'sun' ? teamColors.sun : teamColors.moon,
-        hero: rig.id, pos: [p.x, p.z], hp: actor.hp, maxHp: actor.max_hp, clip: rig.clip,
+        hero: rig.id, skinnedSurfaces: rig.surfaces, groomVisible: rig.groom?.visible ?? false, pos: [p.x, p.z], hp: actor.hp, maxHp: actor.max_hp, clip: rig.clip,
         casts: [...fx.casts], projectiles: fx.projectiles, nocked: !!fx.nock?.enabled };
     });
     return {
@@ -678,6 +707,7 @@ export async function makeScene(
       visualSolidIds: [...visualSolidIds],
       heroClips: [...hero.tracks.keys()],
       heroBones: hero.bones.size,
+      heroSkinnedSurfaces: hero.surfaces,
       activeClip: hero.clip,
       heroId: hero.id,
       posePhase: hero.phase,
@@ -727,5 +757,5 @@ export async function makeScene(
       })
     };
   }
-  return { render, ground, resize, diagnostics };
+  return { render, ground, resize, diagnostics, showGroundAim };
 }

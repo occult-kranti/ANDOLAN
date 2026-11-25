@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import struct
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
@@ -26,6 +27,32 @@ def sha(data):
 
 def capture(args):
     return subprocess.check_output(args, cwd=PROJECT, text=True)
+
+def playable_hanuman(stage):
+    finish = NATIVE / "art/hanuman-hero-finish/models/hanuman-enhanced.glb"
+    if finish.is_file():
+        model = finish
+        edition = "hero-finish"
+    else:
+        base = NATIVE / "assets/heroes/hanuman"
+        model = stage / "hanuman.glb"
+        subprocess.run(
+            ["cargo", "run", "--locked", "--bin", "hero_export", "--",
+             base / "hanuman.glb", base / "hanuman-ability-motion.tres", model],
+            cwd=PROJECT, check=True,
+        )
+        edition = "native-motion-export"
+    with model.open("rb") as handle:
+        magic, version, size, size_json, chunk = struct.unpack("<4sIII4s", handle.read(20))
+        if (magic, version, size, chunk) != (b"glTF", 2, model.stat().st_size, b"JSON"):
+            raise ValueError(f"Invalid Hanuman GLB: {model}")
+        header = json.loads(handle.read(size_json))
+    tracks = {action["name"] for action in header.get("animations", [])}
+    rules = json.loads((NATIVE / "assets/design/hanuman-ability-kit.json").read_text())
+    required = {"idle", "run", "defeat", *(r["motion"] for r in rules["abilities"])}
+    if not header.get("skins") or not required <= tracks:
+        raise ValueError(f"Hanuman needs a skin and all match actions, missing {required - tracks}")
+    return model, {"edition": edition, "clips": sorted(tracks)}
 
 
 def notices(workspace):
@@ -86,6 +113,10 @@ def notices(workspace):
         "YUGA original cues": NATIVE / "NOTICE/HANUMAN-ABILITY-AUDIO.json",
     }.items():
         include(label, path.read_text())
+    if (NATIVE / "art/hanuman-hero-finish/models/hanuman-enhanced.glb").is_file():
+        include("YUGA playable Hanuman finish", "The YUGA team adapted the credited Hanuman body and native motions with a compact muzzle, revised surface textures, weighted copper guard hair and a tail recoil pass. The downloadable model retains the base asset terms listed in Hanuman asset provenance.")
+    if (NATIVE / "art/hanuman-hero-finish/design/hanuman-portrait-target.webp").is_file():
+        include("YUGA title illustration", "Original image-generated Hanuman title art for this game. Source and prompt: games/yuga-native/art/hanuman-hero-finish/design/PORTRAIT.md.")
     text = (
         "\n".join(names)
         + "\n\n"
@@ -111,23 +142,10 @@ def main():
     )
     with TemporaryDirectory(dir=out) as staging:
         stage = Path(staging)
-        hero = stage / "hanuman.glb"
-        base = NATIVE / "assets/heroes/hanuman"
-        subprocess.run(
-            [
-                "cargo",
-                "run",
-                "--locked",
-                "--bin",
-                "hero_export",
-                "--",
-                base / "hanuman.glb",
-                base / "hanuman-ability-motion.tres",
-                hero,
-            ],
-            cwd=PROJECT,
-            check=True,
-        )
+        hero, hero_info = playable_hanuman(stage)
+        cover = NATIVE / "art/hanuman-hero-finish/design/hanuman-portrait-target.webp"
+        if not cover.is_file():
+            cover = NATIVE / "art/hanuman/match/hanuman-keyframe-denoised.png"
         rama = stage / "rama.glb"
         subprocess.run(
             [sys.executable, PROJECT / "tools/pack_rama.py", "--lod", "far", rama],
@@ -169,7 +187,7 @@ def main():
             "soldier": BROWSER / "client/assets/units/soldier.glb",
             "architecture": NATIVE / "assets/world/architecture.glb",
             "nature": NATIVE / "assets/world/nature.glb",
-            "cover": NATIVE / "art/hanuman/match/hanuman-keyframe-denoised.png",
+            "cover": cover,
             "display-font": ROOT
             / "node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-600-normal.woff2",
             "body-font": ROOT
@@ -182,6 +200,7 @@ def main():
         blobs = {name: path.read_bytes() for name, path in assets.items()}
         (stage / "yuga-rust.wasm").write_bytes(blobs["wasm"])
         payload = {
+            "coverMime": "image/webp" if cover.suffix == ".webp" else "image/png",
             "map": json.loads(
                 (NATIVE / "assets/world/confluence-map.json").read_text()
             ),
@@ -212,6 +231,8 @@ def main():
         filename = "yuga-rust.html"
         (stage / filename).write_text(document, encoding="utf-8")
         report = {
+            "hanuman": hero_info,
+            "cover": {"source": str(cover.relative_to(ROOT)), "mime": payload["coverMime"]},
             "rustc": capture(["rustc", "--version"]).strip(),
             "target": TARGET,
             "tick_hz": 20,
@@ -227,7 +248,7 @@ def main():
         }
         (stage / "build.json").write_text(json.dumps(report, indent=2) + "\n")
         (stage / "PLAY.txt").write_text(
-            "Extract and open yuga-rust.html in a desktop browser with WebGL 2 and WebAssembly. All assets are embedded.\nIf your browser blocks local HTML, open a terminal in the extracted folder, run python3 -m http.server 8000 --bind 127.0.0.1, and visit http://127.0.0.1:8000/yuga-rust.html.\nChoose a hero and play a lane match, or choose Hanuman practice to defeat three Moon guards. Move with WASD, aim with the mouse and cast with LMB / Q / E / C / X. Advance your soldiers to the opposing core. For private duels or 3v3 rooms install Node 22.12 or newer. In this extracted folder run node serve_rooms.mjs, then open http://127.0.0.1:8787. To play across a trusted LAN, run node serve_rooms.mjs --host 0.0.0.0 and each player opens http://HOST-LAN-IP:8787. The host chooses a duel or 3v3 room and shares the code. The match starts when all two or six seats are filled. Leave the terminal running while playing. Clicking an ability button selects it for your next arena click. Escape cancels targeting or pauses.\n"
+            "Extract and open yuga-rust.html in a desktop browser with WebGL 2 and WebAssembly. All assets are embedded.\nIf your browser blocks local HTML, open a terminal in the extracted folder, run python3 -m http.server 8000 --bind 127.0.0.1, and visit http://127.0.0.1:8000/yuga-rust.html.\nChoose a hero and play a lane match, or choose Hanuman practice to defeat three Moon guards. Move with WASD, aim with the mouse and cast with LMB / Q / E / C / X. Advance your soldiers to the opposing core. For private duels or 3v3 rooms install Node 22.12 or newer. In this extracted folder run node serve_rooms.mjs, then open http://127.0.0.1:8787. To play across a trusted LAN, run node serve_rooms.mjs --host 0.0.0.0 and each player opens http://HOST-LAN-IP:8787. The host chooses a duel or 3v3 room and shares the code. The match starts when all two or six seats are filled. Leave the terminal running while playing. For Hanuman, click Mountain Pulse and point at the floor to see its footprint. A gold center means the landing is clear. A crossed center and the status text explain an unavailable landing. X quick-casts. Escape cancels targeting or pauses.\n"
         )
         with ZipFile(stage / "yuga-rust-confluence.zip", "w") as archive:
             for name in [

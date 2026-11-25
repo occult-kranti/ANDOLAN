@@ -1,0 +1,45 @@
+{
+  "result": "pass",
+  "transport": "loopback WebSocket, real host, one Rust authority per active room",
+  "authority": "portable Rust WebAssembly worker",
+  "squad_seats": 6,
+  "other_room_seats": 2,
+  "peak_connected_sockets": 9,
+  "peak_running_rooms": 2,
+  "initial_tick": 540,
+  "command_frames": 144,
+  "load_elapsed_ms": 1347,
+  "total_squad_frames": 198,
+  "max_snapshot_bytes": 39067,
+  "squad_network_bytes": 5717676,
+  "observed_frame_interval_p50_ms": 98,
+  "observed_frame_interval_p95_ms": 131,
+  "final_health": {
+    "ok": true,
+    "rooms": 0,
+    "clients": 0,
+    "running": 0
+  },
+  "checks": [
+    "Invalid team sizes rejected; all five waiting seats receive each count while the separate default duel starts.",
+    "Every seat received its local authority view plus five ordered remote players; seventh join and seat spoof were refused.",
+    "Six seats moved, cast, advanced monotonically and acknowledged 144 inputs; stale movement expired and an invalid cast consumed no sequence.",
+    "A squad departure closed precisely its room and its six seats; the other room continued, then released its sockets and authority."
+  ],
+  "archive": {
+    "filename": "yuga-rust-confluence.zip",
+    "sha256": "91315c2c9ea866dafda4ef10732157b456e237c538c83b1aba614555776a7000",
+    "members": {
+      "serve_rooms.mjs": "4800b48e6673b1e32a89fd8ab12db2096cb501db26858fcbec8afdf53c3fb42b",
+      "room-wasm.mjs": "1b6bad9934fd7fa2d3f68583d9f44e410d4275409a648bb8fd5c75309ddfa282",
+      "yuga-rust.wasm": "67866b9d853ac3bf2a2112a0219e4fb18411eaf0c10e210d31ff96b87ce19a82",
+      "yuga-rust.html": "6c8f2d422e8cd984a9ddbe302d644a3d97a9057b673551f41df2a8788817ec78"
+    }
+  },
+  "hashes": {
+    "host": "4800b48e6673b1e32a89fd8ab12db2096cb501db26858fcbec8afdf53c3fb42b",
+    "authority": "67866b9d853ac3bf2a2112a0219e4fb18411eaf0c10e210d31ff96b87ce19a82",
+    "worker": "1b6bad9934fd7fa2d3f68583d9f44e410d4275409a648bb8fd5c75309ddfa282",
+    "test": "3673dffd5912cf603b93b452a07c88cabcfcbf67e7254ab822529d946b060a5c"
+  }
+}

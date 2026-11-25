@@ -1,0 +1,146 @@
+{
+  "date": "2026-11-25",
+  "reference_view": [
+    {
+      "path": "games/yuga-native/art/hanuman/lookdev/hanuman-imagegen-reference.png",
+      "sha256": "ec2b8360cf22bc75b5d38b0f57a8c33f42d3837dd5fe4f9e497bc4699cab561b"
+    },
+    {
+      "path": "games/yuga-native/art/four-hero-motion/media/art/hanuman.png",
+      "sha256": "19cf1f52953c0286ff71826e1bfd0fba0009145b8ba5156d83068568ee85298d"
+    }
+  ],
+  "project_texture": {
+    "path": "games/yuga-native/art/hanuman/lookdev/madder-cloth-imagegen-albedo.png",
+    "sha256": "82d3335b9ef2acbbc06fd730bbac0b28d359ea4043853d6a3f92da1fe9272c8d"
+  },
+  "donor": {
+    "path": "games/yuga-native/art/four-hero-motion/models/hanuman.glb",
+    "sha256": "fd86d3c5611274482199eeef2e90c5d2f355e9265cf1440390d9dbb209c8ded7"
+  },
+  "source_authoring": {
+    "path": "games/yuga-native/tools/hanuman-art/build.py",
+    "sha256": "f28519ee489fd15dc91f07c97cac585c71e1601b876cd802ac6e410dc086214d"
+  },
+  "prior_matched_camera_review": {
+    "path": "games/yuga-native/art/hanuman/lookdev/review-r2.json",
+    "sha256": "23036a1819db8718bdffbdb4ac24bc21406fc4b8fc444c2d26f1b1ab181d5b0e"
+  },
+  "baseline_project_revision": "aa9fbca3a290b34c00ededc11570fd749d9787b6",
+  "surface_tool": {
+    "path": "games/yuga-native/art/hanuman-hero-finish/tools/surfaces.py",
+    "sha256": "cacbdf31827db2e0a08161e8aeaab3c44d657ee0024cae8d0c96b4b9b4efe872"
+  },
+  "source_ownership": "The donor materials, normal maps, generated cloth scan-style study and hero concept belong to the existing YUGA project. This pass adds original procedural ornament and roughness based on those inputs. No external skin, photo or game texture is imported.",
+  "design": [
+    "The copper-alloy cuirass carries a repeating paired-leaf chase, central ridge, recessed brown metal and lower roughness on raised wear. Narrow binding uses small beaded rims and avoids the broader armor engraving.",
+    "Red madder and saffron use a supplementary weft band with mirrored leaves, interlocked braid and narrow border stripes. The madder image supplies real channel and yarn variation. Four repetitions of the project swatch approximate the dense weave from the earlier look-development review.",
+    "A rest-space atlas applies to the original two-metre Vanara body and its UV0. Muzzle, cheek, deltoid and forearm receive different roughness. Original vertex-painted anatomy and the sculpt pass’s separate groom material remain independent.",
+    "First matched pass revealed a bright, stretched gold patch on the original trouser UVs. The final pass reduces madder accent mixture and metallic response. Authored UV distortion still affects band shape at garment folds."
+  ],
+  "comparison": {
+    "path": "data/surface-compare.webp",
+    "sha256": "a928348613418385c983da45f90d25d31999d89c7c843ad636db892dd35ab70c",
+    "source_composed_pixels": [
+      956,
+      697
+    ],
+    "source_render_sha256": {
+      "native": "29478032a00224b10981c1aa8ad8676bf1a7d74cb7617fbb7dbc317252920e92",
+      "finished": "4481cfc4e3773a3b273b22f9bc578cce1426e26eda1be702dea65432b32535a3"
+    },
+    "renderer": "Blender 4.3.2 Cycles CPU, 2 threads, 28 samples, 458 × 590 per plate",
+    "light_rig": "studio() and shadow_lights() from games/yuga-native/art/four-hero-motion/tools/blender_stills.py",
+    "pose": "idle, normalized time .08",
+    "camera": {
+      "azimuth_deg": -19,
+      "elevation_deg": 5,
+      "ortho_scale_m": 1.67,
+      "look_at": [
+        0.012,
+        -0.035,
+        1.31
+      ]
+    },
+    "comparison_scope": "The candidate is the unmodified native mesh with the material patch. The separately built final groom and integrated runtime capture have their own evidence."
+  },
+  "fixture": {
+    "surface_only_output_sha256": "541dcdb267a3a95eb52f6b2c052c86a789cd6781fcef8875044960b1bfdeac81",
+    "surface_only_output_bytes": 12471388,
+    "preserved_original_buffer_bytes": 8085532,
+    "added_buffer_bytes": 3256780,
+    "exacting_equal_json_tables": [
+      "accessors",
+      "meshes",
+      "skins",
+      "nodes",
+      "animations",
+      "scenes",
+      "samplers"
+    ],
+    "original_skin_joints": 167,
+    "animation_count": 11,
+    "material_slots_preserved": true,
+    "anatomy_roughness_range": [
+      0.4431,
+      0.7176
+    ],
+    "maps": {
+      "Anatomy-metal-rough": {
+        "sha256": "a18cbf6272081f856b3ad9ee9ba6972c1940c79864219587e4340e15760e088a",
+        "bytes": 79831
+      },
+      "Binding-basecolor": {
+        "sha256": "d882891a3b9005507684f581b053fdf6fb163f28553f71e247aa6daa3244de8c",
+        "bytes": 230420
+      },
+      "Binding-metal-rough": {
+        "sha256": "f2a4d5beea72f4acd432b311db4025c0e43f049a479472f3570c78d0d0e4202f",
+        "bytes": 198884
+      },
+      "Binding-normal": {
+        "sha256": "c8fded28667d931997fdb77582e83031c3ff3af1bf9a7eb5d8e0540616c36434",
+        "bytes": 260213
+      },
+      "Cuirass-basecolor": {
+        "sha256": "5518406810865bb719a278234a219000a72d1284934c07519102cb9141972500",
+        "bytes": 238417
+      },
+      "Cuirass-metal-rough": {
+        "sha256": "226bcd15e004541b6e8b7c0e56c2e49da36c53dd0314bcfca804fdaea745949b",
+        "bytes": 227365
+      },
+      "Cuirass-normal": {
+        "sha256": "ebabcc96dc1af7259cf9dfe71b9c0b7a2f6c0ce94f98db561f9efac060cf69f2",
+        "bytes": 313477
+      },
+      "Madder-basecolor": {
+        "sha256": "d698035f8db87116984cb0bf7bcc2d829bfd4ffb7ad3babe16393d31aef567f9",
+        "bytes": 284069
+      },
+      "Madder-metal-rough": {
+        "sha256": "25e4e17046f7845e377ea4986e08517107f3e37b6aa298b8a85230720a131e6f",
+        "bytes": 181485
+      },
+      "Madder-normal": {
+        "sha256": "258c3795ad7a32222be2420b43e6f6ba93ed98a190a7411363a29473dd5796eb",
+        "bytes": 371444
+      },
+      "Saffron-basecolor": {
+        "sha256": "7d28b6cc8b5da969542a199da153786a34b880d088d1eb43dfb075801652d359",
+        "bytes": 318222
+      },
+      "Saffron-metal-rough": {
+        "sha256": "25e4e17046f7845e377ea4986e08517107f3e37b6aa298b8a85230720a131e6f",
+        "bytes": 181485
+      },
+      "Saffron-normal": {
+        "sha256": "258c3795ad7a32222be2420b43e6f6ba93ed98a190a7411363a29473dd5796eb",
+        "bytes": 371444
+      }
+    },
+    "second_build_sha256": "541dcdb267a3a95eb52f6b2c052c86a789cd6781fcef8875044960b1bfdeac81",
+    "duplicate_application_rejected": true
+  },
+  "reproduction": "OPENBLAS_NUM_THREADS=1 python games/yuga-native/art/hanuman-hero-finish/tools/surfaces.py games/yuga-native/art/four-hero-motion/models/hanuman.glb /tmp/hanuman-surface.glb --maps /tmp/hanuman-surface-maps"
+}

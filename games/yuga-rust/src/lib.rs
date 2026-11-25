@@ -13,7 +13,7 @@ pub mod world;
 mod browser {
     use super::{
         battle::{Battle, CastInput, Hero, Motion},
-        combat::Combat,
+        combat::{Combat, GroundAim},
         world::World,
     };
     use std::cell::RefCell;
@@ -88,6 +88,23 @@ mod browser {
                 }
             }
         });
+    }
+
+    #[no_mangle]
+    pub extern "C" fn trial_ground_aim(
+        slot: u32,
+        x: f32,
+        z: f32,
+        height: f32,
+        gx: f32,
+        gz: f32,
+    ) -> u32 {
+        TRIAL.with_borrow(|trial| {
+            trial.as_ref().map_or(GroundAim::Unavailable, |t| {
+                t.combat
+                    .ground_aim(slot as usize, [x, z], height, [gx, gz], &t.world)
+            }) as u32
+        })
     }
 
     #[no_mangle]
