@@ -1,5 +1,7 @@
 # YUGA full game production roadmap
 
+**Latest animation intake:** The [five-hero technical codex roadmap](design/animation-tech-codex-2026/README.md) maps the supplied performance, IK, ability, combo and optimization proposals to the actual rigs and authority. All new items are planned; no runtime, task-ledger status or engine compatibility is implied.
+
 **Latest objective direction:** [Ember Rite](design/ember-rite-5v5/README.md) adapts the two-site 5v5 proposal into a carried-fire objective, with story, hero/color concepts, tested standalone round rules and an [integration roadmap](design/ember-rite-5v5/SOURCES_AND_ROADMAP.md). The Rust experiment is not wired into the current skirmish, network, UI or published ZIP. The objective contract supersedes the earlier Rift Seal timing; no task-ledger completion status is changed.
 
 **Current direction, 25 November 2026.** The latest user direction is a hero-only **5v5** tactical match; lane-minion waves are paused. The current Rust/PlayCanvas package has playable Hanuman and Rama, private 1v1/3v3/5v5 rooms and an interim knockout match, not the proposed objective map or finished roster. A two-rendered-client software test missed Hanuman's new ability cue while the observer received damage; resolving and rechecking that remains open. [Current build](../../yuga-rust/README.md) · [Vanara Sena evidence](design/vanara-sena-2026/README.md)

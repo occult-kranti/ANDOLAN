@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**Animation technical codex.** Use the [five-hero intake and roadmap](../games/yuga-native/docs/design/animation-tech-codex-2026/README.md) for the latest animation, IK, VFX, ability and performance proposals. Its source draft includes unfinished fields; it does not establish motion-capture sessions, engine compatibility or new playable abilities.
+
 **Ember Rite, new 5v5 direction.** Start with the [story, objective rules, proposed ten-hero roster, colors and roadmap](../games/yuga-native/docs/design/ember-rite-5v5/README.md). Its isolated Rust round/series experiment has tests but is not integrated with movement, the online room, UI or the downloadable skirmish. The latest objective proposal supersedes the older Rift Seal timing while retaining its map study.
 
 **Five-hero art direction.** Start with the [ensemble concept, improved brief and roadmap](../games/yuga-native/docs/design/dharmic-heroes-key-visual-2026/README.md). This is new concept art and planning, not a five-hero runtime release. The current Rust build remains a hero-only 5v5 prototype; the two-client rendering issue remains an open qualification gate.

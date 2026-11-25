@@ -1,5 +1,7 @@
 # Hanuman action and art production roadmap
 
+**New design intake:** The [five-hero animation technical roadmap](design/animation-tech-codex-2026/ROADMAP.md) proposes an additional mountain/weapon contact study using the existing Hanuman rig. Its suggested 78-bone skeleton, 12-link tail, damage formula and capture claims are unverified inputs, not the current rig or gameplay.
+
 **Current art direction:** The [five-hero ensemble brief and production roadmap](design/dharmic-heroes-key-visual-2026/README.md) adds a new Hanuman mountain-carry concept and retains the existing rig/contact gates. The generated illustration is not a runtime asset. The separate Rust 5v5 Vanara Sena test still needs a two-client rendering fix; see its [evidence and next steps](design/vanara-sena-2026/README.md).
 
 **Rust and browser delivery, 25 November 2026.** The existing five actions now run from the same fixed-step Rust rules on native and WebAssembly. The hero exporter preserves the original skin and transcribes the revised motion library. [Play the drill](../../yuga-rust/README.md) · [Joint-pose evidence](rust-rebuild/HERO-ANIMATION.md) · [Next hero and world milestones](rust-rebuild/README.md)

@@ -7,6 +7,7 @@ Ember Rite adapts the user's **“plant the fire”** brief into an original 5v5
 - [Ten hero roles, ability concepts and color research](HEROES_AND_COLOR.md)
 - [Maps, modes and player progression](MODES_AND_MAPS.md)
 - [Sources, corrections and implementation roadmap](SOURCES_AND_ROADMAP.md)
+- [Five-hero animation, ability and VFX technical intake](../animation-tech-codex-2026/README.md)
 - [New ember-vessel concept and provenance](../../../art/ember-rite-5v5/README.md) · [Existing five-hero art direction](../dharmic-heroes-key-visual-2026/README.md) · [Mandala Rift sketch and routes](../mandala-rift-5v5/README.md)
 
 ## What exists now

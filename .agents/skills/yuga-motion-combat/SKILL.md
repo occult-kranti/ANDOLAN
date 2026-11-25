@@ -31,6 +31,10 @@ state display, W3 imported rig, W4 collision and W6 package/source freezes.
 
 For Confluence, begin with the [measured 20 Hz action index](../../../games/yuga-native/docs/design/combat-panel-2026/baseline.json)
 and [layered cast design](../../../games/yuga-native/docs/design/combat-panel-2026/README.md).
+The [five-hero animation codex intake](../../../games/yuga-native/docs/design/animation-tech-codex-2026/README.md)
+records proposed IK, effects, combos and compatibility gates. Its capture claims,
+new rig counts and damage formulas are unverified; retain existing server-owned
+movement and action clocks until an explicit, tested gameplay contract changes them.
 The Rust/PlayCanvas Hanuman also has [Vanara Sena](../../../games/yuga-native/docs/design/vanara-sena-2026/README.md)
 on V. Its five short-lived guardian images present one server-owned area field;
 they are not autonomous NPCs. Preserve the telegraph, enemy/team/cover checks,

@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Animation technical roadmap.** The [five-hero codex intake](games/yuga-native/docs/design/animation-tech-codex-2026/README.md) preserves the supplied draft and maps its motion, abilities, bridge, accessibility and performance proposals to existing assets and verification gates. It is a plan; the draft's new abilities and capture claims are not implemented by this update.
+
 **Ember Rite direction.** A new [5v5 fire-vessel objective, story, hero/ability concepts and color study](games/yuga-native/docs/design/ember-rite-5v5/README.md) adapts the supplied inspiration. A separate Rust rules experiment tests ignition, quenching and overtime; the current downloadable skirmish does not yet include the objective mode or its map.
 
 **Five-hero key-art direction.** Explore a new Hanuman, Arjuna, Kali, Rama and Krishna [concept and production brief](games/yuga-native/docs/design/dharmic-heroes-key-visual-2026/README.md). The image is an unlayered concept; the [roadmap](games/yuga-native/docs/design/dharmic-heroes-key-visual-2026/ROADMAP.md) separates art, rigging, runtime integration and performance gates. The current Rust 5v5 build still has two playable heroes.
