@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Five-hero key-art direction.** Explore a new Hanuman, Arjuna, Kali, Rama and Krishna [concept and production brief](games/yuga-native/docs/design/dharmic-heroes-key-visual-2026/README.md). The image is an unlayered concept; the [roadmap](games/yuga-native/docs/design/dharmic-heroes-key-visual-2026/ROADMAP.md) separates art, rigging, runtime integration and performance gates. The current Rust 5v5 build still has two playable heroes.
+
 **New Hanuman ability: Vanara Sena.** Press **V** in the current Rust/PlayCanvas build to call five temporary spectral guardians around an aimed, counterable area. The server applies one timed damage field; the figures are presentation, not autonomous minions. [Ability, animation and source notes](games/yuga-native/docs/design/vanara-sena-2026/README.md) · [Game and room host](games/yuga-rust/downloads/yuga-rust-confluence.zip?raw=true)
 
 **Hanuman anatomy and Blender study.** A reversible, subtle facial-sculpt candidate can be tested in the [separate playable preview](games/yuga-rust/downloads/yuga-rust-hanuman-sculpt-preview.zip?raw=true), with [rig, browser and package evidence](games/yuga-native/art/hanuman-build-qa-2026/README.md). The [anatomy and geometry notes](games/yuga-native/docs/design/hanuman-anatomy-geometry-2026/README.md) include an editable sketch and Blender teaching specimen; the [generated turnaround](games/yuga-native/art/hanuman-turnaround-2026/README.md) is art direction, not the actual 3D model. The normal Confluence build retains its existing hero.

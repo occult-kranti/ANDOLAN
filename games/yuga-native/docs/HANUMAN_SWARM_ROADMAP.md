@@ -1,5 +1,7 @@
 # Hanuman action and art production roadmap
 
+**Current art direction:** The [five-hero ensemble brief and production roadmap](design/dharmic-heroes-key-visual-2026/README.md) adds a new Hanuman mountain-carry concept and retains the existing rig/contact gates. The generated illustration is not a runtime asset. The separate Rust 5v5 Vanara Sena test still needs a two-client rendering fix; see its [evidence and next steps](design/vanara-sena-2026/README.md).
+
 **Rust and browser delivery, 25 November 2026.** The existing five actions now run from the same fixed-step Rust rules on native and WebAssembly. The hero exporter preserves the original skin and transcribes the revised motion library. [Play the drill](../../yuga-rust/README.md) · [Joint-pose evidence](rust-rebuild/HERO-ANIMATION.md) · [Next hero and world milestones](rust-rebuild/README.md)
 
 The current playable ability revision is [`d7aedae8`](https://github.com/occult-kranti/ANDOLAN/commit/d7aedae888ccbb49d726877bd9ad5ce46ce7446c). The five revised actions run on the R5 model. The studio master demonstrates those poses on the higher-detail temple art. The next visual milestone brings that surface treatment into the moving game model. [Play and rebuild](HANUMAN_HANDOFF.md) · [Five-action timing and visual brief](HANUMAN_GAME_DESIGN.md) · [Release evidence](research/hanuman-ability-production/README.md)

@@ -1,6 +1,8 @@
 # YUGA full game production roadmap
 
-**Rust implementation, 25 November 2026.** The new package ships Hanuman and Rama, three-lane armies, match outcomes and private 1v1 and 3v3 rooms. The Rust roadmap maps the remaining team-size, elevation, roster, economy, graphics and release work to its original code and acceptance evidence. [Complete Rust roadmap](rust-rebuild/deep-search/FULL-PORT.md) · [Current evidence and game](rust-rebuild/deep-search/README.md)
+**Current direction, 25 November 2026.** The latest user direction is a hero-only **5v5** tactical match; lane-minion waves are paused. The current Rust/PlayCanvas package has playable Hanuman and Rama, private 1v1/3v3/5v5 rooms and an interim knockout match, not the proposed objective map or finished roster. A two-rendered-client software test missed Hanuman's new ability cue while the observer received damage; resolving and rechecking that remains open. [Current build](../../yuga-rust/README.md) · [Vanara Sena evidence](design/vanara-sena-2026/README.md)
+
+**Five-hero visual track.** The [ensemble art brief and roadmap](design/dharmic-heroes-key-visual-2026/README.md) cover Hanuman, Arjuna, Kali, Rama and Krishna from source review through character boards, one complete hero slice, runtime integration and hardware verification. The new image is a flattened concept, not a playable five-hero release. The earlier 6v6/minion design in the historical sections below is retained for context and is superseded for the current competitive direction. This design addition does not change task-ledger completion statuses.
 
 Updated 23 October 2026. This is the execution guide for the original native YUGA game. The target is the visual coherence, animation quality, combat readability and complete competitive experience requested through Deadlock, Dota 2 and Overwatch references. Those games are reference points, not an assertion that their source, artwork or server implementation has been recovered. The target remains open until the integrated game passes the gates below.
 
@@ -24,7 +26,7 @@ Keep Godot/Blender/glTF. After access and hardware qualification, compare TripoS
 
 The user's target machine is a **USA laptop, US$7,000 maximum**. Plan for a 24 GB RTX 5090 Laptop GPU with at least 64 GB system RAM and 4 TB SSD, subject to exact-SKU verification. Serialize heavy GPU inference/rendering, share coding inference across agents and use larger-memory GPU capacity for models that do not fit. No speedup or remaining-round reduction is assumed before measured production results. The active desktop ledger remains **17/78 accepted packets, 0/13 complete rounds**; the complete competitive target remains open. The detailed pilot owns six roles, evidence and next actions without creating new completion credit.
 
-## Intended finished game
+## Earlier intended game proposal — superseded for current competitive direction
 
 - A native Windows/Linux, third-person, competitive **6 versus 6**, three-lane game. Each team initially assigns two heroes per lane, with rotations through a connected jungle. Practice bots, private rooms and a guided first match precede public competitive matchmaking.
 - Fourteen individually readable myth-inspired heroes: Rama, Hanuman, Sita, Ravana, Arjuna, Duryodhana, Karna, Bhima, Meghnad, Draupadi, Subhadra, Hidimbi, Chitrangada and Ulupi. All heroes are available without gameplay purchases. No duplicate hero within a team; opposing mirrored picks are allowed.
