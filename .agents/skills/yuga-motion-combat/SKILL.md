@@ -37,6 +37,10 @@ anchored for its authoritative lifetime after body recovery. Decorative effects
 use the accepted cast clock; a victim cue needs an actual recipient receipt.
 Review the [source notes and sample rigs](../../../games/yuga-native/docs/research/gamecraft-sources-2026/README.md)
 before adopting a new interpolation, pose or effects method.
+For cinematic camera work, the [Sirio previs packet](../../../games/yuga-native/art/agentic-cinematography-2026/README.md)
+contains a pinned local camera study and explicit source and provider gates. A
+placeholder or generated video remains reference material until its timing and
+camera are checked against the actual rig and playable authority.
 
 ## Phase 1: freeze simulation and motion contracts
 

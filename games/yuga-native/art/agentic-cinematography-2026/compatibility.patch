@@ -1,0 +1,45 @@
+diff --git a/engine/cinematic/render.mjs b/engine/cinematic/render.mjs
+index 9bb78fe..a80cf82 100644
+--- a/engine/cinematic/render.mjs
++++ b/engine/cinematic/render.mjs
+@@ -29 +29,2 @@ const inputProps = { standin: STANDIN, loosen: Number(opt("--loosen") ?? 1), pie
+-const chromiumOptions = { gl: "angle" };
++const chromiumOptions = { gl: process.env.YUGA_GL || "swangle" };
++const browserExecutable = process.env.CHROMIUM_BIN || "/usr/bin/chromium";
+@@ -39 +40 @@ serveUrl = await bundle({ entryPoint: path.join(dir, "src/index.ts"), publicDir,
+-const composition = opt("--stills-plan") || opt("--videos") ? null : await selectComposition({ serveUrl, id: ID, inputProps, chromiumOptions });
++const composition = opt("--stills-plan") || opt("--videos") ? null : await selectComposition({ serveUrl, browserExecutable, id: ID, inputProps, chromiumOptions });
+@@ -48 +49 @@ if (opt("--videos")) {
+-    const comp = await selectComposition({ serveUrl, id, inputProps: props, chromiumOptions });
++    const comp = await selectComposition({ serveUrl, browserExecutable, id, inputProps: props, chromiumOptions });
+@@ -50 +51 @@ if (opt("--videos")) {
+-    await renderMedia({ serveUrl, composition: comp, inputProps: props, chromiumOptions, outputLocation: path.join(base, `${id}.mp4`), codec: "h264", crf: 20, pixelFormat: "yuv420p", scale: Number(opt("--scale") ?? 0.5), concurrency: Number(opt("--concurrency") ?? 3), timeoutInMilliseconds: 120000 });
++    await renderMedia({ serveUrl, browserExecutable, composition: comp, inputProps: props, chromiumOptions, outputLocation: path.join(base, `${id}.mp4`), codec: "h264", crf: 20, pixelFormat: "yuv420p", scale: Number(opt("--scale") ?? 0.5), concurrency: Number(opt("--concurrency") ?? 3), timeoutInMilliseconds: 120000 });
+@@ -59 +60 @@ if (opt("--videos")) {
+-    const comp = await selectComposition({ serveUrl, id, inputProps: props, chromiumOptions });
++    const comp = await selectComposition({ serveUrl, browserExecutable, id, inputProps: props, chromiumOptions });
+@@ -63 +64 @@ if (opt("--videos")) {
+-      await renderStill({ serveUrl, composition: comp, inputProps: props, chromiumOptions, onBrowserLog: process.env.BROWSER_LOG ? (l) => console.log("[browser]", l.type, l.text.slice(0, 400)) : undefined, scale: Number(opt("--scale") ?? 1), frame: Math.min(comp.durationInFrames - 1, Math.round(s * comp.fps)), output, timeoutInMilliseconds: inputProps.pathtrace ? 600000 : 120000 });
++      await renderStill({ serveUrl, browserExecutable, composition: comp, inputProps: props, chromiumOptions, onBrowserLog: process.env.BROWSER_LOG ? (l) => console.log("[browser]", l.type, l.text.slice(0, 400)) : undefined, scale: Number(opt("--scale") ?? 1), frame: Math.min(comp.durationInFrames - 1, Math.round(s * comp.fps)), output, timeoutInMilliseconds: inputProps.pathtrace ? 600000 : 120000 });
+@@ -72 +73 @@ if (opt("--videos")) {
+-    await renderStill({ serveUrl, composition, inputProps, chromiumOptions, scale: Number(opt("--scale") ?? 1), frame: Math.min(composition.durationInFrames - 1, Math.round(s * fps)), output, timeoutInMilliseconds: 120000 });
++    await renderStill({ serveUrl, browserExecutable, composition, inputProps, chromiumOptions, scale: Number(opt("--scale") ?? 1), frame: Math.min(composition.durationInFrames - 1, Math.round(s * fps)), output, timeoutInMilliseconds: 120000 });
+@@ -82 +83 @@ if (opt("--videos")) {
+-    serveUrl, composition, inputProps, chromiumOptions, outputLocation, frameRange,
++    serveUrl, browserExecutable, composition, inputProps, chromiumOptions, outputLocation, frameRange,
+diff --git a/engine/cinematic/src/templates/cameras.ts b/engine/cinematic/src/templates/cameras.ts
+index d5bf8e2..8e4038b 100644
+--- a/engine/cinematic/src/templates/cameras.ts
++++ b/engine/cinematic/src/templates/cameras.ts
+@@ -18 +18 @@ export const V = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z)
+-export function make(info: TemplateInfo, actors: ActorSpec[], shots: (P: ReturnType<typeof planner>) => ShotDef[], set?: { build: SceneSpec["build"]; sky: SceneSpec["sky"] }): Piece {
++export function make(info: TemplateInfo, actors: ActorSpec[], shots: (P: ReturnType<typeof planner>) => ShotDef[], set?: { build: SceneSpec["build"]; sky: SceneSpec["sky"]; keyDir?: [number, number, number]; look?: object }): Piece {
+diff --git a/engine/cinematic/src/templates/index.ts b/engine/cinematic/src/templates/index.ts
+index f72882e..5b4c860 100644
+--- a/engine/cinematic/src/templates/index.ts
++++ b/engine/cinematic/src/templates/index.ts
+@@ -13,0 +14 @@ import { FAMOUS_TEMPLATES } from "./famous";
++import { YUGA_TEMPLATES } from "./yuga-mountain";
+@@ -15 +16 @@ import { FAMOUS_TEMPLATES } from "./famous";
+-export const TEMPLATE_PIECES: Record<string, Piece> = Object.fromEntries([...CAMERA_TEMPLATES, ...CAMERA2_TEMPLATES, ...ANGLE_TEMPLATES, ...PREVIEW_TEMPLATES, ...OBJECT_TEMPLATES, ...SCENE_TEMPLATES, ...ACTION_TEMPLATES, ...ONER_TEMPLATES, ...SCENE2_TEMPLATES, ...PRODUCT_TEMPLATES, ...FAMOUS_TEMPLATES, ...STORY_TEMPLATES].map((p) => [p.id, p]));
++export const TEMPLATE_PIECES: Record<string, Piece> = Object.fromEntries([...CAMERA_TEMPLATES, ...CAMERA2_TEMPLATES, ...ANGLE_TEMPLATES, ...PREVIEW_TEMPLATES, ...OBJECT_TEMPLATES, ...SCENE_TEMPLATES, ...ACTION_TEMPLATES, ...ONER_TEMPLATES, ...SCENE2_TEMPLATES, ...PRODUCT_TEMPLATES, ...FAMOUS_TEMPLATES, ...STORY_TEMPLATES, ...YUGA_TEMPLATES].map((p) => [p.id, p]));

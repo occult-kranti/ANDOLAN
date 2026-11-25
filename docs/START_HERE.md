@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**Cinematography and video research.** The [camera study](../games/yuga-native/art/agentic-cinematography-2026/README.md) records the source/provenance checks, an independently reproducible local orbit and the distinction between previs and game assets. Its [caption report](../games/yuga-native/art/agentic-cinematography-2026/VIDEO_RESEARCH.md) records the eight inaccessible videos and a retry script; none is marked as watched.
+
 **Latest five-pass YUGA panel, 25 November 2026.** Start with the [panel handoff](../games/yuga-native/docs/design/five-round-panel-2026/README.md) and [next production work](../games/yuga-native/docs/design/five-round-panel-2026/NEXT.md). It links the tested Hanuman physics and camera update, the actual Blender film and editable timeline, four concept-art boards, historical-art sources and the full combat review. The [current Rust game download](../games/yuga-rust/downloads/yuga-rust-confluence.zip?raw=true) is distinct from the older native preview and historical release assets. Shiva and Krishna's new action designs remain proposals for Confluence.
 
 **World-design research.** The Elden Ring crossover review records the verified mod sources, a standalone Rust terrain-cache test, a licensed rock intake and a YUGA landmark study. The team brief connects composition work to collision and multiplayer checks. [Elden Ring-inspired world study](../games/yuga-native/docs/research/elden-ring-world-study/README.md)

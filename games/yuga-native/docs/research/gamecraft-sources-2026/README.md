@@ -38,6 +38,8 @@ The script verifies both binary hashes, loads each in a fresh empty Blender scen
 
 ## Video review queue
 
+The [later caption-access check](../../../art/agentic-cinematography-2026/VIDEO_RESEARCH.md) tried `yt-dlp`, a transcript library and public transcript services for these four videos and four earlier user-supplied links. It did not obtain captions or footage; the queue below remains unreviewed.
+
 These are verified public video titles and uploader identities. YouTube returned HTTP 403 for direct access in this environment, and a public English-caption endpoint returned an empty payload for the first two. Video frames and transcripts were not reviewed. The links below are for a later source review with access to playback.
 
 | Video | Relevance to investigate |

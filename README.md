@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Agentic cinematography study.** A local camera-blockout experiment evaluates a public editor copy and Sirio Berati's separate MIT-licensed camera pipeline. The four-second YUGA orbit is a placeholder reference, with a reproducible setup, a caption-access report and adoption gates. [Study, clip and roadmap](games/yuga-native/art/agentic-cinematography-2026/README.md)
+
 **New five-pass game-development panel.** Combat, physics, animation, world art and art-history specialists reviewed the existing game and produced action specifications, four illustrated ability boards, an editable Hanuman Blender sequence, a curated museum reference gallery and a tested Rust/browser update. Start with the [panel handoff and evidence](games/yuga-native/docs/design/five-round-panel-2026/README.md) and its [next production roadmap](games/yuga-native/docs/design/five-round-panel-2026/NEXT.md). The art boards and Blender sequence are studies; the remaining commercial-quality game work is identified in the roadmap.
 
 **World reference and asset study.** Explore a new temple, ghat and wetland direction for YUGA, with verified crossover-mod sources, a reusable terrain-cache experiment and a Blender environment study. [World-design brief and source decisions](games/yuga-native/docs/research/elden-ring-world-study/README.md)
