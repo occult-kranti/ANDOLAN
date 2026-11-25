@@ -1,6 +1,6 @@
 # Hanuman Trial handoff
 
-Continue the offline Hanuman practice court on `game/yuga-hanuman-trial`. Commit `12b5678915e688ee99baa8170bb35de30c7affb0` contains the playable model, ability system, effects and reviewed media. Later documentation commits link to that evidence. The separate native production branch had advanced to `82b1a4d3` when this trial was published. Integration with that branch needs its own review and gameplay run. [Verified source checkpoint](https://github.com/occult-kranti/ANDOLAN/commit/12b5678915e688ee99baa8170bb35de30c7affb0)
+The offline trial on `game/yuga-hanuman-trial` includes the five revised Blender motions, projected ability marks and event-driven sound. The portable preview uses gameplay from [`d7aedae8`](https://github.com/occult-kranti/ANDOLAN/commit/d7aedae888ccbb49d726877bd9ad5ce46ce7446c). The playable rig and the detailed temple scene share action data. They have different meshes and materials. [Linux and Windows downloads](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-hanuman-abilities-2026-11-25) · [Watch the gameplay reel](../art/hanuman/reels/hanuman-abilities.mp4) · [Open the editable actions](../art/hanuman/abilities/hanuman-ability-actions.blend) · [Animation and package evidence](research/hanuman-ability-production/README.md)
 
 ## Open and play
 
@@ -36,7 +36,7 @@ godot --headless --path games/yuga-native --script res://tests/hanuman_ground_fi
 | --- | --- |
 | Final R5 imported rig and motion | 15/15 rig checks and 15/15 tail checks. The four-joint secondary motion reacts to run, sprint, turn and landing. It fades into the authored sweep and pulse before impact. [Rig](research/hanuman-nov25/final/rig.json) · [Tail](research/hanuman-nov25/final/tail.json) |
 | Actual trial and five profile-driven actions | 30/30 final launcher checks and 20/20 presentation checks. The earlier R3 ordinary input run reached all five impacts and exited normally. The separate combat suite passed 39/39. [Launcher](research/hanuman-nov25/final/launcher.json) · [Presentation](research/hanuman-nov25/final/effects-owner.json) · [Ordinary route](research/hanuman-nov25/native-r2/receipt.json) · [Combat](research/hanuman-nov25/native-r2/combat.json) |
-| Reviewed motion and effects | The studio reel has 120 rendered frames. The final native reel has 112 rendered frames and uses scripted input in the actual trial. Both are silent at 16 frames per second. [Studio reel](../art/hanuman/reels/hanuman-motion.mp4) · [Native reel](../art/hanuman/reels/hanuman-gameplay.mp4) · [Independent review](research/hanuman-nov25/independent-rounds-4-5.md) |
+| Reviewed motion and effects | The studio reel has 120 rendered frames. The original native reel has 112 rendered frames and uses scripted input in the actual trial. Both are silent at 16 frames per second. [Studio reel](../art/hanuman/reels/hanuman-motion.mp4) · [Native reel](../art/hanuman/reels/hanuman-gameplay.mp4) · [Independent review](research/hanuman-nov25/independent-rounds-4-5.md) |
 
 For the temple court art pass, Godot 4.6.3 reran the existing trial's combat (39), presentation (20), and launcher (30) checks with zero failures. The art master still needs a baked game export, in-engine material review and frame-time measurements before it can replace the playable mesh.
 

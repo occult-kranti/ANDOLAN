@@ -1766,6 +1766,69 @@ def start_readme(platform: str, engines: dict | None = None) -> str:
     return f'''YUGA — RAMA HERO PRACTICE\nOriginal Rama combat, Confluence exploration and animated film / {platform} x86_64\n\nExtract the ENTIRE ZIP to one folder, then run {start}.\nNo Godot editor installation is required. {runtime_text}\n\nDefault controls (keyboard actions are remappable)\nWASD / arrows: move; mouse: aim; LMB: Kodanda arrow; Space: jump;\nShift: sprint; R: reload; Q: Piercing Dawn; E: Measured Step;\nC: Guardian Circle; X: Dawn Volley; F: flight; G: tether;\nCtrl: descend in flight; Esc: pause/release cursor; F2: help/remap;\nF3: Rama ability sheet; F5: reset/respawn; N: Confluence day/night.\nSettings include aim sensitivity, sound, fullscreen, shadows and night.\n\nCompatibility fallback\nRun {start} --rendering-method gl_compatibility\nThe default Forward+ renderer needs Vulkan-capable graphics. The compatibility\nrenderer omits Forward+ glow and SSAO. A recent graphics driver is recommended.\n\nScope\nThe courtyard uses Rama's actual five-action kit against five 90-health\npractice targets. Cleared targets stay down until F5. Primary attacks use a\nshort timed draw; hold-to-charge is not implemented. Four distinct abilities\nprovide a piercing arrow, collision-limited step, a protective healing circle\nand a telegraphed three-arrow volley. Guardian Circle affects Rama and eligible\nfriendly troops. Hero damage/death/respawn uses explicit offline receivers.\n\nConfluence is an offline 140 x 260 m arena with paired army waves, five troop\nroles including cannon carts and chariots, last-hit gold, core outcomes, and\nthree capture/contest/supply relays. Flight and grappling use finite energy,\ncollision limits and landing platforms. Escape opens practice and travel\nactions; F5 restores ordinary waves and neutral relays. The retained fourteen\ninvocation catalogue is a legacy study system, separate from Rama's main kit.\n\nWatch duel opens a separate 24-second scripted Rama-versus-Ravana\nSentinel film with its own animation, camera, effects and synthesized soundtrack.\nNative online matches and the full production hero roster remain unfinished.\nThis package does not establish commercial-game visual parity, human balance\nacceptance, or physical-GPU performance. Windows is packaged and archive-validated\nfrom Linux; native Windows execution has not been verified here.\n\nLicenses and provenance\nSee NOTICE/ and PACKAGE-MANIFEST.json. Original project sources and evidence:\nhttps://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production/games/yuga-native\n\nLinux desktop runtime dependencies\nA desktop X11/Wayland session, graphics/audio drivers and standard system\nlibraries are required. The ZIP does not bundle an operating system. On Linux,\nif your unzip tool drops executable bits, run: chmod +x launch.sh godot\n'''
 
 
+def hanuman_readme(platform: str, has_sample: bool) -> str:
+    launch = './launch.sh' if platform == 'linux' else 'launch.bat'
+    sample = ('\nSee SAMPLES/hanuman-ability.png for a frame from the ability preview.\n'
+              if has_sample else '')
+    return f'''YUGA · HANUMAN TRIAL
+Portable offline practice | {platform} x86_64
+
+Extract the entire ZIP to one folder, then run {launch}.
+The bundled Godot runtime loads the game and needs a desktop session and
+working graphics and audio drivers.
+
+Choose Hanuman, select Begin Hanuman Trial, then select Begin practice.
+WASD or arrows move. Mouse aims. Space jumps and Shift sprints.
+
+LMB  Vajra Gada       Sweep a short frontal arc.
+Q    Vajra Kavacha    Protect yourself and allies in the marked forward fan.
+E    Maruti Udayana   Vault toward the marked endpoint.
+C    Lanka Dahan      Cast embers behind you. The floor mark fades after impact.
+X    Mountain Pulse   Aim at a clear patch of ground and deliver a pulse.
+
+Escape pauses. F5 resets practice. Use Return to title to change modes or quit.
+The ability cards reflect the active key bindings.
+
+Forward+ uses Vulkan. If it fails to start, try {launch} --rendering-method gl_compatibility.
+On Linux, use chmod +x launch.sh godot if your unzip utility drops executable bits.
+
+See NOTICE/ for engine, asset and audio attribution and PACKAGE-MANIFEST.json
+for build identity. This trial runs offline.{sample}
+'''
+
+
+def copy_hanuman_materials(destination: Path, sample: Path | None) -> None:
+    source = PROJECT / 'art' / 'hanuman'
+    manifest = json.loads((source / 'manifest.json').read_text())
+    hero = PROJECT / 'assets/heroes/hanuman/hanuman.glb'
+    if digest(hero) != manifest['glb_sha256'] or hero.stat().st_size != manifest['bytes']:
+        raise ValueError('Hanuman asset differs from its provenance manifest')
+    audio_notice = destination / 'NOTICE' / 'HANUMAN-ABILITY-AUDIO.json'
+    cues = json.loads(audio_notice.read_text())['files']
+    if not cues:
+        raise ValueError('Hanuman audio notice requires cue entries')
+    for name, cue in cues.items():
+        expected = f'assets/audio/hanuman-trial/{name}.wav'
+        if cue['path'] != expected or digest(PROJECT / expected) != cue['sha256']:
+            raise ValueError('Hanuman audio differs from its provenance: ' + name)
+    notices = destination / 'NOTICE' / 'Hanuman'
+    notices.mkdir()
+    for name in ('NOTICE.md', 'manifest.json'):
+        payload = (source / name).read_bytes()
+        if SECRET_CONTENT.search(payload):
+            raise ValueError('Potential credential marker in Hanuman notice: ' + name)
+        (notices / name).write_bytes(payload)
+    if sample is not None:
+        if not sample.is_file() or sample.is_symlink() or sample.stat().st_size > 8 * 1024 * 1024:
+            raise ValueError('Hanuman ability sample requires a small regular PNG')
+        payload = sample.read_bytes()
+        if not payload.startswith(b'\x89PNG\r\n\x1a\n') or SECRET_CONTENT.search(payload):
+            raise ValueError('Hanuman ability sample is not a safe PNG')
+        folder = destination / 'SAMPLES'
+        folder.mkdir()
+        (folder / 'hanuman-ability.png').write_bytes(payload)
+
+
 def copy_rama_crown_companions(project: Path, destination: Path) -> dict:
     """Keep the schema6 parent/attribution references readable in a portable ZIP."""
     copied = {}
@@ -2012,8 +2075,13 @@ def package_all(args: argparse.Namespace, build: Path, exported: dict) -> dict:
         else:
             launcher = '@echo off\r\n"%~dp0godot.exe" --main-pack "%~dp0yuga-native.pck" %*\r\n'
             (staging / 'launch.bat').write_bytes(launcher.encode())
-        (staging / 'START-HERE.txt').write_text(start_readme(platform, engines), encoding='utf-8')
+        hanuman = getattr(args, 'hanuman_trial', False)
+        sample = getattr(args, 'hanuman_sample', None)
+        readme = hanuman_readme(platform, sample is not None) if hanuman else start_readme(platform, engines)
+        (staging / 'START-HERE.txt').write_text(readme, encoding='utf-8')
         safe_notice_copy(staging)
+        if hanuman:
+            copy_hanuman_materials(staging, sample)
         if platform == 'linux':
             copy_public_runtime_notice(staging, engines)
         if streamed is None:
@@ -2063,10 +2131,15 @@ def main() -> int:
     parser.add_argument('--build-dir', type=Path, default=PROJECT / 'build')
     parser.add_argument('--stream-large-payloads', action='store_true',
                         help='Stream validated engine/PCK sources into identical ZIP entries without expanded copies')
+    parser.add_argument('--hanuman-trial', action='store_true',
+                        help='Use Hanuman Trial quickstart and validate its bundled attribution')
+    parser.add_argument('--hanuman-sample', type=Path, help='Bundle a small Hanuman ability preview PNG')
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument('--export-only', action='store_true')
     modes.add_argument('--package-only', action='store_true')
     args = parser.parse_args()
+    if args.hanuman_sample and not args.hanuman_trial:
+        parser.error('--hanuman-sample requires --hanuman-trial')
     build = args.build_dir.resolve()
     build.mkdir(parents=True, exist_ok=True)
     if args.package_only:

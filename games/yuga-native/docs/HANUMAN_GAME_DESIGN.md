@@ -1,105 +1,48 @@
-# Hanuman, the Returning Leap
+# Hanuman · The Returning Leap
 
-Hanuman is a close-range rescuer in YUGA’s standalone native practice court.
-His low, sweeping mace gives him room to hold a front. The ward buys time,
-the vault changes the angle of approach, and the tail answers someone trying
-to follow. The mountain cast asks the player to choose a landing that serves
-both allies and the attack. These are original gameplay interpretations of
-the figure’s courage, service, strength and mountain-bearing exploits.
+Hanuman is a close-range rescuer in YUGA’s offline practice court. He clears space with the gada, shields an ally in front of him, vaults to a clear position and leaves a short-lived rear warning when enemies follow. Mountain Pulse asks him to commit to a shared landing area for rescue and pressure. In a typical exchange, use the shortest action that solves the immediate problem and keep the vault available for the next opening. [Play the trial](HANUMAN_HANDOFF.md)
 
-The supplied *Mythic 3D Hero Design Pipeline* describes a broad silhouette,
-guard gestures, grounded counterplay and a plan for readable windup, travel and
-release. Its Hanuman chapter on PDF pages 12–15, turnaround direction on page 28,
-and courtyard sequence on page 35 informed this slice.
-The existing Godot third-person camera, native practice clock, target receivers
-and input actions determined what could be exercised in this build. The PDF’s
-account, model-access and third-party claims are background material. [Original 42-page brief](../../../docs/handoff/Mythic-3D-Hero-Design-Pipeline.pdf)
+## Inspiration and interpretation
 
-| Input | Action | Read and response | Practice tuning |
+Hanuman’s leap in search of Sita and the return with the medicinal mountain give the kit its two movement images: a committed departure and purposeful return. Griffith’s account of the burning of Lanka also includes Hanuman’s concern for Sita afterward. YUGA borrows the image of the lit tail for a bounded defensive sweep. The gada silhouette and protective hand gesture come from the supplied art brief. Ward properties, damage, cooldowns and all combat shapes are game design choices. The practice opponents are Sun and Moon units in an original court. [Griffith, Book V leap](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L45405) · [Book V fire and reflection](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L48557) · [Book VI medicinal herbs](https://github.com/GITenberg/The-R-m-yan-of-V-lm-ki-translated-into-English-verse_24869/blob/b48a7a226e8a20bed61131382aa5b8bf2206e039/24869-0.txt#L55454) · [Supplied pipeline brief, PDF pp. 12–15, 28 and 35](../../../docs/handoff/Mythic-3D-Hero-Design-Pipeline.pdf)
+
+## Playable timing and shape
+
+The profile is authoritative for practice tuning. Times below are in seconds and run from the accepted cast. Cooldowns start at acceptance. The animation phase is the fraction of the authored clip reached at **release**, including on actions whose impact comes later. [Ability profile](../assets/design/hanuman-ability-kit.json) · [Combat clock](../scripts/hanuman_combat.gd) · [Actor playback](../scripts/hanuman_actor.gd)
+
+| Input and action | Release → impact → ready | Rule geometry and outcome | Clip and release phase |
 | --- | --- | --- | --- |
-| LMB | **Vajra Gada** | Mace preparation and an amber frontal arc. Step back, cross behind or use stone cover. | 0.25 s preparation, 0.30 s recovery, 0.60 s cadence. 34 enemy damage at up to 3.5 m. |
-| Q | **Vajra Kavacha** | Open-palm guard and a pale green fan. Allies use the marked side of the guard and keep a clear line. | 0.35 s preparation, 0.25 s recovery, 9 s cooldown. 48 shield for 3 s on the caster and eligible allies within the 5.5 m fan. |
-| E | **Maruti Udayana** | A forward path shows the planned endpoint. The actor sweeps through the physical course and may stop earlier. | 0.20 s preparation, 0.45 s movement, 0.20 s recovery, 7 s cooldown. Up to 8.5 m with a collision-aware plan and no payload damage. |
-| C | **Lanka Dahan** | The rear sector lights up before the tail sweeps. Step toward either flank or behind cover to break the lingering exposure. | 0.45 s preparation, 0.40 s recovery, 11 s cooldown. 28 enemy damage and up to 16 over 2 s inside the 5 m sector. |
-| X | **Mountain Pulse** | The 7 m landing mark is fixed before release. Leave it or place cover between yourself and the landing. | 0.70 s preparation, 0.45 s travel, 0.50 s recovery, 30 s cooldown. A clear aim point within 14 m receives 65 enemy damage and up to 45 allied healing. |
+| **LMB · Vajra Gada** | 0.25 → 0.25 → 0.55. Recast at 0.60. | Frontal sector, 3.5 m and about 113° wide, with 1.4 m vertical tolerance. Deals 34 enemy damage. | `fire` · .26 |
+| **Q · Vajra Kavacha** | 0.35 → 0.35 → 0.60. Recast at 9.00. | Frontal sector, 5.5 m and about 133° wide, with 1.6 m vertical tolerance. Applies up to 48 shield for 3 s to the caster and qualifying allies. | `cast2` · .50 |
+| **E · Maruti Udayana** | 0.20 launch → up to 0.45 travel → 0.85 ready. Recast at 7.00. | Planned forward path up to 8.5 m, with 0.48 m horizontal clearance in the rule and a separate physics sweep for execution. The movement receipt reports an accepted launch. | `cast1` · .08 |
+| **C · Lanka Dahan** | 0.45 → 0.45 → 0.85. Field ends at 2.45. Recast at 11.00. | Rear sector, 5 m and about 163° wide, with 1.5 m vertical tolerance. Deals 28 enemy damage at impact, then 8 per second for exposure within the 2 s field. | `tail_sweep` · .50 |
+| **X · Mountain Pulse** | 0.70 → 1.15 → 1.65. Recast at 30.00. | Ground disk with 14 m targeting range, 7 m radius and 2.5 m vertical tolerance. Deals 65 enemy damage and heals eligible allies, including the caster, by up to 45. | `mountain_pulse` · .55 |
 
-Q shields through the existing status receiver. The forward fan limits which
-other receivers benefit. The shield itself absorbs accepted damage from any
-direction. C remains active independently of Hanuman once the cast has
-released, so it can cover a retreat without blocking the next action. X
-projects the pulse to the mark while Hanuman stays on the ground. Position,
-health, team, vertical tolerance and cover are checked by authority at receipt
-time. Shields and healing use existing caps.
+The 20 Hz practice clock fixes aim and geometry at cast acceptance, checks team, height and cover for each receiver, and applies payloads once per impact. One action can occupy the actor at a time. Up to three accepted casts can remain live so the ember field can continue as the next action starts. The actor commits its movement input during an action. The collision sweep can shorten a vault and defeat, a round outcome, or a reset can retire live effects. [Combat implementation](../scripts/hanuman_combat.gd) · [Rule shapes](../scripts/ultimate_rules.gd) · [Current rule checks](../tests/hanuman_combat_cases.gd)
 
-## A short court sequence
+## Anticipation, contact, recovery and response
 
-1. **Approach.** Establish a clear three-quarter silhouette with the gada
-   against the stone and leave enough space behind the tail. Step toward the
-   first target and strike once so its health change can be read against the
-   windup and contact.
-2. **Protect.** Face an ally and use Vajra Kavacha. Keep both the hand and the
-   translucent outline readable over the stone. Let a shield amount and the
-   guarded audience speak for the action.
-3. **Change angle.** Set up the vault route from an unobstructed face. Show the
-   lower camera following the lift, then linger long enough to see how the
-   feet return to support. Land near a new angle and turn the tail sector so
-   one target remains inside and another is visibly outside.
-4. **Deliver and recover.** Aim Mountain Pulse between the injured ally and an
-   enemy target. Keep the edge of the landing mark visible through travel.
-   The landing and the health receipts share an authority beat. Close by
-   returning Hanuman to the ordinary grounded stance.
+The motions below are authored on the Hanuman rig. Godot retimes each clip to the committed cast. The independent runs measured the release marker for every action and the later impact marker for Mountain Pulse. [Motion verification](research/hanuman-ability-production/QA-VERIFICATION.md)
 
-## Temple court keyframe
+| Action | Anticipation | Contact and effect | Recovery, vulnerability and counterplay |
+| --- | --- | --- | --- |
+| **Vajra Gada** | Plant the lead foot, coil the trunk and show the head of the gada against the far background. The floor arc establishes the exact range. | Hold the right grip around the handle as the head crosses the frontal sector at 0.25 s. A short amber crescent gives the direction of force. | Let the shoulders follow through before bringing the gada back to guard. The stationary commitment and short frontal reach allow a retreat, flank or solid cover. |
+| **Vajra Kavacha** | Free the non-weapon hand and bring the palm forward. A pale green fan shows which allies to face and where to stand. | At 0.35 s the guard reaches its open pose. Mark recipients only when the shield receiver accepts it. A low ring and lattice distinguish recipient status from the selection fan. | Lower the palm and replant. The 3 s shield absorbs accepted damage from any direction and can be exhausted. Cover can keep an ally outside the cast’s reach. Enemies can delay their pressure or reposition during the 9 s cooldown. |
+| **Maruti Udayana** | Load the hips and ankles in a compact crouch while the planned endpoint appears. Keep the near foot and exit route visible. | At 0.20 s, extend from planted feet as the accepted sweep starts. A short wind ribbon describes the path. Use actual collision and floor contact for the landing pose and its landing ring. | Settle through the knees and let the tail catch up with the torso. Cover can shorten the planned route or block the sweep. Opponents can read the endpoint and pressure the landing. The current vault has no damage payload or immunity. |
+| **Lanka Dahan** | Show the hips and tail coiling away from the threat. Place the rear warning low enough to read under the moving tail. | At 0.45 s, send the tail through the rear arc with two rising ember ribbons. The first burst and later ticks use the same locked sector. An impact stamp supports the 2 s field. | Return the torso forward while the low floor wash remains at the cast origin. Leave the rear arc or break the center-to-target line to avoid later ticks. The follow-through completes at 0.85 s, before the field ends. |
+| **Mountain Pulse** | Set Hanuman low with both feet showing. Fix a visible landing circle before release, then raise the arm and shoulders in a lifting gesture. | Send a ridge-shaped symbol at 0.70 s while Hanuman stays grounded. Finish its descent at the locked disk at 1.15 s. The ring, vertical break, receipt and landing sound share that outcome. | Lower the shoulders and settle back to guard during the 0.50 s recovery. Move outside the disk or use cover from its center. The long warning and cooldown make target choice more important than keeping the animation busy. |
 
-Frame the guarding stance with both feet in the paving plane and the gada
-supported on the rear shoulder. Let the relaxed hand anchor against the belt.
-The eye line leads toward the far courtyard while the tail rises into open
-sky on the opposite side. Use the lamps and cool edge light to keep fur,
-bronze and cloth readable in a still frame. The staging can open the shot
-sequence before the existing approach and combat beats. [Editable scene and
-reference review](../art/hanuman/match/README.md)
+Protective body language serves the rescue role. Hanuman remains damageable through the action under the existing receiver rules. Parries, invulnerability frames, enemy stagger, revive, new terrain changes and competitive tuning would each require a design and rule change. The retained player-feedback study motivates keeping a clear danger or objective cue ahead of decorative detail. [Presentation profiles](../assets/design/hanuman-presentation.json) · [Tail response limits and clip weights](../assets/design/hanuman-tail-response.json) · [Player-feedback evidence and scope](research/RESEARCH_BRIEF.md)
 
-## Motion and effects coverage
+## Separate visual responsibilities
 
-Frame the Blender study as a series of cuts. Each action starts from its own
-neutral pose so an edit can cover repositioning. At 30 fps, use these anchors
-and retime the sampled clip around its contact phase. Keep the full body in
-the clear frame through release, then show where the effect goes.
+- **Geometry carries shape and timing.** Keep the floor boundary readable at anticipation and under reduced effects. Use the gada and palm silhouette, collision-aligned vault ribbon, rear ember ribbons, and the travelling mountain ridge and landing shards as distinct moving shapes. Use material or audio accents only after the main action reads at the shoulder camera. [Presentation event consumer](../scripts/hanuman_trial_effects.gd) · [Independent motion and effects review](research/hanuman-nov25/independent-rounds-4-5.md)
+- **Timed floor texture carries lingering appearance.** Lanka Dahan stamps its remaining active duration. Mountain Pulse stamps a short impact afterglow through recovery. The bounded three-tile atlas is presentation driven. Depth, cover and unit outcomes still use the rule checks. The mark must retain its outline, reset cleanly and stay legible alongside another cue. [Ground field renderer](../scripts/hanuman_ground_field.gd) · [Ground texture verification](research/hanuman-indie-runtime/ground-verification.json)
+- **The flat footprint carries ground contact.** A feathered floor footprint fades with height and at the receiver edge, and accounts for the directional-shadow preference. Keep it quiet during anticipation and landing so it cannot read as a hit zone. Treat pose-projected shadow meshes on steps or multiple levels as future experiments with separate evidence. [Contact shadow](../scripts/hanuman_contact_shadow.gd) · [Matched contact-shadow verification](research/hanuman-indie-runtime/shadow-verification.json)
+- **Projected relief carries background detail.** In the Blender master, face-local relief textures give distant stone patterns surface detail. Preserve geometric silhouettes where the eye reads the structure. Judge the effect on ability readability in the actual game camera after runtime adaptation. [Editable court and renders](../art/hanuman/match/README.md) · [Technique receipts](research/HANUMAN_INDIE_RENDER_TECHNIQUES.md)
 
-| Beat | Camera and contact | Effects to review |
-| --- | --- | --- |
-| Gada · frames 32–48 | Front three-quarter, `fire` at phase .26. Frame the right glove and mace handle together. | Read the half arc from the ground line. Add an ivory stroke on the swung side without covering hand contact. |
-| Kavacha · frames 49–66 | Front three-quarter, `cast2` at phase .50. Show the open palm above the planted lead foot. | Let the forward fan establish allies’ selection. Keep the pale green shield lattice around the recipient as a separate beat. |
-| Vault · frames 67–91 | Broadside, `cast1` at phase .08. Follow the parabola and hold the final step long enough to see support. | Wind marks the route between takeoff and the destination. The collision sweep can stop short of that destination. |
-| Tail · frames 92–118 | Rear three-quarter, `tail_sweep` at phase .50. Include the space behind the hips and follow the tail after contact. | Two orange sheets rise inside the rear boundary. The low warm wash stays within the marked area through the lingering exposure. |
-| Mountain · frames 119–168 | Grounded wide, `mountain_pulse` at phase .55. Keep Hanuman at one side of the landing circle. | The crest falls in roughly 14 frames from release to impact. The vertical break and floor ring start together at impact. |
+## Shoot and review the sequence
 
-The [runtime effect profile](../assets/design/hanuman-presentation.json) defines
-the palettes, heights and spatial audio for the actual game. Use the original
-idle, travel and contact frames to verify pacing in the game renderer. The
-studio cuts can frame the same mechanics more clearly, especially the tail
-field. They demonstrate animation and staging independently of game input.
+Start with the existing three-quarter court pose, then show a brief ordinary approach. Cut front three-quarter for the gada and ward, broadside for takeoff and landing, rear three-quarter for the tail, and wide for Mountain Pulse with Hanuman beside the visible landing mark. Keep one unedited native take from the normal title route through every cast so silhouette edits can be checked against gameplay time. Use a target inside and just outside each boundary, and place an eligible ally behind cover for ward and pulse comparisons. [Studio shot list](../tools/hanuman-capture/storyboard.json) · [Native film plan](../tools/hanuman-capture/native-storyboard.json) · [Actual input archive](research/hanuman-indie-runtime/ordinary-input.zip)
 
-## Authoring and verification
-
-The [Hanuman profile](../assets/design/hanuman-ability-kit.json) defines the
-slot order, geometry, tuning, colors and animation phase hints. The tail sweep
-and mountain pulse use distinct planted clips. The vault reaches its early
-launch pose at release, and the actor's sweep drives its flight. The kit accepts
-one action at a time and runs on the actual 20 Hz practice signal. Up to three
-bounded casts may exist concurrently so the ember field can outlive recovery.
-The kit emits a start, release, payload and recovery before ending the effect.
-The movement receipt reports the start of an accepted sweep. CharacterBody
-motion determines the final position.
-
-The ability tests use the actual courtyard target adapter, clock, geometry and
-vitals. They assert once-only release, cooldown, cover, cap, cancellation and
-receiver reset behavior. The separate rig tests own visual contact and actual
-keyboard entry. Values are practice tuning. Shield parries, directional
-damage absorption, transformed hitboxes, progression and competitive PvP
-balance need their own implementations and tests.
-
-```sh
-godot --headless --path games/yuga-native --script res://tests/hanuman_combat_cases.gd
-godot --headless --path games/yuga-native --script res://tests/hanuman_presentation_cases.gd
-```
+The current 24 fps gameplay reel follows each ability through the real trial and resets the court between shots. Its sound edit places the original cues at their measured release and impact frames. The separate Cycles sheet uses three poses per move to show cloth, fur, goldwork and silhouette at closer range. The production roadmap tracks grounded foot and grip measurements, model baking and player testing. [Gameplay reel and method](research/hanuman-ability-production/reel-method.md) · [Studio pose sheet](../art/hanuman/abilities/hanuman-ability-poses.jpg) · [Roadmap](HANUMAN_SWARM_ROADMAP.md)

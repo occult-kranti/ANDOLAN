@@ -51,7 +51,7 @@ func _begin(case: Array) -> Node3D:
 	return _effects.get_node_or_null("Cue%d" % _cast_id)
 
 
-func _stamp_valid(stamp: MeshInstance3D, case: Array, column: int, row: int) -> bool:
+func _stamp_valid(stamp: MeshInstance3D, column: int, row: int) -> bool:
 	if stamp == null or not stamp.visible or stamp.get_meta("art_phase", -1) != column:
 		return false
 	var material := stamp.material_override as ShaderMaterial
@@ -98,10 +98,10 @@ func _one(case: Array, row: int) -> void:
 	var cue := _begin(case)
 	var stamp: MeshInstance3D = cue.get_node_or_null("InvocationMark") if cue != null else null
 	_assert(case[0] + " windup uses the correct painted mark within its footprint",
-		_stamp_valid(stamp, case, 0, row) and _within_shape(stamp, case[1]))
+		_stamp_valid(stamp, 0, row) and _within_shape(stamp, case[1]))
 	_assert(case[0] + " accepted release selects its own three-dimensional silhouette",
 		_emit("release", case, _cast_id) and cue.has_node(case[2]) and cue.get_node(case[2]).get_child_count() == case[3] and
-		_stamp_valid(stamp, case, 1, row) and _within_shape(stamp, case[1]))
+		_stamp_valid(stamp, 1, row) and _within_shape(stamp, case[1]))
 	_release_geometry[case[0]] = _visible_mesh_count(cue)
 	if case[0] == "mountain_pulse":
 		var payload: Node3D = cue.get_node("MountainPayload")
@@ -118,7 +118,7 @@ func _one(case: Array, row: int) -> void:
 	if case[0] == "vajra_gada":
 		_assert("one-frame combat resolution still leaves time to show the crescent", stamp.get_meta("art_phase") == 1)
 	_effects._process(.105)
-	_assert(case[0] + " resolves to its distinct painted impact frame", _stamp_valid(stamp, case, 2, row) and _within_shape(stamp, case[1]))
+	_assert(case[0] + " resolves to its distinct painted impact frame", _stamp_valid(stamp, 2, row) and _within_shape(stamp, case[1]))
 	_assert(case[0] + " cancel hides the whole cast in the same frame", _emit("cancel", case, _cast_id) and not cue.visible and _effects.report().ground_field.active == 0)
 
 
