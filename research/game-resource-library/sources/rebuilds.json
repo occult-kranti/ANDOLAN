@@ -1,0 +1,1465 @@
+[
+  {
+    "id": "rct2-light-atlas",
+    "name": "Night lighting for rides and streets",
+    "project": "OpenRCT2/OpenRCT2",
+    "revision": "28bb5e553467b5471516a5a22a3e7294a6d8dc94",
+    "path": "src/openrct2/drawing/LightFX.cpp",
+    "category": "graphics",
+    "kind": "light renderer",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "palette-indexed framebuffer"
+    ],
+    "summary": "CalcLightIntensityLantern and RenderToTexture combine light shapes with a palette-rendered scene. Separate emitters attach to vehicles and shop entrances.",
+    "adaptation": "Profile small light masks for lanterns and moving vehicles, and keep art, attenuation curves and color response in new palettes.",
+    "evidence": "source-read",
+    "sha256": "ded4f41e5eae7ed1cb30fd25603f6c8e26344bb0995b766b82d2b010bc4a62af",
+    "license": "GPL-3.0-or-later",
+    "license_path": "licence.txt",
+    "rights_note": "The project readme allows v3 or later. The code license does not grant RollerCoaster Tycoon scenery, rides, artwork, sound or branding. Source study applies to these modules.",
+    "use": "study",
+    "tags": [
+      "lanterns",
+      "night-lighting",
+      "vehicles"
+    ],
+    "symbol": "CalcLightIntensityLantern"
+  },
+  {
+    "id": "rct2-tile-inspector",
+    "name": "Tile-stack level inspector",
+    "project": "OpenRCT2/OpenRCT2",
+    "revision": "28bb5e553467b5471516a5a22a3e7294a6d8dc94",
+    "path": "src/openrct2-ui/windows/TileInspector.cpp",
+    "category": "world",
+    "kind": "editor window",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "tile element records"
+    ],
+    "summary": "The inspector exposes stacked track, wall, scenery and path elements with page-specific controls. PathToggleEdge and QuarterTileSet edit precise local connectivity.",
+    "adaptation": "Give a level editor a stack picker and edge-bit visualization so a designer can fix an occluded tile without deleting neighbors.",
+    "evidence": "source-read",
+    "sha256": "dcabba0ac9558ab567bd672e5f8f7fefca9eae8c7e60b2df3a04f73171f188cc",
+    "license": "GPL-3.0-or-later",
+    "license_path": "licence.txt",
+    "rights_note": "The project readme allows v3 or later. The code license does not grant RollerCoaster Tycoon scenery, rides, artwork, sound or branding. Source study applies to these modules.",
+    "use": "study",
+    "tags": [
+      "editor",
+      "tiles",
+      "tooling"
+    ],
+    "symbol": "PathToggleEdge"
+  },
+  {
+    "id": "rct2-track-blueprints",
+    "name": "Mirrored construction blueprints",
+    "project": "OpenRCT2/OpenRCT2",
+    "revision": "28bb5e553467b5471516a5a22a3e7294a6d8dc94",
+    "path": "src/openrct2/ride/TrackDesign.cpp",
+    "category": "build",
+    "kind": "prefab serialization",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "TD4",
+      "TD6"
+    ],
+    "summary": "TrackDesign::Serialise records a design. Mirror and placement routines handle oriented scenery and entrances, and preview routines operate on a separate map.",
+    "adaptation": "Encode new reusable lane sections as relative offsets and explicit entrance transforms. Round-trip rotation and mirror cases on small authored fixtures.",
+    "evidence": "source-read",
+    "sha256": "b684c0e186a173150c8d65ca128169d8e8024177be5fdbd486cea1e647812444",
+    "license": "GPL-3.0-or-later",
+    "license_path": "licence.txt",
+    "rights_note": "The project readme allows v3 or later. The code license does not grant RollerCoaster Tycoon scenery, rides, artwork, sound or branding. Source study applies to these modules.",
+    "use": "study",
+    "tags": [
+      "prefabs",
+      "mirroring",
+      "construction"
+    ],
+    "symbol": "TrackDesign::Serialise"
+  },
+  {
+    "id": "openttd-rail-reservations",
+    "name": "Route search and track reservations",
+    "project": "OpenTTD/OpenTTD",
+    "revision": "871c4f4cb544af7b45fb22c72129ddea293172ae",
+    "path": "src/pathfinder/yapf/yapf_rail.cpp",
+    "category": "gameplay",
+    "kind": "vehicle path planner",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "rail tile graph"
+    ],
+    "summary": "CYapfReserveTrack searches for safe stopping positions and reserves or unreserves individual directed track segments. Layout changes invalidate cached paths.",
+    "adaptation": "Model an escorted convoy with an explicit route reservation and release test for a blocked junction. Define new vehicle and track geometry.",
+    "evidence": "source-read",
+    "sha256": "741d6bfdf04e6701f5817733fdfa3d7284079247d7a33ef6078c0735222a96ab",
+    "license": "GPL-2.0-only",
+    "license_path": "COPYING.md",
+    "rights_note": "The selected file headers specify version 2. Commercial Transport Tycoon data is separate. OpenGFX or other replacement packs have their own notices.",
+    "use": "study",
+    "tags": [
+      "traffic",
+      "convoys",
+      "pathfinding"
+    ],
+    "symbol": "CYapfReserveTrack"
+  },
+  {
+    "id": "openttd-timetable",
+    "name": "Estimated arrival and departure timetable",
+    "project": "OpenTTD/OpenTTD",
+    "revision": "871c4f4cb544af7b45fb22c72129ddea293172ae",
+    "path": "src/timetable_gui.cpp",
+    "category": "ui",
+    "kind": "schedule editor",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "order list",
+      "simulation ticks"
+    ],
+    "summary": "TimetableArrivalDeparture and CanDetermineTimeTaken distinguish estimated travel, waiting orders and unknown durations, with game-tick conversion used by the display.",
+    "adaptation": "Use the same information distinction for a wave timer or transit panel. Show missing estimates explicitly when a route is incomplete.",
+    "evidence": "source-read",
+    "sha256": "260aff348f7346a40d69f6cdfec276117da18823bac34763e245a14e12eec876",
+    "license": "GPL-2.0-only",
+    "license_path": "COPYING.md",
+    "rights_note": "The selected file headers specify version 2. Commercial Transport Tycoon data is separate. OpenGFX or other replacement packs have their own notices.",
+    "use": "study",
+    "tags": [
+      "timers",
+      "scheduling",
+      "vehicles"
+    ],
+    "symbol": "TimetableArrivalDeparture"
+  },
+  {
+    "id": "openra-radar",
+    "name": "Terrain and vision-aware minimap",
+    "project": "OpenRA/OpenRA",
+    "revision": "b70cab2b43d831039b21528ac88f46180ae02b88",
+    "path": "OpenRA.Mods.Common/Widgets/RadarWidget.cs",
+    "category": "ui",
+    "kind": "minimap widget",
+    "stack": [
+      "C#",
+      ".NET"
+    ],
+    "formats": [
+      "tile grid",
+      "minimap texture"
+    ],
+    "summary": "RadarWidget updates terrain cells, switches observers and maps a minimap pixel to world coordinates. It handles cursor and interaction separately from texture updates.",
+    "adaptation": "Separate base terrain, observed units and camera bounds on a team minimap. Test clicking the corner cells at each zoom.",
+    "evidence": "source-read",
+    "sha256": "60b2e76bbc6ce28c670bd09d13ef7fd9429a5b30839d643a4a6eed760931a2d9",
+    "license": "GPL-3.0-or-later",
+    "license_path": "COPYING",
+    "rights_note": "The selected modules allow v3 or later. Original Command & Conquer unit art, silhouette sheets, sounds and mission data need separate rights. A code adaptation must satisfy the GPL.",
+    "use": "study",
+    "tags": [
+      "minimap",
+      "fog-of-war",
+      "picking"
+    ],
+    "symbol": "MinimapPixelToWorldCoords"
+  },
+  {
+    "id": "openra-production",
+    "name": "Resource-backed production queue",
+    "project": "OpenRA/OpenRA",
+    "revision": "b70cab2b43d831039b21528ac88f46180ae02b88",
+    "path": "OpenRA.Mods.Common/Traits/Player/ProductionQueue.cs",
+    "category": "gameplay",
+    "kind": "production state machine",
+    "stack": [
+      "C#",
+      ".NET"
+    ],
+    "formats": [
+      "actor orders",
+      "trait configuration"
+    ],
+    "summary": "ProductionQueue tests buildability, ticks costs, handles pause and cancellation and reports the remaining time. ProductionItem owns its individual cost and progress.",
+    "adaptation": "Reuse the state transitions to specify roster or reinforcement queues. Verify cancellation refunds, lost producers and multiple queued instances.",
+    "evidence": "source-read",
+    "sha256": "6ce2d2b33fd87b6d13d31c12a879502ad18882e854fa8e7c2ac573afa308f3bb",
+    "license": "GPL-3.0-or-later",
+    "license_path": "COPYING",
+    "rights_note": "The selected modules allow v3 or later. Original Command & Conquer unit art, silhouette sheets, sounds and mission data need separate rights. A code adaptation must satisfy the GPL.",
+    "use": "study",
+    "tags": [
+      "economy",
+      "reinforcements",
+      "queues"
+    ],
+    "symbol": "CancelUnbuildableItems"
+  },
+  {
+    "id": "openra-hierarchical-paths",
+    "name": "Hierarchical grid navigation",
+    "project": "OpenRA/OpenRA",
+    "revision": "b70cab2b43d831039b21528ac88f46180ae02b88",
+    "path": "OpenRA.Mods.Common/Pathfinder/HierarchicalPathFinder.cs",
+    "category": "world",
+    "kind": "pathfinding algorithm",
+    "stack": [
+      "C#",
+      ".NET"
+    ],
+    "formats": [
+      "layered cell graph"
+    ],
+    "summary": "HierarchicalPathFinder builds grids and an abstract cost table for a locomotor, then inserts local endpoints and bidirectional edges into an abstract graph.",
+    "adaptation": "Use multi-resolution navigation for crowds of lane units. Measure baseline searches against routes between neighboring regions and blocked bridges.",
+    "evidence": "source-read",
+    "sha256": "b398473e02bdecaca6e55fd3bf8e8b2562e462c82a01f9dcd65cff680c93e078",
+    "license": "GPL-3.0-or-later",
+    "license_path": "COPYING",
+    "rights_note": "The selected modules allow v3 or later. Original Command & Conquer unit art, silhouette sheets, sounds and mission data need separate rights. A code adaptation must satisfy the GPL.",
+    "use": "study",
+    "tags": [
+      "pathfinding",
+      "crowds",
+      "terrain"
+    ],
+    "symbol": "HierarchicalPathFinder"
+  },
+  {
+    "id": "devilutionx-automap",
+    "name": "Exploration-aware isometric map overlay",
+    "project": "diasurgical/DevilutionX",
+    "revision": "e1c377775a206274f73b5f01c84a967d06e74d54",
+    "path": "Source/automap.cpp",
+    "category": "ui",
+    "kind": "automap",
+    "stack": [
+      "C++",
+      "SDL"
+    ],
+    "formats": [
+      "AMP tile descriptors",
+      "tile grid"
+    ],
+    "summary": "The automap combines explored cells with wall-shape data and draws scaled player direction markers and overlay lines as the view moves.",
+    "adaptation": "Study which wall features remain readable while a player moves, using new symbols and independent cartography. Check both narrow and wide layouts.",
+    "evidence": "source-read",
+    "sha256": "df073537554c4f3b8840f89d6ca1bd441a6416813c7b6b8881368199a317e062",
+    "license": "Sustainable Use License 1.0",
+    "license_path": "LICENSE.md",
+    "rights_note": "The pinned license restricts use and redistribution, including commercial uses. The project also requires separate Diablo or shareware data. Study the behavior and implement new artwork and code for a separately distributed game.",
+    "use": "verify-terms",
+    "tags": [
+      "automap",
+      "isometric",
+      "exploration"
+    ],
+    "symbol": "DrawAutomap"
+  },
+  {
+    "id": "devilutionx-inventory",
+    "name": "Grid inventory interactions",
+    "project": "diasurgical/DevilutionX",
+    "revision": "e1c377775a206274f73b5f01c84a967d06e74d54",
+    "path": "Source/inv.cpp",
+    "category": "ui",
+    "kind": "inventory controller",
+    "stack": [
+      "C++",
+      "SDL"
+    ],
+    "formats": [
+      "inventory grid",
+      "item records"
+    ],
+    "summary": "The inventory code resolves body slots and grids, picks up and places items, and treats belt slots and two-handed equipment as distinct cases.",
+    "adaptation": "Write interaction tests for occupied equipment slots, stack splits and dropping near a full backpack before designing a new layout.",
+    "evidence": "source-read",
+    "sha256": "09b88a7ae6f8de023d7fc9462f7887d7ec7cf5f528dfd321d30abbd173fa5468",
+    "license": "Sustainable Use License 1.0",
+    "license_path": "LICENSE.md",
+    "rights_note": "The pinned license restricts use and redistribution, including commercial uses. The project also requires separate Diablo or shareware data. Study the behavior and implement new artwork and code for a separately distributed game.",
+    "use": "verify-terms",
+    "tags": [
+      "inventory",
+      "equipment",
+      "drag-and-drop"
+    ],
+    "symbol": "CanPut"
+  },
+  {
+    "id": "devilutionx-touch",
+    "name": "Finger ownership for virtual controls",
+    "project": "diasurgical/DevilutionX",
+    "revision": "e1c377775a206274f73b5f01c84a967d06e74d54",
+    "path": "Source/controls/touch/event_handlers.cpp",
+    "category": "gameplay",
+    "kind": "touch input",
+    "stack": [
+      "C++",
+      "SDL"
+    ],
+    "formats": [
+      "SDL touch events"
+    ],
+    "summary": "Finger handlers track the active finger, held state and state changes as it crosses a virtual button. Other handlers translate touches for menus and spell selection.",
+    "adaptation": "Assign each held touch control an owning finger and release it on cancellation. Test aim plus movement with one finger sliding off a button.",
+    "evidence": "source-read",
+    "sha256": "ef5a1aa9cf6972b1987a08bdf3c169ba41bf81ec592e2886e89a0b18b16cd1d8",
+    "license": "Sustainable Use License 1.0",
+    "license_path": "LICENSE.md",
+    "rights_note": "The pinned license restricts use and redistribution, including commercial uses. The project also requires separate Diablo or shareware data. Study the behavior and implement new artwork and code for a separately distributed game.",
+    "use": "verify-terms",
+    "tags": [
+      "mobile",
+      "input",
+      "accessibility"
+    ],
+    "symbol": "VirtualButtonEventHandler::HandleFingerUp"
+  },
+  {
+    "id": "julius-shoreline",
+    "name": "Shoreline placement and boat spawning",
+    "project": "bvschaik/julius",
+    "revision": "6746d82c1261aafd17837533ac0f18b99744b3d3",
+    "path": "src/map/water.c",
+    "category": "world",
+    "kind": "placement rules",
+    "stack": [
+      "C"
+    ],
+    "formats": [
+      "terrain grid"
+    ],
+    "summary": "The water module determines waterfront building orientation, chooses a wharf for a boat and checks the neighboring water tiles before a fishing boat spawns.",
+    "adaptation": "Keep placement, launch and navigability checks separate for river landing zones. Use four rotated shoreline fixtures for acceptance.",
+    "evidence": "source-read",
+    "sha256": "c80cfd976f11a8bdd1de2bb458dbead4550dd21b6bfe9c5613b72813c7947d59",
+    "license": "AGPL-3.0",
+    "license_path": "LICENSE.txt",
+    "rights_note": "The root license is the Affero GPL v3. Check its network-source requirements before adapting code. Caesar III graphics, sounds and text come from separately acquired game data.",
+    "use": "study",
+    "tags": [
+      "water",
+      "placement",
+      "navigation"
+    ],
+    "symbol": "map_water_can_spawn_fishing_boat"
+  },
+  {
+    "id": "julius-store-orders",
+    "name": "Persistent storehouse policies",
+    "project": "bvschaik/julius",
+    "revision": "6746d82c1261aafd17837533ac0f18b99744b3d3",
+    "path": "src/building/storage.c",
+    "category": "gameplay",
+    "kind": "inventory policy persistence",
+    "stack": [
+      "C"
+    ],
+    "formats": [
+      "save buffers",
+      "resource slots"
+    ],
+    "summary": "The storage registry maintains building handles, can reject all resources, and writes and reads per-resource policy state using fixed save records.",
+    "adaptation": "Represent depots through stable identifiers and data-driven acceptance policies. Round-trip abolished and recreated buildings through a save fixture.",
+    "evidence": "source-read",
+    "sha256": "b32f89b6f7770f9ec4fbb8b89264b684a586b43581823fe737c6e99e00cad002",
+    "license": "AGPL-3.0",
+    "license_path": "LICENSE.txt",
+    "rights_note": "The root license is the Affero GPL v3. Check its network-source requirements before adapting code. Caesar III graphics, sounds and text come from separately acquired game data.",
+    "use": "study",
+    "tags": [
+      "economy",
+      "logistics",
+      "persistence"
+    ],
+    "symbol": "building_storage_save_state"
+  },
+  {
+    "id": "openxcom-battle-map",
+    "name": "Scripted tactical map assembly",
+    "project": "OpenXcom/OpenXcom",
+    "revision": "4a4bae5fa2e5a09282928e84943fc84b093e34ff",
+    "path": "src/Battlescape/BattlescapeGenerator.cpp",
+    "category": "world",
+    "kind": "modular level generator",
+    "stack": [
+      "C++",
+      "SDL"
+    ],
+    "formats": [
+      "MAP",
+      "RMP",
+      "map scripts"
+    ],
+    "summary": "BattlescapeGenerator executes map scripts, places modular terrain and craft blocks, and loads map and route data before placing battle participants.",
+    "adaptation": "Design a map recipe that reserves team spawns before filling surrounding modules, and validate navigation sockets independently of surface art.",
+    "evidence": "source-read",
+    "sha256": "a6d9f36f411130136674f8940aeb5b92dba79d0331f61f702009cbd2e6993a48",
+    "license": "GPL-3.0-or-later",
+    "license_path": "LICENSE.txt",
+    "rights_note": "The module headers allow GPL v3 or later. X-COM/UFO graphics, terrain and sounds are separately supplied. Build sample maps and mod rule data independently.",
+    "use": "study",
+    "tags": [
+      "procedural-generation",
+      "level-design",
+      "spawns"
+    ],
+    "symbol": "BattlescapeGenerator::addCraft"
+  },
+  {
+    "id": "openxcom-voxel-fov",
+    "name": "Voxel sightline and exposure checks",
+    "project": "OpenXcom/OpenXcom",
+    "revision": "4a4bae5fa2e5a09282928e84943fc84b093e34ff",
+    "path": "src/Battlescape/TileEngine.cpp",
+    "category": "gameplay",
+    "kind": "visibility and targeting",
+    "stack": [
+      "C++",
+      "SDL"
+    ],
+    "formats": [
+      "voxel grid",
+      "map tiles"
+    ],
+    "summary": "TileEngine calculates unit field of view and checks whether a tile part can be targeted from an origin voxel. Adjacent doors and height affect these queries.",
+    "adaptation": "Build tests for visibility around a half-height wall and an open door before choosing a tactical targeting rule. Supply independent silhouettes and maps.",
+    "evidence": "source-read",
+    "sha256": "50c2a36dbee556a67c03cdf4f7a2351be596fff9920636dd3085f54f22c2be31",
+    "license": "GPL-3.0-or-later",
+    "license_path": "LICENSE.txt",
+    "rights_note": "The module headers allow GPL v3 or later. X-COM/UFO graphics, terrain and sounds are separately supplied. Build sample maps and mod rule data independently.",
+    "use": "study",
+    "tags": [
+      "visibility",
+      "cover",
+      "targeting"
+    ],
+    "symbol": "TileEngine::calculateFOV"
+  },
+  {
+    "id": "openmw-animation-groups",
+    "name": "Prioritized body groups and animation markers",
+    "project": "OpenMW/openmw",
+    "revision": "5f3aafb010a26b789b6a5e590b4e218d1ddf0cd9",
+    "path": "apps/openmw/mwrender/animation.cpp",
+    "category": "animation",
+    "kind": "layered actor playback",
+    "stack": [
+      "C++",
+      "OpenSceneGraph"
+    ],
+    "formats": [
+      "NIF/KF animation",
+      "text keys"
+    ],
+    "summary": "Animation::play accepts a priority and blend mask, resetActiveGroups arbitrates the active groups, and handleTextKey dispatches named timeline events.",
+    "adaptation": "Carry named contact markers and explicit per-body-group precedence into an authored rig pipeline. Test an interrupted upper-body clip while legs keep running.",
+    "evidence": "source-read",
+    "sha256": "69014a829bc286790f66fbfffeff8bea74c92f64b79ac0d73d26ec3a78fadb72",
+    "license": "GPL-3.0",
+    "license_path": "LICENSE",
+    "rights_note": "Upstream declares GPLv3 and tracks third-party components separately. The engine reads separately obtained Morrowind game data. Source analysis confers no rights in retail NIF/KF, textures or voices.",
+    "use": "study",
+    "tags": [
+      "animation-layers",
+      "markers",
+      "characters"
+    ],
+    "symbol": "Animation::resetActiveGroups"
+  },
+  {
+    "id": "openmw-navmesh-cache",
+    "name": "Memory-budgeted navigation tile cache",
+    "project": "OpenMW/openmw",
+    "revision": "5f3aafb010a26b789b6a5e590b4e218d1ddf0cd9",
+    "path": "components/detournavigator/navmeshtilescache.cpp",
+    "category": "world",
+    "kind": "cache",
+    "stack": [
+      "C++",
+      "Detour"
+    ],
+    "formats": [
+      "Detour navmesh tile data"
+    ],
+    "summary": "NavMeshTilesCache separates acquired entries from free cached entries. It tracks byte totals and evicts least-recently-used eligible tiles while active clients retain theirs.",
+    "adaptation": "Budget navigation tiles by bytes rather than object count. Verify slow clients can hold a tile while a camera crossing triggers eviction elsewhere.",
+    "evidence": "source-read",
+    "sha256": "1f42d096562eff0a1d9654a2bbd369acaf7a12c3aa36a092adb4d4be4de5d580",
+    "license": "GPL-3.0",
+    "license_path": "LICENSE",
+    "rights_note": "Upstream declares GPLv3 and tracks third-party components separately. The engine reads separately obtained Morrowind game data. Source analysis confers no rights in retail NIF/KF, textures or voices.",
+    "use": "study",
+    "tags": [
+      "navigation",
+      "streaming",
+      "memory"
+    ],
+    "symbol": "NavMeshTilesCache::removeLeastRecentlyUsed"
+  },
+  {
+    "id": "openmw-actor-controller",
+    "name": "Actor locomotion and action arbitration",
+    "project": "OpenMW/openmw",
+    "revision": "5f3aafb010a26b789b6a5e590b4e218d1ddf0cd9",
+    "path": "apps/openmw/mwmechanics/character.cpp",
+    "category": "characters",
+    "kind": "actor state controller",
+    "stack": [
+      "C++",
+      "OpenSceneGraph"
+    ],
+    "formats": [
+      "character animation groups",
+      "controller state"
+    ],
+    "summary": "CharacterController handles upper-body states, movement, jumping and death animations, updating the actor each simulation step.",
+    "adaptation": "Use a short original clip set to test locomotion interruptions and movement recovery while a held item combines upper and lower actions. Record which states can restart or interrupt each other.",
+    "evidence": "source-read",
+    "sha256": "e84c0f26c0a05acf769e0d4e0dedf5395869dd78b774e4a12553c89e9565fa61",
+    "license": "GPL-3.0",
+    "license_path": "LICENSE",
+    "rights_note": "Upstream declares GPLv3 and tracks third-party components separately. The engine reads separately obtained Morrowind game data. Source analysis confers no rights in retail NIF/KF, textures or voices.",
+    "use": "study",
+    "tags": [
+      "characters",
+      "locomotion",
+      "animation"
+    ],
+    "symbol": "CharacterController::update"
+  },
+  {
+    "id": "openage-slp-sprites",
+    "name": "Paletted sprite and team-color reader",
+    "project": "SFTtech/openage",
+    "revision": "738bfc6cffc371275ada8b919004443e4a203271",
+    "path": "openage/convert/value_object/read/media/slp.pyx",
+    "category": "graphics",
+    "kind": "sprite format reader",
+    "stack": [
+      "Cython",
+      "C++"
+    ],
+    "formats": [
+      "SLP",
+      "palette indices"
+    ],
+    "summary": "The SLP reader interprets scanline boundaries and drawing commands. It distinguishes ordinary, transparent, player-color and shadow pixels before conversion.",
+    "adaptation": "Use a tiny self-authored sprite fixture to test transparency, team recoloring and pivot offsets. Keep commercial game sprites out of the output.",
+    "evidence": "source-read",
+    "sha256": "33d1b6d9e3ecf185e6a1e96b5798b3cd99fbc6ee63cb08ad571c35bd0da34642",
+    "license": "GPL-3.0-or-later",
+    "license_path": "copying.md",
+    "rights_note": "The root policy defaults to v3 or later with listed exceptions. The importer and export wrapper are indexed, and no ensemble sprite, palette, music or other retail game data is included.",
+    "use": "study",
+    "tags": [
+      "sprites",
+      "team-colors",
+      "format"
+    ],
+    "symbol": "SLPFrame"
+  },
+  {
+    "id": "openage-texture-frames",
+    "name": "Sprite-frame export with authored pivots",
+    "project": "SFTtech/openage",
+    "revision": "738bfc6cffc371275ada8b919004443e4a203271",
+    "path": "openage/convert/entity_object/export/texture.py",
+    "category": "build",
+    "kind": "asset conversion",
+    "stack": [
+      "Python",
+      "Pillow",
+      "NumPy"
+    ],
+    "formats": [
+      "SLP",
+      "SMX",
+      "SMP",
+      "RGBA frames"
+    ],
+    "summary": "Texture wraps decoded source frames, preserves each hotspot, and exposes exporter metadata and cache parameters. TextureImage accepts Pillow or NumPy input.",
+    "adaptation": "Keep meaningful anchor points through atlas packing and cached rebuilds. Accept a pack only when a walk cycle keeps a planted foot in place.",
+    "evidence": "source-read",
+    "sha256": "e54c68ac6525db056140116277072b97f4cbdd0f171d2cc38574c5b5874dd25c",
+    "license": "GPL-3.0-or-later",
+    "license_path": "copying.md",
+    "rights_note": "The root policy defaults to v3 or later with listed exceptions. The importer and export wrapper are indexed, and no ensemble sprite, palette, music or other retail game data is included.",
+    "use": "study",
+    "tags": [
+      "atlas",
+      "pivots",
+      "asset-pipeline"
+    ],
+    "symbol": "TextureImage"
+  },
+  {
+    "id": "openlara-follow-camera",
+    "name": "Room-aware chase and first-person camera",
+    "project": "XProger/OpenLara",
+    "revision": "3b268ca4bf986c380f44a26ffd9218bf6d376249",
+    "path": "src/camera.h",
+    "category": "gameplay",
+    "kind": "camera controller",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "room sectors",
+      "camera matrices"
+    ],
+    "summary": "Camera::move and camera update methods maintain a room location and support changing first-person view. setup derives the view/projection and stereo settings.",
+    "adaptation": "Extract the follow-camera and room-transition behavior into an independent fixture with a door, low ceiling and obstruction. Review the separately attributed projection helper before copying that function.",
+    "evidence": "source-read",
+    "sha256": "76b5c69cedfe8afc4e3a24cb1fa59f06271ac08b37ba53363b5b1f2842dc46c8",
+    "license": "BSD-2-Clause",
+    "license_path": "LICENSE",
+    "rights_note": "Keep the copyright and BSD conditions with code redistributions. The source license grants no rights in Tomb Raider model, music, texture or level data. Use original fixture assets and retain any function-specific attribution.",
+    "use": "adapt",
+    "tags": [
+      "camera",
+      "third-person",
+      "rooms"
+    ],
+    "symbol": "updateFirstPerson"
+  },
+  {
+    "id": "openlara-inventory-ring",
+    "name": "Animated inventory ring and selection",
+    "project": "XProger/OpenLara",
+    "revision": "3b268ca4bf986c380f44a26ffd9218bf6d376249",
+    "path": "src/inventory.h",
+    "category": "ui",
+    "kind": "inventory screen",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "item models",
+      "UI state"
+    ],
+    "summary": "Inventory owns categories, selected item animation and page rendering. chooseKey resolves context-sensitive selection while renderPage and renderUI handle presentation.",
+    "adaptation": "Adapt cyclic category navigation with deterministic controller focus. Substitute original item meshes, art and sound and test return-to-game focus.",
+    "evidence": "source-read",
+    "sha256": "1f6f3878903d58220987114aec35bd1737a420b671cf298c675855e8d3f3cb71",
+    "license": "BSD-2-Clause",
+    "license_path": "LICENSE",
+    "rights_note": "Keep the copyright and BSD conditions with code redistributions. The source license grants no rights in Tomb Raider model, music, texture or level data. Use original fixture assets and retain any function-specific attribution.",
+    "use": "adapt",
+    "tags": [
+      "inventory",
+      "controller",
+      "3d-ui"
+    ],
+    "symbol": "chooseKey"
+  },
+  {
+    "id": "openlara-animation-states",
+    "name": "Animation clips, transitions and articulated joints",
+    "project": "XProger/OpenLara",
+    "revision": "3b268ca4bf986c380f44a26ffd9218bf6d376249",
+    "path": "src/animation.h",
+    "category": "animation",
+    "kind": "skeletal playback",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "TR animation frames",
+      "mesh hierarchy"
+    ],
+    "summary": "Animation::setAnim chooses a frame and transition. getCommand decodes animation commands and getJoints walks a mesh hierarchy with optional overrides.",
+    "adaptation": "Prototype recovery windows and joint sockets with an original model. Check state boundaries, missing overrides and exact end-frame behavior before retargeting.",
+    "evidence": "source-read",
+    "sha256": "fd7f327982d0a3f083f80ee3d165b474979c1d4f6cbcfb5c17835993bec53725",
+    "license": "BSD-2-Clause",
+    "license_path": "LICENSE",
+    "rights_note": "Keep the copyright and BSD conditions with code redistributions. The source license grants no rights in Tomb Raider model, music, texture or level data. Use original fixture assets and retain any function-specific attribution.",
+    "use": "adapt",
+    "tags": [
+      "skeleton",
+      "transitions",
+      "markers"
+    ],
+    "symbol": "getJoints"
+  },
+  {
+    "id": "openlara-character-base",
+    "name": "Shared character stance and room zones",
+    "project": "XProger/OpenLara",
+    "revision": "3b268ca4bf986c380f44a26ffd9218bf6d376249",
+    "path": "src/character.h",
+    "category": "characters",
+    "kind": "character controller",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "room sectors",
+      "animation state"
+    ],
+    "summary": "Character::getNextState selects ground, air, slide, hang and water behavior. updateZone chooses the current navigation box from the room sector and records the actor zone.",
+    "adaptation": "Use a neutral rig and original room geometry to exercise standing, swimming and airborne contacts separately before combining them with a new skeleton.",
+    "evidence": "source-read",
+    "sha256": "6d5c3814792ac34b92edc641dc36304b72a47d09e32e53786eba671f520b0646",
+    "license": "BSD-2-Clause",
+    "license_path": "LICENSE",
+    "rights_note": "Keep the copyright and BSD conditions with code redistributions. The source license grants no rights in Tomb Raider model, music, texture or level data. Use original fixture assets and retain any function-specific attribution.",
+    "use": "adapt",
+    "tags": [
+      "characters",
+      "physics",
+      "rooms"
+    ],
+    "symbol": "getNextState"
+  },
+  {
+    "id": "openlara-browser-platform",
+    "name": "Web game loop and platform input",
+    "project": "XProger/OpenLara",
+    "revision": "3b268ca4bf986c380f44a26ffd9218bf6d376249",
+    "path": "src/platform/web/main.cpp",
+    "category": "build",
+    "kind": "browser platform adapter",
+    "stack": [
+      "C++",
+      "Emscripten",
+      "WebGL"
+    ],
+    "formats": [
+      "WebAssembly",
+      "Emscripten callbacks"
+    ],
+    "summary": "The Web entry point maps browser input and browser lifecycle into the native game loop. JavaScript-callable entry points forward controls into the same engine.",
+    "adaptation": "Use the adapter boundary to separate browser input and timing from platform-independent gameplay. Test focus changes and browser resize on a neutral scene.",
+    "evidence": "source-read",
+    "sha256": "a04f9fca5cb6bd1c9a269254e6fadb12e6b12ee1915412e7f3252382ff749ca4",
+    "license": "BSD-2-Clause",
+    "license_path": "LICENSE",
+    "rights_note": "Keep the copyright and BSD conditions with code redistributions. The source license grants no rights in Tomb Raider model, music, texture or level data. Use original fixture assets and retain any function-specific attribution.",
+    "use": "adapt",
+    "tags": [
+      "browser",
+      "wasm",
+      "input"
+    ],
+    "symbol": "game_level_load"
+  },
+  {
+    "id": "scummvm-channel-mixer",
+    "name": "Pausable channel mixer and timing",
+    "project": "scummvm/scummvm",
+    "revision": "771cfb154be9f57e12f06d62dbde8fb641d31c86",
+    "path": "audio/mixer.cpp",
+    "category": "audio",
+    "kind": "audio mixer",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "PCM audio streams"
+    ],
+    "summary": "Mixer channels mix streams, track elapsed time across nested pauses and apply channel volume and balance. Timestamp accounting survives pause/resume.",
+    "adaptation": "Group voice, ambience and effects while keeping pause depth and latency observable. Verify that resuming menus cannot advance dialogue audibly in the background.",
+    "evidence": "source-read",
+    "sha256": "1e636371ac69a89c023b69d6ffd521938ba7729e353826ac43a7a160cab13e59",
+    "license": "GPL-3.0-or-later",
+    "license_path": "COPYING",
+    "rights_note": "Both selected source headers specify v3 or later. ScummVM supports separately licensed game data. Source licensing does not grant the music, speech, sound effects or scripts of those games.",
+    "use": "study",
+    "tags": [
+      "mixer",
+      "pause",
+      "timing"
+    ],
+    "symbol": "Channel::mix"
+  },
+  {
+    "id": "scummvm-smf-parser",
+    "name": "Standard MIDI track and event parser",
+    "project": "scummvm/scummvm",
+    "revision": "771cfb154be9f57e12f06d62dbde8fb641d31c86",
+    "path": "audio/midiparser_smf.cpp",
+    "category": "audio",
+    "kind": "music format reader",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "SMF",
+      "MIDI"
+    ],
+    "summary": "The parser reads MIDI headers and track chunks and decodes channel, meta and system events, including running status for repeated event classes.",
+    "adaptation": "Use original short MIDI files with tempo changes and running status to test a musical cue sequencer, especially loop and transition boundaries.",
+    "evidence": "source-read",
+    "sha256": "88c0dfbaaa0efa66ba697940541244fae263aa4601d075f7792118e276c133b5",
+    "license": "GPL-3.0-or-later",
+    "license_path": "COPYING",
+    "rights_note": "Both selected source headers specify v3 or later. ScummVM supports separately licensed game data. Source licensing does not grant the music, speech, sound effects or scripts of those games.",
+    "use": "study",
+    "tags": [
+      "music",
+      "sequencing",
+      "format"
+    ],
+    "symbol": "MidiParser_SMF::parseNextEvent"
+  },
+  {
+    "id": "openenroth-grid-inventory",
+    "name": "Rectangular equipment storage and invariants",
+    "project": "OpenEnroth/OpenEnroth",
+    "revision": "eb9239f98169db9e7fe90075c31b3d016546dc78",
+    "path": "src/Engine/Objects/Inventory.cpp",
+    "category": "gameplay",
+    "kind": "item grid",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "item handles",
+      "inventory cells"
+    ],
+    "summary": "Inventory::canAdd tests a rectangular footprint, stashAt stores an item at a selected cell, and checkInvariants verifies consistency between item entries and occupied cells.",
+    "adaptation": "Use footprint tests before committing inventory changes. Property-test remove, move, stash and failed placement with items of different sizes.",
+    "evidence": "source-read",
+    "sha256": "0c522e3bd26f174a7e04d1aeb03945dd167fb51fc2fa791428fc799fcca5349f",
+    "license": "LGPL-3.0",
+    "license_path": "LICENSE",
+    "rights_note": "Upstream supplies a Lesser GPL v3 license and requires separately acquired Might and Magic VII data. Review linking and source obligations for a code adaptation and supply new icons and effect art.",
+    "use": "study",
+    "tags": [
+      "inventory",
+      "validation",
+      "items"
+    ],
+    "symbol": "Inventory::checkInvariants"
+  },
+  {
+    "id": "openenroth-spell-billboards",
+    "name": "Spell projectiles and clipped billboards",
+    "project": "OpenEnroth/OpenEnroth",
+    "revision": "eb9239f98169db9e7fe90075c31b3d016546dc78",
+    "path": "src/Engine/SpellFxRenderer.cpp",
+    "category": "graphics",
+    "kind": "spell effect renderer",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "billboard vertices",
+      "particles"
+    ],
+    "summary": "SpellFxRenderer adds projectiles and fire particles, and its billboard helpers project and clip effect geometry against the camera volume.",
+    "adaptation": "Build a spell-effect preview with the effect near the camera and behind the camera. Author new textures, particles and character poses.",
+    "evidence": "source-read",
+    "sha256": "66f2ceec8190021d1aa3bc57e14482b66747d730ecc11e5ae500f14465c4610f",
+    "license": "LGPL-3.0",
+    "license_path": "LICENSE",
+    "rights_note": "Upstream supplies a Lesser GPL v3 license and requires separately acquired Might and Magic VII data. Review linking and source obligations for a code adaptation and supply new icons and effect art.",
+    "use": "study",
+    "tags": [
+      "spells",
+      "vfx",
+      "clipping"
+    ],
+    "symbol": "SpellFX_Billboard::SpellFXViewClip"
+  },
+  {
+    "id": "arx-anim-layer-events",
+    "name": "Layered animation and synchronized sample cues",
+    "project": "arx/ArxLibertatis",
+    "revision": "5b95e4c5ca9d583f1b11c085326979772645e0f3",
+    "path": "src/animation/Animation.cpp",
+    "category": "animation",
+    "kind": "animation state and cues",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "animation handles",
+      "sample paths"
+    ],
+    "summary": "ANIM_Set and changeAnimation operate on an entity layer, GetAltIdx chooses an alternate animation, and the sample helpers release and restore animation sound bindings.",
+    "adaptation": "Test variant selection and sound-trigger continuity when switching equipment. Include a silent animation and an interrupted action in the fixture.",
+    "evidence": "source-read",
+    "sha256": "76dee1e34ad5f03b76eaf8ec2f71e0a87f31b5abedc89f04a4bec3b93d883e36",
+    "license": "GPL-3.0-or-later with upstream Arx Fatalis additional terms notice",
+    "license_path": "LICENSE",
+    "rights_note": "The selected files carry both the project GPL header and an Arkane header referring to additional terms. Review the upstream release conditions and provide independent Arx artwork, music and models before distribution.",
+    "use": "verify-terms",
+    "tags": [
+      "characters",
+      "animation",
+      "audio-events"
+    ],
+    "symbol": "ANIM_Set"
+  },
+  {
+    "id": "arx-item-stacks",
+    "name": "Multi-bag inventory and stack merging",
+    "project": "arx/ArxLibertatis",
+    "revision": "5b95e4c5ca9d583f1b11c085326979772645e0f3",
+    "path": "src/game/Inventory.cpp",
+    "category": "gameplay",
+    "kind": "container operations",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "inventory cells",
+      "item stacks"
+    ],
+    "summary": "Inventory tracks multiple bags and slot footprints. insertIntoNewSlot finds a location and combineItemStacks applies the target/source transfer rule.",
+    "adaptation": "Write explicit transfer and ownership invariants for full containers, split stacks and currencies before connecting bag UI animations.",
+    "evidence": "source-read",
+    "sha256": "83aa3342ff13a1fb45de567018a278e2bdc0986b61beb1f1b039d0713af3e69c",
+    "license": "GPL-3.0-or-later with upstream Arx Fatalis additional terms notice",
+    "license_path": "LICENSE",
+    "rights_note": "The selected files carry both the project GPL header and an Arkane header referring to additional terms. Review the upstream release conditions and provide independent Arx artwork, music and models before distribution.",
+    "use": "verify-terms",
+    "tags": [
+      "inventory",
+      "stacks",
+      "ownership"
+    ],
+    "symbol": "combineItemStacks"
+  },
+  {
+    "id": "diabloweb-worker",
+    "name": "Native browser port on a worker",
+    "project": "d07RiV/diabloweb",
+    "revision": "c61ef19c54ea646aed328bd8cc82c8a5f1ebd81d",
+    "path": "src/api/game.worker.js",
+    "category": "build",
+    "kind": "browser runtime bridge",
+    "stack": [
+      "JavaScript",
+      "WebAssembly"
+    ],
+    "formats": [
+      "WebAssembly",
+      "Web Worker messages",
+      "MPQ input"
+    ],
+    "summary": "The worker opens the game payload, initializes the Wasm runtime and posts load progress. It batches audio operations and transfers buffers to the page.",
+    "adaptation": "Study the separation of input, simulation, progress and presentation for a browser port. Implement independently using new data and a maintained worker lifecycle.",
+    "evidence": "source-read",
+    "sha256": "22df9fffe2156dd6d223a01a518dfebd1dc5c658e1f5ab2f183fc80e47089dbf",
+    "license": "No repository license identified at this revision",
+    "license_path": null,
+    "rights_note": "No license or copying file was found in the pinned tree. The page refers to separate Devilution source and Diablo MPQ files. Use as a behavioral reference and obtain permission before copying these files.",
+    "use": "verify-terms",
+    "tags": [
+      "browser",
+      "wasm",
+      "loading"
+    ],
+    "symbol": "init_game"
+  },
+  {
+    "id": "diabloweb-webaudio",
+    "name": "Game audio handles over Web Audio",
+    "project": "d07RiV/diabloweb",
+    "revision": "c61ef19c54ea646aed328bd8cc82c8a5f1ebd81d",
+    "path": "src/api/sound.js",
+    "category": "audio",
+    "kind": "browser sound bridge",
+    "stack": [
+      "JavaScript",
+      "Web Audio"
+    ],
+    "formats": [
+      "PCM",
+      "Web Audio buffers"
+    ],
+    "summary": "The sound bridge manages handles for decoded and raw planar samples, duplicates playback state and falls back to an inactive sound interface when audio is unavailable.",
+    "adaptation": "Map engine sound IDs to browser buffers with reproducible restart and teardown. Verify conformance using synthesized sounds and suspended audio contexts.",
+    "evidence": "source-read",
+    "sha256": "b254511276055d38de9a29fe8d7e6f79aa6c4518edc613c5bae910d8cfff338d",
+    "license": "No repository license identified at this revision",
+    "license_path": null,
+    "rights_note": "No license or copying file was found in the pinned tree. The page refers to separate Devilution source and Diablo MPQ files. Use as a behavioral reference and obtain permission before copying these files.",
+    "use": "verify-terms",
+    "tags": [
+      "browser",
+      "audio",
+      "pcm"
+    ],
+    "symbol": "create_sound_raw"
+  },
+  {
+    "id": "fast64-fcurve-export",
+    "name": "Blender F-curve sampling and duplicate trimming",
+    "project": "Fast-64/fast64",
+    "revision": "8f96b92e8a22f3c39714964df57775c54a146b82",
+    "path": "fast64_internal/sm64/animation/exporting.py",
+    "category": "blender",
+    "kind": "animation exporter",
+    "stack": [
+      "Python",
+      "Blender"
+    ],
+    "formats": [
+      "Blender actions",
+      "SM64 animation tables",
+      "C output"
+    ],
+    "summary": "get_entire_fcurve_data reads Blender channel data. Vectorized trimming and animation-pair generation prepare compact game animation records.",
+    "adaptation": "Run a fixture armature through the exporter, then validate time range, axis conversion and terminal key preservation in a separate renderer.",
+    "evidence": "source-read",
+    "sha256": "580f049eaf597a8c773380d7b2e85ee0f961235257be3625a2ec6e70102d08bb",
+    "license": "GPL-3.0",
+    "license_path": "LICENSE.txt",
+    "rights_note": "The Blender add-on publishes GPLv3. Using an exporter on original work does not grant rights in Nintendo game data, level meshes, ROMs, textures or animations. Review bundled third-party components separately.",
+    "use": "study",
+    "tags": [
+      "blender",
+      "animation",
+      "compression"
+    ],
+    "symbol": "get_entire_fcurve_data"
+  },
+  {
+    "id": "fast64-collision-export",
+    "name": "Tagged mesh collision export",
+    "project": "Fast-64/fast64",
+    "revision": "8f96b92e8a22f3c39714964df57775c54a146b82",
+    "path": "fast64_internal/sm64/sm64_collision.py",
+    "category": "blender",
+    "kind": "collision exporter",
+    "stack": [
+      "Python",
+      "Blender"
+    ],
+    "formats": [
+      "Blender meshes",
+      "SM64 collision commands",
+      "binary"
+    ],
+    "summary": "The collision module builds indexed vertices and surface triangles, carries room and special parameters and checks limits when writing binary data.",
+    "adaptation": "Tag an original Blender test mesh with traversal, hazard and room metadata. Reimport the export and compare triangle winding, indices and surface classes.",
+    "evidence": "source-read",
+    "sha256": "551227af916e086d78d0c854ead2d600464954a40acfc341f82b58891f057ee4",
+    "license": "GPL-3.0",
+    "license_path": "LICENSE.txt",
+    "rights_note": "The Blender add-on publishes GPLv3. Using an exporter on original work does not grant rights in Nintendo game data, level meshes, ROMs, textures or animations. Review bundled third-party components separately.",
+    "use": "study",
+    "tags": [
+      "blender",
+      "collision",
+      "level-editor"
+    ],
+    "symbol": "CollisionVertex"
+  },
+  {
+    "id": "openloco-mapgen",
+    "name": "Heightmap-to-world generation sequence",
+    "project": "OpenLoco/OpenLoco",
+    "revision": "f64ad1ce9290251d3dadb29eba4a42569efe5d9a",
+    "path": "src/OpenLoco/src/Map/MapGenerator/MapGenerator.cpp",
+    "category": "world",
+    "kind": "terrain generator",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "PNG heightmap",
+      "height grid",
+      "world tiles"
+    ],
+    "summary": "MapGenerator selects a source heightmap, generates land and water, varies surface materials and places other scenery and buildings in later passes.",
+    "adaptation": "Reuse the order of terrain, water, banks and placement passes to adapt an artist-authored elevation image. Check fixed inputs on adjacent regions before populating props.",
+    "evidence": "source-read",
+    "sha256": "49094a32321a1dbb51e06c783b64c28671606af0537a6db773be68863e3941b2",
+    "license": "MIT",
+    "license_path": "LICENSE",
+    "rights_note": "The MIT notice applies to these OpenLoco source modules. Commercial Locomotion objects, scenarios, graphics and sounds are separately supplied. Preserve the notice when adapting source.",
+    "use": "adapt",
+    "tags": [
+      "heightmap",
+      "terrain",
+      "water"
+    ],
+    "symbol": "generateHeightMap"
+  },
+  {
+    "id": "openloco-map-window",
+    "name": "Rotated map projection and live overlays",
+    "project": "OpenLoco/OpenLoco",
+    "revision": "f64ad1ce9290251d3dadb29eba4a42569efe5d9a",
+    "path": "src/OpenLoco/src/Ui/Windows/MapWindow.cpp",
+    "category": "ui",
+    "kind": "map window",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "isometric tile coordinates",
+      "palette buffer"
+    ],
+    "summary": "MapWindow converts between map pixels and world locations, draws vehicle and legend overlays and centers the current view on a selected point.",
+    "adaptation": "Reuse its map-to-world round-trip structure and tab-specific layers for an original navigation window. Test all rotations with edge clicks and moving units.",
+    "evidence": "source-read",
+    "sha256": "58820a212e66cd0048efc4d7599589028f7d2d8e6d98f7d5775f1a1bf5f0535c",
+    "license": "MIT",
+    "license_path": "LICENSE",
+    "rights_note": "The MIT notice applies to these OpenLoco source modules. Commercial Locomotion objects, scenarios, graphics and sounds are separately supplied. Preserve the notice when adapting source.",
+    "use": "adapt",
+    "tags": [
+      "minimap",
+      "projection",
+      "vehicles"
+    ],
+    "symbol": "mapWindowPosToLocation"
+  },
+  {
+    "id": "rsdk4-frame-playback",
+    "name": "Sprite clip timing and hitbox links",
+    "project": "RSDKModding/RSDKv4-Decompilation",
+    "revision": "af95198f93951cc217b43923196e5750667ec1c7",
+    "path": "RSDKv4/Animation.cpp",
+    "category": "animation",
+    "kind": "sprite animation playback",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "RSDKv4 animation records",
+      "sprite frame indices"
+    ],
+    "summary": "LoadAnimationFile reads frame and hitbox data. ProcessObjectAnimation advances frame indices using animation speed and a loop point.",
+    "adaptation": "Study how animation and gameplay hitboxes can share a frame index, then author a fresh neutral clip schema for a distinct project.",
+    "evidence": "source-read",
+    "sha256": "96368dd6345a5d1be720f3cf689c712078bae30aae417cf39836551776efccae",
+    "license": "RSDKv3/v4 Decompilation Source Code License v2",
+    "license_path": "LICENSE.md",
+    "rights_note": "The custom license prohibits commercial use, requires credits and limits asset distribution and default DLC settings. Treat it as a behavioral reference for a separately distributed game and use new visuals and code.",
+    "use": "verify-terms",
+    "tags": [
+      "sprites",
+      "hitboxes",
+      "animation"
+    ],
+    "symbol": "ProcessObjectAnimation"
+  },
+  {
+    "id": "rsdk4-surface-sensors",
+    "name": "Platformer surface contact sensors",
+    "project": "RSDKModding/RSDKv4-Decompilation",
+    "revision": "af95198f93951cc217b43923196e5750667ec1c7",
+    "path": "RSDKv4/Collision.cpp",
+    "category": "gameplay",
+    "kind": "2D character collision",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "tile collision masks",
+      "hitboxes"
+    ],
+    "summary": "Floor, roof and side-wall sensors are distinct routines, with angle-aware surface gripping and separate object and platform contact paths.",
+    "adaptation": "Use the decomposition as a design reference for a new platform controller and test floor-to-wall handoffs with original terrain fixtures.",
+    "evidence": "source-read",
+    "sha256": "b2166fe4944169dcd679d82ff9eb490a47b7177f83bbca07945684a7c1b6afdd",
+    "license": "RSDKv3/v4 Decompilation Source Code License v2",
+    "license_path": "LICENSE.md",
+    "rights_note": "The custom license prohibits commercial use, requires credits and limits asset distribution and default DLC settings. Treat it as a behavioral reference for a separately distributed game and use new visuals and code.",
+    "use": "verify-terms",
+    "tags": [
+      "platformer",
+      "collision",
+      "controls"
+    ],
+    "symbol": "FindFloorPosition"
+  },
+  {
+    "id": "ioq3-impact-marks",
+    "name": "Bounded impact marks clipped to surfaces",
+    "project": "ioquake/ioq3",
+    "revision": "52088b9eae247d8e321c8dc1fb49a879652854f9",
+    "path": "code/cgame/cg_marks.c",
+    "category": "graphics",
+    "kind": "decal geometry",
+    "stack": [
+      "C"
+    ],
+    "formats": [
+      "mark polygons",
+      "world surfaces"
+    ],
+    "summary": "CG_ImpactMark projects an oriented mark and clips it into fragments. CG_AddMarks expires and fades stored polygons from a bounded pool.",
+    "adaptation": "Build a fixed-memory decal field with lifetime and orientation tests at walls, seams and corners. Supply new shaders and impact art.",
+    "evidence": "source-read",
+    "sha256": "2d075c89e51a5af289300e9215fecce0ca8289587d5d6a5e9a4fd947e3705024",
+    "license": "GPL-2.0-or-later",
+    "license_path": "COPYING.txt",
+    "rights_note": "The selected id Software source headers allow GPLv2 or later. Quake III retail assets and trademarks are outside the source license. Include the applicable GPL notices and provide independent art when adapting.",
+    "use": "study",
+    "tags": [
+      "decals",
+      "vfx",
+      "rendering"
+    ],
+    "symbol": "CG_ImpactMark"
+  },
+  {
+    "id": "ioq3-pmove",
+    "name": "Shared fixed-step locomotion",
+    "project": "ioquake/ioq3",
+    "revision": "52088b9eae247d8e321c8dc1fb49a879652854f9",
+    "path": "code/game/bg_pmove.c",
+    "category": "gameplay",
+    "kind": "movement controller",
+    "stack": [
+      "C"
+    ],
+    "formats": [
+      "usercmd input",
+      "player state"
+    ],
+    "summary": "Pmove divides an input time interval into steps. PmoveSingle applies movement, transitions and touch events, with PM_CmdScale normalizing diagonal input.",
+    "adaptation": "Use identical movement inputs for replay and client prediction fixtures. Test diagonal speed, water transitions and low frame-rate input batched across steps.",
+    "evidence": "source-read",
+    "sha256": "ac260d7f0cc28351c02746d17a985fea15332e1db593a69a04bec4ed49cd310f",
+    "license": "GPL-2.0-or-later",
+    "license_path": "COPYING.txt",
+    "rights_note": "The selected id Software source headers allow GPLv2 or later. Quake III retail assets and trademarks are outside the source license. Include the applicable GPL notices and provide independent art when adapting.",
+    "use": "study",
+    "tags": [
+      "movement",
+      "prediction",
+      "input"
+    ],
+    "symbol": "PmoveSingle"
+  },
+  {
+    "id": "chocdoom-automap",
+    "name": "Zoomable marked line automap",
+    "project": "chocolate-doom/chocolate-doom",
+    "revision": "a2dfd51fcc00d272dc8a17a97ccd6683333ff4ea",
+    "path": "src/doom/am_map.c",
+    "category": "ui",
+    "kind": "automap screen",
+    "stack": [
+      "C",
+      "SDL"
+    ],
+    "formats": [
+      "WAD map lines",
+      "marks"
+    ],
+    "summary": "AM_Drawer renders walls, grid, players and crosshair. The module maintains zoom scale, follow mode and stored map marks independently of the player view.",
+    "adaptation": "Define a map-camera transform separate from the game camera. Test saved marks while switching between follow and manual pan with a newly authored map.",
+    "evidence": "source-read",
+    "sha256": "c3df756a14307543643130aae39770e716e0668905c9af25a216429c8344c462",
+    "license": "GPL-2.0-or-later",
+    "license_path": "COPYING.md",
+    "rights_note": "Both file headers allow v2 or later. Doom IWAD graphics, maps and sounds are separately licensed. Use a self-authored fixture or independently licensed content with retained notices.",
+    "use": "study",
+    "tags": [
+      "automap",
+      "zoom",
+      "controls"
+    ],
+    "symbol": "AM_Drawer"
+  },
+  {
+    "id": "chocdoom-tic-loop",
+    "name": "Classic tick and replay scheduling",
+    "project": "chocolate-doom/chocolate-doom",
+    "revision": "a2dfd51fcc00d272dc8a17a97ccd6683333ff4ea",
+    "path": "src/d_loop.c",
+    "category": "build",
+    "kind": "simulation loop",
+    "stack": [
+      "C",
+      "SDL"
+    ],
+    "formats": [
+      "ticcmd frames",
+      "demo input"
+    ],
+    "summary": "TryRunTics selects available game ticks and BuildNewTic constructs commands. The loop separates game timing from display and handles limited peer progress.",
+    "adaptation": "Replay identical inputs under varied presentation rates and ensure a stalled peer cannot advance a shared turn. Distinguish simulation measurements from visual smoothness.",
+    "evidence": "source-read",
+    "sha256": "db10ba67ecae1cb02866ca1ca88771271ad5a15464a73f0d1ec0686e3215eaa2",
+    "license": "GPL-2.0-or-later",
+    "license_path": "COPYING.md",
+    "rights_note": "Both file headers allow v2 or later. Doom IWAD graphics, maps and sounds are separately licensed. Use a self-authored fixture or independently licensed content with retained notices.",
+    "use": "study",
+    "tags": [
+      "fixed-step",
+      "replay",
+      "simulation"
+    ],
+    "symbol": "TryRunTics"
+  },
+  {
+    "id": "cnc-sidebar",
+    "name": "RTS construction strips and palette actions",
+    "project": "electronicarts/CnC_Remastered_Collection",
+    "revision": "f1f0d42bc2dcd06d5d1df943c6150ab34bf307ae",
+    "path": "REDALERT/SIDEBAR.CPP",
+    "category": "ui",
+    "kind": "production sidebar",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "buildable entries",
+      "sidebar state"
+    ],
+    "summary": "SidebarClass activates build strips, scrolls visible entries and routes input to production changes. StripClass handles abandoning a queued item separately.",
+    "adaptation": "Study feedback for queued, in-progress and cancelable builds. Author an original layout, icons and labels and test wheel and keyboard navigation.",
+    "evidence": "source-read",
+    "sha256": "5dcc22190fc7e7b5992357fac2a4c5d7e8b7e7f6f03ffa756420e7f05f742d09",
+    "license": "GPL v3 with Electronic Arts additional terms",
+    "license_path": "LICENSE.md",
+    "rights_note": "EA names the two DLLs, editor and corresponding source and adds trademark, publicity and attribution conditions. The commercial remaster’s art, audio and trademarks are separate. Review the full additional terms before redistribution.",
+    "use": "verify-terms",
+    "tags": [
+      "hud",
+      "queues",
+      "production"
+    ],
+    "symbol": "SidebarClass::StripClass::Abandon_Production"
+  },
+  {
+    "id": "cnc-mission-triggers",
+    "name": "Mission events and scripted actions",
+    "project": "electronicarts/CnC_Remastered_Collection",
+    "revision": "f1f0d42bc2dcd06d5d1df943c6150ab34bf307ae",
+    "path": "TIBERIANDAWN/TRIGGER.CPP",
+    "category": "gameplay",
+    "kind": "mission trigger rules",
+    "stack": [
+      "C++"
+    ],
+    "formats": [
+      "scenario INI trigger entries"
+    ],
+    "summary": "TriggerClass validates event/action data, determines when a team or object is required, and reconstructs triggers from scenario entries in Fill_In.",
+    "adaptation": "Use a typed mission editor that rejects a trigger with a missing subject. Build neutral fixtures for one-shot, repeated and team-based objectives.",
+    "evidence": "source-read",
+    "sha256": "9e27ddac05c0d29f158ee45ed9a9cf964d5c374b6e3cd0ee1832175f5f601117",
+    "license": "GPL v3 with Electronic Arts additional terms",
+    "license_path": "LICENSE.md",
+    "rights_note": "EA names the two DLLs, editor and corresponding source and adds trademark, publicity and attribution conditions. The commercial remaster’s art, audio and trademarks are separate. Review the full additional terms before redistribution.",
+    "use": "verify-terms",
+    "tags": [
+      "mission-scripting",
+      "objectives",
+      "events"
+    ],
+    "symbol": "TriggerClass::Fill_In"
+  },
+  {
+    "id": "opensage-w3d-animation",
+    "name": "W3D animation container reader",
+    "project": "OpenSAGE/OpenSAGE",
+    "revision": "588ac477367a0022adf29f20a084e8873014e6ce",
+    "path": "src/OpenSage.FileFormats.W3d/W3dAnimation.cs",
+    "category": "animation",
+    "kind": "format parser",
+    "stack": [
+      "C#",
+      ".NET"
+    ],
+    "formats": [
+      "W3D chunk stream"
+    ],
+    "summary": "W3dAnimation.Parse dispatches animation headers, channels and bit channels and rejects an unknown chunk type. The record exposes its parsed channel collection.",
+    "adaptation": "Implement an owned-format fixture to verify channel count, frame ranges, optional flags and deterministic failure for unsupported extensions.",
+    "evidence": "source-read",
+    "sha256": "fd4637c4270333b29cfb7436a628d583a15a3f3d29b379430495acb630a34f4f",
+    "license": "GPL v3 with EA additional terms for designated upstream portions",
+    "license_path": "LICENSE.md",
+    "rights_note": "LICENSE.md directs readers to LICENSE-EA.md for code ported from EA. Check file lineage before reuse. Source access confers no rights to retail SAGE formats’ models, particles, textures, sounds or branding.",
+    "use": "verify-terms",
+    "tags": [
+      "format",
+      "skeleton",
+      "animation"
+    ],
+    "symbol": "W3dAnimation"
+  },
+  {
+    "id": "opensage-particle-lifecycle",
+    "name": "Template-driven particle lifetime and draw buffer",
+    "project": "OpenSAGE/OpenSAGE",
+    "revision": "588ac477367a0022adf29f20a084e8873014e6ce",
+    "path": "src/OpenSage.Game/Graphics/ParticleSystems/ParticleSystem.cs",
+    "category": "graphics",
+    "kind": "particle renderer",
+    "stack": [
+      "C#",
+      ".NET"
+    ],
+    "formats": [
+      "particle templates",
+      "vertex buffers"
+    ],
+    "summary": "ParticleSystem updates its emitters against game time, builds a vertex buffer and persists state and color-keyframe information.",
+    "adaptation": "Prototype ability effects from templates with separate simulation, persistence and drawing stages. Compare event timing and particle bounds across frame rates.",
+    "evidence": "source-read",
+    "sha256": "6cedea7232ca5b087c262a662b667f715bbd70b07c6c369cd8b3f22c92df9b98",
+    "license": "GPL v3 with EA additional terms for designated upstream portions",
+    "license_path": "LICENSE.md",
+    "rights_note": "LICENSE.md directs readers to LICENSE-EA.md for code ported from EA. Check file lineage before reuse. Source access confers no rights to retail SAGE formats’ models, particles, textures, sounds or branding.",
+    "use": "verify-terms",
+    "tags": [
+      "vfx",
+      "particles",
+      "rendering"
+    ],
+    "symbol": "UpdateVertexBuffer"
+  },
+  {
+    "id": "gunzrs-action-layer",
+    "name": "Upper-body action playback over a running rig",
+    "project": "OpenRsG/GunZRs",
+    "revision": "485575b7451912ed1d62661c388663b08dce4faf",
+    "path": "src/anim.rs",
+    "category": "animation",
+    "kind": "masked animation evaluator",
+    "stack": [
+      "Rust",
+      "Bevy",
+      "glam"
+    ],
+    "formats": [
+      "ELU ANI keyframes",
+      "local transforms"
+    ],
+    "summary": "The ancestor split selects upper-body joints while advance, sample and blend apply wrap or hold clocks, timeline interpolation and a fading action layer. A local experiment exercised these exact functions on Hanuman’s shipped rig.",
+    "adaptation": "First map the donor split to the real target skeleton and compare per-joint samples. Across 23,472 poses, replacing YUGA’s release envelope moved the right forearm by 77.55 degrees at one sample.",
+    "evidence": "executed",
+    "sha256": "dff5581defcfaeb4b350a03b5e31d85b8b738d116c73176452efeeeaa14373e5",
+    "license": "Apache-2.0",
+    "license_path": "LICENSE",
+    "rights_note": "Retain the Apache license, applicable notices and change statements when adapting code. The implementation takes separately acquired GunZ data. The executed test used YUGA's own rig and no GunZ assets.",
+    "use": "adapt",
+    "tags": [
+      "characters",
+      "animation-layers",
+      "interpolation"
+    ],
+    "symbol": "sample_transform"
+  }
+]

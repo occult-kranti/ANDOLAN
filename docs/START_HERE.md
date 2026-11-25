@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**General game-development resource database.** The offline browser and SQLite index cover individual UI controls, Blender designs, character animations, actual media assets, rebuilds and the REA fork inventory. [Resource library and query examples](../research/game-resource-library/README.md)
+
 **Rust game and handoff.** Start here for the playable two-hero lane match, packaged room server, and fourteen-hero graphical Rust sparring. [Sparring package and controls](../games/yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md) [Play, host and rebuild](../games/yuga-rust/README.md) · [Source search and verification](../games/yuga-native/docs/rust-rebuild/deep-search/README.md)
 
 Use the [project history library](../games/yuga-native/docs/PROJECT_HISTORY_LIBRARY.md) to recover a specific build, original brief, art study or source decision. For an art or runtime change, choose the artifact first, then follow the [production-round skill](../.agents/skills/yuga-art-production-rounds/SKILL.md).

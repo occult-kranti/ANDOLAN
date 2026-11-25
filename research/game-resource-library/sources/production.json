@@ -1,0 +1,968 @@
+[
+  {
+    "id": "production-ribbon",
+    "name": "Paired spline ribbon for weapon trails",
+    "project": "effekseer/Effekseer",
+    "path": "Dev/Cpp/EffekseerRendererCommon/EffekseerRendererCommon/EffekseerRenderer.RibbonRendererBase.h",
+    "category": "graphics",
+    "kind": "particle ribbon renderer",
+    "stack": [
+      "C++",
+      "Effekseer"
+    ],
+    "formats": [
+      "C++ header",
+      "runtime vertex stream"
+    ],
+    "tags": [
+      "trail",
+      "spline",
+      "weapon arc",
+      "tail"
+    ],
+    "symbol": "RenderSplines",
+    "summary": "A separate spline follows each edge. The renderer samples between consecutive instances using the configured subdivision count and writes those edge positions to the strip.",
+    "adaptation": "Feed the two sides of a mace tip or sash, reduce subdivisions at distance and test the strip orientation on abrupt turns.",
+    "revision": "b5700082b49bc5f919610880dafddc90211a9a4e",
+    "sha256": "2c8674ac444a934e2a220454304990ca9f94a2817653e0e36edb8543f8452725",
+    "git_blob_sha1": "8b7f8d8a32cfc77f97d5aae2495ed0d671ddf2a2",
+    "size_bytes": 21631,
+    "license": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "9686573243a6e4732edef9e39ac1356371dc7f4a17d995bea32777e36463cb29",
+    "rights_note": "The Effekseer shared renderer uses the project MIT license. Preserve its copyright and permission notice.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 51,
+        "symbol_text": "RenderSplines"
+      },
+      {
+        "line": 155,
+        "symbol_text": "spline_left.Calculate()"
+      },
+      {
+        "line": 174,
+        "symbol_text": "spline_right.GetValue"
+      }
+    ]
+  },
+  {
+    "id": "production-ring",
+    "name": "Three-radius ring with angular start and end fades",
+    "project": "effekseer/Effekseer",
+    "path": "Dev/Cpp/EffekseerRendererCommon/EffekseerRendererCommon/EffekseerRenderer.RingRendererBase.h",
+    "category": "graphics",
+    "kind": "annular effect geometry",
+    "stack": [
+      "C++",
+      "Effekseer"
+    ],
+    "formats": [
+      "C++ header",
+      "runtime vertex stream"
+    ],
+    "tags": [
+      "ring",
+      "ground telegraph",
+      "wind",
+      "arc"
+    ],
+    "symbol": "RenderRingVertices",
+    "summary": "The renderer derives a center radius between the inner and outer radii, iterates the curved strip and carries separate start and end fade angles.",
+    "adaptation": "Tie a ground warning’s ring radius to the gameplay radius. Use the angular fade for windup while measuring visibility during a moving-camera cast.",
+    "revision": "b5700082b49bc5f919610880dafddc90211a9a4e",
+    "sha256": "87854c08a7ecf8934bc928018154f3412c7cfdc930e19083808297acc00918f0",
+    "git_blob_sha1": "bb7542eed5c317613c3f5363da2960fb936fac8f",
+    "size_bytes": 31332,
+    "license": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "9686573243a6e4732edef9e39ac1356371dc7f4a17d995bea32777e36463cb29",
+    "rights_note": "The Effekseer shared renderer uses the project MIT license. Preserve its copyright and permission notice.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 282,
+        "symbol_text": "RenderRingVertices"
+      },
+      {
+        "line": 361,
+        "symbol_text": "CenterRatio"
+      },
+      {
+        "line": 79,
+        "symbol_text": "fadeEndingAngle"
+      }
+    ]
+  },
+  {
+    "id": "production-bloom",
+    "name": "Weighted HDR bloom reduction",
+    "project": "google/filament",
+    "path": "filament/src/materials/bloom/bloomDownsample.mat",
+    "category": "graphics",
+    "kind": "post-process material",
+    "stack": [
+      "Filament",
+      "GLSL"
+    ],
+    "formats": [
+      "Filament material"
+    ],
+    "tags": [
+      "bloom",
+      "HDR",
+      "diya",
+      "pyramid"
+    ],
+    "symbol": "postProcess",
+    "summary": "The downsample material reads thirteen nearby coordinates and combines overlapping four-sample averages into a weighted low-resolution color.",
+    "adaptation": "Populate a low-resolution emissive pyramid for lamps and crown gems. Compare the smallest resolvable light and temporal shimmer at identical exposure.",
+    "revision": "863e7d72420e99f4efbed8cafa6a343f3407018d",
+    "sha256": "d3bab1bda47ecaf95ef99f6bb3349e8c3dbc84ce9474797966b35a3596cbabef",
+    "git_blob_sha1": "6553f767a85a20c94ced5b681c40eb267ecd9364",
+    "size_bytes": 2421,
+    "license": "Apache-2.0",
+    "license_path": "LICENSE",
+    "license_sha256": "02d70b593dd8e9355dd8e1ca8d13c303bee5bcaf3065b66ff6e4f534e1e6a2c1",
+    "rights_note": "The Filament material is covered by the project Apache 2.0 terms. Preserve applicable attribution and note modifications.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 19,
+        "symbol_text": "postProcess"
+      },
+      {
+        "line": 28,
+        "symbol_text": "box4x4("
+      },
+      {
+        "line": 67,
+        "symbol_text": "c0 * 0.5 + c1 * 0.125"
+      }
+    ]
+  },
+  {
+    "id": "production-coc",
+    "name": "Depth-of-field focus mask for hero portraits",
+    "project": "google/filament",
+    "path": "filament/src/materials/dof/dofCoc.mat",
+    "category": "graphics",
+    "kind": "circle-of-confusion material",
+    "stack": [
+      "Filament",
+      "GLSL"
+    ],
+    "formats": [
+      "Filament material"
+    ],
+    "tags": [
+      "portrait",
+      "depth of field",
+      "focus",
+      "cinematic"
+    ],
+    "symbol": "getCOC",
+    "summary": "The pass reads color and depth, converts depth to a circle of confusion, clamps the blur radius and zeros very small radii before the blur stage.",
+    "adaptation": "Keep the hero’s eyes and brow in the zero-blur range in selection portraits. Use a separate gameplay profile to preserve distant targeting cues.",
+    "revision": "863e7d72420e99f4efbed8cafa6a343f3407018d",
+    "sha256": "6219b8c6aaa9937734d402a8f097c06006219324149e33da41a2de113d4bc8eb",
+    "git_blob_sha1": "d26fe753992e6b35cee08d9cf2441b11bd31feb3",
+    "size_bytes": 2066,
+    "license": "Apache-2.0",
+    "license_path": "LICENSE",
+    "license_sha256": "02d70b593dd8e9355dd8e1ca8d13c303bee5bcaf3065b66ff6e4f534e1e6a2c1",
+    "rights_note": "The Filament material is covered by the project Apache 2.0 terms. Preserve applicable attribution and note modifications.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 72,
+        "symbol_text": "getCOC"
+      },
+      {
+        "line": 79,
+        "symbol_text": "MAX_IN_FOCUS_COC"
+      },
+      {
+        "line": 75,
+        "symbol_text": "materialParams.cocClamp"
+      }
+    ]
+  },
+  {
+    "id": "production-fog",
+    "name": "Temporal volumetric fog with local emission",
+    "project": "godotengine/godot",
+    "path": "servers/rendering/renderer_rd/shaders/environment/volumetric_fog_process.glsl",
+    "category": "graphics",
+    "kind": "participating media compute shader",
+    "stack": [
+      "Godot",
+      "GLSL"
+    ],
+    "formats": [
+      "GLSL compute"
+    ],
+    "tags": [
+      "swamp",
+      "fog",
+      "lantern",
+      "reprojection"
+    ],
+    "symbol": "main",
+    "summary": "The density pass combines scattering, emission and clustered lights with reprojected history. It guards invalid density before integration along depth.",
+    "adaptation": "Inject bounded local fog beneath the Lanka causeway. Compare lamp halos after a camera cut and tune history for moving actors.",
+    "revision": "8f2e46bca3c1cca8f3b759a0eaf67e44082b81a4",
+    "sha256": "fa68b8994cede221ae028fcaaeacfa2f75ed6eaa218e915ddbcc856726047a91",
+    "git_blob_sha1": "f102bce9a8be9c6f13f2868299f46edf92209228",
+    "size_bytes": 31930,
+    "license": "MIT",
+    "license_path": "LICENSE.txt",
+    "license_sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+    "rights_note": "Retain the Godot contributors’ copyright and MIT permission text when distributing adapted shader code.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 294,
+        "symbol_text": "main"
+      },
+      {
+        "line": 802,
+        "symbol_text": "vec4 final_density"
+      },
+      {
+        "line": 809,
+        "symbol_text": "mix(final_density, reprojected_density"
+      },
+      {
+        "line": 61,
+        "symbol_text": "#ifdef MODE_FOG"
+      }
+    ]
+  },
+  {
+    "id": "production-ssr",
+    "name": "Depth-tested screen-space reflections for wet stone",
+    "project": "godotengine/godot",
+    "path": "servers/rendering/renderer_rd/shaders/effects/screen_space_reflection.glsl",
+    "category": "graphics",
+    "kind": "screen-space reflection shader",
+    "stack": [
+      "Godot",
+      "GLSL"
+    ],
+    "formats": [
+      "GLSL compute"
+    ],
+    "tags": [
+      "wet stone",
+      "swamp",
+      "roughness",
+      "reflection"
+    ],
+    "symbol": "compute_geometric_normal",
+    "summary": "The shader traces against screen depth. It fades unreliable hits at the margins and derives the reflection sampling mip from roughness.",
+    "adaptation": "Use an authored fallback reflection for scenery outside the camera and test a boundary where wet steps meet still water.",
+    "revision": "8f2e46bca3c1cca8f3b759a0eaf67e44082b81a4",
+    "sha256": "646e4d4fe322588d772c98b4692eccc33655f7290959adfea4f7d2b85b662c35",
+    "git_blob_sha1": "70971828e3016413d7a46fa16ea41b6088bdc04b",
+    "size_bytes": 11779,
+    "license": "MIT",
+    "license_path": "LICENSE.txt",
+    "license_sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+    "rights_note": "Retain the Godot contributors’ copyright and MIT permission text when distributing adapted shader code.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 67,
+        "symbol_text": "compute_geometric_normal"
+      },
+      {
+        "line": 284,
+        "symbol_text": "validity *= fade * margin_blend"
+      },
+      {
+        "line": 295,
+        "symbol_text": "float cone_angle = min(roughness"
+      }
+    ]
+  },
+  {
+    "id": "production-lightning",
+    "name": "Seeded control points for GPU lightning bolts",
+    "project": "djeedai/bevy_hanabi",
+    "path": "examples/demo/lightning.rs",
+    "category": "graphics",
+    "kind": "procedural particle effect",
+    "stack": [
+      "Rust",
+      "Bevy",
+      "Hanabi"
+    ],
+    "formats": [
+      "Rust source",
+      "GPU expressions"
+    ],
+    "tags": [
+      "lightning",
+      "seed",
+      "ability VFX",
+      "impact"
+    ],
+    "symbol": "create_bolt_effect",
+    "summary": "A wave seed and particle index define perturbed segment control points in the effect expression. Bolt and impact emitters have separate definitions.",
+    "adaptation": "Send a small visual seed and authoritative impact position over the network. Reconstruct the arc locally and test that impact timing remains readable at low particle counts.",
+    "revision": "738b353d9e1120c817099244c7b35091c1af635c",
+    "sha256": "322b1791bc3b6b4517aa9be698275517484a3938eea98b9f8e181868065411a7",
+    "git_blob_sha1": "8ca7e6aa8f6f83ef5efdf9f5ff7eaa46c7655dc4",
+    "size_bytes": 10857,
+    "license": "MIT OR Apache-2.0",
+    "license_path": "LICENSE-MIT",
+    "license_sha256": "d28fd90407bb000d9bf3d547a871e91423592d76c70734eb4c38ffac71df77d8",
+    "rights_note": "The project manifest offers MIT or Apache 2.0. The linked MIT path is one available route. Preserve the chosen license notices.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 38,
+        "symbol_text": "create_bolt_effect"
+      },
+      {
+        "line": 27,
+        "symbol_text": "PARTICLES_PER_BOLT"
+      },
+      {
+        "line": 217,
+        "symbol_text": "fn create_impact_effect"
+      }
+    ],
+    "additional_license_path": "LICENSE-APACHE2",
+    "additional_license_sha256": "9ce355a7f2f34247ed03fd83ed769b8bc18728fac37a64363e60cee9d91c38c4"
+  },
+  {
+    "id": "production-force-field",
+    "name": "Particle force field with two containment shapes",
+    "project": "djeedai/bevy_hanabi",
+    "path": "examples/demo/force_field.rs",
+    "category": "graphics",
+    "kind": "bounded particle simulation",
+    "stack": [
+      "Rust",
+      "Bevy",
+      "Hanabi"
+    ],
+    "formats": [
+      "Rust source",
+      "GPU expressions"
+    ],
+    "tags": [
+      "wind",
+      "bounding volume",
+      "repulsor",
+      "particle budget"
+    ],
+    "symbol": "effects",
+    "summary": "A one-shot spawner initializes surface positions and outward velocities. A moving repulsor, enclosing AABB and spherical exclusion zone constrain the visible particles.",
+    "adaptation": "Animate sparks around a temporary barrier. Keep the visual exclusion radius separate from the server’s damage and protection radius.",
+    "revision": "738b353d9e1120c817099244c7b35091c1af635c",
+    "sha256": "1dc6d618b677de7e436a7415378dc52a6f918316e5c982bba91ae6d74969f0a9",
+    "git_blob_sha1": "70ca403bbd9e4b2ca46a73abae0366b62674c067",
+    "size_bytes": 10367,
+    "license": "MIT OR Apache-2.0",
+    "license_path": "LICENSE-MIT",
+    "license_sha256": "d28fd90407bb000d9bf3d547a871e91423592d76c70734eb4c38ffac71df77d8",
+    "rights_note": "The project manifest offers MIT or Apache 2.0. The linked MIT path is one available route. Preserve the chosen license notices.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 32,
+        "symbol_text": "effects"
+      },
+      {
+        "line": 9,
+        "symbol_text": "KillAabbModifier"
+      },
+      {
+        "line": 10,
+        "symbol_text": "KillSphereModifier"
+      },
+      {
+        "line": 3,
+        "symbol_text": "ConformToSphereModifier"
+      }
+    ],
+    "additional_license_path": "LICENSE-APACHE2",
+    "additional_license_sha256": "9ce355a7f2f34247ed03fd83ed769b8bc18728fac37a64363e60cee9d91c38c4"
+  },
+  {
+    "id": "production-flock",
+    "name": "Read and write particle buffers for a GPU flock",
+    "project": "gfx-rs/wgpu",
+    "path": "examples/features/src/boids/compute.wgsl",
+    "category": "graphics",
+    "kind": "GPU compute shader",
+    "stack": [
+      "WebGPU",
+      "WGSL"
+    ],
+    "formats": [
+      "WGSL"
+    ],
+    "tags": [
+      "flock",
+      "swarm",
+      "compute",
+      "double buffer"
+    ],
+    "symbol": "main",
+    "summary": "Each invocation reads one source particle and scans the source array for cohesion, separation and alignment before writing the new state into another buffer.",
+    "adaptation": "Use a small decorative flock above a map landmark. Benchmark the pairwise distance loop as population rises and compare a spatial grid when scaling.",
+    "revision": "60cef2be828e03ba54e2e1598001b4625c0c2163",
+    "sha256": "b0d9e83dd09495edefb653e021a5e8cacf86b26e699ecb6d2ce8cada5dc0f249",
+    "git_blob_sha1": "6000cff30898fdbbd7c06040097d0a7bdb6dbf12",
+    "size_bytes": 2291,
+    "license": "MIT OR Apache-2.0",
+    "license_path": "LICENSE.MIT",
+    "license_sha256": "f427ebe372a8ed2317b681a2ff8ff8a58ba98e64921e7d9428ea36ec7c2cbe25",
+    "rights_note": "The wgpu workspace offers MIT or Apache 2.0. This shader also cites a separate Vulkan flocking implementation. Review that provenance before a source transplant.",
+    "use": "study",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 23,
+        "symbol_text": "main"
+      },
+      {
+        "line": 22,
+        "symbol_text": "@workgroup_size(64)"
+      },
+      {
+        "line": 17,
+        "symbol_text": "particlesSrc"
+      },
+      {
+        "line": 18,
+        "symbol_text": "particlesDst"
+      }
+    ],
+    "additional_license_path": "LICENSE.APACHE",
+    "additional_license_sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9"
+  },
+  {
+    "id": "production-binaural",
+    "name": "Headphone spatialization with interpolated HRTFs",
+    "project": "ValveSoftware/steam-audio",
+    "path": "core/src/core/binaural_effect.cpp",
+    "category": "audio",
+    "kind": "binaural DSP",
+    "stack": [
+      "C++",
+      "Steam Audio"
+    ],
+    "formats": [
+      "C++ source",
+      "audio frames"
+    ],
+    "tags": [
+      "headphones",
+      "HRTF",
+      "spatial audio",
+      "direction"
+    ],
+    "symbol": "BinauralEffect::apply",
+    "summary": "The effect chooses a nearest or interpolated directional HRTF, prepares a partial stereo downmix and applies its overlap-add convolution stage.",
+    "adaptation": "Anchor a cast warning to the source unit. Compare headphones with a stereo fallback using blind left/right and elevation identification tests.",
+    "revision": "f943b4204b876bc3096b1c3d308784536d461876",
+    "sha256": "db21e42f19249be13c0bfd650ac4ad100cd23a7cda65ae19444acf5c5495748f",
+    "git_blob_sha1": "c222cc69eb0717b82bc28db8fddc5fb72602ede5",
+    "size_bytes": 4638,
+    "license": "Apache-2.0",
+    "license_path": "LICENSE.md",
+    "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "rights_note": "This Valve DSP source has its own Apache 2.0 header. Supply separately cleared impulse responses, HRTF datasets and game sounds.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 44,
+        "symbol_text": "BinauralEffect::apply"
+      },
+      {
+        "line": 77,
+        "symbol_text": "HRTFInterpolation::Bilinear"
+      },
+      {
+        "line": 97,
+        "symbol_text": "overlapAddParams.multipleInputs"
+      }
+    ]
+  },
+  {
+    "id": "production-direct-sound",
+    "name": "Direct-path gain and frequency-dependent transmission",
+    "project": "ValveSoftware/steam-audio",
+    "path": "core/src/core/direct_effect.cpp",
+    "category": "audio",
+    "kind": "direct acoustic filtering",
+    "stack": [
+      "C++",
+      "Steam Audio"
+    ],
+    "formats": [
+      "C++ source",
+      "multiband DSP"
+    ],
+    "tags": [
+      "occlusion",
+      "walls",
+      "attenuation",
+      "mix"
+    ],
+    "symbol": "DirectEffect::calculateGainAndEQ",
+    "summary": "Independently enabled distance attenuation, directivity, absorption, occlusion and wall transmission contribute to the gain and frequency-band coefficients.",
+    "adaptation": "Give stone gates and market awnings different transmission profiles. Test whether players can still identify a dangerous off-screen ability behind each surface.",
+    "revision": "f943b4204b876bc3096b1c3d308784536d461876",
+    "sha256": "49f9933f31f4f72955d1ebc1b7d487031ce208676dd180f1a703c341fa76b3e8",
+    "git_blob_sha1": "1fdb4aa2f0c9d805b5d31c47636a6b16abdaf645",
+    "size_bytes": 5201,
+    "license": "Apache-2.0",
+    "license_path": "LICENSE.md",
+    "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "rights_note": "This Valve DSP source has its own Apache 2.0 header. Supply separately cleared impulse responses, HRTF datasets and game sounds.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 87,
+        "symbol_text": "DirectEffect::calculateGainAndEQ"
+      },
+      {
+        "line": 56,
+        "symbol_text": "ApplyAirAbsorption"
+      },
+      {
+        "line": 57,
+        "symbol_text": "ApplyTransmission"
+      },
+      {
+        "line": 113,
+        "symbol_text": "TransmissionType::FreqIndependent"
+      }
+    ]
+  },
+  {
+    "id": "production-spatial-send",
+    "name": "Distance-driven filter and room-send routing",
+    "project": "tesselode/kira",
+    "path": "crates/examples/spatial-audio/src/main.rs",
+    "category": "audio",
+    "kind": "spatial mix example",
+    "stack": [
+      "Rust",
+      "Kira",
+      "Macroquad"
+    ],
+    "formats": [
+      "Rust source"
+    ],
+    "tags": [
+      "distance",
+      "audio bus",
+      "listener",
+      "environment"
+    ],
+    "symbol": "Value::FromListenerDistance",
+    "summary": "The example maps listener distance onto low-pass cutoff and a reverb send, while camera movement updates the listener’s position and orientation.",
+    "adaptation": "Use the same distance measurement to transition ambient temple bells from dry detail to a wider return. Supply original recordings and measure the level across the transition.",
+    "revision": "b0325713c2cf090f980b46246505509f838d48f5",
+    "sha256": "ef13640e592aa9cc2bb15f512dd5ebd19d34757d2ca67c683f550eb6926e9c8c",
+    "git_blob_sha1": "7365a0e3de203394502abfcf62125ffdfd0d1419",
+    "size_bytes": 3999,
+    "license": "MIT OR Apache-2.0",
+    "license_path": "LICENSE-MIT",
+    "license_sha256": "1d075e895672c131d6adda4c0d03933e4162ca732d8c99b0cc497af884b8e703",
+    "rights_note": "Kira’s project README offers MIT or Apache 2.0. Retain the chosen license notices. Source records cover code, with separate rights for sample audio.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 47,
+        "symbol_text": "Value::FromListenerDistance"
+      },
+      {
+        "line": 53,
+        "symbol_text": ".with_send("
+      },
+      {
+        "line": 83,
+        "symbol_text": "listener.set_orientation"
+      }
+    ],
+    "additional_license_path": "LICENSE-APACHE",
+    "additional_license_sha256": "85bb5389360900e5ef360073a906f7ff6c2866995743242671091f376fe2c92d"
+  },
+  {
+    "id": "production-reverb",
+    "name": "Stereo comb and all-pass reverberation network",
+    "project": "tesselode/kira",
+    "path": "crates/kira/src/effect/reverb.rs",
+    "category": "audio",
+    "kind": "room effect DSP",
+    "stack": [
+      "Rust",
+      "Kira"
+    ],
+    "formats": [
+      "Rust source",
+      "stereo audio frames"
+    ],
+    "tags": [
+      "reverb",
+      "comb",
+      "all-pass",
+      "interpolation"
+    ],
+    "symbol": "init_filters",
+    "summary": "Eight comb stages feed four all-pass stages per side. Filter lengths are initialized for sample rate and stereo width and wet mix interpolate across the processed block.",
+    "adaptation": "Prototype courtyard and enclosed shrine sends with the same dry stem. Check decay tails and gain continuity when crossing a doorway.",
+    "revision": "b0325713c2cf090f980b46246505509f838d48f5",
+    "sha256": "4142942ccc051380b552ef6d63b1cf5c201cef9a81a8758ef1c432145c9e269d",
+    "git_blob_sha1": "84cfcd6feedaa5bd33bde7287a4bbc927dca7672",
+    "size_bytes": 5671,
+    "license": "MIT OR Apache-2.0",
+    "license_path": "LICENSE-MIT",
+    "license_sha256": "1d075e895672c131d6adda4c0d03933e4162ca732d8c99b0cc497af884b8e703",
+    "rights_note": "Kira’s project README offers MIT or Apache 2.0. Retain the chosen license notices. Source records cover code, with separate rights for sample audio.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 62,
+        "symbol_text": "init_filters"
+      },
+      {
+        "line": 23,
+        "symbol_text": "NUM_COMB_FILTERS: usize = 8"
+      },
+      {
+        "line": 24,
+        "symbol_text": "NUM_ALL_PASS_FILTERS: usize = 4"
+      },
+      {
+        "line": 157,
+        "symbol_text": "stereo_width.interpolated_value"
+      }
+    ],
+    "additional_license_path": "LICENSE-APACHE",
+    "additional_license_sha256": "85bb5389360900e5ef360073a906f7ff6c2866995743242671091f376fe2c92d"
+  },
+  {
+    "id": "production-echo",
+    "name": "Independent per-channel feedback echo",
+    "project": "jarikomppa/soloud",
+    "path": "src/filter/soloud_echofilter.cpp",
+    "category": "audio",
+    "kind": "delay line filter",
+    "stack": [
+      "C++",
+      "SoLoud"
+    ],
+    "formats": [
+      "C++ source",
+      "planar PCM"
+    ],
+    "tags": [
+      "delay",
+      "stereo",
+      "impulse",
+      "rhythm"
+    ],
+    "symbol": "EchoFilterInstance::filter",
+    "summary": "The filter maintains a circular delay per channel and mixes the delayed feedback into the dry frame. A compiled impulse probe produced three expected half-amplitude repeats on the driven channel.",
+    "adaptation": "Tempo-sync a short echo to percussion during a team objective. Use an impulse fixture first to verify channel isolation and tail length at each target sample rate.",
+    "revision": "e82fd32c1f62183922f08c14c814a02b58db1873",
+    "sha256": "a7af094d607764619876cbd452ba90812fb849ec336c39c8d6c43535552f2870",
+    "git_blob_sha1": "50eef09775dfbf857d816ef7ff189b6e293fa27a",
+    "size_bytes": 3682,
+    "license": "Zlib",
+    "license_path": "LICENSE",
+    "license_sha256": "27e5dfcca945edeff8ed2ac9808baf53ab6c34cfae5d87b48410181b5af57968",
+    "rights_note": "The echo filter has its own zlib notice. Preserve it in source distributions and identify modified source versions.",
+    "use": "adapt",
+    "evidence": "executed",
+    "witnesses": [
+      {
+        "line": 42,
+        "symbol_text": "EchoFilterInstance::filter"
+      },
+      {
+        "line": 38,
+        "symbol_text": "mParam[EchoFilter::DECAY]"
+      },
+      {
+        "line": 75,
+        "symbol_text": "mParam[EchoFilter::WET]"
+      }
+    ]
+  },
+  {
+    "id": "production-meshlets",
+    "name": "Bounded meshlet construction for scene chunks",
+    "project": "zeux/meshoptimizer",
+    "path": "src/clusterizer.cpp",
+    "category": "build",
+    "kind": "mesh clustering",
+    "stack": [
+      "C++",
+      "meshoptimizer"
+    ],
+    "formats": [
+      "C++ source",
+      "triangle indices"
+    ],
+    "tags": [
+      "meshlets",
+      "culling",
+      "terrain",
+      "budget"
+    ],
+    "symbol": "meshopt_buildMeshlets",
+    "summary": "The builder clusters indexed triangles under vertex and triangle budgets. The compiled fixture reconstructed all 242 original oriented triangles from eight meshlets.",
+    "adaptation": "Partition an opaque temple roof for meshlet culling. Record cluster occupancy and actual camera-path visibility with the intended mesh shader or alternative clustered renderer.",
+    "revision": "8547fc321b782a2235dfc14c65a346a640544cd8",
+    "sha256": "b2320845bc96ab2894306c277a123cab5331d5f5cf63d514ff44c39afd53ee03",
+    "git_blob_sha1": "d4c373508657d0f7f671f388ebcd79e521be0d8e",
+    "size_bytes": 48173,
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "license_sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26",
+    "rights_note": "The implementation refers to the meshoptimizer header for the MIT terms. Preserve its copyright and permission notice when distributing the library.",
+    "use": "adapt",
+    "evidence": "executed",
+    "witnesses": [
+      {
+        "line": 1029,
+        "symbol_text": "meshopt_buildMeshlets"
+      },
+      {
+        "line": 173,
+        "symbol_text": "getMeshletScore"
+      },
+      {
+        "line": 1029,
+        "symbol_text": "meshopt_buildMeshletsBound"
+      }
+    ]
+  },
+  {
+    "id": "production-overdraw",
+    "name": "Opaque triangle ordering with a locality threshold",
+    "project": "zeux/meshoptimizer",
+    "path": "src/overdrawoptimizer.cpp",
+    "category": "build",
+    "kind": "triangle order optimization",
+    "stack": [
+      "C++",
+      "meshoptimizer"
+    ],
+    "formats": [
+      "C++ source",
+      "triangle indices"
+    ],
+    "tags": [
+      "overdraw",
+      "depth",
+      "wave units",
+      "mesh baking"
+    ],
+    "symbol": "meshopt_optimizeOverdraw",
+    "summary": "The implementation splits and sorts triangle clusters while applying a locality threshold. A compiled 242-triangle fixture changed draw order and preserved the oriented triangle set.",
+    "adaptation": "Run on opaque lane props after cache optimization. Compare GPU timing and fragment cost on different viewpoints and leave alpha-sorted effects in their own pass.",
+    "revision": "8547fc321b782a2235dfc14c65a346a640544cd8",
+    "sha256": "a70412562f991133ce52b2833adee9de0a9029dc45312ada1eb5c2452dc4f3ee",
+    "git_blob_sha1": "682b924a9082fd1e4143d530a483e156c0125b9c",
+    "size_bytes": 11671,
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "license_sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26",
+    "rights_note": "The implementation refers to the meshoptimizer header for the MIT terms. Preserve its copyright and permission notice when distributing the library.",
+    "use": "adapt",
+    "evidence": "executed",
+    "witnesses": [
+      {
+        "line": 270,
+        "symbol_text": "meshopt_optimizeOverdraw"
+      },
+      {
+        "line": 161,
+        "symbol_text": "generateHardBoundaries"
+      },
+      {
+        "line": 190,
+        "symbol_text": "generateSoftBoundaries"
+      }
+    ]
+  },
+  {
+    "id": "production-resampler",
+    "name": "Separable texture resampling with explicit edge behavior",
+    "project": "BinomialLLC/basis_universal",
+    "path": "encoder/basisu_resampler.cpp",
+    "category": "build",
+    "kind": "texture resampling",
+    "stack": [
+      "C++",
+      "Basis Universal"
+    ],
+    "formats": [
+      "C++ source",
+      "scalar scanlines"
+    ],
+    "tags": [
+      "texture atlas",
+      "mipmaps",
+      "filter kernels",
+      "seams"
+    ],
+    "symbol": "Resampler::make_clist",
+    "summary": "The resampler computes contribution lists for source samples, runs horizontal and vertical filters and handles reflected or wrapped boundaries.",
+    "adaptation": "Build mip levels for seamless brocade and lamp masks. Compare edges under wrap and clamp modes and measure thin-line contrast at long range.",
+    "revision": "073eb6a0a34a23d77e75e54f41dcd9653a52da83",
+    "sha256": "f3bcaf9facf049b0e3c08d3ad3432a908d8707e68e536140e15d913dd967ec70",
+    "git_blob_sha1": "e8778b5d3087091b9c48813b3ab56f0651126566",
+    "size_bytes": 19635,
+    "license": "Apache-2.0",
+    "license_path": "LICENSES/Apache-2.0.txt",
+    "license_sha256": "3813a29779a0f57428cdc4a15eee600a22dc3e3a549106a22826837ef47537ca",
+    "rights_note": "The resampler source identifies the Apache 2.0 license. Track other distribution dependencies under their own included terms.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 76,
+        "symbol_text": "Resampler::make_clist"
+      },
+      {
+        "line": 42,
+        "symbol_text": "BOUNDARY_REFLECT"
+      },
+      {
+        "line": 350,
+        "symbol_text": "Resampler::resample_x"
+      },
+      {
+        "line": 406,
+        "symbol_text": "Resampler::resample_y"
+      }
+    ]
+  },
+  {
+    "id": "production-ktx-create",
+    "name": "Transfer functions and mip generation during KTX2 creation",
+    "project": "KhronosGroup/KTX-Software",
+    "path": "tools/ktx/command_create.cpp",
+    "category": "build",
+    "kind": "texture import tool",
+    "stack": [
+      "C++",
+      "KTX-Software"
+    ],
+    "formats": [
+      "KTX2",
+      "C++ source"
+    ],
+    "tags": [
+      "albedo",
+      "linear data",
+      "mipmaps",
+      "texture import"
+    ],
+    "symbol": "CommandCreate::generateMipLevels",
+    "summary": "The create command derives source and target color handling, sets image metadata and applies configurable filters and edge wrapping when generating mip levels.",
+    "adaptation": "Assign color textures and numeric effect masks their proper transfer functions. Compare a diagnostic ramp before and after compression to catch accidental double conversion.",
+    "revision": "983695c105618462b8e96458b378222e99faec98",
+    "sha256": "a7c0cbc39566632cb81638219573f38f99223511fed985a9a28d131f973eaa7e",
+    "git_blob_sha1": "ff1b98cdcdb192d5e9ed7c750939c0c3d109b96d",
+    "size_bytes": 159496,
+    "license": "Apache-2.0",
+    "license_path": "LICENSES/Apache-2.0.txt",
+    "license_sha256": "44b0a56e80b41a1b0a6bd1292515e806539fd97b30be54c2719e6c763190ab57",
+    "rights_note": "The command source explicitly identifies Apache-2.0. Keep attribution to Khronos and RasterGrid and audit bundled codecs separately.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 2731,
+        "symbol_text": "CommandCreate::generateMipLevels"
+      },
+      {
+        "line": 2826,
+        "symbol_text": "CommandCreate::determineSourceColorSpace"
+      },
+      {
+        "line": 2970,
+        "symbol_text": "CommandCreate::determineTargetColorSpace"
+      }
+    ]
+  },
+  {
+    "id": "production-ktx-transcode",
+    "name": "Validated texture transcode with optional supercompression",
+    "project": "KhronosGroup/KTX-Software",
+    "path": "tools/ktx/command_transcode.cpp",
+    "category": "build",
+    "kind": "texture transcode tool",
+    "stack": [
+      "C++",
+      "KTX-Software"
+    ],
+    "formats": [
+      "KTX2",
+      "C++ source"
+    ],
+    "tags": [
+      "GPU format",
+      "Basis",
+      "Zstandard",
+      "asset delivery"
+    ],
+    "symbol": "CommandTranscode::executeTranscode",
+    "summary": "The command validates a KTX2 input and its transcodability, runs the requested format conversion, optionally deflates the result and records writer metadata.",
+    "adaptation": "Package one authored texture source into tested device-family formats. Track archive size, GPU allocation and load time separately.",
+    "revision": "983695c105618462b8e96458b378222e99faec98",
+    "sha256": "6b0faf632c120b8fcccc526ad99cf9f99a0ba612652f8363496b80707e84dc8b",
+    "git_blob_sha1": "1f4e551ce51fd6129dfb07bc773b13e667809208",
+    "size_bytes": 8250,
+    "license": "Apache-2.0",
+    "license_path": "LICENSES/Apache-2.0.txt",
+    "license_sha256": "44b0a56e80b41a1b0a6bd1292515e806539fd97b30be54c2719e6c763190ab57",
+    "rights_note": "The command source explicitly identifies Apache-2.0. Keep attribution to Khronos and RasterGrid and audit bundled codecs separately.",
+    "use": "adapt",
+    "evidence": "source-read",
+    "witnesses": [
+      {
+        "line": 149,
+        "symbol_text": "CommandTranscode::executeTranscode"
+      },
+      {
+        "line": 159,
+        "symbol_text": "ktxTexture2_IsTranscodable"
+      },
+      {
+        "line": 165,
+        "symbol_text": "ktxTexture2_DeflateZstd"
+      },
+      {
+        "line": 178,
+        "symbol_text": "KTX_WRITER_KEY"
+      }
+    ]
+  }
+]

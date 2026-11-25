@@ -1,0 +1,501 @@
+{
+  "version": 1,
+  "observed_utc": "2026-11-25T17:57:29+00:00",
+  "selection": "round robin by per-query star rank, deduplicated case-insensitively",
+  "scope": "Public search candidates and path-based matches. Review the pinned bytes and applicable asset-specific terms before reuse.",
+  "settings": {
+    "recipe": [
+      "blender-rigs",
+      "browser-webgpu",
+      "accessibility"
+    ],
+    "query": [],
+    "match": [],
+    "ext": [],
+    "per_page": 5,
+    "pages": 1,
+    "inspect": 3,
+    "files": 6,
+    "tree_calls": 9,
+    "tree_limit": 2500,
+    "max_requests": 36
+  },
+  "counts": {
+    "unique_repositories_returned": 15,
+    "repositories_inspected": 3,
+    "network_requests": 33,
+    "cache_hits": 0
+  },
+  "queries": [
+    {
+      "query": "blender rigging addon stars:>5 archived:false",
+      "effective_query": "blender rigging addon stars:>5 archived:false is:public",
+      "recipes": [
+        "blender-rigs"
+      ],
+      "urls": [
+        "https://api.github.com/search/repositories?q=blender+rigging+addon+stars%3A%3E5+archived%3Afalse+is%3Apublic&sort=stars&order=desc&per_page=5&page=1"
+      ],
+      "total_count": 22,
+      "github_incomplete": false,
+      "ranked_hits": [
+        "Arminando/GameRig",
+        "poly-hammer/character-dna-addon",
+        "Arminando/ActionPoser",
+        "dcc-mcp/dcc-mcp-blender",
+        "L-Medici/Rignet_blender_addon"
+      ],
+      "errors": [],
+      "partial": true
+    },
+    {
+      "query": "topic:webgpu game engine stars:>5 archived:false",
+      "effective_query": "topic:webgpu game engine stars:>5 archived:false is:public",
+      "recipes": [
+        "browser-webgpu"
+      ],
+      "urls": [
+        "https://api.github.com/search/repositories?q=topic%3Awebgpu+game+engine+stars%3A%3E5+archived%3Afalse+is%3Apublic&sort=stars&order=desc&per_page=5&page=1"
+      ],
+      "total_count": 37,
+      "github_incomplete": false,
+      "ranked_hits": [
+        "BabylonJS/Babylon.js",
+        "cocos/cocos-engine",
+        "melonjs/melonJS",
+        "esengine/estella",
+        "cloud9c/taro"
+      ],
+      "errors": [],
+      "partial": true
+    },
+    {
+      "query": "game accessibility screen reader stars:>1 archived:false",
+      "effective_query": "game accessibility screen reader stars:>1 archived:false is:public",
+      "recipes": [
+        "accessibility"
+      ],
+      "urls": [
+        "https://api.github.com/search/repositories?q=game+accessibility+screen+reader+stars%3A%3E1+archived%3Afalse+is%3Apublic&sort=stars&order=desc&per_page=5&page=1"
+      ],
+      "total_count": 9,
+      "github_incomplete": false,
+      "ranked_hits": [
+        "rashadnaqeeb/Civ-V-Access",
+        "tgdragon79/audio-tetris",
+        "ironcross32/BeamNG-Accessibility-Mod",
+        "stephenso1120-cmyk/SRWY-Accessibility",
+        "chripa85/kc-accessibility"
+      ],
+      "errors": [],
+      "partial": true
+    }
+  ],
+  "repositories": [
+    {
+      "project": "Arminando/GameRig",
+      "default_branch": "main",
+      "language": "Python",
+      "topics": [
+        "add-on",
+        "addon",
+        "animation",
+        "autorig",
+        "b3d",
+        "blender",
+        "rigging",
+        "rigify"
+      ],
+      "stars_at_search": 362,
+      "matched_queries": [
+        {
+          "query": "blender rigging addon stars:>5 archived:false",
+          "recipes": [
+            "blender-rigs"
+          ],
+          "rank": 1
+        }
+      ],
+      "reasons": [
+        "rank 1 for blender rigging addon stars:>5 archived:false"
+      ],
+      "revision": "f5529583aae75c304f70cc258a341fa1e51cea6b",
+      "commit_url": "https://github.com/Arminando/GameRig/commit/f5529583aae75c304f70cc258a341fa1e51cea6b",
+      "tree": {
+        "directories_attempted": [
+          ".",
+          "operators",
+          "rigs",
+          "rigs/game",
+          "images",
+          "metarigs",
+          "utils",
+          "rigs/game/basic",
+          "rigs/game/experimental"
+        ],
+        "entries_examined": 38,
+        "excluded_dependency_or_metadata_directories": 0,
+        "github_truncated": false,
+        "partial": true,
+        "limits": [
+          "unvisited directories remain"
+        ],
+        "errors": [],
+        "queued_directories_remaining": 5,
+        "candidate_count": 7,
+        "terms_paths": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/Arminando/GameRig/blob/f5529583aae75c304f70cc258a341fa1e51cea6b/LICENSE.txt"
+          }
+        ],
+        "candidates": [
+          {
+            "path": "rigs/chain_rigs.py",
+            "extension": "py",
+            "bytes": 2410,
+            "score": 8,
+            "reasons": [
+              "filename: rigs",
+              "directory: rigs",
+              "matching extension: .py"
+            ],
+            "blob_oid": "06559045cf92848ce50446ce76f4f10f39bb80a2",
+            "url": "https://github.com/Arminando/GameRig/blob/f5529583aae75c304f70cc258a341fa1e51cea6b/rigs/chain_rigs.py"
+          },
+          {
+            "path": "base_rig.py",
+            "extension": "py",
+            "bytes": 243,
+            "score": 6,
+            "reasons": [
+              "filename: rig",
+              "matching extension: .py"
+            ],
+            "blob_oid": "16788180cf4be28b368edd5a9f638f4ae0ce6a6b",
+            "url": "https://github.com/Arminando/GameRig/blob/f5529583aae75c304f70cc258a341fa1e51cea6b/base_rig.py"
+          },
+          {
+            "path": "utils/bones.py",
+            "extension": "py",
+            "bytes": 1622,
+            "score": 6,
+            "reasons": [
+              "filename: bones",
+              "matching extension: .py"
+            ],
+            "blob_oid": "948cd0404d2a74ef2cc84578ee3f93026dedc9a5",
+            "url": "https://github.com/Arminando/GameRig/blob/f5529583aae75c304f70cc258a341fa1e51cea6b/utils/bones.py"
+          },
+          {
+            "path": "rigs/game/basic/copy_chain.py",
+            "extension": "py",
+            "bytes": 3215,
+            "score": 4,
+            "reasons": [
+              "directory: rigs",
+              "matching extension: .py"
+            ],
+            "blob_oid": "864b23b381758f83b583a53be3fdf900ade9171d",
+            "url": "https://github.com/Arminando/GameRig/blob/f5529583aae75c304f70cc258a341fa1e51cea6b/rigs/game/basic/copy_chain.py"
+          },
+          {
+            "path": "rigs/game/basic/pivot.py",
+            "extension": "py",
+            "bytes": 3217,
+            "score": 4,
+            "reasons": [
+              "directory: rigs",
+              "matching extension: .py"
+            ],
+            "blob_oid": "9330da55ea2132e4eba8aac6e4f8f0afcccea16c",
+            "url": "https://github.com/Arminando/GameRig/blob/f5529583aae75c304f70cc258a341fa1e51cea6b/rigs/game/basic/pivot.py"
+          },
+          {
+            "path": "rigs/game/basic/raw_copy.py",
+            "extension": "py",
+            "bytes": 637,
+            "score": 4,
+            "reasons": [
+              "directory: rigs",
+              "matching extension: .py"
+            ],
+            "blob_oid": "702a9841ab68763fd8e2d35fbfaadedfd79e1ea2",
+            "url": "https://github.com/Arminando/GameRig/blob/f5529583aae75c304f70cc258a341fa1e51cea6b/rigs/game/basic/raw_copy.py"
+          }
+        ]
+      }
+    },
+    {
+      "project": "BabylonJS/Babylon.js",
+      "default_branch": "master",
+      "language": "TypeScript",
+      "topics": [
+        "3d",
+        "babylon",
+        "game-development",
+        "game-engine",
+        "game-engine-3d",
+        "typescript",
+        "webaudio",
+        "webgl",
+        "webgl2",
+        "webgpu",
+        "webvr",
+        "webxr"
+      ],
+      "stars_at_search": 26444,
+      "matched_queries": [
+        {
+          "query": "topic:webgpu game engine stars:>5 archived:false",
+          "recipes": [
+            "browser-webgpu"
+          ],
+          "rank": 1
+        }
+      ],
+      "reasons": [
+        "rank 1 for topic:webgpu game engine stars:>5 archived:false"
+      ],
+      "revision": "a39ec0fe92b0cdca30a1cb501581b9d2805b5115",
+      "commit_url": "https://github.com/BabylonJS/Babylon.js/commit/a39ec0fe92b0cdca30a1cb501581b9d2805b5115",
+      "tree": {
+        "directories_attempted": [
+          ".",
+          "packages",
+          "packages/dev",
+          "packages/dev/addons",
+          "packages/dev/addons/src",
+          "packages/dev/core",
+          "packages/dev/core/src",
+          "packages/dev/core/src/Engines",
+          "packages/dev/core/src/Engines/WebGL"
+        ],
+        "entries_examined": 190,
+        "excluded_dependency_or_metadata_directories": 5,
+        "github_truncated": false,
+        "partial": true,
+        "limits": [
+          "dependency or metadata directories excluded",
+          "unvisited directories remain"
+        ],
+        "errors": [],
+        "queued_directories_remaining": 77,
+        "candidate_count": 44,
+        "terms_paths": [
+          {
+            "path": "NOTICE.md",
+            "url": "https://github.com/BabylonJS/Babylon.js/blob/a39ec0fe92b0cdca30a1cb501581b9d2805b5115/NOTICE.md"
+          },
+          {
+            "path": "license.md",
+            "url": "https://github.com/BabylonJS/Babylon.js/blob/a39ec0fe92b0cdca30a1cb501581b9d2805b5115/license.md"
+          }
+        ],
+        "candidates": [
+          {
+            "path": "packages/dev/core/src/Engines/webgpuEngine.pure.ts",
+            "extension": "ts",
+            "bytes": 234088,
+            "score": 12,
+            "reasons": [
+              "filename: engine, webgpu",
+              "directory: engines",
+              "matching extension: .ts"
+            ],
+            "blob_oid": "a7fef485f8be9362d83ef06598fd0708fbbbde4b",
+            "url": "https://github.com/BabylonJS/Babylon.js/blob/a39ec0fe92b0cdca30a1cb501581b9d2805b5115/packages/dev/core/src/Engines/webgpuEngine.pure.ts"
+          },
+          {
+            "path": "packages/dev/core/src/Engines/webgpuEngine.ts",
+            "extension": "ts",
+            "bytes": 1145,
+            "score": 12,
+            "reasons": [
+              "filename: engine, webgpu",
+              "directory: engines",
+              "matching extension: .ts"
+            ],
+            "blob_oid": "321684b077b22d931eeafd7838dece666eb9f901",
+            "url": "https://github.com/BabylonJS/Babylon.js/blob/a39ec0fe92b0cdca30a1cb501581b9d2805b5115/packages/dev/core/src/Engines/webgpuEngine.ts"
+          },
+          {
+            "path": "packages/dev/core/src/Engines/ICanvas.ts",
+            "extension": "ts",
+            "bytes": 31983,
+            "score": 8,
+            "reasons": [
+              "filename: canvas",
+              "directory: engines",
+              "matching extension: .ts"
+            ],
+            "blob_oid": "d62b25c5ecaf05eb323449d4defd87c50c65e77e",
+            "url": "https://github.com/BabylonJS/Babylon.js/blob/a39ec0fe92b0cdca30a1cb501581b9d2805b5115/packages/dev/core/src/Engines/ICanvas.ts"
+          },
+          {
+            "path": "packages/dev/core/src/Engines/IPipelineContext.ts",
+            "extension": "ts",
+            "bytes": 11712,
+            "score": 8,
+            "reasons": [
+              "filename: pipeline",
+              "directory: engines",
+              "matching extension: .ts"
+            ],
+            "blob_oid": "3201889dca1a7a11ec1274bb53ba3efcc1b86bb1",
+            "url": "https://github.com/BabylonJS/Babylon.js/blob/a39ec0fe92b0cdca30a1cb501581b9d2805b5115/packages/dev/core/src/Engines/IPipelineContext.ts"
+          },
+          {
+            "path": "packages/dev/core/src/Engines/abstractEngine.functions.ts",
+            "extension": "ts",
+            "bytes": 9051,
+            "score": 8,
+            "reasons": [
+              "filename: engine",
+              "directory: engines",
+              "matching extension: .ts"
+            ],
+            "blob_oid": "53ba15d5b68055fdceb3e3b1709623679656fd31",
+            "url": "https://github.com/BabylonJS/Babylon.js/blob/a39ec0fe92b0cdca30a1cb501581b9d2805b5115/packages/dev/core/src/Engines/abstractEngine.functions.ts"
+          },
+          {
+            "path": "packages/dev/core/src/Engines/abstractEngine.pure.ts",
+            "extension": "ts",
+            "bytes": 124675,
+            "score": 8,
+            "reasons": [
+              "filename: engine",
+              "directory: engines",
+              "matching extension: .ts"
+            ],
+            "blob_oid": "e988443d261108b5896c6d78edfd055e1958fb1f",
+            "url": "https://github.com/BabylonJS/Babylon.js/blob/a39ec0fe92b0cdca30a1cb501581b9d2805b5115/packages/dev/core/src/Engines/abstractEngine.pure.ts"
+          }
+        ]
+      }
+    },
+    {
+      "project": "rashadnaqeeb/Civ-V-Access",
+      "default_branch": "main",
+      "language": "Lua",
+      "topics": [],
+      "stars_at_search": 22,
+      "matched_queries": [
+        {
+          "query": "game accessibility screen reader stars:>1 archived:false",
+          "recipes": [
+            "accessibility"
+          ],
+          "rank": 1
+        }
+      ],
+      "reasons": [
+        "rank 1 for game accessibility screen reader stars:>1 archived:false"
+      ],
+      "revision": "cf6764a97ee8cfe690c42d5a90698344e87dcd9d",
+      "commit_url": "https://github.com/rashadnaqeeb/Civ-V-Access/commit/cf6764a97ee8cfe690c42d5a90698344e87dcd9d",
+      "tree": {
+        "directories_attempted": [
+          ".",
+          "src",
+          "src/engine",
+          "src/engine/CvGameCoreDLL_Expansion2",
+          "src/dlc",
+          "src/dlc/UI",
+          "src/lekmod",
+          "src/proxy",
+          "src/vp"
+        ],
+        "entries_examined": 74,
+        "excluded_dependency_or_metadata_directories": 2,
+        "github_truncated": false,
+        "partial": true,
+        "limits": [
+          "dependency or metadata directories excluded",
+          "unvisited directories remain"
+        ],
+        "errors": [],
+        "queued_directories_remaining": 15,
+        "candidate_count": 8,
+        "terms_paths": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/rashadnaqeeb/Civ-V-Access/blob/cf6764a97ee8cfe690c42d5a90698344e87dcd9d/LICENSE"
+          }
+        ],
+        "candidates": [
+          {
+            "path": "src/lekmod/CivVAccess_EngineData.lua",
+            "extension": "lua",
+            "bytes": 57059,
+            "score": 6,
+            "reasons": [
+              "filename: access",
+              "matching extension: .lua"
+            ],
+            "blob_oid": "76d3056f64378627a4e3aef68c570aa798f93f42",
+            "url": "https://github.com/rashadnaqeeb/Civ-V-Access/blob/cf6764a97ee8cfe690c42d5a90698344e87dcd9d/src/lekmod/CivVAccess_EngineData.lua"
+          },
+          {
+            "path": "src/vp/CivVAccess_EngineData.lua",
+            "extension": "lua",
+            "bytes": 70579,
+            "score": 6,
+            "reasons": [
+              "filename: access",
+              "matching extension: .lua"
+            ],
+            "blob_oid": "5ff5feb8e38578e25eb25321b9f910a8ddda87ad",
+            "url": "https://github.com/rashadnaqeeb/Civ-V-Access/blob/cf6764a97ee8cfe690c42d5a90698344e87dcd9d/src/vp/CivVAccess_EngineData.lua"
+          },
+          {
+            "path": "src/engine/CvGameCoreDLL_Expansion2/CivVAccessEventQueue.cpp",
+            "extension": "cpp",
+            "bytes": 2708,
+            "score": 6,
+            "reasons": [
+              "filename: access",
+              "matching extension: .cpp"
+            ],
+            "blob_oid": "aebf13f3fe0021073536fbeee82fea41e8033afa",
+            "url": "https://github.com/rashadnaqeeb/Civ-V-Access/blob/cf6764a97ee8cfe690c42d5a90698344e87dcd9d/src/engine/CvGameCoreDLL_Expansion2/CivVAccessEventQueue.cpp"
+          },
+          {
+            "path": "src/engine/CvGameCoreDLL_Expansion2/CvNotifications.cpp",
+            "extension": "cpp",
+            "bytes": 57850,
+            "score": 6,
+            "reasons": [
+              "filename: notifications",
+              "matching extension: .cpp"
+            ],
+            "blob_oid": "f7482cf8eda884997d8f6390a7d7a5901610b000",
+            "url": "https://github.com/rashadnaqeeb/Civ-V-Access/blob/cf6764a97ee8cfe690c42d5a90698344e87dcd9d/src/engine/CvGameCoreDLL_Expansion2/CvNotifications.cpp"
+          },
+          {
+            "path": "src/dlc/CivVAccess_0.Civ5Pkg",
+            "extension": "civ5pkg",
+            "bytes": 2307,
+            "score": 4,
+            "reasons": [
+              "filename: access"
+            ],
+            "blob_oid": "cbb05c0c27853038934dba364108cd735780ff6e",
+            "url": "https://github.com/rashadnaqeeb/Civ-V-Access/blob/cf6764a97ee8cfe690c42d5a90698344e87dcd9d/src/dlc/CivVAccess_0.Civ5Pkg"
+          },
+          {
+            "path": "src/dlc/CivVAccess_1.Civ5Pkg",
+            "extension": "civ5pkg",
+            "bytes": 948,
+            "score": 4,
+            "reasons": [
+              "filename: access"
+            ],
+            "blob_oid": "c28470d3372692ecc608f0c1d3cd7a312dd3cf66",
+            "url": "https://github.com/rashadnaqeeb/Civ-V-Access/blob/cf6764a97ee8cfe690c42d5a90698344e87dcd9d/src/dlc/CivVAccess_1.Civ5Pkg"
+          }
+        ]
+      }
+    }
+  ]
+}

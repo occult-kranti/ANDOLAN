@@ -1,0 +1,149 @@
+[
+  {
+    "id": "rea-case-desert-battle",
+    "name": "Desert Frost troop strength and battle membership",
+    "project": "AppTesterMC/desert-frost-engine",
+    "revision": "2fc7bf5bda1e6cd3caa8814fb82af248c1800aa1",
+    "path": "third_party/scummvm/engines/dune/battle.cpp",
+    "category": "gameplay",
+    "kind": "strategy combat",
+    "stack": [
+      "C++",
+      "ScummVM"
+    ],
+    "formats": [
+      "C++"
+    ],
+    "summary": "World::troopStrength and placeInBattle separate a troop’s fighting strength from membership in the engagement.",
+    "adaptation": "Use a scenario in which two otherwise similar troops differ in equipment or location. Compare participation and strength independently.",
+    "evidence": "source-read",
+    "sha256": "58d5fea736449a6a6aba38f00ca5547c2341f4394aa21dcdba338def1ac2a9f7",
+    "license": "GPL-3.0-or-later",
+    "license_path": "third_party/scummvm/engines/dune/battle.cpp",
+    "rights_note": "The engine file carries its own GPL-3.0-or-later header. The top-level Apache notice covers a different scope. Original Dune data has separate terms.",
+    "use": "study",
+    "tags": [
+      "historical strategy",
+      "troops",
+      "battle rules"
+    ]
+  },
+  {
+    "id": "rea-case-desert-march",
+    "name": "Desert Frost troop movement between settlements",
+    "project": "AppTesterMC/desert-frost-engine",
+    "revision": "2fc7bf5bda1e6cd3caa8814fb82af248c1800aa1",
+    "path": "third_party/scummvm/engines/dune/troops.cpp",
+    "category": "world",
+    "kind": "troop movement",
+    "stack": [
+      "C++",
+      "ScummVM"
+    ],
+    "formats": [
+      "C++"
+    ],
+    "summary": "World::unlinkTroop and linkTroop move a unit between settlement records. Equipment registration and encounters are separate operations.",
+    "adaptation": "In a campaign-map tool, test transfer out, transfer in and entity deletion against both the old and new settlement lists.",
+    "evidence": "source-read",
+    "sha256": "ec4bae5322b03ede43d87a02a8b43c2f4b6b3b2e5454290e35a91c70c0cac2e7",
+    "license": "GPL-3.0-or-later",
+    "license_path": "third_party/scummvm/engines/dune/troops.cpp",
+    "rights_note": "The engine file carries its own GPL-3.0-or-later header. The top-level Apache notice covers a different scope. Original Dune data has separate terms.",
+    "use": "study",
+    "tags": [
+      "world map",
+      "settlements",
+      "orders"
+    ]
+  },
+  {
+    "id": "rea-case-save-menu-replay",
+    "name": "Save-menu cross-release regression harness",
+    "project": "AppTesterMC/desert-frost-engine",
+    "revision": "2fc7bf5bda1e6cd3caa8814fb82af248c1800aa1",
+    "path": "scripts/check_save_compatibility.py",
+    "category": "build",
+    "kind": "save compatibility",
+    "stack": [
+      "Python",
+      "ScummVM"
+    ],
+    "formats": [
+      "Python",
+      "save file"
+    ],
+    "summary": "The script exercises save-menu behavior across content variants and hashes fixtures during migration tests.",
+    "adaptation": "Borrow the diagnostic pattern for a remake or mod that can open multiple editions. Test edition identification, temporary save slots and preservation of the original bytes.",
+    "evidence": "source-read",
+    "sha256": "b869de2c0bb1f8d9f146d8090f74fb9bff6f6f4ce2f7ec7d9936ca28ddf54dff",
+    "license": "Apache-2.0",
+    "license_path": "LICENSE",
+    "rights_note": "The top-level repository has an Apache license. Running the game-specific cases still requires the correct engine and content.",
+    "use": "study",
+    "tags": [
+      "save games",
+      "regression",
+      "porting"
+    ]
+  },
+  {
+    "id": "rea-case-retro-palette",
+    "name": "SwiftDune indexed palette and palette stash",
+    "project": "AppTesterMC/dune-ios-swift",
+    "revision": "ec79a2ea84bfdd537b101a5b3bcf91deefb7a0f2",
+    "path": "SwiftDune/Engine/Graphics/Palette.swift",
+    "category": "graphics",
+    "kind": "palette controller",
+    "stack": [
+      "Swift",
+      "CoreGraphics"
+    ],
+    "formats": [
+      "Swift"
+    ],
+    "summary": "A fixed 256-color palette provides raw storage and a temporary stash for reversible palette changes.",
+    "adaptation": "In a retro scene editor, preview an alternate palette without changing any sprite indices, then restore the original colors.",
+    "evidence": "source-read",
+    "sha256": "a9f6adea17b9234dbbc4653561d2b3e68ab7f3aecf181aa619fa9c4de6209055",
+    "license": "unverified",
+    "license_path": null,
+    "rights_note": "The reviewed tree had no top-level license declaring redistribution terms for this Swift implementation. Study the design and seek permission before copying it.",
+    "use": "verify-terms",
+    "tags": [
+      "indexed color",
+      "color grading",
+      "adventure"
+    ]
+  },
+  {
+    "id": "rea-case-retro-blit",
+    "name": "SwiftDune pixel-buffer effects and sprite copy",
+    "project": "AppTesterMC/dune-ios-swift",
+    "revision": "ec79a2ea84bfdd537b101a5b3bcf91deefb7a0f2",
+    "path": "SwiftDune/Engine/Graphics/PixelBuffer.swift",
+    "category": "graphics",
+    "kind": "sprite compositor",
+    "stack": [
+      "Swift",
+      "CoreGraphics"
+    ],
+    "formats": [
+      "Swift"
+    ],
+    "summary": "Rendering takes a destination buffer, effect and offset. Clearing and copying ranges are separate operations.",
+    "adaptation": "Compare hard-edge masking and offset handling when an animation crosses a screen boundary. Keep original game sprites outside the test fixture.",
+    "evidence": "source-read",
+    "sha256": "300de33c4940da9675265e846da736d8ff10c33b972eb658b3855f6ab43bb10f",
+    "license": "unverified",
+    "license_path": null,
+    "rights_note": "The reviewed tree had no top-level license declaring redistribution terms for this Swift implementation. Study the design and seek permission before copying it.",
+    "use": "verify-terms",
+    "tags": [
+      "sprite",
+      "palette",
+      "blit",
+      "retro rendering"
+    ]
+  }
+]

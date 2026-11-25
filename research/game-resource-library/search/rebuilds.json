@@ -1,0 +1,715 @@
+{
+  "as_of_utc": "2026-11-25",
+  "scope": "Engine rebuilds, source ports and adjacent game-authoring tools across C, C++, C#, Rust, Python/Cython and JavaScript. This targeted sample combines ranked repository searches, code searches and direct inspection of known projects. The queries do not enumerate every repository, fork or result.",
+  "method": "Each repository query requested page one with up to 15 results by stars; code queries requested page one by best match. total_count reflects GitHub’s matching index on the recorded date. GitHub code search indexes default-branch content. Direct project-name seeds and existing source-port catalogs supplied additional projects. For each reviewed file, we fetched its raw bytes at the listed commit and computed SHA-256 without newline conversion. Rights findings come from the pinned tree and source headers. Runtime executions are distinguished in each record.",
+  "sources": [
+    "Fast-64/fast64",
+    "OpenEnroth/OpenEnroth",
+    "OpenLoco/OpenLoco",
+    "OpenMW/openmw",
+    "OpenRA/OpenRA",
+    "OpenRCT2/OpenRCT2",
+    "OpenRsG/GunZRs",
+    "OpenSAGE/OpenSAGE",
+    "OpenTTD/OpenTTD",
+    "OpenXcom/OpenXcom",
+    "RSDKModding/RSDKv4-Decompilation",
+    "SFTtech/openage",
+    "XProger/OpenLara",
+    "arx/ArxLibertatis",
+    "bvschaik/julius",
+    "chocolate-doom/chocolate-doom",
+    "d07RiV/diabloweb",
+    "diasurgical/DevilutionX",
+    "electronicarts/CnC_Remastered_Collection",
+    "ioquake/ioq3",
+    "scummvm/scummvm"
+  ],
+  "counts": {
+    "projects": 21,
+    "elements": 48,
+    "categories": {
+      "animation": 6,
+      "audio": 3,
+      "blender": 2,
+      "build": 5,
+      "characters": 2,
+      "gameplay": 11,
+      "graphics": 5,
+      "ui": 8,
+      "world": 6
+    },
+    "evidence": {
+      "executed": 1,
+      "source-read": 47
+    },
+    "distinct_ranked_repositories": 94
+  },
+  "queries": [
+    {
+      "method": "github-repositories-search",
+      "query": "topic:engine-reimplementation archived:false",
+      "endpoint": "https://api.github.com/search/repositories?q=topic%3Aengine-reimplementation+archived%3Afalse&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 14,
+      "incomplete_results": false,
+      "returned": 14,
+      "key_results": [
+        "sourcehold/Sourcehold",
+        "BBQGiraffe/OpenNitemare3D",
+        "AdrienTD/wkbre",
+        "lowlevelmetal/OpenSE4",
+        "artemnikonov/hpengine",
+        "delcodigo/open-sosaria",
+        "invictus-1/FA-Remaster",
+        "SapphireDragoness/open-battlespire",
+        "no7z/awesome-rebuilt-games",
+        "DarkArshyn/OpenJade",
+        "initcore0/gobnative",
+        "bullbin/widebrim_editor",
+        "patodois/osp-fo4",
+        "JMPN2712/openkcd"
+      ]
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "topic:game-reimplementation archived:false",
+      "endpoint": "https://api.github.com/search/repositories?q=topic%3Agame-reimplementation+archived%3Afalse&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 17,
+      "incomplete_results": false,
+      "returned": 15,
+      "key_results": [
+        "sprucey149/openbf",
+        "againrom/againrom-engine",
+        "s-nems/open-northland",
+        "imbevystar/rust-gta-3",
+        "hivvu/scale-miniatures",
+        "dominusbelial/AllegianceCore-public",
+        "Krilliac/OmegaStrain-Reimplementation",
+        "pawelchcki/wasmsmac",
+        "ModdingOldGames/OpenATDUnity",
+        "KiringYJ/openkawai",
+        "mnkhprre/CannonCruise",
+        "AmeerMH/insaniquarium-web",
+        "thomashodgkinson1987/aaatw-rs",
+        "3035936740/Beans-Quest-for-Windows",
+        "truizsanchez/nemesio"
+      ]
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "topic:source-port archived:false",
+      "endpoint": "https://api.github.com/search/repositories?q=topic%3Asource-port+archived%3Afalse&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 162,
+      "incomplete_results": false,
+      "returned": 15,
+      "key_results": [
+        "SubmitGame/awesome-decomp-games",
+        "wipeout-phantom-edition/wipeout-phantom-edition",
+        "wojciech-graj/doom-ascii",
+        "NBlood/NBlood",
+        "bradharding/doomretro",
+        "chrissotraidis/harkinianpad",
+        "bibendovsky/bstone",
+        "fabiangreffrath/woof",
+        "skyjake/Doomsday-Engine",
+        "ByteOverlord/Watch_Quake",
+        "wojciech-graj/doom-docm",
+        "dk8827/ra-port",
+        "Yokimitsuro/khdays-port",
+        "themuffinator/openQ4",
+        "pablocpas/OpenCMR2"
+      ]
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "topic:reverse-engineering topic:game-engine",
+      "endpoint": "https://api.github.com/search/repositories?q=topic%3Areverse-engineering+topic%3Agame-engine&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 141,
+      "incomplete_results": false,
+      "returned": 15,
+      "key_results": [
+        "multitheftauto/mtasa-blue",
+        "lethal-guitar/RigelEngine",
+        "OpenKH/OpenKh",
+        "OpenRAC/OpenRAC",
+        "KobaltBlu/KotOR.js",
+        "bailo167/awesome-game-mashups",
+        "erkamyaman/rea-games",
+        "InfiniteC0re/OpenBarnyard",
+        "ankushKun/sh23ds",
+        "cohaereo/alkahest",
+        "MrSapps/msgi",
+        "PsiLupan/FRAY",
+        "SourceEngine-CommunityEdition/source",
+        "j0braun/overbright",
+        "alexbatalov/tig"
+      ]
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "topic:decompilation topic:game-engine",
+      "endpoint": "https://api.github.com/search/repositories?q=topic%3Adecompilation+topic%3Agame-engine&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 27,
+      "incomplete_results": false,
+      "returned": 15,
+      "key_results": [
+        "Sashi-hub085/ue-bulk-export",
+        "bailo167/awesome-game-mashups",
+        "alexbatalov/tig",
+        "sprucey149/openbf",
+        "monstercameron/LibertyFlux",
+        "pedryvo/rrt2-decomp",
+        "felipe-dos-santos81/primal-rage-re",
+        "LiquidSnake0/bully-re",
+        "sosso33/omikron-tns-omk-engine",
+        "Cycl0o0/liboot",
+        "luispolis124/OpenTS3-DS",
+        "Voikanaa/jpog-decomp",
+        "mscrnt/Sightline",
+        "sirbilliams/SpongebobEOTM-Android",
+        "giuseppegr/FoxRV"
+      ]
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "\"engine reimplementation\" game archived:false",
+      "endpoint": "https://api.github.com/search/repositories?q=%22engine+reimplementation%22+game+archived%3Afalse&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 28,
+      "incomplete_results": false,
+      "returned": 15,
+      "key_results": [
+        "Ruin0x11/OpenNefia",
+        "OpenCrystalCaves/OpenCrystalCaves",
+        "OpenPhantom/OpenPhantom",
+        "tg-2/sacengine",
+        "jjmhalew/WoodyRE",
+        "Pedroj-64/DownHill-Port-PC",
+        "AdrienTD/wkbre",
+        "OpenKingdoms/OpenKingdoms",
+        "Theaninova/mhlib",
+        "zuhuHix/BL2_ReBased",
+        "versable/OpenGothicStarter",
+        "DavidBuchanan314/duperhex",
+        "no7z/awesome-rebuilt-games",
+        "demen1n/h4r",
+        "loerting/Indycompiled"
+      ]
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "topic:source-port webassembly",
+      "endpoint": "https://api.github.com/search/repositories?q=topic%3Asource-port+webassembly&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 5,
+      "incomplete_results": false,
+      "returned": 5,
+      "key_results": [
+        "no7z/awesome-rebuilt-games",
+        "KonsomeJona/brickblaster-c",
+        "adamXbot/brickpark-browser",
+        "athola/qwasm2-rs",
+        "BernardV/luminoveau-doom"
+      ]
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "topic:n64 blender exporter fast64",
+      "endpoint": "https://api.github.com/search/repositories?q=topic%3An64+blender+exporter+fast64&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 0,
+      "incomplete_results": false,
+      "returned": 0,
+      "key_results": []
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "Caesar III augustus julius",
+      "endpoint": "https://api.github.com/search/repositories?q=Caesar+III+augustus+julius&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 3,
+      "incomplete_results": false,
+      "returned": 3,
+      "key_results": [
+        "OpenMandrivaAssociation/augustus",
+        "1sunJ/caesar3-build-hotkeys",
+        "0x695/Gaius"
+      ]
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "diablo devilution browser webassembly",
+      "endpoint": "https://api.github.com/search/repositories?q=diablo+devilution+browser+webassembly&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 0,
+      "incomplete_results": false,
+      "returned": 0,
+      "key_results": []
+    },
+    {
+      "method": "github-repositories-search",
+      "query": "topic:game-remake open source",
+      "endpoint": "https://api.github.com/search/repositories?q=topic%3Agame-remake+open+source&per_page=15&page=1&sort=stars&order=desc",
+      "total_count": 3,
+      "incomplete_results": false,
+      "returned": 3,
+      "key_results": [
+        "mrzh7/scam-with-your-friends-web",
+        "Laeresh/CSVM",
+        "DeraymaekerThibault/OpenProcyon"
+      ]
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:OpenRA/OpenRA extension:cs filename:RadarWidget.cs",
+      "endpoint": "https://api.github.com/search/code?q=repo%3AOpenRA%2FOpenRA+extension%3Acs+filename%3ARadarWidget.cs&per_page=15&page=1",
+      "total_count": 1,
+      "incomplete_results": false,
+      "returned": 1,
+      "key_results": [
+        "OpenRA/OpenRA/OpenRA.Mods.Common/Widgets/RadarWidget.cs"
+      ]
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:OpenMW/openmw filename:animation.cpp",
+      "endpoint": "https://api.github.com/search/code?q=repo%3AOpenMW%2Fopenmw+filename%3Aanimation.cpp&per_page=15&page=1",
+      "total_count": 7,
+      "incomplete_results": false,
+      "returned": 7,
+      "key_results": [
+        "OpenMW/openmw/components/resource/animation.cpp",
+        "OpenMW/openmw/apps/openmw/mwrender/animation.cpp",
+        "OpenMW/openmw/apps/openmw/mwrender/npcanimation.cpp",
+        "OpenMW/openmw/apps/openmw/mwrender/actoranimation.cpp",
+        "OpenMW/openmw/apps/openmw/mwrender/weaponanimation.cpp",
+        "OpenMW/openmw/apps/openmw/mwrender/esm4npcanimation.cpp",
+        "OpenMW/openmw/apps/openmw/mwrender/creatureanimation.cpp"
+      ]
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:Fast-64/fast64 filename:oot_anim_writer.py",
+      "endpoint": "https://api.github.com/search/code?q=repo%3AFast-64%2Ffast64+filename%3Aoot_anim_writer.py&per_page=15&page=1",
+      "total_count": 0,
+      "incomplete_results": false,
+      "returned": 0,
+      "key_results": []
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:XProger/OpenLara \"getJoints\" path:src/animation.h",
+      "endpoint": "https://api.github.com/search/code?q=repo%3AXProger%2FOpenLara+%22getJoints%22+path%3Asrc%2Fanimation.h&per_page=15&page=1",
+      "total_count": 0,
+      "incomplete_results": false,
+      "returned": 0,
+      "key_results": []
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:bvschaik/julius \"map_water_can_spawn_fishing_boat\"",
+      "endpoint": "https://api.github.com/search/code?q=repo%3Abvschaik%2Fjulius+%22map_water_can_spawn_fishing_boat%22&per_page=15&page=1",
+      "total_count": 3,
+      "incomplete_results": false,
+      "returned": 3,
+      "key_results": [
+        "bvschaik/julius/src/map/water.h",
+        "bvschaik/julius/src/map/water.c",
+        "bvschaik/julius/src/building/figure.c"
+      ]
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:scummvm/scummvm filename:midiparser_smf.cpp",
+      "endpoint": "https://api.github.com/search/code?q=repo%3Ascummvm%2Fscummvm+filename%3Amidiparser_smf.cpp&per_page=15&page=1",
+      "total_count": 1,
+      "incomplete_results": false,
+      "returned": 1,
+      "key_results": [
+        "scummvm/scummvm/audio/midiparser_smf.cpp"
+      ]
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:ioquake/ioq3 \"CG_ImpactMark\"",
+      "endpoint": "https://api.github.com/search/code?q=repo%3Aioquake%2Fioq3+%22CG_ImpactMark%22&per_page=15&page=1",
+      "total_count": 0,
+      "incomplete_results": false,
+      "returned": 0,
+      "key_results": []
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:OpenLoco/OpenLoco \"generateHeightMap\" filename:MapGenerator.cpp",
+      "endpoint": "https://api.github.com/search/code?q=repo%3AOpenLoco%2FOpenLoco+%22generateHeightMap%22+filename%3AMapGenerator.cpp&per_page=15&page=1",
+      "total_count": 1,
+      "incomplete_results": false,
+      "returned": 1,
+      "key_results": [
+        "OpenLoco/OpenLoco/src/OpenLoco/src/Map/MapGenerator/MapGenerator.cpp"
+      ]
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:d07RiV/diabloweb \"audioBatch\" filename:game.worker.js",
+      "endpoint": "https://api.github.com/search/code?q=repo%3Ad07RiV%2Fdiabloweb+%22audioBatch%22+filename%3Agame.worker.js&per_page=15&page=1",
+      "total_count": 1,
+      "incomplete_results": false,
+      "returned": 1,
+      "key_results": [
+        "d07RiV/diabloweb/src/api/game.worker.js"
+      ]
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:Fast-64/fast64 \"get_entire_fcurve_data\"",
+      "endpoint": "https://api.github.com/search/code?q=repo%3AFast-64%2Ffast64+%22get_entire_fcurve_data%22&per_page=15&page=1",
+      "total_count": 1,
+      "incomplete_results": false,
+      "returned": 1,
+      "key_results": [
+        "Fast-64/fast64/fast64_internal/sm64/animation/exporting.py"
+      ]
+    },
+    {
+      "method": "github-code-search",
+      "query": "repo:OpenRsG/GunZRs \"sample_transform\" filename:anim.rs",
+      "endpoint": "https://api.github.com/search/code?q=repo%3AOpenRsG%2FGunZRs+%22sample_transform%22+filename%3Aanim.rs&per_page=15&page=1",
+      "total_count": 1,
+      "incomplete_results": false,
+      "returned": 1,
+      "key_results": [
+        "OpenRsG/GunZRs/src/anim.rs"
+      ]
+    }
+  ],
+  "project_file_inspection": [
+    {
+      "project": "OpenRCT2/OpenRCT2",
+      "revision": "28bb5e553467b5471516a5a22a3e7294a6d8dc94",
+      "tree_blob_count": 11942,
+      "tree_truncated": false,
+      "file_count": 3,
+      "paths": [
+        "src/openrct2/drawing/LightFX.cpp",
+        "src/openrct2-ui/windows/TileInspector.cpp",
+        "src/openrct2/ride/TrackDesign.cpp"
+      ],
+      "license_file": {
+        "path": "licence.txt",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+      }
+    },
+    {
+      "project": "OpenTTD/OpenTTD",
+      "revision": "871c4f4cb544af7b45fb22c72129ddea293172ae",
+      "tree_blob_count": 1907,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "src/pathfinder/yapf/yapf_rail.cpp",
+        "src/timetable_gui.cpp"
+      ],
+      "license_file": {
+        "path": "COPYING.md",
+        "sha256": "50ac792e113700dd23ecb25ed6f341eb383bed36cb8fd87aa164f4e44f2760b3"
+      }
+    },
+    {
+      "project": "OpenRA/OpenRA",
+      "revision": "b70cab2b43d831039b21528ac88f46180ae02b88",
+      "tree_blob_count": 4163,
+      "tree_truncated": false,
+      "file_count": 3,
+      "paths": [
+        "OpenRA.Mods.Common/Widgets/RadarWidget.cs",
+        "OpenRA.Mods.Common/Traits/Player/ProductionQueue.cs",
+        "OpenRA.Mods.Common/Pathfinder/HierarchicalPathFinder.cs"
+      ],
+      "license_file": {
+        "path": "COPYING",
+        "sha256": "e79e9c8a0c85d735ff98185918ec94ed7d175efc377012787aebcf3b80f0d90b"
+      }
+    },
+    {
+      "project": "diasurgical/DevilutionX",
+      "revision": "e1c377775a206274f73b5f01c84a967d06e74d54",
+      "tree_blob_count": 1529,
+      "tree_truncated": false,
+      "file_count": 3,
+      "paths": [
+        "Source/automap.cpp",
+        "Source/inv.cpp",
+        "Source/controls/touch/event_handlers.cpp"
+      ],
+      "license_file": {
+        "path": "LICENSE.md",
+        "sha256": "049382c17367e384c622369abbeda0cab1d65658c28611717e18afead341e586"
+      }
+    },
+    {
+      "project": "bvschaik/julius",
+      "revision": "6746d82c1261aafd17837533ac0f18b99744b3d3",
+      "tree_blob_count": 903,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "src/map/water.c",
+        "src/building/storage.c"
+      ],
+      "license_file": {
+        "path": "LICENSE.txt",
+        "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+      }
+    },
+    {
+      "project": "OpenXcom/OpenXcom",
+      "revision": "4a4bae5fa2e5a09282928e84943fc84b093e34ff",
+      "tree_blob_count": 1123,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "src/Battlescape/BattlescapeGenerator.cpp",
+        "src/Battlescape/TileEngine.cpp"
+      ],
+      "license_file": {
+        "path": "LICENSE.txt",
+        "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+      }
+    },
+    {
+      "project": "OpenMW/openmw",
+      "revision": "5f3aafb010a26b789b6a5e590b4e218d1ddf0cd9",
+      "tree_blob_count": 3806,
+      "tree_truncated": false,
+      "file_count": 3,
+      "paths": [
+        "apps/openmw/mwrender/animation.cpp",
+        "components/detournavigator/navmeshtilescache.cpp",
+        "apps/openmw/mwmechanics/character.cpp"
+      ],
+      "license_file": {
+        "path": "LICENSE",
+        "sha256": "a187395428b34e87a0279ba67f1dba3c929eec303bea0d2200a2effd55787829"
+      }
+    },
+    {
+      "project": "SFTtech/openage",
+      "revision": "738bfc6cffc371275ada8b919004443e4a203271",
+      "tree_blob_count": 1754,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "openage/convert/value_object/read/media/slp.pyx",
+        "openage/convert/entity_object/export/texture.py"
+      ],
+      "license_file": {
+        "path": "copying.md",
+        "sha256": "23ef9c115e24f14b5f9188cc044d288d1fea93caa77b06bb393d9b4753ab3d17"
+      }
+    },
+    {
+      "project": "XProger/OpenLara",
+      "revision": "3b268ca4bf986c380f44a26ffd9218bf6d376249",
+      "tree_blob_count": 606,
+      "tree_truncated": false,
+      "file_count": 5,
+      "paths": [
+        "src/camera.h",
+        "src/inventory.h",
+        "src/animation.h",
+        "src/character.h",
+        "src/platform/web/main.cpp"
+      ],
+      "license_file": {
+        "path": "LICENSE",
+        "sha256": "76efb6dce59e7de6f0de06ed1459177ca921826b3e5c6da014cfa1e79c911d39"
+      }
+    },
+    {
+      "project": "scummvm/scummvm",
+      "revision": "771cfb154be9f57e12f06d62dbde8fb641d31c86",
+      "tree_blob_count": 26342,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "audio/mixer.cpp",
+        "audio/midiparser_smf.cpp"
+      ],
+      "license_file": {
+        "path": "COPYING",
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+      }
+    },
+    {
+      "project": "OpenEnroth/OpenEnroth",
+      "revision": "eb9239f98169db9e7fe90075c31b3d016546dc78",
+      "tree_blob_count": 1635,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "src/Engine/Objects/Inventory.cpp",
+        "src/Engine/SpellFxRenderer.cpp"
+      ],
+      "license_file": {
+        "path": "LICENSE",
+        "sha256": "a5e6ce857b3a4c0dfef950e9e1fc7dc2eff33c460ca8bf18496d9bc18a2a4c9a"
+      }
+    },
+    {
+      "project": "arx/ArxLibertatis",
+      "revision": "5b95e4c5ca9d583f1b11c085326979772645e0f3",
+      "tree_blob_count": 815,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "src/animation/Animation.cpp",
+        "src/game/Inventory.cpp"
+      ],
+      "license_file": {
+        "path": "LICENSE",
+        "sha256": "c11998395eb53de7af8e0af08207362f5f8bcdd80a9106ad168ae9dcae346957"
+      }
+    },
+    {
+      "project": "d07RiV/diabloweb",
+      "revision": "c61ef19c54ea646aed328bd8cc82c8a5f1ebd81d",
+      "tree_blob_count": 55,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "src/api/game.worker.js",
+        "src/api/sound.js"
+      ],
+      "license_file": null
+    },
+    {
+      "project": "Fast-64/fast64",
+      "revision": "8f96b92e8a22f3c39714964df57775c54a146b82",
+      "tree_blob_count": 245,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "fast64_internal/sm64/animation/exporting.py",
+        "fast64_internal/sm64/sm64_collision.py"
+      ],
+      "license_file": {
+        "path": "LICENSE.txt",
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+      }
+    },
+    {
+      "project": "OpenLoco/OpenLoco",
+      "revision": "f64ad1ce9290251d3dadb29eba4a42569efe5d9a",
+      "tree_blob_count": 911,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "src/OpenLoco/src/Map/MapGenerator/MapGenerator.cpp",
+        "src/OpenLoco/src/Ui/Windows/MapWindow.cpp"
+      ],
+      "license_file": {
+        "path": "LICENSE",
+        "sha256": "4b802543d874d846571bfc27cca0f530eef4aad9d48b051ff2965ce6a1754e18"
+      }
+    },
+    {
+      "project": "RSDKModding/RSDKv4-Decompilation",
+      "revision": "af95198f93951cc217b43923196e5750667ec1c7",
+      "tree_blob_count": 379,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "RSDKv4/Animation.cpp",
+        "RSDKv4/Collision.cpp"
+      ],
+      "license_file": {
+        "path": "LICENSE.md",
+        "sha256": "246bd73e423fb53a1cbaed527b6677656d6f4ff3d4db53d23004d33712853eae"
+      }
+    },
+    {
+      "project": "ioquake/ioq3",
+      "revision": "52088b9eae247d8e321c8dc1fb49a879652854f9",
+      "tree_blob_count": 1048,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "code/cgame/cg_marks.c",
+        "code/game/bg_pmove.c"
+      ],
+      "license_file": {
+        "path": "COPYING.txt",
+        "sha256": "fac9da110d1433f4df0cb9f5dda9449e9aff6ee236ed240fa29e3e92926c363a"
+      }
+    },
+    {
+      "project": "chocolate-doom/chocolate-doom",
+      "revision": "a2dfd51fcc00d272dc8a17a97ccd6683333ff4ea",
+      "tree_blob_count": 733,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "src/doom/am_map.c",
+        "src/d_loop.c"
+      ],
+      "license_file": {
+        "path": "COPYING.md",
+        "sha256": "aef8b4222b79d0dbf6bf17cfff71c90a6a6bb8917a4162abe417b469ed22da2e"
+      }
+    },
+    {
+      "project": "electronicarts/CnC_Remastered_Collection",
+      "revision": "f1f0d42bc2dcd06d5d1df943c6150ab34bf307ae",
+      "tree_blob_count": 1331,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "REDALERT/SIDEBAR.CPP",
+        "TIBERIANDAWN/TRIGGER.CPP"
+      ],
+      "license_file": {
+        "path": "LICENSE.md",
+        "sha256": "ea983887086313047456607084c1323f92f6f809a53b939f659f5ce191b7d82f"
+      }
+    },
+    {
+      "project": "OpenSAGE/OpenSAGE",
+      "revision": "588ac477367a0022adf29f20a084e8873014e6ce",
+      "tree_blob_count": 2035,
+      "tree_truncated": false,
+      "file_count": 2,
+      "paths": [
+        "src/OpenSage.FileFormats.W3d/W3dAnimation.cs",
+        "src/OpenSage.Game/Graphics/ParticleSystems/ParticleSystem.cs"
+      ],
+      "license_file": {
+        "path": "LICENSE.md",
+        "sha256": "09052ff3ef7c9145a1cd197c5afb7ea24cd229f3247c3c4ba391b07a8de19ef8"
+      }
+    },
+    {
+      "project": "OpenRsG/GunZRs",
+      "revision": "485575b7451912ed1d62661c388663b08dce4faf",
+      "tree_blob_count": 127,
+      "tree_truncated": false,
+      "file_count": 1,
+      "paths": [
+        "src/anim.rs"
+      ],
+      "license_file": {
+        "path": "LICENSE",
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      }
+    }
+  ],
+  "execution": [
+    {
+      "id": "gunzrs-action-layer",
+      "proof": "games/yuga-native/docs/rust-rebuild/deep-search/gunz-layers/README.md",
+      "trace": "games/yuga-native/docs/rust-rebuild/deep-search/gunz-layers/results.json",
+      "measure": "23,472 authored-pose comparisons at 120 Hz on 163 classic Hanuman joints. The comparison isolates selected original scheduler and sampler code without a Bevy renderer."
+    }
+  ],
+  "verification": {
+    "method": "A second request fetched each pinned Git tree. The Git blob object ID computed from the raw bytes matched the API tree entry for all 48 source files and all 20 license files. Each recorded symbol occurs verbatim in the verified bytes. The unlicensed browser project had no LICENSE, LICENCE or COPYING filename in its complete tree. Two code searches produced zero hits even though matching symbols occur in the pinned raw files; repository code search can omit known files.",
+    "source_blobs": 48,
+    "license_blobs": 20,
+    "complete_trees": 21
+  }
+}

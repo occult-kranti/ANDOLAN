@@ -1,0 +1,1575 @@
+[
+  {
+    "id": "art-fox",
+    "name": "Fox locomotion and survey clips",
+    "project": "KhronosGroup/glTF-Sample-Assets",
+    "revision": "e124e8d8d7330a5372bc2b4d00d39a4a9d7997ea",
+    "path": "Models/Fox/glTF-Binary/Fox.glb",
+    "category": "characters",
+    "kind": "skinned quadruped",
+    "stack": [
+      "Blender",
+      "glTF"
+    ],
+    "formats": [
+      "GLB"
+    ],
+    "summary": "One skinned quadruped with a 24-joint chain and three distinct Survey, Walk and Run clips. Blender imported all three actions. The Blender 4.3.2 import produced 656 mesh triangles.",
+    "adaptation": "Use the gait clips as a camp-creature retargeting fixture. Plot paws and tail-tip motion at each stride and author new muscle weights for the destination anatomy.",
+    "evidence": "executed",
+    "sha256": "d97044e701822bac5a62696459b27d7b375aada5de8574ed4362edbba94771f7",
+    "license": "CC0-1.0 AND CC-BY-4.0",
+    "license_path": "Models/Fox/LICENSE.md",
+    "rights_note": "PixelMannen dedicated the mesh to CC0. Credit tomkranis for the rig and clips, and AsoboStudio and scurest for the conversion under CC BY 4.0. Preserve attribution and mark changes.",
+    "use": "adapt",
+    "tags": [
+      "quadruped",
+      "gait",
+      "tail",
+      "retargeting"
+    ],
+    "size_bytes": 162852,
+    "git_blob_sha1": "1ef5c0d05658caea339680fe581aa2c8302b3365",
+    "lfs_pointer": false,
+    "license_sha256": "9ddaa2edd6a8f72117eec9709d38cd7d284f61f77752d342c32c828e61f78eae",
+    "blender_import": {
+      "blender": "4.3.2",
+      "source_format": ".glb",
+      "triangles": 656,
+      "meshes": 2,
+      "vertices": 1770,
+      "armature_bones": [
+        24
+      ],
+      "actions": [
+        "Run_root",
+        "Survey_root",
+        "Walk_root"
+      ],
+      "materials": [
+        "fox_material"
+      ],
+      "shape_keys": 0
+    },
+    "metadata_path": "Models/Fox/metadata.json",
+    "metadata_sha256": "1d888d832b5eb2a32a461ae6d5e2bc00f925e3a571c1447842466d2061800604"
+  },
+  {
+    "id": "art-cesiumman",
+    "name": "Cesium Man walk rig",
+    "project": "KhronosGroup/glTF-Sample-Assets",
+    "revision": "e124e8d8d7330a5372bc2b4d00d39a4a9d7997ea",
+    "path": "Models/CesiumMan/glTF-Binary/CesiumMan.glb",
+    "category": "characters",
+    "kind": "skinned humanoid",
+    "stack": [
+      "Blender",
+      "glTF"
+    ],
+    "formats": [
+      "GLB"
+    ],
+    "summary": "A single animated 19-joint humanoid provides a compact inverse-bind and skin-weight comparison. Blender imported the animated armature. The Blender 4.3.2 import produced 4,752 mesh triangles.",
+    "adaptation": "Capture pelvis translation and foot placement before and after the Blender-to-glTF build to identify axis or rest-pose regressions.",
+    "evidence": "executed",
+    "sha256": "b7001eaeea8254bd44773bcd247e78696d94169388fbb2a1800fc69434e777d9",
+    "license": "CC-BY-4.0",
+    "license_path": "Models/CesiumMan/LICENSE.md",
+    "rights_note": "Credit Cesium, identify modifications and respect the separate logo/trademark notice in the model license. Remove or replace marks before using on another character.",
+    "use": "adapt",
+    "tags": [
+      "biped",
+      "retargeting",
+      "skin-weights"
+    ],
+    "size_bytes": 438044,
+    "git_blob_sha1": "8586c4e6a59bf8ef585c2a685c50a80d28503216",
+    "lfs_pointer": false,
+    "license_sha256": "709e02749c7c904c480d98f883cae63046f589031b5f22249544b13c159eedf6",
+    "blender_import": {
+      "blender": "4.3.2",
+      "source_format": ".glb",
+      "triangles": 4752,
+      "meshes": 2,
+      "vertices": 3315,
+      "armature_bones": [
+        19
+      ],
+      "actions": [
+        "Anim_0_Armature"
+      ],
+      "materials": [
+        "Cesium_Man-effect"
+      ],
+      "shape_keys": 0
+    },
+    "metadata_path": "Models/CesiumMan/metadata.json",
+    "metadata_sha256": "635ca496eafa7b82639b3b90f65e35beb9d0ac0d8721e6425a9471f08a9cc603"
+  },
+  {
+    "id": "art-riggedfigure",
+    "name": "Rigged Figure joint hierarchy",
+    "project": "KhronosGroup/glTF-Sample-Assets",
+    "revision": "e124e8d8d7330a5372bc2b4d00d39a4a9d7997ea",
+    "path": "Models/RiggedFigure/glTF-Binary/RiggedFigure.glb",
+    "category": "animation",
+    "kind": "rig fixture",
+    "stack": [
+      "Blender",
+      "glTF"
+    ],
+    "formats": [
+      "GLB"
+    ],
+    "summary": "A 19-joint figure carries 57 animation channels in one clip. Blender loaded an armature and action with a small triangular surface. The Blender 4.3.2 import produced 336 mesh triangles.",
+    "adaptation": "Use it for a fast headless comparison of each joint’s local transform at rest, midpoint and end before a full hero render.",
+    "evidence": "executed",
+    "sha256": "d6be85417d3e256861ee733eea6916093a7af7c79c16366181fd8abcaeb38cf5",
+    "license": "CC-BY-4.0",
+    "license_path": "Models/RiggedFigure/LICENSE.md",
+    "rights_note": "Credit Cesium for the model, link the license and identify modifications. The model notice excludes trademarks.",
+    "use": "adapt",
+    "tags": [
+      "rig",
+      "animation",
+      "regression"
+    ],
+    "size_bytes": 50116,
+    "git_blob_sha1": "c505a33dfa5ba84bd5f3dd0a85f74ee4c9978322",
+    "lfs_pointer": false,
+    "license_sha256": "afceec2b160486a648e06fe1b5ce0305fecff2980885618cd7591fc3d504ffe3",
+    "blender_import": {
+      "blender": "4.3.2",
+      "source_format": ".glb",
+      "triangles": 336,
+      "meshes": 2,
+      "vertices": 412,
+      "armature_bones": [
+        19
+      ],
+      "actions": [
+        "Anim_0_Armature"
+      ],
+      "materials": [
+        "Default-effect"
+      ],
+      "shape_keys": 0
+    },
+    "metadata_path": "Models/RiggedFigure/metadata.json",
+    "metadata_sha256": "9ee417e4a2fd3710e3584abf96dfc7e6e6b770a7dc256c9b3cb994bda6584f1a"
+  },
+  {
+    "id": "art-helmet",
+    "name": "Flight Helmet leather material channel pack",
+    "project": "KhronosGroup/glTF-Sample-Assets",
+    "revision": "e124e8d8d7330a5372bc2b4d00d39a4a9d7997ea",
+    "path": "Models/FlightHelmet/glTF/FlightHelmet_Materials_LeatherPartsMat_OcclusionRoughMetal.png",
+    "category": "graphics",
+    "kind": "packed material texture",
+    "stack": [
+      "glTF",
+      "Blender"
+    ],
+    "formats": [
+      "PNG",
+      "glTF"
+    ],
+    "summary": "The leather material uses a shared texture for ambient occlusion and metallic-roughness, referenced by the Flight Helmet glTF manifest.",
+    "adaptation": "Mark the data image as Non-Color in Blender. Test red ambient occlusion, green roughness and blue metallic on a UV-matched sample before authoring the hero’s belt and bracers.",
+    "evidence": "format-inspected",
+    "sha256": "b77e60f175e4632cd3d892bc9f0e748f522c9288a469585d5cb90270cd68910e",
+    "license": "CC0-1.0",
+    "license_path": "Models/FlightHelmet/LICENSE.md",
+    "rights_note": "The Flight Helmet notice explicitly dedicates model files and textures to CC0. Its separate documentation attribution applies to copied descriptive material.",
+    "use": "adapt",
+    "tags": [
+      "materials",
+      "roughness",
+      "leather",
+      "channel-packing"
+    ],
+    "size_bytes": 4375686,
+    "git_blob_sha1": "72ea477505d6614dec6e7193eba63585272a67e2",
+    "lfs_pointer": false,
+    "license_sha256": "dae9c3cacb2b7ea8289b3f32f2d38560d39070d3848288aa1f6f94140023f7ba",
+    "container": {
+      "width": 2048,
+      "height": 2048,
+      "bit_depth": 8,
+      "png_color_type": 2
+    },
+    "metadata_path": "Models/FlightHelmet/glTF/FlightHelmet.gltf",
+    "metadata_sha256": "c9c16c8b85749f62f38ec6069700e5388c6894d8e566f51a35cc270255402cd3"
+  },
+  {
+    "id": "art-lamp",
+    "name": "Iridescence Lamp layered coatings",
+    "project": "KhronosGroup/glTF-Sample-Assets",
+    "revision": "e124e8d8d7330a5372bc2b4d00d39a4a9d7997ea",
+    "path": "Models/IridescenceLamp/glTF-Binary/IridescenceLamp.glb",
+    "category": "graphics",
+    "kind": "PBR fixture",
+    "stack": [
+      "Blender",
+      "glTF"
+    ],
+    "formats": [
+      "GLB"
+    ],
+    "summary": "Three meshes exercise iridescence, IOR, transmission and volume. Blender imported geometry and materials from the binary. The Blender 4.3.2 import produced 18,866 mesh triangles.",
+    "adaptation": "Render native and browser screenshots of an identical camera sweep to evaluate a jewel or inlaid mace head before committing to the cost of a layered shader.",
+    "evidence": "executed",
+    "sha256": "17cfdc79ec9e38fadb28db159734c5f9592ca423977b546e5057e350ba29ff13",
+    "license": "CC-BY-4.0",
+    "license_path": "Models/IridescenceLamp/LICENSE.md",
+    "rights_note": "Credit Eric Chadwick and Wayfair, LLC, link CC BY 4.0 and identify modifications. The binary embeds the same notice.",
+    "use": "adapt",
+    "tags": [
+      "iridescence",
+      "transmission",
+      "gemstone",
+      "lighting"
+    ],
+    "size_bytes": 4083912,
+    "git_blob_sha1": "464a54a6ed84321816ae60c1d18bd05f6aedc22f",
+    "lfs_pointer": false,
+    "license_sha256": "a3a70681541e9e4c65e35bf2709e6f00318f8c7b3a1d94c11e2cbc59dda6ceaf",
+    "blender_import": {
+      "blender": "4.3.2",
+      "source_format": ".glb",
+      "triangles": 18866,
+      "meshes": 3,
+      "vertices": 10683,
+      "armature_bones": [],
+      "actions": [],
+      "materials": [
+        "IridescenceLamp",
+        "IridescenceLampIridescence",
+        "IridescenceLampTransmissionIridescence"
+      ],
+      "shape_keys": 0
+    },
+    "metadata_path": "Models/IridescenceLamp/metadata.json",
+    "metadata_sha256": "bb4dbc8370d49a0980bd836505d2f81f3923f4750ee446970b5b4d9a9ada7d76"
+  },
+  {
+    "id": "art-morph",
+    "name": "Animated Morph Cube weight track",
+    "project": "KhronosGroup/glTF-Sample-Assets",
+    "revision": "e124e8d8d7330a5372bc2b4d00d39a4a9d7997ea",
+    "path": "Models/AnimatedMorphCube/glTF-Binary/AnimatedMorphCube.glb",
+    "category": "animation",
+    "kind": "morph target fixture",
+    "stack": [
+      "Blender",
+      "glTF"
+    ],
+    "formats": [
+      "GLB"
+    ],
+    "summary": "A twelve-triangle object stores a named weights clip. Blender created three shape-key blocks and an animation action. The Blender 4.3.2 import produced 12 mesh triangles.",
+    "adaptation": "Round-trip the animated weights before baking facial targets, then compare the two extreme shapes and the blended middle frame.",
+    "evidence": "executed",
+    "sha256": "214ee56160a50dbf22543a1d66dbf860986e87f0efac3d89feac1359d0e6aeab",
+    "license": "CC0-1.0",
+    "license_path": "Models/AnimatedMorphCube/LICENSE.md",
+    "rights_note": "Model data is CC0. The accompanying descriptive metadata has a separate CC BY 4.0 notice.",
+    "use": "adapt",
+    "tags": [
+      "face",
+      "shape-keys",
+      "interpolation",
+      "test-fixture"
+    ],
+    "size_bytes": 6752,
+    "git_blob_sha1": "219d2ac524060e34f13d1253729f563cf76aca97",
+    "lfs_pointer": false,
+    "license_sha256": "158a0614b84cd26077483730bd105ee62d5a8db2a7e4267db911c77a2ee0717c",
+    "blender_import": {
+      "blender": "4.3.2",
+      "source_format": ".glb",
+      "triangles": 12,
+      "meshes": 1,
+      "vertices": 24,
+      "armature_bones": [],
+      "actions": [
+        "Square_AnimatedMorphCube"
+      ],
+      "materials": [
+        "Material"
+      ],
+      "shape_keys": 3
+    }
+  },
+  {
+    "id": "art-skeleton-sample",
+    "name": "Blender bone sampling for glTF",
+    "project": "KhronosGroup/glTF-Blender-IO",
+    "revision": "04ef1f08ad956545e6b4edd8528a378ad5031346",
+    "path": "addons/io_scene_gltf2/blender/exp/animation/sampled/armature/keyframes.py",
+    "category": "animation",
+    "kind": "export routine",
+    "stack": [
+      "Blender",
+      "Python",
+      "glTF"
+    ],
+    "formats": [
+      "Python",
+      "glTF"
+    ],
+    "summary": "The sample-key generator evaluates a bone action by transformation channel and can eliminate redundant constant output.",
+    "adaptation": "Capture an IK-driven hand and stepped tail at fixed frames, export only deform bones, and compare the baked rotations against the evaluated Blender armature.",
+    "evidence": "source-read",
+    "sha256": "f61f06ec08b0da4a5e7666cf518c3f366f27b502a103d99ee2fe640eae50ff79",
+    "license": "Apache-2.0",
+    "license_path": "LICENSE.txt",
+    "rights_note": "The exporter source includes the Apache-2.0 notice. Preserve applicable attribution, license and notices and identify source modifications.",
+    "use": "adapt",
+    "tags": [
+      "armature",
+      "baking",
+      "quaternion",
+      "export"
+    ],
+    "size_bytes": 3870,
+    "git_blob_sha1": "36259d44dacc59db8290897edfbbf55406b90db1",
+    "lfs_pointer": false,
+    "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "symbol": "gather_bone_sampled_keyframes"
+  },
+  {
+    "id": "art-morph-sample",
+    "name": "Blender shape-key sampler",
+    "project": "KhronosGroup/glTF-Blender-IO",
+    "revision": "04ef1f08ad956545e6b4edd8528a378ad5031346",
+    "path": "addons/io_scene_gltf2/blender/exp/animation/sampled/shapekeys/keyframes.py",
+    "category": "animation",
+    "kind": "export routine",
+    "stack": [
+      "Blender",
+      "Python",
+      "glTF"
+    ],
+    "formats": [
+      "Python",
+      "glTF"
+    ],
+    "summary": "The sampled shape-key path builds complete morph-weight keys and tests channels for constant values.",
+    "adaptation": "Bake an eyelid blink and muzzle curl into one test clip with an unchanged cheek. Compare target ordering and weights after export.",
+    "evidence": "source-read",
+    "sha256": "f35576257c517d660b78a7f93ca173ec5dc28703025e243e4a31dad49c95fea0",
+    "license": "Apache-2.0",
+    "license_path": "LICENSE.txt",
+    "rights_note": "The exporter source includes the Apache-2.0 notice. Preserve applicable attribution, license and notices and identify source modifications.",
+    "use": "adapt",
+    "tags": [
+      "morph-target",
+      "face",
+      "eyelids",
+      "export"
+    ],
+    "size_bytes": 6295,
+    "git_blob_sha1": "139eece5dc41260218f60e89428d82970ad69e2c",
+    "lfs_pointer": false,
+    "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "symbol": "gather_sk_sampled_keyframes"
+  },
+  {
+    "id": "art-metalrough",
+    "name": "Principled-to-glTF PBR material collector",
+    "project": "KhronosGroup/glTF-Blender-IO",
+    "revision": "04ef1f08ad956545e6b4edd8528a378ad5031346",
+    "path": "addons/io_scene_gltf2/blender/exp/material/pbr_metallic_roughness.py",
+    "category": "graphics",
+    "kind": "material exporter",
+    "stack": [
+      "Blender",
+      "Python",
+      "glTF"
+    ],
+    "formats": [
+      "Python",
+      "glTF"
+    ],
+    "summary": "The exporter gathers base color, roughness, metallic factors and their textures separately, along with extensions and extras.",
+    "adaptation": "Use its supported node inputs for crown and gada materials. Inspect exported material factors, texture channels and base color before art review.",
+    "evidence": "source-read",
+    "sha256": "c7f375fa85e9dcdce0fd90f197bc3353290322b07aa3fe2592d5365f4f0ce6b8",
+    "license": "Apache-2.0",
+    "license_path": "LICENSE.txt",
+    "rights_note": "The exporter source includes the Apache-2.0 notice. Preserve applicable attribution, license and notices and identify source modifications.",
+    "use": "adapt",
+    "tags": [
+      "pbr",
+      "metallic",
+      "roughness",
+      "export"
+    ],
+    "size_bytes": 11522,
+    "git_blob_sha1": "495c13bd4d1859f18914ddab92e843b2c35ea5d3",
+    "lfs_pointer": false,
+    "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "symbol": "gather_material_pbr_metallic_roughness"
+  },
+  {
+    "id": "art-curvemesh",
+    "name": "Curve to Mesh sweep node",
+    "project": "blender/blender",
+    "revision": "9e41359e412ecf835e443e817900a0747947f739",
+    "path": "source/blender/nodes/geometry/nodes/node_geo_curve_to_mesh.cc",
+    "category": "blender",
+    "kind": "geometry node",
+    "stack": [
+      "Blender",
+      "C++"
+    ],
+    "formats": [
+      "C++",
+      "BLEND"
+    ],
+    "summary": "The geometry node sweeps a curve profile over a path, with radius/scale handling and an unprofiled wire fallback.",
+    "adaptation": "Author temple ropes, jewelry cords and bundled strands as editable splines. Convert to mesh for export and inspect normals at bends and joins.",
+    "evidence": "source-read",
+    "sha256": "40567613030185f370d23ce80c376b7196bb8f89ccc4fae186b849a1af2a7648",
+    "license": "GPL-2.0-or-later",
+    "license_path": "release/license/spdx/GPL-2.0-or-later.txt",
+    "rights_note": "The per-file SPDX expression is GPL-2.0-or-later. Use the built-in Blender node for authoring, and preserve the applicable software terms for any source redistribution.",
+    "use": "adapt",
+    "tags": [
+      "geometry-nodes",
+      "curve",
+      "rope",
+      "sweep"
+    ],
+    "size_bytes": 8704,
+    "git_blob_sha1": "da5bb87bc0140ef7d7f538803bbfce206e47fbeb",
+    "lfs_pointer": false,
+    "license_sha256": "a3ade2b6d18c7c30d89faec2ba913283fb2d56370137ea90cfa20891414492f8",
+    "symbol": "curve_to_mesh_sweep"
+  },
+  {
+    "id": "art-scatter",
+    "name": "Distribute Points on Faces node",
+    "project": "blender/blender",
+    "revision": "9e41359e412ecf835e443e817900a0747947f739",
+    "path": "source/blender/nodes/geometry/nodes/node_geo_distribute_points_on_faces.cc",
+    "category": "world",
+    "kind": "geometry node",
+    "stack": [
+      "Blender",
+      "C++"
+    ],
+    "formats": [
+      "C++",
+      "BLEND"
+    ],
+    "summary": "The node samples surface triangles, supporting random and Poisson distribution along with density and a seed.",
+    "adaptation": "Scatter swamp reeds with an authored density mask and repeatable seed. Keep the playable boundary clear, pack instances for the engine, and test density variation by camera distance.",
+    "evidence": "source-read",
+    "sha256": "28bc922b795e98f6639aae209332f24674c5958cf0c294f220c92a813c6377d4",
+    "license": "GPL-2.0-or-later",
+    "license_path": "release/license/spdx/GPL-2.0-or-later.txt",
+    "rights_note": "The per-file SPDX expression is GPL-2.0-or-later. Use the built-in Blender node for authoring, and preserve the applicable software terms for any source redistribution.",
+    "use": "adapt",
+    "tags": [
+      "geometry-nodes",
+      "scatter",
+      "foliage",
+      "poisson"
+    ],
+    "size_bytes": 28414,
+    "git_blob_sha1": "897e6b9931d3248e50c4300e737807b4d20fef40",
+    "lfs_pointer": false,
+    "license_sha256": "a3ade2b6d18c7c30d89faec2ba913283fb2d56370137ea90cfa20891414492f8"
+  },
+  {
+    "id": "art-principled",
+    "name": "Principled BSDF shader sockets",
+    "project": "blender/blender",
+    "revision": "9e41359e412ecf835e443e817900a0747947f739",
+    "path": "source/blender/nodes/shader/nodes/node_shader_bsdf_principled.cc",
+    "category": "graphics",
+    "kind": "material node",
+    "stack": [
+      "Blender",
+      "C++"
+    ],
+    "formats": [
+      "C++",
+      "BLEND"
+    ],
+    "summary": "The shader declares metallic/roughness, coat, transmission and subsurface inputs and controls their socket availability.",
+    "adaptation": "Set up skin, paint and gold as separate calibrated swatches. Bake or simplify unsupported lobes after comparing the exported glTF with Blender lighting.",
+    "evidence": "source-read",
+    "sha256": "a2190f06edc1199425f9dc8cc334cfe5e8070ab8619b42829f2f8ac53a70ac76",
+    "license": "GPL-2.0-or-later",
+    "license_path": "release/license/spdx/GPL-2.0-or-later.txt",
+    "rights_note": "The per-file SPDX expression is GPL-2.0-or-later. Use the built-in Blender node for authoring, and preserve the applicable software terms for any source redistribution.",
+    "use": "adapt",
+    "tags": [
+      "pbr",
+      "skin",
+      "metal",
+      "material-authoring"
+    ],
+    "size_bytes": 38136,
+    "git_blob_sha1": "56903c7902dc012feff050edad05e103109cf4b7",
+    "lfs_pointer": false,
+    "license_sha256": "a3ade2b6d18c7c30d89faec2ba913283fb2d56370137ea90cfa20891414492f8"
+  },
+  {
+    "id": "art-eye",
+    "name": "Rigify eyelid follow and corner controls",
+    "project": "blender/blender-addons",
+    "revision": "b42d68627734cb18af0e6f41537063984313a284",
+    "path": "rigify/rigs/face/skin_eye.py",
+    "category": "characters",
+    "kind": "face rig generator",
+    "stack": [
+      "Blender",
+      "Rigify",
+      "Python"
+    ],
+    "formats": [
+      "Python",
+      "BLEND"
+    ],
+    "summary": "The eye rig creates paired lid controls and corner spaces, tracks the eyeball and exposes lid-follow influence.",
+    "adaptation": "Anchor loops on Hanuman’s redesigned eyelid mesh. Test gaze at both limits, full blink and half blink before baking only deform movement to glTF.",
+    "evidence": "source-read",
+    "sha256": "caceeb34d5f9538612a5f1f0f0b2bcdde94b35d8d940882b47e5ef3e685b15ad",
+    "license": "GPL-2.0-or-later",
+    "license_path": "rigify/rigs/face/skin_eye.py",
+    "rights_note": "The per-file Rigify SPDX header specifies GPL-2.0-or-later. Use the Blender rig generator and bake the output for a separate runtime.",
+    "use": "adapt",
+    "tags": [
+      "face",
+      "eyelids",
+      "rigify",
+      "gaze"
+    ],
+    "size_bytes": 30643,
+    "git_blob_sha1": "1bebf27e124f2f11a409678af2c834a3710d9a51",
+    "lfs_pointer": false,
+    "license_sha256": "caceeb34d5f9538612a5f1f0f0b2bcdde94b35d8d940882b47e5ef3e685b15ad",
+    "symbol": "get_lid_follow_influence"
+  },
+  {
+    "id": "art-arm",
+    "name": "Rigify arm and wrist pivot rig",
+    "project": "blender/blender-addons",
+    "revision": "b42d68627734cb18af0e6f41537063984313a284",
+    "path": "rigify/rigs/limbs/arm.py",
+    "category": "characters",
+    "kind": "limb rig generator",
+    "stack": [
+      "Blender",
+      "Rigify",
+      "Python"
+    ],
+    "formats": [
+      "Python",
+      "BLEND"
+    ],
+    "summary": "The arm generator extends the limb rig with IK hand controls, optional wrist pivot and switchable parenting.",
+    "adaptation": "Use the wrist pivot while blocking a mace grip or bow draw. Bake the wrist and fingers, then measure grip drift through release and recovery.",
+    "evidence": "source-read",
+    "sha256": "dea3055753000ad86eb9b508d6bde162c83acdc1fa41a3772b1a75ea078b4c73",
+    "license": "GPL-2.0-or-later",
+    "license_path": "rigify/rigs/limbs/arm.py",
+    "rights_note": "The per-file Rigify SPDX header specifies GPL-2.0-or-later. Use the Blender rig generator and bake the output for a separate runtime.",
+    "use": "adapt",
+    "tags": [
+      "wrist",
+      "arm",
+      "ik",
+      "weapon-contact"
+    ],
+    "size_bytes": 6857,
+    "git_blob_sha1": "9f9ef6317e90cac703dd1d46730fc7cda1d1cf62",
+    "lfs_pointer": false,
+    "license_sha256": "dea3055753000ad86eb9b508d6bde162c83acdc1fa41a3772b1a75ea078b4c73",
+    "symbol": "make_wrist_pivot_control"
+  },
+  {
+    "id": "art-corrective",
+    "name": "Blender Studio pose-driven corrective shapes",
+    "project": "studio/blender-studio-tools",
+    "revision": "eeedd771704a057a8e4b815cacf7c693ac716619",
+    "path": "scripts-blender/addons/pose_shape_keys/ops.py",
+    "category": "blender",
+    "kind": "corrective authoring tool",
+    "stack": [
+      "Blender",
+      "Python"
+    ],
+    "formats": [
+      "Python",
+      "BLEND"
+    ],
+    "summary": "Operators create pose keys, capture target poses and build drivers from transform channels for corrective deformation.",
+    "adaptation": "Sculpt a shoulder corrective at the raised-mace pose and a muzzle corrective at maximum jaw opening. Bake their weights or rebuild them explicitly in the target runtime.",
+    "evidence": "source-read",
+    "sha256": "cf1ddf29571731e84a2483383564149d520338e0435c7c7143fa9a479bd2e707",
+    "license": "GPL-3.0-or-later",
+    "license_path": "scripts-blender/addons/pose_shape_keys/LICENSE",
+    "rights_note": "The source SPDX header and the accompanying add-on license cover the authoring tool. Distribution of adapted tool code carries the GPL requirements.",
+    "use": "adapt",
+    "tags": [
+      "shape-keys",
+      "deformation",
+      "face",
+      "studio"
+    ],
+    "size_bytes": 46391,
+    "git_blob_sha1": "32c2ba6c14cf8bfca46e3fb320844d41a3d86e05",
+    "lfs_pointer": false,
+    "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "host": "projects.blender.org",
+    "repo_url": "https://projects.blender.org/studio/blender-studio-tools",
+    "source_url": "https://projects.blender.org/studio/blender-studio-tools/src/commit/eeedd771704a057a8e4b815cacf7c693ac716619/scripts-blender/addons/pose_shape_keys/ops.py",
+    "license_url": "https://projects.blender.org/studio/blender-studio-tools/src/commit/eeedd771704a057a8e4b815cacf7c693ac716619/scripts-blender/addons/pose_shape_keys/LICENSE",
+    "symbol": "OBJECT_OT_pose_key_magic_driver"
+  },
+  {
+    "id": "art-lighting",
+    "name": "Blender Studio shot lighting overrides",
+    "project": "studio/blender-studio-tools",
+    "revision": "eeedd771704a057a8e4b815cacf7c693ac716619",
+    "path": "scripts-blender/addons/lighting_overrider/lighting_overrider_execution.py",
+    "category": "blender",
+    "kind": "shot lighting tool",
+    "stack": [
+      "Blender",
+      "Python"
+    ],
+    "formats": [
+      "Python",
+      "JSON",
+      "BLEND"
+    ],
+    "summary": "An execution script reads overrides and applies scene values, rig settings, RNA overrides and motion-blur settings.",
+    "adaptation": "Use scene- and shot-level settings to render the same face or temple under morning, lantern and moonlight without editing the master material.",
+    "evidence": "source-read",
+    "sha256": "442aafd71b3bdb06947c64e4b560b5d255a4f29ccbba62a2d3df68de7b560a97",
+    "license": "GPL-3.0-or-later",
+    "license_path": "scripts-blender/addons/lighting_overrider/LICENSE",
+    "rights_note": "The source SPDX header and the accompanying add-on license cover the authoring tool. Distribution of adapted tool code carries the GPL requirements.",
+    "use": "adapt",
+    "tags": [
+      "lighting",
+      "shots",
+      "overrides",
+      "studio"
+    ],
+    "size_bytes": 11670,
+    "git_blob_sha1": "89ab0b21eec0dac31d727ce504cbc107bcdf46db",
+    "lfs_pointer": false,
+    "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "host": "projects.blender.org",
+    "repo_url": "https://projects.blender.org/studio/blender-studio-tools",
+    "source_url": "https://projects.blender.org/studio/blender-studio-tools/src/commit/eeedd771704a057a8e4b815cacf7c693ac716619/scripts-blender/addons/lighting_overrider/lighting_overrider_execution.py",
+    "license_url": "https://projects.blender.org/studio/blender-studio-tools/src/commit/eeedd771704a057a8e4b815cacf7c693ac716619/scripts-blender/addons/lighting_overrider/LICENSE",
+    "symbol": "load_settings"
+  },
+  {
+    "id": "art-assetcatalog",
+    "name": "Blender Studio asset catalog resolver",
+    "project": "studio/blender-studio-tools",
+    "revision": "eeedd771704a057a8e4b815cacf7c693ac716619",
+    "path": "scripts-blender/addons/asset_pipeline/asset_catalog.py",
+    "category": "build",
+    "kind": "asset library tool",
+    "stack": [
+      "Blender",
+      "Python"
+    ],
+    "formats": [
+      "Python",
+      "BLEND"
+    ],
+    "summary": "The pipeline finds a catalog file in the asset’s parent directories and caches catalog lookup data.",
+    "adaptation": "Share stable asset categories for head, hands, props and temple kits. Test opening from a published subdirectory before assigning the import task to another artist.",
+    "evidence": "source-read",
+    "sha256": "fcc527938fe32d03f99b36daa573fa043eb33bd078938b9069ce444bdb4d986c",
+    "license": "GPL-3.0-or-later",
+    "license_path": "scripts-blender/addons/asset_pipeline/LICENSE",
+    "rights_note": "The source SPDX header and the accompanying add-on license cover the authoring tool. Distribution of adapted tool code carries the GPL requirements.",
+    "use": "adapt",
+    "tags": [
+      "asset-library",
+      "pipeline",
+      "catalog",
+      "studio"
+    ],
+    "size_bytes": 3304,
+    "git_blob_sha1": "4ab8eb2cec3f5b9dc4d199b9fde6c01edcb8ef9c",
+    "lfs_pointer": false,
+    "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "host": "projects.blender.org",
+    "repo_url": "https://projects.blender.org/studio/blender-studio-tools",
+    "source_url": "https://projects.blender.org/studio/blender-studio-tools/src/commit/eeedd771704a057a8e4b815cacf7c693ac716619/scripts-blender/addons/asset_pipeline/asset_catalog.py",
+    "license_url": "https://projects.blender.org/studio/blender-studio-tools/src/commit/eeedd771704a057a8e4b815cacf7c693ac716619/scripts-blender/addons/asset_pipeline/LICENSE",
+    "symbol": "find_asset_cat_file"
+  },
+  {
+    "id": "art-body",
+    "name": "MakeHuman neutral body topology",
+    "project": "makehumancommunity/makehuman",
+    "revision": "a8bc2d54ff0ac92e78ff71431b1023eda42bf482",
+    "path": "makehuman/data/3dobjs/base.obj",
+    "category": "characters",
+    "kind": "anatomy mesh",
+    "stack": [
+      "Blender",
+      "MakeHuman"
+    ],
+    "formats": [
+      "OBJ"
+    ],
+    "summary": "A neutral OBJ with explicitly CC0 geometry and helper groups. The Blender import produced geometry without any rig or animation. The Blender 4.3.2 import produced 36,972 mesh triangles.",
+    "adaptation": "Use as the human retopology donor for shoulders, elbows and hands. Select the intended body faces, remove helper geometry and then bind the new mythic head and costume.",
+    "evidence": "executed",
+    "sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
+    "license": "CC0-1.0",
+    "license_path": "LICENSE.ASSETS.md",
+    "rights_note": "The OBJ header expressly dedicates this mesh to CC0. MakeHuman code has separate software terms.",
+    "use": "adapt",
+    "tags": [
+      "anatomy",
+      "topology",
+      "base-mesh",
+      "retopology"
+    ],
+    "size_bytes": 1749303,
+    "git_blob_sha1": "d26635e9326e3cca30778fd7b9c00062b03cce09",
+    "lfs_pointer": false,
+    "license_sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c",
+    "blender_import": {
+      "blender": "4.3.2",
+      "source_format": ".obj",
+      "triangles": 36972,
+      "meshes": 1,
+      "vertices": 19158,
+      "armature_bones": [],
+      "actions": [],
+      "materials": [],
+      "shape_keys": 0
+    }
+  },
+  {
+    "id": "art-facepose",
+    "name": "MakeHuman face pose-unit library",
+    "project": "makehumancommunity/makehuman",
+    "revision": "a8bc2d54ff0ac92e78ff71431b1023eda42bf482",
+    "path": "makehuman/data/poseunits/face-poseunits.bvh",
+    "category": "animation",
+    "kind": "facial pose library",
+    "stack": [
+      "MakeHuman",
+      "Blender"
+    ],
+    "formats": [
+      "BVH",
+      "JSON"
+    ],
+    "summary": "A 60-frame BVH links one facial pose per frame to a companion named frame map, including brow, eyelid and nose actions.",
+    "adaptation": "Import on the compatible MakeHuman skeleton. Pull individually named poses into a Blender pose library and retarget to new lips and eyelids with neutral and mirrored checks.",
+    "evidence": "format-inspected",
+    "sha256": "42a8e69692e30010371ee6993a6e5d3b468d35065559ec0953c936e31b8d903f",
+    "license": "CC0-1.0",
+    "license_path": "LICENSE.ASSETS.md",
+    "rights_note": "The companion face-poseunits.json names this animation file and specifies CC0. Bundled data and application code have separate licenses.",
+    "use": "adapt",
+    "tags": [
+      "face",
+      "brow",
+      "mouth",
+      "eyelids",
+      "pose-library"
+    ],
+    "size_bytes": 310826,
+    "git_blob_sha1": "2965c340428429da673f57ef923f883ccc1f5b7b",
+    "lfs_pointer": false,
+    "license_sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c",
+    "container": {
+      "frame_count": 60,
+      "frame_seconds": 0.041667,
+      "joint_declarations": 162
+    },
+    "metadata_path": "makehuman/data/poseunits/face-poseunits.json",
+    "metadata_sha256": "e7224f76e9610049b79e5f9e8ac2985d1e9a367333395c07537919258cb42cc3"
+  },
+  {
+    "id": "art-mhskel",
+    "name": "MakeHuman default skeleton",
+    "project": "makehumancommunity/makehuman",
+    "revision": "a8bc2d54ff0ac92e78ff71431b1023eda42bf482",
+    "path": "makehuman/data/rigs/default.mhskel",
+    "category": "characters",
+    "kind": "skeleton specification",
+    "stack": [
+      "MakeHuman",
+      "MPFB",
+      "Blender"
+    ],
+    "formats": [
+      "MHSKEL",
+      "JSON"
+    ],
+    "summary": "The rig JSON defines 163 named bones, joint positions, parents and a sibling weights file. Its metadata explicitly names CC0.",
+    "adaptation": "Use MPFB to resolve joint groups against the donor body. Keep the skeleton and weight tables paired, add a separate tail chain, then compare bind pose and elbow twist.",
+    "evidence": "format-inspected",
+    "sha256": "99f179bce0aa850b45d4191a1d0d234c5851f881c057439470ded3bddf729a24",
+    "license": "CC0-1.0",
+    "license_path": "LICENSE.ASSETS.md",
+    "rights_note": "The rig metadata identifies CC0 in the license field. Use the companion MakeHuman weights or check separately obtained weights.",
+    "use": "adapt",
+    "tags": [
+      "skeleton",
+      "joints",
+      "weights",
+      "retargeting"
+    ],
+    "size_bytes": 117790,
+    "git_blob_sha1": "b02cbecae00143856410d7561adf006d83bf9b3e",
+    "lfs_pointer": false,
+    "license_sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c",
+    "container": {
+      "bones": 163,
+      "joints": 326,
+      "weights_file": "default_weights.mhw"
+    }
+  },
+  {
+    "id": "art-rigservice",
+    "name": "MPFB rig and vertex-weight service",
+    "project": "makehumancommunity/mpfb2",
+    "revision": "650c5c53bd6989a8ac264f31fa1d11d4a0c7bd8a",
+    "path": "src/mpfb/services/rigservice.py",
+    "category": "blender",
+    "kind": "rigging workflow code",
+    "stack": [
+      "Blender",
+      "Python",
+      "MPFB"
+    ],
+    "formats": [
+      "Python",
+      "MHSKEL"
+    ],
+    "summary": "The Blender service manages rig data, bones and weights and supports constructing a MakeHuman-derived armature.",
+    "adaptation": "Run MPFB in the authoring environment to resolve the default rig and weight groups. Export a neutral GLB and inspect bone names before animation transfer.",
+    "evidence": "source-read",
+    "sha256": "4a5a3869dbf5d8081d091fc48aed42d6bade299df5d85c13764a60fe668cafba",
+    "license": "GPL-3.0-or-later",
+    "license_path": "LICENSE.CODE.md",
+    "rights_note": "MPFB LICENSE.md specifies GPL version 3 or later for code. Source and bundled CC0 mesh data have separate terms.",
+    "use": "adapt",
+    "tags": [
+      "rig",
+      "makehuman",
+      "weights",
+      "rigging-tool"
+    ],
+    "size_bytes": 95050,
+    "git_blob_sha1": "c47394881a9e088ae8148d398e8402676e7c9852",
+    "lfs_pointer": false,
+    "license_sha256": "26c03bc049c15fc5b9e52d791a06f1a6bc32f89edc8f8c701ab0aadf66e85b82",
+    "symbol": "RigService"
+  },
+  {
+    "id": "art-mannequin",
+    "name": "GDQuest Mannequiny combat and jump rig",
+    "project": "gdquest-demos/godot-3d-mannequin",
+    "revision": "d48a4fdb49a3930f38cdbeb854cf5be3ae4b6b2a",
+    "path": "godot/assets/3d/mannequiny/mannequiny-0.3.0.glb",
+    "category": "characters",
+    "kind": "animated character",
+    "stack": [
+      "Godot",
+      "Blender",
+      "glTF"
+    ],
+    "formats": [
+      "GLB"
+    ],
+    "summary": "A 45-joint character ships ten clips including jump anticipation, air, landing, dash, punch, kick and transition into fight idle. All ten imported in Blender. The Blender 4.3.2 import produced 14,012 mesh triangles.",
+    "adaptation": "Use the rig in a local playback comparison for anticipation and landing timing. Confirm the GLB’s distribution terms before embedding it in a third-party asset pack.",
+    "evidence": "executed",
+    "sha256": "8005cc2ab9221ad605be2d1cbb89eea894583e72bd5f50a5fbe40243a64f0493",
+    "license": "CC-BY-4.0 (project art notice)",
+    "license_path": "LICENSE",
+    "rights_note": "The project assigns art to CC BY 4.0 and requests credit to GDQuest and contributors. The parenthetical examples name images and audio and the GLB contains no copyright field. Confirm 3D scope with the maintainers before redistribution.",
+    "use": "verify-terms",
+    "tags": [
+      "humanoid",
+      "combat",
+      "locomotion",
+      "reference-rig"
+    ],
+    "size_bytes": 1843984,
+    "git_blob_sha1": "09030cadd8bdc8db42eb78aa9bd95017cef3a986",
+    "lfs_pointer": false,
+    "license_sha256": "571ec1d87f266565d599dbeff1ba59ad24416b6c2703fe8cd70f867e4ce4dc8a",
+    "blender_import": {
+      "blender": "4.3.2",
+      "source_format": ".glb",
+      "triangles": 14012,
+      "meshes": 2,
+      "vertices": 10408,
+      "armature_bones": [
+        45
+      ],
+      "actions": [
+        "air_jump_anticipation_root",
+        "air_jump_root",
+        "air_land_root",
+        "dash_root",
+        "fight_idle_root",
+        "fight_kick_root",
+        "fight_punch_root",
+        "idle_root",
+        "idle_to_fight_root",
+        "run_root"
+      ],
+      "materials": [
+        "Azul",
+        "Blanco",
+        "Negro"
+      ],
+      "shape_keys": 0
+    }
+  },
+  {
+    "id": "art-mannequin-anim",
+    "name": "GDQuest mannequin animation adapter",
+    "project": "gdquest-demos/godot-3d-mannequin",
+    "revision": "d48a4fdb49a3930f38cdbeb854cf5be3ae4b6b2a",
+    "path": "godot/src/Player/Mannequiny.gd",
+    "category": "animation",
+    "kind": "animation graph integration",
+    "stack": [
+      "Godot",
+      "GDScript"
+    ],
+    "formats": [
+      "GDScript",
+      "TSCN"
+    ],
+    "summary": "The Godot 3 script exposes movement and combat state to the character’s AnimationTree, including grounded and air transitions.",
+    "adaptation": "Transfer its input-to-animation interface to the player view; retain authored clip names, then test grounded interruption and return to idle on the new runtime.",
+    "evidence": "source-read",
+    "sha256": "6e3be4195c9569833e8778ea524d1704eb545dc06151bc9d48b1d9bfed72e603",
+    "license": "MIT",
+    "license_path": "LICENSE",
+    "rights_note": "The project explicitly assigns its source code to MIT. Retain its notice. Its separately distributed art has its own terms.",
+    "use": "adapt",
+    "tags": [
+      "animation-tree",
+      "state-machine",
+      "locomotion"
+    ],
+    "size_bytes": 1176,
+    "git_blob_sha1": "bba51963981c17c5e471084cdb3d8bb6c3e277f8",
+    "lfs_pointer": false,
+    "license_sha256": "571ec1d87f266565d599dbeff1ba59ad24416b6c2703fe8cd70f867e4ce4dc8a",
+    "symbol": "Mannequiny"
+  },
+  {
+    "id": "art-paint",
+    "name": "Directional floor marking with normal map",
+    "project": "godotengine/godot-demo-projects",
+    "revision": "281a99f02178db944bcddef39aa694e3bfbe354a",
+    "path": "3d/decals/textures/paintedarrow.png",
+    "category": "graphics",
+    "kind": "decal texture",
+    "stack": [
+      "Godot",
+      "Blender"
+    ],
+    "formats": [
+      "PNG"
+    ],
+    "summary": "A painted arrow and named companion normal map have a dedicated attribution and share-alike notice from Alex Foster.",
+    "adaptation": "Project the texture onto a lane decal plane and compare distance readability. Keep the texture credit and matching adaptation terms with any distributed derivative.",
+    "evidence": "format-inspected",
+    "sha256": "57e394a5784b534487226660b29ed9b223d7078fca3c1712dba916f8fd756d00",
+    "license": "CC-BY-SA-3.0",
+    "license_path": "3d/decals/textures/paintedarrow.LICENSE.md",
+    "rights_note": "The notice covers the arrow PNG and normal map by Alex Foster. Attribute, link the license and carry the share-alike terms when distributing a modified image.",
+    "use": "adapt",
+    "tags": [
+      "decal",
+      "normal-map",
+      "ground",
+      "wayfinding"
+    ],
+    "size_bytes": 46721,
+    "git_blob_sha1": "9e7365b1853a9d12a93a63aff768ba8b036f5907",
+    "lfs_pointer": false,
+    "license_sha256": "4795272e715291e80f91fdabd1654edad2ba9ae6ae16aabe339f5125da01309b",
+    "container": {
+      "width": 1024,
+      "height": 512,
+      "bit_depth": 8,
+      "png_color_type": 4
+    }
+  },
+  {
+    "id": "art-ship",
+    "name": "Dutch sailing ship scene manifest",
+    "project": "godotengine/godot-demo-projects",
+    "revision": "281a99f02178db944bcddef39aa694e3bfbe354a",
+    "path": "3d/graphics_settings/polyhaven/dutch_ship_medium_1k.gltf",
+    "category": "world",
+    "kind": "environment prop reference",
+    "stack": [
+      "Godot",
+      "glTF",
+      "Blender"
+    ],
+    "formats": [
+      "glTF",
+      "BIN",
+      "JPEG"
+    ],
+    "summary": "The glTF separates rigging, hull and sails into three material groups and refers to external geometry and textures.",
+    "adaptation": "Use the component grouping as a dock or river-court reference. Resolve the original ship license and every sidecar before exporting any transformed model.",
+    "evidence": "format-inspected",
+    "sha256": "f823f83e9452484bcadc41424cc3f40b794a7272f7505c8c774543e73a692d51",
+    "license": "Unverified",
+    "license_path": null,
+    "rights_note": "The scene identifies its exporter and Poly Haven directory. This repository’s demo README has no file-specific redistribution grant for the ship and external maps. Confirm the asset provenance and rights before copying.",
+    "use": "verify-terms",
+    "tags": [
+      "harbor",
+      "ship",
+      "prop",
+      "pbr"
+    ],
+    "size_bytes": 7495,
+    "git_blob_sha1": "178aaefe8c713899a2ba1fb57be92f9555735d26",
+    "lfs_pointer": false,
+    "container": {
+      "meshes": 3,
+      "materials": 3,
+      "images": 9,
+      "buffer_uris": [
+        "dutch_ship_medium.bin"
+      ],
+      "sidecars_loaded": false
+    }
+  },
+  {
+    "id": "art-resample",
+    "name": "glTF Transform keyframe resampling",
+    "project": "donmccurdy/glTF-Transform",
+    "revision": "8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f",
+    "path": "packages/functions/src/resample.ts",
+    "category": "build",
+    "kind": "animation optimizer",
+    "stack": [
+      "TypeScript",
+      "glTF-Transform"
+    ],
+    "formats": [
+      "TypeScript",
+      "glTF",
+      "GLB"
+    ],
+    "summary": "The resample transform simplifies redundant animation keys and accepts tolerance and cleanup options.",
+    "adaptation": "Compress sampled locomotion and face clips separately. Compare maximum joint-angle and morph-weight errors at each exported frame before accepting smaller files.",
+    "evidence": "source-read",
+    "sha256": "993f55632bdc21f20d9ad7f6152dd18c9aa059f3403fac1373ec8db09bf6f4fb",
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "animation",
+      "compression",
+      "sampling",
+      "build"
+    ],
+    "size_bytes": 6823,
+    "git_blob_sha1": "32f6f67f335303ea351b518ad66d62a1aa2ec14e",
+    "lfs_pointer": false,
+    "license_sha256": "2c4f111d00dbf22b10d31a14813c5f5de6a828640f7311f26b9dda89b3fce165",
+    "symbol": "resample"
+  },
+  {
+    "id": "art-weld",
+    "name": "glTF Transform indexed vertex weld",
+    "project": "donmccurdy/glTF-Transform",
+    "revision": "8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f",
+    "path": "packages/functions/src/weld.ts",
+    "category": "build",
+    "kind": "mesh optimizer",
+    "stack": [
+      "TypeScript",
+      "glTF-Transform"
+    ],
+    "formats": [
+      "TypeScript",
+      "glTF",
+      "GLB"
+    ],
+    "summary": "The weld transform builds indexed geometry by matching vertex attributes on each candidate primitive.",
+    "adaptation": "Weld a modular temple prop after UV and normal splits are authored. Check index count and silhouette, keeping vertices separate where UVs or normals differ.",
+    "evidence": "source-read",
+    "sha256": "9ff19f47ce53e69216caa23931ff4e1eec8303b9f566090e6e03818a250d1eed",
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "topology",
+      "indices",
+      "mesh",
+      "weld"
+    ],
+    "size_bytes": 6444,
+    "git_blob_sha1": "e3fe7d4e5855b1ff1428a097109b2bc84d1d0832",
+    "lfs_pointer": false,
+    "license_sha256": "2c4f111d00dbf22b10d31a14813c5f5de6a828640f7311f26b9dda89b3fce165",
+    "symbol": "weld"
+  },
+  {
+    "id": "art-texcompress",
+    "name": "glTF Transform texture conversion",
+    "project": "donmccurdy/glTF-Transform",
+    "revision": "8e2a94a2616d293c4b503d0fb6a4b42e6ec7c62f",
+    "path": "packages/functions/src/texture-compress.ts",
+    "category": "build",
+    "kind": "texture optimizer",
+    "stack": [
+      "TypeScript",
+      "glTF-Transform"
+    ],
+    "formats": [
+      "TypeScript",
+      "glTF",
+      "GLB"
+    ],
+    "summary": "The texture transformation filters slots and changes image encoding or resolution through a supplied image encoder.",
+    "adaptation": "Configure separate handling for color and linear normal/mask maps. Compare memory and visible errors on face details and material channels.",
+    "evidence": "source-read",
+    "sha256": "d8b99132eb732e9250eb93d8b2a2f5b0e537fbfdfde7b637af7538d123ae5b13",
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "texture",
+      "encoding",
+      "build",
+      "pbr"
+    ],
+    "size_bytes": 14335,
+    "git_blob_sha1": "dc7d4663f9bec5d31168d5272ac6081c437558ab",
+    "lfs_pointer": false,
+    "license_sha256": "2c4f111d00dbf22b10d31a14813c5f5de6a828640f7311f26b9dda89b3fce165",
+    "symbol": "textureCompress"
+  },
+  {
+    "id": "art-blend-move",
+    "name": "ozz-animation additive pose sample",
+    "project": "guillaumeblanc/ozz-animation",
+    "revision": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+    "path": "samples/additive/sample_additive.cc",
+    "category": "animation",
+    "kind": "runtime animation example",
+    "stack": [
+      "C++",
+      "ozz-animation"
+    ],
+    "formats": [
+      "C++",
+      "OZZ"
+    ],
+    "summary": "The sample builds a base pose and an additive layer with weights applied through ozz’s blending job.",
+    "adaptation": "Blend a breathing or recoil layer over walking and compare stance preservation at weight 0, 0.5 and 1 before porting the math into a different runtime.",
+    "evidence": "source-read",
+    "sha256": "d7de8ebebddfc409aeec3aae349f12384509110947e969d09a7fc0253038139c",
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "additive",
+      "blending",
+      "locomotion",
+      "runtime"
+    ],
+    "size_bytes": 12824,
+    "git_blob_sha1": "e5e6ff562817e79b288176629c9a003f62181be1",
+    "lfs_pointer": false,
+    "license_sha256": "3ddd93e9888fe70b9d61675ceb1c4278a579dc67171678f015de114efe815852",
+    "symbol": "AdditiveBlendSampleApplication"
+  },
+  {
+    "id": "art-footik",
+    "name": "ozz-animation terrain foot placement",
+    "project": "guillaumeblanc/ozz-animation",
+    "revision": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+    "path": "samples/foot_ik/sample_foot_ik.cc",
+    "category": "animation",
+    "kind": "IK reference",
+    "stack": [
+      "C++",
+      "ozz-animation"
+    ],
+    "formats": [
+      "C++",
+      "OZZ"
+    ],
+    "summary": "The sample raycasts the scene and adjusts leg and ankle poses using target contacts against a floor mesh.",
+    "adaptation": "Use uneven court stairs and a flat control surface to measure contact height, knee bending and sole angle before enabling visual IK during movement.",
+    "evidence": "source-read",
+    "sha256": "a09fcb135c88d834381c0b598362bccca47856eaf711e0c2dbddf6bf718d135e",
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "ik",
+      "feet",
+      "ground-contact",
+      "terrain"
+    ],
+    "size_bytes": 28061,
+    "git_blob_sha1": "34e9f9cfa598b43680c3a0fc5187c604aaf40307",
+    "lfs_pointer": false,
+    "license_sha256": "3ddd93e9888fe70b9d61675ceb1c4278a579dc67171678f015de114efe815852",
+    "symbol": "FootIKSampleApplication"
+  },
+  {
+    "id": "art-attach",
+    "name": "ozz-animation joint attachment sample",
+    "project": "guillaumeblanc/ozz-animation",
+    "revision": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+    "path": "samples/attach/sample_attach.cc",
+    "category": "animation",
+    "kind": "attachment transform",
+    "stack": [
+      "C++",
+      "ozz-animation"
+    ],
+    "formats": [
+      "C++",
+      "OZZ"
+    ],
+    "summary": "The sample evaluates the character’s pose and attaches geometry to a named hierarchy joint with a local offset.",
+    "adaptation": "Track a mace socket or bow prop through a clip. Compare world-space attachment transforms between native and browser renderers.",
+    "evidence": "source-read",
+    "sha256": "538ca724637861c60910f496b2fcc8ea6a07dbb77ba7bfc4201770ad27e64899",
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "socket",
+      "weapon",
+      "attachment",
+      "pose"
+    ],
+    "size_bytes": 8157,
+    "git_blob_sha1": "47b171132fc34aeee2624107197b7fcc1848be06",
+    "lfs_pointer": false,
+    "license_sha256": "3ddd93e9888fe70b9d61675ceb1c4278a579dc67171678f015de114efe815852",
+    "symbol": "AttachSampleApplication"
+  },
+  {
+    "id": "art-meshopt-anim",
+    "name": "gltfpack animation processing",
+    "project": "zeux/meshoptimizer",
+    "revision": "8547fc321b782a2235dfc14c65a346a640544cd8",
+    "path": "gltf/animation.cpp",
+    "category": "build",
+    "kind": "clip optimizer",
+    "stack": [
+      "C++",
+      "meshoptimizer"
+    ],
+    "formats": [
+      "C++",
+      "glTF",
+      "GLB"
+    ],
+    "summary": "The gltfpack animation path processes track samples and interpolation, including rotation and weight data.",
+    "adaptation": "Use a copy of the exported rig for clip compression, then compare draw-hand and tail endpoints during the fastest poses and preserve foot contacts.",
+    "evidence": "source-read",
+    "sha256": "e5009282c42a9fd99bfb90c02adbea9f870d896c3d996f079052845013bbb1aa",
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "gltfpack",
+      "compression",
+      "animation",
+      "baking"
+    ],
+    "size_bytes": 9895,
+    "git_blob_sha1": "2f09f61925568c6e8334c475a8d3d1399590af21",
+    "lfs_pointer": false,
+    "license_sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26"
+  },
+  {
+    "id": "art-lod",
+    "name": "meshoptimizer simplification implementation",
+    "project": "zeux/meshoptimizer",
+    "revision": "8547fc321b782a2235dfc14c65a346a640544cd8",
+    "path": "src/simplifier.cpp",
+    "category": "build",
+    "kind": "geometry LOD algorithm",
+    "stack": [
+      "C++",
+      "meshoptimizer"
+    ],
+    "formats": [
+      "C++"
+    ],
+    "summary": "The simplifier classifies vertex groups and evaluates collapse candidates to reduce indexed geometry under error constraints.",
+    "adaptation": "Generate a distance tier for rigid pauldrons first. Lock facial seams and verify per-bone deformation on character LODs before enabling character swaps.",
+    "evidence": "source-read",
+    "sha256": "719303b6970398631e30724e8eebc6cd2e7e08b67fe8ab7cbf7eecafdaa08616",
+    "license": "MIT",
+    "license_path": "LICENSE.md",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "lod",
+      "simplification",
+      "topology",
+      "performance"
+    ],
+    "size_bytes": 107217,
+    "git_blob_sha1": "85c502524f439be82198dc451caba27a62b720de",
+    "lfs_pointer": false,
+    "license_sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26"
+  },
+  {
+    "id": "art-poly-lod",
+    "name": "Poly Haven Blender LOD collection switch",
+    "project": "Poly-Haven/polyhavenassets",
+    "revision": "ca78dc6b8ec35f154492420e78ae8ae3ff229ffe",
+    "path": "operators/lod_switch.py",
+    "category": "blender",
+    "kind": "asset library operator",
+    "stack": [
+      "Blender",
+      "Python"
+    ],
+    "formats": [
+      "Python",
+      "BLEND"
+    ],
+    "summary": "The operator resolves collections by linked library reference and asset identifier and switches the instance to a named LOD.",
+    "adaptation": "Author temple detail tiers with stable source references. Check duplicate-named libraries in separate folders and verify only the intended mesh changes.",
+    "evidence": "source-read",
+    "sha256": "98b8d91e547978d4ed85c742b293f9fb7516f25d0b148940f6372dbe65706140",
+    "license": "GPL-3.0",
+    "license_path": "LICENSE",
+    "rights_note": "The Blender add-on includes the GPL version 3 text. Using its authoring operators grants no rights to unrelated third-party assets.",
+    "use": "adapt",
+    "tags": [
+      "lod",
+      "asset-library",
+      "collections",
+      "authoring"
+    ],
+    "size_bytes": 2140,
+    "git_blob_sha1": "5dabc9e23c8886fd04f03c8ec9d45347e02a47a2",
+    "lfs_pointer": false,
+    "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "symbol": "PHA_OT_lod_switch"
+  },
+  {
+    "id": "art-poly-disp",
+    "name": "Poly Haven material displacement setup",
+    "project": "Poly-Haven/polyhavenassets",
+    "revision": "ca78dc6b8ec35f154492420e78ae8ae3ff229ffe",
+    "path": "operators/tex_displacement_setup.py",
+    "category": "blender",
+    "kind": "material setup operator",
+    "stack": [
+      "Blender",
+      "Python"
+    ],
+    "formats": [
+      "Python",
+      "BLEND"
+    ],
+    "summary": "The operator recognizes connected shader nodes and offers render and mesh displacement routes for a texture.",
+    "adaptation": "Use height for a close stone relief render, then bake normal maps for the runtime tier. Record tessellation and memory changes per material.",
+    "evidence": "source-read",
+    "sha256": "d66f6cc9da50c9835b7622793ade204a56c826d1127b61dda11ff1f8ca6b243b",
+    "license": "GPL-3.0",
+    "license_path": "LICENSE",
+    "rights_note": "The Blender add-on includes the GPL version 3 text. Using its authoring operators grants no rights to unrelated third-party assets.",
+    "use": "adapt",
+    "tags": [
+      "displacement",
+      "baking",
+      "stone",
+      "pbr"
+    ],
+    "size_bytes": 8579,
+    "git_blob_sha1": "09a2dee63e0929e6f444c076cdfbe7fd912840c1",
+    "lfs_pointer": false,
+    "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "symbol": "PHA_OT_tex_displacement_setup"
+  },
+  {
+    "id": "art-vrm-spring",
+    "name": "VRM spring-bone collisions and constraints",
+    "project": "saturday06/VRM-Addon-for-Blender",
+    "revision": "74805226df70a6058b54e3cfe9921e28b5a2bb81",
+    "path": "src/io_scene_vrm/editor/spring_bone1/handler.py",
+    "category": "animation",
+    "kind": "secondary motion solver",
+    "stack": [
+      "Blender",
+      "Python",
+      "VRM"
+    ],
+    "formats": [
+      "Python",
+      "VRM",
+      "glTF"
+    ],
+    "summary": "The solver maintains spring state, constrains bone directions and handles sphere, capsule and plane collision classes.",
+    "adaptation": "Prototype Hanuman’s tail tip and cloth tassels against a hip capsule. Compare variable frame times and reset behavior after teleport, without changing authoritative hits.",
+    "evidence": "source-read",
+    "sha256": "4aedfa5f5394ef7c9cad5477a605b6d665e061c348781eec45b1c24fe1faca41",
+    "license": "MIT OR GPL-3.0-or-later",
+    "license_path": "LICENSE_MAIN.txt",
+    "rights_note": "The per-file SPDX header and LICENSE_MAIN.txt offer both options. Select one and preserve its notices. This record covers the solver code.",
+    "use": "adapt",
+    "tags": [
+      "spring-bone",
+      "secondary-motion",
+      "tail",
+      "collider"
+    ],
+    "size_bytes": 36948,
+    "git_blob_sha1": "dca505168447964c3c42ba4fce42fa74f2b60025",
+    "lfs_pointer": false,
+    "license_sha256": "3dbe3cd3576670bc2f698a44ec9905e5b7d80edab3c57fc6a5d587d3df9c2dd0",
+    "symbol": "update_pose_bone_rotations"
+  },
+  {
+    "id": "art-web-water",
+    "name": "Three.js planar reflected water",
+    "project": "mrdoob/three.js",
+    "revision": "1d3772857eb8970ce24b3757980c5e9d46c0d6ff",
+    "path": "examples/jsm/objects/Water.js",
+    "category": "graphics",
+    "kind": "water shader",
+    "stack": [
+      "Three.js",
+      "JavaScript",
+      "GLSL"
+    ],
+    "formats": [
+      "JavaScript",
+      "GLSL"
+    ],
+    "summary": "The Water object renders a reflected view into a target and distorts it with normal samples before compositing surface color.",
+    "adaptation": "Prototype the swamp with a bounded water plane and reduced-resolution reflection. Profile a reflected camera against a cheap distant water tier.",
+    "evidence": "source-read",
+    "sha256": "b9d659735f768964c21f5d4241bdeb13e7c4b3fafaff57aa4a1ac5a4470d069e",
+    "license": "MIT",
+    "license_path": "LICENSE",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "water",
+      "reflection",
+      "shader",
+      "swamp"
+    ],
+    "size_bytes": 13314,
+    "git_blob_sha1": "a68e268f813a1f59c5a104c02503f26ddde8bdcd",
+    "lfs_pointer": false,
+    "license_sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "symbol": "Water"
+  },
+  {
+    "id": "art-web-shapes",
+    "name": "Three.js skin and facial morph playback",
+    "project": "mrdoob/three.js",
+    "revision": "1d3772857eb8970ce24b3757980c5e9d46c0d6ff",
+    "path": "examples/webgl_animation_skinning_morph.html",
+    "category": "animation",
+    "kind": "browser scene example",
+    "stack": [
+      "Three.js",
+      "JavaScript",
+      "glTF"
+    ],
+    "formats": [
+      "HTML",
+      "JavaScript",
+      "GLB"
+    ],
+    "summary": "The example pairs animated skeletal actions with independently driven morph-target influences on the face mesh.",
+    "adaptation": "Test whether a blink and a facial expression survive an upper-body attack transition. Supply a separately licensed original rig to the example logic.",
+    "evidence": "source-read",
+    "sha256": "f91f205125aba93ca5c248415c96f68366a410e68a41b0aa601e8cb89de46e1a",
+    "license": "MIT",
+    "license_path": "LICENSE",
+    "rights_note": "Retain the MIT copyright and permission notice for copied or substantially adapted code. External models, textures and third-party dependencies require their own notices.",
+    "use": "adapt",
+    "tags": [
+      "face",
+      "blendshape",
+      "web",
+      "animation"
+    ],
+    "size_bytes": 6672,
+    "git_blob_sha1": "b935ca6f032a49c9b4bb8c9fe5719ce0f9b6f408",
+    "lfs_pointer": false,
+    "license_sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+  },
+  {
+    "id": "art-atlasuv",
+    "name": "MCprep UV and transparent-face tools",
+    "project": "Moo-Ack-Productions/MCprep",
+    "revision": "bf146fc2a31f97152c28f29a709b1b2b9893ef16",
+    "path": "MCprep_addon/materials/uv_tools.py",
+    "category": "blender",
+    "kind": "texture-atlas authoring tool",
+    "stack": [
+      "Blender",
+      "Python",
+      "MCprep"
+    ],
+    "formats": [
+      "Python",
+      "BLEND"
+    ],
+    "summary": "The add-on inspects UV bounds per material, rescales UVs and can select faces by image alpha.",
+    "adaptation": "Use the UV checks on your own lantern and market-sign atlases, expand edge padding and inspect mip seams. The donor is the tool code only.",
+    "evidence": "source-read",
+    "sha256": "cf87c87beef77b192500c2eb159bfcfae2223a633f4add38444f47bcc87bc195",
+    "license": "GPL-2.0-or-later",
+    "license_path": "MCprep_addon/materials/uv_tools.py",
+    "rights_note": "The source explicitly grants GPL version 2 or later. Other add-on contents carry different licenses. This listing covers the UV script, with no bundled game textures.",
+    "use": "adapt",
+    "tags": [
+      "uv",
+      "atlas",
+      "modding",
+      "alpha"
+    ],
+    "size_bytes": 13030,
+    "git_blob_sha1": "553e37b5e657aa292d1c8882fb48233abbd0450c",
+    "lfs_pointer": false,
+    "license_sha256": "cf87c87beef77b192500c2eb159bfcfae2223a633f4add38444f47bcc87bc195",
+    "symbol": "get_uv_bounds_per_material"
+  }
+]
