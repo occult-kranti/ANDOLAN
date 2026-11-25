@@ -1,5 +1,7 @@
 # Hanuman Trial handoff
 
+**Current playable Hanuman.** The new Rust Confluence release ships the compact muzzle, swept mane, surfaced costume, Mountain Pulse recovery and five-technique practice coach. Artists and engineers continuing that edition should use the current studio handoff. The Godot trial below remains available as an earlier playable reference. [Current release](../art/hanuman-hero-finish/README.md) · [Editable scene and rebuild](../art/hanuman-hero-finish/HANDOFF.md) · [Next rounds](../art/hanuman-hero-finish/ROADMAP.md)
+
 The offline trial on `game/yuga-hanuman-trial` includes the five revised Blender motions, projected ability marks and event-driven sound. The portable preview uses gameplay from [`d7aedae8`](https://github.com/occult-kranti/ANDOLAN/commit/d7aedae888ccbb49d726877bd9ad5ce46ce7446c). The playable rig and the detailed temple scene share action data. They have different meshes and materials. [Linux and Windows downloads](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-hanuman-abilities-2026-11-25) · [Watch the gameplay reel](../art/hanuman/reels/hanuman-abilities.mp4) · [Open the editable actions](../art/hanuman/abilities/hanuman-ability-actions.blend) · [Animation and package evidence](research/hanuman-ability-production/README.md)
 
 ## Open and play

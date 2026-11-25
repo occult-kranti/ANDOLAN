@@ -1,5 +1,9 @@
 # Start here: project and agent handoff
 
+**Current Hanuman release.** The Rust Confluence build embeds the same enhanced character used for the new Cycles portraits and motion reel. Use the handoff to locate or rebuild the sculpt, materials, motion and game. [Play and view](../games/yuga-native/art/hanuman-hero-finish/README.md) · [Developer and artist handoff](../games/yuga-native/art/hanuman-hero-finish/HANDOFF.md) · [Next milestones](../games/yuga-native/art/hanuman-hero-finish/ROADMAP.md)
+
+**Character art and motion.** Use the four-hero studio for turnaround sheets, frame-level direction, actual Blender views, animated GLBs and film source. The handoff identifies the existing Rama and Hanuman rigs and the new Shiva and Krishna previews. [Four-hero studio](../games/yuga-native/art/four-hero-motion/README.md)
+
 **General game-development resource database.** The offline browser and SQLite index cover individual UI controls, Blender designs, character animations, actual media assets, rebuilds and the REA fork inventory. [Resource library and query examples](../research/game-resource-library/README.md)
 
 **Rust game and handoff.** Start here for the playable two-hero lane match, packaged room server, and fourteen-hero graphical Rust sparring. [Sparring package and controls](../games/yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md) [Play, host and rebuild](../games/yuga-rust/README.md) · [Source search and verification](../games/yuga-native/docs/rust-rebuild/deep-search/README.md)

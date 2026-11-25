@@ -1,5 +1,9 @@
 # ANDOLAN / YUGA
 
+**Play the new Hanuman.** Extract Confluence, open `yuga-rust.html`, and choose **Hanuman practice** to learn the gada, ally shield, vault, tail sweep and Mountain Pulse. The playable model, matched Blender portraits, slow-motion study and editable art studio share the same 167-joint character. [Game download](https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-four-hero-motion-studio-2026-11-25/yuga-rust-confluence.zip) · [Art, film and editable Blender scene](games/yuga-native/art/hanuman-hero-finish/README.md) · [Next five production rounds](games/yuga-native/art/hanuman-hero-finish/ROADMAP.md)
+
+**Four heroes in motion.** Study Hanuman, Shiva, Rama and Krishna with multi-angle artwork, an illustrated animator book, five films and four downloadable rigs. The offline inspector lets you orbit, pause and scrub all 48 tracks. [Character studio and downloads](games/yuga-native/art/four-hero-motion/README.md)
+
 **Game resource library.** Search across game rebuilds and engines, UI controls, Blender rigs, animation, shaders, SVG icons and glTF models. Includes an offline visual browser, SQLite database, source pins and per-item rights evidence. [Browse or download the resource library](research/game-resource-library/README.md)
 
 **Play all fourteen heroes in Rust.** Choose **Hero sparring** in Sangam City to try the original weapons, all 42 abilities and the skinned characters in a three-person practice encounter. [Download the graphical roster](games/yuga-rust/downloads/yuga-rust-classic.zip?raw=true) · [Launch instructions](games/yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md)

@@ -1,0 +1,25 @@
+{
+  "task": "Rebuild the Hanuman artist GLB from the focused archive source selection in a separate checkout-shaped directory",
+  "blender": "4.3.2",
+  "input_selection": "Only the packager-listed art scripts, artist controls, original GLB, original character sheet and madder sample. No finished model was present in the isolated input directory at assembly time.",
+  "entry": "games/yuga-native/art/hanuman-hero-finish/tools/finish.py",
+  "baseline_glb_sha256": "fd86d3c5611274482199eeef2e90c5d2f355e9265cf1440390d9dbb209c8ded7",
+  "intermediate_sculpt_sha256": "a10acc276867c9f9bd7b1e2624d048f1f4964c98433e9b90e7f4b498e0af1fe2",
+  "intermediate_surfaces_sha256": "1d32817e8afe21b001de862ba23c0561d73099e398646102d9bef621256821b3",
+  "rebuilt_glb_sha256": "6612e710578c2527fc1edb84cd8c2c64936cd7ec2a0b201d4a714eead870273a",
+  "released_glb_sha256": "6612e710578c2527fc1edb84cd8c2c64936cd7ec2a0b201d4a714eead870273a",
+  "playable_bytes": 14418404,
+  "result": "byte-identical model",
+  "editable_patch": "Generated in the same run. Blender project UUIDs may vary between saved copies.",
+  "rust_library_from_archive_inputs": {
+    "scope": "Compile and exercise the isolated Rust authority and its source fixtures from the planned package inputs. Dependencies resolved from the local locked Cargo registry cache.",
+    "command": "cargo test --offline --locked --lib --manifest-path games/yuga-rust/Cargo.toml",
+    "passed": 44,
+    "failed": 0,
+    "ignored": 2,
+    "ignored_tests": [
+      "army::match_tests::twenty_minute_full_match_stays_bounded_and_all_lanes_fight",
+      "army::tests::compares_current_godot_spawn_order_and_uncontested_marches"
+    ]
+  }
+}

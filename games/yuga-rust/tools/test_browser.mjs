@@ -12,6 +12,7 @@ const { values } = parseArgs({
     input: { type: 'string', default: path.join(gameRoot, 'dist/yuga-rust.html') },
     report: { type: 'string', default: path.join(gameRoot, 'dist/browser-check.json') },
     screenshot: { type: 'string', default: path.join(gameRoot, 'dist/gameplay.png') },
+    'coach-screenshot': { type: 'string' },
   },
 });
 const html = path.resolve(values.input);
@@ -39,6 +40,13 @@ const check = (ok, label) => {
   if (process.env.YUGA_QA_TRACE) console.log(label);
 };
 const distance = (a,b) => Math.hypot(a[0]-b[0], a[1]-b[1]);
+
+async function coachScore(expected, stage) {
+  if (!values['coach-screenshot']) return;
+  const hint = await page.locator('#match-detail').textContent();
+  check(hint.startsWith(expected + '/5 techniques'), 'coach shows ' + expected + '/5 after ' + stage);
+  (evidence.coach_steps ??= []).push({stage, count:expected, hint});
+}
 
 async function until(label, predicate, timeout = 45_000) {
   const end = Date.now() + timeout;
@@ -139,6 +147,7 @@ try {
   await page.locator('#sound').click();
 
   // Move and interrupt a pending attack before measuring the clean combat run.
+  await coachScore(0, 'starting the drill');
   const start = first.state.actor.pos;
   await page.keyboard.down('w');
   try { await until('forward movement', p=>distance(start,p.state.actor.pos) >= .6); }
@@ -151,6 +160,7 @@ try {
   await page.keyboard.press('Escape');
   const cancelled = await until('cancel selection', p => p.mode === 'playing' && p.input.armedSlot === null);
   check(cancelled.state.events.length === moved.state.events.length, 'Escape cancels targeting before pause without spending a cast');
+  await coachScore(0, 'cancelling an armed cast');
   await page.locator('button[data-slot="4"]').click();
   const selected = await until('select Mountain', p => p.input.armedSlot === 4);
   check(selected.state.events.length === moved.state.events.length, 'clicking a ready HUD ability arms it without casting');
@@ -179,6 +189,7 @@ try {
   await page.locator('#pause').click();
   await until('pause button',p=>p.mode==='paused');
   await reset('paused');
+  await coachScore(0, 'resetting the paused drill');
 
   // An unobstructed forward strike, frontal ally ward, rear sweep and delayed disk.
   await aim(1);
@@ -187,6 +198,7 @@ try {
   const gadaImpact = await beat(gada,'impact');
   const enemy = gadaImpact.current.state.targets.find(t=>t.id===1);
   check(enemy.hp === 56, 'primary strike deals 34 HP to the pointed enemy');
+  await coachScore(1, 'the frontal gada hit');
   evidence.ability_results.gada = {begin:gada.tick, impact:gadaImpact.event.tick, hp:enemy.hp};
   await aim(1);
   const ward = await cast(1, ()=>page.keyboard.press('q'));
@@ -200,6 +212,7 @@ try {
   check(cooldown.input.armedSlot === null && cooldown.state.abilities[1].cooldown_ticks > 0 && cooldown.state.events.filter(e=>e.kind==='begin'&&e.slot===1).length===1,
     'keyboard and action-bar repeats during the ward lock and cooldown start no second cast');
   check((await page.locator('#status').textContent()).includes('cooling down'), 'HUD explains the rejected ward input');
+  await coachScore(2, 'shielding the ally and rejecting both cooldown repeats');
   evidence.ability_results.ward = {impact:wardImpact.event.tick, shield:ally.shield};
 
   await aim(1);
@@ -208,6 +221,7 @@ try {
   check(burn.event.receipts.some(r=>r.damage===28), 'tail impact deals 28 damage behind the hero');
   const lingering = await beat(tail,'tick');
   check(lingering.event.tick > burn.event.tick, 'the tail field deals exposure damage after the sweep');
+  await coachScore(3, 'sweeping the rear guard and applying the following exposure tick');
   evidence.ability_results.tail = {impact:burn.event.tick, first_exposure:lingering.event.tick};
 
   // Save a genuine running state; the canvas alone must contain visibly varied 3D imagery.
@@ -231,6 +245,7 @@ try {
   const {event:slammed,current:afterSlam} = await beat(mountain,'impact');
   check(slammed.tick-release.tick===9 && afterSlam.state.actor.hp===300 && afterSlam.state.defeated===2,
     'Mountain heals the actor and eliminates two targets nine ticks after release');
+  await coachScore(4, 'landing Mountain Pulse on the guards');
   evidence.ability_results.mountain = {release:release.tick, impact:slammed.tick, kills:afterSlam.state.defeated, actor_hp:afterSlam.state.actor.hp};
 
   // The remaining target is seven metres forward. Vault into range, then finish it.
@@ -242,13 +257,22 @@ try {
     'vault moves the actor through the air and lands on the court');
   const last = ground.current.state.targets.find(t=>t.id===3);
   check(last.hp === 25 && distance(ground.current.state.actor.pos,last.pos)<3.5, 'the remaining target is within physical strike reach after vault');
+  await coachScore(5, 'landing the vault');
   evidence.ability_results.vault = {release_tick:(await beat(takeoff,'release')).event.tick, air_y:apex.state.actor.y, landed:ground.current.state.actor.pos};
 
   await aim(3);
   await cast(0, async ()=>{ await page.mouse.down(); await page.mouse.up(); });
   const won = await until('drill complete',p=>p.mode==='complete');
   check(won.state.defeated===3 && await page.locator('#result').isVisible(), 'all three neutralizations show the completion dialog');
+  if (values['coach-screenshot']) {
+    evidence.coach_completion = await page.locator('#summary').innerText();
+    check(evidence.coach_completion.includes('5/5 techniques demonstrated'), 'the completion dialog preserves all five demonstrated techniques');
+    const coachShot = path.resolve(values['coach-screenshot']);
+    await mkdir(path.dirname(coachShot), {recursive:true});
+    evidence.coach_png_sha256 = hash(await page.screenshot({path:coachShot,timeout:90_000}));
+  }
   await reset('complete');
+  await coachScore(0, 'starting over after victory');
   await page.setViewportSize({width:820,height:600});
   await until('resized renderer still ticks',p=>p.mode==='playing'&&p.state.tick>2);
   check(await page.locator('#arena').isVisible() && await page.locator('#pause').isVisible(), 'resized trial keeps its viewport and pause control');
